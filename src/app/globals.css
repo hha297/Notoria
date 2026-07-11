@@ -1,26 +1,246 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@plugin "@tailwindcss/typography";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  --font-sans: var(--font-rubik), -apple-system, system-ui, "Segoe UI", Helvetica,
+    Arial, sans-serif;
+  --font-heading: var(--font-display), var(--font-rubik), sans-serif;
+  --font-mono: Monaco, Menlo, "Ubuntu Mono", monospace;
+
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+
+  --color-ink: var(--ink);
+  --color-ink-deep: var(--ink-deep);
+  --color-surface-night: var(--surface-night);
+  --color-surface-canvas-dark: var(--surface-canvas-dark);
+  --color-accent-lime: var(--accent-lime);
+  --color-accent-violet-mid: var(--accent-violet-mid);
+  --color-hairline-cloud: var(--hairline-cloud);
+  --color-hairline-violet: var(--hairline-violet);
+  --color-on-primary: var(--on-primary);
+  --color-on-dark-muted: var(--on-dark-muted);
+
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 10px;
+  --radius-xl: 12px;
+  --radius-2xl: 18px;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  /* Brand */
+  --primary: #150f23;
+  --primary-foreground: #ffffff;
+  --ink: #1f1633;
+  --ink-deep: #1f1633;
+  --accent-lime: #c2ef4e;
+  --accent-pink: #fa7faa;
+  --accent-violet-mid: #79628c;
+  --accent-violet-deep: #422082;
+
+  /* Surfaces — light canvas for app content */
+  --background: #ffffff;
+  --foreground: #1f1633;
+  --card: #ffffff;
+  --card-foreground: #1f1633;
+  --popover: #ffffff;
+  --popover-foreground: #1f1633;
+  --surface-canvas-dark: #1f1633;
+  --surface-night: #150f23;
+  --on-primary: #ffffff;
+  --on-dark-muted: rgba(255, 255, 255, 0.72);
+  --on-dark-faint: rgba(255, 255, 255, 0.18);
+
+  /* UI */
+  --secondary: #f0f0f0;
+  --secondary-foreground: #1f1633;
+  --muted: #f0f0f0;
+  --muted-foreground: #79628c;
+  --accent: #f0f0f0;
+  --accent-foreground: #1f1633;
+  --destructive: #fa7faa;
+  --border: #e5e7eb;
+  --input: #cfcfdb;
+  --ring: rgba(59, 130, 246, 0.5);
+  --hairline-cloud: #e5e7eb;
+  --hairline-violet: #362d59;
+  --hairline-cool: #cfcfdb;
+
+  /* Dark sidebar shell */
+  --sidebar: #150f23;
+  --sidebar-foreground: #ffffff;
+  --sidebar-primary: #ffffff;
+  --sidebar-primary-foreground: #1f1633;
+  --sidebar-accent: rgba(255, 255, 255, 0.1);
+  --sidebar-accent-foreground: #ffffff;
+  --sidebar-border: #362d59;
+  --sidebar-ring: rgba(59, 130, 246, 0.5);
+
+  --radius: 8px;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+
+  html {
+    @apply font-sans;
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+@layer components {
+  .eyebrow {
+    @apply text-[15px] font-medium uppercase tracking-[0.2px] text-muted-foreground;
+  }
+
+  .heading-xl {
+    @apply font-heading text-[30px] font-medium leading-tight tracking-tight;
+  }
+
+  .heading-md {
+    @apply font-heading text-2xl font-medium leading-tight;
+  }
+
+  .chip-lime {
+    @apply inline-block rounded-[4px] bg-accent-lime px-3 text-ink;
+  }
+
+  .card-surface {
+    @apply rounded-xl border border-hairline-cloud bg-card p-8 text-ink shadow-none;
+  }
+
+  .card-surface-dark {
+    @apply rounded-[18px] border border-hairline-violet bg-ink-deep p-8 text-on-primary shadow-none;
+  }
+
+  .data-table {
+    @apply overflow-hidden rounded-xl border border-hairline-cloud bg-card;
+  }
+
+  .data-table thead {
+    @apply border-b border-hairline-cloud bg-muted/60 text-left;
+  }
+
+  .data-table th {
+    @apply px-4 py-3 text-sm font-semibold uppercase tracking-[0.2px] text-muted-foreground;
+  }
+
+  .data-table td {
+    @apply border-t border-hairline-cloud px-4 py-3 text-sm;
+  }
+
+  .data-table tbody tr {
+    @apply transition-colors hover:bg-muted/40;
+  }
+
+  .empty-state {
+    @apply rounded-xl border border-dashed border-hairline-cloud bg-card p-12 text-center;
+  }
+
+  .sidebar-starfield {
+    background-color: var(--sidebar);
+    background-image:
+      radial-gradient(
+        circle at 20% 30%,
+        rgba(255, 255, 255, 0.06) 0 1px,
+        transparent 1px
+      ),
+      radial-gradient(
+        circle at 70% 60%,
+        rgba(255, 255, 255, 0.04) 0 1px,
+        transparent 1px
+      );
+    background-size:
+      120px 120px,
+      180px 180px;
+  }
+}
+
+/* TipTap editor */
+.tiptap p.is-editor-empty:first-child::before {
+  color: var(--muted-foreground);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+.tiptap table {
+  border-collapse: collapse;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+.tiptap th,
+.tiptap td {
+  border: 1px solid var(--hairline-cloud);
+  min-width: 80px;
+  padding: 0.5rem 0.75rem;
+}
+
+.tiptap th {
+  background: #f0f0f0;
+  font-weight: 600;
+}
+
+.tiptap ul[data-type="taskList"] {
+  list-style: none;
+  padding-left: 0;
+}
+
+.tiptap ul[data-type="taskList"] li {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.5rem;
+}
+
+.tiptap ul[data-type="taskList"] li > label {
+  margin-top: 0.2rem;
+}
+
+.tiptap code {
+  font-family: var(--font-mono);
+}
+
+.tiptap pre {
+  background: var(--surface-night);
+  border-radius: 8px;
+  color: var(--on-primary);
+  font-family: var(--font-mono);
+  padding: 1rem;
 }
