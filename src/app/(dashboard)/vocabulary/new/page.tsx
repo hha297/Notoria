@@ -8,7 +8,7 @@ export default async function NewVocabularyPage() {
   const languageName = getLanguageName(workplaceLanguage);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-8">
+    <div className="mx-auto max-w-3xl space-y-10 pt-2">
       <PageHeader
         eyebrow="Vocabulary"
         title="Add"

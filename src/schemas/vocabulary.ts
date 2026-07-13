@@ -8,8 +8,6 @@ export const meaningSchema = z.object({
 
 export const vocabularyFormSchema = z.object({
   word: z.string().min(1, "Word is required"),
-  pronunciation: z.string().optional(),
-  ipa: z.string().optional(),
   partOfSpeech: z.string().optional(),
   notes: z.string().optional(),
   meanings: z.array(meaningSchema).min(1, "Add at least one meaning"),

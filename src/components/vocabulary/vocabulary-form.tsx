@@ -6,6 +6,10 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import {
+  SortableMeanings,
+  type MeaningItem,
+} from "@/components/vocabulary/sortable-meanings";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -27,17 +31,11 @@ import {
 } from "@/schemas/vocabulary";
 
 type VocabularyFormClientValues = Omit<VocabularyFormValues, "meanings">;
-import {
-  SortableMeanings,
-  type MeaningItem,
-} from "@/components/vocabulary/sortable-meanings";
 
 type VocabularyFormProps = {
   initialData?: {
     id: string;
     word: string;
-    pronunciation?: string | null;
-    ipa?: string | null;
     partOfSpeech?: string | null;
     notes?: string | null;
     meanings: Array<{
@@ -73,8 +71,6 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
     resolver: zodResolver(vocabularyFormClientSchema),
     defaultValues: {
       word: initialData?.word ?? "",
-      pronunciation: initialData?.pronunciation ?? "",
-      ipa: initialData?.ipa ?? "",
       partOfSpeech: initialData?.partOfSpeech ?? "",
       notes: initialData?.notes ?? "",
     },
@@ -121,21 +117,25 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
   }
 
   return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
-      <Card className="card-surface gap-0 py-0 ring-0">
-        <CardHeader>
-          <CardTitle>{initialData ? "Edit word" : "New word"}</CardTitle>
-          <CardDescription>
+    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+      <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
+        <CardHeader className="space-y-2 border-b border-hairline-cloud px-8 pt-8 pb-6">
+          <CardTitle className="heading-md text-ink">
+            {initialData ? "Edit word" : "New word"}
+          </CardTitle>
+          <CardDescription className="text-base leading-relaxed">
             Add a word and one or more meanings. Drag meanings to reorder.
           </CardDescription>
         </CardHeader>
-        <CardContent className="space-y-4">
-          <div className="grid gap-4 md:grid-cols-2">
+
+        <CardContent className="space-y-8 px-8 py-8">
+          <div className="grid gap-6 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="word">Word</Label>
               <Input
                 id="word"
                 placeholder="e.g. Koira"
+                className="h-10"
                 {...form.register("word")}
               />
               {form.formState.errors.word && (
@@ -145,18 +145,11 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="pronunciation">Pronunciation</Label>
-              <Input
-                id="pronunciation"
-                placeholder="Optional"
-                {...form.register("pronunciation")}
-              />
-            </div>
-            <div className="space-y-2">
               <Label htmlFor="partOfSpeech">Part of speech</Label>
               <Input
                 id="partOfSpeech"
                 placeholder="noun, verb..."
+                className="h-10"
                 {...form.register("partOfSpeech")}
               />
             </div>
@@ -169,15 +162,16 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
             <Textarea
               id="notes"
               placeholder="Mnemonics, usage tips..."
-              rows={3}
+              rows={4}
+              className="min-h-28 resize-y"
               {...form.register("notes")}
             />
           </div>
         </CardContent>
       </Card>
 
-      <div className="flex justify-end gap-2">
-        <Button type="submit" disabled={isSaving}>
+      <div className="flex justify-end">
+        <Button type="submit" disabled={isSaving} size="lg">
           {isSaving ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (
