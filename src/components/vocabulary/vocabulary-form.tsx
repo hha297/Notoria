@@ -35,7 +35,6 @@ import {
 type VocabularyFormProps = {
   initialData?: {
     id: string;
-    language: string;
     word: string;
     pronunciation?: string | null;
     ipa?: string | null;
@@ -73,7 +72,6 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
   const form = useForm<VocabularyFormClientValues>({
     resolver: zodResolver(vocabularyFormClientSchema),
     defaultValues: {
-      language: initialData?.language ?? "fi",
       word: initialData?.word ?? "",
       pronunciation: initialData?.pronunciation ?? "",
       ipa: initialData?.ipa ?? "",
@@ -145,10 +143,6 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
                   {form.formState.errors.word.message}
                 </p>
               )}
-            </div>
-            <div className="space-y-2">
-              <Label htmlFor="language">Language</Label>
-              <Input id="language" placeholder="fi" {...form.register("language")} />
             </div>
             <div className="space-y-2">
               <Label htmlFor="pronunciation">Pronunciation</Label>

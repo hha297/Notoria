@@ -51,7 +51,7 @@ export const vocabularyWords = pgTable("vocabulary_words", {
   userId: uuid("user_id")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  language: text("language").notNull().default("fi"),
+  language: text("language").notNull().default("en"),
   word: text("word").notNull(),
   pronunciation: text("pronunciation"),
   ipa: text("ipa"),
@@ -102,6 +102,7 @@ export const exercises = pgTable("exercises", {
     .references(() => users.id, { onDelete: "cascade" }),
   title: text("title").notNull(),
   type: exerciseTypeEnum("type").notNull().default("QUESTIONS"),
+  language: text("language").notNull().default("en"),
   content: jsonb("content").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()

@@ -10,7 +10,7 @@ import {
   PenLine,
   Settings,
 } from "lucide-react";
-import { Logo, LogoIcon, LogoWordmark } from "@/components/ui/logo";
+import { Logo, LogoWordmark } from "@/components/ui/logo";
 import {
   Sidebar,
   SidebarContent,
@@ -43,7 +43,7 @@ export function AppSidebar() {
       collapsible="icon"
       className="sidebar-starfield border-r border-sidebar-border"
     >
-      <SidebarHeader className="border-b border-sidebar-border px-3 py-4 pb-2">
+      <SidebarHeader className="border-b border-sidebar-border px-3 py-3 pb-2">
         <Link
           href="/"
           className={cn(
@@ -51,7 +51,7 @@ export function AppSidebar() {
             "group-data-[collapsible=icon]:justify-center",
           )}
         >
-          <LogoIcon className="hidden group-data-[collapsible=icon]:block" />
+          <Logo className="hidden group-data-[collapsible=icon]:block" />
           <div className="flex min-w-0 items-center gap-2.5 group-data-[collapsible=icon]:hidden">
             <Logo />
             <LogoWordmark />
@@ -61,13 +61,13 @@ export function AppSidebar() {
 
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="text-[10px] font-semibold uppercase tracking-[0.25px] text-on-dark-muted">
+          <SidebarGroupLabel className="text-xs font-semibold uppercase tracking-[0.25px] text-on-dark-muted">
             Workspace
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => (
-                <SidebarMenuItem key={item.title}>
+                <SidebarMenuItem key={item.title} className="py-0.5">
                   {item.disabled ? (
                     <SidebarMenuButton
                       disabled
@@ -87,8 +87,9 @@ export function AppSidebar() {
                       }
                       tooltip={item.title}
                       className={cn(
-                        "text-sidebar-foreground",
-                        "data-active:bg-sidebar-accent data-active:text-sidebar-accent-foreground",
+                        "text-sidebar-foreground transition-colors",
+                        "hover:bg-accent-lime/25! hover:text-accent-lime!",
+                        "data-active:bg-accent-lime/25! data-active:text-accent-lime! data-active:font-medium",
                       )}
                     >
                       <item.icon />

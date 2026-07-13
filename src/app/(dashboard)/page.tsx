@@ -5,10 +5,15 @@ import { StatCard } from "@/components/layout/stat-card";
 import { LinkButton } from "@/components/ui/link-button";
 import { getExercises } from "@/lib/actions/exercises";
 import { getVocabularyWords } from "@/lib/actions/vocabulary";
+import { getLanguageName } from "@/lib/languages";
+import { getWorkplaceLanguage } from "@/lib/workplace";
 
 export const dynamic = "force-dynamic";
 
 export default async function DashboardPage() {
+  const workplaceLanguage = await getWorkplaceLanguage();
+  const languageName = getLanguageName(workplaceLanguage);
+
   const [words, exercises] = await Promise.all([
     getVocabularyWords(),
     getExercises(),
@@ -20,13 +25,13 @@ export default async function DashboardPage() {
         eyebrow="Overview"
         title="Your"
         highlight="workspace"
-        description="Store vocabulary, build exercises, and study Finnish in one private place."
+        description={`Store vocabulary, build exercises, and study ${languageName} in one private place.`}
       />
 
       <div className="grid gap-4 md:grid-cols-3">
         <StatCard label="Words saved" value={words.length} />
         <StatCard label="Exercises created" value={exercises.length} featured />
-        <StatCard label="Primary language" value="Finnish" />
+        <StatCard label="Workplace" value={languageName} />
       </div>
 
       <div className="grid gap-4 md:grid-cols-2">

@@ -6,9 +6,9 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  --font-sans: var(--font-rubik), -apple-system, system-ui, "Segoe UI", Helvetica,
+  --font-sans: var(--font-chakra-petch), -apple-system, system-ui, "Segoe UI", Helvetica,
     Arial, sans-serif;
-  --font-heading: var(--font-display), var(--font-rubik), sans-serif;
+  --font-heading: var(--font-vt323), var(--font-chakra-petch), sans-serif;
   --font-mono: Monaco, Menlo, "Ubuntu Mono", monospace;
 
   --color-background: var(--background);
@@ -55,6 +55,15 @@
   --radius-lg: 10px;
   --radius-xl: 12px;
   --radius-2xl: 18px;
+}
+
+@utility font-sans {
+  font-family: var(--font-chakra-petch), -apple-system, system-ui, "Segoe UI", Helvetica,
+    Arial, sans-serif;
+}
+
+@utility font-heading {
+  font-family: var(--font-vt323), var(--font-chakra-petch), sans-serif;
 }
 
 :root {

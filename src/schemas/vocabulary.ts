@@ -7,7 +7,6 @@ export const meaningSchema = z.object({
 });
 
 export const vocabularyFormSchema = z.object({
-  language: z.string().min(2, "Language is required"),
   word: z.string().min(1, "Word is required"),
   pronunciation: z.string().optional(),
   ipa: z.string().optional(),
