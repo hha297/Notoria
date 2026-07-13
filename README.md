@@ -48,19 +48,19 @@ These are defined in the product spec but not implemented yet:
 
 ## Tech stack
 
-| Layer | Technology |
-|-------|------------|
-| Framework | Next.js 16 (App Router) |
-| Language | TypeScript |
-| Styling | Tailwind CSS v4, shadcn/ui |
-| Database | PostgreSQL 16 |
-| ORM | Drizzle |
-| Forms | React Hook Form + Zod |
-| Editor | TipTap |
-| Drag & drop | dnd-kit |
-| State | TanStack Query (server data), Zustand (UI, reserved) |
-| Icons | Lucide |
-| Deployment | Docker, Docker Compose |
+| Layer       | Technology                                           |
+| ----------- | ---------------------------------------------------- |
+| Framework   | Next.js 16 (App Router)                              |
+| Language    | TypeScript                                           |
+| Styling     | Tailwind CSS v4, shadcn/ui                           |
+| Database    | PostgreSQL 16                                        |
+| ORM         | Drizzle                                              |
+| Forms       | React Hook Form + Zod                                |
+| Editor      | TipTap                                               |
+| Drag & drop | dnd-kit                                              |
+| State       | TanStack Query (server data), Zustand (UI, reserved) |
+| Icons       | Lucide                                               |
+| Deployment  | Docker, Docker Compose                               |
 
 ---
 
@@ -148,28 +148,28 @@ On first request, a demo user is created automatically (no separate seed step).
 
 ## Available scripts
 
-| Command | Description |
-|---------|-------------|
-| `npm run dev` | Start development server |
-| `npm run build` | Production build |
-| `npm run start` | Run production server |
-| `npm run lint` | Run ESLint |
-| `npm run db:push` | Push Drizzle schema to PostgreSQL |
-| `npm run db:studio` | Open Drizzle Studio (DB browser) |
+| Command             | Description                       |
+| ------------------- | --------------------------------- |
+| `npm run dev`       | Start development server          |
+| `npm run build`     | Production build                  |
+| `npm run start`     | Run production server             |
+| `npm run lint`      | Run ESLint                        |
+| `npm run db:push`   | Push Drizzle schema to PostgreSQL |
+| `npm run db:studio` | Open Drizzle Studio (DB browser)  |
 
 ---
 
 ## Routes
 
-| Path | Description |
-|------|-------------|
-| `/` | Dashboard |
-| `/vocabulary` | Word list |
-| `/vocabulary/new` | Add a new word |
-| `/vocabulary/[id]` | Edit a word |
-| `/exercises` | Exercise list |
-| `/exercises/new` | Create exercise |
-| `/exercises/[id]` | Edit exercise (autosave) |
+| Path               | Description              |
+| ------------------ | ------------------------ |
+| `/`                | Dashboard                |
+| `/vocabulary`      | Word list                |
+| `/vocabulary/new`  | Add a new word           |
+| `/vocabulary/[id]` | Edit a word              |
+| `/exercises`       | Exercise list            |
+| `/exercises/new`   | Create exercise          |
+| `/exercises/[id]`  | Edit exercise (autosave) |
 
 ---
 
@@ -213,13 +213,3 @@ Auth is **not** implemented yet. The app uses a fixed demo user ID from `.env.lo
 When Auth.js is added, the demo user helper in `src/lib/auth/demo-user.ts` will be replaced by real session handling.
 
 ---
-
-## Design
-
-UI tokens and component rules live in `.prompt/DESIGN.MD` (violet midnight canvas, lime accents, Rubik + Space Grotesk typography).
-
----
-
-## License
-
-Private project.

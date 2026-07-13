@@ -3,11 +3,9 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
-  BookOpen,
   Dumbbell,
   Home,
   Languages,
-  PenLine,
   Settings,
 } from "lucide-react";
 import { Logo, LogoWordmark } from "@/components/ui/logo";
@@ -30,8 +28,6 @@ const navItems = [
   { title: "Dashboard", href: "/", icon: Home },
   { title: "Vocabulary", href: "/vocabulary", icon: Languages },
   { title: "Exercises", href: "/exercises", icon: Dumbbell },
-  { title: "Grammar", href: "/grammar", icon: BookOpen, disabled: true },
-  { title: "Writing", href: "/writing", icon: PenLine, disabled: true },
   { title: "Settings", href: "/settings", icon: Settings, disabled: true },
 ];
 
