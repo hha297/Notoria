@@ -16,20 +16,11 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
-  createExercise,
-  updateExercise,
-} from "@/lib/actions/exercises";
+import { createExercise, updateExercise } from "@/lib/actions/exercises";
 import type { ExerciseFormValues } from "@/schemas/exercise";
 
-type ExerciseEditorProps = {
+type WritingExerciseEditorProps = {
+  exerciseType: ExerciseFormValues["type"];
   initialData?: {
     id: string;
     title: string;
@@ -38,24 +29,13 @@ type ExerciseEditorProps = {
   };
 };
 
-const exerciseTypes: Array<{
-  value: ExerciseFormValues["type"];
-  label: string;
-}> = [
-  { value: "QUESTIONS", label: "Questions" },
-  { value: "FILL_BLANK", label: "Fill in the blank" },
-  { value: "TRANSLATION", label: "Translation" },
-  { value: "WRITING", label: "Writing" },
-  { value: "READING", label: "Reading" },
-  { value: "GRAMMAR_DRILL", label: "Grammar drill" },
-];
-
-export function ExerciseEditor({ initialData }: ExerciseEditorProps) {
+export function WritingExerciseEditor({
+  exerciseType,
+  initialData,
+}: WritingExerciseEditorProps) {
   const router = useRouter();
+  const type = initialData?.type ?? exerciseType;
   const [title, setTitle] = useState(initialData?.title ?? "");
-  const [type, setType] = useState<ExerciseFormValues["type"]>(
-    initialData?.type ?? "QUESTIONS",
-  );
   const [content, setContent] = useState<JSONContent>(
     initialData?.content ?? {
       type: "doc",
@@ -120,59 +100,50 @@ export function ExerciseEditor({ initialData }: ExerciseEditorProps) {
   }
 
   return (
-    <div className="space-y-6">
-      <Card className="card-surface gap-0 py-0 ring-0">
-        <CardHeader>
-          <CardTitle>{initialData ? "Edit exercise" : "New exercise"}</CardTitle>
-          <CardDescription>
-            Build rich exercises with headings, checklists, tables and more.
+    <div className="space-y-8">
+      <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
+        <CardHeader className="space-y-2 border-b border-hairline-cloud px-8 pt-8 pb-6">
+          <CardTitle className="heading-md text-ink">
+            {initialData ? "Edit exercise" : "New exercise"}
+          </CardTitle>
+          <CardDescription className="text-base leading-relaxed">
+            Add a title and write your exercise content below.
           </CardDescription>
         </CardHeader>
-        <CardContent className="grid gap-4 md:grid-cols-[2fr_1fr]">
+
+        <CardContent className="space-y-8 px-8 py-8">
           <div className="space-y-2">
             <Label htmlFor="title">Title</Label>
             <Input
               id="title"
               value={title}
               onChange={(event) => setTitle(event.target.value)}
-              placeholder="Tell about yourself"
+              placeholder="Exercise title"
+              className="h-10"
             />
           </div>
+
           <div className="space-y-2">
-            <Label>Type</Label>
-            <Select
-              value={type}
-              onValueChange={(value) =>
-                setType(value as ExerciseFormValues["type"])
-              }
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue placeholder="Select type" />
-              </SelectTrigger>
-              <SelectContent>
-                {exerciseTypes.map((item) => (
-                  <SelectItem key={item.value} value={item.value}>
-                    {item.label}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <Label>Content</Label>
+            <RichTextEditor
+              content={content}
+              placeholder="Start writing your exercise content here..."
+              onChange={setContent}
+              onAutosave={initialData?.id ? handleAutosave : undefined}
+            />
           </div>
         </CardContent>
       </Card>
 
-      <RichTextEditor
-        content={content}
-        placeholder="Missä synnyit?&#10;&#10;Millainen perhe sinulla on?&#10;&#10;Mikä on ammattisi?"
-        onChange={setContent}
-        onAutosave={initialData?.id ? handleAutosave : undefined}
-      />
-
       <div className="flex items-center justify-between">
         <p className="text-sm text-muted-foreground">
-          {isAutosaving ? "Autosaving..." : initialData ? "Changes autosave" : "Save to enable autosave"}
+          {isAutosaving
+            ? "Autosaving..."
+            : initialData
+              ? "Changes autosave"
+              : "Save to enable autosave"}
         </p>
-        <Button onClick={() => persistExercise(true)} disabled={isSaving}>
+        <Button onClick={() => persistExercise(true)} disabled={isSaving} size="lg">
           {isSaving ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (

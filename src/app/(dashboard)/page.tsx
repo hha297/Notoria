@@ -64,19 +64,11 @@ export default async function DashboardPage() {
           </p>
           <div className="flex gap-2">
             <LinkButton
-              href="/exercises/new"
+              href="/exercises"
               variant="secondary"
               className="bg-on-primary text-ink hover:bg-on-primary/90"
             >
-              <Plus className="size-4" />
-              New exercise
-            </LinkButton>
-            <LinkButton
-              href="/exercises"
-              variant="ghost"
-              className="text-on-primary hover:bg-on-dark-faint"
-            >
-              View all
+              Open studio
             </LinkButton>
           </div>
         </div>
