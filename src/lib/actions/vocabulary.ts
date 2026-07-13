@@ -60,8 +60,8 @@ export async function createVocabularyWord(data: VocabularyFormValues) {
       userId,
       language,
       word: parsed.word,
-      pronunciation: parsed.pronunciation || null,
-      ipa: parsed.ipa || null,
+      pronunciation: null,
+      ipa: null,
       partOfSpeech: parsed.partOfSpeech || null,
       notes: parsed.notes || null,
     })
@@ -101,8 +101,6 @@ export async function updateVocabularyWord(
     .update(vocabularyWords)
     .set({
       word: parsed.word,
-      pronunciation: parsed.pronunciation || null,
-      ipa: parsed.ipa || null,
       partOfSpeech: parsed.partOfSpeech || null,
       notes: parsed.notes || null,
       updatedAt: new Date(),

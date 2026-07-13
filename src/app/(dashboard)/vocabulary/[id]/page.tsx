@@ -18,7 +18,7 @@ export default async function VocabularyDetailPage({
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-8">
+    <div className="mx-auto max-w-3xl space-y-10 pt-2">
       <PageHeader
         eyebrow="Vocabulary"
         title="Edit"
