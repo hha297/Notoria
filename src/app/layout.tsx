@@ -1,18 +1,20 @@
 import type { Metadata } from "next";
-import { Rubik, Space_Grotesk } from "next/font/google";
+import { Chakra_Petch, VT323 } from "next/font/google";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryProvider } from "@/components/providers/query-provider";
 import "./globals.css";
 
-const rubik = Rubik({
-  variable: "--font-rubik",
+const chakraPetch = Chakra_Petch({
+  variable: "--font-chakra-petch",
   subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
 });
 
-const spaceGrotesk = Space_Grotesk({
-  variable: "--font-display",
+const vt323 = VT323({
+  variable: "--font-vt323",
   subsets: ["latin"],
+  weight: "400",
 });
 
 export const metadata: Metadata = {
@@ -29,9 +31,12 @@ export default function RootLayout({
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${rubik.variable} ${spaceGrotesk.variable} h-full antialiased`}
+      className={`${chakraPetch.variable} ${vt323.variable} h-full antialiased`}
     >
-      <body className="min-h-full font-sans" suppressHydrationWarning>
+      <body
+        className={`${chakraPetch.className} min-h-full font-sans`}
+        suppressHydrationWarning
+      >
         <QueryProvider>
           <TooltipProvider>
             {children}

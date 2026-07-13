@@ -1,10 +1,11 @@
 "use server";
 
-import { asc, desc, eq } from "drizzle-orm";
+import { and, asc, desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { vocabularyWords, wordMeanings } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/demo-user";
+import { getWorkplaceLanguage } from "@/lib/workplace";
 import {
   vocabularyFormSchema,
   type VocabularyFormValues,
@@ -12,9 +13,13 @@ import {
 
 export async function getVocabularyWords() {
   const userId = await getCurrentUserId();
+  const language = await getWorkplaceLanguage();
 
   return db.query.vocabularyWords.findMany({
-    where: eq(vocabularyWords.userId, userId),
+    where: and(
+      eq(vocabularyWords.userId, userId),
+      eq(vocabularyWords.language, language),
+    ),
     with: {
       meanings: {
         orderBy: [asc(wordMeanings.sortOrder)],
@@ -26,8 +31,9 @@ export async function getVocabularyWords() {
 
 export async function getVocabularyWord(id: string) {
   const userId = await getCurrentUserId();
+  const language = await getWorkplaceLanguage();
 
-  return db.query.vocabularyWords.findFirst({
+  const word = await db.query.vocabularyWords.findFirst({
     where: eq(vocabularyWords.id, id),
     with: {
       meanings: {
@@ -35,17 +41,24 @@ export async function getVocabularyWord(id: string) {
       },
     },
   });
+
+  if (!word || word.userId !== userId || word.language !== language) {
+    return null;
+  }
+
+  return word;
 }
 
 export async function createVocabularyWord(data: VocabularyFormValues) {
   const parsed = vocabularyFormSchema.parse(data);
   const userId = await getCurrentUserId();
+  const language = await getWorkplaceLanguage();
 
   const [word] = await db
     .insert(vocabularyWords)
     .values({
       userId,
-      language: parsed.language,
+      language,
       word: parsed.word,
       pronunciation: parsed.pronunciation || null,
       ipa: parsed.ipa || null,
@@ -74,19 +87,19 @@ export async function updateVocabularyWord(
 ) {
   const parsed = vocabularyFormSchema.parse(data);
   const userId = await getCurrentUserId();
+  const language = await getWorkplaceLanguage();
 
   const existing = await db.query.vocabularyWords.findFirst({
     where: eq(vocabularyWords.id, id),
   });
 
-  if (!existing || existing.userId !== userId) {
+  if (!existing || existing.userId !== userId || existing.language !== language) {
     throw new Error("Word not found");
   }
 
   await db
     .update(vocabularyWords)
     .set({
-      language: parsed.language,
       word: parsed.word,
       pronunciation: parsed.pronunciation || null,
       ipa: parsed.ipa || null,
@@ -114,12 +127,13 @@ export async function updateVocabularyWord(
 
 export async function deleteVocabularyWord(id: string) {
   const userId = await getCurrentUserId();
+  const language = await getWorkplaceLanguage();
 
   const existing = await db.query.vocabularyWords.findFirst({
     where: eq(vocabularyWords.id, id),
   });
 
-  if (!existing || existing.userId !== userId) {
+  if (!existing || existing.userId !== userId || existing.language !== language) {
     throw new Error("Word not found");
   }
 

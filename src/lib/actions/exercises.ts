@@ -1,10 +1,11 @@
 "use server";
 
-import { desc, eq } from "drizzle-orm";
+import { and, desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { exercises } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/demo-user";
+import { getWorkplaceLanguage } from "@/lib/workplace";
 import {
   exerciseFormSchema,
   type ExerciseFormValues,
@@ -12,21 +13,26 @@ import {
 
 export async function getExercises() {
   const userId = await getCurrentUserId();
+  const language = await getWorkplaceLanguage();
 
   return db.query.exercises.findMany({
-    where: eq(exercises.userId, userId),
+    where: and(
+      eq(exercises.userId, userId),
+      eq(exercises.language, language),
+    ),
     orderBy: [desc(exercises.updatedAt)],
   });
 }
 
 export async function getExercise(id: string) {
   const userId = await getCurrentUserId();
+  const language = await getWorkplaceLanguage();
 
   const exercise = await db.query.exercises.findFirst({
     where: eq(exercises.id, id),
   });
 
-  if (!exercise || exercise.userId !== userId) {
+  if (!exercise || exercise.userId !== userId || exercise.language !== language) {
     return null;
   }
 
@@ -36,6 +42,7 @@ export async function getExercise(id: string) {
 export async function createExercise(data: ExerciseFormValues) {
   const parsed = exerciseFormSchema.parse(data);
   const userId = await getCurrentUserId();
+  const language = await getWorkplaceLanguage();
 
   const [exercise] = await db
     .insert(exercises)
@@ -43,6 +50,7 @@ export async function createExercise(data: ExerciseFormValues) {
       userId,
       title: parsed.title,
       type: parsed.type,
+      language,
       content: parsed.content,
     })
     .returning();
@@ -54,12 +62,17 @@ export async function createExercise(data: ExerciseFormValues) {
 export async function updateExercise(id: string, data: ExerciseFormValues) {
   const parsed = exerciseFormSchema.parse(data);
   const userId = await getCurrentUserId();
+  const language = await getWorkplaceLanguage();
 
   const existing = await db.query.exercises.findFirst({
     where: eq(exercises.id, id),
   });
 
-  if (!existing || existing.userId !== userId) {
+  if (
+    !existing ||
+    existing.userId !== userId ||
+    existing.language !== language
+  ) {
     throw new Error("Exercise not found");
   }
 
@@ -81,12 +94,17 @@ export async function updateExercise(id: string, data: ExerciseFormValues) {
 
 export async function deleteExercise(id: string) {
   const userId = await getCurrentUserId();
+  const language = await getWorkplaceLanguage();
 
   const existing = await db.query.exercises.findFirst({
     where: eq(exercises.id, id),
   });
 
-  if (!existing || existing.userId !== userId) {
+  if (
+    !existing ||
+    existing.userId !== userId ||
+    existing.language !== language
+  ) {
     throw new Error("Exercise not found");
   }
 

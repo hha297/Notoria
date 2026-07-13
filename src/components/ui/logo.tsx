@@ -12,7 +12,7 @@ function LogoFrame({
   return (
     <div
       className={cn(
-        "shrink-0 overflow-hidden rounded-2xl border-2 border-accent-lime",
+        "shrink-0 overflow-hidden rounded-xl border-2 border-accent-lime",
         className,
       )}
     >
@@ -27,40 +27,26 @@ export function Logo({ className }: LogoProps) {
       <Image
         src="/logo.png"
         alt="Notoria"
-        width={32}
-        height={32}
-        className="size-8"
+        width={24}
+        height={24}
+        className="size-6"
         priority
       />
     </LogoFrame>
   );
 }
 
-export function LogoIcon({ className }: LogoProps) {
-  return (
-    <LogoFrame className={className}>
-      <Image
-        src="/logo.png"
-        alt="Notoria"
-        width={32}
-        height={32}
-        className="size-8"
-        priority
-      />
-    </LogoFrame>
-  );
-}
 
 export function LogoWordmark({ className }: LogoProps) {
   return (
     <span
       className={cn(
-        "font-heading text-base font-bold tracking-[-0.03em] text-sidebar-foreground",
+        "font-heading text-2xl font-medium tracking-[-0.03em] text-sidebar-foreground",
         className,
       )}
     >
       Noto
-      <span className="font-medium text-accent-lime">ria</span>
+      <span className="text-accent-lime">ria</span>
     </span>
   );
 }
