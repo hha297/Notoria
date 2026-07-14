@@ -1,72 +1,66 @@
-import Link from "next/link";
 import { Plus } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
 import { LinkButton } from "@/components/ui/link-button";
-import { Badge } from "@/components/ui/badge";
+import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
+import { VocabularyTable } from "@/components/vocabulary/vocabulary-table";
 import { getVocabularyWords } from "@/lib/actions/vocabulary";
+import { getActiveWorkspace } from "@/lib/workspace";
 
 export const dynamic = "force-dynamic";
 
 export default async function VocabularyPage() {
+  const t = await getTranslations("vocabulary");
+  const workspace = await getActiveWorkspace();
+
+  if (!workspace) {
+    return (
+      <div className="space-y-8">
+        <PageHeader
+          eyebrow={t("title")}
+          title={t("title")}
+          highlight={t("bank")}
+          description={t("disabledNoWorkspace")}
+        />
+        <NoWorkspaceEmpty />
+      </div>
+    );
+  }
+
   const words = await getVocabularyWords();
+
+  const serializedWords = words.map((word) => ({
+    id: word.id,
+    word: word.word,
+    partOfSpeech: word.partOfSpeech,
+    updatedAt: word.updatedAt.toISOString(),
+    meanings: word.meanings.map((meaning) => ({ meaning: meaning.meaning })),
+    tags: word.tags.map((tag) => ({ id: tag.id, tag: tag.tag })),
+  }));
 
   return (
     <div className="space-y-8">
       <PageHeader
-        eyebrow="Study"
-        title="Vocabulary"
-        highlight="bank"
-        description="Store words with multiple meanings. Drag to reorder meanings when editing."
+        eyebrow={t("title")}
+        title={t("title")}
+        highlight={t("bank")}
+        description={t("formDescription")}
       >
         <LinkButton href="/vocabulary/new">
           <Plus className="size-4" />
-          Add word
+          {t("addWord")}
         </LinkButton>
       </PageHeader>
 
       {words.length === 0 ? (
         <div className="empty-state">
-          <p className="text-muted-foreground">No words yet.</p>
+          <p className="text-muted-foreground">{t("emptyTitle")}</p>
           <LinkButton href="/vocabulary/new" className="mt-4">
-            Add your first word
+            {t("addFirst")}
           </LinkButton>
         </div>
       ) : (
-        <div className="data-table">
-          <table className="w-full">
-            <thead>
-              <tr>
-                <th>Word</th>
-                <th>Meanings</th>
-                <th>POS</th>
-                <th>Status</th>
-              </tr>
-            </thead>
-            <tbody>
-              {words.map((word) => (
-                <tr key={word.id}>
-                  <td>
-                    <Link
-                      href={`/vocabulary/${word.id}`}
-                      className="font-semibold text-ink underline-offset-4 hover:underline"
-                    >
-                      {word.word}
-                    </Link>
-                  </td>
-                  <td className="text-muted-foreground">
-                    {word.meanings.map((m) => m.meaning).join(" · ")}
-                  </td>
-                  <td className="text-muted-foreground">
-                    {word.partOfSpeech ?? "—"}
-                  </td>
-                  <td>
-                    <Badge variant="secondary">{word.status}</Badge>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
+        <VocabularyTable words={serializedWords} />
       )}
     </div>
   );

@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Chakra_Petch, VT323 } from "next/font/google";
+import { NextIntlClientProvider } from "next-intl";
+import { getLocale, getMessages } from "next-intl/server";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryProvider } from "@/components/providers/query-provider";
@@ -22,14 +24,17 @@ export const metadata: Metadata = {
   description: "Private language-learning workspace for vocabulary and exercises",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const locale = await getLocale();
+  const messages = await getMessages();
+
   return (
     <html
-      lang="en"
+      lang={locale}
       suppressHydrationWarning
       className={`${chakraPetch.variable} ${vt323.variable} h-full antialiased`}
     >
@@ -37,12 +42,14 @@ export default function RootLayout({
         className={`${chakraPetch.className} min-h-full font-sans`}
         suppressHydrationWarning
       >
-        <QueryProvider>
-          <TooltipProvider>
-            {children}
-            <Toaster richColors position="top-right" />
-          </TooltipProvider>
-        </QueryProvider>
+        <NextIntlClientProvider messages={messages}>
+          <QueryProvider>
+            <TooltipProvider>
+              {children}
+              <Toaster richColors position="top-right" />
+            </TooltipProvider>
+          </QueryProvider>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
