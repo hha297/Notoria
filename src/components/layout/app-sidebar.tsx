@@ -57,7 +57,7 @@ export function AppSidebar({ userName, userEmail }: AppSidebarProps) {
         >
           <Logo className="hidden group-data-[collapsible=icon]:block" />
           <div className="flex min-w-0 items-center gap-2.5 group-data-[collapsible=icon]:hidden">
-            <Logo />
+            <Logo size="md" />
             <LogoWordmark tone="sidebar" />
           </div>
         </Link>

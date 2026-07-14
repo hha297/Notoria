@@ -8,7 +8,7 @@ import { Plus } from "lucide-react";
 import { toast } from "sonner";
 import { FlashcardCard } from "@/components/flashcards/flashcard-card";
 import { FlashcardControls } from "@/components/flashcards/flashcard-controls";
-import { FlashcardFiltersBar } from "@/components/flashcards/flashcard-filters";
+import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { FlashcardRatingBar } from "@/components/flashcards/flashcard-rating-bar";
 import { LinkButton } from "@/components/ui/link-button";
 import { Progress } from "@/components/ui/progress";
@@ -258,12 +258,13 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
   if (filteredWords.length === 0) {
     return (
       <div className="space-y-6">
-        <FlashcardFiltersBar
+        <VocabularyFiltersBar
           words={words}
           filters={filters}
           studyMode={studyMode}
           onFiltersChange={setFilters}
           onStudyModeChange={setStudyMode}
+          showStudyMode
         />
         <div className="empty-state">
           <p className="text-muted-foreground">{t("noFilteredCards")}</p>
@@ -278,12 +279,13 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
 
   return (
     <div className="space-y-6">
-      <FlashcardFiltersBar
+      <VocabularyFiltersBar
         words={words}
         filters={filters}
         studyMode={studyMode}
         onFiltersChange={setFilters}
         onStudyModeChange={setStudyMode}
+        showStudyMode
       />
 
       <div className="space-y-3">

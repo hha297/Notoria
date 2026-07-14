@@ -153,8 +153,112 @@
     "studio": "studio",
     "saved": "Tallennetut harjoitukset",
     "description": "Valitse korttityyli uudelle harjoitukselle.",
+    "studioDescription": "Harjoittele sanastoa aktiivisessa työtilassa kuudella tavalla — kaikki luodaan omista sanoistasi.",
+    "practice": "harjoittelu",
+    "editor": "editori",
+    "edit": "Muokkaa",
+    "editDescription": "Muutokset tallentuvat automaattisesti ensimmäisen tallennuksen jälkeen.",
+    "noWorkspace": "Luo työtila ennen harjoitusten aloittamista.",
     "updated": "Päivitetty",
-    "backToStudio": "Takaisin harjoituksiin"
+    "backToStudio": "Takaisin harjoituksiin",
+    "studyMode": "Opiskelutila",
+    "types": {
+      "flashcard": {
+        "label": "Muistikortit",
+        "description": "Käännä kortteja opiskellaksesi sanoja ja merkityksiä toistoväleillä.",
+        "preview": "Käännä · Arvioi · Kertaa"
+      },
+      "writing": {
+        "label": "Kirjoittaminen",
+        "description": "Luo kirjoitustehtäviä ja harjoituksia editorissa.",
+        "preview": "Tehtävä · Luonnos · Tallenna",
+        "pageDescription": "Kirjoita tehtäviä, kysymyksiä ja harjoituksia editorissa."
+      },
+      "fill-in-blank": {
+        "label": "Täytä aukko",
+        "description": "Täydennä esimerkkilauseet puuttuvalla sanalla.",
+        "preview": "Minulla on uusi ______."
+      },
+      "multiple-choice": {
+        "label": "Monivalinta",
+        "description": "Valitse oikea merkitys tai sana — häiriövastaukset tulevat sanastostasi.",
+        "preview": "Mikä merkitys sopii?"
+      },
+      "match-pairs": {
+        "label": "Yhdistä parit",
+        "description": "Yhdistä jokainen sana oikeaan merkitykseen Quizlet-tyylisessä ruudukossa.",
+        "preview": "Sana ↔ Merkitys"
+      },
+      "type-answer": {
+        "label": "Kirjoita vastaus",
+        "description": "Kirjoita puuttuva sana tai merkitys ja saa palaute heti.",
+        "preview": "Kirjoita vastaus…"
+      }
+    },
+    "empty": {
+      "noWordsTitle": "Ei sanastoa vielä",
+      "noWordsDescription": "Lisää sanoja työtilaan ensin, palaa sitten harjoittelemaan.",
+      "addWords": "Lisää sanoja",
+      "noMeaningsTitle": "Ei merkityksiä harjoiteltavaksi",
+      "noMeaningsDescription": "Lisää vähintään yksi merkitys sanoillesi käyttääksesi tätä harjoitusta.",
+      "noExamplesTitle": "Ei esimerkkilauseita vielä",
+      "noExamplesDescription": "Lisää esimerkkilauseita, joissa sana esiintyy, luodaksesi aukkotehtäviä.",
+      "editVocabulary": "Muokkaa sanastoa",
+      "needMoreWordsTitle": "Tarvitaan lisää sanastoa",
+      "needMoreWordsDescription": "Lisää vähintään {count} merkityksellistä sanaa työtilaan käyttääksesi tätä harjoitusta.",
+      "noFiltered": "Yksikään sana ei vastaa suodattimia. Kokeile muuttaa suodattimia."
+    },
+    "fillInBlank": {
+      "prompt": "Täytä aukko",
+      "hint": "Vihje",
+      "correct": "Oikein!",
+      "incorrect": "Vastaus on {answer}",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} oikein",
+      "keyboardHint": "Enter tarkistaa · Enter uudelleen seuraavaan",
+      "previous": "Edellinen",
+      "next": "Seuraava",
+      "check": "Tarkista",
+      "shuffle": "Sekoita",
+      "finish": "Lopeta kierros"
+    },
+    "multipleChoice": {
+      "questionWord": "Mikä on tämän sanan merkitys?",
+      "questionMeaning": "Mikä sana vastaa tätä merkitystä?",
+      "correct": "Oikein!",
+      "incorrect": "Oikea vastaus: {answer}",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} oikein",
+      "previous": "Edellinen",
+      "next": "Seuraava",
+      "shuffle": "Sekoita kysymykset",
+      "finish": "Lopeta kierros"
+    },
+    "matchPairs": {
+      "words": "Sanat",
+      "meanings": "Merkitykset",
+      "progress": "{matched} / {total} yhdistetty",
+      "hint": "Valitse sana, sitten napauta sen merkitystä",
+      "complete": "Kaikki parit yhdistetty — hienoa!",
+      "shuffle": "Sekoita sarakkeet"
+    },
+    "typeAnswer": {
+      "questionWord": "Mikä on merkitys?",
+      "questionMeaning": "Mikä sana vastaa tätä merkitystä?",
+      "placeholder": "Kirjoita vastaus…",
+      "yourAnswer": "Vastauksesi",
+      "correctAnswer": "Oikea vastaus",
+      "correct": "Oikein!",
+      "incorrect": "Ei aivan — katso oikea vastaus yllä",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} oikein",
+      "keyboardHint": "Enter tarkistaa · Enter uudelleen seuraavaan",
+      "previous": "Edellinen",
+      "next": "Seuraava",
+      "check": "Tarkista",
+      "shuffle": "Sekoita",
+      "finish": "Lopeta kierros"
+    }
   },
   "flashcards": {
     "title": "Muistikortit",
