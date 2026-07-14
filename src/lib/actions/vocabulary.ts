@@ -9,7 +9,7 @@ import {
   wordExamples,
   wordMeanings,
 } from "@/db/schema";
-import { getCurrentUserId } from "@/lib/auth/demo-user";
+import { getCurrentUserId } from "@/lib/auth/session";
 import { requireActiveWorkspace, getActiveWorkspace } from "@/lib/workspace";
 import {
   vocabularyFormSchema,

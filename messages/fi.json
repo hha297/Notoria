@@ -194,5 +194,29 @@
     "generic": "Jokin meni pieleen",
     "noWorkspace": "Ei aktiivista työtilaa",
     "notFound": "Ei löytynyt"
+  },
+  "auth": {
+    "welcomeBack": "Tervetuloa takaisin",
+    "signInDescription": "Kirjaudu Notoria-tilillesi",
+    "createAccountTitle": "Luo tili",
+    "registerDescription": "Aloita oppiminen omassa yksityisessä työtilassasi",
+    "email": "Sähköposti",
+    "password": "Salasana",
+    "name": "Nimi",
+    "signIn": "Kirjaudu",
+    "signOut": "Kirjaudu ulos",
+    "createAccount": "Luo tili",
+    "noAccount": "Eikö sinulla ole tiliä?",
+    "hasAccount": "Onko sinulla jo tili?",
+    "invalidCredentials": "Virheellinen sähköposti tai salasana",
+    "emailExists": "Tämä sähköposti on jo käytössä",
+    "registerFailed": "Tilin luonti epäonnistui. Yritä uudelleen.",
+    "signInAfterRegisterFailed": "Tili luotu. Kirjaudu sisään.",
+    "passwordHint": "Vähintään 8 merkkiä",
+    "showPassword": "Näytä salasana",
+    "hidePassword": "Piilota salasana",
+    "account": "Tili",
+    "accountSettings": "Tilin asetukset",
+    "accountDescription": "Profiilisi ja kirjautumistietosi"
   }
 }

@@ -194,5 +194,29 @@
     "generic": "Something went wrong",
     "noWorkspace": "No active workspace",
     "notFound": "Not found"
+  },
+  "auth": {
+    "welcomeBack": "Welcome back",
+    "signInDescription": "Sign in to your Notoria account",
+    "createAccountTitle": "Create your account",
+    "registerDescription": "Start learning with your own private workspace",
+    "email": "Email",
+    "password": "Password",
+    "name": "Name",
+    "signIn": "Sign in",
+    "signOut": "Log out",
+    "createAccount": "Create account",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "invalidCredentials": "Invalid email or password",
+    "emailExists": "An account with this email already exists",
+    "registerFailed": "Could not create account. Please try again.",
+    "signInAfterRegisterFailed": "Account created. Please sign in.",
+    "passwordHint": "At least 8 characters",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "account": "Account",
+    "accountSettings": "Account settings",
+    "accountDescription": "Your profile and sign-in details"
   }
 }

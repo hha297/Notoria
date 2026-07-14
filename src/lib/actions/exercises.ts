@@ -4,7 +4,7 @@ import { and, desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { exercises } from "@/db/schema";
-import { getCurrentUserId } from "@/lib/auth/demo-user";
+import { getCurrentUserId } from "@/lib/auth/session";
 import { requireActiveWorkspace, getActiveWorkspace } from "@/lib/workspace";
 import {
   exerciseFormSchema,
