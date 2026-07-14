@@ -5,7 +5,7 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { exercises } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/demo-user";
-import { getWorkplaceLanguage } from "@/lib/workplace";
+import { requireActiveWorkspace, getActiveWorkspace } from "@/lib/workspace";
 import {
   exerciseFormSchema,
   type ExerciseFormValues,
@@ -13,12 +13,16 @@ import {
 
 export async function getExercises() {
   const userId = await getCurrentUserId();
-  const language = await getWorkplaceLanguage();
+  const workspace = await getActiveWorkspace();
+
+  if (!workspace) {
+    return [];
+  }
 
   return db.query.exercises.findMany({
     where: and(
       eq(exercises.userId, userId),
-      eq(exercises.language, language),
+      eq(exercises.workspaceId, workspace.id),
     ),
     orderBy: [desc(exercises.updatedAt)],
   });
@@ -26,13 +30,17 @@ export async function getExercises() {
 
 export async function getExercise(id: string) {
   const userId = await getCurrentUserId();
-  const language = await getWorkplaceLanguage();
+  const workspace = await requireActiveWorkspace();
 
   const exercise = await db.query.exercises.findFirst({
     where: eq(exercises.id, id),
   });
 
-  if (!exercise || exercise.userId !== userId || exercise.language !== language) {
+  if (
+    !exercise ||
+    exercise.userId !== userId ||
+    exercise.workspaceId !== workspace.id
+  ) {
     return null;
   }
 
@@ -42,15 +50,15 @@ export async function getExercise(id: string) {
 export async function createExercise(data: ExerciseFormValues) {
   const parsed = exerciseFormSchema.parse(data);
   const userId = await getCurrentUserId();
-  const language = await getWorkplaceLanguage();
+  const workspace = await requireActiveWorkspace();
 
   const [exercise] = await db
     .insert(exercises)
     .values({
       userId,
+      workspaceId: workspace.id,
       title: parsed.title,
       type: parsed.type,
-      language,
       content: parsed.content,
     })
     .returning();
@@ -62,7 +70,7 @@ export async function createExercise(data: ExerciseFormValues) {
 export async function updateExercise(id: string, data: ExerciseFormValues) {
   const parsed = exerciseFormSchema.parse(data);
   const userId = await getCurrentUserId();
-  const language = await getWorkplaceLanguage();
+  const workspace = await requireActiveWorkspace();
 
   const existing = await db.query.exercises.findFirst({
     where: eq(exercises.id, id),
@@ -71,7 +79,7 @@ export async function updateExercise(id: string, data: ExerciseFormValues) {
   if (
     !existing ||
     existing.userId !== userId ||
-    existing.language !== language
+    existing.workspaceId !== workspace.id
   ) {
     throw new Error("Exercise not found");
   }
@@ -94,7 +102,7 @@ export async function updateExercise(id: string, data: ExerciseFormValues) {
 
 export async function deleteExercise(id: string) {
   const userId = await getCurrentUserId();
-  const language = await getWorkplaceLanguage();
+  const workspace = await requireActiveWorkspace();
 
   const existing = await db.query.exercises.findFirst({
     where: eq(exercises.id, id),
@@ -103,7 +111,7 @@ export async function deleteExercise(id: string) {
   if (
     !existing ||
     existing.userId !== userId ||
-    existing.language !== language
+    existing.workspaceId !== workspace.id
   ) {
     throw new Error("Exercise not found");
   }

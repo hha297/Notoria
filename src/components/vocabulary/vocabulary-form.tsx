@@ -5,11 +5,17 @@ import { Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import {
+  SortableExamples,
+  type ExampleItem,
+} from "@/components/vocabulary/sortable-examples";
 import {
   SortableMeanings,
   type MeaningItem,
 } from "@/components/vocabulary/sortable-meanings";
+import { TagMultiSelect } from "@/components/vocabulary/tag-multi-select";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,17 +26,32 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import {
   createVocabularyWord,
   updateVocabularyWord,
 } from "@/lib/actions/vocabulary";
 import {
+  getCustomTagName,
+  isCustomTagKey,
+  PARTS_OF_SPEECH,
+} from "@/lib/vocabulary-tags";
+import {
   vocabularyFormClientSchema,
   type VocabularyFormValues,
 } from "@/schemas/vocabulary";
 
-type VocabularyFormClientValues = Omit<VocabularyFormValues, "meanings">;
+type VocabularyFormClientValues = Omit<
+  VocabularyFormValues,
+  "meanings" | "examples" | "tags"
+>;
 
 type VocabularyFormProps = {
   initialData?: {
@@ -43,21 +64,55 @@ type VocabularyFormProps = {
       meaning: string;
       sortOrder: number;
     }>;
+    examples: Array<{
+      id: string;
+      sentence: string;
+      sortOrder: number;
+    }>;
+    tags: Array<{
+      tag: string;
+    }>;
   };
 };
 
 function createDefaultMeanings(): MeaningItem[] {
   return [
     {
-      id: crypto.randomUUID(),
+      id: "new-meaning-0",
       meaning: "",
       sortOrder: 0,
     },
   ];
 }
 
+function createDefaultExamples(): ExampleItem[] {
+  return [
+    {
+      id: "new-example-0",
+      sentence: "",
+      sortOrder: 0,
+    },
+  ];
+}
+
+function getInitialSessionCustomTags(
+  tags: Array<{ tag: string }> | undefined,
+): string[] {
+  if (!tags) {
+    return [];
+  }
+
+  return tags
+    .map((tag) => tag.tag)
+    .filter(isCustomTagKey)
+    .map(getCustomTagName)
+    .sort((a, b) => a.localeCompare(b));
+}
+
 export function VocabularyForm({ initialData }: VocabularyFormProps) {
   const router = useRouter();
+  const t = useTranslations("vocabulary");
+  const tPos = useTranslations("tags.pos");
   const [isSaving, setIsSaving] = useState(false);
   const [meanings, setMeanings] = useState<MeaningItem[]>(
     initialData?.meanings.map((meaning) => ({
@@ -66,12 +121,27 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
       sortOrder: meaning.sortOrder,
     })) ?? createDefaultMeanings(),
   );
+  const [examples, setExamples] = useState<ExampleItem[]>(
+    initialData?.examples.map((example) => ({
+      id: example.id,
+      sentence: example.sentence,
+      sortOrder: example.sortOrder,
+    })) ?? createDefaultExamples(),
+  );
+  const [tags, setTags] = useState<string[]>(
+    initialData?.tags.map((tag) => tag.tag) ?? [],
+  );
+  const [sessionCustomTags, setSessionCustomTags] = useState<string[]>(() =>
+    getInitialSessionCustomTags(initialData?.tags),
+  );
 
   const form = useForm<VocabularyFormClientValues>({
     resolver: zodResolver(vocabularyFormClientSchema),
     defaultValues: {
       word: initialData?.word ?? "",
-      partOfSpeech: initialData?.partOfSpeech ?? "",
+      partOfSpeech:
+        (initialData?.partOfSpeech as VocabularyFormClientValues["partOfSpeech"]) ??
+        undefined,
       notes: initialData?.notes ?? "",
     },
   });
@@ -86,9 +156,17 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
       .filter((item) => item.meaning.length > 0);
 
     if (filledMeanings.length === 0) {
-      toast.error("Add at least one meaning");
+      toast.error(t("meaningRequired"));
       return;
     }
+
+    const filledExamples = examples
+      .map((item, index) => ({
+        id: item.id,
+        sentence: item.sentence.trim(),
+        sortOrder: index,
+      }))
+      .filter((item) => item.sentence.length > 0);
 
     setIsSaving(true);
 
@@ -96,45 +174,49 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
       const payload = {
         ...values,
         meanings: filledMeanings,
+        examples: filledExamples,
+        tags,
       };
 
       if (initialData?.id) {
         await updateVocabularyWord(initialData.id, payload);
-        toast.success("Word updated");
+        toast.success(t("updated"));
         router.refresh();
       } else {
         const word = await createVocabularyWord(payload);
-        toast.success("Word saved");
-        router.push(`/vocabulary/${word.id}`);
+        toast.success(t("saved"));
+        router.push("/vocabulary");
       }
     } catch (error) {
       toast.error(
-        error instanceof Error ? error.message : "Failed to save word",
+        error instanceof Error ? error.message : t("meaningRequired"),
       );
     } finally {
       setIsSaving(false);
     }
   }
 
+  const selectedPartOfSpeech = form.watch("partOfSpeech");
+
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
       <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
         <CardHeader className="space-y-2 border-b border-hairline-cloud px-8 pt-8 pb-6">
           <CardTitle className="heading-md text-ink">
-            {initialData ? "Edit word" : "New word"}
+            {initialData ? t("editWord") : t("newWord")}
           </CardTitle>
           <CardDescription className="text-base leading-relaxed">
-            Add a word and one or more meanings. Drag meanings to reorder.
+            {t("formDescription")}
           </CardDescription>
         </CardHeader>
 
         <CardContent className="space-y-8 px-8 py-8">
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="space-y-2">
-              <Label htmlFor="word">Word</Label>
+              <Label htmlFor="word">{t("word")}</Label>
               <Input
                 id="word"
-                placeholder="e.g. Koira"
+                placeholder={t("wordPlaceholder")}
                 className="h-10"
                 {...form.register("word")}
               />
@@ -145,25 +227,58 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
               )}
             </div>
             <div className="space-y-2">
-              <Label htmlFor="partOfSpeech">Part of speech</Label>
-              <Input
-                id="partOfSpeech"
-                placeholder="noun, verb..."
-                className="h-10"
-                {...form.register("partOfSpeech")}
-              />
+              <Label>{t("partOfSpeech")}</Label>
+              <Select
+                value={form.watch("partOfSpeech") ?? ""}
+                onValueChange={(value) =>
+                  form.setValue(
+                    "partOfSpeech",
+                    value
+                      ? (value as VocabularyFormClientValues["partOfSpeech"])
+                      : undefined,
+                  )
+                }
+              >
+                <SelectTrigger className="h-10 w-full">
+                  <SelectValue placeholder={t("partOfSpeechPlaceholder")}>
+                    {selectedPartOfSpeech &&
+                    PARTS_OF_SPEECH.includes(
+                      selectedPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
+                    )
+                      ? tPos(
+                          selectedPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
+                        )
+                      : null}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  {PARTS_OF_SPEECH.map((pos) => (
+                    <SelectItem key={pos} value={pos}>
+                      {tPos(pos)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
             </div>
           </div>
 
           <SortableMeanings meanings={meanings} onChange={setMeanings} />
+          <SortableExamples examples={examples} onChange={setExamples} />
+          <TagMultiSelect
+            value={tags}
+            onChange={setTags}
+            sessionCustomTags={sessionCustomTags}
+            onSessionCustomTagsChange={setSessionCustomTags}
+          />
 
           <div className="space-y-2">
-            <Label htmlFor="notes">Notes</Label>
+            <Label htmlFor="notes">{t("notes")}</Label>
             <Textarea
               id="notes"
-              placeholder="Mnemonics, usage tips..."
+              placeholder={t("notesPlaceholder")}
               rows={4}
               className="min-h-28 resize-y"
+              suppressHydrationWarning
               {...form.register("notes")}
             />
           </div>
@@ -177,7 +292,7 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
           ) : (
             <Save className="size-4" />
           )}
-          {initialData ? "Update word" : "Save word"}
+          {initialData ? t("updateWord") : t("saveWord")}
         </Button>
       </div>
     </form>

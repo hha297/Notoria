@@ -3,35 +3,105 @@
 import { and, asc, desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
-import { vocabularyWords, wordMeanings } from "@/db/schema";
+import {
+  vocabularyWordTags,
+  vocabularyWords,
+  wordExamples,
+  wordMeanings,
+} from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/demo-user";
-import { getWorkplaceLanguage } from "@/lib/workplace";
+import { requireActiveWorkspace, getActiveWorkspace } from "@/lib/workspace";
 import {
   vocabularyFormSchema,
   type VocabularyFormValues,
 } from "@/schemas/vocabulary";
 
+async function assertWordInWorkspace(wordId: string, workspaceId: string) {
+  const userId = await getCurrentUserId();
+
+  const word = await db.query.vocabularyWords.findFirst({
+    where: eq(vocabularyWords.id, wordId),
+  });
+
+  if (!word || word.userId !== userId || word.workspaceId !== workspaceId) {
+    throw new Error("Word not found");
+  }
+
+  return word;
+}
+
+async function replaceWordRelations(
+  wordId: string,
+  data: VocabularyFormValues,
+) {
+  await db.delete(wordMeanings).where(eq(wordMeanings.wordId, wordId));
+  await db.delete(wordExamples).where(eq(wordExamples.wordId, wordId));
+  await db
+    .delete(vocabularyWordTags)
+    .where(eq(vocabularyWordTags.wordId, wordId));
+
+  if (data.meanings.length > 0) {
+    await db.insert(wordMeanings).values(
+      data.meanings.map((meaning, index) => ({
+        wordId,
+        meaning: meaning.meaning,
+        sortOrder: meaning.sortOrder ?? index,
+      })),
+    );
+  }
+
+  if (data.examples.length > 0) {
+    await db.insert(wordExamples).values(
+      data.examples.map((example, index) => ({
+        wordId,
+        sentence: example.sentence,
+        sortOrder: example.sortOrder ?? index,
+      })),
+    );
+  }
+
+  if (data.tags.length > 0) {
+    await db.insert(vocabularyWordTags).values(
+      data.tags.map((tag) => ({
+        wordId,
+        tag,
+      })),
+    );
+  }
+}
+
 export async function getVocabularyWords() {
   const userId = await getCurrentUserId();
-  const language = await getWorkplaceLanguage();
+  const workspace = await getActiveWorkspace();
+
+  if (!workspace) {
+    return [];
+  }
 
   return db.query.vocabularyWords.findMany({
     where: and(
       eq(vocabularyWords.userId, userId),
-      eq(vocabularyWords.language, language),
+      eq(vocabularyWords.workspaceId, workspace.id),
     ),
     with: {
       meanings: {
         orderBy: [asc(wordMeanings.sortOrder)],
       },
+      examples: {
+        orderBy: [asc(wordExamples.sortOrder)],
+      },
+      tags: true,
     },
     orderBy: [desc(vocabularyWords.updatedAt)],
   });
 }
 
 export async function getVocabularyWord(id: string) {
-  const userId = await getCurrentUserId();
-  const language = await getWorkplaceLanguage();
+  const workspace = await getActiveWorkspace();
+
+  if (!workspace) {
+    return null;
+  }
 
   const word = await db.query.vocabularyWords.findFirst({
     where: eq(vocabularyWords.id, id),
@@ -39,10 +109,14 @@ export async function getVocabularyWord(id: string) {
       meanings: {
         orderBy: [asc(wordMeanings.sortOrder)],
       },
+      examples: {
+        orderBy: [asc(wordExamples.sortOrder)],
+      },
+      tags: true,
     },
   });
 
-  if (!word || word.userId !== userId || word.language !== language) {
+  if (!word || word.workspaceId !== workspace.id) {
     return null;
   }
 
@@ -52,30 +126,20 @@ export async function getVocabularyWord(id: string) {
 export async function createVocabularyWord(data: VocabularyFormValues) {
   const parsed = vocabularyFormSchema.parse(data);
   const userId = await getCurrentUserId();
-  const language = await getWorkplaceLanguage();
+  const workspace = await requireActiveWorkspace();
 
   const [word] = await db
     .insert(vocabularyWords)
     .values({
       userId,
-      language,
+      workspaceId: workspace.id,
       word: parsed.word,
-      pronunciation: null,
-      ipa: null,
       partOfSpeech: parsed.partOfSpeech || null,
       notes: parsed.notes || null,
     })
     .returning();
 
-  if (parsed.meanings.length > 0) {
-    await db.insert(wordMeanings).values(
-      parsed.meanings.map((meaning, index) => ({
-        wordId: word.id,
-        meaning: meaning.meaning,
-        sortOrder: meaning.sortOrder ?? index,
-      })),
-    );
-  }
+  await replaceWordRelations(word.id, parsed);
 
   revalidatePath("/vocabulary");
   return word;
@@ -86,16 +150,9 @@ export async function updateVocabularyWord(
   data: VocabularyFormValues,
 ) {
   const parsed = vocabularyFormSchema.parse(data);
-  const userId = await getCurrentUserId();
-  const language = await getWorkplaceLanguage();
+  const workspace = await requireActiveWorkspace();
 
-  const existing = await db.query.vocabularyWords.findFirst({
-    where: eq(vocabularyWords.id, id),
-  });
-
-  if (!existing || existing.userId !== userId || existing.language !== language) {
-    throw new Error("Word not found");
-  }
+  await assertWordInWorkspace(id, workspace.id);
 
   await db
     .update(vocabularyWords)
@@ -107,33 +164,15 @@ export async function updateVocabularyWord(
     })
     .where(eq(vocabularyWords.id, id));
 
-  await db.delete(wordMeanings).where(eq(wordMeanings.wordId, id));
-
-  if (parsed.meanings.length > 0) {
-    await db.insert(wordMeanings).values(
-      parsed.meanings.map((meaning, index) => ({
-        wordId: id,
-        meaning: meaning.meaning,
-        sortOrder: meaning.sortOrder ?? index,
-      })),
-    );
-  }
+  await replaceWordRelations(id, parsed);
 
   revalidatePath("/vocabulary");
   revalidatePath(`/vocabulary/${id}`);
 }
 
 export async function deleteVocabularyWord(id: string) {
-  const userId = await getCurrentUserId();
-  const language = await getWorkplaceLanguage();
-
-  const existing = await db.query.vocabularyWords.findFirst({
-    where: eq(vocabularyWords.id, id),
-  });
-
-  if (!existing || existing.userId !== userId || existing.language !== language) {
-    throw new Error("Word not found");
-  }
+  const workspace = await requireActiveWorkspace();
+  await assertWordInWorkspace(id, workspace.id);
 
   await db.delete(vocabularyWords).where(eq(vocabularyWords.id, id));
   revalidatePath("/vocabulary");

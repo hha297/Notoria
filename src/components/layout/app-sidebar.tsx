@@ -8,6 +8,7 @@ import {
   Languages,
   Settings,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 import { Logo, LogoWordmark } from "@/components/ui/logo";
 import {
   Sidebar,
@@ -25,14 +26,16 @@ import {
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { title: "Dashboard", href: "/", icon: Home },
-  { title: "Vocabulary", href: "/vocabulary", icon: Languages },
-  { title: "Exercises", href: "/exercises", icon: Dumbbell },
-  { title: "Settings", href: "/settings", icon: Settings, disabled: true },
-];
+  { titleKey: "dashboard", href: "/", icon: Home },
+  { titleKey: "vocabulary", href: "/vocabulary", icon: Languages },
+  { titleKey: "exercises", href: "/exercises", icon: Dumbbell },
+  { titleKey: "settings", href: "/settings", icon: Settings, disabled: true },
+] as const;
 
 export function AppSidebar() {
   const pathname = usePathname();
+  const t = useTranslations("nav");
+  const td = useTranslations("dashboard");
 
   return (
     <Sidebar
@@ -58,20 +61,20 @@ export function AppSidebar() {
       <SidebarContent>
         <SidebarGroup>
           <SidebarGroupLabel className="text-xs font-semibold uppercase tracking-[0.25px] text-on-dark-muted">
-            Workspace
+            {t("workspace")}
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => (
-                <SidebarMenuItem key={item.title} className="py-0.5">
-                  {item.disabled ? (
+                <SidebarMenuItem key={item.titleKey} className="py-0.5">
+                  {"disabled" in item && item.disabled ? (
                     <SidebarMenuButton
                       disabled
-                      tooltip={item.title}
+                      tooltip={t(item.titleKey)}
                       className="text-on-dark-muted opacity-50"
                     >
                       <item.icon />
-                      <span>{item.title}</span>
+                      <span>{t(item.titleKey)}</span>
                     </SidebarMenuButton>
                   ) : (
                     <SidebarMenuButton
@@ -81,7 +84,7 @@ export function AppSidebar() {
                           ? pathname === "/"
                           : pathname.startsWith(item.href)
                       }
-                      tooltip={item.title}
+                      tooltip={t(item.titleKey)}
                       className={cn(
                         "text-sidebar-foreground transition-colors",
                         "hover:bg-accent-lime/25! hover:text-accent-lime!",
@@ -89,7 +92,7 @@ export function AppSidebar() {
                       )}
                     >
                       <item.icon />
-                      <span className="font-medium">{item.title}</span>
+                      <span className="font-medium">{t(item.titleKey)}</span>
                     </SidebarMenuButton>
                   )}
                 </SidebarMenuItem>
@@ -100,7 +103,7 @@ export function AppSidebar() {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-sidebar-border p-4 text-xs text-on-dark-muted group-data-[collapsible=icon]:hidden">
-        Private language-learning workspace
+        {td("sidebarFooter")}
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

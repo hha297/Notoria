@@ -1,28 +1,48 @@
 import { AppSidebar } from "@/components/layout/app-sidebar";
-import { WorkplaceSelector } from "@/components/layout/workplace-selector";
+import { LocaleSelector } from "@/components/layout/locale-selector";
+import { WorkspaceSelector } from "@/components/layout/workspace-selector";
 import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
   SidebarTrigger,
 } from "@/components/ui/sidebar";
-import { getWorkplaceLanguage } from "@/lib/workplace";
+import { locales, type AppLocale } from "@/i18n/config";
+import { LOCALE_COOKIE } from "@/i18n/request";
+import { getUserWorkspaces, getActiveWorkspace } from "@/lib/workspace";
+import { cookies } from "next/headers";
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  const workplaceLanguage = await getWorkplaceLanguage();
+  const [workspaces, activeWorkspace] = await Promise.all([
+    getUserWorkspaces(),
+    getActiveWorkspace(),
+  ]);
+
+  const cookieStore = await cookies();
+  const localeCookie = cookieStore.get(LOCALE_COOKIE)?.value;
+  const locale =
+    localeCookie && locales.includes(localeCookie as AppLocale)
+      ? (localeCookie as AppLocale)
+      : "en";
 
   return (
     <SidebarProvider>
       <AppSidebar />
       <SidebarInset className="bg-background">
-        <header className="flex h-14 shrink-0 items-center gap-2 border-b border-hairline-cloud bg-background px-6">
+        <header className="flex h-14 shrink-0 items-center gap-3 border-b border-hairline-cloud bg-background px-6">
           <SidebarTrigger className="-ml-1 text-ink" />
-          <Separator orientation="vertical" className="mr-2 h-4" />
-          <WorkplaceSelector value={workplaceLanguage} />
+          <Separator orientation="vertical" className="h-4" />
+          <WorkspaceSelector
+            workspaces={workspaces}
+            activeWorkspaceId={activeWorkspace?.id}
+          />
+          <div className="ml-auto">
+            <LocaleSelector value={locale} />
+          </div>
         </header>
         <main className="flex-1 overflow-auto bg-background px-6 py-8">
           <div className="mx-auto max-w-6xl">{children}</div>

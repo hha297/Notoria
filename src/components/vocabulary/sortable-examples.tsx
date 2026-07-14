@@ -25,18 +25,18 @@ import { Input } from "@/components/ui/input";
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
 
-export type MeaningItem = {
+export type ExampleItem = {
   id: string;
-  meaning: string;
+  sentence: string;
   sortOrder: number;
 };
 
-type SortableMeaningsProps = {
-  meanings: MeaningItem[];
-  onChange: (meanings: MeaningItem[]) => void;
+type SortableExamplesProps = {
+  examples: ExampleItem[];
+  onChange: (examples: ExampleItem[]) => void;
 };
 
-function MeaningRowShell({
+function ExampleRowShell({
   item,
   index,
   onUpdate,
@@ -45,9 +45,9 @@ function MeaningRowShell({
   placeholder,
   dragHandle,
 }: {
-  item: MeaningItem;
+  item: ExampleItem;
   index: number;
-  onUpdate: (id: string, meaning: string) => void;
+  onUpdate: (id: string, sentence: string) => void;
   onRemove: (id: string) => void;
   canRemove: boolean;
   placeholder: string;
@@ -60,7 +60,7 @@ function MeaningRowShell({
         {index + 1}.
       </span>
       <Input
-        value={item.meaning}
+        value={item.sentence}
         onChange={(event) => onUpdate(item.id, event.target.value)}
         placeholder={placeholder}
         className="flex-1"
@@ -71,7 +71,7 @@ function MeaningRowShell({
         size="icon-sm"
         onClick={() => onRemove(item.id)}
         disabled={!canRemove}
-        aria-label="Remove meaning"
+        aria-label="Remove example"
       >
         <Trash2 className="size-4" />
       </Button>
@@ -79,7 +79,7 @@ function MeaningRowShell({
   );
 }
 
-function SortableMeaningRow({
+function SortableExampleRow({
   item,
   index,
   onUpdate,
@@ -87,9 +87,9 @@ function SortableMeaningRow({
   canRemove,
   placeholder,
 }: {
-  item: MeaningItem;
+  item: ExampleItem;
   index: number;
-  onUpdate: (id: string, meaning: string) => void;
+  onUpdate: (id: string, sentence: string) => void;
   onRemove: (id: string) => void;
   canRemove: boolean;
   placeholder: string;
@@ -112,7 +112,7 @@ function SortableMeaningRow({
       }}
       className={cn(isDragging && "opacity-60 shadow-md")}
     >
-      <MeaningRowShell
+      <ExampleRowShell
         item={item}
         index={index}
         onUpdate={onUpdate}
@@ -135,7 +135,10 @@ function SortableMeaningRow({
   );
 }
 
-export function SortableMeanings({ meanings, onChange }: SortableMeaningsProps) {
+export function SortableExamples({
+  examples,
+  onChange,
+}: SortableExamplesProps) {
   const mounted = useMounted();
   const t = useTranslations("vocabulary");
   const sensors = useSensors(
@@ -149,40 +152,42 @@ export function SortableMeanings({ meanings, onChange }: SortableMeaningsProps) 
     const { active, over } = event;
     if (!over || active.id === over.id) return;
 
-    const oldIndex = meanings.findIndex((item) => item.id === active.id);
-    const newIndex = meanings.findIndex((item) => item.id === over.id);
-    const reordered = arrayMove(meanings, oldIndex, newIndex).map(
-      (item, index) => ({
+    const oldIndex = examples.findIndex((item) => item.id === active.id);
+    const newIndex = examples.findIndex((item) => item.id === over.id);
+    onChange(
+      arrayMove(examples, oldIndex, newIndex).map((item, index) => ({
         ...item,
         sortOrder: index,
-      }),
+      })),
     );
-
-    onChange(reordered);
   }
 
-  function addMeaning() {
+  function addExample() {
     onChange([
-      ...meanings,
+      ...examples,
       {
         id: crypto.randomUUID(),
-        meaning: "",
-        sortOrder: meanings.length,
+        sentence: "",
+        sortOrder: examples.length,
       },
     ]);
   }
 
-  function updateMeaning(id: string, meaning: string) {
+  function updateExample(id: string, sentence: string) {
     onChange(
-      meanings.map((item) =>
-        item.id === id ? { ...item, meaning } : item,
+      examples.map((item) =>
+        item.id === id ? { ...item, sentence } : item,
       ),
     );
   }
 
-  function removeMeaning(id: string) {
+  function removeExample(id: string) {
+    if (examples.length <= 1) {
+      return;
+    }
+
     onChange(
-      meanings
+      examples
         .filter((item) => item.id !== id)
         .map((item, index) => ({ ...item, sortOrder: index })),
     );
@@ -190,26 +195,26 @@ export function SortableMeanings({ meanings, onChange }: SortableMeaningsProps) 
 
   const list = (
     <div className="space-y-2">
-      {meanings.map((item, index) =>
+      {examples.map((item, index) =>
         mounted ? (
-          <SortableMeaningRow
+          <SortableExampleRow
             key={item.id}
             item={item}
             index={index}
-            onUpdate={updateMeaning}
-            onRemove={removeMeaning}
-            canRemove={meanings.length > 1}
-            placeholder={t("meaningPlaceholder")}
+            onUpdate={updateExample}
+            onRemove={removeExample}
+            canRemove={examples.length > 1}
+            placeholder={t("examplePlaceholder")}
           />
         ) : (
-          <MeaningRowShell
+          <ExampleRowShell
             key={item.id}
             item={item}
             index={index}
-            onUpdate={updateMeaning}
-            onRemove={removeMeaning}
-            canRemove={meanings.length > 1}
-            placeholder={t("meaningPlaceholder")}
+            onUpdate={updateExample}
+            onRemove={removeExample}
+            canRemove={examples.length > 1}
+            placeholder={t("examplePlaceholder")}
             dragHandle={
               <span className="rounded-md p-1 text-muted-foreground">
                 <GripVertical className="size-4" />
@@ -224,22 +229,22 @@ export function SortableMeanings({ meanings, onChange }: SortableMeaningsProps) 
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between">
-        <label className="text-sm font-medium">{t("meanings")}</label>
-        <Button type="button" variant="outline" size="sm" onClick={addMeaning}>
+        <label className="text-sm font-medium">{t("examples")}</label>
+        <Button type="button" variant="outline" size="sm" onClick={addExample}>
           <Plus className="size-4" />
-          {t("addMeaning")}
+          {t("addExample")}
         </Button>
       </div>
 
       {mounted ? (
         <DndContext
-          id="vocabulary-meanings"
+          id="vocabulary-examples"
           sensors={sensors}
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}
         >
           <SortableContext
-            items={meanings.map((item) => item.id)}
+            items={examples.map((item) => item.id)}
             strategy={verticalListSortingStrategy}
           >
             {list}
