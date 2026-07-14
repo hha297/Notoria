@@ -9,11 +9,20 @@ import { Input } from "@/components/ui/input";
 import {
   Select,
   SelectContent,
+  SelectGroup,
   SelectItem,
+  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { getTagLabel, PARTS_OF_SPEECH } from "@/lib/vocabulary-tags";
+import {
+  BUILTIN_TAG_GROUPS,
+  getCustomTagName,
+  getTagLabel,
+  isCustomTagKey,
+  PARTS_OF_SPEECH,
+  type TagGroupKey,
+} from "@/lib/vocabulary-tags";
 import { VocabularyRowActions } from "@/components/vocabulary/vocabulary-row-actions";
 
 export type VocabularyWordRow = {
@@ -42,15 +51,27 @@ export function VocabularyTable({ words }: VocabularyTableProps) {
   const [sortField, setSortField] = useState<SortField>("updated");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
 
-  const tagOptions = useMemo(() => {
+  const customTagOptions = useMemo(() => {
     const seen = new Set<string>();
     for (const word of words) {
       for (const tag of word.tags) {
-        seen.add(tag.tag);
+        if (isCustomTagKey(tag.tag)) {
+          seen.add(tag.tag);
+        }
       }
     }
-    return Array.from(seen).sort();
+
+    return Array.from(seen).sort((a, b) =>
+      getCustomTagName(a).localeCompare(getCustomTagName(b)),
+    );
   }, [words]);
+
+  const tagFilterGroups: TagGroupKey[] = [
+    "difficulty",
+    "topic",
+    "grammar",
+    "learningStatus",
+  ];
 
   const filteredWords = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -155,7 +176,9 @@ export function VocabularyTable({ words }: VocabularyTableProps) {
           <Select value={partOfSpeechFilter} onValueChange={(value) => value && setPartOfSpeechFilter(value)}>
             <SelectTrigger size="sm" className="min-w-[160px]">
               <SelectValue placeholder={t("filterPartOfSpeech")}>
-                {getPartOfSpeechFilterLabel(partOfSpeechFilter)}
+                {partOfSpeechFilter === "all"
+                  ? t("filterPartOfSpeech")
+                  : getPartOfSpeechFilterLabel(partOfSpeechFilter)}
               </SelectValue>
             </SelectTrigger>
             <SelectContent>
@@ -170,17 +193,36 @@ export function VocabularyTable({ words }: VocabularyTableProps) {
 
           <Select value={tagFilter} onValueChange={(value) => value && setTagFilter(value)}>
             <SelectTrigger size="sm" className="min-w-[140px]">
-              <SelectValue placeholder={t("filterTag")}>
-                {getTagFilterLabel(tagFilter)}
+              <SelectValue placeholder={t("columns.tags")}>
+                {tagFilter === "all"
+                  ? t("columns.tags")
+                  : getTagFilterLabel(tagFilter)}
               </SelectValue>
             </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">{t("filterAll")}</SelectItem>
-              {tagOptions.map((tag) => (
-                <SelectItem key={tag} value={tag}>
-                  {getTagLabel(tag, (key) => tTags(key))}
-                </SelectItem>
+            <SelectContent className="max-h-80 min-w-56">
+              <SelectGroup>
+                <SelectItem value="all">{t("filterAll")}</SelectItem>
+              </SelectGroup>
+              {tagFilterGroups.map((group) => (
+                <SelectGroup key={group}>
+                  <SelectLabel>{tTags(`groups.${group}`)}</SelectLabel>
+                  {BUILTIN_TAG_GROUPS[group].map((tag) => (
+                    <SelectItem key={tag.id} value={tag.id}>
+                      {tTags(`${group}.${tag.id}`)}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
               ))}
+              {customTagOptions.length > 0 && (
+                <SelectGroup>
+                  <SelectLabel>{tTags("groups.custom")}</SelectLabel>
+                  {customTagOptions.map((tag) => (
+                    <SelectItem key={tag} value={tag}>
+                      {getCustomTagName(tag)}
+                    </SelectItem>
+                  ))}
+                </SelectGroup>
+              )}
             </SelectContent>
           </Select>
 
