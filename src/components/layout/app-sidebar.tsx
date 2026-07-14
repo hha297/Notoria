@@ -23,6 +23,7 @@ import {
   SidebarMenuItem,
   SidebarRail,
 } from "@/components/ui/sidebar";
+import { UserButton } from "@/components/layout/user-button";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -32,10 +33,14 @@ const navItems = [
   { titleKey: "settings", href: "/settings", icon: Settings, disabled: true },
 ] as const;
 
-export function AppSidebar() {
+type AppSidebarProps = {
+  userName: string;
+  userEmail: string;
+};
+
+export function AppSidebar({ userName, userEmail }: AppSidebarProps) {
   const pathname = usePathname();
   const t = useTranslations("nav");
-  const td = useTranslations("dashboard");
 
   return (
     <Sidebar
@@ -53,7 +58,7 @@ export function AppSidebar() {
           <Logo className="hidden group-data-[collapsible=icon]:block" />
           <div className="flex min-w-0 items-center gap-2.5 group-data-[collapsible=icon]:hidden">
             <Logo />
-            <LogoWordmark />
+            <LogoWordmark tone="sidebar" />
           </div>
         </Link>
       </SidebarHeader>
@@ -102,8 +107,8 @@ export function AppSidebar() {
         </SidebarGroup>
       </SidebarContent>
 
-      <SidebarFooter className="border-t border-sidebar-border p-4 text-xs text-on-dark-muted group-data-[collapsible=icon]:hidden">
-        {td("sidebarFooter")}
+      <SidebarFooter className="border-t border-sidebar-border p-3">
+        <UserButton name={userName} email={userEmail} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

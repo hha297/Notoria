@@ -194,5 +194,29 @@
     "generic": "Đã xảy ra lỗi",
     "noWorkspace": "Chưa có không gian học",
     "notFound": "Không tìm thấy"
+  },
+  "auth": {
+    "welcomeBack": "Chào mừng trở lại",
+    "signInDescription": "Đăng nhập vào tài khoản Notoria của bạn",
+    "createAccountTitle": "Tạo tài khoản",
+    "registerDescription": "Bắt đầu học với không gian riêng của bạn",
+    "email": "Email",
+    "password": "Mật khẩu",
+    "name": "Tên",
+    "signIn": "Đăng nhập",
+    "signOut": "Đăng xuất",
+    "createAccount": "Tạo tài khoản",
+    "noAccount": "Chưa có tài khoản?",
+    "hasAccount": "Đã có tài khoản?",
+    "invalidCredentials": "Email hoặc mật khẩu không đúng",
+    "emailExists": "Email này đã được sử dụng",
+    "registerFailed": "Không thể tạo tài khoản. Vui lòng thử lại.",
+    "signInAfterRegisterFailed": "Tài khoản đã tạo. Vui lòng đăng nhập.",
+    "passwordHint": "Ít nhất 8 ký tự",
+    "showPassword": "Hiện mật khẩu",
+    "hidePassword": "Ẩn mật khẩu",
+    "account": "Tài khoản",
+    "accountSettings": "Cài đặt tài khoản",
+    "accountDescription": "Hồ sơ và thông tin đăng nhập của bạn"
   }
 }

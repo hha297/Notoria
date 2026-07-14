@@ -10,6 +10,7 @@ import {
 import { locales, type AppLocale } from "@/i18n/config";
 import { LOCALE_COOKIE } from "@/i18n/request";
 import { getUserWorkspaces, getActiveWorkspace } from "@/lib/workspace";
+import { getSession } from "@/lib/auth/session";
 import { cookies } from "next/headers";
 
 export default async function DashboardLayout({
@@ -17,9 +18,10 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [workspaces, activeWorkspace] = await Promise.all([
+  const [workspaces, activeWorkspace, session] = await Promise.all([
     getUserWorkspaces(),
     getActiveWorkspace(),
+    getSession(),
   ]);
 
   const cookieStore = await cookies();
@@ -31,7 +33,10 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
-      <AppSidebar />
+      <AppSidebar
+        userName={session?.user?.name ?? "User"}
+        userEmail={session?.user?.email ?? ""}
+      />
       <SidebarInset className="bg-background">
         <header className="flex h-14 shrink-0 items-center gap-3 border-b border-hairline-cloud bg-background px-6">
           <SidebarTrigger className="-ml-1 text-ink" />

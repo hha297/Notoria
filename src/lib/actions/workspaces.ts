@@ -10,7 +10,7 @@ import {
   workspaceTags,
   workspaces,
 } from "@/db/schema";
-import { getCurrentUserId } from "@/lib/auth/demo-user";
+import { getCurrentUserId } from "@/lib/auth/session";
 import { isValidLanguageCode } from "@/lib/languages";
 import { customTagKey } from "@/lib/vocabulary-tags";
 import { resolveWorkspaceName } from "@/lib/workspace-names";

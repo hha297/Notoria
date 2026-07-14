@@ -3,6 +3,7 @@ import { cn } from "@/lib/utils";
 
 type LogoProps = {
   className?: string;
+  size?: "sm" | "md";
 };
 
 function LogoFrame({
@@ -21,27 +22,42 @@ function LogoFrame({
   );
 }
 
-export function Logo({ className }: LogoProps) {
+const logoSizes = {
+  sm: { frame: "size-6", image: 24 },
+  md: { frame: "size-9", image: 36 },
+} as const;
+
+export function Logo({ className, size = "sm" }: LogoProps) {
+  const dimensions = logoSizes[size];
+
   return (
-    <LogoFrame className={className}>
+    <LogoFrame className={cn(dimensions.frame, className)}>
       <Image
         src="/logo.png"
         alt="Notoria"
-        width={24}
-        height={24}
-        className="size-6"
+        width={dimensions.image}
+        height={dimensions.image}
+        className="size-full"
         priority
       />
     </LogoFrame>
   );
 }
 
+type LogoWordmarkProps = LogoProps & {
+  /** `ink` for light backgrounds; `sidebar` for the dark sidebar */
+  tone?: "ink" | "sidebar";
+};
 
-export function LogoWordmark({ className }: LogoProps) {
+export function LogoWordmark({
+  className,
+  tone = "sidebar",
+}: LogoWordmarkProps) {
   return (
     <span
       className={cn(
-        "font-heading text-2xl font-medium tracking-[-0.03em] text-sidebar-foreground",
+        "font-heading text-2xl font-medium tracking-[-0.03em]",
+        tone === "sidebar" ? "text-sidebar-foreground" : "text-ink",
         className,
       )}
     >

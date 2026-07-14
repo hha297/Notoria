@@ -239,7 +239,7 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
                   )
                 }
               >
-                <SelectTrigger className="h-10 w-full">
+                <SelectTrigger className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!">
                   <SelectValue placeholder={t("partOfSpeechPlaceholder")}>
                     {selectedPartOfSpeech &&
                     PARTS_OF_SPEECH.includes(

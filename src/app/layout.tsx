@@ -5,6 +5,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryProvider } from "@/components/providers/query-provider";
+import { AuthSessionProvider } from "@/components/providers/auth-session-provider";
 import "./globals.css";
 
 const chakraPetch = Chakra_Petch({
@@ -43,12 +44,14 @@ export default async function RootLayout({
         suppressHydrationWarning
       >
         <NextIntlClientProvider messages={messages}>
-          <QueryProvider>
-            <TooltipProvider>
-              {children}
-              <Toaster richColors position="top-right" />
-            </TooltipProvider>
-          </QueryProvider>
+          <AuthSessionProvider>
+            <QueryProvider>
+              <TooltipProvider>
+                {children}
+                <Toaster richColors position="top-right" />
+              </TooltipProvider>
+            </QueryProvider>
+          </AuthSessionProvider>
         </NextIntlClientProvider>
       </body>
     </html>

@@ -2,7 +2,7 @@ import { cookies } from "next/headers";
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { workspaces } from "@/db/schema";
-import { getCurrentUserId } from "@/lib/auth/demo-user";
+import { getCurrentUserId } from "@/lib/auth/session";
 
 export const WORKSPACE_COOKIE = "notoria-workspace";
 
