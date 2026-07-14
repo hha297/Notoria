@@ -153,7 +153,63 @@
     "studio": "studio",
     "saved": "Bài tập đã lưu",
     "description": "Chọn kiểu thẻ cho bài tập mới.",
-    "updated": "Cập nhật"
+    "updated": "Cập nhật",
+    "backToStudio": "Quay lại bài tập"
+  },
+  "flashcards": {
+    "title": "Flashcards",
+    "mode": "học",
+    "description": "Học từ vựng với thẻ lật mượt, phím tắt và đánh giá lặp lại ngắt quãng.",
+    "noWorkspace": "Tạo workspace trước khi bắt đầu học flashcards.",
+    "emptyTitle": "Chưa có từ vựng",
+    "emptyDescription": "Thêm từ vào workspace trước, rồi quay lại để học với flashcards.",
+    "addWords": "Thêm từ",
+    "noFilteredCards": "Không có thẻ nào khớp bộ lọc. Hãy điều chỉnh bộ lọc để tiếp tục.",
+    "studyMode": "Chế độ học",
+    "modes": {
+      "wordToMeaning": "Từ → Nghĩa",
+      "meaningToWord": "Nghĩa → Từ",
+      "mixed": "Hỗn hợp"
+    },
+    "filterStatus": "Trạng thái học",
+    "status": {
+      "NEW": "Mới",
+      "LEARNING": "Đang học",
+      "REVIEW": "Ôn tập",
+      "MASTERED": "Đã thuộc"
+    },
+    "questionWord": "Nghĩa là gì?",
+    "questionMeaning": "Từ nào khớp với nghĩa này?",
+    "answer": "Đáp án",
+    "tapToFlip": "Chạm hoặc nhấn Space để lật",
+    "showAnswer": "Xem đáp án",
+    "hideAnswer": "Ẩn đáp án",
+    "flip": "Lật thẻ",
+    "previous": "Trước",
+    "next": "Tiếp",
+    "shuffle": "Xáo trộn",
+    "restart": "Học lại",
+    "progress": "{current} / {total}",
+    "keyboardHint": "Space lật · ← → điều hướng",
+    "meanings": "Nghĩa",
+    "examples": "Ví dụ",
+    "notes": "Ghi chú",
+    "noMeaning": "Chưa có nghĩa",
+    "ratePrompt": "Bạn nhớ mức nào?",
+    "ratings": {
+      "AGAIN": "Lại",
+      "HARD": "Khó",
+      "GOOD": "Tốt",
+      "EASY": "Dễ"
+    },
+    "ratingHints": {
+      "AGAIN": "< 1 phút",
+      "HARD": "Sớm",
+      "GOOD": "Tốt",
+      "EASY": "Dễ"
+    },
+    "sessionComplete": "Hoàn thành phiên — bắt đầu vòng mới",
+    "ratingFailed": "Không thể lưu đánh giá"
   },
   "dashboard": {
     "overview": "Tổng quan",
