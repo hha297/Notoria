@@ -95,6 +95,20 @@ function createDefaultExamples(): ExampleItem[] {
   ];
 }
 
+function getInitialExamples(
+  examples?: Array<{ id: string; sentence: string; sortOrder: number }>,
+): ExampleItem[] {
+  if (!examples?.length) {
+    return createDefaultExamples();
+  }
+
+  return examples.map((example) => ({
+    id: example.id,
+    sentence: example.sentence,
+    sortOrder: example.sortOrder,
+  }));
+}
+
 function getInitialSessionCustomTags(
   tags: Array<{ tag: string }> | undefined,
 ): string[] {
@@ -121,12 +135,8 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
       sortOrder: meaning.sortOrder,
     })) ?? createDefaultMeanings(),
   );
-  const [examples, setExamples] = useState<ExampleItem[]>(
-    initialData?.examples.map((example) => ({
-      id: example.id,
-      sentence: example.sentence,
-      sortOrder: example.sortOrder,
-    })) ?? createDefaultExamples(),
+  const [examples, setExamples] = useState<ExampleItem[]>(() =>
+    getInitialExamples(initialData?.examples),
   );
   const [tags, setTags] = useState<string[]>(
     initialData?.tags.map((tag) => tag.tag) ?? [],

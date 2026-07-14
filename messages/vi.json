@@ -153,8 +153,112 @@
     "studio": "studio",
     "saved": "Bài tập đã lưu",
     "description": "Chọn kiểu thẻ cho bài tập mới.",
+    "studioDescription": "Luyện tập từ vựng trong workspace với sáu chế độ — tất cả được tạo từ từ vựng của bạn.",
+    "practice": "luyện tập",
+    "editor": "soạn thảo",
+    "edit": "Chỉnh sửa",
+    "editDescription": "Thay đổi tự lưu sau lần lưu đầu tiên.",
+    "noWorkspace": "Tạo workspace trước khi bắt đầu bài tập.",
     "updated": "Cập nhật",
-    "backToStudio": "Quay lại bài tập"
+    "backToStudio": "Quay lại bài tập",
+    "studyMode": "Chế độ học",
+    "types": {
+      "flashcard": {
+        "label": "Flashcards",
+        "description": "Lật thẻ để học từ và nghĩa với đánh giá lặp lại ngắt quãng.",
+        "preview": "Lật · Đánh giá · Ôn"
+      },
+      "writing": {
+        "label": "Viết",
+        "description": "Tạo đề bài viết và bài luyện tập trong trình soạn thảo.",
+        "preview": "Đề · Nháp · Lưu",
+        "pageDescription": "Viết đề bài, câu hỏi và bài luyện tập trong trình soạn thảo."
+      },
+      "fill-in-blank": {
+        "label": "Điền vào chỗ trống",
+        "description": "Hoàn thành câu ví dụ với từ vựng còn thiếu.",
+        "preview": "Minulla on uusi ______."
+      },
+      "multiple-choice": {
+        "label": "Trắc nghiệm",
+        "description": "Chọn nghĩa hoặc từ đúng — đáp án nhiễu lấy từ từ vựng của bạn.",
+        "preview": "Nghĩa nào đúng?"
+      },
+      "match-pairs": {
+        "label": "Ghép cặp",
+        "description": "Ghép mỗi từ với nghĩa tương ứng kiểu Quizlet.",
+        "preview": "Từ ↔ Nghĩa"
+      },
+      "type-answer": {
+        "label": "Gõ đáp án",
+        "description": "Gõ từ hoặc nghĩa còn thiếu và nhận phản hồi ngay.",
+        "preview": "Gõ đáp án…"
+      }
+    },
+    "empty": {
+      "noWordsTitle": "Chưa có từ vựng",
+      "noWordsDescription": "Thêm từ vào workspace trước, rồi quay lại để luyện tập.",
+      "addWords": "Thêm từ",
+      "noMeaningsTitle": "Chưa có nghĩa để luyện tập",
+      "noMeaningsDescription": "Thêm ít nhất một nghĩa cho từ vựng để dùng bài tập này.",
+      "noExamplesTitle": "Chưa có câu ví dụ",
+      "noExamplesDescription": "Thêm câu ví dụ có chứa từ vựng để tạo câu điền chỗ trống.",
+      "editVocabulary": "Sửa từ vựng",
+      "needMoreWordsTitle": "Cần thêm từ vựng",
+      "needMoreWordsDescription": "Thêm ít nhất {count} từ có nghĩa trong workspace để dùng bài tập này.",
+      "noFiltered": "Không có từ nào khớp bộ lọc. Hãy thử điều chỉnh bộ lọc."
+    },
+    "fillInBlank": {
+      "prompt": "Điền vào chỗ trống",
+      "hint": "Gợi ý",
+      "correct": "Đúng!",
+      "incorrect": "Đáp án là {answer}",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} đúng",
+      "keyboardHint": "Enter để kiểm tra · Enter lần nữa để tiếp",
+      "previous": "Trước",
+      "next": "Tiếp",
+      "check": "Kiểm tra",
+      "shuffle": "Xáo trộn",
+      "finish": "Hoàn thành vòng"
+    },
+    "multipleChoice": {
+      "questionWord": "Nghĩa của từ này là gì?",
+      "questionMeaning": "Từ nào khớp với nghĩa này?",
+      "correct": "Đúng!",
+      "incorrect": "Đáp án đúng: {answer}",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} đúng",
+      "previous": "Trước",
+      "next": "Tiếp",
+      "shuffle": "Xáo trộn câu hỏi",
+      "finish": "Hoàn thành vòng"
+    },
+    "matchPairs": {
+      "words": "Từ",
+      "meanings": "Nghĩa",
+      "progress": "Đã ghép {matched} / {total}",
+      "hint": "Chọn một từ, rồi chạm vào nghĩa tương ứng",
+      "complete": "Đã ghép hết — làm tốt lắm!",
+      "shuffle": "Xáo trộn cột"
+    },
+    "typeAnswer": {
+      "questionWord": "Nghĩa là gì?",
+      "questionMeaning": "Từ nào khớp với nghĩa này?",
+      "placeholder": "Gõ đáp án…",
+      "yourAnswer": "Đáp án của bạn",
+      "correctAnswer": "Đáp án đúng",
+      "correct": "Đúng!",
+      "incorrect": "Chưa đúng — xem đáp án ở trên",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} đúng",
+      "keyboardHint": "Enter để kiểm tra · Enter lần nữa để tiếp",
+      "previous": "Trước",
+      "next": "Tiếp",
+      "check": "Kiểm tra",
+      "shuffle": "Xáo trộn",
+      "finish": "Hoàn thành vòng"
+    }
   },
   "flashcards": {
     "title": "Flashcards",

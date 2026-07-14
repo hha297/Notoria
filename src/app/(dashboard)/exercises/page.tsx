@@ -36,7 +36,7 @@ export default async function ExercisesPage() {
         eyebrow={t("title")}
         title={t("title")}
         highlight={t("studio")}
-        description="Pick a card style for your new exercise."
+        description={t("studioDescription")}
       />
 
       <ExerciseTypePicker />

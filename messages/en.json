@@ -153,8 +153,112 @@
     "studio": "studio",
     "saved": "Saved exercises",
     "description": "Pick a card style for your new exercise.",
+    "studioDescription": "Practice vocabulary from your active workspace with six study modes — all generated from your own words.",
+    "practice": "practice",
+    "editor": "editor",
+    "edit": "Edit",
+    "editDescription": "Changes autosave after the first save.",
+    "noWorkspace": "Create a workspace before starting exercises.",
     "updated": "Updated",
-    "backToStudio": "Back to exercises"
+    "backToStudio": "Back to exercises",
+    "studyMode": "Study mode",
+    "types": {
+      "flashcard": {
+        "label": "Flashcards",
+        "description": "Flip cards to study words and meanings with spaced-repetition ratings.",
+        "preview": "Flip · Rate · Review"
+      },
+      "writing": {
+        "label": "Writing",
+        "description": "Create rich writing prompts and practice tasks in the editor.",
+        "preview": "Prompt · Draft · Save",
+        "pageDescription": "Write prompts, questions, and practice tasks in the rich editor."
+      },
+      "fill-in-blank": {
+        "label": "Fill in the Blank",
+        "description": "Complete example sentences with the missing vocabulary word.",
+        "preview": "Minulla on uusi ______."
+      },
+      "multiple-choice": {
+        "label": "Multiple Choice",
+        "description": "Pick the correct meaning or word — distractors come from your vocabulary.",
+        "preview": "Which meaning fits?"
+      },
+      "match-pairs": {
+        "label": "Match Pairs",
+        "description": "Match each word to its meaning in a Quizlet-style grid.",
+        "preview": "Word ↔ Meaning"
+      },
+      "type-answer": {
+        "label": "Type the Answer",
+        "description": "Type the missing word or meaning and get instant feedback.",
+        "preview": "Type your answer…"
+      }
+    },
+    "empty": {
+      "noWordsTitle": "No vocabulary yet",
+      "noWordsDescription": "Add words to your workspace first, then come back to practice.",
+      "addWords": "Add words",
+      "noMeaningsTitle": "No meanings to practice",
+      "noMeaningsDescription": "Add at least one meaning to your vocabulary words to use this exercise.",
+      "noExamplesTitle": "No example sentences yet",
+      "noExamplesDescription": "Add example sentences that include the vocabulary word to generate fill-in-the-blank questions.",
+      "editVocabulary": "Edit vocabulary",
+      "needMoreWordsTitle": "Need more vocabulary",
+      "needMoreWordsDescription": "Add at least {count} words with meanings in this workspace to use this exercise.",
+      "noFiltered": "No words match your filters. Try adjusting them to continue."
+    },
+    "fillInBlank": {
+      "prompt": "Fill in the blank",
+      "hint": "Hint",
+      "correct": "Correct!",
+      "incorrect": "The answer is {answer}",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} correct",
+      "keyboardHint": "Enter to check · Enter again for next",
+      "previous": "Previous",
+      "next": "Next",
+      "check": "Check",
+      "shuffle": "Shuffle",
+      "finish": "Finish round"
+    },
+    "multipleChoice": {
+      "questionWord": "What is the meaning of this word?",
+      "questionMeaning": "Which word matches this meaning?",
+      "correct": "Correct!",
+      "incorrect": "Correct answer: {answer}",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} correct",
+      "previous": "Previous",
+      "next": "Next",
+      "shuffle": "Shuffle questions",
+      "finish": "Finish round"
+    },
+    "matchPairs": {
+      "words": "Words",
+      "meanings": "Meanings",
+      "progress": "{matched} / {total} matched",
+      "hint": "Select a word, then tap its meaning",
+      "complete": "All pairs matched — great job!",
+      "shuffle": "Shuffle columns"
+    },
+    "typeAnswer": {
+      "questionWord": "What is the meaning?",
+      "questionMeaning": "Which word matches this meaning?",
+      "placeholder": "Type your answer…",
+      "yourAnswer": "Your answer",
+      "correctAnswer": "Correct answer",
+      "correct": "Correct!",
+      "incorrect": "Not quite — see the correct answer above",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} correct",
+      "keyboardHint": "Enter to check · Enter again for next",
+      "previous": "Previous",
+      "next": "Next",
+      "check": "Check",
+      "shuffle": "Shuffle",
+      "finish": "Finish round"
+    }
   },
   "flashcards": {
     "title": "Flashcards",
