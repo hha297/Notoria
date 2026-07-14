@@ -153,7 +153,63 @@
     "studio": "studio",
     "saved": "Tallennetut harjoitukset",
     "description": "Valitse korttityyli uudelle harjoitukselle.",
-    "updated": "Päivitetty"
+    "updated": "Päivitetty",
+    "backToStudio": "Takaisin harjoituksiin"
+  },
+  "flashcards": {
+    "title": "Muistikortit",
+    "mode": "tila",
+    "description": "Opettele sanastoa sujuvilla käännöskorteilla, pikanäppäimillä ja toistoväleillä.",
+    "noWorkspace": "Luo työtila ennen muistikorttiopiskelua.",
+    "emptyTitle": "Ei sanastoa vielä",
+    "emptyDescription": "Lisää sanoja työtilaan ensin, palaa sitten opiskelemaan muistikorteilla.",
+    "addWords": "Lisää sanoja",
+    "noFilteredCards": "Yksikään kortti ei vastaa suodattimia. Säädä suodattimia jatkaaksesi.",
+    "studyMode": "Opiskelutila",
+    "modes": {
+      "wordToMeaning": "Sana → Merkitys",
+      "meaningToWord": "Merkitys → Sana",
+      "mixed": "Sekoitettu"
+    },
+    "filterStatus": "Opiskelun tila",
+    "status": {
+      "NEW": "Uusi",
+      "LEARNING": "Opetellaan",
+      "REVIEW": "Kerrattava",
+      "MASTERED": "Hallittu"
+    },
+    "questionWord": "Mikä on merkitys?",
+    "questionMeaning": "Mikä sana vastaa tätä merkitystä?",
+    "answer": "Vastaus",
+    "tapToFlip": "Napauta tai paina välilyöntiä kääntääksesi",
+    "showAnswer": "Näytä vastaus",
+    "hideAnswer": "Piilota vastaus",
+    "flip": "Käännä",
+    "previous": "Edellinen",
+    "next": "Seuraava",
+    "shuffle": "Sekoita",
+    "restart": "Aloita alusta",
+    "progress": "{current} / {total}",
+    "keyboardHint": "Välilyönti kääntää · ← → navigoi",
+    "meanings": "Merkitykset",
+    "examples": "Esimerkit",
+    "notes": "Muistiinpanot",
+    "noMeaning": "Ei merkitystä vielä",
+    "ratePrompt": "Kuinka hyvin muistit?",
+    "ratings": {
+      "AGAIN": "Uudelleen",
+      "HARD": "Vaikea",
+      "GOOD": "Hyvä",
+      "EASY": "Helppo"
+    },
+    "ratingHints": {
+      "AGAIN": "< 1 min",
+      "HARD": "Pian",
+      "GOOD": "Hyvä",
+      "EASY": "Helppo"
+    },
+    "sessionComplete": "Sessio valmis — aloitetaan uusi kierros",
+    "ratingFailed": "Arviota ei voitu tallentaa"
   },
   "dashboard": {
     "overview": "Yleiskatsaus",

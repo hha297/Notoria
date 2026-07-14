@@ -34,6 +34,18 @@ export const exerciseTypeEnum = pgEnum("exercise_type", [
   "GRAMMAR_DRILL",
 ]);
 
+export const flashcardRatingEnum = pgEnum("flashcard_rating", [
+  "AGAIN",
+  "HARD",
+  "GOOD",
+  "EASY",
+]);
+
+export const flashcardStudyDirectionEnum = pgEnum("flashcard_study_direction", [
+  "WORD_TO_MEANING",
+  "MEANING_TO_WORD",
+]);
+
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
@@ -144,6 +156,54 @@ export const vocabularyWordTags = pgTable("vocabulary_word_tags", {
   tag: text("tag").notNull(),
 });
 
+export const flashcardReviews = pgTable("flashcard_reviews", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  wordId: uuid("word_id")
+    .notNull()
+    .references(() => vocabularyWords.id, { onDelete: "cascade" }),
+  workspaceId: uuid("workspace_id")
+    .notNull()
+    .references(() => workspaces.id, { onDelete: "cascade" }),
+  rating: flashcardRatingEnum("rating").notNull(),
+  direction: flashcardStudyDirectionEnum("direction").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+export const flashcardProgress = pgTable(
+  "flashcard_progress",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    wordId: uuid("word_id")
+      .notNull()
+      .references(() => vocabularyWords.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    lastRating: flashcardRatingEnum("last_rating"),
+    easeFactor: integer("ease_factor").notNull().default(250),
+    intervalDays: integer("interval_days").notNull().default(0),
+    repetitions: integer("repetitions").notNull().default(0),
+    nextReviewAt: timestamp("next_review_at", { withTimezone: true }),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("flashcard_progress_user_word_unique").on(
+      table.userId,
+      table.wordId,
+    ),
+  ],
+);
+
 export const exercises = pgTable("exercises", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: uuid("user_id")
@@ -247,6 +307,39 @@ export const vocabularyWordTagsRelations = relations(
   }),
 );
 
+export const flashcardReviewsRelations = relations(flashcardReviews, ({ one }) => ({
+  user: one(users, {
+    fields: [flashcardReviews.userId],
+    references: [users.id],
+  }),
+  word: one(vocabularyWords, {
+    fields: [flashcardReviews.wordId],
+    references: [vocabularyWords.id],
+  }),
+  workspace: one(workspaces, {
+    fields: [flashcardReviews.workspaceId],
+    references: [workspaces.id],
+  }),
+}));
+
+export const flashcardProgressRelations = relations(
+  flashcardProgress,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [flashcardProgress.userId],
+      references: [users.id],
+    }),
+    word: one(vocabularyWords, {
+      fields: [flashcardProgress.wordId],
+      references: [vocabularyWords.id],
+    }),
+    workspace: one(workspaces, {
+      fields: [flashcardProgress.workspaceId],
+      references: [workspaces.id],
+    }),
+  }),
+);
+
 export const exercisesRelations = relations(exercises, ({ one }) => ({
   user: one(users, {
     fields: [exercises.userId],
@@ -275,4 +368,6 @@ export type WorkspaceTag = typeof workspaceTags.$inferSelect;
 export type VocabularyWord = typeof vocabularyWords.$inferSelect;
 export type WordMeaning = typeof wordMeanings.$inferSelect;
 export type WordExample = typeof wordExamples.$inferSelect;
+export type FlashcardReview = typeof flashcardReviews.$inferSelect;
+export type FlashcardProgress = typeof flashcardProgress.$inferSelect;
 export type Exercise = typeof exercises.$inferSelect;

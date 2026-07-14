@@ -153,7 +153,63 @@
     "studio": "studio",
     "saved": "Saved exercises",
     "description": "Pick a card style for your new exercise.",
-    "updated": "Updated"
+    "updated": "Updated",
+    "backToStudio": "Back to exercises"
+  },
+  "flashcards": {
+    "title": "Flashcards",
+    "mode": "mode",
+    "description": "Study vocabulary with smooth flip cards, keyboard shortcuts, and spaced-repetition ratings.",
+    "noWorkspace": "Create a workspace before starting a flashcard session.",
+    "emptyTitle": "No vocabulary yet",
+    "emptyDescription": "Add words to your workspace first, then come back to study with flashcards.",
+    "addWords": "Add words",
+    "noFilteredCards": "No cards match your filters. Try adjusting them to continue.",
+    "studyMode": "Study mode",
+    "modes": {
+      "wordToMeaning": "Word → Meaning",
+      "meaningToWord": "Meaning → Word",
+      "mixed": "Mixed"
+    },
+    "filterStatus": "Learning status",
+    "status": {
+      "NEW": "New",
+      "LEARNING": "Learning",
+      "REVIEW": "Review",
+      "MASTERED": "Mastered"
+    },
+    "questionWord": "What is the meaning?",
+    "questionMeaning": "Which word matches this meaning?",
+    "answer": "Answer",
+    "tapToFlip": "Tap or press Space to flip",
+    "showAnswer": "Show answer",
+    "hideAnswer": "Hide answer",
+    "flip": "Flip",
+    "previous": "Previous",
+    "next": "Next",
+    "shuffle": "Shuffle",
+    "restart": "Restart session",
+    "progress": "{current} / {total}",
+    "keyboardHint": "Space flip · ← → navigate",
+    "meanings": "Meanings",
+    "examples": "Examples",
+    "notes": "Notes",
+    "noMeaning": "No meaning yet",
+    "ratePrompt": "How well did you know this?",
+    "ratings": {
+      "AGAIN": "Again",
+      "HARD": "Hard",
+      "GOOD": "Good",
+      "EASY": "Easy"
+    },
+    "ratingHints": {
+      "AGAIN": "< 1 min",
+      "HARD": "Soon",
+      "GOOD": "Good",
+      "EASY": "Easy"
+    },
+    "sessionComplete": "Session complete — starting a fresh round",
+    "ratingFailed": "Could not save your rating"
   },
   "dashboard": {
     "overview": "Overview",
