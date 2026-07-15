@@ -1,6 +1,6 @@
 # Notoria
 
-**Notoria** is a private web app for language learning. It helps you collect vocabulary, write exercises, and keep study materials in one place — built for long-term, personal use.
+**Notoria** is a private web app for language learning. Collect vocabulary in language-specific workspaces, then practice with exercises generated entirely from your own words — no AI, no external dictionaries.
 
 Each account owns its own data. The app is not a social platform: no public profiles, no sharing feed, no multiplayer features.
 
@@ -8,59 +8,69 @@ Each account owns its own data. The app is not a social platform: no public prof
 
 ## What you can do today
 
+### Authentication & account
+
+- Register and sign in with email and password (NextAuth credentials, JWT sessions)
+- Protected dashboard routes via middleware
+- **Account settings** (`/account`): update display name, change password, upload or remove profile photo (Cloudinary)
+
+### Workspaces
+
+- One workspace per language you are learning
+- Switch workspaces from the header; vocabulary and exercises always use the active workspace
+- Default English workspace created on signup
+
 ### Vocabulary
 
-- Add words with **multiple meanings**
-- **Drag and drop** to reorder meanings
-- Optional fields: pronunciation, part of speech, notes
-- Browse all words in a table view
-- Edit and save any entry
+- Add words with **multiple meanings** (drag-and-drop reorder)
+- **Example sentences**, part of speech, notes, and tags (built-in groups + custom tags inline on the form)
+- Filter and sort the vocabulary table (part of speech, tags, search)
+- Learning status tracked per word (`NEW`, `LEARNING`, `REVIEW`, `MASTERED`)
 
-### Exercises
+### Exercise Studio
 
-- Create exercise documents with a **rich text editor** (TipTap)
-- Supported formatting: headings, bold/italic/underline, highlights, lists, task checklists, tables, images, links, code blocks
-- Word and character counters
-- **Autosave** after the first manual save
-- Exercise types: questions, fill-in-the-blank, translation, writing, reading, grammar drill
+Six study modes under `/exercises`, all generated from workspace vocabulary:
+
+| Mode | Description |
+| ---- | ----------- |
+| **Flashcards** | Flip cards with keyboard shortcuts and spaced-repetition ratings |
+| **Writing** | Rich-text writing prompts saved in the editor (TipTap) |
+| **Fill in the blank** | Complete example sentences with the missing word |
+| **Multiple choice** | Word ↔ meaning quizzes; distractors from other words in the workspace |
+| **Match pairs** | Quizlet-style word/meaning matching |
+| **Type the answer** | Type the missing word or meaning with instant feedback |
+
+Shared filters (part of speech, learning status, tags) and study-direction toggles where applicable. No third-party language APIs — only data you entered.
 
 ### Dashboard
 
-- Overview of word count, exercise count, and quick links to main modules
+- Word counts, words ready to practice, active workspace summary
+- Quick links to vocabulary and Exercise Studio
 
----
+### UI language
 
-## Planned modules
-
-These are defined in the product spec but not implemented yet:
-
-- Authentication (register, login, Google/GitHub OAuth)
-- Grammar notes
-- Writing journal
-- Collections & tags
-- Global search
-- Spaced repetition / review system
-- Statistics & charts
-- Import/export (CSV, Excel, JSON, Markdown)
-- Notebook (chapter-based structure with flexible blocks)
+- App UI available in **English**, **Vietnamese**, and **Finnish** (header selector, `next-intl`)
 
 ---
 
 ## Tech stack
 
-| Layer       | Technology                                           |
-| ----------- | ---------------------------------------------------- |
-| Framework   | Next.js 16 (App Router)                              |
-| Language    | TypeScript                                           |
-| Styling     | Tailwind CSS v4, shadcn/ui                           |
-| Database    | PostgreSQL 16                                        |
-| ORM         | Drizzle                                              |
-| Forms       | React Hook Form + Zod                                |
-| Editor      | TipTap                                               |
-| Drag & drop | dnd-kit                                              |
-| State       | TanStack Query (server data), Zustand (UI, reserved) |
-| Icons       | Lucide                                               |
-| Deployment  | Docker, Docker Compose                               |
+| Layer        | Technology                                              |
+| ------------ | ------------------------------------------------------- |
+| Framework    | Next.js 16 (App Router)                                 |
+| Language     | TypeScript                                              |
+| Styling      | Tailwind CSS v4, shadcn/ui                              |
+| Database     | PostgreSQL 16                                           |
+| ORM          | Drizzle                                                 |
+| Auth         | NextAuth v5 (credentials)                               |
+| i18n         | next-intl                                               |
+| Forms        | React Hook Form + Zod                                   |
+| Editor       | TipTap (writing exercises)                              |
+| Drag & drop  | dnd-kit                                                 |
+| State        | TanStack Query (server data)                            |
+| Media        | Cloudinary (profile avatars)                            |
+| Icons        | Lucide                                                  |
+| Deployment   | Docker, Docker Compose                                  |
 
 ---
 
@@ -68,21 +78,29 @@ These are defined in the product spec but not implemented yet:
 
 ```
 src/
-├── app/                    # Next.js routes
-│   └── (dashboard)/        # Main app shell (sidebar layout)
+├── app/
+│   ├── (auth)/             # Sign in, sign up
+│   ├── (dashboard)/        # Main app (sidebar layout)
+│   │   ├── account/        # Profile, password, avatar
+│   │   ├── exercises/      # Exercise Studio + study modes
+│   │   └── vocabulary/     # Word list and editor
+│   └── api/auth/           # NextAuth route handler
 ├── components/
+│   ├── account/            # Account settings, user avatar
+│   ├── auth/               # Login, register, password input
 │   ├── editor/             # TipTap rich text editor
-│   ├── exercises/          # Exercise editor
-│   ├── layout/             # Sidebar, page header, stat cards
-│   ├── ui/                 # shadcn primitives + Logo
-│   └── vocabulary/         # Vocabulary form, sortable meanings
-├── db/
-│   ├── schema.ts           # Drizzle schema
-│   └── index.ts            # DB client (singleton pool)
+│   ├── exercises/          # Study sessions, type picker
+│   ├── flashcards/         # Flashcard session UI
+│   ├── layout/             # Sidebar, header, workspace selector
+│   ├── vocabulary/         # Forms, table, tags
+│   └── ui/                 # shadcn primitives
+├── db/                     # Drizzle schema and client
 ├── lib/
-│   ├── actions/            # Server Actions (CRUD)
-│   └── auth/               # Demo user helper (until Auth.js)
-└── schemas/                # Zod validation schemas
+│   ├── actions/            # Server Actions (CRUD, auth, account)
+│   ├── exercises/          # Exercise generation from vocabulary
+│   └── flashcards/         # Flashcard session logic
+├── messages/               # en.json, vi.json, fi.json
+└── schemas/                # Zod validation
 ```
 
 ---
@@ -92,6 +110,7 @@ src/
 - **Node.js** 20+
 - **Docker Desktop** (for local PostgreSQL)
 - **npm**
+- **Cloudinary account** (optional — only needed for profile photo uploads)
 
 ---
 
@@ -105,17 +124,19 @@ npm install
 
 ### 2. Environment variables
 
-Copy the example file:
-
-```bash
-cp .env.example .env.local
-```
-
-Default values:
+Create `.env.local` in the project root:
 
 ```env
 DATABASE_URL=postgresql://notoria:notoria@localhost:5434/notoria
-DEMO_USER_ID=00000000-0000-4000-8000-000000000001
+
+# Auth.js / NextAuth — generate AUTH_SECRET with: openssl rand -base64 32
+AUTH_SECRET=your-secret-here
+AUTH_URL=http://localhost:3000
+
+# Cloudinary (optional — profile avatars)
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
 ```
 
 > PostgreSQL runs on port **5434** (not 5432) to avoid conflicts with other databases on your machine.
@@ -140,9 +161,7 @@ npm run db:push
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000).
-
-On first request, a demo user is created automatically (no separate seed step).
+Open [http://localhost:3000](http://localhost:3000), create an account at `/sign-up`, then start adding vocabulary.
 
 ---
 
@@ -161,28 +180,37 @@ On first request, a demo user is created automatically (no separate seed step).
 
 ## Routes
 
-| Path               | Description              |
-| ------------------ | ------------------------ |
-| `/`                | Dashboard                |
-| `/vocabulary`      | Word list                |
-| `/vocabulary/new`  | Add a new word           |
-| `/vocabulary/[id]` | Edit a word              |
-| `/exercises`       | Exercise list            |
-| `/exercises/new`   | Create exercise          |
-| `/exercises/[id]`  | Edit exercise (autosave) |
+| Path | Description |
+| ---- | ----------- |
+| `/sign-in` | Sign in |
+| `/sign-up` | Create account |
+| `/` | Dashboard |
+| `/vocabulary` | Word list |
+| `/vocabulary/new` | Add a word |
+| `/vocabulary/[id]` | Edit a word |
+| `/exercises` | Exercise Studio (pick a study mode) |
+| `/exercises/flashcard` | Flashcard session |
+| `/exercises/writing` | New writing exercise |
+| `/exercises/fill-in-blank` | Fill in the blank |
+| `/exercises/multiple-choice` | Multiple choice |
+| `/exercises/match-pairs` | Match pairs |
+| `/exercises/type-answer` | Type the answer |
+| `/exercises/[id]` | Edit a saved writing exercise |
+| `/account` | Account settings |
 
 ---
 
 ## Database
 
-### Tables
+### Main tables
 
-- `users` — user accounts (demo user for now)
-- `vocabulary_words` — vocabulary entries
-- `word_meanings` — meanings per word (sortable)
-- `word_examples` — rich examples (schema ready)
-- `exercises` — exercise documents (JSON content from TipTap)
-- `grammar_notes` — grammar pages (schema ready)
+- `users` — accounts (name, email, password hash, avatar URL)
+- `workspaces` — one per user per language
+- `workspace_tags` — workspace-scoped custom tag catalog
+- `vocabulary_words` — words scoped to a workspace
+- `word_meanings`, `word_examples`, `vocabulary_word_tags` — word relations
+- `exercises` — saved writing documents (TipTap JSON)
+- `flashcard_reviews`, `flashcard_progress` — spaced-repetition data
 
 ### Reset database
 
@@ -202,14 +230,16 @@ If you see `sorry, too many clients already` during development:
 docker restart notoria-db
 ```
 
-Then restart `npm run dev`. The app uses a singleton connection pool to reduce this in dev mode.
+Then restart `npm run dev`.
 
 ---
 
-## Authentication (current state)
+## Planned / not yet implemented
 
-Auth is **not** implemented yet. The app uses a fixed demo user ID from `.env.local`. All vocabulary and exercises are stored under that user.
-
-When Auth.js is added, the demo user helper in `src/lib/auth/demo-user.ts` will be replaced by real session handling.
-
----
+- OAuth providers (Google, GitHub)
+- Grammar notes module
+- Writing journal (separate from exercise editor)
+- Global search
+- Statistics and charts
+- Import/export (CSV, JSON, Markdown)
+- Notebook (chapter-based structure)
