@@ -168,9 +168,20 @@ export async function updateWorkspaceTag(
     throw new Error("TAG_EXISTS");
   }
 
+  const newName = parsed.name.trim();
+  const oldKey = customTagKey(tag.name);
+  const newKey = customTagKey(newName);
+
+  if (oldKey !== newKey) {
+    await db
+      .update(vocabularyWordTags)
+      .set({ tag: newKey })
+      .where(eq(vocabularyWordTags.tag, oldKey));
+  }
+
   const [updated] = await db
     .update(workspaceTags)
-    .set({ name: parsed.name.trim() })
+    .set({ name: newName })
     .where(eq(workspaceTags.id, tagId))
     .returning();
 
@@ -192,7 +203,7 @@ export async function deleteWorkspaceTag(tagId: string) {
 
   await db
     .delete(vocabularyWordTags)
-    .where(eq(vocabularyWordTags.tag, customTagKey(tagId)));
+    .where(eq(vocabularyWordTags.tag, customTagKey(tag.name)));
 
   await db.delete(workspaceTags).where(eq(workspaceTags.id, tagId));
   revalidatePath("/", "layout");

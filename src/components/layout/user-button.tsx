@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ChevronsUpDown, LogOut, User } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import { UserAvatar } from "@/components/account/user-avatar";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,18 +20,10 @@ import { cn } from "@/lib/utils";
 type UserButtonProps = {
   name: string;
   email: string;
+  image?: string | null;
 };
 
-function getInitials(name: string) {
-  return name
-    .split(" ")
-    .filter(Boolean)
-    .slice(0, 2)
-    .map((part) => part[0]?.toUpperCase() ?? "")
-    .join("");
-}
-
-export function UserButton({ name, email }: UserButtonProps) {
+export function UserButton({ name, email, image }: UserButtonProps) {
   const router = useRouter();
   const t = useTranslations("auth");
 
@@ -49,9 +42,12 @@ export function UserButton({ name, email }: UserButtonProps) {
           "group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:border-0 group-data-[collapsible=icon]:bg-transparent group-data-[collapsible=icon]:p-0",
         )}
       >
-        <span className="flex size-8 shrink-0 items-center justify-center rounded-full bg-accent-lime/20 text-xs font-semibold text-accent-lime">
-          {getInitials(name) || "U"}
-        </span>
+        <UserAvatar
+          name={name}
+          image={image}
+          size="sm"
+          className="group-data-[collapsible=icon]:size-8"
+        />
         <span className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
           <span className="block truncate font-medium text-sidebar-foreground">
             {name}
