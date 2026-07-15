@@ -6,7 +6,6 @@ import {
   Dumbbell,
   Home,
   Languages,
-  Settings,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Logo, LogoWordmark } from "@/components/ui/logo";
@@ -30,15 +29,15 @@ const navItems = [
   { titleKey: "dashboard", href: "/", icon: Home },
   { titleKey: "vocabulary", href: "/vocabulary", icon: Languages },
   { titleKey: "exercises", href: "/exercises", icon: Dumbbell },
-  { titleKey: "settings", href: "/settings", icon: Settings, disabled: true },
 ] as const;
 
 type AppSidebarProps = {
   userName: string;
   userEmail: string;
+  userImage?: string | null;
 };
 
-export function AppSidebar({ userName, userEmail }: AppSidebarProps) {
+export function AppSidebar({ userName, userEmail, userImage }: AppSidebarProps) {
   const pathname = usePathname();
   const t = useTranslations("nav");
 
@@ -72,34 +71,23 @@ export function AppSidebar({ userName, userEmail }: AppSidebarProps) {
             <SidebarMenu>
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.titleKey} className="py-0.5">
-                  {"disabled" in item && item.disabled ? (
-                    <SidebarMenuButton
-                      disabled
-                      tooltip={t(item.titleKey)}
-                      className="text-on-dark-muted opacity-50"
-                    >
-                      <item.icon />
-                      <span>{t(item.titleKey)}</span>
-                    </SidebarMenuButton>
-                  ) : (
-                    <SidebarMenuButton
-                      render={<Link href={item.href} />}
-                      isActive={
-                        item.href === "/"
-                          ? pathname === "/"
-                          : pathname.startsWith(item.href)
-                      }
-                      tooltip={t(item.titleKey)}
-                      className={cn(
-                        "text-sidebar-foreground transition-colors",
-                        "hover:bg-accent-lime/25! hover:text-accent-lime!",
-                        "data-active:bg-accent-lime/25! data-active:text-accent-lime! data-active:font-medium",
-                      )}
-                    >
-                      <item.icon />
-                      <span className="font-medium">{t(item.titleKey)}</span>
-                    </SidebarMenuButton>
-                  )}
+                  <SidebarMenuButton
+                    render={<Link href={item.href} />}
+                    isActive={
+                      item.href === "/"
+                        ? pathname === "/"
+                        : pathname.startsWith(item.href)
+                    }
+                    tooltip={t(item.titleKey)}
+                    className={cn(
+                      "text-sidebar-foreground transition-colors",
+                      "hover:bg-accent-lime/25! hover:text-accent-lime!",
+                      "data-active:bg-accent-lime/25! data-active:text-accent-lime! data-active:font-medium",
+                    )}
+                  >
+                    <item.icon />
+                    <span className="font-medium">{t(item.titleKey)}</span>
+                  </SidebarMenuButton>
                 </SidebarMenuItem>
               ))}
             </SidebarMenu>
@@ -108,7 +96,7 @@ export function AppSidebar({ userName, userEmail }: AppSidebarProps) {
       </SidebarContent>
 
       <SidebarFooter className="border-t border-sidebar-border p-3">
-        <UserButton name={userName} email={userEmail} />
+        <UserButton name={userName} email={userEmail} image={userImage} />
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>

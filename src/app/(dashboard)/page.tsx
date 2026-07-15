@@ -5,7 +5,6 @@ import { PageHeader } from "@/components/layout/page-header";
 import { StatCard } from "@/components/layout/stat-card";
 import { LinkButton } from "@/components/ui/link-button";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
-import { getExercises } from "@/lib/actions/exercises";
 import { getVocabularyWords } from "@/lib/actions/vocabulary";
 import { getActiveWorkspace } from "@/lib/workspace";
 import { getLanguageName } from "@/lib/languages";
@@ -32,10 +31,8 @@ export default async function DashboardPage() {
 
   const languageName = getLanguageName(workspace.language);
 
-  const [words, exercises] = await Promise.all([
-    getVocabularyWords(),
-    getExercises(),
-  ]);
+  const [words] = await Promise.all([getVocabularyWords()]);
+  const practiceReadyWords = words.filter((word) => word.meanings.length > 0).length;
 
   return (
     <div className="space-y-10">
@@ -48,7 +45,7 @@ export default async function DashboardPage() {
 
       <div className="grid gap-4 md:grid-cols-3">
         <StatCard label={t("wordsSaved")} value={words.length} />
-        <StatCard label={t("exercisesCreated")} value={exercises.length} featured />
+        <StatCard label={t("wordsReadyToPractice")} value={practiceReadyWords} featured />
         <StatCard label={t("activeWorkspace")} value={workspace.name} />
       </div>
 
@@ -86,7 +83,7 @@ export default async function DashboardPage() {
               variant="secondary"
               className="bg-on-primary text-ink hover:bg-on-primary/90"
             >
-              {t("openStudio")}
+              {t("startPracticing")}
             </LinkButton>
           </div>
         </div>

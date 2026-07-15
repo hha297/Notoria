@@ -36,6 +36,7 @@ export default async function DashboardLayout({
       <AppSidebar
         userName={session?.user?.name ?? "User"}
         userEmail={session?.user?.email ?? ""}
+        userImage={session?.user?.image}
       />
       <SidebarInset className="bg-background">
         <header className="flex h-14 shrink-0 items-center gap-3 border-b border-hairline-cloud bg-background px-6">
