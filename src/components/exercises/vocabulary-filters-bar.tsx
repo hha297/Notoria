@@ -18,16 +18,9 @@ import {
   getTagLabel,
   isCustomTagKey,
   PARTS_OF_SPEECH,
-  type TagGroupKey,
+  TAG_PICKER_GROUPS,
 } from "@/lib/vocabulary-tags";
 import type { FlashcardFilters, FlashcardStudyMode, FlashcardWord } from "@/types/flashcards";
-
-const TAG_FILTER_GROUPS: TagGroupKey[] = [
-  "difficulty",
-  "topic",
-  "grammar",
-  "learningStatus",
-];
 
 const STATUS_OPTIONS = ["NEW", "LEARNING", "REVIEW", "MASTERED"] as const;
 
@@ -145,7 +138,7 @@ export function VocabularyFiltersBar({
           <SelectGroup>
             <SelectItem value="all">{tVocab("filterAll")}</SelectItem>
           </SelectGroup>
-          {TAG_FILTER_GROUPS.map((group) => (
+          {TAG_PICKER_GROUPS.map((group) => (
             <SelectGroup key={group}>
               <SelectLabel>{tTags(`groups.${group}`)}</SelectLabel>
               {BUILTIN_TAG_GROUPS[group].map((tag) => (

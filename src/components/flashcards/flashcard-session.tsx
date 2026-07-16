@@ -4,14 +4,13 @@ import { useCallback, useEffect, useMemo, useState, useTransition } from "react"
 import { useHotkeys } from "react-hotkeys-hook";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Plus } from "lucide-react";
 import { toast } from "sonner";
 import { FlashcardCard } from "@/components/flashcards/flashcard-card";
 import { FlashcardControls } from "@/components/flashcards/flashcard-controls";
+import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { FlashcardRatingBar } from "@/components/flashcards/flashcard-rating-bar";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
-import { LinkButton } from "@/components/ui/link-button";
 import { Progress } from "@/components/ui/progress";
 import { recordFlashcardReview } from "@/lib/actions/flashcards";
 import {
@@ -247,16 +246,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
   });
 
   if (words.length === 0) {
-    return (
-      <div className="empty-state">
-        <p className="text-lg font-medium text-ink">{t("emptyTitle")}</p>
-        <p className="mt-2 max-w-md text-muted-foreground">{t("emptyDescription")}</p>
-        <LinkButton href="/vocabulary/new" className="mt-6">
-          <Plus className="size-4" />
-          {t("addWords")}
-        </LinkButton>
-      </div>
-    );
+    return <VocabularyEmpty variant="no-words" />;
   }
 
   if (filteredWords.length === 0) {
@@ -270,9 +260,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
           onStudyModeChange={setStudyMode}
           showStudyMode
         />
-        <div className="empty-state">
-          <p className="text-muted-foreground">{t("noFilteredCards")}</p>
-        </div>
+        <VocabularyEmpty variant="no-filtered" />
       </div>
     );
   }
