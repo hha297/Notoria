@@ -1,0 +1,1 @@
+export const VOCABULARY_WORD_EXISTS = "WORD_EXISTS";

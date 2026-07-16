@@ -38,6 +38,7 @@ import {
   createVocabularyWord,
   updateVocabularyWord,
 } from "@/lib/actions/vocabulary";
+import { VOCABULARY_WORD_EXISTS } from "@/lib/vocabulary-errors";
 import {
   getCustomTagName,
   isCustomTagKey,
@@ -198,6 +199,11 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
         router.push("/vocabulary");
       }
     } catch (error) {
+      if (error instanceof Error && error.message === VOCABULARY_WORD_EXISTS) {
+        toast.error(t("wordExists"));
+        return;
+      }
+
       toast.error(
         error instanceof Error ? error.message : t("meaningRequired"),
       );

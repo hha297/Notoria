@@ -313,7 +313,7 @@ export function VocabularyTable({ words }: VocabularyTableProps) {
                       })}
                     </td>
                     <td>
-                      <VocabularyRowActions wordId={word.id} />
+                      <VocabularyRowActions wordId={word.id} word={word.word} />
                     </td>
                   </tr>
                 );

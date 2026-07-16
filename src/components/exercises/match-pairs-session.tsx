@@ -2,12 +2,14 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { Shuffle } from "lucide-react";
+import { RotateCcw } from "lucide-react";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
+import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { Button } from "@/components/ui/button";
 import { buildMatchPairItems, type MatchPairItem } from "@/lib/exercises/match-pairs";
+import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { shuffleArray } from "@/lib/exercises/utils";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
@@ -21,46 +23,51 @@ type MatchPairsSessionProps = {
 
 export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps) {
   const t = useTranslations("exercises.matchPairs");
+  const tSession = useTranslations("exercises.session");
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
+  const [sessionItems, setSessionItems] = useState<MatchPairItem[]>([]);
   const [round, setRound] = useState(0);
   const [selectedWordId, setSelectedWordId] = useState<string | null>(null);
   const [matchedIds, setMatchedIds] = useState<Set<string>>(new Set());
   const [wrongId, setWrongId] = useState<string | null>(null);
+  const [sessionComplete, setSessionComplete] = useState(false);
 
   const filteredWords = useMemo(
     () => filterFlashcardWords(words, filters),
     [words, filters],
   );
-  const items = useMemo(() => buildMatchPairItems(filteredWords), [filteredWords]);
+  const poolItems = useMemo(() => buildMatchPairItems(filteredWords), [filteredWords]);
 
-  const wordColumn = useMemo(
-    () => shuffleArray(items.map((i) => i)),
-    [items, round],
-  );
-  const meaningColumn = useMemo(
-    () => shuffleArray(items.map((i) => ({ wordId: i.wordId, meaning: i.meaning }))),
-    [items, round],
-  );
-
-  const restart = useCallback(() => {
+  const startSession = useCallback(() => {
+    setSessionItems(sampleSessionItems(poolItems));
     setRound((r) => r + 1);
     setSelectedWordId(null);
     setMatchedIds(new Set());
     setWrongId(null);
-  }, []);
+    setSessionComplete(false);
+  }, [poolItems]);
 
   useEffect(() => {
-    restart();
-  }, [items, workspaceId, restart]);
+    startSession();
+  }, [startSession, workspaceId]);
+
+  const wordColumn = useMemo(
+    () => shuffleArray(sessionItems.map((i) => i)),
+    [sessionItems, round],
+  );
+  const meaningColumn = useMemo(
+    () => shuffleArray(sessionItems.map((i) => ({ wordId: i.wordId, meaning: i.meaning }))),
+    [sessionItems, round],
+  );
 
   const handleWordClick = (wordId: string) => {
-    if (matchedIds.has(wordId)) return;
+    if (matchedIds.has(wordId) || sessionComplete) return;
     setSelectedWordId(wordId);
     setWrongId(null);
   };
 
   const handleMeaningClick = (wordId: string) => {
-    if (matchedIds.has(wordId) || !selectedWordId) return;
+    if (matchedIds.has(wordId) || !selectedWordId || sessionComplete) return;
 
     if (selectedWordId === wordId) {
       const next = new Set(matchedIds);
@@ -68,6 +75,9 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
       setMatchedIds(next);
       setSelectedWordId(null);
       setWrongId(null);
+      if (next.size === sessionItems.length) {
+        setSessionComplete(true);
+      }
       return;
     }
 
@@ -78,10 +88,8 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
     }, 700);
   };
 
-  const complete = items.length > 0 && matchedIds.size === items.length;
-
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
-  if (items.length < 2) {
+  if (poolItems.length < 2) {
     return (
       <div className="space-y-6">
         <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
@@ -93,47 +101,53 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
   return (
     <div className="space-y-6">
       <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
-      <ExerciseProgressHeader
-        progressLabel={t("progress", { matched: matchedIds.size, total: items.length })}
-        progressValue={items.length ? (matchedIds.size / items.length) * 100 : 0}
-        hint={t("hint")}
-      />
-      {complete && (
-        <div className="rounded-xl border border-[#b8d96a] bg-[#f4fae0] px-4 py-3 text-center text-sm font-medium text-[#4a6b0a]">
-          {t("complete")}
-        </div>
+      {sessionComplete ? (
+        <SessionCompleteCard
+          title={t("complete")}
+          scoreLabel={tSession("pairsMatched", { count: sessionItems.length })}
+          tryAgainLabel={tSession("tryAgain")}
+          onTryAgain={startSession}
+        />
+      ) : (
+        <>
+          <ExerciseProgressHeader
+            progressLabel={t("progress", { matched: matchedIds.size, total: sessionItems.length })}
+            progressValue={sessionItems.length ? (matchedIds.size / sessionItems.length) * 100 : 0}
+            hint={t("hint")}
+          />
+          <div className="grid gap-4 sm:grid-cols-2">
+            <Column title={t("words")}>
+              {wordColumn.map((item) => (
+                <MatchButton
+                  key={`w-${item.wordId}`}
+                  label={item.word}
+                  selected={selectedWordId === item.wordId}
+                  matched={matchedIds.has(item.wordId)}
+                  wrong={wrongId !== null && selectedWordId === item.wordId}
+                  onClick={() => handleWordClick(item.wordId)}
+                />
+              ))}
+            </Column>
+            <Column title={t("meanings")}>
+              {meaningColumn.map((item) => (
+                <MatchButton
+                  key={`m-${item.wordId}-${item.meaning}`}
+                  label={item.meaning}
+                  selected={false}
+                  matched={matchedIds.has(item.wordId)}
+                  wrong={wrongId === item.wordId}
+                  onClick={() => handleMeaningClick(item.wordId)}
+                />
+              ))}
+            </Column>
+          </div>
+          <div className="flex justify-center">
+            <Button type="button" variant="ghost" size="sm" onClick={startSession}>
+              <RotateCcw className="size-4" />{tSession("tryAgain")}
+            </Button>
+          </div>
+        </>
       )}
-      <div className="grid gap-4 sm:grid-cols-2">
-        <Column title={t("words")}>
-          {wordColumn.map((item) => (
-            <MatchButton
-              key={`w-${item.wordId}`}
-              label={item.word}
-              selected={selectedWordId === item.wordId}
-              matched={matchedIds.has(item.wordId)}
-              wrong={wrongId !== null && selectedWordId === item.wordId}
-              onClick={() => handleWordClick(item.wordId)}
-            />
-          ))}
-        </Column>
-        <Column title={t("meanings")}>
-          {meaningColumn.map((item) => (
-            <MatchButton
-              key={`m-${item.wordId}-${item.meaning}`}
-              label={item.meaning}
-              selected={false}
-              matched={matchedIds.has(item.wordId)}
-              wrong={wrongId === item.wordId}
-              onClick={() => handleMeaningClick(item.wordId)}
-            />
-          ))}
-        </Column>
-      </div>
-      <div className="flex justify-center">
-        <Button type="button" variant="ghost" size="sm" onClick={restart}>
-          <Shuffle className="size-4" />{t("shuffle")}
-        </Button>
-      </div>
     </div>
   );
 }

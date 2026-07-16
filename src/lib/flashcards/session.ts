@@ -5,6 +5,7 @@ import type {
   FlashcardStudyMode,
   FlashcardWord,
 } from "@/types/flashcards";
+import { sampleSessionItems } from "@/lib/exercises/session-size";
 
 export function shuffleArray<T>(items: T[]): T[] {
   const next = [...items];
@@ -89,14 +90,14 @@ export function createSessionState({
   currentIndex?: number;
   isFlipped?: boolean;
 }): FlashcardSessionState {
-  const shuffled = shuffleArray(words);
+  const sessionWords = sampleSessionItems(words);
 
   return {
     workspaceId,
     filtersKey: getFiltersKey(filters, studyMode),
     studyMode,
-    cardIds: shuffled.map((word) => word.id),
-    directions: buildSessionDirections(shuffled, studyMode),
+    cardIds: sessionWords.map((word) => word.id),
+    directions: buildSessionDirections(sessionWords, studyMode),
     currentIndex,
     isFlipped,
   };

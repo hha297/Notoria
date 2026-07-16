@@ -1,6 +1,6 @@
 "use server";
 
-import { and, asc, desc, eq } from "drizzle-orm";
+import { and, asc, desc, eq, ne, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import {
@@ -15,6 +15,32 @@ import {
   vocabularyFormSchema,
   type VocabularyFormValues,
 } from "@/schemas/vocabulary";
+import { VOCABULARY_WORD_EXISTS } from "@/lib/vocabulary-errors";
+
+function normalizeWord(word: string) {
+  return word.trim().toLowerCase();
+}
+
+async function assertWordIsUnique(
+  word: string,
+  workspaceId: string,
+  excludeId?: string,
+) {
+  const normalized = normalizeWord(word);
+
+  const existing = await db.query.vocabularyWords.findFirst({
+    where: and(
+      eq(vocabularyWords.workspaceId, workspaceId),
+      sql`lower(trim(${vocabularyWords.word})) = ${normalized}`,
+      excludeId ? ne(vocabularyWords.id, excludeId) : undefined,
+    ),
+    columns: { id: true },
+  });
+
+  if (existing) {
+    throw new Error(VOCABULARY_WORD_EXISTS);
+  }
+}
 
 async function assertWordInWorkspace(wordId: string, workspaceId: string) {
   const userId = await getCurrentUserId();
@@ -128,6 +154,8 @@ export async function createVocabularyWord(data: VocabularyFormValues) {
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
 
+  await assertWordIsUnique(parsed.word, workspace.id);
+
   const [word] = await db
     .insert(vocabularyWords)
     .values({
@@ -153,6 +181,7 @@ export async function updateVocabularyWord(
   const workspace = await requireActiveWorkspace();
 
   await assertWordInWorkspace(id, workspace.id);
+  await assertWordIsUnique(parsed.word, workspace.id, id);
 
   await db
     .update(vocabularyWords)
