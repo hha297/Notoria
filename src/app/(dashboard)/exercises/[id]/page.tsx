@@ -1,5 +1,4 @@
 import { notFound, redirect } from "next/navigation";
-import type { JSONContent } from "@tiptap/react";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { getTranslations } from "next-intl/server";
@@ -56,7 +55,7 @@ export default async function ExercisePage({
           id: exercise.id,
           title: exercise.title,
           type: exercise.type,
-          content: exercise.content as JSONContent,
+          content: exercise.content,
         }}
       />
     </div>

@@ -175,9 +175,9 @@
       },
       "writing": {
         "label": "Writing",
-        "description": "Create rich writing prompts and practice tasks in the editor.",
-        "preview": "Prompt · Draft · Save",
-        "pageDescription": "Write prompts, questions, and practice tasks in the rich editor."
+        "description": "Create rich documents or structured question sets for prompts and practice.",
+        "preview": "Document · Questions · Save",
+        "pageDescription": "Write free-form prompts in the rich editor, or build textbook-style question sets."
       },
       "fill-in-blank": {
         "label": "Fill in the Blank",
@@ -269,6 +269,52 @@
       "check": "Check",
       "shuffle": "Shuffle",
       "finish": "Finish round"
+    },
+    "writing": {
+      "newTitle": "New writing exercise",
+      "editTitle": "Edit writing exercise",
+      "formDescription": "Choose a mode, add a title, then build your content.",
+      "title": "Title",
+      "titlePlaceholder": "e.g. My Life Story",
+      "titleRequired": "Title is required",
+      "promptRequired": "Add at least one question prompt",
+      "mode": "Mode",
+      "modes": {
+        "richDocument": "Rich Document",
+        "questionSet": "Question Set",
+        "richDocumentHint": "Free-form writing with the rich text editor.",
+        "questionSetHint": "Structured sections and questions — like a textbook worksheet."
+      },
+      "content": "Content",
+      "contentPlaceholder": "Start writing your exercise content here...",
+      "sections": "Sections",
+      "section": "Section",
+      "sectionTitlePlaceholder": "Section title (optional)",
+      "question": "Question",
+      "prompt": "Prompt",
+      "promptPlaceholder": "Where were you born?",
+      "exampleAnswer": "Example answer",
+      "exampleAnswerPlaceholder": "Optional model answer…",
+      "notes": "Notes / hints",
+      "notesPlaceholder": "Optional teaching notes or hints…",
+      "optional": "optional",
+      "addQuestion": "Add question",
+      "addSection": "Add section",
+      "deleteQuestion": "Delete question",
+      "duplicateQuestion": "Duplicate question",
+      "deleteSection": "Delete section",
+      "dragQuestion": "Drag to reorder question",
+      "dragSection": "Drag to reorder section",
+      "collapseSection": "Collapse section",
+      "expandSection": "Expand section",
+      "questionCount": "{count, plural, one {# question} other {# questions}}",
+      "save": "Save exercise",
+      "saved": "Exercise saved",
+      "created": "Exercise created",
+      "saveFailed": "Failed to save exercise",
+      "autosaving": "Autosaving...",
+      "autosaveReady": "Changes autosave",
+      "autosavePending": "Save to enable autosave"
     }
   },
   "flashcards": {
