@@ -7,6 +7,7 @@ import { Badge } from "@/components/ui/badge";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getExerciseTypeLabel } from "@/lib/exercise-types";
 import { getExercises } from "@/lib/actions/exercises";
+import { parseWritingContent } from "@/lib/writing/content";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export const dynamic = "force-dynamic";
@@ -47,7 +48,13 @@ export default async function ExercisesPage() {
             {t("saved")}
           </h2>
           <div className="grid gap-4">
-            {exercises.map((exercise) => (
+            {exercises.map((exercise) => {
+              const writing =
+                exercise.type === "WRITING"
+                  ? parseWritingContent(exercise.content)
+                  : null;
+
+              return (
               <Link
                 key={exercise.id}
                 href={`/exercises/${exercise.id}`}
@@ -65,12 +72,22 @@ export default async function ExercisesPage() {
                       })}
                     </p>
                   </div>
-                  <Badge variant="secondary">
-                    {getExerciseTypeLabel(exercise.type)}
-                  </Badge>
+                  <div className="flex flex-wrap justify-end gap-2">
+                    {writing && (
+                      <Badge variant="outline">
+                        {writing.mode === "question_set"
+                          ? t("writing.modes.questionSet")
+                          : t("writing.modes.richDocument")}
+                      </Badge>
+                    )}
+                    <Badge variant="secondary">
+                      {getExerciseTypeLabel(exercise.type)}
+                    </Badge>
+                  </div>
                 </div>
               </Link>
-            ))}
+              );
+            })}
           </div>
         </section>
       )}
