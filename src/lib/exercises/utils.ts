@@ -1,3 +1,4 @@
+import type { FlashcardWord } from "@/types/flashcards";
 import type { FlashcardStudyMode } from "@/types/flashcards";
 
 export type StudyDirection = "WORD_TO_MEANING" | "MEANING_TO_WORD";
@@ -15,6 +16,10 @@ export function shuffleArray<T>(items: T[]): T[] {
 
 export function normalizeAnswer(value: string) {
   return value.trim().toLowerCase();
+}
+
+export function normalizeMeaningKey(value: string) {
+  return normalizeAnswer(value);
 }
 
 export function answersMatch(input: string, expected: string) {
@@ -58,6 +63,75 @@ export function pickDistractors<T>(
   return shuffleArray(unique).slice(0, count);
 }
 
+/** @deprecated Use assignWordMeanings for exercises. */
 export function primaryMeaning(meanings: string[], fallback = "—") {
   return meanings[0]?.trim() || fallback;
+}
+
+function trimmedMeanings(meanings: string[]) {
+  return meanings.map((meaning) => meaning.trim()).filter(Boolean);
+}
+
+/**
+ * Pick one meaning per word for a session.
+ * Prefers a random meaning not already assigned to another word.
+ */
+export function assignWordMeanings(
+  words: FlashcardWord[],
+): Map<string, string> {
+  const assignments = new Map<string, string>();
+  const takenKeys = new Set<string>();
+
+  for (const word of shuffleArray(words.filter((item) => item.meanings.length > 0))) {
+    const candidates = shuffleArray(trimmedMeanings(word.meanings));
+    const conflictFree = candidates.find(
+      (meaning) => !takenKeys.has(normalizeMeaningKey(meaning)),
+    );
+    const chosen = conflictFree ?? candidates[0];
+
+    if (!chosen) continue;
+
+    assignments.set(word.id, chosen);
+    takenKeys.add(normalizeMeaningKey(chosen));
+  }
+
+  return assignments;
+}
+
+/** True when no other word lists the same meaning (case-insensitive). */
+export function isMeaningOwnedByWord(
+  meaning: string,
+  wordId: string,
+  words: FlashcardWord[],
+): boolean {
+  const key = normalizeMeaningKey(meaning);
+  if (!key) return false;
+
+  return !words.some(
+    (word) =>
+      word.id !== wordId &&
+      word.meanings.some((item) => normalizeMeaningKey(item) === key),
+  );
+}
+
+/** Drop words whose assigned meaning collides with an earlier word in the set. */
+export function filterConflictFreeAssignments(
+  words: FlashcardWord[],
+  assignments: Map<string, string>,
+): FlashcardWord[] {
+  const seen = new Set<string>();
+  const result: FlashcardWord[] = [];
+
+  for (const word of words) {
+    const meaning = assignments.get(word.id);
+    if (!meaning) continue;
+
+    const key = normalizeMeaningKey(meaning);
+    if (seen.has(key)) continue;
+
+    seen.add(key);
+    result.push(word);
+  }
+
+  return result;
 }

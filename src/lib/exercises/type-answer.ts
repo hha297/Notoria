@@ -1,8 +1,10 @@
 import type { FlashcardWord } from "@/types/flashcards";
 import type { FlashcardStudyMode } from "@/types/flashcards";
 import {
+  assignWordMeanings,
   buildMixedDirections,
-  primaryMeaning,
+  isMeaningOwnedByWord,
+  normalizeMeaningKey,
   shuffleArray,
   type StudyDirection,
 } from "@/lib/exercises/utils";
@@ -32,6 +34,7 @@ export function buildTypeAnswerItems(
   words: FlashcardWord[],
   studyMode: FlashcardStudyMode,
 ): TypeAnswerItem[] {
+  const assignments = assignWordMeanings(words);
   const directions =
     studyMode === "mixed"
       ? buildMixedDirections(words.map((word) => word.id))
@@ -40,7 +43,8 @@ export function buildTypeAnswerItems(
   const items: TypeAnswerItem[] = [];
 
   for (const word of words) {
-    if (word.meanings.length === 0) continue;
+    const assignedMeaning = assignments.get(word.id);
+    if (!assignedMeaning) continue;
 
     const direction: StudyDirection =
       studyMode === "word-to-meaning"
@@ -49,14 +53,20 @@ export function buildTypeAnswerItems(
           ? "MEANING_TO_WORD"
           : directions[word.id] ?? "WORD_TO_MEANING";
 
-    const meaning = primaryMeaning(word.meanings);
+    if (
+      direction === "MEANING_TO_WORD" &&
+      !isMeaningOwnedByWord(assignedMeaning, word.id, words)
+    ) {
+      continue;
+    }
+
     const isWordPrompt = direction === "WORD_TO_MEANING";
 
     items.push({
-      id: `${word.id}-${direction}`,
+      id: `${word.id}-${direction}-${normalizeMeaningKey(assignedMeaning)}`,
       wordId: word.id,
       direction,
-      prompt: isWordPrompt ? word.word : meaning,
+      prompt: isWordPrompt ? word.word : assignedMeaning,
       acceptableAnswers: buildAnswers(
         isWordPrompt ? word.meanings : [word.word],
       ),
