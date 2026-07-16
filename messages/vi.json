@@ -94,9 +94,9 @@
   },
   "tags": {
     "groups": {
-      "difficulty": "Độ khó",
+      "difficulty": "Cấp độ",
       "topic": "Chủ đề",
-      "grammar": "Ngữ pháp / Cách dùng",
+      "grammar": "Cách dùng",
       "learningStatus": "Trạng thái học",
       "custom": "Thẻ tùy chỉnh"
     },
@@ -110,25 +110,28 @@
     },
     "topic": {
       "daily": "Hàng ngày",
+      "home": "Nhà cửa",
+      "food": "Ăn uống",
       "travel": "Du lịch",
       "work": "Công việc",
+      "people": "Con người",
+      "feelings": "Cảm xúc",
+      "culture": "Văn hóa",
       "school": "Trường học",
       "business": "Kinh doanh",
       "technology": "Công nghệ",
-      "food": "Ẩm thực",
       "health": "Sức khỏe",
       "shopping": "Mua sắm",
       "family": "Gia đình",
       "nature": "Thiên nhiên",
-      "culture": "Văn hóa",
       "sports": "Thể thao"
     },
     "grammar": {
-      "grammar": "Ngữ pháp",
       "formal": "Trang trọng",
       "informal": "Thân mật",
       "slang": "Tiếng lóng",
       "idiom": "Thành ngữ",
+      "grammar": "Ngữ pháp",
       "expression": "Cụm từ"
     },
     "learningStatus": {

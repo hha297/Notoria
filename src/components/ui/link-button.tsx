@@ -14,7 +14,7 @@ export function LinkButton({
 }: LinkButtonProps) {
   return (
     <Link
-      className={cn(buttonVariants({ variant, size, className }))}
+      className={cn(buttonVariants({ variant, size }), className)}
       {...props}
     />
   );

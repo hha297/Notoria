@@ -192,9 +192,9 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
       if (initialData?.id) {
         await updateVocabularyWord(initialData.id, payload);
         toast.success(t("updated"));
-        router.refresh();
+        router.push("/vocabulary");
       } else {
-        const word = await createVocabularyWord(payload);
+        await createVocabularyWord(payload);
         toast.success(t("saved"));
         router.push("/vocabulary");
       }

@@ -1,14 +1,11 @@
-export type TagGroupKey =
-  | "difficulty"
-  | "topic"
-  | "grammar"
-  | "learningStatus";
+export type TagGroupKey = "difficulty" | "topic" | "grammar";
 
 export type BuiltinTag = {
   id: string;
   group: TagGroupKey;
 };
 
+/** Tags shown in the picker — kept short and everyday-friendly. */
 export const BUILTIN_TAG_GROUPS: Record<TagGroupKey, BuiltinTag[]> = {
   difficulty: [
     { id: "a1", group: "difficulty" },
@@ -20,36 +17,47 @@ export const BUILTIN_TAG_GROUPS: Record<TagGroupKey, BuiltinTag[]> = {
   ],
   topic: [
     { id: "daily", group: "topic" },
+    { id: "home", group: "topic" },
+    { id: "food", group: "topic" },
     { id: "travel", group: "topic" },
     { id: "work", group: "topic" },
-    { id: "school", group: "topic" },
-    { id: "business", group: "topic" },
-    { id: "technology", group: "topic" },
-    { id: "food", group: "topic" },
-    { id: "health", group: "topic" },
-    { id: "shopping", group: "topic" },
-    { id: "family", group: "topic" },
-    { id: "nature", group: "topic" },
+    { id: "people", group: "topic" },
+    { id: "feelings", group: "topic" },
     { id: "culture", group: "topic" },
-    { id: "sports", group: "topic" },
   ],
   grammar: [
-    { id: "grammar", group: "grammar" },
     { id: "formal", group: "grammar" },
     { id: "informal", group: "grammar" },
     { id: "slang", group: "grammar" },
     { id: "idiom", group: "grammar" },
-    { id: "expression", group: "grammar" },
-  ],
-  learningStatus: [
-    { id: "new", group: "learningStatus" },
-    { id: "learning", group: "learningStatus" },
-    { id: "review", group: "learningStatus" },
-    { id: "mastered", group: "learningStatus" },
   ],
 };
 
+/** Older tag ids that may still exist on saved words. */
+const LEGACY_TAG_GROUPS: Record<string, TagGroupKey | "learningStatus"> = {
+  school: "topic",
+  business: "topic",
+  technology: "topic",
+  health: "topic",
+  shopping: "topic",
+  family: "topic",
+  nature: "topic",
+  sports: "topic",
+  grammar: "grammar",
+  expression: "grammar",
+  new: "learningStatus",
+  learning: "learningStatus",
+  review: "learningStatus",
+  mastered: "learningStatus",
+};
+
 export const ALL_BUILTIN_TAGS = Object.values(BUILTIN_TAG_GROUPS).flat();
+
+export const TAG_PICKER_GROUPS: TagGroupKey[] = [
+  "difficulty",
+  "topic",
+  "grammar",
+];
 
 export const PARTS_OF_SPEECH = [
   "noun",
@@ -79,10 +87,12 @@ export function getCustomTagName(tag: string): string {
 }
 
 export function isBuiltinTag(tag: string): boolean {
-  return ALL_BUILTIN_TAGS.some((item) => item.id === tag);
+  return (
+    ALL_BUILTIN_TAGS.some((item) => item.id === tag) || tag in LEGACY_TAG_GROUPS
+  );
 }
 
-export function getTagGroupForId(tagId: string): TagGroupKey {
+export function getTagGroupForId(tagId: string): TagGroupKey | "learningStatus" {
   if (BUILTIN_TAG_GROUPS.difficulty.some((tag) => tag.id === tagId)) {
     return "difficulty";
   }
@@ -92,7 +102,7 @@ export function getTagGroupForId(tagId: string): TagGroupKey {
   if (BUILTIN_TAG_GROUPS.grammar.some((tag) => tag.id === tagId)) {
     return "grammar";
   }
-  return "learningStatus";
+  return LEGACY_TAG_GROUPS[tagId] ?? "topic";
 }
 
 export function getTagLabel(

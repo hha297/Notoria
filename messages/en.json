@@ -94,9 +94,9 @@
   },
   "tags": {
     "groups": {
-      "difficulty": "Difficulty",
+      "difficulty": "Level",
       "topic": "Topic",
-      "grammar": "Grammar / Usage",
+      "grammar": "Usage",
       "learningStatus": "Learning status",
       "custom": "Custom tags"
     },
@@ -109,26 +109,29 @@
       "c2": "C2"
     },
     "topic": {
-      "daily": "Daily",
+      "daily": "Everyday",
+      "home": "Home",
+      "food": "Food",
       "travel": "Travel",
       "work": "Work",
+      "people": "People",
+      "feelings": "Feelings",
+      "culture": "Culture",
       "school": "School",
       "business": "Business",
       "technology": "Technology",
-      "food": "Food",
       "health": "Health",
       "shopping": "Shopping",
       "family": "Family",
       "nature": "Nature",
-      "culture": "Culture",
       "sports": "Sports"
     },
     "grammar": {
-      "grammar": "Grammar",
       "formal": "Formal",
       "informal": "Informal",
       "slang": "Slang",
       "idiom": "Idiom",
+      "grammar": "Grammar",
       "expression": "Expression"
     },
     "learningStatus": {

@@ -21,7 +21,7 @@ import {
   getTagLabel,
   isCustomTagKey,
   PARTS_OF_SPEECH,
-  type TagGroupKey,
+  TAG_PICKER_GROUPS,
 } from "@/lib/vocabulary-tags";
 import { VocabularyRowActions } from "@/components/vocabulary/vocabulary-row-actions";
 
@@ -66,12 +66,7 @@ export function VocabularyTable({ words }: VocabularyTableProps) {
     );
   }, [words]);
 
-  const tagFilterGroups: TagGroupKey[] = [
-    "difficulty",
-    "topic",
-    "grammar",
-    "learningStatus",
-  ];
+  const tagFilterGroups = TAG_PICKER_GROUPS;
 
   const filteredWords = useMemo(() => {
     const query = search.trim().toLowerCase();

@@ -94,9 +94,9 @@
   },
   "tags": {
     "groups": {
-      "difficulty": "Vaikeustaso",
+      "difficulty": "Taso",
       "topic": "Aihe",
-      "grammar": "Kielioppi / Käyttö",
+      "grammar": "Käyttö",
       "learningStatus": "Oppimistila",
       "custom": "Omat tunnisteet"
     },
@@ -110,25 +110,28 @@
     },
     "topic": {
       "daily": "Arki",
+      "home": "Koti",
+      "food": "Ruoka",
       "travel": "Matkailu",
       "work": "Työ",
+      "people": "Ihmiset",
+      "feelings": "Tunteet",
+      "culture": "Kulttuuri",
       "school": "Koulu",
       "business": "Liiketoiminta",
       "technology": "Teknologia",
-      "food": "Ruoka",
       "health": "Terveys",
       "shopping": "Ostokset",
       "family": "Perhe",
       "nature": "Luonto",
-      "culture": "Kulttuuri",
       "sports": "Urheilu"
     },
     "grammar": {
-      "grammar": "Kielioppi",
       "formal": "Muodollinen",
       "informal": "Epämuodollinen",
       "slang": "Slangi",
-      "idiom": "Idiomit",
+      "idiom": "Idiomi",
+      "grammar": "Kielioppi",
       "expression": "Ilmaisu"
     },
     "learningStatus": {

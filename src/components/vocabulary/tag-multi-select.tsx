@@ -11,6 +11,7 @@ import {
   BUILTIN_TAG_GROUPS,
   customTagKey,
   getTagLabel,
+  TAG_PICKER_GROUPS,
   type TagGroupKey,
 } from "@/lib/vocabulary-tags";
 
@@ -153,9 +154,7 @@ export function TagMultiSelect({
 
         {open && (
           <div className="space-y-4 border-t border-hairline-cloud px-4 py-4">
-            {(
-              ["difficulty", "topic", "grammar", "learningStatus"] as TagGroupKey[]
-            ).map(renderGroup)}
+            {TAG_PICKER_GROUPS.map(renderGroup)}
 
             {sessionCustomTags.length > 0 && (
               <div className="space-y-1">
