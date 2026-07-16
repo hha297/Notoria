@@ -88,7 +88,9 @@
     "sortAsc": "A → Z",
     "sortDesc": "Z → A",
     "noResults": "No words match your filters",
-    "deleteConfirm": "Delete this word?"
+    "deleteConfirmTitle": "Delete this word?",
+    "deleteConfirmDescription": "\"{word}\" will be permanently removed from your vocabulary.",
+    "wordExists": "This word already exists in your vocabulary."
   },
   "tags": {
     "groups": {
@@ -222,6 +224,12 @@
       "shuffle": "Shuffle",
       "finish": "Finish round"
     },
+    "session": {
+      "complete": "Session complete!",
+      "score": "{correct} / {total} correct",
+      "pairsMatched": "Matched {count} pairs",
+      "tryAgain": "Try again"
+    },
     "multipleChoice": {
       "questionWord": "What is the meaning of this word?",
       "questionMeaning": "Which word matches this meaning?",
@@ -312,7 +320,8 @@
       "GOOD": "Good",
       "EASY": "Easy"
     },
-    "sessionComplete": "Session complete — starting a fresh round",
+    "sessionComplete": "Session complete!",
+    "tryAgain": "Try again",
     "ratingFailed": "Could not save your rating"
   },
   "dashboard": {

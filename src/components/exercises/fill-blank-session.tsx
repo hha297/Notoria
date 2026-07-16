@@ -3,15 +3,17 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight, Lightbulb, Shuffle } from "lucide-react";
+import { ChevronLeft, ChevronRight, Lightbulb, RotateCcw } from "lucide-react";
 import { CheckCircle2, XCircle } from "lucide-react";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
+import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { buildFillBlankItems, type FillBlankItem } from "@/lib/exercises/fill-blank";
-import { answersMatchAny, shuffleArray } from "@/lib/exercises/utils";
+import { sampleSessionItems } from "@/lib/exercises/session-size";
+import { answersMatchAny } from "@/lib/exercises/utils";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
 import { DEFAULT_FLASHCARD_FILTERS } from "@/types/flashcards";
@@ -24,25 +26,35 @@ type FillBlankSessionProps = {
 
 export function FillBlankSession({ workspaceId, words }: FillBlankSessionProps) {
   const t = useTranslations("exercises.fillInBlank");
+  const tSession = useTranslations("exercises.session");
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [itemIds, setItemIds] = useState<string[]>([]);
   const [index, setIndex] = useState(0);
   const [input, setInput] = useState("");
   const [revealed, setRevealed] = useState(false);
+  const [sessionComplete, setSessionComplete] = useState(false);
   const [score, setScore] = useState({ correct: 0, answered: 0 });
 
   const filteredWords = useMemo(
     () => filterFlashcardWords(words, filters),
     [words, filters],
   );
-  const items = useMemo(() => buildFillBlankItems(filteredWords), [filteredWords]);
-  const itemMap = useMemo(() => new Map(items.map((i) => [i.id, i])), [items]);
+  const poolItems = useMemo(() => buildFillBlankItems(filteredWords), [filteredWords]);
+  const itemMap = useMemo(() => new Map(poolItems.map((i) => [i.id, i])), [poolItems]);
 
-  useEffect(() => {
-    setItemIds(shuffleArray(items).map((i) => i.id));
+  const startSession = useCallback(() => {
+    const sampled = sampleSessionItems(poolItems);
+    setItemIds(sampled.map((i) => i.id));
     setIndex(0);
     setScore({ correct: 0, answered: 0 });
-  }, [items, workspaceId]);
+    setSessionComplete(false);
+    setInput("");
+    setRevealed(false);
+  }, [poolItems]);
+
+  useEffect(() => {
+    startSession();
+  }, [startSession, workspaceId]);
 
   useEffect(() => {
     setInput("");
@@ -55,12 +67,6 @@ export function FillBlankSession({ workspaceId, words }: FillBlankSessionProps) 
     ? answersMatchAny(input, current.acceptableAnswers)
     : false;
 
-  const restart = useCallback(() => {
-    setItemIds(shuffleArray(items).map((i) => i.id));
-    setIndex(0);
-    setScore({ correct: 0, answered: 0 });
-  }, [items]);
-
   const check = useCallback(() => {
     if (!current || revealed || !input.trim()) return;
     setRevealed(true);
@@ -71,9 +77,12 @@ export function FillBlankSession({ workspaceId, words }: FillBlankSessionProps) 
   }, [current, input, revealed]);
 
   const next = useCallback(() => {
-    if (index < total - 1) setIndex((i) => i + 1);
-    else restart();
-  }, [index, total, restart]);
+    if (index < total - 1) {
+      setIndex((i) => i + 1);
+      return;
+    }
+    setSessionComplete(true);
+  }, [index, total]);
 
   useHotkeys("enter", (e) => {
     e.preventDefault();
@@ -82,7 +91,7 @@ export function FillBlankSession({ workspaceId, words }: FillBlankSessionProps) 
   }, { enableOnFormTags: true }, [revealed, check, next]);
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
-  if (items.length === 0) {
+  if (poolItems.length === 0) {
     return (
       <div className="space-y-6">
         <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
@@ -91,11 +100,20 @@ export function FillBlankSession({ workspaceId, words }: FillBlankSessionProps) 
     );
   }
 
-  if (!current) return null;
+  if (!current && !sessionComplete) return null;
 
   return (
     <div className="space-y-6">
       <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
+      {sessionComplete ? (
+        <SessionCompleteCard
+          title={tSession("complete")}
+          scoreLabel={tSession("score", { correct: score.correct, total })}
+          tryAgainLabel={tSession("tryAgain")}
+          onTryAgain={startSession}
+        />
+      ) : current ? (
+        <>
       <ExerciseProgressHeader
         progressLabel={t("progress", { current: index + 1, total })}
         scoreLabel={t("score", { correct: score.correct, answered: score.answered })}
@@ -117,10 +135,13 @@ export function FillBlankSession({ workspaceId, words }: FillBlankSessionProps) 
         onPrev={() => setIndex((i) => i - 1)}
         onNext={next}
         onCheck={check}
-        onShuffle={restart}
+        onTryAgain={startSession}
+        tryAgainLabel={tSession("tryAgain")}
         canCheck={!!input.trim()}
         isLast={index >= total - 1}
       />
+        </>
+      ) : null}
     </div>
   );
 }
@@ -246,7 +267,8 @@ function ExerciseNav({
   onPrev,
   onNext,
   onCheck,
-  onShuffle,
+  onTryAgain,
+  tryAgainLabel,
   canCheck,
   isLast,
 }: {
@@ -256,7 +278,8 @@ function ExerciseNav({
   onPrev: () => void;
   onNext: () => void;
   onCheck: () => void;
-  onShuffle: () => void;
+  onTryAgain: () => void;
+  tryAgainLabel: string;
   canCheck: boolean;
   isLast: boolean;
 }) {
@@ -278,9 +301,9 @@ function ExerciseNav({
           </Button>
         )}
       </div>
-      <Button type="button" variant="ghost" onClick={onShuffle}>
-        <Shuffle className="size-4" />
-        {t("shuffle")}
+      <Button type="button" variant="ghost" onClick={onTryAgain}>
+        <RotateCcw className="size-4" />
+        {tryAgainLabel}
       </Button>
     </div>
   );

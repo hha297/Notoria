@@ -10,6 +10,7 @@ import { FlashcardCard } from "@/components/flashcards/flashcard-card";
 import { FlashcardControls } from "@/components/flashcards/flashcard-controls";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { FlashcardRatingBar } from "@/components/flashcards/flashcard-rating-bar";
+import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { LinkButton } from "@/components/ui/link-button";
 import { Progress } from "@/components/ui/progress";
 import { recordFlashcardReview } from "@/lib/actions/flashcards";
@@ -43,6 +44,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FILTERS);
   const [studyMode, setStudyMode] = useState<FlashcardStudyMode>("word-to-meaning");
   const [session, setSession] = useState<FlashcardSessionState | null>(null);
+  const [sessionComplete, setSessionComplete] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const filteredWords = useMemo(
@@ -73,9 +75,12 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
   useEffect(() => {
     if (filteredWords.length === 0) {
       setSession(null);
+      setSessionComplete(false);
       clearSessionState(workspaceId);
       return;
     }
+
+    setSessionComplete(false);
 
     const saved = loadSessionState(workspaceId);
     if (canRestoreSession(saved, workspaceId, filtersKey, availableIds)) {
@@ -163,6 +168,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
       studyMode,
     });
 
+    setSessionComplete(false);
     setSession(nextSession);
     saveSessionState(nextSession);
   }, [filteredWords, filters, studyMode, workspaceId]);
@@ -181,6 +187,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
       isFlipped: false,
     });
 
+    setSessionComplete(false);
     setSession(nextSession);
     saveSessionState(nextSession);
   }, [filteredWords, filters, studyMode, workspaceId]);
@@ -206,8 +213,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
               isFlipped: false,
             }));
           } else {
-            toast.success(t("sessionComplete"));
-            handleRestart();
+            setSessionComplete(true);
           }
 
           router.refresh();
@@ -219,10 +225,8 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
     [
       currentDirection,
       currentWord,
-      handleRestart,
       router,
       session,
-      t,
       updateSession,
     ],
   );
@@ -273,7 +277,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
     );
   }
 
-  if (!session || !currentWord) {
+  if (!session || (!currentWord && !sessionComplete)) {
     return null;
   }
 
@@ -288,48 +292,62 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
         showStudyMode
       />
 
-      <div className="space-y-3">
-        <div className="flex items-center justify-between gap-4 text-sm">
-          <p className="font-medium text-ink">
-            {t("progress", { current: currentNumber, total: totalCards })}
-          </p>
-          <p className="text-muted-foreground">{t("keyboardHint")}</p>
-        </div>
-        <Progress value={progressValue} />
-      </div>
-
-      <FlashcardCard
-        word={currentWord}
-        direction={currentDirection}
-        isFlipped={session.isFlipped}
-        onFlip={handleFlip}
-      />
-
-      {session.isFlipped ? (
-        <div className="space-y-4">
-          <FlashcardRatingBar onRate={handleRate} isSubmitting={isPending} />
-          <FlashcardControls
-            canGoPrevious={session.currentIndex > 0}
-            canGoNext={session.currentIndex < session.cardIds.length - 1}
-            isFlipped={session.isFlipped}
-            onPrevious={handlePrevious}
-            onNext={handleNext}
-            onFlip={handleFlip}
-            onShuffle={handleShuffle}
-            onRestart={handleRestart}
-          />
-        </div>
-      ) : (
-        <FlashcardControls
-          canGoPrevious={session.currentIndex > 0}
-          canGoNext={session.currentIndex < session.cardIds.length - 1}
-          isFlipped={session.isFlipped}
-          onPrevious={handlePrevious}
-          onNext={handleNext}
-          onFlip={handleFlip}
-          onShuffle={handleShuffle}
-          onRestart={handleRestart}
+      {sessionComplete ? (
+        <SessionCompleteCard
+          title={t("sessionComplete")}
+          scoreLabel={t("progress", {
+            current: totalCards,
+            total: totalCards,
+          })}
+          tryAgainLabel={t("tryAgain")}
+          onTryAgain={handleShuffle}
         />
+      ) : (
+        <>
+          <div className="space-y-3">
+            <div className="flex items-center justify-between gap-4 text-sm">
+              <p className="font-medium text-ink">
+                {t("progress", { current: currentNumber, total: totalCards })}
+              </p>
+              <p className="text-muted-foreground">{t("keyboardHint")}</p>
+            </div>
+            <Progress value={progressValue} />
+          </div>
+
+          <FlashcardCard
+            word={currentWord!}
+            direction={currentDirection}
+            isFlipped={session.isFlipped}
+            onFlip={handleFlip}
+          />
+
+          {session.isFlipped ? (
+            <div className="mx-auto flex w-full max-w-lg flex-col items-center gap-4">
+              <FlashcardRatingBar onRate={handleRate} isSubmitting={isPending} />
+              <FlashcardControls
+                canGoPrevious={session.currentIndex > 0}
+                canGoNext={session.currentIndex < session.cardIds.length - 1}
+                isFlipped={session.isFlipped}
+                onPrevious={handlePrevious}
+                onNext={handleNext}
+                onFlip={handleFlip}
+                onShuffle={handleShuffle}
+                onRestart={handleRestart}
+              />
+            </div>
+          ) : (
+            <FlashcardControls
+              canGoPrevious={session.currentIndex > 0}
+              canGoNext={session.currentIndex < session.cardIds.length - 1}
+              isFlipped={session.isFlipped}
+              onPrevious={handlePrevious}
+              onNext={handleNext}
+              onFlip={handleFlip}
+              onShuffle={handleShuffle}
+              onRestart={handleRestart}
+            />
+          )}
+        </>
       )}
     </div>
   );

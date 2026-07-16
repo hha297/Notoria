@@ -88,7 +88,9 @@
     "sortAsc": "A → Ö",
     "sortDesc": "Ö → A",
     "noResults": "Yksikään sana ei vastaa suodattimia",
-    "deleteConfirm": "Poistetaanko tämä sana?"
+    "deleteConfirmTitle": "Poistetaanko tämä sana?",
+    "deleteConfirmDescription": "\"{word}\" poistetaan pysyvästi sanastostasi.",
+    "wordExists": "Tämä sana on jo sanastossasi."
   },
   "tags": {
     "groups": {
@@ -222,6 +224,12 @@
       "shuffle": "Sekoita",
       "finish": "Lopeta kierros"
     },
+    "session": {
+      "complete": "Harjoitus valmis!",
+      "score": "{correct} / {total} oikein",
+      "pairsMatched": "{count} paria yhdistetty",
+      "tryAgain": "Yritä uudelleen"
+    },
     "multipleChoice": {
       "questionWord": "Mikä on tämän sanan merkitys?",
       "questionMeaning": "Mikä sana vastaa tätä merkitystä?",
@@ -312,7 +320,8 @@
       "GOOD": "Hyvä",
       "EASY": "Helppo"
     },
-    "sessionComplete": "Sessio valmis — aloitetaan uusi kierros",
+    "sessionComplete": "Harjoitus valmis!",
+    "tryAgain": "Yritä uudelleen",
     "ratingFailed": "Arviota ei voitu tallentaa"
   },
   "dashboard": {

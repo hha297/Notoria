@@ -88,7 +88,9 @@
     "sortAsc": "A → Z",
     "sortDesc": "Z → A",
     "noResults": "Không có từ nào khớp bộ lọc",
-    "deleteConfirm": "Xóa từ này?"
+    "deleteConfirmTitle": "Xóa từ này?",
+    "deleteConfirmDescription": "\"{word}\" sẽ bị xóa vĩnh viễn khỏi từ vựng của bạn.",
+    "wordExists": "Từ này đã có trong từ vựng."
   },
   "tags": {
     "groups": {
@@ -222,6 +224,12 @@
       "shuffle": "Xáo trộn",
       "finish": "Hoàn thành vòng"
     },
+    "session": {
+      "complete": "Hoàn thành phiên luyện tập!",
+      "score": "{correct} / {total} đúng",
+      "pairsMatched": "Đã ghép {count} cặp",
+      "tryAgain": "Thử lại"
+    },
     "multipleChoice": {
       "questionWord": "Nghĩa của từ này là gì?",
       "questionMeaning": "Từ nào khớp với nghĩa này?",
@@ -312,7 +320,8 @@
       "GOOD": "Tốt",
       "EASY": "Dễ"
     },
-    "sessionComplete": "Hoàn thành phiên — bắt đầu vòng mới",
+    "sessionComplete": "Hoàn thành phiên học!",
+    "tryAgain": "Thử lại",
     "ratingFailed": "Không thể lưu đánh giá"
   },
   "dashboard": {
