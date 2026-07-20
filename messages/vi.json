@@ -314,9 +314,34 @@
       "saveFailed": "Không lưu được bài tập",
       "autosaving": "Đang tự lưu...",
       "autosaveReady": "Thay đổi sẽ tự lưu",
-      "autosavePending": "Lưu lần đầu để bật tự lưu"
+      "autosavePending": "Lưu lần đầu để bật tự lưu",
+      "export": {
+        "button": "Xuất",
+        "title": "Xuất bài viết",
+        "description": "Chọn định dạng và tùy chọn cho bảng bài tập in được.",
+        "format": "Định dạng xuất",
+        "formatPdf": "PDF (.pdf)",
+        "formatDocx": "Word (.docx)",
+        "options": "Tùy chọn",
+        "includeExamples": "Kèm câu trả lời mẫu",
+        "includeNotes": "Kèm ghi chú / gợi ý",
+        "leaveBlankSpace": "Để khoảng trống viết sau mỗi câu hỏi",
+        "confirm": "Xuất",
+        "success": "Đã bắt đầu tải xuống",
+        "failed": "Xuất thất bại",
+        "empty": "Thêm ít nhất một câu hỏi hoặc nội dung trước khi xuất",
+        "documentHeading": "Bài tập viết",
+        "titleLabel": "Tiêu đề",
+        "sectionLabel": "Phần",
+        "questionLabel": "Câu hỏi",
+        "exampleAnswerLabel": "Câu trả lời mẫu",
+        "notesLabel": "Ghi chú"
+      }
     }
   },
+  "flashcards": {
+    "title": "Flashcards",
+    "mode": "học",
     "description": "Học từ vựng với thẻ lật mượt, phím tắt và đánh giá lặp lại ngắt quãng.",
     "noWorkspace": "Tạo workspace trước khi bắt đầu học flashcards.",
     "emptyTitle": "Chưa có từ vựng",

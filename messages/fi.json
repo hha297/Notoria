@@ -314,7 +314,29 @@
       "saveFailed": "Tehtävän tallennus epäonnistui",
       "autosaving": "Tallennetaan…",
       "autosaveReady": "Muutokset tallentuvat automaattisesti",
-      "autosavePending": "Tallenna kerran ottaaksesi automaattisen tallennuksen käyttöön"
+      "autosavePending": "Tallenna kerran ottaaksesi automaattisen tallennuksen käyttöön",
+      "export": {
+        "button": "Vie",
+        "title": "Vie kirjoitustehtävä",
+        "description": "Valitse muoto ja asetukset tulostettavalle tehtävälle.",
+        "format": "Vientimuoto",
+        "formatPdf": "PDF (.pdf)",
+        "formatDocx": "Word (.docx)",
+        "options": "Asetukset",
+        "includeExamples": "Sisällytä esimerkkivastaukset",
+        "includeNotes": "Sisällytä muistiinpanot / vinkit",
+        "leaveBlankSpace": "Jätä tyhjää kirjoitustilaa jokaisen kysymyksen jälkeen",
+        "confirm": "Vie",
+        "success": "Lataus aloitettu",
+        "failed": "Vienti epäonnistui",
+        "empty": "Lisää vähintään yksi kysymys tai sisältöä ennen vientiä",
+        "documentHeading": "Kirjoitustehtävä",
+        "titleLabel": "Otsikko",
+        "sectionLabel": "Osio",
+        "questionLabel": "Kysymys",
+        "exampleAnswerLabel": "Esimerkkivastaus",
+        "notesLabel": "Muistiinpanot"
+      }
     }
   },
   "flashcards": {
