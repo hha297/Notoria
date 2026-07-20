@@ -7,8 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
-import { QuestionSetBuilder } from "@/components/exercises/writing/question-set-builder";
-import { WritingExportDialog } from "@/components/exercises/writing/export-dialog";
+import { QuestionSetBuilder } from "@/components/writing/question-set-builder";
+import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -20,7 +20,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
-import { createExercise, updateExercise } from "@/lib/actions/exercises";
+import { createWritingDocument, updateWritingDocument } from "@/lib/actions/writing";
 import {
   parseWritingContent,
   serializeWritingContent,
@@ -32,7 +32,7 @@ import {
 } from "@/lib/writing/content";
 import type { ExerciseFormValues } from "@/schemas/exercise";
 
-type WritingExerciseEditorProps = {
+type WritingEditorProps = {
   exerciseType: ExerciseFormValues["type"];
   initialData?: {
     id: string;
@@ -44,12 +44,12 @@ type WritingExerciseEditorProps = {
 
 const AUTOSAVE_MS = 1500;
 
-export function WritingExerciseEditor({
+export function WritingEditor({
   exerciseType,
   initialData,
-}: WritingExerciseEditorProps) {
+}: WritingEditorProps) {
   const router = useRouter();
-  const t = useTranslations("exercises.writing");
+  const t = useTranslations("writing");
   const type = initialData?.type ?? exerciseType;
 
   const [title, setTitle] = useState(initialData?.title ?? "");
@@ -106,13 +106,13 @@ export function WritingExerciseEditor({
       const payload = buildPayload(title, editorState);
 
       if (initialData?.id) {
-        await updateExercise(initialData.id, payload);
+        await updateWritingDocument(initialData.id, payload);
         if (showToast) toast.success(t("saved"));
         router.refresh();
       } else {
-        const exercise = await createExercise(payload);
+        const exercise = await createWritingDocument(payload);
         if (showToast) toast.success(t("created"));
-        router.push(`/exercises/${exercise.id}`);
+        router.push(`/writing/${exercise.id}`);
       }
     } catch (error) {
       if (showToast) {
@@ -137,7 +137,7 @@ export function WritingExerciseEditor({
 
     setIsAutosaving(true);
     try {
-      await updateExercise(id, buildPayload(nextTitle, nextState));
+      await updateWritingDocument(id, buildPayload(nextTitle, nextState));
     } catch {
       // Autosave failures are silent
     } finally {
@@ -182,7 +182,7 @@ export function WritingExerciseEditor({
     setIsAutosaving(true);
 
     try {
-      await updateExercise(initialData.id, buildPayload(title, nextState));
+      await updateWritingDocument(initialData.id, buildPayload(title, nextState));
     } catch {
       // Autosave failures are silent
     } finally {
@@ -204,7 +204,7 @@ export function WritingExerciseEditor({
 
         <CardContent className="space-y-6 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-6 md:px-8 md:py-8">
           <div className="space-y-2">
-            <Label htmlFor="title">{t("title")}</Label>
+            <Label htmlFor="title">{t("documentTitle")}</Label>
             <Input
               id="title"
               value={title}

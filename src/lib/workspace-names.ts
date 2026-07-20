@@ -26,7 +26,7 @@ const NOUNS = [
   "Horizon",
 ];
 
-export function generateWorkspaceName(languageCode: string): string {
+export function generateWorkspaceName(): string {
   const adjective = ADJECTIVES[Math.floor(Math.random() * ADJECTIVES.length)];
   const noun = NOUNS[Math.floor(Math.random() * NOUNS.length)];
   return `${adjective} ${noun}`;
@@ -45,5 +45,5 @@ export function resolveWorkspaceName(
     return `My ${getLanguageName(languageCode)}`;
   }
 
-  return generateWorkspaceName(languageCode);
+  return generateWorkspaceName();
 }

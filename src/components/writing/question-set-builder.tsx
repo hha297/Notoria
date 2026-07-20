@@ -23,7 +23,7 @@ import { useTranslations } from "next-intl";
 import {
   SectionDragHandle,
   WritingSectionCard,
-} from "@/components/exercises/writing/writing-section-card";
+} from "@/components/writing/writing-section-card";
 import { Button } from "@/components/ui/button";
 import { useMounted } from "@/hooks/use-mounted";
 import {
@@ -93,7 +93,7 @@ export function QuestionSetBuilder({
   sections,
   onChange,
 }: QuestionSetBuilderProps) {
-  const t = useTranslations("exercises.writing");
+  const t = useTranslations("writing");
   const mounted = useMounted();
   const [collapsedIds, setCollapsedIds] = useState<Set<string>>(new Set());
   const sensors = useSensors(

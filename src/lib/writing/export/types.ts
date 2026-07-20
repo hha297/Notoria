@@ -1,4 +1,4 @@
-import type { WritingEditorState, WritingMode } from "@/lib/writing/content";
+import type { WritingMode } from "@/lib/writing/content";
 
 export type ExportFormat = "pdf" | "docx";
 

@@ -221,3 +221,26 @@ export function writingContentHasPrompt(state: WritingEditorState): boolean {
 export function countWritingQuestions(sections: WritingSection[]): number {
   return sections.reduce((total, section) => total + section.questions.length, 0);
 }
+
+export function getWritingListMeta(content: unknown): {
+  mode: WritingMode;
+  sectionCount: number;
+  questionCount: number;
+} {
+  const parsed = parseWritingContent(content);
+
+  if (parsed.mode === "rich_document") {
+    return {
+      mode: "rich_document",
+      sectionCount: 0,
+      questionCount: 0,
+    };
+  }
+
+  return {
+    mode: "question_set",
+    sectionCount: parsed.sections.length,
+    questionCount: countWritingQuestions(parsed.sections),
+  };
+}
+

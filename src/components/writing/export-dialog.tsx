@@ -103,7 +103,7 @@ export function WritingExportDialog({
   title,
   editorState,
 }: WritingExportDialogProps) {
-  const t = useTranslations("exercises.writing.export");
+  const t = useTranslations("writing.export");
   const tc = useTranslations("common");
   const [options, setOptions] = useState<ExportOptions>(DEFAULT_EXPORT_OPTIONS);
   const [isExporting, setIsExporting] = useState(false);

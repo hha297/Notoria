@@ -32,7 +32,7 @@ export function WritingQuestionCard({
   onDelete,
   className,
 }: WritingQuestionCardProps) {
-  const t = useTranslations("exercises.writing");
+  const t = useTranslations("writing");
 
   return (
     <div
@@ -128,7 +128,7 @@ export function QuestionDragHandle({
   attributes: DraggableAttributes;
   listeners?: SyntheticListenerMap;
 }) {
-  const t = useTranslations("exercises.writing");
+  const t = useTranslations("writing");
 
   return (
     <button

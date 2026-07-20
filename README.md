@@ -1,14 +1,14 @@
 # Notoria
 
-**Notoria** is a private web app for language learning. Collect vocabulary in language-specific workspaces, then practice with exercises generated entirely from your own words — no AI, no external dictionaries.
+**Notoria** is a private web application for language learning. Collect vocabulary in language-specific workspaces, then practice with exercises generated entirely from your own words — no AI, no external dictionaries.
 
-Each account owns its own data. The app is not a social platform: no public profiles, no sharing feed, no multiplayer features.
+Each account owns its own data. The app is not a social platform: no public profiles, no sharing feed, and no multiplayer features.
 
 ---
 
-## What you can do today
+## Features
 
-### Authentication & account
+### Authentication & Account
 
 - Register and sign in with email and password (NextAuth credentials, JWT sessions)
 - Protected dashboard routes via middleware
@@ -16,96 +16,131 @@ Each account owns its own data. The app is not a social platform: no public prof
 
 ### Workspaces
 
-- One workspace per language you are learning
-- Switch workspaces from the header; vocabulary and exercises always use the active workspace
-- Default English workspace created on signup
+- One workspace per language you are learning (duplicate languages are blocked)
+- Create and switch workspaces from the header; vocabulary and exercises always use the **active** workspace
+- Active workspace is stored in a cookie and restored across sessions
+- A default English workspace is created on signup
 
 ### Vocabulary
 
-- Add words with **multiple meanings** (drag-and-drop reorder)
-- **Example sentences**, part of speech, notes, and tags (built-in groups + custom tags inline on the form)
-- Filter and sort the vocabulary table (part of speech, tags, search)
-- Learning status tracked per word (`NEW`, `LEARNING`, `REVIEW`, `MASTERED`)
+- Add words with **multiple meanings** and **example sentences** (drag-and-drop reorder)
+- Part of speech, notes, and tags
+- **Tags:** built-in groups (level A1–C2, topic, usage) plus workspace custom tags
+- **Learning status** per word (`NEW`, `LEARNING`, `REVIEW`, `MASTERED`) — updated by flashcard ratings
+- Search, filter (part of speech, tags), and sort (word / last updated)
+- Responsive vocabulary list: card layout on mobile, table on desktop
+- **Export** the currently filtered/sorted list to **PDF**, **CSV**, or **Word (.docx)** with optional columns (part of speech, tags, last updated, notes)
 
-### Exercise Studio
+### Writing
 
-Six study modes under `/exercises`, all generated from workspace vocabulary:
+- Dedicated **Writing** module (separate from Exercise)
+- **Rich document** mode — TipTap rich text editor
+- **Question set** mode — sections and questions (prompt, example answer, notes) with drag-and-drop reorder
+- List view with search and sorting; create, edit, delete
+- Autosave for existing documents
+- **Export** to **PDF** or **Word (.docx)** with options for example answers, notes, and blank writing space
+
+### Exercise
+
+Five study modes under `/exercises`. Quiz modes are generated from workspace vocabulary (no third-party language APIs). Sessions typically sample **20–50** items from the filtered pool.
 
 | Mode | Description |
 | ---- | ----------- |
-| **Flashcards** | Flip cards with keyboard shortcuts and spaced-repetition ratings |
-| **Writing** | Rich-text writing prompts saved in the editor (TipTap) |
-| **Fill in the blank** | Complete example sentences with the missing word |
-| **Multiple choice** | Word ↔ meaning quizzes; distractors from other words in the workspace |
-| **Match pairs** | Quizlet-style word/meaning matching |
-| **Type the answer** | Type the missing word or meaning with instant feedback |
+| **Flashcards** | Flip cards with keyboard shortcuts; spaced-repetition ratings (Again / Hard / Good / Easy) update learning status |
+| **Fill in the Blank** | Complete your own example sentences with the missing word |
+| **Multiple Choice** | Word ↔ meaning quizzes; distractors from other words in the workspace |
+| **Match Pairs** | Quizlet-style word/meaning matching boards |
+| **Type the Answer** | Type the word or meaning with instant feedback |
 
-Shared filters (part of speech, learning status, tags) and study-direction toggles where applicable. No third-party language APIs — only data you entered.
+Shared filters on quiz sessions: part of speech, learning status, and tags. Study-direction toggles (word → meaning / meaning → word / mixed) where applicable.
 
 ### Dashboard
 
-- Word counts, words ready to practice, active workspace summary
-- Quick links to vocabulary and Exercise Studio
+- Word counts, words ready to practice, and active workspace summary
+- Quick links to vocabulary and Exercise
+- Recent words list
 
-### UI language
+### Internationalization
 
-- App UI available in **English**, **Vietnamese**, and **Finnish** (header selector, `next-intl`)
+- App UI available in **English**, **Vietnamese**, and **Finnish**
+- Language selector in the header (`next-intl`, cookie-persisted)
+- Separate from workspace learning languages (Finnish, Vietnamese, Japanese, etc.)
 
----
+### Responsive Design
 
-## Tech stack
-
-| Layer        | Technology                                              |
-| ------------ | ------------------------------------------------------- |
-| Framework    | Next.js 16 (App Router)                                 |
-| Language     | TypeScript                                              |
-| Styling      | Tailwind CSS v4, shadcn/ui                              |
-| Database     | PostgreSQL 16                                           |
-| ORM          | Drizzle                                                 |
-| Auth         | NextAuth v5 (credentials)                               |
-| i18n         | next-intl                                               |
-| Forms        | React Hook Form + Zod                                   |
-| Editor       | TipTap (writing exercises)                              |
-| Drag & drop  | dnd-kit                                                 |
-| State        | TanStack Query (server data)                            |
-| Media        | Cloudinary (profile avatars)                            |
-| Icons        | Lucide                                                  |
-| Deployment   | Docker, Docker Compose                                  |
+- Layouts and navigation optimized for **mobile**, **tablet**, and **desktop**
+- Mobile sidebar drawer closes after navigation
+- Touch-friendly controls, adaptive padding, and mobile-friendly vocabulary cards
 
 ---
 
-## Project structure
+## Tech Stack
+
+| Layer | Technology |
+| ----- | ---------- |
+| Framework | Next.js 16 (App Router), React 19 |
+| Language | TypeScript |
+| Styling | Tailwind CSS v4, shadcn/ui (Base UI) |
+| Database | PostgreSQL 16 |
+| ORM | Drizzle |
+| Auth | NextAuth v5 (credentials) |
+| i18n | next-intl |
+| Forms | React Hook Form + Zod |
+| Editor | TipTap (writing exercises) |
+| Drag & drop | dnd-kit |
+| Export | `@react-pdf/renderer`, `docx` |
+| Media | Cloudinary (profile avatars) |
+| Icons | Lucide |
+| Motion | Motion (flashcards) |
+| Deployment | Docker, Docker Compose |
+
+---
+
+## Project Structure
 
 ```
+messages/                 # UI locales: en.json, vi.json, fi.json
+public/
+├── fonts/                # Export fonts (PDF)
+└── background.png        # Auth hero (desktop/tablet)
 src/
 ├── app/
-│   ├── (auth)/             # Sign in, sign up
-│   ├── (dashboard)/        # Main app (sidebar layout)
-│   │   ├── account/        # Profile, password, avatar
-│   │   ├── exercises/      # Exercise Studio + study modes
-│   │   └── vocabulary/     # Word list and editor
-│   └── api/auth/           # NextAuth route handler
+│   ├── (auth)/           # Sign in, sign up
+│   ├── (dashboard)/      # Sidebar layout
+│   │   ├── account/      # Profile, password, avatar
+│   │   ├── exercises/    # Exercise (vocabulary practice)
+│   │   ├── vocabulary/   # Word list and editor
+│   │   └── writing/      # Writing list and editor
+│   └── api/auth/         # NextAuth route handler
 ├── components/
-│   ├── account/            # Account settings, user avatar
-│   ├── auth/               # Login, register, password input
-│   ├── editor/             # TipTap rich text editor
-│   ├── exercises/          # Study sessions, type picker
-│   ├── flashcards/         # Flashcard session UI
-│   ├── layout/             # Sidebar, header, workspace selector
-│   ├── vocabulary/         # Forms, table, tags
-│   └── ui/                 # shadcn primitives
-├── db/                     # Drizzle schema and client
+│   ├── account/          # Account settings, avatar
+│   ├── auth/             # Login, register, password input
+│   ├── editor/           # TipTap rich text editor
+│   ├── exercises/        # Sessions, filters
+│   ├── flashcards/       # Flashcard session UI
+│   ├── layout/           # Sidebar, header, page chrome
+│   ├── providers/        # Session, query, tooltip wrappers
+│   ├── ui/               # shadcn primitives
+│   ├── vocabulary/       # Forms, table, tags, export dialog
+│   ├── workspace/        # Create workspace dialog
+│   └── writing/          # Writing list, editor, export dialog
+├── db/                   # Drizzle schema and client
+├── hooks/                # Shared React hooks
+├── i18n/                 # Locale config and request helpers
 ├── lib/
-│   ├── actions/            # Server Actions (CRUD, auth, account)
-│   ├── exercises/          # Exercise generation from vocabulary
-│   └── flashcards/         # Flashcard session logic
-├── messages/               # en.json, vi.json, fi.json
-└── schemas/                # Zod validation
+│   ├── actions/          # Server Actions (CRUD, auth, account)
+│   ├── auth/             # Session helpers
+│   ├── exercises/        # Quiz generation + session sizing
+│   ├── flashcards/       # Flashcard filters and SRS session logic
+│   ├── vocabulary/       # Vocabulary export (PDF / CSV / DOCX)
+│   └── writing/          # Writing content model + export
+├── schemas/              # Zod validation
+└── types/                # Shared TypeScript types
 ```
 
 ---
 
-## Requirements
+## Prerequisites
 
 - **Node.js** 20+
 - **Docker Desktop** (for local PostgreSQL)
@@ -114,15 +149,15 @@ src/
 
 ---
 
-## Local setup
+## Getting Started
 
-### 1. Install dependencies
+### 1. Install Dependencies
 
 ```bash
 npm install
 ```
 
-### 2. Environment variables
+### 2. Configure Environment Variables
 
 Create `.env.local` in the project root:
 
@@ -141,7 +176,7 @@ CLOUDINARY_API_SECRET=
 
 > PostgreSQL runs on port **5434** (not 5432) to avoid conflicts with other databases on your machine.
 
-### 3. Start the database
+### 3. Start the Database
 
 ```bash
 docker compose up -d
@@ -149,13 +184,13 @@ docker compose up -d
 
 This starts container `notoria-db` (image: `postgres:16-alpine`).
 
-### 4. Apply database schema
+### 4. Apply the Database Schema
 
 ```bash
 npm run db:push
 ```
 
-### 5. Run the dev server
+### 5. Start the Development Server
 
 ```bash
 npm run dev
@@ -165,56 +200,64 @@ Open [http://localhost:3000](http://localhost:3000), create an account at `/sign
 
 ---
 
-## Available scripts
+## Scripts
 
-| Command             | Description                       |
-| ------------------- | --------------------------------- |
-| `npm run dev`       | Start development server          |
-| `npm run build`     | Production build                  |
-| `npm run start`     | Run production server             |
-| `npm run lint`      | Run ESLint                        |
-| `npm run db:push`   | Push Drizzle schema to PostgreSQL |
-| `npm run db:studio` | Open Drizzle Studio (DB browser)  |
+| Command | Description |
+| ------- | ----------- |
+| `npm run dev` | Start the development server |
+| `npm run build` | Create a production build |
+| `npm run start` | Run the production server |
+| `npm run lint` | Run ESLint |
+| `npm run db:push` | Push the Drizzle schema to PostgreSQL |
+| `npm run db:studio` | Open Drizzle Studio (database browser) |
 
 ---
 
-## Routes
+## Application Routes
 
 | Path | Description |
 | ---- | ----------- |
 | `/sign-in` | Sign in |
-| `/sign-up` | Create account |
+| `/sign-up` | Create an account |
 | `/` | Dashboard |
-| `/vocabulary` | Word list |
+| `/vocabulary` | Vocabulary list (search, filters, export) |
 | `/vocabulary/new` | Add a word |
 | `/vocabulary/[id]` | Edit a word |
-| `/exercises` | Exercise Studio (pick a study mode) |
+| `/writing` | Writing list (search, sort, export) |
+| `/writing/new` | Create writing |
+| `/writing/[id]` | Edit writing |
+| `/exercises` | Exercise (pick a study mode) |
 | `/exercises/flashcard` | Flashcard session |
-| `/exercises/writing` | New writing exercise |
 | `/exercises/fill-in-blank` | Fill in the blank |
 | `/exercises/multiple-choice` | Multiple choice |
 | `/exercises/match-pairs` | Match pairs |
 | `/exercises/type-answer` | Type the answer |
-| `/exercises/[id]` | Edit a saved writing exercise |
 | `/account` | Account settings |
 
 ---
 
 ## Database
 
-### Main tables
+### Schema Overview
 
-- `users` — accounts (name, email, password hash, avatar URL)
-- `workspaces` — one per user per language
-- `workspace_tags` — workspace-scoped custom tag catalog
-- `vocabulary_words` — words scoped to a workspace
-- `word_meanings`, `word_examples`, `vocabulary_word_tags` — word relations
-- `exercises` — saved writing documents (TipTap JSON)
-- `flashcard_reviews`, `flashcard_progress` — spaced-repetition data
+| Table | Purpose |
+| ----- | ------- |
+| `users` | Accounts (name, email, password hash, avatar URL) |
+| `workspaces` | One workspace per user per language |
+| `workspace_tags` | Workspace-scoped custom tag catalog |
+| `vocabulary_words` | Words in a workspace (POS, notes, learning status) |
+| `word_meanings` | Ordered meanings |
+| `word_examples` | Ordered example sentences |
+| `vocabulary_word_tags` | Word ↔ tag links (built-in ids or `custom:…`) |
+| `exercises` | Saved writing documents (JSONB: rich document or question set) |
+| `flashcard_reviews` | Per-review rating log |
+| `flashcard_progress` | Spaced-repetition state |
 
-### Reset database
+> `grammar_notes` exists in the schema for a future module and is not exposed in the UI yet.
 
-If credentials change or the DB gets into a bad state:
+### Reset the Database
+
+If credentials change or the database gets into a bad state:
 
 ```bash
 docker compose down -v
@@ -222,7 +265,7 @@ docker compose up -d
 npm run db:push
 ```
 
-### Connection pool errors
+### Connection Pool Errors
 
 If you see `sorry, too many clients already` during development:
 
@@ -234,12 +277,12 @@ Then restart `npm run dev`.
 
 ---
 
-## Planned / not yet implemented
+## Roadmap
 
 - OAuth providers (Google, GitHub)
-- Grammar notes module
-- Writing journal (separate from exercise editor)
+- Grammar notes module (schema reserved)
+- Writing journal (separate from the exercise editor)
 - Global search
 - Statistics and charts
-- Import/export (CSV, JSON, Markdown)
+- Vocabulary import (CSV / JSON)
 - Notebook (chapter-based structure)

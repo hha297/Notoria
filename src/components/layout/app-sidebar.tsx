@@ -6,6 +6,7 @@ import {
   Dumbbell,
   Home,
   Languages,
+  PenLine,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Logo, LogoWordmark } from "@/components/ui/logo";
@@ -29,6 +30,7 @@ import { cn } from "@/lib/utils";
 const navItems = [
   { titleKey: "dashboard", href: "/", icon: Home },
   { titleKey: "vocabulary", href: "/vocabulary", icon: Languages },
+  { titleKey: "writing", href: "/writing", icon: PenLine },
   { titleKey: "exercises", href: "/exercises", icon: Dumbbell },
 ] as const;
 
