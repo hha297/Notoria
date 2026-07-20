@@ -138,8 +138,10 @@ export function RichTextEditor({
   return (
     <div className={cn("overflow-hidden rounded-xl border border-hairline-cloud bg-card", className)}>
       {editable && <EditorToolbar editor={editor} />}
-      <EditorContent editor={editor} />
-      <div className="flex items-center justify-between border-t border-hairline-cloud bg-muted/30 px-4 py-2 font-mono text-xs text-muted-foreground">
+      <div className="overflow-x-auto">
+        <EditorContent editor={editor} />
+      </div>
+      <div className="flex flex-col gap-1 border-t border-hairline-cloud bg-muted/30 px-3 py-2 font-mono text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-4">
         <span>
           {words} words · {characters} characters
         </span>

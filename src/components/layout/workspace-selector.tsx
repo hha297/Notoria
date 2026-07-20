@@ -57,20 +57,23 @@ export function WorkspaceSelector({
 
   return (
     <>
-      <div className="flex min-w-0 flex-1 items-center gap-2">
+      <div className="flex min-w-0 flex-1 items-center gap-1.5 sm:gap-2">
         {workspaces.length === 0 ? (
           <Button size="sm" onClick={() => setCreateOpen(true)}>
             <Plus className="size-4" />
-            {t("createWorkspace")}
+            <span className="hidden sm:inline">{t("createWorkspace")}</span>
           </Button>
         ) : (
-          <div className="flex min-w-0 items-center gap-2">
+          <div className="flex min-w-0 flex-1 items-center gap-1.5 sm:gap-2">
             <Select
               value={active?.id}
               onValueChange={handleChange}
               disabled={isPending}
             >
-              <SelectTrigger size="sm" className="min-w-[200px] bg-background">
+              <SelectTrigger
+                size="sm"
+                className="min-w-0 max-w-full flex-1 bg-background sm:max-w-[240px] sm:min-w-[160px]"
+              >
                 <SelectValue>
                   {active && (
                     <WorkspaceOption
@@ -99,9 +102,11 @@ export function WorkspaceSelector({
               size="sm"
               variant="outline"
               onClick={() => setCreateOpen(true)}
+              className="shrink-0"
+              aria-label={t("createWorkspace")}
             >
               <Plus className="size-4" />
-              {t("createWorkspace")}
+              <span className="hidden md:inline">{t("createWorkspace")}</span>
             </Button>
           </div>
         )}
@@ -126,12 +131,12 @@ function WorkspaceOption({
   const language = WORKPLACE_LANGUAGES.find((item) => item.code === languageCode);
 
   return (
-    <span className="flex items-center gap-2">
+    <span className="flex min-w-0 items-center gap-2">
       {language && (
-        <CountryFlag code={language.flagCode} className="h-3.5 w-5" />
+        <CountryFlag code={language.flagCode} className="h-3.5 w-5 shrink-0" />
       )}
       <span className="truncate">{name}</span>
-      <span className="text-muted-foreground">
+      <span className="hidden truncate text-muted-foreground sm:inline">
         · {getLanguageName(languageCode)}
       </span>
     </span>

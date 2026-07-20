@@ -115,7 +115,7 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
             progressValue={sessionItems.length ? (matchedIds.size / sessionItems.length) * 100 : 0}
             hint={t("hint")}
           />
-          <div className="grid gap-4 sm:grid-cols-2">
+          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
             <Column title={t("words")}>
               {wordColumn.map((item) => (
                 <MatchButton
@@ -154,9 +154,13 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
 
 function Column({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="space-y-2 rounded-2xl border border-hairline-cloud bg-card p-4">
-      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">{title}</p>
-      <div className="space-y-2">{children}</div>
+    <div className="space-y-2 rounded-2xl border border-hairline-cloud bg-card p-3 sm:p-4">
+      <p className="sticky top-0 z-10 bg-card pb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        {title}
+      </p>
+      <div className="max-h-[min(42vh,360px)] space-y-2 overflow-y-auto overscroll-contain sm:max-h-none sm:overflow-visible">
+        {children}
+      </div>
     </div>
   );
 }
@@ -180,7 +184,7 @@ function MatchButton({
       onClick={onClick}
       disabled={matched}
       className={cn(
-        "w-full cursor-pointer rounded-xl border px-4 py-3 text-left text-sm font-medium transition-all",
+        "w-full min-h-11 cursor-pointer rounded-xl border px-4 py-3 text-left text-sm font-medium transition-all sm:min-h-0",
         matched && "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a] opacity-80",
         !matched && selected && "border-accent-lime bg-accent-lime/15 text-ink",
         !matched && wrong && "border-[#f3b8cc] bg-[#fff1f6] text-[#c7366a] animate-pulse",

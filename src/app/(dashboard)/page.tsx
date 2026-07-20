@@ -35,7 +35,7 @@ export default async function DashboardPage() {
   const practiceReadyWords = words.filter((word) => word.meanings.length > 0).length;
 
   return (
-    <div className="space-y-10">
+    <div className="space-y-8 sm:space-y-10">
       <PageHeader
         eyebrow={t("overview")}
         title={t("your")}
@@ -43,22 +43,26 @@ export default async function DashboardPage() {
         description={t("description", { language: languageName })}
       />
 
-      <div className="grid gap-4 md:grid-cols-3">
+      <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 md:grid-cols-3">
         <StatCard label={t("wordsSaved")} value={words.length} />
         <StatCard label={t("wordsReadyToPractice")} value={practiceReadyWords} featured />
-        <StatCard label={t("activeWorkspace")} value={workspace.name} />
+        <StatCard
+          label={t("activeWorkspace")}
+          value={workspace.name}
+          className="sm:col-span-2 md:col-span-1"
+        />
       </div>
 
-      <div className="grid gap-4 md:grid-cols-2">
+      <div className="grid gap-3 sm:gap-4 md:grid-cols-2">
         <div className="card-surface">
-          <div className="mb-6 flex items-center gap-2">
-            <Languages className="size-5 text-ink" />
+          <div className="mb-4 flex items-center gap-2 sm:mb-6">
+            <Languages className="size-5 shrink-0 text-ink" />
             <h2 className="heading-md">{t("vocabularyCardTitle")}</h2>
           </div>
-          <p className="mb-6 text-sm leading-relaxed text-muted-foreground">
+          <p className="mb-4 text-sm leading-relaxed text-muted-foreground sm:mb-6">
             {t("vocabularyCardDescription")}
           </p>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <LinkButton href="/vocabulary/new">
               <Plus className="size-4" />
               {t("addWord")}
@@ -70,14 +74,14 @@ export default async function DashboardPage() {
         </div>
 
         <div className="card-surface-dark">
-          <div className="mb-6 flex items-center gap-2">
-            <Dumbbell className="size-5" />
+          <div className="mb-4 flex items-center gap-2 sm:mb-6">
+            <Dumbbell className="size-5 shrink-0" />
             <h2 className="heading-md">{t("exercisesCardTitle")}</h2>
           </div>
-          <p className="mb-6 text-sm leading-relaxed text-on-dark-muted">
+          <p className="mb-4 text-sm leading-relaxed text-on-dark-muted sm:mb-6">
             {t("exercisesCardDescription")}
           </p>
-          <div className="flex gap-2">
+          <div className="flex flex-wrap gap-2">
             <LinkButton
               href="/exercises"
               variant="secondary"
@@ -91,8 +95,8 @@ export default async function DashboardPage() {
 
       {words.length > 0 && (
         <div className="card-surface">
-          <div className="mb-6 flex items-center gap-2">
-            <BookOpen className="size-5 text-ink" />
+          <div className="mb-4 flex items-center gap-2 sm:mb-6">
+            <BookOpen className="size-5 shrink-0 text-ink" />
             <h2 className="heading-md">{t("recentWords")}</h2>
           </div>
           <div className="space-y-2">
@@ -100,11 +104,11 @@ export default async function DashboardPage() {
               <Link
                 key={word.id}
                 href={`/vocabulary/${word.id}`}
-                className="flex items-center justify-between rounded-lg border border-hairline-cloud p-4 transition-colors hover:bg-muted/50"
+                className="flex items-center justify-between gap-3 rounded-lg border border-hairline-cloud p-3 transition-colors hover:bg-muted/50 sm:p-4"
               >
-                <div>
-                  <p className="font-semibold text-ink">{word.word}</p>
-                  <p className="text-sm text-muted-foreground">
+                <div className="min-w-0">
+                  <p className="truncate font-semibold text-ink">{word.word}</p>
+                  <p className="line-clamp-2 text-sm text-muted-foreground">
                     {word.meanings.map((m) => m.meaning).join(" · ")}
                   </p>
                 </div>

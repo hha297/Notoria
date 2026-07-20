@@ -208,12 +208,12 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
           value={search}
           onChange={(event) => setSearch(event.target.value)}
           placeholder={t("searchPlaceholder")}
-          className="lg:max-w-sm"
+          className="h-10 lg:h-8 lg:max-w-sm"
         />
 
-        <div className="flex flex-wrap gap-2">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 lg:flex lg:flex-wrap">
           <Select value={partOfSpeechFilter} onValueChange={(value) => value && setPartOfSpeechFilter(value)}>
-            <SelectTrigger size="sm" className="min-w-[160px]">
+            <SelectTrigger size="sm" className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-40">
               <SelectValue placeholder={t("filterPartOfSpeech")}>
                 {partOfSpeechFilter === "all"
                   ? t("filterPartOfSpeech")
@@ -231,7 +231,7 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
           </Select>
 
           <Select value={tagFilter} onValueChange={(value) => value && setTagFilter(value)}>
-            <SelectTrigger size="sm" className="min-w-[140px]">
+            <SelectTrigger size="sm" className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-35">
               <SelectValue placeholder={t("columns.tags")}>
                 {tagFilter === "all"
                   ? t("columns.tags")
@@ -277,7 +277,7 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
               setSortDirection(direction);
             }}
           >
-            <SelectTrigger size="sm" className="min-w-[180px]">
+            <SelectTrigger size="sm" className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-45">
               <SelectValue placeholder={t("sortBy")}>
                 {getSortLabel(sortValue)}
               </SelectValue>
@@ -296,70 +296,129 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
           <p className="text-muted-foreground">{t("noResults")}</p>
         </div>
       ) : (
-        <div className="data-table">
-          <table className="w-full">
-            <thead>
-              <tr>
-                <th>{t("columns.word")}</th>
-                <th>{t("columns.partOfSpeech")}</th>
-                <th>{t("columns.meaning")}</th>
-                <th>{t("columns.tags")}</th>
-                <th>{t("columns.updated")}</th>
-                <th className="w-28" />
-              </tr>
-            </thead>
-            <tbody>
-              {filteredWords.map((word) => {
-                const firstMeaning = word.meanings[0]?.meaning;
-                const extraMeanings = word.meanings.length - 1;
+        <>
+          <div className="space-y-3 md:hidden">
+            {filteredWords.map((word) => {
+              const firstMeaning = word.meanings[0]?.meaning;
+              const extraMeanings = word.meanings.length - 1;
 
-                return (
-                  <tr key={word.id}>
-                    <td>
+              return (
+                <div
+                  key={word.id}
+                  className="rounded-xl border border-hairline-cloud bg-card p-4"
+                >
+                  <div className="flex items-start justify-between gap-3">
+                    <div className="min-w-0 space-y-1">
                       <Link
                         href={`/vocabulary/${word.id}`}
-                        className="font-semibold text-ink underline-offset-4 hover:underline"
+                        className="block truncate text-base font-semibold text-ink underline-offset-4 hover:underline"
                       >
                         {word.word}
                       </Link>
-                    </td>
-                    <td className="text-muted-foreground">
-                      {formatPartOfSpeech(word.partOfSpeech)}
-                    </td>
-                    <td className="text-muted-foreground">
-                      {firstMeaning ?? "—"}
-                      {extraMeanings > 0 && (
-                        <span className="ml-1 text-xs text-muted-foreground">
-                          {t("moreMeanings", { count: extraMeanings })}
-                        </span>
+                      <p className="text-sm text-muted-foreground">
+                        {formatPartOfSpeech(word.partOfSpeech)}
+                      </p>
+                    </div>
+                    <VocabularyRowActions wordId={word.id} word={word.word} />
+                  </div>
+
+                  <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
+                    {firstMeaning ?? "—"}
+                    {extraMeanings > 0 && (
+                      <span className="ml-1 text-xs">
+                        {t("moreMeanings", { count: extraMeanings })}
+                      </span>
+                    )}
+                  </p>
+
+                  {word.tags.length > 0 && (
+                    <div className="mt-3 flex flex-wrap gap-1">
+                      {word.tags.slice(0, 4).map((tag) => (
+                        <Badge key={tag.id} variant="secondary">
+                          {getTagLabel(tag.tag, (key) => tTags(key))}
+                        </Badge>
+                      ))}
+                      {word.tags.length > 4 && (
+                        <Badge variant="outline">+{word.tags.length - 4}</Badge>
                       )}
-                    </td>
-                    <td>
-                      <div className="flex flex-wrap gap-1">
-                        {word.tags.slice(0, 3).map((tag) => (
-                          <Badge key={tag.id} variant="secondary">
-                            {getTagLabel(tag.tag, (key) => tTags(key))}
-                          </Badge>
-                        ))}
-                        {word.tags.length > 3 && (
-                          <Badge variant="outline">+{word.tags.length - 3}</Badge>
+                    </div>
+                  )}
+
+                  <p className="mt-3 text-xs text-muted-foreground">
+                    {formatDistanceToNow(new Date(word.updatedAt), {
+                      addSuffix: true,
+                    })}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
+
+          <div className="data-table hidden md:block">
+            <table>
+              <thead>
+                <tr>
+                  <th>{t("columns.word")}</th>
+                  <th>{t("columns.partOfSpeech")}</th>
+                  <th>{t("columns.meaning")}</th>
+                  <th>{t("columns.tags")}</th>
+                  <th>{t("columns.updated")}</th>
+                  <th className="w-28" />
+                </tr>
+              </thead>
+              <tbody>
+                {filteredWords.map((word) => {
+                  const firstMeaning = word.meanings[0]?.meaning;
+                  const extraMeanings = word.meanings.length - 1;
+
+                  return (
+                    <tr key={word.id}>
+                      <td>
+                        <Link
+                          href={`/vocabulary/${word.id}`}
+                          className="font-semibold text-ink underline-offset-4 hover:underline"
+                        >
+                          {word.word}
+                        </Link>
+                      </td>
+                      <td className="text-muted-foreground">
+                        {formatPartOfSpeech(word.partOfSpeech)}
+                      </td>
+                      <td className="text-muted-foreground">
+                        {firstMeaning ?? "—"}
+                        {extraMeanings > 0 && (
+                          <span className="ml-1 text-xs text-muted-foreground">
+                            {t("moreMeanings", { count: extraMeanings })}
+                          </span>
                         )}
-                      </div>
-                    </td>
-                    <td className="text-sm text-muted-foreground">
-                      {formatDistanceToNow(new Date(word.updatedAt), {
-                        addSuffix: true,
-                      })}
-                    </td>
-                    <td>
-                      <VocabularyRowActions wordId={word.id} word={word.word} />
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
-        </div>
+                      </td>
+                      <td>
+                        <div className="flex flex-wrap gap-1">
+                          {word.tags.slice(0, 3).map((tag) => (
+                            <Badge key={tag.id} variant="secondary">
+                              {getTagLabel(tag.tag, (key) => tTags(key))}
+                            </Badge>
+                          ))}
+                          {word.tags.length > 3 && (
+                            <Badge variant="outline">+{word.tags.length - 3}</Badge>
+                          )}
+                        </div>
+                      </td>
+                      <td className="text-sm text-muted-foreground">
+                        {formatDistanceToNow(new Date(word.updatedAt), {
+                          addSuffix: true,
+                        })}
+                      </td>
+                      <td>
+                        <VocabularyRowActions wordId={word.id} word={word.word} />
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
+        </>
       )}
 
       <VocabularyExportDialog

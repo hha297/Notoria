@@ -28,7 +28,7 @@ function FlashcardFace({
   return (
     <div
       className={cn(
-        "absolute inset-0 flex flex-col rounded-3xl border border-hairline-cloud bg-card p-8 shadow-xl shadow-ink/5",
+        "absolute inset-0 flex flex-col rounded-2xl border border-hairline-cloud bg-card p-5 shadow-xl shadow-ink/5 sm:rounded-3xl sm:p-8",
         className,
       )}
       style={{ backfaceVisibility: "hidden" }}
@@ -141,11 +141,11 @@ export function FlashcardCard({
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-2">
+    <div className="mx-auto w-full max-w-2xl px-0 sm:px-2">
       <motion.button
         type="button"
         onClick={onFlip}
-        className="relative h-[min(70vh,520px)] w-full cursor-pointer border-0 bg-transparent p-0 outline-none focus-visible:ring-3 focus-visible:ring-ring/50"
+        className="relative h-[min(62vh,440px)] w-full cursor-pointer border-0 bg-transparent p-0 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:h-[min(70vh,520px)]"
         style={{ perspective: 1200 }}
         aria-label={isFlipped ? t("hideAnswer") : t("showAnswer")}
       >
@@ -160,7 +160,7 @@ export function FlashcardCard({
               {isWordFront ? t("questionWord") : t("questionMeaning")}
             </p>
             <div className="flex flex-1 flex-col items-center justify-center text-center">
-              <p className="font-heading text-4xl font-medium tracking-tight text-ink sm:text-5xl">
+              <p className="break-words font-heading text-3xl font-medium tracking-tight text-ink sm:text-4xl md:text-5xl">
                 {isWordFront ? word.word : primaryMeaning}
               </p>
               {!isWordFront && word.meanings.length > 1 && (

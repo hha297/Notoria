@@ -57,6 +57,7 @@ export function LoginForm() {
           autoComplete="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
+          className="h-11 bg-background md:h-8"
           required
         />
       </div>
@@ -68,13 +69,14 @@ export function LoginForm() {
           autoComplete="current-password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
+          className="h-11 bg-background md:h-8"
           required
         />
       </div>
 
       {error && <p className="text-sm text-destructive">{error}</p>}
 
-      <Button type="submit" className="w-full" disabled={isLoading}>
+      <Button type="submit" className="h-11 w-full md:h-9" disabled={isLoading}>
         {isLoading && <Loader2 className="size-4 animate-spin" />}
         {t("signIn")}
       </Button>

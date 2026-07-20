@@ -139,11 +139,13 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
             progressValue={total ? ((index + 1) / total) * 100 : 0}
           />
           {current && (
-            <div className="mx-auto max-w-2xl rounded-3xl border border-hairline-cloud bg-card p-8 shadow-xl shadow-ink/5 sm:p-10">
+            <div className="mx-auto max-w-2xl rounded-2xl border border-hairline-cloud bg-card p-5 shadow-xl shadow-ink/5 sm:rounded-3xl sm:p-8 md:p-10">
               <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
                 {current.direction === "WORD_TO_MEANING" ? t("questionWord") : t("questionMeaning")}
               </p>
-              <p className="mt-6 font-heading text-3xl font-medium text-ink sm:text-4xl">{current.prompt}</p>
+              <p className="mt-4 break-words font-heading text-2xl font-medium text-ink sm:mt-6 sm:text-3xl md:text-4xl">
+                {current.prompt}
+              </p>
               <div className="mt-8 space-y-4">
                 {!revealed ? (
                   <Input
@@ -168,16 +170,37 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
               </div>
             </div>
           )}
-          <div className="flex flex-col items-center gap-4">
-            <div className="flex gap-2">
-              <Button type="button" variant="outline" size="sm" disabled={index === 0} onClick={() => setIndex((i) => i - 1)}>
+          <div className="flex flex-col items-center gap-3 sm:gap-4">
+            <div className="flex w-full max-w-sm flex-col gap-2 sm:w-auto sm:max-w-none sm:flex-row">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                disabled={index === 0}
+                onClick={() => setIndex((i) => i - 1)}
+                className="h-11 w-full sm:h-8 sm:w-auto"
+              >
                 <ChevronLeft className="size-4" />{t("previous")}
               </Button>
               {!revealed ? (
-                <Button type="button" size="sm" onClick={check} disabled={!input.trim()}>{t("check")}</Button>
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={check}
+                  disabled={!input.trim()}
+                  className="h-11 w-full sm:h-8 sm:w-auto"
+                >
+                  {t("check")}
+                </Button>
               ) : (
-                <Button type="button" size="sm" onClick={next}>
-                  {index >= total - 1 ? t("finish") : t("next")}<ChevronRight className="size-4" />
+                <Button
+                  type="button"
+                  size="sm"
+                  onClick={next}
+                  className="h-11 w-full sm:h-8 sm:w-auto"
+                >
+                  {index >= total - 1 ? t("finish") : t("next")}
+                  <ChevronRight className="size-4" />
                 </Button>
               )}
             </div>

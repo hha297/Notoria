@@ -9,7 +9,6 @@ import {
   SelectContent,
   SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -48,9 +47,11 @@ export function LocaleSelector({ value }: LocaleSelectorProps) {
 
   return (
     <div className="flex min-w-0 items-center gap-2">
-
       <Select value={value} onValueChange={handleChange} disabled={isPending}>
-        <SelectTrigger size="sm" className="min-w-[140px] bg-background">
+        <SelectTrigger
+          size="sm"
+          className="min-w-0 w-[7.5rem] bg-background sm:w-auto sm:min-w-[140px]"
+        >
           <SelectValue>{LOCALE_LABELS[value]}</SelectValue>
         </SelectTrigger>
         <SelectContent>

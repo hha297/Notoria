@@ -284,19 +284,37 @@ function ExerciseNav({
   isLast: boolean;
 }) {
   return (
-    <div className="flex flex-col items-center gap-5 pt-2">
-      <div className="flex flex-wrap justify-center gap-3">
-        <Button type="button" variant="outline" size="default" onClick={onPrev} disabled={!canPrev}>
+    <div className="flex flex-col items-center gap-4 pt-2 sm:gap-5">
+      <div className="flex w-full max-w-sm flex-col gap-2 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center sm:gap-3">
+        <Button
+          type="button"
+          variant="outline"
+          size="default"
+          onClick={onPrev}
+          disabled={!canPrev}
+          className="h-11 w-full sm:h-9 sm:w-auto"
+        >
           <ChevronLeft className="size-4" />
           {t("previous")}
         </Button>
         {revealed ? (
-          <Button type="button" size="default" onClick={onNext}>
+          <Button
+            type="button"
+            size="default"
+            onClick={onNext}
+            className="h-11 w-full sm:h-9 sm:w-auto"
+          >
             {isLast ? t("finish") : t("next")}
             <ChevronRight className="size-4" />
           </Button>
         ) : (
-          <Button type="button" size="default" onClick={onCheck} disabled={!canCheck}>
+          <Button
+            type="button"
+            size="default"
+            onClick={onCheck}
+            disabled={!canCheck}
+            className="h-11 w-full sm:h-9 sm:w-auto"
+          >
             {t("check")}
           </Button>
         )}

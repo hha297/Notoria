@@ -17,7 +17,7 @@ export function SessionCompleteCard({
   onTryAgain,
 }: SessionCompleteCardProps) {
   return (
-    <div className="mx-auto max-w-lg rounded-2xl border border-[#b8d96a] bg-[#f4fae0] p-8 text-center">
+    <div className="mx-auto max-w-lg rounded-2xl border border-[#b8d96a] bg-[#f4fae0] p-5 text-center sm:p-8">
       <p className="font-heading text-xl font-medium text-[#4a6b0a]">{title}</p>
       {scoreLabel && (
         <p className="mt-2 text-sm font-medium text-[#4a6b0a]/80">{scoreLabel}</p>

@@ -145,27 +145,31 @@
   }
 
   .heading-xl {
-    @apply font-heading text-[30px] font-medium leading-tight tracking-tight;
+    @apply font-heading text-2xl font-medium leading-tight tracking-tight sm:text-[30px];
   }
 
   .heading-md {
-    @apply font-heading text-2xl font-medium leading-tight;
+    @apply font-heading text-xl font-medium leading-tight sm:text-2xl;
   }
 
   .chip-lime {
-    @apply inline-block rounded-[4px] bg-accent-lime px-3 text-ink;
+    @apply inline-block rounded-[4px] bg-accent-lime px-2 text-ink sm:px-3;
   }
 
   .card-surface {
-    @apply rounded-xl border border-hairline-cloud bg-card p-8 text-ink shadow-none;
+    @apply rounded-xl border border-hairline-cloud bg-card p-4 text-ink shadow-none sm:p-6 md:p-8;
   }
 
   .card-surface-dark {
-    @apply rounded-[18px] border border-hairline-violet bg-ink-deep p-8 text-on-primary shadow-none;
+    @apply rounded-[18px] border border-hairline-violet bg-ink-deep p-4 text-on-primary shadow-none sm:p-6 md:p-8;
   }
 
   .data-table {
-    @apply overflow-hidden rounded-xl border border-hairline-cloud bg-card;
+    @apply overflow-x-auto rounded-xl border border-hairline-cloud bg-card;
+  }
+
+  .data-table table {
+    @apply w-full min-w-[640px];
   }
 
   .data-table thead {
@@ -173,11 +177,11 @@
   }
 
   .data-table th {
-    @apply px-4 py-3 text-sm font-semibold uppercase tracking-[0.2px] text-muted-foreground;
+    @apply px-3 py-3 text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground sm:px-4 sm:text-sm;
   }
 
   .data-table td {
-    @apply border-t border-hairline-cloud px-4 py-3 text-sm;
+    @apply border-t border-hairline-cloud px-3 py-3 text-sm sm:px-4;
   }
 
   .data-table tbody tr {
@@ -185,7 +189,7 @@
   }
 
   .empty-state {
-    @apply flex flex-col items-center justify-center rounded-xl border border-dashed border-hairline-cloud bg-card px-6 py-14 text-center sm:px-10 sm:py-16;
+    @apply flex flex-col items-center justify-center rounded-xl border border-dashed border-hairline-cloud bg-card px-4 py-10 text-center sm:px-10 sm:py-16;
   }
 
   .sidebar-starfield {

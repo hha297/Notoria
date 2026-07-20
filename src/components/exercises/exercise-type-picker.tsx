@@ -15,7 +15,7 @@ export function ExerciseTypePicker() {
           key={item.slug}
           href={`/exercises/${item.slug}`}
           className={cn(
-            "group relative flex cursor-pointer flex-col overflow-hidden rounded-xl border border-hairline-cloud bg-card p-6 transition-all",
+            "group relative flex cursor-pointer flex-col overflow-hidden rounded-xl border border-hairline-cloud bg-card p-4 transition-all sm:p-6",
             "hover:border-accent-lime/50 hover:shadow-[0_0_0_1px_rgba(194,239,78,0.35)]",
           )}
         >

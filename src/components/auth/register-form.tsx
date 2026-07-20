@@ -64,6 +64,7 @@ export function RegisterForm() {
           autoComplete="name"
           value={name}
           onChange={(event) => setName(event.target.value)}
+          className="h-11 bg-background md:h-8"
           required
         />
       </div>
@@ -76,6 +77,7 @@ export function RegisterForm() {
           autoComplete="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
+          className="h-11 bg-background md:h-8"
           required
         />
       </div>
@@ -87,6 +89,7 @@ export function RegisterForm() {
           autoComplete="new-password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
+          className="h-11 bg-background md:h-8"
           minLength={8}
           required
         />
@@ -95,7 +98,7 @@ export function RegisterForm() {
 
       {error && <p className="text-sm text-destructive">{error}</p>}
 
-      <Button type="submit" className="w-full" disabled={isLoading}>
+      <Button type="submit" className="h-11 w-full md:h-9" disabled={isLoading}>
         {isLoading && <Loader2 className="size-4 animate-spin" />}
         {t("createAccount")}
       </Button>

@@ -217,16 +217,16 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
       <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
-        <CardHeader className="space-y-2 border-b border-hairline-cloud px-8 pt-8 pb-6">
+        <CardHeader className="space-y-2 border-b border-hairline-cloud px-4 pt-5 pb-4 sm:px-6 sm:pt-6 sm:pb-5 md:px-8 md:pt-8 md:pb-6">
           <CardTitle className="heading-md text-ink">
             {initialData ? t("editWord") : t("newWord")}
           </CardTitle>
-          <CardDescription className="text-base leading-relaxed">
+          <CardDescription className="text-sm leading-relaxed sm:text-base">
             {t("formDescription")}
           </CardDescription>
         </CardHeader>
 
-        <CardContent className="space-y-8 px-8 py-8">
+        <CardContent className="space-y-6 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-6 md:px-8 md:py-8">
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="word">{t("word")}</Label>
@@ -301,8 +301,13 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
         </CardContent>
       </Card>
 
-      <div className="flex justify-end">
-        <Button type="submit" disabled={isSaving} size="lg">
+      <div className="flex justify-stretch sm:justify-end">
+        <Button
+          type="submit"
+          disabled={isSaving}
+          size="lg"
+          className="h-11 w-full sm:h-9 sm:w-auto"
+        >
           {isSaving ? (
             <Loader2 className="size-4 animate-spin" />
           ) : (

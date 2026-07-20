@@ -32,7 +32,7 @@ export default async function ExercisesPage() {
   }
 
   return (
-    <div className="mx-auto max-w-5xl space-y-10 pt-2">
+    <div className="mx-auto max-w-5xl space-y-8 pt-1 sm:space-y-10 sm:pt-2">
       <PageHeader
         eyebrow={t("title")}
         title={t("title")}
@@ -43,11 +43,11 @@ export default async function ExercisesPage() {
       <ExerciseTypePicker />
 
       {exercises.length > 0 && (
-        <section className="space-y-4">
-          <h2 className="font-heading text-xl font-medium text-ink">
+        <section className="space-y-3 sm:space-y-4">
+          <h2 className="font-heading text-lg font-medium text-ink sm:text-xl">
             {t("saved")}
           </h2>
-          <div className="grid gap-4">
+          <div className="grid gap-3 sm:gap-4">
             {exercises.map((exercise) => {
               const writing =
                 exercise.type === "WRITING"
@@ -60,9 +60,9 @@ export default async function ExercisesPage() {
                 href={`/exercises/${exercise.id}`}
                 className="card-surface block transition-colors hover:bg-muted/30"
               >
-                <div className="flex items-start justify-between gap-4 p-0">
-                  <div>
-                    <h3 className="text-xl font-medium text-ink">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between sm:gap-4">
+                  <div className="min-w-0">
+                    <h3 className="truncate text-lg font-medium text-ink sm:text-xl">
                       {exercise.title}
                     </h3>
                     <p className="mt-1 text-sm text-muted-foreground">
@@ -72,7 +72,7 @@ export default async function ExercisesPage() {
                       })}
                     </p>
                   </div>
-                  <div className="flex flex-wrap justify-end gap-2">
+                  <div className="flex flex-wrap gap-2 sm:justify-end">
                     {writing && (
                       <Badge variant="outline">
                         {writing.mode === "question_set"
