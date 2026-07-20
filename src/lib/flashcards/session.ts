@@ -7,17 +7,6 @@ import type {
 } from "@/types/flashcards";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 
-export function shuffleArray<T>(items: T[]): T[] {
-  const next = [...items];
-
-  for (let index = next.length - 1; index > 0; index -= 1) {
-    const swapIndex = Math.floor(Math.random() * (index + 1));
-    [next[index], next[swapIndex]] = [next[swapIndex], next[index]];
-  }
-
-  return next;
-}
-
 export function getFiltersKey(filters: FlashcardFilters, studyMode: FlashcardStudyMode) {
   return `${studyMode}:${filters.tag}:${filters.partOfSpeech}:${filters.status}`;
 }

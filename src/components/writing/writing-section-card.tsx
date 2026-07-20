@@ -29,7 +29,7 @@ import { useTranslations } from "next-intl";
 import {
   QuestionDragHandle,
   WritingQuestionCard,
-} from "@/components/exercises/writing/writing-question-card";
+} from "@/components/writing/writing-question-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useMounted } from "@/hooks/use-mounted";
@@ -109,7 +109,7 @@ export function WritingSectionCard({
   onChange,
   onDelete,
 }: WritingSectionCardProps) {
-  const t = useTranslations("exercises.writing");
+  const t = useTranslations("writing");
   const mounted = useMounted();
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -300,7 +300,7 @@ export function SectionDragHandle({
   attributes: DraggableAttributes;
   listeners?: SyntheticListenerMap;
 }) {
-  const t = useTranslations("exercises.writing");
+  const t = useTranslations("writing");
 
   return (
     <button

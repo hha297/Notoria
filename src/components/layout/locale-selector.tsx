@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
-import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import {
   Select,
@@ -27,7 +26,6 @@ type LocaleSelectorProps = {
 
 export function LocaleSelector({ value }: LocaleSelectorProps) {
   const router = useRouter();
-  const t = useTranslations("header");
   const [isPending, startTransition] = useTransition();
 
   function handleChange(nextValue: string | null) {
