@@ -90,7 +90,36 @@
     "noResults": "Yksikään sana ei vastaa suodattimia",
     "deleteConfirmTitle": "Poistetaanko tämä sana?",
     "deleteConfirmDescription": "\"{word}\" poistetaan pysyvästi sanastostasi.",
-    "wordExists": "Tämä sana on jo sanastossasi."
+    "wordExists": "Tämä sana on jo sanastossasi.",
+    "export": {
+      "button": "Vie",
+      "title": "Vie sanasto",
+      "description": "Vie taulukossa näytettävät sanat.",
+      "rowCount": "{count, plural, one {# sana} other {# sanaa}}",
+      "format": "Muoto",
+      "formatPdf": "PDF (.pdf)",
+      "formatCsv": "CSV (.csv)",
+      "formatDocx": "Word (.docx)",
+      "options": "Sisällytä",
+      "includePartOfSpeech": "Sisällytä sanaluokka",
+      "includeTags": "Sisällytä tunnisteet",
+      "includeLastUpdated": "Sisällytä päivitysaika",
+      "includeNotes": "Sisällytä muistiinpanot",
+      "confirm": "Vie",
+      "success": "Lataus aloitettu",
+      "failed": "Vienti epäonnistui",
+      "empty": "Ei vietäviä sanoja",
+      "documentHeading": "Sanasto",
+      "workspaceLabel": "Työtila",
+      "columns": {
+        "word": "Sana",
+        "partOfSpeech": "Sanaluokka",
+        "meanings": "Merkitykset",
+        "tags": "Tunnisteet",
+        "notes": "Muistiinpanot",
+        "updated": "Päivitetty"
+      }
+    }
   },
   "tags": {
     "groups": {

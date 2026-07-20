@@ -90,7 +90,36 @@
     "noResults": "No words match your filters",
     "deleteConfirmTitle": "Delete this word?",
     "deleteConfirmDescription": "\"{word}\" will be permanently removed from your vocabulary.",
-    "wordExists": "This word already exists in your vocabulary."
+    "wordExists": "This word already exists in your vocabulary.",
+    "export": {
+      "button": "Export",
+      "title": "Export Vocabulary",
+      "description": "Export the words currently shown in the table.",
+      "rowCount": "{count, plural, one {# word} other {# words}}",
+      "format": "Format",
+      "formatPdf": "PDF (.pdf)",
+      "formatCsv": "CSV (.csv)",
+      "formatDocx": "Word (.docx)",
+      "options": "Include",
+      "includePartOfSpeech": "Include Part of Speech",
+      "includeTags": "Include Tags",
+      "includeLastUpdated": "Include Last Updated",
+      "includeNotes": "Include Notes",
+      "confirm": "Export",
+      "success": "Download started",
+      "failed": "Export failed",
+      "empty": "No words to export",
+      "documentHeading": "Vocabulary",
+      "workspaceLabel": "Workspace",
+      "columns": {
+        "word": "Word",
+        "partOfSpeech": "Part of Speech",
+        "meanings": "Meanings",
+        "tags": "Tags",
+        "notes": "Notes",
+        "updated": "Last Updated"
+      }
+    }
   },
   "tags": {
     "groups": {
