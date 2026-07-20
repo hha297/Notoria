@@ -1,4 +1,5 @@
 import { AppSidebar } from "@/components/layout/app-sidebar";
+import { DashboardDocumentTitle } from "@/components/layout/dashboard-document-title";
 import { LocaleSelector } from "@/components/layout/locale-selector";
 import { WorkspaceSelector } from "@/components/layout/workspace-selector";
 import {
@@ -32,6 +33,7 @@ export default async function DashboardLayout({
 
   return (
     <SidebarProvider>
+      <DashboardDocumentTitle />
       <AppSidebar
         userName={session?.user?.name ?? "User"}
         userEmail={session?.user?.email ?? ""}
