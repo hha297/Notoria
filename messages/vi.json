@@ -90,7 +90,36 @@
     "noResults": "Không có từ nào khớp bộ lọc",
     "deleteConfirmTitle": "Xóa từ này?",
     "deleteConfirmDescription": "\"{word}\" sẽ bị xóa vĩnh viễn khỏi từ vựng của bạn.",
-    "wordExists": "Từ này đã có trong từ vựng."
+    "wordExists": "Từ này đã có trong từ vựng.",
+    "export": {
+      "button": "Xuất",
+      "title": "Xuất từ vựng",
+      "description": "Xuất các từ đang hiển thị trong bảng.",
+      "rowCount": "{count, plural, other {# từ}}",
+      "format": "Định dạng",
+      "formatPdf": "PDF (.pdf)",
+      "formatCsv": "CSV (.csv)",
+      "formatDocx": "Word (.docx)",
+      "options": "Bao gồm",
+      "includePartOfSpeech": "Bao gồm loại từ",
+      "includeTags": "Bao gồm thẻ",
+      "includeLastUpdated": "Bao gồm ngày cập nhật",
+      "includeNotes": "Bao gồm ghi chú",
+      "confirm": "Xuất",
+      "success": "Đã bắt đầu tải xuống",
+      "failed": "Xuất thất bại",
+      "empty": "Không có từ để xuất",
+      "documentHeading": "Từ vựng",
+      "workspaceLabel": "Không gian học",
+      "columns": {
+        "word": "Từ",
+        "partOfSpeech": "Loại từ",
+        "meanings": "Nghĩa",
+        "tags": "Thẻ",
+        "notes": "Ghi chú",
+        "updated": "Cập nhật"
+      }
+    }
   },
   "tags": {
     "groups": {

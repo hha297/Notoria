@@ -1,11 +1,15 @@
 "use client";
 
 import Link from "next/link";
-import { formatDistanceToNow } from "date-fns";
+import { format, formatDistanceToNow } from "date-fns";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
+import { Download, Plus } from "lucide-react";
+import { PageHeader } from "@/components/layout/page-header";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { LinkButton } from "@/components/ui/link-button";
 import {
   Select,
   SelectContent,
@@ -23,12 +27,15 @@ import {
   PARTS_OF_SPEECH,
   TAG_PICKER_GROUPS,
 } from "@/lib/vocabulary-tags";
+import { VocabularyExportDialog } from "@/components/vocabulary/export-dialog";
 import { VocabularyRowActions } from "@/components/vocabulary/vocabulary-row-actions";
+import type { VocabularyExportSourceWord } from "@/lib/vocabulary/export/build-document";
 
 export type VocabularyWordRow = {
   id: string;
   word: string;
   partOfSpeech: string | null;
+  notes?: string | null;
   updatedAt: string;
   meanings: Array<{ meaning: string }>;
   tags: Array<{ id: string; tag: string }>;
@@ -39,9 +46,10 @@ type SortDirection = "asc" | "desc";
 
 type VocabularyTableProps = {
   words: VocabularyWordRow[];
+  workspaceName: string;
 };
 
-export function VocabularyTable({ words }: VocabularyTableProps) {
+export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) {
   const t = useTranslations("vocabulary");
   const tTags = useTranslations("tags");
   const tPos = useTranslations("tags.pos");
@@ -50,6 +58,7 @@ export function VocabularyTable({ words }: VocabularyTableProps) {
   const [tagFilter, setTagFilter] = useState("all");
   const [sortField, setSortField] = useState<SortField>("updated");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
+  const [exportOpen, setExportOpen] = useState(false);
 
   const customTagOptions = useMemo(() => {
     const seen = new Set<string>();
@@ -157,8 +166,43 @@ export function VocabularyTable({ words }: VocabularyTableProps) {
 
   const sortValue = `${sortField}:${sortDirection}`;
 
+  const exportWords = useMemo((): VocabularyExportSourceWord[] => {
+    return filteredWords.map((word) => ({
+      word: word.word,
+      partOfSpeechLabel: formatPartOfSpeech(word.partOfSpeech),
+      meanings: word.meanings.map((item) => item.meaning).filter(Boolean),
+      tagLabels: word.tags.map((tag) =>
+        getTagLabel(tag.tag, (key) => tTags(key)),
+      ),
+      notes: word.notes ?? "",
+      updatedAtLabel: format(new Date(word.updatedAt), "yyyy-MM-dd"),
+    }));
+  }, [filteredWords, tPos, tTags]);
+
   return (
-    <div className="space-y-4">
+    <div className="space-y-8">
+      <PageHeader
+        eyebrow={t("title")}
+        title={t("title")}
+        highlight={t("bank")}
+        description={t("formDescription")}
+      >
+        <Button
+          type="button"
+          variant="outline"
+          onClick={() => setExportOpen(true)}
+          disabled={filteredWords.length === 0}
+        >
+          <Download className="size-4" />
+          {t("export.button")}
+        </Button>
+        <LinkButton href="/vocabulary/new">
+          <Plus className="size-4" />
+          {t("addWord")}
+        </LinkButton>
+      </PageHeader>
+
+      <div className="space-y-4">
       <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
         <Input
           value={search}
@@ -317,6 +361,14 @@ export function VocabularyTable({ words }: VocabularyTableProps) {
           </table>
         </div>
       )}
+
+      <VocabularyExportDialog
+        open={exportOpen}
+        onOpenChange={setExportOpen}
+        workspaceName={workspaceName}
+        words={exportWords}
+      />
+      </div>
     </div>
   );
 }
