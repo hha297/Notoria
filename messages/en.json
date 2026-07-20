@@ -314,7 +314,29 @@
       "saveFailed": "Failed to save exercise",
       "autosaving": "Autosaving...",
       "autosaveReady": "Changes autosave",
-      "autosavePending": "Save to enable autosave"
+      "autosavePending": "Save to enable autosave",
+      "export": {
+        "button": "Export",
+        "title": "Export writing exercise",
+        "description": "Choose a format and options for a printable worksheet.",
+        "format": "Export format",
+        "formatPdf": "PDF (.pdf)",
+        "formatDocx": "Word (.docx)",
+        "options": "Options",
+        "includeExamples": "Include example answers",
+        "includeNotes": "Include notes / hints",
+        "leaveBlankSpace": "Leave blank writing space after each question",
+        "confirm": "Export",
+        "success": "Download started",
+        "failed": "Export failed",
+        "empty": "Add at least one question or some document content before exporting",
+        "documentHeading": "Writing Exercise",
+        "titleLabel": "Title",
+        "sectionLabel": "Section",
+        "questionLabel": "Question",
+        "exampleAnswerLabel": "Example Answer",
+        "notesLabel": "Notes"
+      }
     }
   },
   "flashcards": {

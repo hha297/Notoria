@@ -208,22 +208,25 @@ export function WritingSectionCard({
 
   return (
     <div className="overflow-hidden rounded-2xl border border-hairline-cloud bg-card">
-      <div className="flex items-center gap-2 border-b border-hairline-cloud px-3 py-3 sm:px-4">
-        {dragHandle}
-        <button
-          type="button"
-          onClick={onToggleCollapse}
-          className="rounded-md p-1 text-muted-foreground hover:bg-muted"
-          aria-label={collapsed ? t("expandSection") : t("collapseSection")}
-        >
-          <ChevronDown
-            className={cn(
-              "size-4 transition-transform",
-              collapsed && "-rotate-90",
-            )}
-          />
-        </button>
-        <div className="min-w-0 flex-1 space-y-1">
+      <div className="flex items-start gap-2.5 border-b border-hairline-cloud bg-muted/30 px-3 py-3.5 sm:gap-3 sm:px-4 sm:py-4">
+        <div className="flex items-center gap-0.5 pt-2.5">
+          {dragHandle}
+          <button
+            type="button"
+            onClick={onToggleCollapse}
+            className="rounded-md p-1.5 text-muted-foreground transition-colors hover:bg-muted hover:text-ink"
+            aria-label={collapsed ? t("expandSection") : t("collapseSection")}
+          >
+            <ChevronDown
+              className={cn(
+                "size-4 transition-transform",
+                collapsed && "-rotate-90",
+              )}
+            />
+          </button>
+        </div>
+
+        <div className="min-w-0 flex-1 space-y-2">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             {t("section")} {index + 1}
           </p>
@@ -233,9 +236,15 @@ export function WritingSectionCard({
               onChange({ ...section, title: event.target.value })
             }
             placeholder={t("sectionTitlePlaceholder")}
-            className="h-9 border-0 bg-transparent px-0 shadow-none focus-visible:ring-0"
+            className={cn(
+              "h-10 rounded-lg border-hairline-cloud bg-background px-3 text-sm font-medium text-ink shadow-none",
+              "placeholder:font-normal placeholder:text-muted-foreground/80",
+              "hover:border-accent-lime/40",
+              "focus-visible:border-accent-lime focus-visible:bg-accent-lime/10 focus-visible:shadow-none focus-visible:ring-3 focus-visible:ring-accent-lime/25",
+            )}
           />
         </div>
+
         <Button
           type="button"
           variant="ghost"
@@ -243,6 +252,7 @@ export function WritingSectionCard({
           onClick={onDelete}
           disabled={!canDelete}
           aria-label={t("deleteSection")}
+          className="mt-2.5"
         >
           <Trash2 className="size-4" />
         </Button>

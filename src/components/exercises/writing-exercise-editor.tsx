@@ -1,13 +1,14 @@
 "use client";
 
 import type { JSONContent } from "@tiptap/react";
-import { Loader2, Save } from "lucide-react";
+import { Download, Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { QuestionSetBuilder } from "@/components/exercises/writing/question-set-builder";
+import { WritingExportDialog } from "@/components/exercises/writing/export-dialog";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -59,6 +60,7 @@ export function WritingExerciseEditor({
   );
   const [isSaving, setIsSaving] = useState(false);
   const [isAutosaving, setIsAutosaving] = useState(false);
+  const [exportOpen, setExportOpen] = useState(false);
 
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const latestRef = useRef({ title, editorState, type, id: initialData?.id });
@@ -266,7 +268,7 @@ export function WritingExerciseEditor({
         </CardContent>
       </Card>
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">
           {isAutosaving
             ? t("autosaving")
@@ -274,19 +276,37 @@ export function WritingExerciseEditor({
               ? t("autosaveReady")
               : t("autosavePending")}
         </p>
-        <Button
-          onClick={() => persistExercise(true)}
-          disabled={isSaving}
-          size="lg"
-        >
-          {isSaving ? (
-            <Loader2 className="size-4 animate-spin" />
-          ) : (
-            <Save className="size-4" />
-          )}
-          {t("save")}
-        </Button>
+        <div className="flex flex-wrap items-center gap-2">
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            onClick={() => setExportOpen(true)}
+          >
+            <Download className="size-4" />
+            {t("export.button")}
+          </Button>
+          <Button
+            onClick={() => persistExercise(true)}
+            disabled={isSaving}
+            size="lg"
+          >
+            {isSaving ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Save className="size-4" />
+            )}
+            {t("save")}
+          </Button>
+        </div>
       </div>
+
+      <WritingExportDialog
+        open={exportOpen}
+        onOpenChange={setExportOpen}
+        title={title}
+        editorState={editorState}
+      />
     </div>
   );
 }
