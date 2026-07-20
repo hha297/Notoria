@@ -36,13 +36,13 @@ export function FlashcardControls({
 
   return (
     <div className="mx-auto flex w-full max-w-lg flex-col items-center gap-5">
-      <div className="flex flex-wrap items-center justify-center gap-3">
+      <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-3">
         <Button
           type="button"
           variant="outline"
           onClick={onPrevious}
           disabled={!canGoPrevious}
-          className="min-w-30"
+          className="h-11 w-full sm:h-9 sm:w-auto sm:min-w-30"
         >
           <ChevronLeft className="size-4" />
           {t("previous")}
@@ -52,7 +52,7 @@ export function FlashcardControls({
           type="button"
           variant="secondary"
           onClick={onFlip}
-          className="min-w-30 font-semibold"
+          className="h-11 w-full font-semibold sm:h-9 sm:w-auto sm:min-w-30"
         >
           <RotateCw className="size-4" />
           {isFlipped ? t("hideAnswer") : t("flip")}
@@ -63,7 +63,7 @@ export function FlashcardControls({
           variant="outline"
           onClick={onNext}
           disabled={!canGoNext}
-          className="min-w-30"
+          className="h-11 w-full sm:h-9 sm:w-auto sm:min-w-30"
         >
           {t("next")}
           <ChevronRight className="size-4" />

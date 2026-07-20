@@ -4,7 +4,7 @@ export default function AuthLayout({
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-svh bg-[url('/background.png')] bg-cover bg-center bg-no-repeat bg-sidebar">
+    <div className="min-h-svh bg-background md:bg-[url('/background.png')] md:bg-cover md:bg-center md:bg-no-repeat md:bg-sidebar">
       {children}
     </div>
   );

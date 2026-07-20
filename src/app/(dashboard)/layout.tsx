@@ -39,19 +39,19 @@ export default async function DashboardLayout({
         userImage={session?.user?.image}
       />
       <SidebarInset className="bg-background">
-        <header className="flex h-14 shrink-0 items-center gap-3 border-b border-hairline-cloud bg-background px-6">
-          <SidebarTrigger className="-ml-1 text-ink" />
-          <Separator orientation="vertical" className="h-4" />
+        <header className="flex h-14 shrink-0 items-center gap-2 border-b border-hairline-cloud bg-background px-3 sm:gap-3 sm:px-6">
+          <SidebarTrigger className="-ml-0.5 text-ink sm:-ml-1" />
+          <Separator orientation="vertical" className="hidden h-4 sm:block" />
           <WorkspaceSelector
             workspaces={workspaces}
             activeWorkspaceId={activeWorkspace?.id}
           />
-          <div className="ml-auto">
+          <div className="ml-auto shrink-0">
             <LocaleSelector value={locale} />
           </div>
         </header>
-        <main className="flex-1 overflow-auto bg-background px-6 py-8">
-          <div className="mx-auto max-w-6xl">{children}</div>
+        <main className="flex-1 overflow-auto bg-background px-4 py-6 sm:px-6 sm:py-8">
+          <div className="mx-auto w-full max-w-6xl">{children}</div>
         </main>
       </SidebarInset>
     </SidebarProvider>

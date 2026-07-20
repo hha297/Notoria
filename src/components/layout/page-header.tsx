@@ -38,12 +38,16 @@ export function PageHeader({
           )}
         </h1>
         {description && (
-          <p className="max-w-2xl text-base leading-relaxed text-muted-foreground">
+          <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
             {description}
           </p>
         )}
       </div>
-      {children && <div className="flex shrink-0 gap-2">{children}</div>}
+      {children && (
+        <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:shrink-0 sm:justify-end">
+          {children}
+        </div>
+      )}
     </div>
   );
 }

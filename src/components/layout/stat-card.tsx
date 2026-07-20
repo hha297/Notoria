@@ -17,7 +17,7 @@ export function StatCard({
   return (
     <div
       className={cn(
-        "rounded-xl border p-8",
+        "rounded-xl border p-4 sm:p-6 md:p-8",
         featured
           ? "border-hairline-violet bg-surface-night text-on-primary"
           : "border-hairline-cloud bg-card text-ink",
@@ -26,7 +26,7 @@ export function StatCard({
     >
       <p
         className={cn(
-          "text-[30px] font-medium leading-tight",
+          "text-2xl font-medium leading-tight sm:text-[30px]",
           featured ? "text-on-primary" : "text-ink",
         )}
       >

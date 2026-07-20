@@ -15,6 +15,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 
 type UserButtonProps = {
@@ -26,8 +27,16 @@ type UserButtonProps = {
 export function UserButton({ name, email, image }: UserButtonProps) {
   const router = useRouter();
   const t = useTranslations("auth");
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  function closeMobileSidebar() {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  }
 
   async function handleSignOut() {
+    closeMobileSidebar();
     await signOut({ redirect: false });
     router.push("/sign-in");
     router.refresh();
@@ -70,7 +79,9 @@ export function UserButton({ name, email, image }: UserButtonProps) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
-          <DropdownMenuItem render={<Link href="/account" />}>
+          <DropdownMenuItem
+            render={<Link href="/account" onClick={closeMobileSidebar} />}
+          >
             <User className="size-4" />
             {t("accountSettings")}
           </DropdownMenuItem>

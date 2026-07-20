@@ -21,6 +21,7 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
+  useSidebar,
 } from "@/components/ui/sidebar";
 import { UserButton } from "@/components/layout/user-button";
 import { cn } from "@/lib/utils";
@@ -40,6 +41,13 @@ type AppSidebarProps = {
 export function AppSidebar({ userName, userEmail, userImage }: AppSidebarProps) {
   const pathname = usePathname();
   const t = useTranslations("nav");
+  const { isMobile, setOpenMobile } = useSidebar();
+
+  function closeMobileSidebar() {
+    if (isMobile) {
+      setOpenMobile(false);
+    }
+  }
 
   return (
     <Sidebar
@@ -49,6 +57,7 @@ export function AppSidebar({ userName, userEmail, userImage }: AppSidebarProps) 
       <SidebarHeader className="border-b border-sidebar-border px-3 py-3 pb-2">
         <Link
           href="/"
+          onClick={closeMobileSidebar}
           className={cn(
             "flex items-center rounded-md outline-none transition-opacity hover:opacity-90",
             "group-data-[collapsible=icon]:justify-center",
@@ -72,7 +81,9 @@ export function AppSidebar({ userName, userEmail, userImage }: AppSidebarProps) 
               {navItems.map((item) => (
                 <SidebarMenuItem key={item.titleKey} className="py-0.5">
                   <SidebarMenuButton
-                    render={<Link href={item.href} />}
+                    render={
+                      <Link href={item.href} onClick={closeMobileSidebar} />
+                    }
                     isActive={
                       item.href === "/"
                         ? pathname === "/"

@@ -60,7 +60,7 @@ export function VocabularyFiltersBar({
   }, [words]);
 
   return (
-    <div className="space-y-4 rounded-2xl border border-hairline-cloud bg-card p-4">
+    <div className="space-y-4 rounded-2xl border border-hairline-cloud bg-card p-3 sm:p-4">
       {showStudyMode && onStudyModeChange && (
         <div className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -185,7 +185,7 @@ function FilterSelect({
         {label}
       </p>
       <Select value={value} onValueChange={(v) => v && onChange(v)}>
-        <SelectTrigger className="w-full cursor-pointer">
+        <SelectTrigger className="h-10 w-full cursor-pointer sm:h-8">
           <SelectValue>{display}</SelectValue>
         </SelectTrigger>
         <SelectContent className={contentClassName}>{children}</SelectContent>
