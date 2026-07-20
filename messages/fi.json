@@ -14,10 +14,11 @@
   "nav": {
     "dashboard": "Etusivu",
     "vocabulary": "Sanasto",
+    "writing": "Kirjoittaminen",
     "exercises": "Harjoitus",
+    "account": "Tili",
     "settings": "Asetukset",
-    "workspace": "Työtila",
-    "writing": "Kirjoittaminen"
+    "workspace": "Työtila"
   },
   "header": {
     "createWorkspace": "Luo työtila",
@@ -76,7 +77,8 @@
       "partOfSpeech": "Sanaluokka",
       "meaning": "Merkitys",
       "tags": "Tunnisteet",
-      "updated": "Päivitetty"
+      "updated": "Päivitetty",
+      "actions": "Toiminnot"
     },
     "moreMeanings": "+{count} muuta",
     "searchPlaceholder": "Hae sanoja tai merkityksiä...",
@@ -458,7 +460,8 @@
       "mode": "Tila",
       "sections": "Osiot",
       "questions": "Kysymykset",
-      "updated": "Päivitetty"
+      "updated": "Päivitetty",
+      "actions": "Toiminnot"
     },
     "sectionCount": "{count, plural, one {# osio} other {# osiota}}",
     "questionCount": "{count, plural, one {# kysymys} other {# kysymystä}}",

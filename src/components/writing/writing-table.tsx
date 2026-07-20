@@ -75,12 +75,12 @@ export function WritingTable({ documents }: WritingTableProps) {
       </PageHeader>
 
       <div className="space-y-4">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center">
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
           <Input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder={t("searchPlaceholder")}
-            className="h-10 sm:h-8 sm:max-w-sm"
+            className="h-10 w-full sm:h-8 sm:max-w-sm"
           />
           <Select
             value={sort}
@@ -115,7 +115,7 @@ export function WritingTable({ documents }: WritingTableProps) {
           </div>
         ) : (
           <>
-            <div className="space-y-3 md:hidden">
+            <div className="space-y-3 lg:hidden">
               {filtered.map((document) => {
                 const meta = getWritingListMeta(document.content);
                 return (
@@ -160,16 +160,26 @@ export function WritingTable({ documents }: WritingTableProps) {
               })}
             </div>
 
-            <div className="data-table hidden md:block">
-              <table>
+            <div className="data-table hidden lg:block">
+              <table className="table-fixed">
+                <colgroup>
+                  <col />
+                  <col className="w-[9rem]" />
+                  <col className="w-[7rem]" />
+                  <col className="w-[7rem]" />
+                  <col className="w-[9rem]" />
+                  <col className="w-[8.5rem]" />
+                </colgroup>
                 <thead>
                   <tr>
                     <th>{t("columns.title")}</th>
                     <th>{t("columns.mode")}</th>
-                    <th>{t("columns.sections")}</th>
-                    <th>{t("columns.questions")}</th>
+                    <th className="text-center">{t("columns.sections")}</th>
+                    <th className="text-center">{t("columns.questions")}</th>
                     <th>{t("columns.updated")}</th>
-                    <th className="w-40" />
+                    <th>
+                      <span className="sr-only">{t("columns.actions")}</span>
+                    </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -177,32 +187,32 @@ export function WritingTable({ documents }: WritingTableProps) {
                     const meta = getWritingListMeta(document.content);
                     return (
                       <tr key={document.id}>
-                        <td>
+                        <td className="min-w-0">
                           <Link
                             href={`/writing/${document.id}`}
-                            className="font-semibold text-ink underline-offset-4 hover:underline"
+                            className="block truncate font-semibold text-ink underline-offset-4 hover:underline"
                           >
                             {document.title}
                           </Link>
                         </td>
                         <td>
-                          <Badge variant="secondary">
+                          <Badge variant="secondary" className="max-w-full truncate">
                             {meta.mode === "question_set"
                               ? t("modes.questionSet")
                               : t("modes.richDocument")}
                           </Badge>
                         </td>
-                        <td className="text-muted-foreground">
+                        <td className="text-center text-muted-foreground">
                           {meta.mode === "question_set"
                             ? meta.sectionCount
                             : "—"}
                         </td>
-                        <td className="text-muted-foreground">
+                        <td className="text-center text-muted-foreground">
                           {meta.mode === "question_set"
                             ? meta.questionCount
                             : "—"}
                         </td>
-                        <td className="text-sm text-muted-foreground">
+                        <td className="whitespace-nowrap text-sm text-muted-foreground">
                           {formatDistanceToNow(new Date(document.updatedAt), {
                             addSuffix: true,
                           })}

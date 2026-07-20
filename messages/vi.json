@@ -14,10 +14,11 @@
   "nav": {
     "dashboard": "Tổng quan",
     "vocabulary": "Từ vựng",
+    "writing": "Viết",
     "exercises": "Bài tập",
+    "account": "Tài khoản",
     "settings": "Cài đặt",
-    "workspace": "Không gian học",
-    "writing": "Viết"
+    "workspace": "Không gian học"
   },
   "header": {
     "createWorkspace": "Tạo không gian học",
@@ -76,7 +77,8 @@
       "partOfSpeech": "Loại từ",
       "meaning": "Nghĩa",
       "tags": "Thẻ",
-      "updated": "Cập nhật"
+      "updated": "Cập nhật",
+      "actions": "Thao tác"
     },
     "moreMeanings": "+{count} nghĩa khác",
     "searchPlaceholder": "Tìm từ hoặc nghĩa...",
@@ -458,7 +460,8 @@
       "mode": "Chế độ",
       "sections": "Phần",
       "questions": "Câu hỏi",
-      "updated": "Cập nhật"
+      "updated": "Cập nhật",
+      "actions": "Thao tác"
     },
     "sectionCount": "{count, plural, other {# phần}}",
     "questionCount": "{count, plural, other {# câu hỏi}}",

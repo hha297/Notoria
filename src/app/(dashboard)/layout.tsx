@@ -1,7 +1,6 @@
 import { AppSidebar } from "@/components/layout/app-sidebar";
 import { LocaleSelector } from "@/components/layout/locale-selector";
 import { WorkspaceSelector } from "@/components/layout/workspace-selector";
-import { Separator } from "@/components/ui/separator";
 import {
   SidebarInset,
   SidebarProvider,
@@ -41,12 +40,11 @@ export default async function DashboardLayout({
       <SidebarInset className="bg-background">
         <header className="flex h-14 shrink-0 items-center gap-2 border-b border-hairline-cloud bg-background px-3 sm:gap-3 sm:px-6">
           <SidebarTrigger className="-ml-0.5 text-ink sm:-ml-1" />
-          <Separator orientation="vertical" className="hidden h-4 sm:block" />
           <WorkspaceSelector
             workspaces={workspaces}
             activeWorkspaceId={activeWorkspace?.id}
           />
-          <div className="ml-auto shrink-0">
+          <div className="ml-auto flex min-w-0 items-center gap-1.5 sm:gap-2">
             <LocaleSelector value={locale} />
           </div>
         </header>

@@ -57,14 +57,14 @@ export function WorkspaceSelector({
 
   return (
     <>
-      <div className="flex min-w-0 flex-1 items-center gap-1.5 sm:gap-2">
+      <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
         {workspaces.length === 0 ? (
           <Button size="sm" onClick={() => setCreateOpen(true)}>
             <Plus className="size-4" />
             <span className="hidden sm:inline">{t("createWorkspace")}</span>
           </Button>
         ) : (
-          <div className="flex min-w-0 flex-1 items-center gap-1.5 sm:gap-2">
+          <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
             <Select
               value={active?.id}
               onValueChange={handleChange}
@@ -72,7 +72,7 @@ export function WorkspaceSelector({
             >
               <SelectTrigger
                 size="sm"
-                className="min-w-0 max-w-full flex-1 bg-background sm:max-w-[240px] sm:min-w-[160px]"
+                className="min-w-0 max-w-[9.5rem] bg-background sm:max-w-[240px] sm:min-w-[160px]"
               >
                 <SelectValue>
                   {active && (

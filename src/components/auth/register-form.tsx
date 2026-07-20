@@ -64,7 +64,7 @@ export function RegisterForm() {
           autoComplete="name"
           value={name}
           onChange={(event) => setName(event.target.value)}
-          className="h-11 bg-background md:h-8"
+          className="h-11 bg-background md:h-8 md:bg-transparent"
           required
         />
       </div>
@@ -77,7 +77,7 @@ export function RegisterForm() {
           autoComplete="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          className="h-11 bg-background md:h-8"
+          className="h-11 bg-background md:h-8 md:bg-transparent"
           required
         />
       </div>
@@ -89,7 +89,7 @@ export function RegisterForm() {
           autoComplete="new-password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-          className="h-11 bg-background md:h-8"
+          className="h-11 bg-background md:h-8 md:bg-transparent"
           minLength={8}
           required
         />

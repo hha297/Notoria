@@ -57,7 +57,7 @@ export function LoginForm() {
           autoComplete="email"
           value={email}
           onChange={(event) => setEmail(event.target.value)}
-          className="h-11 bg-background md:h-8"
+          className="h-11 bg-background md:h-8 md:bg-transparent"
           required
         />
       </div>
@@ -69,7 +69,7 @@ export function LoginForm() {
           autoComplete="current-password"
           value={password}
           onChange={(event) => setPassword(event.target.value)}
-          className="h-11 bg-background md:h-8"
+          className="h-11 bg-background md:h-8 md:bg-transparent"
           required
         />
       </div>

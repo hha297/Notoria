@@ -21,7 +21,10 @@ const vt323 = VT323({
 });
 
 export const metadata: Metadata = {
-  title: "Notoria",
+  title: {
+    default: "Notoria",
+    template: "%s",
+  },
   description: "Private language-learning workspace for vocabulary and exercises",
 };
 

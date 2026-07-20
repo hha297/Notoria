@@ -165,19 +165,19 @@
   }
 
   .data-table {
-    @apply overflow-x-auto rounded-xl border border-hairline-cloud bg-card;
+    @apply w-full overflow-x-auto rounded-xl border border-hairline-cloud bg-card;
   }
 
   .data-table table {
-    @apply w-full min-w-[640px];
+    @apply w-full min-w-[640px] border-collapse;
   }
 
   .data-table thead {
-    @apply border-b border-hairline-cloud bg-muted/60 text-left;
+    @apply border-b border-hairline-cloud text-left;
   }
 
   .data-table th {
-    @apply px-3 py-3 text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground sm:px-4 sm:text-sm;
+    @apply bg-muted/60 px-3 py-3 text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground sm:px-4 sm:text-sm;
   }
 
   .data-table td {

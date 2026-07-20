@@ -355,7 +355,15 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
           </div>
 
           <div className="data-table hidden md:block">
-            <table>
+            <table className="table-fixed">
+              <colgroup>
+                <col className="w-[18%]" />
+                <col className="w-[14%]" />
+                <col />
+                <col className="w-[18%]" />
+                <col className="w-[12%]" />
+                <col className="w-[7rem]" />
+              </colgroup>
               <thead>
                 <tr>
                   <th>{t("columns.word")}</th>
@@ -363,7 +371,9 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
                   <th>{t("columns.meaning")}</th>
                   <th>{t("columns.tags")}</th>
                   <th>{t("columns.updated")}</th>
-                  <th className="w-28" />
+                  <th>
+                    <span className="sr-only">{t("columns.actions")}</span>
+                  </th>
                 </tr>
               </thead>
               <tbody>
@@ -376,7 +386,7 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
                       <td>
                         <Link
                           href={`/vocabulary/${word.id}`}
-                          className="font-semibold text-ink underline-offset-4 hover:underline"
+                          className="block truncate font-semibold text-ink underline-offset-4 hover:underline"
                         >
                           {word.word}
                         </Link>
@@ -384,13 +394,15 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
                       <td className="text-muted-foreground">
                         {formatPartOfSpeech(word.partOfSpeech)}
                       </td>
-                      <td className="text-muted-foreground">
-                        {firstMeaning ?? "—"}
-                        {extraMeanings > 0 && (
-                          <span className="ml-1 text-xs text-muted-foreground">
-                            {t("moreMeanings", { count: extraMeanings })}
-                          </span>
-                        )}
+                      <td className="min-w-0 text-muted-foreground">
+                        <span className="line-clamp-2">
+                          {firstMeaning ?? "—"}
+                          {extraMeanings > 0 && (
+                            <span className="ml-1 text-xs text-muted-foreground">
+                              {t("moreMeanings", { count: extraMeanings })}
+                            </span>
+                          )}
+                        </span>
                       </td>
                       <td>
                         <div className="flex flex-wrap gap-1">

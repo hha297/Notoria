@@ -16,6 +16,7 @@
     "vocabulary": "Vocabulary",
     "writing": "Writing",
     "exercises": "Exercise",
+    "account": "Account",
     "settings": "Settings",
     "workspace": "Workspace"
   },
@@ -76,7 +77,8 @@
       "partOfSpeech": "Part of speech",
       "meaning": "Meaning",
       "tags": "Tags",
-      "updated": "Last updated"
+      "updated": "Last updated",
+      "actions": "Actions"
     },
     "moreMeanings": "+{count} more",
     "searchPlaceholder": "Search words or meanings...",
@@ -314,7 +316,8 @@
       "mode": "Mode",
       "sections": "Sections",
       "questions": "Questions",
-      "updated": "Last updated"
+      "updated": "Last updated",
+      "actions": "Actions"
     },
     "sectionCount": "{count, plural, one {# section} other {# sections}}",
     "questionCount": "{count, plural, one {# question} other {# questions}}",
