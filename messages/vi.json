@@ -105,6 +105,8 @@
     "sortAsc": "A → Z",
     "sortDesc": "Z → A",
     "noResults": "Không có từ nào khớp bộ lọc",
+    "uncategorizedPos": "Chưa phân loại",
+    "groupCount": "{count, plural, other {# từ}}",
     "deleteConfirmTitle": "Xóa từ này?",
     "deleteConfirmDescription": "\"{word}\" sẽ bị xóa vĩnh viễn khỏi từ vựng của bạn.",
     "wordExists": "Từ này đã có trong từ vựng.",

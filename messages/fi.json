@@ -105,6 +105,8 @@
     "sortAsc": "A → Ö",
     "sortDesc": "Ö → A",
     "noResults": "Yksikään sana ei vastaa suodattimia",
+    "uncategorizedPos": "Luokittelematon",
+    "groupCount": "{count, plural, one {# sana} other {# sanaa}}",
     "deleteConfirmTitle": "Poistetaanko tämä sana?",
     "deleteConfirmDescription": "\"{word}\" poistetaan pysyvästi sanastostasi.",
     "wordExists": "Tämä sana on jo sanastossasi.",
