@@ -26,7 +26,8 @@ export function DashboardDocumentTitle() {
     }
 
     if (pathname === "/writing/new") return tWriting("newTitle");
-    if (/^\/writing\/[^/]+$/.test(pathname)) return tWriting("editTitle");
+    if (/^\/writing\/[^/]+\/edit$/.test(pathname)) return tWriting("editTitle");
+    if (/^\/writing\/[^/]+$/.test(pathname)) return tWriting("previewTitle");
     if (pathname === "/writing" || pathname.startsWith("/writing/")) {
       return tNav("writing");
     }

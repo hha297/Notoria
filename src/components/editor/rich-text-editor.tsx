@@ -100,8 +100,10 @@ export function RichTextEditor({
     },
     editorProps: {
       attributes: {
-        class:
-          "prose prose-neutral dark:prose-invert max-w-none min-h-[320px] px-4 py-3 focus:outline-none",
+        class: cn(
+          "prose prose-neutral dark:prose-invert max-w-none px-4 py-3 focus:outline-none",
+          editable ? "min-h-[320px]" : "min-h-0",
+        ),
       },
     },
   });
@@ -117,6 +119,11 @@ export function RichTextEditor({
       lastSavedContent.current = incoming;
     }
   }, [content, editor]);
+
+  useEffect(() => {
+    if (!editor) return;
+    editor.setEditable(editable);
+  }, [editable, editor]);
 
   useEffect(() => {
     return () => {
@@ -139,14 +146,19 @@ export function RichTextEditor({
     <div className={cn("overflow-hidden rounded-xl border border-hairline-cloud bg-card", className)}>
       {editable && <EditorToolbar editor={editor} />}
       <div className="overflow-x-auto">
-        <EditorContent editor={editor} />
+        <EditorContent
+          editor={editor}
+          className={cn(!editable && "[&_.ProseMirror]:min-h-0")}
+        />
       </div>
-      <div className="flex flex-col gap-1 border-t border-hairline-cloud bg-muted/30 px-3 py-2 font-mono text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-4">
-        <span>
-          {words} words · {characters} characters
-        </span>
-        {onAutosave && <span>Autosave enabled</span>}
-      </div>
+      {editable && (
+        <div className="flex flex-col gap-1 border-t border-hairline-cloud bg-muted/30 px-3 py-2 font-mono text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-4">
+          <span>
+            {words} words · {characters} characters
+          </span>
+          {onAutosave && <span>Autosave enabled</span>}
+        </div>
+      )}
     </div>
   );
 }

@@ -66,7 +66,7 @@ export function WritingRowActions({ id, title, content }: WritingRowActionsProps
           <span className="sr-only">{tw("export.button")}</span>
         </Button>
         <Link
-          href={`/writing/${id}`}
+          href={`/writing/${id}/edit`}
           className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }))}
         >
           <Pencil className="size-4" />
