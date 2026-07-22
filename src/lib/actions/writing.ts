@@ -16,6 +16,7 @@ function revalidateWriting(id?: string) {
   revalidatePath("/writing/new");
   if (id) {
     revalidatePath(`/writing/${id}`);
+    revalidatePath(`/writing/${id}/edit`);
   }
 }
 

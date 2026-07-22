@@ -34,6 +34,8 @@ import type { ExerciseFormValues } from "@/schemas/exercise";
 
 type WritingEditorProps = {
   exerciseType: ExerciseFormValues["type"];
+  /** When set, Cancel returns here and Save navigates here after persisting. */
+  previewHref?: string;
   initialData?: {
     id: string;
     title: string;
@@ -46,10 +48,12 @@ const AUTOSAVE_MS = 1500;
 
 export function WritingEditor({
   exerciseType,
+  previewHref,
   initialData,
 }: WritingEditorProps) {
   const router = useRouter();
   const t = useTranslations("writing");
+  const tCommon = useTranslations("common");
   const type = initialData?.type ?? exerciseType;
 
   const [title, setTitle] = useState(initialData?.title ?? "");
@@ -108,11 +112,11 @@ export function WritingEditor({
       if (initialData?.id) {
         await updateWritingDocument(initialData.id, payload);
         if (showToast) toast.success(t("saved"));
-        router.refresh();
+        router.replace(previewHref ?? `/writing/${initialData.id}`);
       } else {
         const exercise = await createWritingDocument(payload);
         if (showToast) toast.success(t("created"));
-        router.push(`/writing/${exercise.id}`);
+        router.replace(`/writing/${exercise.id}`);
       }
     } catch (error) {
       if (showToast) {
@@ -146,7 +150,8 @@ export function WritingEditor({
   }
 
   function scheduleAutosave() {
-    if (!initialData?.id) return;
+    // Explicit Save when coming from preview so Cancel can discard cleanly.
+    if (!initialData?.id || previewHref) return;
     if (autosaveTimer.current) clearTimeout(autosaveTimer.current);
     autosaveTimer.current = setTimeout(() => {
       void runAutosave();
@@ -171,7 +176,7 @@ export function WritingEditor({
   }
 
   async function handleRichAutosave(nextContent: JSONContent) {
-    if (!initialData?.id || !title.trim()) return;
+    if (!initialData?.id || !title.trim() || previewHref) return;
 
     const nextState: WritingEditorState = {
       ...editorState,
@@ -255,7 +260,9 @@ export function WritingEditor({
                 placeholder={t("contentPlaceholder")}
                 onChange={setDoc}
                 onAutosave={
-                  initialData?.id ? handleRichAutosave : undefined
+                  initialData?.id && !previewHref
+                    ? handleRichAutosave
+                    : undefined
                 }
               />
             </div>
@@ -270,13 +277,27 @@ export function WritingEditor({
 
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <p className="text-sm text-muted-foreground">
-          {isAutosaving
-            ? t("autosaving")
-            : initialData
-              ? t("autosaveReady")
-              : t("autosavePending")}
+          {previewHref
+            ? t("editSaveHint")
+            : isAutosaving
+              ? t("autosaving")
+              : initialData
+                ? t("autosaveReady")
+                : t("autosavePending")}
         </p>
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
+          {previewHref ? (
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              onClick={() => router.replace(previewHref)}
+              disabled={isSaving}
+              className="h-11 w-full sm:h-9 sm:w-auto"
+            >
+              {tCommon("cancel")}
+            </Button>
+          ) : null}
           <Button
             type="button"
             variant="outline"

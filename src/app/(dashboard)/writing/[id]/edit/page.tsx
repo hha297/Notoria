@@ -3,12 +3,12 @@ import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
-import { WritingPreview } from "@/components/writing/writing-preview";
+import { WritingEditor } from "@/components/writing/writing-editor";
 import { getWritingDocument } from "@/lib/actions/writing";
 
 export const dynamic = "force-dynamic";
 
-export default async function WritingDocumentPage({
+export default async function EditWritingPage({
   params,
 }: {
   params: Promise<{ id: string }>;
@@ -21,26 +21,34 @@ export default async function WritingDocumentPage({
     notFound();
   }
 
+  const previewHref = `/writing/${document.id}`;
+
   return (
     <div className="mx-auto max-w-4xl space-y-8 pt-1 sm:space-y-10 sm:pt-2">
       <div className="space-y-6">
         <Link
-          href="/writing"
+          href={previewHref}
           className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-ink"
         >
           <ArrowLeft className="size-4" />
-          {t("backToList")}
+          {t("backToPreview")}
         </Link>
         <PageHeader
           eyebrow={t("title")}
-          title={document.title}
-          description={t("previewDescription")}
+          title={t("edit")}
+          highlight={document.title}
+          description={t("editDescription")}
         />
       </div>
-      <WritingPreview
-        id={document.id}
-        title={document.title}
-        content={document.content}
+      <WritingEditor
+        exerciseType="WRITING"
+        previewHref={previewHref}
+        initialData={{
+          id: document.id,
+          title: document.title,
+          type: document.type,
+          content: document.content,
+        }}
       />
     </div>
   );
