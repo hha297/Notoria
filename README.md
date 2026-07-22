@@ -24,11 +24,14 @@ Each account owns its own data. The app is not a social platform: no public prof
 ### Vocabulary
 
 - Add words with **multiple meanings** and **example sentences** (drag-and-drop reorder)
-- Part of speech, notes, and tags
+- Each example can include optional **meaning/translation** and **notes/explanation** (collapsible per sentence)
+- Part of speech, word-level notes, and tags
 - **Tags:** built-in groups (level A1–C2, topic, usage) plus workspace custom tags
 - **Learning status** per word (`NEW`, `LEARNING`, `REVIEW`, `MASTERED`) — updated by flashcard ratings
 - Search, filter (part of speech, tags), and sort (word / last updated)
-- Responsive vocabulary list: card layout on mobile, table on desktop
+- List grouped into **separate tables by part of speech** (Noun, Verb, …); uncategorized words in their own section
+- Click a word → **read-only preview**; **Edit** opens the form; Save returns to preview
+- Responsive list: cards on mobile, tables on desktop
 - **Export** the currently filtered/sorted list to **PDF**, **CSV**, or **Word (.docx)** with optional columns (part of speech, tags, last updated, notes)
 
 ### Writing
@@ -36,8 +39,9 @@ Each account owns its own data. The app is not a social platform: no public prof
 - Dedicated **Writing** module (separate from Exercise)
 - **Rich document** mode — TipTap rich text editor
 - **Question set** mode — sections and questions (prompt, example answer, notes) with drag-and-drop reorder
-- List view with search and sorting; create, edit, delete
-- Autosave for existing documents
+- List view with search and sorting; create, delete, export from the list
+- Click a document → **read-only preview**; **Edit** opens the editor; Save returns to preview (Cancel discards unsaved edits)
+- Autosave on `/writing/new` after the first save; explicit Save when editing from preview
 - **Export** to **PDF** or **Word (.docx)** with options for example answers, notes, and blank writing space
 
 ### Exercise
@@ -109,21 +113,21 @@ src/
 │   ├── (dashboard)/      # Sidebar layout
 │   │   ├── account/      # Profile, password, avatar
 │   │   ├── exercises/    # Exercise (vocabulary practice)
-│   │   ├── vocabulary/   # Word list and editor
-│   │   └── writing/      # Writing list and editor
-│   └── api/auth/         # NextAuth route handler
+│   │   ├── vocabulary/   # Word list, preview, editor
+│   │   └── writing/      # Writing list, preview, editor
+   └── api/auth/         # NextAuth route handler
 ├── components/
 │   ├── account/          # Account settings, avatar
 │   ├── auth/             # Login, register, password input
 │   ├── editor/           # TipTap rich text editor
 │   ├── exercises/        # Sessions, filters
 │   ├── flashcards/       # Flashcard session UI
-│   ├── layout/           # Sidebar, header, page chrome
+│   ├── layout/           # Sidebar, header, document title
 │   ├── providers/        # Session, query, tooltip wrappers
 │   ├── ui/               # shadcn primitives
-│   ├── vocabulary/       # Forms, table, tags, export dialog
+│   ├── vocabulary/       # Forms, preview, table, tags, export
 │   ├── workspace/        # Create workspace dialog
-│   └── writing/          # Writing list, editor, export dialog
+│   └── writing/          # List, preview, editor, export
 ├── db/                   # Drizzle schema and client
 ├── hooks/                # Shared React hooks
 ├── i18n/                 # Locale config and request helpers
@@ -220,12 +224,14 @@ Open [http://localhost:3000](http://localhost:3000), create an account at `/sign
 | `/sign-in` | Sign in |
 | `/sign-up` | Create an account |
 | `/` | Dashboard |
-| `/vocabulary` | Vocabulary list (search, filters, export) |
+| `/vocabulary` | Vocabulary list (grouped by POS; search, filters, export) |
 | `/vocabulary/new` | Add a word |
-| `/vocabulary/[id]` | Edit a word |
+| `/vocabulary/[id]` | Word preview (read-only) |
+| `/vocabulary/[id]/edit` | Edit a word |
 | `/writing` | Writing list (search, sort, export) |
 | `/writing/new` | Create writing |
-| `/writing/[id]` | Edit writing |
+| `/writing/[id]` | Writing preview (read-only) |
+| `/writing/[id]/edit` | Edit writing |
 | `/exercises` | Exercise (pick a study mode) |
 | `/exercises/flashcard` | Flashcard session |
 | `/exercises/fill-in-blank` | Fill in the blank |
@@ -247,7 +253,7 @@ Open [http://localhost:3000](http://localhost:3000), create an account at `/sign
 | `workspace_tags` | Workspace-scoped custom tag catalog |
 | `vocabulary_words` | Words in a workspace (POS, notes, learning status) |
 | `word_meanings` | Ordered meanings |
-| `word_examples` | Ordered example sentences |
+| `word_examples` | Ordered example sentences (optional meaning + notes per example) |
 | `vocabulary_word_tags` | Word ↔ tag links (built-in ids or `custom:…`) |
 | `exercises` | Saved writing documents (JSONB: rich document or question set) |
 | `flashcard_reviews` | Per-review rating log |
@@ -281,7 +287,6 @@ Then restart `npm run dev`.
 
 - OAuth providers (Google, GitHub)
 - Grammar notes module (schema reserved)
-- Writing journal (separate from the exercise editor)
 - Global search
 - Statistics and charts
 - Vocabulary import (CSV / JSON)
