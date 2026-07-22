@@ -143,6 +143,8 @@ export const wordExamples = pgTable("word_examples", {
     .notNull()
     .references(() => vocabularyWords.id, { onDelete: "cascade" }),
   sentence: text("sentence").notNull(),
+  meaning: text("meaning"),
+  notes: text("notes"),
   sortOrder: integer("sort_order").notNull().default(0),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()

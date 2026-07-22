@@ -20,7 +20,8 @@ export function DashboardDocumentTitle() {
     }
 
     if (pathname === "/vocabulary/new") return tVocab("addWord");
-    if (/^\/vocabulary\/[^/]+$/.test(pathname)) return tVocab("editWord");
+    if (/^\/vocabulary\/[^/]+\/edit$/.test(pathname)) return tVocab("editWord");
+    if (/^\/vocabulary\/[^/]+$/.test(pathname)) return tVocab("previewTitle");
     if (pathname === "/vocabulary" || pathname.startsWith("/vocabulary/")) {
       return tNav("vocabulary");
     }

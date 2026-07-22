@@ -81,6 +81,8 @@ async function replaceWordRelations(
       data.examples.map((example, index) => ({
         wordId,
         sentence: example.sentence,
+        meaning: example.meaning?.trim() || null,
+        notes: example.notes?.trim() || null,
         sortOrder: example.sortOrder ?? index,
       })),
     );
@@ -170,6 +172,7 @@ export async function createVocabularyWord(data: VocabularyFormValues) {
   await replaceWordRelations(word.id, parsed);
 
   revalidatePath("/vocabulary");
+  revalidatePath(`/vocabulary/${word.id}`);
   return word;
 }
 
@@ -197,6 +200,7 @@ export async function updateVocabularyWord(
 
   revalidatePath("/vocabulary");
   revalidatePath(`/vocabulary/${id}`);
+  revalidatePath(`/vocabulary/${id}/edit`);
 }
 
 export async function deleteVocabularyWord(id: string) {
@@ -205,4 +209,6 @@ export async function deleteVocabularyWord(id: string) {
 
   await db.delete(vocabularyWords).where(eq(vocabularyWords.id, id));
   revalidatePath("/vocabulary");
+  revalidatePath(`/vocabulary/${id}`);
+  revalidatePath(`/vocabulary/${id}/edit`);
 }
