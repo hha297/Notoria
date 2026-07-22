@@ -10,6 +10,8 @@ export const meaningSchema = z.object({
 export const exampleSchema = z.object({
   id: z.string().optional(),
   sentence: z.string().min(1, "Example is required"),
+  meaning: z.string().optional().default(""),
+  notes: z.string().optional().default(""),
   sortOrder: z.number().int().nonnegative(),
 });
 

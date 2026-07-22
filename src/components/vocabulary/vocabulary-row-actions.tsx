@@ -48,7 +48,7 @@ export function VocabularyRowActions({ wordId, word }: VocabularyRowActionsProps
     <>
       <div className="flex justify-end gap-1">
         <Link
-          href={`/vocabulary/${wordId}`}
+          href={`/vocabulary/${wordId}/edit`}
           className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }))}
         >
           <Pencil className="size-4" />

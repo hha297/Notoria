@@ -55,6 +55,8 @@ type VocabularyFormClientValues = Omit<
 >;
 
 type VocabularyFormProps = {
+  /** When set, Cancel returns here and Save navigates here after persisting. */
+  previewHref?: string;
   initialData?: {
     id: string;
     word: string;
@@ -68,6 +70,8 @@ type VocabularyFormProps = {
     examples: Array<{
       id: string;
       sentence: string;
+      meaning?: string | null;
+      notes?: string | null;
       sortOrder: number;
     }>;
     tags: Array<{
@@ -91,13 +95,21 @@ function createDefaultExamples(): ExampleItem[] {
     {
       id: "new-example-0",
       sentence: "",
+      meaning: "",
+      notes: "",
       sortOrder: 0,
     },
   ];
 }
 
 function getInitialExamples(
-  examples?: Array<{ id: string; sentence: string; sortOrder: number }>,
+  examples?: Array<{
+    id: string;
+    sentence: string;
+    meaning?: string | null;
+    notes?: string | null;
+    sortOrder: number;
+  }>,
 ): ExampleItem[] {
   if (!examples?.length) {
     return createDefaultExamples();
@@ -106,6 +118,8 @@ function getInitialExamples(
   return examples.map((example) => ({
     id: example.id,
     sentence: example.sentence,
+    meaning: example.meaning ?? "",
+    notes: example.notes ?? "",
     sortOrder: example.sortOrder,
   }));
 }
@@ -124,9 +138,10 @@ function getInitialSessionCustomTags(
     .sort((a, b) => a.localeCompare(b));
 }
 
-export function VocabularyForm({ initialData }: VocabularyFormProps) {
+export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps) {
   const router = useRouter();
   const t = useTranslations("vocabulary");
+  const tCommon = useTranslations("common");
   const tPos = useTranslations("tags.pos");
   const [isSaving, setIsSaving] = useState(false);
   const [meanings, setMeanings] = useState<MeaningItem[]>(
@@ -175,6 +190,8 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
       .map((item, index) => ({
         id: item.id,
         sentence: item.sentence.trim(),
+        meaning: item.meaning.trim(),
+        notes: item.notes.trim(),
         sortOrder: index,
       }))
       .filter((item) => item.sentence.length > 0);
@@ -192,11 +209,11 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
       if (initialData?.id) {
         await updateVocabularyWord(initialData.id, payload);
         toast.success(t("updated"));
-        router.push("/vocabulary");
+        router.replace(previewHref ?? `/vocabulary/${initialData.id}`);
       } else {
-        await createVocabularyWord(payload);
+        const word = await createVocabularyWord(payload);
         toast.success(t("saved"));
-        router.push("/vocabulary");
+        router.replace(`/vocabulary/${word.id}`);
       }
     } catch (error) {
       if (error instanceof Error && error.message === VOCABULARY_WORD_EXISTS) {
@@ -301,7 +318,19 @@ export function VocabularyForm({ initialData }: VocabularyFormProps) {
         </CardContent>
       </Card>
 
-      <div className="flex justify-stretch sm:justify-end">
+      <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
+        {previewHref ? (
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            onClick={() => router.replace(previewHref)}
+            disabled={isSaving}
+            className="h-11 w-full sm:h-9 sm:w-auto"
+          >
+            {tCommon("cancel")}
+          </Button>
+        ) : null}
         <Button
           type="submit"
           disabled={isSaving}
