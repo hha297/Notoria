@@ -45,10 +45,7 @@ function tipTapToParagraphs(doc: JSONContent): string[] {
 export function buildExportDocument(
   title: string,
   state: WritingEditorState,
-  options: Pick<
-    ExportOptions,
-    "includeExampleAnswers" | "includeNotes"
-  >,
+  options: Pick<ExportOptions, "includeExampleAnswers" | "includeNotes">,
 ): ExportDocumentModel {
   const trimmedTitle = title.trim();
 
@@ -58,6 +55,7 @@ export function buildExportDocument(
       mode: "rich_document",
       sections: [],
       paragraphs: tipTapToParagraphs(state.doc),
+      doc: state.doc,
     };
   }
 
@@ -73,10 +71,7 @@ export function buildExportDocument(
             prompt: question.prompt.trim(),
           };
 
-          if (
-            options.includeExampleAnswers &&
-            question.exampleAnswer.trim()
-          ) {
+          if (options.includeExampleAnswers && question.exampleAnswer.trim()) {
             item.exampleAnswer = question.exampleAnswer.trim();
           }
 
@@ -94,6 +89,7 @@ export function buildExportDocument(
     mode: "question_set",
     sections,
     paragraphs: [],
+    doc: null,
   };
 }
 
