@@ -15,6 +15,7 @@ import type {
   ExportSection,
 } from "@/lib/writing/export/types";
 import { BLANK_LINE_COUNT } from "@/lib/writing/export/types";
+import { generateRichDocumentPdfBlob } from "@/lib/writing/export/rich-document-pdf";
 import { wrapTextOntoLines } from "@/lib/writing/export/wrap-text";
 
 const FONT_SANS = "ChakraPetch";
@@ -49,6 +50,9 @@ async function ensureExportFonts() {
           { src: URL.createObjectURL(bold), fontWeight: 700 },
         ],
       });
+
+      // Never soft-hyphenate mid-word (e.g. "ongel-man") — wrap whole words only.
+      Font.registerHyphenationCallback((word) => [word]);
     })().catch((error) => {
       fontReady = null;
       throw error;
@@ -151,10 +155,6 @@ const styles = StyleSheet.create({
     color: "#3d3850",
     marginBottom: 6,
   },
-  paragraph: {
-    fontFamily: FONT_SANS,
-    marginBottom: 10,
-  },
   footer: {
     position: "absolute",
     bottom: 28,
@@ -256,7 +256,7 @@ function SectionBlock({
   );
 }
 
-function WritingPdfDocument({
+function QuestionSetPdfDocument({
   model,
   labels,
   options,
@@ -274,21 +274,15 @@ function WritingPdfDocument({
           <Text style={styles.titleValue}>{model.title || "—"}</Text>
         </View>
         <View style={styles.divider} />
-        {model.mode === "question_set"
-          ? model.sections.map((section, index) => (
-              <SectionBlock
-                key={index}
-                section={section}
-                index={index}
-                labels={labels}
-                leaveBlankSpace={options.leaveBlankSpace}
-              />
-            ))
-          : model.paragraphs.map((paragraph, index) => (
-              <Text key={index} style={styles.paragraph}>
-                {paragraph || " "}
-              </Text>
-            ))}
+        {model.sections.map((section, index) => (
+          <SectionBlock
+            key={index}
+            section={section}
+            index={index}
+            labels={labels}
+            leaveBlankSpace={options.leaveBlankSpace}
+          />
+        ))}
         <Text
           style={styles.footer}
           render={({ pageNumber, totalPages }) =>
@@ -308,7 +302,11 @@ export async function generateWritingPdfBlob(
 ): Promise<Blob> {
   await ensureExportFonts();
 
+  if (model.mode === "rich_document") {
+    return generateRichDocumentPdfBlob(model, labels);
+  }
+
   return pdf(
-    <WritingPdfDocument model={model} labels={labels} options={options} />,
+    <QuestionSetPdfDocument model={model} labels={labels} options={options} />,
   ).toBlob();
 }

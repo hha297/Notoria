@@ -1,3 +1,4 @@
+import type { JSONContent } from "@tiptap/react";
 import type { WritingMode } from "@/lib/writing/content";
 
 export type ExportFormat = "pdf" | "docx";
@@ -33,8 +34,10 @@ export type ExportDocumentModel = {
   title: string;
   mode: WritingMode;
   sections: ExportSection[];
-  /** Plain paragraphs extracted from rich TipTap docs. */
+  /** Plain paragraphs for rich_document DOCX export. */
   paragraphs: string[];
+  /** TipTap JSON for rich_document PDF export (preserves formatting). */
+  doc: JSONContent | null;
 };
 
 export const DEFAULT_EXPORT_OPTIONS: ExportOptions = {

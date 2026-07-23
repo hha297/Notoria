@@ -270,4 +270,3 @@ export async function generateWritingDocxBlob(
 
   return Packer.toBlob(document);
 }
-
