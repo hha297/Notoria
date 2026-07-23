@@ -131,11 +131,11 @@ export function WritingEditor({
       if (initialData?.id) {
         await updateWritingDocument(initialData.id, payload);
         if (showToast) toast.success(t("saved"));
-        router.replace(previewHref ?? `/writing/${initialData.id}`);
+        router.replace("/writing");
       } else {
-        const exercise = await createWritingDocument(payload);
+        await createWritingDocument(payload);
         if (showToast) toast.success(t("created"));
-        router.replace(`/writing/${exercise.id}`);
+        router.replace("/writing");
       }
     } catch (error) {
       if (showToast) {

@@ -209,11 +209,11 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
       if (initialData?.id) {
         await updateVocabularyWord(initialData.id, payload);
         toast.success(t("updated"));
-        router.replace(previewHref ?? `/vocabulary/${initialData.id}`);
+        router.replace("/vocabulary");
       } else {
-        const word = await createVocabularyWord(payload);
+        await createVocabularyWord(payload);
         toast.success(t("saved"));
-        router.replace(`/vocabulary/${word.id}`);
+        router.replace("/vocabulary");
       }
     } catch (error) {
       if (error instanceof Error && error.message === VOCABULARY_WORD_EXISTS) {
