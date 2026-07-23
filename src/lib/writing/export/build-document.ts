@@ -46,12 +46,15 @@ export function buildExportDocument(
   title: string,
   state: WritingEditorState,
   options: Pick<ExportOptions, "includeExampleAnswers" | "includeNotes">,
+  description = "",
 ): ExportDocumentModel {
   const trimmedTitle = title.trim();
+  const trimmedDescription = description.trim();
 
   if (state.mode === "rich_document") {
     return {
       title: trimmedTitle,
+      description: trimmedDescription,
       mode: "rich_document",
       sections: [],
       paragraphs: tipTapToParagraphs(state.doc),
@@ -86,6 +89,7 @@ export function buildExportDocument(
 
   return {
     title: trimmedTitle,
+    description: trimmedDescription,
     mode: "question_set",
     sections,
     paragraphs: [],

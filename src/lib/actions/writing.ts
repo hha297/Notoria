@@ -69,6 +69,7 @@ export async function createWritingDocument(data: ExerciseFormValues) {
       userId,
       workspaceId: workspace.id,
       title: parsed.title,
+      description: parsed.description.trim() || null,
       type: "WRITING",
       content: parsed.content,
     })
@@ -103,6 +104,7 @@ export async function updateWritingDocument(
     .update(exercises)
     .set({
       title: parsed.title,
+      description: parsed.description.trim() || null,
       type: "WRITING",
       content: parsed.content,
       updatedAt: new Date(),

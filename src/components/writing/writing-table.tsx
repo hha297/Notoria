@@ -24,6 +24,7 @@ import {
 export type WritingListItem = {
   id: string;
   title: string;
+  description?: string | null;
   content: unknown;
   updatedAt: string;
 };
@@ -71,10 +72,16 @@ function WritingModeGroup({ mode, title, documents }: ModeGroupProps) {
                   >
                     {document.title}
                   </Link>
+                  {document.description?.trim() ? (
+                    <p className="line-clamp-2 text-sm text-muted-foreground">
+                      {document.description.trim()}
+                    </p>
+                  ) : null}
                 </div>
                 <WritingRowActions
                   id={document.id}
                   title={document.title}
+                  description={document.description}
                   content={document.content}
                 />
               </div>
@@ -139,6 +146,11 @@ function WritingModeGroup({ mode, title, documents }: ModeGroupProps) {
                     >
                       {document.title}
                     </Link>
+                    {document.description?.trim() ? (
+                      <p className="mt-0.5 line-clamp-1 text-sm text-muted-foreground">
+                        {document.description.trim()}
+                      </p>
+                    ) : null}
                   </td>
                   {isQuestionSet ? (
                     <>
@@ -159,6 +171,7 @@ function WritingModeGroup({ mode, title, documents }: ModeGroupProps) {
                     <WritingRowActions
                       id={document.id}
                       title={document.title}
+                      description={document.description}
                       content={document.content}
                     />
                   </td>
@@ -181,7 +194,11 @@ export function WritingTable({ documents }: WritingTableProps) {
     const query = search.trim().toLowerCase();
     const result = documents.filter((document) => {
       if (!query) return true;
-      return document.title.toLowerCase().includes(query);
+      const titleMatch = document.title.toLowerCase().includes(query);
+      const descriptionMatch = (document.description ?? "")
+        .toLowerCase()
+        .includes(query);
+      return titleMatch || descriptionMatch;
     });
 
     result.sort((a, b) => {

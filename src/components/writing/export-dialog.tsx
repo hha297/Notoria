@@ -27,6 +27,7 @@ type WritingExportDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   title: string;
+  description?: string | null;
   editorState: WritingEditorState;
 };
 
@@ -101,6 +102,7 @@ export function WritingExportDialog({
   open,
   onOpenChange,
   title,
+  description,
   editorState,
 }: WritingExportDialogProps) {
   const t = useTranslations("writing.export");
@@ -117,11 +119,13 @@ export function WritingExportDialog({
     try {
       await exportWritingExercise({
         title,
+        description,
         state: editorState,
         options,
         labels: {
           documentHeading: t("documentHeading"),
           titleLabel: t("titleLabel"),
+          descriptionLabel: t("descriptionLabel"),
           sectionLabel: t("sectionLabel"),
           questionLabel: t("questionLabel"),
           exampleAnswerLabel: t("exampleAnswerLabel"),

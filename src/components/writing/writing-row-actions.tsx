@@ -26,10 +26,16 @@ import { cn } from "@/lib/utils";
 type WritingRowActionsProps = {
   id: string;
   title: string;
+  description?: string | null;
   content: unknown;
 };
 
-export function WritingRowActions({ id, title, content }: WritingRowActionsProps) {
+export function WritingRowActions({
+  id,
+  title,
+  description,
+  content,
+}: WritingRowActionsProps) {
   const router = useRouter();
   const t = useTranslations("common");
   const tw = useTranslations("writing");
@@ -121,6 +127,7 @@ export function WritingRowActions({ id, title, content }: WritingRowActionsProps
         open={exportOpen}
         onOpenChange={setExportOpen}
         title={title}
+        description={description}
         editorState={editorState}
       />
     </>

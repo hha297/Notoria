@@ -16,10 +16,16 @@ import {
 type WritingPreviewProps = {
   id: string;
   title: string;
+  description?: string | null;
   content: unknown;
 };
 
-export function WritingPreview({ id, title, content }: WritingPreviewProps) {
+export function WritingPreview({
+  id,
+  title,
+  description,
+  content,
+}: WritingPreviewProps) {
   const t = useTranslations("writing");
   const [exportOpen, setExportOpen] = useState(false);
 
@@ -33,6 +39,8 @@ export function WritingPreview({ id, title, content }: WritingPreviewProps) {
       [...editorState.sections].sort((a, b) => a.sortOrder - b.sortOrder),
     [editorState.sections],
   );
+
+  const trimmedDescription = description?.trim() ?? "";
 
   return (
     <div className="space-y-6 sm:space-y-8">
@@ -67,6 +75,11 @@ export function WritingPreview({ id, title, content }: WritingPreviewProps) {
               : t("modes.richDocument")}
           </Badge>
           <h2 className="heading-md text-ink">{title}</h2>
+          {trimmedDescription ? (
+            <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
+              {trimmedDescription}
+            </p>
+          ) : null}
         </header>
 
         {editorState.mode === "rich_document" ? (
@@ -132,6 +145,7 @@ export function WritingPreview({ id, title, content }: WritingPreviewProps) {
         open={exportOpen}
         onOpenChange={setExportOpen}
         title={title}
+        description={trimmedDescription}
         editorState={editorState}
       />
     </div>

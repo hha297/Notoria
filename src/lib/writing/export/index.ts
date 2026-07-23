@@ -17,11 +17,17 @@ export { buildExportFilename } from "@/lib/writing/export/filename";
 
 export async function exportWritingExercise(params: {
   title: string;
+  description?: string | null;
   state: WritingEditorState;
   options: ExportOptions;
   labels: ExportLabels;
 }): Promise<{ filename: string }> {
-  const model = buildExportDocument(params.title, params.state, params.options);
+  const model = buildExportDocument(
+    params.title,
+    params.state,
+    params.options,
+    params.description ?? "",
+  );
 
   if (exportDocumentIsEmpty(model)) {
     throw new Error("EMPTY_EXPORT");
