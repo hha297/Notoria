@@ -32,6 +32,7 @@ export default async function WritingPage() {
       documents={documents.map((document) => ({
         id: document.id,
         title: document.title,
+        description: document.description,
         content: document.content,
         updatedAt: document.updatedAt.toISOString(),
       }))}

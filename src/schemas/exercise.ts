@@ -2,6 +2,7 @@ import { z } from "zod";
 
 export const exerciseFormSchema = z.object({
   title: z.string().min(1, "Title is required"),
+  description: z.string().max(2000).optional().default(""),
   type: z.enum([
     "QUESTIONS",
     "FILL_BLANK",

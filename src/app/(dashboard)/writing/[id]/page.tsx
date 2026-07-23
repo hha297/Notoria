@@ -40,6 +40,7 @@ export default async function WritingDocumentPage({
       <WritingPreview
         id={document.id}
         title={document.title}
+        description={document.description}
         content={document.content}
       />
     </div>

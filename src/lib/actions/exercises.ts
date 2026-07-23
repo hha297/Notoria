@@ -58,6 +58,7 @@ export async function createExercise(data: ExerciseFormValues) {
       userId,
       workspaceId: workspace.id,
       title: parsed.title,
+      description: parsed.description.trim() || null,
       type: parsed.type,
       content: parsed.content,
     })
@@ -88,6 +89,7 @@ export async function updateExercise(id: string, data: ExerciseFormValues) {
     .update(exercises)
     .set({
       title: parsed.title,
+      description: parsed.description.trim() || null,
       type: parsed.type,
       content: parsed.content,
       updatedAt: new Date(),

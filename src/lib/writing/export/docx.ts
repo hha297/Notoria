@@ -178,15 +178,17 @@ export async function generateWritingDocxBlob(
       ],
     }),
     new Paragraph({
-      spacing: { after: 200 },
-      border: {
-        bottom: {
-          style: BorderStyle.SINGLE,
-          size: 12,
-          color: "D5D0E0",
-          space: 8,
-        },
-      },
+      spacing: { after: model.description ? 80 : 200 },
+      border: model.description
+        ? undefined
+        : {
+            bottom: {
+              style: BorderStyle.SINGLE,
+              size: 12,
+              color: "D5D0E0",
+              space: 8,
+            },
+          },
       children: [
         new TextRun({
           text: model.title || "—",
@@ -197,6 +199,42 @@ export async function generateWritingDocxBlob(
       ],
     }),
   ];
+
+  if (model.description) {
+    children.push(
+      new Paragraph({
+        spacing: { after: 40 },
+        children: [
+          new TextRun({
+            text: labels.descriptionLabel,
+            font: FONT_SANS,
+            size: 18,
+            color: "6B6680",
+            allCaps: true,
+          }),
+        ],
+      }),
+      new Paragraph({
+        spacing: { after: 200 },
+        border: {
+          bottom: {
+            style: BorderStyle.SINGLE,
+            size: 12,
+            color: "D5D0E0",
+            space: 8,
+          },
+        },
+        children: [
+          new TextRun({
+            text: model.description,
+            font: FONT_SANS,
+            size: 20,
+            color: "3D3850",
+          }),
+        ],
+      }),
+    );
+  }
 
   if (model.mode === "question_set") {
     model.sections.forEach((section, sectionIndex) => {

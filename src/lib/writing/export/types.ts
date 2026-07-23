@@ -13,6 +13,7 @@ export type ExportOptions = {
 export type ExportLabels = {
   documentHeading: string;
   titleLabel: string;
+  descriptionLabel: string;
   sectionLabel: string;
   questionLabel: string;
   exampleAnswerLabel: string;
@@ -32,6 +33,7 @@ export type ExportSection = {
 
 export type ExportDocumentModel = {
   title: string;
+  description: string;
   mode: WritingMode;
   sections: ExportSection[];
   /** Plain paragraphs for rich_document DOCX export. */

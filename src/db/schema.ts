@@ -216,6 +216,7 @@ export const exercises = pgTable("exercises", {
     .notNull()
     .references(() => workspaces.id, { onDelete: "cascade" }),
   title: text("title").notNull(),
+  description: text("description"),
   type: exerciseTypeEnum("type").notNull().default("QUESTIONS"),
   content: jsonb("content").notNull(),
   createdAt: timestamp("created_at", { withTimezone: true })

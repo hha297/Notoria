@@ -19,6 +19,7 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { createWritingDocument, updateWritingDocument } from "@/lib/actions/writing";
 import {
@@ -39,6 +40,7 @@ type WritingEditorProps = {
   initialData?: {
     id: string;
     title: string;
+    description?: string | null;
     type: ExerciseFormValues["type"];
     content: unknown;
   };
@@ -57,6 +59,9 @@ export function WritingEditor({
   const type = initialData?.type ?? exerciseType;
 
   const [title, setTitle] = useState(initialData?.title ?? "");
+  const [description, setDescription] = useState(
+    initialData?.description ?? "",
+  );
   const [editorState, setEditorState] = useState<WritingEditorState>(() =>
     writingContentToEditorState(
       parseWritingContent(initialData?.content ?? undefined),
@@ -67,11 +72,23 @@ export function WritingEditor({
   const [exportOpen, setExportOpen] = useState(false);
 
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const latestRef = useRef({ title, editorState, type, id: initialData?.id });
+  const latestRef = useRef({
+    title,
+    description,
+    editorState,
+    type,
+    id: initialData?.id,
+  });
 
   useEffect(() => {
-    latestRef.current = { title, editorState, type, id: initialData?.id };
-  }, [title, editorState, type, initialData?.id]);
+    latestRef.current = {
+      title,
+      description,
+      editorState,
+      type,
+      id: initialData?.id,
+    };
+  }, [title, description, editorState, type, initialData?.id]);
 
   useEffect(() => {
     return () => {
@@ -81,10 +98,12 @@ export function WritingEditor({
 
   function buildPayload(
     nextTitle: string,
+    nextDescription: string,
     nextState: WritingEditorState,
   ): ExerciseFormValues {
     return {
       title: nextTitle.trim(),
+      description: nextDescription.trim(),
       type,
       content: serializeWritingContent(nextState) as Record<string, unknown>,
     };
@@ -107,7 +126,7 @@ export function WritingEditor({
     setIsSaving(true);
 
     try {
-      const payload = buildPayload(title, editorState);
+      const payload = buildPayload(title, description, editorState);
 
       if (initialData?.id) {
         await updateWritingDocument(initialData.id, payload);
@@ -130,7 +149,12 @@ export function WritingEditor({
   }
 
   async function runAutosave() {
-    const { title: nextTitle, editorState: nextState, id } = latestRef.current;
+    const {
+      title: nextTitle,
+      description: nextDescription,
+      editorState: nextState,
+      id,
+    } = latestRef.current;
     if (!id || !nextTitle.trim()) return;
     if (
       nextState.mode === "question_set" &&
@@ -141,7 +165,10 @@ export function WritingEditor({
 
     setIsAutosaving(true);
     try {
-      await updateWritingDocument(id, buildPayload(nextTitle, nextState));
+      await updateWritingDocument(
+        id,
+        buildPayload(nextTitle, nextDescription, nextState),
+      );
     } catch {
       // Autosave failures are silent
     } finally {
@@ -187,7 +214,10 @@ export function WritingEditor({
     setIsAutosaving(true);
 
     try {
-      await updateWritingDocument(initialData.id, buildPayload(title, nextState));
+      await updateWritingDocument(
+        initialData.id,
+        buildPayload(title, description, nextState),
+      );
     } catch {
       // Autosave failures are silent
     } finally {
@@ -219,6 +249,26 @@ export function WritingEditor({
               }}
               placeholder={t("titlePlaceholder")}
               className="h-10"
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="description">
+              {t("documentDescription")}{" "}
+              <span className="font-normal text-muted-foreground">
+                ({t("optional")})
+              </span>
+            </Label>
+            <Textarea
+              id="description"
+              value={description}
+              onChange={(event) => {
+                setDescription(event.target.value);
+                scheduleAutosave();
+              }}
+              placeholder={t("descriptionPlaceholder")}
+              rows={3}
+              className="min-h-20 resize-y"
             />
           </div>
 
@@ -328,6 +378,7 @@ export function WritingEditor({
         open={exportOpen}
         onOpenChange={setExportOpen}
         title={title}
+        description={description}
         editorState={editorState}
       />
     </div>

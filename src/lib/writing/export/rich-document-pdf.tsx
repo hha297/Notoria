@@ -47,6 +47,16 @@ const styles = StyleSheet.create({
     fontFamily: FONT_SANS,
     fontWeight: 700,
   },
+  descriptionRow: {
+    marginBottom: 16,
+  },
+  descriptionBody: {
+    fontSize: 11,
+    fontFamily: FONT_SANS,
+    fontWeight: 400,
+    color: "#3d3850",
+    lineHeight: 1.45,
+  },
   divider: {
     borderBottomWidth: 1,
     borderBottomColor: "#d5d0e0",
@@ -84,6 +94,12 @@ function RichDocumentPdf({
           <Text style={styles.titleLabel}>{labels.titleLabel}</Text>
           <Text style={styles.titleValue}>{model.title || "—"}</Text>
         </View>
+        {model.description ? (
+          <View style={styles.descriptionRow}>
+            <Text style={styles.titleLabel}>{labels.descriptionLabel}</Text>
+            <Text style={styles.descriptionBody}>{model.description}</Text>
+          </View>
+        ) : null}
         <View style={styles.divider} />
         {renderTipTapDocToPdf(model.doc)}
         <View style={styles.closingDivider} />

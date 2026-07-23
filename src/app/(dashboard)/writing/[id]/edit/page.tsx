@@ -46,6 +46,7 @@ export default async function EditWritingPage({
         initialData={{
           id: document.id,
           title: document.title,
+          description: document.description,
           type: document.type,
           content: document.content,
         }}
