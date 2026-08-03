@@ -13,7 +13,12 @@ import TableRow from "@tiptap/extension-table-row";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import Underline from "@tiptap/extension-underline";
-import { EditorContent, useEditor, type JSONContent } from "@tiptap/react";
+import {
+  EditorContent,
+  useEditor,
+  type Editor,
+  type JSONContent,
+} from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { common, createLowlight } from "lowlight";
 import { useEffect, useRef } from "react";
@@ -30,7 +35,42 @@ type RichTextEditorProps = {
   autosaveDelayMs?: number;
   className?: string;
   editable?: boolean;
+  /** Same extensions/toolbar as writing; notes is only a more compact shell. */
+  variant?: "full" | "notes";
+  showFooter?: boolean;
+  onEditorReady?: (editor: Editor | null) => void;
 };
+
+function buildExtensions(placeholder: string) {
+  return [
+    StarterKit.configure({
+      codeBlock: false,
+    }),
+    Underline,
+    Highlight,
+    Link.configure({
+      openOnClick: false,
+    }),
+    Image,
+    Table.configure({
+      resizable: true,
+    }),
+    TableRow,
+    TableHeader,
+    TableCell,
+    TaskList,
+    TaskItem.configure({
+      nested: true,
+    }),
+    CodeBlockLowlight.configure({
+      lowlight,
+    }),
+    Placeholder.configure({
+      placeholder,
+    }),
+    CharacterCount,
+  ];
+}
 
 export function RichTextEditor({
   content,
@@ -40,41 +80,19 @@ export function RichTextEditor({
   autosaveDelayMs = 1500,
   className,
   editable = true,
+  variant = "full",
+  showFooter,
+  onEditorReady,
 }: RichTextEditorProps) {
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSavedContent = useRef<string>("");
+  const isNotes = variant === "notes";
+  const footerVisible = showFooter ?? !isNotes;
 
   const editor = useEditor({
     immediatelyRender: false,
     editable,
-    extensions: [
-      StarterKit.configure({
-        codeBlock: false,
-      }),
-      Underline,
-      Highlight,
-      Link.configure({
-        openOnClick: false,
-      }),
-      Image,
-      Table.configure({
-        resizable: true,
-      }),
-      TableRow,
-      TableHeader,
-      TableCell,
-      TaskList,
-      TaskItem.configure({
-        nested: true,
-      }),
-      CodeBlockLowlight.configure({
-        lowlight,
-      }),
-      Placeholder.configure({
-        placeholder,
-      }),
-      CharacterCount,
-    ],
+    extensions: buildExtensions(placeholder),
     content: content ?? {
       type: "doc",
       content: [{ type: "paragraph" }],
@@ -102,11 +120,27 @@ export function RichTextEditor({
       attributes: {
         class: cn(
           "prose prose-neutral dark:prose-invert max-w-none px-4 py-3 focus:outline-none",
-          editable ? "min-h-[320px]" : "min-h-0",
+          isNotes
+            ? editable
+              ? "min-h-[140px]"
+              : "min-h-0"
+            : editable
+              ? "min-h-[320px]"
+              : "min-h-0",
         ),
       },
     },
   });
+
+  const onEditorReadyRef = useRef(onEditorReady);
+  onEditorReadyRef.current = onEditorReady;
+
+  useEffect(() => {
+    onEditorReadyRef.current?.(editor ?? null);
+    return () => {
+      onEditorReadyRef.current?.(null);
+    };
+  }, [editor]);
 
   useEffect(() => {
     if (!editor || content === undefined) return;
@@ -135,7 +169,12 @@ export function RichTextEditor({
 
   if (!editor) {
     return (
-      <div className="min-h-[360px] animate-pulse rounded-lg border bg-muted/30" />
+      <div
+        className={cn(
+          "animate-pulse rounded-lg border bg-muted/30",
+          isNotes ? "min-h-[180px]" : "min-h-[360px]",
+        )}
+      />
     );
   }
 
@@ -143,7 +182,12 @@ export function RichTextEditor({
   const words = editor.storage.characterCount.words();
 
   return (
-    <div className={cn("overflow-hidden rounded-xl border border-hairline-cloud bg-card", className)}>
+    <div
+      className={cn(
+        "overflow-hidden rounded-xl border border-hairline-cloud bg-card",
+        className,
+      )}
+    >
       {editable && <EditorToolbar editor={editor} />}
       <div className="overflow-x-auto">
         <EditorContent
@@ -151,7 +195,7 @@ export function RichTextEditor({
           className={cn(!editable && "[&_.ProseMirror]:min-h-0")}
         />
       </div>
-      {editable && (
+      {editable && footerVisible && (
         <div className="flex flex-col gap-1 border-t border-hairline-cloud bg-muted/30 px-3 py-2 font-mono text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-4">
           <span>
             {words} words · {characters} characters

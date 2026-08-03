@@ -31,6 +31,7 @@ import {
 import { VocabularyExportDialog } from "@/components/vocabulary/export-dialog";
 import { VocabularyRowActions } from "@/components/vocabulary/vocabulary-row-actions";
 import type { VocabularyExportSourceWord } from "@/lib/vocabulary/export/build-document";
+import { vocabularyNotesToPlainText } from "@/lib/vocabulary/notes-content";
 import { cn } from "@/lib/utils";
 
 export type VocabularyWordRow = {
@@ -445,7 +446,7 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
       tagLabels: word.tags.map((tag) =>
         getTagLabel(tag.tag, (key) => tTags(key)),
       ),
-      notes: word.notes ?? "",
+      notes: vocabularyNotesToPlainText(word.notes),
       updatedAtLabel: format(new Date(word.updatedAt), "yyyy-MM-dd"),
     }));
   }, [filteredWords, tPos, tTags]);

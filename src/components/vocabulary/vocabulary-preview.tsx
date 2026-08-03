@@ -4,6 +4,11 @@ import { Pencil } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { LinkButton } from "@/components/ui/link-button";
+import { VocabularyNotesContent } from "@/components/vocabulary/vocabulary-notes-content";
+import {
+  isNotesDocEmpty,
+  parseVocabularyNotes,
+} from "@/lib/vocabulary/notes-content";
 import { getTagLabel, PARTS_OF_SPEECH } from "@/lib/vocabulary-tags";
 
 type VocabularyPreviewProps = {
@@ -134,14 +139,12 @@ export function VocabularyPreview({
           </section>
         ) : null}
 
-        {notes?.trim() ? (
+        {notes && !isNotesDocEmpty(parseVocabularyNotes(notes)) ? (
           <section className="space-y-2">
             <h3 className="text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground">
               {t("notes")}
             </h3>
-            <p className="whitespace-pre-wrap text-sm leading-relaxed text-ink sm:text-base">
-              {notes.trim()}
-            </p>
+            <VocabularyNotesContent notes={notes} />
           </section>
         ) : null}
       </article>
