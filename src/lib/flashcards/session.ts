@@ -79,7 +79,7 @@ export function createSessionState({
   currentIndex?: number;
   isFlipped?: boolean;
 }): FlashcardSessionState {
-  const sessionWords = sampleSessionItems(words);
+  const sessionWords = sampleSessionItems(words, "flashcards");
 
   return {
     workspaceId,

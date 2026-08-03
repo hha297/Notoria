@@ -189,6 +189,7 @@ export async function createVocabularyWord(data: VocabularyFormValues) {
       workspaceId: workspace.id,
       word: parsed.word,
       partOfSpeech: parsed.partOfSpeech || null,
+      synonyms: parsed.synonyms?.trim() || null,
       notes: parsed.notes || null,
     })
     .returning();
@@ -215,6 +216,7 @@ export async function updateVocabularyWord(
     .set({
       word: parsed.word,
       partOfSpeech: parsed.partOfSpeech || null,
+      synonyms: parsed.synonyms?.trim() || null,
       notes: parsed.notes || null,
       updatedAt: new Date(),
     })

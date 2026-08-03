@@ -3,6 +3,7 @@
 import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/layout/page-header";
+import { PageShell } from "@/components/layout/page-shell";
 import { LinkButton } from "@/components/ui/link-button";
 import {
   VocabularyTable,
@@ -19,7 +20,7 @@ export function VocabularyView({ words, workspaceName }: VocabularyViewProps) {
 
   if (words.length === 0) {
     return (
-      <div className="space-y-8">
+      <PageShell>
         <PageHeader
           eyebrow={t("title")}
           title={t("title")}
@@ -38,7 +39,7 @@ export function VocabularyView({ words, workspaceName }: VocabularyViewProps) {
             {t("addFirst")}
           </LinkButton>
         </div>
-      </div>
+      </PageShell>
     );
   }
 

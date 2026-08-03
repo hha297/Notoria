@@ -3,11 +3,16 @@
 import { motion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
+import { VocabularyNotesContent } from "@/components/vocabulary/vocabulary-notes-content";
 import {
   getTagLabel,
   isBuiltinTag,
   PARTS_OF_SPEECH,
 } from "@/lib/vocabulary-tags";
+import {
+  isNotesDocEmpty,
+  parseVocabularyNotes,
+} from "@/lib/vocabulary/notes-content";
 import { cn } from "@/lib/utils";
 import type { FlashcardCardDirection, FlashcardWord } from "@/types/flashcards";
 
@@ -119,16 +124,28 @@ export function FlashcardCard({
           </div>
         )}
 
-        {word.notes && (
+        {word.synonyms && (
+          <div>
+            <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+              {t("synonyms")}
+            </p>
+            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              {word.synonyms}
+            </p>
+          </div>
+        )}
+
+        {word.notes &&
+        !isNotesDocEmpty(parseVocabularyNotes(word.notes)) ? (
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               {t("notes")}
             </p>
-            <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              {word.notes}
-            </p>
+            <div className="mt-2 text-sm leading-relaxed text-muted-foreground">
+              <VocabularyNotesContent notes={word.notes} />
+            </div>
           </div>
-        )}
+        ) : null}
 
         <div className="flex flex-wrap items-center gap-3">
           {partOfSpeech && (

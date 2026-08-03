@@ -39,7 +39,7 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
   const poolItems = useMemo(() => buildMatchPairItems(filteredWords), [filteredWords]);
 
   const startSession = useCallback(() => {
-    setSessionItems(sampleSessionItems(poolItems));
+    setSessionItems(sampleSessionItems(poolItems, "match_pairs"));
     setRound((r) => r + 1);
     setSelectedWordId(null);
     setMatchedIds(new Set());

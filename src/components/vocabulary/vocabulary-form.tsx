@@ -1,12 +1,14 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Save } from "lucide-react";
+import { AlignLeft, Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
+import type { Editor, JSONContent } from "@tiptap/react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import {
   SortableExamples,
   type ExampleItem,
@@ -33,12 +35,17 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import {
   checkVocabularyWordExists,
   createVocabularyWord,
   updateVocabularyWord,
 } from "@/lib/actions/vocabulary";
+import {
+  formatNotesDoc,
+  isNotesDocEmpty,
+  parseVocabularyNotes,
+  serializeVocabularyNotes,
+} from "@/lib/vocabulary/notes-content";
 import { VOCABULARY_WORD_EXISTS } from "@/lib/vocabulary-errors";
 import {
   getCustomTagName,
@@ -62,6 +69,7 @@ type VocabularyFormProps = {
     id: string;
     word: string;
     partOfSpeech?: string | null;
+    synonyms?: string | null;
     notes?: string | null;
     meanings: Array<{
       id: string;
@@ -179,9 +187,17 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
       partOfSpeech:
         (initialData?.partOfSpeech as VocabularyFormClientValues["partOfSpeech"]) ??
         undefined,
-      notes: initialData?.notes ?? "",
+      synonyms: initialData?.synonyms ?? "",
+      notes: serializeVocabularyNotes(
+        parseVocabularyNotes(initialData?.notes ?? ""),
+      ),
     },
   });
+
+  const [notesDoc, setNotesDoc] = useState<JSONContent>(() =>
+    parseVocabularyNotes(initialData?.notes ?? ""),
+  );
+  const notesEditorRef = useRef<Editor | null>(null);
 
   const watchedWord = form.watch("word");
   const wordCheckRequestId = useRef(0);
@@ -296,6 +312,33 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
   const isDuplicate = wordCheckStatus === "duplicate";
   const isCheckingWord = wordCheckStatus === "checking";
   const saveDisabled = isSaving || isDuplicate || isCheckingWord;
+  const formatNotesDisabled = isNotesDocEmpty(notesDoc);
+
+  function handleNotesChange(doc: JSONContent) {
+    setNotesDoc(doc);
+    form.setValue("notes", serializeVocabularyNotes(doc), {
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+  }
+
+  function handleFormatNotes() {
+    if (isNotesDocEmpty(notesDoc)) return;
+
+    const formatted = formatNotesDoc(notesDoc);
+    if (JSON.stringify(formatted) === JSON.stringify(notesDoc)) {
+      toast.message(t("formatNotesUnchanged"));
+      return;
+    }
+
+    setNotesDoc(formatted);
+    form.setValue("notes", serializeVocabularyNotes(formatted), {
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+    notesEditorRef.current?.commands.setContent(formatted);
+    toast.success(t("formatNotesSuccess"));
+  }
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -411,15 +454,46 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
           />
 
           <div className="space-y-2">
-            <Label htmlFor="notes">{t("notes")}</Label>
-            <Textarea
-              id="notes"
-              placeholder={t("notesPlaceholder")}
-              rows={4}
-              className="min-h-28 resize-y"
-              suppressHydrationWarning
-              {...form.register("notes")}
+            <Label htmlFor="synonyms">
+              {t("synonyms")}{" "}
+              <span className="font-normal text-muted-foreground">
+                ({tCommon("optional")})
+              </span>
+            </Label>
+            <Input
+              id="synonyms"
+              placeholder={t("synonymsPlaceholder")}
+              className="h-10"
+              {...form.register("synonyms")}
             />
+          </div>
+
+          <div className="space-y-2">
+            <div className="flex items-center justify-between gap-2">
+              <Label htmlFor="notes-editor">{t("notes")}</Label>
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                className="h-8 shrink-0"
+                disabled={formatNotesDisabled}
+                onClick={handleFormatNotes}
+              >
+                <AlignLeft className="size-3.5" />
+                {t("formatNotes")}
+              </Button>
+            </div>
+            <div id="notes-editor">
+              <RichTextEditor
+                content={notesDoc}
+                placeholder={t("notesPlaceholder")}
+                variant="notes"
+                onChange={handleNotesChange}
+                onEditorReady={(editor) => {
+                  notesEditorRef.current = editor;
+                }}
+              />
+            </div>
           </div>
         </CardContent>
       </Card>

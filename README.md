@@ -46,7 +46,7 @@ Each account owns its own data. The app is not a social platform: no public prof
 
 ### Exercise
 
-Five study modes under `/exercises`. Quiz modes are generated from workspace vocabulary (no third-party language APIs). Sessions typically sample **20–50** items from the filtered pool.
+Five study modes under `/exercises`. Quiz modes are generated from workspace vocabulary (no third-party language APIs). Sessions typically sample up to a mode-specific maximum from the filtered pool (**flashcards 30**, **fill-in-the-blank 15**, **multiple choice 20**, **match pairs 10**, **type-the-answer 15**).
 
 | Mode | Description |
 | ---- | ----------- |

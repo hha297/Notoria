@@ -106,6 +106,7 @@ export async function getFlashcardWords(): Promise<FlashcardWord[]> {
     id: word.id,
     word: word.word,
     partOfSpeech: word.partOfSpeech,
+    synonyms: word.synonyms,
     notes: word.notes,
     status: word.status,
     meanings: word.meanings.map((meaning) => meaning.meaning),

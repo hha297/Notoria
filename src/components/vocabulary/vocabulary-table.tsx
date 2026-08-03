@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight, Download, Plus } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
+import { PageShell } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -30,6 +31,7 @@ import {
 import { VocabularyExportDialog } from "@/components/vocabulary/export-dialog";
 import { VocabularyRowActions } from "@/components/vocabulary/vocabulary-row-actions";
 import type { VocabularyExportSourceWord } from "@/lib/vocabulary/export/build-document";
+import { vocabularyNotesToPlainText } from "@/lib/vocabulary/notes-content";
 import { cn } from "@/lib/utils";
 
 export type VocabularyWordRow = {
@@ -444,7 +446,7 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
       tagLabels: word.tags.map((tag) =>
         getTagLabel(tag.tag, (key) => tTags(key)),
       ),
-      notes: word.notes ?? "",
+      notes: vocabularyNotesToPlainText(word.notes),
       updatedAtLabel: format(new Date(word.updatedAt), "yyyy-MM-dd"),
     }));
   }, [filteredWords, tPos, tTags]);
@@ -499,7 +501,7 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
   }, [filteredWords, t, tPos]);
 
   return (
-    <div className="space-y-8">
+    <PageShell>
       <PageHeader
         eyebrow={t("title")}
         title={t("title")}
@@ -633,6 +635,6 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
         words={exportWords}
       />
       </div>
-    </div>
+    </PageShell>
   );
 }

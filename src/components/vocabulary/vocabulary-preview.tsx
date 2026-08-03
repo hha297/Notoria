@@ -4,12 +4,18 @@ import { Pencil } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { LinkButton } from "@/components/ui/link-button";
+import { VocabularyNotesContent } from "@/components/vocabulary/vocabulary-notes-content";
+import {
+  isNotesDocEmpty,
+  parseVocabularyNotes,
+} from "@/lib/vocabulary/notes-content";
 import { getTagLabel, PARTS_OF_SPEECH } from "@/lib/vocabulary-tags";
 
 type VocabularyPreviewProps = {
   id: string;
   word: string;
   partOfSpeech?: string | null;
+  synonyms?: string | null;
   notes?: string | null;
   meanings: Array<{
     id: string;
@@ -30,6 +36,7 @@ export function VocabularyPreview({
   id,
   word,
   partOfSpeech,
+  synonyms,
   notes,
   meanings,
   examples,
@@ -74,6 +81,12 @@ export function VocabularyPreview({
             ))}
           </div>
           <h2 className="heading-md text-ink">{word}</h2>
+          {synonyms?.trim() ? (
+            <p className="text-sm text-muted-foreground sm:text-base">
+              <span className="font-medium text-ink/70">{t("synonyms")}: </span>
+              {synonyms.trim()}
+            </p>
+          ) : null}
         </header>
 
         <section className="space-y-3">
@@ -126,14 +139,12 @@ export function VocabularyPreview({
           </section>
         ) : null}
 
-        {notes?.trim() ? (
+        {notes && !isNotesDocEmpty(parseVocabularyNotes(notes)) ? (
           <section className="space-y-2">
             <h3 className="text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground">
               {t("notes")}
             </h3>
-            <p className="whitespace-pre-wrap text-sm leading-relaxed text-ink sm:text-base">
-              {notes.trim()}
-            </p>
+            <VocabularyNotesContent notes={notes} />
           </section>
         ) : null}
       </article>

@@ -10,6 +10,7 @@ export type FlashcardWord = {
   id: string;
   word: string;
   partOfSpeech: string | null;
+  synonyms: string | null;
   notes: string | null;
   status: FlashcardWordStatus;
   meanings: string[];

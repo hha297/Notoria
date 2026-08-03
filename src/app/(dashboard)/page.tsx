@@ -2,6 +2,7 @@ import Link from "next/link";
 import { BookOpen, Dumbbell, Languages, Plus } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
+import { PageShell } from "@/components/layout/page-shell";
 import { StatCard } from "@/components/layout/stat-card";
 import { LinkButton } from "@/components/ui/link-button";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
@@ -17,7 +18,7 @@ export default async function DashboardPage() {
 
   if (!workspace) {
     return (
-      <div className="space-y-10">
+      <PageShell>
         <PageHeader
           eyebrow={t("overview")}
           title={t("your")}
@@ -25,7 +26,7 @@ export default async function DashboardPage() {
           description={t("description", { language: "—" })}
         />
         <NoWorkspaceEmpty />
-      </div>
+      </PageShell>
     );
   }
 
@@ -35,7 +36,7 @@ export default async function DashboardPage() {
   const practiceReadyWords = words.filter((word) => word.meanings.length > 0).length;
 
   return (
-    <div className="space-y-8 sm:space-y-10">
+    <PageShell>
       <PageHeader
         eyebrow={t("overview")}
         title={t("your")}
@@ -117,6 +118,6 @@ export default async function DashboardPage() {
           </div>
         </div>
       )}
-    </div>
+    </PageShell>
   );
 }

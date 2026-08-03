@@ -6,6 +6,7 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Plus } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
+import { PageShell } from "@/components/layout/page-shell";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
 import {
@@ -245,7 +246,7 @@ export function WritingTable({ documents }: WritingTableProps) {
   }, [filtered, t]);
 
   return (
-    <div className="space-y-8">
+    <PageShell>
       <PageHeader
         eyebrow={t("title")}
         title={t("title")}
@@ -310,6 +311,6 @@ export function WritingTable({ documents }: WritingTableProps) {
           </div>
         )}
       </div>
-    </div>
+    </PageShell>
   );
 }

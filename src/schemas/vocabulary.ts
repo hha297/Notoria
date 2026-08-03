@@ -18,6 +18,7 @@ export const exampleSchema = z.object({
 export const vocabularyFormSchema = z.object({
   word: z.string().min(1, "Word is required"),
   partOfSpeech: z.enum(PARTS_OF_SPEECH).optional(),
+  synonyms: z.string().optional(),
   notes: z.string().optional(),
   meanings: z.array(meaningSchema).min(1, "Add at least one meaning"),
   examples: z.array(exampleSchema).default([]),
