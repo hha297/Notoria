@@ -115,6 +115,8 @@
     "deleteConfirmTitle": "Xóa từ này?",
     "deleteConfirmDescription": "\"{word}\" sẽ bị xóa vĩnh viễn khỏi từ vựng của bạn.",
     "wordExists": "Từ này đã có trong từ vựng.",
+    "wordExistsCheckFailed": "Không kiểm tra được từ trùng. Bạn có thể thử lại hoặc vẫn lưu.",
+    "wordExistsChecking": "Đang kiểm tra…",
     "export": {
       "button": "Xuất",
       "title": "Xuất từ vựng",

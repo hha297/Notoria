@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -35,6 +35,7 @@ import {
 } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import {
+  checkVocabularyWordExists,
   createVocabularyWord,
   updateVocabularyWord,
 } from "@/lib/actions/vocabulary";
@@ -79,6 +80,14 @@ type VocabularyFormProps = {
     }>;
   };
 };
+
+type WordCheckStatus = "idle" | "checking" | "duplicate" | "unique" | "error";
+
+const WORD_CHECK_DEBOUNCE_MS = 400;
+
+function normalizeWordInput(word: string) {
+  return word.trim().toLowerCase();
+}
 
 function createDefaultMeanings(): MeaningItem[] {
   return [
@@ -144,6 +153,8 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
   const tCommon = useTranslations("common");
   const tPos = useTranslations("tags.pos");
   const [isSaving, setIsSaving] = useState(false);
+  const [wordCheckStatus, setWordCheckStatus] =
+    useState<WordCheckStatus>("idle");
   const [meanings, setMeanings] = useState<MeaningItem[]>(
     initialData?.meanings.map((meaning) => ({
       id: meaning.id,
@@ -172,7 +183,58 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
     },
   });
 
+  const watchedWord = form.watch("word");
+  const wordCheckRequestId = useRef(0);
+  const initialNormalizedWord = initialData
+    ? normalizeWordInput(initialData.word)
+    : "";
+
+  useEffect(() => {
+    const normalized = normalizeWordInput(watchedWord ?? "");
+
+    if (!normalized) {
+      wordCheckRequestId.current += 1;
+      setWordCheckStatus("idle");
+      return;
+    }
+
+    // Editing the same word as before is always allowed.
+    if (initialData?.id && normalized === initialNormalizedWord) {
+      wordCheckRequestId.current += 1;
+      setWordCheckStatus("unique");
+      return;
+    }
+
+    const requestId = ++wordCheckRequestId.current;
+    setWordCheckStatus("checking");
+
+    const timer = setTimeout(() => {
+      void (async () => {
+        try {
+          const result = await checkVocabularyWordExists(
+            normalized,
+            initialData?.id,
+          );
+          if (requestId !== wordCheckRequestId.current) return;
+          setWordCheckStatus(result.exists ? "duplicate" : "unique");
+        } catch {
+          if (requestId !== wordCheckRequestId.current) return;
+          // Do not block save on network/check failure.
+          setWordCheckStatus("error");
+        }
+      })();
+    }, WORD_CHECK_DEBOUNCE_MS);
+
+    return () => {
+      clearTimeout(timer);
+    };
+  }, [watchedWord, initialData?.id, initialNormalizedWord]);
+
   async function onSubmit(values: VocabularyFormClientValues) {
+    if (wordCheckStatus === "duplicate" || wordCheckStatus === "checking") {
+      return;
+    }
+
     const filledMeanings = meanings
       .map((item, index) => ({
         id: item.id,
@@ -217,6 +279,7 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
       }
     } catch (error) {
       if (error instanceof Error && error.message === VOCABULARY_WORD_EXISTS) {
+        setWordCheckStatus("duplicate");
         toast.error(t("wordExists"));
         return;
       }
@@ -230,6 +293,9 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
   }
 
   const selectedPartOfSpeech = form.watch("partOfSpeech");
+  const isDuplicate = wordCheckStatus === "duplicate";
+  const isCheckingWord = wordCheckStatus === "checking";
+  const saveDisabled = isSaving || isDuplicate || isCheckingWord;
 
   return (
     <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
@@ -247,17 +313,57 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="word">{t("word")}</Label>
-              <Input
-                id="word"
-                placeholder={t("wordPlaceholder")}
-                className="h-10"
-                {...form.register("word")}
-              />
-              {form.formState.errors.word && (
+              <div className="relative">
+                <Input
+                  id="word"
+                  placeholder={t("wordPlaceholder")}
+                  className="h-10 pr-10"
+                  aria-invalid={isDuplicate || undefined}
+                  aria-describedby={
+                    isDuplicate || wordCheckStatus === "error" || isCheckingWord
+                      ? "word-duplicate-status"
+                      : undefined
+                  }
+                  {...form.register("word")}
+                />
+                {isCheckingWord ? (
+                  <Loader2
+                    className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 animate-spin text-muted-foreground"
+                    aria-hidden
+                  />
+                ) : null}
+              </div>
+              {form.formState.errors.word ? (
                 <p className="text-sm text-destructive">
                   {form.formState.errors.word.message}
                 </p>
-              )}
+              ) : null}
+              {isCheckingWord ? (
+                <p
+                  id="word-duplicate-status"
+                  className="text-sm text-muted-foreground"
+                >
+                  {t("wordExistsChecking")}
+                </p>
+              ) : null}
+              {isDuplicate ? (
+                <p
+                  id="word-duplicate-status"
+                  className="text-sm text-destructive"
+                  role="alert"
+                >
+                  {t("wordExists")}
+                </p>
+              ) : null}
+              {wordCheckStatus === "error" ? (
+                <p
+                  id="word-duplicate-status"
+                  className="text-sm text-muted-foreground"
+                  role="status"
+                >
+                  {t("wordExistsCheckFailed")}
+                </p>
+              ) : null}
             </div>
             <div className="space-y-2">
               <Label>{t("partOfSpeech")}</Label>
@@ -333,7 +439,7 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
         ) : null}
         <Button
           type="submit"
-          disabled={isSaving}
+          disabled={saveDisabled}
           size="lg"
           className="h-11 w-full sm:h-9 sm:w-auto"
         >

@@ -1,4 +1,4 @@
-import { relations } from "drizzle-orm";
+import { relations, sql } from "drizzle-orm";
 import {
   integer,
   jsonb,
@@ -105,25 +105,34 @@ export const workspaceTags = pgTable(
   ],
 );
 
-export const vocabularyWords = pgTable("vocabulary_words", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  workspaceId: uuid("workspace_id")
-    .notNull()
-    .references(() => workspaces.id, { onDelete: "cascade" }),
-  word: text("word").notNull(),
-  partOfSpeech: text("part_of_speech"),
-  notes: text("notes"),
-  status: vocabularyStatusEnum("status").notNull().default("NEW"),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-});
+export const vocabularyWords = pgTable(
+  "vocabulary_words",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    word: text("word").notNull(),
+    partOfSpeech: text("part_of_speech"),
+    notes: text("notes"),
+    status: vocabularyStatusEnum("status").notNull().default("NEW"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("vocabulary_words_workspace_normalized_word_unique").on(
+      table.workspaceId,
+      sql`lower(trim(${table.word}))`,
+    ),
+  ],
+);
 
 export const wordMeanings = pgTable("word_meanings", {
   id: uuid("id").primaryKey().defaultRandom(),
