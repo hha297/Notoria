@@ -3,6 +3,7 @@
 import { PenLine, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/layout/page-header";
+import { PageShell } from "@/components/layout/page-shell";
 import { LinkButton } from "@/components/ui/link-button";
 import {
   WritingTable,
@@ -18,7 +19,7 @@ export function WritingView({ documents }: WritingViewProps) {
 
   if (documents.length === 0) {
     return (
-      <div className="space-y-8">
+      <PageShell>
         <PageHeader
           eyebrow={t("title")}
           title={t("title")}
@@ -44,7 +45,7 @@ export function WritingView({ documents }: WritingViewProps) {
             {t("createFirst")}
           </LinkButton>
         </div>
-      </div>
+      </PageShell>
     );
   }
 

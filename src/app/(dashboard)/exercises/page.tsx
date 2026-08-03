@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
+import { PageShell } from "@/components/layout/page-shell";
 import { ExerciseTypePicker } from "@/components/exercises/exercise-type-picker";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getActiveWorkspace } from "@/lib/workspace";
@@ -12,7 +13,7 @@ export default async function ExercisesPage() {
 
   if (!workspace) {
     return (
-      <div className="mx-auto max-w-5xl space-y-8 pt-1 sm:space-y-10 sm:pt-2">
+      <PageShell>
         <PageHeader
           eyebrow={t("title")}
           title={t("title")}
@@ -20,12 +21,12 @@ export default async function ExercisesPage() {
           description={t("description")}
         />
         <NoWorkspaceEmpty />
-      </div>
+      </PageShell>
     );
   }
 
   return (
-    <div className="mx-auto max-w-5xl space-y-8 pt-1 sm:space-y-10 sm:pt-2">
+    <PageShell>
       <PageHeader
         eyebrow={t("title")}
         title={t("title")}
@@ -34,6 +35,6 @@ export default async function ExercisesPage() {
       />
 
       <ExerciseTypePicker />
-    </div>
+    </PageShell>
   );
 }

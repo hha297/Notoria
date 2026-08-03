@@ -6,6 +6,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight, Download, Plus } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
+import { PageShell } from "@/components/layout/page-shell";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -499,7 +500,7 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
   }, [filteredWords, t, tPos]);
 
   return (
-    <div className="space-y-8">
+    <PageShell>
       <PageHeader
         eyebrow={t("title")}
         title={t("title")}
@@ -633,6 +634,6 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
         words={exportWords}
       />
       </div>
-    </div>
+    </PageShell>
   );
 }

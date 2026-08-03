@@ -1,19 +1,32 @@
 import { shuffleArray } from "@/lib/exercises/utils";
 
-export const SESSION_SIZE_MIN = 20;
-export const SESSION_SIZE_MAX = 50;
+export type ExerciseSessionMode =
+  | "flashcards"
+  | "fill_blank"
+  | "multiple_choice"
+  | "match_pairs"
+  | "type_answer";
 
-/** Pick a session length between 20–50 when enough items exist; otherwise use all. */
-export function pickSessionSize(available: number): number {
+/** Maximum items (or pairs) per exercise session. */
+export const SESSION_SIZE_MAX_BY_MODE: Record<ExerciseSessionMode, number> = {
+  flashcards: 30,
+  fill_blank: 15,
+  multiple_choice: 20,
+  match_pairs: 10,
+  type_answer: 15,
+};
+
+/** Cap session length at the mode maximum; use all items when fewer are available. */
+export function pickSessionSize(available: number, max: number): number {
   if (available <= 0) return 0;
-  if (available <= SESSION_SIZE_MIN) return available;
-  if (available <= SESSION_SIZE_MAX) return available;
-  const span = SESSION_SIZE_MAX - SESSION_SIZE_MIN + 1;
-  return SESSION_SIZE_MIN + Math.floor(Math.random() * span);
+  return Math.min(available, max);
 }
 
-export function sampleSessionItems<T>(items: T[]): T[] {
+export function sampleSessionItems<T>(
+  items: T[],
+  mode: ExerciseSessionMode,
+): T[] {
   if (items.length === 0) return [];
-  const size = pickSessionSize(items.length);
+  const size = pickSessionSize(items.length, SESSION_SIZE_MAX_BY_MODE[mode]);
   return shuffleArray(items).slice(0, size);
 }

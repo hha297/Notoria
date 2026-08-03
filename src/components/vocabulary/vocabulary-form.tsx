@@ -62,6 +62,7 @@ type VocabularyFormProps = {
     id: string;
     word: string;
     partOfSpeech?: string | null;
+    synonyms?: string | null;
     notes?: string | null;
     meanings: Array<{
       id: string;
@@ -179,6 +180,7 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
       partOfSpeech:
         (initialData?.partOfSpeech as VocabularyFormClientValues["partOfSpeech"]) ??
         undefined,
+      synonyms: initialData?.synonyms ?? "",
       notes: initialData?.notes ?? "",
     },
   });
@@ -409,6 +411,21 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
             sessionCustomTags={sessionCustomTags}
             onSessionCustomTagsChange={setSessionCustomTags}
           />
+
+          <div className="space-y-2">
+            <Label htmlFor="synonyms">
+              {t("synonyms")}{" "}
+              <span className="font-normal text-muted-foreground">
+                ({tCommon("optional")})
+              </span>
+            </Label>
+            <Input
+              id="synonyms"
+              placeholder={t("synonymsPlaceholder")}
+              className="h-10"
+              {...form.register("synonyms")}
+            />
+          </div>
 
           <div className="space-y-2">
             <Label htmlFor="notes">{t("notes")}</Label>

@@ -117,6 +117,7 @@ export const vocabularyWords = pgTable(
       .references(() => workspaces.id, { onDelete: "cascade" }),
     word: text("word").notNull(),
     partOfSpeech: text("part_of_speech"),
+    synonyms: text("synonyms"),
     notes: text("notes"),
     status: vocabularyStatusEnum("status").notNull().default("NEW"),
     createdAt: timestamp("created_at", { withTimezone: true })

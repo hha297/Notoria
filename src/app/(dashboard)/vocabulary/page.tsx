@@ -1,5 +1,6 @@
 import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
+import { PageShell } from "@/components/layout/page-shell";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { VocabularyView } from "@/components/vocabulary/vocabulary-view";
 import { getVocabularyWords } from "@/lib/actions/vocabulary";
@@ -13,7 +14,7 @@ export default async function VocabularyPage() {
 
   if (!workspace) {
     return (
-      <div className="space-y-8">
+      <PageShell>
         <PageHeader
           eyebrow={t("title")}
           title={t("title")}
@@ -21,7 +22,7 @@ export default async function VocabularyPage() {
           description={t("disabledNoWorkspace")}
         />
         <NoWorkspaceEmpty />
-      </div>
+      </PageShell>
     );
   }
 

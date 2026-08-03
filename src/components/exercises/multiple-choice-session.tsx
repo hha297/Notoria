@@ -42,6 +42,7 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
   const startSession = useCallback(() => {
     const built = sampleSessionItems(
       buildMultipleChoiceQuestions(filteredWords, studyMode),
+      "multiple_choice",
     );
     setQuestions(built);
     setIndex(0);

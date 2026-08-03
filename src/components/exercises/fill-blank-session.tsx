@@ -43,7 +43,7 @@ export function FillBlankSession({ workspaceId, words }: FillBlankSessionProps) 
   const itemMap = useMemo(() => new Map(poolItems.map((i) => [i.id, i])), [poolItems]);
 
   const startSession = useCallback(() => {
-    const sampled = sampleSessionItems(poolItems);
+    const sampled = sampleSessionItems(poolItems, "fill_blank");
     setItemIds(sampled.map((i) => i.id));
     setIndex(0);
     setScore({ correct: 0, answered: 0 });

@@ -10,6 +10,7 @@ type VocabularyPreviewProps = {
   id: string;
   word: string;
   partOfSpeech?: string | null;
+  synonyms?: string | null;
   notes?: string | null;
   meanings: Array<{
     id: string;
@@ -30,6 +31,7 @@ export function VocabularyPreview({
   id,
   word,
   partOfSpeech,
+  synonyms,
   notes,
   meanings,
   examples,
@@ -74,6 +76,12 @@ export function VocabularyPreview({
             ))}
           </div>
           <h2 className="heading-md text-ink">{word}</h2>
+          {synonyms?.trim() ? (
+            <p className="text-sm text-muted-foreground sm:text-base">
+              <span className="font-medium text-ink/70">{t("synonyms")}: </span>
+              {synonyms.trim()}
+            </p>
+          ) : null}
         </header>
 
         <section className="space-y-3">

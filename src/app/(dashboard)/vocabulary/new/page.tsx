@@ -25,9 +25,9 @@ export default async function NewVocabularyPage() {
           </Link>
           <PageHeader
             eyebrow={t("title")}
-            title={t("addWord")}
-            highlight={t("bank")}
-            description={t("disabledNoWorkspace")}
+          title={t("addWord")}
+          highlight={t("addWordHighlight")}
+          description={t("disabledNoWorkspace")}
           />
         </div>
         <NoWorkspaceEmpty />
@@ -48,7 +48,7 @@ export default async function NewVocabularyPage() {
         <PageHeader
           eyebrow={t("title")}
           title={t("addWord")}
-          highlight={t("bank")}
+          highlight={t("addWordHighlight")}
           description={t("formDescription")}
         />
       </div>

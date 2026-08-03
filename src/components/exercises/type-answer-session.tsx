@@ -46,7 +46,7 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
   const itemMap = useMemo(() => new Map(poolItems.map((i) => [i.id, i])), [poolItems]);
 
   const startSession = useCallback(() => {
-    const sampled = sampleSessionItems(poolItems);
+    const sampled = sampleSessionItems(poolItems, "type_answer");
     setItemIds(sampled.map((i) => i.id));
     setIndex(0);
     setScore({ correct: 0, answered: 0 });

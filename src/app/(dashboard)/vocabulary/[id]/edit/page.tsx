@@ -53,6 +53,7 @@ export default async function EditVocabularyPage({
           id: word.id,
           word: word.word,
           partOfSpeech: word.partOfSpeech,
+          synonyms: word.synonyms,
           notes: word.notes,
           meanings: word.meanings,
           examples: word.examples,
