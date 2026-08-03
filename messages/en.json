@@ -115,6 +115,8 @@
     "deleteConfirmTitle": "Delete this word?",
     "deleteConfirmDescription": "\"{word}\" will be permanently removed from your vocabulary.",
     "wordExists": "This word already exists in your vocabulary.",
+    "wordExistsCheckFailed": "Couldn’t verify if this word already exists. You can try again or save anyway.",
+    "wordExistsChecking": "Checking…",
     "export": {
       "button": "Export",
       "title": "Export Vocabulary",

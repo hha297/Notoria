@@ -21,12 +21,13 @@ function normalizeWord(word: string) {
   return word.trim().toLowerCase();
 }
 
-async function assertWordIsUnique(
+async function findDuplicateWordId(
   word: string,
   workspaceId: string,
   excludeId?: string,
-) {
+): Promise<string | null> {
   const normalized = normalizeWord(word);
+  if (!normalized) return null;
 
   const existing = await db.query.vocabularyWords.findFirst({
     where: and(
@@ -37,7 +38,16 @@ async function assertWordIsUnique(
     columns: { id: true },
   });
 
-  if (existing) {
+  return existing?.id ?? null;
+}
+
+async function assertWordIsUnique(
+  word: string,
+  workspaceId: string,
+  excludeId?: string,
+) {
+  const existingId = await findDuplicateWordId(word, workspaceId, excludeId);
+  if (existingId) {
     throw new Error(VOCABULARY_WORD_EXISTS);
   }
 }
@@ -96,6 +106,20 @@ async function replaceWordRelations(
       })),
     );
   }
+}
+
+export async function checkVocabularyWordExists(
+  word: string,
+  excludeId?: string,
+): Promise<{ exists: boolean; id: string | null }> {
+  const workspace = await getActiveWorkspace();
+
+  if (!workspace) {
+    return { exists: false, id: null };
+  }
+
+  const id = await findDuplicateWordId(word, workspace.id, excludeId);
+  return { exists: Boolean(id), id };
 }
 
 export async function getVocabularyWords() {

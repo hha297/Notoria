@@ -115,6 +115,8 @@
     "deleteConfirmTitle": "Poistetaanko tämä sana?",
     "deleteConfirmDescription": "\"{word}\" poistetaan pysyvästi sanastostasi.",
     "wordExists": "Tämä sana on jo sanastossasi.",
+    "wordExistsCheckFailed": "Sanan olemassaoloa ei voitu tarkistaa. Voit yrittää uudelleen tai tallentaa silti.",
+    "wordExistsChecking": "Tarkistetaan…",
     "export": {
       "button": "Vie",
       "title": "Vie sanasto",
