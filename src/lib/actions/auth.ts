@@ -56,5 +56,5 @@ export async function registerUser(data: z.infer<typeof registerSchema>) {
     sameSite: "lax",
   });
 
-  return { userId: user.id };
+  return { userId: user.id, workspaceId: workspace.id };
 }

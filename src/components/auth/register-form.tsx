@@ -11,7 +11,10 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/auth/password-input";
 import { registerUser } from "@/lib/actions/auth";
-import { requestWelcomeModalOnLogin } from "@/lib/prompts/storage";
+import {
+  requestFirstEntryOnboarding,
+  requestWorkspaceOnboarding,
+} from "@/lib/onboarding/storage";
 
 export function RegisterForm() {
   const router = useRouter();
@@ -28,7 +31,7 @@ export function RegisterForm() {
     setIsLoading(true);
 
     try {
-      await registerUser({ name, email, password });
+      const registration = await registerUser({ name, email, password });
 
       const result = await signIn("credentials", {
         email,
@@ -42,7 +45,10 @@ export function RegisterForm() {
         return;
       }
 
-      requestWelcomeModalOnLogin();
+      requestFirstEntryOnboarding();
+      if (registration.workspaceId) {
+        requestWorkspaceOnboarding(registration.workspaceId);
+      }
       router.push("/");
       router.refresh();
     } catch (err) {

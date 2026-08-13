@@ -8,6 +8,7 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
+import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -70,6 +71,7 @@ export function TheoryLibrary({ notes }: TheoryLibraryProps) {
           highlight={t("highlight")}
           description={t("description")}
         >
+          <ShowTutorialButton section="theory" />
           <LinkButton href="/theory/new">
             <Plus className="size-4" />
             {t("create")}

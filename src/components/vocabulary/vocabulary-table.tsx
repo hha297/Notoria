@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight, Download, Plus } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
+import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -518,6 +519,7 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
         highlight={t("bank")}
         description={t("formDescription")}
       >
+        <ShowTutorialButton section="vocabulary" />
         <Button
           type="button"
           variant="outline"

@@ -650,6 +650,160 @@
       }
     }
   },
+  "onboarding": {
+    "skip": "Skip",
+    "skipForNow": "Skip for now",
+    "getStarted": "Get started",
+    "close": "Close",
+    "welcome": {
+      "title": "Welcome to Notoria! 👋",
+      "message": "Your workspace is ready. Let’s get you started with a few simple steps.",
+      "features": {
+        "vocabulary": "Build your vocabulary",
+        "writing": "Practice writing",
+        "exercises": "Learn through exercises",
+        "theory": "Review theory and learning materials"
+      }
+    },
+    "firstAction": {
+      "title": "Let’s start learning!",
+      "message": "Add some vocabulary first, then you can explore exercises and other learning features."
+    },
+    "actions": {
+      "addVocabulary": {
+        "empty": {
+          "title": "Start with your first words",
+          "description": "Add some vocabulary to build your learning foundation."
+        },
+        "starting": {
+          "title": "Keep building your vocabulary",
+          "description": "Add a few more words before trying an exercise."
+        },
+        "almost": {
+          "title": "You’re almost ready!",
+          "description": "Add a few more words for a better exercise experience."
+        }
+      },
+      "tryExercise": {
+        "title": "Ready to practice?",
+        "description": "You have enough vocabulary to start your first exercise."
+      },
+      "startWriting": {
+        "title": "Start writing",
+        "description": "Create your first writing practice."
+      },
+      "exploreTheory": {
+        "title": "Explore theory",
+        "description": "Save notes on grammar, usage, and how the language works."
+      },
+      "exploreWorkspace": {
+        "title": "Explore the workspace",
+        "description": "Look around and continue learning at your own pace."
+      }
+    }
+  },
+  "tutorials": {
+    "show": "Show tutorial",
+    "showShort": "Tutorial",
+    "next": "Next",
+    "skip": "Skip tutorial",
+    "done": "Got it",
+    "vocabulary": {
+      "title": "Vocabulary",
+      "description": "Build your personal vocabulary collection and review words you’ve learned.",
+      "cta": "Add a word",
+      "steps": {
+        "addWord": {
+          "title": "1. Add a word",
+          "body": "Create a new vocabulary item with meanings, examples, and notes."
+        },
+        "tags": {
+          "title": "2. Add tags",
+          "body": "Organize words with reusable tags so you can find and filter them later."
+        },
+        "review": {
+          "title": "3. Review",
+          "body": "Use your words in exercises and other learning activities once you have a small collection."
+        }
+      }
+    },
+    "writing": {
+      "title": "Writing",
+      "description": "Practice writing with prompts, drafts, and organized pieces you can revisit.",
+      "cta": "Start writing",
+      "steps": {
+        "create": {
+          "title": "1. Create a writing",
+          "body": "Start a new piece — a prompt, a draft, or a question set — in your workspace."
+        },
+        "organize": {
+          "title": "2. Organize",
+          "body": "Use search, filters, and metadata to keep your writing easy to find."
+        },
+        "practice": {
+          "title": "3. Practice and export",
+          "body": "Open a piece to keep writing, or export it when you want a printable copy."
+        }
+      }
+    },
+    "theory": {
+      "title": "Theory",
+      "description": "Keep notes on grammar, pronunciation, usage, and how the language works.",
+      "cta": "Add theory",
+      "steps": {
+        "add": {
+          "title": "1. Add a note",
+          "body": "Create a theory note and choose a category so related topics stay together."
+        },
+        "browse": {
+          "title": "2. Browse",
+          "body": "Search and filter by category to jump back to what you need."
+        },
+        "read": {
+          "title": "3. Read and revisit",
+          "body": "Open a note to study it, then come back whenever you want a refresher."
+        }
+      }
+    },
+    "exercise": {
+      "title": "Exercises",
+      "description": "Practice with flashcards, quizzes, and other activities built from your vocabulary.",
+      "cta": "Try an exercise",
+      "steps": {
+        "vocabulary": {
+          "title": "1. Build vocabulary first",
+          "body": "Most exercises work best with at least {count} words. Add a small collection before you start."
+        },
+        "choose": {
+          "title": "2. Choose a type",
+          "body": "Pick flashcards, multiple choice, match pairs, fill in the blank, or type the answer."
+        },
+        "practice": {
+          "title": "3. Practice",
+          "body": "Complete a short session. Come back often — a few minutes still counts."
+        }
+      }
+    },
+    "conversation": {
+      "title": "Conversation",
+      "description": "Practice speaking and responding in your target language.",
+      "cta": "Start a conversation",
+      "steps": {
+        "start": {
+          "title": "1. Start a conversation",
+          "body": "Open a conversation to begin practicing in context."
+        },
+        "practice": {
+          "title": "2. Practice",
+          "body": "Reply naturally and keep the exchange going."
+        },
+        "review": {
+          "title": "3. Review",
+          "body": "Look back at useful phrases and add them to your vocabulary."
+        }
+      }
+    }
+  },
   "settings": {
     "title": "Settings",
     "workspace": "Workspace",

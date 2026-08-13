@@ -27,6 +27,7 @@ import {
 } from "@/components/ui/select";
 import { createWorkspace } from "@/lib/actions/workspaces";
 import { getLanguageByCode, WORKPLACE_LANGUAGES } from "@/lib/languages";
+import { requestWorkspaceOnboarding } from "@/lib/onboarding/storage";
 
 type CreateWorkspaceDialogProps = {
   open: boolean;
@@ -84,10 +85,11 @@ export function CreateWorkspaceDialog({
   function handleCreate() {
     startTransition(async () => {
       try {
-        await createWorkspace({
+        const workspace = await createWorkspace({
           name: name.trim() || undefined,
           language,
         });
+        requestWorkspaceOnboarding(workspace.id);
         toast.success(t("created"));
         setName("");
         onOpenChange(false);

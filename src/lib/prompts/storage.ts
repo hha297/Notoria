@@ -1,3 +1,5 @@
+import { isOnboardingTakingPriority } from "@/lib/onboarding/storage";
+
 const LAST_PROMPT_KEY = "notoria.welcome-prompt.last";
 const RECENT_PROMPTS_KEY = "notoria.welcome-prompt.recent";
 const SESSION_SHOWN_KEY = "notoria.welcome-modal.shown";
@@ -87,6 +89,8 @@ export function markWelcomeModalHidden() {
 
 export function shouldShowWelcomeModal(now = Date.now()): boolean {
   if (typeof window === "undefined") return false;
+
+  if (isOnboardingTakingPriority()) return false;
 
   const forced = read(sessionStorage, FORCE_SHOW_KEY) === "1";
   if (forced) return true;
