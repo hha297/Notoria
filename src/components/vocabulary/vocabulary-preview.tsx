@@ -1,6 +1,6 @@
 "use client";
 
-import { Pencil } from "lucide-react";
+import { Pencil, Star } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { LinkButton } from "@/components/ui/link-button";
@@ -10,6 +10,7 @@ import {
   parseVocabularyNotes,
 } from "@/lib/vocabulary/notes-content";
 import { getTagLabel, PARTS_OF_SPEECH } from "@/lib/vocabulary-tags";
+import { cn } from "@/lib/utils";
 
 type VocabularyPreviewProps = {
   id: string;
@@ -20,6 +21,7 @@ type VocabularyPreviewProps = {
   meanings: Array<{
     id: string;
     meaning: string;
+    isPrimary?: boolean;
     sortOrder: number;
   }>;
   examples: Array<{
@@ -47,6 +49,12 @@ export function VocabularyPreview({
   const tTags = useTranslations("tags");
 
   const sortedMeanings = [...meanings].sort((a, b) => a.sortOrder - b.sortOrder);
+  const primaryMeanings = sortedMeanings.filter(
+    (meaning) => meaning.isPrimary !== false,
+  );
+  const otherMeanings = sortedMeanings.filter(
+    (meaning) => meaning.isPrimary === false,
+  );
   const sortedExamples = [...examples].sort((a, b) => a.sortOrder - b.sortOrder);
 
   const partOfSpeechLabel =
@@ -54,6 +62,33 @@ export function VocabularyPreview({
     PARTS_OF_SPEECH.includes(partOfSpeech as (typeof PARTS_OF_SPEECH)[number])
       ? tPos(partOfSpeech as (typeof PARTS_OF_SPEECH)[number])
       : partOfSpeech;
+
+  function renderMeaningList(
+    items: typeof sortedMeanings,
+    opts?: { muted?: boolean; showStar?: boolean },
+  ) {
+    return (
+      <ol className="space-y-2">
+        {items.map((meaning, index) => (
+          <li
+            key={meaning.id}
+            className={cn(
+              "flex items-start gap-2 text-sm sm:text-base",
+              opts?.muted ? "text-muted-foreground" : "text-ink",
+            )}
+          >
+            <span className="mt-0.5 w-5 shrink-0 text-muted-foreground">
+              {index + 1}.
+            </span>
+            {opts?.showStar ? (
+              <Star className="mt-0.5 size-3.5 shrink-0 fill-current text-accent-lime" />
+            ) : null}
+            <span>{meaning.meaning}</span>
+          </li>
+        ))}
+      </ol>
+    );
+  }
 
   return (
     <div className="space-y-6 sm:space-y-8">
@@ -89,19 +124,23 @@ export function VocabularyPreview({
           ) : null}
         </header>
 
-        <section className="space-y-3">
-          <h3 className="text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground">
-            {t("meanings")}
-          </h3>
-          <ol className="space-y-2">
-            {sortedMeanings.map((meaning, index) => (
-              <li key={meaning.id} className="text-sm text-ink sm:text-base">
-                <span className="mr-2 text-muted-foreground">{index + 1}.</span>
-                {meaning.meaning}
-              </li>
-            ))}
-          </ol>
-        </section>
+        {primaryMeanings.length > 0 ? (
+          <section className="space-y-3">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground">
+              {t("primaryMeanings")}
+            </h3>
+            {renderMeaningList(primaryMeanings, { showStar: true })}
+          </section>
+        ) : null}
+
+        {otherMeanings.length > 0 ? (
+          <section className="space-y-3">
+            <h3 className="text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground">
+              {t("otherMeanings")}
+            </h3>
+            {renderMeaningList(otherMeanings, { muted: true })}
+          </section>
+        ) : null}
 
         {sortedExamples.length > 0 ? (
           <section className="space-y-4">

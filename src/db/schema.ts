@@ -1,5 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import {
+  boolean,
   integer,
   jsonb,
   pgEnum,
@@ -141,6 +142,8 @@ export const wordMeanings = pgTable("word_meanings", {
     .notNull()
     .references(() => vocabularyWords.id, { onDelete: "cascade" }),
   meaning: text("meaning").notNull(),
+  /** Used by exercises; secondary meanings stay on the word for reference. */
+  isPrimary: boolean("is_primary").notNull().default(true),
   sortOrder: integer("sort_order").notNull().default(0),
   createdAt: timestamp("created_at", { withTimezone: true })
     .notNull()

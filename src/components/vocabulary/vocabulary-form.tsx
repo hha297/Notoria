@@ -46,6 +46,10 @@ import {
   parseVocabularyNotes,
   serializeVocabularyNotes,
 } from "@/lib/vocabulary/notes-content";
+import {
+  countPrimaryMeanings,
+  MAX_PRIMARY_MEANINGS,
+} from "@/lib/vocabulary/primary-meanings";
 import { VOCABULARY_WORD_EXISTS } from "@/lib/vocabulary-errors";
 import {
   getCustomTagName,
@@ -77,6 +81,7 @@ type VocabularyFormProps = {
     meanings: Array<{
       id: string;
       meaning: string;
+      isPrimary?: boolean;
       sortOrder: number;
     }>;
     examples: Array<{
@@ -113,6 +118,7 @@ function createDefaultMeanings(): MeaningItem[] {
     {
       id: "new-meaning-0",
       meaning: "",
+      isPrimary: true,
       sortOrder: 0,
     },
   ];
@@ -180,6 +186,7 @@ export function VocabularyForm({
     initialData?.meanings.map((meaning) => ({
       id: meaning.id,
       meaning: meaning.meaning,
+      isPrimary: meaning.isPrimary ?? true,
       sortOrder: meaning.sortOrder,
     })) ?? createDefaultMeanings(),
   );
@@ -271,12 +278,23 @@ export function VocabularyForm({
       .map((item, index) => ({
         id: item.id,
         meaning: item.meaning.trim(),
+        isPrimary: item.isPrimary,
         sortOrder: index,
       }))
       .filter((item) => item.meaning.length > 0);
 
     if (filledMeanings.length === 0) {
       toast.error(t("meaningRequired"));
+      return;
+    }
+
+    const primaryCount = countPrimaryMeanings(filledMeanings);
+    if (primaryCount < 1) {
+      toast.error(t("primaryMeaningRequired"));
+      return;
+    }
+    if (primaryCount > MAX_PRIMARY_MEANINGS) {
+      toast.error(t("primaryMeaningLimit", { max: MAX_PRIMARY_MEANINGS }));
       return;
     }
 

@@ -88,6 +88,7 @@ async function replaceWordRelations(
       data.meanings.map((meaning, index) => ({
         wordId,
         meaning: meaning.meaning,
+        isPrimary: meaning.isPrimary,
         sortOrder: meaning.sortOrder ?? index,
       })),
     );
