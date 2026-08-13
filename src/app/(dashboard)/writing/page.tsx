@@ -35,6 +35,7 @@ export default async function WritingPage() {
         title: document.title,
         description: document.description,
         content: document.content,
+        createdAt: document.createdAt.toISOString(),
         updatedAt: document.updatedAt.toISOString(),
       }))}
     />

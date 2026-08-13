@@ -19,6 +19,13 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { createWritingDocument, updateWritingDocument } from "@/lib/actions/writing";
@@ -31,6 +38,15 @@ import {
   type WritingMode,
   type WritingSection,
 } from "@/lib/writing/content";
+import {
+  WRITING_CEFR_LEVELS,
+  WRITING_FORMALITY,
+  WRITING_TOPICS,
+  isKnownWritingTopic,
+  type WritingCefr,
+  type WritingFormality,
+  type WritingMeta,
+} from "@/lib/writing/meta";
 import type { ExerciseFormValues } from "@/schemas/exercise";
 
 type WritingEditorProps = {
@@ -55,6 +71,7 @@ export function WritingEditor({
 }: WritingEditorProps) {
   const router = useRouter();
   const t = useTranslations("writing");
+  const tMeta = useTranslations("writing.meta");
   const tCommon = useTranslations("common");
   const type = initialData?.type ?? exerciseType;
 
@@ -202,6 +219,14 @@ export function WritingEditor({
     scheduleAutosave();
   }
 
+  function setMeta(patch: Partial<WritingMeta>) {
+    setEditorState((current) => ({
+      ...current,
+      meta: { ...current.meta, ...patch },
+    }));
+    scheduleAutosave();
+  }
+
   async function handleRichAutosave(nextContent: JSONContent) {
     if (!initialData?.id || !title.trim() || previewHref) return;
 
@@ -270,6 +295,110 @@ export function WritingEditor({
               rows={3}
               className="min-h-20 resize-y"
             />
+          </div>
+
+          <div className="grid gap-4 sm:grid-cols-3">
+            <div className="space-y-2">
+              <Label htmlFor="writing-cefr">{tMeta("cefrLabel")}</Label>
+              <Select
+                value={editorState.meta.cefrLevel ?? "none"}
+                onValueChange={(value) =>
+                  value &&
+                  setMeta({
+                    cefrLevel:
+                      value === "none" ? null : (value as WritingCefr),
+                  })
+                }
+              >
+                <SelectTrigger
+                  id="writing-cefr"
+                  className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!"
+                >
+                  <SelectValue placeholder={tMeta("cefrPlaceholder")}>
+                    {editorState.meta.cefrLevel
+                      ? tMeta(`cefr.${editorState.meta.cefrLevel}`)
+                      : tMeta("none")}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">{tMeta("none")}</SelectItem>
+                  {WRITING_CEFR_LEVELS.map((level) => (
+                    <SelectItem key={level} value={level}>
+                      {tMeta(`cefr.${level}`)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="writing-topic">{tMeta("topicLabel")}</Label>
+              <Select
+                value={editorState.meta.topic ?? "none"}
+                onValueChange={(value) =>
+                  value &&
+                  setMeta({ topic: value === "none" ? null : value })
+                }
+              >
+                <SelectTrigger
+                  id="writing-topic"
+                  className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!"
+                >
+                  <SelectValue placeholder={tMeta("topicPlaceholder")}>
+                    {editorState.meta.topic
+                      ? isKnownWritingTopic(editorState.meta.topic)
+                        ? tMeta(`topics.${editorState.meta.topic}`)
+                        : editorState.meta.topic
+                      : tMeta("none")}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">{tMeta("none")}</SelectItem>
+                  {WRITING_TOPICS.map((topic) => (
+                    <SelectItem key={topic} value={topic}>
+                      {tMeta(`topics.${topic}`)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="writing-formality">
+                {tMeta("formalityLabel")}
+              </Label>
+              <Select
+                value={editorState.meta.formality ?? "none"}
+                onValueChange={(value) =>
+                  value &&
+                  setMeta({
+                    formality:
+                      value === "none"
+                        ? null
+                        : (value as WritingFormality),
+                  })
+                }
+              >
+                <SelectTrigger
+                  id="writing-formality"
+                  className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!"
+                >
+                  <SelectValue placeholder={tMeta("formalityPlaceholder")}>
+                    {editorState.meta.formality
+                      ? tMeta(`formality.${editorState.meta.formality}`)
+                      : tMeta("none")}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="none">{tMeta("none")}</SelectItem>
+                  {WRITING_FORMALITY.map((item) => (
+                    <SelectItem key={item} value={item}>
+                      {tMeta(`formality.${item}`)}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
           </div>
 
           <div className="space-y-2">
