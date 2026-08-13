@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/auth/password-input";
 import { registerUser } from "@/lib/actions/auth";
+import { requestWelcomeModalOnLogin } from "@/lib/prompts/storage";
 
 export function RegisterForm() {
   const router = useRouter();
@@ -41,6 +42,7 @@ export function RegisterForm() {
         return;
       }
 
+      requestWelcomeModalOnLogin();
       router.push("/");
       router.refresh();
     } catch (err) {

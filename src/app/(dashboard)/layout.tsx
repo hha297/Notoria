@@ -2,6 +2,7 @@ import { AppSidebar } from "@/components/layout/app-sidebar";
 import { DashboardDocumentTitle } from "@/components/layout/dashboard-document-title";
 import { LocaleSelector } from "@/components/layout/locale-selector";
 import { WorkspaceSelector } from "@/components/layout/workspace-selector";
+import { WelcomePromptModal } from "@/components/prompts/welcome-prompt";
 import {
   SidebarInset,
   SidebarProvider,
@@ -50,6 +51,10 @@ export default async function DashboardLayout({
             <LocaleSelector value={locale} />
           </div>
         </header>
+        <WelcomePromptModal
+          hasWorkspace={Boolean(activeWorkspace)}
+          languageCode={activeWorkspace?.language ?? null}
+        />
         <main className="flex-1 overflow-auto bg-background px-4 py-6 sm:px-6 sm:py-8">
           <div className="mx-auto w-full max-w-6xl">{children}</div>
         </main>

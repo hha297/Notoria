@@ -411,6 +411,96 @@
     "recentWords": "Viimeisimmät sanat",
     "sidebarFooter": "Yksityinen kielenopiskelun työtila"
   },
+  "prompts": {
+    "skip": "Ohita",
+    "gotIt": "Selvä",
+    "titles": {
+      "greeting": "Tervetuloa takaisin! 👋",
+      "motivation": "Pieni kannustus",
+      "language": "Kielesi tänään",
+      "activity": "Ehdotus"
+    },
+    "greeting": {
+      "morning": {
+        "title": "Hyvää huomenta! ☀️",
+        "message": "Valmis oppimaan jotain uutta?"
+      },
+      "afternoon": {
+        "title": "Hyvää päivää!",
+        "message": "Mitä haluaisit oppia tänään?"
+      },
+      "evening": {
+        "title": "Hyvää iltaa!",
+        "message": "Entäpä pieni harjoitteluhetki ennen päivän päätöstä?"
+      },
+      "welcomeBack": {
+        "title": "Tervetuloa takaisin! 👋",
+        "message": "Mitä haluaisit oppia tänään?"
+      },
+      "hello": {
+        "title": "Hei!",
+        "message": "Tehdään tästä päivästä merkityksellinen — muutama minuutti riittää."
+      }
+    },
+    "motivation": {
+      "whatToPractice": {
+        "title": "Aloita milloin tahansa",
+        "message": "Mitä haluat harjoitella tänään?"
+      },
+      "fewMinutes": {
+        "title": "Muutama minuutti riittää",
+        "message": "Lyhyt harjoitus voi vaikuttaa. Mihin keskityt tänään?"
+      },
+      "oneStep": {
+        "title": "Tärkeintä on aloittaa",
+        "message": "Yksi pieni askel tänään on silti edistystä."
+      },
+      "curious": {
+        "title": "Seuraa uteliaisuuttasi",
+        "message": "Valitse aihe ja sukella mukaan — mikä tahansa alku lasketaan."
+      }
+    },
+    "language": {
+      "practiceToday": {
+        "title": "Kielesi tänään",
+        "message": "Valmis harjoittelemaan kieltä <lang></lang> tänään?"
+      },
+      "learnWords": {
+        "title": "Kasvata sanastoa",
+        "message": "Haluatko opetella uusia sanoja kielellä <lang></lang>?"
+      },
+      "whatToLearn": {
+        "title": "Valitse painopiste",
+        "message": "Mitä haluaisit oppia tänään kielessä <lang></lang>?"
+      },
+      "keepGoing": {
+        "title": "Rutiini syntyy toistosta",
+        "message": "Jatka kielen <lang></lang> parissa — pieni harjoittelu kertyy."
+      }
+    },
+    "activity": {
+      "vocabulary": {
+        "title": "Ehdotus",
+        "message": "Entäpä sanaston kertaaminen tänään?"
+      },
+      "writing": {
+        "title": "Ehdotus",
+        "message": "Haluatko harjoitella kirjoittamista?"
+      },
+      "theoryOrExercise": {
+        "title": "Ehdotus",
+        "message": "Voit kerrata teoriaa tai kokeilla harjoitusta."
+      },
+      "exercise": {
+        "title": "Ehdotus",
+        "message": "Valmis lyhyeen harjoitukseen?"
+      },
+      "theory": {
+        "title": "Ehdotus",
+        "message": "Entäpä teorian kertaus muistin virkistämiseksi?"
+      }
+    }
+  },
   "settings": {
     "title": "Asetukset",
     "workspace": "Työtila",

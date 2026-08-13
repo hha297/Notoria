@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/auth/password-input";
+import { requestWelcomeModalOnLogin } from "@/lib/prompts/storage";
 
 export function LoginForm() {
   const router = useRouter();
@@ -38,6 +39,7 @@ export function LoginForm() {
       }
 
       const callbackUrl = searchParams.get("callbackUrl") ?? "/";
+      requestWelcomeModalOnLogin();
       router.push(callbackUrl);
       router.refresh();
     } catch {

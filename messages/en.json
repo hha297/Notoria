@@ -560,6 +560,96 @@
     "recentWords": "Recent words",
     "sidebarFooter": "Private language-learning workspace"
   },
+  "prompts": {
+    "skip": "Skip",
+    "gotIt": "Got it",
+    "titles": {
+      "greeting": "Welcome back! 👋",
+      "motivation": "A little nudge",
+      "language": "Your language today",
+      "activity": "A suggestion"
+    },
+    "greeting": {
+      "morning": {
+        "title": "Good morning! ☀️",
+        "message": "Ready to learn something new?"
+      },
+      "afternoon": {
+        "title": "Good afternoon!",
+        "message": "What would you like to learn today?"
+      },
+      "evening": {
+        "title": "Good evening!",
+        "message": "Fancy a bit of practice before the day winds down?"
+      },
+      "welcomeBack": {
+        "title": "Welcome back! 👋",
+        "message": "What would you like to learn today?"
+      },
+      "hello": {
+        "title": "Hello!",
+        "message": "Let’s make today count — even a few minutes helps."
+      }
+    },
+    "motivation": {
+      "whatToPractice": {
+        "title": "Ready when you are",
+        "message": "What do you want to practice today?"
+      },
+      "fewMinutes": {
+        "title": "A few minutes go a long way",
+        "message": "A short session can make a difference. What are you working on today?"
+      },
+      "oneStep": {
+        "title": "Keep the streak of showing up",
+        "message": "One small step today is still progress."
+      },
+      "curious": {
+        "title": "Follow your curiosity",
+        "message": "Pick a topic and dive in — anything you start counts."
+      }
+    },
+    "language": {
+      "practiceToday": {
+        "title": "Your language today",
+        "message": "Ready to practice <lang></lang> today?"
+      },
+      "learnWords": {
+        "title": "Grow your vocabulary",
+        "message": "Want to learn a few new <lang></lang> words?"
+      },
+      "whatToLearn": {
+        "title": "Pick a focus",
+        "message": "What would you like to learn in <lang></lang> today?"
+      },
+      "keepGoing": {
+        "title": "You’re building a habit",
+        "message": "Keep going with <lang></lang> — a little practice adds up."
+      }
+    },
+    "activity": {
+      "vocabulary": {
+        "title": "A suggestion",
+        "message": "How about reviewing some vocabulary today?"
+      },
+      "writing": {
+        "title": "A suggestion",
+        "message": "Want to practice your writing?"
+      },
+      "theoryOrExercise": {
+        "title": "A suggestion",
+        "message": "You could review a theory topic or try an exercise."
+      },
+      "exercise": {
+        "title": "A suggestion",
+        "message": "Ready for a quick exercise?"
+      },
+      "theory": {
+        "title": "A suggestion",
+        "message": "How about reading a theory note to refresh your memory?"
+      }
+    }
+  },
   "settings": {
     "title": "Settings",
     "workspace": "Workspace",

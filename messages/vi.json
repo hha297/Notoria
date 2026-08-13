@@ -411,6 +411,96 @@
     "recentWords": "Từ gần đây",
     "sidebarFooter": "Góc học ngôn ngữ riêng của bạn"
   },
+  "prompts": {
+    "skip": "Bỏ qua",
+    "gotIt": "Đã hiểu",
+    "titles": {
+      "greeting": "Chào mừng trở lại! 👋",
+      "motivation": "Một lời nhắc nhỏ",
+      "language": "Ngôn ngữ của bạn hôm nay",
+      "activity": "Gợi ý"
+    },
+    "greeting": {
+      "morning": {
+        "title": "Chào buổi sáng! ☀️",
+        "message": "Sẵn sàng học điều mới chưa?"
+      },
+      "afternoon": {
+        "title": "Chào buổi chiều!",
+        "message": "Hôm nay bạn muốn học gì?"
+      },
+      "evening": {
+        "title": "Chào buổi tối!",
+        "message": "Luyện thêm một chút trước khi kết thúc ngày nhé?"
+      },
+      "welcomeBack": {
+        "title": "Chào mừng trở lại! 👋",
+        "message": "Hôm nay bạn muốn học gì?"
+      },
+      "hello": {
+        "title": "Xin chào!",
+        "message": "Hãy khiến hôm nay đáng giá — chỉ vài phút cũng được."
+      }
+    },
+    "motivation": {
+      "whatToPractice": {
+        "title": "Bắt đầu khi bạn sẵn sàng",
+        "message": "Hôm nay bạn muốn luyện gì?"
+      },
+      "fewMinutes": {
+        "title": "Vài phút cũng đáng kể",
+        "message": "Một phiên ngắn có thể tạo khác biệt. Bạn đang học gì hôm nay?"
+      },
+      "oneStep": {
+        "title": "Quan trọng là bắt đầu",
+        "message": "Một bước nhỏ hôm nay vẫn là tiến bộ."
+      },
+      "curious": {
+        "title": "Theo tò mò của bạn",
+        "message": "Chọn một chủ đề và bắt đầu — bất cứ gì bạn mở ra đều tính."
+      }
+    },
+    "language": {
+      "practiceToday": {
+        "title": "Ngôn ngữ của bạn hôm nay",
+        "message": "Sẵn sàng luyện <lang></lang> hôm nay chưa?"
+      },
+      "learnWords": {
+        "title": "Thêm vốn từ",
+        "message": "Muốn học thêm vài từ <lang></lang> mới?"
+      },
+      "whatToLearn": {
+        "title": "Chọn trọng tâm",
+        "message": "Hôm nay bạn muốn học gì với <lang></lang>?"
+      },
+      "keepGoing": {
+        "title": "Bạn đang tạo thói quen",
+        "message": "Tiếp tục với <lang></lang> — luyện ít cũng cộng dồn."
+      }
+    },
+    "activity": {
+      "vocabulary": {
+        "title": "Gợi ý",
+        "message": "Xem lại một ít từ vựng hôm nay nhé?"
+      },
+      "writing": {
+        "title": "Gợi ý",
+        "message": "Muốn luyện viết một chút chứ?"
+      },
+      "theoryOrExercise": {
+        "title": "Gợi ý",
+        "message": "Bạn có thể ôn lý thuyết hoặc làm một bài tập."
+      },
+      "exercise": {
+        "title": "Gợi ý",
+        "message": "Sẵn sàng cho một bài tập nhanh?"
+      },
+      "theory": {
+        "title": "Gợi ý",
+        "message": "Đọc một ghi chú lý thuyết để ôn lại nhé?"
+      }
+    }
+  },
   "settings": {
     "title": "Cài đặt",
     "workspace": "Không gian học",
