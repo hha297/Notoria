@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
+import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
@@ -12,6 +13,7 @@ import {
   buildMultipleChoiceQuestions,
   type MultipleChoiceQuestion,
 } from "@/lib/exercises/multiple-choice";
+import { hintInitialLetter } from "@/lib/exercises/hint";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardStudyMode, FlashcardWord } from "@/types/flashcards";
@@ -25,6 +27,7 @@ type MultipleChoiceSessionProps = {
 
 export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSessionProps) {
   const t = useTranslations("exercises.multipleChoice");
+  const tHint = useTranslations("exercises.timedHint");
   const tSession = useTranslations("exercises.session");
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [studyMode, setStudyMode] = useState<FlashcardStudyMode>("mixed");
@@ -145,6 +148,11 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
               <p className="mt-4 break-words font-heading text-2xl font-medium text-ink sm:mt-6 sm:text-3xl md:text-4xl">
                 {current.prompt}
               </p>
+              <div className="mt-6">
+                <ExerciseHint resetKey={current.id} answered={revealed}>
+                  {tHint("startsWith", { letter: hintInitialLetter(current.correctOption) })}
+                </ExerciseHint>
+              </div>
               <div className="mt-8 grid gap-2 sm:grid-cols-2">
                 {current.options.map((option) => {
                   const isSelected = selected === option;

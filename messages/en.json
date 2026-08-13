@@ -274,6 +274,12 @@
         "preview": "Type your answer…"
       }
     },
+    "timedHint": {
+      "availableIn": "💡 Hint available in {seconds}s",
+      "showNow": "Show hint now",
+      "label": "Hint",
+      "startsWith": "Starts with “{letter}”"
+    },
     "empty": {
       "noWordsTitle": "No vocabulary yet",
       "noWordsDescription": "Add words to your workspace first, then come back to practice.",
