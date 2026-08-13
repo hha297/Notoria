@@ -14,6 +14,7 @@ import { useTranslations } from "next-intl";
 import { Plus } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
+import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
 import {
@@ -420,6 +421,7 @@ export function WritingTable({ documents }: WritingTableProps) {
         highlight={t("studio")}
         description={t("description")}
       >
+        <ShowTutorialButton section="writing" />
         <LinkButton href="/writing/new">
           <Plus className="size-4" />
           {t("create")}

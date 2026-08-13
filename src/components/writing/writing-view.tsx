@@ -4,6 +4,7 @@ import { PenLine, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
+import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { LinkButton } from "@/components/ui/link-button";
 import {
   WritingTable,
@@ -26,6 +27,7 @@ export function WritingView({ documents }: WritingViewProps) {
           highlight={t("studio")}
           description={t("description")}
         >
+          <ShowTutorialButton section="writing" />
           <LinkButton href="/writing/new">
             <Plus className="size-4" />
             {t("create")}

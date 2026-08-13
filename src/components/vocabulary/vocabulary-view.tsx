@@ -4,6 +4,7 @@ import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
+import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { LinkButton } from "@/components/ui/link-button";
 import {
   VocabularyTable,
@@ -27,6 +28,7 @@ export function VocabularyView({ words, workspaceName }: VocabularyViewProps) {
           highlight={t("bank")}
           description={t("formDescription")}
         >
+          <ShowTutorialButton section="vocabulary" />
           <LinkButton href="/vocabulary/new">
             <Plus className="size-4" />
             {t("addWord")}

@@ -411,6 +411,250 @@
     "recentWords": "Từ gần đây",
     "sidebarFooter": "Góc học ngôn ngữ riêng của bạn"
   },
+  "prompts": {
+    "skip": "Bỏ qua",
+    "gotIt": "Đã hiểu",
+    "titles": {
+      "greeting": "Chào mừng trở lại! 👋",
+      "motivation": "Một lời nhắc nhỏ",
+      "language": "Ngôn ngữ của bạn hôm nay",
+      "activity": "Gợi ý"
+    },
+    "greeting": {
+      "morning": {
+        "title": "Chào buổi sáng! ☀️",
+        "message": "Sẵn sàng học điều mới chưa?"
+      },
+      "afternoon": {
+        "title": "Chào buổi chiều!",
+        "message": "Hôm nay bạn muốn học gì?"
+      },
+      "evening": {
+        "title": "Chào buổi tối!",
+        "message": "Luyện thêm một chút trước khi kết thúc ngày nhé?"
+      },
+      "welcomeBack": {
+        "title": "Chào mừng trở lại! 👋",
+        "message": "Hôm nay bạn muốn học gì?"
+      },
+      "hello": {
+        "title": "Xin chào!",
+        "message": "Hãy khiến hôm nay đáng giá — chỉ vài phút cũng được."
+      }
+    },
+    "motivation": {
+      "whatToPractice": {
+        "title": "Bắt đầu khi bạn sẵn sàng",
+        "message": "Hôm nay bạn muốn luyện gì?"
+      },
+      "fewMinutes": {
+        "title": "Vài phút cũng đáng kể",
+        "message": "Một phiên ngắn có thể tạo khác biệt. Bạn đang học gì hôm nay?"
+      },
+      "oneStep": {
+        "title": "Quan trọng là bắt đầu",
+        "message": "Một bước nhỏ hôm nay vẫn là tiến bộ."
+      },
+      "curious": {
+        "title": "Theo tò mò của bạn",
+        "message": "Chọn một chủ đề và bắt đầu — bất cứ gì bạn mở ra đều tính."
+      }
+    },
+    "language": {
+      "practiceToday": {
+        "title": "Ngôn ngữ của bạn hôm nay",
+        "message": "Sẵn sàng luyện <lang></lang> hôm nay chưa?"
+      },
+      "learnWords": {
+        "title": "Thêm vốn từ",
+        "message": "Muốn học thêm vài từ <lang></lang> mới?"
+      },
+      "whatToLearn": {
+        "title": "Chọn trọng tâm",
+        "message": "Hôm nay bạn muốn học gì với <lang></lang>?"
+      },
+      "keepGoing": {
+        "title": "Bạn đang tạo thói quen",
+        "message": "Tiếp tục với <lang></lang> — luyện ít cũng cộng dồn."
+      }
+    },
+    "activity": {
+      "vocabulary": {
+        "title": "Gợi ý",
+        "message": "Xem lại một ít từ vựng hôm nay nhé?"
+      },
+      "writing": {
+        "title": "Gợi ý",
+        "message": "Muốn luyện viết một chút chứ?"
+      },
+      "theoryOrExercise": {
+        "title": "Gợi ý",
+        "message": "Bạn có thể ôn lý thuyết hoặc làm một bài tập."
+      },
+      "exercise": {
+        "title": "Gợi ý",
+        "message": "Sẵn sàng cho một bài tập nhanh?"
+      },
+      "theory": {
+        "title": "Gợi ý",
+        "message": "Đọc một ghi chú lý thuyết để ôn lại nhé?"
+      }
+    }
+  },
+  "onboarding": {
+    "skip": "Bỏ qua",
+    "skipForNow": "Để sau",
+    "getStarted": "Bắt đầu",
+    "close": "Đóng",
+    "welcome": {
+      "title": "Chào mừng đến Notoria! 👋",
+      "message": "Không gian học đã sẵn sàng. Bắt đầu với vài bước đơn giản nhé.",
+      "features": {
+        "vocabulary": "Xây dựng vốn từ",
+        "writing": "Luyện viết",
+        "exercises": "Học qua bài tập",
+        "theory": "Ôn lý thuyết và tài liệu học"
+      }
+    },
+    "firstAction": {
+      "title": "Bắt đầu học thôi!",
+      "message": "Hãy thêm từ vựng trước, rồi bạn có thể khám phá bài tập và các phần khác."
+    },
+    "actions": {
+      "addVocabulary": {
+        "empty": {
+          "title": "Bắt đầu với những từ đầu tiên",
+          "description": "Thêm từ vựng để dựng nền tảng học tập."
+        },
+        "starting": {
+          "title": "Tiếp tục xây vốn từ",
+          "description": "Thêm vài từ nữa trước khi làm bài tập."
+        },
+        "almost": {
+          "title": "Sắp sẵn sàng rồi!",
+          "description": "Thêm vài từ nữa để bài tập hiệu quả hơn."
+        }
+      },
+      "tryExercise": {
+        "title": "Sẵn sàng luyện tập?",
+        "description": "Bạn đã có đủ từ vựng để làm bài tập đầu tiên."
+      },
+      "startWriting": {
+        "title": "Bắt đầu viết",
+        "description": "Tạo bài luyện viết đầu tiên."
+      },
+      "exploreTheory": {
+        "title": "Khám phá lý thuyết",
+        "description": "Lưu ghi chú về ngữ pháp, cách dùng và cách ngôn ngữ vận hành."
+      },
+      "exploreWorkspace": {
+        "title": "Khám phá không gian học",
+        "description": "Xem quanh và tiếp tục học theo nhịp của bạn."
+      }
+    }
+  },
+  "tutorials": {
+    "show": "Xem hướng dẫn",
+    "showShort": "Hướng dẫn",
+    "next": "Tiếp",
+    "skip": "Bỏ qua hướng dẫn",
+    "done": "Đã hiểu",
+    "vocabulary": {
+      "title": "Từ vựng",
+      "description": "Xây sổ từ của bạn và ôn những từ đã học.",
+      "cta": "Thêm từ",
+      "steps": {
+        "addWord": {
+          "title": "1. Thêm một từ",
+          "body": "Tạo mục từ mới kèm nghĩa, ví dụ và ghi chú."
+        },
+        "tags": {
+          "title": "2. Gắn thẻ",
+          "body": "Sắp xếp từ bằng thẻ dùng lại được để sau này dễ tìm."
+        },
+        "review": {
+          "title": "3. Ôn tập",
+          "body": "Dùng từ trong bài tập và các hoạt động học khi bạn đã có một ít vốn từ."
+        }
+      }
+    },
+    "writing": {
+      "title": "Viết",
+      "description": "Luyện viết với đề bài, bản nháp và các bài bạn có thể quay lại.",
+      "cta": "Bắt đầu viết",
+      "steps": {
+        "create": {
+          "title": "1. Tạo bài viết",
+          "body": "Bắt đầu một đề, bản nháp hoặc bộ câu hỏi trong không gian học."
+        },
+        "organize": {
+          "title": "2. Sắp xếp",
+          "body": "Dùng tìm kiếm, bộ lọc và metadata để dễ tìm lại bài."
+        },
+        "practice": {
+          "title": "3. Luyện và xuất",
+          "body": "Mở bài để viết tiếp, hoặc xuất file khi cần bản in."
+        }
+      }
+    },
+    "theory": {
+      "title": "Lý thuyết",
+      "description": "Giữ ghi chú về ngữ pháp, phát âm, cách dùng và cách ngôn ngữ vận hành.",
+      "cta": "Thêm lý thuyết",
+      "steps": {
+        "add": {
+          "title": "1. Thêm ghi chú",
+          "body": "Tạo ghi chú lý thuyết và chọn danh mục để các chủ đề liên quan nằm cùng nhau."
+        },
+        "browse": {
+          "title": "2. Duyệt",
+          "body": "Tìm kiếm và lọc theo danh mục khi bạn muốn quay lại."
+        },
+        "read": {
+          "title": "3. Đọc lại",
+          "body": "Mở ghi chú để học, rồi quay lại bất cứ lúc nào cần ôn."
+        }
+      }
+    },
+    "exercise": {
+      "title": "Bài tập",
+      "description": "Luyện với flashcard, quiz và các dạng bài tạo từ sổ từ của bạn.",
+      "cta": "Làm bài tập",
+      "steps": {
+        "vocabulary": {
+          "title": "1. Thêm từ trước",
+          "body": "Hầu hết bài tập hiệu quả hơn khi có ít nhất {count} từ. Hãy có một bộ sưu tập nhỏ trước khi bắt đầu."
+        },
+        "choose": {
+          "title": "2. Chọn dạng bài",
+          "body": "Chọn flashcard, trắc nghiệm, nối cặp, điền chỗ trống hoặc gõ đáp án."
+        },
+        "practice": {
+          "title": "3. Luyện tập",
+          "body": "Hoàn thành một phiên ngắn. Quay lại thường xuyên — vài phút cũng tính."
+        }
+      }
+    },
+    "conversation": {
+      "title": "Hội thoại",
+      "description": "Luyện nói và đáp lại bằng ngôn ngữ bạn đang học.",
+      "cta": "Bắt đầu hội thoại",
+      "steps": {
+        "start": {
+          "title": "1. Bắt đầu hội thoại",
+          "body": "Mở một cuộc hội thoại để luyện trong ngữ cảnh."
+        },
+        "practice": {
+          "title": "2. Luyện",
+          "body": "Trả lời tự nhiên và giữ cuộc trao đổi tiếp tục."
+        },
+        "review": {
+          "title": "3. Ôn lại",
+          "body": "Xem lại cụm hữu ích và thêm vào sổ từ."
+        }
+      }
+    }
+  },
   "settings": {
     "title": "Cài đặt",
     "workspace": "Không gian học",

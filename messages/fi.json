@@ -411,6 +411,250 @@
     "recentWords": "Viimeisimmät sanat",
     "sidebarFooter": "Yksityinen kielenopiskelun työtila"
   },
+  "prompts": {
+    "skip": "Ohita",
+    "gotIt": "Selvä",
+    "titles": {
+      "greeting": "Tervetuloa takaisin! 👋",
+      "motivation": "Pieni kannustus",
+      "language": "Kielesi tänään",
+      "activity": "Ehdotus"
+    },
+    "greeting": {
+      "morning": {
+        "title": "Hyvää huomenta! ☀️",
+        "message": "Valmis oppimaan jotain uutta?"
+      },
+      "afternoon": {
+        "title": "Hyvää päivää!",
+        "message": "Mitä haluaisit oppia tänään?"
+      },
+      "evening": {
+        "title": "Hyvää iltaa!",
+        "message": "Entäpä pieni harjoitteluhetki ennen päivän päätöstä?"
+      },
+      "welcomeBack": {
+        "title": "Tervetuloa takaisin! 👋",
+        "message": "Mitä haluaisit oppia tänään?"
+      },
+      "hello": {
+        "title": "Hei!",
+        "message": "Tehdään tästä päivästä merkityksellinen — muutama minuutti riittää."
+      }
+    },
+    "motivation": {
+      "whatToPractice": {
+        "title": "Aloita milloin tahansa",
+        "message": "Mitä haluat harjoitella tänään?"
+      },
+      "fewMinutes": {
+        "title": "Muutama minuutti riittää",
+        "message": "Lyhyt harjoitus voi vaikuttaa. Mihin keskityt tänään?"
+      },
+      "oneStep": {
+        "title": "Tärkeintä on aloittaa",
+        "message": "Yksi pieni askel tänään on silti edistystä."
+      },
+      "curious": {
+        "title": "Seuraa uteliaisuuttasi",
+        "message": "Valitse aihe ja sukella mukaan — mikä tahansa alku lasketaan."
+      }
+    },
+    "language": {
+      "practiceToday": {
+        "title": "Kielesi tänään",
+        "message": "Valmis harjoittelemaan kieltä <lang></lang> tänään?"
+      },
+      "learnWords": {
+        "title": "Kasvata sanastoa",
+        "message": "Haluatko opetella uusia sanoja kielellä <lang></lang>?"
+      },
+      "whatToLearn": {
+        "title": "Valitse painopiste",
+        "message": "Mitä haluaisit oppia tänään kielessä <lang></lang>?"
+      },
+      "keepGoing": {
+        "title": "Rutiini syntyy toistosta",
+        "message": "Jatka kielen <lang></lang> parissa — pieni harjoittelu kertyy."
+      }
+    },
+    "activity": {
+      "vocabulary": {
+        "title": "Ehdotus",
+        "message": "Entäpä sanaston kertaaminen tänään?"
+      },
+      "writing": {
+        "title": "Ehdotus",
+        "message": "Haluatko harjoitella kirjoittamista?"
+      },
+      "theoryOrExercise": {
+        "title": "Ehdotus",
+        "message": "Voit kerrata teoriaa tai kokeilla harjoitusta."
+      },
+      "exercise": {
+        "title": "Ehdotus",
+        "message": "Valmis lyhyeen harjoitukseen?"
+      },
+      "theory": {
+        "title": "Ehdotus",
+        "message": "Entäpä teorian kertaus muistin virkistämiseksi?"
+      }
+    }
+  },
+  "onboarding": {
+    "skip": "Ohita",
+    "skipForNow": "Ohita toistaiseksi",
+    "getStarted": "Aloita",
+    "close": "Sulje",
+    "welcome": {
+      "title": "Tervetuloa Notoriaan! 👋",
+      "message": "Työtilasi on valmis. Aloitetaan muutamalla yksinkertaisella askeleella.",
+      "features": {
+        "vocabulary": "Rakenna sanastoa",
+        "writing": "Harjoittele kirjoittamista",
+        "exercises": "Opi harjoitusten avulla",
+        "theory": "Kertaa teoriaa ja oppimateriaaleja"
+      }
+    },
+    "firstAction": {
+      "title": "Aloitetaan oppiminen!",
+      "message": "Lisää ensin sanastoa — sen jälkeen voit kokeilla harjoituksia ja muita osioita."
+    },
+    "actions": {
+      "addVocabulary": {
+        "empty": {
+          "title": "Aloita ensimmäisistä sanoista",
+          "description": "Lisää sanastoa oppimisen pohjaksi."
+        },
+        "starting": {
+          "title": "Jatka sanaston kasvattamista",
+          "description": "Lisää vielä muutama sana ennen harjoitusta."
+        },
+        "almost": {
+          "title": "Olet melkein valmis!",
+          "description": "Lisää vielä muutama sana, jotta harjoittelu sujuu paremmin."
+        }
+      },
+      "tryExercise": {
+        "title": "Valmis harjoittelemaan?",
+        "description": "Sanastoa on jo tarpeeksi ensimmäiseen harjoitukseen."
+      },
+      "startWriting": {
+        "title": "Aloita kirjoittaminen",
+        "description": "Luo ensimmäinen kirjoitusharjoituksesi."
+      },
+      "exploreTheory": {
+        "title": "Tutustu teoriaan",
+        "description": "Tallenna muistiinpanoja kieliopista, käytöstä ja kielen rakenteesta."
+      },
+      "exploreWorkspace": {
+        "title": "Tutustu työtilaan",
+        "description": "Katso ympärillesi ja jatka oppimista omaan tahtiin."
+      }
+    }
+  },
+  "tutorials": {
+    "show": "Näytä opas",
+    "showShort": "Opas",
+    "next": "Seuraava",
+    "skip": "Ohita opas",
+    "done": "Selvä",
+    "vocabulary": {
+      "title": "Sanasto",
+      "description": "Rakenna oma sanalista ja kertaa oppimiasi sanoja.",
+      "cta": "Lisää sana",
+      "steps": {
+        "addWord": {
+          "title": "1. Lisää sana",
+          "body": "Luo uusi sana merkityksineen, esimerkkeineen ja muistiinpanoineen."
+        },
+        "tags": {
+          "title": "2. Lisää tunnisteita",
+          "body": "Järjestä sanoja tunnisteilla, jotta löydät ne myöhemmin helposti."
+        },
+        "review": {
+          "title": "3. Kertaa",
+          "body": "Käytä sanoja harjoituksissa, kun kokoelma on kasvanut hieman."
+        }
+      }
+    },
+    "writing": {
+      "title": "Kirjoittaminen",
+      "description": "Harjoittele kirjoittamista tehtävillä, luonnoksilla ja tallennetuilla teksteillä.",
+      "cta": "Aloita kirjoittaminen",
+      "steps": {
+        "create": {
+          "title": "1. Luo kirjoitus",
+          "body": "Aloita uusi tehtävä, luonnos tai kysymyssarja työtilassasi."
+        },
+        "organize": {
+          "title": "2. Järjestä",
+          "body": "Käytä hakua, suodattimia ja metatietoja, jotta tekstit pysyvät löydettävissä."
+        },
+        "practice": {
+          "title": "3. Harjoittele ja vie",
+          "body": "Avaa teksti jatkaaksesi kirjoittamista tai vie se tulostettavaksi."
+        }
+      }
+    },
+    "theory": {
+      "title": "Teoria",
+      "description": "Pidä muistiinpanoja kieliopista, ääntämisestä, käytöstä ja kielen rakenteesta.",
+      "cta": "Lisää teoriaa",
+      "steps": {
+        "add": {
+          "title": "1. Lisää muistiinpano",
+          "body": "Luo teoriamuistiinpano ja valitse kategoria, jotta aiheet pysyvät yhdessä."
+        },
+        "browse": {
+          "title": "2. Selaa",
+          "body": "Hae ja suodata kategorian mukaan, kun haluat palata aiheeseen."
+        },
+        "read": {
+          "title": "3. Lue uudelleen",
+          "body": "Avaa muistiinpano opiskellaksesi ja palaa siihen tarvittaessa."
+        }
+      }
+    },
+    "exercise": {
+      "title": "Harjoitukset",
+      "description": "Harjoittele muistikorteilla, visailuilla ja muilla tehtävillä, jotka syntyvät sanastostasi.",
+      "cta": "Kokeile harjoitusta",
+      "steps": {
+        "vocabulary": {
+          "title": "1. Rakenna ensin sanastoa",
+          "body": "Useimmat harjoitukset sujuvat parhaiten, kun sanoja on vähintään {count}. Kerää pieni kokoelma ennen aloitusta."
+        },
+        "choose": {
+          "title": "2. Valitse tyyppi",
+          "body": "Valitse muistikortit, monivalinta, parit, aukkojen täydennys tai kirjoita vastaus."
+        },
+        "practice": {
+          "title": "3. Harjoittele",
+          "body": "Tee lyhyt sessio. Palaa usein — muutama minuutti riittää."
+        }
+      }
+    },
+    "conversation": {
+      "title": "Keskustelu",
+      "description": "Harjoittele puhumista ja vastaamista kohdekielellä.",
+      "cta": "Aloita keskustelu",
+      "steps": {
+        "start": {
+          "title": "1. Aloita keskustelu",
+          "body": "Avaa keskustelu ja harjoittele kieltä kontekstissa."
+        },
+        "practice": {
+          "title": "2. Harjoittele",
+          "body": "Vastaa luontevasti ja pidä keskustelu käynnissä."
+        },
+        "review": {
+          "title": "3. Kertaa",
+          "body": "Poimi hyödyllisiä ilmauksia ja lisää ne sanastoosi."
+        }
+      }
+    }
+  },
   "settings": {
     "title": "Asetukset",
     "workspace": "Työtila",
