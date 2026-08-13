@@ -18,16 +18,22 @@ import {
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { GripVertical, Plus, Trash2 } from "lucide-react";
+import { GripVertical, Plus, Star, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useMounted } from "@/hooks/use-mounted";
+import {
+  countPrimaryMeanings,
+  MAX_PRIMARY_MEANINGS,
+} from "@/lib/vocabulary/primary-meanings";
 import { cn } from "@/lib/utils";
 
 export type MeaningItem = {
   id: string;
   meaning: string;
+  isPrimary: boolean;
   sortOrder: number;
 };
 
@@ -40,25 +46,60 @@ function MeaningRowShell({
   item,
   index,
   onUpdate,
+  onTogglePrimary,
   onRemove,
   canRemove,
+  canMarkPrimary,
   placeholder,
+  primaryLabel,
+  secondaryLabel,
   dragHandle,
 }: {
   item: MeaningItem;
   index: number;
   onUpdate: (id: string, meaning: string) => void;
+  onTogglePrimary: (id: string) => void;
   onRemove: (id: string) => void;
   canRemove: boolean;
+  canMarkPrimary: boolean;
   placeholder: string;
+  primaryLabel: string;
+  secondaryLabel: string;
   dragHandle: ReactNode;
 }) {
   return (
-    <div className="flex items-center gap-2 rounded-lg border bg-card p-2">
+    <div
+      className={cn(
+        "flex items-center gap-2 rounded-lg border bg-card p-2",
+        item.isPrimary
+          ? "border-accent-lime/50 bg-accent-lime/5"
+          : "border-hairline-cloud opacity-90",
+      )}
+    >
       {dragHandle}
       <span className="w-6 text-sm font-medium text-muted-foreground">
         {index + 1}.
       </span>
+      <Button
+        type="button"
+        variant="ghost"
+        size="icon-sm"
+        onClick={() => onTogglePrimary(item.id)}
+        disabled={!item.isPrimary && !canMarkPrimary}
+        aria-pressed={item.isPrimary}
+        aria-label={item.isPrimary ? primaryLabel : secondaryLabel}
+        title={item.isPrimary ? primaryLabel : secondaryLabel}
+        className={cn(
+          "shrink-0",
+          item.isPrimary
+            ? "text-accent-lime hover:text-accent-lime"
+            : "text-muted-foreground",
+        )}
+      >
+        <Star
+          className={cn("size-4", item.isPrimary && "fill-current")}
+        />
+      </Button>
       <Input
         value={item.meaning}
         onChange={(event) => onUpdate(item.id, event.target.value)}
@@ -83,16 +124,24 @@ function SortableMeaningRow({
   item,
   index,
   onUpdate,
+  onTogglePrimary,
   onRemove,
   canRemove,
+  canMarkPrimary,
   placeholder,
+  primaryLabel,
+  secondaryLabel,
 }: {
   item: MeaningItem;
   index: number;
   onUpdate: (id: string, meaning: string) => void;
+  onTogglePrimary: (id: string) => void;
   onRemove: (id: string) => void;
   canRemove: boolean;
+  canMarkPrimary: boolean;
   placeholder: string;
+  primaryLabel: string;
+  secondaryLabel: string;
 }) {
   const {
     attributes,
@@ -116,9 +165,13 @@ function SortableMeaningRow({
         item={item}
         index={index}
         onUpdate={onUpdate}
+        onTogglePrimary={onTogglePrimary}
         onRemove={onRemove}
         canRemove={canRemove}
+        canMarkPrimary={canMarkPrimary}
         placeholder={placeholder}
+        primaryLabel={primaryLabel}
+        secondaryLabel={secondaryLabel}
         dragHandle={
           <button
             type="button"
@@ -145,6 +198,9 @@ export function SortableMeanings({ meanings, onChange }: SortableMeaningsProps) 
     }),
   );
 
+  const primaryCount = countPrimaryMeanings(meanings);
+  const canMarkPrimary = primaryCount < MAX_PRIMARY_MEANINGS;
+
   function handleDragEnd(event: DragEndEvent) {
     const { active, over } = event;
     if (!over || active.id === over.id) return;
@@ -167,6 +223,7 @@ export function SortableMeanings({ meanings, onChange }: SortableMeaningsProps) 
       {
         id: crypto.randomUUID(),
         meaning: "",
+        isPrimary: primaryCount === 0,
         sortOrder: meanings.length,
       },
     ]);
@@ -180,11 +237,46 @@ export function SortableMeanings({ meanings, onChange }: SortableMeaningsProps) 
     );
   }
 
-  function removeMeaning(id: string) {
+  function togglePrimary(id: string) {
+    const target = meanings.find((item) => item.id === id);
+    if (!target) return;
+
+    if (target.isPrimary) {
+      if (primaryCount <= 1) {
+        toast.error(t("primaryMeaningRequired"));
+        return;
+      }
+      onChange(
+        meanings.map((item) =>
+          item.id === id ? { ...item, isPrimary: false } : item,
+        ),
+      );
+      return;
+    }
+
+    if (!canMarkPrimary) {
+      toast.error(t("primaryMeaningLimit", { max: MAX_PRIMARY_MEANINGS }));
+      return;
+    }
+
     onChange(
-      meanings
-        .filter((item) => item.id !== id)
-        .map((item, index) => ({ ...item, sortOrder: index })),
+      meanings.map((item) =>
+        item.id === id ? { ...item, isPrimary: true } : item,
+      ),
+    );
+  }
+
+  function removeMeaning(id: string) {
+    const remaining = meanings.filter((item) => item.id !== id);
+    if (
+      remaining.length > 0 &&
+      countPrimaryMeanings(remaining) === 0
+    ) {
+      remaining[0] = { ...remaining[0]!, isPrimary: true };
+    }
+
+    onChange(
+      remaining.map((item, index) => ({ ...item, sortOrder: index })),
     );
   }
 
@@ -197,9 +289,13 @@ export function SortableMeanings({ meanings, onChange }: SortableMeaningsProps) 
             item={item}
             index={index}
             onUpdate={updateMeaning}
+            onTogglePrimary={togglePrimary}
             onRemove={removeMeaning}
             canRemove={meanings.length > 1}
+            canMarkPrimary={canMarkPrimary}
             placeholder={t("meaningPlaceholder")}
+            primaryLabel={t("primaryMeaning")}
+            secondaryLabel={t("markAsPrimary")}
           />
         ) : (
           <MeaningRowShell
@@ -207,9 +303,13 @@ export function SortableMeanings({ meanings, onChange }: SortableMeaningsProps) 
             item={item}
             index={index}
             onUpdate={updateMeaning}
+            onTogglePrimary={togglePrimary}
             onRemove={removeMeaning}
             canRemove={meanings.length > 1}
+            canMarkPrimary={canMarkPrimary}
             placeholder={t("meaningPlaceholder")}
+            primaryLabel={t("primaryMeaning")}
+            secondaryLabel={t("markAsPrimary")}
             dragHandle={
               <span className="rounded-md p-1 text-muted-foreground">
                 <GripVertical className="size-4" />
@@ -223,8 +323,13 @@ export function SortableMeanings({ meanings, onChange }: SortableMeaningsProps) 
 
   return (
     <div className="space-y-3">
-      <div className="flex items-center justify-between">
-        <label className="text-sm font-medium">{t("meanings")}</label>
+      <div className="flex flex-wrap items-center justify-between gap-2">
+        <div className="space-y-0.5">
+          <label className="text-sm font-medium">{t("meanings")}</label>
+          <p className="text-xs text-muted-foreground">
+            {t("primaryMeaningHint", { max: MAX_PRIMARY_MEANINGS })}
+          </p>
+        </div>
         <Button type="button" variant="outline" size="sm" onClick={addMeaning}>
           <Plus className="size-4" />
           {t("addMeaning")}

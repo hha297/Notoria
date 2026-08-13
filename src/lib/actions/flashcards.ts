@@ -109,7 +109,9 @@ export async function getFlashcardWords(): Promise<FlashcardWord[]> {
     synonyms: word.synonyms,
     notes: word.notes,
     status: word.status,
-    meanings: word.meanings.map((meaning) => meaning.meaning),
+    meanings: word.meanings
+      .filter((meaning) => meaning.isPrimary)
+      .map((meaning) => meaning.meaning),
     examples: word.examples.map((example) => example.sentence),
     tags: word.tags.map((tag) => tag.tag),
   }));

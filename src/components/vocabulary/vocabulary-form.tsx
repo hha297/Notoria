@@ -46,11 +46,17 @@ import {
   parseVocabularyNotes,
   serializeVocabularyNotes,
 } from "@/lib/vocabulary/notes-content";
+import {
+  countPrimaryMeanings,
+  MAX_PRIMARY_MEANINGS,
+} from "@/lib/vocabulary/primary-meanings";
 import { VOCABULARY_WORD_EXISTS } from "@/lib/vocabulary-errors";
 import {
   getCustomTagName,
   isCustomTagKey,
+  normalizeWordTags,
   PARTS_OF_SPEECH,
+  uniqueCustomTagNames,
 } from "@/lib/vocabulary-tags";
 import {
   vocabularyFormClientSchema,
@@ -65,6 +71,7 @@ type VocabularyFormClientValues = Omit<
 type VocabularyFormProps = {
   /** When set, Cancel returns here and Save navigates here after persisting. */
   previewHref?: string;
+  existingCustomTags?: string[];
   initialData?: {
     id: string;
     word: string;
@@ -74,6 +81,7 @@ type VocabularyFormProps = {
     meanings: Array<{
       id: string;
       meaning: string;
+      isPrimary?: boolean;
       sortOrder: number;
     }>;
     examples: Array<{
@@ -97,11 +105,20 @@ function normalizeWordInput(word: string) {
   return word.trim().toLowerCase();
 }
 
+/** Capitalize only the first character; leave the rest unchanged. */
+function capitalizeWordFirstLetter(value: string) {
+  if (!value) return value;
+  const chars = [...value];
+  chars[0] = chars[0]!.toLocaleUpperCase();
+  return chars.join("");
+}
+
 function createDefaultMeanings(): MeaningItem[] {
   return [
     {
       id: "new-meaning-0",
       meaning: "",
+      isPrimary: true,
       sortOrder: 0,
     },
   ];
@@ -141,21 +158,23 @@ function getInitialExamples(
   }));
 }
 
-function getInitialSessionCustomTags(
+function getInitialCustomTags(
+  existingCustomTags: string[] | undefined,
   tags: Array<{ tag: string }> | undefined,
 ): string[] {
-  if (!tags) {
-    return [];
-  }
-
-  return tags
-    .map((tag) => tag.tag)
+  const fromWord = tags
+    ?.map((tag) => tag.tag)
     .filter(isCustomTagKey)
-    .map(getCustomTagName)
-    .sort((a, b) => a.localeCompare(b));
+    .map(getCustomTagName) ?? [];
+
+  return uniqueCustomTagNames([...(existingCustomTags ?? []), ...fromWord]);
 }
 
-export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps) {
+export function VocabularyForm({
+  initialData,
+  previewHref,
+  existingCustomTags,
+}: VocabularyFormProps) {
   const router = useRouter();
   const t = useTranslations("vocabulary");
   const tCommon = useTranslations("common");
@@ -167,17 +186,21 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
     initialData?.meanings.map((meaning) => ({
       id: meaning.id,
       meaning: meaning.meaning,
+      isPrimary: meaning.isPrimary ?? true,
       sortOrder: meaning.sortOrder,
     })) ?? createDefaultMeanings(),
   );
   const [examples, setExamples] = useState<ExampleItem[]>(() =>
     getInitialExamples(initialData?.examples),
   );
-  const [tags, setTags] = useState<string[]>(
-    initialData?.tags.map((tag) => tag.tag) ?? [],
+  const [tags, setTags] = useState<string[]>(() =>
+    normalizeWordTags(
+      initialData?.tags.map((tag) => tag.tag) ?? [],
+      existingCustomTags,
+    ),
   );
-  const [sessionCustomTags, setSessionCustomTags] = useState<string[]>(() =>
-    getInitialSessionCustomTags(initialData?.tags),
+  const [customTags, setCustomTags] = useState<string[]>(() =>
+    getInitialCustomTags(existingCustomTags, initialData?.tags),
   );
 
   const form = useForm<VocabularyFormClientValues>({
@@ -255,12 +278,23 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
       .map((item, index) => ({
         id: item.id,
         meaning: item.meaning.trim(),
+        isPrimary: item.isPrimary,
         sortOrder: index,
       }))
       .filter((item) => item.meaning.length > 0);
 
     if (filledMeanings.length === 0) {
       toast.error(t("meaningRequired"));
+      return;
+    }
+
+    const primaryCount = countPrimaryMeanings(filledMeanings);
+    if (primaryCount < 1) {
+      toast.error(t("primaryMeaningRequired"));
+      return;
+    }
+    if (primaryCount > MAX_PRIMARY_MEANINGS) {
+      toast.error(t("primaryMeaningLimit", { max: MAX_PRIMARY_MEANINGS }));
       return;
     }
 
@@ -281,7 +315,7 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
         ...values,
         meanings: filledMeanings,
         examples: filledExamples,
-        tags,
+        tags: normalizeWordTags(tags, customTags),
       };
 
       if (initialData?.id) {
@@ -313,6 +347,10 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
   const isCheckingWord = wordCheckStatus === "checking";
   const saveDisabled = isSaving || isDuplicate || isCheckingWord;
   const formatNotesDisabled = isNotesDocEmpty(notesDoc);
+  const {
+    onChange: onWordChange,
+    ...wordField
+  } = form.register("word");
 
   function handleNotesChange(doc: JSONContent) {
     setNotesDoc(doc);
@@ -367,7 +405,16 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
                       ? "word-duplicate-status"
                       : undefined
                   }
-                  {...form.register("word")}
+                  {...wordField}
+                  onChange={(event) => {
+                    const capitalized = capitalizeWordFirstLetter(
+                      event.target.value,
+                    );
+                    if (capitalized !== event.target.value) {
+                      event.target.value = capitalized;
+                    }
+                    void onWordChange(event);
+                  }}
                 />
                 {isCheckingWord ? (
                   <Loader2
@@ -449,8 +496,8 @@ export function VocabularyForm({ initialData, previewHref }: VocabularyFormProps
           <TagMultiSelect
             value={tags}
             onChange={setTags}
-            sessionCustomTags={sessionCustomTags}
-            onSessionCustomTagsChange={setSessionCustomTags}
+            customTags={customTags}
+            onCustomTagsChange={setCustomTags}
           />
 
           <div className="space-y-2">

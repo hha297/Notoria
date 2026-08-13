@@ -8,6 +8,7 @@ import {
   vocabularyWords,
   wordExamples,
   wordMeanings,
+  workspaceTags,
 } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
 import { requireActiveWorkspace, getActiveWorkspace } from "@/lib/workspace";
@@ -16,6 +17,12 @@ import {
   type VocabularyFormValues,
 } from "@/schemas/vocabulary";
 import { VOCABULARY_WORD_EXISTS } from "@/lib/vocabulary-errors";
+import {
+  getCustomTagName,
+  isCustomTagKey,
+  normalizeWordTags,
+  uniqueCustomTagNames,
+} from "@/lib/vocabulary-tags";
 
 function normalizeWord(word: string) {
   return word.trim().toLowerCase();
@@ -81,6 +88,7 @@ async function replaceWordRelations(
       data.meanings.map((meaning, index) => ({
         wordId,
         meaning: meaning.meaning,
+        isPrimary: meaning.isPrimary,
         sortOrder: meaning.sortOrder ?? index,
       })),
     );
@@ -100,12 +108,54 @@ async function replaceWordRelations(
 
   if (data.tags.length > 0) {
     await db.insert(vocabularyWordTags).values(
-      data.tags.map((tag) => ({
+      normalizeWordTags(data.tags).map((tag) => ({
         wordId,
         tag,
       })),
     );
   }
+}
+
+async function canonicalizeWordTags(workspaceId: string, tags: string[]) {
+  const stored = await db.query.workspaceTags.findMany({
+    where: eq(workspaceTags.workspaceId, workspaceId),
+    columns: { name: true },
+  });
+
+  return normalizeWordTags(
+    tags,
+    stored.map((tag) => tag.name),
+  );
+}
+
+async function ensureWorkspaceCustomTags(
+  workspaceId: string,
+  tags: string[],
+) {
+  const names = uniqueCustomTagNames(
+    tags.filter(isCustomTagKey).map(getCustomTagName),
+  );
+  if (names.length === 0) return;
+
+  const existing = await db.query.workspaceTags.findMany({
+    where: eq(workspaceTags.workspaceId, workspaceId),
+    columns: { name: true },
+  });
+  const existingKeys = new Set(
+    existing.map((tag) => tag.name.trim().toLowerCase()),
+  );
+  const toInsert = names.filter(
+    (name) => !existingKeys.has(name.toLowerCase()),
+  );
+
+  if (toInsert.length === 0) return;
+
+  await db.insert(workspaceTags).values(
+    toInsert.map((name) => ({
+      workspaceId,
+      name,
+    })),
+  );
 }
 
 export async function checkVocabularyWordExists(
@@ -182,6 +232,9 @@ export async function createVocabularyWord(data: VocabularyFormValues) {
 
   await assertWordIsUnique(parsed.word, workspace.id);
 
+  const tags = await canonicalizeWordTags(workspace.id, parsed.tags);
+  const payload = { ...parsed, tags };
+
   const [word] = await db
     .insert(vocabularyWords)
     .values({
@@ -194,7 +247,8 @@ export async function createVocabularyWord(data: VocabularyFormValues) {
     })
     .returning();
 
-  await replaceWordRelations(word.id, parsed);
+  await replaceWordRelations(word.id, payload);
+  await ensureWorkspaceCustomTags(workspace.id, tags);
 
   revalidatePath("/vocabulary");
   revalidatePath(`/vocabulary/${word.id}`);
@@ -211,6 +265,9 @@ export async function updateVocabularyWord(
   await assertWordInWorkspace(id, workspace.id);
   await assertWordIsUnique(parsed.word, workspace.id, id);
 
+  const tags = await canonicalizeWordTags(workspace.id, parsed.tags);
+  const payload = { ...parsed, tags };
+
   await db
     .update(vocabularyWords)
     .set({
@@ -222,7 +279,8 @@ export async function updateVocabularyWord(
     })
     .where(eq(vocabularyWords.id, id));
 
-  await replaceWordRelations(id, parsed);
+  await replaceWordRelations(id, payload);
+  await ensureWorkspaceCustomTags(workspace.id, tags);
 
   revalidatePath("/vocabulary");
   revalidatePath(`/vocabulary/${id}`);

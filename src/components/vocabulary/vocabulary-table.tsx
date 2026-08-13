@@ -40,7 +40,7 @@ export type VocabularyWordRow = {
   partOfSpeech: string | null;
   notes?: string | null;
   updatedAt: string;
-  meanings: Array<{ meaning: string }>;
+  meanings: Array<{ meaning: string; isPrimary?: boolean }>;
   tags: Array<{ id: string; tag: string }>;
 };
 
@@ -132,8 +132,13 @@ function VocabularyPosGroup({
 
       <div className="space-y-3 md:hidden">
         {pageWords.map((word) => {
-          const firstMeaning = word.meanings[0]?.meaning;
-          const extraMeanings = word.meanings.length - 1;
+          const primaryMeanings = word.meanings.filter(
+            (item) => item.isPrimary !== false,
+          );
+          const displayMeanings =
+            primaryMeanings.length > 0 ? primaryMeanings : word.meanings;
+          const firstMeaning = displayMeanings[0]?.meaning;
+          const extraMeanings = displayMeanings.length - 1;
 
           return (
             <div
@@ -206,8 +211,13 @@ function VocabularyPosGroup({
           </thead>
           <tbody>
             {pageWords.map((word) => {
-              const firstMeaning = word.meanings[0]?.meaning;
-              const extraMeanings = word.meanings.length - 1;
+              const primaryMeanings = word.meanings.filter(
+                (item) => item.isPrimary !== false,
+              );
+              const displayMeanings =
+                primaryMeanings.length > 0 ? primaryMeanings : word.meanings;
+              const firstMeaning = displayMeanings[0]?.meaning;
+              const extraMeanings = displayMeanings.length - 1;
 
               return (
                 <tr key={word.id}>

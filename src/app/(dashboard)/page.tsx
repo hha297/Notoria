@@ -33,7 +33,9 @@ export default async function DashboardPage() {
   const languageName = getLanguageName(workspace.language);
 
   const [words] = await Promise.all([getVocabularyWords()]);
-  const practiceReadyWords = words.filter((word) => word.meanings.length > 0).length;
+  const practiceReadyWords = words.filter((word) =>
+    word.meanings.some((meaning) => meaning.isPrimary),
+  ).length;
 
   return (
     <PageShell>
@@ -110,7 +112,11 @@ export default async function DashboardPage() {
                 <div className="min-w-0">
                   <p className="truncate font-semibold text-ink">{word.word}</p>
                   <p className="line-clamp-2 text-sm text-muted-foreground">
-                    {word.meanings.map((m) => m.meaning).join(" · ")}
+                    {word.meanings
+                      .filter((m) => m.isPrimary)
+                      .map((m) => m.meaning)
+                      .join(" · ") ||
+                      word.meanings.map((m) => m.meaning).join(" · ")}
                   </p>
                 </div>
               </Link>

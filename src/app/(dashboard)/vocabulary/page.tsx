@@ -34,7 +34,10 @@ export default async function VocabularyPage() {
     partOfSpeech: word.partOfSpeech,
     notes: word.notes,
     updatedAt: word.updatedAt.toISOString(),
-    meanings: word.meanings.map((meaning) => ({ meaning: meaning.meaning })),
+    meanings: word.meanings.map((meaning) => ({
+      meaning: meaning.meaning,
+      isPrimary: meaning.isPrimary,
+    })),
     tags: word.tags.map((tag) => ({ id: tag.id, tag: tag.tag })),
   }));
 
