@@ -12,6 +12,7 @@ export function DashboardDocumentTitle() {
   const tWriting = useTranslations("writing");
   const tExercises = useTranslations("exercises");
   const tFlashcards = useTranslations("flashcards");
+  const tTheory = useTranslations("theory");
 
   const title = useMemo(() => {
     if (pathname === "/") return tNav("dashboard");
@@ -33,6 +34,13 @@ export function DashboardDocumentTitle() {
       return tNav("writing");
     }
 
+    if (pathname === "/theory/new") return tTheory("newTitle");
+    if (/^\/theory\/[^/]+\/edit$/.test(pathname)) return tTheory("editTitle");
+    if (/^\/theory\/[^/]+$/.test(pathname)) return tTheory("previewTitle");
+    if (pathname === "/theory" || pathname.startsWith("/theory/")) {
+      return tNav("theory");
+    }
+
     if (pathname === "/exercises/flashcard") return tFlashcards("title");
     if (pathname === "/exercises/fill-in-blank") {
       return tExercises("types.fill-in-blank.label");
@@ -52,7 +60,7 @@ export function DashboardDocumentTitle() {
     }
 
     return "Notoria";
-  }, [pathname, tExercises, tFlashcards, tNav, tVocab, tWriting]);
+  }, [pathname, tExercises, tFlashcards, tNav, tTheory, tVocab, tWriting]);
 
   useEffect(() => {
     document.title = title;

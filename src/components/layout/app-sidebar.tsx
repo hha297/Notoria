@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  BookOpen,
   Dumbbell,
   Home,
   Languages,
@@ -31,6 +32,7 @@ const navItems = [
   { titleKey: "dashboard", href: "/", icon: Home },
   { titleKey: "vocabulary", href: "/vocabulary", icon: Languages },
   { titleKey: "writing", href: "/writing", icon: PenLine },
+  { titleKey: "theory", href: "/theory", icon: BookOpen },
   { titleKey: "exercises", href: "/exercises", icon: Dumbbell },
 ] as const;
 
