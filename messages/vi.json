@@ -274,6 +274,12 @@
         "preview": "Gõ đáp án…"
       }
     },
+    "timedHint": {
+      "availableIn": "💡 Gợi ý sau {seconds}s",
+      "showNow": "Hiện gợi ý ngay",
+      "label": "Gợi ý",
+      "startsWith": "Bắt đầu bằng “{letter}”"
+    },
     "empty": {
       "noWordsTitle": "Chưa có từ để luyện",
       "noWordsDescription": "Thêm vài từ vào sổ tay trước, rồi quay lại luyện nhé.",

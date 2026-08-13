@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight, RotateCcw, CheckCircle2, XCircle } from "lucide-react";
+import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
@@ -12,6 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { buildTypeAnswerItems } from "@/lib/exercises/type-answer";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
+import { hintInitialLetter } from "@/lib/exercises/hint";
 import { answersMatchAny } from "@/lib/exercises/utils";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardStudyMode, FlashcardWord } from "@/types/flashcards";
@@ -25,6 +27,7 @@ type TypeAnswerSessionProps = {
 
 export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps) {
   const t = useTranslations("exercises.typeAnswer");
+  const tHint = useTranslations("exercises.timedHint");
   const tSession = useTranslations("exercises.session");
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [studyMode, setStudyMode] = useState<FlashcardStudyMode>("mixed");
@@ -146,6 +149,17 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
               <p className="mt-4 break-words font-heading text-2xl font-medium text-ink sm:mt-6 sm:text-3xl md:text-4xl">
                 {current.prompt}
               </p>
+              <div className="mt-6">
+                <ExerciseHint resetKey={current.id} answered={revealed}>
+                  {tHint("startsWith", {
+                    letter: hintInitialLetter(
+                      current.direction === "WORD_TO_MEANING"
+                        ? (current.meanings[0] ?? current.acceptableAnswers[0] ?? "")
+                        : current.word,
+                    ),
+                  })}
+                </ExerciseHint>
+              </div>
               <div className="mt-8 space-y-4">
                 {!revealed ? (
                   <Input

@@ -274,6 +274,12 @@
         "preview": "Kirjoita vastaus…"
       }
     },
+    "timedHint": {
+      "availableIn": "💡 Vihje saatavilla {seconds}s kuluttua",
+      "showNow": "Näytä vihje nyt",
+      "label": "Vihje",
+      "startsWith": "Alkaa merkillä “{letter}”"
+    },
     "empty": {
       "noWordsTitle": "Ei sanastoa vielä",
       "noWordsDescription": "Lisää sanoja työtilaan ensin, palaa sitten harjoittelemaan.",

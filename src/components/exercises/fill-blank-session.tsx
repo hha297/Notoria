@@ -3,8 +3,9 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight, Lightbulb, RotateCcw } from "lucide-react";
+import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
 import { CheckCircle2, XCircle } from "lucide-react";
+import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
@@ -227,17 +228,9 @@ function FillBlankCard({
         </div>
 
         {item.meanings[0] && (
-          <div className="flex items-start gap-3 rounded-xl border border-hairline-cloud bg-muted/25 px-4 py-3 sm:px-5 sm:py-4">
-            <Lightbulb className="mt-0.5 size-5 shrink-0 text-accent-violet-mid" />
-            <div className="min-w-0">
-              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                {t("hint")}
-              </p>
-              <p className="mt-1 text-sm text-ink sm:text-base">
-                {item.meanings.join(" · ")}
-              </p>
-            </div>
-          </div>
+          <ExerciseHint resetKey={item.id} answered={revealed}>
+            {item.meanings.join(" · ")}
+          </ExerciseHint>
         )}
 
         {revealed && (
