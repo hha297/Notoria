@@ -30,6 +30,11 @@ const workspaceTagSchema = z.object({
   name: z.string().min(1).max(40),
 });
 
+const updateWorkspaceSchema = z.object({
+  name: z.string().trim().min(1).max(80),
+  language: z.string().min(2),
+});
+
 export async function createWorkspace(data: z.infer<typeof createWorkspaceSchema>) {
   const parsed = createWorkspaceSchema.parse(data);
 
@@ -89,6 +94,93 @@ export async function setActiveWorkspace(workspaceId: string) {
   });
 
   revalidatePath("/", "layout");
+}
+
+export async function updateWorkspace(
+  workspaceId: string,
+  data: z.infer<typeof updateWorkspaceSchema>,
+) {
+  const parsed = updateWorkspaceSchema.parse(data);
+
+  if (!isValidLanguageCode(parsed.language)) {
+    throw new Error("Invalid language");
+  }
+
+  const userId = await getCurrentUserId();
+  const workspace = await db.query.workspaces.findFirst({
+    where: eq(workspaces.id, workspaceId),
+  });
+
+  if (!workspace || workspace.userId !== userId) {
+    throw new Error("Workspace not found");
+  }
+
+  if (parsed.language !== workspace.language) {
+    const existing = await db.query.workspaces.findFirst({
+      where: and(
+        eq(workspaces.userId, userId),
+        eq(workspaces.language, parsed.language),
+      ),
+    });
+
+    if (existing) {
+      throw new Error("WORKSPACE_LANGUAGE_EXISTS");
+    }
+  }
+
+  const [updated] = await db
+    .update(workspaces)
+    .set({
+      name: parsed.name,
+      language: parsed.language,
+      updatedAt: new Date(),
+    })
+    .where(eq(workspaces.id, workspaceId))
+    .returning();
+
+  revalidatePath("/", "layout");
+  return updated;
+}
+
+export async function deleteWorkspace(workspaceId: string) {
+  const userId = await getCurrentUserId();
+  const workspace = await db.query.workspaces.findFirst({
+    where: eq(workspaces.id, workspaceId),
+  });
+
+  if (!workspace || workspace.userId !== userId) {
+    throw new Error("Workspace not found");
+  }
+
+  const remaining = await db.query.workspaces.findMany({
+    where: eq(workspaces.userId, userId),
+    orderBy: (table, { asc }) => [asc(table.createdAt)],
+  });
+  const nextWorkspace = remaining.find((item) => item.id !== workspaceId);
+
+  await db.delete(workspaces).where(eq(workspaces.id, workspaceId));
+
+  const cookieStore = await cookies();
+  const activeId = cookieStore.get(WORKSPACE_COOKIE)?.value;
+
+  if (!activeId || activeId === workspaceId) {
+    if (nextWorkspace) {
+      cookieStore.set(WORKSPACE_COOKIE, nextWorkspace.id, {
+        path: "/",
+        maxAge: 60 * 60 * 24 * 365,
+        sameSite: "lax",
+      });
+    } else {
+      cookieStore.set(WORKSPACE_COOKIE, "", {
+        path: "/",
+        maxAge: 0,
+        sameSite: "lax",
+      });
+    }
+  }
+
+  revalidatePath("/", "layout");
+  return { nextWorkspaceId: nextWorkspace?.id ?? null };
 }
 
 async function findWorkspaceTagByName(workspaceId: string, name: string) {
