@@ -1,4 +1,10 @@
 import type { JSONContent } from "@tiptap/react";
+import {
+  EMPTY_WRITING_META,
+  parseWritingMeta,
+  serializeWritingMeta,
+  type WritingMeta,
+} from "@/lib/writing/meta";
 
 export const WRITING_CONTENT_VERSION = 1 as const;
 
@@ -23,12 +29,14 @@ export type RichDocumentContent = {
   mode: "rich_document";
   version: typeof WRITING_CONTENT_VERSION;
   doc: JSONContent;
+  meta: WritingMeta;
 };
 
 export type QuestionSetContent = {
   mode: "question_set";
   version: typeof WRITING_CONTENT_VERSION;
   sections: WritingSection[];
+  meta: WritingMeta;
 };
 
 export type WritingContent = RichDocumentContent | QuestionSetContent;
@@ -38,6 +46,7 @@ export type WritingEditorState = {
   mode: WritingMode;
   doc: JSONContent;
   sections: WritingSection[];
+  meta: WritingMeta;
 };
 
 export function createEmptyDoc(): JSONContent {
@@ -77,6 +86,7 @@ export function createDefaultEditorState(
     mode,
     doc: createEmptyDoc(),
     sections: createDefaultSections(),
+    meta: { ...EMPTY_WRITING_META },
   };
 }
 
@@ -122,6 +132,7 @@ function normalizeSection(raw: unknown, index: number): WritingSection {
 
 /**
  * Accepts legacy TipTap docs (`{ type: "doc" }`) and the new wrapped shape.
+ * Missing `meta` is filled with empty defaults for backward compatibility.
  */
 export function parseWritingContent(raw: unknown): WritingContent {
   if (isTipTapDoc(raw) && !("mode" in raw)) {
@@ -129,6 +140,7 @@ export function parseWritingContent(raw: unknown): WritingContent {
       mode: "rich_document",
       version: WRITING_CONTENT_VERSION,
       doc: raw,
+      meta: { ...EMPTY_WRITING_META },
     };
   }
 
@@ -137,8 +149,11 @@ export function parseWritingContent(raw: unknown): WritingContent {
       mode: "rich_document",
       version: WRITING_CONTENT_VERSION,
       doc: createEmptyDoc(),
+      meta: { ...EMPTY_WRITING_META },
     };
   }
+
+  const meta = parseWritingMeta(raw.meta);
 
   if (raw.mode === "question_set") {
     const sections = Array.isArray(raw.sections)
@@ -149,6 +164,7 @@ export function parseWritingContent(raw: unknown): WritingContent {
       mode: "question_set",
       version: WRITING_CONTENT_VERSION,
       sections: sections.length > 0 ? sections : createDefaultSections(),
+      meta,
     };
   }
 
@@ -162,6 +178,7 @@ export function parseWritingContent(raw: unknown): WritingContent {
     mode: "rich_document",
     version: WRITING_CONTENT_VERSION,
     doc,
+    meta,
   };
 }
 
@@ -173,6 +190,7 @@ export function writingContentToEditorState(
       mode: "question_set",
       doc: createEmptyDoc(),
       sections: content.sections,
+      meta: { ...content.meta },
     };
   }
 
@@ -180,12 +198,15 @@ export function writingContentToEditorState(
     mode: "rich_document",
     doc: content.doc,
     sections: createDefaultSections(),
+    meta: { ...content.meta },
   };
 }
 
 export function serializeWritingContent(
   state: WritingEditorState,
 ): WritingContent {
+  const meta = serializeWritingMeta(state.meta);
+
   if (state.mode === "question_set") {
     return {
       mode: "question_set",
@@ -198,6 +219,7 @@ export function serializeWritingContent(
           sortOrder: questionIndex,
         })),
       })),
+      meta,
     };
   }
 
@@ -205,6 +227,7 @@ export function serializeWritingContent(
     mode: "rich_document",
     version: WRITING_CONTENT_VERSION,
     doc: state.doc,
+    meta,
   };
 }
 
@@ -219,13 +242,17 @@ export function writingContentHasPrompt(state: WritingEditorState): boolean {
 }
 
 export function countWritingQuestions(sections: WritingSection[]): number {
-  return sections.reduce((total, section) => total + section.questions.length, 0);
+  return sections.reduce(
+    (total, section) => total + section.questions.length,
+    0,
+  );
 }
 
 export function getWritingListMeta(content: unknown): {
   mode: WritingMode;
   sectionCount: number;
   questionCount: number;
+  meta: WritingMeta;
 } {
   const parsed = parseWritingContent(content);
 
@@ -234,6 +261,7 @@ export function getWritingListMeta(content: unknown): {
       mode: "rich_document",
       sectionCount: 0,
       questionCount: 0,
+      meta: parsed.meta,
     };
   }
 
@@ -241,6 +269,6 @@ export function getWritingListMeta(content: unknown): {
     mode: "question_set",
     sectionCount: parsed.sections.length,
     questionCount: countWritingQuestions(parsed.sections),
+    meta: parsed.meta,
   };
 }
-

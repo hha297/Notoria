@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
+import { WritingMetaBadges } from "@/components/writing/writing-meta-badges";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
@@ -69,11 +70,14 @@ export function WritingPreview({
 
       <article className="card-surface space-y-6 p-4 sm:space-y-8 sm:p-6 md:p-8">
         <header className="space-y-3 border-b border-hairline-cloud pb-5">
-          <Badge variant="secondary">
-            {editorState.mode === "question_set"
-              ? t("modes.questionSet")
-              : t("modes.richDocument")}
-          </Badge>
+          <div className="flex flex-wrap items-center gap-2">
+            <Badge variant="secondary">
+              {editorState.mode === "question_set"
+                ? t("modes.questionSet")
+                : t("modes.richDocument")}
+            </Badge>
+            <WritingMetaBadges meta={editorState.meta} />
+          </div>
           <h2 className="heading-md text-ink">{title}</h2>
           {trimmedDescription ? (
             <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
