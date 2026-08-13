@@ -1,20 +1,25 @@
 "use server";
 
-import { and, eq } from "drizzle-orm";
+import { and, eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { z } from "zod";
 import { db } from "@/db";
 import {
   vocabularyWordTags,
+  vocabularyWords,
   workspaceTags,
   workspaces,
 } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
 import { isValidLanguageCode } from "@/lib/languages";
-import { customTagKey } from "@/lib/vocabulary-tags";
+import {
+  customTagKey,
+  getCustomTagName,
+  uniqueCustomTagNames,
+} from "@/lib/vocabulary-tags";
 import { resolveWorkspaceName } from "@/lib/workspace-names";
-import { WORKSPACE_COOKIE } from "@/lib/workspace";
+import { getActiveWorkspace, WORKSPACE_COOKIE } from "@/lib/workspace";
 
 const createWorkspaceSchema = z.object({
   name: z.string().optional(),
@@ -86,6 +91,18 @@ export async function setActiveWorkspace(workspaceId: string) {
   revalidatePath("/", "layout");
 }
 
+async function findWorkspaceTagByName(workspaceId: string, name: string) {
+  const normalized = name.trim().toLowerCase();
+  if (!normalized) return undefined;
+
+  return db.query.workspaceTags.findFirst({
+    where: and(
+      eq(workspaceTags.workspaceId, workspaceId),
+      sql`lower(${workspaceTags.name}) = ${normalized}`,
+    ),
+  });
+}
+
 export async function getWorkspaceTags(workspaceId: string) {
   const userId = await getCurrentUserId();
 
@@ -118,12 +135,10 @@ export async function createWorkspaceTag(
     throw new Error("Workspace not found");
   }
 
-  const duplicate = await db.query.workspaceTags.findFirst({
-    where: and(
-      eq(workspaceTags.workspaceId, workspaceId),
-      eq(workspaceTags.name, parsed.name.trim()),
-    ),
-  });
+  const duplicate = await findWorkspaceTagByName(
+    workspaceId,
+    parsed.name.trim(),
+  );
 
   if (duplicate) {
     throw new Error("TAG_EXISTS");
@@ -157,12 +172,10 @@ export async function updateWorkspaceTag(
     throw new Error("Tag not found");
   }
 
-  const duplicate = await db.query.workspaceTags.findFirst({
-    where: and(
-      eq(workspaceTags.workspaceId, tag.workspaceId),
-      eq(workspaceTags.name, parsed.name.trim()),
-    ),
-  });
+  const duplicate = await findWorkspaceTagByName(
+    tag.workspaceId,
+    parsed.name.trim(),
+  );
 
   if (duplicate && duplicate.id !== tagId) {
     throw new Error("TAG_EXISTS");
@@ -207,4 +220,50 @@ export async function deleteWorkspaceTag(tagId: string) {
 
   await db.delete(workspaceTags).where(eq(workspaceTags.id, tagId));
   revalidatePath("/", "layout");
+}
+
+export async function getActiveWorkspaceCustomTags(): Promise<string[]> {
+  const workspace = await getActiveWorkspace();
+  if (!workspace) return [];
+
+  const stored = await db.query.workspaceTags.findMany({
+    where: eq(workspaceTags.workspaceId, workspace.id),
+    columns: { name: true },
+  });
+
+  const fromWords = await db
+    .selectDistinct({ tag: vocabularyWordTags.tag })
+    .from(vocabularyWordTags)
+    .innerJoin(
+      vocabularyWords,
+      eq(vocabularyWordTags.wordId, vocabularyWords.id),
+    )
+    .where(
+      and(
+        eq(vocabularyWords.workspaceId, workspace.id),
+        sql`${vocabularyWordTags.tag} like 'custom:%'`,
+      ),
+    );
+
+  return uniqueCustomTagNames([
+    ...stored.map((tag) => tag.name),
+    ...fromWords.map((row) => getCustomTagName(row.tag)),
+  ]);
+}
+
+export async function createActiveWorkspaceTag(name: string) {
+  const workspace = await getActiveWorkspace();
+  if (!workspace) {
+    throw new Error("NO_WORKSPACE");
+  }
+
+  const parsed = workspaceTagSchema.parse({ name });
+  const existing = await findWorkspaceTagByName(workspace.id, parsed.name);
+
+  if (existing) {
+    return { tag: existing, created: false as const };
+  }
+
+  const tag = await createWorkspaceTag(workspace.id, parsed);
+  return { tag, created: true as const };
 }

@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { VocabularyForm } from "@/components/vocabulary/vocabulary-form";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
+import { getActiveWorkspaceCustomTags } from "@/lib/actions/workspaces";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export const dynamic = "force-dynamic";
@@ -52,7 +53,7 @@ export default async function NewVocabularyPage() {
           description={t("formDescription")}
         />
       </div>
-      <VocabularyForm />
+      <VocabularyForm existingCustomTags={await getActiveWorkspaceCustomTags()} />
     </div>
   );
 }

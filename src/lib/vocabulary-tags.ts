@@ -73,6 +73,7 @@ export const PARTS_OF_SPEECH = [
 ] as const;
 
 const CUSTOM_TAG_PREFIX = "custom:";
+export const CUSTOM_TAG_MAX_LENGTH = 40;
 
 export function customTagKey(name: string): string {
   return `${CUSTOM_TAG_PREFIX}${name.trim()}`;
@@ -84,6 +85,90 @@ export function isCustomTagKey(tag: string): boolean {
 
 export function getCustomTagName(tag: string): string {
   return tag.slice(CUSTOM_TAG_PREFIX.length);
+}
+
+export function uniqueCustomTagNames(names: string[]): string[] {
+  const seen = new Map<string, string>();
+
+  for (const raw of names) {
+    const name = raw.trim();
+    if (!name) continue;
+    const key = name.toLowerCase();
+    if (!seen.has(key)) {
+      seen.set(key, name);
+    }
+  }
+
+  return [...seen.values()].sort((a, b) => a.localeCompare(b));
+}
+
+export function findCustomTagName(
+  names: string[],
+  candidate: string,
+): string | undefined {
+  const key = candidate.trim().toLowerCase();
+  if (!key) return undefined;
+  return names.find((name) => name.toLowerCase() === key);
+}
+
+export function isValidCustomTagName(name: string): boolean {
+  const trimmed = name.trim();
+  return trimmed.length > 0 && trimmed.length <= CUSTOM_TAG_MAX_LENGTH;
+}
+
+export type VocabularyTagGroup = TagGroupKey | "custom";
+
+export type VocabularyTagOption = {
+  id: string;
+  group: VocabularyTagGroup;
+};
+
+export function listBuiltinTagOptions(): VocabularyTagOption[] {
+  return TAG_PICKER_GROUPS.flatMap((group) =>
+    BUILTIN_TAG_GROUPS[group].map((tag) => ({ id: tag.id, group })),
+  );
+}
+
+export function listCustomTagOptions(names: string[]): VocabularyTagOption[] {
+  return uniqueCustomTagNames(names).map((name) => ({
+    id: customTagKey(name),
+    group: "custom" as const,
+  }));
+}
+
+export function listTagOptions(customNames: string[]): VocabularyTagOption[] {
+  return [...listBuiltinTagOptions(), ...listCustomTagOptions(customNames)];
+}
+
+/** Canonicalize and de-dupe tags stored on a word. */
+export function normalizeWordTags(
+  tags: string[],
+  customNames: string[] = [],
+): string[] {
+  const canonicalCustom = uniqueCustomTagNames(customNames);
+  const seen = new Set<string>();
+  const result: string[] = [];
+
+  for (const raw of tags) {
+    if (typeof raw !== "string") continue;
+    let tag = raw.trim();
+    if (!tag) continue;
+
+    if (isCustomTagKey(tag)) {
+      const name = getCustomTagName(tag).trim();
+      if (!isValidCustomTagName(name)) continue;
+      tag = customTagKey(findCustomTagName(canonicalCustom, name) ?? name);
+    } else if (!isBuiltinTag(tag)) {
+      continue;
+    }
+
+    const dedupeKey = isCustomTagKey(tag) ? tag.toLowerCase() : tag;
+    if (seen.has(dedupeKey)) continue;
+    seen.add(dedupeKey);
+    result.push(tag);
+  }
+
+  return result;
 }
 
 export function isBuiltinTag(tag: string): boolean {
