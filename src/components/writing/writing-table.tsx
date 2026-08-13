@@ -300,7 +300,7 @@ export function WritingTable({ documents }: WritingTableProps) {
         writingMetaSearchText(meta),
         meta.cefrLevel ? tMeta(`cefr.${meta.cefrLevel}`) : "",
         meta.topic &&
-        (WRITING_TOPICS as readonly string[]).includes(meta.topic)
+          (WRITING_TOPICS as readonly string[]).includes(meta.topic)
           ? tMeta(`topics.${meta.topic as (typeof WRITING_TOPICS)[number]}`)
           : (meta.topic ?? ""),
         meta.formality
@@ -472,8 +472,8 @@ export function WritingTable({ documents }: WritingTableProps) {
                   {topicFilter === "all"
                     ? t("filterTopic")
                     : tMeta(
-                        `topics.${topicFilter as (typeof WRITING_TOPICS)[number]}`,
-                      )}
+                      `topics.${topicFilter as (typeof WRITING_TOPICS)[number]}`,
+                    )}
                 </SelectValue>
               </SelectTrigger>
               <SelectContent>
