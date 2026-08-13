@@ -8,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { CountryFlag } from "@/components/layout/country-flag";
 import { CreateWorkspaceDialog } from "@/components/workspace/create-workspace-dialog";
+import { WorkspaceActionsMenu } from "@/components/workspace/workspace-actions-menu";
 import {
   Select,
   SelectContent,
@@ -108,6 +109,12 @@ export function WorkspaceSelector({
               <Plus className="size-4" />
               <span className="hidden md:inline">{t("createWorkspace")}</span>
             </Button>
+            {active && (
+              <WorkspaceActionsMenu
+                workspace={active}
+                workspaces={workspaces}
+              />
+            )}
           </div>
         )}
       </div>
