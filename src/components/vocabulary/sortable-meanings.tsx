@@ -23,6 +23,7 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { Button } from "@/components/ui/button";
+import { useFocusNewItem } from "@/hooks/use-focus-new-item";
 import { useMounted } from "@/hooks/use-mounted";
 import {
   countPrimaryMeanings,
@@ -54,6 +55,7 @@ function MeaningRowShell({
   primaryLabel,
   secondaryLabel,
   dragHandle,
+  inputRef,
 }: {
   item: MeaningItem;
   index: number;
@@ -66,6 +68,7 @@ function MeaningRowShell({
   primaryLabel: string;
   secondaryLabel: string;
   dragHandle: ReactNode;
+  inputRef?: (node: HTMLInputElement | null) => void;
 }) {
   return (
     <div
@@ -101,6 +104,7 @@ function MeaningRowShell({
         />
       </Button>
       <CapitalizedInput
+        ref={inputRef}
         value={item.meaning}
         onChange={(event) => onUpdate(item.id, event.target.value)}
         placeholder={placeholder}
@@ -131,6 +135,7 @@ function SortableMeaningRow({
   placeholder,
   primaryLabel,
   secondaryLabel,
+  inputRef,
 }: {
   item: MeaningItem;
   index: number;
@@ -142,6 +147,7 @@ function SortableMeaningRow({
   placeholder: string;
   primaryLabel: string;
   secondaryLabel: string;
+  inputRef?: (node: HTMLInputElement | null) => void;
 }) {
   const {
     attributes,
@@ -172,6 +178,7 @@ function SortableMeaningRow({
         placeholder={placeholder}
         primaryLabel={primaryLabel}
         secondaryLabel={secondaryLabel}
+        inputRef={inputRef}
         dragHandle={
           <button
             type="button"
@@ -191,6 +198,7 @@ function SortableMeaningRow({
 export function SortableMeanings({ meanings, onChange }: SortableMeaningsProps) {
   const mounted = useMounted();
   const t = useTranslations("vocabulary");
+  const { requestFocus, bindRef } = useFocusNewItem<HTMLInputElement>();
   const sensors = useSensors(
     useSensor(PointerSensor),
     useSensor(KeyboardSensor, {
@@ -218,10 +226,12 @@ export function SortableMeanings({ meanings, onChange }: SortableMeaningsProps) 
   }
 
   function addMeaning() {
+    const id = crypto.randomUUID();
+    requestFocus(id);
     onChange([
       ...meanings,
       {
-        id: crypto.randomUUID(),
+        id,
         meaning: "",
         isPrimary: primaryCount === 0,
         sortOrder: meanings.length,
@@ -296,6 +306,7 @@ export function SortableMeanings({ meanings, onChange }: SortableMeaningsProps) 
             placeholder={t("meaningPlaceholder")}
             primaryLabel={t("primaryMeaning")}
             secondaryLabel={t("markAsPrimary")}
+            inputRef={bindRef(item.id)}
           />
         ) : (
           <MeaningRowShell
@@ -310,6 +321,7 @@ export function SortableMeanings({ meanings, onChange }: SortableMeaningsProps) 
             placeholder={t("meaningPlaceholder")}
             primaryLabel={t("primaryMeaning")}
             secondaryLabel={t("markAsPrimary")}
+            inputRef={bindRef(item.id)}
             dragHandle={
               <span className="rounded-md p-1 text-muted-foreground">
                 <GripVertical className="size-4" />
