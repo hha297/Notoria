@@ -1,6 +1,8 @@
 import type { JSONContent } from "@tiptap/react";
 import { Image, Text, View, StyleSheet } from "@react-pdf/renderer";
 import type { ReactNode } from "react";
+import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
+import type { ExportLayout } from "@/lib/writing/export/types";
 
 /** Matches Question Set export body typography (Chakra Petch / ink). */
 const FONT_SANS = "ChakraPetch";
@@ -11,6 +13,12 @@ const styles = StyleSheet.create({
   },
   block: {
     marginBottom: 12,
+  },
+  docBlock: {
+    marginBottom: 10,
+  },
+  docSpacer: {
+    marginBottom: 8,
   },
   /** Ruled line — same look as Question Set answer lines. */
   ruledLine: {
@@ -32,6 +40,37 @@ const styles = StyleSheet.create({
     fontSize: 12,
     fontWeight: 700,
     color: "#1a1528",
+  },
+  docText: {
+    fontFamily: FONT_SANS,
+    fontSize: 11,
+    fontWeight: 400,
+    color: "#1a1528",
+    lineHeight: 1.5,
+  },
+  docH1: {
+    fontFamily: FONT_SANS,
+    fontSize: 16,
+    fontWeight: 700,
+    color: "#1a1528",
+    lineHeight: 1.3,
+    marginTop: 6,
+  },
+  docH2: {
+    fontFamily: FONT_SANS,
+    fontSize: 13,
+    fontWeight: 700,
+    color: "#1a1528",
+    lineHeight: 1.3,
+    marginTop: 4,
+  },
+  docH3: {
+    fontFamily: FONT_SANS,
+    fontSize: 12,
+    fontWeight: 700,
+    color: "#1a1528",
+    lineHeight: 1.3,
+    marginTop: 2,
   },
   listBlock: {
     marginBottom: 12,
@@ -137,7 +176,9 @@ function getMarks(node: JSONContent): MarkAttrs {
 }
 
 function collectPlainText(node: JSONContent): string {
-  if (node.type === "text" && typeof node.text === "string") return node.text;
+  if (node.type === "text" && typeof node.text === "string") {
+    return sanitizeExportText(node.text);
+  }
   if (!node.content?.length) return "";
   return node.content.map(collectPlainText).join("");
 }
@@ -148,11 +189,13 @@ function collectRuns(nodes: JSONContent[] | undefined): TextRun[] {
 
   for (const node of nodes) {
     if (node.type === "hardBreak") {
-      runs.push({ text: " ", marks: {} });
+      runs.push({ text: "\n", marks: {} });
       continue;
     }
     if (node.type === "text" && typeof node.text === "string") {
-      runs.push({ text: node.text, marks: getMarks(node) });
+      const text = sanitizeExportText(node.text);
+      if (!text) continue;
+      runs.push({ text, marks: getMarks(node) });
       continue;
     }
     if (node.content?.length) {
@@ -163,12 +206,21 @@ function collectRuns(nodes: JSONContent[] | undefined): TextRun[] {
   return runs;
 }
 
-function renderRun(run: TextRun, variant: "body" | "heading"): ReactNode {
+function renderRun(
+  run: TextRun,
+  variant: "body" | "heading",
+  layout: ExportLayout,
+): ReactNode {
   const marks = run.marks;
+  const isDocument = layout === "document";
   return (
     <Text
       style={[
-        variant === "heading" ? styles.ruledHeading : styles.ruledText,
+        isDocument
+          ? {}
+          : variant === "heading"
+            ? styles.ruledHeading
+            : styles.ruledText,
         {
           fontWeight: marks.bold || variant === "heading" ? 700 : 400,
           fontStyle: marks.italic ? "italic" : "normal",
@@ -176,9 +228,11 @@ function renderRun(run: TextRun, variant: "body" | "heading"): ReactNode {
             marks.underline || marks.linkHref ? "underline" : "none",
           color: marks.linkHref
             ? "#3d6b0a"
-            : variant === "heading"
+            : isDocument
               ? "#1a1528"
-              : "#2f4a08",
+              : variant === "heading"
+                ? "#1a1528"
+                : "#2f4a08",
           backgroundColor: marks.highlight ? "#f2f6c8" : undefined,
         },
       ]}
@@ -288,7 +342,7 @@ function RuledLines({
           <Text>
             {lineRuns.length > 0 ? (
               lineRuns.map((run, runIndex) => (
-                <Text key={runIndex}>{renderRun(run, variant)}</Text>
+                <Text key={runIndex}>{renderRun(run, variant, "worksheet")}</Text>
               ))
             ) : (
               <Text
@@ -328,9 +382,71 @@ function RuledFromNodes({
   return <RuledLines runs={runs} variant={variant} prefix={prefix} />;
 }
 
+function documentHeadingStyle(level: number) {
+  if (level <= 1) return styles.docH1;
+  if (level === 2) return styles.docH2;
+  return styles.docH3;
+}
+
+function DocumentFromNodes({
+  nodes,
+  variant = "body",
+  prefix,
+  headingLevel = 1,
+}: {
+  nodes: JSONContent[] | undefined;
+  variant?: "body" | "heading";
+  prefix?: string;
+  headingLevel?: number;
+}): ReactNode {
+  const runs = collectRuns(nodes);
+  const allRuns = prefix
+    ? [{ text: `${prefix} `, marks: {} }, ...runs].filter((run) => run.text)
+    : runs;
+
+  if (allRuns.length === 0) {
+    return <View style={styles.docSpacer} />;
+  }
+
+  return (
+    <Text style={variant === "heading" ? documentHeadingStyle(headingLevel) : styles.docText}>
+      {allRuns.map((run, index) => (
+        <Text key={index}>{renderRun(run, variant, "document")}</Text>
+      ))}
+    </Text>
+  );
+}
+
+function BodyFromNodes({
+  nodes,
+  variant = "body",
+  prefix,
+  layout,
+  headingLevel,
+}: {
+  nodes: JSONContent[] | undefined;
+  variant?: "body" | "heading";
+  prefix?: string;
+  layout: ExportLayout;
+  headingLevel?: number;
+}): ReactNode {
+  if (layout === "document") {
+    return (
+      <DocumentFromNodes
+        nodes={nodes}
+        variant={variant}
+        prefix={prefix}
+        headingLevel={headingLevel}
+      />
+    );
+  }
+  return <RuledFromNodes nodes={nodes} variant={variant} prefix={prefix} />;
+}
+
 function renderListItems(
   items: JSONContent[] | undefined,
   ordered: boolean,
+  layout: ExportLayout,
 ): ReactNode[] {
   if (!items?.length) return [];
 
@@ -342,8 +458,12 @@ function renderListItems(
       ) ?? [];
 
     return (
-      <View key={index} style={styles.block}>
-        <RuledFromNodes nodes={inlineNodes} prefix={marker} />
+      <View key={index} style={layout === "document" ? styles.docBlock : styles.block}>
+        <BodyFromNodes
+          nodes={inlineNodes}
+          prefix={marker}
+          layout={layout}
+        />
       </View>
     );
   });
@@ -375,30 +495,44 @@ function renderTable(node: JSONContent, key: number): ReactNode {
   );
 }
 
-function renderBlock(node: JSONContent, index: number): ReactNode {
+function renderBlock(
+  node: JSONContent,
+  index: number,
+  layout: ExportLayout,
+): ReactNode {
+  const blockStyle = layout === "document" ? styles.docBlock : styles.block;
+
   switch (node.type) {
     case "paragraph":
       return (
-        <View key={index} style={styles.block}>
-          <RuledFromNodes nodes={node.content} />
+        <View key={index} style={blockStyle}>
+          <BodyFromNodes nodes={node.content} layout={layout} />
         </View>
       );
-    case "heading":
+    case "heading": {
+      const headingLevel =
+        typeof node.attrs?.level === "number" ? node.attrs.level : 1;
       return (
-        <View key={index} style={styles.block}>
-          <RuledFromNodes nodes={node.content} variant="heading" />
+        <View key={index} style={blockStyle}>
+          <BodyFromNodes
+            nodes={node.content}
+            variant="heading"
+            layout={layout}
+            headingLevel={headingLevel}
+          />
         </View>
       );
+    }
     case "bulletList":
       return (
         <View key={index} style={styles.listBlock}>
-          {renderListItems(node.content, false)}
+          {renderListItems(node.content, false, layout)}
         </View>
       );
     case "orderedList":
       return (
         <View key={index} style={styles.listBlock}>
-          {renderListItems(node.content, true)}
+          {renderListItems(node.content, true, layout)}
         </View>
       );
     case "taskList":
@@ -411,10 +545,11 @@ function renderBlock(node: JSONContent, index: number): ReactNode {
                 child.type === "paragraph" ? (child.content ?? []) : [child],
               ) ?? [];
             return (
-              <View key={itemIndex} style={styles.block}>
-                <RuledFromNodes
+              <View key={itemIndex} style={blockStyle}>
+                <BodyFromNodes
                   nodes={inlineNodes}
-                  prefix={checked ? "☑" : "☐"}
+                  prefix={checked ? "[x]" : "[ ]"}
+                  layout={layout}
                 />
               </View>
             );
@@ -425,18 +560,18 @@ function renderBlock(node: JSONContent, index: number): ReactNode {
       return (
         <View key={index} style={styles.blockquote}>
           {(node.content ?? []).map((child, childIndex) => (
-            <View key={childIndex} style={styles.block}>
-              <RuledFromNodes nodes={child.content} />
+            <View key={childIndex} style={blockStyle}>
+              <BodyFromNodes nodes={child.content} layout={layout} />
             </View>
           ))}
         </View>
       );
     case "codeBlock":
-      // Keep code as a block; still sit each line on a rule for consistency
       return (
-        <View key={index} style={styles.block}>
-          <RuledFromNodes
+        <View key={index} style={blockStyle}>
+          <BodyFromNodes
             nodes={[{ type: "text", text: collectPlainText(node) || " " }]}
+            layout={layout}
           />
         </View>
       );
@@ -457,7 +592,7 @@ function renderBlock(node: JSONContent, index: number): ReactNode {
         return (
           <View key={index}>
             {node.content.map((child, childIndex) =>
-              renderBlock(child, childIndex),
+              renderBlock(child, childIndex, layout),
             )}
           </View>
         );
@@ -466,19 +601,22 @@ function renderBlock(node: JSONContent, index: number): ReactNode {
   }
 }
 
-/** Continuous TipTap → PDF body on ruled lines (worksheet look). */
-export function renderTipTapDocToPdf(doc: JSONContent | null): ReactNode {
+/** Continuous TipTap → PDF body. Worksheet keeps ruled lines; document does not. */
+export function renderTipTapDocToPdf(
+  doc: JSONContent | null,
+  layout: ExportLayout = "worksheet",
+): ReactNode {
   if (!doc?.content?.length) {
     return (
-      <View style={styles.block}>
-        <RuledFromNodes nodes={undefined} />
+      <View style={layout === "document" ? styles.docBlock : styles.block}>
+        <BodyFromNodes nodes={undefined} layout={layout} />
       </View>
     );
   }
 
   return (
     <View style={styles.body}>
-      {doc.content.map((node, index) => renderBlock(node, index))}
+      {doc.content.map((node, index) => renderBlock(node, index, layout))}
     </View>
   );
 }

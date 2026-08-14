@@ -1,6 +1,5 @@
 import {
   Document,
-  Font,
   Page,
   StyleSheet,
   Text,
@@ -18,46 +17,9 @@ import type {
   VocabularyExportOptions,
   VocabularyExportRow,
 } from "@/lib/vocabulary/export/types";
+import { ensurePdfFonts, PDF_FONT_SANS } from "@/lib/export/pdf-fonts";
 
-const FONT_SANS = "ChakraPetch";
-let fontReady: Promise<void> | null = null;
-
-async function ensureExportFonts() {
-  if (typeof window === "undefined") return;
-  if (!fontReady) {
-    fontReady = (async () => {
-      const origin = window.location.origin;
-      const [regular, medium, bold] = await Promise.all([
-        fetch(`${origin}/fonts/ChakraPetch-Regular.ttf`).then((r) => {
-          if (!r.ok) throw new Error(`Font load failed: Regular (${r.status})`);
-          return r.blob();
-        }),
-        fetch(`${origin}/fonts/ChakraPetch-Medium.ttf`).then((r) => {
-          if (!r.ok) throw new Error(`Font load failed: Medium (${r.status})`);
-          return r.blob();
-        }),
-        fetch(`${origin}/fonts/ChakraPetch-Bold.ttf`).then((r) => {
-          if (!r.ok) throw new Error(`Font load failed: Bold (${r.status})`);
-          return r.blob();
-        }),
-      ]);
-
-      Font.register({
-        family: FONT_SANS,
-        fonts: [
-          { src: URL.createObjectURL(regular), fontWeight: 400 },
-          { src: URL.createObjectURL(medium), fontWeight: 500 },
-          { src: URL.createObjectURL(bold), fontWeight: 700 },
-        ],
-      });
-    })().catch((error) => {
-      fontReady = null;
-      throw error;
-    });
-  }
-
-  await fontReady;
-}
+const FONT_SANS = PDF_FONT_SANS;
 
 const styles = StyleSheet.create({
   page: {
@@ -244,7 +206,7 @@ export async function generateVocabularyPdfBlob(
   labels: VocabularyExportLabels,
   options: VocabularyExportOptions,
 ): Promise<Blob> {
-  await ensureExportFonts();
+  await ensurePdfFonts();
 
   return pdf(
     <VocabularyPdfDocument

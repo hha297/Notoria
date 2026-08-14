@@ -7,8 +7,10 @@ import { Document, Page, StyleSheet, Text, View, pdf } from "@react-pdf/renderer
 import type {
   ExportDocumentModel,
   ExportLabels,
+  ExportLayout,
 } from "@/lib/writing/export/types";
 import { renderTipTapDocToPdf } from "@/lib/writing/export/tiptap-pdf";
+import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
 
 const FONT_SANS = "ChakraPetch";
 
@@ -67,6 +69,9 @@ const styles = StyleSheet.create({
     borderBottomColor: "#d5d0e0",
     marginTop: 18,
   },
+  titleGap: {
+    marginBottom: 18,
+  },
   footer: {
     position: "absolute",
     bottom: 28,
@@ -82,27 +87,33 @@ const styles = StyleSheet.create({
 function RichDocumentPdf({
   model,
   labels,
+  layout,
 }: {
   model: ExportDocumentModel;
   labels: ExportLabels;
+  layout: ExportLayout;
 }) {
+  const isDocument = layout === "document";
+  const title = sanitizeExportText(model.title) || "—";
+  const description = sanitizeExportText(model.description);
+
   return (
     <Document>
       <Page size="A4" style={styles.page} wrap>
         <Text style={styles.heading}>{labels.documentHeading}</Text>
         <View style={styles.titleRow}>
           <Text style={styles.titleLabel}>{labels.titleLabel}</Text>
-          <Text style={styles.titleValue}>{model.title || "—"}</Text>
+          <Text style={styles.titleValue}>{title}</Text>
         </View>
-        {model.description ? (
+        {description ? (
           <View style={styles.descriptionRow}>
             <Text style={styles.titleLabel}>{labels.descriptionLabel}</Text>
-            <Text style={styles.descriptionBody}>{model.description}</Text>
+            <Text style={styles.descriptionBody}>{description}</Text>
           </View>
         ) : null}
-        <View style={styles.divider} />
-        {renderTipTapDocToPdf(model.doc)}
-        <View style={styles.closingDivider} />
+        {isDocument ? <View style={styles.titleGap} /> : <View style={styles.divider} />}
+        {renderTipTapDocToPdf(model.doc, layout)}
+        {isDocument ? null : <View style={styles.closingDivider} />}
         <Text
           style={styles.footer}
           render={({ pageNumber, totalPages }) =>
@@ -119,6 +130,9 @@ function RichDocumentPdf({
 export async function generateRichDocumentPdfBlob(
   model: ExportDocumentModel,
   labels: ExportLabels,
+  layout: ExportLayout = "worksheet",
 ): Promise<Blob> {
-  return pdf(<RichDocumentPdf model={model} labels={labels} />).toBlob();
+  return pdf(
+    <RichDocumentPdf model={model} labels={labels} layout={layout} />,
+  ).toBlob();
 }

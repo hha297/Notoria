@@ -7,7 +7,7 @@ import { Copy, GripVertical, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { CapitalizedTextarea } from "@/components/form/capitalized-text";
 import type { WritingQuestion } from "@/lib/writing/content";
 import { cn } from "@/lib/utils";
 
@@ -70,7 +70,7 @@ export function WritingQuestionCard({
       <div className="space-y-3">
         <div className="space-y-1.5">
           <Label htmlFor={`prompt-${question.id}`}>{t("prompt")}</Label>
-          <Textarea
+          <CapitalizedTextarea
             id={`prompt-${question.id}`}
             value={question.prompt}
             onChange={(event) =>
@@ -88,7 +88,7 @@ export function WritingQuestionCard({
               ({t("optional")})
             </span>
           </Label>
-          <Textarea
+          <CapitalizedTextarea
             id={`example-${question.id}`}
             value={question.exampleAnswer}
             onChange={(event) =>
@@ -106,7 +106,7 @@ export function WritingQuestionCard({
               ({t("optional")})
             </span>
           </Label>
-          <Textarea
+          <CapitalizedTextarea
             id={`notes-${question.id}`}
             value={question.notes}
             onChange={(event) =>

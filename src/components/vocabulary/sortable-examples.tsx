@@ -21,10 +21,13 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { ChevronDown, GripVertical, Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import {
+  CapitalizedInput,
+  CapitalizedTextarea,
+} from "@/components/form/capitalized-text";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
+import { useFocusNewItem } from "@/hooks/use-focus-new-item";
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
 
@@ -55,6 +58,7 @@ function ExampleRowShell({
   dragHandle,
   detailsOpen,
   onToggleDetails,
+  inputRef,
 }: {
   item: ExampleItem;
   index: number;
@@ -65,6 +69,7 @@ function ExampleRowShell({
   dragHandle: ReactNode;
   detailsOpen: boolean;
   onToggleDetails: () => void;
+  inputRef?: (node: HTMLInputElement | null) => void;
 }) {
   const t = useTranslations("vocabulary");
   const hasDetails = Boolean(item.meaning.trim() || item.notes.trim());
@@ -77,7 +82,8 @@ function ExampleRowShell({
           {index + 1}.
         </span>
         <div className="min-w-0 flex-1 space-y-2">
-          <Input
+          <CapitalizedInput
+            ref={inputRef}
             value={item.sentence}
             onChange={(event) =>
               onUpdate(item.id, { sentence: event.target.value })
@@ -128,7 +134,7 @@ function ExampleRowShell({
                 ({t("optional")})
               </span>
             </Label>
-            <Textarea
+            <CapitalizedTextarea
               id={`example-meaning-${item.id}`}
               value={item.meaning}
               onChange={(event) =>
@@ -145,7 +151,7 @@ function ExampleRowShell({
                 ({t("optional")})
               </span>
             </Label>
-            <Textarea
+            <CapitalizedTextarea
               id={`example-notes-${item.id}`}
               value={item.notes}
               onChange={(event) =>
@@ -170,6 +176,7 @@ function SortableExampleRow({
   placeholder,
   detailsOpen,
   onToggleDetails,
+  inputRef,
 }: {
   item: ExampleItem;
   index: number;
@@ -179,6 +186,7 @@ function SortableExampleRow({
   placeholder: string;
   detailsOpen: boolean;
   onToggleDetails: () => void;
+  inputRef?: (node: HTMLInputElement | null) => void;
 }) {
   const {
     attributes,
@@ -207,6 +215,7 @@ function SortableExampleRow({
         placeholder={placeholder}
         detailsOpen={detailsOpen}
         onToggleDetails={onToggleDetails}
+        inputRef={inputRef}
         dragHandle={
           <button
             type="button"
@@ -229,6 +238,7 @@ export function SortableExamples({
 }: SortableExamplesProps) {
   const mounted = useMounted();
   const t = useTranslations("vocabulary");
+  const { requestFocus, bindRef } = useFocusNewItem<HTMLInputElement>();
   const [openDetails, setOpenDetails] = useState<Record<string, boolean>>(
     () =>
       Object.fromEntries(
@@ -261,6 +271,7 @@ export function SortableExamples({
 
   function addExample() {
     const id = crypto.randomUUID();
+    requestFocus(id);
     onChange([
       ...examples,
       {
@@ -320,6 +331,7 @@ export function SortableExamples({
             placeholder={t("examplePlaceholder")}
             detailsOpen={Boolean(openDetails[item.id])}
             onToggleDetails={() => toggleDetails(item.id)}
+            inputRef={bindRef(item.id)}
           />
         ) : (
           <ExampleRowShell
@@ -332,6 +344,7 @@ export function SortableExamples({
             placeholder={t("examplePlaceholder")}
             detailsOpen={Boolean(openDetails[item.id])}
             onToggleDetails={() => toggleDetails(item.id)}
+            inputRef={bindRef(item.id)}
             dragHandle={
               <span className="mt-1 rounded-md p-1 text-muted-foreground sm:mt-0">
                 <GripVertical className="size-4" />

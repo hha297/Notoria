@@ -26,7 +26,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -103,14 +103,6 @@ const WORD_CHECK_DEBOUNCE_MS = 400;
 
 function normalizeWordInput(word: string) {
   return word.trim().toLowerCase();
-}
-
-/** Capitalize only the first character; leave the rest unchanged. */
-function capitalizeWordFirstLetter(value: string) {
-  if (!value) return value;
-  const chars = [...value];
-  chars[0] = chars[0]!.toLocaleUpperCase();
-  return chars.join("");
 }
 
 function createDefaultMeanings(): MeaningItem[] {
@@ -347,10 +339,6 @@ export function VocabularyForm({
   const isCheckingWord = wordCheckStatus === "checking";
   const saveDisabled = isSaving || isDuplicate || isCheckingWord;
   const formatNotesDisabled = isNotesDocEmpty(notesDoc);
-  const {
-    onChange: onWordChange,
-    ...wordField
-  } = form.register("word");
 
   function handleNotesChange(doc: JSONContent) {
     setNotesDoc(doc);
@@ -395,7 +383,7 @@ export function VocabularyForm({
             <div className="space-y-2">
               <Label htmlFor="word">{t("word")}</Label>
               <div className="relative">
-                <Input
+                <CapitalizedInput
                   id="word"
                   placeholder={t("wordPlaceholder")}
                   className="h-10 pr-10"
@@ -405,16 +393,7 @@ export function VocabularyForm({
                       ? "word-duplicate-status"
                       : undefined
                   }
-                  {...wordField}
-                  onChange={(event) => {
-                    const capitalized = capitalizeWordFirstLetter(
-                      event.target.value,
-                    );
-                    if (capitalized !== event.target.value) {
-                      event.target.value = capitalized;
-                    }
-                    void onWordChange(event);
-                  }}
+                  {...form.register("word")}
                 />
                 {isCheckingWord ? (
                   <Loader2
@@ -507,7 +486,7 @@ export function VocabularyForm({
                 ({tCommon("optional")})
               </span>
             </Label>
-            <Input
+            <CapitalizedInput
               id="synonyms"
               placeholder={t("synonymsPlaceholder")}
               className="h-10"

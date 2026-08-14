@@ -42,6 +42,21 @@ function tipTapToParagraphs(doc: JSONContent): string[] {
   return paragraphs;
 }
 
+export function buildRichDocumentExport(
+  title: string,
+  doc: JSONContent,
+  description = "",
+): ExportDocumentModel {
+  return {
+    title: title.trim(),
+    description: description.trim(),
+    mode: "rich_document",
+    sections: [],
+    paragraphs: tipTapToParagraphs(doc),
+    doc,
+  };
+}
+
 export function buildExportDocument(
   title: string,
   state: WritingEditorState,
@@ -52,14 +67,7 @@ export function buildExportDocument(
   const trimmedDescription = description.trim();
 
   if (state.mode === "rich_document") {
-    return {
-      title: trimmedTitle,
-      description: trimmedDescription,
-      mode: "rich_document",
-      sections: [],
-      paragraphs: tipTapToParagraphs(state.doc),
-      doc: state.doc,
-    };
+    return buildRichDocumentExport(trimmedTitle, state.doc, trimmedDescription);
   }
 
   const sections: ExportSection[] = [...state.sections]

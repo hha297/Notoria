@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { QuestionSetBuilder } from "@/components/writing/question-set-builder";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
+import { CapitalizedInput, CapitalizedTextarea } from "@/components/form/capitalized-text";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -17,7 +18,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -26,7 +26,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { createWritingDocument, updateWritingDocument } from "@/lib/actions/writing";
 import {
@@ -265,7 +264,7 @@ export function WritingEditor({
         <CardContent className="space-y-6 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-6 md:px-8 md:py-8">
           <div className="space-y-2">
             <Label htmlFor="title">{t("documentTitle")}</Label>
-            <Input
+            <CapitalizedInput
               id="title"
               value={title}
               onChange={(event) => {
@@ -284,7 +283,7 @@ export function WritingEditor({
                 ({t("optional")})
               </span>
             </Label>
-            <Textarea
+            <CapitalizedTextarea
               id="description"
               value={description}
               onChange={(event) => {

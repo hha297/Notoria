@@ -12,13 +12,18 @@ export function buildExportFilename(
   title: string,
   format: "pdf" | "docx",
   now = new Date(),
+  prefix = "writing",
 ): string {
   const slug = slugifyFilenamePart(title.trim());
   const date = now.toISOString().slice(0, 10);
 
   if (slug) {
-    return `writing-${slug}.${format}`;
+    return `${prefix}-${slug}.${format}`;
   }
 
-  return `writing_exercise_${date}.${format}`;
+  if (prefix === "writing") {
+    return `writing_exercise_${date}.${format}`;
+  }
+
+  return `${prefix}_${date}.${format}`;
 }

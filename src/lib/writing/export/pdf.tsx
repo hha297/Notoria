@@ -1,6 +1,5 @@
 import {
   Document,
-  Font,
   Page,
   StyleSheet,
   Text,
@@ -13,54 +12,14 @@ import type {
   ExportOptions,
   ExportQuestion,
   ExportSection,
+  ExportLayout,
 } from "@/lib/writing/export/types";
 import { BLANK_LINE_COUNT } from "@/lib/writing/export/types";
 import { generateRichDocumentPdfBlob } from "@/lib/writing/export/rich-document-pdf";
 import { wrapTextOntoLines } from "@/lib/writing/export/wrap-text";
+import { ensurePdfFonts, PDF_FONT_SANS } from "@/lib/export/pdf-fonts";
 
-const FONT_SANS = "ChakraPetch";
-
-let fontReady: Promise<void> | null = null;
-
-async function ensureExportFonts() {
-  if (typeof window === "undefined") return;
-  if (!fontReady) {
-    fontReady = (async () => {
-      const origin = window.location.origin;
-      const [regular, medium, bold] = await Promise.all([
-        fetch(`${origin}/fonts/ChakraPetch-Regular.ttf`).then((r) => {
-          if (!r.ok) throw new Error(`Font load failed: Regular (${r.status})`);
-          return r.blob();
-        }),
-        fetch(`${origin}/fonts/ChakraPetch-Medium.ttf`).then((r) => {
-          if (!r.ok) throw new Error(`Font load failed: Medium (${r.status})`);
-          return r.blob();
-        }),
-        fetch(`${origin}/fonts/ChakraPetch-Bold.ttf`).then((r) => {
-          if (!r.ok) throw new Error(`Font load failed: Bold (${r.status})`);
-          return r.blob();
-        }),
-      ]);
-
-      Font.register({
-        family: FONT_SANS,
-        fonts: [
-          { src: URL.createObjectURL(regular), fontWeight: 400 },
-          { src: URL.createObjectURL(medium), fontWeight: 500 },
-          { src: URL.createObjectURL(bold), fontWeight: 700 },
-        ],
-      });
-
-      // Never soft-hyphenate mid-word (e.g. "ongel-man") — wrap whole words only.
-      Font.registerHyphenationCallback((word) => [word]);
-    })().catch((error) => {
-      fontReady = null;
-      throw error;
-    });
-  }
-
-  await fontReady;
-}
+const FONT_SANS = PDF_FONT_SANS;
 
 const styles = StyleSheet.create({
   page: {
@@ -315,11 +274,12 @@ export async function generateWritingPdfBlob(
   model: ExportDocumentModel,
   labels: ExportLabels,
   options: ExportOptions,
+  layout: ExportLayout = "worksheet",
 ): Promise<Blob> {
-  await ensureExportFonts();
+  await ensurePdfFonts();
 
   if (model.mode === "rich_document") {
-    return generateRichDocumentPdfBlob(model, labels);
+    return generateRichDocumentPdfBlob(model, labels, layout);
   }
 
   return pdf(

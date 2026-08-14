@@ -2,12 +2,13 @@
 
 import { motion } from "motion/react";
 import { formatDistanceToNow } from "date-fns";
-import { Clock, Loader2, Pencil, Trash2 } from "lucide-react";
+import { Clock, Download, Loader2, Pencil, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { TheoryExportDialog } from "@/components/theory/export-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
@@ -46,6 +47,7 @@ export function TheoryReader({
   const tCommon = useTranslations("common");
   const te = useTranslations("errors");
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [exportOpen, setExportOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const parsed = useMemo(() => parseTheoryContent(content), [content]);
@@ -87,6 +89,16 @@ export function TheoryReader({
           type="button"
           variant="outline"
           size="lg"
+          onClick={() => setExportOpen(true)}
+          className="h-11 w-full sm:h-9 sm:w-auto"
+        >
+          <Download className="size-4" />
+          {t("export.button")}
+        </Button>
+        <Button
+          type="button"
+          variant="outline"
+          size="lg"
           onClick={() => setDeleteOpen(true)}
           className="h-11 w-full sm:h-9 sm:w-auto"
         >
@@ -120,6 +132,14 @@ export function TheoryReader({
           className="border-0 bg-transparent shadow-none"
         />
       </article>
+
+      <TheoryExportDialog
+        open={exportOpen}
+        onOpenChange={setExportOpen}
+        title={title}
+        description={parsed.description}
+        doc={parsed.doc}
+      />
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <DialogContent showCloseButton={!isPending}>

@@ -3,6 +3,8 @@ import type { WritingMode } from "@/lib/writing/content";
 
 export type ExportFormat = "pdf" | "docx";
 
+export type ExportLayout = "worksheet" | "document";
+
 export type ExportOptions = {
   format: ExportFormat;
   includeExampleAnswers: boolean;
