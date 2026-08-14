@@ -21,10 +21,12 @@ import {
 import { CSS } from "@dnd-kit/utilities";
 import { ChevronDown, GripVertical, Plus, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import {
+  CapitalizedInput,
+  CapitalizedTextarea,
+} from "@/components/form/capitalized-text";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { useMounted } from "@/hooks/use-mounted";
 import { cn } from "@/lib/utils";
 
@@ -77,7 +79,7 @@ function ExampleRowShell({
           {index + 1}.
         </span>
         <div className="min-w-0 flex-1 space-y-2">
-          <Input
+          <CapitalizedInput
             value={item.sentence}
             onChange={(event) =>
               onUpdate(item.id, { sentence: event.target.value })
@@ -128,7 +130,7 @@ function ExampleRowShell({
                 ({t("optional")})
               </span>
             </Label>
-            <Textarea
+            <CapitalizedTextarea
               id={`example-meaning-${item.id}`}
               value={item.meaning}
               onChange={(event) =>
@@ -145,7 +147,7 @@ function ExampleRowShell({
                 ({t("optional")})
               </span>
             </Label>
-            <Textarea
+            <CapitalizedTextarea
               id={`example-notes-${item.id}`}
               value={item.notes}
               onChange={(event) =>

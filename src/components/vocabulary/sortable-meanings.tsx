@@ -21,8 +21,8 @@ import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Plus, Star, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useMounted } from "@/hooks/use-mounted";
 import {
   countPrimaryMeanings,
@@ -100,7 +100,7 @@ function MeaningRowShell({
           className={cn("size-4", item.isPrimary && "fill-current")}
         />
       </Button>
-      <Input
+      <CapitalizedInput
         value={item.meaning}
         onChange={(event) => onUpdate(item.id, event.target.value)}
         placeholder={placeholder}

@@ -31,7 +31,7 @@ import {
   WritingQuestionCard,
 } from "@/components/writing/writing-question-card";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
+import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { useMounted } from "@/hooks/use-mounted";
 import {
   createQuestion,
@@ -230,7 +230,7 @@ export function WritingSectionCard({
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
             {t("section")} {index + 1}
           </p>
-          <Input
+          <CapitalizedInput
             value={section.title}
             onChange={(event) =>
               onChange({ ...section, title: event.target.value })
