@@ -737,6 +737,21 @@
       "communication": "Viestintä",
       "usage": "Käyttö",
       "culture": "Kulttuuri ja konteksti"
+    },
+    "export": {
+      "button": "Vie",
+      "title": "Vie teoria",
+      "description": "Valitse muoto tulostettavalle asiakirjalle.",
+      "format": "Vientimuoto",
+      "formatPdf": "PDF (.pdf)",
+      "formatDocx": "Word (.docx)",
+      "confirm": "Vie",
+      "success": "Lataus aloitettu",
+      "failed": "Vienti epäonnistui",
+      "empty": "Lisää sisältöä ennen vientiä",
+      "documentHeading": "Teoria",
+      "titleLabel": "Otsikko",
+      "descriptionLabel": "Kuvaus"
     }
   },
   "errors": {

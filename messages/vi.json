@@ -737,6 +737,21 @@
       "communication": "Giao tiếp",
       "usage": "Cách dùng",
       "culture": "Văn hóa & ngữ cảnh"
+    },
+    "export": {
+      "button": "Xuất file",
+      "title": "Xuất lý thuyết",
+      "description": "Chọn định dạng để in hoặc lưu tài liệu.",
+      "format": "Định dạng",
+      "formatPdf": "PDF (.pdf)",
+      "formatDocx": "Word (.docx)",
+      "confirm": "Xuất",
+      "success": "Đang tải file xuống…",
+      "failed": "Xuất file không thành công",
+      "empty": "Thêm nội dung trước khi xuất",
+      "documentHeading": "Lý thuyết",
+      "titleLabel": "Tiêu đề",
+      "descriptionLabel": "Mô tả"
     }
   },
   "errors": {

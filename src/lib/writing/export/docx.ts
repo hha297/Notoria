@@ -4,16 +4,20 @@ import {
   HeadingLevel,
   Packer,
   Paragraph,
+  Table,
   TextRun,
 } from "docx";
 import type {
   ExportDocumentModel,
   ExportLabels,
+  ExportLayout,
   ExportOptions,
   ExportQuestion,
 } from "@/lib/writing/export/types";
 import { BLANK_LINE_COUNT } from "@/lib/writing/export/types";
 import { wrapTextOntoLines } from "@/lib/writing/export/wrap-text";
+import { renderTipTapDocToDocx } from "@/lib/writing/export/tiptap-docx";
+import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
 
 /** Match Notoria body font across the exported worksheet. */
 const FONT_SANS = "Chakra Petch";
@@ -151,8 +155,23 @@ export async function generateWritingDocxBlob(
   model: ExportDocumentModel,
   labels: ExportLabels,
   options: ExportOptions,
+  layout: ExportLayout = "worksheet",
 ): Promise<Blob> {
-  const children: Paragraph[] = [
+  const isDocument = layout === "document";
+  const title = sanitizeExportText(model.title) || "—";
+  const description = sanitizeExportText(model.description);
+  const headerBorder = isDocument
+    ? undefined
+    : {
+        bottom: {
+          style: BorderStyle.SINGLE,
+          size: 12,
+          color: "D5D0E0",
+          space: 8,
+        },
+      };
+
+  const children: Array<Paragraph | Table> = [
     new Paragraph({
       heading: HeadingLevel.HEADING_1,
       spacing: { after: 120 },
@@ -178,20 +197,11 @@ export async function generateWritingDocxBlob(
       ],
     }),
     new Paragraph({
-      spacing: { after: model.description ? 80 : 200 },
-      border: model.description
-        ? undefined
-        : {
-            bottom: {
-              style: BorderStyle.SINGLE,
-              size: 12,
-              color: "D5D0E0",
-              space: 8,
-            },
-          },
+      spacing: { after: description ? 80 : 200 },
+      border: description ? undefined : headerBorder,
       children: [
         new TextRun({
-          text: model.title || "—",
+          text: title,
           font: FONT_SANS,
           bold: true,
           size: 28,
@@ -200,7 +210,7 @@ export async function generateWritingDocxBlob(
     }),
   ];
 
-  if (model.description) {
+  if (description) {
     children.push(
       new Paragraph({
         spacing: { after: 40 },
@@ -216,17 +226,10 @@ export async function generateWritingDocxBlob(
       }),
       new Paragraph({
         spacing: { after: 200 },
-        border: {
-          bottom: {
-            style: BorderStyle.SINGLE,
-            size: 12,
-            color: "D5D0E0",
-            space: 8,
-          },
-        },
+        border: headerBorder,
         children: [
           new TextRun({
-            text: model.description,
+            text: description,
             font: FONT_SANS,
             size: 20,
             color: "3D3850",
@@ -269,20 +272,7 @@ export async function generateWritingDocxBlob(
       });
     });
   } else {
-    model.paragraphs.forEach((paragraph) => {
-      children.push(
-        new Paragraph({
-          spacing: { after: 160 },
-          children: [
-            new TextRun({
-              text: paragraph || " ",
-              font: FONT_SANS,
-              size: 22,
-            }),
-          ],
-        }),
-      );
-    });
+    children.push(...renderTipTapDocToDocx(model.doc));
   }
 
   const document = new Document({

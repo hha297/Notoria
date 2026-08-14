@@ -886,6 +886,21 @@
       "communication": "Communication",
       "usage": "Usage",
       "culture": "Culture & Context"
+    },
+    "export": {
+      "button": "Export",
+      "title": "Export theory",
+      "description": "Choose a format for a printable document.",
+      "format": "Export format",
+      "formatPdf": "PDF (.pdf)",
+      "formatDocx": "Word (.docx)",
+      "confirm": "Export",
+      "success": "Download started",
+      "failed": "Export failed",
+      "empty": "Add some content before exporting",
+      "documentHeading": "Theory",
+      "titleLabel": "Title",
+      "descriptionLabel": "Description"
     }
   },
   "errors": {
