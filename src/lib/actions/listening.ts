@@ -3,7 +3,10 @@
 import { and, desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
-import { listeningExercises, listeningLessons } from "@/db/schema";
+import {
+  listeningExercises,
+  listeningLessons,
+} from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
 import {
   configureCloudinary,
@@ -13,7 +16,6 @@ import {
 import { ListeningError, toListeningError } from "@/lib/listening/errors";
 import { generateListeningExercisesFromTranscript } from "@/lib/listening/generate";
 import { assignDialogueSpeakers } from "@/lib/listening/infer-speakers";
-import { resolveListeningMediaFromUrl } from "@/lib/listening/media-resolver";
 import {
   isMultiSpeakerTranscript,
   SPEAKER_ASSIGNMENT_VERSION,
@@ -24,10 +26,7 @@ import {
   toListeningListItem,
 } from "@/lib/listening/serialize";
 import { transcribeListeningMedia } from "@/lib/listening/transcribe";
-import type {
-  ListeningLessonDetail,
-  ListeningLessonListItem,
-} from "@/lib/listening/types";
+import type { ListeningLessonDetail, ListeningLessonListItem } from "@/lib/listening/types";
 import {
   isAllowedListeningFile,
   mediaTypeFromFormat,
@@ -169,9 +168,7 @@ async function destroyListeningAsset(publicId: string) {
   }
 }
 
-export async function getListeningLessons(): Promise<
-  ListeningLessonListItem[]
-> {
+export async function getListeningLessons(): Promise<ListeningLessonListItem[]> {
   const userId = await getCurrentUserId();
   const workspace = await getActiveWorkspace();
 
@@ -221,8 +218,24 @@ export async function getListeningLesson(
   return toListeningLessonDetail(lesson);
 }
 
-function parseLessonMeta(formData: FormData) {
-  return listeningUploadMetaSchema.parse({
+export async function createListeningLesson(formData: FormData) {
+  const userId = await getCurrentUserId();
+  const workspace = await requireActiveWorkspace();
+  const file = formData.get("file");
+
+  if (!(file instanceof File) || file.size === 0) {
+    throw new ListeningError("INVALID_FILE");
+  }
+
+  if (!isAllowedListeningFile(file)) {
+    throw new ListeningError("INVALID_FILE_TYPE");
+  }
+
+  if (file.size > MAX_LISTENING_FILE_SIZE) {
+    throw new ListeningError("FILE_TOO_LARGE");
+  }
+
+  const meta = listeningUploadMetaSchema.parse({
     title:
       typeof formData.get("title") === "string"
         ? String(formData.get("title"))
@@ -235,42 +248,31 @@ function parseLessonMeta(formData: FormData) {
         : null,
     formality: optionalFormality(formData.get("formality")),
   });
-}
 
-async function persistUploadedListeningLesson(input: {
-  file: File;
-  titleFallback: string;
-  durationFallback?: number | null;
-  userId: string;
-  workspaceId: string;
-  language: string;
-  meta: ReturnType<typeof parseLessonMeta>;
-}) {
   const upload = await uploadListeningAsset({
-    file: input.file,
-    userId: input.userId,
-    workspaceId: input.workspaceId,
+    file,
+    userId,
+    workspaceId: workspace.id,
   });
 
-  const title = input.meta.title?.trim() || input.titleFallback;
-  const format =
-    upload.format ?? input.file.name.split(".").pop()?.toLowerCase() ?? null;
+  const title = meta.title?.trim() || titleFromFilename(file.name);
+  const format = upload.format ?? file.name.split(".").pop()?.toLowerCase() ?? null;
 
   const [lesson] = await db
     .insert(listeningLessons)
     .values({
-      userId: input.userId,
-      workspaceId: input.workspaceId,
+      userId,
+      workspaceId: workspace.id,
       title,
       cloudinaryUrl: upload.secure_url,
       cloudinaryPublicId: upload.public_id,
-      mediaType: mediaTypeFromFormat(format ?? undefined, input.file.type),
+      mediaType: mediaTypeFromFormat(format ?? undefined, file.type),
       format,
-      duration: upload.duration ?? input.durationFallback ?? null,
-      cefrLevel: input.meta.cefrLevel,
-      topic: input.meta.topic,
-      formality: input.meta.formality,
-      language: input.language,
+      duration: upload.duration ?? null,
+      cefrLevel: meta.cefrLevel,
+      topic: meta.topic,
+      formality: meta.formality,
+      language: workspace.language,
       status: "TRANSCRIBING",
       errorCode: null,
     })
@@ -278,73 +280,6 @@ async function persistUploadedListeningLesson(input: {
 
   revalidateListening(lesson.id);
   return { id: lesson.id };
-}
-
-export async function createListeningLesson(formData: FormData) {
-  const userId = await getCurrentUserId();
-  const workspace = await requireActiveWorkspace();
-  const source = formData.get("source") === "url" ? "url" : "file";
-  const file = formData.get("file");
-  const mediaUrl =
-    typeof formData.get("mediaUrl") === "string"
-      ? String(formData.get("mediaUrl"))
-      : "";
-  const meta = parseLessonMeta(formData);
-
-  if (source === "url") {
-    if (file instanceof File && file.size > 0) {
-      throw new ListeningError("INVALID_FILE");
-    }
-
-    let resolved;
-    try {
-      resolved = await resolveListeningMediaFromUrl(mediaUrl);
-    } catch (error) {
-      throw error instanceof ListeningError
-        ? error
-        : new ListeningError("MEDIA_EXTRACTION_FAILED");
-    }
-    const extracted = new File(
-      [new Uint8Array(resolved.buffer)],
-      resolved.filename,
-      { type: resolved.mimeType },
-    );
-
-    return persistUploadedListeningLesson({
-      file: extracted,
-      titleFallback: resolved.title || "Listening",
-      durationFallback: resolved.duration,
-      userId,
-      workspaceId: workspace.id,
-      language: workspace.language,
-      meta,
-    });
-  }
-
-  if (!(file instanceof File) || file.size === 0) {
-    throw new ListeningError("INVALID_FILE");
-  }
-
-  if (mediaUrl.trim()) {
-    throw new ListeningError("INVALID_FILE");
-  }
-
-  if (!isAllowedListeningFile(file)) {
-    throw new ListeningError("INVALID_FILE_TYPE");
-  }
-
-  if (file.size > MAX_LISTENING_FILE_SIZE) {
-    throw new ListeningError("FILE_TOO_LARGE");
-  }
-
-  return persistUploadedListeningLesson({
-    file,
-    titleFallback: titleFromFilename(file.name),
-    userId,
-    workspaceId: workspace.id,
-    language: workspace.language,
-    meta,
-  });
 }
 
 export async function transcribeListeningLesson(id: string) {
@@ -480,7 +415,7 @@ export async function ensureListeningSpeakers(id: string) {
   });
   const utterances = isMultiSpeakerTranscript(assigned.utterances)
     ? assigned.utterances
-    : (current?.utterances ?? []);
+    : current?.utterances ?? [];
 
   await db
     .update(listeningLessons)

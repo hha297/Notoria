@@ -2,7 +2,7 @@
 
 import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Headphones, Link2, Loader2, Upload } from "lucide-react";
+import { Headphones, Loader2, Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -23,7 +23,6 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import {
   createListeningLesson,
   transcribeListeningLesson,
@@ -31,7 +30,6 @@ import {
 import { isListeningErrorCode } from "@/lib/listening/errors";
 import {
   isAllowedListeningFile,
-  isValidListeningSourceUrl,
   MAX_LISTENING_FILE_SIZE,
 } from "@/lib/listening/utils";
 import {
@@ -43,8 +41,7 @@ import {
 } from "@/lib/writing/meta";
 import { cn } from "@/lib/utils";
 
-type MediaSource = "file" | "url";
-type UploadStep = "form" | "uploading" | "fetching" | "transcribing";
+type UploadStep = "form" | "uploading" | "transcribing";
 
 type UploadListeningDialogProps = {
   open: boolean;
@@ -60,10 +57,7 @@ export function UploadListeningDialog({
   const tc = useTranslations("common");
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
-  const [source, setSource] = useState<MediaSource>("file");
   const [file, setFile] = useState<File | null>(null);
-  const [mediaUrl, setMediaUrl] = useState("");
-  const [urlError, setUrlError] = useState<string | null>(null);
   const [title, setTitle] = useState("");
   const [cefrLevel, setCefrLevel] = useState("none");
   const [topic, setTopic] = useState("none");
@@ -73,13 +67,9 @@ export function UploadListeningDialog({
   const [isPending, startTransition] = useTransition();
 
   const busy = isPending || step !== "form";
-  const canSubmit = source === "file" ? Boolean(file) : Boolean(mediaUrl.trim());
 
   function resetForm() {
-    setSource("file");
     setFile(null);
-    setMediaUrl("");
-    setUrlError(null);
     setTitle("");
     setCefrLevel("none");
     setTopic("none");
@@ -95,19 +85,6 @@ export function UploadListeningDialog({
       : t("errors.PROCESSING_FAILED");
   }
 
-  function selectSource(next: MediaSource) {
-    if (next === source) return;
-    setSource(next);
-    setUrlError(null);
-    setDragOver(false);
-    if (next === "file") {
-      setMediaUrl("");
-    } else {
-      setFile(null);
-      if (inputRef.current) inputRef.current.value = "";
-    }
-  }
-
   function chooseFile(next: File | undefined) {
     if (!next) return;
     if (!isAllowedListeningFile(next)) {
@@ -119,16 +96,6 @@ export function UploadListeningDialog({
       return;
     }
     setFile(next);
-    setMediaUrl("");
-    setUrlError(null);
-  }
-
-  function handleMediaUrlChange(value: string) {
-    setMediaUrl(value);
-    if (!urlError) return;
-    setUrlError(
-      isValidListeningSourceUrl(value) ? null : t("errors.INVALID_URL"),
-    );
   }
 
   function handleOpenChange(next: boolean) {
@@ -138,31 +105,18 @@ export function UploadListeningDialog({
   }
 
   function handleSubmit() {
-    if (source === "file") {
-      if (!file) return;
-    } else if (!isValidListeningSourceUrl(mediaUrl)) {
-      setUrlError(t("errors.INVALID_URL"));
-      return;
-    } else {
-      setUrlError(null);
-    }
+    if (!file) return;
 
     startTransition(async () => {
       try {
         const formData = new FormData();
-        formData.set("source", source);
+        formData.set("file", file);
         formData.set("title", title);
         formData.set("cefrLevel", cefrLevel);
         formData.set("topic", topic);
         formData.set("formality", formality);
 
-        if (source === "file" && file) {
-          formData.set("file", file);
-        } else {
-          formData.set("mediaUrl", mediaUrl.trim());
-        }
-
-        setStep(source === "url" ? "fetching" : "uploading");
+        setStep("uploading");
         const created = await createListeningLesson(formData);
 
         setStep("transcribing");
@@ -184,11 +138,9 @@ export function UploadListeningDialog({
   const stepLabel =
     step === "uploading"
       ? t("steps.uploading")
-      : step === "fetching"
-        ? t("steps.fetching")
-        : step === "transcribing"
-          ? t("steps.transcribing")
-          : null;
+      : step === "transcribing"
+        ? t("steps.transcribing")
+        : null;
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -206,99 +158,47 @@ export function UploadListeningDialog({
           </div>
         ) : (
           <div className="space-y-4">
-            <div className="space-y-2">
-              <p className="text-sm font-medium text-ink">{t("chooseSource")}</p>
-              <ToggleGroup
-                value={[source]}
-                onValueChange={(value) => {
-                  const next = value[0] as MediaSource | undefined;
-                  if (next) selectSource(next);
-                }}
-                className="flex w-full gap-2"
-              >
-                <ToggleGroupItem
-                  value="file"
-                  variant="outline"
-                  className="h-9 flex-1 cursor-pointer uppercase tracking-[0.2px]"
-                >
-                  {t("sourceFile")}
-                </ToggleGroupItem>
-                <ToggleGroupItem
-                  value="url"
-                  variant="outline"
-                  className="h-9 flex-1 cursor-pointer uppercase tracking-[0.2px]"
-                >
-                  {t("sourceUrl")}
-                </ToggleGroupItem>
-              </ToggleGroup>
-            </div>
-
-            {source === "file" ? (
-              <>
-                <button
-                  type="button"
-                  onClick={() => inputRef.current?.click()}
-                  onDragOver={(event) => {
-                    event.preventDefault();
-                    setDragOver(true);
-                  }}
-                  onDragLeave={() => setDragOver(false)}
-                  onDrop={(event) => {
-                    event.preventDefault();
-                    setDragOver(false);
-                    chooseFile(event.dataTransfer.files[0]);
-                  }}
-                  className={cn(
-                    "flex w-full cursor-pointer flex-col items-center rounded-xl border border-dashed px-4 py-8 text-center transition-colors",
-                    dragOver
-                      ? "border-accent-lime bg-accent-lime/15"
-                      : "border-hairline-cloud bg-muted/30 hover:border-accent-lime/50",
-                  )}
-                >
-                  <div className="mb-3 flex size-12 items-center justify-center rounded-2xl border border-hairline-cloud bg-card">
-                    {file ? (
-                      <Headphones className="size-5 text-ink" />
-                    ) : (
-                      <Upload className="size-5 text-ink" />
-                    )}
-                  </div>
-                  <p className="font-medium text-ink">
-                    {file ? file.name : t("dropTitle")}
-                  </p>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    {file ? t("replaceFile") : t("dropDescription")}
-                  </p>
-                </button>
-                <input
-                  ref={inputRef}
-                  type="file"
-                  accept=".mp3,.mp4,audio/mpeg,video/mp4"
-                  className="hidden"
-                  onChange={(event) => chooseFile(event.target.files?.[0])}
-                />
-              </>
-            ) : (
-              <div className="space-y-2">
-                <Label htmlFor="listening-media-url">{t("urlLabel")}</Label>
-                <div className="relative">
-                  <Link2 className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-                  <Input
-                    id="listening-media-url"
-                    type="url"
-                    value={mediaUrl}
-                    onChange={(event) => handleMediaUrlChange(event.target.value)}
-                    placeholder={t("urlPlaceholder")}
-                    aria-invalid={urlError ? true : undefined}
-                    className="h-10 pl-9"
-                  />
-                </div>
-                {urlError ? (
-                  <p className="text-sm text-destructive">{urlError}</p>
+            <button
+              type="button"
+              onClick={() => inputRef.current?.click()}
+              onDragOver={(event) => {
+                event.preventDefault();
+                setDragOver(true);
+              }}
+              onDragLeave={() => setDragOver(false)}
+              onDrop={(event) => {
+                event.preventDefault();
+                setDragOver(false);
+                chooseFile(event.dataTransfer.files[0]);
+              }}
+              className={cn(
+                "flex w-full cursor-pointer flex-col items-center rounded-xl border border-dashed px-4 py-8 text-center transition-colors",
+                dragOver
+                  ? "border-accent-lime bg-accent-lime/15"
+                  : "border-hairline-cloud bg-muted/30 hover:border-accent-lime/50",
+              )}
+            >
+              <div className="mb-3 flex size-12 items-center justify-center rounded-2xl border border-hairline-cloud bg-card">
+                {file ? (
+                  <Headphones className="size-5 text-ink" />
                 ) : (
-                  <p className="text-sm text-muted-foreground">{t("urlHint")}</p>
+                  <Upload className="size-5 text-ink" />
                 )}
               </div>
-            )}
+              <p className="font-medium text-ink">
+                {file ? file.name : t("dropTitle")}
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {file ? t("replaceFile") : t("dropDescription")}
+              </p>
+            </button>
+            <input
+              ref={inputRef}
+              type="file"
+              accept=".mp3,.mp4,audio/mpeg,video/mp4"
+              className="hidden"
+              onChange={(event) => chooseFile(event.target.files?.[0])}
+            />
 
             <div className="space-y-2">
               <Label htmlFor="listening-title">
@@ -394,16 +294,10 @@ export function UploadListeningDialog({
           <Button
             type="button"
             onClick={handleSubmit}
-            disabled={!canSubmit || busy}
+            disabled={!file || busy}
           >
-            {busy ? (
-              <Loader2 className="size-4 animate-spin" />
-            ) : source === "url" ? (
-              <Link2 className="size-4" />
-            ) : (
-              <Upload className="size-4" />
-            )}
-            {source === "url" ? t("generateAction") : t("uploadAction")}
+            {busy ? <Loader2 className="size-4 animate-spin" /> : <Upload className="size-4" />}
+            {t("uploadAction")}
           </Button>
         </DialogFooter>
       </DialogContent>

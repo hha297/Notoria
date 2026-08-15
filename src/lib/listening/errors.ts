@@ -5,12 +5,6 @@ export const LISTENING_ERROR_CODES = [
   "INVALID_FILE",
   "INVALID_FILE_TYPE",
   "FILE_TOO_LARGE",
-  "INVALID_URL",
-  "UNSUPPORTED_MEDIA_URL",
-  "MEDIA_UNAVAILABLE",
-  "MEDIA_TOO_LONG",
-  "MEDIA_EXTRACTION_FAILED",
-  "EXTRACTOR_NOT_CONFIGURED",
   "TRANSCRIPTION_FAILED",
   "GENERATION_FAILED",
   "GENERATION_UNAVAILABLE",
@@ -32,9 +26,7 @@ export class ListeningError extends Error {
   }
 }
 
-export function isListeningErrorCode(
-  value: string,
-): value is ListeningErrorCode {
+export function isListeningErrorCode(value: string): value is ListeningErrorCode {
   return (LISTENING_ERROR_CODES as readonly string[]).includes(value);
 }
 
