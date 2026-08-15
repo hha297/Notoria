@@ -69,6 +69,8 @@ function commonArgs() {
     "20",
     "--retries",
     "2",
+    "--extractor-args",
+    "youtube:player_client=tv,android,web",
   ];
 }
 
