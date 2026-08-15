@@ -75,6 +75,7 @@ export const fillBlankDataSchema = z.object({
 
 export const multipleChoiceDataSchema = z.object({
   options: z.array(z.string().min(1)).min(2).max(6),
+  uiLocale: z.string().min(2).max(8).optional(),
 });
 
 export const storedListeningExerciseSchema = z.discriminatedUnion("type", [

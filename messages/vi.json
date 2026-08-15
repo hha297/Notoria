@@ -896,7 +896,7 @@
       "MEDIA_UNAVAILABLE": "Media này là riêng tư, được bảo vệ, hoặc không còn khả dụng.",
       "MEDIA_TOO_LONG": "Đoạn media quá dài. Hãy dùng nội dung dưới 30 phút.",
       "MEDIA_EXTRACTION_FAILED": "Không thể lấy media này. Hãy thử liên kết khác.",
-      "EXTRACTOR_NOT_CONFIGURED": "Máy chủ hiện không hỗ trợ lấy media từ liên kết.",
+      "EXTRACTOR_NOT_CONFIGURED": "Máy chủ hiện không hỗ trợ lấy media từ liên kết. Hãy tải lên file MP3 hoặc MP4.",
       "TRANSCRIPTION_FAILED": "Không thể chép lời audio này. Hãy thử lại.",
       "GENERATION_FAILED": "Không thể tạo bài tập. Hãy thử lại.",
       "GENERATION_UNAVAILABLE": "Hiện không thể tạo bài tập. Hãy thử lại sau.",
