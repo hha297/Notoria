@@ -896,6 +896,7 @@
       "MEDIA_UNAVAILABLE": "Media on yksityinen, suojattu tai ei enää saatavilla.",
       "MEDIA_TOO_LONG": "Klippi on liian pitkä. Käytä alle 30 minuutin mediaa.",
       "MEDIA_EXTRACTION_FAILED": "Mediaa ei voitu hakea. Kokeile toista linkkiä.",
+      "MEDIA_SOURCE_BLOCKED": "Sivusto esti tämän pilvipalvelimen. Lataa ääni ja tuo MP3- tai MP4-tiedosto.",
       "EXTRACTOR_NOT_CONFIGURED": "Linkkien haku ei ole käytettävissä tällä palvelimella. Lataa sen sijaan MP3- tai MP4-tiedosto.",
       "TRANSCRIPTION_FAILED": "Ääntä ei voitu litteroida. Yritä uudelleen.",
       "GENERATION_FAILED": "Harjoituksia ei voitu luoda. Yritä uudelleen.",
