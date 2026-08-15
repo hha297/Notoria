@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { CheckCircle2, Loader2, RotateCcw, XCircle } from "lucide-react";
-import { useTranslations, useLocale } from "next-intl";
+import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { ListeningAudioPlayer } from "@/components/listening/listening-audio-player";
 import { ListeningTranscript } from "@/components/listening/listening-transcript";
@@ -11,7 +11,6 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { generateListeningExercises, ensureListeningSpeakers } from "@/lib/actions/listening";
 import { isListeningErrorCode } from "@/lib/listening/errors";
-import { multipleChoiceNeedsLocaleRefresh } from "@/lib/listening/question-locale";
 import { isMultiSpeakerTranscript, SPEAKER_ASSIGNMENT_VERSION } from "@/lib/listening/speakers";
 import { LISTENING_PRACTICE_TYPES } from "@/lib/listening/types";
 import type {
@@ -102,12 +101,10 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
   const t = useTranslations("listening");
   const tPractice = useTranslations("listening.practice");
   const tTypes = useTranslations("listening.types");
-  const locale = useLocale();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [speakersPending, startSpeakersTransition] = useTransition();
   const speakersRequested = useRef(false);
-  const localeRefreshKey = useRef<string | null>(null);
   const [showTranscript, setShowTranscript] = useState(false);
   const [seekRequest, setSeekRequest] = useState<{ ms: number; nonce: number } | null>(
     null,
@@ -171,29 +168,6 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
       : t("errors.PROCESSING_FAILED");
   }
 
-  useEffect(() => {
-    if (!selectedType || isPending) return;
-    const existing = lesson.exercises.filter(
-      (exercise) => exercise.type === selectedType,
-    );
-    if (!multipleChoiceNeedsLocaleRefresh(existing, locale)) return;
-
-    const key = `${lesson.id}:${selectedType}:${locale}`;
-    if (localeRefreshKey.current === key) return;
-    localeRefreshKey.current = key;
-
-    startTransition(async () => {
-      try {
-        await generateListeningExercises(lesson.id, selectedType);
-        toast.success(t("exercisesGenerated"));
-        router.refresh();
-      } catch (error) {
-        localeRefreshKey.current = null;
-        toast.error(errorMessage(error));
-      }
-    });
-  }, [locale, selectedType, lesson.id, lesson.exercises, isPending, router, t]);
-
   function setAnswer(id: string, value: unknown) {
     if (checked) return;
     setAnswers((prev) => ({ ...prev, [id]: value }));
@@ -210,19 +184,13 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
 
     const existing = lesson.exercises.filter((exercise) => exercise.type === type);
     const sparse = isSparseExerciseSet(lesson, type, existing.length);
-    const localeMismatch = multipleChoiceNeedsLocaleRefresh(existing, locale);
-    const alreadyLoaded =
-      selectedType === type && existing.length > 0 && !sparse && !localeMismatch;
+    const alreadyLoaded = selectedType === type && existing.length > 0 && !sparse;
     if (alreadyLoaded) return;
 
     setSelectedType(type);
     resetSession();
 
-    if (existing.length > 0 && !sparse && !localeMismatch) return;
-
-    if (localeMismatch) {
-      localeRefreshKey.current = `${lesson.id}:${type}:${locale}`;
-    }
+    if (existing.length > 0 && !sparse) return;
 
     startTransition(async () => {
       try {

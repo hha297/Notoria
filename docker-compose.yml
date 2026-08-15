@@ -14,17 +14,5 @@ services:
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
-  listening-extractor:
-    build:
-      context: ./extractor
-      dockerfile: Dockerfile
-    container_name: notoria-listening-extractor
-    restart: unless-stopped
-    environment:
-      LISTENING_EXTRACTOR_SECRET: ${LISTENING_EXTRACTOR_SECRET:-dev-extractor-secret}
-      PORT: 8787
-    ports:
-      - "8787:8787"
-
 volumes:
   postgres_data:

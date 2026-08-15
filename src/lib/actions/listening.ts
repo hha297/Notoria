@@ -2,7 +2,6 @@
 
 import { and, desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import { getLocale } from "next-intl/server";
 import { db } from "@/db";
 import { listeningExercises, listeningLessons } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
@@ -407,7 +406,6 @@ export async function generateListeningExercises(
       durationSeconds: lesson.duration,
       utterances: parseTranscriptionData(lesson.transcriptionData)?.utterances,
       language: lesson.language,
-      uiLocale: await getLocale(),
       cefrLevel: (lesson.cefrLevel as WritingCefr | null) ?? null,
       topic: lesson.topic,
       formality: (lesson.formality as WritingFormality | null) ?? null,
