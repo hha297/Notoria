@@ -35,7 +35,46 @@ const MIME_TYPES = {
   aac: "audio/aac",
 };
 
-function json(res, status, body) {
+function isLoopback(req) {
+  const addr = req.socket.remoteAddress || "";
+  return addr === "127.0.0.1" || addr === "::1" || addr === "::ffff:127.0.0.1";
+}
+
+const ALLOWED_ORIGINS = new Set(
+  [
+    "https://www.notoria.fi",
+    "https://notoria.fi",
+    "http://localhost:3000",
+    "http://127.0.0.1:3000",
+    ...(process.env.LISTENING_EXTRACTOR_CORS_ORIGINS ?? "")
+      .split(",")
+      .map((origin) => origin.trim())
+      .filter(Boolean),
+  ],
+);
+
+function applyCors(req, res) {
+  const origin = req.headers.origin;
+  if (origin && ALLOWED_ORIGINS.has(origin)) {
+    res.setHeader("Access-Control-Allow-Origin", origin);
+    res.setHeader("Vary", "Origin");
+    res.setHeader("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
+    res.setHeader(
+      "Access-Control-Allow-Headers",
+      "Content-Type, Authorization, Access-Control-Request-Private-Network",
+    );
+    res.setHeader(
+      "Access-Control-Expose-Headers",
+      "X-Listening-Title, X-Listening-Duration, X-Listening-Format, X-Listening-Media-Type",
+    );
+  }
+  if (req.headers["access-control-request-private-network"] === "true") {
+    res.setHeader("Access-Control-Allow-Private-Network", "true");
+  }
+}
+
+function json(req, res, status, body) {
+  applyCors(req, res);
   res.writeHead(status, { "Content-Type": "application/json" });
   res.end(JSON.stringify(body));
 }
@@ -296,19 +335,28 @@ function readJson(req) {
 }
 
 const server = createServer(async (req, res) => {
+  if (req.method === "OPTIONS") {
+    applyCors(req, res);
+    res.writeHead(204);
+    res.end();
+    return;
+  }
+
   if (req.method === "GET" && req.url === "/health") {
-    json(res, 200, { ok: true });
+    json(req, res, 200, { ok: true });
     return;
   }
 
   if (req.method !== "POST" || req.url !== "/extract") {
-    json(res, 404, { code: "LESSON_NOT_FOUND" });
+    json(req, res, 404, { code: "LESSON_NOT_FOUND" });
     return;
   }
 
   const auth = req.headers.authorization || "";
-  if (!SECRET || auth !== `Bearer ${SECRET}`) {
-    json(res, 401, { code: "EXTRACTOR_NOT_CONFIGURED" });
+  const authorized =
+    isLoopback(req) || Boolean(SECRET && auth === `Bearer ${SECRET}`);
+  if (!authorized) {
+    json(req, res, 401, { code: "EXTRACTOR_NOT_CONFIGURED" });
     return;
   }
 
@@ -316,6 +364,7 @@ const server = createServer(async (req, res) => {
     const body = await readJson(req);
     const url = await assertSafeUrl(body.url);
     const media = await extract(url);
+    applyCors(req, res);
     res.writeHead(200, {
       "Content-Type": media.mimeType,
       "Content-Length": String(media.buffer.length),
@@ -326,15 +375,14 @@ const server = createServer(async (req, res) => {
     });
     res.end(media.buffer);
   } catch (error) {
-    json(res, 400, { code: error?.code || "MEDIA_EXTRACTION_FAILED" });
+    json(req, res, 400, { code: error?.code || "MEDIA_EXTRACTION_FAILED" });
   }
 });
 
 if (!SECRET) {
-  console.error("LISTENING_EXTRACTOR_SECRET is required");
-  process.exit(1);
+  console.warn("LISTENING_EXTRACTOR_SECRET missing; only loopback clients can extract");
 }
 
-server.listen(PORT, () => {
+server.listen(PORT, "0.0.0.0", () => {
   console.log(`listening extractor on :${PORT}`);
 });
