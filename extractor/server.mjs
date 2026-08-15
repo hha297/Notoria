@@ -156,11 +156,8 @@ function mapYtDlpError(text) {
   if (/unsupported url|no video formats|unable to extract|no media found/.test(lower)) {
     return "UNSUPPORTED_MEDIA_URL";
   }
-  if (/sign in to confirm|not a bot|http error 403|po token|javascript runtime/.test(lower)) {
-    return "MEDIA_SOURCE_BLOCKED";
-  }
   if (
-    /private video|login required|members-only|http error 401|http error 404|video unavailable|drm protected/.test(
+    /private video|login required|sign in to confirm|members-only|http error 401|http error 404|video unavailable|drm protected/.test(
       lower,
     )
   ) {
@@ -170,26 +167,16 @@ function mapYtDlpError(text) {
   return "MEDIA_EXTRACTION_FAILED";
 }
 
-function commonArgs() {
-  return [
-    "--ignore-config",
-    "--no-playlist",
-    "--no-warnings",
-    "--no-cache-dir",
-    "--js-runtimes",
-    "deno",
-    "--extractor-args",
-    "youtube:player_client=tv,android,web",
-  ];
-}
-
 async function extract(url) {
   const workDir = await mkdtemp(join(tmpdir(), "notoria-listening-"));
   try {
     const meta = await runProcess(
       "yt-dlp",
       [
-        ...commonArgs(),
+        "--ignore-config",
+        "--no-playlist",
+        "--no-warnings",
+        "--no-cache-dir",
         "--skip-download",
         "-J",
         "--",
@@ -219,7 +206,10 @@ async function extract(url) {
     const download = await runProcess(
       "yt-dlp",
       [
-        ...commonArgs(),
+        "--ignore-config",
+        "--no-playlist",
+        "--no-warnings",
+        "--no-cache-dir",
         "--max-filesize",
         "25M",
         "-f",

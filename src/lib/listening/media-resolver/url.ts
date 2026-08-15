@@ -91,18 +91,3 @@ export async function assertSafeListeningMediaUrl(raw: string) {
 
   return parsed.href;
 }
-
-export function isCloudBlockedMediaHost(rawUrl: string) {
-  try {
-    const host = new URL(rawUrl).hostname.replace(/^www\./, "").toLowerCase();
-    return (
-      host === "youtube.com" ||
-      host === "youtu.be" ||
-      host.endsWith(".youtube.com") ||
-      host === "soundcloud.com" ||
-      host.endsWith(".soundcloud.com")
-    );
-  } catch {
-    return false;
-  }
-}

@@ -1045,7 +1045,6 @@
       "MEDIA_UNAVAILABLE": "That media is private, protected, or no longer available.",
       "MEDIA_TOO_LONG": "That clip is too long. Use media under 30 minutes.",
       "MEDIA_EXTRACTION_FAILED": "We could not fetch that media. Try another link.",
-      "MEDIA_SOURCE_BLOCKED": "That site blocked this cloud server. Download the audio and upload an MP3 or MP4 instead.",
       "EXTRACTOR_NOT_CONFIGURED": "Link extraction is not available on this server. Upload an MP3 or MP4 file instead.",
       "TRANSCRIPTION_FAILED": "We could not transcribe that audio. Try again.",
       "GENERATION_FAILED": "We could not generate exercises. Try again.",

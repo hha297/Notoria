@@ -165,15 +165,7 @@ export function extractionErrorFromOutput(stderr: string) {
   }
 
   if (
-    /sign in to confirm|not a bot|http error 403|po token|javascript runtime/.test(
-      text,
-    )
-  ) {
-    return new ListeningError("MEDIA_SOURCE_BLOCKED");
-  }
-
-  if (
-    /private video|login required|members-only|join this channel|age[ -]?restrict|http error 401|http error 404|video unavailable|this video is not available|drm protected/.test(
+    /private video|login required|sign in to confirm|members-only|join this channel|age[ -]?restrict|http error 401|http error 404|video unavailable|this video is not available|drm protected/.test(
       text,
     )
   ) {

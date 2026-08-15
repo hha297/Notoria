@@ -4,7 +4,6 @@ import {
   type ListeningErrorCode,
 } from "@/lib/listening/errors";
 import type { ExtractedListeningMedia } from "@/lib/listening/media-resolver/extract";
-import { isCloudBlockedMediaHost } from "@/lib/listening/media-resolver/url";
 
 const EXTRACTOR_TIMEOUT_MS = 180_000;
 const MAX_EXTRACTED_BYTES = 25 * 1024 * 1024;
@@ -100,11 +99,7 @@ export async function extractListeningMediaRemote(
       } catch {
         // Keep the generic extraction error.
       }
-      throw new ListeningError(
-        code === "MEDIA_EXTRACTION_FAILED" && isCloudBlockedMediaHost(url)
-          ? "MEDIA_SOURCE_BLOCKED"
-          : code,
-      );
+      throw new ListeningError(code);
     }
 
     const buffer = Buffer.from(await response.arrayBuffer());
@@ -140,9 +135,7 @@ export async function extractListeningMediaRemote(
     if (error instanceof ListeningError) {
       throw error;
     }
-    throw new ListeningError(
-      isCloudBlockedMediaHost(url) ? "MEDIA_SOURCE_BLOCKED" : "MEDIA_EXTRACTION_FAILED",
-    );
+    throw new ListeningError("MEDIA_EXTRACTION_FAILED");
   } finally {
     clearTimeout(timeout);
   }
