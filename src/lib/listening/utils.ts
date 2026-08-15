@@ -33,7 +33,24 @@ export function isAllowedListeningFile(file: File) {
   return ALLOWED_MIME_TYPES.has(file.type);
 }
 
-export function mediaTypeFromFormat(format: string | undefined, mimeType: string) {
+export function isValidListeningSourceUrl(raw: string) {
+  const trimmed = raw.trim();
+  if (!trimmed || trimmed.length > 2048) {
+    return false;
+  }
+
+  try {
+    const parsed = new URL(trimmed);
+    return parsed.protocol === "https:" || parsed.protocol === "http:";
+  } catch {
+    return false;
+  }
+}
+
+export function mediaTypeFromFormat(
+  format: string | undefined,
+  mimeType: string,
+) {
   const normalized = (format ?? "").toLowerCase();
   if (normalized === "mp4" || mimeType.startsWith("video/")) {
     return "video";
@@ -42,12 +59,17 @@ export function mediaTypeFromFormat(format: string | undefined, mimeType: string
 }
 
 export function titleFromFilename(filename: string) {
-  const base = filename.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").trim();
+  const base = filename
+    .replace(/\.[^.]+$/, "")
+    .replace(/[_-]+/g, " ")
+    .trim();
   if (!base) return "Listening";
   return base.replace(/\b\w/g, (char) => char.toLocaleUpperCase());
 }
 
-export function formatListeningDuration(totalSeconds: number | null | undefined) {
+export function formatListeningDuration(
+  totalSeconds: number | null | undefined,
+) {
   if (totalSeconds == null || Number.isNaN(totalSeconds) || totalSeconds < 0) {
     return null;
   }
@@ -97,7 +119,10 @@ export function deriveSentencesFromWords(
   const flush = () => {
     if (current.length === 0) return;
     sentences.push({
-      text: current.map((word) => word.text).join(" ").replace(/\s+([.,!?;:])/g, "$1"),
+      text: current
+        .map((word) => word.text)
+        .join(" ")
+        .replace(/\s+([.,!?;:])/g, "$1"),
       start: current[0].start,
       end: current[current.length - 1].end,
     });

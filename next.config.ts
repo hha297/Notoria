@@ -9,7 +9,12 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "50mb",
     },
   },
-  serverExternalPackages: ["assemblyai", "openai"],
+  serverExternalPackages: [
+    "assemblyai",
+    "openai",
+    "youtube-dl-exec",
+    "ffmpeg-static",
+  ],
   images: {
     remotePatterns: [
       {
