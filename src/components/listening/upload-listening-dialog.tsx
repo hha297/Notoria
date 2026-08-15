@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Headphones, Link2, Loader2, Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -30,7 +30,12 @@ import {
 } from "@/lib/actions/listening";
 import { isListeningErrorCode } from "@/lib/listening/errors";
 import {
+  extractListeningMediaLocally,
+  isLocalListeningExtractorReady,
+} from "@/lib/listening/local-extractor";
+import {
   isAllowedListeningFile,
+  isHostedMediaPageUrl,
   isValidListeningSourceUrl,
   MAX_LISTENING_FILE_SIZE,
 } from "@/lib/listening/utils";
@@ -70,10 +75,28 @@ export function UploadListeningDialog({
   const [formality, setFormality] = useState("none");
   const [dragOver, setDragOver] = useState(false);
   const [step, setStep] = useState<UploadStep>("form");
+  const [extractorReady, setExtractorReady] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const busy = isPending || step !== "form";
   const canSubmit = source === "file" ? Boolean(file) : Boolean(mediaUrl.trim());
+
+  useEffect(() => {
+    if (!open || source !== "url") return;
+
+    let cancelled = false;
+    isLocalListeningExtractorReady()
+      .then((ready) => {
+        if (!cancelled) setExtractorReady(ready);
+      })
+      .catch(() => {
+        if (!cancelled) setExtractorReady(false);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [open, source]);
 
   function resetForm() {
     setSource("file");
@@ -150,15 +173,27 @@ export function UploadListeningDialog({
     startTransition(async () => {
       try {
         const formData = new FormData();
-        formData.set("source", source);
         formData.set("title", title);
         formData.set("cefrLevel", cefrLevel);
         formData.set("topic", topic);
         formData.set("formality", formality);
 
         if (source === "file" && file) {
+          formData.set("source", "file");
           formData.set("file", file);
+        } else if (isHostedMediaPageUrl(mediaUrl)) {
+          setStep("fetching");
+          const extracted = await extractListeningMediaLocally(mediaUrl.trim());
+          if (!extracted) {
+            throw new Error("LOCAL_EXTRACTOR_REQUIRED");
+          }
+          formData.set("source", "file");
+          formData.set("file", extracted.file);
+          if (!title.trim() && extracted.title) {
+            formData.set("title", extracted.title);
+          }
         } else {
+          formData.set("source", "url");
           formData.set("mediaUrl", mediaUrl.trim());
         }
 
@@ -298,7 +333,9 @@ export function UploadListeningDialog({
                 {urlError ? (
                   <p className="text-sm text-destructive">{urlError}</p>
                 ) : (
-                  <p className="text-sm text-muted-foreground">{t("urlHint")}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {extractorReady ? t("extractorReady") : t("extractorOffline")}
+                  </p>
                 )}
               </div>
             )}
