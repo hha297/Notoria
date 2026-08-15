@@ -164,6 +164,9 @@ export function UploadListeningDialog({
 
         setStep(source === "url" ? "fetching" : "uploading");
         const created = await createListeningLesson(formData);
+        if ("error" in created) {
+          throw new Error(created.error);
+        }
 
         setStep("transcribing");
         await transcribeListeningLesson(created.id);
