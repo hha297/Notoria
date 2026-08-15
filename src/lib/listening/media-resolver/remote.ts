@@ -9,11 +9,7 @@ const EXTRACTOR_TIMEOUT_MS = 180_000;
 const MAX_EXTRACTED_BYTES = 25 * 1024 * 1024;
 
 function extractorBaseUrl() {
-  return (
-    process.env.LISTENING_EXTRACTOR_URL?.trim()
-      .replace(/\/+$/, "")
-      .replace(/\/extract$/i, "") ?? ""
-  );
+  return process.env.LISTENING_EXTRACTOR_URL?.trim().replace(/\/+$/, "") ?? "";
 }
 
 function extractorSecret() {
@@ -27,47 +23,6 @@ function decodeHeaderValue(value: string | null, fallback: string) {
   } catch {
     return value;
   }
-}
-
-function sleep(ms: number) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
-async function fetchExtractor(
-  baseUrl: string,
-  secret: string,
-  url: string,
-  signal: AbortSignal,
-) {
-  let lastResponse: Response | null = null;
-
-  for (let attempt = 0; attempt < 2; attempt += 1) {
-    const response = await fetch(`${baseUrl}/extract`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${secret}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ url }),
-      signal,
-    });
-    lastResponse = response;
-
-    const contentType = response.headers.get("content-type") ?? "";
-    const shouldRetry =
-      response.status === 502 ||
-      response.status === 503 ||
-      response.status === 504 ||
-      contentType.includes("text/html");
-
-    if (!shouldRetry || attempt === 1) {
-      return response;
-    }
-
-    await sleep(3_000);
-  }
-
-  return lastResponse!;
 }
 
 export function hasRemoteListeningExtractor() {
@@ -87,7 +42,15 @@ export async function extractListeningMediaRemote(
   const timeout = setTimeout(() => controller.abort(), EXTRACTOR_TIMEOUT_MS);
 
   try {
-    const response = await fetchExtractor(baseUrl, secret, url, controller.signal);
+    const response = await fetch(`${baseUrl}/extract`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${secret}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ url }),
+      signal: controller.signal,
+    });
 
     if (!response.ok) {
       let code: ListeningErrorCode = "MEDIA_EXTRACTION_FAILED";

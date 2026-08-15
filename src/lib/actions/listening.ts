@@ -282,67 +282,70 @@ async function persistUploadedListeningLesson(input: {
 }
 
 export async function createListeningLesson(formData: FormData) {
-  try {
-    const userId = await getCurrentUserId();
-    const workspace = await requireActiveWorkspace();
-    const source = formData.get("source") === "url" ? "url" : "file";
-    const file = formData.get("file");
-    const mediaUrl =
-      typeof formData.get("mediaUrl") === "string"
-        ? String(formData.get("mediaUrl"))
-        : "";
-    const meta = parseLessonMeta(formData);
+  const userId = await getCurrentUserId();
+  const workspace = await requireActiveWorkspace();
+  const source = formData.get("source") === "url" ? "url" : "file";
+  const file = formData.get("file");
+  const mediaUrl =
+    typeof formData.get("mediaUrl") === "string"
+      ? String(formData.get("mediaUrl"))
+      : "";
+  const meta = parseLessonMeta(formData);
 
-    if (source === "url") {
-      if (file instanceof File && file.size > 0) {
-        throw new ListeningError("INVALID_FILE");
-      }
-
-      const resolved = await resolveListeningMediaFromUrl(mediaUrl);
-      const extracted = new File(
-        [new Uint8Array(resolved.buffer)],
-        resolved.filename,
-        { type: resolved.mimeType },
-      );
-
-      return persistUploadedListeningLesson({
-        file: extracted,
-        titleFallback: resolved.title || "Listening",
-        durationFallback: resolved.duration,
-        userId,
-        workspaceId: workspace.id,
-        language: workspace.language,
-        meta,
-      });
-    }
-
-    if (!(file instanceof File) || file.size === 0) {
+  if (source === "url") {
+    if (file instanceof File && file.size > 0) {
       throw new ListeningError("INVALID_FILE");
     }
 
-    if (mediaUrl.trim()) {
-      throw new ListeningError("INVALID_FILE");
+    let resolved;
+    try {
+      resolved = await resolveListeningMediaFromUrl(mediaUrl);
+    } catch (error) {
+      throw error instanceof ListeningError
+        ? error
+        : new ListeningError("MEDIA_EXTRACTION_FAILED");
     }
-
-    if (!isAllowedListeningFile(file)) {
-      throw new ListeningError("INVALID_FILE_TYPE");
-    }
-
-    if (file.size > MAX_LISTENING_FILE_SIZE) {
-      throw new ListeningError("FILE_TOO_LARGE");
-    }
+    const extracted = new File(
+      [new Uint8Array(resolved.buffer)],
+      resolved.filename,
+      { type: resolved.mimeType },
+    );
 
     return persistUploadedListeningLesson({
-      file,
-      titleFallback: titleFromFilename(file.name),
+      file: extracted,
+      titleFallback: resolved.title || "Listening",
+      durationFallback: resolved.duration,
       userId,
       workspaceId: workspace.id,
       language: workspace.language,
       meta,
     });
-  } catch (error) {
-    return { error: toListeningError(error).code };
   }
+
+  if (!(file instanceof File) || file.size === 0) {
+    throw new ListeningError("INVALID_FILE");
+  }
+
+  if (mediaUrl.trim()) {
+    throw new ListeningError("INVALID_FILE");
+  }
+
+  if (!isAllowedListeningFile(file)) {
+    throw new ListeningError("INVALID_FILE_TYPE");
+  }
+
+  if (file.size > MAX_LISTENING_FILE_SIZE) {
+    throw new ListeningError("FILE_TOO_LARGE");
+  }
+
+  return persistUploadedListeningLesson({
+    file,
+    titleFallback: titleFromFilename(file.name),
+    userId,
+    workspaceId: workspace.id,
+    language: workspace.language,
+    meta,
+  });
 }
 
 export async function transcribeListeningLesson(id: string) {
