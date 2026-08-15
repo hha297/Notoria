@@ -47,23 +47,6 @@ export function isValidListeningSourceUrl(raw: string) {
   }
 }
 
-export function isHostedMediaPageUrl(raw: string) {
-  try {
-    const host = new URL(raw).hostname.replace(/^www\./, "").toLowerCase();
-    return (
-      host === "youtube.com" ||
-      host === "youtu.be" ||
-      host === "m.youtube.com" ||
-      host === "music.youtube.com" ||
-      host.endsWith(".youtube.com") ||
-      host === "soundcloud.com" ||
-      host.endsWith(".soundcloud.com")
-    );
-  } catch {
-    return false;
-  }
-}
-
 export function mediaTypeFromFormat(
   format: string | undefined,
   mimeType: string,
