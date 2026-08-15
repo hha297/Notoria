@@ -8,6 +8,12 @@ import {
   dialogueTurnsForPrompt,
   isMultiSpeakerTranscript,
 } from "@/lib/listening/speakers";
+import type { AppLocale } from "@/i18n/config";
+import {
+  asAppLocale,
+  genericSpeakerLabel,
+  uiLanguageName,
+} from "@/lib/listening/question-locale";
 import type { ListeningPracticeType, ListeningUtterance } from "@/lib/listening/types";
 import { tokenizeSentence, transcriptContains } from "@/lib/listening/utils";
 import {
@@ -119,6 +125,12 @@ function unwrapGeneratedSet(raw: unknown): unknown {
   return raw;
 }
 
+function localizeSpeakerName(name: string, locale: AppLocale) {
+  const match = name.trim().match(/^Speaker\s+([A-Z0-9]+)$/i);
+  if (!match) return name;
+  return genericSpeakerLabel(locale, match[1].toUpperCase());
+}
+
 function typeInstructions(
   type: ListeningPracticeType,
   min: number,
@@ -126,11 +138,12 @@ function typeInstructions(
   max: number,
   durationSeconds: number,
   speakers: string[],
+  locale: AppLocale,
 ) {
   const isDialogue = speakers.length > 1;
-  const speakerA = speakers[0] ?? "Speaker A";
-  const speakerB = speakers[1] ?? "Speaker B";
+  const speakerA = speakers[0] ?? genericSpeakerLabel(locale, "A");
   const pace = `Audio length is about ${durationSeconds} seconds. Create about one question every 10-20 seconds, targeting ${target} questions (minimum ${min}, maximum ${max}).`;
+  const questionLanguage = uiLanguageName(locale);
 
   if (type === "FILL_BLANK") {
     return {
@@ -176,48 +189,32 @@ function typeInstructions(
     };
   }
 
-  const dialogueOptions = isDialogue
-    ? [
-        speakerA,
-        speakerB,
-        speakers[2] ?? "Speaker C",
-        "Nobody in this audio",
-      ].filter((option, index, list) => list.indexOf(option) === index)
-    : [];
-  while (dialogueOptions.length < 4) {
-    dialogueOptions.push(`Speaker ${String.fromCharCode(65 + dialogueOptions.length)}`);
-  }
-
   return {
     summary: `Generate ${target} multiple-choice questions from the transcript.`,
     output: {
       type: "MULTIPLE_CHOICE",
       title: "string",
       questions: [
-        isDialogue
-          ? {
-              question: `What does ${speakerA} say first?`,
-              options: dialogueOptions.slice(0, 4),
-              correctAnswer: speakerA,
-            }
-          : {
-              question: "Why is the speaker going to the restaurant?",
-              options: [
-                "Because he is hungry",
-                "Because he wants to work",
-                "Because he wants to sleep",
-                "Because he has a meeting",
-              ],
-              correctAnswer: "Because he is hungry",
-            },
+        {
+          question: `<comprehension question written in ${questionLanguage}>`,
+          options: [
+            "<answer from the transcript>",
+            "<plausible distractor from the transcript>",
+            "<plausible distractor from the transcript>",
+            "<plausible distractor from the transcript>",
+          ],
+          correctAnswer: "<answer from the transcript>",
+        },
       ],
     },
     rules: [
       pace,
       `You MUST generate at least ${min} questions and should generate ${target}. Do not stop at 2-5 questions.`,
+      `Write every question stem in ${questionLanguage}. Never write question stems in English unless the UI language is English.`,
       "Ask about details throughout the audio: who, what, where, when, why, numbers, and key vocabulary.",
       "Cover the transcript from beginning to end. Do not only ask about the opening lines.",
       "Every question must be multiple choice with exactly 4 distinct options.",
+      "Keep options and correctAnswer in the language of the transcript. Do not translate names, numbers, or quoted words.",
       "Every correct answer must be grounded in the transcript.",
       "Do not invent details that are not in the audio.",
       "Do not rewrite, translate, or summarize the spoken text.",
@@ -238,6 +235,7 @@ function toStoredSet(
   raw: unknown,
   transcript: string,
   extraTerms: string[] = [],
+  uiLocale?: AppLocale,
 ): {
   title: string;
   cefrLevel?: string | null;
@@ -293,7 +291,10 @@ function toStoredSet(
     const stored = storedListeningExerciseSchema.safeParse({
       type: "MULTIPLE_CHOICE",
       question: question.question,
-      data: { options: question.options },
+      data: {
+        options: question.options,
+        ...(uiLocale ? { uiLocale } : {}),
+      },
       correctAnswer: canonical,
     });
     return stored.success ? [stored.data] : [];
@@ -329,6 +330,7 @@ async function requestExerciseJson(input: {
   dialogue: ReturnType<typeof dialogueTurnsForPrompt>;
   exerciseType: ListeningPracticeType;
   language?: string | null;
+  uiLocale: AppLocale;
   cefrLevel?: WritingCefr | null;
   topic?: string | null;
   formality?: WritingFormality | null;
@@ -339,11 +341,13 @@ async function requestExerciseJson(input: {
   durationSeconds: number;
   extraInstruction?: string;
 }) {
+  const locale = input.uiLocale;
   const speakers = [
     ...new Set(
       input.dialogue
         .map((turn) => turn.displayName)
-        .filter((name): name is string => Boolean(name)),
+        .filter((name): name is string => Boolean(name))
+        .map((name) => localizeSpeakerName(name, locale)),
     ),
   ];
   const isDialogue = new Set(input.dialogue.map((turn) => turn.speaker)).size > 1;
@@ -354,7 +358,9 @@ async function requestExerciseJson(input: {
     input.max,
     input.durationSeconds,
     speakers,
+    locale,
   );
+  const questionLanguage = uiLanguageName(locale);
 
   const completion = await input.client.chat.completions.create({
     model: "gpt-4o-mini",
@@ -376,6 +382,11 @@ Rules:
 - Each question must have one clearly correct answer.
 - Avoid ambiguous questions, duplicate options, and meaningless distractors.
 - Split content into many short questions instead of a few broad ones.
+- The app UI language is ${questionLanguage}. Write every multiple-choice question stem in ${questionLanguage}.
+- JSON keys stay in English. Question stem text must be ${questionLanguage}.
+- Fill-in-the-blank sentences must remain in the transcript's original language.
+- Multiple-choice options and correct answers must remain in the transcript's language.
+- If a speaker has no personal name, use ${genericSpeakerLabel(locale, "A")} / ${genericSpeakerLabel(locale, "B")} — never untranslated "Speaker A" unless the UI language is English.
 - Return JSON only.
 ${instructions.rules.map((rule) => `- ${rule}`).join("\n")}${
           input.extraInstruction ? `\n- ${input.extraInstruction}` : ""
@@ -390,7 +401,9 @@ ${instructions.rules.map((rule) => `- ${rule}`).join("\n")}${
             text: sentence,
           })),
           dialogue: isDialogue ? input.dialogue : undefined,
-          language: input.language ?? null,
+          audioLanguage: input.language ?? null,
+          uiLanguage: questionLanguage,
+          uiLocale: locale,
           cefrLevel: input.cefrLevel ?? null,
           topic: input.topic ?? null,
           formality: input.formality ?? null,
@@ -417,6 +430,7 @@ export async function generateListeningExercisesFromTranscript(input: {
   durationSeconds?: number | null;
   utterances?: ListeningUtterance[];
   language?: string | null;
+  uiLocale?: string | null;
   cefrLevel?: WritingCefr | null;
   topic?: string | null;
   formality?: WritingFormality | null;
@@ -439,11 +453,14 @@ export async function generateListeningExercisesFromTranscript(input: {
   const utterances = input.utterances ?? [];
   const isDialogue = isMultiSpeakerTranscript(utterances);
   const dialogue = isDialogue ? dialogueTurnsForPrompt(utterances) : [];
+  const locale = asAppLocale(input.uiLocale);
   const extraTerms = [
     ...new Set(
-      dialogue.flatMap((turn) =>
-        turn.displayName ? [turn.displayName, `Speaker ${turn.speaker}`] : [`Speaker ${turn.speaker}`],
-      ),
+      dialogue.flatMap((turn) => {
+        const labels = [`Speaker ${turn.speaker}`, genericSpeakerLabel(locale, turn.speaker)];
+        if (turn.displayName) labels.push(turn.displayName);
+        return labels;
+      }),
     ),
   ];
 
@@ -467,6 +484,7 @@ export async function generateListeningExercisesFromTranscript(input: {
     dialogue,
     exerciseType,
     language: input.language,
+    uiLocale: locale,
     cefrLevel: input.cefrLevel,
     topic: input.topic,
     formality: input.formality,
@@ -496,7 +514,7 @@ export async function generateListeningExercisesFromTranscript(input: {
     throw new ListeningError("VALIDATION_FAILED");
   }
 
-  let stored = toStoredSet(exerciseType, parsedJson, transcript, extraTerms);
+  let stored = toStoredSet(exerciseType, parsedJson, transcript, extraTerms, locale);
   if (!stored || stored.exercises.length === 0) {
     throw new ListeningError("VALIDATION_FAILED");
   }
@@ -513,7 +531,7 @@ export async function generateListeningExercisesFromTranscript(input: {
 
       if (extraContent) {
         const extraJson = JSON.parse(extraContent) as unknown;
-        const extraStored = toStoredSet(exerciseType, extraJson, transcript, extraTerms);
+        const extraStored = toStoredSet(exerciseType, extraJson, transcript, extraTerms, locale);
         if (extraStored) {
           stored = {
             ...stored,
