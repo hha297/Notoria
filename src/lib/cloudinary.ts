@@ -39,6 +39,10 @@ export function getAvatarPublicId(userId: string) {
   return `${getAvatarFolder(userId)}/avatar`;
 }
 
+export function getListeningFolder(userId: string, workspaceId: string) {
+  return `notoria/listening/${userId}/${workspaceId}`;
+}
+
 export function extractCloudinaryPublicId(url: string): string | null {
   if (!url.includes("res.cloudinary.com")) {
     return null;

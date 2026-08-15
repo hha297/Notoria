@@ -47,6 +47,21 @@ export const flashcardStudyDirectionEnum = pgEnum("flashcard_study_direction", [
   "MEANING_TO_WORD",
 ]);
 
+export const listeningStatusEnum = pgEnum("listening_status", [
+  "UPLOADING",
+  "TRANSCRIBING",
+  "GENERATING",
+  "COMPLETED",
+  "FAILED",
+]);
+
+export const listeningExerciseTypeEnum = pgEnum("listening_exercise_type", [
+  "FILL_BLANK",
+  "MULTIPLE_CHOICE",
+  "DICTATION",
+  "WORD_ORDERING",
+]);
+
 export const users = pgTable("users", {
   id: uuid("id").primaryKey().defaultRandom(),
   name: text("name").notNull(),
@@ -240,6 +255,52 @@ export const exercises = pgTable("exercises", {
     .defaultNow(),
 });
 
+export const listeningLessons = pgTable("listening_lessons", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  userId: uuid("user_id")
+    .notNull()
+    .references(() => users.id, { onDelete: "cascade" }),
+  workspaceId: uuid("workspace_id")
+    .notNull()
+    .references(() => workspaces.id, { onDelete: "cascade" }),
+  title: text("title").notNull(),
+  cloudinaryUrl: text("cloudinary_url").notNull(),
+  cloudinaryPublicId: text("cloudinary_public_id").notNull(),
+  mediaType: text("media_type").notNull(),
+  format: text("format"),
+  duration: integer("duration"),
+  transcript: text("transcript"),
+  transcriptionData: jsonb("transcription_data"),
+  language: text("language"),
+  cefrLevel: text("cefr_level"),
+  topic: text("topic"),
+  formality: text("formality"),
+  exerciseType: listeningExerciseTypeEnum("exercise_type"),
+  status: listeningStatusEnum("status").notNull().default("UPLOADING"),
+  errorCode: text("error_code"),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+export const listeningExercises = pgTable("listening_exercises", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  lessonId: uuid("lesson_id")
+    .notNull()
+    .references(() => listeningLessons.id, { onDelete: "cascade" }),
+  type: listeningExerciseTypeEnum("type").notNull(),
+  question: text("question").notNull(),
+  data: jsonb("data").notNull(),
+  correctAnswer: jsonb("correct_answer").notNull(),
+  sortOrder: integer("sort_order").notNull().default(0),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
 export const grammarNotes = pgTable("grammar_notes", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: uuid("user_id")
@@ -262,6 +323,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   workspaces: many(workspaces),
   vocabularyWords: many(vocabularyWords),
   exercises: many(exercises),
+  listeningLessons: many(listeningLessons),
   grammarNotes: many(grammarNotes),
 }));
 
@@ -272,6 +334,7 @@ export const workspacesRelations = relations(workspaces, ({ one, many }) => ({
   }),
   vocabularyWords: many(vocabularyWords),
   exercises: many(exercises),
+  listeningLessons: many(listeningLessons),
   grammarNotes: many(grammarNotes),
   tags: many(workspaceTags),
 }));
@@ -379,6 +442,31 @@ export const grammarNotesRelations = relations(grammarNotes, ({ one }) => ({
   }),
 }));
 
+export const listeningLessonsRelations = relations(
+  listeningLessons,
+  ({ one, many }) => ({
+    user: one(users, {
+      fields: [listeningLessons.userId],
+      references: [users.id],
+    }),
+    workspace: one(workspaces, {
+      fields: [listeningLessons.workspaceId],
+      references: [workspaces.id],
+    }),
+    exercises: many(listeningExercises),
+  }),
+);
+
+export const listeningExercisesRelations = relations(
+  listeningExercises,
+  ({ one }) => ({
+    lesson: one(listeningLessons, {
+      fields: [listeningExercises.lessonId],
+      references: [listeningLessons.id],
+    }),
+  }),
+);
+
 export type User = typeof users.$inferSelect;
 export type Workspace = typeof workspaces.$inferSelect;
 export type WorkspaceTag = typeof workspaceTags.$inferSelect;
@@ -388,3 +476,5 @@ export type WordExample = typeof wordExamples.$inferSelect;
 export type FlashcardReview = typeof flashcardReviews.$inferSelect;
 export type FlashcardProgress = typeof flashcardProgress.$inferSelect;
 export type Exercise = typeof exercises.$inferSelect;
+export type ListeningLesson = typeof listeningLessons.$inferSelect;
+export type ListeningExercise = typeof listeningExercises.$inferSelect;

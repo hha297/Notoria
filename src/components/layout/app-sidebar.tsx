@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 import {
   BookOpen,
   Dumbbell,
+  Headphones,
   Home,
   Languages,
   PenLine,
@@ -34,6 +35,7 @@ const navItems = [
   { titleKey: "writing", href: "/writing", icon: PenLine },
   { titleKey: "theory", href: "/theory", icon: BookOpen },
   { titleKey: "exercises", href: "/exercises", icon: Dumbbell },
+  { titleKey: "listening", href: "/listening", icon: Headphones },
 ] as const;
 
 type AppSidebarProps = {
