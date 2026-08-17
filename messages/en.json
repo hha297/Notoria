@@ -144,6 +144,16 @@
     "wordExists": "This word already exists in your vocabulary.",
     "wordExistsCheckFailed": "Couldn’t verify if this word already exists. You can try again or save anyway.",
     "wordExistsChecking": "Checking…",
+    "aiSuggestion": "AI suggestion",
+    "aiChecking": "Checking with AI…",
+    "aiDisclaimer": "AI suggestions may be incorrect.",
+    "aiSkip": "Skip",
+    "aiUseWord": "Use {word}",
+    "aiDidYouMean": "Did you mean \"{word}\"?",
+    "aiPossibleMeaning": "Possible meaning",
+    "aiLikelyMeaning": "A likely meaning is \"{meaning}\".",
+    "aiUseSuggestion": "Use suggestion",
+    "aiMeaningMismatch": "\"{meaning}\" does not appear to be a meaning of \"{word}\".",
     "export": {
       "button": "Export",
       "title": "Export Vocabulary",
@@ -308,6 +318,20 @@
       "shuffle": "Shuffle",
       "finish": "Finish round"
     },
+    "ai": {
+      "generate": "Generate with AI",
+      "generateMore": "Generate 10 more",
+      "generating": "Generating questions…",
+      "levelLabel": "CEFR level",
+      "emptyTitle": "Generate fill-in-the-blank questions",
+      "emptyDescription": "Create 10 new sentences from your vocabulary. Every sentence is written from scratch — existing examples are not reused.",
+      "generated": "AI generated",
+      "unavailable": "Could not generate questions right now. Please try again later.",
+      "forbidden": "AI exercise generation is available with Pro.",
+      "upgradeHint": "AI exercise generation is available with Pro.",
+      "emptyWords": "Add vocabulary words before generating questions.",
+      "noneValid": "AI could not create valid questions for these words. Try again."
+    },
     "session": {
       "complete": "Session complete!",
       "score": "{correct} / {total} correct",
@@ -450,6 +474,37 @@
     },
     "content": "Content",
     "contentPlaceholder": "Start writing your content here...",
+    "ai": {
+      "check": "Check with AI",
+      "improve": "Improve sentence",
+      "grammar": "Check grammar",
+      "checking": "Checking with AI…",
+      "checkingImprove": "Improving sentence…",
+      "checkingGrammar": "Checking grammar…",
+      "suggestion": "AI suggestion",
+      "apply": "Use",
+      "skip": "Skip",
+      "disclaimer": "AI suggestions may be incorrect.",
+      "empty": "Write something before checking with AI.",
+      "unavailable": "AI suggestions are temporarily unavailable. Please try again later.",
+      "forbidden": "AI writing assistance is available with Pro.",
+      "noIssues": "No issues found.",
+      "noImprove": "This sentence already sounds natural.",
+      "noGrammar": "No grammar issues found.",
+      "applyFailed": "Could not apply that suggestion automatically.",
+      "upgradeHint": "AI writing assistance is available with Pro.",
+      "types": {
+        "grammar": "Grammar",
+        "spelling": "Spelling",
+        "vocabulary": "Vocabulary",
+        "style": "Style",
+        "clarity": "Clarity"
+      },
+      "severities": {
+        "error": "Incorrect",
+        "suggestion": "Optional"
+      }
+    },
     "sections": "Sections",
     "section": "Section",
     "sectionTitlePlaceholder": "Section title (optional)",
@@ -1118,5 +1173,57 @@
     "nameUpdated": "Name updated",
     "nameUpdateFailed": "Could not update name",
     "nameTooShort": "Name must be at least 2 characters"
+  },
+  "billing": {
+    "title": "Notoria Pro",
+    "description": "Unlock AI-powered learning features.",
+    "proDescription": "You currently have Notoria Pro.",
+    "tagline": "Unlock AI-powered learning features.",
+    "price": "€4.99 / month",
+    "upgrade": "Upgrade to Pro",
+    "manage": "Manage subscription",
+    "proBadge": "Pro",
+    "freeBadge": "Free",
+    "renewsOn": "Renews on {date}",
+    "activating": "Confirming your subscription…",
+    "checkoutSuccess": "Payment received. Pro will activate shortly.",
+    "checkoutCanceled": "Checkout was canceled. You were not charged.",
+    "checkoutFailed": "Could not start checkout. Please try again.",
+    "portalFailed": "Could not open billing management. Please try again.",
+    "alreadyPro": "You already have an active Pro subscription.",
+    "notConfigured": "Billing is not configured yet.",
+    "noCustomer": "No billing customer is linked to this account yet.",
+    "modalTitle": "Upgrade to Notoria Pro",
+    "modalSubtitle": "Unlock AI-powered learning tools and get more out of Notoria.",
+    "lockedTitle": "Pro feature",
+    "lockedDescription": "This feature requires Pro. Upgrade to unlock it and get access to AI-powered tools and other Pro features.",
+    "planName": "Pro",
+    "cancelAnytime": "Cancel anytime",
+    "benefits": {
+      "vocab": {
+        "title": "AI-powered vocabulary assistance",
+        "body": "Generate vocabulary ideas, get explanations, examples, and personalized learning help directly in Vocabulary."
+      },
+      "writing": {
+        "title": "AI writing assistance",
+        "body": "Get AI-powered corrections, suggestions, explanations, and feedback to improve your writing."
+      },
+      "exercises": {
+        "title": "AI-powered exercises",
+        "body": "Create and practice personalized exercises with AI based on your learning needs."
+      },
+      "listening": {
+        "title": "Enhanced listening experience",
+        "body": "Get more powerful tools for practicing and working with listening content."
+      },
+      "files": {
+        "title": "PDF & Word (DOCX) support",
+        "body": "Export vocabulary, writing, and theory notes to PDF or DOCX, and keep your materials easy to share."
+      },
+      "personal": {
+        "title": "A more personalized learning experience",
+        "body": "Use AI-powered tools to make your vocabulary, writing, and practice sessions more useful and tailored to you."
+      }
+    }
   }
 }

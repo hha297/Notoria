@@ -37,7 +37,11 @@ export default async function FillInBlankPage() {
         </Link>
         <PageHeader eyebrow={t("title")} title={t("types.fill-in-blank.label")} highlight={t("practice")} description={t("types.fill-in-blank.description")} />
       </div>
-      <FillBlankSession workspaceId={workspace.id} words={words} />
+      <FillBlankSession
+        workspaceId={workspace.id}
+        words={words}
+        language={workspace.language}
+      />
     </div>
   );
 }

@@ -9,6 +9,7 @@ import type {
   VocabularyExportOptions,
 } from "@/lib/vocabulary/export/types";
 import type { VocabularyExportSourceWord } from "@/lib/vocabulary/export/build-document";
+import { assertPaidDocumentExport } from "@/lib/actions/paid-features";
 import { downloadBlob } from "@/lib/writing/export/download";
 
 export type {
@@ -24,6 +25,11 @@ export async function exportVocabulary(params: {
   options: VocabularyExportOptions;
   labels: VocabularyExportLabels;
 }): Promise<{ filename: string }> {
+  const access = await assertPaidDocumentExport(params.options.format);
+  if (!access.ok) {
+    throw new Error(access.code);
+  }
+
   const document = buildVocabularyExportDocument(
     params.workspaceName,
     params.words,

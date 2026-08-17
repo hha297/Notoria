@@ -54,6 +54,7 @@ export default async function EditVocabularyPage({
       <VocabularyForm
         previewHref={previewHref}
         existingCustomTags={existingCustomTags}
+        language={workspace.language}
         initialData={{
           id: word.id,
           word: word.word,

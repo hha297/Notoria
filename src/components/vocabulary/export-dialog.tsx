@@ -1,9 +1,11 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { Download, Loader2 } from "lucide-react";
+import { useEffect, useMemo, useState } from "react";
+import { Download, Loader2, Lock } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { useProAccess } from "@/components/billing/pro-access-provider";
+import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -36,6 +38,7 @@ function RadioOption({
   value,
   checked,
   label,
+  locked = false,
   onChange,
 }: {
   id: string;
@@ -43,6 +46,7 @@ function RadioOption({
   value: string;
   checked: boolean;
   label: string;
+  locked?: boolean;
   onChange: () => void;
 }) {
   return (
@@ -53,6 +57,7 @@ function RadioOption({
         checked
           ? "border-accent-lime/50 bg-accent-lime/10 text-ink"
           : "border-hairline-cloud hover:bg-muted/40",
+        locked && lockedFeatureClassName,
       )}
     >
       <input
@@ -64,6 +69,7 @@ function RadioOption({
         onChange={onChange}
         className="size-4 accent-[var(--accent-lime)]"
       />
+      {locked ? <Lock className="size-3.5 text-muted-foreground" /> : null}
       <span className="font-medium">{label}</span>
     </label>
   );
@@ -105,10 +111,20 @@ export function VocabularyExportDialog({
 }: VocabularyExportDialogProps) {
   const t = useTranslations("vocabulary.export");
   const tc = useTranslations("common");
-  const [options, setOptions] = useState<VocabularyExportOptions>(
-    DEFAULT_VOCABULARY_EXPORT_OPTIONS,
-  );
+  const { hasProAccess, openUpgrade } = useProAccess();
+  const [options, setOptions] = useState<VocabularyExportOptions>(() => ({
+    ...DEFAULT_VOCABULARY_EXPORT_OPTIONS,
+    format: hasProAccess ? DEFAULT_VOCABULARY_EXPORT_OPTIONS.format : "csv",
+  }));
   const [isExporting, setIsExporting] = useState(false);
+
+  useEffect(() => {
+    if (!hasProAccess) {
+      setOptions((current) =>
+        current.format === "csv" ? current : { ...current, format: "csv" },
+      );
+    }
+  }, [hasProAccess]);
 
   const countLabel = useMemo(
     () => t("rowCount", { count: words.length }),
@@ -116,6 +132,10 @@ export function VocabularyExportDialog({
   );
 
   function setFormat(format: VocabularyExportFormat) {
+    if (!hasProAccess && format !== "csv") {
+      openUpgrade();
+      return;
+    }
     setOptions((current) => ({ ...current, format }));
   }
 
@@ -143,7 +163,9 @@ export function VocabularyExportDialog({
       onOpenChange(false);
     } catch (error) {
       console.error("[vocabulary-export]", error);
-      if (error instanceof Error && error.message === "EMPTY_EXPORT") {
+      if (error instanceof Error && error.message === "PRO_REQUIRED") {
+        openUpgrade();
+      } else if (error instanceof Error && error.message === "EMPTY_EXPORT") {
         toast.error(t("empty"));
       } else {
         toast.error(t("failed"));
@@ -173,6 +195,7 @@ export function VocabularyExportDialog({
                 value="pdf"
                 checked={options.format === "pdf"}
                 label={t("formatPdf")}
+                locked={!hasProAccess}
                 onChange={() => setFormat("pdf")}
               />
               <RadioOption
@@ -189,6 +212,7 @@ export function VocabularyExportDialog({
                 value="docx"
                 checked={options.format === "docx"}
                 label={t("formatDocx")}
+                locked={!hasProAccess}
                 onChange={() => setFormat("docx")}
               />
             </div>

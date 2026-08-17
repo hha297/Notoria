@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Loader2, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
+import { ProSubscriptionCard } from "@/components/account/pro-subscription-card";
 import { UserAvatar } from "@/components/account/user-avatar";
 import { PasswordInput } from "@/components/auth/password-input";
 import { Button } from "@/components/ui/button";
@@ -24,6 +25,7 @@ import {
   updatePassword,
   uploadAvatar,
 } from "@/lib/actions/account";
+import type { BillingState } from "@/lib/stripe/types";
 
 type AccountSettingsProps = {
   user: {
@@ -32,10 +34,12 @@ type AccountSettingsProps = {
     email: string;
     image: string | null;
     passwordHash: string | null;
+    billing: BillingState;
   };
+  checkoutResult?: string;
 };
 
-export function AccountSettings({ user }: AccountSettingsProps) {
+export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) {
   const router = useRouter();
   const { update } = useSession();
   const t = useTranslations("auth");
@@ -170,6 +174,10 @@ export function AccountSettings({ user }: AccountSettingsProps) {
 
   return (
     <div className="grid max-w-3xl gap-6">
+      <ProSubscriptionCard
+        billing={user.billing}
+        checkoutResult={checkoutResult}
+      />
       <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
         <CardHeader className="border-b border-hairline-cloud px-6 py-5">
           <CardTitle className="text-lg text-ink">{t("avatar")}</CardTitle>

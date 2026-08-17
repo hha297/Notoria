@@ -36,6 +36,8 @@ export default async function NewVocabularyPage() {
     );
   }
 
+  const existingCustomTags = await getActiveWorkspaceCustomTags();
+
   return (
     <div className="mx-auto max-w-3xl space-y-8 pt-1 sm:space-y-10 sm:pt-2">
       <div className="space-y-6">
@@ -53,7 +55,10 @@ export default async function NewVocabularyPage() {
           description={t("formDescription")}
         />
       </div>
-      <VocabularyForm existingCustomTags={await getActiveWorkspaceCustomTags()} />
+      <VocabularyForm
+        existingCustomTags={existingCustomTags}
+        language={workspace.language}
+      />
     </div>
   );
 }

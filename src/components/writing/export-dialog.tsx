@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Download, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { useProAccess } from "@/components/billing/pro-access-provider";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -107,6 +108,7 @@ export function WritingExportDialog({
 }: WritingExportDialogProps) {
   const t = useTranslations("writing.export");
   const tc = useTranslations("common");
+  const { openUpgrade } = useProAccess();
   const [options, setOptions] = useState<ExportOptions>(DEFAULT_EXPORT_OPTIONS);
   const [isExporting, setIsExporting] = useState(false);
 
@@ -136,7 +138,9 @@ export function WritingExportDialog({
       onOpenChange(false);
     } catch (error) {
       console.error("[writing-export]", error);
-      if (error instanceof Error && error.message === "EMPTY_EXPORT") {
+      if (error instanceof Error && error.message === "PRO_REQUIRED") {
+        openUpgrade();
+      } else if (error instanceof Error && error.message === "EMPTY_EXPORT") {
         toast.error(t("empty"));
       } else {
         toast.error(t("failed"));

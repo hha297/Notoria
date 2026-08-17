@@ -1,10 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
-import { CheckCircle2, XCircle } from "lucide-react";
+import { ChevronLeft, ChevronRight, RotateCcw, Sparkles } from "lucide-react";
+import { CheckCircle2, Loader2, XCircle } from "lucide-react";
+import { toast } from "sonner";
+import { useProAccess } from "@/components/billing/pro-access-provider";
+import { ExerciseAiBar } from "@/components/exercises/exercise-ai-bar";
 import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
@@ -12,9 +15,20 @@ import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { buildFillBlankItems, type FillBlankItem } from "@/lib/exercises/fill-blank";
+import { requestExerciseAi } from "@/lib/exercises/ai-client";
+import type { ExerciseAiCefr } from "@/lib/exercises/ai-types";
+import {
+  fillBlankExerciseToItem,
+  fillBlankItemSentence,
+} from "@/lib/exercises/ai-validate";
+import { pickFillBlankAiWords, toExerciseAiWord } from "@/lib/exercises/ai-words";
+import {
+  expectedFillBlankAnswer,
+  buildFillBlankItems,
+  type FillBlankItem,
+} from "@/lib/exercises/fill-blank";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
-import { answersMatchAny } from "@/lib/exercises/utils";
+import { answersMatchAny, shuffleArray } from "@/lib/exercises/utils";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
 import { DEFAULT_FLASHCARD_FILTERS } from "@/types/flashcards";
@@ -23,50 +37,178 @@ import { cn } from "@/lib/utils";
 type FillBlankSessionProps = {
   workspaceId: string;
   words: FlashcardWord[];
+  language?: string;
 };
 
-export function FillBlankSession({ workspaceId, words }: FillBlankSessionProps) {
+export function FillBlankSession({
+  workspaceId,
+  words,
+  language,
+}: FillBlankSessionProps) {
   const t = useTranslations("exercises.fillInBlank");
   const tSession = useTranslations("exercises.session");
+  const tAi = useTranslations("exercises.ai");
+  const { hasProAccess, openUpgrade } = useProAccess();
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
+  const [aiItems, setAiItems] = useState<FillBlankItem[] | null>(null);
   const [itemIds, setItemIds] = useState<string[]>([]);
   const [index, setIndex] = useState(0);
   const [input, setInput] = useState("");
   const [revealed, setRevealed] = useState(false);
   const [sessionComplete, setSessionComplete] = useState(false);
   const [score, setScore] = useState({ correct: 0, answered: 0 });
+  const [generating, setGenerating] = useState(false);
+  const [level, setLevel] = useState<ExerciseAiCefr>("a2");
+  const [usedWordIds, setUsedWordIds] = useState<string[]>([]);
+  const avoidByWord = useRef<Record<string, string[]>>({});
+  const batchRef = useRef(0);
 
   const filteredWords = useMemo(
     () => filterFlashcardWords(words, filters),
     [words, filters],
   );
-  const poolItems = useMemo(() => buildFillBlankItems(filteredWords), [filteredWords]);
-  const itemMap = useMemo(() => new Map(poolItems.map((i) => [i.id, i])), [poolItems]);
+  const exampleItems = useMemo(
+    () => buildFillBlankItems(filteredWords),
+    [filteredWords],
+  );
+  const sessionItems = aiItems ?? (!hasProAccess ? exampleItems : []);
+  const itemMap = useMemo(
+    () => new Map(sessionItems.map((item) => [item.id, item])),
+    [sessionItems],
+  );
 
-  const startSession = useCallback(() => {
-    const sampled = sampleSessionItems(poolItems, "fill_blank");
-    setItemIds(sampled.map((i) => i.id));
+  const resetRound = useCallback((ids: string[]) => {
+    setItemIds(ids);
     setIndex(0);
     setScore({ correct: 0, answered: 0 });
     setSessionComplete(false);
     setInput("");
     setRevealed(false);
-  }, [poolItems]);
+  }, []);
+
+  const startExampleSession = useCallback(() => {
+    const sampled = sampleSessionItems(exampleItems, "fill_blank");
+    setAiItems(null);
+    resetRound(sampled.map((item) => item.id));
+  }, [exampleItems, resetRound]);
+
+  const startFromAiItems = useCallback(
+    (items: FillBlankItem[]) => {
+      resetRound(shuffleArray(items).map((item) => item.id));
+    },
+    [resetRound],
+  );
 
   useEffect(() => {
-    startSession();
-  }, [startSession, workspaceId]);
+    if (!hasProAccess) startExampleSession();
+  }, [hasProAccess, startExampleSession]);
+
+  useEffect(() => {
+    if (!hasProAccess) return;
+    setAiItems(null);
+    setUsedWordIds([]);
+    avoidByWord.current = {};
+    resetRound([]);
+  }, [hasProAccess, workspaceId, resetRound]);
 
   useEffect(() => {
     setInput("");
     setRevealed(false);
   }, [index, itemIds]);
 
+  const generateQuestions = useCallback(async () => {
+    if (!hasProAccess) {
+      openUpgrade();
+      return;
+    }
+    if (filteredWords.length === 0) {
+      toast.error(tAi("emptyWords"));
+      return;
+    }
+
+    setGenerating(true);
+    try {
+      const picked = pickFillBlankAiWords(filteredWords, 10, usedWordIds);
+      const payloadWords = picked.map((word) =>
+        toExerciseAiWord(word, avoidByWord.current[word.id] ?? []),
+      );
+      const result = await requestExerciseAi({
+        exerciseType: "fill-in-blank",
+        language: language ?? null,
+        level,
+        words: payloadWords,
+      });
+
+      if (!result.ok) {
+        if (result.code === "AI_FORBIDDEN") {
+          openUpgrade();
+          return;
+        }
+        toast.error(
+          result.code === "AI_EMPTY" ? tAi("emptyWords") : tAi("unavailable"),
+        );
+        return;
+      }
+
+      batchRef.current += 1;
+      const batchId = `${Date.now()}-${batchRef.current}`;
+      const remaining = [...picked];
+      const nextItems: FillBlankItem[] = [];
+
+      for (const [itemIndex, exercise] of result.exercises.entries()) {
+        const matchIndex = remaining.findIndex((word) => word.id === exercise.wordId);
+        const word =
+          matchIndex >= 0
+            ? remaining.splice(matchIndex, 1)[0]
+            : picked.find((item) => item.id === exercise.wordId);
+        if (!word) continue;
+        const item = fillBlankExerciseToItem(
+          exercise,
+          { ...toExerciseAiWord(word), meanings: word.meanings },
+          `${batchId}-${itemIndex}`,
+        );
+        if (item) nextItems.push(item);
+      }
+
+      if (nextItems.length === 0) {
+        toast.error(tAi("noneValid"));
+        return;
+      }
+
+      for (const item of nextItems) {
+        const sentence = fillBlankItemSentence(item);
+        const existing = avoidByWord.current[item.wordId] ?? [];
+        avoidByWord.current[item.wordId] = [...existing, sentence].slice(-12);
+      }
+
+      setUsedWordIds((current) => [
+        ...current,
+        ...nextItems.map((item) => item.wordId),
+      ]);
+      setAiItems(nextItems);
+      startFromAiItems(nextItems);
+    } catch {
+      toast.error(tAi("unavailable"));
+    } finally {
+      setGenerating(false);
+    }
+  }, [
+    hasProAccess,
+    openUpgrade,
+    filteredWords,
+    language,
+    level,
+    startFromAiItems,
+    tAi,
+    usedWordIds,
+  ]);
+
   const current = itemMap.get(itemIds[index] ?? "");
   const total = itemIds.length;
   const isCorrect = current
     ? answersMatchAny(input, current.acceptableAnswers)
     : false;
+  const hasSession = total > 0;
 
   const check = useCallback(() => {
     if (!current || revealed || !input.trim()) return;
@@ -85,6 +227,14 @@ export function FillBlankSession({ workspaceId, words }: FillBlankSessionProps) 
     setSessionComplete(true);
   }, [index, total]);
 
+  const tryAgain = useCallback(() => {
+    if (aiItems) {
+      startFromAiItems(aiItems);
+      return;
+    }
+    startExampleSession();
+  }, [aiItems, startExampleSession, startFromAiItems]);
+
   useHotkeys("enter", (e) => {
     e.preventDefault();
     if (!revealed) check();
@@ -92,57 +242,130 @@ export function FillBlankSession({ workspaceId, words }: FillBlankSessionProps) 
   }, { enableOnFormTags: true }, [revealed, check, next]);
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
-  if (poolItems.length === 0) {
+
+  const aiBar = (
+    <ExerciseAiBar
+      generating={generating}
+      hasSession={Boolean(aiItems)}
+      level={level}
+      disabled={filteredWords.length === 0}
+      onLevelChange={setLevel}
+      onGenerate={() => void generateQuestions()}
+    />
+  );
+
+  if (filteredWords.length === 0) {
     return (
       <div className="space-y-6">
         <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
+        {aiBar}
+        <VocabularyEmpty variant="no-filtered" />
+      </div>
+    );
+  }
+
+  if (!hasProAccess && exampleItems.length === 0) {
+    return (
+      <div className="space-y-6">
+        <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
+        {aiBar}
         <VocabularyEmpty variant="no-examples" />
       </div>
     );
   }
 
-  if (!current && !sessionComplete) return null;
-
   return (
     <div className="space-y-6">
       <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
-      {sessionComplete ? (
+      {aiBar}
+
+      {sessionComplete && hasSession ? (
         <SessionCompleteCard
           title={tSession("complete")}
           scoreLabel={tSession("score", { correct: score.correct, total })}
           tryAgainLabel={tSession("tryAgain")}
-          onTryAgain={startSession}
+          onTryAgain={tryAgain}
+          extraAction={{
+            label: tAi("generateMore"),
+            onClick: () => void generateQuestions(),
+            loading: generating,
+            locked: !hasProAccess,
+          }}
         />
       ) : current ? (
         <>
-      <ExerciseProgressHeader
-        progressLabel={t("progress", { current: index + 1, total })}
-        scoreLabel={t("score", { correct: score.correct, answered: score.answered })}
-        hint={t("keyboardHint")}
-        progressValue={total ? ((index + 1) / total) * 100 : 0}
-      />
-      <FillBlankCard
-        item={current}
-        input={input}
-        revealed={revealed}
-        isCorrect={isCorrect}
-        onInputChange={setInput}
-        onCheck={check}
-      />
-      <ExerciseNav
-        t={t}
-        canPrev={index > 0}
-        revealed={revealed}
-        onPrev={() => setIndex((i) => i - 1)}
-        onNext={next}
-        onCheck={check}
-        onTryAgain={startSession}
-        tryAgainLabel={tSession("tryAgain")}
-        canCheck={!!input.trim()}
-        isLast={index >= total - 1}
-      />
+          <ExerciseProgressHeader
+            progressLabel={t("progress", { current: index + 1, total })}
+            scoreLabel={t("score", { correct: score.correct, answered: score.answered })}
+            hint={t("keyboardHint")}
+            progressValue={total ? ((index + 1) / total) * 100 : 0}
+          />
+          <FillBlankCard
+            item={current}
+            input={input}
+            revealed={revealed}
+            isCorrect={isCorrect}
+            onInputChange={setInput}
+            onCheck={check}
+          />
+          <ExerciseNav
+            t={t}
+            canPrev={index > 0}
+            revealed={revealed}
+            onPrev={() => setIndex((i) => i - 1)}
+            onNext={next}
+            onCheck={check}
+            onTryAgain={tryAgain}
+            tryAgainLabel={tSession("tryAgain")}
+            canCheck={!!input.trim()}
+            isLast={index >= total - 1}
+          />
         </>
+      ) : hasProAccess ? (
+        <EmptyGenerateCard
+          generating={generating}
+          onGenerate={() => void generateQuestions()}
+        />
       ) : null}
+    </div>
+  );
+}
+
+function EmptyGenerateCard({
+  generating,
+  onGenerate,
+}: {
+  generating: boolean;
+  onGenerate: () => void;
+}) {
+  const tAi = useTranslations("exercises.ai");
+
+  return (
+    <div className="mx-auto max-w-lg rounded-3xl border border-hairline-cloud bg-card p-6 text-center shadow-xl shadow-ink/5 sm:p-10">
+      <div className="mx-auto mb-5 flex size-12 items-center justify-center rounded-full bg-accent-lime/20 text-ink">
+        {generating ? (
+          <Loader2 className="size-5 animate-spin" />
+        ) : (
+          <Sparkles className="size-5" />
+        )}
+      </div>
+      <p className="text-lg font-medium text-ink">{tAi("emptyTitle")}</p>
+      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
+        {tAi("emptyDescription")}
+      </p>
+      <Button
+        type="button"
+        className="mt-6"
+        disabled={generating}
+        onClick={onGenerate}
+      >
+        {generating ? (
+          <Loader2 className="size-4 animate-spin" />
+        ) : (
+          <Sparkles className="size-4" />
+        )}
+        {generating ? tAi("generating") : tAi("generate")}
+      </Button>
     </div>
   );
 }
@@ -163,13 +386,23 @@ function FillBlankCard({
   onCheck: () => void;
 }) {
   const t = useTranslations("exercises.fillInBlank");
+  const tAi = useTranslations("exercises.ai");
   const blankMinWidth = Math.max(item.word.length + 2, 6);
+  const expected = expectedFillBlankAnswer(item);
 
   return (
     <div className="mx-auto max-w-3xl rounded-3xl border border-hairline-cloud bg-card p-6 shadow-xl shadow-ink/5 sm:p-10 md:p-12">
-      <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-violet-mid">
-        {t("prompt")}
-      </p>
+      <div className="flex items-center justify-between gap-3">
+        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-violet-mid">
+          {t("prompt")}
+        </p>
+        {item.aiGenerated ? (
+          <p className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+            <Sparkles className="size-3" />
+            {tAi("generated")}
+          </p>
+        ) : null}
+      </div>
 
       <form
         onSubmit={(e) => {
@@ -199,7 +432,7 @@ function FillBlankCard({
                       : "bg-[#fff1f6] text-destructive ring-2 ring-[#f3b8cc]/60",
                   )}
                 >
-                  {isCorrect ? input : item.word}
+                  {isCorrect ? input : expected}
                 </span>
               ) : (
                 <Input
@@ -245,7 +478,7 @@ function FillBlankCard({
             ) : (
               <XCircle className="size-5 shrink-0" />
             )}
-            {isCorrect ? t("correct") : t("incorrect", { answer: item.word })}
+            {isCorrect ? t("correct") : t("incorrect", { answer: expected })}
           </div>
         )}
       </form>

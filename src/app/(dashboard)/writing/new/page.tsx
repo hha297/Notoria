@@ -52,7 +52,10 @@ export default async function NewWritingPage() {
           description={t("formDescription")}
         />
       </div>
-      <WritingEditor exerciseType="WRITING" />
+      <WritingEditor
+        exerciseType="WRITING"
+        language={workspace.language}
+      />
     </div>
   );
 }

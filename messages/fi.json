@@ -144,6 +144,16 @@
     "wordExists": "Tämä sana on jo sanastossasi.",
     "wordExistsCheckFailed": "Sanan olemassaoloa ei voitu tarkistaa. Voit yrittää uudelleen tai tallentaa silti.",
     "wordExistsChecking": "Tarkistetaan…",
+    "aiSuggestion": "Tekoälyehdotus",
+    "aiChecking": "Tarkistetaan tekoälyllä…",
+    "aiDisclaimer": "Tekoälyehdotukset voivat olla virheellisiä.",
+    "aiSkip": "Ohita",
+    "aiUseWord": "Käytä: {word}",
+    "aiDidYouMean": "Tarkoititko \"{word}\"?",
+    "aiPossibleMeaning": "Mahdollinen merkitys",
+    "aiLikelyMeaning": "Todennäköisempi merkitys on \"{meaning}\".",
+    "aiUseSuggestion": "Käytä ehdotusta",
+    "aiMeaningMismatch": "\"{meaning}\" ei näytä olevan merkitys sanalle \"{word}\".",
     "export": {
       "button": "Vie",
       "title": "Vie sanasto",
@@ -307,6 +317,20 @@
       "check": "Tarkista",
       "shuffle": "Sekoita",
       "finish": "Lopeta kierros"
+    },
+    "ai": {
+      "generate": "Luo tekoälyllä",
+      "generateMore": "Luo 10 lisää",
+      "generating": "Luodaan kysymyksiä…",
+      "levelLabel": "CEFR-taso",
+      "emptyTitle": "Luo täydennä aukko -kysymyksiä",
+      "emptyDescription": "Luo 10 uutta lausetta sanastostasi. Jokainen lause kirjoitetaan alusta — olemassa olevia esimerkkejä ei käytetä uudelleen.",
+      "generated": "Tekoälyn luoma",
+      "unavailable": "Kysymyksiä ei voitu luoda juuri nyt. Yritä myöhemmin.",
+      "forbidden": "Tekoälyharjoitukset kuuluvat Pro-tilaukseen.",
+      "upgradeHint": "Tekoälyharjoitukset kuuluvat Pro-tilaukseen.",
+      "emptyWords": "Lisää sanoja ennen kysymysten luomista.",
+      "noneValid": "Tekoäly ei saanut luotua kelvollisia kysymyksiä näille sanoille. Yritä uudelleen."
     },
     "session": {
       "complete": "Harjoitus valmis!",
@@ -970,6 +994,58 @@
     "nameUpdateFailed": "Nimen päivitys epäonnistui",
     "nameTooShort": "Nimen on oltava vähintään 2 merkkiä"
   },
+  "billing": {
+    "title": "Notoria Pro",
+    "description": "Avaa tekoälyyn perustuvat oppimisominaisuudet.",
+    "proDescription": "Sinulla on Notoria Pro.",
+    "tagline": "Avaa tekoälyyn perustuvat oppimisominaisuudet.",
+    "price": "4,99 € / kuukausi",
+    "upgrade": "Päivitä Pro-tilaukseen",
+    "manage": "Hallinnoi tilausta",
+    "proBadge": "Pro",
+    "freeBadge": "Ilmainen",
+    "renewsOn": "Uusiutuu {date}",
+    "activating": "Vahvistetaan tilaustasi…",
+    "checkoutSuccess": "Maksu vastaanotettu. Pro aktivoituu hetken kuluttua.",
+    "checkoutCanceled": "Kassa peruutettiin. Sinua ei veloitettu.",
+    "checkoutFailed": "Kassaa ei voitu aloittaa. Yritä uudelleen.",
+    "portalFailed": "Laskutuksen hallintaa ei voitu avata. Yritä uudelleen.",
+    "alreadyPro": "Sinulla on jo aktiivinen Pro-tilaus.",
+    "notConfigured": "Laskutusta ei ole vielä määritetty.",
+    "noCustomer": "Tähän tiliin ei ole vielä liitetty laskutusasiakasta.",
+    "modalTitle": "Päivitä Notoria Pro -tilaukseen",
+    "modalSubtitle": "Avaa tekoälytyökalut ja saa enemmän irti Notoriasta.",
+    "lockedTitle": "Pro-ominaisuus",
+    "lockedDescription": "Tämä ominaisuus vaatii Pro-tilauksen. Päivitä Prohon avataksesi sen ja saadaksesi tekoälytyökalut sekä muut Pro-ominaisuudet.",
+    "planName": "Pro",
+    "cancelAnytime": "Peru milloin tahansa",
+    "benefits": {
+      "vocab": {
+        "title": "Tekoälyavusteinen sanasto",
+        "body": "Luo sanastoideoita ja saat selityksiä, esimerkkejä ja henkilökohtaista apua suoraan Sanasto-osiossa."
+      },
+      "writing": {
+        "title": "Tekoälyavusteinen kirjoittaminen",
+        "body": "Saat tekoälyn korjauksia, ehdotuksia, selityksiä ja palautetta kirjoittamisesi tueksi."
+      },
+      "exercises": {
+        "title": "Tekoälyavusteiset harjoitukset",
+        "body": "Luo ja harjoittele henkilökohtaisia tehtäviä tekoälyn avulla oppimistarpeidesi mukaan."
+      },
+      "listening": {
+        "title": "Parempi kuuntelukokemus",
+        "body": "Saat tehokkaampia työkaluja kuuntelusisällön harjoitteluun ja käsittelyyn."
+      },
+      "files": {
+        "title": "PDF- ja Word-tuki (DOCX)",
+        "body": "Vie sanasto, kirjoitukset ja teoriamuistiinpanot PDF- tai Word-tiedostoina ja jaa ne helposti."
+      },
+      "personal": {
+        "title": "Henkilökohtaisempi oppiminen",
+        "body": "Käytä tekoälytyökaluja, jotta sanasto, kirjoittaminen ja harjoittelu palvelevat sinua paremmin."
+      }
+    }
+  },
   "writing": {
     "title": "Kirjoittaminen",
     "studio": "studio",
@@ -1068,6 +1144,37 @@
     },
     "content": "Sisältö",
     "contentPlaceholder": "Aloita tehtävän sisällön kirjoittaminen…",
+    "ai": {
+      "check": "Tarkista tekoälyllä",
+      "improve": "Paranna lausetta",
+      "grammar": "Tarkista kielioppi",
+      "checking": "Tarkistetaan tekoälyllä…",
+      "checkingImprove": "Parannetaan lausetta…",
+      "checkingGrammar": "Tarkistetaan kielioppia…",
+      "suggestion": "Tekoälyehdotus",
+      "apply": "Käytä",
+      "skip": "Ohita",
+      "disclaimer": "Tekoälyehdotukset voivat olla virheellisiä.",
+      "empty": "Kirjoita jotain ennen tekoälytarkistusta.",
+      "unavailable": "Tekoälyehdotukset eivät ole juuri nyt saatavilla. Yritä myöhemmin.",
+      "forbidden": "Tekoälyavusteinen kirjoitus kuuluu Pro-tilaukseen.",
+      "noIssues": "Ei havaittuja ongelmia.",
+      "noImprove": "Lause kuulostaa jo luontevalta.",
+      "noGrammar": "Kieliopivirheitä ei löytynyt.",
+      "applyFailed": "Ehdotusta ei voitu soveltaa automaattisesti.",
+      "upgradeHint": "Tekoälyavusteinen kirjoitus kuuluu Pro-tilaukseen.",
+      "types": {
+        "grammar": "Kielioppi",
+        "spelling": "Oikeinkirjoitus",
+        "vocabulary": "Sanasto",
+        "style": "Tyyli",
+        "clarity": "Selkeys"
+      },
+      "severities": {
+        "error": "Virhe",
+        "suggestion": "Valinnainen"
+      }
+    },
     "sections": "Osiot",
     "section": "Osio",
     "sectionTitlePlaceholder": "Osion otsikko (valinnainen)",

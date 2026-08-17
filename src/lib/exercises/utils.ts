@@ -82,7 +82,9 @@ export function assignWordMeanings(
   const assignments = new Map<string, string>();
   const takenKeys = new Set<string>();
 
-  for (const word of shuffleArray(words.filter((item) => item.meanings.length > 0))) {
+  for (const word of shuffleArray(
+    words.filter((item) => item.meanings.length > 0),
+  )) {
     const candidates = shuffleArray(trimmedMeanings(word.meanings));
     const conflictFree = candidates.find(
       (meaning) => !takenKeys.has(normalizeMeaningKey(meaning)),

@@ -7,7 +7,9 @@ export default auth((request) => {
   const isAuthRoute =
     pathname.startsWith("/sign-in") || pathname.startsWith("/sign-up");
   const isPublicRoute =
-    isAuthRoute || pathname.startsWith("/api/auth");
+    isAuthRoute ||
+    pathname.startsWith("/api/auth") ||
+    pathname.startsWith("/api/stripe/webhook");
 
   if (!isLoggedIn && !isPublicRoute) {
     const loginUrl = new URL("/sign-in", request.nextUrl.origin);

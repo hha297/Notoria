@@ -6,6 +6,7 @@ import { ChevronsUpDown, LogOut, User } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { UserAvatar } from "@/components/account/user-avatar";
+import { Badge } from "@/components/ui/badge";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,11 +23,13 @@ type UserButtonProps = {
   name: string;
   email: string;
   image?: string | null;
+  isPro?: boolean;
 };
 
-export function UserButton({ name, email, image }: UserButtonProps) {
+export function UserButton({ name, email, image, isPro = false }: UserButtonProps) {
   const router = useRouter();
   const t = useTranslations("auth");
+  const tb = useTranslations("billing");
   const { isMobile, setOpenMobile } = useSidebar();
 
   function closeMobileSidebar() {
@@ -58,8 +61,18 @@ export function UserButton({ name, email, image }: UserButtonProps) {
           className="group-data-[collapsible=icon]:size-8"
         />
         <span className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
-          <span className="block truncate font-medium text-sidebar-foreground">
-            {name}
+          <span className="flex min-w-0 items-center gap-1.5">
+            <span className="block truncate font-medium text-sidebar-foreground">
+              {name}
+            </span>
+            {isPro ? (
+              <Badge
+                variant="secondary"
+                className="h-4 px-1.5 text-[10px] tracking-wide"
+              >
+                {tb("proBadge")}
+              </Badge>
+            ) : null}
           </span>
           <span className="block truncate text-xs text-on-dark-muted">
             {email}
@@ -72,7 +85,14 @@ export function UserButton({ name, email, image }: UserButtonProps) {
         <DropdownMenuGroup>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col gap-0.5">
-              <span className="font-medium">{name}</span>
+              <span className="flex items-center gap-1.5">
+                <span className="font-medium">{name}</span>
+                {isPro ? (
+                  <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">
+                    {tb("proBadge")}
+                  </Badge>
+                ) : null}
+              </span>
               <span className="text-xs text-muted-foreground">{email}</span>
             </div>
           </DropdownMenuLabel>

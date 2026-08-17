@@ -5,6 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
 import { WritingEditor } from "@/components/writing/writing-editor";
 import { getWritingDocument } from "@/lib/actions/writing";
+import { getActiveWorkspace } from "@/lib/workspace";
 
 export const dynamic = "force-dynamic";
 
@@ -15,7 +16,10 @@ export default async function EditWritingPage({
 }) {
   const { id } = await params;
   const t = await getTranslations("writing");
-  const document = await getWritingDocument(id);
+  const [document, workspace] = await Promise.all([
+    getWritingDocument(id),
+    getActiveWorkspace(),
+  ]);
 
   if (!document) {
     notFound();
@@ -43,6 +47,7 @@ export default async function EditWritingPage({
       <WritingEditor
         exerciseType="WRITING"
         previewHref={previewHref}
+        language={workspace?.language ?? "en"}
         initialData={{
           id: document.id,
           title: document.title,

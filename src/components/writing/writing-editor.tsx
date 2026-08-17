@@ -1,14 +1,16 @@
 "use client";
 
-import type { JSONContent } from "@tiptap/react";
+import type { Editor, JSONContent } from "@tiptap/react";
 import { Download, Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { QuestionSetBuilder } from "@/components/writing/question-set-builder";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
+import { WritingAiBar } from "@/components/writing/writing-ai-bar";
 import { CapitalizedInput, CapitalizedTextarea } from "@/components/form/capitalized-text";
 import { Button } from "@/components/ui/button";
 import {
@@ -52,6 +54,7 @@ type WritingEditorProps = {
   exerciseType: ExerciseFormValues["type"];
   /** When set, Cancel returns here and Save navigates here after persisting. */
   previewHref?: string;
+  language?: string;
   initialData?: {
     id: string;
     title: string;
@@ -66,6 +69,7 @@ const AUTOSAVE_MS = 1500;
 export function WritingEditor({
   exerciseType,
   previewHref,
+  language = "en",
   initialData,
 }: WritingEditorProps) {
   const router = useRouter();
@@ -86,6 +90,7 @@ export function WritingEditor({
   const [isSaving, setIsSaving] = useState(false);
   const [isAutosaving, setIsAutosaving] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
+  const [editor, setEditor] = useState<Editor | null>(null);
 
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const latestRef = useRef({
@@ -430,6 +435,17 @@ export function WritingEditor({
             </p>
           </div>
 
+          <WritingAiBar
+            language={language}
+            title={title}
+            editorState={editorState}
+            editor={editor}
+            onEditorStateChange={(next) => {
+              setEditorState(next);
+              scheduleAutosave();
+            }}
+          />
+
           {editorState.mode === "rich_document" ? (
             <div className="space-y-2">
               <Label>{t("content")}</Label>
@@ -437,6 +453,7 @@ export function WritingEditor({
                 content={editorState.doc}
                 placeholder={t("contentPlaceholder")}
                 onChange={setDoc}
+                onEditorReady={setEditor}
                 onAutosave={
                   initialData?.id && !previewHref
                     ? handleRichAutosave
@@ -476,16 +493,16 @@ export function WritingEditor({
               {tCommon("cancel")}
             </Button>
           ) : null}
-          <Button
+          <LockedFeatureButton
             type="button"
             variant="outline"
             size="lg"
+            icon={<Download className="size-4" />}
             onClick={() => setExportOpen(true)}
             className="h-11 w-full sm:h-9 sm:w-auto"
           >
-            <Download className="size-4" />
             {t("export.button")}
-          </Button>
+          </LockedFeatureButton>
           <Button
             onClick={() => persistExercise(true)}
             disabled={isSaving}

@@ -3,11 +3,11 @@
 import { Download, Pencil } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
+import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { WritingMetaBadges } from "@/components/writing/writing-meta-badges";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
 import {
   parseWritingContent,
@@ -47,16 +47,16 @@ export function WritingPreview({
     <div className="space-y-6 sm:space-y-8">
       <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
         <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
-          <Button
+          <LockedFeatureButton
             type="button"
             variant="outline"
             size="lg"
+            icon={<Download className="size-4" />}
             onClick={() => setExportOpen(true)}
             className="h-11 w-full sm:h-9 sm:w-auto"
           >
-            <Download className="size-4" />
             {t("export.button")}
-          </Button>
+          </LockedFeatureButton>
           <LinkButton
             href={`/writing/${id}/edit`}
             size="lg"

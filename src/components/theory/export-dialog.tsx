@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Download, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { useProAccess } from "@/components/billing/pro-access-provider";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -78,6 +79,7 @@ export function TheoryExportDialog({
 }: TheoryExportDialogProps) {
   const t = useTranslations("theory.export");
   const tc = useTranslations("common");
+  const { openUpgrade } = useProAccess();
   const [format, setFormat] = useState<ExportFormat>(DEFAULT_EXPORT_OPTIONS.format);
   const [isExporting, setIsExporting] = useState(false);
 
@@ -103,7 +105,9 @@ export function TheoryExportDialog({
       onOpenChange(false);
     } catch (error) {
       console.error("[theory-export]", error);
-      if (error instanceof Error && error.message === "EMPTY_EXPORT") {
+      if (error instanceof Error && error.message === "PRO_REQUIRED") {
+        openUpgrade();
+      } else if (error instanceof Error && error.message === "EMPTY_EXPORT") {
         toast.error(t("empty"));
       } else {
         toast.error(t("failed"));

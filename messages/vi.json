@@ -144,6 +144,16 @@
     "wordExists": "Từ này đã có trong sổ tay rồi.",
     "wordExistsCheckFailed": "Chưa kiểm tra được từ trùng. Bạn thử lại, hoặc cứ lưu cũng được.",
     "wordExistsChecking": "Đang kiểm tra…",
+    "aiSuggestion": "Gợi ý AI",
+    "aiChecking": "Đang kiểm tra bằng AI…",
+    "aiDisclaimer": "Gợi ý AI có thể không đúng.",
+    "aiSkip": "Bỏ qua",
+    "aiUseWord": "Dùng {word}",
+    "aiDidYouMean": "Ý bạn là \"{word}\"?",
+    "aiPossibleMeaning": "Nghĩa có thể đúng",
+    "aiLikelyMeaning": "Nghĩa phù hợp hơn có thể là \"{meaning}\".",
+    "aiUseSuggestion": "Dùng gợi ý",
+    "aiMeaningMismatch": "\"{meaning}\" có vẻ không phải nghĩa của \"{word}\".",
     "export": {
       "button": "Xuất file",
       "title": "Xuất từ vựng",
@@ -307,6 +317,20 @@
       "check": "Kiểm tra",
       "shuffle": "Xáo thứ tự",
       "finish": "Kết thúc vòng này"
+    },
+    "ai": {
+      "generate": "Tạo bằng AI",
+      "generateMore": "Tạo thêm 10 câu",
+      "generating": "Đang tạo câu hỏi…",
+      "levelLabel": "Trình độ CEFR",
+      "emptyTitle": "Tạo câu điền chỗ trống",
+      "emptyDescription": "Tạo 10 câu mới từ từ vựng của bạn. Mỗi câu được viết từ đầu — không dùng lại câu ví dụ có sẵn.",
+      "generated": "Do AI tạo",
+      "unavailable": "Hiện không tạo được câu hỏi. Thử lại sau.",
+      "forbidden": "Tạo bài tập bằng AI dành cho Pro.",
+      "upgradeHint": "Tạo bài tập bằng AI dành cho Pro.",
+      "emptyWords": "Thêm từ vựng trước khi tạo câu hỏi.",
+      "noneValid": "AI không tạo được câu hỏi hợp lệ cho các từ này. Thử lại."
     },
     "session": {
       "complete": "Xong một vòng luyện!",
@@ -970,6 +994,58 @@
     "nameUpdateFailed": "Không cập nhật được tên",
     "nameTooShort": "Tên cần ít nhất 2 ký tự"
   },
+  "billing": {
+    "title": "Notoria Pro",
+    "description": "Mở khóa các tính năng học tập dùng AI.",
+    "proDescription": "Bạn đang dùng Notoria Pro.",
+    "tagline": "Mở khóa các tính năng học tập dùng AI.",
+    "price": "€4,99 / tháng",
+    "upgrade": "Nâng cấp lên Pro",
+    "manage": "Quản lý gói đăng ký",
+    "proBadge": "Pro",
+    "freeBadge": "Miễn phí",
+    "renewsOn": "Gia hạn vào {date}",
+    "activating": "Đang xác nhận gói đăng ký…",
+    "checkoutSuccess": "Đã nhận thanh toán. Pro sẽ được kích hoạt ngay.",
+    "checkoutCanceled": "Bạn đã hủy thanh toán. Không bị trừ tiền.",
+    "checkoutFailed": "Không bắt đầu được thanh toán. Thử lại nhé.",
+    "portalFailed": "Không mở được trang quản lý gói. Thử lại nhé.",
+    "alreadyPro": "Bạn đã có gói Pro đang hoạt động.",
+    "notConfigured": "Chưa cấu hình thanh toán.",
+    "noCustomer": "Tài khoản này chưa được liên kết với khách hàng thanh toán.",
+    "modalTitle": "Nâng cấp lên Notoria Pro",
+    "modalSubtitle": "Mở khóa công cụ học tập dùng AI và tận dụng Notoria tốt hơn.",
+    "lockedTitle": "Tính năng Pro",
+    "lockedDescription": "Tính năng này cần gói Pro. Nâng cấp để mở khóa và dùng công cụ AI cùng các tính năng Pro khác.",
+    "planName": "Pro",
+    "cancelAnytime": "Hủy bất cứ lúc nào",
+    "benefits": {
+      "vocab": {
+        "title": "Hỗ trợ từ vựng bằng AI",
+        "body": "Gợi ý từ, giải thích, ví dụ và trợ giúp học tập ngay trong mục Từ vựng."
+      },
+      "writing": {
+        "title": "Hỗ trợ viết bằng AI",
+        "body": "Nhận sửa lỗi, gợi ý, giải thích và phản hồi từ AI để viết tốt hơn."
+      },
+      "exercises": {
+        "title": "Bài tập tạo bởi AI",
+        "body": "Tạo và luyện bài tập cá nhân hóa bằng AI theo nhu cầu học của bạn."
+      },
+      "listening": {
+        "title": "Trải nghiệm nghe tốt hơn",
+        "body": "Có thêm công cụ mạnh hơn để luyện và làm việc với nội dung nghe."
+      },
+      "files": {
+        "title": "Hỗ trợ PDF & Word (DOCX)",
+        "body": "Xuất từ vựng, bài viết và ghi chú lý thuyết ra PDF hoặc DOCX, dễ chia sẻ và tái sử dụng."
+      },
+      "personal": {
+        "title": "Học tập cá nhân hóa hơn",
+        "body": "Dùng công cụ AI để từ vựng, viết và luyện tập phù hợp hơn với bạn."
+      }
+    }
+  },
   "writing": {
     "title": "Viết",
     "studio": "luyện viết",
@@ -1068,6 +1144,37 @@
     },
     "content": "Nội dung",
     "contentPlaceholder": "Bắt đầu viết nội dung…",
+    "ai": {
+      "check": "Kiểm tra bằng AI",
+      "improve": "Cải thiện câu",
+      "grammar": "Kiểm tra ngữ pháp",
+      "checking": "Đang kiểm tra bằng AI…",
+      "checkingImprove": "Đang cải thiện câu…",
+      "checkingGrammar": "Đang kiểm tra ngữ pháp…",
+      "suggestion": "Gợi ý AI",
+      "apply": "Dùng",
+      "skip": "Bỏ qua",
+      "disclaimer": "Gợi ý AI có thể không đúng.",
+      "empty": "Hãy viết nội dung trước khi kiểm tra bằng AI.",
+      "unavailable": "Gợi ý AI tạm thời không dùng được. Thử lại sau.",
+      "forbidden": "Hỗ trợ viết AI dành cho Pro.",
+      "noIssues": "Không thấy vấn đề nào.",
+      "noImprove": "Câu này đã tự nhiên.",
+      "noGrammar": "Không thấy lỗi ngữ pháp.",
+      "applyFailed": "Không thể áp dụng gợi ý tự động.",
+      "upgradeHint": "Hỗ trợ viết AI dành cho Pro.",
+      "types": {
+        "grammar": "Ngữ pháp",
+        "spelling": "Chính tả",
+        "vocabulary": "Từ vựng",
+        "style": "Văn phong",
+        "clarity": "Rõ ràng"
+      },
+      "severities": {
+        "error": "Sai",
+        "suggestion": "Tùy chọn"
+      }
+    },
     "sections": "Các phần",
     "section": "Phần",
     "sectionTitlePlaceholder": "Tiêu đề phần (không bắt buộc)",

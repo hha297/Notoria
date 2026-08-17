@@ -6,6 +6,7 @@ import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Download, Loader2, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -62,15 +63,15 @@ export function WritingRowActions({
   return (
     <>
       <div className="flex justify-end gap-1">
-        <Button
+        <LockedFeatureButton
           variant="ghost"
           size="icon-sm"
+          icon={<Download className="size-4" />}
           onClick={() => setExportOpen(true)}
           disabled={isPending}
         >
-          <Download className="size-4" />
           <span className="sr-only">{tw("export.button")}</span>
-        </Button>
+        </LockedFeatureButton>
         <Link
           href={`/writing/${id}/edit`}
           className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }))}
