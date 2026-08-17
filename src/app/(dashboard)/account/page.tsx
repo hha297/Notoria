@@ -7,9 +7,14 @@ import { requireUser } from "@/lib/auth/session";
 
 export const dynamic = "force-dynamic";
 
-export default async function AccountPage() {
+export default async function AccountPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ billing?: string }>;
+}) {
   const t = await getTranslations("auth");
   const sessionUser = await requireUser();
+  const { billing } = await searchParams;
 
   if (!sessionUser?.email) {
     redirect("/sign-in");
@@ -25,7 +30,7 @@ export default async function AccountPage() {
         description={t("accountDescription")}
       />
 
-      <AccountSettings user={user} />
+      <AccountSettings user={user} checkoutResult={billing} />
     </div>
   );
 }

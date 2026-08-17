@@ -970,6 +970,56 @@
     "nameUpdateFailed": "Không cập nhật được tên",
     "nameTooShort": "Tên cần ít nhất 2 ký tự"
   },
+  "billing": {
+    "title": "Notoria Pro",
+    "description": "Mở khóa các tính năng học tập dùng AI.",
+    "proDescription": "Bạn đang dùng Notoria Pro.",
+    "tagline": "Mở khóa các tính năng học tập dùng AI.",
+    "price": "€4,99 / tháng",
+    "upgrade": "Nâng cấp lên Pro",
+    "manage": "Quản lý gói đăng ký",
+    "proBadge": "Pro",
+    "freeBadge": "Miễn phí",
+    "renewsOn": "Gia hạn vào {date}",
+    "activating": "Đang xác nhận gói đăng ký…",
+    "checkoutSuccess": "Đã nhận thanh toán. Pro sẽ được kích hoạt ngay.",
+    "checkoutCanceled": "Bạn đã hủy thanh toán. Không bị trừ tiền.",
+    "checkoutFailed": "Không bắt đầu được thanh toán. Thử lại nhé.",
+    "portalFailed": "Không mở được trang quản lý gói. Thử lại nhé.",
+    "alreadyPro": "Bạn đã có gói Pro đang hoạt động.",
+    "notConfigured": "Chưa cấu hình thanh toán.",
+    "noCustomer": "Tài khoản này chưa được liên kết với khách hàng thanh toán.",
+    "modalTitle": "Nâng cấp lên Notoria Pro",
+    "modalSubtitle": "Mở khóa công cụ học tập dùng AI và tận dụng Notoria tốt hơn.",
+    "planName": "Pro",
+    "cancelAnytime": "Hủy bất cứ lúc nào",
+    "benefits": {
+      "vocab": {
+        "title": "Hỗ trợ từ vựng bằng AI",
+        "body": "Gợi ý từ, giải thích, ví dụ và trợ giúp học tập ngay trong mục Từ vựng."
+      },
+      "writing": {
+        "title": "Hỗ trợ viết bằng AI",
+        "body": "Nhận sửa lỗi, gợi ý, giải thích và phản hồi từ AI để viết tốt hơn."
+      },
+      "exercises": {
+        "title": "Bài tập tạo bởi AI",
+        "body": "Tạo và luyện bài tập cá nhân hóa bằng AI theo nhu cầu học của bạn."
+      },
+      "listening": {
+        "title": "Trải nghiệm nghe tốt hơn",
+        "body": "Có thêm công cụ mạnh hơn để luyện và làm việc với nội dung nghe."
+      },
+      "files": {
+        "title": "Hỗ trợ PDF & Word (DOCX)",
+        "body": "Xuất từ vựng, bài viết và ghi chú lý thuyết ra PDF hoặc DOCX, dễ chia sẻ và tái sử dụng."
+      },
+      "personal": {
+        "title": "Học tập cá nhân hóa hơn",
+        "body": "Dùng công cụ AI để từ vựng, viết và luyện tập phù hợp hơn với bạn."
+      }
+    }
+  },
   "writing": {
     "title": "Viết",
     "studio": "luyện viết",

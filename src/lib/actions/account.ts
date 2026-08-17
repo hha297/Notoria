@@ -13,6 +13,7 @@ import {
   getAvatarPublicId,
   isCloudinaryConfigured,
 } from "@/lib/cloudinary";
+import { toBillingState } from "@/lib/stripe/pro";
 
 const MAX_AVATAR_SIZE = 5 * 1024 * 1024;
 const ALLOWED_AVATAR_TYPES = new Set([
@@ -48,6 +49,10 @@ export async function getAccountUser() {
       email: true,
       image: true,
       passwordHash: true,
+      subscriptionPlan: true,
+      subscriptionStatus: true,
+      stripeCustomerId: true,
+      stripeCurrentPeriodEnd: true,
     },
   });
 
@@ -55,7 +60,14 @@ export async function getAccountUser() {
     throw new Error("Unauthorized");
   }
 
-  return user;
+  return {
+    id: user.id,
+    name: user.name,
+    email: user.email,
+    image: user.image,
+    passwordHash: user.passwordHash,
+    billing: toBillingState(user),
+  };
 }
 
 export async function updatePassword(

@@ -1118,5 +1118,55 @@
     "nameUpdated": "Name updated",
     "nameUpdateFailed": "Could not update name",
     "nameTooShort": "Name must be at least 2 characters"
+  },
+  "billing": {
+    "title": "Notoria Pro",
+    "description": "Unlock AI-powered learning features.",
+    "proDescription": "You currently have Notoria Pro.",
+    "tagline": "Unlock AI-powered learning features.",
+    "price": "€4.99 / month",
+    "upgrade": "Upgrade to Pro",
+    "manage": "Manage subscription",
+    "proBadge": "Pro",
+    "freeBadge": "Free",
+    "renewsOn": "Renews on {date}",
+    "activating": "Confirming your subscription…",
+    "checkoutSuccess": "Payment received. Pro will activate shortly.",
+    "checkoutCanceled": "Checkout was canceled. You were not charged.",
+    "checkoutFailed": "Could not start checkout. Please try again.",
+    "portalFailed": "Could not open billing management. Please try again.",
+    "alreadyPro": "You already have an active Pro subscription.",
+    "notConfigured": "Billing is not configured yet.",
+    "noCustomer": "No billing customer is linked to this account yet.",
+    "modalTitle": "Upgrade to Notoria Pro",
+    "modalSubtitle": "Unlock AI-powered learning tools and get more out of Notoria.",
+    "planName": "Pro",
+    "cancelAnytime": "Cancel anytime",
+    "benefits": {
+      "vocab": {
+        "title": "AI-powered vocabulary assistance",
+        "body": "Generate vocabulary ideas, get explanations, examples, and personalized learning help directly in Vocabulary."
+      },
+      "writing": {
+        "title": "AI writing assistance",
+        "body": "Get AI-powered corrections, suggestions, explanations, and feedback to improve your writing."
+      },
+      "exercises": {
+        "title": "AI-powered exercises",
+        "body": "Create and practice personalized exercises with AI based on your learning needs."
+      },
+      "listening": {
+        "title": "Enhanced listening experience",
+        "body": "Get more powerful tools for practicing and working with listening content."
+      },
+      "files": {
+        "title": "PDF & Word (DOCX) support",
+        "body": "Export vocabulary, writing, and theory notes to PDF or DOCX, and keep your materials easy to share."
+      },
+      "personal": {
+        "title": "A more personalized learning experience",
+        "body": "Use AI-powered tools to make your vocabulary, writing, and practice sessions more useful and tailored to you."
+      }
+    }
   }
 }

@@ -970,6 +970,56 @@
     "nameUpdateFailed": "Nimen päivitys epäonnistui",
     "nameTooShort": "Nimen on oltava vähintään 2 merkkiä"
   },
+  "billing": {
+    "title": "Notoria Pro",
+    "description": "Avaa tekoälyyn perustuvat oppimisominaisuudet.",
+    "proDescription": "Sinulla on Notoria Pro.",
+    "tagline": "Avaa tekoälyyn perustuvat oppimisominaisuudet.",
+    "price": "4,99 € / kuukausi",
+    "upgrade": "Päivitä Pro-tilaukseen",
+    "manage": "Hallinnoi tilausta",
+    "proBadge": "Pro",
+    "freeBadge": "Ilmainen",
+    "renewsOn": "Uusiutuu {date}",
+    "activating": "Vahvistetaan tilaustasi…",
+    "checkoutSuccess": "Maksu vastaanotettu. Pro aktivoituu hetken kuluttua.",
+    "checkoutCanceled": "Kassa peruutettiin. Sinua ei veloitettu.",
+    "checkoutFailed": "Kassaa ei voitu aloittaa. Yritä uudelleen.",
+    "portalFailed": "Laskutuksen hallintaa ei voitu avata. Yritä uudelleen.",
+    "alreadyPro": "Sinulla on jo aktiivinen Pro-tilaus.",
+    "notConfigured": "Laskutusta ei ole vielä määritetty.",
+    "noCustomer": "Tähän tiliin ei ole vielä liitetty laskutusasiakasta.",
+    "modalTitle": "Päivitä Notoria Pro -tilaukseen",
+    "modalSubtitle": "Avaa tekoälyyn perustuvat oppimistyökalut ja saat enemmän irti Notoriasta.",
+    "planName": "Pro",
+    "cancelAnytime": "Peru milloin tahansa",
+    "benefits": {
+      "vocab": {
+        "title": "Tekoälyavusteinen sanasto",
+        "body": "Luo sanastoideoita ja saat selityksiä, esimerkkejä ja henkilökohtaista apua suoraan Sanasto-osiossa."
+      },
+      "writing": {
+        "title": "Tekoälyavusteinen kirjoittaminen",
+        "body": "Saat tekoälyn korjauksia, ehdotuksia, selityksiä ja palautetta kirjoittamisesi tueksi."
+      },
+      "exercises": {
+        "title": "Tekoälyavusteiset harjoitukset",
+        "body": "Luo ja harjoittele henkilökohtaisia tehtäviä tekoälyn avulla oppimistarpeidesi mukaan."
+      },
+      "listening": {
+        "title": "Parempi kuuntelukokemus",
+        "body": "Saat tehokkaampia työkaluja kuuntelusisällön harjoitteluun ja käsittelyyn."
+      },
+      "files": {
+        "title": "PDF- ja Word-tuki (DOCX)",
+        "body": "Vie sanasto, kirjoitukset ja teoriamuistiinpanot PDF- tai Word-tiedostoina ja jaa ne helposti."
+      },
+      "personal": {
+        "title": "Henkilökohtaisempi oppiminen",
+        "body": "Käytä tekoälytyökaluja, jotta sanasto, kirjoittaminen ja harjoittelu palvelevat sinua paremmin."
+      }
+    }
+  },
   "writing": {
     "title": "Kirjoittaminen",
     "studio": "studio",

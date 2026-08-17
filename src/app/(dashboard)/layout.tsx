@@ -14,6 +14,10 @@ import { LOCALE_COOKIE } from "@/i18n/request";
 import { getSession } from "@/lib/auth/session";
 import { EMPTY_WORKSPACE_SNAPSHOT } from "@/lib/onboarding/requirements";
 import { getWorkspaceActivitySnapshot } from "@/lib/onboarding/snapshot";
+import {
+  getCurrentSubscription,
+  hasActiveProSubscription,
+} from "@/lib/stripe/pro";
 import { getUserWorkspaces, getActiveWorkspace } from "@/lib/workspace";
 import { cookies } from "next/headers";
 
@@ -22,10 +26,11 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const [workspaces, activeWorkspace, session] = await Promise.all([
+  const [workspaces, activeWorkspace, session, subscription] = await Promise.all([
     getUserWorkspaces(),
     getActiveWorkspace(),
     getSession(),
+    getCurrentSubscription(),
   ]);
 
   const snapshot = activeWorkspace
@@ -46,6 +51,7 @@ export default async function DashboardLayout({
         userName={session?.user?.name ?? "User"}
         userEmail={session?.user?.email ?? ""}
         userImage={session?.user?.image}
+        isPro={hasActiveProSubscription(subscription)}
       />
       <SidebarInset className="bg-background">
         <header className="flex h-14 shrink-0 items-center gap-2 border-b border-hairline-cloud bg-background px-3 sm:gap-3 sm:px-6">

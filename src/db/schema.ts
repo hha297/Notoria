@@ -13,6 +13,8 @@ import {
 
 export const userRoleEnum = pgEnum("user_role", ["USER", "ADMIN"]);
 
+export const subscriptionPlanEnum = pgEnum("subscription_plan", ["free", "pro"]);
+
 export const vocabularyStatusEnum = pgEnum("vocabulary_status", [
   "NEW",
   "LEARNING",
@@ -62,20 +64,40 @@ export const listeningExerciseTypeEnum = pgEnum("listening_exercise_type", [
   "WORD_ORDERING",
 ]);
 
-export const users = pgTable("users", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  name: text("name").notNull(),
-  email: text("email").notNull().unique(),
-  passwordHash: text("password_hash"),
-  image: text("image"),
-  role: userRoleEnum("role").notNull().default("USER"),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-});
+export const users = pgTable(
+  "users",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    name: text("name").notNull(),
+    email: text("email").notNull().unique(),
+    passwordHash: text("password_hash"),
+    image: text("image"),
+    role: userRoleEnum("role").notNull().default("USER"),
+    subscriptionPlan: subscriptionPlanEnum("subscription_plan")
+      .notNull()
+      .default("free"),
+    subscriptionStatus: text("subscription_status"),
+    stripeCustomerId: text("stripe_customer_id"),
+    stripeSubscriptionId: text("stripe_subscription_id"),
+    stripeCurrentPeriodEnd: timestamp("stripe_current_period_end", {
+      withTimezone: true,
+    }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("users_stripe_customer_id_unique")
+      .on(table.stripeCustomerId)
+      .where(sql`${table.stripeCustomerId} is not null`),
+    uniqueIndex("users_stripe_subscription_id_unique")
+      .on(table.stripeSubscriptionId)
+      .where(sql`${table.stripeSubscriptionId} is not null`),
+  ],
+);
 
 export const workspaces = pgTable(
   "workspaces",
@@ -480,6 +502,7 @@ export const listeningExercisesRelations = relations(
 );
 
 export type User = typeof users.$inferSelect;
+export type SubscriptionPlan = (typeof subscriptionPlanEnum.enumValues)[number];
 export type Workspace = typeof workspaces.$inferSelect;
 export type WorkspaceTag = typeof workspaceTags.$inferSelect;
 export type VocabularyWord = typeof vocabularyWords.$inferSelect;

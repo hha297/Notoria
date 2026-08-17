@@ -27,6 +27,7 @@ import {
   useSidebar,
 } from "@/components/ui/sidebar";
 import { UserButton } from "@/components/layout/user-button";
+import { SidebarProCta } from "@/components/layout/sidebar-pro-cta";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -42,9 +43,15 @@ type AppSidebarProps = {
   userName: string;
   userEmail: string;
   userImage?: string | null;
+  isPro?: boolean;
 };
 
-export function AppSidebar({ userName, userEmail, userImage }: AppSidebarProps) {
+export function AppSidebar({
+  userName,
+  userEmail,
+  userImage,
+  isPro = false,
+}: AppSidebarProps) {
   const pathname = usePathname();
   const t = useTranslations("nav");
   const { isMobile, setOpenMobile } = useSidebar();
@@ -113,7 +120,15 @@ export function AppSidebar({ userName, userEmail, userImage }: AppSidebarProps) 
       </SidebarContent>
 
       <SidebarFooter className="border-t border-sidebar-border p-3">
-        <UserButton name={userName} email={userEmail} image={userImage} />
+        <div className="flex flex-col gap-2">
+          <SidebarProCta isPro={isPro} />
+          <UserButton
+            name={userName}
+            email={userEmail}
+            image={userImage}
+            isPro={isPro}
+          />
+        </div>
       </SidebarFooter>
       <SidebarRail />
     </Sidebar>
