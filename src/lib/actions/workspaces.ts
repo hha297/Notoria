@@ -1,6 +1,6 @@
 "use server";
 
-import { and, eq, sql } from "drizzle-orm";
+import { and, eq, inArray, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { cookies } from "next/headers";
 import { z } from "zod";
@@ -27,7 +27,7 @@ const createWorkspaceSchema = z.object({
 });
 
 const workspaceTagSchema = z.object({
-  name: z.string().min(1).max(40),
+  name: z.string().trim().min(1).max(40),
 });
 
 const updateWorkspaceSchema = z.object({
@@ -183,6 +183,74 @@ export async function deleteWorkspace(workspaceId: string) {
   return { nextWorkspaceId: nextWorkspace?.id ?? null };
 }
 
+async function workspaceVocabularyWordIds(workspaceId: string) {
+  const rows = await db
+    .select({ id: vocabularyWords.id })
+    .from(vocabularyWords)
+    .where(eq(vocabularyWords.workspaceId, workspaceId));
+
+  return rows.map((row) => row.id);
+}
+
+async function retargetCustomTagOnWords(
+  workspaceId: string,
+  oldName: string,
+  newName: string,
+) {
+  const oldKey = customTagKey(oldName);
+  const newKey = customTagKey(newName);
+  if (oldKey === newKey) return;
+
+  const wordIds = await workspaceVocabularyWordIds(workspaceId);
+  if (wordIds.length === 0) return;
+
+  const alreadyHasNew = await db
+    .select({ wordId: vocabularyWordTags.wordId })
+    .from(vocabularyWordTags)
+    .where(
+      and(
+        eq(vocabularyWordTags.tag, newKey),
+        inArray(vocabularyWordTags.wordId, wordIds),
+      ),
+    );
+
+  const alreadyIds = alreadyHasNew.map((row) => row.wordId);
+  if (alreadyIds.length > 0) {
+    await db
+      .delete(vocabularyWordTags)
+      .where(
+        and(
+          eq(vocabularyWordTags.tag, oldKey),
+          inArray(vocabularyWordTags.wordId, alreadyIds),
+        ),
+      );
+  }
+
+  await db
+    .update(vocabularyWordTags)
+    .set({ tag: newKey })
+    .where(
+      and(
+        eq(vocabularyWordTags.tag, oldKey),
+        inArray(vocabularyWordTags.wordId, wordIds),
+      ),
+    );
+}
+
+async function removeCustomTagFromWords(workspaceId: string, name: string) {
+  const wordIds = await workspaceVocabularyWordIds(workspaceId);
+  if (wordIds.length === 0) return;
+
+  await db
+    .delete(vocabularyWordTags)
+    .where(
+      and(
+        eq(vocabularyWordTags.tag, customTagKey(name)),
+        inArray(vocabularyWordTags.wordId, wordIds),
+      ),
+    );
+}
+
 async function findWorkspaceTagByName(workspaceId: string, name: string) {
   const normalized = name.trim().toLowerCase();
   if (!normalized) return undefined;
@@ -274,15 +342,7 @@ export async function updateWorkspaceTag(
   }
 
   const newName = parsed.name.trim();
-  const oldKey = customTagKey(tag.name);
-  const newKey = customTagKey(newName);
-
-  if (oldKey !== newKey) {
-    await db
-      .update(vocabularyWordTags)
-      .set({ tag: newKey })
-      .where(eq(vocabularyWordTags.tag, oldKey));
-  }
+  await retargetCustomTagOnWords(tag.workspaceId, tag.name, newName);
 
   const [updated] = await db
     .update(workspaceTags)
@@ -306,10 +366,7 @@ export async function deleteWorkspaceTag(tagId: string) {
     throw new Error("Tag not found");
   }
 
-  await db
-    .delete(vocabularyWordTags)
-    .where(eq(vocabularyWordTags.tag, customTagKey(tag.name)));
-
+  await removeCustomTagFromWords(tag.workspaceId, tag.name);
   await db.delete(workspaceTags).where(eq(workspaceTags.id, tagId));
   revalidatePath("/", "layout");
 }
@@ -341,6 +398,67 @@ export async function getActiveWorkspaceCustomTags(): Promise<string[]> {
     ...stored.map((tag) => tag.name),
     ...fromWords.map((row) => getCustomTagName(row.tag)),
   ]);
+}
+
+export async function updateActiveWorkspaceTag(
+  currentName: string,
+  nextName: string,
+) {
+  const workspace = await getActiveWorkspace();
+  if (!workspace) {
+    throw new Error("NO_WORKSPACE");
+  }
+
+  const parsed = workspaceTagSchema.parse({ name: nextName });
+  const current = currentName.trim();
+  if (!current) {
+    throw new Error("Tag not found");
+  }
+
+  const stored = await findWorkspaceTagByName(workspace.id, current);
+  const duplicate = await findWorkspaceTagByName(workspace.id, parsed.name);
+
+  if (duplicate && duplicate.id !== stored?.id) {
+    throw new Error("TAG_EXISTS");
+  }
+
+  if (stored) {
+    return updateWorkspaceTag(stored.id, parsed);
+  }
+
+  await retargetCustomTagOnWords(workspace.id, current, parsed.name);
+
+  const [tag] = await db
+    .insert(workspaceTags)
+    .values({
+      workspaceId: workspace.id,
+      name: parsed.name,
+    })
+    .returning();
+
+  revalidatePath("/", "layout");
+  return tag;
+}
+
+export async function deleteActiveWorkspaceTag(name: string) {
+  const workspace = await getActiveWorkspace();
+  if (!workspace) {
+    throw new Error("NO_WORKSPACE");
+  }
+
+  const current = name.trim();
+  if (!current) {
+    throw new Error("Tag not found");
+  }
+
+  const stored = await findWorkspaceTagByName(workspace.id, current);
+  await removeCustomTagFromWords(workspace.id, stored?.name ?? current);
+
+  if (stored) {
+    await db.delete(workspaceTags).where(eq(workspaceTags.id, stored.id));
+  }
+
+  revalidatePath("/", "layout");
 }
 
 export async function createActiveWorkspaceTag(name: string) {

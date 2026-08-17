@@ -1,15 +1,28 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { Plus, X } from "lucide-react";
+import { Loader2, Pencil, Plus, Trash2, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
-import { createActiveWorkspaceTag } from "@/lib/actions/workspaces";
+import {
+  createActiveWorkspaceTag,
+  deleteActiveWorkspaceTag,
+  updateActiveWorkspaceTag,
+} from "@/lib/actions/workspaces";
 import {
   customTagKey,
   findCustomTagName,
@@ -67,6 +80,19 @@ function findExactTagMatch(
   });
 }
 
+function replaceSelectedTag(tags: string[], fromKey: string, toKey: string) {
+  const next = tags.map((tag) =>
+    tag.toLowerCase() === fromKey.toLowerCase() ? toKey : tag,
+  );
+  const seen = new Set<string>();
+  return next.filter((tag) => {
+    const key = tag.toLowerCase();
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  });
+}
+
 export function TagMultiSelect({
   value,
   onChange,
@@ -76,10 +102,19 @@ export function TagMultiSelect({
   const t = useTranslations("tags");
   const tv = useTranslations("vocabulary");
   const tSettings = useTranslations("settings");
+  const tCommon = useTranslations("common");
   const tErrors = useTranslations("errors");
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const [isCreating, setIsCreating] = useState(false);
+  const [editingTag, setEditingTag] = useState<string | null>(null);
+  const [editName, setEditName] = useState("");
+  const [editError, setEditError] = useState<string | null>(null);
+  const [isSavingEdit, setIsSavingEdit] = useState(false);
+  const [deletingTag, setDeletingTag] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  const busy = isCreating || isSavingEdit || isDeleting;
 
   function optionLabel(option: VocabularyTagOption) {
     return getTagLabel(option.id, (key) => t(key));
@@ -101,8 +136,8 @@ export function TagMultiSelect({
   }, [filtered]);
 
   const exactMatch = findExactTagMatch(options, query, optionLabel);
-  const canCreate =
-    isValidCustomTagName(query) && !exactMatch && !isCreating;
+  const canCreate = isValidCustomTagName(query) && !exactMatch && !busy;
+  const canSubmitQuery = Boolean(query.trim()) && !busy && (canCreate || Boolean(exactMatch));
 
   function setTagChecked(tag: string, checked: boolean) {
     if (checked) {
@@ -149,7 +184,9 @@ export function TagMultiSelect({
       onCustomTagsChange(uniqueCustomTagNames([...customTags, canonical]));
       selectTag(customTagKey(canonical));
 
-      if (!result.created) {
+      if (result.created) {
+        toast.success(tSettings("tagCreated"));
+      } else {
         toast.message(tSettings("tagExists"));
       }
     } catch (error) {
@@ -161,6 +198,16 @@ export function TagMultiSelect({
     } finally {
       setIsCreating(false);
       inputRef.current?.focus();
+    }
+  }
+
+  function handleAdd() {
+    if (exactMatch) {
+      selectTag(exactMatch.id);
+      return;
+    }
+    if (isValidCustomTagName(query)) {
+      void handleCreateFromQuery();
     }
   }
 
@@ -186,46 +233,132 @@ export function TagMultiSelect({
     }
   }
 
+  function openEdit(option: VocabularyTagOption) {
+    setEditingTag(getCustomTagName(option.id));
+    setEditName(getCustomTagName(option.id));
+    setEditError(null);
+  }
+
+  async function handleSaveEdit() {
+    if (!editingTag) return;
+    const nextName = editName.trim();
+    if (!isValidCustomTagName(nextName)) {
+      setEditError(tSettings("tagNameRequired"));
+      return;
+    }
+
+    const duplicate = findCustomTagName(customTags, nextName);
+    if (duplicate && duplicate.toLowerCase() !== editingTag.toLowerCase()) {
+      setEditError(tSettings("tagExists"));
+      return;
+    }
+
+    setIsSavingEdit(true);
+    try {
+      const updated = await updateActiveWorkspaceTag(editingTag, nextName);
+      const fromKey = customTagKey(editingTag);
+      const toKey = customTagKey(updated.name);
+      onCustomTagsChange(
+        uniqueCustomTagNames(
+          customTags.map((name) =>
+            name.toLowerCase() === editingTag.toLowerCase() ? updated.name : name,
+          ),
+        ),
+      );
+      onChange(replaceSelectedTag(value, fromKey, toKey));
+      toast.success(tSettings("tagUpdated"));
+      setEditingTag(null);
+    } catch (error) {
+      if (error instanceof Error && error.message === "TAG_EXISTS") {
+        setEditError(tSettings("tagExists"));
+        return;
+      }
+      toast.error(tErrors("generic"));
+    } finally {
+      setIsSavingEdit(false);
+    }
+  }
+
+  async function handleConfirmDelete() {
+    if (!deletingTag) return;
+    setIsDeleting(true);
+    try {
+      await deleteActiveWorkspaceTag(deletingTag);
+      const removedKey = customTagKey(deletingTag);
+      onCustomTagsChange(
+        customTags.filter(
+          (name) => name.toLowerCase() !== deletingTag.toLowerCase(),
+        ),
+      );
+      onChange(
+        value.filter((tag) => tag.toLowerCase() !== removedKey.toLowerCase()),
+      );
+      toast.success(tSettings("tagDeleted"));
+      setDeletingTag(null);
+    } catch {
+      toast.error(tErrors("generic"));
+    } finally {
+      setIsDeleting(false);
+    }
+  }
+
   return (
     <div className="space-y-2">
       <label className="text-sm font-medium">{tv("tags")}</label>
 
       <div className="overflow-hidden rounded-lg border border-hairline-cloud bg-card">
-        <div
-          className="flex min-h-10 cursor-text flex-wrap items-center gap-1.5 px-3 py-2"
-          onClick={() => inputRef.current?.focus()}
-        >
-          {value.map((tag) => (
-            <Badge
-              key={tag}
-              variant="secondary"
-              className="h-6 gap-0.5 pr-1"
-            >
-              {getTagLabel(tag, (key) => t(key))}
-              <button
-                type="button"
-                className="rounded-sm p-0.5 text-on-primary/70 transition-colors hover:text-on-primary"
-                aria-label={`Remove ${getTagLabel(tag, (key) => t(key))}`}
-                onClick={(event) => {
-                  event.stopPropagation();
-                  setTagChecked(tag, false);
-                }}
+        <div className="flex items-start gap-2 px-3 py-2">
+          <div
+            className="flex min-h-10 min-w-0 flex-1 cursor-text flex-wrap items-center gap-1.5"
+            onClick={() => inputRef.current?.focus()}
+          >
+            {value.map((tag) => (
+              <Badge
+                key={tag}
+                variant="secondary"
+                className="h-6 gap-0.5 pr-1"
               >
-                <X className="size-3" />
-              </button>
-            </Badge>
-          ))}
-          <Input
-            ref={inputRef}
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-            onKeyDown={handleInputKeyDown}
-            placeholder={
-              value.length === 0 ? tv("searchOrCreateTags") : tv("selectTags")
-            }
-            className="h-7 min-w-32 flex-1 border-0 bg-transparent px-0 shadow-none focus-visible:border-0 focus-visible:ring-0 focus-visible:shadow-none"
-            disabled={isCreating}
-          />
+                {getTagLabel(tag, (key) => t(key))}
+                <button
+                  type="button"
+                  className="rounded-sm p-0.5 text-on-primary/70 transition-colors hover:text-on-primary"
+                  aria-label={`Remove ${getTagLabel(tag, (key) => t(key))}`}
+                  onClick={(event) => {
+                    event.stopPropagation();
+                    setTagChecked(tag, false);
+                  }}
+                >
+                  <X className="size-3" />
+                </button>
+              </Badge>
+            ))}
+            <Input
+              ref={inputRef}
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+              onKeyDown={handleInputKeyDown}
+              placeholder={
+                value.length === 0 ? tv("searchOrCreateTags") : tv("selectTags")
+              }
+              className="h-7 min-w-32 flex-1 border-0 bg-transparent px-0 shadow-none focus-visible:border-0 focus-visible:ring-0 focus-visible:shadow-none"
+              disabled={busy}
+            />
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            size="sm"
+            className="mt-1.5 shrink-0"
+            onClick={handleAdd}
+            disabled={!canSubmitQuery}
+          >
+            {isCreating ? (
+              <Loader2 className="size-3.5 animate-spin" />
+            ) : (
+              <Plus className="size-3.5" />
+            )}
+            {tv("addCustomTag")}
+          </Button>
         </div>
 
         <div className="border-t border-hairline-cloud">
@@ -238,7 +371,7 @@ export function TagMultiSelect({
                   size="sm"
                   className="h-8 w-full justify-start gap-2 text-ink"
                   onClick={() => void handleCreateFromQuery()}
-                  disabled={isCreating}
+                  disabled={busy}
                 >
                   <Plus className="size-4" />
                   {tv("createTag", { name: query.trim() })}
@@ -258,32 +391,67 @@ export function TagMultiSelect({
                     <div className="grid gap-0.5 sm:grid-cols-2">
                       {item.options.map((option) => {
                         const checked = value.includes(option.id);
+                        const isCustom = option.group === "custom";
                         return (
-                          <label
+                          <div
                             key={option.id}
-                            htmlFor={`tag-${option.id}`}
                             className={cn(
-                              "flex cursor-pointer items-center gap-2 rounded-md px-2 py-1.5 text-sm transition-colors hover:bg-muted/60",
+                              "flex items-center gap-1 rounded-md px-1 py-0.5 transition-colors hover:bg-muted/60",
                               checked && "bg-accent-lime/10",
                             )}
                           >
-                            <input
-                              id={`tag-${option.id}`}
-                              type="checkbox"
-                              checked={checked}
-                              onChange={() => toggleTag(option.id)}
-                              className="size-3.5 rounded border-input accent-accent-lime"
-                            />
-                            <span
-                              className={cn(
-                                checked
-                                  ? "font-medium text-ink"
-                                  : "text-muted-foreground",
-                              )}
+                            <label
+                              htmlFor={`tag-${option.id}`}
+                              className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 px-1 py-1 text-sm"
                             >
-                              {optionLabel(option)}
-                            </span>
-                          </label>
+                              <input
+                                id={`tag-${option.id}`}
+                                type="checkbox"
+                                checked={checked}
+                                onChange={() => toggleTag(option.id)}
+                                disabled={busy}
+                                className="size-3.5 shrink-0 rounded border-input accent-accent-lime"
+                              />
+                              <span
+                                className={cn(
+                                  "truncate",
+                                  checked
+                                    ? "font-medium text-ink"
+                                    : "text-muted-foreground",
+                                )}
+                              >
+                                {optionLabel(option)}
+                              </span>
+                            </label>
+                            {isCustom ? (
+                              <div className="flex shrink-0 items-center">
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="icon-xs"
+                                  className="text-muted-foreground"
+                                  aria-label={tSettings("renameTag")}
+                                  disabled={busy}
+                                  onClick={() => openEdit(option)}
+                                >
+                                  <Pencil />
+                                </Button>
+                                <Button
+                                  type="button"
+                                  variant="ghost"
+                                  size="icon-xs"
+                                  className="text-muted-foreground hover:text-destructive"
+                                  aria-label={tCommon("delete")}
+                                  disabled={busy}
+                                  onClick={() =>
+                                    setDeletingTag(getCustomTagName(option.id))
+                                  }
+                                >
+                                  <Trash2 />
+                                </Button>
+                              </div>
+                            ) : null}
+                          </div>
                         );
                       })}
                     </div>
@@ -294,6 +462,104 @@ export function TagMultiSelect({
           </ScrollArea>
         </div>
       </div>
+
+      <Dialog
+        open={editingTag !== null}
+        onOpenChange={(open) => {
+          if (isSavingEdit) return;
+          if (!open) setEditingTag(null);
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{tSettings("editTagTitle")}</DialogTitle>
+            <DialogDescription>{tSettings("editTagDescription")}</DialogDescription>
+          </DialogHeader>
+          <div className="space-y-2">
+            <Label htmlFor="rename-custom-tag">{tSettings("tagName")}</Label>
+            <Input
+              id="rename-custom-tag"
+              value={editName}
+              onChange={(event) => {
+                setEditName(event.target.value);
+                setEditError(null);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault();
+                  void handleSaveEdit();
+                }
+              }}
+              maxLength={40}
+              aria-invalid={editError ? true : undefined}
+              disabled={isSavingEdit}
+            />
+            {editError ? (
+              <p className="text-sm text-destructive">{editError}</p>
+            ) : null}
+          </div>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setEditingTag(null)}
+              disabled={isSavingEdit}
+            >
+              {tCommon("cancel")}
+            </Button>
+            <Button
+              type="button"
+              onClick={() => void handleSaveEdit()}
+              disabled={isSavingEdit}
+            >
+              {isSavingEdit ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : null}
+              {tSettings("renameTag")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog
+        open={deletingTag !== null}
+        onOpenChange={(open) => {
+          if (isDeleting) return;
+          if (!open) setDeletingTag(null);
+        }}
+      >
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>{tSettings("deleteTagTitle")}</DialogTitle>
+            <DialogDescription>
+              {tSettings("deleteTagDescription", { name: deletingTag ?? "" })}
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={() => setDeletingTag(null)}
+              disabled={isDeleting}
+            >
+              {tCommon("cancel")}
+            </Button>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => void handleConfirmDelete()}
+              disabled={isDeleting}
+            >
+              {isDeleting ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <Trash2 className="size-4" />
+              )}
+              {tCommon("delete")}
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
