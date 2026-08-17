@@ -1043,7 +1043,8 @@
       "VALIDATION_FAILED": "The generated exercises were not usable. Try again.",
       "LESSON_NOT_FOUND": "Listening lesson not found.",
       "PROCESSING_FAILED": "Something went wrong while creating this lesson. Try again.",
-      "EMPTY_TRANSCRIPT": "No speech was found in that file."
+      "EMPTY_TRANSCRIPT": "No speech was found in that file.",
+      "DUPLICATE_FILENAME": "A file with this name already exists."
     }
   },
   "errors": {

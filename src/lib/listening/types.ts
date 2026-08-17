@@ -61,6 +61,7 @@ export type ListeningTranscriptionData = {
 export type ListeningLessonListItem = {
   id: string;
   title: string;
+  originalFilename: string | null;
   cefrLevel: string | null;
   topic: string | null;
   formality: string | null;

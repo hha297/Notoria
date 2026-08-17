@@ -101,7 +101,13 @@ export function ListeningView({ lessons }: ListeningViewProps) {
         )}
       </AnimatePresence>
 
-      <UploadListeningDialog open={uploadOpen} onOpenChange={setUploadOpen} />
+      <UploadListeningDialog
+        open={uploadOpen}
+        onOpenChange={setUploadOpen}
+        existingFilenames={lessons.flatMap((lesson) =>
+          lesson.originalFilename ? [lesson.originalFilename] : [],
+        )}
+      />
     </PageShell>
   );
 }

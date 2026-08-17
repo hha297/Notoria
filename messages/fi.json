@@ -894,7 +894,8 @@
       "VALIDATION_FAILED": "Luodut harjoitukset eivät kelvanneet. Yritä uudelleen.",
       "LESSON_NOT_FOUND": "Kuuntelutuntia ei löytynyt.",
       "PROCESSING_FAILED": "Tunnin luonti epäonnistui. Yritä uudelleen.",
-      "EMPTY_TRANSCRIPT": "Tiedostosta ei löytynyt puhetta."
+      "EMPTY_TRANSCRIPT": "Tiedostosta ei löytynyt puhetta.",
+      "DUPLICATE_FILENAME": "Tiedosto tällä nimellä on jo olemassa."
     }
   },
   "errors": {

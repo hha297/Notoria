@@ -255,36 +255,48 @@ export const exercises = pgTable("exercises", {
     .defaultNow(),
 });
 
-export const listeningLessons = pgTable("listening_lessons", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  workspaceId: uuid("workspace_id")
-    .notNull()
-    .references(() => workspaces.id, { onDelete: "cascade" }),
-  title: text("title").notNull(),
-  cloudinaryUrl: text("cloudinary_url").notNull(),
-  cloudinaryPublicId: text("cloudinary_public_id").notNull(),
-  mediaType: text("media_type").notNull(),
-  format: text("format"),
-  duration: integer("duration"),
-  transcript: text("transcript"),
-  transcriptionData: jsonb("transcription_data"),
-  language: text("language"),
-  cefrLevel: text("cefr_level"),
-  topic: text("topic"),
-  formality: text("formality"),
-  exerciseType: listeningExerciseTypeEnum("exercise_type"),
-  status: listeningStatusEnum("status").notNull().default("UPLOADING"),
-  errorCode: text("error_code"),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-});
+export const listeningLessons = pgTable(
+  "listening_lessons",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    originalFilename: text("original_filename"),
+    cloudinaryUrl: text("cloudinary_url").notNull(),
+    cloudinaryPublicId: text("cloudinary_public_id").notNull(),
+    mediaType: text("media_type").notNull(),
+    format: text("format"),
+    duration: integer("duration"),
+    transcript: text("transcript"),
+    transcriptionData: jsonb("transcription_data"),
+    language: text("language"),
+    cefrLevel: text("cefr_level"),
+    topic: text("topic"),
+    formality: text("formality"),
+    exerciseType: listeningExerciseTypeEnum("exercise_type"),
+    status: listeningStatusEnum("status").notNull().default("UPLOADING"),
+    errorCode: text("error_code"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("listening_lessons_workspace_normalized_filename_unique")
+      .on(
+        table.workspaceId,
+        sql`lower(trim(${table.originalFilename}))`,
+      )
+      .where(sql`${table.originalFilename} is not null`),
+  ],
+);
 
 export const listeningExercises = pgTable("listening_exercises", {
   id: uuid("id").primaryKey().defaultRandom(),

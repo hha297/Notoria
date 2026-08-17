@@ -31,6 +31,7 @@ import { isListeningErrorCode } from "@/lib/listening/errors";
 import {
   isAllowedListeningFile,
   MAX_LISTENING_FILE_SIZE,
+  normalizeListeningFilename,
 } from "@/lib/listening/utils";
 import {
   WRITING_CEFR_LEVELS,
@@ -46,11 +47,13 @@ type UploadStep = "form" | "uploading" | "transcribing";
 type UploadListeningDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  existingFilenames?: string[];
 };
 
 export function UploadListeningDialog({
   open,
   onOpenChange,
+  existingFilenames = [],
 }: UploadListeningDialogProps) {
   const t = useTranslations("listening");
   const tMeta = useTranslations("listening.meta");
@@ -85,6 +88,14 @@ export function UploadListeningDialog({
       : t("errors.PROCESSING_FAILED");
   }
 
+  function isDuplicateFilename(filename: string) {
+    const normalized = normalizeListeningFilename(filename);
+    if (!normalized) return false;
+    return existingFilenames.some(
+      (existing) => normalizeListeningFilename(existing) === normalized,
+    );
+  }
+
   function chooseFile(next: File | undefined) {
     if (!next) return;
     if (!isAllowedListeningFile(next)) {
@@ -93,6 +104,10 @@ export function UploadListeningDialog({
     }
     if (next.size > MAX_LISTENING_FILE_SIZE) {
       toast.error(t("errors.FILE_TOO_LARGE"));
+      return;
+    }
+    if (isDuplicateFilename(next.name)) {
+      toast.error(t("errors.DUPLICATE_FILENAME"));
       return;
     }
     setFile(next);
@@ -106,6 +121,10 @@ export function UploadListeningDialog({
 
   function handleSubmit() {
     if (!file) return;
+    if (isDuplicateFilename(file.name)) {
+      toast.error(t("errors.DUPLICATE_FILENAME"));
+      return;
+    }
 
     startTransition(async () => {
       try {

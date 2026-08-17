@@ -123,10 +123,10 @@ function VocabularyPosGroup({
         <p className="text-xs text-muted-foreground sm:text-sm">
           {showPagination
             ? t("groupPageRange", {
-                start: rangeStart,
-                end: rangeEnd,
-                count: words.length,
-              })
+              start: rangeStart,
+              end: rangeEnd,
+              count: words.length,
+            })
             : t("groupCount", { count: words.length })}
         </p>
       </div>
@@ -468,9 +468,9 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
     for (const word of filteredWords) {
       const key =
         word.partOfSpeech &&
-        PARTS_OF_SPEECH.includes(
-          word.partOfSpeech as (typeof PARTS_OF_SPEECH)[number],
-        )
+          PARTS_OF_SPEECH.includes(
+            word.partOfSpeech as (typeof PARTS_OF_SPEECH)[number],
+          )
           ? word.partOfSpeech
           : "__none__";
 
@@ -536,116 +536,116 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
       </PageHeader>
 
       <div className="space-y-4">
-      <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-        <Input
-          value={search}
-          onChange={(event) => setSearch(event.target.value)}
-          placeholder={t("searchPlaceholder")}
-          className="h-10 lg:h-8 lg:max-w-sm"
-        />
+        <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+          <Input
+            value={search}
+            onChange={(event) => setSearch(event.target.value)}
+            placeholder={t("searchPlaceholder")}
+            className="h-10 lg:h-8 lg:max-w-sm"
+          />
 
-        <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 lg:flex lg:flex-wrap">
-          <Select value={partOfSpeechFilter} onValueChange={(value) => value && setPartOfSpeechFilter(value)}>
-            <SelectTrigger size="sm" className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-40">
-              <SelectValue placeholder={t("filterPartOfSpeech")}>
-                {partOfSpeechFilter === "all"
-                  ? t("filterPartOfSpeech")
-                  : getPartOfSpeechFilterLabel(partOfSpeechFilter)}
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="all">{t("filterAll")}</SelectItem>
-              {PARTS_OF_SPEECH.map((pos) => (
-                <SelectItem key={pos} value={pos}>
-                  {tPos(pos)}
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
-
-          <Select value={tagFilter} onValueChange={(value) => value && setTagFilter(value)}>
-            <SelectTrigger size="sm" className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-35">
-              <SelectValue placeholder={t("columns.tags")}>
-                {tagFilter === "all"
-                  ? t("columns.tags")
-                  : getTagFilterLabel(tagFilter)}
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent className="max-h-80 min-w-56">
-              <SelectGroup>
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 lg:flex lg:flex-wrap">
+            <Select value={partOfSpeechFilter} onValueChange={(value) => value && setPartOfSpeechFilter(value)}>
+              <SelectTrigger size="sm" className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-40">
+                <SelectValue placeholder={t("filterPartOfSpeech")}>
+                  {partOfSpeechFilter === "all"
+                    ? t("filterPartOfSpeech")
+                    : getPartOfSpeechFilterLabel(partOfSpeechFilter)}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
                 <SelectItem value="all">{t("filterAll")}</SelectItem>
-              </SelectGroup>
-              {tagFilterGroups.map((group) => (
-                <SelectGroup key={group}>
-                  <SelectLabel>{tTags(`groups.${group}`)}</SelectLabel>
-                  {BUILTIN_TAG_GROUPS[group].map((tag) => (
-                    <SelectItem key={tag.id} value={tag.id}>
-                      {tTags(`${group}.${tag.id}`)}
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              ))}
-              {customTagOptions.length > 0 && (
+                {PARTS_OF_SPEECH.map((pos) => (
+                  <SelectItem key={pos} value={pos}>
+                    {tPos(pos)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+
+            <Select value={tagFilter} onValueChange={(value) => value && setTagFilter(value)}>
+              <SelectTrigger size="sm" className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-35">
+                <SelectValue placeholder={t("columns.tags")}>
+                  {tagFilter === "all"
+                    ? t("columns.tags")
+                    : getTagFilterLabel(tagFilter)}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent className="max-h-80 min-w-56">
                 <SelectGroup>
-                  <SelectLabel>{tTags("groups.custom")}</SelectLabel>
-                  {customTagOptions.map((tag) => (
-                    <SelectItem key={tag} value={tag}>
-                      {getCustomTagName(tag)}
-                    </SelectItem>
-                  ))}
+                  <SelectItem value="all">{t("filterAll")}</SelectItem>
                 </SelectGroup>
-              )}
-            </SelectContent>
-          </Select>
+                {tagFilterGroups.map((group) => (
+                  <SelectGroup key={group}>
+                    <SelectLabel>{tTags(`groups.${group}`)}</SelectLabel>
+                    {BUILTIN_TAG_GROUPS[group].map((tag) => (
+                      <SelectItem key={tag.id} value={tag.id}>
+                        {tTags(`${group}.${tag.id}`)}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                ))}
+                {customTagOptions.length > 0 && (
+                  <SelectGroup>
+                    <SelectLabel>{tTags("groups.custom")}</SelectLabel>
+                    {customTagOptions.map((tag) => (
+                      <SelectItem key={tag} value={tag}>
+                        {getCustomTagName(tag)}
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                )}
+              </SelectContent>
+            </Select>
 
-          <Select
-            value={sortValue}
-            onValueChange={(value) => {
-              if (!value) return;
-              const [field, direction] = value.split(":") as [
-                SortField,
-                SortDirection,
-              ];
-              setSortField(field);
-              setSortDirection(direction);
-            }}
-          >
-            <SelectTrigger size="sm" className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-45">
-              <SelectValue placeholder={t("sortBy")}>
-                {getSortLabel(sortValue)}
-              </SelectValue>
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="updated:desc">{t("sortUpdated")}</SelectItem>
-              <SelectItem value="word:asc">{t("sortWord")} ({t("sortAsc")})</SelectItem>
-              <SelectItem value="word:desc">{t("sortWord")} ({t("sortDesc")})</SelectItem>
-            </SelectContent>
-          </Select>
+            <Select
+              value={sortValue}
+              onValueChange={(value) => {
+                if (!value) return;
+                const [field, direction] = value.split(":") as [
+                  SortField,
+                  SortDirection,
+                ];
+                setSortField(field);
+                setSortDirection(direction);
+              }}
+            >
+              <SelectTrigger size="sm" className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-45">
+                <SelectValue placeholder={t("sortBy")}>
+                  {getSortLabel(sortValue)}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="updated:desc">{t("sortUpdated")}</SelectItem>
+                <SelectItem value="word:asc">{t("sortWord")} ({t("sortAsc")})</SelectItem>
+                <SelectItem value="word:desc">{t("sortWord")} ({t("sortDesc")})</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
         </div>
-      </div>
 
-      {filteredWords.length === 0 ? (
-        <div className="empty-state">
-          <p className="text-muted-foreground">{t("noResults")}</p>
-        </div>
-      ) : (
-        <div className="space-y-8">
-          {groupedWords.map((group) => (
-            <VocabularyPosGroup
-              key={`${group.key}:${search}:${partOfSpeechFilter}:${tagFilter}:${sortValue}`}
-              title={group.title}
-              words={group.words}
-            />
-          ))}
-        </div>
-      )}
+        {filteredWords.length === 0 ? (
+          <div className="empty-state">
+            <p className="text-muted-foreground">{t("noResults")}</p>
+          </div>
+        ) : (
+          <div className="space-y-8">
+            {groupedWords.map((group) => (
+              <VocabularyPosGroup
+                key={`${group.key}:${search}:${partOfSpeechFilter}:${tagFilter}:${sortValue}`}
+                title={group.title}
+                words={group.words}
+              />
+            ))}
+          </div>
+        )}
 
-      <VocabularyExportDialog
-        open={exportOpen}
-        onOpenChange={setExportOpen}
-        workspaceName={workspaceName}
-        words={exportWords}
-      />
+        <VocabularyExportDialog
+          open={exportOpen}
+          onOpenChange={setExportOpen}
+          workspaceName={workspaceName}
+          words={exportWords}
+        />
       </div>
     </PageShell>
   );

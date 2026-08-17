@@ -41,6 +41,16 @@ export function mediaTypeFromFormat(format: string | undefined, mimeType: string
   return "audio";
 }
 
+export function listeningFilenameFromUpload(filename: string) {
+  const trimmed = filename.trim();
+  const base = trimmed.split(/[/\\]/).pop()?.trim() ?? "";
+  return base;
+}
+
+export function normalizeListeningFilename(filename: string) {
+  return listeningFilenameFromUpload(filename).toLowerCase();
+}
+
 export function titleFromFilename(filename: string) {
   const base = filename.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").trim();
   if (!base) return "Listening";

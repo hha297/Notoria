@@ -156,6 +156,7 @@ export function toListeningListItem(
   return {
     id: lesson.id,
     title: lesson.title,
+    originalFilename: lesson.originalFilename,
     cefrLevel: lesson.cefrLevel,
     topic: lesson.topic,
     formality: lesson.formality,
