@@ -828,14 +828,19 @@
     "customTagsDescription": "Create workspace-specific tags for vocabulary. Built-in tags are always available.",
     "tagName": "Tag name",
     "tagNamePlaceholder": "e.g. YKI, JLPT N5, IELTS",
+    "tagNameRequired": "Enter a tag name.",
     "addTag": "Add tag",
     "renameTag": "Rename",
+    "editTagTitle": "Rename tag",
+    "editTagDescription": "The new name will be applied to every word using this tag.",
     "tagCreated": "Tag created",
     "tagUpdated": "Tag renamed",
     "tagDeleted": "Tag deleted",
     "tagExists": "A tag with this name already exists",
     "noCustomTags": "No custom tags yet",
-    "deleteTagConfirm": "Delete this tag? It will be removed from all words."
+    "deleteTagTitle": "Delete this tag?",
+    "deleteTagConfirm": "Delete this tag? It will be removed from all words.",
+    "deleteTagDescription": "\"{name}\" will be removed from all words. The words themselves will not be deleted."
   },
   "theory": {
     "eyebrow": "Theory",

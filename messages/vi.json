@@ -679,14 +679,19 @@
     "customTagsDescription": "Tạo thẻ của bạn cho từ vựng. Thẻ có sẵn vẫn dùng được bình thường.",
     "tagName": "Tên thẻ",
     "tagNamePlaceholder": "vd. YKI, JLPT N5, IELTS",
+    "tagNameRequired": "Hãy nhập tên thẻ.",
     "addTag": "Thêm thẻ",
     "renameTag": "Đổi tên",
+    "editTagTitle": "Đổi tên thẻ",
+    "editTagDescription": "Tên mới sẽ được áp dụng cho mọi từ đang dùng thẻ này.",
     "tagCreated": "Đã tạo thẻ",
     "tagUpdated": "Đã đổi tên thẻ",
     "tagDeleted": "Đã xóa thẻ",
     "tagExists": "Thẻ này đã có rồi",
     "noCustomTags": "Chưa có thẻ riêng nào",
-    "deleteTagConfirm": "Xóa thẻ này? Thẻ sẽ bị gỡ khỏi mọi từ đang gắn."
+    "deleteTagTitle": "Xóa thẻ này?",
+    "deleteTagConfirm": "Xóa thẻ này? Thẻ sẽ bị gỡ khỏi mọi từ đang gắn.",
+    "deleteTagDescription": "\"{name}\" sẽ bị gỡ khỏi mọi từ đang gắn. Bản thân các từ không bị xóa."
   },
   "theory": {
     "eyebrow": "Lý thuyết",

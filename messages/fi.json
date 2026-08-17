@@ -679,14 +679,19 @@
     "customTagsDescription": "Luo työtilakohtaisia tunnisteita sanastolle. Valmiit tunnisteet ovat aina käytettävissä.",
     "tagName": "Tunnisteen nimi",
     "tagNamePlaceholder": "esim. YKI, JLPT N5, IELTS",
+    "tagNameRequired": "Anna tunnisteen nimi.",
     "addTag": "Lisää tunniste",
     "renameTag": "Nimeä uudelleen",
+    "editTagTitle": "Nimeä tunniste uudelleen",
+    "editTagDescription": "Uusi nimi päivitetään kaikkiin sanoihin, joissa tunnistetta käytetään.",
     "tagCreated": "Tunniste luotu",
     "tagUpdated": "Tunniste nimetty uudelleen",
     "tagDeleted": "Tunniste poistettu",
     "tagExists": "Tämänniminen tunniste on jo olemassa",
     "noCustomTags": "Ei omia tunnisteita vielä",
-    "deleteTagConfirm": "Poistetaanko tämä tunniste? Se poistetaan kaikista sanoista."
+    "deleteTagTitle": "Poistetaanko tämä tunniste?",
+    "deleteTagConfirm": "Poistetaanko tämä tunniste? Se poistetaan kaikista sanoista.",
+    "deleteTagDescription": "\"{name}\" poistetaan kaikista sanoista. Sanoja itseään ei poisteta."
   },
   "theory": {
     "eyebrow": "Teoria",
