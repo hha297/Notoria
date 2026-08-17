@@ -1,6 +1,6 @@
 "use server";
 
-import { and, desc, eq, sql } from "drizzle-orm";
+import { and, desc, eq, ne, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import {
@@ -28,6 +28,8 @@ import {
 import { transcribeListeningMedia } from "@/lib/listening/transcribe";
 import type { ListeningLessonDetail, ListeningLessonListItem } from "@/lib/listening/types";
 import {
+  applyListeningFilenameRename,
+  fallbackListeningFilename,
   isAllowedListeningFile,
   listeningFilenameFromUpload,
   mediaTypeFromFormat,
@@ -234,16 +236,18 @@ function isUniqueViolation(error: unknown) {
 async function assertListeningFilenameIsUnique(
   filename: string,
   workspaceId: string,
+  excludeId?: string,
 ) {
   const normalized = normalizeListeningFilename(filename);
   if (!normalized) {
-    throw new ListeningError("INVALID_FILE");
+    throw new ListeningError("FILENAME_REQUIRED");
   }
 
   const existing = await db.query.listeningLessons.findFirst({
     where: and(
       eq(listeningLessons.workspaceId, workspaceId),
       sql`lower(trim(${listeningLessons.originalFilename})) = ${normalized}`,
+      excludeId ? ne(listeningLessons.id, excludeId) : undefined,
     ),
     columns: { id: true },
   });
@@ -521,4 +525,51 @@ export async function deleteListeningLesson(id: string) {
   await db.delete(listeningLessons).where(eq(listeningLessons.id, id));
   await destroyListeningAsset(lesson.cloudinaryPublicId);
   revalidateListening(id);
+}
+
+export async function renameListeningLesson(id: string, filename: string) {
+  const { lesson, workspace } = await requireOwnedLesson(id);
+  const currentFilename = fallbackListeningFilename(
+    lesson.originalFilename,
+    lesson.title,
+    lesson.format,
+  );
+  const nextFilename = applyListeningFilenameRename(filename, currentFilename);
+
+  if (!nextFilename) {
+    throw new ListeningError("FILENAME_REQUIRED");
+  }
+
+  const sameName =
+    normalizeListeningFilename(nextFilename) ===
+    normalizeListeningFilename(lesson.originalFilename ?? "");
+
+  if (sameName && lesson.originalFilename) {
+    return { id, originalFilename: lesson.originalFilename };
+  }
+
+  await assertListeningFilenameIsUnique(nextFilename, workspace.id, id);
+
+  const currentTitleFromFile = titleFromFilename(currentFilename);
+  const shouldSyncTitle =
+    !lesson.title.trim() || lesson.title === currentTitleFromFile;
+
+  try {
+    await db
+      .update(listeningLessons)
+      .set({
+        originalFilename: nextFilename,
+        title: shouldSyncTitle ? titleFromFilename(nextFilename) : lesson.title,
+        updatedAt: new Date(),
+      })
+      .where(eq(listeningLessons.id, id));
+  } catch (error) {
+    if (isUniqueViolation(error)) {
+      throw new ListeningError("DUPLICATE_FILENAME");
+    }
+    throw error;
+  }
+
+  revalidateListening(id);
+  return { id, originalFilename: nextFilename };
 }

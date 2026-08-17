@@ -798,6 +798,11 @@
     "retry": "Thử lại",
     "created": "Đã tạo bài nghe thành công.",
     "deleted": "Đã xóa bài nghe",
+    "renameFile": "Đổi tên file",
+    "renameFileTitle": "Đổi tên file",
+    "renameFileDescription": "Đổi tên file. File audio không bị tải lên lại.",
+    "fileNameLabel": "Tên file",
+    "renamed": "Đã cập nhật tên file",
     "deleteConfirmTitle": "Xóa bài nghe này?",
     "deleteConfirmDescription": "\"{title}\" và các bài tập sẽ bị xóa vĩnh viễn.",
     "backToList": "Quay lại Nghe",
@@ -908,7 +913,8 @@
       "LESSON_NOT_FOUND": "Không tìm thấy bài nghe.",
       "PROCESSING_FAILED": "Có lỗi khi tạo bài nghe. Hãy thử lại.",
       "EMPTY_TRANSCRIPT": "Không tìm thấy lời nói trong file này.",
-      "DUPLICATE_FILENAME": "Đã có file với tên này."
+      "DUPLICATE_FILENAME": "Đã có file với tên này.",
+      "FILENAME_REQUIRED": "Hãy nhập tên file."
     }
   },
   "errors": {

@@ -157,6 +157,7 @@ export function toListeningListItem(
     id: lesson.id,
     title: lesson.title,
     originalFilename: lesson.originalFilename,
+    format: lesson.format,
     cefrLevel: lesson.cefrLevel,
     topic: lesson.topic,
     formality: lesson.formality,
@@ -200,6 +201,7 @@ export function toListeningLessonDetail(
   return {
     id: lesson.id,
     title: lesson.title,
+    originalFilename: lesson.originalFilename,
     cloudinaryUrl: lesson.cloudinaryUrl,
     mediaType: lesson.mediaType,
     format: lesson.format,

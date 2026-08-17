@@ -13,6 +13,7 @@ export const LISTENING_ERROR_CODES = [
   "PROCESSING_FAILED",
   "EMPTY_TRANSCRIPT",
   "DUPLICATE_FILENAME",
+  "FILENAME_REQUIRED",
 ] as const;
 
 export type ListeningErrorCode = (typeof LISTENING_ERROR_CODES)[number];

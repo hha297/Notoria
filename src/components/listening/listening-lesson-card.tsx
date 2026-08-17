@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Headphones, Loader2, RotateCcw, Trash2 } from "lucide-react";
+import { Headphones, Loader2, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
@@ -24,13 +24,17 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { LinkButton } from "@/components/ui/link-button";
+import { RenameListeningDialog } from "@/components/listening/rename-listening-dialog";
 import {
   deleteListeningLesson,
   processListeningLesson,
 } from "@/lib/actions/listening";
 import { isListeningErrorCode } from "@/lib/listening/errors";
 import type { ListeningLessonListItem } from "@/lib/listening/types";
-import { formatListeningDuration } from "@/lib/listening/utils";
+import {
+  formatListeningDuration,
+  splitListeningFilename,
+} from "@/lib/listening/utils";
 import {
   isKnownWritingTopic,
   type WritingCefr,
@@ -53,10 +57,14 @@ export function ListeningLessonCard({ lesson }: ListeningLessonCardProps) {
   const tc = useTranslations("common");
   const router = useRouter();
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [renameOpen, setRenameOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const duration = formatListeningDuration(lesson.duration);
   const processing = lesson.status !== "COMPLETED" && lesson.status !== "FAILED";
+  const filenameStem = lesson.originalFilename
+    ? splitListeningFilename(lesson.originalFilename).stem
+    : "";
 
   function errorMessage(error: unknown) {
     const code = error instanceof Error ? error.message : "PROCESSING_FAILED";
@@ -102,11 +110,40 @@ export function ListeningLessonCard({ lesson }: ListeningLessonCardProps) {
               {t(`status.${lesson.status}`)}
             </Badge>
           </div>
-          <CardTitle className="text-lg text-ink">
-            <Link href={`/listening/${lesson.id}`} className="hover:underline">
-              {lesson.title}
-            </Link>
-          </CardTitle>
+          <div className="group/title flex min-w-0 items-center gap-1">
+            <CardTitle className="min-w-0 truncate text-lg text-ink">
+              <Link href={`/listening/${lesson.id}`} className="hover:underline">
+                {lesson.title}
+              </Link>
+            </CardTitle>
+            <div className="flex shrink-0 items-center opacity-0 transition-opacity group-focus-within/title:opacity-100 group-hover/title:opacity-100 max-sm:opacity-100">
+              <Button
+                type="button"
+                size="icon-sm"
+                variant="ghost"
+                className="size-6 text-muted-foreground hover:text-ink"
+                onClick={() => setRenameOpen(true)}
+                disabled={isPending}
+              >
+                <Pencil className="size-3.5" />
+                <span className="sr-only">{t("renameFile")}</span>
+              </Button>
+              <Button
+                type="button"
+                size="icon-sm"
+                variant="ghost"
+                className="size-6 text-muted-foreground hover:text-destructive"
+                onClick={() => setDeleteOpen(true)}
+                disabled={isPending}
+              >
+                <Trash2 className="size-3.5" />
+                <span className="sr-only">{tc("delete")}</span>
+              </Button>
+            </div>
+          </div>
+          {filenameStem ? (
+            <p className="truncate text-xs text-muted-foreground">{filenameStem}</p>
+          ) : null}
           <CardDescription className="flex flex-wrap items-center gap-1.5 text-sm">
             {lesson.topic ? (
               <span>
@@ -161,19 +198,18 @@ export function ListeningLessonCard({ lesson }: ListeningLessonCardProps) {
                 {processing ? t("viewProgress") : t("open")}
               </LinkButton>
             )}
-            <Button
-              type="button"
-              size="icon-sm"
-              variant="ghost"
-              onClick={() => setDeleteOpen(true)}
-              disabled={isPending}
-            >
-              <Trash2 className="size-4" />
-              <span className="sr-only">{tc("delete")}</span>
-            </Button>
           </div>
         </CardContent>
       </Card>
+
+      <RenameListeningDialog
+        open={renameOpen}
+        onOpenChange={setRenameOpen}
+        lessonId={lesson.id}
+        title={lesson.title}
+        originalFilename={lesson.originalFilename}
+        format={lesson.format}
+      />
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <DialogContent showCloseButton={!isPending}>

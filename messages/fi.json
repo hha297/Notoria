@@ -798,6 +798,11 @@
     "retry": "Yritä uudelleen",
     "created": "Kuuntelutunti luotiin onnistuneesti.",
     "deleted": "Kuuntelutunti poistettu",
+    "renameFile": "Nimeä tiedosto uudelleen",
+    "renameFileTitle": "Nimeä tiedosto uudelleen",
+    "renameFileDescription": "Muuta tiedostonimeä. Äänitiedostoa ei ladata uudelleen.",
+    "fileNameLabel": "Tiedostonimi",
+    "renamed": "Tiedostonimi päivitetty",
     "deleteConfirmTitle": "Poistetaanko tämä kuuntelutunti?",
     "deleteConfirmDescription": "\"{title}\" ja sen harjoitukset poistetaan pysyvästi.",
     "backToList": "Takaisin kuunteluun",
@@ -908,7 +913,8 @@
       "LESSON_NOT_FOUND": "Kuuntelutuntia ei löytynyt.",
       "PROCESSING_FAILED": "Tunnin luonti epäonnistui. Yritä uudelleen.",
       "EMPTY_TRANSCRIPT": "Tiedostosta ei löytynyt puhetta.",
-      "DUPLICATE_FILENAME": "Tiedosto tällä nimellä on jo olemassa."
+      "DUPLICATE_FILENAME": "Tiedosto tällä nimellä on jo olemassa.",
+      "FILENAME_REQUIRED": "Anna tiedostonimi."
     }
   },
   "errors": {
