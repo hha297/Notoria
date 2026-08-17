@@ -1128,6 +1128,37 @@
     },
     "content": "Sisältö",
     "contentPlaceholder": "Aloita tehtävän sisällön kirjoittaminen…",
+    "ai": {
+      "check": "Tarkista tekoälyllä",
+      "improve": "Paranna lausetta",
+      "grammar": "Tarkista kielioppi",
+      "checking": "Tarkistetaan tekoälyllä…",
+      "checkingImprove": "Parannetaan lausetta…",
+      "checkingGrammar": "Tarkistetaan kielioppia…",
+      "suggestion": "Tekoälyehdotus",
+      "apply": "Käytä",
+      "skip": "Ohita",
+      "disclaimer": "Tekoälyehdotukset voivat olla virheellisiä.",
+      "empty": "Kirjoita jotain ennen tekoälytarkistusta.",
+      "unavailable": "Tekoälyehdotukset eivät ole juuri nyt saatavilla. Yritä myöhemmin.",
+      "forbidden": "Tekoälyavusteinen kirjoitus kuuluu Pro-tilaukseen.",
+      "noIssues": "Ei havaittuja ongelmia.",
+      "noImprove": "Lause kuulostaa jo luontevalta.",
+      "noGrammar": "Kieliopivirheitä ei löytynyt.",
+      "applyFailed": "Ehdotusta ei voitu soveltaa automaattisesti.",
+      "upgradeHint": "Tekoälyavusteinen kirjoitus kuuluu Pro-tilaukseen.",
+      "types": {
+        "grammar": "Kielioppi",
+        "spelling": "Oikeinkirjoitus",
+        "vocabulary": "Sanasto",
+        "style": "Tyyli",
+        "clarity": "Selkeys"
+      },
+      "severities": {
+        "error": "Virhe",
+        "suggestion": "Valinnainen"
+      }
+    },
     "sections": "Osiot",
     "section": "Osio",
     "sectionTitlePlaceholder": "Osion otsikko (valinnainen)",

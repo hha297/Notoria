@@ -1128,6 +1128,37 @@
     },
     "content": "Nội dung",
     "contentPlaceholder": "Bắt đầu viết nội dung…",
+    "ai": {
+      "check": "Kiểm tra bằng AI",
+      "improve": "Cải thiện câu",
+      "grammar": "Kiểm tra ngữ pháp",
+      "checking": "Đang kiểm tra bằng AI…",
+      "checkingImprove": "Đang cải thiện câu…",
+      "checkingGrammar": "Đang kiểm tra ngữ pháp…",
+      "suggestion": "Gợi ý AI",
+      "apply": "Dùng",
+      "skip": "Bỏ qua",
+      "disclaimer": "Gợi ý AI có thể không đúng.",
+      "empty": "Hãy viết nội dung trước khi kiểm tra bằng AI.",
+      "unavailable": "Gợi ý AI tạm thời không dùng được. Thử lại sau.",
+      "forbidden": "Hỗ trợ viết AI dành cho Pro.",
+      "noIssues": "Không thấy vấn đề nào.",
+      "noImprove": "Câu này đã tự nhiên.",
+      "noGrammar": "Không thấy lỗi ngữ pháp.",
+      "applyFailed": "Không thể áp dụng gợi ý tự động.",
+      "upgradeHint": "Hỗ trợ viết AI dành cho Pro.",
+      "types": {
+        "grammar": "Ngữ pháp",
+        "spelling": "Chính tả",
+        "vocabulary": "Từ vựng",
+        "style": "Văn phong",
+        "clarity": "Rõ ràng"
+      },
+      "severities": {
+        "error": "Sai",
+        "suggestion": "Tùy chọn"
+      }
+    },
     "sections": "Các phần",
     "section": "Phần",
     "sectionTitlePlaceholder": "Tiêu đề phần (không bắt buộc)",

@@ -460,6 +460,37 @@
     },
     "content": "Content",
     "contentPlaceholder": "Start writing your content here...",
+    "ai": {
+      "check": "Check with AI",
+      "improve": "Improve sentence",
+      "grammar": "Check grammar",
+      "checking": "Checking with AI…",
+      "checkingImprove": "Improving sentence…",
+      "checkingGrammar": "Checking grammar…",
+      "suggestion": "AI suggestion",
+      "apply": "Use",
+      "skip": "Skip",
+      "disclaimer": "AI suggestions may be incorrect.",
+      "empty": "Write something before checking with AI.",
+      "unavailable": "AI suggestions are temporarily unavailable. Please try again later.",
+      "forbidden": "AI writing assistance is available with Pro.",
+      "noIssues": "No issues found.",
+      "noImprove": "This sentence already sounds natural.",
+      "noGrammar": "No grammar issues found.",
+      "applyFailed": "Could not apply that suggestion automatically.",
+      "upgradeHint": "AI writing assistance is available with Pro.",
+      "types": {
+        "grammar": "Grammar",
+        "spelling": "Spelling",
+        "vocabulary": "Vocabulary",
+        "style": "Style",
+        "clarity": "Clarity"
+      },
+      "severities": {
+        "error": "Incorrect",
+        "suggestion": "Optional"
+      }
+    },
     "sections": "Sections",
     "section": "Section",
     "sectionTitlePlaceholder": "Section title (optional)",
