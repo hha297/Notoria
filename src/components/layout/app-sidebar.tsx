@@ -8,10 +8,13 @@ import {
   Headphones,
   Home,
   Languages,
+  Lock,
   PenLine,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Logo, LogoWordmark } from "@/components/ui/logo";
+import { useProAccess } from "@/components/billing/pro-access-provider";
+import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import {
   Sidebar,
   SidebarContent,
@@ -36,7 +39,7 @@ const navItems = [
   { titleKey: "writing", href: "/writing", icon: PenLine },
   { titleKey: "theory", href: "/theory", icon: BookOpen },
   { titleKey: "exercises", href: "/exercises", icon: Dumbbell },
-  { titleKey: "listening", href: "/listening", icon: Headphones },
+  { titleKey: "listening", href: "/listening", icon: Headphones, pro: true },
 ] as const;
 
 type AppSidebarProps = {
@@ -55,6 +58,7 @@ export function AppSidebar({
   const pathname = usePathname();
   const t = useTranslations("nav");
   const { isMobile, setOpenMobile } = useSidebar();
+  const { hasProAccess, openUpgrade } = useProAccess();
 
   function closeMobileSidebar() {
     if (isMobile) {
@@ -91,29 +95,44 @@ export function AppSidebar({
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>
-              {navItems.map((item) => (
-                <SidebarMenuItem key={item.titleKey} className="py-0.5">
-                  <SidebarMenuButton
-                    render={
-                      <Link href={item.href} onClick={closeMobileSidebar} />
-                    }
-                    isActive={
-                      item.href === "/"
-                        ? pathname === "/"
-                        : pathname.startsWith(item.href)
-                    }
-                    tooltip={t(item.titleKey)}
-                    className={cn(
-                      "text-sidebar-foreground transition-colors",
-                      "hover:bg-accent-lime/25! hover:text-accent-lime!",
-                      "data-active:bg-accent-lime/25! data-active:text-accent-lime! data-active:font-medium",
-                    )}
-                  >
-                    <item.icon />
-                    <span className="font-medium">{t(item.titleKey)}</span>
-                  </SidebarMenuButton>
-                </SidebarMenuItem>
-              ))}
+              {navItems.map((item) => {
+                const locked = "pro" in item && item.pro && !hasProAccess;
+                return (
+                  <SidebarMenuItem key={item.titleKey} className="py-0.5">
+                    <SidebarMenuButton
+                      render={
+                        locked ? (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              closeMobileSidebar();
+                              openUpgrade();
+                            }}
+                          />
+                        ) : (
+                          <Link href={item.href} onClick={closeMobileSidebar} />
+                        )
+                      }
+                      isActive={
+                        !locked &&
+                        (item.href === "/"
+                          ? pathname === "/"
+                          : pathname.startsWith(item.href))
+                      }
+                      tooltip={t(item.titleKey)}
+                      className={cn(
+                        "text-sidebar-foreground transition-colors",
+                        "hover:bg-accent-lime/25! hover:text-accent-lime!",
+                        "data-active:bg-accent-lime/25! data-active:text-accent-lime! data-active:font-medium",
+                        locked && lockedFeatureClassName,
+                      )}
+                    >
+                      {locked ? <Lock /> : <item.icon />}
+                      <span className="font-medium">{t(item.titleKey)}</span>
+                    </SidebarMenuButton>
+                  </SidebarMenuItem>
+                );
+              })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>

@@ -1195,6 +1195,8 @@
     "noCustomer": "No billing customer is linked to this account yet.",
     "modalTitle": "Upgrade to Notoria Pro",
     "modalSubtitle": "Unlock AI-powered learning tools and get more out of Notoria.",
+    "lockedTitle": "Pro feature",
+    "lockedDescription": "This feature requires Pro. Upgrade to unlock it and get access to AI-powered tools and other Pro features.",
     "planName": "Pro",
     "cancelAnytime": "Cancel anytime",
     "benefits": {

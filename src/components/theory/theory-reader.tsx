@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { TheoryExportDialog } from "@/components/theory/export-dialog";
 import { Badge } from "@/components/ui/badge";
@@ -85,16 +86,16 @@ export function TheoryReader({
           <Pencil className="size-4" />
           {t("edit")}
         </LinkButton>
-        <Button
+        <LockedFeatureButton
           type="button"
           variant="outline"
           size="lg"
+          icon={<Download className="size-4" />}
           onClick={() => setExportOpen(true)}
           className="h-11 w-full sm:h-9 sm:w-auto"
         >
-          <Download className="size-4" />
           {t("export.button")}
-        </Button>
+        </LockedFeatureButton>
         <Button
           type="button"
           variant="outline"

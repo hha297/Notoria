@@ -2,8 +2,10 @@
 
 import { Loader2, Lock, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { ProUpgradeDialog } from "@/components/billing/pro-upgrade-dialog";
+import { useProAccess } from "@/components/billing/pro-access-provider";
+import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import {
   Select,
   SelectContent,
@@ -17,34 +19,29 @@ import {
 } from "@/lib/exercises/ai-types";
 
 type ExerciseAiBarProps = {
-  canUseAi: boolean;
   generating: boolean;
   hasSession: boolean;
   level: ExerciseAiCefr;
-  upgradeOpen: boolean;
   disabled?: boolean;
   onLevelChange: (level: ExerciseAiCefr) => void;
   onGenerate: () => void;
-  onUpgradeOpenChange: (open: boolean) => void;
 };
 
 export function ExerciseAiBar({
-  canUseAi,
   generating,
   hasSession,
   level,
-  upgradeOpen,
   disabled = false,
   onLevelChange,
   onGenerate,
-  onUpgradeOpenChange,
 }: ExerciseAiBarProps) {
   const t = useTranslations("exercises.ai");
   const tMeta = useTranslations("writing.meta");
+  const { hasProAccess, openUpgrade } = useProAccess();
 
   function handleGenerate() {
-    if (!canUseAi) {
-      onUpgradeOpenChange(true);
+    if (!hasProAccess) {
+      openUpgrade();
       return;
     }
     onGenerate();
@@ -80,12 +77,14 @@ export function ExerciseAiBar({
         <Button
           type="button"
           size="sm"
-          disabled={generating || disabled}
+          aria-disabled={!hasProAccess || undefined}
+          disabled={hasProAccess && (generating || disabled)}
+          className={cn(!hasProAccess && lockedFeatureClassName)}
           onClick={handleGenerate}
         >
           {generating ? (
             <Loader2 className="size-3.5 animate-spin" />
-          ) : canUseAi ? (
+          ) : hasProAccess ? (
             <Sparkles className="size-3.5" />
           ) : (
             <Lock className="size-3.5" />
@@ -96,12 +95,7 @@ export function ExerciseAiBar({
               ? t("generateMore")
               : t("generate")}
         </Button>
-        {!canUseAi ? (
-          <p className="text-xs text-muted-foreground">{t("upgradeHint")}</p>
-        ) : null}
       </div>
-
-      <ProUpgradeDialog open={upgradeOpen} onOpenChange={onUpgradeOpenChange} />
     </div>
   );
 }

@@ -2,8 +2,10 @@ import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { ListeningView } from "@/components/listening/listening-view";
+import { ListeningLockedPage } from "@/components/listening/listening-locked";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getListeningLessons } from "@/lib/actions/listening";
+import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export const dynamic = "force-dynamic";
@@ -25,6 +27,11 @@ export default async function ListeningPage() {
         <NoWorkspaceEmpty />
       </PageShell>
     );
+  }
+
+  const proAccess = await getCurrentProAccess();
+  if (!proAccess.hasProAccess) {
+    return <ListeningLockedPage />;
   }
 
   const lessons = await getListeningLessons();

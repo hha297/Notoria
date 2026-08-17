@@ -4,9 +4,8 @@ import { db } from "@/db";
 import { users, type User } from "@/db/schema";
 import { auth } from "@/auth";
 import { getCurrentUserId } from "@/lib/auth/session";
+import { hasActivePaidPlan } from "@/lib/auth/paid-access";
 import type { BillingState } from "@/lib/stripe/types";
-
-const PRO_ACCESS_STATUSES = new Set(["active", "trialing", "past_due"]);
 
 export type SubscriptionSnapshot = Pick<
   User,
@@ -28,13 +27,7 @@ export class ProRequiredError extends Error {
 export function hasActiveProSubscription(
   user: Pick<User, "subscriptionPlan" | "subscriptionStatus"> | null | undefined,
 ) {
-  if (!user) return false;
-
-  return (
-    user.subscriptionPlan === "pro" &&
-    Boolean(user.subscriptionStatus) &&
-    PRO_ACCESS_STATUSES.has(user.subscriptionStatus as string)
-  );
+  return hasActivePaidPlan(user);
 }
 
 export async function getCurrentSubscription(): Promise<SubscriptionSnapshot | null> {

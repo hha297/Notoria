@@ -5,7 +5,6 @@ import { PageHeader } from "@/components/layout/page-header";
 import { FillBlankSession } from "@/components/exercises/fill-blank-session";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getFlashcardWords } from "@/lib/actions/flashcards";
-import { getCurrentAiAccess } from "@/lib/auth/ai-access";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export const dynamic = "force-dynamic";
@@ -28,10 +27,7 @@ export default async function FillInBlankPage() {
     );
   }
 
-  const [words, aiAccess] = await Promise.all([
-    getFlashcardWords(),
-    getCurrentAiAccess(),
-  ]);
+  const words = await getFlashcardWords();
 
   return (
     <div className="mx-auto max-w-5xl space-y-10 pt-2">
@@ -44,7 +40,6 @@ export default async function FillInBlankPage() {
       <FillBlankSession
         workspaceId={workspace.id}
         words={words}
-        canUseAi={aiAccess.canUseAi}
         language={workspace.language}
       />
     </div>

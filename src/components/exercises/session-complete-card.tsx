@@ -1,7 +1,9 @@
 "use client";
 
-import { Loader2, RotateCcw, Sparkles } from "lucide-react";
+import { Loader2, Lock, RotateCcw, Sparkles } from "lucide-react";
+import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 type SessionCompleteCardProps = {
   title: string;
@@ -13,6 +15,7 @@ type SessionCompleteCardProps = {
     onClick: () => void;
     loading?: boolean;
     disabled?: boolean;
+    locked?: boolean;
   };
 };
 
@@ -38,11 +41,15 @@ export function SessionCompleteCard({
           <Button
             type="button"
             variant="outline"
+            aria-disabled={extraAction.locked || undefined}
             onClick={extraAction.onClick}
-            disabled={extraAction.disabled || extraAction.loading}
+            disabled={!extraAction.locked && (extraAction.disabled || extraAction.loading)}
+            className={cn(extraAction.locked && lockedFeatureClassName)}
           >
             {extraAction.loading ? (
               <Loader2 className="size-4 animate-spin" />
+            ) : extraAction.locked ? (
+              <Lock className="size-4" />
             ) : (
               <Sparkles className="size-4" />
             )}

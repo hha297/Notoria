@@ -1,3 +1,4 @@
+import { assertPaidDocumentExport } from "@/lib/actions/paid-features";
 import { buildExportDocument, buildRichDocumentExport, exportDocumentIsEmpty } from "@/lib/writing/export/build-document";
 import { generateWritingDocxBlob } from "@/lib/writing/export/docx";
 import { downloadBlob } from "@/lib/writing/export/download";
@@ -76,6 +77,11 @@ export async function exportDocumentModel(params: {
   filenamePrefix?: string;
   layout?: ExportLayout;
 }): Promise<{ filename: string }> {
+  const access = await assertPaidDocumentExport(params.options.format);
+  if (!access.ok) {
+    throw new Error(access.code);
+  }
+
   if (exportDocumentIsEmpty(params.model)) {
     throw new Error("EMPTY_EXPORT");
   }

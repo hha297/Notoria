@@ -1015,6 +1015,8 @@
     "noCustomer": "Tài khoản này chưa được liên kết với khách hàng thanh toán.",
     "modalTitle": "Nâng cấp lên Notoria Pro",
     "modalSubtitle": "Mở khóa công cụ học tập dùng AI và tận dụng Notoria tốt hơn.",
+    "lockedTitle": "Tính năng Pro",
+    "lockedDescription": "Tính năng này cần gói Pro. Nâng cấp để mở khóa và dùng công cụ AI cùng các tính năng Pro khác.",
     "planName": "Pro",
     "cancelAnytime": "Hủy bất cứ lúc nào",
     "benefits": {

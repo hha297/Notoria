@@ -1014,7 +1014,9 @@
     "notConfigured": "Laskutusta ei ole vielä määritetty.",
     "noCustomer": "Tähän tiliin ei ole vielä liitetty laskutusasiakasta.",
     "modalTitle": "Päivitä Notoria Pro -tilaukseen",
-    "modalSubtitle": "Avaa tekoälyyn perustuvat oppimistyökalut ja saat enemmän irti Notoriasta.",
+    "modalSubtitle": "Avaa tekoälytyökalut ja saa enemmän irti Notoriasta.",
+    "lockedTitle": "Pro-ominaisuus",
+    "lockedDescription": "Tämä ominaisuus vaatii Pro-tilauksen. Päivitä Prohon avataksesi sen ja saadaksesi tekoälytyökalut sekä muut Pro-ominaisuudet.",
     "planName": "Pro",
     "cancelAnytime": "Peru milloin tahansa",
     "benefits": {

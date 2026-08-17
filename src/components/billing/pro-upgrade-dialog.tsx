@@ -29,11 +29,17 @@ const BENEFITS = [
 type ProUpgradeDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  variant?: "upgrade" | "locked";
 };
 
-export function ProUpgradeDialog({ open, onOpenChange }: ProUpgradeDialogProps) {
+export function ProUpgradeDialog({
+  open,
+  onOpenChange,
+  variant = "upgrade",
+}: ProUpgradeDialogProps) {
   const t = useTranslations("billing");
   const [isPending, startTransition] = useTransition();
+  const isLocked = variant === "locked";
 
   function handleOpenChange(next: boolean) {
     if (isPending && !next) return;
@@ -68,31 +74,35 @@ export function ProUpgradeDialog({ open, onOpenChange }: ProUpgradeDialogProps) 
             <Sparkles className="size-4" />
           </div>
           <DialogTitle className="text-center text-lg text-ink">
-            {t("modalTitle")}
+            {isLocked ? t("lockedTitle") : t("modalTitle")}
           </DialogTitle>
           <DialogDescription className="text-center">
-            {t("modalSubtitle")}
+            {isLocked ? t("lockedDescription") : t("modalSubtitle")}
           </DialogDescription>
-          <p className="pt-1 font-heading text-xl font-medium text-ink">
-            {t("price")}
-          </p>
+          {isLocked ? null : (
+            <p className="pt-1 font-heading text-xl font-medium text-ink">
+              {t("price")}
+            </p>
+          )}
         </DialogHeader>
 
-        <ul className="grid gap-x-6 gap-y-4 sm:grid-cols-2">
-          {BENEFITS.map((benefit) => (
-            <li key={benefit} className="flex gap-2">
-              <Check className="mt-0.5 size-4 shrink-0 text-accent-lime" />
-              <div className="min-w-0">
-                <p className="text-sm font-medium leading-snug text-ink">
-                  {t(`benefits.${benefit}.title`)}
-                </p>
-                <p className="text-xs leading-snug text-muted-foreground">
-                  {t(`benefits.${benefit}.body`)}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ul>
+        {isLocked ? null : (
+          <ul className="grid gap-x-6 gap-y-4 sm:grid-cols-2">
+            {BENEFITS.map((benefit) => (
+              <li key={benefit} className="flex gap-2">
+                <Check className="mt-0.5 size-4 shrink-0 text-accent-lime" />
+                <div className="min-w-0">
+                  <p className="text-sm font-medium leading-snug text-ink">
+                    {t(`benefits.${benefit}.title`)}
+                  </p>
+                  <p className="text-xs leading-snug text-muted-foreground">
+                    {t(`benefits.${benefit}.body`)}
+                  </p>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
 
         <div className="space-y-2 pt-1">
           <Button

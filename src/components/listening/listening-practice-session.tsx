@@ -2,9 +2,11 @@
 
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, Loader2, RotateCcw, XCircle } from "lucide-react";
+import { CheckCircle2, Loader2, Lock, RotateCcw, XCircle } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { useProAccess } from "@/components/billing/pro-access-provider";
+import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import { ListeningAudioPlayer } from "@/components/listening/listening-audio-player";
 import { ListeningTranscript } from "@/components/listening/listening-transcript";
 import { Button } from "@/components/ui/button";
@@ -101,6 +103,7 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
   const t = useTranslations("listening");
   const tPractice = useTranslations("listening.practice");
   const tTypes = useTranslations("listening.types");
+  const { hasProAccess, openUpgrade } = useProAccess();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [speakersPending, startSpeakersTransition] = useTransition();
@@ -181,6 +184,10 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
 
   function chooseType(type: ListeningPracticeType) {
     if (isPending) return;
+    if (!hasProAccess) {
+      openUpgrade();
+      return;
+    }
 
     const existing = lesson.exercises.filter((exercise) => exercise.type === type);
     const sparse = isSparseExerciseSet(lesson, type, existing.length);
@@ -198,6 +205,10 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
         toast.success(t("exercisesGenerated"));
         router.refresh();
       } catch (error) {
+        if (error instanceof Error && error.message === "PRO_REQUIRED") {
+          openUpgrade();
+          return;
+        }
         toast.error(errorMessage(error));
       }
     });
@@ -248,17 +259,24 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
           <p className="mt-1 text-sm text-muted-foreground">{t("chooseExerciseType")}</p>
         </div>
         <div className="flex flex-wrap gap-2">
-          {LISTENING_PRACTICE_TYPES.map((type) => (
-            <Button
-              key={type}
-              type="button"
-              variant={selectedType === type ? "default" : "outline"}
-              onClick={() => chooseType(type)}
-              disabled={isPending}
-            >
-              {tTypes(type)}
-            </Button>
-          ))}
+          {LISTENING_PRACTICE_TYPES.map((type) => {
+            const locked = !hasProAccess;
+
+            return (
+              <Button
+                key={type}
+                type="button"
+                variant={selectedType === type ? "default" : "outline"}
+                aria-disabled={locked || undefined}
+                onClick={() => chooseType(type)}
+                disabled={hasProAccess && isPending}
+                className={cn(locked && lockedFeatureClassName)}
+              >
+                {locked ? <Lock className="size-3.5" /> : null}
+                {tTypes(type)}
+              </Button>
+            );
+          })}
         </div>
       </section>
 

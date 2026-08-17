@@ -77,7 +77,6 @@ type VocabularyFormProps = {
   /** When set, Cancel returns here and Save navigates here after persisting. */
   previewHref?: string;
   existingCustomTags?: string[];
-  canUseAi?: boolean;
   language?: string;
   initialData?: {
     id: string;
@@ -173,7 +172,6 @@ export function VocabularyForm({
   initialData,
   previewHref,
   existingCustomTags,
-  canUseAi = false,
   language = "en",
 }: VocabularyFormProps) {
   const router = useRouter();
@@ -350,9 +348,7 @@ export function VocabularyForm({
 
   const selectedPartOfSpeech = form.watch("partOfSpeech");
   const spellingAi = useVocabularySpellingAi({
-    enabled:
-      canUseAi &&
-      (wordCheckStatus === "unique" || wordCheckStatus === "error"),
+    enabled: wordCheckStatus === "unique" || wordCheckStatus === "error",
     word: watchedWord ?? "",
     language,
     partOfSpeech: selectedPartOfSpeech,
@@ -530,20 +526,16 @@ export function VocabularyForm({
           <SortableMeanings
             meanings={meanings}
             onChange={setMeanings}
-            ai={
-              canUseAi
-                ? {
-                    enabled: true,
-                    word: watchedWord ?? "",
-                    language,
-                    partOfSpeech: selectedPartOfSpeech,
-                    examples: examples
-                      .map((example) => example.sentence.trim())
-                      .filter(Boolean)
-                      .slice(0, 6),
-                  }
-                : undefined
-            }
+            ai={{
+              enabled: true,
+              word: watchedWord ?? "",
+              language,
+              partOfSpeech: selectedPartOfSpeech,
+              examples: examples
+                .map((example) => example.sentence.trim())
+                .filter(Boolean)
+                .slice(0, 6),
+            }}
           />
           <SortableExamples examples={examples} onChange={setExamples} />
           <TagMultiSelect

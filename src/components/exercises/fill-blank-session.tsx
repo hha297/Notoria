@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight, RotateCcw, Sparkles } from "lucide-react";
 import { CheckCircle2, Loader2, XCircle } from "lucide-react";
 import { toast } from "sonner";
+import { useProAccess } from "@/components/billing/pro-access-provider";
 import { ExerciseAiBar } from "@/components/exercises/exercise-ai-bar";
 import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
@@ -36,19 +37,18 @@ import { cn } from "@/lib/utils";
 type FillBlankSessionProps = {
   workspaceId: string;
   words: FlashcardWord[];
-  canUseAi?: boolean;
   language?: string;
 };
 
 export function FillBlankSession({
   workspaceId,
   words,
-  canUseAi = false,
   language,
 }: FillBlankSessionProps) {
   const t = useTranslations("exercises.fillInBlank");
   const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
+  const { hasProAccess, openUpgrade } = useProAccess();
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [aiItems, setAiItems] = useState<FillBlankItem[] | null>(null);
   const [itemIds, setItemIds] = useState<string[]>([]);
@@ -58,7 +58,6 @@ export function FillBlankSession({
   const [sessionComplete, setSessionComplete] = useState(false);
   const [score, setScore] = useState({ correct: 0, answered: 0 });
   const [generating, setGenerating] = useState(false);
-  const [upgradeOpen, setUpgradeOpen] = useState(false);
   const [level, setLevel] = useState<ExerciseAiCefr>("a2");
   const [usedWordIds, setUsedWordIds] = useState<string[]>([]);
   const avoidByWord = useRef<Record<string, string[]>>({});
@@ -72,7 +71,7 @@ export function FillBlankSession({
     () => buildFillBlankItems(filteredWords),
     [filteredWords],
   );
-  const sessionItems = aiItems ?? (!canUseAi ? exampleItems : []);
+  const sessionItems = aiItems ?? (!hasProAccess ? exampleItems : []);
   const itemMap = useMemo(
     () => new Map(sessionItems.map((item) => [item.id, item])),
     [sessionItems],
@@ -101,16 +100,16 @@ export function FillBlankSession({
   );
 
   useEffect(() => {
-    if (!canUseAi) startExampleSession();
-  }, [canUseAi, startExampleSession]);
+    if (!hasProAccess) startExampleSession();
+  }, [hasProAccess, startExampleSession]);
 
   useEffect(() => {
-    if (!canUseAi) return;
+    if (!hasProAccess) return;
     setAiItems(null);
     setUsedWordIds([]);
     avoidByWord.current = {};
     resetRound([]);
-  }, [canUseAi, workspaceId, resetRound]);
+  }, [hasProAccess, workspaceId, resetRound]);
 
   useEffect(() => {
     setInput("");
@@ -118,8 +117,8 @@ export function FillBlankSession({
   }, [index, itemIds]);
 
   const generateQuestions = useCallback(async () => {
-    if (!canUseAi) {
-      setUpgradeOpen(true);
+    if (!hasProAccess) {
+      openUpgrade();
       return;
     }
     if (filteredWords.length === 0) {
@@ -141,14 +140,13 @@ export function FillBlankSession({
       });
 
       if (!result.ok) {
+        if (result.code === "AI_FORBIDDEN") {
+          openUpgrade();
+          return;
+        }
         toast.error(
-          result.code === "AI_FORBIDDEN"
-            ? tAi("forbidden")
-            : result.code === "AI_EMPTY"
-              ? tAi("emptyWords")
-              : tAi("unavailable"),
+          result.code === "AI_EMPTY" ? tAi("emptyWords") : tAi("unavailable"),
         );
-        if (result.code === "AI_FORBIDDEN") setUpgradeOpen(true);
         return;
       }
 
@@ -195,7 +193,8 @@ export function FillBlankSession({
       setGenerating(false);
     }
   }, [
-    canUseAi,
+    hasProAccess,
+    openUpgrade,
     filteredWords,
     language,
     level,
@@ -246,15 +245,12 @@ export function FillBlankSession({
 
   const aiBar = (
     <ExerciseAiBar
-      canUseAi={canUseAi}
       generating={generating}
       hasSession={Boolean(aiItems)}
       level={level}
-      upgradeOpen={upgradeOpen}
       disabled={filteredWords.length === 0}
       onLevelChange={setLevel}
       onGenerate={() => void generateQuestions()}
-      onUpgradeOpenChange={setUpgradeOpen}
     />
   );
 
@@ -268,7 +264,7 @@ export function FillBlankSession({
     );
   }
 
-  if (!canUseAi && exampleItems.length === 0) {
+  if (!hasProAccess && exampleItems.length === 0) {
     return (
       <div className="space-y-6">
         <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
@@ -289,15 +285,12 @@ export function FillBlankSession({
           scoreLabel={tSession("score", { correct: score.correct, total })}
           tryAgainLabel={tSession("tryAgain")}
           onTryAgain={tryAgain}
-          extraAction={
-            canUseAi
-              ? {
-                  label: tAi("generateMore"),
-                  onClick: () => void generateQuestions(),
-                  loading: generating,
-                }
-              : undefined
-          }
+          extraAction={{
+            label: tAi("generateMore"),
+            onClick: () => void generateQuestions(),
+            loading: generating,
+            locked: !hasProAccess,
+          }}
         />
       ) : current ? (
         <>
@@ -328,7 +321,7 @@ export function FillBlankSession({
             isLast={index >= total - 1}
           />
         </>
-      ) : canUseAi ? (
+      ) : hasProAccess ? (
         <EmptyGenerateCard
           generating={generating}
           onGenerate={() => void generateQuestions()}

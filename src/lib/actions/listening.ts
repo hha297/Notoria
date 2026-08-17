@@ -7,6 +7,7 @@ import {
   listeningExercises,
   listeningLessons,
 } from "@/db/schema";
+import { requireProAccess } from "@/lib/auth/pro-access";
 import { getCurrentUserId } from "@/lib/auth/session";
 import {
   configureCloudinary,
@@ -173,6 +174,7 @@ async function destroyListeningAsset(publicId: string) {
 }
 
 export async function getListeningLessons(): Promise<ListeningLessonListItem[]> {
+  await requireProAccess();
   const userId = await getCurrentUserId();
   const workspace = await getActiveWorkspace();
 
@@ -199,6 +201,7 @@ export async function getListeningLessons(): Promise<ListeningLessonListItem[]> 
 export async function getListeningLesson(
   id: string,
 ): Promise<ListeningLessonDetail | null> {
+  await requireProAccess();
   const userId = await getCurrentUserId();
   const workspace = await getActiveWorkspace();
 
@@ -258,6 +261,7 @@ async function assertListeningFilenameIsUnique(
 }
 
 export async function createListeningLesson(formData: FormData) {
+  await requireProAccess();
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
   const file = formData.get("file");
@@ -338,6 +342,7 @@ export async function createListeningLesson(formData: FormData) {
 }
 
 export async function transcribeListeningLesson(id: string) {
+  await requireProAccess();
   const { lesson, workspace } = await requireOwnedLesson(id);
 
   await db
@@ -382,6 +387,7 @@ export async function generateListeningExercises(
   id: string,
   type: ListeningPracticeType,
 ) {
+  await requireProAccess();
   const exerciseType = listeningPracticeTypeSchema.parse(type);
   const { lesson } = await requireOwnedLesson(id);
 
@@ -446,6 +452,7 @@ export async function generateListeningExercises(
 }
 
 export async function ensureListeningSpeakers(id: string) {
+  await requireProAccess();
   const { lesson } = await requireOwnedLesson(id);
   const transcript = lesson.transcript?.trim();
   if (!transcript) {
@@ -493,6 +500,7 @@ export async function ensureListeningSpeakers(id: string) {
 }
 
 export async function processListeningLesson(id: string) {
+  await requireProAccess();
   const { lesson } = await requireOwnedLesson(id);
 
   try {
@@ -520,6 +528,7 @@ export async function processListeningLesson(id: string) {
 }
 
 export async function deleteListeningLesson(id: string) {
+  await requireProAccess();
   const { lesson } = await requireOwnedLesson(id);
 
   await db.delete(listeningLessons).where(eq(listeningLessons.id, id));
@@ -528,6 +537,7 @@ export async function deleteListeningLesson(id: string) {
 }
 
 export async function renameListeningLesson(id: string, filename: string) {
+  await requireProAccess();
   const { lesson, workspace } = await requireOwnedLesson(id);
   const currentFilename = fallbackListeningFilename(
     lesson.originalFilename,

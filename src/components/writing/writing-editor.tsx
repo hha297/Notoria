@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { QuestionSetBuilder } from "@/components/writing/question-set-builder";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
@@ -53,7 +54,6 @@ type WritingEditorProps = {
   exerciseType: ExerciseFormValues["type"];
   /** When set, Cancel returns here and Save navigates here after persisting. */
   previewHref?: string;
-  canUseAi?: boolean;
   language?: string;
   initialData?: {
     id: string;
@@ -69,7 +69,6 @@ const AUTOSAVE_MS = 1500;
 export function WritingEditor({
   exerciseType,
   previewHref,
-  canUseAi = false,
   language = "en",
   initialData,
 }: WritingEditorProps) {
@@ -437,7 +436,6 @@ export function WritingEditor({
           </div>
 
           <WritingAiBar
-            canUseAi={canUseAi}
             language={language}
             title={title}
             editorState={editorState}
@@ -495,16 +493,16 @@ export function WritingEditor({
               {tCommon("cancel")}
             </Button>
           ) : null}
-          <Button
+          <LockedFeatureButton
             type="button"
             variant="outline"
             size="lg"
+            icon={<Download className="size-4" />}
             onClick={() => setExportOpen(true)}
             className="h-11 w-full sm:h-9 sm:w-auto"
           >
-            <Download className="size-4" />
             {t("export.button")}
-          </Button>
+          </LockedFeatureButton>
           <Button
             onClick={() => persistExercise(true)}
             disabled={isSaving}

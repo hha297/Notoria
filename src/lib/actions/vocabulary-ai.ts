@@ -1,6 +1,6 @@
 "use server";
 
-import { AiAccessError, requireAiAccess } from "@/lib/auth/ai-access";
+import { getCurrentUserId } from "@/lib/auth/session";
 import {
   analyzeVocabularyMeaning,
   analyzeVocabularySpelling,
@@ -14,7 +14,7 @@ import {
 
 export type VocabularyAiFailure = {
   ok: false;
-  code: "AI_FORBIDDEN" | "AI_UNAVAILABLE";
+  code: "AI_UNAVAILABLE";
 };
 
 export type VocabularySpellingActionResult =
@@ -25,13 +25,7 @@ export type VocabularyMeaningActionResult =
   | { ok: true; result: VocabularyMeaningResult }
   | VocabularyAiFailure;
 
-function toFailure(error: unknown): VocabularyAiFailure {
-  if (error instanceof AiAccessError) {
-    return { ok: false, code: "AI_FORBIDDEN" };
-  }
-  if (error instanceof Error && error.message === "Unauthorized") {
-    return { ok: false, code: "AI_FORBIDDEN" };
-  }
+function toFailure(): VocabularyAiFailure {
   return { ok: false, code: "AI_UNAVAILABLE" };
 }
 
@@ -44,11 +38,11 @@ export async function suggestVocabularySpelling(
   }
 
   try {
-    await requireAiAccess();
+    await getCurrentUserId();
     const result = await analyzeVocabularySpelling(parsed.data);
     return { ok: true, result };
-  } catch (error) {
-    return toFailure(error);
+  } catch {
+    return toFailure();
   }
 }
 
@@ -61,10 +55,10 @@ export async function validateVocabularyMeaning(
   }
 
   try {
-    await requireAiAccess();
+    await getCurrentUserId();
     const result = await analyzeVocabularyMeaning(parsed.data);
     return { ok: true, result };
-  } catch (error) {
-    return toFailure(error);
+  } catch {
+    return toFailure();
   }
 }
