@@ -318,6 +318,20 @@
       "shuffle": "Xáo thứ tự",
       "finish": "Kết thúc vòng này"
     },
+    "ai": {
+      "generate": "Tạo bằng AI",
+      "generateMore": "Tạo thêm 10 câu",
+      "generating": "Đang tạo câu hỏi…",
+      "levelLabel": "Trình độ CEFR",
+      "emptyTitle": "Tạo câu điền chỗ trống",
+      "emptyDescription": "Tạo 10 câu mới từ từ vựng của bạn. Mỗi câu được viết từ đầu — không dùng lại câu ví dụ có sẵn.",
+      "generated": "Do AI tạo",
+      "unavailable": "Hiện không tạo được câu hỏi. Thử lại sau.",
+      "forbidden": "Tạo bài tập bằng AI dành cho Pro.",
+      "upgradeHint": "Tạo bài tập bằng AI dành cho Pro.",
+      "emptyWords": "Thêm từ vựng trước khi tạo câu hỏi.",
+      "noneValid": "AI không tạo được câu hỏi hợp lệ cho các từ này. Thử lại."
+    },
     "session": {
       "complete": "Xong một vòng luyện!",
       "score": "{correct} / {total} câu đúng",

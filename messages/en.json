@@ -318,6 +318,20 @@
       "shuffle": "Shuffle",
       "finish": "Finish round"
     },
+    "ai": {
+      "generate": "Generate with AI",
+      "generateMore": "Generate 10 more",
+      "generating": "Generating questions…",
+      "levelLabel": "CEFR level",
+      "emptyTitle": "Generate fill-in-the-blank questions",
+      "emptyDescription": "Create 10 new sentences from your vocabulary. Every sentence is written from scratch — existing examples are not reused.",
+      "generated": "AI generated",
+      "unavailable": "Could not generate questions right now. Please try again later.",
+      "forbidden": "AI exercise generation is available with Pro.",
+      "upgradeHint": "AI exercise generation is available with Pro.",
+      "emptyWords": "Add vocabulary words before generating questions.",
+      "noneValid": "AI could not create valid questions for these words. Try again."
+    },
     "session": {
       "complete": "Session complete!",
       "score": "{correct} / {total} correct",

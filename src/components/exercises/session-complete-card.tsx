@@ -1,6 +1,6 @@
 "use client";
 
-import { RotateCcw } from "lucide-react";
+import { Loader2, RotateCcw, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 type SessionCompleteCardProps = {
@@ -8,6 +8,12 @@ type SessionCompleteCardProps = {
   scoreLabel?: string;
   tryAgainLabel: string;
   onTryAgain: () => void;
+  extraAction?: {
+    label: string;
+    onClick: () => void;
+    loading?: boolean;
+    disabled?: boolean;
+  };
 };
 
 export function SessionCompleteCard({
@@ -15,6 +21,7 @@ export function SessionCompleteCard({
   scoreLabel,
   tryAgainLabel,
   onTryAgain,
+  extraAction,
 }: SessionCompleteCardProps) {
   return (
     <div className="mx-auto max-w-lg rounded-2xl border border-[#b8d96a] bg-[#f4fae0] p-5 text-center sm:p-8">
@@ -22,10 +29,27 @@ export function SessionCompleteCard({
       {scoreLabel && (
         <p className="mt-2 text-sm font-medium text-[#4a6b0a]/80">{scoreLabel}</p>
       )}
-      <Button type="button" className="mt-6" onClick={onTryAgain}>
-        <RotateCcw className="size-4" />
-        {tryAgainLabel}
-      </Button>
+      <div className="mt-6 flex flex-col items-center gap-2 sm:flex-row sm:justify-center">
+        <Button type="button" onClick={onTryAgain} disabled={extraAction?.loading}>
+          <RotateCcw className="size-4" />
+          {tryAgainLabel}
+        </Button>
+        {extraAction ? (
+          <Button
+            type="button"
+            variant="outline"
+            onClick={extraAction.onClick}
+            disabled={extraAction.disabled || extraAction.loading}
+          >
+            {extraAction.loading ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Sparkles className="size-4" />
+            )}
+            {extraAction.label}
+          </Button>
+        ) : null}
+      </div>
     </div>
   );
 }

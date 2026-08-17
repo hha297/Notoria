@@ -318,6 +318,20 @@
       "shuffle": "Sekoita",
       "finish": "Lopeta kierros"
     },
+    "ai": {
+      "generate": "Luo tekoälyllä",
+      "generateMore": "Luo 10 lisää",
+      "generating": "Luodaan kysymyksiä…",
+      "levelLabel": "CEFR-taso",
+      "emptyTitle": "Luo täydennä aukko -kysymyksiä",
+      "emptyDescription": "Luo 10 uutta lausetta sanastostasi. Jokainen lause kirjoitetaan alusta — olemassa olevia esimerkkejä ei käytetä uudelleen.",
+      "generated": "Tekoälyn luoma",
+      "unavailable": "Kysymyksiä ei voitu luoda juuri nyt. Yritä myöhemmin.",
+      "forbidden": "Tekoälyharjoitukset kuuluvat Pro-tilaukseen.",
+      "upgradeHint": "Tekoälyharjoitukset kuuluvat Pro-tilaukseen.",
+      "emptyWords": "Lisää sanoja ennen kysymysten luomista.",
+      "noneValid": "Tekoäly ei saanut luotua kelvollisia kysymyksiä näille sanoille. Yritä uudelleen."
+    },
     "session": {
       "complete": "Harjoitus valmis!",
       "score": "{correct} / {total} oikein",

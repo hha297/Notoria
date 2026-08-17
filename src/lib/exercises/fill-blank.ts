@@ -12,9 +12,10 @@ export type FillBlankItem = {
   sentenceBefore: string;
   sentenceAfter: string;
   acceptableAnswers: string[];
+  aiGenerated?: boolean;
 };
 
-function buildAcceptableAnswers(word: string, matchedWord: string) {
+export function buildFillBlankAcceptableAnswers(word: string, matchedWord: string) {
   const answers = new Set<string>();
   for (const candidate of [matchedWord, word]) {
     const trimmed = candidate.trim();
@@ -24,6 +25,10 @@ function buildAcceptableAnswers(word: string, matchedWord: string) {
     }
   }
   return [...answers];
+}
+
+export function expectedFillBlankAnswer(item: FillBlankItem) {
+  return item.acceptableAnswers[0]?.trim() || item.word;
 }
 
 function splitSentenceAtWord(sentence: string, word: string) {
@@ -52,7 +57,10 @@ export function buildFillBlankItems(words: FlashcardWord[]): FillBlankItem[] {
         meanings: word.meanings,
         sentenceBefore: split.before,
         sentenceAfter: split.after,
-        acceptableAnswers: buildAcceptableAnswers(word.word, split.matched),
+        acceptableAnswers: buildFillBlankAcceptableAnswers(
+          word.word,
+          split.matched,
+        ),
       });
     }
   }
