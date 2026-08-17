@@ -12,6 +12,8 @@ export const LISTENING_ERROR_CODES = [
   "LESSON_NOT_FOUND",
   "PROCESSING_FAILED",
   "EMPTY_TRANSCRIPT",
+  "DUPLICATE_FILENAME",
+  "FILENAME_REQUIRED",
 ] as const;
 
 export type ListeningErrorCode = (typeof LISTENING_ERROR_CODES)[number];

@@ -61,6 +61,8 @@ export type ListeningTranscriptionData = {
 export type ListeningLessonListItem = {
   id: string;
   title: string;
+  originalFilename: string | null;
+  format: string | null;
   cefrLevel: string | null;
   topic: string | null;
   formality: string | null;
@@ -85,6 +87,7 @@ export type ListeningExerciseClient = {
 export type ListeningLessonDetail = {
   id: string;
   title: string;
+  originalFilename: string | null;
   cloudinaryUrl: string;
   mediaType: string;
   format: string | null;

@@ -41,6 +41,51 @@ export function mediaTypeFromFormat(format: string | undefined, mimeType: string
   return "audio";
 }
 
+export function listeningFilenameFromUpload(filename: string) {
+  const trimmed = filename.trim();
+  const base = trimmed.split(/[/\\]/).pop()?.trim() ?? "";
+  return base;
+}
+
+export function normalizeListeningFilename(filename: string) {
+  return listeningFilenameFromUpload(filename).toLowerCase();
+}
+
+export function splitListeningFilename(filename: string) {
+  const name = listeningFilenameFromUpload(filename);
+  const match = name.match(/^(.*?)(\.[A-Za-z0-9]+)?$/);
+  return {
+    stem: (match?.[1] ?? "").trim(),
+    extension: (match?.[2] ?? "").toLowerCase(),
+  };
+}
+
+export function fallbackListeningFilename(
+  originalFilename: string | null | undefined,
+  title: string,
+  format?: string | null,
+) {
+  const stored = originalFilename
+    ? listeningFilenameFromUpload(originalFilename)
+    : "";
+  if (stored) return stored;
+
+  const stem = title.trim() || "listening";
+  const extension = format?.replace(/^\./, "").trim().toLowerCase();
+  return extension ? `${stem}.${extension}` : stem;
+}
+
+export function applyListeningFilenameRename(
+  input: string,
+  currentFilename: string,
+) {
+  const current = splitListeningFilename(currentFilename);
+  const next = splitListeningFilename(input);
+  if (!next.stem) return "";
+  const extension = current.extension || next.extension;
+  return extension ? `${next.stem}${extension}` : next.stem;
+}
+
 export function titleFromFilename(filename: string) {
   const base = filename.replace(/\.[^.]+$/, "").replace(/[_-]+/g, " ").trim();
   if (!base) return "Listening";

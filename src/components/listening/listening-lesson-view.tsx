@@ -2,11 +2,12 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, RotateCcw, Trash2 } from "lucide-react";
+import { Loader2, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { ListeningAudioPlayer } from "@/components/listening/listening-audio-player";
 import { ListeningPracticeSession } from "@/components/listening/listening-practice-session";
+import { RenameListeningDialog } from "@/components/listening/rename-listening-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
@@ -40,6 +41,7 @@ export function ListeningLessonView({ lesson }: ListeningLessonViewProps) {
   const tc = useTranslations("common");
   const router = useRouter();
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [renameOpen, setRenameOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
   const processing =
@@ -125,6 +127,14 @@ export function ListeningLessonView({ lesson }: ListeningLessonViewProps) {
           ) : null}
           <Button
             variant="outline"
+            onClick={() => setRenameOpen(true)}
+            disabled={isPending}
+          >
+            <Pencil className="size-4" />
+            {t("renameFile")}
+          </Button>
+          <Button
+            variant="outline"
             onClick={() => setDeleteOpen(true)}
             disabled={isPending}
           >
@@ -154,6 +164,15 @@ export function ListeningLessonView({ lesson }: ListeningLessonViewProps) {
       ) : (
         <ListeningAudioPlayer src={lesson.cloudinaryUrl} mediaType={lesson.mediaType} />
       )}
+
+      <RenameListeningDialog
+        open={renameOpen}
+        onOpenChange={setRenameOpen}
+        lessonId={lesson.id}
+        title={lesson.title}
+        originalFilename={lesson.originalFilename}
+        format={lesson.format}
+      />
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <DialogContent showCloseButton={!isPending}>

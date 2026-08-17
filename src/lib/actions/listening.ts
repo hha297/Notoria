@@ -1,6 +1,6 @@
 "use server";
 
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, ne, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import {
@@ -28,9 +28,13 @@ import {
 import { transcribeListeningMedia } from "@/lib/listening/transcribe";
 import type { ListeningLessonDetail, ListeningLessonListItem } from "@/lib/listening/types";
 import {
+  applyListeningFilenameRename,
+  fallbackListeningFilename,
   isAllowedListeningFile,
+  listeningFilenameFromUpload,
   mediaTypeFromFormat,
   MAX_LISTENING_FILE_SIZE,
+  normalizeListeningFilename,
   titleFromFilename,
   toTranscriptionData,
 } from "@/lib/listening/utils";
@@ -218,6 +222,41 @@ export async function getListeningLesson(
   return toListeningLessonDetail(lesson);
 }
 
+function isUniqueViolation(error: unknown) {
+  let current: unknown = error;
+  for (let depth = 0; depth < 4 && current && typeof current === "object"; depth += 1) {
+    if ("code" in current && String(current.code) === "23505") {
+      return true;
+    }
+    current = "cause" in current ? current.cause : undefined;
+  }
+  return false;
+}
+
+async function assertListeningFilenameIsUnique(
+  filename: string,
+  workspaceId: string,
+  excludeId?: string,
+) {
+  const normalized = normalizeListeningFilename(filename);
+  if (!normalized) {
+    throw new ListeningError("FILENAME_REQUIRED");
+  }
+
+  const existing = await db.query.listeningLessons.findFirst({
+    where: and(
+      eq(listeningLessons.workspaceId, workspaceId),
+      sql`lower(trim(${listeningLessons.originalFilename})) = ${normalized}`,
+      excludeId ? ne(listeningLessons.id, excludeId) : undefined,
+    ),
+    columns: { id: true },
+  });
+
+  if (existing) {
+    throw new ListeningError("DUPLICATE_FILENAME");
+  }
+}
+
 export async function createListeningLesson(formData: FormData) {
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
@@ -234,6 +273,13 @@ export async function createListeningLesson(formData: FormData) {
   if (file.size > MAX_LISTENING_FILE_SIZE) {
     throw new ListeningError("FILE_TOO_LARGE");
   }
+
+  const originalFilename = listeningFilenameFromUpload(file.name);
+  if (!originalFilename) {
+    throw new ListeningError("INVALID_FILE");
+  }
+
+  await assertListeningFilenameIsUnique(originalFilename, workspace.id);
 
   const meta = listeningUploadMetaSchema.parse({
     title:
@@ -258,28 +304,37 @@ export async function createListeningLesson(formData: FormData) {
   const title = meta.title?.trim() || titleFromFilename(file.name);
   const format = upload.format ?? file.name.split(".").pop()?.toLowerCase() ?? null;
 
-  const [lesson] = await db
-    .insert(listeningLessons)
-    .values({
-      userId,
-      workspaceId: workspace.id,
-      title,
-      cloudinaryUrl: upload.secure_url,
-      cloudinaryPublicId: upload.public_id,
-      mediaType: mediaTypeFromFormat(format ?? undefined, file.type),
-      format,
-      duration: upload.duration ?? null,
-      cefrLevel: meta.cefrLevel,
-      topic: meta.topic,
-      formality: meta.formality,
-      language: workspace.language,
-      status: "TRANSCRIBING",
-      errorCode: null,
-    })
-    .returning();
+  try {
+    const [lesson] = await db
+      .insert(listeningLessons)
+      .values({
+        userId,
+        workspaceId: workspace.id,
+        title,
+        originalFilename,
+        cloudinaryUrl: upload.secure_url,
+        cloudinaryPublicId: upload.public_id,
+        mediaType: mediaTypeFromFormat(format ?? undefined, file.type),
+        format,
+        duration: upload.duration ?? null,
+        cefrLevel: meta.cefrLevel,
+        topic: meta.topic,
+        formality: meta.formality,
+        language: workspace.language,
+        status: "TRANSCRIBING",
+        errorCode: null,
+      })
+      .returning();
 
-  revalidateListening(lesson.id);
-  return { id: lesson.id };
+    revalidateListening(lesson.id);
+    return { id: lesson.id };
+  } catch (error) {
+    await destroyListeningAsset(upload.public_id);
+    if (isUniqueViolation(error)) {
+      throw new ListeningError("DUPLICATE_FILENAME");
+    }
+    throw error;
+  }
 }
 
 export async function transcribeListeningLesson(id: string) {
@@ -470,4 +525,51 @@ export async function deleteListeningLesson(id: string) {
   await db.delete(listeningLessons).where(eq(listeningLessons.id, id));
   await destroyListeningAsset(lesson.cloudinaryPublicId);
   revalidateListening(id);
+}
+
+export async function renameListeningLesson(id: string, filename: string) {
+  const { lesson, workspace } = await requireOwnedLesson(id);
+  const currentFilename = fallbackListeningFilename(
+    lesson.originalFilename,
+    lesson.title,
+    lesson.format,
+  );
+  const nextFilename = applyListeningFilenameRename(filename, currentFilename);
+
+  if (!nextFilename) {
+    throw new ListeningError("FILENAME_REQUIRED");
+  }
+
+  const sameName =
+    normalizeListeningFilename(nextFilename) ===
+    normalizeListeningFilename(lesson.originalFilename ?? "");
+
+  if (sameName && lesson.originalFilename) {
+    return { id, originalFilename: lesson.originalFilename };
+  }
+
+  await assertListeningFilenameIsUnique(nextFilename, workspace.id, id);
+
+  const currentTitleFromFile = titleFromFilename(currentFilename);
+  const shouldSyncTitle =
+    !lesson.title.trim() || lesson.title === currentTitleFromFile;
+
+  try {
+    await db
+      .update(listeningLessons)
+      .set({
+        originalFilename: nextFilename,
+        title: shouldSyncTitle ? titleFromFilename(nextFilename) : lesson.title,
+        updatedAt: new Date(),
+      })
+      .where(eq(listeningLessons.id, id));
+  } catch (error) {
+    if (isUniqueViolation(error)) {
+      throw new ListeningError("DUPLICATE_FILENAME");
+    }
+    throw error;
+  }
+
+  revalidateListening(id);
+  return { id, originalFilename: nextFilename };
 }

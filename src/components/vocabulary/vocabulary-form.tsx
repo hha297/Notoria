@@ -450,12 +450,12 @@ export function VocabularyForm({
                 <SelectTrigger className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!">
                   <SelectValue placeholder={t("partOfSpeechPlaceholder")}>
                     {selectedPartOfSpeech &&
-                    PARTS_OF_SPEECH.includes(
-                      selectedPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
-                    )
+                      PARTS_OF_SPEECH.includes(
+                        selectedPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
+                      )
                       ? tPos(
-                          selectedPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
-                        )
+                        selectedPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
+                      )
                       : null}
                   </SelectValue>
                 </SelectTrigger>
