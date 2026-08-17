@@ -4,6 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { VocabularyForm } from "@/components/vocabulary/vocabulary-form";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
+import { getCurrentAiAccess } from "@/lib/auth/ai-access";
 import { getActiveWorkspaceCustomTags } from "@/lib/actions/workspaces";
 import { getActiveWorkspace } from "@/lib/workspace";
 
@@ -36,6 +37,11 @@ export default async function NewVocabularyPage() {
     );
   }
 
+  const [existingCustomTags, aiAccess] = await Promise.all([
+    getActiveWorkspaceCustomTags(),
+    getCurrentAiAccess(),
+  ]);
+
   return (
     <div className="mx-auto max-w-3xl space-y-8 pt-1 sm:space-y-10 sm:pt-2">
       <div className="space-y-6">
@@ -53,7 +59,11 @@ export default async function NewVocabularyPage() {
           description={t("formDescription")}
         />
       </div>
-      <VocabularyForm existingCustomTags={await getActiveWorkspaceCustomTags()} />
+      <VocabularyForm
+        existingCustomTags={existingCustomTags}
+        canUseAi={aiAccess.canUseAi}
+        language={workspace.language}
+      />
     </div>
   );
 }

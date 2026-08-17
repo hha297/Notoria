@@ -5,6 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
 import { VocabularyForm } from "@/components/vocabulary/vocabulary-form";
 import { getVocabularyWord } from "@/lib/actions/vocabulary";
+import { getCurrentAiAccess } from "@/lib/auth/ai-access";
 import { getActiveWorkspaceCustomTags } from "@/lib/actions/workspaces";
 import { getActiveWorkspace } from "@/lib/workspace";
 
@@ -23,9 +24,10 @@ export default async function EditVocabularyPage({
     notFound();
   }
 
-  const [word, existingCustomTags] = await Promise.all([
+  const [word, existingCustomTags, aiAccess] = await Promise.all([
     getVocabularyWord(id),
     getActiveWorkspaceCustomTags(),
+    getCurrentAiAccess(),
   ]);
 
   if (!word) {
@@ -54,6 +56,8 @@ export default async function EditVocabularyPage({
       <VocabularyForm
         previewHref={previewHref}
         existingCustomTags={existingCustomTags}
+        canUseAi={aiAccess.canUseAi}
+        language={workspace.language}
         initialData={{
           id: word.id,
           word: word.word,

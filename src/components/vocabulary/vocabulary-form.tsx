@@ -18,6 +18,10 @@ import {
   type MeaningItem,
 } from "@/components/vocabulary/sortable-meanings";
 import { TagMultiSelect } from "@/components/vocabulary/tag-multi-select";
+import {
+  VocabularyAiChecking,
+  VocabularyAiSuggestionCard,
+} from "@/components/vocabulary/ai-suggestion-card";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -51,6 +55,7 @@ import {
   MAX_PRIMARY_MEANINGS,
 } from "@/lib/vocabulary/primary-meanings";
 import { VOCABULARY_WORD_EXISTS } from "@/lib/vocabulary-errors";
+import { useVocabularySpellingAi } from "@/hooks/use-vocabulary-spelling-ai";
 import {
   getCustomTagName,
   isCustomTagKey,
@@ -72,6 +77,8 @@ type VocabularyFormProps = {
   /** When set, Cancel returns here and Save navigates here after persisting. */
   previewHref?: string;
   existingCustomTags?: string[];
+  canUseAi?: boolean;
+  language?: string;
   initialData?: {
     id: string;
     word: string;
@@ -97,9 +104,9 @@ type VocabularyFormProps = {
   };
 };
 
-type WordCheckStatus = "idle" | "checking" | "duplicate" | "unique" | "error";
+type WordCheckStatus = "idle" | "pending" | "checking" | "duplicate" | "unique" | "error";
 
-const WORD_CHECK_DEBOUNCE_MS = 400;
+const WORD_CHECK_DEBOUNCE_MS = 300;
 
 function normalizeWordInput(word: string) {
   return word.trim().toLowerCase();
@@ -166,6 +173,8 @@ export function VocabularyForm({
   initialData,
   previewHref,
   existingCustomTags,
+  canUseAi = false,
+  language = "en",
 }: VocabularyFormProps) {
   const router = useRouter();
   const t = useTranslations("vocabulary");
@@ -237,9 +246,10 @@ export function VocabularyForm({
     }
 
     const requestId = ++wordCheckRequestId.current;
-    setWordCheckStatus("checking");
+    setWordCheckStatus("pending");
 
     const timer = setTimeout(() => {
+      setWordCheckStatus("checking");
       void (async () => {
         try {
           const result = await checkVocabularyWordExists(
@@ -262,7 +272,11 @@ export function VocabularyForm({
   }, [watchedWord, initialData?.id, initialNormalizedWord]);
 
   async function onSubmit(values: VocabularyFormClientValues) {
-    if (wordCheckStatus === "duplicate" || wordCheckStatus === "checking") {
+    if (
+      wordCheckStatus === "duplicate" ||
+      wordCheckStatus === "checking" ||
+      wordCheckStatus === "pending"
+    ) {
       return;
     }
 
@@ -335,9 +349,23 @@ export function VocabularyForm({
   }
 
   const selectedPartOfSpeech = form.watch("partOfSpeech");
+  const spellingAi = useVocabularySpellingAi({
+    enabled:
+      canUseAi &&
+      (wordCheckStatus === "unique" || wordCheckStatus === "error"),
+    word: watchedWord ?? "",
+    language,
+    partOfSpeech: selectedPartOfSpeech,
+    initialWord: initialData?.word,
+  });
   const isDuplicate = wordCheckStatus === "duplicate";
   const isCheckingWord = wordCheckStatus === "checking";
-  const saveDisabled = isSaving || isDuplicate || isCheckingWord;
+  const isWordBusy = isCheckingWord || spellingAi.isChecking;
+  const saveDisabled =
+    isSaving ||
+    isDuplicate ||
+    isCheckingWord ||
+    wordCheckStatus === "pending";
   const formatNotesDisabled = isNotesDocEmpty(notesDoc);
 
   function handleNotesChange(doc: JSONContent) {
@@ -389,13 +417,15 @@ export function VocabularyForm({
                   className="h-10 pr-10"
                   aria-invalid={isDuplicate || undefined}
                   aria-describedby={
-                    isDuplicate || wordCheckStatus === "error" || isCheckingWord
+                    isDuplicate ||
+                    wordCheckStatus === "error" ||
+                    isWordBusy
                       ? "word-duplicate-status"
                       : undefined
                   }
                   {...form.register("word")}
                 />
-                {isCheckingWord ? (
+                {isWordBusy ? (
                   <Loader2
                     className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 animate-spin text-muted-foreground"
                     aria-hidden
@@ -410,7 +440,8 @@ export function VocabularyForm({
               {isCheckingWord ? (
                 <p
                   id="word-duplicate-status"
-                  className="text-sm text-muted-foreground"
+                  className="flex items-center gap-1.5 text-xs text-muted-foreground"
+                  role="status"
                 >
                   {t("wordExistsChecking")}
                 </p>
@@ -432,6 +463,32 @@ export function VocabularyForm({
                 >
                   {t("wordExistsCheckFailed")}
                 </p>
+              ) : null}
+              {!isCheckingWord && spellingAi.isChecking ? (
+                <VocabularyAiChecking id="word-duplicate-status" />
+              ) : null}
+              {spellingAi.suggestion?.suggestion ? (
+                <VocabularyAiSuggestionCard
+                  body={
+                    spellingAi.suggestion.explanation?.trim() ||
+                    t("aiDidYouMean", {
+                      word: spellingAi.suggestion.suggestion,
+                    })
+                  }
+                  acceptLabel={t("aiUseWord", {
+                    word: spellingAi.suggestion.suggestion,
+                  })}
+                  onAccept={() => {
+                    const nextWord = spellingAi.suggestion?.suggestion;
+                    if (!nextWord) return;
+                    spellingAi.accept(nextWord);
+                    form.setValue("word", nextWord, {
+                      shouldDirty: true,
+                      shouldTouch: true,
+                    });
+                  }}
+                  onSkip={spellingAi.skip}
+                />
               ) : null}
             </div>
             <div className="space-y-2">
@@ -470,7 +527,24 @@ export function VocabularyForm({
             </div>
           </div>
 
-          <SortableMeanings meanings={meanings} onChange={setMeanings} />
+          <SortableMeanings
+            meanings={meanings}
+            onChange={setMeanings}
+            ai={
+              canUseAi
+                ? {
+                    enabled: true,
+                    word: watchedWord ?? "",
+                    language,
+                    partOfSpeech: selectedPartOfSpeech,
+                    examples: examples
+                      .map((example) => example.sentence.trim())
+                      .filter(Boolean)
+                      .slice(0, 6),
+                  }
+                : undefined
+            }
+          />
           <SortableExamples examples={examples} onChange={setExamples} />
           <TagMultiSelect
             value={tags}
