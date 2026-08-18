@@ -16,6 +16,7 @@ import { NewFolderButton } from "@/components/folders/new-folder-button";
 import { ListeningFiltersBar } from "@/components/listening/listening-filters-bar";
 import { ListeningLessonCard } from "@/components/listening/listening-lesson-card";
 import { UploadListeningDialog } from "@/components/listening/upload-listening-dialog";
+import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { Button } from "@/components/ui/button";
 import { childrenOf, itemsInFolder } from "@/lib/folders/tree";
 import type { FolderListItem } from "@/lib/folders/types";
@@ -94,6 +95,7 @@ export function ListeningView({
               highlight={t("highlight")}
               description={t("description")}
             >
+              <ShowTutorialButton section="listening" />
               <NewFolderButton />
               <Button onClick={() => setUploadOpen(true)}>
                 <Plus className="size-4" />

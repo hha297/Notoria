@@ -6,12 +6,19 @@ import { useTranslations } from "next-intl";
 import { SectionTutorial } from "@/components/onboarding/section-tutorial";
 import { Button } from "@/components/ui/button";
 import type { TutorialSectionId } from "@/lib/onboarding/tutorials";
+import { cn } from "@/lib/utils";
 
 type ShowTutorialButtonProps = {
   section: TutorialSectionId;
+  variant?: "ghost" | "outline";
+  className?: string;
 };
 
-export function ShowTutorialButton({ section }: ShowTutorialButtonProps) {
+export function ShowTutorialButton({
+  section,
+  variant = "ghost",
+  className,
+}: ShowTutorialButtonProps) {
   const t = useTranslations("tutorials");
   const [open, setOpen] = useState(false);
 
@@ -19,9 +26,12 @@ export function ShowTutorialButton({ section }: ShowTutorialButtonProps) {
     <>
       <Button
         type="button"
-        variant="ghost"
+        variant={variant}
         size="sm"
-        className="text-muted-foreground"
+        className={cn(
+          variant === "ghost" && "text-muted-foreground",
+          className,
+        )}
         onClick={() => setOpen(true)}
       >
         <CircleHelp className="size-4" />

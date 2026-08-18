@@ -4,9 +4,10 @@ import { AnimatePresence, motion } from "motion/react";
 import {
   BookOpen,
   Dumbbell,
+  Headphones,
   Languages,
-  MessageCircle,
   PenLine,
+  Video,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useEffect, useState } from "react";
@@ -32,10 +33,11 @@ const EASE = [0.25, 0.1, 0.25, 1] as const;
 
 const SECTION_ICONS = {
   vocabulary: Languages,
-  writing: PenLine,
   theory: BookOpen,
   exercise: Dumbbell,
-  conversation: MessageCircle,
+  writing: PenLine,
+  listening: Headphones,
+  speaking: Video,
 } as const;
 
 type SectionTutorialProps = {

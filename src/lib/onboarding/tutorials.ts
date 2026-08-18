@@ -1,9 +1,10 @@
 export const TUTORIAL_SECTIONS = [
   "vocabulary",
-  "writing",
   "theory",
   "exercise",
-  "conversation",
+  "writing",
+  "listening",
+  "speaking",
 ] as const;
 
 export type TutorialSectionId = (typeof TUTORIAL_SECTIONS)[number];
@@ -29,11 +30,6 @@ export const SECTION_TUTORIALS = {
     ctaHref: "/vocabulary/new",
     steps: [{ id: "addWord" }, { id: "tags" }, { id: "review" }],
   },
-  writing: {
-    id: "writing",
-    ctaHref: "/writing/new",
-    steps: [{ id: "create" }, { id: "organize" }, { id: "practice" }],
-  },
   theory: {
     id: "theory",
     ctaHref: "/theory/new",
@@ -44,9 +40,20 @@ export const SECTION_TUTORIALS = {
     ctaHref: "/exercises",
     steps: [{ id: "vocabulary" }, { id: "choose" }, { id: "practice" }],
   },
-  conversation: {
-    id: "conversation",
-    steps: [{ id: "start" }, { id: "practice" }, { id: "review" }],
+  writing: {
+    id: "writing",
+    ctaHref: "/writing/new",
+    steps: [{ id: "create" }, { id: "organize" }, { id: "practice" }],
+  },
+  listening: {
+    id: "listening",
+    ctaHref: "/listening",
+    steps: [{ id: "upload" }, { id: "transcript" }, { id: "practice" }],
+  },
+  speaking: {
+    id: "speaking",
+    ctaHref: "/speaking",
+    steps: [{ id: "start" }, { id: "talk" }, { id: "review" }],
   },
 } as const satisfies Record<TutorialSectionId, TutorialDefinition>;
 

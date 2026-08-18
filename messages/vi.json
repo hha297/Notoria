@@ -18,6 +18,7 @@
     "theory": "Lý thuyết",
     "exercises": "Luyện tập",
     "listening": "Nghe",
+    "speaking": "Nói",
     "account": "Tài khoản",
     "settings": "Cài đặt",
     "workspace": "Không gian học"
@@ -484,18 +485,99 @@
     "overview": "Tổng quan",
     "your": "Không gian",
     "workspaceLabel": "của bạn",
-    "description": "Lưu từ và luyện {language} bằng bài tập tạo từ chính sổ tay của bạn.",
+    "description": "{language} nằm trong không gian này. Notoria là góc học riêng: gom từ, lưu lý thuyết, luyện tập, viết, rồi nghe và nói.",
     "wordsSaved": "Từ đã lưu",
     "wordsReadyToPractice": "Từ sẵn sàng luyện",
+    "theoryNotes": "Ghi chú lý thuyết",
+    "writingPieces": "Bài viết",
     "activeWorkspace": "Không gian học",
-    "vocabularyCardTitle": "Từ vựng",
-    "vocabularyCardDescription": "Thêm từ kèm nghĩa, câu ví dụ và thẻ.",
-    "addWord": "Thêm từ",
-    "viewAll": "Xem tất cả",
-    "exercisesCardTitle": "Luyện tập",
-    "exercisesCardDescription": "Flashcards, trắc nghiệm và nhiều kiểu bài khác — đều lấy từ sổ tay của bạn.",
-    "startPracticing": "Bắt đầu luyện",
-    "recentWords": "Từ gần đây",
+    "guideEyebrow": "Bắt đầu",
+    "guideTitle": "Cách dùng Notoria",
+    "guideSubtitle": "Một không gian, một ngôn ngữ. Đi theo thứ tự các mục dưới đây — mục sau dựa trên mục trước. Mở tutorial bất cứ lúc nào cần hướng dẫn.",
+    "modulesTitle": "Khám phá không gian học",
+    "modulesSubtitle": "Vào thẳng một mục, hoặc xem tutorial trước.",
+    "startHere": "Bắt đầu đây",
+    "pro": "Pro",
+    "unlock": "Mở khóa Pro",
+    "open": "Mở",
+    "steps": {
+      "vocabulary": {
+        "title": "Từ vựng",
+        "body": "Thêm từ kèm nghĩa, ví dụ và thẻ. Sổ này nuôi các bài tập và ôn tập."
+      },
+      "theory": {
+        "title": "Lý thuyết",
+        "body": "Lưu ngữ pháp, phát âm và cách dùng mà bạn hay quên."
+      },
+      "exercises": {
+        "title": "Luyện tập",
+        "body": "Luyện từ chính sổ từ của bạn — flashcard, quiz, điền chỗ trống và hơn thế."
+      },
+      "writing": {
+        "title": "Viết",
+        "body": "Soạn bài và bộ câu hỏi. Pro có thể kiểm tra, cải thiện và xuất file."
+      },
+      "listening": {
+        "title": "Nghe",
+        "body": "Tải audio hoặc video, lấy transcript, biến thành bài học."
+      },
+      "speaking": {
+        "title": "Nói",
+        "body": "Gọi video với gia sư AI, rồi xem lại transcript và nhận xét."
+      }
+    },
+    "modules": {
+      "vocabulary": {
+        "title": "Từ vựng",
+        "description": "Sổ từ riêng cho ngôn ngữ này.",
+        "how": "Thêm từ, đánh dấu nghĩa chính, gắn câu ví dụ. Dùng thẻ và tìm kiếm khi cần lấy lại.",
+        "cta": "Mở từ vựng"
+      },
+      "theory": {
+        "title": "Lý thuyết",
+        "description": "Sổ ghi cách ngôn ngữ vận hành — không phải chỗ luyện viết.",
+        "how": "Tạo ghi chú, chọn danh mục, rồi quay lại khi cần ôn.",
+        "cta": "Mở lý thuyết"
+      },
+      "exercises": {
+        "title": "Luyện tập",
+        "description": "Phiên ngắn xây từ những từ bạn đã lưu.",
+        "how": "Thêm một ít từ trước, rồi chọn dạng bài. Quay lại thường xuyên — vài phút cũng tính.",
+        "cta": "Mở luyện tập"
+      },
+      "writing": {
+        "title": "Viết",
+        "description": "Tài liệu rich text và bộ câu hỏi, xem lại và xuất được.",
+        "how": "Bắt đầu bản nháp, sắp xếp bằng thư mục, dùng AI Pro để kiểm tra hoặc cải thiện.",
+        "cta": "Mở viết"
+      },
+      "listening": {
+        "title": "Nghe",
+        "description": "Biến audio hoặc video thật thành bài học.",
+        "how": "Tải clip, đọc transcript, rồi luyện. Cả mục này dành cho Pro.",
+        "cta": "Mở nghe"
+      },
+      "speaking": {
+        "title": "Nói",
+        "description": "Hội thoại video trực tiếp với gia sư AI.",
+        "how": "Tạo phiên, vào cuộc gọi, rồi xem transcript và tóm tắt. Chỉ Pro.",
+        "cta": "Mở nói"
+      }
+    },
+    "counts": {
+      "words": "{count, plural, other {# từ}}",
+      "notes": "{count, plural, other {# ghi chú}}",
+      "writings": "{count, plural, other {# bài}}",
+      "practiceReady": "{count, plural, other {# từ sẵn sàng}}"
+    },
+    "practiceNowEyebrow": "Hôm nay",
+    "practiceNowTitle": "Luyện ngay",
+    "practiceNowReady": "{count, plural, other {# từ sẵn sàng cho bài tập.}}",
+    "practiceNowNeedsMeaning": "Đánh dấu nghĩa chính cho một từ để nó xuất hiện trong bài tập.",
+    "practiceNowCta": "Bắt đầu luyện",
+    "practiceNowVocabCta": "Mở từ vựng",
+    "continueTitle": "Tiếp tục",
+    "continueSubtitle": "Mở lại việc bạn đang làm dở.",
     "sidebarFooter": "Góc học ngôn ngữ riêng của bạn"
   },
   "prompts": {
@@ -722,22 +804,41 @@
         }
       }
     },
-    "conversation": {
-      "title": "Hội thoại",
-      "description": "Luyện nói và đáp lại bằng ngôn ngữ bạn đang học.",
-      "cta": "Bắt đầu hội thoại",
+    "listening": {
+      "title": "Nghe",
+      "description": "Tải audio hoặc video thật, đọc transcript, rồi luyện từ đó.",
+      "cta": "Mở nghe",
       "steps": {
-        "start": {
-          "title": "1. Bắt đầu hội thoại",
-          "body": "Mở một cuộc hội thoại để luyện trong ngữ cảnh."
+        "upload": {
+          "title": "1. Tải clip",
+          "body": "Thêm file audio hoặc video bạn muốn học — podcast, bài giảng, hoặc bản ghi của chính bạn."
+        },
+        "transcript": {
+          "title": "2. Đọc transcript",
+          "body": "Mở bài để theo lời thoại. Dùng để bắt những từ nghe sót."
         },
         "practice": {
-          "title": "2. Luyện",
-          "body": "Trả lời tự nhiên và giữ cuộc trao đổi tiếp tục."
+          "title": "3. Luyện",
+          "body": "Chạy phiên nghe, rồi lưu từ hữu ích vào sổ từ vựng."
+        }
+      }
+    },
+    "speaking": {
+      "title": "Nói",
+      "description": "Gọi video trực tiếp với gia sư AI, rồi xem lại những gì bạn nói.",
+      "cta": "Bắt đầu cuộc gọi",
+      "steps": {
+        "start": {
+          "title": "1. Tạo phiên",
+          "body": "Chọn chủ đề, trình độ CEFR và ngôn ngữ. Vào cuộc khi sẵn sàng nói."
+        },
+        "talk": {
+          "title": "2. Nói với gia sư",
+          "body": "Nói tự nhiên. Gia sư bám chủ đề và khớp trình độ của bạn."
         },
         "review": {
           "title": "3. Ôn lại",
-          "body": "Xem lại cụm hữu ích và thêm vào sổ từ."
+          "body": "Sau cuộc gọi, đọc transcript và tóm tắt để tái sử dụng cụm hữu ích."
         }
       }
     }
@@ -988,6 +1089,92 @@
       "FILENAME_REQUIRED": "Hãy nhập tên file."
     }
   },
+  "speaking": {
+    "eyebrow": "Nói",
+    "title": "Nói",
+    "highlight": "luyện tập",
+    "description": "Tham gia cuộc gọi video với gia sư AI và luyện hội thoại bằng ngôn ngữ của không gian học.",
+    "disabledNoWorkspace": "Hãy tạo không gian học trước khi bắt đầu buổi nói.",
+    "newCall": "Cuộc gọi mới",
+    "newCallFirst": "Bắt đầu cuộc gọi đầu tiên",
+    "newTitle": "Cuộc gọi nói mới",
+    "newDescription": "Chọn trình độ và chủ đề. Gia sư AI sẽ vào cuộc gọi và nói chuyện với bạn.",
+    "create": "Tạo cuộc gọi",
+    "created": "Đã tạo cuộc gọi nói",
+    "titleLabel": "Tiêu đề",
+    "titlePlaceholder": "Không bắt buộc — tạo từ chủ đề",
+    "notesLabel": "Ghi chú cho gia sư",
+    "notesPlaceholder": "Điều bạn muốn luyện, hoặc những từ bạn hay nhầm…",
+    "emptyTitle": "Chưa có buổi nói nào",
+    "emptyDescription": "Bắt đầu cuộc gọi video với gia sư AI để luyện nói.",
+    "mySessions": "Buổi nói của tôi",
+    "join": "Vào cuộc gọi",
+    "open": "Mở",
+    "viewProgress": "Xem tiến trình",
+    "backToList": "Quay lại Nói",
+    "sessionDescription": "Vào cuộc gọi, rồi quay lại đây để xem nhận xét và bản ghi.",
+    "deleted": "Đã xóa buổi nói",
+    "ended": "Đã kết thúc cuộc gọi",
+    "endSession": "Kết thúc buổi",
+    "deleteConfirmTitle": "Xóa buổi này?",
+    "deleteConfirmDescription": "Thao tác này sẽ xóa “{title}” và bản ghi của buổi nói.",
+    "processingTitle": "Đang chuẩn bị nhận xét",
+    "processingDescription": "Gia sư đang kết thúc buổi. Nhận xét sẽ xuất hiện tại đây trong giây lát.",
+    "feedbackTitle": "Nhận xét của gia sư",
+    "feedbackDescription": "Tóm tắt ngắn về buổi hội thoại.",
+    "transcriptTitle": "Bản ghi",
+    "status": {
+      "upcoming": "Sẵn sàng",
+      "active": "Đang gọi",
+      "processing": "Đang xử lý",
+      "completed": "Hoàn thành",
+      "cancelled": "Đã hủy"
+    },
+    "meta": {
+      "cefrLabel": "Trình độ CEFR",
+      "topicLabel": "Chủ đề",
+      "cefr": {
+        "a1": "A1",
+        "a2": "A2",
+        "b1": "B1",
+        "b2": "B2",
+        "c1": "C1",
+        "c2": "C2"
+      },
+      "topics": {
+        "travel": "Du lịch",
+        "work": "Công việc",
+        "daily": "Đời sống",
+        "food": "Ẩm thực",
+        "shopping": "Mua sắm",
+        "home": "Nhà cửa",
+        "people": "Con người",
+        "culture": "Văn hóa"
+      }
+    },
+    "call": {
+      "lobbyTitle": "Sẵn sàng nói?",
+      "lobbyDescription": "Kiểm tra camera và micro, rồi tham gia. Gia sư AI sẽ vào ngay sau bạn.",
+      "permissions": "Hãy cho phép trình duyệt dùng micro để vào cuộc gọi. Camera không bắt buộc.",
+      "cancel": "Hủy",
+      "join": "Vào cuộc gọi",
+      "joining": "Đang vào…",
+      "tutorFailed": "Bạn đã vào cuộc gọi, nhưng gia sư AI chưa vào được. Hãy thoát rồi thử lại.",
+      "endedTitle": "Đã kết thúc cuộc gọi",
+      "endedDescription": "Nhận xét sẽ xuất hiện trên trang buổi nói trong giây lát.",
+      "back": "Quay lại buổi nói",
+      "notConfigured": "Cuộc gọi video chưa được cấu hình. Thêm khóa Stream Video để bắt đầu."
+    },
+    "errors": {
+      "STREAM_NOT_CONFIGURED": "Cuộc gọi video chưa được cấu hình.",
+      "OPENAI_NOT_CONFIGURED": "Gia sư AI chưa được cấu hình.",
+      "INVALID_INPUT": "Kiểm tra chủ đề và trình độ, rồi thử lại.",
+      "SESSION_NOT_FOUND": "Không tìm thấy buổi nói.",
+      "SESSION_NOT_JOINABLE": "Cuộc gọi này không còn thể tham gia.",
+      "STREAM_CALL_FAILED": "Không thể bắt đầu cuộc gọi. Hãy thử lại.",
+      "UNAUTHORIZED": "Đăng nhập để tham gia cuộc gọi nói."
+    }
+  },
   "errors": {
     "generic": "Có lỗi xảy ra",
     "noWorkspace": "Chưa có không gian học",
@@ -1046,7 +1233,7 @@
     "description": "Mở khóa các tính năng học tập dùng AI.",
     "proDescription": "Bạn đang dùng Notoria Pro.",
     "tagline": "Mở khóa các tính năng học tập dùng AI.",
-    "price": "€4,99 / tháng",
+    "price": "€9,99 / tháng",
     "upgrade": "Nâng cấp lên Pro",
     "manage": "Quản lý gói đăng ký",
     "proBadge": "Pro",
@@ -1061,11 +1248,65 @@
     "notConfigured": "Chưa cấu hình thanh toán.",
     "noCustomer": "Tài khoản này chưa được liên kết với khách hàng thanh toán.",
     "modalTitle": "Nâng cấp lên Notoria Pro",
-    "modalSubtitle": "Mở khóa công cụ học tập dùng AI và tận dụng Notoria tốt hơn.",
-    "lockedTitle": "Tính năng Pro",
-    "lockedDescription": "Tính năng này cần gói Pro. Nâng cấp để mở khóa và dùng công cụ AI cùng các tính năng Pro khác.",
+    "modalSubtitle": "Bản miễn phí đủ để lưu từ và luyện. Pro thêm AI viết, nghe, nói, và xuất file in được.",
+    "lockedTitle": "Đây là tính năng Pro",
+    "lockedDescription": "Nâng cấp để mở khóa — kèm nghe, nói, AI viết, và xuất PDF/Word.",
     "planName": "Pro",
     "cancelAnytime": "Hủy bất cứ lúc nào",
+    "compare": {
+      "capability": "Bạn nhận được gì",
+      "free": "Miễn phí",
+      "pro": "Pro",
+      "impact": "Để làm gì",
+      "yes": "Có",
+      "locked": "Khóa",
+      "rows": {
+        "vocab": {
+          "capability": "Sổ từ, thẻ, tìm kiếm",
+          "impact": "Lưu từ mà không cần trả phí"
+        },
+        "vocabAi": {
+          "capability": "AI chính tả và nghĩa",
+          "impact": "Thêm từ nhanh và đúng hơn"
+        },
+        "csv": {
+          "capability": "Xuất CSV",
+          "impact": "Sao lưu từ ra bảng tính"
+        },
+        "export": {
+          "capability": "Xuất PDF và Word",
+          "impact": "In phiếu bài hoặc chia sẻ file"
+        },
+        "writing": {
+          "capability": "Trình soạn viết",
+          "impact": "Tự soạn bài và phiếu bài"
+        },
+        "writingAi": {
+          "capability": "AI viết (sửa và cải thiện)",
+          "impact": "Sửa lỗi trên bài của bạn"
+        },
+        "exercises": {
+          "capability": "Bài tập từ ví dụ đã lưu",
+          "impact": "Luyện đúng câu bạn đã thêm"
+        },
+        "fillBlank": {
+          "capability": "Điền chỗ trống bằng AI",
+          "impact": "Câu mới, không phải thuộc ví dụ cũ"
+        },
+        "theory": {
+          "capability": "Ghi chú lý thuyết",
+          "impact": "Lưu ngữ pháp và cách dùng"
+        },
+        "listening": {
+          "capability": "Bài nghe",
+          "impact": "Học từ audio hoặc video của bạn"
+        },
+        "speaking": {
+          "capability": "Gọi nói với AI",
+          "impact": "Gọi trực tiếp với gia sư, có bản ghi"
+        }
+      }
+    },
     "benefits": {
       "vocab": {
         "title": "Hỗ trợ từ vựng bằng AI",
@@ -1082,6 +1323,10 @@
       "listening": {
         "title": "Trải nghiệm nghe tốt hơn",
         "body": "Có thêm công cụ mạnh hơn để luyện và làm việc với nội dung nghe."
+      },
+      "speaking": {
+        "title": "Cuộc gọi nói với AI",
+        "body": "Luyện hội thoại trực tiếp với gia sư AI qua video, rồi nhận nhận xét và bản ghi."
       },
       "files": {
         "title": "Hỗ trợ PDF & Word (DOCX)",

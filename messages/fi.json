@@ -18,6 +18,7 @@
     "theory": "Teoria",
     "exercises": "Harjoitus",
     "listening": "Kuuntelu",
+    "speaking": "Puhuminen",
     "account": "Tili",
     "settings": "Asetukset",
     "workspace": "Työtila"
@@ -484,18 +485,99 @@
     "overview": "Yleiskatsaus",
     "your": "Sinun",
     "workspaceLabel": "työtilasi",
-    "description": "Tallenna sanastoa ja harjoittele {language} sanastoosi perustuvilla harjoituksilla.",
+    "description": "{language} asuu tässä. Notoria on yksityinen opiskelutyötila: kerää sanoja, tallenna teoriaa, harjoittele, kirjoita, kuuntele ja puhu.",
     "wordsSaved": "Tallennetut sanat",
     "wordsReadyToPractice": "Harjoiteltavat sanat",
+    "theoryNotes": "Teoriamuistiinpanot",
+    "writingPieces": "Kirjoitukset",
     "activeWorkspace": "Aktiivinen työtila",
-    "vocabularyCardTitle": "Sanasto",
-    "vocabularyCardDescription": "Lisää sanoja merkityksillä, esimerkeillä ja tunnisteilla.",
-    "addWord": "Lisää sana",
-    "viewAll": "Näytä kaikki",
-    "exercisesCardTitle": "Harjoitukset",
-    "exercisesCardDescription": "Harjoittele muistikorteilla, monivalinnoilla ja muilla — kaikki sanastostasi.",
-    "startPracticing": "Aloita harjoittelu",
-    "recentWords": "Viimeisimmät sanat",
+    "guideEyebrow": "Aloitus",
+    "guideTitle": "Näin käytät Notoriaa",
+    "guideSubtitle": "Yksi työtila, yksi kieli. Etene osioissa tässä järjestyksessä — seuraava rakentuu edellisen päälle. Avaa opastus milloin tahansa.",
+    "modulesTitle": "Tutustu työtilaan",
+    "modulesSubtitle": "Siirry osioon suoraan tai avaa ensin sen opastus.",
+    "startHere": "Aloita tästä",
+    "pro": "Pro",
+    "unlock": "Avaa Pro",
+    "open": "Avaa",
+    "steps": {
+      "vocabulary": {
+        "title": "Sanasto",
+        "body": "Lisää sanoja merkityksillä, esimerkeillä ja tunnisteilla. Tämä kirjasto ruokkii harjoituksia."
+      },
+      "theory": {
+        "title": "Teoria",
+        "body": "Tallenna kielioppi, ääntäminen ja käyttö, jotka unohtuvat helposti."
+      },
+      "exercises": {
+        "title": "Harjoitus",
+        "body": "Harjoittele omista sanoistasi — muistikortit, visailut, aukot ja muut."
+      },
+      "writing": {
+        "title": "Kirjoittaminen",
+        "body": "Luonnostele tekstejä ja tehtäväsarjoja. Pro voi tarkistaa, parantaa ja viedä ne."
+      },
+      "listening": {
+        "title": "Kuuntelu",
+        "body": "Lataa ääntä tai videota, saa litterointi ja tee siitä oppitunti."
+      },
+      "speaking": {
+        "title": "Puhuminen",
+        "body": "Soita tekoälyohjaajalle videolla ja käy sitten litterointi ja palaute läpi."
+      }
+    },
+    "modules": {
+      "vocabulary": {
+        "title": "Sanasto",
+        "description": "Henkilökohtainen sanapankki tälle kielelle.",
+        "how": "Lisää sana, merkitse ensisijaiset merkitykset ja liitä esimerkkilauseita. Tunnisteet ja haku auttavat myöhemmin.",
+        "cta": "Avaa sanasto"
+      },
+      "theory": {
+        "title": "Teoria",
+        "description": "Vihko kielen toiminnasta — ei kirjoitusharjoittelua.",
+        "how": "Luo muistiinpano, valitse kategoria ja palaa siihen, kun tarvitset kertausta.",
+        "cta": "Avaa teoria"
+      },
+      "exercises": {
+        "title": "Harjoitus",
+        "description": "Lyhyitä sessioita jo tallennetuista sanoista.",
+        "how": "Lisää ensin muutama sana, valitse sitten tyyppi. Palaa usein — muutama minuutti riittää.",
+        "cta": "Avaa harjoitukset"
+      },
+      "writing": {
+        "title": "Kirjoittaminen",
+        "description": "Rich-tekstidokumentit ja tehtäväsarjat, joihin voit palata ja jotka voit viedä.",
+        "how": "Aloita luonnos, järjestä kansioilla ja käytä Pro-tekoälyä tekstin tarkistukseen tai parantamiseen.",
+        "cta": "Avaa kirjoittaminen"
+      },
+      "listening": {
+        "title": "Kuuntelu",
+        "description": "Muuta aito ääni tai video oppitunniksi.",
+        "how": "Lataa klippi, lue litterointi ja harjoittele. Koko osio on Pro.",
+        "cta": "Avaa kuuntelu"
+      },
+      "speaking": {
+        "title": "Puhuminen",
+        "description": "Live-videokeskustelu tekoälyohjaajan kanssa.",
+        "how": "Luo sessio, liity puheluun ja käy sitten litterointi ja yhteenveto läpi. Vain Pro.",
+        "cta": "Avaa puhuminen"
+      }
+    },
+    "counts": {
+      "words": "{count, plural, one {# sana} other {# sanaa}}",
+      "notes": "{count, plural, one {# muistiinpano} other {# muistiinpanoa}}",
+      "writings": "{count, plural, one {# teksti} other {# tekstiä}}",
+      "practiceReady": "{count, plural, one {# sana valmis} other {# sanaa valmiina}}"
+    },
+    "practiceNowEyebrow": "Tänään",
+    "practiceNowTitle": "Harjoittele nyt",
+    "practiceNowReady": "{count, plural, one {# sana on valmis harjoituksiin.} other {# sanaa on valmiina harjoituksiin.}}",
+    "practiceNowNeedsMeaning": "Merkitse sanaan ensisijainen merkitys, jotta se näkyy harjoituksissa.",
+    "practiceNowCta": "Aloita harjoitus",
+    "practiceNowVocabCta": "Avaa sanasto",
+    "continueTitle": "Jatka",
+    "continueSubtitle": "Palaa siihen, mitä olit tekemässä.",
     "sidebarFooter": "Yksityinen kielenopiskelun työtila"
   },
   "prompts": {
@@ -722,22 +804,41 @@
         }
       }
     },
-    "conversation": {
-      "title": "Keskustelu",
-      "description": "Harjoittele puhumista ja vastaamista kohdekielellä.",
-      "cta": "Aloita keskustelu",
+    "listening": {
+      "title": "Kuuntelu",
+      "description": "Lataa aitoa ääntä tai videota, lue litterointi ja harjoittele sen pohjalta.",
+      "cta": "Avaa kuuntelu",
       "steps": {
-        "start": {
-          "title": "1. Aloita keskustelu",
-          "body": "Avaa keskustelu ja harjoittele kieltä kontekstissa."
+        "upload": {
+          "title": "1. Lataa klippi",
+          "body": "Lisää äänitiedosto tai video, josta haluat oppia — podcast, oppitunti tai oma tallenne."
+        },
+        "transcript": {
+          "title": "2. Lue litterointi",
+          "body": "Avaa oppitunti ja seuraa tekstiä. Näin saat kiinni sanat, jotka jäivät korvalta."
         },
         "practice": {
-          "title": "2. Harjoittele",
-          "body": "Vastaa luontevasti ja pidä keskustelu käynnissä."
+          "title": "3. Harjoittele",
+          "body": "Tee kuuntelusessio ja tallenna hyödylliset sanat sanastoosi."
+        }
+      }
+    },
+    "speaking": {
+      "title": "Puhuminen",
+      "description": "Pidä live-videopuhelu tekoälyohjaajan kanssa ja kertaa, mitä sanoit.",
+      "cta": "Aloita puhelu",
+      "steps": {
+        "start": {
+          "title": "1. Luo sessio",
+          "body": "Valitse aihe, CEFR-taso ja kieli. Liity, kun olet valmis puhumaan."
+        },
+        "talk": {
+          "title": "2. Puhu ohjaajan kanssa",
+          "body": "Puhu luontevasti. Ohjaaja pysyy aiheessa ja tasollasi."
         },
         "review": {
           "title": "3. Kertaa",
-          "body": "Poimi hyödyllisiä ilmauksia ja lisää ne sanastoosi."
+          "body": "Puhelun jälkeen lue litterointi ja yhteenveto, jotta voit käyttää hyödyllisiä ilmauksia uudelleen."
         }
       }
     }
@@ -988,6 +1089,92 @@
       "FILENAME_REQUIRED": "Anna tiedostonimi."
     }
   },
+  "speaking": {
+    "eyebrow": "Puhuminen",
+    "title": "Puhuminen",
+    "highlight": "harjoitus",
+    "description": "Liity live-videopuheluun tekoälyohjaajan kanssa ja harjoittele keskustelua työtilan kielellä.",
+    "disabledNoWorkspace": "Luo työtila ennen puhumisharjoituksen aloittamista.",
+    "newCall": "Uusi puhelu",
+    "newCallFirst": "Aloita ensimmäinen puhelu",
+    "newTitle": "Uusi puhumispuhelu",
+    "newDescription": "Valitse taso ja aihe. Tekoälyohjaaja liittyy puheluun ja keskustelee kanssasi.",
+    "create": "Luo puhelu",
+    "created": "Puhumispuhelu luotu",
+    "titleLabel": "Otsikko",
+    "titlePlaceholder": "Valinnainen — muodostetaan aiheesta",
+    "notesLabel": "Muistiinpanot ohjaajalle",
+    "notesPlaceholder": "Mitä haluat harjoitella, tai sanat jotka sekoittuvat…",
+    "emptyTitle": "Ei puhumissessioita vielä",
+    "emptyDescription": "Aloita videopuhelu tekoälyohjaajan kanssa ja harjoittele puhumista.",
+    "mySessions": "Puhumissessioni",
+    "join": "Liity puheluun",
+    "open": "Avaa",
+    "viewProgress": "Näytä eteneminen",
+    "backToList": "Takaisin puhumiseen",
+    "sessionDescription": "Liity puheluun ja palaa tähän palautetta ja litterointia varten.",
+    "deleted": "Puhumissessio poistettu",
+    "ended": "Puhelu päättyi",
+    "endSession": "Lopeta sessio",
+    "deleteConfirmTitle": "Poistetaanko tämä sessio?",
+    "deleteConfirmDescription": "Tämä poistaa session “{title}” ja sen litteroinnin.",
+    "processingTitle": "Palautetta valmistellaan",
+    "processingDescription": "Ohjaaja päättää session. Palaute ilmestyy tähän hetken kuluttua.",
+    "feedbackTitle": "Ohjaajan palaute",
+    "feedbackDescription": "Lyhyt yhteenveto keskustelusta.",
+    "transcriptTitle": "Litterointi",
+    "status": {
+      "upcoming": "Valmis",
+      "active": "Puhelussa",
+      "processing": "Käsitellään",
+      "completed": "Valmis",
+      "cancelled": "Peruttu"
+    },
+    "meta": {
+      "cefrLabel": "CEFR-taso",
+      "topicLabel": "Aihe",
+      "cefr": {
+        "a1": "A1",
+        "a2": "A2",
+        "b1": "B1",
+        "b2": "B2",
+        "c1": "C1",
+        "c2": "C2"
+      },
+      "topics": {
+        "travel": "Matkailu",
+        "work": "Työ",
+        "daily": "Arki",
+        "food": "Ruoka",
+        "shopping": "Ostokset",
+        "home": "Koti",
+        "people": "Ihmiset",
+        "culture": "Kulttuuri"
+      }
+    },
+    "call": {
+      "lobbyTitle": "Valmis puhumaan?",
+      "lobbyDescription": "Tarkista kamera ja mikrofoni, sitten liity. Tekoälyohjaaja tulee mukaan pian sinun jälkeesi.",
+      "permissions": "Salli mikrofonin käyttö selaimessa, jotta voit liittyä puheluun. Kamera on valinnainen.",
+      "cancel": "Peruuta",
+      "join": "Liity puheluun",
+      "joining": "Liitytään…",
+      "tutorFailed": "Olet puhelussa, mutta tekoälyohjaaja ei liittynyt. Poistu ja yritä uudelleen.",
+      "endedTitle": "Puhelu päättyi",
+      "endedDescription": "Palaute ilmestyy sessiosivulle hetken kuluttua.",
+      "back": "Takaisin sessioon",
+      "notConfigured": "Videopuhelua ei ole vielä määritetty. Lisää Stream Videon API-avaimet aloittaaksesi."
+    },
+    "errors": {
+      "STREAM_NOT_CONFIGURED": "Videopuhelua ei ole määritetty.",
+      "OPENAI_NOT_CONFIGURED": "Tekoälyohjaajaa ei ole määritetty.",
+      "INVALID_INPUT": "Tarkista aihe ja taso, ja yritä uudelleen.",
+      "SESSION_NOT_FOUND": "Puhumissessiota ei löytynyt.",
+      "SESSION_NOT_JOINABLE": "Tähän puheluun ei voi enää liittyä.",
+      "STREAM_CALL_FAILED": "Videopuhelua ei voitu aloittaa. Yritä uudelleen.",
+      "UNAUTHORIZED": "Kirjaudu sisään liittyäksesi puhumispuheluun."
+    }
+  },
   "errors": {
     "generic": "Jokin meni pieleen",
     "noWorkspace": "Ei aktiivista työtilaa",
@@ -1046,7 +1233,7 @@
     "description": "Avaa tekoälyyn perustuvat oppimisominaisuudet.",
     "proDescription": "Sinulla on Notoria Pro.",
     "tagline": "Avaa tekoälyyn perustuvat oppimisominaisuudet.",
-    "price": "4,99 € / kuukausi",
+    "price": "9,99 € / kuukausi",
     "upgrade": "Päivitä Pro-tilaukseen",
     "manage": "Hallinnoi tilausta",
     "proBadge": "Pro",
@@ -1061,11 +1248,65 @@
     "notConfigured": "Laskutusta ei ole vielä määritetty.",
     "noCustomer": "Tähän tiliin ei ole vielä liitetty laskutusasiakasta.",
     "modalTitle": "Päivitä Notoria Pro -tilaukseen",
-    "modalSubtitle": "Avaa tekoälytyökalut ja saa enemmän irti Notoriasta.",
-    "lockedTitle": "Pro-ominaisuus",
-    "lockedDescription": "Tämä ominaisuus vaatii Pro-tilauksen. Päivitä Prohon avataksesi sen ja saadaksesi tekoälytyökalut sekä muut Pro-ominaisuudet.",
+    "modalSubtitle": "Ilmaisessa säilyvät kirjasto ja harjoittelu. Pro tuo kirjoittamisen tekoälyn, kuuntelun, puhumisen ja tulostettavat tiedostot.",
+    "lockedTitle": "Tämä on Pro-ominaisuus",
+    "lockedDescription": "Päivitä Prohon avataksesi sen — sekä kuuntelun, puhumisen, kirjoittamisen tekoälyn ja PDF/Word-viennin.",
     "planName": "Pro",
     "cancelAnytime": "Peru milloin tahansa",
+    "compare": {
+      "capability": "Mitä saat",
+      "free": "Ilmainen",
+      "pro": "Pro",
+      "impact": "Miksi se auttaa",
+      "yes": "Kyllä",
+      "locked": "Lukittu",
+      "rows": {
+        "vocab": {
+          "capability": "Sanakirjasto, tunnisteet, haku",
+          "impact": "Säilytä sanat ilman maksua"
+        },
+        "vocabAi": {
+          "capability": "Tekoäly: oikeinkirjoitus ja merkitys",
+          "impact": "Lisää sanoja nopeammin ja tarkemmin"
+        },
+        "csv": {
+          "capability": "CSV-vienti",
+          "impact": "Varmuuskopioi sanat taulukkoon"
+        },
+        "export": {
+          "capability": "PDF- ja Word-vienti",
+          "impact": "Tulosta tehtävät tai jaa tiedostot"
+        },
+        "writing": {
+          "capability": "Kirjoituseditori",
+          "impact": "Luo luonnoksia ja tehtäväarkkeja itse"
+        },
+        "writingAi": {
+          "capability": "Kirjoittamisen tekoäly",
+          "impact": "Korjauksia omaan tekstiisi"
+        },
+        "exercises": {
+          "capability": "Harjoitukset omista esimerkeistä",
+          "impact": "Harjoittele tallennetuilla lauseilla"
+        },
+        "fillBlank": {
+          "capability": "Tekoälyn täydennystehtävät",
+          "impact": "Uudet lauseet, ei muistettuja esimerkkejä"
+        },
+        "theory": {
+          "capability": "Teoriamuistiinpanot",
+          "impact": "Tallenna kielioppi ja käyttö"
+        },
+        "listening": {
+          "capability": "Kuuntelutunnit",
+          "impact": "Muuta ääni tai video harjoitukseksi"
+        },
+        "speaking": {
+          "capability": "Tekoälypuhelu",
+          "impact": "Live-ohjaaja, sitten litterointi"
+        }
+      }
+    },
     "benefits": {
       "vocab": {
         "title": "Tekoälyavusteinen sanasto",
@@ -1082,6 +1323,10 @@
       "listening": {
         "title": "Parempi kuuntelukokemus",
         "body": "Saat tehokkaampia työkaluja kuuntelusisällön harjoitteluun ja käsittelyyn."
+      },
+      "speaking": {
+        "title": "Tekoälypuhelut",
+        "body": "Harjoittele live-keskustelua tekoälyohjaajan kanssa videopuhelussa ja saa palaute sekä litterointi."
       },
       "files": {
         "title": "PDF- ja Word-tuki (DOCX)",

@@ -9,7 +9,8 @@ export default auth((request) => {
   const isPublicRoute =
     isAuthRoute ||
     pathname.startsWith("/api/auth") ||
-    pathname.startsWith("/api/stripe/webhook");
+    pathname.startsWith("/api/stripe/webhook") ||
+    pathname.startsWith("/api/stream/webhook");
 
   if (!isLoggedIn && !isPublicRoute) {
     const loginUrl = new URL("/sign-in", request.nextUrl.origin);

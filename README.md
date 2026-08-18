@@ -1,8 +1,8 @@
 # Notoria
 
-**Notoria** is a private web app for language learning. Each account owns its own data: vocabulary, writing, theory notes, exercises, and listening lessons live in **language-specific workspaces**. The app is not social — no public profiles, no sharing feed, no multiplayer.
+**Notoria** is a private web app for language learning. Each account owns its own data: vocabulary, writing, theory notes, exercises, listening lessons, and speaking sessions live in **language-specific workspaces**. The app is not social — no public profiles, no sharing feed, no multiplayer.
 
-Free users can collect words and practice with quizzes built from those words. **Notoria Pro** unlocks the rest of the learning loop: AI writing help, AI fill-in-the-blank generation, PDF/DOCX export, and the full Listening module.
+Free users can collect words and practice with quizzes built from those words. **Notoria Pro** (€9.99 / month) unlocks the rest of the learning loop: AI writing help, AI fill-in-the-blank generation, PDF/DOCX export, the full **Listening** module, and **Speaking** (live video call with an AI tutor).
 
 ---
 
@@ -22,8 +22,9 @@ Access is **Admin or an active Pro subscription** (`active`, `trialing`, or `pas
 | Fill in the Blank **Generate with AI** (10 new sentences) | Locked | Yes | Practice the word in *new* contexts, not memorized examples |
 | Theory notes | Yes | Yes | Grammar/usage notebook for every user |
 | **Listening** (upload, transcript, practice) | Locked (whole module) | Yes | Turns real audio/video into a lesson |
+| **Speaking** (live video call with AI tutor) | Locked (whole module) | Yes | Spoken practice with feedback and a transcript |
 
-Subscribe from `/account` or any locked control. Price in the UI: **€4.99 / month**, cancel anytime via Stripe Customer Portal.
+Subscribe from `/account` or any locked control. Price in the UI: **€9.99 / month**, cancel anytime via Stripe Customer Portal.
 
 ---
 
@@ -35,13 +36,14 @@ Subscribe from `/account` or any locked control. Price in the UI: **€4.99 / mo
 - Protected dashboard routes via middleware
 - **Account settings** (`/account`): display name, password, Cloudinary avatar
 - **Billing card**: upgrade to Pro (Stripe Checkout), manage subscription (Customer Portal), plan/status badges
+- **Upgrade modal**: compact Free vs Pro comparison table (what you get, lock state, why it matters) from `/account` or any locked control
 - User roles: `USER` (default) and `ADMIN` (full Pro access without a Stripe subscription)
 
 ### Workspaces
 
 - One workspace per language you are learning (duplicate languages are blocked)
 - Create, rename, delete, and switch workspaces from the header
-- Vocabulary, writing, theory, exercises, and listening always use the **active** workspace
+- Vocabulary, writing, theory, exercises, listening, and speaking always use the **active** workspace
 - Active workspace is stored in a cookie and restored across sessions
 - A default English workspace is created on signup
 
@@ -112,11 +114,31 @@ Upload real audio or video and practice against a transcript.
 
 **Impact:** listening is no longer “play a file in another tab”. One upload becomes transcript + graded practice in the target language.
 
+### Speaking (Pro)
+
+Live video conversation with an AI tutor, then written feedback.
+
+- Create a session (topic, CEFR level, optional notes); join from a full-screen call UI outside the dashboard chrome (`/speaking/[id]/call`)
+- Stream Video for the call; OpenAI Realtime (`gpt-realtime`) as **Notoria Tutor** — greets the learner, stays on topic, matches CEFR, corrects important mistakes briefly
+- Auto transcription; after hang-up the app disconnects the tutor, pulls the transcript, and writes a short summary (overview, what went well, what to practice)
+- Session list with status (`upcoming` → `active` → `processing` → `completed`); reopen a completed call for transcript + feedback
+- Entire module is Pro. Free users see a lock screen and a faded Speaking nav item
+- Locally, the tutor connects from the call page because Stream webhooks cannot reach localhost. In production, configure `/api/stream/webhook` (see below)
+
+**Impact:** speaking practice stays in the same workspace as vocabulary and listening, instead of a separate chatbot or an in-person tutor. The recording is off; the artifact is the transcript and tutor notes.
+
 ### Dashboard
 
-- Word counts, words ready to practice, active workspace
-- Quick links and onboarding cues (first words, first writing, theory, exercises)
-- Time-of-day greetings and study suggestions
+Home is a workspace hub, not a word dump.
+
+- Stats: words saved, words ready to practice, theory notes, writing pieces
+- **Practice now** — jump into exercises when words have a primary meaning
+- **Continue** — reopen the latest theory, writing, listening, or speaking item
+- **How to use Notoria** — six-step path in sidebar order (Vocabulary → Theory → Exercise → Writing → Listening → Speaking)
+- Per-module cards with a short “how”, a CTA, and a replayable tutorial
+- Time-of-day greetings and first-workspace onboarding still run on top
+
+**Impact:** new users see the whole product and a next action, instead of three counts and a list of recent words.
 
 ### Internationalization
 
@@ -146,8 +168,9 @@ Upload real audio or video and practice against a transcript.
 | Editor | TipTap |
 | Drag & drop | dnd-kit |
 | Export | `@react-pdf/renderer`, `docx` |
-| AI | OpenAI (vocabulary, writing, exercises, listening generation) |
-| Speech | AssemblyAI (listening transcription) |
+| AI | OpenAI (vocabulary, writing, exercises, listening generation, speaking summary) + OpenAI Realtime (speaking tutor) |
+| Speech | AssemblyAI (listening transcription); Stream Video transcription (speaking) |
+| Realtime video | Stream Video + `@stream-io/openai-realtime-api` (AI tutor on the call) |
 | Media | Cloudinary (avatars + listening files) |
 | Tests | Vitest (access rules, AI contracts) |
 | Icons | Lucide |
@@ -166,25 +189,31 @@ public/
 src/
 ├── app/
 │   ├── (auth)/           # Sign in, sign up
+│   ├── (call)/           # Full-screen speaking call (no sidebar)
 │   ├── (dashboard)/      # Sidebar layout
 │   │   ├── account/      # Profile, password, avatar, billing
 │   │   ├── exercises/    # Vocabulary practice modes
 │   │   ├── listening/    # Pro listening lessons
+│   │   ├── speaking/     # Pro speaking sessions
 │   │   ├── theory/       # Grammar / usage notes
 │   │   ├── vocabulary/
 │   │   └── writing/
 │   └── api/
 │       ├── auth/         # NextAuth
 │       ├── ai/           # Writing + exercise AI (Pro-gated)
+│       ├── stream/       # Stream Video webhooks
 │       └── stripe/       # Checkout, portal, webhook
 ├── components/
 │   ├── account/          # Settings + Pro subscription card
-│   ├── billing/          # Upgrade modal, locked buttons/styles, Pro provider
+│   ├── billing/          # Upgrade modal (Free vs Pro table), locked buttons, Pro provider
+│   ├── dashboard/        # How-to guide + continue / practice now
 │   ├── editor/           # TipTap
 │   ├── exercises/
 │   ├── flashcards/
-│   ├── layout/           # Sidebar (Listening locked for free), header
+│   ├── layout/           # Sidebar (Listening + Speaking locked for free), header
 │   ├── listening/
+│   ├── onboarding/       # Workspace onboarding + section tutorials
+│   ├── speaking/
 │   ├── theory/
 │   ├── vocabulary/
 │   ├── workspace/
@@ -196,6 +225,7 @@ src/
 │   ├── exercises/        # Quiz generation + AI fill-in-blank
 │   ├── flashcards/       # SRS
 │   ├── listening/        # Transcribe, speakers, generate practice
+│   ├── speaking/         # Tutor instructions, Stream, transcript summary
 │   ├── stripe/           # Checkout, portal, subscription sync
 │   ├── theory/
 │   ├── vocabulary/       # Export + background AI
@@ -211,7 +241,7 @@ src/
 - **Node.js** 20+
 - **Docker Desktop** (local PostgreSQL)
 - **npm**
-- Optional for full local features: Cloudinary, OpenAI, AssemblyAI, Stripe (test mode)
+- Optional for full local features: Cloudinary, OpenAI, AssemblyAI, Stream Video, Stripe (test mode)
 
 ---
 
@@ -239,16 +269,23 @@ CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
 
-# OpenAI (vocabulary / writing / exercise / listening AI)
+# OpenAI (vocabulary / writing / exercise / listening AI / speaking tutor + summary)
 OPENAI_API_KEY=
 
 # AssemblyAI (listening transcription)
 ASSEMBLYAI_API_KEY=
 
+# Stream Video (speaking calls)
+NEXT_PUBLIC_STREAM_VIDEO_API_KEY=
+STREAM_VIDEO_SECRET_KEY=
+
 # Stripe test keys (local billing)
 STRIPE_SECRET_KEY=
 STRIPE_PRICE_ID=
 STRIPE_WEBHOOK_SECRET=
+
+# Used by `npm run db:push` (prod first, then local)
+DATABASE_URL_PROD=
 ```
 
 `STRIPE_PUBLISHABLE_KEY` is unused (Checkout is server-side).
@@ -268,6 +305,8 @@ Container: `notoria-db` (`postgres:16-alpine`).
 ```bash
 npm run db:push
 ```
+
+Pushes the Drizzle schema to **production** (`DATABASE_URL_PROD`) then **local** (`DATABASE_URL`), and leaves `DATABASE_URL` pointing at local.
 
 ### 5. Run the app
 
@@ -299,11 +338,22 @@ Keep `.env.local` on **test** keys. Production env lives in **Vercel → Setting
 | `CLOUDINARY_*` | Same account as media |
 | `OPENAI_API_KEY` | Live key |
 | `ASSEMBLYAI_API_KEY` | Live key |
+| `NEXT_PUBLIC_STREAM_VIDEO_API_KEY` | Stream Video API key |
+| `STREAM_VIDEO_SECRET_KEY` | Stream Video API secret |
 | `STRIPE_SECRET_KEY` | `sk_live_...` |
 | `STRIPE_PRICE_ID` | Live Price ID (`price_...`) |
 | `STRIPE_WEBHOOK_SECRET` | Signing secret of the **live** webhook |
 
 After changing env vars, **Redeploy**.
+
+**Speaking (Stream Video)**
+
+1. [Stream Dashboard](https://dashboard.getstream.io) → Video app → copy API key + secret into the Vercel env vars above
+2. Webhooks → add `https://YOUR-DOMAIN/api/stream/webhook`
+3. Events: `call.session_started`, `call.session_participant_left`, `call.session_ended`, `call.transcription_ready`
+4. Redeploy so `NEXT_PUBLIC_STREAM_VIDEO_API_KEY` is in the client bundle
+
+The AI tutor stays connected through the Next.js server for the length of the call (`maxDuration` 300s). Use a Vercel plan that allows that, or a long-running Node host.
 
 **Stripe (Live mode)**
 
@@ -325,7 +375,7 @@ Schema changes: point Drizzle at the prod `DATABASE_URL`, run `npm run db:push`,
 | `npm run start` | Run the production build |
 | `npm run lint` | ESLint |
 | `npm test` | Vitest |
-| `npm run db:push` | Push Drizzle schema to PostgreSQL |
+| `npm run db:push` | Push schema to production, then local (`DATABASE_URL_PROD` then `DATABASE_URL`) |
 | `npm run db:studio` | Drizzle Studio |
 
 ---
@@ -357,9 +407,12 @@ Schema changes: point Drizzle at the prod `DATABASE_URL`, run `npm run db:push`,
 | `/exercises/type-answer` | Type the answer |
 | `/listening` | Listening list (Pro) |
 | `/listening/[id]` | Lesson + practice (Pro) |
+| `/speaking` | Speaking sessions (Pro) |
+| `/speaking/[id]` | Session detail / transcript (Pro) |
+| `/speaking/[id]/call` | Full-screen AI video call (Pro) |
 | `/account` | Profile, password, avatar, billing |
 
-API: `POST /api/ai/writing`, `POST /api/ai/exercise` (Pro), `POST /api/stripe/create-checkout-session`, `POST /api/stripe/create-portal-session`, `POST /api/stripe/webhook`.
+API: `POST /api/ai/writing`, `POST /api/ai/exercise` (Pro), `POST /api/stream/webhook`, `POST /api/stripe/create-checkout-session`, `POST /api/stripe/create-portal-session`, `POST /api/stripe/webhook`.
 
 ---
 
@@ -380,6 +433,7 @@ API: `POST /api/ai/writing`, `POST /api/ai/exercise` (Pro), `POST /api/stripe/cr
 | `grammar_notes` | Theory notes (JSONB TipTap) |
 | `listening_lessons` | Uploaded media, transcript, metadata, job status |
 | `listening_exercises` | Generated listening questions |
+| `speaking_sessions` | AI video-call sessions, transcript, summary |
 | `flashcard_reviews` | Per-review rating log |
 | `flashcard_progress` | Spaced-repetition state |
 

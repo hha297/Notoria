@@ -14,6 +14,7 @@ export function DashboardDocumentTitle() {
   const tFlashcards = useTranslations("flashcards");
   const tTheory = useTranslations("theory");
   const tListening = useTranslations("listening");
+  const tSpeaking = useTranslations("speaking");
 
   const title = useMemo(() => {
     if (pathname === "/") return tNav("dashboard");
@@ -49,6 +50,10 @@ export function DashboardDocumentTitle() {
       return tNav("listening");
     }
 
+    if (pathname === "/speaking" || pathname.startsWith("/speaking/")) {
+      return tNav("speaking");
+    }
+
     if (pathname === "/exercises/flashcard") return tFlashcards("title");
     if (pathname === "/exercises/fill-in-blank") {
       return tExercises("types.fill-in-blank.label");
@@ -68,7 +73,7 @@ export function DashboardDocumentTitle() {
     }
 
     return "Notoria";
-  }, [pathname, tExercises, tFlashcards, tListening, tNav, tTheory, tVocab, tWriting]);
+  }, [pathname, tExercises, tFlashcards, tListening, tNav, tSpeaking, tTheory, tVocab, tWriting]);
 
   useEffect(() => {
     document.title = title;

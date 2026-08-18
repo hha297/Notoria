@@ -9,7 +9,13 @@ const nextConfig: NextConfig = {
       bodySizeLimit: "50mb",
     },
   },
-  serverExternalPackages: ["assemblyai", "openai", "stripe"],
+  serverExternalPackages: [
+    "assemblyai",
+    "openai",
+    "stripe",
+    "@stream-io/node-sdk",
+    "@stream-io/openai-realtime-api",
+  ],
   images: {
     remotePatterns: [
       {
