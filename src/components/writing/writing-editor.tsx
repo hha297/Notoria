@@ -54,6 +54,8 @@ type WritingEditorProps = {
   exerciseType: ExerciseFormValues["type"];
   /** When set, Cancel returns here and Save navigates here after persisting. */
   previewHref?: string;
+  listHref?: string;
+  folderId?: string | null;
   language?: string;
   initialData?: {
     id: string;
@@ -69,6 +71,8 @@ const AUTOSAVE_MS = 1500;
 export function WritingEditor({
   exerciseType,
   previewHref,
+  listHref = "/writing",
+  folderId = null,
   language = "en",
   initialData,
 }: WritingEditorProps) {
@@ -152,11 +156,11 @@ export function WritingEditor({
       if (initialData?.id) {
         await updateWritingDocument(initialData.id, payload);
         if (showToast) toast.success(t("saved"));
-        router.replace("/writing");
+        router.replace(previewHref ?? listHref);
       } else {
-        await createWritingDocument(payload);
+        await createWritingDocument(payload, { folderId });
         if (showToast) toast.success(t("created"));
-        router.replace("/writing");
+        router.replace(listHref);
       }
     } catch (error) {
       if (showToast) {

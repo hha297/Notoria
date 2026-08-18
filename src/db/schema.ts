@@ -1,6 +1,8 @@
 import { relations, sql } from "drizzle-orm";
 import {
+  type AnyPgColumn,
   boolean,
+  index,
   integer,
   jsonb,
   pgEnum,
@@ -62,6 +64,12 @@ export const listeningExerciseTypeEnum = pgEnum("listening_exercise_type", [
   "MULTIPLE_CHOICE",
   "DICTATION",
   "WORD_ORDERING",
+]);
+
+export const folderSectionEnum = pgEnum("folder_section", [
+  "writing",
+  "listening",
+  "theory",
 ]);
 
 export const users = pgTable(
@@ -139,6 +147,38 @@ export const workspaceTags = pgTable(
     uniqueIndex("workspace_tags_workspace_name_unique").on(
       table.workspaceId,
       table.name,
+    ),
+  ],
+);
+
+export const workspaceFolders = pgTable(
+  "workspace_folders",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    section: folderSectionEnum("section").notNull(),
+    parentId: uuid("parent_id").references(
+      (): AnyPgColumn => workspaceFolders.id,
+      { onDelete: "cascade" },
+    ),
+    name: text("name").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("workspace_folders_workspace_section_parent_idx").on(
+      table.workspaceId,
+      table.section,
+      table.parentId,
     ),
   ],
 );
@@ -257,25 +297,32 @@ export const flashcardProgress = pgTable(
   ],
 );
 
-export const exercises = pgTable("exercises", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  workspaceId: uuid("workspace_id")
-    .notNull()
-    .references(() => workspaces.id, { onDelete: "cascade" }),
-  title: text("title").notNull(),
-  description: text("description"),
-  type: exerciseTypeEnum("type").notNull().default("QUESTIONS"),
-  content: jsonb("content").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-});
+export const exercises = pgTable(
+  "exercises",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    folderId: uuid("folder_id").references(() => workspaceFolders.id, {
+      onDelete: "cascade",
+    }),
+    title: text("title").notNull(),
+    description: text("description"),
+    type: exerciseTypeEnum("type").notNull().default("QUESTIONS"),
+    content: jsonb("content").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [index("exercises_folder_id_idx").on(table.folderId)],
+);
 
 export const listeningLessons = pgTable(
   "listening_lessons",
@@ -300,6 +347,9 @@ export const listeningLessons = pgTable(
     cefrLevel: text("cefr_level"),
     topic: text("topic"),
     formality: text("formality"),
+    folderId: uuid("folder_id").references(() => workspaceFolders.id, {
+      onDelete: "cascade",
+    }),
     exerciseType: listeningExerciseTypeEnum("exercise_type"),
     status: listeningStatusEnum("status").notNull().default("UPLOADING"),
     errorCode: text("error_code"),
@@ -317,6 +367,7 @@ export const listeningLessons = pgTable(
         sql`lower(trim(${table.originalFilename}))`,
       )
       .where(sql`${table.originalFilename} is not null`),
+    index("listening_lessons_folder_id_idx").on(table.folderId),
   ],
 );
 
@@ -335,23 +386,30 @@ export const listeningExercises = pgTable("listening_exercises", {
     .defaultNow(),
 });
 
-export const grammarNotes = pgTable("grammar_notes", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  workspaceId: uuid("workspace_id")
-    .notNull()
-    .references(() => workspaces.id, { onDelete: "cascade" }),
-  title: text("title").notNull(),
-  content: jsonb("content").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-});
+export const grammarNotes = pgTable(
+  "grammar_notes",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    folderId: uuid("folder_id").references(() => workspaceFolders.id, {
+      onDelete: "cascade",
+    }),
+    title: text("title").notNull(),
+    content: jsonb("content").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [index("grammar_notes_folder_id_idx").on(table.folderId)],
+);
 
 export const usersRelations = relations(users, ({ many }) => ({
   workspaces: many(workspaces),
@@ -359,6 +417,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   exercises: many(exercises),
   listeningLessons: many(listeningLessons),
   grammarNotes: many(grammarNotes),
+  folders: many(workspaceFolders),
 }));
 
 export const workspacesRelations = relations(workspaces, ({ one, many }) => ({
@@ -371,6 +430,7 @@ export const workspacesRelations = relations(workspaces, ({ one, many }) => ({
   listeningLessons: many(listeningLessons),
   grammarNotes: many(grammarNotes),
   tags: many(workspaceTags),
+  folders: many(workspaceFolders),
 }));
 
 export const workspaceTagsRelations = relations(workspaceTags, ({ one }) => ({
@@ -379,6 +439,29 @@ export const workspaceTagsRelations = relations(workspaceTags, ({ one }) => ({
     references: [workspaces.id],
   }),
 }));
+
+export const workspaceFoldersRelations = relations(
+  workspaceFolders,
+  ({ one, many }) => ({
+    user: one(users, {
+      fields: [workspaceFolders.userId],
+      references: [users.id],
+    }),
+    workspace: one(workspaces, {
+      fields: [workspaceFolders.workspaceId],
+      references: [workspaces.id],
+    }),
+    parent: one(workspaceFolders, {
+      fields: [workspaceFolders.parentId],
+      references: [workspaceFolders.id],
+      relationName: "folder_tree",
+    }),
+    children: many(workspaceFolders, { relationName: "folder_tree" }),
+    writingDocuments: many(exercises),
+    listeningLessons: many(listeningLessons),
+    grammarNotes: many(grammarNotes),
+  }),
+);
 
 export const vocabularyWordsRelations = relations(
   vocabularyWords,
@@ -463,6 +546,10 @@ export const exercisesRelations = relations(exercises, ({ one }) => ({
     fields: [exercises.workspaceId],
     references: [workspaces.id],
   }),
+  folder: one(workspaceFolders, {
+    fields: [exercises.folderId],
+    references: [workspaceFolders.id],
+  }),
 }));
 
 export const grammarNotesRelations = relations(grammarNotes, ({ one }) => ({
@@ -473,6 +560,10 @@ export const grammarNotesRelations = relations(grammarNotes, ({ one }) => ({
   workspace: one(workspaces, {
     fields: [grammarNotes.workspaceId],
     references: [workspaces.id],
+  }),
+  folder: one(workspaceFolders, {
+    fields: [grammarNotes.folderId],
+    references: [workspaceFolders.id],
   }),
 }));
 
@@ -486,6 +577,10 @@ export const listeningLessonsRelations = relations(
     workspace: one(workspaces, {
       fields: [listeningLessons.workspaceId],
       references: [workspaces.id],
+    }),
+    folder: one(workspaceFolders, {
+      fields: [listeningLessons.folderId],
+      references: [workspaceFolders.id],
     }),
     exercises: many(listeningExercises),
   }),
@@ -505,11 +600,14 @@ export type User = typeof users.$inferSelect;
 export type SubscriptionPlan = (typeof subscriptionPlanEnum.enumValues)[number];
 export type Workspace = typeof workspaces.$inferSelect;
 export type WorkspaceTag = typeof workspaceTags.$inferSelect;
+export type WorkspaceFolder = typeof workspaceFolders.$inferSelect;
+export type FolderSection = (typeof folderSectionEnum.enumValues)[number];
 export type VocabularyWord = typeof vocabularyWords.$inferSelect;
 export type WordMeaning = typeof wordMeanings.$inferSelect;
 export type WordExample = typeof wordExamples.$inferSelect;
 export type FlashcardReview = typeof flashcardReviews.$inferSelect;
 export type FlashcardProgress = typeof flashcardProgress.$inferSelect;
 export type Exercise = typeof exercises.$inferSelect;
+export type GrammarNote = typeof grammarNotes.$inferSelect;
 export type ListeningLesson = typeof listeningLessons.$inferSelect;
 export type ListeningExercise = typeof listeningExercises.$inferSelect;

@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { grammarNotes } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
+import { resolveFolderId } from "@/lib/actions/folders";
 import { getActiveWorkspace, requireActiveWorkspace } from "@/lib/workspace";
 import {
   parseTheoryContent,
@@ -16,8 +17,7 @@ import {
 } from "@/schemas/theory";
 
 function revalidateTheory(id?: string) {
-  revalidatePath("/theory");
-  revalidatePath("/theory/new");
+  revalidatePath("/theory", "layout");
   if (id) {
     revalidatePath(`/theory/${id}`);
     revalidatePath(`/theory/${id}/edit`);
@@ -65,16 +65,21 @@ export async function getTheoryNote(id: string) {
   return note;
 }
 
-export async function createTheoryNote(data: TheoryFormValues) {
+export async function createTheoryNote(
+  data: TheoryFormValues,
+  options?: { folderId?: string | null },
+) {
   const parsed = theoryFormSchema.parse(data);
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
+  const folderId = await resolveFolderId(options?.folderId, "theory");
 
   const [note] = await db
     .insert(grammarNotes)
     .values({
       userId,
       workspaceId: workspace.id,
+      folderId,
       title: parsed.title,
       content: contentFromForm(parsed),
     })

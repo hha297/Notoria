@@ -47,12 +47,14 @@ type UploadStep = "form" | "uploading" | "transcribing";
 type UploadListeningDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  folderId?: string | null;
   existingFilenames?: string[];
 };
 
 export function UploadListeningDialog({
   open,
   onOpenChange,
+  folderId = null,
   existingFilenames = [],
 }: UploadListeningDialogProps) {
   const t = useTranslations("listening");
@@ -134,6 +136,9 @@ export function UploadListeningDialog({
         formData.set("cefrLevel", cefrLevel);
         formData.set("topic", topic);
         formData.set("formality", formality);
+        if (folderId) {
+          formData.set("folderId", folderId);
+        }
 
         setStep("uploading");
         const created = await createListeningLesson(formData);

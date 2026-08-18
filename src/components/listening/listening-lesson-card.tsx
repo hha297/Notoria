@@ -25,6 +25,7 @@ import {
 } from "@/components/ui/dialog";
 import { LinkButton } from "@/components/ui/link-button";
 import { RenameListeningDialog } from "@/components/listening/rename-listening-dialog";
+import { MoveItemButton } from "@/components/folders/move-item-button";
 import {
   deleteListeningLesson,
   processListeningLesson,
@@ -117,6 +118,11 @@ export function ListeningLessonCard({ lesson }: ListeningLessonCardProps) {
               </Link>
             </CardTitle>
             <div className="flex shrink-0 items-center opacity-0 transition-opacity group-focus-within/title:opacity-100 group-hover/title:opacity-100 max-sm:opacity-100">
+              <MoveItemButton
+                id={lesson.id}
+                title={lesson.title}
+                folderId={lesson.folderId}
+              />
               <Button
                 type="button"
                 size="icon-sm"

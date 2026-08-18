@@ -35,6 +35,7 @@ import {
 
 type TheoryEditorProps = {
   previewHref?: string;
+  folderId?: string | null;
   initialData?: {
     id: string;
     title: string;
@@ -44,7 +45,7 @@ type TheoryEditorProps = {
 
 const AUTOSAVE_MS = 1500;
 
-export function TheoryEditor({ previewHref, initialData }: TheoryEditorProps) {
+export function TheoryEditor({ previewHref, folderId = null, initialData }: TheoryEditorProps) {
   const router = useRouter();
   const t = useTranslations("theory");
   const tCommon = useTranslations("common");
@@ -144,7 +145,7 @@ export function TheoryEditor({ previewHref, initialData }: TheoryEditorProps) {
         toast.success(t("saved"));
         router.replace(previewHref ?? `/theory/${initialData.id}`);
       } else {
-        const created = await createTheoryNote(payload);
+        const created = await createTheoryNote(payload, { folderId });
         toast.success(t("created"));
         router.replace(`/theory/${created.id}`);
       }

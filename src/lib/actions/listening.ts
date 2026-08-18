@@ -40,6 +40,7 @@ import {
   toTranscriptionData,
 } from "@/lib/listening/utils";
 import { getActiveWorkspace, requireActiveWorkspace } from "@/lib/workspace";
+import { resolveFolderId } from "@/lib/actions/folders";
 import {
   listeningCefrSchema,
   listeningFormalitySchema,
@@ -50,7 +51,7 @@ import type { ListeningPracticeType } from "@/lib/listening/types";
 import type { WritingCefr, WritingFormality } from "@/lib/writing/meta";
 
 function revalidateListening(id?: string) {
-  revalidatePath("/listening");
+  revalidatePath("/listening", "layout");
   if (id) {
     revalidatePath(`/listening/${id}`);
     revalidatePath(`/listening/${id}/practice`);
@@ -285,6 +286,13 @@ export async function createListeningLesson(formData: FormData) {
 
   await assertListeningFilenameIsUnique(originalFilename, workspace.id);
 
+  const folderId = await resolveFolderId(
+    typeof formData.get("folderId") === "string"
+      ? String(formData.get("folderId"))
+      : null,
+    "listening",
+  );
+
   const meta = listeningUploadMetaSchema.parse({
     title:
       typeof formData.get("title") === "string"
@@ -314,6 +322,7 @@ export async function createListeningLesson(formData: FormData) {
       .values({
         userId,
         workspaceId: workspace.id,
+        folderId,
         title,
         originalFilename,
         cloudinaryUrl: upload.secure_url,

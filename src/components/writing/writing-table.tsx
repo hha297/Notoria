@@ -1,11 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import {
   endOfMonth,
   endOfWeek,
   format,
-  formatDistanceToNow,
   startOfMonth,
   startOfWeek,
 } from "date-fns";
@@ -15,6 +13,8 @@ import { Plus } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
+import { FolderEmptyState, FolderGrid, FolderWorkspace } from "@/components/folders/folder-workspace";
+import { NewFolderButton } from "@/components/folders/new-folder-button";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
 import {
@@ -24,12 +24,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { WritingMetaBadges } from "@/components/writing/writing-meta-badges";
-import { WritingRowActions } from "@/components/writing/writing-row-actions";
+import { WritingCard, type WritingListItem } from "@/components/writing/writing-card";
 import {
   getWritingListMeta,
   type WritingMode,
 } from "@/lib/writing/content";
+import { childrenOf, folderMatchesQuery, itemsInFolder } from "@/lib/folders/tree";
+import type { FolderListItem } from "@/lib/folders/types";
+import { sectionCreateHref } from "@/lib/folders/paths";
 import {
   WRITING_CEFR_LEVELS,
   WRITING_FORMALITY,
@@ -39,14 +41,7 @@ import {
   type WritingFormality,
 } from "@/lib/writing/meta";
 
-export type WritingListItem = {
-  id: string;
-  title: string;
-  description?: string | null;
-  content: unknown;
-  createdAt: string;
-  updatedAt: string;
-};
+export type { WritingListItem };
 
 type SortOption =
   | "updated:desc"
@@ -62,6 +57,8 @@ type GroupByOption = "mode" | "week" | "month";
 
 type WritingTableProps = {
   documents: WritingListItem[];
+  folders: FolderListItem[];
+  currentFolderId: string | null;
 };
 
 type DocumentGroup = {
@@ -83,20 +80,12 @@ const CEFR_ORDER: Record<WritingCefr, number> = {
 function WritingDocumentGroup({
   title,
   documents,
-  mode,
 }: {
   title: string;
   documents: WritingListItem[];
   mode?: WritingMode;
 }) {
   const t = useTranslations("writing");
-  const showQuestionColumns =
-    mode === "question_set" ||
-    (mode === undefined &&
-      documents.some(
-        (document) =>
-          getWritingListMeta(document.content).mode === "question_set",
-      ));
 
   return (
     <section className="space-y-3">
@@ -109,138 +98,10 @@ function WritingDocumentGroup({
         </p>
       </div>
 
-      <div className="space-y-3 lg:hidden">
-        {documents.map((document) => {
-          const listMeta = getWritingListMeta(document.content);
-          return (
-            <div
-              key={document.id}
-              className="rounded-xl border border-hairline-cloud bg-card p-4"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0 space-y-1">
-                  <Link
-                    href={`/writing/${document.id}`}
-                    className="block truncate text-base font-semibold text-ink underline-offset-4 hover:underline"
-                  >
-                    {document.title}
-                  </Link>
-                  {document.description?.trim() ? (
-                    <p className="line-clamp-2 text-sm text-muted-foreground">
-                      {document.description.trim()}
-                    </p>
-                  ) : null}
-                  <WritingMetaBadges meta={listMeta.meta} />
-                </div>
-                <WritingRowActions
-                  id={document.id}
-                  title={document.title}
-                  description={document.description}
-                  content={document.content}
-                />
-              </div>
-              {listMeta.mode === "question_set" ? (
-                <p className="mt-3 text-sm text-muted-foreground">
-                  {t("sectionCount", { count: listMeta.sectionCount })}
-                  {" · "}
-                  {t("questionCount", { count: listMeta.questionCount })}
-                </p>
-              ) : null}
-              <p className="mt-3 text-xs text-muted-foreground">
-                {formatDistanceToNow(new Date(document.updatedAt), {
-                  addSuffix: true,
-                })}
-              </p>
-            </div>
-          );
-        })}
-      </div>
-
-      <div className="data-table hidden lg:block">
-        <table className="table-fixed">
-          {showQuestionColumns ? (
-            <colgroup>
-              <col />
-              <col className="w-[7rem]" />
-              <col className="w-[7rem]" />
-              <col className="w-[9rem]" />
-              <col className="w-[8.5rem]" />
-            </colgroup>
-          ) : (
-            <colgroup>
-              <col />
-              <col className="w-[9rem]" />
-              <col className="w-[8.5rem]" />
-            </colgroup>
-          )}
-          <thead>
-            <tr>
-              <th>{t("columns.title")}</th>
-              {showQuestionColumns ? (
-                <>
-                  <th className="text-center">{t("columns.sections")}</th>
-                  <th className="text-center">{t("columns.questions")}</th>
-                </>
-              ) : null}
-              <th>{t("columns.updated")}</th>
-              <th>
-                <span className="sr-only">{t("columns.actions")}</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            {documents.map((document) => {
-              const listMeta = getWritingListMeta(document.content);
-              return (
-                <tr key={document.id}>
-                  <td className="min-w-0">
-                    <Link
-                      href={`/writing/${document.id}`}
-                      className="block truncate font-semibold text-ink underline-offset-4 hover:underline"
-                    >
-                      {document.title}
-                    </Link>
-                    {document.description?.trim() ? (
-                      <p className="mt-0.5 line-clamp-1 text-sm text-muted-foreground">
-                        {document.description.trim()}
-                      </p>
-                    ) : null}
-                    <div className="mt-1.5">
-                      <WritingMetaBadges meta={listMeta.meta} />
-                    </div>
-                  </td>
-                  {showQuestionColumns ? (
-                    <>
-                      <td className="text-center text-muted-foreground">
-                        {listMeta.mode === "question_set"
-                          ? listMeta.sectionCount
-                          : "—"}
-                      </td>
-                      <td className="text-center text-muted-foreground">
-                        {listMeta.mode === "question_set"
-                          ? listMeta.questionCount
-                          : "—"}
-                      </td>
-                    </>
-                  ) : null}
-                  <td className="whitespace-nowrap text-sm text-muted-foreground">
-                    {formatDistanceToNow(new Date(document.updatedAt), {
-                      addSuffix: true,
-                    })}
-                  </td>
-                  <td>
-                    <WritingRowActions
-                      id={document.id}
-                      title={document.title}
-                      description={document.description}
-                      content={document.content}
-                    />
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
+        {documents.map((document) => (
+          <WritingCard key={document.id} document={document} />
+        ))}
       </div>
     </section>
   );
@@ -267,8 +128,13 @@ function sortLabel(sort: SortOption, t: ReturnType<typeof useTranslations>): str
   }
 }
 
-export function WritingTable({ documents }: WritingTableProps) {
+export function WritingTable({
+  documents,
+  folders,
+  currentFolderId,
+}: WritingTableProps) {
   const t = useTranslations("writing");
+  const tFolders = useTranslations("folders");
   const tMeta = useTranslations("writing.meta");
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState<SortOption>("updated:desc");
@@ -276,10 +142,23 @@ export function WritingTable({ documents }: WritingTableProps) {
   const [cefrFilter, setCefrFilter] = useState<string>("all");
   const [topicFilter, setTopicFilter] = useState<string>("all");
   const [formalityFilter, setFormalityFilter] = useState<string>("all");
+  const createHref = sectionCreateHref("writing", currentFolderId);
+  const childFolders = childrenOf(folders, currentFolderId);
+  const matchingFolders = search.trim()
+    ? folders.filter((folder) => folderMatchesQuery(folder, search))
+    : childFolders;
+  const hasFilters =
+    search.trim() !== "" ||
+    cefrFilter !== "all" ||
+    topicFilter !== "all" ||
+    formalityFilter !== "all";
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
-    const result = documents.filter((document) => {
+    const scoped = query
+      ? documents
+      : itemsInFolder(documents, currentFolderId);
+    const result = scoped.filter((document) => {
       const listMeta = getWritingListMeta(document.content);
       const { meta } = listMeta;
 
@@ -344,6 +223,7 @@ export function WritingTable({ documents }: WritingTableProps) {
     return result;
   }, [
     documents,
+    currentFolderId,
     search,
     sort,
     cefrFilter,
@@ -415,19 +295,28 @@ export function WritingTable({ documents }: WritingTableProps) {
 
   return (
     <PageShell>
-      <PageHeader
-        eyebrow={t("title")}
-        title={t("title")}
-        highlight={t("studio")}
-        description={t("description")}
+      <FolderWorkspace
+        section="writing"
+        folders={folders}
+        currentFolderId={currentFolderId}
+        items={documents}
+        search={search}
+        header={
+          <PageHeader
+            eyebrow={t("title")}
+            title={t("title")}
+            highlight={t("studio")}
+            description={t("description")}
+          >
+            <ShowTutorialButton section="writing" />
+            <NewFolderButton />
+            <LinkButton href={createHref}>
+              <Plus className="size-4" />
+              {t("create")}
+            </LinkButton>
+          </PageHeader>
+        }
       >
-        <ShowTutorialButton section="writing" />
-        <LinkButton href="/writing/new">
-          <Plus className="size-4" />
-          {t("create")}
-        </LinkButton>
-      </PageHeader>
-
       <div className="space-y-4">
         <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
           <Input
@@ -569,10 +458,32 @@ export function WritingTable({ documents }: WritingTableProps) {
           </div>
         </div>
 
+        <FolderGrid />
+
         {groups.length === 0 ? (
-          <div className="empty-state">
-            <p className="text-muted-foreground">{t("noResults")}</p>
-          </div>
+          hasFilters ? (
+            matchingFolders.length === 0 ? (
+              <div className="empty-state">
+                <p className="text-muted-foreground">{t("noResults")}</p>
+              </div>
+            ) : null
+          ) : childFolders.length === 0 ? (
+            <FolderEmptyState
+              title={
+                currentFolderId ? tFolders("emptyFolder") : t("emptyTitle")
+              }
+              description={
+                currentFolderId
+                  ? tFolders("emptyFolderDescription")
+                  : t("emptyDescription")
+              }
+            >
+              <LinkButton href={createHref} className="mt-5">
+                <Plus className="size-4" />
+                {currentFolderId ? t("create") : t("createFirst")}
+              </LinkButton>
+            </FolderEmptyState>
+          ) : null
         ) : (
           <div className="space-y-8">
             {groups.map((group) => (
@@ -586,6 +497,7 @@ export function WritingTable({ documents }: WritingTableProps) {
           </div>
         )}
       </div>
+      </FolderWorkspace>
     </PageShell>
   );
 }
