@@ -21,11 +21,11 @@ export const vocabularyFormSchema = z
   .object({
     word: z.string().min(1, "Word is required"),
     partOfSpeech: z.enum(PARTS_OF_SPEECH).optional(),
-    synonyms: z.string().optional(),
     notes: z.string().optional(),
     meanings: z.array(meaningSchema).min(1, "Add at least one meaning"),
     examples: z.array(exampleSchema).default([]),
     tags: z.array(z.string()).default([]),
+    synonymIds: z.array(z.string().uuid()).default([]),
   })
   .superRefine((data, ctx) => {
     const primaryCount = data.meanings.filter((item) => item.isPrimary).length;
@@ -48,8 +48,13 @@ export const vocabularyFormSchema = z
 export const vocabularyFormClientSchema = z.object({
   word: z.string().min(1, "Word is required"),
   partOfSpeech: z.enum(PARTS_OF_SPEECH).optional(),
-  synonyms: z.string().optional(),
   notes: z.string().optional(),
+});
+
+export const createSynonymWordSchema = z.object({
+  word: z.string().min(1, "Word is required"),
+  meaning: z.string().min(1, "Meaning is required"),
+  partOfSpeech: z.enum(PARTS_OF_SPEECH).optional(),
 });
 
 export type VocabularyFormValues = z.infer<typeof vocabularyFormSchema>;

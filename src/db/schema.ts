@@ -2,6 +2,7 @@ import { relations, sql } from "drizzle-orm";
 import {
   type AnyPgColumn,
   boolean,
+  check,
   index,
   integer,
   jsonb,
@@ -249,6 +250,37 @@ export const vocabularyWordTags = pgTable("vocabulary_word_tags", {
   tag: text("tag").notNull(),
 });
 
+export const vocabularySynonyms = pgTable(
+  "vocabulary_synonyms",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    wordId: uuid("word_id")
+      .notNull()
+      .references(() => vocabularyWords.id, { onDelete: "cascade" }),
+    synonymId: uuid("synonym_id")
+      .notNull()
+      .references(() => vocabularyWords.id, { onDelete: "cascade" }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("vocabulary_synonyms_pair_unique").on(
+      table.wordId,
+      table.synonymId,
+    ),
+    index("vocabulary_synonyms_synonym_id_idx").on(table.synonymId),
+    index("vocabulary_synonyms_workspace_id_idx").on(table.workspaceId),
+    check(
+      "vocabulary_synonyms_ordered",
+      sql`${table.wordId} < ${table.synonymId}`,
+    ),
+  ],
+);
+
 export const flashcardReviews = pgTable("flashcard_reviews", {
   id: uuid("id").primaryKey().defaultRandom(),
   userId: uuid("user_id")
@@ -477,6 +509,8 @@ export const vocabularyWordsRelations = relations(
     meanings: many(wordMeanings),
     examples: many(wordExamples),
     tags: many(vocabularyWordTags),
+    synonymLinks: many(vocabularySynonyms, { relationName: "synonym_word" }),
+    synonymOfLinks: many(vocabularySynonyms, { relationName: "synonym_peer" }),
   }),
 );
 
@@ -500,6 +534,26 @@ export const vocabularyWordTagsRelations = relations(
     word: one(vocabularyWords, {
       fields: [vocabularyWordTags.wordId],
       references: [vocabularyWords.id],
+    }),
+  }),
+);
+
+export const vocabularySynonymsRelations = relations(
+  vocabularySynonyms,
+  ({ one }) => ({
+    workspace: one(workspaces, {
+      fields: [vocabularySynonyms.workspaceId],
+      references: [workspaces.id],
+    }),
+    word: one(vocabularyWords, {
+      fields: [vocabularySynonyms.wordId],
+      references: [vocabularyWords.id],
+      relationName: "synonym_word",
+    }),
+    synonym: one(vocabularyWords, {
+      fields: [vocabularySynonyms.synonymId],
+      references: [vocabularyWords.id],
+      relationName: "synonym_peer",
     }),
   }),
 );
@@ -603,6 +657,7 @@ export type WorkspaceTag = typeof workspaceTags.$inferSelect;
 export type WorkspaceFolder = typeof workspaceFolders.$inferSelect;
 export type FolderSection = (typeof folderSectionEnum.enumValues)[number];
 export type VocabularyWord = typeof vocabularyWords.$inferSelect;
+export type VocabularySynonym = typeof vocabularySynonyms.$inferSelect;
 export type WordMeaning = typeof wordMeanings.$inferSelect;
 export type WordExample = typeof wordExamples.$inferSelect;
 export type FlashcardReview = typeof flashcardReviews.$inferSelect;
