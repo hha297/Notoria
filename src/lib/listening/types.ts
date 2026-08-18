@@ -66,6 +66,7 @@ export type ListeningLessonListItem = {
   cefrLevel: string | null;
   topic: string | null;
   formality: string | null;
+  folderId: string | null;
   duration: number | null;
   status: ListeningStatus;
   errorCode: string | null;
@@ -98,6 +99,7 @@ export type ListeningLessonDetail = {
   cefrLevel: string | null;
   topic: string | null;
   formality: string | null;
+  folderId: string | null;
   exerciseType: ListeningExerciseType | null;
   status: ListeningStatus;
   errorCode: string | null;

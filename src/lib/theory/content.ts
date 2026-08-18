@@ -135,6 +135,7 @@ export type TheoryListItem = {
   title: string;
   description: string;
   category: string;
+  folderId: string | null;
   readingMinutes: number;
   updatedAt: string;
 };
@@ -143,6 +144,7 @@ export function toTheoryListItem(note: {
   id: string;
   title: string;
   content: unknown;
+  folderId?: string | null;
   updatedAt: Date | string;
 }): TheoryListItem {
   const parsed = parseTheoryContent(note.content);
@@ -154,6 +156,7 @@ export function toTheoryListItem(note: {
     title: note.title,
     description: excerpt,
     category: parsed.category,
+    folderId: note.folderId ?? null,
     readingMinutes: estimateReadingMinutes(parsed.doc),
     updatedAt:
       typeof note.updatedAt === "string"

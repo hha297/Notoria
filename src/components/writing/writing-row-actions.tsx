@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 import { Download, Loader2, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
+import { MoveItemButton } from "@/components/folders/move-item-button";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
 import {
@@ -29,6 +30,7 @@ type WritingRowActionsProps = {
   title: string;
   description?: string | null;
   content: unknown;
+  folderId?: string | null;
 };
 
 export function WritingRowActions({
@@ -36,6 +38,7 @@ export function WritingRowActions({
   title,
   description,
   content,
+  folderId,
 }: WritingRowActionsProps) {
   const router = useRouter();
   const t = useTranslations("common");
@@ -62,7 +65,11 @@ export function WritingRowActions({
 
   return (
     <>
-      <div className="flex justify-end gap-1">
+      <div
+        className="flex justify-end gap-1"
+        onPointerDown={(event) => event.stopPropagation()}
+      >
+        <MoveItemButton id={id} title={title} folderId={folderId} />
         <LockedFeatureButton
           variant="ghost"
           size="icon-sm"

@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { exercises } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
+import { resolveFolderId } from "@/lib/actions/folders";
 import { requireActiveWorkspace, getActiveWorkspace } from "@/lib/workspace";
 import {
   exerciseFormSchema,
@@ -12,8 +13,7 @@ import {
 } from "@/schemas/exercise";
 
 function revalidateWriting(id?: string) {
-  revalidatePath("/writing");
-  revalidatePath("/writing/new");
+  revalidatePath("/writing", "layout");
   if (id) {
     revalidatePath(`/writing/${id}`);
     revalidatePath(`/writing/${id}/edit`);
@@ -58,16 +58,21 @@ export async function getWritingDocument(id: string) {
   return document;
 }
 
-export async function createWritingDocument(data: ExerciseFormValues) {
+export async function createWritingDocument(
+  data: ExerciseFormValues,
+  options?: { folderId?: string | null },
+) {
   const parsed = exerciseFormSchema.parse({ ...data, type: "WRITING" });
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
+  const folderId = await resolveFolderId(options?.folderId, "writing");
 
   const [document] = await db
     .insert(exercises)
     .values({
       userId,
       workspaceId: workspace.id,
+      folderId,
       title: parsed.title,
       description: parsed.description.trim() || null,
       type: "WRITING",

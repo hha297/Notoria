@@ -9,6 +9,14 @@ import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
+import { FolderItemDrag } from "@/components/folders/folder-dnd";
+import {
+  FolderEmptyState,
+  FolderGrid,
+  FolderWorkspace,
+} from "@/components/folders/folder-workspace";
+import { MoveItemButton } from "@/components/folders/move-item-button";
+import { NewFolderButton } from "@/components/folders/new-folder-button";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -19,6 +27,9 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
+import { sectionCreateHref } from "@/lib/folders/paths";
+import { childrenOf, folderMatchesQuery, itemsInFolder } from "@/lib/folders/tree";
+import type { FolderListItem } from "@/lib/folders/types";
 import {
   THEORY_CATEGORIES,
   isKnownTheoryCategory,
@@ -30,6 +41,8 @@ const EASE = [0.25, 0.1, 0.25, 1] as const;
 
 type TheoryLibraryProps = {
   notes: TheoryListItem[];
+  folders: FolderListItem[];
+  currentFolderId: string | null;
 };
 
 function categoryLabel(
@@ -41,14 +54,21 @@ function categoryLabel(
     : category;
 }
 
-export function TheoryLibrary({ notes }: TheoryLibraryProps) {
+export function TheoryLibrary({
+  notes,
+  folders,
+  currentFolderId,
+}: TheoryLibraryProps) {
   const t = useTranslations("theory");
+  const tFolders = useTranslations("folders");
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState<string>("all");
+  const createHref = sectionCreateHref("theory", currentFolderId);
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
-    return notes.filter((note) => {
+    const scoped = query ? notes : itemsInFolder(notes, currentFolderId);
+    return scoped.filter((note) => {
       if (category !== "all" && note.category !== category) return false;
       if (!query) return true;
       return [note.title, note.description, categoryLabel(note.category, t)]
@@ -56,113 +76,159 @@ export function TheoryLibrary({ notes }: TheoryLibraryProps) {
         .toLowerCase()
         .includes(query);
     });
-  }, [notes, search, category, t]);
+  }, [notes, currentFolderId, search, category, t]);
+
+  const childFolders = childrenOf(folders, currentFolderId);
+  const matchingFolders = search.trim()
+    ? folders.filter((folder) => folderMatchesQuery(folder, search))
+    : childFolders;
+  const isEmptyRoot = !currentFolderId && notes.length === 0 && folders.length === 0;
+  const isEmptyFolder =
+    !search.trim() &&
+    category === "all" &&
+    childFolders.length === 0 &&
+    itemsInFolder(notes, currentFolderId).length === 0;
+  const hasFilters = search.trim() !== "" || category !== "all";
 
   return (
     <PageShell>
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.22, ease: EASE }}
-      >
-        <PageHeader
-          eyebrow={t("eyebrow")}
-          title={t("title")}
-          highlight={t("highlight")}
-          description={t("description")}
-        >
-          <ShowTutorialButton section="theory" />
-          <LinkButton href="/theory/new">
-            <Plus className="size-4" />
-            {t("create")}
-          </LinkButton>
-        </PageHeader>
-      </motion.div>
-
-      <motion.div
-        initial={{ opacity: 0, y: 8 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.22, delay: 0.05, ease: EASE }}
-        className="space-y-4"
-      >
-        <div className="relative max-w-md">
-          <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-          <Input
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder={t("searchPlaceholder")}
-            className="h-10 pl-9 lg:h-9"
-          />
-        </div>
-
-        <div className="flex flex-wrap gap-2">
-          <FilterPill
-            active={category === "all"}
-            onClick={() => setCategory("all")}
-          >
-            {t("filterAll")}
-          </FilterPill>
-          {THEORY_CATEGORIES.map((item) => (
-            <FilterPill
-              key={item}
-              active={category === item}
-              onClick={() => setCategory(item)}
-            >
-              {t(`categories.${item}`)}
-            </FilterPill>
-          ))}
-        </div>
-      </motion.div>
-
-      <AnimatePresence mode="wait">
-        {filtered.length === 0 ? (
+      <FolderWorkspace
+        section="theory"
+        folders={folders}
+        currentFolderId={currentFolderId}
+        items={notes}
+        search={search}
+        header={
           <motion.div
-            key="empty"
             initial={{ opacity: 0, y: 8 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.18, ease: EASE }}
-            className="empty-state"
+            transition={{ duration: 0.22, ease: EASE }}
           >
-            <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-hairline-cloud bg-muted/40">
-              <BookOpen className="size-6 text-muted-foreground" />
-            </div>
-            <p className="font-medium text-ink">
-              {notes.length === 0 ? t("emptyTitle") : t("noResults")}
-            </p>
-            <p className="mt-2 max-w-md text-sm text-muted-foreground">
-              {notes.length === 0
-                ? t("emptyDescription")
-                : t("noResultsDescription")}
-            </p>
-            {notes.length === 0 ? (
-              <LinkButton href="/theory/new" className="mt-5">
+            <PageHeader
+              eyebrow={t("eyebrow")}
+              title={t("title")}
+              highlight={t("highlight")}
+              description={t("description")}
+            >
+              <ShowTutorialButton section="theory" />
+              <NewFolderButton />
+              <LinkButton href={createHref}>
+                <Plus className="size-4" />
+                {t("create")}
+              </LinkButton>
+            </PageHeader>
+          </motion.div>
+        }
+      >
+        {isEmptyRoot || (isEmptyFolder && !hasFilters) ? (
+          currentFolderId ? (
+            <FolderEmptyState
+              title={tFolders("emptyFolder")}
+              description={tFolders("emptyFolderDescription")}
+            >
+              <LinkButton href={createHref} className="mt-5">
+                <Plus className="size-4" />
+                {t("create")}
+              </LinkButton>
+            </FolderEmptyState>
+          ) : (
+            <div className="empty-state">
+              <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-hairline-cloud bg-muted/40">
+                <BookOpen className="size-6 text-muted-foreground" />
+              </div>
+              <p className="font-medium text-ink">{t("emptyTitle")}</p>
+              <p className="mt-2 max-w-md text-sm text-muted-foreground">
+                {t("emptyDescription")}
+              </p>
+              <LinkButton href={createHref} className="mt-5">
                 <Plus className="size-4" />
                 {t("createFirst")}
               </LinkButton>
-            ) : null}
-          </motion.div>
+            </div>
+          )
         ) : (
-          <motion.div
-            key={`${category}:${search}`}
-            initial="hidden"
-            animate="show"
-            exit={{ opacity: 0 }}
-            variants={{
-              hidden: { opacity: 0 },
-              show: {
-                opacity: 1,
-                transition: { staggerChildren: 0.045, delayChildren: 0.04 },
-              },
-            }}
-            className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
-          >
-            {filtered.map((note) => (
-              <TheoryCard key={note.id} note={note} />
-            ))}
-          </motion.div>
+          <>
+            <motion.div
+              initial={{ opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.22, delay: 0.05, ease: EASE }}
+              className="space-y-4"
+            >
+              <div className="relative max-w-md">
+                <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+                <Input
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  placeholder={t("searchPlaceholder")}
+                  className="h-10 pl-9 lg:h-9"
+                />
+              </div>
+
+              <div className="flex flex-wrap gap-2">
+                <FilterPill
+                  active={category === "all"}
+                  onClick={() => setCategory("all")}
+                >
+                  {t("filterAll")}
+                </FilterPill>
+                {THEORY_CATEGORIES.map((item) => (
+                  <FilterPill
+                    key={item}
+                    active={category === item}
+                    onClick={() => setCategory(item)}
+                  >
+                    {t(`categories.${item}`)}
+                  </FilterPill>
+                ))}
+              </div>
+            </motion.div>
+
+            <FolderGrid />
+
+            <AnimatePresence mode="wait">
+              {filtered.length === 0 ? (
+                hasFilters && matchingFolders.length === 0 ? (
+                  <motion.div
+                    key="empty"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -6 }}
+                    transition={{ duration: 0.18, ease: EASE }}
+                    className="empty-state"
+                  >
+                    <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-hairline-cloud bg-muted/40">
+                      <BookOpen className="size-6 text-muted-foreground" />
+                    </div>
+                    <p className="font-medium text-ink">{t("noResults")}</p>
+                    <p className="mt-2 max-w-md text-sm text-muted-foreground">
+                      {t("noResultsDescription")}
+                    </p>
+                  </motion.div>
+                ) : null
+              ) : (
+                <motion.div
+                  key={`${category}:${search}`}
+                  initial="hidden"
+                  animate="show"
+                  exit={{ opacity: 0 }}
+                  variants={{
+                    hidden: { opacity: 0 },
+                    show: {
+                      opacity: 1,
+                      transition: { staggerChildren: 0.045, delayChildren: 0.04 },
+                    },
+                  }}
+                  className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
+                >
+                  {filtered.map((note) => (
+                    <TheoryCard key={note.id} note={note} />
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </>
         )}
-      </AnimatePresence>
+      </FolderWorkspace>
     </PageShell>
   );
 }
@@ -196,26 +262,35 @@ function TheoryCard({ note }: { note: TheoryListItem }) {
   const t = useTranslations("theory");
 
   return (
-    <motion.div
-      variants={{
-        hidden: { opacity: 0, y: 10 },
-        show: { opacity: 1, y: 0, transition: { duration: 0.2, ease: EASE } },
-      }}
-      whileHover={{ y: -3 }}
-      transition={{ duration: 0.18, ease: EASE }}
-    >
-      <Link href={`/theory/${note.id}`} className="block h-full">
+    <FolderItemDrag id={note.id}>
+      <motion.div
+        variants={{
+          hidden: { opacity: 0, y: 10 },
+          show: { opacity: 1, y: 0, transition: { duration: 0.2, ease: EASE } },
+        }}
+        whileHover={{ y: -3 }}
+        transition={{ duration: 0.18, ease: EASE }}
+      >
         <Card className="h-full border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
           <CardHeader className="gap-3">
-            <Badge variant="outline" className="w-fit">
-              {categoryLabel(note.category, t)}
-            </Badge>
-            <CardTitle className="text-lg text-ink">{note.title}</CardTitle>
-            {note.description ? (
-              <CardDescription className="line-clamp-3 text-sm leading-relaxed">
-                {note.description}
-              </CardDescription>
-            ) : null}
+            <div className="flex items-start justify-between gap-2">
+              <Badge variant="outline" className="w-fit">
+                {categoryLabel(note.category, t)}
+              </Badge>
+              <MoveItemButton
+                id={note.id}
+                title={note.title}
+                folderId={note.folderId}
+              />
+            </div>
+            <Link href={`/theory/${note.id}`} className="block">
+              <CardTitle className="text-lg text-ink">{note.title}</CardTitle>
+              {note.description ? (
+                <CardDescription className="mt-2 line-clamp-3 text-sm leading-relaxed">
+                  {note.description}
+                </CardDescription>
+              ) : null}
+            </Link>
           </CardHeader>
           <CardContent className="mt-auto flex items-center gap-3 pb-1 text-xs text-muted-foreground">
             <span className="inline-flex items-center gap-1">
@@ -230,7 +305,7 @@ function TheoryCard({ note }: { note: TheoryListItem }) {
             </span>
           </CardContent>
         </Card>
-      </Link>
-    </motion.div>
+      </motion.div>
+    </FolderItemDrag>
   );
 }
