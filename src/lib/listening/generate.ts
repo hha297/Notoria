@@ -1,5 +1,13 @@
 import OpenAI from "openai";
 import { ListeningError, toListeningError } from "@/lib/listening/errors";
+import { mergeFillBlankQuestions } from "@/lib/listening/fill-blank-passage";
+import {
+  alignFillBlankAnswers,
+  buildFillBlankFromTranscript,
+  extractFillBlankQuestions,
+  keepGroundedFillBlanks,
+  parseJsonObject,
+} from "@/lib/listening/fill-blank-generate";
 import {
   splitListeningSentences,
   targetQuestionCount,
@@ -16,7 +24,6 @@ import {
   type WritingFormality,
 } from "@/lib/writing/meta";
 import {
-  generatedFillBlankSetSchema,
   generatedMultipleChoiceSetSchema,
   listeningCefrSchema,
   listeningFormalitySchema,
@@ -105,6 +112,28 @@ function answerGroundedInTranscript(
   return tokens.length > 0 && tokens.some((token) => haystack.includes(token.toLocaleLowerCase()));
 }
 
+function isFillBlankGrounded(
+  blank: string,
+  transcript: string,
+  extraTerms: string[] = [],
+) {
+  if (
+    extraTerms.some(
+      (term) => term.trim().toLocaleLowerCase() === blank.trim().toLocaleLowerCase(),
+    )
+  ) {
+    return true;
+  }
+  return blankGroundedInTranscript(blank, transcript);
+}
+
+function extractGeneratedTitle(raw: unknown, fallback: string) {
+  if (!raw || typeof raw !== "object") return fallback;
+  const title = (raw as { title?: unknown }).title;
+  if (typeof title !== "string") return fallback;
+  return title.trim().slice(0, 120) || fallback;
+}
+
 function unwrapGeneratedSet(raw: unknown): unknown {
   if (!raw || typeof raw !== "object") return raw;
   const record = raw as Record<string, unknown>;
@@ -134,41 +163,47 @@ function typeInstructions(
 
   if (type === "FILL_BLANK") {
     return {
-      summary: `Generate ${target} fill-in-the-blank questions from the transcript.`,
+      summary: `Generate one fill-in-the-blank passage from the full transcript, with about ${target} blanks.`,
       output: {
         type: "FILL_BLANK",
         title: "string",
         questions: [
           isDialogue
             ? {
-                speaker: speakerA,
-                sentenceWithBlanks: "I'm still ______.",
-                blanks: ["hungry"],
+                sentenceWithBlanks: `${speakerA}: Minun mielestäni ______ asuinalueella pitäisi olla ______ palvelut.\n\n${speakerB}: On ______, että kaikilla ihmisillä on lähellä ruokakauppa, ______, koulu ja ______.`,
+                blanks: ["kaikilla", "samanlaiset", "tärkeää", "terveysasema", "kirjasto"],
               }
             : {
-                sentenceWithBlanks: "I'm still ______.",
-                blanks: ["hungry"],
+                sentenceWithBlanks:
+                  "Minun mielestäni ______ asuinalueella pitäisi olla ______ palvelut.\n\nOn ______, että kaikilla ihmisillä on lähellä ruokakauppa, ______, koulu ja ______. Silloin arki on ______, eikä tarvitse ______ pitkälle.",
+                blanks: [
+                  "kaikilla",
+                  "samanlaiset",
+                  "tärkeää",
+                  "terveysasema",
+                  "kirjasto",
+                  "helpompaa",
+                  "matkustaa",
+                ],
               },
         ],
       },
       rules: [
-        pace,
-        `You MUST generate at least ${min} questions and should generate ${target}. Do not stop at 2-5 questions.`,
-        "Split the transcript into many short questions. One sentence = one question.",
-        "Prefer exactly 1 blank per question so there are more questions. Use 2 blanks only when the sentence is long.",
-        "Do not combine several sentences into one item.",
-        "Do not show the full transcript as a single item.",
+        `Audio length is about ${durationSeconds} seconds. Create about ${target} blanks in total (minimum ${min}, maximum ${max}).`,
+        "Return EXACTLY one item in questions. Do not split the transcript into multiple questions.",
+        "The exercise is the whole transcript with blanks. Keep the original paragraph and line breaks.",
+        "Copy the spoken text in order. Replace only the missing words/phrases with ______.",
+        "Do not rewrite, translate, summarize, or reorder the transcript.",
         "Blank useful vocabulary, names, numbers, expressions, or grammar — not random function words.",
-        "Use ______ for every blank.",
+        "Spread blanks through the whole text from beginning to end. Several blanks per paragraph is expected.",
+        "Use ______ for every blank. The blanks array must match the blanks in order.",
         "Every blank answer must appear in the original transcript.",
-        "Cover the transcript from beginning to end.",
-        "Do not rewrite, translate, or summarize the spoken text.",
         ...(isDialogue
           ? [
               `This is a multi-speaker dialogue. The speakers in THIS audio are: ${speakers.join(", ")}.`,
               "Use only those speaker labels. Never invent other personal names.",
-              "Include the speaker display name on each question.",
-              "Keep each question as one speaker turn. Do not merge turns from different speakers.",
+              `Keep each speaker turn as its own paragraph, prefixed with the speaker name, e.g. "${speakerA}: ...".`,
+              "Do not put speaker names in a separate field. Include them in sentenceWithBlanks.",
             ]
           : []),
         "Do not generate multiple choice, dictation, or word ordering.",
@@ -248,34 +283,46 @@ function toStoredSet(
   const unwrapped = unwrapGeneratedSet(raw);
 
   if (type === "FILL_BLANK") {
-    const parsed = generatedFillBlankSetSchema.safeParse(unwrapped);
-    if (!parsed.success) return null;
-
-    const exercises = parsed.data.questions.flatMap((question) => {
-      const groundedBlanks = question.blanks.filter(
-        (blank) =>
-          blankGroundedInTranscript(blank, transcript) ||
-          extraTerms.some(
-            (term) => term.toLocaleLowerCase() === blank.toLocaleLowerCase(),
-          ),
+    const questions = extractFillBlankQuestions(unwrapped).flatMap((question) => {
+      const aligned = alignFillBlankAnswers(
+        question.sentenceWithBlanks,
+        question.blanks,
       );
-      if (groundedBlanks.length === 0) return [];
-      if (groundedBlanks.length !== question.blanks.length) return [];
-
-      const stored = storedListeningExerciseSchema.safeParse({
-        type: "FILL_BLANK",
-        question: question.sentenceWithBlanks,
-        data: {
-          sentenceWithBlanks: question.sentenceWithBlanks,
-          speaker: question.speaker?.trim() || undefined,
+      const kept = keepGroundedFillBlanks(
+        aligned.sentenceWithBlanks,
+        aligned.blanks,
+        transcript,
+        extraTerms,
+        isFillBlankGrounded,
+      );
+      if (!kept) return [];
+      return [
+        {
+          speaker: question.speaker,
+          sentenceWithBlanks: kept.sentenceWithBlanks,
+          blanks: kept.blanks,
         },
-        correctAnswer: question.blanks,
-      });
-      return stored.success ? [stored.data] : [];
+      ];
     });
 
-    if (exercises.length === 0) return null;
-    return { ...parsed.data, exercises };
+    const merged = mergeFillBlankQuestions(questions);
+    if (!merged) return null;
+
+    const stored = storedListeningExerciseSchema.safeParse({
+      type: "FILL_BLANK",
+      question: merged.sentenceWithBlanks,
+      data: {
+        sentenceWithBlanks: merged.sentenceWithBlanks,
+        speaker: merged.speaker?.slice(0, 80) || undefined,
+      },
+      correctAnswer: merged.blanks,
+    });
+    if (!stored.success) return null;
+
+    return {
+      title: extractGeneratedTitle(unwrapped, ""),
+      exercises: [stored.data],
+    };
   }
 
   const parsed = generatedMultipleChoiceSetSchema.safeParse(unwrapped);
@@ -301,6 +348,13 @@ function toStoredSet(
 
   if (exercises.length === 0) return null;
   return { ...parsed.data, exercises };
+}
+
+function fillBlankCount(exercises: StoredListeningExercise[]) {
+  return exercises.reduce((count, exercise) => {
+    if (exercise.type !== "FILL_BLANK") return count;
+    return count + exercise.correctAnswer.length;
+  }, 0);
 }
 
 function mergeExercises(
@@ -356,10 +410,15 @@ async function requestExerciseJson(input: {
     speakers,
   );
 
+  const isFillBlank = input.exerciseType === "FILL_BLANK";
+  const splitRule = isFillBlank
+    ? "Return exactly one questions item: the full transcript with blanks. Never split it into multiple questions."
+    : "Split content into many short questions instead of a few broad ones.";
+
   const completion = await input.client.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: 0.35,
-    max_tokens: 8000,
+    max_tokens: isFillBlank ? 12000 : 8000,
     response_format: { type: "json_object" },
     messages: [
       {
@@ -373,9 +432,9 @@ Rules:
 - Do not invent facts, names, places, or details that are not in the transcript.
 - Every correct answer must come from the transcript.
 - Prefer useful vocabulary and grammar for the given CEFR level.
-- Each question must have one clearly correct answer.
+- Each blank or question must have one clearly correct answer.
 - Avoid ambiguous questions, duplicate options, and meaningless distractors.
-- Split content into many short questions instead of a few broad ones.
+- ${splitRule}
 - Return JSON only.
 ${instructions.rules.map((rule) => `- ${rule}`).join("\n")}${
           input.extraInstruction ? `\n- ${input.extraInstruction}` : ""
@@ -489,36 +548,89 @@ export async function generateListeningExercisesFromTranscript(input: {
     throw new ListeningError("GENERATION_FAILED");
   }
 
-  let parsedJson: unknown;
-  try {
-    parsedJson = JSON.parse(content);
-  } catch {
+  const parsedJson = parseJsonObject(content);
+  if (!parsedJson && exerciseType !== "FILL_BLANK") {
     throw new ListeningError("VALIDATION_FAILED");
   }
 
-  let stored = toStoredSet(exerciseType, parsedJson, transcript, extraTerms);
+  let stored = parsedJson
+    ? toStoredSet(exerciseType, parsedJson, transcript, extraTerms)
+    : null;
+
+  if ((!stored || stored.exercises.length === 0) && exerciseType === "FILL_BLANK") {
+    try {
+      const retryContent = await requestExerciseJson({
+        ...requestInput,
+        extraInstruction:
+          "The previous JSON was not usable. Return valid JSON with EXACTLY one questions item. sentenceWithBlanks must be the full transcript using ______ for each blank. blanks must be an array of the missing words in order, copied from the transcript. The number of ______ markers must equal blanks.length.",
+      });
+      const retryJson = retryContent ? parseJsonObject(retryContent) : null;
+      if (retryJson) {
+        stored = toStoredSet(exerciseType, retryJson, transcript, extraTerms);
+      }
+    } catch {
+      stored = stored ?? null;
+    }
+  }
+
+  if ((!stored || stored.exercises.length === 0) && exerciseType === "FILL_BLANK") {
+    const fallback = buildFillBlankFromTranscript(transcript, target);
+    if (fallback) {
+      const parsedFallback = storedListeningExerciseSchema.safeParse({
+        type: "FILL_BLANK",
+        question: fallback.sentenceWithBlanks,
+        data: { sentenceWithBlanks: fallback.sentenceWithBlanks },
+        correctAnswer: fallback.blanks,
+      });
+      if (parsedFallback.success) {
+        stored = {
+          title: input.fallbackTitle,
+          exercises: [parsedFallback.data],
+        };
+      }
+    }
+  }
+
   if (!stored || stored.exercises.length === 0) {
     throw new ListeningError("VALIDATION_FAILED");
   }
 
-  if (stored.exercises.length < min) {
-    const needed = Math.max(1, target - stored.exercises.length);
-    const existingQuestions = stored.exercises.map((exercise) => exercise.question);
+  const needsMore =
+    exerciseType === "FILL_BLANK"
+      ? fillBlankCount(stored.exercises) < min
+      : stored.exercises.length < min;
+
+  if (needsMore) {
+    const extraInstruction =
+      exerciseType === "FILL_BLANK"
+        ? `The first pass only produced ${fillBlankCount(stored.exercises)} blanks. Return EXACTLY one questions item covering the FULL transcript with about ${target} blanks. Keep the original paragraph breaks. Do not split into multiple questions.`
+        : `The first pass only produced ${stored.exercises.length} usable questions. Generate ${Math.max(1, target - stored.exercises.length)} additional NEW questions from uncovered parts of the transcript. Do not repeat these existing questions: ${JSON.stringify(stored.exercises.map((exercise) => exercise.question))}`;
 
     try {
       const extraContent = await requestExerciseJson({
         ...requestInput,
-        extraInstruction: `The first pass only produced ${stored.exercises.length} usable questions. Generate ${needed} additional NEW questions from uncovered parts of the transcript. Do not repeat these existing questions: ${JSON.stringify(existingQuestions)}`,
+        extraInstruction,
       });
 
       if (extraContent) {
-        const extraJson = JSON.parse(extraContent) as unknown;
-        const extraStored = toStoredSet(exerciseType, extraJson, transcript, extraTerms);
+        const extraJson = parseJsonObject(extraContent);
+        const extraStored = extraJson
+          ? toStoredSet(exerciseType, extraJson, transcript, extraTerms)
+          : null;
         if (extraStored) {
-          stored = {
-            ...stored,
-            exercises: mergeExercises(stored.exercises, extraStored.exercises, max),
-          };
+          stored =
+            exerciseType === "FILL_BLANK"
+              ? fillBlankCount(extraStored.exercises) >= fillBlankCount(stored.exercises)
+                ? extraStored
+                : stored
+              : {
+                  ...stored,
+                  exercises: mergeExercises(
+                    stored.exercises,
+                    extraStored.exercises,
+                    max,
+                  ),
+                };
         }
       }
     } catch {

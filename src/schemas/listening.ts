@@ -29,8 +29,8 @@ const generatedMetaSchema = z.object({
 export const generatedFillBlankQuestionSchema = z
   .object({
     speaker: z.string().trim().min(1).max(80).nullish(),
-    sentenceWithBlanks: z.string().trim().min(1).max(400),
-    blanks: z.array(z.string().trim().min(1).max(80)).min(1).max(4),
+    sentenceWithBlanks: z.string().trim().min(1).max(30000),
+    blanks: z.array(z.string().trim().min(1).max(120)).min(1).max(80),
   })
   .refine(
     (value) => countBlanks(value.sentenceWithBlanks) === value.blanks.length,

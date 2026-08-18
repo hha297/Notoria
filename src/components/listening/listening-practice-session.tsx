@@ -21,6 +21,7 @@ import type {
   ListeningPracticeType,
 } from "@/lib/listening/types";
 import { listeningAnswersMatch } from "@/lib/listening/practice";
+import { mergeFillBlankQuestions } from "@/lib/listening/fill-blank-passage";
 import { targetQuestionCount } from "@/lib/listening/select-type";
 import { fillBlankDataSchema, multipleChoiceDataSchema } from "@/schemas/listening";
 import { cn } from "@/lib/utils";
@@ -53,11 +54,6 @@ function checkExercise(exercise: ListeningExerciseClient, answer: unknown): bool
   ];
 }
 
-function isQuestionCorrect(exercise: ListeningExerciseClient, answer: unknown) {
-  const results = checkExercise(exercise, answer);
-  return results.length > 0 && results.every(Boolean);
-}
-
 function hasAnswer(exercise: ListeningExerciseClient, answer: unknown) {
   if (exercise.type === "FILL_BLANK") {
     const expected = asStringArray(exercise.correctAnswer);
@@ -65,6 +61,37 @@ function hasAnswer(exercise: ListeningExerciseClient, answer: unknown) {
     return expected.every((_, index) => (given[index] ?? "").trim().length > 0);
   }
   return typeof answer === "string" && answer.length > 0;
+}
+
+function toFillBlankPassage(
+  exercises: ListeningExerciseClient[],
+): ListeningExerciseClient | null {
+  const items = exercises.filter((exercise) => exercise.type === "FILL_BLANK");
+  if (items.length === 0) return null;
+
+  const merged = mergeFillBlankQuestions(
+    items.map((exercise) => {
+      const data = fillBlankDataSchema.safeParse(exercise.data);
+      return {
+        speaker: data.success ? data.data.speaker : undefined,
+        sentenceWithBlanks: fillBlankDisplayText(exercise),
+        blanks: asStringArray(exercise.correctAnswer),
+      };
+    }),
+  );
+  if (!merged) return null;
+
+  return {
+    id: items.length === 1 ? items[0]!.id : "fill-blank-passage",
+    type: "FILL_BLANK",
+    question: merged.sentenceWithBlanks,
+    data: {
+      sentenceWithBlanks: merged.sentenceWithBlanks,
+      speaker: merged.speaker,
+    },
+    correctAnswer: merged.blanks,
+    sortOrder: 0,
+  };
 }
 
 function formatExpected(exercise: ListeningExerciseClient) {
@@ -80,7 +107,7 @@ function isSparseExerciseSet(
   count: number,
 ) {
   if (count === 0) return true;
-  if (type === "FILL_BLANK" && count === 1) return true;
+  if (type === "FILL_BLANK") return false;
   const { min } = targetQuestionCount({
     transcript: lesson.transcript ?? "",
     durationSeconds: lesson.duration,
@@ -147,22 +174,40 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
     [lesson.exercises, selectedType],
   );
 
+  const practiceExercises = useMemo(() => {
+    if (selectedType !== "FILL_BLANK") return exercises;
+    const passage = toFillBlankPassage(exercises);
+    return passage ? [passage] : [];
+  }, [exercises, selectedType]);
+
   const results = useMemo(() => {
     if (!checked) return {};
     return Object.fromEntries(
-      exercises.map((exercise) => [
+      practiceExercises.map((exercise) => [
         exercise.id,
-        isQuestionCorrect(exercise, answers[exercise.id]),
+        checkExercise(exercise, answers[exercise.id]),
       ]),
-    ) as Record<string, boolean>;
-  }, [answers, checked, exercises]);
+    ) as Record<string, boolean[]>;
+  }, [answers, checked, practiceExercises]);
 
-  const total = exercises.length;
-  const correctCount = Object.values(results).filter(Boolean).length;
+  const isFillBlank = selectedType === "FILL_BLANK";
+  const blankResults = useMemo(
+    () => Object.values(results).flat(),
+    [results],
+  );
+  const total = isFillBlank
+    ? practiceExercises.reduce(
+        (count, exercise) => count + asStringArray(exercise.correctAnswer).length,
+        0,
+      )
+    : practiceExercises.length;
+  const correctCount = isFillBlank
+    ? blankResults.filter(Boolean).length
+    : Object.values(results).filter((item) => item.every(Boolean)).length;
   const percent = total ? Math.round((correctCount / total) * 100) : 0;
   const canCheck =
-    exercises.length > 0 &&
-    exercises.every((exercise) => hasAnswer(exercise, answers[exercise.id]));
+    practiceExercises.length > 0 &&
+    practiceExercises.every((exercise) => hasAnswer(exercise, answers[exercise.id]));
 
   function errorMessage(error: unknown) {
     const code = error instanceof Error ? error.message : "PROCESSING_FAILED";
@@ -291,11 +336,11 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
         <p className="text-sm text-muted-foreground">{t("chooseTypeHint")}</p>
       ) : null}
 
-      {selectedType && !isPending && exercises.length === 0 ? (
+      {selectedType && !isPending && practiceExercises.length === 0 ? (
         <p className="text-sm text-muted-foreground">{t("chooseTypeHint")}</p>
       ) : null}
 
-      {selectedType && !isPending && exercises.length > 0 ? (
+      {selectedType && !isPending && practiceExercises.length > 0 ? (
         <>
           {checked ? (
             <div className="rounded-2xl border border-[#b8d96a] bg-[#f4fae0] p-5 text-center sm:p-6">
@@ -311,36 +356,41 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
             </div>
           ) : null}
 
+          {isFillBlank ? (
+            <p className="text-sm text-muted-foreground">{t("fillBlankOverview")}</p>
+          ) : null}
+
           <div className="space-y-4">
-            {exercises.map((exercise, index) => {
-              const isCorrect = results[exercise.id] ?? false;
+            {practiceExercises.map((exercise, index) => {
+              const blankChecks = results[exercise.id] ?? [];
+              const isCorrect =
+                blankChecks.length > 0 && blankChecks.every(Boolean);
               return (
                 <section
                   key={`${exercise.id}:${round}`}
                   className="rounded-2xl border border-hairline-cloud bg-card p-5 sm:p-6"
                 >
-                  <div className="mb-3 flex items-start justify-between gap-3">
-                    <p className="text-sm font-semibold uppercase tracking-[0.2px] text-muted-foreground">
-                      {tPractice("questionLabel", { number: index + 1 })}
-                    </p>
-                    {checked ? (
-                      isCorrect ? (
-                        <CheckCircle2 className="size-5 text-[#4a6b0a]" />
-                      ) : (
-                        <XCircle className="size-5 text-destructive" />
-                      )
-                    ) : null}
-                  </div>
                   {exercise.type === "FILL_BLANK" ? (
                     <FillBlankQuestion
                       exercise={exercise}
                       answer={asStringArray(answers[exercise.id])}
                       checked={checked}
-                      isCorrect={isCorrect}
                       onChange={(value) => setAnswer(exercise.id, value)}
                     />
                   ) : (
                     <>
+                      <div className="mb-3 flex items-start justify-between gap-3">
+                        <p className="text-sm font-semibold uppercase tracking-[0.2px] text-muted-foreground">
+                          {tPractice("questionLabel", { number: index + 1 })}
+                        </p>
+                        {checked ? (
+                          isCorrect ? (
+                            <CheckCircle2 className="size-5 text-[#4a6b0a]" />
+                          ) : (
+                            <XCircle className="size-5 text-destructive" />
+                          )
+                        ) : null}
+                      </div>
                       <p className="font-heading text-lg font-medium text-ink sm:text-xl">
                         {exercise.question}
                       </p>
@@ -356,13 +406,13 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
                           onChange={(value) => setAnswer(exercise.id, value)}
                         />
                       </div>
+                      {checked && !isCorrect ? (
+                        <p className="mt-4 text-sm text-destructive">
+                          {tPractice("expected")}: {formatExpected(exercise)}
+                        </p>
+                      ) : null}
                     </>
                   )}
-                  {checked && !isCorrect ? (
-                    <p className="mt-4 text-sm text-destructive">
-                      {tPractice("expected")}: {formatExpected(exercise)}
-                    </p>
-                  ) : null}
                 </section>
               );
             })}
@@ -395,13 +445,11 @@ function FillBlankQuestion({
   exercise,
   answer,
   checked,
-  isCorrect,
   onChange,
 }: {
   exercise: ListeningExerciseClient;
   answer: string[];
   checked: boolean;
-  isCorrect: boolean;
   onChange: (value: string[]) => void;
 }) {
   const t = useTranslations("listening.practice");
@@ -427,28 +475,40 @@ function FillBlankQuestion({
           {speaker}
         </p>
       ) : null}
-      <p className="whitespace-pre-wrap text-base leading-[2.2] text-ink sm:text-lg">
+      <div className="whitespace-pre-wrap text-base leading-[2.35] text-ink sm:text-lg">
         {parts.map((part, index) => (
-        <span key={`${part}-${index}`}>
-          {part}
-          {index < blanks.length ? (
-            <Input
-              value={answer[index] ?? ""}
-              onChange={(event) => update(index, event.target.value)}
-              disabled={checked}
-              aria-label={t("blankLabel", { number: index + 1 })}
-              className={cn(
-                "mx-1 inline-flex h-9 w-28 align-baseline md:w-36",
-                checked && isCorrect && "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a]",
-                checked &&
-                  !blankResults[index] &&
-                  "border-destructive/40 bg-destructive/10 text-destructive",
-              )}
-            />
-          ) : null}
-        </span>
-      ))}
-      </p>
+          <span key={`${part}-${index}`}>
+            {part}
+            {index < blanks.length ? (
+              <span className="inline-flex flex-wrap items-baseline gap-1 align-baseline">
+                <Input
+                  value={answer[index] ?? ""}
+                  onChange={(event) => update(index, event.target.value)}
+                  disabled={checked}
+                  aria-label={t("blankLabel", { number: index + 1 })}
+                  style={{
+                    width: `${Math.min(22, Math.max(8, (blanks[index]?.length ?? 6) + 2))}ch`,
+                  }}
+                  className={cn(
+                    "mx-1 inline-flex h-9 max-w-[min(100%,18rem)] align-baseline",
+                    checked &&
+                      blankResults[index] &&
+                      "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a]",
+                    checked &&
+                      !blankResults[index] &&
+                      "border-destructive/40 bg-destructive/10 text-destructive",
+                  )}
+                />
+                {checked && !blankResults[index] ? (
+                  <span className="text-sm text-destructive">
+                    ({blanks[index]})
+                  </span>
+                ) : null}
+              </span>
+            ) : null}
+          </span>
+        ))}
+      </div>
     </div>
   );
 }
