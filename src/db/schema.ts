@@ -73,6 +73,14 @@ export const folderSectionEnum = pgEnum("folder_section", [
   "theory",
 ]);
 
+export const speakingStatusEnum = pgEnum("speaking_status", [
+  "upcoming",
+  "active",
+  "processing",
+  "completed",
+  "cancelled",
+]);
+
 export const users = pgTable(
   "users",
   {
@@ -443,11 +451,47 @@ export const grammarNotes = pgTable(
   (table) => [index("grammar_notes_folder_id_idx").on(table.folderId)],
 );
 
+export const speakingSessions = pgTable(
+  "speaking_sessions",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    language: text("language").notNull(),
+    topic: text("topic"),
+    cefrLevel: text("cefr_level"),
+    notes: text("notes"),
+    status: speakingStatusEnum("status").notNull().default("upcoming"),
+    startedAt: timestamp("started_at", { withTimezone: true }),
+    endedAt: timestamp("ended_at", { withTimezone: true }),
+    transcriptUrl: text("transcript_url"),
+    transcript: text("transcript"),
+    recordingUrl: text("recording_url"),
+    summary: text("summary"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("speaking_sessions_workspace_id_idx").on(table.workspaceId),
+    index("speaking_sessions_user_id_idx").on(table.userId),
+  ],
+);
+
 export const usersRelations = relations(users, ({ many }) => ({
   workspaces: many(workspaces),
   vocabularyWords: many(vocabularyWords),
   exercises: many(exercises),
   listeningLessons: many(listeningLessons),
+  speakingSessions: many(speakingSessions),
   grammarNotes: many(grammarNotes),
   folders: many(workspaceFolders),
 }));
@@ -460,6 +504,7 @@ export const workspacesRelations = relations(workspaces, ({ one, many }) => ({
   vocabularyWords: many(vocabularyWords),
   exercises: many(exercises),
   listeningLessons: many(listeningLessons),
+  speakingSessions: many(speakingSessions),
   grammarNotes: many(grammarNotes),
   tags: many(workspaceTags),
   folders: many(workspaceFolders),
@@ -650,6 +695,20 @@ export const listeningExercisesRelations = relations(
   }),
 );
 
+export const speakingSessionsRelations = relations(
+  speakingSessions,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [speakingSessions.userId],
+      references: [users.id],
+    }),
+    workspace: one(workspaces, {
+      fields: [speakingSessions.workspaceId],
+      references: [workspaces.id],
+    }),
+  }),
+);
+
 export type User = typeof users.$inferSelect;
 export type SubscriptionPlan = (typeof subscriptionPlanEnum.enumValues)[number];
 export type Workspace = typeof workspaces.$inferSelect;
@@ -666,3 +725,5 @@ export type Exercise = typeof exercises.$inferSelect;
 export type GrammarNote = typeof grammarNotes.$inferSelect;
 export type ListeningLesson = typeof listeningLessons.$inferSelect;
 export type ListeningExercise = typeof listeningExercises.$inferSelect;
+export type SpeakingSession = typeof speakingSessions.$inferSelect;
+export type SpeakingStatus = (typeof speakingStatusEnum.enumValues)[number];

@@ -18,6 +18,7 @@
     "theory": "Theory",
     "exercises": "Exercise",
     "listening": "Listening",
+    "speaking": "Speaking",
     "account": "Account",
     "settings": "Settings",
     "workspace": "Workspace"
@@ -664,19 +665,100 @@
     "overview": "Overview",
     "your": "Your",
     "workspaceLabel": "workspace",
-    "description": "Store vocabulary and practice {language} with exercises built from your words.",
+    "description": "{language} lives here. Notoria is a private study workspace: collect words, save theory, practice, write, then listen and speak.",
     "wordsSaved": "Words saved",
     "wordsReadyToPractice": "Words ready to practice",
+    "theoryNotes": "Theory notes",
+    "writingPieces": "Writing pieces",
     "activeWorkspace": "Active workspace",
-    "vocabularyCardTitle": "Vocabulary",
-    "vocabularyCardDescription": "Add words with meanings, examples, and tags.",
-    "addWord": "Add word",
-    "viewAll": "View all",
-    "exercisesCardTitle": "Exercises",
-    "exercisesCardDescription": "Practice with flashcards, quizzes, and more — all generated from your vocabulary.",
-    "startPracticing": "Start practicing",
-    "recentWords": "Recent words",
-    "sidebarFooter": "Private language-learning workspace"
+    "guideEyebrow": "Getting started",
+    "guideTitle": "How to use Notoria",
+    "guideSubtitle": "One workspace, one language. Work through the sections in this order — each one builds on the last. Open a tutorial whenever you want a walkthrough.",
+    "modulesTitle": "Explore the workspace",
+    "modulesSubtitle": "Jump into a section, or open its tutorial first.",
+    "startHere": "Start here",
+    "pro": "Pro",
+    "unlock": "Unlock Pro",
+    "open": "Open",
+    "steps": {
+      "vocabulary": {
+        "title": "Vocabulary",
+        "body": "Add words with meanings, examples, and tags. This library powers exercises and review."
+      },
+      "theory": {
+        "title": "Theory",
+        "body": "Save grammar, pronunciation, and usage notes you keep forgetting."
+      },
+      "exercises": {
+        "title": "Exercise",
+        "body": "Practice from your own words — flashcards, quizzes, fill-in-the-blank, and more."
+      },
+      "writing": {
+        "title": "Writing",
+        "body": "Draft texts and question sets. Pro can check, improve, and export them."
+      },
+      "listening": {
+        "title": "Listening",
+        "body": "Upload audio or video, get a transcript, and turn it into a lesson."
+      },
+      "speaking": {
+        "title": "Speaking",
+        "body": "Call an AI tutor on video, then review the transcript and feedback."
+      }
+    },
+    "modules": {
+      "vocabulary": {
+        "title": "Vocabulary",
+        "description": "Your personal word bank for this language.",
+        "how": "Add a word, mark primary meanings, and attach example sentences. Use tags and search to find them later.",
+        "cta": "Open vocabulary"
+      },
+      "theory": {
+        "title": "Theory",
+        "description": "A notebook for how the language works — not writing practice.",
+        "how": "Create a note, pick a category, and come back when you need a refresher.",
+        "cta": "Open theory"
+      },
+      "exercises": {
+        "title": "Exercise",
+        "description": "Short sessions built from the words you already saved.",
+        "how": "Add a handful of words first, then pick a mode. Come back often — a few minutes still counts.",
+        "cta": "Open exercises"
+      },
+      "writing": {
+        "title": "Writing",
+        "description": "Rich documents and question sets you can revisit and export.",
+        "how": "Start a draft, organize with folders, and use Pro AI to check or improve your text.",
+        "cta": "Open writing"
+      },
+      "listening": {
+        "title": "Listening",
+        "description": "Turn real audio or video into a lesson.",
+        "how": "Upload a clip, read the transcript, then practice. This whole module is Pro.",
+        "cta": "Open listening"
+      },
+      "speaking": {
+        "title": "Speaking",
+        "description": "Live video conversation with an AI tutor.",
+        "how": "Create a session, join the call, then review the transcript and summary. Pro only.",
+        "cta": "Open speaking"
+      }
+    },
+    "counts": {
+      "words": "{count, plural, one {# word} other {# words}}",
+      "notes": "{count, plural, one {# note} other {# notes}}",
+      "writings": "{count, plural, one {# piece} other {# pieces}}",
+      "practiceReady": "{count, plural, one {# word ready} other {# words ready}}"
+    },
+    "sidebarFooter": "Private language-learning workspace",
+    "practiceNowEyebrow": "Today",
+    "practiceNowTitle": "Practice now",
+    "practiceNowReady": "{count, plural, one {# word is ready for exercises.} other {# words are ready for exercises.}}",
+    "practiceNowNeedsMeaning": "Mark a primary meaning on a word so it can show up in exercises.",
+    "practiceNowCta": "Start an exercise",
+    "practiceNowVocabCta": "Open vocabulary",
+    "continueTitle": "Continue",
+    "continueSubtitle": "Pick up the last thing you were working on."
   },
   "prompts": {
     "skip": "Skip",
@@ -902,22 +984,41 @@
         }
       }
     },
-    "conversation": {
-      "title": "Conversation",
-      "description": "Practice speaking and responding in your target language.",
-      "cta": "Start a conversation",
+    "listening": {
+      "title": "Listening",
+      "description": "Upload real audio or video, read the transcript, and practice from it.",
+      "cta": "Open listening",
       "steps": {
-        "start": {
-          "title": "1. Start a conversation",
-          "body": "Open a conversation to begin practicing in context."
+        "upload": {
+          "title": "1. Upload a clip",
+          "body": "Add an audio or video file you want to learn from — a podcast, a lesson, or your own recording."
+        },
+        "transcript": {
+          "title": "2. Read the transcript",
+          "body": "Open the lesson to follow along with the text. Use it to catch words you missed by ear."
         },
         "practice": {
-          "title": "2. Practice",
-          "body": "Reply naturally and keep the exchange going."
+          "title": "3. Practice",
+          "body": "Run a listening session, then save useful words back to your vocabulary."
+        }
+      }
+    },
+    "speaking": {
+      "title": "Speaking",
+      "description": "Have a live video call with an AI tutor, then review what you said.",
+      "cta": "Start a call",
+      "steps": {
+        "start": {
+          "title": "1. Create a session",
+          "body": "Pick a topic, CEFR level, and language. Join when you are ready to talk."
+        },
+        "talk": {
+          "title": "2. Talk with the tutor",
+          "body": "Speak naturally. The tutor stays on the topic and matches your level."
         },
         "review": {
           "title": "3. Review",
-          "body": "Look back at useful phrases and add them to your vocabulary."
+          "body": "After the call, read the transcript and summary so you can reuse useful phrases."
         }
       }
     }
@@ -1168,6 +1269,92 @@
       "FILENAME_REQUIRED": "Enter a file name."
     }
   },
+  "speaking": {
+    "eyebrow": "Speaking",
+    "title": "Speaking",
+    "highlight": "practice",
+    "description": "Join a live video call with an AI tutor and practice conversation in your workspace language.",
+    "disabledNoWorkspace": "Create a workspace before starting a speaking session.",
+    "newCall": "New call",
+    "newCallFirst": "Start your first call",
+    "newTitle": "New speaking call",
+    "newDescription": "Pick a level and topic. An AI tutor will join the call and speak with you.",
+    "create": "Create call",
+    "created": "Speaking call created",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Optional — generated from the topic",
+    "notesLabel": "Notes for the tutor",
+    "notesPlaceholder": "Anything you want to practice, or words you keep mixing up…",
+    "emptyTitle": "No speaking sessions yet",
+    "emptyDescription": "Start a video call with an AI tutor to practice speaking.",
+    "mySessions": "My speaking sessions",
+    "join": "Join call",
+    "open": "Open",
+    "viewProgress": "View progress",
+    "backToList": "Back to speaking",
+    "sessionDescription": "Join the call, then come back here for feedback and a transcript.",
+    "deleted": "Speaking session deleted",
+    "ended": "Call ended",
+    "endSession": "End session",
+    "deleteConfirmTitle": "Delete this session?",
+    "deleteConfirmDescription": "This will remove “{title}” and its transcript.",
+    "processingTitle": "Preparing your feedback",
+    "processingDescription": "The tutor is wrapping up. Feedback will appear here in a minute.",
+    "feedbackTitle": "Tutor feedback",
+    "feedbackDescription": "A short recap of how the conversation went.",
+    "transcriptTitle": "Transcript",
+    "status": {
+      "upcoming": "Ready",
+      "active": "In call",
+      "processing": "Processing",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    },
+    "meta": {
+      "cefrLabel": "CEFR level",
+      "topicLabel": "Topic",
+      "cefr": {
+        "a1": "A1",
+        "a2": "A2",
+        "b1": "B1",
+        "b2": "B2",
+        "c1": "C1",
+        "c2": "C2"
+      },
+      "topics": {
+        "travel": "Travel",
+        "work": "Work",
+        "daily": "Daily life",
+        "food": "Food",
+        "shopping": "Shopping",
+        "home": "Home",
+        "people": "People",
+        "culture": "Culture"
+      }
+    },
+    "call": {
+      "lobbyTitle": "Ready to speak?",
+      "lobbyDescription": "Check your camera and microphone, then join. The AI tutor will enter shortly after you.",
+      "permissions": "Allow microphone access in your browser to join the call. Camera is optional.",
+      "cancel": "Cancel",
+      "join": "Join call",
+      "joining": "Joining…",
+      "tutorFailed": "You are in the call, but the AI tutor could not join. Try leaving and joining again.",
+      "endedTitle": "Call ended",
+      "endedDescription": "Feedback will appear on the session page in a few moments.",
+      "back": "Back to session",
+      "notConfigured": "Video calling is not configured yet. Add Stream Video API keys to start a call."
+    },
+    "errors": {
+      "STREAM_NOT_CONFIGURED": "Video calling is not configured.",
+      "OPENAI_NOT_CONFIGURED": "The AI tutor is not configured.",
+      "INVALID_INPUT": "Check the topic and level, then try again.",
+      "SESSION_NOT_FOUND": "Speaking session not found.",
+      "SESSION_NOT_JOINABLE": "This call is no longer available to join.",
+      "STREAM_CALL_FAILED": "Could not start the video call. Try again.",
+      "UNAUTHORIZED": "Sign in to join a speaking call."
+    }
+  },
   "errors": {
     "generic": "Something went wrong",
     "noWorkspace": "No active workspace",
@@ -1226,7 +1413,7 @@
     "description": "Unlock AI-powered learning features.",
     "proDescription": "You currently have Notoria Pro.",
     "tagline": "Unlock AI-powered learning features.",
-    "price": "€4.99 / month",
+    "price": "€9.99 / month",
     "upgrade": "Upgrade to Pro",
     "manage": "Manage subscription",
     "proBadge": "Pro",
@@ -1241,11 +1428,65 @@
     "notConfigured": "Billing is not configured yet.",
     "noCustomer": "No billing customer is linked to this account yet.",
     "modalTitle": "Upgrade to Notoria Pro",
-    "modalSubtitle": "Unlock AI-powered learning tools and get more out of Notoria.",
-    "lockedTitle": "Pro feature",
-    "lockedDescription": "This feature requires Pro. Upgrade to unlock it and get access to AI-powered tools and other Pro features.",
+    "modalSubtitle": "Free keeps your library and practice. Pro adds AI writing, listening, speaking, and printable files.",
+    "lockedTitle": "This is a Pro feature",
+    "lockedDescription": "Upgrade to unlock it — along with listening, speaking, writing AI, and PDF/Word export.",
     "planName": "Pro",
     "cancelAnytime": "Cancel anytime",
+    "compare": {
+      "capability": "What you get",
+      "free": "Free",
+      "pro": "Pro",
+      "impact": "Why it matters",
+      "yes": "Yes",
+      "locked": "Locked",
+      "rows": {
+        "vocab": {
+          "capability": "Word library, tags, search",
+          "impact": "Keep your words without paying"
+        },
+        "vocabAi": {
+          "capability": "AI spelling and meaning",
+          "impact": "Add words faster and more accurately"
+        },
+        "csv": {
+          "capability": "CSV export",
+          "impact": "Backup words to a spreadsheet"
+        },
+        "export": {
+          "capability": "PDF and Word export",
+          "impact": "Print worksheets or share files"
+        },
+        "writing": {
+          "capability": "Writing editor",
+          "impact": "Draft texts and worksheets yourself"
+        },
+        "writingAi": {
+          "capability": "Writing AI (check and improve)",
+          "impact": "Get corrections on your own text"
+        },
+        "exercises": {
+          "capability": "Exercises from your examples",
+          "impact": "Practice sentences you already saved"
+        },
+        "fillBlank": {
+          "capability": "AI fill-in-the-blank",
+          "impact": "New sentences, not memorized examples"
+        },
+        "theory": {
+          "capability": "Theory notes",
+          "impact": "Save grammar and usage for later"
+        },
+        "listening": {
+          "capability": "Listening lessons",
+          "impact": "Turn your audio or video into practice"
+        },
+        "speaking": {
+          "capability": "Speaking call with AI",
+          "impact": "Live tutor call, then a transcript"
+        }
+      }
+    },
     "benefits": {
       "vocab": {
         "title": "AI-powered vocabulary assistance",
@@ -1262,6 +1503,10 @@
       "listening": {
         "title": "Enhanced listening experience",
         "body": "Get more powerful tools for practicing and working with listening content."
+      },
+      "speaking": {
+        "title": "AI speaking calls",
+        "body": "Practice live conversation with an AI tutor on a video call, then get feedback and a transcript."
       },
       "files": {
         "title": "PDF & Word (DOCX) support",
