@@ -18,6 +18,7 @@ import {
   type MeaningItem,
 } from "@/components/vocabulary/sortable-meanings";
 import { TagMultiSelect } from "@/components/vocabulary/tag-multi-select";
+import { SynonymPicker } from "@/components/vocabulary/synonym-picker";
 import {
   VocabularyAiChecking,
   VocabularyAiSuggestionCard,
@@ -67,23 +68,25 @@ import {
   vocabularyFormClientSchema,
   type VocabularyFormValues,
 } from "@/schemas/vocabulary";
+import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
 
 type VocabularyFormClientValues = Omit<
   VocabularyFormValues,
-  "meanings" | "examples" | "tags"
+  "meanings" | "examples" | "tags" | "synonymIds"
 >;
 
 type VocabularyFormProps = {
   /** When set, Cancel returns here and Save navigates here after persisting. */
   previewHref?: string;
   existingCustomTags?: string[];
+  synonymOptions?: VocabularySynonymRef[];
   language?: string;
   initialData?: {
     id: string;
     word: string;
     partOfSpeech?: string | null;
-    synonyms?: string | null;
     notes?: string | null;
+    synonymRefs?: VocabularySynonymRef[];
     meanings: Array<{
       id: string;
       meaning: string;
@@ -172,6 +175,7 @@ export function VocabularyForm({
   initialData,
   previewHref,
   existingCustomTags,
+  synonymOptions = [],
   language = "en",
 }: VocabularyFormProps) {
   const router = useRouter();
@@ -201,6 +205,12 @@ export function VocabularyForm({
   const [customTags, setCustomTags] = useState<string[]>(() =>
     getInitialCustomTags(existingCustomTags, initialData?.tags),
   );
+  const [synonyms, setSynonyms] = useState<VocabularySynonymRef[]>(
+    initialData?.synonymRefs ?? [],
+  );
+  const [availableSynonyms, setAvailableSynonyms] = useState<
+    VocabularySynonymRef[]
+  >(synonymOptions);
 
   const form = useForm<VocabularyFormClientValues>({
     resolver: zodResolver(vocabularyFormClientSchema),
@@ -209,7 +219,6 @@ export function VocabularyForm({
       partOfSpeech:
         (initialData?.partOfSpeech as VocabularyFormClientValues["partOfSpeech"]) ??
         undefined,
-      synonyms: initialData?.synonyms ?? "",
       notes: serializeVocabularyNotes(
         parseVocabularyNotes(initialData?.notes ?? ""),
       ),
@@ -320,6 +329,7 @@ export function VocabularyForm({
         meanings: filledMeanings,
         examples: filledExamples,
         tags: normalizeWordTags(tags, customTags),
+        synonymIds: synonyms.map((item) => item.id),
       };
 
       if (initialData?.id) {
@@ -545,20 +555,14 @@ export function VocabularyForm({
             onCustomTagsChange={setCustomTags}
           />
 
-          <div className="space-y-2">
-            <Label htmlFor="synonyms">
-              {t("synonyms")}{" "}
-              <span className="font-normal text-muted-foreground">
-                ({tCommon("optional")})
-              </span>
-            </Label>
-            <CapitalizedInput
-              id="synonyms"
-              placeholder={t("synonymsPlaceholder")}
-              className="h-10"
-              {...form.register("synonyms")}
-            />
-          </div>
+          <SynonymPicker
+            value={synonyms}
+            onChange={setSynonyms}
+            options={availableSynonyms}
+            onOptionsChange={setAvailableSynonyms}
+            currentWordId={initialData?.id}
+            currentWord={watchedWord}
+          />
 
           <div className="space-y-2">
             <div className="flex items-center justify-between gap-2">

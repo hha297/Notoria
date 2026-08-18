@@ -6,6 +6,7 @@ import { db } from "@/db";
 import {
   flashcardProgress,
   flashcardReviews,
+  vocabularySynonyms,
   vocabularyWords,
   wordExamples,
   wordMeanings,
@@ -17,6 +18,13 @@ import type {
   FlashcardRating,
   FlashcardWord,
 } from "@/types/flashcards";
+import {
+  formatSynonymNames,
+  matchLegacySynonyms,
+  parseLegacySynonymNames,
+  uniqueSynonymIds,
+  type VocabularySynonymRef,
+} from "@/lib/vocabulary/synonyms";
 
 const STATUS_FROM_RATING = {
   AGAIN: "LEARNING",
@@ -102,19 +110,67 @@ export async function getFlashcardWords(): Promise<FlashcardWord[]> {
     orderBy: [asc(vocabularyWords.word)],
   });
 
-  return words.map((word) => ({
+  const pairs = await db
+    .select({
+      wordId: vocabularySynonyms.wordId,
+      synonymId: vocabularySynonyms.synonymId,
+    })
+    .from(vocabularySynonyms)
+    .where(eq(vocabularySynonyms.workspaceId, workspace.id));
+
+  const options: VocabularySynonymRef[] = words.map((word) => ({
     id: word.id,
     word: word.word,
-    partOfSpeech: word.partOfSpeech,
-    synonyms: word.synonyms,
-    notes: word.notes,
-    status: word.status,
-    meanings: word.meanings
-      .filter((meaning) => meaning.isPrimary)
-      .map((meaning) => meaning.meaning),
-    examples: word.examples.map((example) => example.sentence),
-    tags: word.tags.map((tag) => tag.tag),
+    meaning: word.meanings.find((meaning) => meaning.isPrimary)?.meaning ??
+      word.meanings[0]?.meaning ??
+      null,
   }));
+  const optionById = new Map(options.map((option) => [option.id, option]));
+  const linkedByWordId = new Map<string, VocabularySynonymRef[]>();
+
+  for (const pair of pairs) {
+    const left = optionById.get(pair.wordId);
+    const right = optionById.get(pair.synonymId);
+    if (!left || !right) continue;
+
+    const leftPeers = linkedByWordId.get(pair.wordId) ?? [];
+    const rightPeers = linkedByWordId.get(pair.synonymId) ?? [];
+    if (!leftPeers.some((item) => item.id === right.id)) leftPeers.push(right);
+    if (!rightPeers.some((item) => item.id === left.id)) rightPeers.push(left);
+    linkedByWordId.set(pair.wordId, leftPeers);
+    linkedByWordId.set(pair.synonymId, rightPeers);
+  }
+
+  return words.map((word) => {
+    const linked = uniqueSynonymIds(
+      (linkedByWordId.get(word.id) ?? []).map((item) => item.id),
+      word.id,
+    )
+      .map((id) => optionById.get(id))
+      .filter((item): item is VocabularySynonymRef => Boolean(item));
+
+    const legacy = linked.length
+      ? linked
+      : matchLegacySynonyms(
+          parseLegacySynonymNames(word.synonyms),
+          options,
+          word.id,
+        ).matched;
+
+    return {
+      id: word.id,
+      word: word.word,
+      partOfSpeech: word.partOfSpeech,
+      synonyms: formatSynonymNames(legacy) || word.synonyms,
+      notes: word.notes,
+      status: word.status,
+      meanings: word.meanings
+        .filter((meaning) => meaning.isPrimary)
+        .map((meaning) => meaning.meaning),
+      examples: word.examples.map((example) => example.sentence),
+      tags: word.tags.map((tag) => tag.tag),
+    };
+  });
 }
 
 export async function recordFlashcardReview({

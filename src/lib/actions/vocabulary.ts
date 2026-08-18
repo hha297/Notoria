@@ -1,9 +1,10 @@
 "use server";
 
-import { and, asc, desc, eq, ne, sql } from "drizzle-orm";
+import { and, asc, desc, eq, inArray, ne, or, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import {
+  vocabularySynonyms,
   vocabularyWordTags,
   vocabularyWords,
   wordExamples,
@@ -13,6 +14,7 @@ import {
 import { getCurrentUserId } from "@/lib/auth/session";
 import { requireActiveWorkspace, getActiveWorkspace } from "@/lib/workspace";
 import {
+  createSynonymWordSchema,
   vocabularyFormSchema,
   type VocabularyFormValues,
 } from "@/schemas/vocabulary";
@@ -23,6 +25,16 @@ import {
   normalizeWordTags,
   uniqueCustomTagNames,
 } from "@/lib/vocabulary-tags";
+import {
+  formatSynonymNames,
+  matchLegacySynonyms,
+  orderedSynonymPair,
+  parseLegacySynonymNames,
+  primaryMeaningText,
+  synonymPeerId,
+  uniqueSynonymIds,
+  type VocabularySynonymRef,
+} from "@/lib/vocabulary/synonyms";
 
 function normalizeWord(word: string) {
   return word.trim().toLowerCase();
@@ -114,6 +126,151 @@ async function replaceWordRelations(
       })),
     );
   }
+}
+
+function toSynonymRef(word: {
+  id: string;
+  word: string;
+  meanings: Array<{ meaning: string; isPrimary?: boolean; sortOrder?: number }>;
+}): VocabularySynonymRef {
+  return {
+    id: word.id,
+    word: word.word,
+    meaning: primaryMeaningText(word.meanings),
+  };
+}
+
+async function listWorkspaceSynonymOptions(workspaceId: string) {
+  const words = await db.query.vocabularyWords.findMany({
+    where: eq(vocabularyWords.workspaceId, workspaceId),
+    columns: { id: true, word: true },
+    with: {
+      meanings: {
+        columns: { meaning: true, isPrimary: true, sortOrder: true },
+        orderBy: [asc(wordMeanings.sortOrder)],
+      },
+    },
+    orderBy: [asc(vocabularyWords.word)],
+  });
+
+  return words.map(toSynonymRef);
+}
+
+async function loadSynonymPairsForWord(wordId: string, workspaceId: string) {
+  return db
+    .select({
+      wordId: vocabularySynonyms.wordId,
+      synonymId: vocabularySynonyms.synonymId,
+    })
+    .from(vocabularySynonyms)
+    .where(
+      and(
+        eq(vocabularySynonyms.workspaceId, workspaceId),
+        or(
+          eq(vocabularySynonyms.wordId, wordId),
+          eq(vocabularySynonyms.synonymId, wordId),
+        ),
+      ),
+    );
+}
+
+async function resolveSynonymsForWord(
+  wordId: string,
+  workspaceId: string,
+  legacyText: string | null | undefined,
+) {
+  const [pairs, options] = await Promise.all([
+    loadSynonymPairsForWord(wordId, workspaceId),
+    listWorkspaceSynonymOptions(workspaceId),
+  ]);
+  const optionById = new Map(options.map((option) => [option.id, option]));
+  const linked = uniqueSynonymIds(
+    pairs.map((pair) => synonymPeerId(wordId, pair)),
+    wordId,
+  )
+    .map((id) => optionById.get(id))
+    .filter((item): item is VocabularySynonymRef => Boolean(item));
+
+  if (linked.length > 0) {
+    return { linked, unmatched: [] as string[] };
+  }
+
+  const legacy = matchLegacySynonyms(
+    parseLegacySynonymNames(legacyText),
+    options,
+    wordId,
+  );
+  return { linked: legacy.matched, unmatched: legacy.unmatched };
+}
+
+async function replaceSynonyms(
+  wordId: string,
+  workspaceId: string,
+  synonymIds: string[],
+) {
+  const ids = uniqueSynonymIds(synonymIds, wordId);
+  const previousPairs = await loadSynonymPairsForWord(wordId, workspaceId);
+  const previousIds = previousPairs.map((pair) => synonymPeerId(wordId, pair));
+
+  let linked: VocabularySynonymRef[] = [];
+  if (ids.length > 0) {
+    const found = await db.query.vocabularyWords.findMany({
+      where: and(
+        eq(vocabularyWords.workspaceId, workspaceId),
+        inArray(vocabularyWords.id, ids),
+      ),
+      columns: { id: true, word: true },
+      with: {
+        meanings: {
+          columns: { meaning: true, isPrimary: true, sortOrder: true },
+          orderBy: [asc(wordMeanings.sortOrder)],
+        },
+      },
+    });
+
+    if (found.length !== ids.length) {
+      throw new Error("Synonym not found");
+    }
+
+    const foundById = new Map(found.map((word) => [word.id, word]));
+    linked = ids.map((id) => toSynonymRef(foundById.get(id)!));
+  }
+
+  await db
+    .delete(vocabularySynonyms)
+    .where(
+      and(
+        eq(vocabularySynonyms.workspaceId, workspaceId),
+        or(
+          eq(vocabularySynonyms.wordId, wordId),
+          eq(vocabularySynonyms.synonymId, wordId),
+        ),
+      ),
+    );
+
+  if (ids.length > 0) {
+    await db.insert(vocabularySynonyms).values(
+      ids.map((synonymId) => ({
+        workspaceId,
+        ...orderedSynonymPair(wordId, synonymId),
+      })),
+    );
+  }
+
+  await db
+    .update(vocabularyWords)
+    .set({
+      synonyms: formatSynonymNames(linked) || null,
+      updatedAt: new Date(),
+    })
+    .where(eq(vocabularyWords.id, wordId));
+
+  const affectedIds = uniqueSynonymIds([...previousIds, ...ids, wordId]);
+  for (const id of affectedIds) {
+    revalidatePath(`/vocabulary/${id}`);
+    revalidatePath(`/vocabulary/${id}/edit`);
+  }
+  revalidatePath("/vocabulary");
 }
 
 async function canonicalizeWordTags(workspaceId: string, tags: string[]) {
@@ -222,7 +379,87 @@ export async function getVocabularyWord(id: string) {
     return null;
   }
 
-  return word;
+  const synonyms = await resolveSynonymsForWord(
+    word.id,
+    workspace.id,
+    word.synonyms,
+  );
+
+  return {
+    ...word,
+    synonymRefs: synonyms.linked,
+    unmatchedSynonyms: synonyms.unmatched,
+  };
+}
+
+export async function listVocabularySynonymOptions() {
+  const workspace = await getActiveWorkspace();
+  if (!workspace) {
+    return [] as VocabularySynonymRef[];
+  }
+
+  return listWorkspaceSynonymOptions(workspace.id);
+}
+
+export async function createSynonymWord(data: {
+  word: string;
+  meaning: string;
+  partOfSpeech?: string;
+}) {
+  const parsed = createSynonymWordSchema.parse(data);
+  const userId = await getCurrentUserId();
+  const workspace = await requireActiveWorkspace();
+
+  const existingId = await findDuplicateWordId(parsed.word, workspace.id);
+  if (existingId) {
+    const existing = await db.query.vocabularyWords.findFirst({
+      where: eq(vocabularyWords.id, existingId),
+      columns: { id: true, word: true },
+      with: {
+        meanings: {
+          columns: { meaning: true, isPrimary: true, sortOrder: true },
+          orderBy: [asc(wordMeanings.sortOrder)],
+        },
+      },
+    });
+
+    if (!existing) {
+      throw new Error("Word not found");
+    }
+
+    return { created: false, word: toSynonymRef(existing) };
+  }
+
+  const [word] = await db
+    .insert(vocabularyWords)
+    .values({
+      userId,
+      workspaceId: workspace.id,
+      word: parsed.word.trim(),
+      partOfSpeech: parsed.partOfSpeech || null,
+      synonyms: null,
+      notes: null,
+    })
+    .returning();
+
+  await db.insert(wordMeanings).values({
+    wordId: word.id,
+    meaning: parsed.meaning.trim(),
+    isPrimary: true,
+    sortOrder: 0,
+  });
+
+  revalidatePath("/vocabulary");
+  revalidatePath(`/vocabulary/${word.id}`);
+
+  return {
+    created: true,
+    word: {
+      id: word.id,
+      word: word.word,
+      meaning: parsed.meaning.trim(),
+    } satisfies VocabularySynonymRef,
+  };
 }
 
 export async function createVocabularyWord(data: VocabularyFormValues) {
@@ -242,12 +479,13 @@ export async function createVocabularyWord(data: VocabularyFormValues) {
       workspaceId: workspace.id,
       word: parsed.word,
       partOfSpeech: parsed.partOfSpeech || null,
-      synonyms: parsed.synonyms?.trim() || null,
+      synonyms: null,
       notes: parsed.notes || null,
     })
     .returning();
 
   await replaceWordRelations(word.id, payload);
+  await replaceSynonyms(word.id, workspace.id, parsed.synonymIds);
   await ensureWorkspaceCustomTags(workspace.id, tags);
 
   revalidatePath("/vocabulary");
@@ -273,13 +511,13 @@ export async function updateVocabularyWord(
     .set({
       word: parsed.word,
       partOfSpeech: parsed.partOfSpeech || null,
-      synonyms: parsed.synonyms?.trim() || null,
       notes: parsed.notes || null,
       updatedAt: new Date(),
     })
     .where(eq(vocabularyWords.id, id));
 
   await replaceWordRelations(id, payload);
+  await replaceSynonyms(id, workspace.id, parsed.synonymIds);
   await ensureWorkspaceCustomTags(workspace.id, tags);
 
   revalidatePath("/vocabulary");

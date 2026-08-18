@@ -4,19 +4,22 @@ import { Pencil, Star } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { LinkButton } from "@/components/ui/link-button";
+import { SynonymLinks } from "@/components/vocabulary/synonym-links";
 import { VocabularyNotesContent } from "@/components/vocabulary/vocabulary-notes-content";
 import {
   isNotesDocEmpty,
   parseVocabularyNotes,
 } from "@/lib/vocabulary/notes-content";
 import { getTagLabel, PARTS_OF_SPEECH } from "@/lib/vocabulary-tags";
+import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
 import { cn } from "@/lib/utils";
 
 type VocabularyPreviewProps = {
   id: string;
   word: string;
   partOfSpeech?: string | null;
-  synonyms?: string | null;
+  synonyms?: VocabularySynonymRef[];
+  unmatchedSynonyms?: string[];
   notes?: string | null;
   meanings: Array<{
     id: string;
@@ -38,7 +41,8 @@ export function VocabularyPreview({
   id,
   word,
   partOfSpeech,
-  synonyms,
+  synonyms = [],
+  unmatchedSynonyms = [],
   notes,
   meanings,
   examples,
@@ -116,12 +120,10 @@ export function VocabularyPreview({
             ))}
           </div>
           <h2 className="heading-md text-ink">{word}</h2>
-          {synonyms?.trim() ? (
-            <p className="text-sm text-muted-foreground sm:text-base">
-              <span className="font-medium text-ink/70">{t("synonyms")}: </span>
-              {synonyms.trim()}
-            </p>
-          ) : null}
+          <SynonymLinks
+            synonyms={synonyms}
+            unmatched={unmatchedSynonyms}
+          />
         </header>
 
         {primaryMeanings.length > 0 ? (
