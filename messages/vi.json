@@ -342,7 +342,9 @@
       "availableIn": "💡 Gợi ý sau {seconds}s",
       "showNow": "Hiện gợi ý ngay",
       "label": "Gợi ý",
-      "startsWith": "Bắt đầu bằng “{letter}”"
+      "startsWith": "Bắt đầu bằng “{letter}”",
+      "revealPrompt": "Vẫn chưa ra? Bạn có thể xem đáp án.",
+      "revealAnswer": "Hiện đáp án"
     },
     "empty": {
       "noWordsTitle": "Chưa có từ để luyện",

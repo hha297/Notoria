@@ -342,7 +342,9 @@
       "availableIn": "💡 Hint available in {seconds}s",
       "showNow": "Show hint now",
       "label": "Hint",
-      "startsWith": "Starts with “{letter}”"
+      "startsWith": "Starts with “{letter}”",
+      "revealPrompt": "Still stuck? You can reveal the full answer.",
+      "revealAnswer": "Reveal Answer"
     },
     "empty": {
       "noWordsTitle": "No vocabulary yet",

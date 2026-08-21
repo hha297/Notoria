@@ -28,6 +28,7 @@ import {
   type FillBlankItem,
 } from "@/lib/exercises/fill-blank";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
+import { hintInitialLetter } from "@/lib/exercises/hint";
 import { answersMatchAny, shuffleArray } from "@/lib/exercises/utils";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
@@ -55,6 +56,7 @@ export function FillBlankSession({
   const [index, setIndex] = useState(0);
   const [input, setInput] = useState("");
   const [revealed, setRevealed] = useState(false);
+  const [peeked, setPeeked] = useState(false);
   const [sessionComplete, setSessionComplete] = useState(false);
   const [score, setScore] = useState({ correct: 0, answered: 0 });
   const [generating, setGenerating] = useState(false);
@@ -84,6 +86,7 @@ export function FillBlankSession({
     setSessionComplete(false);
     setInput("");
     setRevealed(false);
+    setPeeked(false);
   }, []);
 
   const startExampleSession = useCallback(() => {
@@ -114,6 +117,7 @@ export function FillBlankSession({
   useEffect(() => {
     setInput("");
     setRevealed(false);
+    setPeeked(false);
   }, [index, itemIds]);
 
   const generateQuestions = useCallback(async () => {
@@ -206,7 +210,7 @@ export function FillBlankSession({
   const current = itemMap.get(itemIds[index] ?? "");
   const total = itemIds.length;
   const isCorrect = current
-    ? answersMatchAny(input, current.acceptableAnswers)
+    ? !peeked && answersMatchAny(input, current.acceptableAnswers)
     : false;
   const hasSession = total > 0;
 
@@ -218,6 +222,16 @@ export function FillBlankSession({
       answered: s.answered + 1,
     }));
   }, [current, input, revealed]);
+
+  const revealAnswer = useCallback(() => {
+    if (!current || revealed) return;
+    setPeeked(true);
+    setRevealed(true);
+    setScore((s) => ({
+      correct: s.correct,
+      answered: s.answered + 1,
+    }));
+  }, [current, revealed]);
 
   const next = useCallback(() => {
     if (index < total - 1) {
@@ -307,6 +321,7 @@ export function FillBlankSession({
             isCorrect={isCorrect}
             onInputChange={setInput}
             onCheck={check}
+            onRevealAnswer={revealAnswer}
           />
           <ExerciseNav
             t={t}
@@ -377,6 +392,7 @@ function FillBlankCard({
   isCorrect,
   onInputChange,
   onCheck,
+  onRevealAnswer,
 }: {
   item: FillBlankItem;
   input: string;
@@ -384,8 +400,10 @@ function FillBlankCard({
   isCorrect: boolean;
   onInputChange: (v: string) => void;
   onCheck: () => void;
+  onRevealAnswer: () => void;
 }) {
   const t = useTranslations("exercises.fillInBlank");
+  const tHint = useTranslations("exercises.timedHint");
   const tAi = useTranslations("exercises.ai");
   const blankMinWidth = Math.max(item.word.length + 2, 6);
   const expected = expectedFillBlankAnswer(item);
@@ -460,11 +478,21 @@ function FillBlankCard({
           </div>
         </div>
 
-        {item.meanings[0] && (
-          <ExerciseHint resetKey={item.id} answered={revealed}>
-            {item.meanings.join(" · ")}
-          </ExerciseHint>
-        )}
+        <ExerciseHint
+          resetKey={item.id}
+          answered={revealed}
+          correctAnswer={expected}
+          onRevealAnswer={onRevealAnswer}
+        >
+          <div className="space-y-1">
+            {item.meanings[0] ? (
+              <p>{item.meanings.join(" · ")}</p>
+            ) : null}
+            <p>
+              {tHint("startsWith", { letter: hintInitialLetter(expected) })}
+            </p>
+          </div>
+        </ExerciseHint>
 
         {revealed && (
           <div

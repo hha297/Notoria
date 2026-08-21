@@ -35,6 +35,7 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
   const [index, setIndex] = useState(0);
   const [input, setInput] = useState("");
   const [revealed, setRevealed] = useState(false);
+  const [peeked, setPeeked] = useState(false);
   const [sessionComplete, setSessionComplete] = useState(false);
   const [score, setScore] = useState({ correct: 0, answered: 0 });
 
@@ -56,6 +57,7 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
     setSessionComplete(false);
     setInput("");
     setRevealed(false);
+    setPeeked(false);
   }, [poolItems]);
 
   useEffect(() => {
@@ -65,11 +67,14 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
   useEffect(() => {
     setInput("");
     setRevealed(false);
+    setPeeked(false);
   }, [index, itemIds]);
 
   const current = itemMap.get(itemIds[index] ?? "");
   const total = itemIds.length;
-  const isCorrect = current ? answersMatchAny(input, current.acceptableAnswers) : false;
+  const isCorrect = current
+    ? !peeked && answersMatchAny(input, current.acceptableAnswers)
+    : false;
   const correctDisplay =
     current?.direction === "WORD_TO_MEANING"
       ? current.meanings.join(" · ")
@@ -80,6 +85,16 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
     setRevealed(true);
     setScore((s) => ({
       correct: s.correct + (answersMatchAny(input, current.acceptableAnswers) ? 1 : 0),
+      answered: s.answered + 1,
+    }));
+  };
+
+  const revealAnswer = () => {
+    if (!current || revealed) return;
+    setPeeked(true);
+    setRevealed(true);
+    setScore((s) => ({
+      correct: s.correct,
       answered: s.answered + 1,
     }));
   };
@@ -150,7 +165,12 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
                 {current.prompt}
               </p>
               <div className="mt-6">
-                <ExerciseHint resetKey={current.id} answered={revealed}>
+                <ExerciseHint
+                  resetKey={current.id}
+                  answered={revealed}
+                  correctAnswer={correctDisplay}
+                  onRevealAnswer={revealAnswer}
+                >
                   {tHint("startsWith", {
                     letter: hintInitialLetter(
                       current.direction === "WORD_TO_MEANING"

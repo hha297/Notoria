@@ -342,7 +342,9 @@
       "availableIn": "💡 Vihje saatavilla {seconds}s kuluttua",
       "showNow": "Näytä vihje nyt",
       "label": "Vihje",
-      "startsWith": "Alkaa merkillä “{letter}”"
+      "startsWith": "Alkaa merkillä “{letter}”",
+      "revealPrompt": "Vieläkö jumissa? Voit paljastaa koko vastauksen.",
+      "revealAnswer": "Näytä vastaus"
     },
     "empty": {
       "noWordsTitle": "Ei sanastoa vielä",

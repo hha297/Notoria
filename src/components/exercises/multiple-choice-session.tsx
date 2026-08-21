@@ -34,6 +34,7 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
   const [questions, setQuestions] = useState<MultipleChoiceQuestion[]>([]);
   const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
+  const [peeked, setPeeked] = useState(false);
   const [sessionComplete, setSessionComplete] = useState(false);
   const [score, setScore] = useState({ correct: 0, answered: 0 });
 
@@ -50,6 +51,7 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
     setQuestions(built);
     setIndex(0);
     setSelected(null);
+    setPeeked(false);
     setSessionComplete(false);
     setScore({ correct: 0, answered: 0 });
   }, [filteredWords, studyMode]);
@@ -60,18 +62,30 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
 
   useEffect(() => {
     setSelected(null);
+    setPeeked(false);
   }, [index, questions]);
 
   const current = questions[index];
   const total = questions.length;
-  const revealed = selected !== null;
-  const isCorrect = current ? selected === current.correctOption : false;
+  const revealed = selected !== null || peeked;
+  const isCorrect = Boolean(
+    current && !peeked && selected === current.correctOption,
+  );
 
   const pick = (option: string) => {
     if (!current || revealed) return;
     setSelected(option);
     setScore((s) => ({
       correct: s.correct + (option === current.correctOption ? 1 : 0),
+      answered: s.answered + 1,
+    }));
+  };
+
+  const revealAnswer = () => {
+    if (!current || revealed) return;
+    setPeeked(true);
+    setScore((s) => ({
+      correct: s.correct,
       answered: s.answered + 1,
     }));
   };
@@ -149,7 +163,12 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
                 {current.prompt}
               </p>
               <div className="mt-6">
-                <ExerciseHint resetKey={current.id} answered={revealed}>
+                <ExerciseHint
+                  resetKey={current.id}
+                  answered={revealed}
+                  correctAnswer={current.correctOption}
+                  onRevealAnswer={revealAnswer}
+                >
                   {tHint("startsWith", { letter: hintInitialLetter(current.correctOption) })}
                 </ExerciseHint>
               </div>
