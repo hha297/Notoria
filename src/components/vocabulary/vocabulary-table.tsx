@@ -4,7 +4,7 @@ import Link from "next/link";
 import { format, formatDistanceToNow } from "date-fns";
 import { useEffect, useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight, Download, Plus } from "lucide-react";
+import { ChevronLeft, ChevronRight, Download, Plus, Search } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
@@ -41,6 +41,7 @@ export type VocabularyWordRow = {
   partOfSpeech: string | null;
   notes?: string | null;
   updatedAt: string;
+  createdAt?: string;
   meanings: Array<{ meaning: string; isPrimary?: boolean }>;
   tags: Array<{ id: string; tag: string }>;
 };
@@ -54,6 +55,7 @@ type VocabularyTableProps = {
 };
 
 const GROUP_PAGE_SIZE = 20;
+const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 
 function buildPageList(current: number, total: number): Array<number | "ellipsis"> {
   if (total <= 7) {
@@ -87,6 +89,68 @@ function buildPageList(current: number, total: number): Array<number | "ellipsis
   return result;
 }
 
+const MEANING_PREVIEW_LIMIT = 5;
+
+function wordMeanings(word: VocabularyWordRow) {
+  const texts = word.meanings.map((item) => item.meaning).filter(Boolean);
+  return {
+    shown: texts.slice(0, MEANING_PREVIEW_LIMIT),
+    extra: Math.max(0, texts.length - MEANING_PREVIEW_LIMIT),
+  };
+}
+
+function WordTags({ tags }: { tags: VocabularyWordRow["tags"] }) {
+  const tTags = useTranslations("tags");
+
+  if (tags.length === 0) {
+    return <span className="text-muted-foreground">—</span>;
+  }
+
+  return (
+    <div className="flex flex-wrap gap-1">
+      {tags.slice(0, 3).map((tag) => (
+        <Badge
+          key={tag.id}
+          variant="outline"
+          className="h-5 max-w-full rounded-md border-hairline-cloud bg-muted/40 px-1.5 text-[11px] font-medium text-muted-foreground"
+        >
+          <span className="truncate">
+            {getTagLabel(tag.tag, (key) => tTags(key))}
+          </span>
+        </Badge>
+      ))}
+      {tags.length > 3 ? (
+        <Badge
+          variant="outline"
+          className="h-5 rounded-md border-hairline-cloud px-1.5 text-[11px] text-muted-foreground"
+        >
+          +{tags.length - 3}
+        </Badge>
+      ) : null}
+    </div>
+  );
+}
+
+function MeaningCell({ word }: { word: VocabularyWordRow }) {
+  const t = useTranslations("vocabulary");
+  const { shown, extra } = wordMeanings(word);
+
+  if (shown.length === 0) {
+    return <span className="text-muted-foreground">—</span>;
+  }
+
+  return (
+    <p className="min-w-0 text-sm leading-snug text-muted-foreground">
+      {shown.join(" · ")}
+      {extra > 0 ? (
+        <span className="ml-1 text-xs text-muted-foreground">
+          {t("moreMeanings", { count: extra })}
+        </span>
+      ) : null}
+    </p>
+  );
+}
+
 function VocabularyPosGroup({
   title,
   words,
@@ -95,7 +159,6 @@ function VocabularyPosGroup({
   words: VocabularyWordRow[];
 }) {
   const t = useTranslations("vocabulary");
-  const tTags = useTranslations("tags");
   const [page, setPage] = useState(1);
 
   const totalPages = Math.max(1, Math.ceil(words.length / GROUP_PAGE_SIZE));
@@ -115,11 +178,17 @@ function VocabularyPosGroup({
   const rangeEnd = Math.min(page * GROUP_PAGE_SIZE, words.length);
 
   return (
-    <section className="space-y-3">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="font-heading text-lg font-medium tracking-tight text-ink sm:text-xl">
-          {title}
-        </h2>
+    <section className="overflow-hidden rounded-xl border border-hairline-cloud bg-card">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-hairline-cloud bg-muted/30 px-3 py-2.5 sm:px-4">
+        <div className="flex min-w-0 items-center gap-2.5">
+          <span
+            className="h-4 w-1 shrink-0 rounded-full bg-accent-lime"
+            aria-hidden
+          />
+          <h2 className="font-heading text-lg font-medium tracking-tight text-ink sm:text-xl">
+            {title}
+          </h2>
+        </div>
         <p className="text-xs text-muted-foreground sm:text-sm">
           {showPagination
             ? t("groupPageRange", {
@@ -131,147 +200,105 @@ function VocabularyPosGroup({
         </p>
       </div>
 
-      <div className="space-y-3 md:hidden">
-        {pageWords.map((word) => {
-          const primaryMeanings = word.meanings.filter(
-            (item) => item.isPrimary !== false,
-          );
-          const displayMeanings =
-            primaryMeanings.length > 0 ? primaryMeanings : word.meanings;
-          const firstMeaning = displayMeanings[0]?.meaning;
-          const extraMeanings = displayMeanings.length - 1;
-
-          return (
-            <div
-              key={word.id}
-              className="rounded-xl border border-hairline-cloud bg-card p-4"
-            >
-              <div className="flex items-start justify-between gap-3">
-                <div className="min-w-0 space-y-1">
-                  <Link
-                    href={`/vocabulary/${word.id}`}
-                    className="block truncate text-base font-semibold text-ink underline-offset-4 hover:underline"
-                  >
-                    {word.word}
-                  </Link>
-                </div>
-                <VocabularyRowActions wordId={word.id} word={word.word} />
+      <div className="space-y-2 p-2 md:hidden">
+        {pageWords.map((word) => (
+          <div
+            key={word.id}
+            className="rounded-lg border border-hairline-cloud bg-background p-3 transition-colors hover:bg-muted/40"
+          >
+            <div className="flex items-start justify-between gap-2">
+              <div className="min-w-0">
+                <Link
+                  href={`/vocabulary/${word.id}`}
+                  className="block truncate text-[15px] font-semibold text-ink underline-offset-4 hover:underline"
+                >
+                  {word.word}
+                </Link>
               </div>
-
-              <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-                {firstMeaning ?? "—"}
-                {extraMeanings > 0 && (
-                  <span className="ml-1 text-xs">
-                    {t("moreMeanings", { count: extraMeanings })}
-                  </span>
-                )}
-              </p>
-
-              {word.tags.length > 0 && (
-                <div className="mt-3 flex flex-wrap gap-1">
-                  {word.tags.slice(0, 4).map((tag) => (
-                    <Badge key={tag.id} variant="secondary">
-                      {getTagLabel(tag.tag, (key) => tTags(key))}
-                    </Badge>
-                  ))}
-                  {word.tags.length > 4 && (
-                    <Badge variant="outline">+{word.tags.length - 4}</Badge>
-                  )}
-                </div>
-              )}
-
-              <p className="mt-3 text-xs text-muted-foreground">
-                {formatDistanceToNow(new Date(word.updatedAt), {
-                  addSuffix: true,
-                })}
-              </p>
+              <VocabularyRowActions wordId={word.id} word={word.word} />
             </div>
-          );
-        })}
+            <div className="mt-2">
+              <MeaningCell word={word} />
+            </div>
+            {word.tags.length > 0 ? (
+              <div className="mt-2">
+                <WordTags tags={word.tags} />
+              </div>
+            ) : null}
+            <p className="mt-2 text-[11px] text-muted-foreground">
+              {formatDistanceToNow(new Date(word.updatedAt), {
+                addSuffix: true,
+              })}
+            </p>
+          </div>
+        ))}
       </div>
 
-      <div className="data-table hidden md:block">
-        <table className="table-fixed">
+      <div className="hidden overflow-x-auto md:block">
+        <table className="w-full table-fixed border-collapse text-left">
           <colgroup>
             <col className="w-[22%]" />
-            <col />
-            <col className="w-[20%]" />
-            <col className="w-[14%]" />
-            <col className="w-[7rem]" />
+            <col className="w-[40%]" />
+            <col className="w-[22%]" />
+            <col className="w-[10%]" />
+            <col className="w-16" />
           </colgroup>
           <thead>
-            <tr>
-              <th>{t("columns.word")}</th>
-              <th>{t("columns.meaning")}</th>
-              <th>{t("columns.tags")}</th>
-              <th>{t("columns.updated")}</th>
-              <th>
+            <tr className="border-b border-hairline-cloud text-left">
+              <th className="px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2px] text-muted-foreground">
+                {t("columns.word")}
+              </th>
+              <th className="px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2px] text-muted-foreground">
+                {t("columns.meaning")}
+              </th>
+              <th className="px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2px] text-muted-foreground">
+                {t("columns.tags")}
+              </th>
+              <th className="px-4 py-2 text-[11px] font-semibold uppercase tracking-[0.2px] text-muted-foreground">
+                {t("columns.updated")}
+              </th>
+              <th className="px-3 py-2">
                 <span className="sr-only">{t("columns.actions")}</span>
               </th>
             </tr>
           </thead>
           <tbody>
-            {pageWords.map((word) => {
-              const primaryMeanings = word.meanings.filter(
-                (item) => item.isPrimary !== false,
-              );
-              const displayMeanings =
-                primaryMeanings.length > 0 ? primaryMeanings : word.meanings;
-              const firstMeaning = displayMeanings[0]?.meaning;
-              const extraMeanings = displayMeanings.length - 1;
-
-              return (
-                <tr key={word.id}>
-                  <td>
-                    <Link
-                      href={`/vocabulary/${word.id}`}
-                      className="block truncate font-semibold text-ink underline-offset-4 hover:underline"
-                    >
-                      {word.word}
-                    </Link>
-                  </td>
-                  <td className="min-w-0 text-muted-foreground">
-                    <span className="line-clamp-2">
-                      {firstMeaning ?? "—"}
-                      {extraMeanings > 0 && (
-                        <span className="ml-1 text-xs text-muted-foreground">
-                          {t("moreMeanings", { count: extraMeanings })}
-                        </span>
-                      )}
-                    </span>
-                  </td>
-                  <td>
-                    <div className="flex flex-wrap gap-1">
-                      {word.tags.slice(0, 3).map((tag) => (
-                        <Badge key={tag.id} variant="secondary">
-                          {getTagLabel(tag.tag, (key) => tTags(key))}
-                        </Badge>
-                      ))}
-                      {word.tags.length > 3 && (
-                        <Badge variant="outline">
-                          +{word.tags.length - 3}
-                        </Badge>
-                      )}
-                    </div>
-                  </td>
-                  <td className="whitespace-nowrap text-sm text-muted-foreground">
-                    {formatDistanceToNow(new Date(word.updatedAt), {
-                      addSuffix: true,
-                    })}
-                  </td>
-                  <td>
-                    <VocabularyRowActions wordId={word.id} word={word.word} />
-                  </td>
-                </tr>
-              );
-            })}
+            {pageWords.map((word) => (
+              <tr
+                key={word.id}
+                className="border-b border-hairline-cloud last:border-b-0 transition-colors hover:bg-muted/40"
+              >
+                <td className="px-4 py-2.5 align-middle">
+                  <Link
+                    href={`/vocabulary/${word.id}`}
+                    className="block truncate text-[15px] font-semibold text-ink underline-offset-4 hover:underline"
+                  >
+                    {word.word}
+                  </Link>
+                </td>
+                <td className="min-w-0 px-4 py-2.5 align-middle">
+                  <MeaningCell word={word} />
+                </td>
+                <td className="px-4 py-2.5 align-middle">
+                  <WordTags tags={word.tags} />
+                </td>
+                <td className="whitespace-nowrap px-4 py-2.5 align-middle text-xs text-muted-foreground">
+                  {formatDistanceToNow(new Date(word.updatedAt), {
+                    addSuffix: true,
+                  })}
+                </td>
+                <td className="px-2 py-2.5 align-middle">
+                  <VocabularyRowActions wordId={word.id} word={word.word} />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
 
       {showPagination ? (
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-xs text-muted-foreground sm:text-sm">
+        <div className="flex flex-col gap-2 border-t border-hairline-cloud px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:px-4">
+          <p className="text-xs text-muted-foreground">
             {t("pageOf", { page, totalPages })}
           </p>
           <div className="flex flex-wrap items-center gap-1">
@@ -279,7 +306,7 @@ function VocabularyPosGroup({
               type="button"
               variant="outline"
               size="sm"
-              className="h-9 px-2 sm:h-8"
+              className="h-8 px-2"
               onClick={() => setPage((current) => Math.max(1, current - 1))}
               disabled={page <= 1}
               aria-label={t("previousPage")}
@@ -301,7 +328,7 @@ function VocabularyPosGroup({
                   variant={item === page ? "default" : "outline"}
                   size="sm"
                   className={cn(
-                    "h-9 min-w-9 px-2 sm:h-8",
+                    "h-8 min-w-8 px-2",
                     item === page && "pointer-events-none",
                   )}
                   onClick={() => setPage(item)}
@@ -316,7 +343,7 @@ function VocabularyPosGroup({
               type="button"
               variant="outline"
               size="sm"
-              className="h-9 px-2 sm:h-8"
+              className="h-8 px-2"
               onClick={() =>
                 setPage((current) => Math.min(totalPages, current + 1))
               }
@@ -359,6 +386,20 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
   }, [words]);
 
   const tagFilterGroups = TAG_PICKER_GROUPS;
+
+  const stats = useMemo(() => {
+    const weekAgo = Date.now() - WEEK_MS;
+    let nouns = 0;
+    let verbs = 0;
+    let recent = 0;
+    for (const word of words) {
+      if (word.partOfSpeech === "noun") nouns += 1;
+      if (word.partOfSpeech === "verb") verbs += 1;
+      const created = word.createdAt ?? word.updatedAt;
+      if (new Date(created).getTime() >= weekAgo) recent += 1;
+    }
+    return { total: words.length, nouns, verbs, recent };
+  }, [words]);
 
   const filteredWords = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -448,6 +489,10 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
   }
 
   const sortValue = `${sortField}:${sortDirection}`;
+  const filtersActive =
+    Boolean(search.trim()) ||
+    partOfSpeechFilter !== "all" ||
+    tagFilter !== "all";
 
   const exportWords = useMemo((): VocabularyExportSourceWord[] => {
     return filteredWords.map((word) => ({
@@ -511,13 +556,20 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
     return groups;
   }, [filteredWords, t, tPos]);
 
+  const statItems = [
+    { label: t("stats.total"), value: stats.total },
+    { label: tPos("noun"), value: stats.nouns },
+    { label: tPos("verb"), value: stats.verbs },
+    { label: t("stats.recent"), value: stats.recent },
+  ];
+
   return (
-    <PageShell>
+    <PageShell className="space-y-5">
       <PageHeader
-        eyebrow={t("title")}
+        eyebrow={workspaceName}
         title={t("title")}
         highlight={t("bank")}
-        description={t("formDescription")}
+        description={t("groupCount", { count: words.length })}
       >
         <ShowTutorialButton section="vocabulary" />
         <Button
@@ -535,18 +587,48 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
         </LinkButton>
       </PageHeader>
 
-      <div className="space-y-4">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
-          <Input
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder={t("searchPlaceholder")}
-            className="h-10 lg:h-8 lg:max-w-sm"
-          />
+      <div className="grid grid-cols-2 overflow-hidden rounded-xl border border-hairline-cloud sm:grid-cols-4">
+        {statItems.map((item, index) => (
+          <div
+            key={item.label}
+            className={cn(
+              "bg-card px-4 py-3",
+              index % 2 === 1 && "border-l border-hairline-cloud",
+              index > 0 && "sm:border-l sm:border-hairline-cloud",
+              index >= 2 && "border-t border-hairline-cloud sm:border-t-0",
+            )}
+          >
+            <p className="font-heading text-xl font-medium leading-none text-ink sm:text-2xl">
+              {item.value}
+            </p>
+            <p className="mt-1.5 text-xs font-medium text-muted-foreground">
+              {item.label}
+            </p>
+          </div>
+        ))}
+      </div>
 
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 lg:flex lg:flex-wrap">
-            <Select value={partOfSpeechFilter} onValueChange={(value) => value && setPartOfSpeechFilter(value)}>
-              <SelectTrigger size="sm" className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-40">
+      <div className="space-y-4">
+        <div className="flex flex-col gap-2 rounded-xl border border-hairline-cloud bg-card p-2 sm:flex-row sm:items-center">
+          <div className="relative min-w-0 flex-1">
+            <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder={t("searchPlaceholder")}
+              className="h-9 border-0 bg-transparent pl-9 shadow-none focus-visible:shadow-none"
+            />
+          </div>
+
+          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-1.5">
+            <Select
+              value={partOfSpeechFilter}
+              onValueChange={(value) => value && setPartOfSpeechFilter(value)}
+            >
+              <SelectTrigger
+                size="sm"
+                className="h-9 w-full min-w-0 sm:min-w-36"
+              >
                 <SelectValue placeholder={t("filterPartOfSpeech")}>
                   {partOfSpeechFilter === "all"
                     ? t("filterPartOfSpeech")
@@ -563,8 +645,14 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
               </SelectContent>
             </Select>
 
-            <Select value={tagFilter} onValueChange={(value) => value && setTagFilter(value)}>
-              <SelectTrigger size="sm" className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-35">
+            <Select
+              value={tagFilter}
+              onValueChange={(value) => value && setTagFilter(value)}
+            >
+              <SelectTrigger
+                size="sm"
+                className="h-9 w-full min-w-0 sm:min-w-32"
+              >
                 <SelectValue placeholder={t("columns.tags")}>
                   {tagFilter === "all"
                     ? t("columns.tags")
@@ -610,26 +698,42 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
                 setSortDirection(direction);
               }}
             >
-              <SelectTrigger size="sm" className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-45">
+              <SelectTrigger
+                size="sm"
+                className="h-9 w-full min-w-0 sm:min-w-40"
+              >
                 <SelectValue placeholder={t("sortBy")}>
                   {getSortLabel(sortValue)}
                 </SelectValue>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="updated:desc">{t("sortUpdated")}</SelectItem>
-                <SelectItem value="word:asc">{t("sortWord")} ({t("sortAsc")})</SelectItem>
-                <SelectItem value="word:desc">{t("sortWord")} ({t("sortDesc")})</SelectItem>
+                <SelectItem value="word:asc">
+                  {t("sortWord")} ({t("sortAsc")})
+                </SelectItem>
+                <SelectItem value="word:desc">
+                  {t("sortWord")} ({t("sortDesc")})
+                </SelectItem>
               </SelectContent>
             </Select>
           </div>
         </div>
 
+        {filtersActive ? (
+          <p className="-mt-2 text-xs text-muted-foreground">
+            {t("shownOfTotal", {
+              shown: filteredWords.length,
+              total: words.length,
+            })}
+          </p>
+        ) : null}
+
         {filteredWords.length === 0 ? (
-          <div className="empty-state">
+          <div className="empty-state py-12">
             <p className="text-muted-foreground">{t("noResults")}</p>
           </div>
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-4">
             {groupedWords.map((group) => (
               <VocabularyPosGroup
                 key={`${group.key}:${search}:${partOfSpeechFilter}:${tagFilter}:${sortValue}`}

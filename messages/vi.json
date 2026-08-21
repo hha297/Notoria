@@ -180,6 +180,11 @@
     "sortAsc": "A → Z",
     "sortDesc": "Z → A",
     "noResults": "Không tìm thấy từ nào khớp bộ lọc",
+    "shownOfTotal": "{shown} / {total}",
+    "stats": {
+      "total": "Tổng",
+      "recent": "Tuần này"
+    },
     "uncategorizedPos": "Chưa phân loại",
     "groupCount": "{count, plural, other {# từ}}",
     "groupPageRange": "{start}–{end} / {count}",
@@ -337,7 +342,9 @@
       "availableIn": "💡 Gợi ý sau {seconds}s",
       "showNow": "Hiện gợi ý ngay",
       "label": "Gợi ý",
-      "startsWith": "Bắt đầu bằng “{letter}”"
+      "startsWith": "Bắt đầu bằng “{letter}”",
+      "revealPrompt": "Vẫn chưa ra? Bạn có thể xem đáp án.",
+      "revealAnswer": "Hiện đáp án"
     },
     "empty": {
       "noWordsTitle": "Chưa có từ để luyện",

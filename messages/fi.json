@@ -180,6 +180,11 @@
     "sortAsc": "A → Ö",
     "sortDesc": "Ö → A",
     "noResults": "Yksikään sana ei vastaa suodattimia",
+    "shownOfTotal": "{shown} / {total}",
+    "stats": {
+      "total": "Yhteensä",
+      "recent": "Tällä viikolla"
+    },
     "uncategorizedPos": "Luokittelematon",
     "groupCount": "{count, plural, one {# sana} other {# sanaa}}",
     "groupPageRange": "{start}–{end} / {count}",
@@ -337,7 +342,9 @@
       "availableIn": "💡 Vihje saatavilla {seconds}s kuluttua",
       "showNow": "Näytä vihje nyt",
       "label": "Vihje",
-      "startsWith": "Alkaa merkillä “{letter}”"
+      "startsWith": "Alkaa merkillä “{letter}”",
+      "revealPrompt": "Vieläkö jumissa? Voit paljastaa koko vastauksen.",
+      "revealAnswer": "Näytä vastaus"
     },
     "empty": {
       "noWordsTitle": "Ei sanastoa vielä",

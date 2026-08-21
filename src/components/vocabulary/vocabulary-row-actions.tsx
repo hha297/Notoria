@@ -46,21 +46,25 @@ export function VocabularyRowActions({ wordId, word }: VocabularyRowActionsProps
 
   return (
     <>
-      <div className="flex justify-end gap-1">
+      <div className="flex justify-end gap-0.5">
         <Link
           href={`/vocabulary/${wordId}/edit`}
-          className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }))}
+          className={cn(
+            buttonVariants({ variant: "ghost", size: "icon-sm" }),
+            "text-muted-foreground hover:text-ink",
+          )}
         >
-          <Pencil className="size-4" />
+          <Pencil className="size-3.5" />
           <span className="sr-only">{t("edit")}</span>
         </Link>
         <Button
           variant="ghost"
           size="icon-sm"
+          className="text-muted-foreground hover:text-ink"
           onClick={() => setDeleteOpen(true)}
           disabled={isPending}
         >
-          <Trash2 className="size-4" />
+          <Trash2 className="size-3.5" />
           <span className="sr-only">{t("delete")}</span>
         </Button>
       </div>

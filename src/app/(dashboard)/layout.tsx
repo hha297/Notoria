@@ -78,7 +78,7 @@ export default async function DashboardLayout({
             snapshot={snapshot}
           />
           <main className="flex-1 overflow-auto bg-background px-4 py-6 sm:px-6 sm:py-8">
-            <div className="mx-auto w-full max-w-6xl">{children}</div>
+            <div className="mx-auto w-full max-w-7xl">{children}</div>
           </main>
         </SidebarInset>
       </SidebarProvider>

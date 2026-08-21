@@ -23,7 +23,7 @@ export function VocabularyView({ words, workspaceName }: VocabularyViewProps) {
     return (
       <PageShell>
         <PageHeader
-          eyebrow={t("title")}
+          eyebrow={workspaceName}
           title={t("title")}
           highlight={t("bank")}
           description={t("formDescription")}

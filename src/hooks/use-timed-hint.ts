@@ -8,7 +8,7 @@ export function useTimedHint(answered: boolean) {
   const [shown, setShown] = useState(false);
 
   useEffect(() => {
-    if (shown || answered) return;
+    if (answered) return;
     if (secondsLeft <= 0) {
       setShown(true);
       return;
@@ -19,11 +19,14 @@ export function useTimedHint(answered: boolean) {
     }, 1000);
 
     return () => window.clearTimeout(timer);
-  }, [answered, secondsLeft, shown]);
+  }, [answered, secondsLeft]);
 
   const showNow = useCallback(() => {
     setShown(true);
   }, []);
 
-  return { secondsLeft, shown, showNow };
+  const hintVisible = shown || (secondsLeft <= 0 && !answered);
+  const canRevealAnswer = hintVisible && !answered;
+
+  return { secondsLeft, shown, showNow, hintVisible, canRevealAnswer };
 }
