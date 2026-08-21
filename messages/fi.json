@@ -180,6 +180,11 @@
     "sortAsc": "A → Ö",
     "sortDesc": "Ö → A",
     "noResults": "Yksikään sana ei vastaa suodattimia",
+    "shownOfTotal": "{shown} / {total}",
+    "stats": {
+      "total": "Yhteensä",
+      "recent": "Tällä viikolla"
+    },
     "uncategorizedPos": "Luokittelematon",
     "groupCount": "{count, plural, one {# sana} other {# sanaa}}",
     "groupPageRange": "{start}–{end} / {count}",

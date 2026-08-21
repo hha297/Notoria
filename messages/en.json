@@ -180,6 +180,11 @@
     "sortAsc": "A → Z",
     "sortDesc": "Z → A",
     "noResults": "No words match your filters",
+    "shownOfTotal": "{shown} of {total}",
+    "stats": {
+      "total": "Total",
+      "recent": "This week"
+    },
     "uncategorizedPos": "Uncategorized",
     "groupCount": "{count, plural, one {# word} other {# words}}",
     "groupPageRange": "{start}–{end} of {count}",

@@ -39,6 +39,7 @@ export default async function VocabularyPage() {
       isPrimary: meaning.isPrimary,
     })),
     tags: word.tags.map((tag) => ({ id: tag.id, tag: tag.tag })),
+    createdAt: word.createdAt.toISOString(),
   }));
 
   return (
