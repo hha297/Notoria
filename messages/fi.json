@@ -129,7 +129,7 @@
     "optional": "valinnainen",
     "tags": "Tunnisteet",
     "selectTags": "Valitse tunnisteet",
-    "searchOrCreateTags": "Hae tai luo tunnisteita…",
+    "searchOrCreateTags": "Hae tai luo omia tunnisteita…",
     "createTag": "Luo “{name}”",
     "noMatchingTags": "Ei vastaavia tunnisteita",
     "createCustomTag": "Luo oma tunniste",

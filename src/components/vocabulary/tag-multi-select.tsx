@@ -16,7 +16,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { cn } from "@/lib/utils";
 import {
   createActiveWorkspaceTag,
@@ -30,10 +29,10 @@ import {
   getTagLabel,
   isCustomTagKey,
   isValidCustomTagName,
-  listTagOptions,
+  listBuiltinTagOptions,
+  listCustomTagOptions,
   TAG_PICKER_GROUPS,
   uniqueCustomTagNames,
-  type VocabularyTagGroup,
   type VocabularyTagOption,
 } from "@/lib/vocabulary-tags";
 
@@ -46,8 +45,6 @@ type TagMultiSelectProps = {
   onCustomTagsChange: (tags: string[]) => void;
 };
 
-const GROUP_ORDER: VocabularyTagGroup[] = [...TAG_PICKER_GROUPS, "custom"];
-
 function tagMatchesQuery(
   option: VocabularyTagOption,
   query: string,
@@ -58,12 +55,11 @@ function tagMatchesQuery(
   return (
     label.toLowerCase().includes(q) ||
     option.id.toLowerCase().includes(q) ||
-    (isCustomTagKey(option.id) &&
-      getCustomTagName(option.id).toLowerCase().includes(q))
+    getCustomTagName(option.id).toLowerCase().includes(q)
   );
 }
 
-function findExactTagMatch(
+function findExactCustomMatch(
   options: VocabularyTagOption[],
   query: string,
   getLabel: (option: VocabularyTagOption) => string,
@@ -73,9 +69,10 @@ function findExactTagMatch(
 
   return options.find((option) => {
     const label = getLabel(option).toLowerCase();
-    if (label === q || option.id.toLowerCase() === q) return true;
     return (
-      isCustomTagKey(option.id) && getCustomTagName(option.id).toLowerCase() === q
+      label === q ||
+      option.id.toLowerCase() === q ||
+      getCustomTagName(option.id).toLowerCase() === q
     );
   });
 }
@@ -120,24 +117,29 @@ export function TagMultiSelect({
     return getTagLabel(option.id, (key) => t(key));
   }
 
-  const options = useMemo(() => listTagOptions(customTags), [customTags]);
+  const builtinGroups = useMemo(() => {
+    const options = listBuiltinTagOptions();
+    return TAG_PICKER_GROUPS.map((group) => ({
+      group,
+      options: options.filter((option) => option.group === group),
+    })).filter((item) => item.options.length > 0);
+  }, []);
 
-  const filtered = useMemo(() => {
-    return options.filter((option) =>
+  const customOptions = useMemo(
+    () => listCustomTagOptions(customTags),
+    [customTags],
+  );
+
+  const filteredCustom = useMemo(() => {
+    return customOptions.filter((option) =>
       tagMatchesQuery(option, query, optionLabel(option)),
     );
-  }, [options, query, t]);
+  }, [customOptions, query, t]);
 
-  const grouped = useMemo(() => {
-    return GROUP_ORDER.map((group) => ({
-      group,
-      options: filtered.filter((option) => option.group === group),
-    })).filter((item) => item.options.length > 0);
-  }, [filtered]);
-
-  const exactMatch = findExactTagMatch(options, query, optionLabel);
+  const exactMatch = findExactCustomMatch(customOptions, query, optionLabel);
   const canCreate = isValidCustomTagName(query) && !exactMatch && !busy;
-  const canSubmitQuery = Boolean(query.trim()) && !busy && (canCreate || Boolean(exactMatch));
+  const canSubmitQuery =
+    Boolean(query.trim()) && !busy && (canCreate || Boolean(exactMatch));
 
   function setTagChecked(tag: string, checked: boolean) {
     if (checked) {
@@ -158,8 +160,6 @@ export function TagMultiSelect({
 
   function toggleTag(tag: string) {
     setTagChecked(tag, !value.includes(tag));
-    setQuery("");
-    inputRef.current?.focus();
   }
 
   async function handleCreateFromQuery() {
@@ -218,8 +218,8 @@ export function TagMultiSelect({
         selectTag(exactMatch.id);
         return;
       }
-      if (filtered.length === 1 && !canCreate) {
-        selectTag(filtered[0]!.id);
+      if (filteredCustom.length === 1 && !canCreate) {
+        selectTag(filteredCustom[0]!.id);
         return;
       }
       if (isValidCustomTagName(query)) {
@@ -228,8 +228,11 @@ export function TagMultiSelect({
       return;
     }
 
-    if (event.key === "Backspace" && query.length === 0 && value.length > 0) {
-      onChange(value.slice(0, -1));
+    if (event.key === "Backspace" && query.length === 0) {
+      const lastCustom = [...value].reverse().find((tag) => isCustomTagKey(tag));
+      if (lastCustom) {
+        onChange(value.filter((tag) => tag !== lastCustom));
+      }
     }
   }
 
@@ -302,164 +305,202 @@ export function TagMultiSelect({
     }
   }
 
+  const selectedCustom = value.filter((tag) => isCustomTagKey(tag));
+
   return (
-    <div className="space-y-2">
-      <label className="text-sm font-medium">{tv("tags")}</label>
-
-      <div className="overflow-hidden rounded-lg border border-hairline-cloud bg-card">
-        <div className="flex items-start gap-2 px-3 py-2">
-          <div
-            className="flex min-h-10 min-w-0 flex-1 cursor-text flex-wrap items-center gap-1.5"
-            onClick={() => inputRef.current?.focus()}
-          >
-            {value.map((tag) => (
-              <Badge
-                key={tag}
-                variant="secondary"
-                className="h-6 gap-0.5 pr-1"
-              >
-                {getTagLabel(tag, (key) => t(key))}
-                <button
-                  type="button"
-                  className="rounded-sm p-0.5 text-on-primary/70 transition-colors hover:text-on-primary"
-                  aria-label={`Remove ${getTagLabel(tag, (key) => t(key))}`}
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    setTagChecked(tag, false);
-                  }}
-                >
-                  <X className="size-3" />
-                </button>
-              </Badge>
-            ))}
-            <Input
-              ref={inputRef}
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              onKeyDown={handleInputKeyDown}
-              placeholder={
-                value.length === 0 ? tv("searchOrCreateTags") : tv("selectTags")
-              }
-              className="h-7 min-w-32 flex-1 border-0 bg-transparent px-0 shadow-none focus-visible:border-0 focus-visible:ring-0 focus-visible:shadow-none"
-              disabled={busy}
-            />
-          </div>
-          <Button
-            type="button"
-            variant="outline"
-            size="sm"
-            className="mt-1.5 shrink-0"
-            onClick={handleAdd}
-            disabled={!canSubmitQuery}
-          >
-            {isCreating ? (
-              <Loader2 className="size-3.5 animate-spin" />
-            ) : (
-              <Plus className="size-3.5" />
-            )}
-            {tv("addCustomTag")}
-          </Button>
-        </div>
-
-        <div className="border-t border-hairline-cloud">
-          <ScrollArea className="h-56">
-            <div className="space-y-3 px-3 py-3">
-              {canCreate ? (
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-full justify-start gap-2 text-ink"
-                  onClick={() => void handleCreateFromQuery()}
-                  disabled={busy}
-                >
-                  <Plus className="size-4" />
-                  {tv("createTag", { name: query.trim() })}
-                </Button>
-              ) : null}
-
-              {grouped.length === 0 && !canCreate ? (
-                <p className="px-1 py-2 text-sm text-muted-foreground">
-                  {tv("noMatchingTags")}
+    <div className="space-y-4">
+      <div className="space-y-2">
+        <Label>{tv("tags")}</Label>
+        <div className="overflow-hidden rounded-lg border border-hairline-cloud bg-card">
+          <div className="space-y-3 px-3 py-3">
+            {builtinGroups.map((item) => (
+              <div key={item.group} className="space-y-1">
+                <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+                  {t(`groups.${item.group}`)}
                 </p>
+                <div className="grid gap-0.5 sm:grid-cols-2">
+                  {item.options.map((option) => {
+                    const checked = value.includes(option.id);
+                    return (
+                      <label
+                        key={option.id}
+                        htmlFor={`tag-${option.id}`}
+                        className={cn(
+                          "flex cursor-pointer items-center gap-2 rounded-md px-2 py-1 text-sm transition-colors hover:bg-muted/60",
+                          checked && "bg-accent-lime/10",
+                        )}
+                      >
+                        <input
+                          id={`tag-${option.id}`}
+                          type="checkbox"
+                          checked={checked}
+                          onChange={() => toggleTag(option.id)}
+                          disabled={busy}
+                          className="size-3.5 shrink-0 rounded border-input accent-accent-lime"
+                        />
+                        <span
+                          className={cn(
+                            "truncate",
+                            checked
+                              ? "font-medium text-ink"
+                              : "text-muted-foreground",
+                          )}
+                        >
+                          {optionLabel(option)}
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="custom-tags-search">
+          {t("groups.custom")}{" "}
+          <span className="font-normal text-muted-foreground">
+            ({tCommon("optional")})
+          </span>
+        </Label>
+        <div className="overflow-hidden rounded-lg border border-hairline-cloud bg-card">
+          <div className="flex items-start gap-2 px-3 py-2">
+            <div
+              className="flex min-h-10 min-w-0 flex-1 cursor-text flex-wrap items-center gap-1.5"
+              onClick={() => inputRef.current?.focus()}
+            >
+              {selectedCustom.map((tag) => (
+                <Badge
+                  key={tag}
+                  variant="secondary"
+                  className="h-6 gap-0.5 pr-1"
+                >
+                  {getTagLabel(tag, (key) => t(key))}
+                  <button
+                    type="button"
+                    className="rounded-sm p-0.5 text-on-primary/70 transition-colors hover:text-on-primary"
+                    aria-label={`Remove ${getTagLabel(tag, (key) => t(key))}`}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      setTagChecked(tag, false);
+                    }}
+                  >
+                    <X className="size-3" />
+                  </button>
+                </Badge>
+              ))}
+              <Input
+                id="custom-tags-search"
+                ref={inputRef}
+                value={query}
+                onChange={(event) => setQuery(event.target.value)}
+                onKeyDown={handleInputKeyDown}
+                placeholder={tv("searchOrCreateTags")}
+                className="h-7 min-w-32 flex-1 border-0 bg-transparent px-0 shadow-none focus-visible:border-0 focus-visible:ring-0 focus-visible:shadow-none"
+                disabled={busy}
+              />
+            </div>
+            <Button
+              type="button"
+              variant="outline"
+              size="sm"
+              className="mt-1.5 shrink-0"
+              onClick={handleAdd}
+              disabled={!canSubmitQuery}
+            >
+              {isCreating ? (
+                <Loader2 className="size-3.5 animate-spin" />
               ) : (
-                grouped.map((item) => (
-                  <div key={item.group} className="space-y-1">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                      {t(`groups.${item.group}`)}
-                    </p>
-                    <div className="grid gap-0.5 sm:grid-cols-2">
-                      {item.options.map((option) => {
-                        const checked = value.includes(option.id);
-                        const isCustom = option.group === "custom";
-                        return (
-                          <div
-                            key={option.id}
+                <Plus className="size-3.5" />
+              )}
+              {tv("addCustomTag")}
+            </Button>
+          </div>
+
+          <div className="border-t border-hairline-cloud">
+            <div className="max-h-48 overflow-y-auto">
+              <div className="space-y-1 px-3 py-2">
+                {canCreate ? (
+                  <Button
+                    type="button"
+                    variant="ghost"
+                    size="sm"
+                    className="h-8 w-full justify-start gap-2 text-ink"
+                    onClick={() => void handleCreateFromQuery()}
+                    disabled={busy}
+                  >
+                    <Plus className="size-4" />
+                    {tv("createTag", { name: query.trim() })}
+                  </Button>
+                ) : null}
+
+                {filteredCustom.length === 0 && !canCreate ? (
+                  <p className="px-1 py-1.5 text-sm text-muted-foreground">
+                    {customOptions.length === 0
+                      ? tSettings("noCustomTags")
+                      : tv("noMatchingTags")}
+                  </p>
+                ) : (
+                  filteredCustom.map((option) => {
+                    const checked = value.includes(option.id);
+                    return (
+                      <div
+                        key={option.id}
+                        className={cn(
+                          "flex items-center gap-1 rounded-md px-1 transition-colors hover:bg-muted/60",
+                          checked && "bg-muted/50",
+                        )}
+                      >
+                        <button
+                          type="button"
+                          className="flex min-w-0 flex-1 items-center px-1 py-1.5 text-left text-sm"
+                          onClick={() => toggleTag(option.id)}
+                          disabled={busy}
+                        >
+                          <span
                             className={cn(
-                              "flex items-center gap-1 rounded-md px-1 py-0.5 transition-colors hover:bg-muted/60",
-                              checked && "bg-accent-lime/10",
+                              "min-w-0 flex-1 truncate font-medium",
+                              checked ? "text-ink" : "text-ink/90",
                             )}
                           >
-                            <label
-                              htmlFor={`tag-${option.id}`}
-                              className="flex min-w-0 flex-1 cursor-pointer items-center gap-2 px-1 py-1 text-sm"
-                            >
-                              <input
-                                id={`tag-${option.id}`}
-                                type="checkbox"
-                                checked={checked}
-                                onChange={() => toggleTag(option.id)}
-                                disabled={busy}
-                                className="size-3.5 shrink-0 rounded border-input accent-accent-lime"
-                              />
-                              <span
-                                className={cn(
-                                  "truncate",
-                                  checked
-                                    ? "font-medium text-ink"
-                                    : "text-muted-foreground",
-                                )}
-                              >
-                                {optionLabel(option)}
-                              </span>
-                            </label>
-                            {isCustom ? (
-                              <div className="flex shrink-0 items-center">
-                                <Button
-                                  type="button"
-                                  variant="ghost"
-                                  size="icon-xs"
-                                  className="text-muted-foreground"
-                                  aria-label={tSettings("renameTag")}
-                                  disabled={busy}
-                                  onClick={() => openEdit(option)}
-                                >
-                                  <Pencil />
-                                </Button>
-                                <Button
-                                  type="button"
-                                  variant="ghost"
-                                  size="icon-xs"
-                                  className="text-muted-foreground hover:text-destructive"
-                                  aria-label={tCommon("delete")}
-                                  disabled={busy}
-                                  onClick={() =>
-                                    setDeletingTag(getCustomTagName(option.id))
-                                  }
-                                >
-                                  <Trash2 />
-                                </Button>
-                              </div>
-                            ) : null}
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                ))
-              )}
+                            {optionLabel(option)}
+                          </span>
+                        </button>
+                        <div className="flex shrink-0 items-center">
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-xs"
+                            className="text-muted-foreground"
+                            aria-label={tSettings("renameTag")}
+                            disabled={busy}
+                            onClick={() => openEdit(option)}
+                          >
+                            <Pencil />
+                          </Button>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="icon-xs"
+                            className="text-muted-foreground hover:text-destructive"
+                            aria-label={tCommon("delete")}
+                            disabled={busy}
+                            onClick={() =>
+                              setDeletingTag(getCustomTagName(option.id))
+                            }
+                          >
+                            <Trash2 />
+                          </Button>
+                        </div>
+                      </div>
+                    );
+                  })
+                )}
+              </div>
             </div>
-          </ScrollArea>
+          </div>
         </div>
       </div>
 
