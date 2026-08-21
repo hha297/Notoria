@@ -129,7 +129,7 @@
     "optional": "optional",
     "tags": "Tags",
     "selectTags": "Select tags",
-    "searchOrCreateTags": "Search or create tags…",
+    "searchOrCreateTags": "Search or create custom tags…",
     "createTag": "Create “{name}”",
     "noMatchingTags": "No matching tags",
     "createCustomTag": "Create custom tag",

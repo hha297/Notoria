@@ -129,7 +129,7 @@
     "optional": "không bắt buộc",
     "tags": "Thẻ",
     "selectTags": "Chọn thẻ",
-    "searchOrCreateTags": "Tìm hoặc tạo thẻ…",
+    "searchOrCreateTags": "Tìm hoặc tạo thẻ riêng…",
     "createTag": "Tạo “{name}”",
     "noMatchingTags": "Không có thẻ phù hợp",
     "createCustomTag": "Tạo thẻ riêng",
