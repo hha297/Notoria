@@ -1,4 +1,5 @@
 import type { JSONContent } from "@tiptap/react";
+import { stripTransientImages } from "@/lib/editor/images";
 import {
   EMPTY_WRITING_META,
   parseWritingMeta,
@@ -226,7 +227,7 @@ export function serializeWritingContent(
   return {
     mode: "rich_document",
     version: WRITING_CONTENT_VERSION,
-    doc: state.doc,
+    doc: stripTransientImages(state.doc),
     meta,
   };
 }

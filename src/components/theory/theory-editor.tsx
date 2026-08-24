@@ -56,6 +56,7 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
   const [description, setDescription] = useState(parsed.description);
   const [doc, setDoc] = useState<JSONContent>(parsed.doc);
   const [isSaving, setIsSaving] = useState(false);
+  const [imageUploading, setImageUploading] = useState(false);
   const [isAutosaving, setIsAutosaving] = useState(false);
 
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -244,6 +245,7 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
                 setDoc(next);
                 scheduleAutosave();
               }}
+              onImageUploadPendingChange={setImageUploading}
             />
           </div>
         </CardContent>
@@ -274,7 +276,7 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
           ) : null}
           <Button
             onClick={() => persist()}
-            disabled={isSaving}
+            disabled={isSaving || imageUploading}
             size="lg"
             className="h-11 w-full sm:h-9 sm:w-auto"
           >

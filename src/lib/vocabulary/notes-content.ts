@@ -1,5 +1,9 @@
 import type { JSONContent } from "@tiptap/react";
 import { formatVocabularyNotes } from "@/lib/vocabulary/format-notes";
+import {
+  isPersistedImageSrc,
+  stripTransientImages,
+} from "@/lib/editor/images";
 
 export const EMPTY_NOTES_DOC: JSONContent = {
   type: "doc",
@@ -149,10 +153,11 @@ export function parseVocabularyNotes(raw: string | null | undefined): JSONConten
 }
 
 export function serializeVocabularyNotes(doc: JSONContent): string {
-  if (isNotesDocEmpty(doc)) {
+  const cleaned = stripTransientImages(doc);
+  if (isNotesDocEmpty(cleaned)) {
     return "";
   }
-  return JSON.stringify(doc);
+  return JSON.stringify(cleaned);
 }
 
 function nodePlainText(node: JSONContent): string {
@@ -255,6 +260,11 @@ export function isNotesDocEmpty(doc: JSONContent | null | undefined): boolean {
 
   return !doc.content.some((node) => {
     if (node.type === "horizontalRule") return true;
+    if (node.type === "image") {
+      return isPersistedImageSrc(
+        typeof node.attrs?.src === "string" ? node.attrs.src : "",
+      );
+    }
     if (node.type === "bulletList" || node.type === "orderedList" || node.type === "taskList") {
       return (node.content?.length ?? 0) > 0;
     }
@@ -309,6 +319,11 @@ function tidyInlineNodes(
 
 function isVisuallyEmptyBlock(node: JSONContent): boolean {
   if (node.type === "horizontalRule") return false;
+  if (node.type === "image") {
+    return !isPersistedImageSrc(
+      typeof node.attrs?.src === "string" ? node.attrs.src : "",
+    );
+  }
   if (
     node.type === "bulletList" ||
     node.type === "orderedList" ||
