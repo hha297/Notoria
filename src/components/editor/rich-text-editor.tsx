@@ -22,7 +22,20 @@ import {
 import StarterKit from "@tiptap/starter-kit";
 import { common, createLowlight } from "lowlight";
 import { useEffect, useRef } from "react";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 import { EditorToolbar } from "@/components/editor/editor-toolbar";
+import {
+  collectImageFiles,
+  editorDocHasTransientImages,
+  fileFromTransientSrc,
+  isTransientMediaSrc,
+} from "@/lib/editor/images";
+import {
+  removeEditorImagesBySrc,
+  replaceEditorImageSrc,
+} from "@/lib/editor/insert-images";
+import { uploadEditorImageFile } from "@/lib/editor/upload-image";
 import { cn } from "@/lib/utils";
 
 const lowlight = createLowlight(common);
@@ -39,19 +52,25 @@ type RichTextEditorProps = {
   variant?: "full" | "notes";
   showFooter?: boolean;
   onEditorReady?: (editor: Editor | null) => void;
+  onImageUploadPendingChange?: (pending: boolean) => void;
 };
 
 function buildExtensions(placeholder: string) {
   return [
     StarterKit.configure({
       codeBlock: false,
+      link: false,
+      underline: false,
     }),
     Underline,
     Highlight,
     Link.configure({
       openOnClick: false,
     }),
-    Image,
+    Image.configure({
+      inline: false,
+      allowBase64: false,
+    }),
     Table.configure({
       resizable: true,
     }),
@@ -83,11 +102,31 @@ export function RichTextEditor({
   variant = "full",
   showFooter,
   onEditorReady,
+  onImageUploadPendingChange,
 }: RichTextEditorProps) {
+  const tEditor = useTranslations("editor");
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const lastSavedContent = useRef<string>("");
+  const lastSavedContent = useRef("");
+  const pendingUploads = useRef(0);
+  const insertImagesRef = useRef<(files: File[]) => void>(() => {});
+  const persistTransientRef = useRef<(currentEditor: Editor) => void>(() => {});
+  const emitLatestRef = useRef<(currentEditor: Editor) => void>(() => {});
   const isNotes = variant === "notes";
   const footerVisible = showFooter ?? !isNotes;
+
+  function imageErrorMessage(code: string) {
+    switch (code) {
+      case "FILE_TOO_LARGE":
+        return tEditor("imageTooLarge");
+      case "INVALID_FILE_TYPE":
+      case "INVALID_FILE":
+        return tEditor("imageInvalidType");
+      case "CLOUDINARY_NOT_CONFIGURED":
+        return tEditor("imageUnavailable");
+      default:
+        return tEditor("imagePasteFailed");
+    }
+  }
 
   const editor = useEditor({
     immediatelyRender: false,
@@ -98,7 +137,14 @@ export function RichTextEditor({
       content: [{ type: "paragraph" }],
     },
     onUpdate: ({ editor: currentEditor }) => {
+      if (pendingUploads.current > 0) return;
+
       const json = currentEditor.getJSON();
+      if (editorDocHasTransientImages(json)) {
+        persistTransientRef.current(currentEditor);
+        return;
+      }
+
       onChange?.(json);
 
       if (!onAutosave) return;
@@ -110,6 +156,7 @@ export function RichTextEditor({
       autosaveTimer.current = setTimeout(() => {
         const serialized = JSON.stringify(json);
         if (serialized === lastSavedContent.current) return;
+        if (pendingUploads.current > 0) return;
 
         void Promise.resolve(onAutosave(json)).then(() => {
           lastSavedContent.current = serialized;
@@ -120,6 +167,7 @@ export function RichTextEditor({
       attributes: {
         class: cn(
           "prose prose-neutral dark:prose-invert max-w-none px-4 py-3 focus:outline-none",
+          "[&_img]:h-auto [&_img]:max-h-80 [&_img]:max-w-full [&_img]:rounded-lg",
           isNotes
             ? editable
               ? "min-h-[140px]"
@@ -129,8 +177,99 @@ export function RichTextEditor({
               : "min-h-0",
         ),
       },
+      handlePaste(_view, event) {
+        const files = collectImageFiles(event.clipboardData);
+        if (files.length === 0) return false;
+        event.preventDefault();
+        insertImagesRef.current(files);
+        return true;
+      },
+      handleDrop(_view, event) {
+        const files = collectImageFiles(event.dataTransfer);
+        if (files.length === 0) return false;
+        event.preventDefault();
+        insertImagesRef.current(files);
+        return true;
+      },
     },
   });
+
+  emitLatestRef.current = (currentEditor) => {
+    const json = currentEditor.getJSON();
+    onChange?.(json);
+
+    if (!onAutosave || pendingUploads.current > 0) return;
+    const serialized = JSON.stringify(json);
+    if (serialized === lastSavedContent.current) return;
+    void Promise.resolve(onAutosave(json)).then(() => {
+      lastSavedContent.current = serialized;
+    });
+  };
+
+  async function beginUploadWork(
+    currentEditor: Editor,
+    work: () => Promise<void>,
+  ) {
+    pendingUploads.current += 1;
+    onImageUploadPendingChange?.(true);
+    try {
+      await work();
+    } finally {
+      pendingUploads.current = Math.max(0, pendingUploads.current - 1);
+      if (pendingUploads.current === 0) {
+        onImageUploadPendingChange?.(false);
+        emitLatestRef.current(currentEditor);
+      }
+    }
+  }
+
+  insertImagesRef.current = (files) => {
+    const currentEditor = editor;
+    if (!currentEditor || files.length === 0) return;
+
+    void beginUploadWork(currentEditor, async () => {
+      for (const file of files) {
+        const objectUrl = URL.createObjectURL(file);
+        currentEditor.chain().focus().setImage({ src: objectUrl }).run();
+        const result = await uploadEditorImageFile(file);
+        if ("error" in result) {
+          removeEditorImagesBySrc(currentEditor, objectUrl);
+          toast.error(imageErrorMessage(result.error));
+        } else {
+          replaceEditorImageSrc(currentEditor, objectUrl, result.url);
+        }
+        URL.revokeObjectURL(objectUrl);
+      }
+    });
+  };
+
+  persistTransientRef.current = (currentEditor) => {
+    void beginUploadWork(currentEditor, async () => {
+      const srcs: string[] = [];
+      currentEditor.state.doc.descendants((node) => {
+        const src = String(node.attrs?.src ?? "");
+        if (node.type.name === "image" && isTransientMediaSrc(src)) {
+          srcs.push(src);
+        }
+      });
+
+      for (const src of srcs) {
+        try {
+          const file = await fileFromTransientSrc(src);
+          const result = await uploadEditorImageFile(file);
+          if ("error" in result) {
+            removeEditorImagesBySrc(currentEditor, src);
+            toast.error(imageErrorMessage(result.error));
+          } else {
+            replaceEditorImageSrc(currentEditor, src, result.url);
+          }
+        } catch {
+          removeEditorImagesBySrc(currentEditor, src);
+          toast.error(tEditor("imagePasteFailed"));
+        }
+      }
+    });
+  };
 
   const onEditorReadyRef = useRef(onEditorReady);
   onEditorReadyRef.current = onEditorReady;
@@ -144,6 +283,7 @@ export function RichTextEditor({
 
   useEffect(() => {
     if (!editor || content === undefined) return;
+    if (pendingUploads.current > 0) return;
 
     const current = JSON.stringify(editor.getJSON());
     const incoming = JSON.stringify(content ?? { type: "doc", content: [] });

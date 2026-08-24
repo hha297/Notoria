@@ -228,6 +228,7 @@ export function VocabularyForm({
   const [notesDoc, setNotesDoc] = useState<JSONContent>(() =>
     parseVocabularyNotes(initialData?.notes ?? ""),
   );
+  const [notesImageUploading, setNotesImageUploading] = useState(false);
   const notesEditorRef = useRef<Editor | null>(null);
 
   const watchedWord = form.watch("word");
@@ -371,7 +372,8 @@ export function VocabularyForm({
     isSaving ||
     isDuplicate ||
     isCheckingWord ||
-    wordCheckStatus === "pending";
+    wordCheckStatus === "pending" ||
+    notesImageUploading;
   const formatNotesDisabled = isNotesDocEmpty(notesDoc);
 
   function handleNotesChange(doc: JSONContent) {
@@ -585,6 +587,7 @@ export function VocabularyForm({
                 placeholder={t("notesPlaceholder")}
                 variant="notes"
                 onChange={handleNotesChange}
+                onImageUploadPendingChange={setNotesImageUploading}
                 onEditorReady={(editor) => {
                   notesEditorRef.current = editor;
                 }}

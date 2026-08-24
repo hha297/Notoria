@@ -43,6 +43,10 @@ export function getListeningFolder(userId: string, workspaceId: string) {
   return `notoria/listening/${userId}/${workspaceId}`;
 }
 
+export function getEditorImageFolder(userId: string) {
+  return `notoria/editor/${userId}`;
+}
+
 export function extractCloudinaryPublicId(url: string): string | null {
   if (!url.includes("res.cloudinary.com")) {
     return null;

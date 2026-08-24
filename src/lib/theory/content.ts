@@ -1,4 +1,5 @@
 import type { JSONContent } from "@tiptap/react";
+import { stripTransientImages } from "@/lib/editor/images";
 
 export const THEORY_CONTENT_VERSION = 1 as const;
 
@@ -125,6 +126,7 @@ export function serializeTheoryContent(
 ): TheoryNoteContent {
   return parseTheoryContent({
     ...content,
+    doc: stripTransientImages(content.doc),
     kind: "theory",
     version: THEORY_CONTENT_VERSION,
   });

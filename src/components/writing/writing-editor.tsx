@@ -92,6 +92,7 @@ export function WritingEditor({
     ),
   );
   const [isSaving, setIsSaving] = useState(false);
+  const [imageUploading, setImageUploading] = useState(false);
   const [isAutosaving, setIsAutosaving] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [editor, setEditor] = useState<Editor | null>(null);
@@ -458,6 +459,7 @@ export function WritingEditor({
                 placeholder={t("contentPlaceholder")}
                 onChange={setDoc}
                 onEditorReady={setEditor}
+                onImageUploadPendingChange={setImageUploading}
                 onAutosave={
                   initialData?.id && !previewHref
                     ? handleRichAutosave
@@ -509,7 +511,7 @@ export function WritingEditor({
           </LockedFeatureButton>
           <Button
             onClick={() => persistExercise(true)}
-            disabled={isSaving}
+            disabled={isSaving || imageUploading}
             size="lg"
             className="h-11 w-full sm:h-9 sm:w-auto"
           >
