@@ -56,6 +56,7 @@ import {
   MAX_PRIMARY_MEANINGS,
 } from "@/lib/vocabulary/primary-meanings";
 import { VOCABULARY_WORD_EXISTS } from "@/lib/vocabulary-errors";
+import { isSameVocabularyIdentity, normalizeVocabularyWord } from "@/lib/vocabulary/word-identity";
 import { useVocabularySpellingAi } from "@/hooks/use-vocabulary-spelling-ai";
 import {
   getCustomTagName,
@@ -111,7 +112,7 @@ type WordCheckStatus = "idle" | "pending" | "checking" | "duplicate" | "unique" 
 const WORD_CHECK_DEBOUNCE_MS = 300;
 
 function normalizeWordInput(word: string) {
-  return word.trim().toLowerCase();
+  return normalizeVocabularyWord(word);
 }
 
 function createDefaultMeanings(): MeaningItem[] {
@@ -232,10 +233,8 @@ export function VocabularyForm({
   const notesEditorRef = useRef<Editor | null>(null);
 
   const watchedWord = form.watch("word");
+  const watchedPartOfSpeech = form.watch("partOfSpeech");
   const wordCheckRequestId = useRef(0);
-  const initialNormalizedWord = initialData
-    ? normalizeWordInput(initialData.word)
-    : "";
 
   useEffect(() => {
     const normalized = normalizeWordInput(watchedWord ?? "");
@@ -246,8 +245,14 @@ export function VocabularyForm({
       return;
     }
 
-    // Editing the same word as before is always allowed.
-    if (initialData?.id && normalized === initialNormalizedWord) {
+    // Editing this same word + part of speech is always allowed.
+    if (
+      initialData?.id &&
+      isSameVocabularyIdentity(
+        { word: watchedWord ?? "", partOfSpeech: watchedPartOfSpeech },
+        { word: initialData.word, partOfSpeech: initialData.partOfSpeech },
+      )
+    ) {
       wordCheckRequestId.current += 1;
       setWordCheckStatus("unique");
       return;
@@ -263,6 +268,7 @@ export function VocabularyForm({
           const result = await checkVocabularyWordExists(
             normalized,
             initialData?.id,
+            watchedPartOfSpeech,
           );
           if (requestId !== wordCheckRequestId.current) return;
           setWordCheckStatus(result.exists ? "duplicate" : "unique");
@@ -277,7 +283,13 @@ export function VocabularyForm({
     return () => {
       clearTimeout(timer);
     };
-  }, [watchedWord, initialData?.id, initialNormalizedWord]);
+  }, [
+    watchedWord,
+    watchedPartOfSpeech,
+    initialData?.id,
+    initialData?.word,
+    initialData?.partOfSpeech,
+  ]);
 
   async function onSubmit(values: VocabularyFormClientValues) {
     if (

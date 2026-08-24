@@ -215,9 +215,10 @@ export const vocabularyWords = pgTable(
       .defaultNow(),
   },
   (table) => [
-    uniqueIndex("vocabulary_words_workspace_normalized_word_unique").on(
+    uniqueIndex("vocabulary_words_workspace_normalized_word_pos_unique").on(
       table.workspaceId,
       sql`lower(trim(${table.word}))`,
+      sql`coalesce(${table.partOfSpeech}, '')`,
     ),
   ],
 );

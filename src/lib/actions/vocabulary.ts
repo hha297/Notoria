@@ -35,23 +35,28 @@ import {
   uniqueSynonymIds,
   type VocabularySynonymRef,
 } from "@/lib/vocabulary/synonyms";
+import { normalizePartOfSpeech, normalizeVocabularyWord } from "@/lib/vocabulary/word-identity";
 
 function normalizeWord(word: string) {
-  return word.trim().toLowerCase();
+  return normalizeVocabularyWord(word);
 }
 
 async function findDuplicateWordId(
   word: string,
   workspaceId: string,
   excludeId?: string,
+  partOfSpeech?: string | null,
 ): Promise<string | null> {
   const normalized = normalizeWord(word);
   if (!normalized) return null;
+
+  const normalizedPartOfSpeech = normalizePartOfSpeech(partOfSpeech);
 
   const existing = await db.query.vocabularyWords.findFirst({
     where: and(
       eq(vocabularyWords.workspaceId, workspaceId),
       sql`lower(trim(${vocabularyWords.word})) = ${normalized}`,
+      sql`coalesce(${vocabularyWords.partOfSpeech}, '') = ${normalizedPartOfSpeech}`,
       excludeId ? ne(vocabularyWords.id, excludeId) : undefined,
     ),
     columns: { id: true },
@@ -64,8 +69,14 @@ async function assertWordIsUnique(
   word: string,
   workspaceId: string,
   excludeId?: string,
+  partOfSpeech?: string | null,
 ) {
-  const existingId = await findDuplicateWordId(word, workspaceId, excludeId);
+  const existingId = await findDuplicateWordId(
+    word,
+    workspaceId,
+    excludeId,
+    partOfSpeech,
+  );
   if (existingId) {
     throw new Error(VOCABULARY_WORD_EXISTS);
   }
@@ -318,6 +329,7 @@ async function ensureWorkspaceCustomTags(
 export async function checkVocabularyWordExists(
   word: string,
   excludeId?: string,
+  partOfSpeech?: string | null,
 ): Promise<{ exists: boolean; id: string | null }> {
   const workspace = await getActiveWorkspace();
 
@@ -325,7 +337,12 @@ export async function checkVocabularyWordExists(
     return { exists: false, id: null };
   }
 
-  const id = await findDuplicateWordId(word, workspace.id, excludeId);
+  const id = await findDuplicateWordId(
+    word,
+    workspace.id,
+    excludeId,
+    partOfSpeech,
+  );
   return { exists: Boolean(id), id };
 }
 
@@ -410,7 +427,12 @@ export async function createSynonymWord(data: {
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
 
-  const existingId = await findDuplicateWordId(parsed.word, workspace.id);
+  const existingId = await findDuplicateWordId(
+    parsed.word,
+    workspace.id,
+    undefined,
+    parsed.partOfSpeech,
+  );
   if (existingId) {
     const existing = await db.query.vocabularyWords.findFirst({
       where: eq(vocabularyWords.id, existingId),
@@ -467,7 +489,7 @@ export async function createVocabularyWord(data: VocabularyFormValues) {
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
 
-  await assertWordIsUnique(parsed.word, workspace.id);
+  await assertWordIsUnique(parsed.word, workspace.id, undefined, parsed.partOfSpeech);
 
   const tags = await canonicalizeWordTags(workspace.id, parsed.tags);
   const payload = { ...parsed, tags };
@@ -501,7 +523,7 @@ export async function updateVocabularyWord(
   const workspace = await requireActiveWorkspace();
 
   await assertWordInWorkspace(id, workspace.id);
-  await assertWordIsUnique(parsed.word, workspace.id, id);
+  await assertWordIsUnique(parsed.word, workspace.id, id, parsed.partOfSpeech);
 
   const tags = await canonicalizeWordTags(workspace.id, parsed.tags);
   const payload = { ...parsed, tags };
