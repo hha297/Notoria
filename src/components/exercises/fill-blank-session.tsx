@@ -27,6 +27,7 @@ import {
   buildFillBlankItems,
   type FillBlankItem,
 } from "@/lib/exercises/fill-blank";
+import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { answersMatchAny, shuffleArray } from "@/lib/exercises/utils";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";

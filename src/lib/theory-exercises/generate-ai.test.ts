@@ -235,7 +235,7 @@ describe("AI theory exercise mapping", () => {
     if (item.type !== "fill_blank") return;
     expect(item.suffix ?? "").not.toMatch(/bookform/i);
     expect(item.sentence).not.toMatch(/\(about\)/i);
-    expect(item.hint.toLowerCase()).toContain("about");
+    expect(item.hint?.toLowerCase()).toContain("about");
   });
 
   it("maps transformation drafts with an explicit source word", () => {
