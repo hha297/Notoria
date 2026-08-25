@@ -28,7 +28,8 @@ const styles = StyleSheet.create({
     paddingHorizontal: 48,
     fontFamily: FONT_SANS,
     fontSize: 11,
-    lineHeight: 1.45,
+    // Avoid unitless lineHeight on Page — breaks long docs with fixed footers
+    // (react-pdf: unsupported number …e+21).
     color: "#1a1528",
   },
   heading: {
@@ -36,6 +37,7 @@ const styles = StyleSheet.create({
     fontFamily: FONT_SANS,
     fontWeight: 700,
     marginBottom: 8,
+    lineHeight: 1.3,
   },
   titleRow: {
     marginBottom: 16,
@@ -53,6 +55,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: FONT_SANS,
     fontWeight: 700,
+    lineHeight: 1.3,
   },
   descriptionRow: {
     marginBottom: 16,
