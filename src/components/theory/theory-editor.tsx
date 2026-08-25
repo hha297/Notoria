@@ -32,6 +32,10 @@ import {
   parseTheoryContent,
   serializeTheoryContent,
 } from "@/lib/theory/content";
+import {
+  THEORY_DESCRIPTION_MAX,
+  type TheoryFormErrorCode,
+} from "@/schemas/theory";
 
 type TheoryEditorProps = {
   previewHref?: string;
@@ -110,6 +114,7 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
   async function runAutosave() {
     const current = latestRef.current;
     if (!current.id || !current.title.trim()) return;
+    if (current.description.trim().length > THEORY_DESCRIPTION_MAX) return;
 
     setIsAutosaving(true);
     try {
@@ -132,9 +137,33 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
     }
   }
 
+  function actionErrorMessage(
+    code: TheoryFormErrorCode | "NOT_FOUND" | "SAVE_FAILED",
+  ) {
+    switch (code) {
+      case "TITLE_REQUIRED":
+        return t("titleRequired");
+      case "DESCRIPTION_TOO_LONG":
+        return t("descriptionTooLong", { max: THEORY_DESCRIPTION_MAX });
+      case "CATEGORY_INVALID":
+        return t("categoryInvalid");
+      case "NOT_FOUND":
+        return t("notFound");
+      default:
+        return t("saveFailed");
+    }
+  }
+
   async function persist() {
     if (!title.trim()) {
       toast.error(t("titleRequired"));
+      return;
+    }
+
+    if (description.trim().length > THEORY_DESCRIPTION_MAX) {
+      toast.error(
+        t("descriptionTooLong", { max: THEORY_DESCRIPTION_MAX }),
+      );
       return;
     }
 
@@ -142,16 +171,24 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
     try {
       const payload = buildPayload();
       if (initialData?.id) {
-        await updateTheoryNote(initialData.id, payload);
+        const result = await updateTheoryNote(initialData.id, payload);
+        if (!result.ok) {
+          toast.error(actionErrorMessage(result.code));
+          return;
+        }
         toast.success(t("saved"));
         router.replace(previewHref ?? `/theory/${initialData.id}`);
       } else {
         const created = await createTheoryNote(payload, { folderId });
+        if (!created.ok) {
+          toast.error(actionErrorMessage(created.code));
+          return;
+        }
         toast.success(t("created"));
         router.replace(`/theory/${created.id}`);
       }
-    } catch (error) {
-      toast.error(error instanceof Error ? error.message : t("saveFailed"));
+    } catch {
+      toast.error(t("saveFailed"));
     } finally {
       setIsSaving(false);
     }
@@ -217,12 +254,23 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
           </div>
 
           <div className="space-y-2">
-            <Label htmlFor="theory-description">
-              {t("summaryLabel")}{" "}
-              <span className="font-normal text-muted-foreground">
-                ({tCommon("optional")})
+            <div className="flex items-end justify-between gap-2">
+              <Label htmlFor="theory-description">
+                {t("summaryLabel")}{" "}
+                <span className="font-normal text-muted-foreground">
+                  ({tCommon("optional")})
+                </span>
+              </Label>
+              <span
+                className={
+                  description.length > THEORY_DESCRIPTION_MAX
+                    ? "text-xs text-destructive"
+                    : "text-xs text-muted-foreground"
+                }
+              >
+                {description.length}/{THEORY_DESCRIPTION_MAX}
               </span>
-            </Label>
+            </div>
             <Textarea
               id="theory-description"
               value={description}
@@ -231,8 +279,12 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
                 scheduleAutosave();
               }}
               placeholder={t("summaryPlaceholder")}
+              maxLength={THEORY_DESCRIPTION_MAX}
               rows={3}
               className="min-h-20 resize-y"
+              aria-invalid={
+                description.length > THEORY_DESCRIPTION_MAX ? true : undefined
+              }
             />
           </div>
 
