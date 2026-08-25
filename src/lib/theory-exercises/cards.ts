@@ -1,8 +1,4 @@
 import {
-  estimateTheoryExerciseCount,
-  extractTheoryContent,
-} from "@/lib/theory-exercises/extract";
-import {
   parseTheoryContent,
   theoryExcerpt,
   theoryDocPlainText,
@@ -17,9 +13,9 @@ export function toTheoryExerciseCard(note: {
   updatedAt: Date | string;
 }): TheoryExerciseCardItem {
   const parsed = parseTheoryContent(note.content);
-  const extracted = extractTheoryContent(parsed.doc);
-  const description =
-    parsed.description || theoryExcerpt(theoryDocPlainText(parsed.doc));
+  const plain = theoryDocPlainText(parsed.doc);
+  const description = parsed.description || theoryExcerpt(plain);
+  const wordCount = plain.split(/\s+/).filter(Boolean).length;
 
   return {
     id: note.id,
@@ -27,9 +23,9 @@ export function toTheoryExerciseCard(note: {
     description,
     category: parsed.category,
     readingMinutes: estimateReadingMinutes(parsed.doc),
-    estimatedExercises: estimateTheoryExerciseCount(extracted),
-    sectionCount: extracted.sections.filter((s) => s.heading !== "Notes").length ||
-      extracted.sections.length,
+    // Soft estimate for card UI only — actual count comes from AI generation.
+    estimatedExercises: Math.min(30, Math.max(10, Math.round(wordCount / 25))),
+    sectionCount: Math.max(1, Math.round(wordCount / 80)),
     updatedAt:
       typeof note.updatedAt === "string"
         ? note.updatedAt
