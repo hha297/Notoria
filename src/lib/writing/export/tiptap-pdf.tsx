@@ -210,31 +210,40 @@ function renderRun(
   run: TextRun,
   variant: "body" | "heading",
   layout: ExportLayout,
+  key?: string | number,
 ): ReactNode {
   const marks = run.marks;
   const isDocument = layout === "document";
+  const markStyle = {
+    fontWeight: (marks.bold || variant === "heading" ? 700 : 400) as 400 | 700,
+    fontStyle: (marks.italic ? "italic" : "normal") as "italic" | "normal",
+    textDecoration: (marks.underline || marks.linkHref
+      ? "underline"
+      : "none") as "underline" | "none",
+    color: marks.linkHref
+      ? "#3d6b0a"
+      : isDocument
+        ? "#1a1528"
+        : variant === "heading"
+          ? "#1a1528"
+          : "#2f4a08",
+    ...(marks.highlight ? { backgroundColor: "#f2f6c8" } : {}),
+  };
+
+  if (isDocument) {
+    return (
+      <Text key={key} style={markStyle}>
+        {run.text}
+      </Text>
+    );
+  }
+
   return (
     <Text
+      key={key}
       style={[
-        isDocument
-          ? {}
-          : variant === "heading"
-            ? styles.ruledHeading
-            : styles.ruledText,
-        {
-          fontWeight: marks.bold || variant === "heading" ? 700 : 400,
-          fontStyle: marks.italic ? "italic" : "normal",
-          textDecoration:
-            marks.underline || marks.linkHref ? "underline" : "none",
-          color: marks.linkHref
-            ? "#3d6b0a"
-            : isDocument
-              ? "#1a1528"
-              : variant === "heading"
-                ? "#1a1528"
-                : "#2f4a08",
-          backgroundColor: marks.highlight ? "#f2f6c8" : undefined,
-        },
+        variant === "heading" ? styles.ruledHeading : styles.ruledText,
+        markStyle,
       ]}
     >
       {run.text}
@@ -341,9 +350,9 @@ function RuledLines({
         <View key={index} style={styles.ruledLine} wrap={false}>
           <Text>
             {lineRuns.length > 0 ? (
-              lineRuns.map((run, runIndex) => (
-                <Text key={runIndex}>{renderRun(run, variant, "worksheet")}</Text>
-              ))
+              lineRuns.map((run, runIndex) =>
+                renderRun(run, variant, "worksheet", runIndex),
+              )
             ) : (
               <Text
                 style={
@@ -410,9 +419,7 @@ function DocumentFromNodes({
 
   return (
     <Text style={variant === "heading" ? documentHeadingStyle(headingLevel) : styles.docText}>
-      {allRuns.map((run, index) => (
-        <Text key={index}>{renderRun(run, variant, "document")}</Text>
-      ))}
+      {allRuns.map((run, index) => renderRun(run, variant, "document", index))}
     </Text>
   );
 }

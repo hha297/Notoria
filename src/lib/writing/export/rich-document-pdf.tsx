@@ -23,7 +23,9 @@ const styles = StyleSheet.create({
     paddingHorizontal: 36,
     fontFamily: FONT_SANS,
     fontSize: 11,
-    lineHeight: 1.45,
+    // Do not set unitless lineHeight on Page: react-pdf re-resolves it on
+    // every pagination pass with fixed footers and blows up on long docs
+    // (unsupported number: …e+21). Keep lineHeight on Text styles only.
     color: "#1a1528",
   },
   heading: {
@@ -31,6 +33,7 @@ const styles = StyleSheet.create({
     fontFamily: FONT_SANS,
     fontWeight: 700,
     marginBottom: 8,
+    lineHeight: 1.3,
   },
   titleRow: {
     marginBottom: 16,
@@ -48,6 +51,7 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontFamily: FONT_SANS,
     fontWeight: 700,
+    lineHeight: 1.3,
   },
   descriptionRow: {
     marginBottom: 16,
