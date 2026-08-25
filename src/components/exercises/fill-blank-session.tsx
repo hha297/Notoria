@@ -27,8 +27,6 @@ import {
   buildFillBlankItems,
   type FillBlankItem,
 } from "@/lib/exercises/fill-blank";
-import { sampleSessionItems } from "@/lib/exercises/session-size";
-import { hintInitialLetter } from "@/lib/exercises/hint";
 import { answersMatchAny, shuffleArray } from "@/lib/exercises/utils";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
@@ -403,10 +401,10 @@ function FillBlankCard({
   onRevealAnswer: () => void;
 }) {
   const t = useTranslations("exercises.fillInBlank");
-  const tHint = useTranslations("exercises.timedHint");
   const tAi = useTranslations("exercises.ai");
   const blankMinWidth = Math.max(item.word.length + 2, 6);
   const expected = expectedFillBlankAnswer(item);
+  const cue = item.meanings.map((m) => m.trim()).filter(Boolean)[0];
 
   return (
     <div className="mx-auto max-w-3xl rounded-3xl border border-hairline-cloud bg-card p-6 shadow-xl shadow-ink/5 sm:p-10 md:p-12">
@@ -470,6 +468,12 @@ function FillBlankCard({
               )}
             </span>
 
+            {cue ? (
+              <span className="text-xl font-medium text-muted-foreground sm:text-2xl md:text-3xl">
+                ({cue})
+              </span>
+            ) : null}
+
             {item.sentenceAfter && (
               <span className="text-xl font-medium text-ink sm:text-2xl md:text-3xl">
                 {item.sentenceAfter}
@@ -483,16 +487,7 @@ function FillBlankCard({
           answered={revealed}
           correctAnswer={expected}
           onRevealAnswer={onRevealAnswer}
-        >
-          <div className="space-y-1">
-            {item.meanings[0] ? (
-              <p>{item.meanings.join(" · ")}</p>
-            ) : null}
-            <p>
-              {tHint("startsWith", { letter: hintInitialLetter(expected) })}
-            </p>
-          </div>
-        </ExerciseHint>
+        />
 
         {revealed && (
           <div

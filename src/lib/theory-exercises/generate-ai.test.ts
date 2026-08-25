@@ -17,7 +17,7 @@ describe("AI theory exercise mapping", () => {
         {
           type: "fill_blank",
           learningObjective: "Complete the required noun form.",
-          targetType: "word_form",
+          targetType: "full_word",
           sentence: "We talked about the new ________",
           answer: "project",
           acceptedAnswers: ["project", "Project"],
@@ -109,7 +109,7 @@ describe("AI theory exercise mapping", () => {
       {
         type: "fill_blank",
         learningObjective: "Complete the required verb form.",
-        targetType: "word_form",
+        targetType: "full_word",
         sentence: "Students _______ about the topic.",
         answer: "spoke",
         hint: "Use the verb form required by the Theory.",
@@ -125,6 +125,53 @@ describe("AI theory exercise mapping", () => {
     expect(item.prefix).toBe("Students");
     expect(item.suffix).toBe("about the topic.");
     expect(item.spaced).toBe(true);
+  });
+
+  it("requires a distinct sourceWord for word-form fills", () => {
+    const missing = mapAiDraftsToTheoryExercises("theory_1", [
+      {
+        type: "fill_blank",
+        learningObjective: "Practice the plural partitive.",
+        targetType: "word_form",
+        sentence: "We have ________.",
+        answer: "dogs",
+        hint: "Use the required plural form.",
+        completedSentence: "We have dogs.",
+      },
+    ]);
+    expect(missing).toHaveLength(0);
+
+    const sameAsAnswer = mapAiDraftsToTheoryExercises("theory_1", [
+      {
+        type: "fill_blank",
+        learningObjective: "Practice the plural partitive.",
+        targetType: "word_form",
+        sentence: "We have ________.",
+        answer: "dogs",
+        sourceWord: "dogs",
+        hint: "Use the required plural form.",
+        completedSentence: "We have dogs.",
+      },
+    ]);
+    expect(sameAsAnswer).toHaveLength(0);
+
+    const ok = mapAiDraftsToTheoryExercises("theory_1", [
+      {
+        type: "fill_blank",
+        learningObjective: "Practice the plural partitive.",
+        targetType: "word_form",
+        sentence: "We have ________.",
+        answer: "dogs",
+        sourceWord: "dog",
+        hint: "Use the required plural form.",
+        completedSentence: "We have dogs.",
+      },
+    ]);
+    expect(ok).toHaveLength(1);
+    const item = ok[0]!;
+    expect(item.type).toBe("fill_blank");
+    if (item.type !== "fill_blank") return;
+    expect(item.sourceWord).toBe("dog");
   });
 
   it("rejects English sentence frames when studying a non-English language", () => {
@@ -176,7 +223,7 @@ describe("AI theory exercise mapping", () => {
       {
         type: "fill_blank",
         learningObjective: "Practice the required form.",
-        targetType: "word_form",
+        targetType: "full_word",
         sentence: "I look for info ________ bookform. (about)",
         answer: "bookform",
         hint: "Use the form required after this verb.",

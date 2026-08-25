@@ -441,6 +441,8 @@
     "timedHint": {
       "availableIn": "💡 Gợi ý sau {seconds}s",
       "showNow": "Hiện gợi ý ngay",
+      "answerAvailableIn": "💡 Đáp án sau {seconds}s",
+      "showAnswerNow": "Hiện đáp án ngay",
       "label": "Gợi ý",
       "startsWith": "Bắt đầu bằng “{letter}”",
       "revealPrompt": "Vẫn chưa ra? Bạn có thể xem đáp án.",
@@ -462,6 +464,7 @@
     "fillInBlank": {
       "prompt": "Điền vào chỗ trống",
       "hint": "Gợi ý",
+      "hintExplainWord": "Hãy nghĩ về nghĩa của từ còn thiếu trong câu này.",
       "correct": "Đúng rồi!",
       "incorrect": "Đáp án là {answer}",
       "progress": "{current} / {total}",

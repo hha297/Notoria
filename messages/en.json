@@ -441,6 +441,8 @@
     "timedHint": {
       "availableIn": "💡 Hint available in {seconds}s",
       "showNow": "Show hint now",
+      "answerAvailableIn": "💡 Answer available in {seconds}s",
+      "showAnswerNow": "Show answer now",
       "label": "Hint",
       "startsWith": "Starts with “{letter}”",
       "revealPrompt": "Still stuck? You can reveal the full answer.",
@@ -462,6 +464,7 @@
     "fillInBlank": {
       "prompt": "Fill in the blank",
       "hint": "Hint",
+      "hintExplainWord": "Think about the meaning of the missing word in this sentence.",
       "correct": "Correct!",
       "incorrect": "The answer is {answer}",
       "progress": "{current} / {total}",

@@ -441,6 +441,8 @@
     "timedHint": {
       "availableIn": "💡 Vihje saatavilla {seconds}s kuluttua",
       "showNow": "Näytä vihje nyt",
+      "answerAvailableIn": "💡 Vastaus saatavilla {seconds}s kuluttua",
+      "showAnswerNow": "Näytä vastaus nyt",
       "label": "Vihje",
       "startsWith": "Alkaa merkillä “{letter}”",
       "revealPrompt": "Vieläkö jumissa? Voit paljastaa koko vastauksen.",
@@ -462,6 +464,7 @@
     "fillInBlank": {
       "prompt": "Täytä aukko",
       "hint": "Vihje",
+      "hintExplainWord": "Mieti puuttuvan sanan merkitystä tässä lauseessa.",
       "correct": "Oikein!",
       "incorrect": "Vastaus on {answer}",
       "progress": "{current} / {total}",
