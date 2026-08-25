@@ -2,8 +2,10 @@ import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
-import { ExerciseTypePicker } from "@/components/exercises/exercise-type-picker";
+import { ExerciseStudio } from "@/components/exercises/exercise-studio";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
+import { getTheoryNotes } from "@/lib/actions/theory";
+import { toTheoryExerciseCard } from "@/lib/theory-exercises/cards";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export const dynamic = "force-dynamic";
@@ -26,6 +28,9 @@ export default async function ExercisesPage() {
     );
   }
 
+  const notes = await getTheoryNotes();
+  const theories = notes.map((note) => toTheoryExerciseCard(note));
+
   return (
     <PageShell>
       <PageHeader
@@ -37,7 +42,7 @@ export default async function ExercisesPage() {
         <ShowTutorialButton section="exercise" />
       </PageHeader>
 
-      <ExerciseTypePicker />
+      <ExerciseStudio theories={theories} />
     </PageShell>
   );
 }
