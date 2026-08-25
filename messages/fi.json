@@ -366,7 +366,7 @@
       "true": "Tosi",
       "false": "Epätosi",
       "fillPlaceholder": "Kirjoita puuttuva osa…",
-      "sourceWordLabel": "Perusmuoto: {word}",
+      "sourceWordLabel": "Muunnettava sana: {word}",
       "hint": "Vihje: {hint}",
       "endingHint": "Vihje: {hint}",
       "matchHint": "Yhdistä perusmuoto oikeaan taivutusmuotoon.",

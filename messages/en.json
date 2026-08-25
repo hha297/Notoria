@@ -366,7 +366,7 @@
       "true": "True",
       "false": "False",
       "fillPlaceholder": "Type the missing part…",
-      "sourceWordLabel": "Base word: {word}",
+      "sourceWordLabel": "Word to transform: {word}",
       "hint": "Hint: {hint}",
       "endingHint": "Hint: {hint}",
       "matchHint": "Match each base word to its correct form.",

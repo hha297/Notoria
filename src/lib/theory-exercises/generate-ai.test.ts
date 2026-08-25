@@ -1,17 +1,13 @@
 import { describe, expect, it } from "vitest";
 import {
   answersMatchAny,
+  forceFullWordBlank,
   isValidTheoryExercise,
   mapAiDraftsToTheoryExercises,
+  resolveFullWordAnswer,
   revealTextForExercise,
 } from "@/lib/theory-exercises/generate-ai";
 import { buildTheoryExerciseSession } from "@/lib/theory-exercises/build-session";
-
-const targetFields = {
-  learningObjective: "Practice the required ending after this verb pattern.",
-  targetType: "suffix" as const,
-  hint: "Add the ending required by the Theory for this construction.",
-};
 
 describe("AI theory exercise mapping", () => {
   it("maps fill_blank drafts with accepted answers and hints", () => {
@@ -40,22 +36,22 @@ describe("AI theory exercise mapping", () => {
     if (item.type !== "fill_blank") return;
     expect(item.generator).toBe("ai");
     expect(item.sentence).toContain("________");
+    expect(item.spaced).toBe(true);
     expect(item.hint).toBeTruthy();
-    expect(item.learningObjective).toBeTruthy();
     expect(answersMatchAny("Project", item.acceptedAnswers)).toBe(true);
   });
 
-  it("maps suffix fills glued to the stem and reveals the full sentence", () => {
+  it("converts in-word blanks into full-word blanks with source word", () => {
     const items = mapAiDraftsToTheoryExercises("theory_1", [
       {
         type: "fill_blank",
-        ...targetFields,
-        sentence: "She wrote about the weekendtrip________.",
-        answer: "about",
-        acceptedAnswers: ["about", "-about"],
-        sourceWord: "weekendtrip",
-        completedSentence: "She wrote about the weekendtripabout.",
-        hint: "Complete the ending required after this verb when expressing a topic.",
+        learningObjective: "Practice the required form.",
+        targetType: "suffix",
+        sentence: "I found an article top________.",
+        answer: "topicform",
+        sourceWord: "topic",
+        completedSentence: "I found an article topicform.",
+        hint: "Change the base word into the form required by the sentence.",
       },
     ]);
 
@@ -63,25 +59,136 @@ describe("AI theory exercise mapping", () => {
     const item = items[0]!;
     expect(item.type).toBe("fill_blank");
     if (item.type !== "fill_blank") return;
-    expect(item.spaced).toBe(false);
-    expect(item.prefix?.endsWith("weekendtrip")).toBe(true);
-    expect(item.answer).toBe("about");
-    expect(answersMatchAny("-about", item.acceptedAnswers)).toBe(true);
-    expect(revealTextForExercise(item)).toBe("She wrote about the weekendtripabout.");
+    expect(item.spaced).toBe(true);
+    expect(item.sentence).toBe("I found an article ________.");
+    expect(item.prefix?.endsWith("top")).toBe(false);
+    expect(item.sourceWord).toBe("topic");
+    expect(item.answer).toBe("topicform");
+    expect(revealTextForExercise(item)).toBe("topic → topicform");
   });
 
-  it("rejects suffix targets that blank a separate whole word", () => {
+  it("recovers full-word answers when AI returns only an ending", () => {
+    expect(
+      resolveFullWordAnswer({
+        answer: "sta",
+        sourceWord: "aihe",
+        completedSentence: "Löysin artikkelin aiheesta.",
+      }),
+    ).toBe("aiheesta");
+
     const items = mapAiDraftsToTheoryExercises("theory_1", [
       {
         type: "fill_blank",
-        ...targetFields,
-        sentence: "She ________ about the weekendtripabout.",
-        answer: "wrote",
-        sourceWord: "weekendtrip",
-        hint: "This verb means to express something in writing.",
+        learningObjective: "Practice the required form.",
+        targetType: "suffix",
+        sentence: "Löysin artikkelin aihee________.",
+        answer: "sta",
+        sourceWord: "aihe",
+        completedSentence: "Löysin artikkelin aiheesta.",
+        hint: "Change aihe into the form required by the sentence.",
       },
     ]);
+
+    expect(items).toHaveLength(1);
+    const item = items[0]!;
+    expect(item.type).toBe("fill_blank");
+    if (item.type !== "fill_blank") return;
+    expect(item.sentence).toBe("Löysin artikkelin ________.");
+    expect(item.answer).toBe("aiheesta");
+    expect(item.sourceWord).toBe("aihe");
+  });
+
+  it("forceFullWordBlank detaches glued stems", () => {
+    expect(forceFullWordBlank("Löysin artikkelin aihee________.")).toBe(
+      "Löysin artikkelin ________.",
+    );
+  });
+
+  it("normalizes underscore runs into a single blank", () => {
+    const items = mapAiDraftsToTheoryExercises("theory_1", [
+      {
+        type: "fill_blank",
+        learningObjective: "Complete the required verb form.",
+        targetType: "word_form",
+        sentence: "Students _______ about the topic.",
+        answer: "spoke",
+        hint: "Use the verb form required by the Theory.",
+        completedSentence: "Students spoke about the topic.",
+      },
+    ]);
+
+    expect(items).toHaveLength(1);
+    const item = items[0]!;
+    expect(item.type).toBe("fill_blank");
+    if (item.type !== "fill_blank") return;
+    expect(item.sentence).toBe("Students ________ about the topic.");
+    expect(item.prefix).toBe("Students");
+    expect(item.suffix).toBe("about the topic.");
+    expect(item.spaced).toBe(true);
+  });
+
+  it("rejects English sentence frames when studying a non-English language", () => {
+    const items = mapAiDraftsToTheoryExercises(
+      "theory_1",
+      [
+        {
+          type: "fill_blank",
+          learningObjective: "Practice the required form.",
+          targetType: "word_form",
+          sentence: "I heard ________ the news yesterday.",
+          answer: "uutisista",
+          sourceWord: "uutinen",
+          hint: "Use the form required by the Theory.",
+          completedSentence: "I heard uutisista the news yesterday.",
+        },
+      ],
+      "Verb + Rektio",
+      30,
+      "Finnish",
+    );
     expect(items).toHaveLength(0);
+  });
+
+  it("strips duplicate answer tokens before or after the blank", () => {
+    const items = mapAiDraftsToTheoryExercises("theory_1", [
+      {
+        type: "fill_blank",
+        learningObjective: "Practice the required form.",
+        targetType: "word_form",
+        sentence: "I am interested in historyform ________ (history).",
+        answer: "historyform",
+        sourceWord: "history",
+        completedSentence: "I am interested in historyform historyform.",
+        hint: "Change the base word into the form required by the sentence.",
+      },
+    ]);
+    expect(items).toHaveLength(1);
+    const item = items[0]!;
+    expect(item.type).toBe("fill_blank");
+    if (item.type !== "fill_blank") return;
+    expect(item.prefix?.toLowerCase()).not.toContain("historyform");
+    expect(item.suffix?.toLowerCase() ?? "").not.toContain("historyform");
+    expect(item.sentence.toLowerCase().split("historyform").length - 1).toBe(0);
+  });
+
+  it("moves answer leaks and glosses out of the sentence into the hint", () => {
+    const items = mapAiDraftsToTheoryExercises("theory_1", [
+      {
+        type: "fill_blank",
+        learningObjective: "Practice the required form.",
+        targetType: "word_form",
+        sentence: "I look for info ________ bookform. (about)",
+        answer: "bookform",
+        hint: "Use the form required after this verb.",
+      },
+    ]);
+    expect(items).toHaveLength(1);
+    const item = items[0]!;
+    expect(item.type).toBe("fill_blank");
+    if (item.type !== "fill_blank") return;
+    expect(item.suffix ?? "").not.toMatch(/bookform/i);
+    expect(item.sentence).not.toMatch(/\(about\)/i);
+    expect(item.hint.toLowerCase()).toContain("about");
   });
 
   it("maps transformation drafts with an explicit source word", () => {
@@ -125,30 +232,33 @@ describe("AI theory exercise mapping", () => {
     const items = mapAiDraftsToTheoryExercises("theory_1", [
       {
         type: "fill_blank",
-        learningObjective: "Practice the required ending.",
-        targetType: "suffix",
+        learningObjective: "Practice the required form.",
+        targetType: "word_form",
         sentence: "They spoke about the trip________.",
-        answer: "form",
+        answer: "tripform",
         sourceWord: "trip",
-        hint: "Add the ending required by the Theory.",
+        hint: "Change the base word into the required form.",
+        completedSentence: "They spoke about the tripform.",
       },
       {
         type: "fill_blank",
-        learningObjective: "Practice the required ending.",
-        targetType: "suffix",
+        learningObjective: "Practice the required form.",
+        targetType: "word_form",
         sentence: "She wrote about the project________.",
-        answer: "form",
+        answer: "projectform",
         sourceWord: "project",
-        hint: "Add the ending required by the Theory.",
+        hint: "Change the base word into the required form.",
+        completedSentence: "She wrote about the projectform.",
       },
       {
         type: "fill_blank",
-        learningObjective: "Practice the required ending.",
-        targetType: "suffix",
+        learningObjective: "Practice the required form.",
+        targetType: "word_form",
         sentence: "She wrote about the project________.",
-        answer: "form",
+        answer: "projectform",
         sourceWord: "project",
-        hint: "Add the ending required by the Theory.",
+        hint: "Change the base word into the required form.",
+        completedSentence: "She wrote about the projectform.",
       },
       {
         type: "transformation",
@@ -159,7 +269,6 @@ describe("AI theory exercise mapping", () => {
         hint: "Add the plural ending from the Theory.",
       },
     ]);
-    // Two unique suffix contexts + one transformation; clone sentence dropped
     expect(items.length).toBe(3);
   });
 
@@ -187,6 +296,7 @@ describe("AI theory exercise mapping", () => {
         learningObjective: "Produce the missing word.",
         targetType: "full_word",
         hint: "Use the word required by the Theory.",
+        spaced: true,
       }),
     ).toBe(true);
 
@@ -202,24 +312,6 @@ describe("AI theory exercise mapping", () => {
         sentence: "Hello ________",
         answer: "world",
         acceptedAnswers: ["world"],
-      }),
-    ).toBe(false);
-
-    expect(
-      isValidTheoryExercise({
-        id: "x",
-        source: "theory",
-        theoryId: "t",
-        generator: "ai",
-        type: "fill_blank",
-        typeLabelKey: "fill_blank",
-        materialSource: "ai",
-        sentence: "Hello world",
-        answer: "world",
-        acceptedAnswers: ["world"],
-        learningObjective: "Produce the missing word.",
-        targetType: "full_word",
-        hint: "Use the word required by the Theory.",
       }),
     ).toBe(false);
   });

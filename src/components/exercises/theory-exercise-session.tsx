@@ -13,7 +13,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
 import { shuffleArray } from "@/lib/exercises/utils";
-import { answersMatchAny, revealTextForExercise } from "@/lib/theory-exercises/generate-ai";
+import { answersMatchAny, revealTextForExercise, scrubFillBlankPresentation } from "@/lib/theory-exercises/generate-ai";
 import type {
   TheoryExercise,
   TheoryExerciseSession,
@@ -311,7 +311,26 @@ function FillBlankCard({
   const [checked, setChecked] = useState(false);
   const [peeked, setPeeked] = useState(false);
   const isCorrect = !peeked && answersMatchAny(value, item.acceptedAnswers);
-  const blankChars = Math.max(item.answer.length, value.trim().length, 4);
+
+  const scrubbed = scrubFillBlankPresentation({
+    prefix: item.prefix,
+    suffix: item.suffix,
+    answer: item.answer,
+    hint: item.hint ?? "",
+    spaced: true,
+  });
+  const prefixText = scrubbed.prefix;
+  const suffixText = scrubbed.suffix;
+  const displayHint = scrubbed.hint;
+  const revealDisplay = revealTextForExercise({
+    ...item,
+    prefix: scrubbed.prefix || undefined,
+    suffix: scrubbed.suffix || undefined,
+    hint: scrubbed.hint,
+    sentence: scrubbed.sentence,
+    completedSentence: item.completedSentence ?? scrubbed.completedSentence,
+  });
+  const gapAfter = suffixText.length > 0 && /^[\p{L}\p{N}(]/u.test(suffixText);
 
   const check = () => {
     if (checked || !value.trim()) return;
@@ -327,9 +346,6 @@ function FillBlankCard({
     onResolved(false);
   };
 
-  const showInline = Boolean(item.prefix);
-  const revealDisplay = revealTextForExercise(item);
-
   return (
     <div className="rounded-2xl border border-hairline-cloud bg-card p-5 sm:p-6">
       <SkillHeader
@@ -337,79 +353,65 @@ function FillBlankCard({
         instruction={item.instruction ?? t("instructions.fillBlank")}
         fallbackType={t("types.fill_blank")}
       />
-      {item.sourceWord && item.targetType === "suffix" ? (
-        <p className="mb-2 text-sm text-muted-foreground">
-          {t("sourceWordLabel", { word: item.sourceWord })}
-        </p>
-      ) : null}
-      {showInline ? (
-        <p className="mt-1 font-heading text-xl font-medium leading-[1.45] text-ink sm:text-2xl">
-          {[
-            <span key="prefix">{item.prefix}</span>,
-            item.spaced ? " " : null,
-            checked ? (
-              <span
-                key="answer"
-                className={cn(
-                  "border-b-2 font-semibold",
-                  isCorrect
-                    ? "border-[#b8d96a] text-[#4a6b0a]"
-                    : "border-destructive/50 text-destructive",
-                )}
-              >
-                {isCorrect ? value.trim() : item.answer}
-              </span>
-            ) : (
-              <input
-                key="blank"
-                value={value}
-                onChange={(e) => setValue(e.target.value)}
-                placeholder="…"
-                aria-label={t("fillPlaceholder")}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault();
-                    if (checked) onNext();
-                    else check();
-                  }
-                }}
-                style={{ width: `${blankChars + 0.5}ch` }}
-                className={cn(
-                  "m-0 inline border-0 border-b-2 border-dashed border-muted-foreground/45",
-                  "bg-transparent p-0 align-baseline font-heading text-xl font-semibold leading-[1.45] text-ink",
-                  "outline-none placeholder:text-muted-foreground/40",
-                  "focus:border-solid focus:border-accent-lime sm:text-2xl",
-                )}
-                autoFocus
-                autoComplete="off"
-                spellCheck={false}
-              />
-            ),
-            item.suffix ? <span key="suffix">{item.suffix}</span> : null,
-          ]}
-        </p>
-      ) : (
-        <p className="font-heading text-xl font-medium leading-snug text-ink">{item.sentence}</p>
-      )}
+
+      <p className="mt-1 font-heading text-xl font-medium leading-[1.45] text-ink sm:text-2xl">
+        {prefixText ? <span>{prefixText}</span> : null}
+        {prefixText ? <span className="whitespace-pre"> </span> : null}
+        {checked ? (
+          <span
+            className={cn(
+              "border-b-2 font-semibold",
+              isCorrect
+                ? "border-[#b8d96a] text-[#4a6b0a]"
+                : "border-destructive/50 text-destructive",
+            )}
+          >
+            {isCorrect ? value.trim() : item.answer}
+          </span>
+        ) : (
+          <span
+            aria-hidden
+            className="inline-block min-w-[7ch] translate-y-[-0.08em] border-b-2 border-dashed border-muted-foreground/55"
+          />
+        )}
+        {item.sourceWord ? (
+          <span className="font-normal text-muted-foreground">
+            {" "}
+            ({item.sourceWord})
+          </span>
+        ) : null}
+        {suffixText ? (
+          <>
+            {gapAfter ? <span className="whitespace-pre"> </span> : null}
+            <span>{suffixText}</span>
+          </>
+        ) : null}
+      </p>
 
       <div className="mt-5 flex flex-col gap-2 sm:flex-row sm:items-center">
-        {!showInline ? (
-          <Input
-            value={value}
-            onChange={(e) => setValue(e.target.value)}
-            disabled={checked}
-            placeholder={t("fillPlaceholder")}
-            onKeyDown={(e) => {
-              if (e.key === "Enter") {
-                e.preventDefault();
-                if (checked) onNext();
-                else check();
-              }
-            }}
-            className="sm:flex-1"
-            autoFocus
-          />
-        ) : null}
+        <Input
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
+          disabled={checked}
+          placeholder={t("fillPlaceholder")}
+          name="theory-exercise-blank"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              if (checked) onNext();
+              else check();
+            }
+          }}
+          className="sm:flex-1"
+          autoFocus
+          autoComplete="off"
+          autoCorrect="off"
+          autoCapitalize="off"
+          spellCheck={false}
+          data-1p-ignore
+          data-lpignore="true"
+          data-form-type="other"
+        />
         {!checked ? (
           <Button type="button" onClick={check} disabled={!value.trim()}>
             {t("check")}
@@ -424,7 +426,7 @@ function FillBlankCard({
           correctAnswer={revealDisplay}
           onRevealAnswer={revealAnswer}
         >
-          <HintText text={item.hint} />
+          <HintText text={displayHint} />
         </ExerciseHint>
       </div>
 
@@ -489,7 +491,24 @@ function TransformationCard({
       <p className="font-heading text-2xl font-medium tracking-tight text-ink sm:text-3xl">
         {item.showArrow !== false ? (
           <>
-            {item.promptWord} → <span className="text-muted-foreground">________</span>
+            {item.promptWord} →{" "}
+            {checked ? (
+              <span
+                className={cn(
+                  "border-b-2 font-semibold",
+                  isCorrect
+                    ? "border-[#b8d96a] text-[#4a6b0a]"
+                    : "border-destructive/50 text-destructive",
+                )}
+              >
+                {isCorrect ? value.trim() : item.answer}
+              </span>
+            ) : (
+              <span
+                aria-hidden
+                className="inline-block min-w-[7ch] translate-y-[-0.08em] border-b-2 border-dashed border-muted-foreground/55"
+              />
+            )}
           </>
         ) : (
           item.promptWord

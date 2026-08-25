@@ -32,8 +32,6 @@ Theory supplies the RULE / knowledge to practice. You invent the practice materi
 ## Step 0 — Theory focus
 First decide what the Theory actually teaches. Write theoryFocus as 1–2 sentences.
 Distinguish incidental example content from the learning target.
-- If Theory teaches “verb requires form X on its complement”, blank the complement form / ending — not the verb.
-- If Theory teaches verb conjugation, blank the verb form — not an unrelated noun.
 
 ## Step 1 — Learning target per exercise
 For EVERY exercise set:
@@ -42,30 +40,46 @@ For EVERY exercise set:
 - hint: helps with THAT target only
 - completedSentence: fully correct sentence/form after answering
 
-## Step 2 — Invent practice around the target
-Pipeline: Theory rule → learning target → INVENT fresh context → blank that isolates the target → hint.
+## Step 2 — Invent practice
+Pipeline: Theory rule → learning target → invent fresh context → one full-word blank → hint.
 
-You MUST invent new sentences, names, and vocabulary. Do NOT copy Theory examples.
-Vocabulary list is optional inspiration only — invent freely if empty or insufficient.
-Same answer/ending across many items is expected when drilling one form.
+Never invent unsupported grammatical rules.
+Never copy Theory example sentences.
+Never put the answer (or a near-copy) in the sentence outside the blank.
+The blank slot is the ONLY place the target form appears — do not also write it before or after ________.
+Never put translation glosses like "(about)" in the sentence — put meaning clues only in hint.
 
-Never invent unsupported grammatical rules. Contexts/words may be invented freely.
+## CRITICAL — language of practice material
+Detect the language being studied from Theory + studyLanguage.
+Write sentence, sourceWord, answer, and completedSentence ALL in that studied language.
+- Studying Finnish → Finnish sentences (e.g. "Kuulin ________ eilen.")
+- Studying English → English sentences
+- Studying Vietnamese → Vietnamese sentences
+NEVER wrap a Finnish/other target form in an English sentence frame.
+NEVER use English (or the UI language) as the sentence unless that is the language being studied.
+Hints may be in any language; practice content must match the studied language.
 
-## Blank placement
-1. suffix: stem visible + ________ glued (no space). answer = ending only. sourceWord = base word.
-2. prefix: ________ glued before stem.
-3. word_form / full_word: blank the whole required form.
-4. structure/concept: still one concrete answer.
-5. Never blank incidental non-target words.
+## CRITICAL UI RULE — never blank inside a word
+NEVER produce in-word blanks such as: stem________ or aihee________
+ALWAYS use one full-token blank in the studied language.
 
-## Quantity (critical)
-Return EXACTLY maxExercises items. Target set size is 20–30.
-Pad with varied invented contexts that still test the SAME Theory rule until you hit maxExercises.
-Do not stop early because Theory examples ran out — invent more practice.
+When the learner must transform a specific word:
+- type: "fill_blank" (preferred) or "transformation"
+- sourceWord / promptWord = BASE FORM in the studied language (dictionary form), NEVER a translation, NEVER the already-inflected answer.
+  Finnish: sourceWord "uutinen" / "uutiset", answer "uutisista" — NOT sourceWord "news" and NOT sourceWord "uutisista".
+- answer = COMPLETE target form in the studied language
+- sentence = full-word ________ in the studied language (UI shows: … ________ (sourceWord))
+
+For pure transformations without a sentence, use type "transformation" with promptWord + full answer.
+For conceptual / rule completion (no specific lexical item), omit sourceWord.
+
+## Quantity
+Return EXACTLY maxExercises items (target 20–30). Invent varied contexts for the same rule.
+Same full-form answer across different sentences is OK.
 
 ## Other
-1. Any language/subject; do not assume one language.
-2. Prefer fill_blank; transformation when clearer; multiple_choice sparingly.
+1. Any language/subject.
+2. Prefer fill_blank; transformation when there is no sentence; multiple_choice sparingly.
 3. No abstract meta questions; no "/" alternate-list labels as answers.
 4. skillLabel = Theory title when available.
 5. JSON only:
@@ -91,7 +105,7 @@ Do not stop early because Theory examples ran out — invent more practice.
     "materialSource"?: "theory" | "vocabulary" | "ai"
   } ]
 }
-6. fill_blank sentence MUST contain exactly one ________ marker.
+6. fill_blank sentence MUST contain exactly one blank as eight underscores: ________
 7. No markdown.`;
 
 async function requestExerciseBatch(input: {
@@ -101,6 +115,7 @@ async function requestExerciseBatch(input: {
   vocabularyWords: string[];
   maxExercises: number;
   batchIndex: number;
+  studyLanguage?: string;
   avoidSentences?: string[];
 }): Promise<TheoryAiExerciseDraft[]> {
   const completion = await input.client.chat.completions.create({
@@ -114,13 +129,14 @@ async function requestExerciseBatch(input: {
         role: "user",
         content: JSON.stringify({
           title: input.title,
+          studyLanguage: input.studyLanguage ?? null,
           maxExercises: input.maxExercises,
           batch: input.batchIndex,
           theoryPlainText: input.theoryPlainText,
           vocabularyWords: input.vocabularyWords,
           avoidReusingTheseSentences: (input.avoidSentences ?? []).slice(0, 40),
           reminder:
-            "Invent fresh practice contexts. Return EXACTLY maxExercises items. Same ending/answer across items is fine. Do not copy Theory examples.",
+            "Practice sentence/sourceWord/answer MUST be in studyLanguage (the language being learned). Never use an English sentence frame for a non-English Theory. sourceWord = base form in that language, not a translation and not the declined answer.",
         }),
       },
     ],
@@ -142,6 +158,7 @@ export async function generateAiTheoryExercises(input: {
   doc: JSONContent;
   vocabulary?: TheoryVocabWord[];
   count?: number;
+  studyLanguage?: string;
 }): Promise<TheoryExercise[]> {
   const plainText = theoryDocPlainText(input.doc);
   if (!plainText.trim()) return [];
@@ -150,15 +167,16 @@ export async function generateAiTheoryExercises(input: {
   const client = getOpenAIClient();
   const vocabularyWords = (input.vocabulary ?? []).slice(0, 60).map((w) => w.word);
   const theoryPlainText = plainText.slice(0, 12_000);
+  const studyLanguage = input.studyLanguage?.trim() || undefined;
 
   const batchArgs = {
     client,
     title: input.theoryTitle,
     theoryPlainText,
     vocabularyWords,
+    studyLanguage,
   };
 
-  // Over-request slightly per batch; models often under-deliver.
   const first = Math.ceil(count / 2) + 2;
   const second = Math.ceil(count / 2) + 2;
   const [batchA, batchB] = await Promise.all([
@@ -172,9 +190,9 @@ export async function generateAiTheoryExercises(input: {
     drafts,
     input.theoryTitle,
     count,
+    studyLanguage,
   );
 
-  // Refill if validation/under-delivery left the set short.
   if (items.length < count) {
     const avoid = drafts
       .map((d) => d.sentence)
@@ -192,6 +210,7 @@ export async function generateAiTheoryExercises(input: {
       drafts,
       input.theoryTitle,
       count,
+      studyLanguage,
     );
   }
 

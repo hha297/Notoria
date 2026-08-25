@@ -5,6 +5,7 @@ import { getFlashcardWords } from "@/lib/actions/flashcards";
 import { getTheoryNote } from "@/lib/actions/theory";
 import { generateAiTheoryExercises } from "@/lib/theory-exercises/ai";
 import { parseTheoryContent } from "@/lib/theory/content";
+import { getActiveWorkspace } from "@/lib/workspace";
 
 export const runtime = "nodejs";
 
@@ -46,6 +47,7 @@ export async function POST(request: Request) {
   try {
     const content = parseTheoryContent(note.content);
     const words = await getFlashcardWords();
+    const workspace = await getActiveWorkspace();
     const exercises = await generateAiTheoryExercises({
       theoryId: note.id,
       theoryTitle: note.title,
@@ -56,6 +58,7 @@ export async function POST(request: Request) {
         partOfSpeech: w.partOfSpeech,
       })),
       count: parsed.data.count,
+      studyLanguage: workspace?.language,
     });
     return NextResponse.json({ ok: true, exercises });
   } catch (error) {
