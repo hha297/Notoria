@@ -366,7 +366,7 @@
       "true": "Đúng",
       "false": "Sai",
       "fillPlaceholder": "Nhập phần còn thiếu…",
-      "sourceWordLabel": "Từ gốc: {word}",
+      "sourceWordLabel": "Từ cần biến đổi: {word}",
       "hint": "Gợi ý: {hint}",
       "endingHint": "Gợi ý: {hint}",
       "matchHint": "Ghép mỗi từ gốc với dạng đúng của nó.",
