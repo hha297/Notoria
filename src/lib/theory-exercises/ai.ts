@@ -70,8 +70,9 @@ When the learner must transform a specific word:
 - answer = COMPLETE target form in the studied language
 - sentence = full-word ________ in the studied language (UI shows: … ________ (sourceWord))
 
-For pure transformations without a sentence, use type "transformation" with promptWord + full answer.
-For conceptual / rule completion (no specific lexical item), omit sourceWord.
+For word-form / inflection / case / conjugation practice (the usual Theory case):
+ALWAYS set sourceWord to the base form shown in parentheses. Example UI: Meillä on ________ (koira).
+Only omit sourceWord for pure concept/rule completion with no lexical item to transform.
 
 ## Quantity
 Return EXACTLY maxExercises items (target 20–30). Invent varied contexts for the same rule.
@@ -136,7 +137,7 @@ async function requestExerciseBatch(input: {
           vocabularyWords: input.vocabularyWords,
           avoidReusingTheseSentences: (input.avoidSentences ?? []).slice(0, 40),
           reminder:
-            "Practice sentence/sourceWord/answer MUST be in studyLanguage (the language being learned). Never use an English sentence frame for a non-English Theory. sourceWord = base form in that language, not a translation and not the declined answer.",
+            "Practice sentence/answer/sourceWord MUST be in studyLanguage. ALWAYS include sourceWord (base form) for form practice so the UI can show: ________ (sourceWord). Never omit it for case/inflection drills. sourceWord must differ from answer.",
         }),
       },
     ],

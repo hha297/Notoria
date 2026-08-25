@@ -451,13 +451,21 @@ export function mapAiDraftsToTheoryExercises(
       });
       if (!answerText) continue;
 
-      // Parenthesis must be the base form, not the declined answer itself.
+      const needsSourceWord =
+        targetType === "suffix" ||
+        targetType === "prefix" ||
+        targetType === "word_form";
+
+      // Parenthesis cue: required for form practice; must be the base, not the answer.
       if (
         sourceWord &&
         normalizeAnswerKey(sourceWord) === normalizeAnswerKey(answerText)
       ) {
+        // Invalid base — reject so we don't ship ________ without a cue / wrong cue.
+        if (needsSourceWord) continue;
         sourceWord = undefined;
       }
+      if (needsSourceWord && !sourceWord) continue;
 
       const sentence = forceFullWordBlank(draft.sentence);
       const split = splitSentenceBlank(sentence);
