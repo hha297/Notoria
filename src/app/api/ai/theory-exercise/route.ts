@@ -10,7 +10,7 @@ export const runtime = "nodejs";
 
 const bodySchema = z.object({
   theoryId: z.string().min(1),
-  count: z.number().int().min(1).max(6).optional(),
+  count: z.number().int().min(1).max(30).optional(),
 });
 
 export async function POST(request: Request) {

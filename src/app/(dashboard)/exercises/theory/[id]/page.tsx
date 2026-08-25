@@ -6,9 +6,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { TheoryExerciseSessionView } from "@/components/exercises/theory-exercise-session";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getTheoryNote } from "@/lib/actions/theory";
-import { getFlashcardWords } from "@/lib/actions/flashcards";
 import { buildTheoryExerciseSession } from "@/lib/theory-exercises/build-session";
-import { parseTheoryContent } from "@/lib/theory/content";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export const dynamic = "force-dynamic";
@@ -48,17 +46,9 @@ export default async function TheoryExercisePracticePage({
   const note = await getTheoryNote(id);
   if (!note) notFound();
 
-  const content = parseTheoryContent(note.content);
-  const words = await getFlashcardWords();
   const session = buildTheoryExerciseSession({
     theoryId: note.id,
     theoryTitle: note.title,
-    doc: content.doc,
-    vocabulary: words.map((w) => ({
-      id: w.id,
-      word: w.word,
-      partOfSpeech: w.partOfSpeech,
-    })),
   });
 
   return (

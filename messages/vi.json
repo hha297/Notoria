@@ -343,21 +343,21 @@
       "vocabulary": "Từ vựng",
       "theory": "Lý thuyết",
       "vocabularyHint": "Các kiểu bài xây từ từ trong không gian học đang dùng.",
-      "theoryHint": "Câu hỏi luyện tập tạo từ ghi chú lý thuyết bạn đã viết."
+      "theoryHint": "AI biến ghi chú Theory thành bài điền chỗ trống."
     },
     "theory": {
       "eyebrow": "Luyện lý thuyết",
       "practiceTitle": "Bài tập lý thuyết",
-      "practiceDescription": "Câu hỏi lấy từ ghi chú này — trả lời, nhận phản hồi, rồi tiếp tục.",
+      "practiceDescription": "AI biến ghi chú này thành bài điền chỗ trống — kèm gợi ý và giải thích.",
       "openLibrary": "Mở thư viện lý thuyết",
       "practice": "Luyện tập",
       "view": "Xem",
       "emptyTitle": "Chưa có ghi chú lý thuyết",
-      "emptyDescription": "Viết ghi chú với tiêu đề, danh sách, bảng hoặc ví dụ — rồi luyện tập từ đó tại đây.",
+      "emptyDescription": "Viết ghi chú lý thuyết — rồi luyện tập tại đây với bài tập do AI tạo.",
       "emptyCta": "Tạo ghi chú lý thuyết",
       "sections": "{count, plural, one {# mục} other {# mục}}",
       "estimatedExercises": "~{count} câu",
-      "limitedExercises": "Thêm cấu trúc để có nhiều câu hơn",
+      "limitedExercises": "Thêm nội dung để luyện phong phú hơn",
       "practicing": "Đang luyện",
       "progress": "{current} / {total}",
       "score": "{correct} / {answered} đúng",
@@ -366,19 +366,25 @@
       "true": "Đúng",
       "false": "Sai",
       "fillPlaceholder": "Nhập phần còn thiếu…",
+      "sourceWordLabel": "Từ gốc: {word}",
       "hint": "Gợi ý: {hint}",
-      "endingHint": "Mẫu: {hint}",
+      "endingHint": "Gợi ý: {hint}",
       "matchHint": "Ghép mỗi từ gốc với dạng đúng của nó.",
       "matchBase": "Từ gốc",
       "matchForm": "Dạng chia",
       "reshuffle": "Xáo lại",
       "backToStudio": "Về trang luyện tập",
       "editTheory": "Sửa lý thuyết",
-      "tooThinTitle": "Chưa đủ nội dung có cấu trúc",
-      "tooThinDescription": "Thêm tiêu đề, danh sách, bảng hoặc cặp rõ ràng (ví dụ từ → dạng) để tạo câu hỏi ổn định. Bạn cũng có thể dùng AI nếu có Pro.",
-      "enhanceAi": "Bổ sung bằng AI",
-      "enhancingAi": "Đang tạo…",
-      "aiAdded": "Đã thêm câu hỏi AI",
+      "needAiTitle": "Tạo bài luyện bằng AI",
+      "needAiDescription": "AI sẽ đọc Theory này và tạo bài điền chỗ trống với ngữ cảnh mới.",
+      "needAiProDescription": "Nâng cấp Pro để biến ghi chú Theory thành bài tập AI.",
+      "generatingTitle": "Đang tạo bài luyện…",
+      "generatingDescription": "AI đang đọc Theory và viết bài điền chỗ trống.",
+      "generateAi": "Tạo bài tập",
+      "generateMore": "Tạo bộ mới",
+      "regenerate": "Bộ mới",
+      "unlockAi": "Mở khóa với Pro",
+      "aiReady": "Sẵn sàng luyện tập",
       "aiUnavailable": "Không tạo được câu hỏi AI lúc này.",
       "aiForbidden": "Bài tập lý thuyết bằng AI dành cho Pro.",
       "feedback": {
@@ -395,10 +401,10 @@
         "theory_question": "Kiểm tra lý thuyết"
       },
       "instructions": {
-        "applyRule": "Áp dụng quy tắc cho từ sau.",
+        "applyRule": "Hoàn thành dạng từ.",
         "chooseForm": "Chọn dạng đúng.",
         "chooseInContext": "Chọn dạng phù hợp với ngữ cảnh.",
-        "fillBlank": "Điền dạng đúng.",
+        "fillBlank": "Điền chỗ trống.",
         "completeConstruction": "Hoàn thành cấu trúc.",
         "completeRule": "Hoàn thành quy tắc.",
         "theoryCheck": "Kiểm tra lý thuyết"
@@ -1352,9 +1358,9 @@
     "notConfigured": "Chưa cấu hình thanh toán.",
     "noCustomer": "Tài khoản này chưa được liên kết với khách hàng thanh toán.",
     "modalTitle": "Nâng cấp lên Notoria Pro",
-    "modalSubtitle": "Bản miễn phí đủ để lưu từ và luyện. Pro thêm AI viết, nghe, nói, và xuất file in được.",
+    "modalSubtitle": "Bản miễn phí đủ để lưu từ và luyện. Pro thêm bài Theory AI, AI viết, nghe, nói, và xuất file in được.",
     "lockedTitle": "Đây là tính năng Pro",
-    "lockedDescription": "Nâng cấp để mở khóa — kèm nghe, nói, AI viết, và xuất PDF/Word.",
+    "lockedDescription": "Nâng cấp để mở khóa bài Theory AI — kèm nghe, nói, AI viết, và xuất PDF/Word.",
     "planName": "Pro",
     "cancelAnytime": "Hủy bất cứ lúc nào",
     "compare": {
@@ -1401,6 +1407,10 @@
           "capability": "Ghi chú lý thuyết",
           "impact": "Lưu ngữ pháp và cách dùng"
         },
+        "theoryAi": {
+          "capability": "Bài tập Theory bằng AI",
+          "impact": "Luyện Theory của bạn với bài điền chỗ trống do AI tạo"
+        },
         "listening": {
           "capability": "Bài nghe",
           "impact": "Học từ audio hoặc video của bạn"
@@ -1423,6 +1433,10 @@
       "exercises": {
         "title": "Bài tập tạo bởi AI",
         "body": "Tạo và luyện bài tập cá nhân hóa bằng AI theo nhu cầu học của bạn."
+      },
+      "theoryAi": {
+        "title": "Bài tập Theory bằng AI",
+        "body": "Biến ghi chú Theory thành bài điền chỗ trống tương tác với ngữ cảnh mới, gợi ý và giải thích."
       },
       "listening": {
         "title": "Trải nghiệm nghe tốt hơn",

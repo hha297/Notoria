@@ -343,21 +343,21 @@
       "vocabulary": "Sanasto",
       "theory": "Teoria",
       "vocabularyHint": "Tavat rakentuvat aktiivisen työtilan sanoista.",
-      "theoryHint": "Harjoituskysymykset generoidaan kirjoittamastasi teoriamerkinnästä."
+      "theoryHint": "Tekoäly muuttaa teoriamerkinnän aukkoharjoitukseksi."
     },
     "theory": {
       "eyebrow": "Teoriaharjoitus",
       "practiceTitle": "Teoriaharjoitus",
-      "practiceDescription": "Kysymykset tästä merkinnästä — vastaa, saa palaute ja jatka.",
+      "practiceDescription": "Tekoäly muuttaa tämän merkinnän aukkotehtäviksi — vihjeillä ja selityksillä.",
       "openLibrary": "Avaa teoriakirjasto",
       "practice": "Harjoittele",
       "view": "Näytä",
       "emptyTitle": "Ei vielä teoriamerkintöjä",
-      "emptyDescription": "Kirjoita teoriasta otsikoita, listoja, taulukoita tai esimerkkejä — harjoittele sitten täällä.",
+      "emptyDescription": "Kirjoita teoriamerkintä — harjoittele sitten täällä tekoälyn tekemillä tehtävillä.",
       "emptyCta": "Luo teoriamerkintä",
       "sections": "{count, plural, one {# osio} other {# osiota}}",
       "estimatedExercises": "~{count} tehtävää",
-      "limitedExercises": "Lisää rakennetta saadaksesi enemmän tehtäviä",
+      "limitedExercises": "Lisää sisältöä monipuolisempaan harjoitteluun",
       "practicing": "Harjoittelet",
       "progress": "{current} / {total}",
       "score": "{correct} / {answered} oikein",
@@ -366,19 +366,25 @@
       "true": "Tosi",
       "false": "Epätosi",
       "fillPlaceholder": "Kirjoita puuttuva osa…",
+      "sourceWordLabel": "Perusmuoto: {word}",
       "hint": "Vihje: {hint}",
-      "endingHint": "Kuvio: {hint}",
+      "endingHint": "Vihje: {hint}",
       "matchHint": "Yhdistä perusmuoto oikeaan taivutusmuotoon.",
       "matchBase": "Perusmuoto",
       "matchForm": "Taivutusmuoto",
       "reshuffle": "Sekoita uudelleen",
       "backToStudio": "Takaisin harjoituksiin",
       "editTheory": "Muokkaa teoriaa",
-      "tooThinTitle": "Ei vielä tarpeeksi rakennetta",
-      "tooThinDescription": "Lisää otsikoita, listoja, taulukoita tai selkeitä pareja (esim. sana → muoto), jotta voimme luoda luotettavia kysymyksiä. Voit myös täydentää tekoälyllä, jos sinulla on Pro.",
-      "enhanceAi": "Täydennä tekoälyllä",
-      "enhancingAi": "Luodaan…",
-      "aiAdded": "Tekoälykysymyksiä lisätty",
+      "needAiTitle": "Luo tekoälyharjoitus",
+      "needAiDescription": "Tekoäly lukee Teorian ja luo aukkotehtäviä uusilla konteksteilla.",
+      "needAiProDescription": "Päivitä Prohon, jotta voit harjoitella Theory-muistiinpanojasi tekoälyn avulla.",
+      "generatingTitle": "Luodaan harjoitusta…",
+      "generatingDescription": "Tekoäly lukee Teoriaasi ja kirjoittaa aukkotehtäviä.",
+      "generateAi": "Luo tehtävät",
+      "generateMore": "Luo uusi sarja",
+      "regenerate": "Uusi sarja",
+      "unlockAi": "Avaa Prolla",
+      "aiReady": "Harjoitus valmis",
       "aiUnavailable": "Tekoälykysymyksiä ei voitu luoda juuri nyt.",
       "aiForbidden": "Teorian tekoälyharjoitukset kuuluvat Pro-pakettiin.",
       "feedback": {
@@ -395,10 +401,10 @@
         "theory_question": "Teoriantarkistus"
       },
       "instructions": {
-        "applyRule": "Sovella sääntöä seuraavaan sanaan.",
+        "applyRule": "Täydennä muoto.",
         "chooseForm": "Valitse oikea muoto.",
         "chooseInContext": "Valitse kontekstiin sopiva muoto.",
-        "fillBlank": "Täytä oikea muoto.",
+        "fillBlank": "Täytä aukko.",
         "completeConstruction": "Täydennä rakenne.",
         "completeRule": "Täydennä sääntö.",
         "theoryCheck": "Teoriantarkistus"
@@ -1352,9 +1358,9 @@
     "notConfigured": "Laskutusta ei ole vielä määritetty.",
     "noCustomer": "Tähän tiliin ei ole vielä liitetty laskutusasiakasta.",
     "modalTitle": "Päivitä Notoria Pro -tilaukseen",
-    "modalSubtitle": "Ilmaisessa säilyvät kirjasto ja harjoittelu. Pro tuo kirjoittamisen tekoälyn, kuuntelun, puhumisen ja tulostettavat tiedostot.",
+    "modalSubtitle": "Ilmaisessa säilyvät kirjasto ja harjoittelu. Pro tuo Theory-tekoälyharjoitukset, kirjoittamisen tekoälyn, kuuntelun, puhumisen ja tulostettavat tiedostot.",
     "lockedTitle": "Tämä on Pro-ominaisuus",
-    "lockedDescription": "Päivitä Prohon avataksesi sen — sekä kuuntelun, puhumisen, kirjoittamisen tekoälyn ja PDF/Word-viennin.",
+    "lockedDescription": "Päivitä Prohon avataksesi Theory-tekoälyharjoitukset — sekä kuuntelun, puhumisen, kirjoittamisen tekoälyn ja PDF/Word-viennin.",
     "planName": "Pro",
     "cancelAnytime": "Peru milloin tahansa",
     "compare": {
@@ -1401,6 +1407,10 @@
           "capability": "Teoriamuistiinpanot",
           "impact": "Tallenna kielioppi ja käyttö"
         },
+        "theoryAi": {
+          "capability": "Theory-tekoälyharjoitukset",
+          "impact": "Harjoittele omaa Teoriaasi tekoälyn aukkotehtävillä"
+        },
         "listening": {
           "capability": "Kuuntelutunnit",
           "impact": "Muuta ääni tai video harjoitukseksi"
@@ -1423,6 +1433,10 @@
       "exercises": {
         "title": "Tekoälyavusteiset harjoitukset",
         "body": "Luo ja harjoittele henkilökohtaisia tehtäviä tekoälyn avulla oppimistarpeidesi mukaan."
+      },
+      "theoryAi": {
+        "title": "Theory-tekoälyharjoitukset",
+        "body": "Muuta omat Teoriamuistiinpanosi interaktiivisiksi aukkotehtäviksi uusilla konteksteilla, vihjeillä ja selityksillä."
       },
       "listening": {
         "title": "Parempi kuuntelukokemus",

@@ -343,21 +343,21 @@
       "vocabulary": "Vocabulary",
       "theory": "Theory",
       "vocabularyHint": "Modes built from words in your active workspace.",
-      "theoryHint": "Practice questions generated from a theory note you wrote."
+      "theoryHint": "AI turns a theory note into fill-in-the-blank practice."
     },
     "theory": {
       "eyebrow": "Theory practice",
       "practiceTitle": "Theory exercise",
-      "practiceDescription": "Questions extracted from this note — answer, get feedback, then continue.",
+      "practiceDescription": "AI turns this note into fill-in-the-blank practice — with hints and explanations.",
       "openLibrary": "Open theory library",
       "practice": "Practice",
       "view": "View",
       "emptyTitle": "No theory notes yet",
-      "emptyDescription": "Write a theory note with headings, lists, tables, or examples — then practice from it here.",
+      "emptyDescription": "Write a theory note — then practice from it here with AI-generated exercises.",
       "emptyCta": "Create a theory note",
       "sections": "{count, plural, one {# section} other {# sections}}",
       "estimatedExercises": "~{count} exercises",
-      "limitedExercises": "Add structure for more exercises",
+      "limitedExercises": "Add more content for richer practice",
       "practicing": "Practicing",
       "progress": "{current} / {total}",
       "score": "{correct} / {answered} correct",
@@ -366,19 +366,25 @@
       "true": "True",
       "false": "False",
       "fillPlaceholder": "Type the missing part…",
+      "sourceWordLabel": "Base word: {word}",
       "hint": "Hint: {hint}",
-      "endingHint": "Pattern: {hint}",
+      "endingHint": "Hint: {hint}",
       "matchHint": "Match each base word to its correct form.",
       "matchBase": "Base word",
       "matchForm": "Form",
       "reshuffle": "Reshuffle",
       "backToStudio": "Back to exercises",
       "editTheory": "Edit theory",
-      "tooThinTitle": "Not enough structured content yet",
-      "tooThinDescription": "Add headings, lists, tables, or clear pairs (like word → form) so we can build reliable practice questions. You can also enhance with AI if you have Pro.",
-      "enhanceAi": "Enhance with AI",
-      "enhancingAi": "Generating…",
-      "aiAdded": "Added AI questions",
+      "needAiTitle": "Generate AI practice",
+      "needAiDescription": "AI will read this Theory and create fill-in-the-blank exercises with fresh contexts.",
+      "needAiProDescription": "Upgrade to Pro to turn your Theory notes into AI-generated practice exercises.",
+      "generatingTitle": "Creating your practice…",
+      "generatingDescription": "AI is reading your Theory and writing fill-in-the-blank exercises.",
+      "generateAi": "Generate exercises",
+      "generateMore": "Generate new set",
+      "regenerate": "New set",
+      "unlockAi": "Unlock with Pro",
+      "aiReady": "Practice ready",
       "aiUnavailable": "Could not generate AI questions right now.",
       "aiForbidden": "AI theory exercises are available with Pro.",
       "feedback": {
@@ -395,10 +401,10 @@
         "theory_question": "Theory check"
       },
       "instructions": {
-        "applyRule": "Apply the rule to the following word.",
+        "applyRule": "Complete the form.",
         "chooseForm": "Choose the correct form.",
         "chooseInContext": "Choose the form that fits this context.",
-        "fillBlank": "Fill in the correct form.",
+        "fillBlank": "Fill in the blank.",
         "completeConstruction": "Complete the construction.",
         "completeRule": "Complete the rule.",
         "theoryCheck": "Theory Check"
@@ -1532,9 +1538,9 @@
     "notConfigured": "Billing is not configured yet.",
     "noCustomer": "No billing customer is linked to this account yet.",
     "modalTitle": "Upgrade to Notoria Pro",
-    "modalSubtitle": "Free keeps your library and practice. Pro adds AI writing, listening, speaking, and printable files.",
+    "modalSubtitle": "Free keeps your library and practice. Pro adds AI Theory exercises, writing, listening, speaking, and printable files.",
     "lockedTitle": "This is a Pro feature",
-    "lockedDescription": "Upgrade to unlock it — along with listening, speaking, writing AI, and PDF/Word export.",
+    "lockedDescription": "Upgrade to unlock AI Theory exercises — along with listening, speaking, writing AI, and PDF/Word export.",
     "planName": "Pro",
     "cancelAnytime": "Cancel anytime",
     "compare": {
@@ -1581,6 +1587,10 @@
           "capability": "Theory notes",
           "impact": "Save grammar and usage for later"
         },
+        "theoryAi": {
+          "capability": "AI Theory Exercises",
+          "impact": "Practice your own Theory with AI fill-in-the-blank exercises"
+        },
         "listening": {
           "capability": "Listening lessons",
           "impact": "Turn your audio or video into practice"
@@ -1603,6 +1613,10 @@
       "exercises": {
         "title": "AI-powered exercises",
         "body": "Create and practice personalized exercises with AI based on your learning needs."
+      },
+      "theoryAi": {
+        "title": "AI Theory Exercises",
+        "body": "Turn your personal Theory notes into interactive fill-in-the-blank practice with fresh contexts, hints, and explanations."
       },
       "listening": {
         "title": "Enhanced listening experience",

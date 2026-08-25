@@ -1,34 +1,64 @@
 /**
- * Unified theory-exercise item shape.
- * Session UI does not care whether an item was system- or AI-generated.
- * Designed so Mixed Practice can later share the same contract.
+ * Theory exercise item shapes — AI-generated only.
+ * Vocabulary exercises remain a separate system.
  */
 
-export type ExerciseSource = "theory" | "vocabulary";
-export type ExerciseGenerator = "system" | "ai";
 export type TheoryMaterialSource = "theory" | "vocabulary" | "ai";
 
-export type TheoryExerciseType =
-  | "fill_blank"
-  | "transformation"
-  | "multiple_choice"
-  | "theory_question"
-  | "match_pairs"
-  | "true_false";
+export type TheoryExerciseType = "fill_blank" | "transformation" | "multiple_choice";
+
+/** What the exercise isolates and tests (from Theory knowledge). */
+export type TheoryLearningTargetType =
+  | "suffix"
+  | "prefix"
+  | "word_form"
+  | "full_word"
+  | "structure"
+  | "concept";
 
 export type TheoryExerciseBase = {
   id: string;
   source: "theory";
   theoryId: string;
-  generator: ExerciseGenerator;
+  generator: "ai";
   type: TheoryExerciseType;
   typeLabelKey: TheoryExerciseType;
-  /** Where the tested word/material came from (not shown in UI). */
   materialSource: TheoryMaterialSource;
-  /** Short skill label shown above the prompt, e.g. theory title. */
   skillLabel?: string;
-  /** What the learner should do, e.g. "Apply the rule to the following word." */
   instruction?: string;
+  hint?: string;
+  explanation?: string;
+  /** Short statement of what is being practiced (not shown unless useful). */
+  learningObjective?: string;
+  targetType?: TheoryLearningTargetType;
+};
+
+export type TheoryFillBlankExercise = TheoryExerciseBase & {
+  type: "fill_blank";
+  /** Prompt with ________ blank (or plain context when prefix is used). */
+  sentence: string;
+  /** Canonical expected answer (may be a span such as an ending, or a full form). */
+  answer: string;
+  /** All accepted spellings / variants. */
+  acceptedAnswers: string[];
+  /** Visible stem/context before the blank. */
+  prefix?: string;
+  suffix?: string;
+  spaced?: boolean;
+  /** Source lemma when the blank completes/transforms a known word. */
+  sourceWord?: string;
+  /** Full correct sentence/form for reveal. */
+  completedSentence?: string;
+};
+
+export type TheoryTransformationExercise = TheoryExerciseBase & {
+  type: "transformation";
+  /** Source word shown to the learner. */
+  promptWord: string;
+  answer: string;
+  acceptedAnswers: string[];
+  showArrow?: boolean;
+  completedSentence?: string;
 };
 
 export type TheoryMultipleChoiceExercise = TheoryExerciseBase & {
@@ -36,80 +66,18 @@ export type TheoryMultipleChoiceExercise = TheoryExerciseBase & {
   prompt: string;
   options: string[];
   correctOption: string;
-  explanation?: string;
-};
-
-/** Limited conceptual true/false — prefer theory_question in new code. */
-export type TheoryTrueFalseExercise = TheoryExerciseBase & {
-  type: "true_false";
-  statement: string;
-  correct: boolean;
-  explanation?: string;
-};
-
-export type TheoryMatchPairsExercise = TheoryExerciseBase & {
-  type: "match_pairs";
-  pairs: Array<{ id: string; left: string; right: string }>;
-};
-
-export type TheoryFillBlankExercise = TheoryExerciseBase & {
-  type: "fill_blank";
-  /** Sentence / rule with ________ for the blank (fallback display). */
-  sentence: string;
-  /** Expected tail or full answer depending on prefix/spaced. */
-  answer: string;
-  hint?: string;
-  /** Visible stem/base before the blank (discovered from Theory). */
-  prefix?: string;
-  /** Optional text after the blank. */
-  suffix?: string;
-  /** Separate token after prefix (space between base and answer). */
-  spaced?: boolean;
-};
-
-export type TheoryTransformationExercise = TheoryExerciseBase & {
-  type: "transformation";
-  /** Base word shown to the learner. */
-  promptWord: string;
-  answer: string;
-  /** Optional arrow display: promptWord → ________ */
-  showArrow?: boolean;
-  /** Pattern / transformation hint shown to the learner (discovered from Theory). */
-  hint?: string;
-};
-
-/**
- * Conceptual / rule questions (fill, MC, or limited true/false).
- * Presented in UI as "Theory Check".
- */
-export type TheoryConceptExercise = TheoryExerciseBase & {
-  type: "theory_question";
-  mode: "fill" | "multiple_choice" | "true_false";
-  prompt: string;
-  answer: string;
-  options?: string[];
-  correctBoolean?: boolean;
-  explanation?: string;
+  acceptedAnswers: string[];
+  completedSentence?: string;
 };
 
 export type TheoryExercise =
-  | TheoryMultipleChoiceExercise
-  | TheoryTrueFalseExercise
-  | TheoryMatchPairsExercise
   | TheoryFillBlankExercise
   | TheoryTransformationExercise
-  | TheoryConceptExercise;
+  | TheoryMultipleChoiceExercise;
 
 export type TheoryExerciseSession = {
   theoryId: string;
   theoryTitle: string;
-  /** Discovered knowledge shape — for internal routing / future UX copy only. */
-  knowledgeKind:
-    | "transformation"
-    | "relation"
-    | "definition"
-    | "mixed"
-    | "unknown";
   items: TheoryExercise[];
 };
 
