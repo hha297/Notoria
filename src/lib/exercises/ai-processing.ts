@@ -71,10 +71,16 @@ export function progressForStage(
 
 export type ProcessingPipelineId = "import" | "aiGenerate";
 
-/** Ordered stages shown in the UI for each pipeline (excluding idle/error/completed). */
+/** Stages shown in the pipeline UI (excludes idle / error / completed). */
+export type PipelineStage = Exclude<
+  ProcessingStage,
+  "idle" | "error" | "completed"
+>;
+
+/** Ordered stages shown in the UI for each pipeline. */
 export const PROCESSING_PIPELINES: Record<
   ProcessingPipelineId,
-  ProcessingStage[]
+  readonly PipelineStage[]
 > = {
   import: ["uploading", "extracting", "analyzing", "generating", "saving"],
   aiGenerate: ["generating", "saving"],

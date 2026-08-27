@@ -21,10 +21,7 @@ type AiProcessingProgressProps = {
   onDismissError?: () => void;
 };
 
-const STAGE_MESSAGE_KEYS: Record<
-  Exclude<ProcessingStage, "idle">,
-  string
-> = {
+const STAGE_MESSAGE_KEYS = {
   uploading: "stages.uploading",
   extracting: "stages.extracting",
   analyzing: "stages.analyzing",
@@ -32,7 +29,7 @@ const STAGE_MESSAGE_KEYS: Record<
   saving: "stages.saving",
   completed: "stages.completed",
   error: "stages.error",
-};
+} as const satisfies Record<Exclude<ProcessingStage, "idle">, string>;
 
 export function AiProcessingProgress({
   state,
