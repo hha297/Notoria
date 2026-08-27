@@ -103,6 +103,7 @@ export function validateFillBlankExercise(
     answer,
     baseWord: word.word,
     language: raw.language ?? null,
+    instruction: raw.instruction?.trim() || null,
     explanation: null,
     difficulty: raw.difficulty ?? null,
   };
