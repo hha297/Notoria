@@ -39,6 +39,8 @@ For EVERY exercise set:
 - targetType: suffix | prefix | word_form | full_word | structure | concept
 - hint: helps with THAT target only
 - completedSentence: fully correct sentence/form after answering
+- instruction: short learner-facing task line derived from the Theory rule (what they should do). Prefer the studied language of the Theory. Example: if Theory teaches Finnish plural partitive of adjectives, instruction might be "Kirjoita adjektiivi monikon partitiivissa." Do NOT invent topics that Theory does not support. If Theory has no clear task wording, use a neutral line like "Complete the exercise."
+- skillLabel: Theory title when available
 
 ## Step 2 — Invent practice
 Pipeline: Theory rule → learning target → invent fresh context → one full-word blank → hint.
@@ -83,7 +85,8 @@ Same full-form answer across different sentences is OK.
 2. Prefer fill_blank; transformation when there is no sentence; multiple_choice sparingly.
 3. No abstract meta questions; no "/" alternate-list labels as answers.
 4. skillLabel = Theory title when available.
-5. JSON only:
+5. ALWAYS include instruction (see Step 1). Never leave the learner without task context.
+6. JSON only:
 {
   "theoryFocus": string,
   "exercises": [ {
@@ -107,7 +110,8 @@ Same full-form answer across different sentences is OK.
   } ]
 }
 6. fill_blank sentence MUST contain exactly one blank as eight underscores: ________
-7. No markdown.`;
+7. No markdown.
+8. Optional showArrow: false for prompt-line style (cue + blank) instead of cue → blank.`;
 
 async function requestExerciseBatch(input: {
   client: OpenAI;

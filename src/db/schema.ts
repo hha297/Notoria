@@ -81,6 +81,27 @@ export const speakingStatusEnum = pgEnum("speaking_status", [
   "cancelled",
 ]);
 
+export const exerciseImportSourceEnum = pgEnum("exercise_import_source", [
+  "image",
+  "file",
+  "url",
+]);
+
+export const exerciseImportStatusEnum = pgEnum("exercise_import_status", [
+  "UPLOADING",
+  "EXTRACTING",
+  "ANALYZING",
+  "GENERATING",
+  "COMPLETED",
+  "FAILED",
+]);
+
+export const importedExerciseTypeEnum = pgEnum("imported_exercise_type", [
+  "fill_blank",
+  "transformation",
+  "multiple_choice",
+]);
+
 export const users = pgTable(
   "users",
   {
@@ -487,6 +508,58 @@ export const speakingSessions = pgTable(
   ],
 );
 
+export const exerciseImports = pgTable(
+  "exercise_imports",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    sourceType: exerciseImportSourceEnum("source_type").notNull(),
+    title: text("title").notNull(),
+    originalFilename: text("original_filename"),
+    sourceUrl: text("source_url"),
+    fileUrl: text("file_url"),
+    filePublicId: text("file_public_id"),
+    mimeType: text("mime_type"),
+    extractedText: text("extracted_text"),
+    analysis: jsonb("analysis"),
+    status: exerciseImportStatusEnum("status").notNull().default("UPLOADING"),
+    errorCode: text("error_code"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("exercise_imports_workspace_id_idx").on(table.workspaceId),
+    index("exercise_imports_user_id_idx").on(table.userId),
+  ],
+);
+
+export const importedExercises = pgTable(
+  "imported_exercises",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    importId: uuid("import_id")
+      .notNull()
+      .references(() => exerciseImports.id, { onDelete: "cascade" }),
+    type: importedExerciseTypeEnum("type").notNull(),
+    /** Full exercise payload compatible with TheoryExercise shapes. */
+    data: jsonb("data").notNull(),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [index("imported_exercises_import_id_idx").on(table.importId)],
+);
+
 export const usersRelations = relations(users, ({ many }) => ({
   workspaces: many(workspaces),
   vocabularyWords: many(vocabularyWords),
@@ -495,6 +568,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   speakingSessions: many(speakingSessions),
   grammarNotes: many(grammarNotes),
   folders: many(workspaceFolders),
+  exerciseImports: many(exerciseImports),
 }));
 
 export const workspacesRelations = relations(workspaces, ({ one, many }) => ({
@@ -509,6 +583,7 @@ export const workspacesRelations = relations(workspaces, ({ one, many }) => ({
   grammarNotes: many(grammarNotes),
   tags: many(workspaceTags),
   folders: many(workspaceFolders),
+  exerciseImports: many(exerciseImports),
 }));
 
 export const workspaceTagsRelations = relations(workspaceTags, ({ one }) => ({
@@ -710,6 +785,31 @@ export const speakingSessionsRelations = relations(
   }),
 );
 
+export const exerciseImportsRelations = relations(
+  exerciseImports,
+  ({ one, many }) => ({
+    user: one(users, {
+      fields: [exerciseImports.userId],
+      references: [users.id],
+    }),
+    workspace: one(workspaces, {
+      fields: [exerciseImports.workspaceId],
+      references: [workspaces.id],
+    }),
+    exercises: many(importedExercises),
+  }),
+);
+
+export const importedExercisesRelations = relations(
+  importedExercises,
+  ({ one }) => ({
+    import: one(exerciseImports, {
+      fields: [importedExercises.importId],
+      references: [exerciseImports.id],
+    }),
+  }),
+);
+
 export type User = typeof users.$inferSelect;
 export type SubscriptionPlan = (typeof subscriptionPlanEnum.enumValues)[number];
 export type Workspace = typeof workspaces.$inferSelect;
@@ -728,3 +828,11 @@ export type ListeningLesson = typeof listeningLessons.$inferSelect;
 export type ListeningExercise = typeof listeningExercises.$inferSelect;
 export type SpeakingSession = typeof speakingSessions.$inferSelect;
 export type SpeakingStatus = (typeof speakingStatusEnum.enumValues)[number];
+export type ExerciseImport = typeof exerciseImports.$inferSelect;
+export type ImportedExercise = typeof importedExercises.$inferSelect;
+export type ExerciseImportStatus =
+  (typeof exerciseImportStatusEnum.enumValues)[number];
+export type ExerciseImportSource =
+  (typeof exerciseImportSourceEnum.enumValues)[number];
+export type ImportedExerciseType =
+  (typeof importedExerciseTypeEnum.enumValues)[number];

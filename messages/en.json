@@ -329,7 +329,7 @@
     "title": "Exercise",
     "studio": "studio",
     "description": "Choose a study mode to practice your vocabulary.",
-    "studioDescription": "Practice from your vocabulary or theory notes — pick a source, then start a focused session.",
+    "studioDescription": "Practice from your vocabulary, theory notes, or imported material — pick a source, then start a focused session.",
     "practice": "practice",
     "editor": "editor",
     "edit": "Edit",
@@ -342,8 +342,108 @@
       "label": "Exercise source",
       "vocabulary": "Vocabulary",
       "theory": "Theory",
+      "import": "Import",
       "vocabularyHint": "Modes built from words in your active workspace.",
-      "theoryHint": "AI turns a theory note into fill-in-the-blank practice."
+      "theoryHint": "AI turns a theory note into fill-in-the-blank practice.",
+      "importHint": "Import a worksheet or notes — we keep the source cues and turn them into practice cards."
+    },
+    "processing": {
+      "workingTitle": "Working on your exercise",
+      "readyTitle": "Exercise ready",
+      "errorTitle": "Something went wrong",
+      "cancel": "Cancel",
+      "retry": "Retry",
+      "dismiss": "Dismiss",
+      "stages": {
+        "uploading": "Uploading…",
+        "extracting": "Extracting content…",
+        "analyzing": "Analyzing content…",
+        "generating": "Generating exercise…",
+        "saving": "Saving exercise…",
+        "completed": "Exercise ready",
+        "error": "Generation failed"
+      }
+    },
+    "import": {
+      "eyebrow": "Imported practice",
+      "practiceTitle": "Imported exercises",
+      "practiceDescription": "Practice cards built from your imported material — same cues and order, no invented drills.",
+      "formTitle": "Import learning material",
+      "formDescription": "Provide a source. We extract its structure and build practice from those cues only.",
+      "modes": {
+        "image": "Image",
+        "file": "File",
+        "url": "URL",
+        "text": "Text"
+      },
+      "titleLabel": "Title",
+      "titlePlaceholder": "Optional — defaults from the source",
+      "urlLabel": "URL",
+      "urlPlaceholder": "https://…",
+      "textLabel": "Learning text",
+      "textPlaceholder": "Paste or type learning material…",
+      "dropImageTitle": "Drop image here",
+      "dropFileTitle": "Drop file here",
+      "dropDescription": "or click to upload",
+      "pasteHint": "You can also paste an image with Ctrl + V",
+      "pasteAlwaysHint": "Tip: Ctrl + V pastes a clipboard image from any Import mode.",
+      "supportedFiles": "PDF, DOCX, images, and plain text (.txt, .md)",
+      "pastedImageTitle": "Pasted image",
+      "importAction": "Import & generate",
+      "unlockPro": "Unlock with Pro",
+      "myImports": "My imports",
+      "practice": "Practice",
+      "retry": "Retry",
+      "delete": "Delete",
+      "deleteConfirmTitle": "Delete this import?",
+      "deleteConfirmDescription": "\"{title}\" and its generated exercises will be permanently removed.",
+      "ready": "Exercises ready",
+      "deleted": "Import deleted",
+      "exerciseCount": "{count, plural, one {# exercise} other {# exercises}}",
+      "importedAgo": "Imported {time}",
+      "processingHint": "Extracting content and generating exercises…",
+      "extractingHint": "Reading and analyzing your material…",
+      "generatingHint": "Creating practice exercises from the content…",
+      "uploadBytes": "{loaded} / {total}",
+      "cancelUpload": "Cancel",
+      "uploadCancelled": "Upload cancelled",
+      "sourceTypes": {
+        "image": "Image",
+        "file": "File",
+        "url": "URL"
+      },
+      "status": {
+        "UPLOADING": "Uploading",
+        "EXTRACTING": "Extracting",
+        "ANALYZING": "Processing",
+        "GENERATING": "Generating",
+        "COMPLETED": "Ready",
+        "FAILED": "Failed"
+      },
+      "steps": {
+        "uploading": "Uploading…",
+        "extracting": "Analyzing content…",
+        "generating": "Generating exercises…",
+        "complete": "Complete",
+        "processing": "Processing…"
+      },
+      "errors": {
+        "CLOUDINARY_NOT_CONFIGURED": "File storage is not configured.",
+        "OPENAI_NOT_CONFIGURED": "AI processing is not configured.",
+        "INVALID_FILE": "Choose a file to import.",
+        "INVALID_FILE_TYPE": "That file type is not supported. Use an image, PDF, DOCX, or plain text.",
+        "FILE_TOO_LARGE": "That file is too large. Please use a file under 10 MB.",
+        "INVALID_URL": "Enter a valid http(s) URL.",
+        "URL_FETCH_FAILED": "Could not fetch that URL. Try another link.",
+        "UNSUPPORTED_PARSE": "Could not read that document. Use PDF or DOCX (not legacy .doc).",
+        "EMPTY_CONTENT": "No usable learning content was found.",
+        "ANALYSIS_FAILED": "Could not process that material. Try again.",
+        "GENERATION_FAILED": "Could not generate exercises from that material.",
+        "GENERATION_UNAVAILABLE": "Exercise generation is unavailable right now. Try again later.",
+        "IMPORT_NOT_FOUND": "Import not found.",
+        "PROCESSING_FAILED": "Something went wrong while processing this import.",
+        "ALREADY_PROCESSING": "This import is already being processed."
+      }
     },
     "theory": {
       "eyebrow": "Theory practice",
@@ -407,6 +507,7 @@
         "fillBlank": "Fill in the blank.",
         "completeConstruction": "Complete the construction.",
         "completeRule": "Complete the rule.",
+        "completeExercise": "Complete the exercise.",
         "theoryCheck": "Theory Check"
       },
       "trueFalseLabel": "True or False"
@@ -463,6 +564,7 @@
     },
     "fillInBlank": {
       "prompt": "Fill in the blank",
+      "instruction": "Fill in the blank with the correct word form.",
       "hint": "Hint",
       "hintExplainWord": "Think about the meaning of the missing word in this sentence.",
       "correct": "Correct!",
@@ -1541,9 +1643,9 @@
     "notConfigured": "Billing is not configured yet.",
     "noCustomer": "No billing customer is linked to this account yet.",
     "modalTitle": "Upgrade to Notoria Pro",
-    "modalSubtitle": "Free keeps your library and practice. Pro adds AI Theory exercises, writing, listening, speaking, and printable files.",
+    "modalSubtitle": "Free keeps your library and practice. Pro adds AI exercises from vocabulary, theory, and imports — plus writing, listening, speaking, and printable files.",
     "lockedTitle": "This is a Pro feature",
-    "lockedDescription": "Upgrade to unlock AI Theory exercises — along with listening, speaking, writing AI, and PDF/Word export.",
+    "lockedDescription": "Upgrade to unlock AI exercises (vocabulary, theory, and import) — along with listening, speaking, writing AI, and PDF/Word export.",
     "planName": "Pro",
     "cancelAnytime": "Cancel anytime",
     "compare": {
@@ -1594,6 +1696,10 @@
           "capability": "AI Theory Exercises",
           "impact": "Practice your own Theory with AI fill-in-the-blank exercises"
         },
+        "importAi": {
+          "capability": "AI Import Exercises",
+          "impact": "Turn worksheets, images, PDFs, or URLs into practice cards"
+        },
         "listening": {
           "capability": "Listening lessons",
           "impact": "Turn your audio or video into practice"
@@ -1620,6 +1726,10 @@
       "theoryAi": {
         "title": "AI Theory Exercises",
         "body": "Turn your personal Theory notes into interactive fill-in-the-blank practice with fresh contexts, hints, and explanations."
+      },
+      "importAi": {
+        "title": "AI Import Exercises",
+        "body": "Import worksheets, images, PDFs, or URLs and turn them into practice cards — alongside vocabulary and Theory AI in Exercise Studio."
       },
       "listening": {
         "title": "Enhanced listening experience",

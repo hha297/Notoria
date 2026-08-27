@@ -4,9 +4,10 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight, RotateCcw, Sparkles } from "lucide-react";
-import { CheckCircle2, Loader2, XCircle } from "lucide-react";
+import { CheckCircle2, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
+import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseAiBar } from "@/components/exercises/exercise-ai-bar";
 import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
@@ -15,6 +16,7 @@ import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useAiProcessing } from "@/hooks/use-ai-processing";
 import { requestExerciseAi } from "@/lib/exercises/ai-client";
 import type { ExerciseAiCefr } from "@/lib/exercises/ai-types";
 import {
@@ -58,11 +60,18 @@ export function FillBlankSession({
   const [peeked, setPeeked] = useState(false);
   const [sessionComplete, setSessionComplete] = useState(false);
   const [score, setScore] = useState({ correct: 0, answered: 0 });
-  const [generating, setGenerating] = useState(false);
   const [level, setLevel] = useState<ExerciseAiCefr>("a2");
   const [usedWordIds, setUsedWordIds] = useState<string[]>([]);
   const avoidByWord = useRef<Record<string, string[]>>({});
   const batchRef = useRef(0);
+  const {
+    state: processing,
+    setStage,
+    reset: resetProcessing,
+    fail,
+    complete: completeProcessing,
+    isActive: generating,
+  } = useAiProcessing();
 
   const filteredWords = useMemo(
     () => filterFlashcardWords(words, filters),
@@ -129,7 +138,7 @@ export function FillBlankSession({
       return;
     }
 
-    setGenerating(true);
+    setStage("generating");
     try {
       const picked = pickFillBlankAiWords(filteredWords, 10, usedWordIds);
       const payloadWords = picked.map((word) =>
@@ -144,14 +153,17 @@ export function FillBlankSession({
 
       if (!result.ok) {
         if (result.code === "AI_FORBIDDEN") {
+          fail(tAi("forbidden"));
           openUpgrade();
           return;
         }
-        toast.error(
+        fail(
           result.code === "AI_EMPTY" ? tAi("emptyWords") : tAi("unavailable"),
         );
         return;
       }
+
+      setStage("saving");
 
       batchRef.current += 1;
       const batchId = `${Date.now()}-${batchRef.current}`;
@@ -174,7 +186,7 @@ export function FillBlankSession({
       }
 
       if (nextItems.length === 0) {
-        toast.error(tAi("noneValid"));
+        fail(tAi("noneValid"));
         return;
       }
 
@@ -190,17 +202,21 @@ export function FillBlankSession({
       ]);
       setAiItems(nextItems);
       startFromAiItems(nextItems);
+      completeProcessing();
+      window.setTimeout(() => resetProcessing(), 350);
     } catch {
-      toast.error(tAi("unavailable"));
-    } finally {
-      setGenerating(false);
+      fail(tAi("unavailable"));
     }
   }, [
+    completeProcessing,
+    fail,
     hasProAccess,
     openUpgrade,
     filteredWords,
     language,
     level,
+    resetProcessing,
+    setStage,
     startFromAiItems,
     tAi,
     usedWordIds,
@@ -292,7 +308,24 @@ export function FillBlankSession({
       <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
       {aiBar}
 
-      {sessionComplete && hasSession ? (
+      {generating ||
+      processing.stage === "error" ||
+      processing.stage === "completed" ? (
+        <AiProcessingProgress
+          state={processing}
+          pipeline="aiGenerate"
+          onRetry={
+            processing.stage === "error"
+              ? () => void generateQuestions()
+              : undefined
+          }
+          onDismissError={
+            processing.stage === "error"
+              ? () => resetProcessing()
+              : undefined
+          }
+        />
+      ) : sessionComplete && hasSession ? (
         <SessionCompleteCard
           title={tSession("complete")}
           scoreLabel={tSession("score", { correct: score.correct, total })}
@@ -336,49 +369,27 @@ export function FillBlankSession({
           />
         </>
       ) : hasProAccess ? (
-        <EmptyGenerateCard
-          generating={generating}
-          onGenerate={() => void generateQuestions()}
-        />
+        <EmptyGenerateCard onGenerate={() => void generateQuestions()} />
       ) : null}
     </div>
   );
 }
 
-function EmptyGenerateCard({
-  generating,
-  onGenerate,
-}: {
-  generating: boolean;
-  onGenerate: () => void;
-}) {
+function EmptyGenerateCard({ onGenerate }: { onGenerate: () => void }) {
   const tAi = useTranslations("exercises.ai");
 
   return (
     <div className="mx-auto max-w-lg rounded-3xl border border-hairline-cloud bg-card p-6 text-center shadow-xl shadow-ink/5 sm:p-10">
       <div className="mx-auto mb-5 flex size-12 items-center justify-center rounded-full bg-accent-lime/20 text-ink">
-        {generating ? (
-          <Loader2 className="size-5 animate-spin" />
-        ) : (
-          <Sparkles className="size-5" />
-        )}
+        <Sparkles className="size-5" />
       </div>
       <p className="text-lg font-medium text-ink">{tAi("emptyTitle")}</p>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
         {tAi("emptyDescription")}
       </p>
-      <Button
-        type="button"
-        className="mt-6"
-        disabled={generating}
-        onClick={onGenerate}
-      >
-        {generating ? (
-          <Loader2 className="size-4 animate-spin" />
-        ) : (
-          <Sparkles className="size-4" />
-        )}
-        {generating ? tAi("generating") : tAi("generate")}
+      <Button type="button" className="mt-6" onClick={onGenerate}>
+        <Sparkles className="size-4" />
+        {tAi("generate")}
       </Button>
     </div>
   );
@@ -409,16 +420,21 @@ function FillBlankCard({
 
   return (
     <div className="mx-auto max-w-3xl rounded-3xl border border-hairline-cloud bg-card p-6 shadow-xl shadow-ink/5 sm:p-10 md:p-12">
-      <div className="flex items-center justify-between gap-3">
-        <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-violet-mid">
-          {t("prompt")}
-        </p>
-        {item.aiGenerated ? (
-          <p className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-            <Sparkles className="size-3" />
-            {tAi("generated")}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between gap-3">
+          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-violet-mid">
+            {t("prompt")}
           </p>
-        ) : null}
+          {item.aiGenerated ? (
+            <p className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+              <Sparkles className="size-3" />
+              {tAi("generated")}
+            </p>
+          ) : null}
+        </div>
+        <p className="text-sm leading-relaxed text-ink">
+          {item.instruction?.trim() || t("instruction")}
+        </p>
       </div>
 
       <form

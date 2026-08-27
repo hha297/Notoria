@@ -4,9 +4,11 @@ import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { ExerciseStudio } from "@/components/exercises/exercise-studio";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
+import { getExerciseImports } from "@/lib/actions/exercise-import";
 import { getTheoryNotes } from "@/lib/actions/theory";
 import { toTheoryExerciseCard } from "@/lib/theory-exercises/cards";
 import { getActiveWorkspace } from "@/lib/workspace";
+import { getCurrentProAccess } from "@/lib/auth/pro-access";
 
 export const dynamic = "force-dynamic";
 
@@ -30,6 +32,15 @@ export default async function ExercisesPage() {
 
   const notes = await getTheoryNotes();
   const theories = notes.map((note) => toTheoryExerciseCard(note));
+  const { hasProAccess } = await getCurrentProAccess();
+  let imports: Awaited<ReturnType<typeof getExerciseImports>> = [];
+  if (hasProAccess) {
+    try {
+      imports = await getExerciseImports();
+    } catch {
+      imports = [];
+    }
+  }
 
   return (
     <PageShell>
@@ -42,7 +53,7 @@ export default async function ExercisesPage() {
         <ShowTutorialButton section="exercise" />
       </PageHeader>
 
-      <ExerciseStudio theories={theories} />
+      <ExerciseStudio theories={theories} imports={imports} />
     </PageShell>
   );
 }

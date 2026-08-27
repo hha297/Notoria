@@ -26,7 +26,8 @@ Requirements:
 13. Vary sentence structure and context. If the same word appears more than once, write a clearly different sentence each time.
 14. Do not invent unnecessary facts. Do not change the vocabulary word or meaning.
 15. Keep explanation empty.
-16. Return one exercise per input entry. Copy wordId from the input.
+16. Optionally include instruction: a short learner-facing task line in the SAME language as the sentence (e.g. "Fill in the blank with the correct word." / equivalent). Do NOT invent a specific grammar topic unless the word metadata clearly supports it. Prefer a neutral fill-in-the-blank instruction.
+17. Return one exercise per input entry. Copy wordId from the input.
 
 Return structured JSON only:
 {
@@ -38,6 +39,7 @@ Return structured JSON only:
       "answer": string,
       "baseWord": string,
       "language": string,
+      "instruction": string,
       "explanation": string,
       "difficulty": string
     }

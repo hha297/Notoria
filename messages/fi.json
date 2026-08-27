@@ -329,7 +329,7 @@
     "title": "Harjoitus",
     "studio": "studio",
     "description": "Valitse harjoittelutila sanastollesi.",
-    "studioDescription": "Harjoittele sanastosta tai teoriasta — valitse lähde ja aloita keskittynyt sessio.",
+    "studioDescription": "Harjoittele sanastosta, teoriasta tai tuodusta materiaalista — valitse lähde ja aloita keskittynyt sessio.",
     "practice": "harjoittelu",
     "editor": "editori",
     "edit": "Muokkaa",
@@ -342,8 +342,108 @@
       "label": "Harjoituslähde",
       "vocabulary": "Sanasto",
       "theory": "Teoria",
+      "import": "Tuo",
       "vocabularyHint": "Tavat rakentuvat aktiivisen työtilan sanoista.",
-      "theoryHint": "Tekoäly muuttaa teoriamerkinnän aukkoharjoitukseksi."
+      "theoryHint": "Tekoäly muuttaa teoriamerkinnän aukkoharjoitukseksi.",
+      "importHint": "Tuo harjoituspaperi tai muistiinpanot — säilytämme lähteen vihjeet ja teemme niistä harjoituskortteja."
+    },
+    "processing": {
+      "workingTitle": "Harjoitusta valmistellaan",
+      "readyTitle": "Harjoitus valmis",
+      "errorTitle": "Jotain meni pieleen",
+      "cancel": "Peruuta",
+      "retry": "Yritä uudelleen",
+      "dismiss": "Sulje",
+      "stages": {
+        "uploading": "Ladataan…",
+        "extracting": "Poimitaan sisältöä…",
+        "analyzing": "Analysoidaan…",
+        "generating": "Luodaan harjoitusta…",
+        "saving": "Tallennetaan…",
+        "completed": "Harjoitus valmis",
+        "error": "Luonti epäonnistui"
+      }
+    },
+    "import": {
+      "eyebrow": "Tuotu harjoitus",
+      "practiceTitle": "Tuodut harjoitukset",
+      "practiceDescription": "Harjoituskortit rakennetaan tuodun materiaalin vihjeistä ja järjestyksestä — ei keksittyjä lauseita.",
+      "formTitle": "Tuo oppimateriaalia",
+      "formDescription": "Anna lähde. Poimimme rakenteen ja rakennamme harjoitukset vain lähteen vihjeistä.",
+      "modes": {
+        "image": "Kuva",
+        "file": "Tiedosto",
+        "url": "URL",
+        "text": "Teksti"
+      },
+      "titleLabel": "Otsikko",
+      "titlePlaceholder": "Valinnainen — oletus lähteestä",
+      "urlLabel": "URL",
+      "urlPlaceholder": "https://…",
+      "textLabel": "Oppimisteksti",
+      "textPlaceholder": "Liitä tai kirjoita oppimateriaalia…",
+      "dropImageTitle": "Pudota kuva tähän",
+      "dropFileTitle": "Pudota tiedosto tähän",
+      "dropDescription": "tai napsauta ladataksesi",
+      "pasteHint": "Voit myös liittää kuvan Ctrl + V -näppäimillä",
+      "pasteAlwaysHint": "Vinkki: Ctrl + V liittää leikepöydän kuvan missä tahansa Import-tilassa.",
+      "supportedFiles": "PDF, DOCX, kuvat ja pelkkä teksti (.txt, .md)",
+      "pastedImageTitle": "Liitetty kuva",
+      "importAction": "Tuo ja luo",
+      "unlockPro": "Avaa Prolla",
+      "myImports": "Omat tuonnit",
+      "practice": "Harjoittele",
+      "retry": "Yritä uudelleen",
+      "delete": "Poista",
+      "deleteConfirmTitle": "Poistetaanko tämä tuonti?",
+      "deleteConfirmDescription": "\"{title}\" ja sen luodut harjoitukset poistetaan pysyvästi.",
+      "ready": "Harjoitukset valmiina",
+      "deleted": "Tuonti poistettu",
+      "exerciseCount": "{count, plural, one {# harjoitus} other {# harjoitusta}}",
+      "importedAgo": "Tuotu {time}",
+      "processingHint": "Poimitaan sisältöä ja luodaan harjoituksia…",
+      "extractingHint": "Luetaan ja analysoidaan materiaalia…",
+      "generatingHint": "Luodaan harjoituksia sisällöstä…",
+      "uploadBytes": "{loaded} / {total}",
+      "cancelUpload": "Peruuta",
+      "uploadCancelled": "Lataus peruutettu",
+      "sourceTypes": {
+        "image": "Kuva",
+        "file": "Tiedosto",
+        "url": "URL"
+      },
+      "status": {
+        "UPLOADING": "Ladataan",
+        "EXTRACTING": "Poimitaan",
+        "ANALYZING": "Käsitellään",
+        "GENERATING": "Luodaan",
+        "COMPLETED": "Valmis",
+        "FAILED": "Epäonnistui"
+      },
+      "steps": {
+        "uploading": "Ladataan…",
+        "extracting": "Analysoidaan sisältöä…",
+        "generating": "Luodaan harjoituksia…",
+        "complete": "Valmis",
+        "processing": "Käsitellään…"
+      },
+      "errors": {
+        "CLOUDINARY_NOT_CONFIGURED": "Tiedostojen tallennusta ei ole määritetty.",
+        "OPENAI_NOT_CONFIGURED": "Tekoälykäsittelyä ei ole määritetty.",
+        "INVALID_FILE": "Valitse tiedosto tuotavaksi.",
+        "INVALID_FILE_TYPE": "Tiedostotyyppiä ei tueta. Käytä kuvaa, PDF:ää, DOCX:ää tai pelkkää tekstiä.",
+        "FILE_TOO_LARGE": "Tiedosto on liian suuri. Käytä alle 10 Mt:n tiedostoa.",
+        "INVALID_URL": "Anna kelvollinen http(s)-URL.",
+        "URL_FETCH_FAILED": "URL:ia ei voitu hakea. Kokeile toista linkkiä.",
+        "UNSUPPORTED_PARSE": "Asiakirjaa ei voitu lukea. Käytä PDF- tai DOCX-tiedostoa (ei vanhaa .doc-muotoa).",
+        "EMPTY_CONTENT": "Käytettävää oppisisältöä ei löytynyt.",
+        "ANALYSIS_FAILED": "Materiaalia ei voitu käsitellä. Yritä uudelleen.",
+        "GENERATION_FAILED": "Harjoituksia ei voitu luoda materiaalista.",
+        "GENERATION_UNAVAILABLE": "Harjoitusten luonti ei ole juuri nyt saatavilla. Yritä myöhemmin.",
+        "IMPORT_NOT_FOUND": "Tuontia ei löytynyt.",
+        "PROCESSING_FAILED": "Jotain meni pieleen tätä tuontia käsiteltäessä.",
+        "ALREADY_PROCESSING": "Tätä tuontia käsitellään jo."
+      }
     },
     "theory": {
       "eyebrow": "Teoriaharjoitus",
@@ -407,6 +507,7 @@
         "fillBlank": "Täytä aukko.",
         "completeConstruction": "Täydennä rakenne.",
         "completeRule": "Täydennä sääntö.",
+        "completeExercise": "Suorita harjoitus.",
         "theoryCheck": "Teoriantarkistus"
       },
       "trueFalseLabel": "Tosi tai epätosi"
@@ -463,6 +564,7 @@
     },
     "fillInBlank": {
       "prompt": "Täytä aukko",
+      "instruction": "Täytä aukko sanan oikealla muodolla.",
       "hint": "Vihje",
       "hintExplainWord": "Mieti puuttuvan sanan merkitystä tässä lauseessa.",
       "correct": "Oikein!",
@@ -1361,9 +1463,9 @@
     "notConfigured": "Laskutusta ei ole vielä määritetty.",
     "noCustomer": "Tähän tiliin ei ole vielä liitetty laskutusasiakasta.",
     "modalTitle": "Päivitä Notoria Pro -tilaukseen",
-    "modalSubtitle": "Ilmaisessa säilyvät kirjasto ja harjoittelu. Pro tuo Theory-tekoälyharjoitukset, kirjoittamisen tekoälyn, kuuntelun, puhumisen ja tulostettavat tiedostot.",
+    "modalSubtitle": "Ilmaisessa säilyvät kirjasto ja harjoittelu. Pro tuo tekoälyharjoitukset sanastosta, teoriasta ja tuonneista — sekä kirjoittamisen tekoälyn, kuuntelun, puhumisen ja tulostettavat tiedostot.",
     "lockedTitle": "Tämä on Pro-ominaisuus",
-    "lockedDescription": "Päivitä Prohon avataksesi Theory-tekoälyharjoitukset — sekä kuuntelun, puhumisen, kirjoittamisen tekoälyn ja PDF/Word-viennin.",
+    "lockedDescription": "Päivitä Prohon avataksesi tekoälyharjoitukset (sanasto, teoria, tuonti) — sekä kuuntelun, puhumisen, kirjoittamisen tekoälyn ja PDF/Word-viennin.",
     "planName": "Pro",
     "cancelAnytime": "Peru milloin tahansa",
     "compare": {
@@ -1414,6 +1516,10 @@
           "capability": "Theory-tekoälyharjoitukset",
           "impact": "Harjoittele omaa Teoriaasi tekoälyn aukkotehtävillä"
         },
+        "importAi": {
+          "capability": "Tuontiharjoitukset tekoälyllä",
+          "impact": "Muuta harjoituspaperit, kuvat, PDF:t tai URL:it harjoituskorteiksi"
+        },
         "listening": {
           "capability": "Kuuntelutunnit",
           "impact": "Muuta ääni tai video harjoitukseksi"
@@ -1440,6 +1546,10 @@
       "theoryAi": {
         "title": "Theory-tekoälyharjoitukset",
         "body": "Muuta omat Teoriamuistiinpanosi interaktiivisiksi aukkotehtäviksi uusilla konteksteilla, vihjeillä ja selityksillä."
+      },
+      "importAi": {
+        "title": "Tuontiharjoitukset tekoälyllä",
+        "body": "Tuo harjoituspaperit, kuvat, PDF:t tai URL:it harjoituskorteiksi — yhdessä sanaston ja Teorian tekoälyn kanssa Exercise Studiossa."
       },
       "listening": {
         "title": "Parempi kuuntelukokemus",

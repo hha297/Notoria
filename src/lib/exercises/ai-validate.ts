@@ -172,6 +172,7 @@ export function fillBlankExerciseToItem(
     sentenceAfter: split.after,
     acceptableAnswers: buildFillBlankAcceptableAnswers(word.word, exercise.answer),
     aiGenerated: true,
+    instruction: exercise.instruction?.trim() || undefined,
   };
 }
 

@@ -6,12 +6,14 @@ import { toast } from "sonner";
 import { Check, CheckCircle2, ChevronRight, Loader2, RotateCcw, Sparkles, X, XCircle } from "lucide-react";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { lockedFeatureClassName } from "@/components/billing/locked-styles";
+import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
+import { useAiProcessing } from "@/hooks/use-ai-processing";
 import { shuffleArray } from "@/lib/exercises/utils";
 import { answersMatchAny, revealTextForExercise, scrubFillBlankPresentation } from "@/lib/theory-exercises/generate-ai";
 import type {
@@ -25,25 +27,33 @@ import { cn } from "@/lib/utils";
 
 type TheoryExerciseSessionViewProps = {
   session: TheoryExerciseSession;
+  /**
+   * When true, practice persisted items only (no AI generate / regenerate).
+   * Used by Import sessions.
+   */
+  practiceOnly?: boolean;
 };
 
 function SkillHeader({
   skillLabel,
   instruction,
   fallbackType,
+  fallbackInstruction,
 }: {
   skillLabel?: string;
   instruction?: string;
   fallbackType: string;
+  fallbackInstruction: string;
 }) {
+  const title = skillLabel?.trim() || fallbackType;
+  const task = instruction?.trim() || fallbackInstruction;
+
   return (
-    <div className="mb-4 space-y-1">
+    <div className="mb-5 space-y-2">
       <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-        {skillLabel || fallbackType}
+        {title}
       </p>
-      {instruction ? (
-        <p className="text-sm text-muted-foreground">{instruction}</p>
-      ) : null}
+      <p className="text-sm leading-relaxed text-ink">{task}</p>
     </div>
   );
 }
@@ -53,7 +63,10 @@ function HintText({ text }: { text?: string }) {
   return <p>{text}</p>;
 }
 
-export function TheoryExerciseSessionView({ session }: TheoryExerciseSessionViewProps) {
+export function TheoryExerciseSessionView({
+  session,
+  practiceOnly = false,
+}: TheoryExerciseSessionViewProps) {
   const t = useTranslations("exercises.theory");
   const tSession = useTranslations("exercises.session");
   const { hasProAccess, openUpgrade } = useProAccess();
@@ -62,8 +75,15 @@ export function TheoryExerciseSessionView({ session }: TheoryExerciseSessionView
   const [score, setScore] = useState({ correct: 0, answered: 0 });
   const [complete, setComplete] = useState(false);
   const [round, setRound] = useState(0);
-  const [generating, setGenerating] = useState(false);
   const [autoTried, setAutoTried] = useState(false);
+  const {
+    state: processing,
+    setStage,
+    reset: resetProcessing,
+    fail,
+    complete: completeProcessing,
+    isActive: generating,
+  } = useAiProcessing();
 
   const restart = useCallback((nextItems: TheoryExercise[]) => {
     setItems(shuffleArray(nextItems));
@@ -78,7 +98,7 @@ export function TheoryExerciseSessionView({ session }: TheoryExerciseSessionView
       openUpgrade();
       return;
     }
-    setGenerating(true);
+    setStage("generating", { title: session.theoryTitle });
     try {
       const response = await fetch("/api/ai/theory-exercise", {
         method: "POST",
@@ -92,26 +112,38 @@ export function TheoryExerciseSessionView({ session }: TheoryExerciseSessionView
       };
       if (!response.ok || !result.ok) {
         if (result.code === "AI_FORBIDDEN") {
-          toast.error(t("aiForbidden"));
+          fail(t("aiForbidden"));
           openUpgrade();
           return;
         }
-        toast.error(t("aiUnavailable"));
+        fail(t("aiUnavailable"));
         return;
       }
       const incoming = result.exercises ?? [];
       if (incoming.length === 0) {
-        toast.error(t("aiUnavailable"));
+        fail(t("aiUnavailable"));
         return;
       }
+      setStage("saving");
+      completeProcessing();
       restart(incoming);
       toast.success(t("aiReady"));
+      window.setTimeout(() => resetProcessing(), 350);
     } catch {
-      toast.error(t("aiUnavailable"));
-    } finally {
-      setGenerating(false);
+      fail(t("aiUnavailable"));
     }
-  }, [hasProAccess, openUpgrade, restart, session.theoryId, t]);
+  }, [
+    completeProcessing,
+    fail,
+    hasProAccess,
+    openUpgrade,
+    resetProcessing,
+    restart,
+    session.theoryId,
+    session.theoryTitle,
+    setStage,
+    t,
+  ]);
 
   useEffect(() => {
     setItems(shuffleArray(session.items));
@@ -123,12 +155,19 @@ export function TheoryExerciseSessionView({ session }: TheoryExerciseSessionView
   }, [session.theoryId, session.items]);
 
   useEffect(() => {
-    if (autoTried || items.length > 0 || generating) return;
+    if (practiceOnly || autoTried || items.length > 0 || generating) return;
     setAutoTried(true);
     if (hasProAccess) {
       void generateWithAi();
     }
-  }, [autoTried, generateWithAi, generating, hasProAccess, items.length]);
+  }, [
+    autoTried,
+    generateWithAi,
+    generating,
+    hasProAccess,
+    items.length,
+    practiceOnly,
+  ]);
 
   const current = items[index];
   const total = items.length;
@@ -149,18 +188,42 @@ export function TheoryExerciseSessionView({ session }: TheoryExerciseSessionView
     setComplete(true);
   };
 
+  if (
+    items.length === 0 &&
+    (generating ||
+      processing.stage === "error" ||
+      processing.stage === "completed")
+  ) {
+    return (
+      <AiProcessingProgress
+        state={processing}
+        pipeline="aiGenerate"
+        onRetry={
+          processing.stage === "error" ? () => void generateWithAi() : undefined
+        }
+        onDismissError={
+          processing.stage === "error" ? () => resetProcessing() : undefined
+        }
+      />
+    );
+  }
+
   if (items.length === 0) {
     return (
       <div className="rounded-2xl border border-hairline-cloud bg-card p-8 text-center">
-        {generating ? (
+        {practiceOnly ? (
           <>
-            <Loader2 className="mx-auto size-8 animate-spin text-muted-foreground" />
-            <p className="mt-4 font-heading text-lg font-medium text-ink">
-              {t("generatingTitle")}
+            <p className="font-heading text-lg font-medium text-ink">
+              {t("backToStudio")}
             </p>
             <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
-              {t("generatingDescription")}
+              {t("aiUnavailable")}
             </p>
+            <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+              <LinkButton href="/exercises" variant="outline">
+                {t("backToStudio")}
+              </LinkButton>
+            </div>
           </>
         ) : (
           <>
@@ -192,6 +255,21 @@ export function TheoryExerciseSessionView({ session }: TheoryExerciseSessionView
     );
   }
 
+  if (generating || processing.stage === "error") {
+    return (
+      <AiProcessingProgress
+        state={processing}
+        pipeline="aiGenerate"
+        onRetry={
+          processing.stage === "error" ? () => void generateWithAi() : undefined
+        }
+        onDismissError={
+          processing.stage === "error" ? () => resetProcessing() : undefined
+        }
+      />
+    );
+  }
+
   if (complete) {
     return (
       <SessionCompleteCard
@@ -202,12 +280,16 @@ export function TheoryExerciseSessionView({ session }: TheoryExerciseSessionView
         })}
         tryAgainLabel={tSession("tryAgain")}
         onTryAgain={() => restart(items)}
-        extraAction={{
-          label: t("generateMore"),
-          onClick: () => void generateWithAi(),
-          loading: generating,
-          locked: !hasProAccess,
-        }}
+        extraAction={
+          practiceOnly
+            ? undefined
+            : {
+                label: t("generateMore"),
+                onClick: () => void generateWithAi(),
+                loading: generating,
+                locked: !hasProAccess,
+              }
+        }
       />
     );
   }
@@ -226,22 +308,24 @@ export function TheoryExerciseSessionView({ session }: TheoryExerciseSessionView
           />
         </div>
         <div className="flex items-center gap-2">
-          <Button
-            type="button"
-            variant="ghost"
-            size="sm"
-            onClick={() => void generateWithAi()}
-            disabled={generating}
-            aria-disabled={!hasProAccess || undefined}
-            className={cn(!hasProAccess && lockedFeatureClassName)}
-          >
-            {generating ? (
-              <Loader2 className="size-4 animate-spin" />
-            ) : (
-              <Sparkles className="size-4" />
-            )}
-            {t("regenerate")}
-          </Button>
+          {!practiceOnly ? (
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => void generateWithAi()}
+              disabled={generating}
+              aria-disabled={!hasProAccess || undefined}
+              className={cn(!hasProAccess && lockedFeatureClassName)}
+            >
+              {generating ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <Sparkles className="size-4" />
+              )}
+              {t("regenerate")}
+            </Button>
+          ) : null}
           <Button type="button" variant="ghost" size="sm" onClick={() => restart(items)}>
             <RotateCcw className="size-4" />
             {t("reshuffle")}
@@ -350,13 +434,18 @@ function FillBlankCard({
   return (
     <div className="space-y-4">
       <div className="mx-auto max-w-3xl rounded-3xl border border-hairline-cloud bg-card p-6 shadow-xl shadow-ink/5 sm:p-10 md:p-12">
-        <div className="flex items-center justify-between gap-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-violet-mid">
-            {item.skillLabel || t("types.fill_blank")}
-          </p>
-          <p className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-            <Sparkles className="size-3" />
-            {tAi("generated")}
+        <div className="space-y-2">
+          <div className="flex items-center justify-between gap-3">
+            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-violet-mid">
+              {item.skillLabel || t("types.fill_blank")}
+            </p>
+            <p className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+              <Sparkles className="size-3" />
+              {tAi("generated")}
+            </p>
+          </div>
+          <p className="text-sm leading-relaxed text-ink">
+            {item.instruction?.trim() || t("instructions.fillBlank")}
           </p>
         </div>
 
@@ -519,8 +608,13 @@ function TransformationCard({
     <div className="rounded-2xl border border-hairline-cloud bg-card p-5 sm:p-6">
       <SkillHeader
         skillLabel={item.skillLabel}
-        instruction={item.instruction ?? t("instructions.applyRule")}
+        instruction={item.instruction}
         fallbackType={t("types.transformation")}
+        fallbackInstruction={
+          item.showArrow === false
+            ? t("instructions.completeExercise")
+            : t("instructions.applyRule")
+        }
       />
       <p className="font-heading text-2xl font-medium tracking-tight text-ink sm:text-3xl">
         {item.showArrow !== false ? (
@@ -545,7 +639,26 @@ function TransformationCard({
             )}
           </>
         ) : (
-          item.promptWord
+          <>
+            <span>{item.promptWord}: </span>
+            {checked ? (
+              <span
+                className={cn(
+                  "border-b-2 font-semibold",
+                  isCorrect
+                    ? "border-[#b8d96a] text-[#4a6b0a]"
+                    : "border-destructive/50 text-destructive",
+                )}
+              >
+                {isCorrect ? value.trim() : item.answer}
+              </span>
+            ) : (
+              <span
+                aria-hidden
+                className="inline-block min-w-[7ch] translate-y-[-0.08em] border-b-2 border-dashed border-muted-foreground/55"
+              />
+            )}
+          </>
         )}
       </p>
       <div className="mt-5 flex flex-col gap-2 sm:flex-row">
@@ -635,8 +748,9 @@ function MultipleChoiceCard({
     <div className="rounded-2xl border border-hairline-cloud bg-card p-5 sm:p-6">
       <SkillHeader
         skillLabel={item.skillLabel}
-        instruction={item.instruction ?? t("instructions.chooseForm")}
+        instruction={item.instruction}
         fallbackType={t("types.multiple_choice")}
+        fallbackInstruction={t("instructions.chooseForm")}
       />
       <p className="font-heading text-xl font-medium leading-snug text-ink">{item.prompt}</p>
       <div className="mt-5 grid gap-2">

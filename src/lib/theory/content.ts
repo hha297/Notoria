@@ -39,6 +39,27 @@ export function createEmptyTheoryDoc(): JSONContent {
   };
 }
 
+/** Build a TipTap doc from plain imported text (one paragraph per line block). */
+export function plainTextToTheoryDoc(text: string): JSONContent {
+  const paragraphs = text
+    .split(/\n+/)
+    .map((line) => line.trim())
+    .filter(Boolean)
+    .slice(0, 400);
+
+  if (paragraphs.length === 0) {
+    return createEmptyTheoryDoc();
+  }
+
+  return {
+    type: "doc",
+    content: paragraphs.map((line) => ({
+      type: "paragraph",
+      content: [{ type: "text", text: line }],
+    })),
+  };
+}
+
 export function isKnownTheoryCategory(
   category: string | null | undefined,
 ): category is TheoryCategory {
