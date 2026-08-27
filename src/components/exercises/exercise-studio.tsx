@@ -3,21 +3,25 @@
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { BookOpen, Layers } from "lucide-react";
+import { BookOpen, Layers, Upload } from "lucide-react";
 import { ExerciseTypePicker } from "@/components/exercises/exercise-type-picker";
+import { ImportExercisePanel } from "@/components/exercises/import-exercise-panel";
 import { TheoryExercisePicker } from "@/components/exercises/theory-exercise-picker";
 import type { TheoryExerciseCardItem } from "@/components/exercises/theory-exercise-picker";
+import type { ExerciseImportListItem } from "@/lib/exercise-import/types";
 import { cn } from "@/lib/utils";
 
-type StudioSource = "vocabulary" | "theory";
+type StudioSource = "vocabulary" | "theory" | "import";
 
 type ExerciseStudioProps = {
   theories: TheoryExerciseCardItem[];
+  imports?: ExerciseImportListItem[];
   defaultSource?: StudioSource;
 };
 
 export function ExerciseStudio({
   theories,
+  imports = [],
   defaultSource = "vocabulary",
 }: ExerciseStudioProps) {
   const t = useTranslations("exercises");
@@ -35,6 +39,11 @@ export function ExerciseStudio({
           id: "theory" as const,
           label: t("sources.theory"),
           icon: BookOpen,
+        },
+        {
+          id: "import" as const,
+          label: t("sources.import"),
+          icon: Upload,
         },
       ] as const,
     [t],
@@ -88,10 +97,15 @@ export function ExerciseStudio({
             <p className="text-sm text-muted-foreground">{t("sources.vocabularyHint")}</p>
             <ExerciseTypePicker />
           </div>
-        ) : (
+        ) : source === "theory" ? (
           <div className="space-y-3">
             <p className="text-sm text-muted-foreground">{t("sources.theoryHint")}</p>
             <TheoryExercisePicker theories={theories} />
+          </div>
+        ) : (
+          <div className="space-y-3">
+            <p className="text-sm text-muted-foreground">{t("sources.importHint")}</p>
+            <ImportExercisePanel imports={imports} />
           </div>
         )}
       </div>

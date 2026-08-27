@@ -6,8 +6,10 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const nextConfig: NextConfig = {
   experimental: {
     serverActions: {
+      // Listening allows up to 25 MB; keep headroom above Import's 10 MB limit.
       bodySizeLimit: "50mb",
     },
+    proxyClientMaxBodySize: "50mb",
   },
   serverExternalPackages: [
     "assemblyai",

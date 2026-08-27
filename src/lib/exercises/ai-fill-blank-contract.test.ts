@@ -93,6 +93,10 @@ describe("fill-in-blank AI prompt contract", () => {
       "Do NOT reuse existing example sentences or previous exercise questions",
     );
     expect(FILL_BLANK_GENERATOR_PROMPT).toContain("CEFR");
+    expect(FILL_BLANK_GENERATOR_PROMPT).toContain("instruction");
+    expect(FILL_BLANK_GENERATOR_PROMPT).toContain(
+      "Do NOT invent a specific grammar topic",
+    );
   });
 
   it("sends examples only as sentences to avoid, never as a source list", () => {

@@ -62,6 +62,7 @@ export const exerciseAiFillBlankSchema = z.object({
   answer: z.string().trim().min(1).max(120),
   baseWord: z.string().trim().min(1).max(120).optional(),
   language: optionalTextSchema.catch(null),
+  instruction: optionalTextSchema.catch(null),
   explanation: optionalTextSchema.catch(null),
   difficulty: optionalTextSchema.catch(null),
 });

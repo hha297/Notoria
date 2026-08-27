@@ -103,6 +103,7 @@ export function validateFillBlankExercise(
     answer,
     baseWord: word.word,
     language: raw.language ?? null,
+    instruction: raw.instruction?.trim() || null,
     explanation: null,
     difficulty: raw.difficulty ?? null,
   };
@@ -172,6 +173,7 @@ export function fillBlankExerciseToItem(
     sentenceAfter: split.after,
     acceptableAnswers: buildFillBlankAcceptableAnswers(word.word, exercise.answer),
     aiGenerated: true,
+    instruction: exercise.instruction?.trim() || undefined,
   };
 }
 

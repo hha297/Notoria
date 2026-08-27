@@ -29,6 +29,7 @@ const COMPARE_ROWS = [
   { id: "fillBlank", free: "locked" },
   { id: "theory", free: "yes" },
   { id: "theoryAi", free: "locked" },
+  { id: "importAi", free: "locked" },
   { id: "listening", free: "locked" },
   { id: "speaking", free: "locked" },
 ] as const;

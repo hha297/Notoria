@@ -13,6 +13,8 @@ export type FillBlankItem = {
   sentenceAfter: string;
   acceptableAnswers: string[];
   aiGenerated?: boolean;
+  /** Learner-facing task line (AI or UI fallback). */
+  instruction?: string;
 };
 
 export function buildFillBlankAcceptableAnswers(word: string, matchedWord: string) {

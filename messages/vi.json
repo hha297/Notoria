@@ -329,7 +329,7 @@
     "title": "Luyện tập",
     "studio": "cùng Notoria",
     "description": "Chọn một kiểu bài để ôn từ trong sổ tay của bạn.",
-    "studioDescription": "Luyện từ vựng hoặc lý thuyết — chọn nguồn, rồi bắt đầu phiên tập trung.",
+    "studioDescription": "Luyện từ vựng, lý thuyết, hoặc tài liệu đã nhập — chọn nguồn, rồi bắt đầu phiên tập trung.",
     "practice": "hôm nay",
     "editor": "soạn thảo",
     "edit": "Chỉnh sửa",
@@ -342,8 +342,108 @@
       "label": "Nguồn bài tập",
       "vocabulary": "Từ vựng",
       "theory": "Lý thuyết",
+      "import": "Nhập",
       "vocabularyHint": "Các kiểu bài xây từ từ trong không gian học đang dùng.",
-      "theoryHint": "AI biến ghi chú Theory thành bài điền chỗ trống."
+      "theoryHint": "AI biến ghi chú Theory thành bài điền chỗ trống.",
+      "importHint": "Nhập worksheet hoặc ghi chú — giữ đúng cue từ nguồn và tạo thẻ luyện, không bịa bài mới."
+    },
+    "processing": {
+      "workingTitle": "Đang xử lý bài tập",
+      "readyTitle": "Bài tập đã sẵn sàng",
+      "errorTitle": "Có lỗi xảy ra",
+      "cancel": "Huỷ",
+      "retry": "Thử lại",
+      "dismiss": "Đóng",
+      "stages": {
+        "uploading": "Đang tải lên…",
+        "extracting": "Đang trích nội dung…",
+        "analyzing": "Đang phân tích…",
+        "generating": "Đang tạo bài tập…",
+        "saving": "Đang lưu…",
+        "completed": "Bài tập sẵn sàng",
+        "error": "Tạo bài thất bại"
+      }
+    },
+    "import": {
+      "eyebrow": "Bài từ tài liệu nhập",
+      "practiceTitle": "Bài tập đã nhập",
+      "practiceDescription": "Thẻ luyện lấy đúng cue và thứ tự từ tài liệu nhập — không bịa câu mới.",
+      "formTitle": "Nhập tài liệu học",
+      "formDescription": "Chọn nguồn. Hệ thống trích cấu trúc và chỉ tạo bài từ các cue có trong nguồn.",
+      "modes": {
+        "image": "Ảnh",
+        "file": "File",
+        "url": "URL",
+        "text": "Văn bản"
+      },
+      "titleLabel": "Tiêu đề",
+      "titlePlaceholder": "Tuỳ chọn — lấy từ nguồn",
+      "urlLabel": "URL",
+      "urlPlaceholder": "https://…",
+      "textLabel": "Nội dung học",
+      "textPlaceholder": "Dán hoặc gõ tài liệu học…",
+      "dropImageTitle": "Thả ảnh vào đây",
+      "dropFileTitle": "Thả file vào đây",
+      "dropDescription": "hoặc bấm để tải lên",
+      "pasteHint": "Bạn cũng có thể dán ảnh bằng Ctrl + V",
+      "pasteAlwaysHint": "Mẹo: Ctrl + V dán ảnh từ clipboard ở mọi chế độ Import.",
+      "supportedFiles": "PDF, DOCX, ảnh và văn bản thuần (.txt, .md)",
+      "pastedImageTitle": "Ảnh đã dán",
+      "importAction": "Nhập & tạo bài",
+      "unlockPro": "Mở khoá với Pro",
+      "myImports": "Tài liệu đã nhập",
+      "practice": "Luyện tập",
+      "retry": "Thử lại",
+      "delete": "Xoá",
+      "deleteConfirmTitle": "Xoá bản nhập này?",
+      "deleteConfirmDescription": "\"{title}\" và các bài tập đã tạo sẽ bị xoá vĩnh viễn.",
+      "ready": "Bài tập đã sẵn sàng",
+      "deleted": "Đã xoá",
+      "exerciseCount": "{count, plural, one {# bài tập} other {# bài tập}}",
+      "importedAgo": "Nhập {time}",
+      "processingHint": "Đang trích nội dung và tạo bài tập…",
+      "extractingHint": "Đang đọc và phân tích tài liệu…",
+      "generatingHint": "Đang tạo bài tập từ nội dung…",
+      "uploadBytes": "{loaded} / {total}",
+      "cancelUpload": "Huỷ",
+      "uploadCancelled": "Đã huỷ tải lên",
+      "sourceTypes": {
+        "image": "Ảnh",
+        "file": "File",
+        "url": "URL"
+      },
+      "status": {
+        "UPLOADING": "Đang tải lên",
+        "EXTRACTING": "Đang trích",
+        "ANALYZING": "Đang xử lý",
+        "GENERATING": "Đang tạo bài",
+        "COMPLETED": "Sẵn sàng",
+        "FAILED": "Thất bại"
+      },
+      "steps": {
+        "uploading": "Đang tải lên…",
+        "extracting": "Đang phân tích nội dung…",
+        "generating": "Đang tạo bài tập…",
+        "complete": "Hoàn tất",
+        "processing": "Đang xử lý…"
+      },
+      "errors": {
+        "CLOUDINARY_NOT_CONFIGURED": "Chưa cấu hình lưu trữ file.",
+        "OPENAI_NOT_CONFIGURED": "Chưa cấu hình AI.",
+        "INVALID_FILE": "Chọn một file để nhập.",
+        "INVALID_FILE_TYPE": "Loại file không hỗ trợ. Dùng ảnh, PDF, DOCX hoặc văn bản thuần.",
+        "FILE_TOO_LARGE": "File quá lớn. Vui lòng dùng file dưới 10 MB.",
+        "INVALID_URL": "Nhập URL http(s) hợp lệ.",
+        "URL_FETCH_FAILED": "Không lấy được URL đó. Thử liên kết khác.",
+        "UNSUPPORTED_PARSE": "Không đọc được tài liệu. Dùng PDF hoặc DOCX (không phải .doc cũ).",
+        "EMPTY_CONTENT": "Không tìm thấy nội dung học hữu ích.",
+        "ANALYSIS_FAILED": "Không xử lý được tài liệu. Thử lại.",
+        "GENERATION_FAILED": "Không tạo được bài tập từ tài liệu.",
+        "GENERATION_UNAVAILABLE": "Tạo bài tập tạm thời không khả dụng. Thử lại sau.",
+        "IMPORT_NOT_FOUND": "Không tìm thấy.",
+        "PROCESSING_FAILED": "Có lỗi khi xử lý tài liệu nhập.",
+        "ALREADY_PROCESSING": "Tài liệu này đang được xử lý."
+      }
     },
     "theory": {
       "eyebrow": "Luyện lý thuyết",
@@ -407,6 +507,7 @@
         "fillBlank": "Điền chỗ trống.",
         "completeConstruction": "Hoàn thành cấu trúc.",
         "completeRule": "Hoàn thành quy tắc.",
+        "completeExercise": "Hoàn thành bài tập.",
         "theoryCheck": "Kiểm tra lý thuyết"
       },
       "trueFalseLabel": "Đúng hoặc Sai"
@@ -463,6 +564,7 @@
     },
     "fillInBlank": {
       "prompt": "Điền vào chỗ trống",
+      "instruction": "Điền chỗ trống bằng dạng đúng của từ.",
       "hint": "Gợi ý",
       "hintExplainWord": "Hãy nghĩ về nghĩa của từ còn thiếu trong câu này.",
       "correct": "Đúng rồi!",
@@ -1361,9 +1463,9 @@
     "notConfigured": "Chưa cấu hình thanh toán.",
     "noCustomer": "Tài khoản này chưa được liên kết với khách hàng thanh toán.",
     "modalTitle": "Nâng cấp lên Notoria Pro",
-    "modalSubtitle": "Bản miễn phí đủ để lưu từ và luyện. Pro thêm bài Theory AI, AI viết, nghe, nói, và xuất file in được.",
+    "modalSubtitle": "Bản miễn phí đủ để lưu từ và luyện. Pro thêm bài AI từ từ vựng, Theory và Import — kèm AI viết, nghe, nói, và xuất file in được.",
     "lockedTitle": "Đây là tính năng Pro",
-    "lockedDescription": "Nâng cấp để mở khóa bài Theory AI — kèm nghe, nói, AI viết, và xuất PDF/Word.",
+    "lockedDescription": "Nâng cấp để mở khóa bài AI (từ vựng, Theory, Import) — kèm nghe, nói, AI viết, và xuất PDF/Word.",
     "planName": "Pro",
     "cancelAnytime": "Hủy bất cứ lúc nào",
     "compare": {
@@ -1414,6 +1516,10 @@
           "capability": "Bài tập Theory bằng AI",
           "impact": "Luyện Theory của bạn với bài điền chỗ trống do AI tạo"
         },
+        "importAi": {
+          "capability": "Bài tập Import bằng AI",
+          "impact": "Biến worksheet, ảnh, PDF hoặc URL thành thẻ luyện"
+        },
         "listening": {
           "capability": "Bài nghe",
           "impact": "Học từ audio hoặc video của bạn"
@@ -1440,6 +1546,10 @@
       "theoryAi": {
         "title": "Bài tập Theory bằng AI",
         "body": "Biến ghi chú Theory thành bài điền chỗ trống tương tác với ngữ cảnh mới, gợi ý và giải thích."
+      },
+      "importAi": {
+        "title": "Bài tập Import bằng AI",
+        "body": "Import worksheet, ảnh, PDF hoặc URL thành thẻ luyện — cùng với AI từ vựng và Theory trong Exercise Studio."
       },
       "listening": {
         "title": "Trải nghiệm nghe tốt hơn",
