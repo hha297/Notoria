@@ -988,6 +988,22 @@
         "library": {
           "title": "4. Kirjoituskirjastosi",
           "body": "Avaa teksti jatkaaksesi kirjoittamista. Prolla voit käyttää tekoälyä tarkistukseen ja parantamiseen tai viedä kopion tarvittaessa."
+        },
+        "newFolder": {
+          "title": "5. Luo kansio",
+          "body": "Napsauta Uusi kansio ryhmitelläksesi kirjoituksia aiheen, tason tai projektin mukaan. Kansiot ovat valinnaisia — voit pitää kaiken ylimmällä tasolla."
+        },
+        "nameFolder": {
+          "title": "6. Nimeä kansio",
+          "body": "Kirjoita nimi, jolla löydät sisällön myöhemmin (esim. Esse-luonnokset tai B1-tehtävät). Kansio luodaan sijaintiin, jossa olet."
+        },
+        "organize": {
+          "title": "7. Kansiot ja tiedostot",
+          "body": "Kansiot ovat kirjoituslistan yläpuolella. Avaa kansio työskennelläksesi sen sisällä — uudet tekstit tallentuvat sinne automaattisesti."
+        },
+        "moveItem": {
+          "title": "8. Siirrä kansioiden välillä",
+          "body": "Käytä siirtokuvaketta tai vedä teksti kansikortille. Voit myös sisäkkäistää kansioita aiheittain."
         }
       }
     },
@@ -1011,6 +1027,22 @@
         "read": {
           "title": "4. Lue uudelleen",
           "body": "Avaa muistiinpano tarvittaessa. Palaa milloin tahansa — tämä on oma muistivihkosi."
+        },
+        "newFolder": {
+          "title": "5. Luo kansio",
+          "body": "Napsauta Uusi kansio ryhmitelläksesi muistiinpanoja aiheen, kurssin tai kokeen mukaan. Kansiot ovat valinnaisia."
+        },
+        "nameFolder": {
+          "title": "6. Nimeä kansio",
+          "body": "Kirjoita selkeä nimi (esim. Kielioppi B1 tai Ääntäminen). Kansio luodaan sijaintiin, jossa olet."
+        },
+        "organize": {
+          "title": "7. Kansiot ja tiedostot",
+          "body": "Kansiot näkyvät muistiinpanojen yläpuolella. Avaa kansio nähdäksesi vain sen sisällön — uudet muistiinpanot tallentuvat sinne."
+        },
+        "moveItem": {
+          "title": "8. Siirrä muistiinpanoja",
+          "body": "Käytä siirtokuvaketta tai vedä muistiinpano kansiolle. Voit myös sisäkkäistää kansioita aiheittain."
         }
       }
     },
@@ -1045,6 +1077,22 @@
         "lessons": {
           "title": "3. Opiskele oppitunteja",
           "body": "Avaa oppitunti lukeaksesi litteroinnin, huomataksesi uudet sanat ja ilmaukset ja harjoitellaksesi valitsemallasi materiaalilla."
+        },
+        "newFolder": {
+          "title": "4. Luo kansio",
+          "body": "Napsauta Uusi kansio ryhmitelläksesi oppitunteja aiheen, kurssin tai tason mukaan. Kansiot ovat valinnaisia."
+        },
+        "nameFolder": {
+          "title": "5. Nimeä kansio",
+          "body": "Kirjoita ymmärrettävä nimi (esim. Podcastit tai Koevalmistelu). Kansio luodaan sijaintiin, jossa olet."
+        },
+        "organize": {
+          "title": "6. Kansiot ja tiedostot",
+          "body": "Kansiot näkyvät oppituntien yläpuolella. Avaa kansio selataksesi vain sitä ryhmää — lataukset tallentuvat sinne automaattisesti."
+        },
+        "moveItem": {
+          "title": "7. Siirrä oppitunteja",
+          "body": "Käytä siirtokuvaketta tai vedä oppitunti kansikortille. Voit myös sisäkkäistää kansioita suurempien kokoelmien järjestämiseen."
         }
       }
     },
@@ -1458,6 +1506,14 @@
     "proDescription": "Sinulla on Notoria Pro.",
     "tagline": "Avaa tekoälyyn perustuvat oppimisominaisuudet.",
     "price": "9,99 € / kuukausi",
+    "priceAmount": "9,99 €",
+    "pricePeriod": "kuukaudessa, laskutetaan kuukausittain",
+    "freePrice": "0 €",
+    "mostPopular": "Suosituin",
+    "currentPlan": "Nykyinen tilaus",
+    "choosePro": "Valitse Pro",
+    "freePlanDescription": "Kirjasto, harjoittelu ja CSV-vienti.",
+    "proPlanDescription": "Tekoälyharjoitukset, kuuntelu, puhuminen ja PDF/Word-vienti.",
     "upgrade": "Päivitä Pro-tilaukseen",
     "manage": "Hallinnoi tilausta",
     "proBadge": "Pro",
@@ -1471,7 +1527,7 @@
     "alreadyPro": "Sinulla on jo aktiivinen Pro-tilaus.",
     "notConfigured": "Laskutusta ei ole vielä määritetty.",
     "noCustomer": "Tähän tiliin ei ole vielä liitetty laskutusasiakasta.",
-    "modalTitle": "Päivitä Notoria Pro -tilaukseen",
+    "modalTitle": "Päivitä tilaus",
     "modalSubtitle": "Ilmaisessa säilyvät kirjasto ja harjoittelu. Pro tuo tekoälyharjoitukset sanastosta, teoriasta ja tuonneista — sekä kirjoittamisen tekoälyn, kuuntelun, puhumisen ja tulostettavat tiedostot.",
     "lockedTitle": "Tämä on Pro-ominaisuus",
     "lockedDescription": "Päivitä Prohon avataksesi tekoälyharjoitukset (sanasto, teoria, tuonti) — sekä kuuntelun, puhumisen, kirjoittamisen tekoälyn ja PDF/Word-viennin.",

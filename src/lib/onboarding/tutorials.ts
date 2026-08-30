@@ -9,13 +9,30 @@ export const TUTORIAL_SECTIONS = [
 
 export type TutorialSectionId = (typeof TUTORIAL_SECTIONS)[number];
 
+export type TutorialPrepareAction =
+  | "open-listening-upload"
+  | "close-listening-upload"
+  | "open-folder-create"
+  | "close-folder-create";
+
 export type TutorialStepDefinition = {
   id: string;
   /** Stable `data-tutorial` identifier for guided spotlight steps. */
   target?: string;
   /** Optional UI action before the step is shown (e.g. open a dialog). */
-  prepare?: "open-listening-upload" | "close-listening-upload";
+  prepare?: TutorialPrepareAction;
 };
+
+const FOLDER_TUTORIAL_STEPS = [
+  { id: "newFolder", target: "folder-new" },
+  {
+    id: "nameFolder",
+    target: "folder-name-input",
+    prepare: "open-folder-create",
+  },
+  { id: "organize", target: "folder-organize" },
+  { id: "moveItem", target: "folder-move-item" },
+] as const satisfies readonly TutorialStepDefinition[];
 
 export type TutorialDefinition = {
   id: TutorialSectionId;
@@ -47,6 +64,7 @@ export const SECTION_TUTORIALS = {
       { id: "category", target: "theory-category-filter" },
       { id: "search", target: "theory-search" },
       { id: "read", target: "theory-note-list" },
+      ...FOLDER_TUTORIAL_STEPS,
     ],
   },
   exercise: {
@@ -65,6 +83,7 @@ export const SECTION_TUTORIALS = {
       { id: "search", target: "writing-search" },
       { id: "filters", target: "writing-filters" },
       { id: "library", target: "writing-list" },
+      ...FOLDER_TUTORIAL_STEPS,
     ],
   },
   listening: {
@@ -78,6 +97,7 @@ export const SECTION_TUTORIALS = {
         prepare: "open-listening-upload",
       },
       { id: "lessons", target: "listening-lessons" },
+      ...FOLDER_TUTORIAL_STEPS,
     ],
   },
   speaking: {

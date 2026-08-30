@@ -89,24 +89,31 @@ export function GuidedSectionTutorial({
       setStepIndex(0);
     } else {
       dispatchTutorialPrepare("close-listening-upload");
+      dispatchTutorialPrepare("close-folder-create");
     }
   }, [open, section]);
 
   useEffect(() => {
     if (!open) return;
 
+    if (step?.prepare === "open-listening-upload") {
+      dispatchTutorialPrepare("open-listening-upload");
+      dispatchTutorialPrepare("close-folder-create");
+    } else if (step?.prepare === "open-folder-create") {
+      dispatchTutorialPrepare("open-folder-create");
+      dispatchTutorialPrepare("close-listening-upload");
+    } else {
+      dispatchTutorialPrepare("close-listening-upload");
+      dispatchTutorialPrepare("close-folder-create");
+    }
+
     if (step?.prepare) {
-      dispatchTutorialPrepare(step.prepare);
       const timeout = window.setTimeout(() => {
         setPrepareTick((current) => current + 1);
       }, 320);
       return () => window.clearTimeout(timeout);
     }
-
-    if (section === "listening") {
-      dispatchTutorialPrepare("close-listening-upload");
-    }
-  }, [open, stepIndex, step?.prepare, section]);
+  }, [open, stepIndex, step?.prepare]);
 
   useLayoutEffect(() => {
     if (!open || !popoverRef.current) return;

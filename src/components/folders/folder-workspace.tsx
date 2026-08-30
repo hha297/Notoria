@@ -3,6 +3,7 @@
 import {
   createContext,
   useContext,
+  useEffect,
   useMemo,
   useState,
   useTransition,
@@ -36,6 +37,7 @@ import type {
   FolderMoveItemType,
   FolderSection,
 } from "@/lib/folders/types";
+import { onTutorialPrepare } from "@/lib/onboarding/tutorial-prepare";
 
 export type FolderWorkspaceItem = {
   id: string;
@@ -115,6 +117,17 @@ export function FolderWorkspace({
       setInternalCreateOpen(open);
     }
   }
+
+  useEffect(() => {
+    return onTutorialPrepare((action) => {
+      if (action === "open-folder-create") {
+        setCreateOpen(true);
+      }
+      if (action === "close-folder-create") {
+        setCreateOpen(false);
+      }
+    });
+  }, []);
 
   const query = search.trim();
   const visibleFolders = useMemo(() => {
@@ -272,7 +285,7 @@ export function FolderWorkspace({
             folders={folders}
             currentFolderId={currentFolderId}
           />
-          {children}
+          <div data-tutorial="folder-organize">{children}</div>
         </div>
       </FolderDndProvider>
 

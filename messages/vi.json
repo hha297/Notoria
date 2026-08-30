@@ -988,6 +988,22 @@
         "library": {
           "title": "4. Thư viện bài viết",
           "body": "Mở bài để viết tiếp. Với Pro, bạn có thể dùng AI kiểm tra và cải thiện, hoặc xuất file khi cần."
+        },
+        "newFolder": {
+          "title": "5. Tạo thư mục",
+          "body": "Bấm Thư mục mới để nhóm bài viết theo chủ đề, trình độ hoặc dự án. Thư mục là tùy chọn — bạn vẫn có thể để mọi thứ ở cấp cao nhất."
+        },
+        "nameFolder": {
+          "title": "6. Đặt tên thư mục",
+          "body": "Nhập tên dễ nhớ (ví dụ Bản nháp essay hoặc Bài tập B1). Thư mục được tạo trong vị trí bạn đang xem."
+        },
+        "organize": {
+          "title": "7. Thư mục và file",
+          "body": "Thư mục nằm phía trên danh sách bài viết. Mở thư mục để làm việc bên trong — bài mới tạo ở đó sẽ được lưu vào thư mục đó."
+        },
+        "moveItem": {
+          "title": "8. Di chuyển giữa các thư mục",
+          "body": "Dùng biểu tượng di chuyển trên bài viết, hoặc kéo thả lên thẻ thư mục. Bạn cũng có thể lồng thư mục trong thư mục khác."
         }
       }
     },
@@ -1011,6 +1027,22 @@
         "read": {
           "title": "4. Đọc lại",
           "body": "Mở ghi chú khi cần ôn. Quay lại bất cứ lúc nào — đây là sổ tham khảo của bạn."
+        },
+        "newFolder": {
+          "title": "5. Tạo thư mục",
+          "body": "Bấm Thư mục mới để nhóm ghi chú theo chủ đề, bài học hoặc kỳ thi. Thư mục là tùy chọn — ghi chú vẫn có thể ở cấp cao nhất."
+        },
+        "nameFolder": {
+          "title": "6. Đặt tên thư mục",
+          "body": "Nhập tên rõ ràng (ví dụ Ngữ pháp B1 hoặc Phát âm). Thư mục được tạo trong vị trí bạn đang xem."
+        },
+        "organize": {
+          "title": "7. Thư mục và file",
+          "body": "Thư mục hiện phía trên ghi chú. Mở thư mục để chỉ xem nội dung bên trong — ghi chú mới tạo ở đó sẽ được lưu vào thư mục đó."
+        },
+        "moveItem": {
+          "title": "8. Di chuyển ghi chú",
+          "body": "Dùng biểu tượng di chuyển trên ghi chú, hoặc kéo thả lên thư mục. Bạn cũng có thể lồng thư mục để sắp xếp theo chủ đề."
         }
       }
     },
@@ -1045,6 +1077,22 @@
         "lessons": {
           "title": "3. Học bài của bạn",
           "body": "Mở bài để đọc transcript, bắt từ và cách diễn đạt mới, và luyện với nội dung bạn chọn."
+        },
+        "newFolder": {
+          "title": "4. Tạo thư mục",
+          "body": "Bấm Thư mục mới để nhóm bài nghe theo chủ đề, khóa học hoặc trình độ. Thư mục là tùy chọn — bạn vẫn có thể để mọi thứ ở cấp cao nhất."
+        },
+        "nameFolder": {
+          "title": "5. Đặt tên thư mục",
+          "body": "Nhập tên dễ hiểu (ví dụ Podcast hoặc Ôn thi). Thư mục được tạo trong vị trí bạn đang xem."
+        },
+        "organize": {
+          "title": "6. Thư mục và file",
+          "body": "Thư mục hiện phía trên bài nghe. Mở thư mục để duyệt nhóm đó — bài tải lên khi đang ở trong thư mục sẽ được lưu vào đó."
+        },
+        "moveItem": {
+          "title": "7. Di chuyển bài nghe",
+          "body": "Dùng biểu tượng di chuyển trên bài, hoặc kéo thả lên thẻ thư mục. Bạn cũng có thể lồng thư mục để tổ chức bộ sưu tập lớn hơn."
         }
       }
     },
@@ -1458,6 +1506,14 @@
     "proDescription": "Bạn đang dùng Notoria Pro.",
     "tagline": "Mở khóa các tính năng học tập dùng AI.",
     "price": "€9,99 / tháng",
+    "priceAmount": "€9,99",
+    "pricePeriod": "mỗi tháng, thanh toán hàng tháng",
+    "freePrice": "€0",
+    "mostPopular": "Phổ biến nhất",
+    "currentPlan": "Gói hiện tại",
+    "choosePro": "Chọn Pro",
+    "freePlanDescription": "Thư viện, luyện tập và xuất CSV.",
+    "proPlanDescription": "Bài AI, nghe, nói và xuất PDF/Word.",
     "upgrade": "Nâng cấp lên Pro",
     "manage": "Quản lý gói đăng ký",
     "proBadge": "Pro",
@@ -1471,7 +1527,7 @@
     "alreadyPro": "Bạn đã có gói Pro đang hoạt động.",
     "notConfigured": "Chưa cấu hình thanh toán.",
     "noCustomer": "Tài khoản này chưa được liên kết với khách hàng thanh toán.",
-    "modalTitle": "Nâng cấp lên Notoria Pro",
+    "modalTitle": "Nâng cấp gói",
     "modalSubtitle": "Bản miễn phí đủ để lưu từ và luyện. Pro thêm bài AI từ từ vựng, Theory và Import — kèm AI viết, nghe, nói, và xuất file in được.",
     "lockedTitle": "Đây là tính năng Pro",
     "lockedDescription": "Nâng cấp để mở khóa bài AI (từ vựng, Theory, Import) — kèm nghe, nói, AI viết, và xuất PDF/Word.",

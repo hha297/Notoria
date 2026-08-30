@@ -1,8 +1,8 @@
+import type { TutorialPrepareAction } from "@/lib/onboarding/tutorials";
+
 export const TUTORIAL_PREPARE_EVENT = "notoria:tutorial-prepare";
 
-export type TutorialPrepareAction =
-  | "open-listening-upload"
-  | "close-listening-upload";
+export type { TutorialPrepareAction };
 
 export function dispatchTutorialPrepare(action: TutorialPrepareAction) {
   window.dispatchEvent(

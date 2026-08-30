@@ -1168,6 +1168,22 @@
         "library": {
           "title": "4. Your writing library",
           "body": "Open a piece to keep writing. With Pro, you can also use AI to check and improve your work, or export when you need a copy."
+        },
+        "newFolder": {
+          "title": "5. Create a folder",
+          "body": "Click New folder to group writing by topic, level, or project. Folders are optional — you can keep everything at the top level too."
+        },
+        "nameFolder": {
+          "title": "6. Name your folder",
+          "body": "Type a name that helps you find things later (for example Essay drafts or B1 worksheets). The folder is created inside the location you are viewing."
+        },
+        "organize": {
+          "title": "7. Folders and files",
+          "body": "Folders sit above your writing list. Open a folder to work inside it — new pieces you create there are saved in that folder automatically."
+        },
+        "moveItem": {
+          "title": "8. Move between folders",
+          "body": "Use the move icon on any piece, or drag it onto a folder card. You can also drag folders into other folders to nest topics."
         }
       }
     },
@@ -1191,6 +1207,22 @@
         "read": {
           "title": "4. Read and revisit",
           "body": "Open a note whenever you need a refresher. Come back as often as you like — this is your reference notebook."
+        },
+        "newFolder": {
+          "title": "5. Create a folder",
+          "body": "Click New folder to group theory notes by topic, unit, or exam. Folders are optional — your notes can stay at the top level too."
+        },
+        "nameFolder": {
+          "title": "6. Name your folder",
+          "body": "Type a clear name (for example Grammar B1 or Pronunciation). The folder is created inside the location you are viewing."
+        },
+        "organize": {
+          "title": "7. Folders and files",
+          "body": "Folders appear above your notes. Open a folder to see only what is inside — new notes you create there are saved in that folder."
+        },
+        "moveItem": {
+          "title": "8. Move notes between folders",
+          "body": "Use the move icon on any note, or drag it onto a folder. You can also nest folders inside each other to organize by topic."
         }
       }
     },
@@ -1225,6 +1257,22 @@
         "lessons": {
           "title": "3. Study your lessons",
           "body": "Open a lesson to read the transcript, catch new words and expressions, and practice with the material you chose."
+        },
+        "newFolder": {
+          "title": "4. Create a folder",
+          "body": "Click New folder to group lessons by topic, course, or skill level. Folders are optional — you can keep everything at the top level."
+        },
+        "nameFolder": {
+          "title": "5. Name your folder",
+          "body": "Type a name that makes sense to you (for example Podcasts or Exam prep). The folder is created inside the location you are viewing."
+        },
+        "organize": {
+          "title": "6. Folders and files",
+          "body": "Folders appear above your lessons. Open a folder to browse only that group — uploads you add while inside a folder are saved there."
+        },
+        "moveItem": {
+          "title": "7. Move lessons between folders",
+          "body": "Use the move icon on any lesson, or drag it onto a folder card. You can also nest folders to organize larger collections."
         }
       }
     },
@@ -1638,6 +1686,14 @@
     "proDescription": "You currently have Notoria Pro.",
     "tagline": "Unlock AI-powered learning features.",
     "price": "€9.99 / month",
+    "priceAmount": "€9.99",
+    "pricePeriod": "per month billed monthly",
+    "freePrice": "€0",
+    "mostPopular": "Most Popular",
+    "currentPlan": "Current Plan",
+    "choosePro": "Choose Pro",
+    "freePlanDescription": "Your library, practice, and CSV export.",
+    "proPlanDescription": "AI exercises, listening, speaking, and PDF/Word export.",
     "upgrade": "Upgrade to Pro",
     "manage": "Manage subscription",
     "proBadge": "Pro",
@@ -1651,7 +1707,7 @@
     "alreadyPro": "You already have an active Pro subscription.",
     "notConfigured": "Billing is not configured yet.",
     "noCustomer": "No billing customer is linked to this account yet.",
-    "modalTitle": "Upgrade to Notoria Pro",
+    "modalTitle": "Upgrade Plan",
     "modalSubtitle": "Free keeps your library and practice. Pro adds AI exercises from vocabulary, theory, and imports — plus writing, listening, speaking, and printable files.",
     "lockedTitle": "This is a Pro feature",
     "lockedDescription": "Upgrade to unlock AI exercises (vocabulary, theory, and import) — along with listening, speaking, writing AI, and PDF/Word export.",

@@ -19,6 +19,7 @@ export function NewFolderButton({ onClick }: NewFolderButtonProps) {
       variant="outline"
       onClick={onClick ?? workspace?.openCreate}
       disabled={!onClick && !workspace}
+      data-tutorial="folder-new"
     >
       <FolderPlus className="size-4" />
       {t("new")}
