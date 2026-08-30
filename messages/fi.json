@@ -705,7 +705,11 @@
     "activeWorkspace": "Aktiivinen työtila",
     "guideEyebrow": "Aloitus",
     "guideTitle": "Näin käytät Notoriaa",
-    "guideSubtitle": "Yksi työtila, yksi kieli. Etene osioissa tässä järjestyksessä — seuraava rakentuu edellisen päälle. Avaa opastus milloin tahansa.",
+    "guideTagline": "Sinun kielesi. Sinun tietosi. Sinun oppimispäiväkirjasi.",
+    "guideSubtitle": "Notoria on yksityinen, henkilökohtainen työtila — ei perinteinen kurssi, joka kertoo mitä opit. Sinä valitset kielen, sanat, kielioppimuistiinpanot, esimerkit ja harjoittelumateriaalit.",
+    "guideSubtitleSecondary": "Työtilasi kasvaa oppimismatkasi mukana. Aloita Sanastosta ja Teoriasta, ja muuta keräämäsi tieto harjoituksiksi, kirjoittamiseksi, kuunteluksi ja puhumiseksi.",
+    "guideFullCtaPrompt": "Haluatko tietää lisää siitä, miten Notoria toimii?",
+    "guideFullCta": "Lue koko opas",
     "modulesTitle": "Tutustu työtilaan",
     "modulesSubtitle": "Siirry osioon suoraan tai avaa ensin sen opastus.",
     "startHere": "Aloita tästä",
@@ -715,27 +719,27 @@
     "steps": {
       "vocabulary": {
         "title": "Sanasto",
-        "body": "Lisää sanoja merkityksillä, esimerkeillä ja tunnisteilla. Tämä kirjasto ruokkii harjoituksia."
+        "body": "Lisää omia sanoja ja ilmauksia merkityksineen, esimerkkilauseineen, ääntämisineen ja tunnisteineen. Järjestä aiheen, tason tai tilanteen mukaan — ja käytä uudelleen harjoituksissa. Aloita arjesta, oppitunneista, kirjoista tai mediasta; kirjastosi on harjoittelun perusta."
       },
       "theory": {
         "title": "Teoria",
-        "body": "Tallenna kielioppi, ääntäminen ja käyttö, jotka unohtuvat helposti."
+        "body": "Tallenna kielioppisäännöt, ääntämismerkinnät, käyttöselitykset ja omat esimerkit omilla sanoillasi. Teoria on muistivihko, johon palaat aina unohtaessasi. Mitä enemmän dokumentoit, sitä vahvempi tietopohjasi kasvaa."
       },
       "exercises": {
         "title": "Harjoitus",
-        "body": "Harjoittele omista sanoistasi — muistikortit, visailut, aukot ja muut."
+        "body": "Harjoittele muistikorteilla, visailuilla, aukkotehtävillä ja muilla — omasta sanastostasi ja teoriastasi. Harjoitukset kasvavat lisäämäsi tiedon mukana. Mitä enemmän materiaalia, sitä hyödyllisempi ja henkilökohtaisempi harjoittelu."
       },
       "writing": {
         "title": "Kirjoittaminen",
-        "body": "Luonnostele tekstejä ja tehtäväsarjoja. Pro voi tarkistaa, parantaa ja viedä ne."
+        "body": "Luonnostele tekstejä ja luo tehtäväsarjoja omista aiheista ja sanastosta. Kirjoittaminen on aktiivista tiedon käyttöä, ei pelkkää ulkoa opettelua. Prolla tekoäly tarkistaa ja parantaa tekstiä; voit myös viedä materiaaleja tarvittaessa."
       },
       "listening": {
         "title": "Kuuntelu",
-        "body": "Lataa ääntä tai videota, saa litterointi ja tee siitä oppitunti."
+        "body": "Lataa ääntä tai videota, saa litterointi ja muuta se oppitunniksi. Käytä litterointia tuntemattomien sanojen ja ilmausten tunnistamiseen, ja harjoittele valitsemallasi aitolla sisällöllä. Tuo omat kuuntelumateriaalisi — et ole sidottu valmiiseen sisältöön."
       },
       "speaking": {
         "title": "Puhuminen",
-        "body": "Soita tekoälyohjaajalle videolla ja käy sitten litterointi ja palaute läpi."
+        "body": "Soita tekoälyohjaajalle videolla ja harjoittele luonnollista puhetta omalla oppimistiedollasi. Käy jokaisen session jälkeen litterointi ja palaute läpi. Näin sulkeutuu oppimiskierros: opi → harjoittele → käytä → arvioi → paranna."
       }
     },
     "modules": {
@@ -940,117 +944,170 @@
     "next": "Seuraava",
     "skip": "Ohita opas",
     "done": "Selvä",
+    "stepProgress": "{current} / {total}",
     "vocabulary": {
       "title": "Sanasto",
-      "description": "Rakenna oma sanalista ja kertaa oppimiasi sanoja.",
+      "description": "Lisää sinulle merkityksellisiä sanoja — etsi, järjestä ja käytä niitä koko Notoriassa.",
       "cta": "Lisää sana",
       "steps": {
         "addWord": {
           "title": "1. Lisää sana",
-          "body": "Luo uusi sana merkityksineen, esimerkkeineen ja muistiinpanoineen."
+          "body": "Aloita henkilökohtaisen sanaston rakentaminen. Lisää sanoja ja ilmauksia, jotka haluat oikeasti muistaa — täytä merkitykset, esimerkit ja tunnisteet seuraavalla näytöllä."
         },
-        "tags": {
-          "title": "2. Lisää tunnisteita",
-          "body": "Järjestä sanoja tunnisteilla, jotta löydät ne myöhemmin helposti."
+        "search": {
+          "title": "2. Hae kirjastosta",
+          "body": "Etsi sanoja sen sijaan, että selaat kaikkea. Kokeile sanaa, merkitystä tai tunnistetta."
         },
-        "review": {
-          "title": "3. Kertaa",
-          "body": "Käytä sanoja harjoituksissa, kun kokoelma on kasvanut hieman."
+        "filters": {
+          "title": "3. Suodata ja järjestä",
+          "body": "Rajaa sanaluokan, tunnisteen tai lajittelun mukaan. Ryhmittele aiheen, tason tai tilanteen mukaan."
+        },
+        "library": {
+          "title": "4. Sanakirjastosi",
+          "body": "Tallennetut sanat ovat täällä. Avaa merkintä muokataksesi tai käytä niitä harjoituksissa ja kertauksessa."
         }
       }
     },
     "writing": {
       "title": "Kirjoittaminen",
-      "description": "Harjoittele kirjoittamista tehtävillä, luonnoksilla ja tallennetuilla teksteillä.",
+      "description": "Käytä oppimaasi omissa lauseissasi — luonnoksia, kysymyssarjoja ja tekstejä, joihin voit palata.",
       "cta": "Aloita kirjoittaminen",
       "steps": {
         "create": {
-          "title": "1. Luo kirjoitus",
-          "body": "Aloita uusi tehtävä, luonnos tai kysymyssarja työtilassasi."
+          "title": "1. Aloita kirjoittaminen",
+          "body": "Luo teksti tai kirjoitustehtävä aiheesta, jota haluat harjoitella. Kirjoituksen ei tarvitse olla täydellistä — kokeile, tee virheitä ja huomaa mitä vielä puuttuu."
+        },
+        "search": {
+          "title": "2. Hae",
+          "body": "Löydä teksti nopeasti otsikon tai sisällön perusteella."
+        },
+        "filters": {
+          "title": "3. Suodata",
+          "body": "Rajaa tason, aiheen, muodollisuuden tai lajittelun mukaan."
+        },
+        "library": {
+          "title": "4. Kirjoituskirjastosi",
+          "body": "Avaa teksti jatkaaksesi kirjoittamista. Prolla voit käyttää tekoälyä tarkistukseen ja parantamiseen tai viedä kopion tarvittaessa."
+        },
+        "newFolder": {
+          "title": "5. Luo kansio",
+          "body": "Napsauta Uusi kansio ryhmitelläksesi kirjoituksia aiheen, tason tai projektin mukaan. Kansiot ovat valinnaisia — voit pitää kaiken ylimmällä tasolla."
+        },
+        "nameFolder": {
+          "title": "6. Nimeä kansio",
+          "body": "Kirjoita nimi, jolla löydät sisällön myöhemmin (esim. Esse-luonnokset tai B1-tehtävät). Kansio luodaan sijaintiin, jossa olet."
         },
         "organize": {
-          "title": "2. Järjestä",
-          "body": "Käytä hakua, suodattimia ja metatietoja, jotta tekstit pysyvät löydettävissä."
+          "title": "7. Kansiot ja tiedostot",
+          "body": "Kansiot ovat kirjoituslistan yläpuolella. Avaa kansio työskennelläksesi sen sisällä — uudet tekstit tallentuvat sinne automaattisesti."
         },
-        "practice": {
-          "title": "3. Harjoittele ja vie",
-          "body": "Avaa teksti jatkaaksesi kirjoittamista tai vie se tulostettavaksi."
+        "moveItem": {
+          "title": "8. Siirrä kansioiden välillä",
+          "body": "Käytä siirtokuvaketta tai vedä teksti kansikortille. Voit myös sisäkkäistää kansioita aiheittain."
         }
       }
     },
     "theory": {
       "title": "Teoria",
-      "description": "Pidä muistiinpanoja kieliopista, ääntämisestä, käytöstä ja kielen rakenteesta.",
+      "description": "Pidä selitykset, jotka haluat muistaa — kielioppi, ääntäminen, käyttö ja omat muistiinpanot.",
       "cta": "Lisää teoriaa",
       "steps": {
         "add": {
           "title": "1. Lisää muistiinpano",
-          "body": "Luo teoriamuistiinpano ja valitse kategoria, jotta aiheet pysyvät yhdessä."
+          "body": "Luo muistiinpano asiasta, jonka haluat muistaa. Kirjoittaessasi valitse kategoria, jotta aiheet pysyvät yhdessä."
         },
-        "browse": {
-          "title": "2. Selaa",
-          "body": "Hae ja suodata kategorian mukaan, kun haluat palata aiheeseen."
+        "category": {
+          "title": "2. Selaa kategorioittain",
+          "body": "Suodata kategorian mukaan palataksesi kielioppiin, ääntämiseen, käyttöön tai muihin tallentamiisi aiheisiin."
+        },
+        "search": {
+          "title": "3. Hae",
+          "body": "Etsi muistiinpano nopeasti teoriamuistiinpanojen joukosta."
         },
         "read": {
-          "title": "3. Lue uudelleen",
-          "body": "Avaa muistiinpano opiskellaksesi ja palaa siihen tarvittaessa."
+          "title": "4. Lue uudelleen",
+          "body": "Avaa muistiinpano tarvittaessa. Palaa milloin tahansa — tämä on oma muistivihkosi."
+        },
+        "newFolder": {
+          "title": "5. Luo kansio",
+          "body": "Napsauta Uusi kansio ryhmitelläksesi muistiinpanoja aiheen, kurssin tai kokeen mukaan. Kansiot ovat valinnaisia."
+        },
+        "nameFolder": {
+          "title": "6. Nimeä kansio",
+          "body": "Kirjoita selkeä nimi (esim. Kielioppi B1 tai Ääntäminen). Kansio luodaan sijaintiin, jossa olet."
+        },
+        "organize": {
+          "title": "7. Kansiot ja tiedostot",
+          "body": "Kansiot näkyvät muistiinpanojen yläpuolella. Avaa kansio nähdäksesi vain sen sisällön — uudet muistiinpanot tallentuvat sinne."
+        },
+        "moveItem": {
+          "title": "8. Siirrä muistiinpanoja",
+          "body": "Käytä siirtokuvaketta tai vedä muistiinpano kansiolle. Voit myös sisäkkäistää kansioita aiheittain."
         }
       }
     },
     "exercise": {
       "title": "Harjoitukset",
-      "description": "Harjoittele muistikorteilla, visailuilla ja muilla tehtävillä, jotka syntyvät sanastostasi.",
+      "description": "Muuta tietosi harjoitukseksi — muistikortit, visailut, aukot ja muuta.",
       "cta": "Kokeile harjoitusta",
       "steps": {
-        "vocabulary": {
-          "title": "1. Rakenna ensin sanastoa",
-          "body": "Useimmat harjoitukset sujuvat parhaiten, kun sanoja on vähintään {count}. Kerää pieni kokoelma ennen aloitusta."
+        "sources": {
+          "title": "1. Valitse lähde",
+          "body": "Harjoittele tallennetusta sanastosta, teoriasta tai tuoduista materiaaleista. Mitä enemmän lisäät, sitä hyödyllisempi harjoittelu."
         },
-        "choose": {
-          "title": "2. Valitse tyyppi",
-          "body": "Valitse muistikortit, monivalinta, parit, aukkojen täydennys tai kirjoita vastaus."
-        },
-        "practice": {
-          "title": "3. Harjoittele",
-          "body": "Tee lyhyt sessio. Palaa usein — muutama minuutti riittää."
+        "types": {
+          "title": "2. Valitse harjoitustyyppi",
+          "body": "Valitse muistikortit, monivalinta, parit, aukot tai kirjoita vastaus — ja aloita lyhyt sessio omalla tiedollasi."
         }
       }
     },
     "listening": {
       "title": "Kuuntelu",
-      "description": "Lataa aitoa ääntä tai videota, lue litterointi ja harjoittele sen pohjalta.",
+      "description": "Tuo aitoa sisältöä, jonka haluat ymmärtää — lataa ääni/video, lue litterointi ja opiskele siitä.",
       "cta": "Avaa kuuntelu",
       "steps": {
         "upload": {
-          "title": "1. Lataa klippi",
-          "body": "Lisää äänitiedosto tai video, josta haluat oppia — podcast, oppitunti tai oma tallenne."
+          "title": "1. Lataa materiaali",
+          "body": "Tuo jotain, mitä todella haluat ymmärtää — podcast, video, oppitunti tai oma tallenne."
         },
-        "transcript": {
-          "title": "2. Lue litterointi",
-          "body": "Avaa oppitunti ja seuraa tekstiä. Näin saat kiinni sanat, jotka jäivät korvalta."
+        "uploadArea": {
+          "title": "2. Valitse tiedosto",
+          "body": "Valitse tai pudota ääni- tai videotiedosto. Notoria lataa sen ja luo litteroinnin, kun tuettu."
         },
-        "practice": {
-          "title": "3. Harjoittele",
-          "body": "Tee kuuntelusessio ja tallenna hyödylliset sanat sanastoosi."
+        "lessons": {
+          "title": "3. Opiskele oppitunteja",
+          "body": "Avaa oppitunti lukeaksesi litteroinnin, huomataksesi uudet sanat ja ilmaukset ja harjoitellaksesi valitsemallasi materiaalilla."
+        },
+        "newFolder": {
+          "title": "4. Luo kansio",
+          "body": "Napsauta Uusi kansio ryhmitelläksesi oppitunteja aiheen, kurssin tai tason mukaan. Kansiot ovat valinnaisia."
+        },
+        "nameFolder": {
+          "title": "5. Nimeä kansio",
+          "body": "Kirjoita ymmärrettävä nimi (esim. Podcastit tai Koevalmistelu). Kansio luodaan sijaintiin, jossa olet."
+        },
+        "organize": {
+          "title": "6. Kansiot ja tiedostot",
+          "body": "Kansiot näkyvät oppituntien yläpuolella. Avaa kansio selataksesi vain sitä ryhmää — lataukset tallentuvat sinne automaattisesti."
+        },
+        "moveItem": {
+          "title": "7. Siirrä oppitunteja",
+          "body": "Käytä siirtokuvaketta tai vedä oppitunti kansikortille. Voit myös sisäkkäistää kansioita suurempien kokoelmien järjestämiseen."
         }
       }
     },
     "speaking": {
       "title": "Puhuminen",
-      "description": "Pidä live-videopuhelu tekoälyohjaajan kanssa ja kertaa, mitä sanoit.",
+      "description": "Harjoittele kielen käyttöä keskustelussa — lue sitten litterointi ja palaute.",
       "cta": "Aloita puhelu",
       "steps": {
         "start": {
-          "title": "1. Luo sessio",
-          "body": "Valitse aihe, CEFR-taso ja kieli. Liity, kun olet valmis puhumaan."
+          "title": "1. Aloita sessio",
+          "body": "Luo puhumissessio ja liity, kun olet valmis. Harjoittele kielen käyttöä oikeassa keskustelussa, älä vain opettelemalla."
         },
-        "talk": {
-          "title": "2. Puhu ohjaajan kanssa",
-          "body": "Puhu luontevasti. Ohjaaja pysyy aiheessa ja tasollasi."
-        },
-        "review": {
-          "title": "3. Kertaa",
-          "body": "Puhelun jälkeen lue litterointi ja yhteenveto, jotta voit käyttää hyödyllisiä ilmauksia uudelleen."
+        "sessions": {
+          "title": "2. Kertaa jälkeenpäin",
+          "body": "Avaa sessio lukeaksesi litteroinnin ja palautteen. Huomaa virheet, käytä hyviä ilmauksia uudelleen ja päätä, mitä lisätä päiväkirjaan."
         }
       }
     }
@@ -1449,6 +1506,14 @@
     "proDescription": "Sinulla on Notoria Pro.",
     "tagline": "Avaa tekoälyyn perustuvat oppimisominaisuudet.",
     "price": "9,99 € / kuukausi",
+    "priceAmount": "9,99 €",
+    "pricePeriod": "kuukaudessa, laskutetaan kuukausittain",
+    "freePrice": "0 €",
+    "mostPopular": "Suosituin",
+    "currentPlan": "Nykyinen tilaus",
+    "choosePro": "Valitse Pro",
+    "freePlanDescription": "Kirjasto, harjoittelu ja CSV-vienti.",
+    "proPlanDescription": "Tekoälyharjoitukset, kuuntelu, puhuminen ja PDF/Word-vienti.",
     "upgrade": "Päivitä Pro-tilaukseen",
     "manage": "Hallinnoi tilausta",
     "proBadge": "Pro",
@@ -1462,7 +1527,7 @@
     "alreadyPro": "Sinulla on jo aktiivinen Pro-tilaus.",
     "notConfigured": "Laskutusta ei ole vielä määritetty.",
     "noCustomer": "Tähän tiliin ei ole vielä liitetty laskutusasiakasta.",
-    "modalTitle": "Päivitä Notoria Pro -tilaukseen",
+    "modalTitle": "Päivitä tilaus",
     "modalSubtitle": "Ilmaisessa säilyvät kirjasto ja harjoittelu. Pro tuo tekoälyharjoitukset sanastosta, teoriasta ja tuonneista — sekä kirjoittamisen tekoälyn, kuuntelun, puhumisen ja tulostettavat tiedostot.",
     "lockedTitle": "Tämä on Pro-ominaisuus",
     "lockedDescription": "Päivitä Prohon avataksesi tekoälyharjoitukset (sanasto, teoria, tuonti) — sekä kuuntelun, puhumisen, kirjoittamisen tekoälyn ja PDF/Word-viennin.",
@@ -1747,6 +1812,238 @@
       "questionLabel": "Kysymys",
       "exampleAnswerLabel": "Esimerkkivastaus",
       "notesLabel": "Muistiinpanot"
+    }
+  },
+  "gettingStarted": {
+    "backToWorkspace": "Takaisin työtilaan",
+    "meta": {
+      "eyebrow": "Opas",
+      "title": "Tervetuloa Notoriaan",
+      "description": "Kaikki mitä tarvitset henkilökohtaisen kielten oppimispäiväkirjan rakentamiseen ja tiedon muuttamiseen harjoitukseksi."
+    },
+    "toc": {
+      "title": "Tällä sivulla",
+      "welcome": "Mikä on Notoria?",
+      "howItWorks": "Miten se toimii",
+      "vocabulary": "Sanasto",
+      "theory": "Teoria",
+      "exercise": "Harjoitus",
+      "writing": "Kirjoittaminen",
+      "listening": "Kuuntelu",
+      "speaking": "Puhuminen",
+      "connections": "Tietosi muuttuu harjoitukseksi",
+      "philosophy": "Oppimispäiväkirjasi",
+      "startHere": "Aloita tästä"
+    },
+    "welcome": {
+      "title": "Mikä on Notoria?",
+      "lead": "Notoria on yksityinen oppimispäiväkirjasi.",
+      "paragraphs": [
+        "Ajattele sitä muistivihkona kielimatkallesi — paitsi että kaikki kirjoitat voit muuttaa harjoitukseksi.",
+        "Ei ole ennalta määrättyä opetussuunnitelmaa. Ei ole \"oikeaa\" tapaa käyttää työtilaa. Ei ole opettajaa olkapäälläsi. Kukaan ei arvostele muistiinpanojasi."
+      ],
+      "examplesIntro": "Sinä päätät, mikä kuuluu Notoriaasi. Esimerkiksi voit:",
+      "examples": [
+        "Kirjoittaa sanan, jonka kuulit tänään",
+        "Tallentaa kielioppisäännön, jonka vihdoinkin ymmärsit",
+        "Lisätä esimerkkilauseen, joka on sinulle järkevä",
+        "Ladata videon, jota haluat opiskella",
+        "Kirjoittaa aiheesta, jota haluat harjoitella puhumaan"
+      ],
+      "overTime": "Ajan myötä näistä pienistä paloista muodostuu henkilökohtainen kielitietopohjasi.",
+      "noWrongWay": {
+        "title": "Päiväkirjan rakentamisessa ei ole oikeaa tai väärää tapaa.",
+        "paragraphs": [
+          "Oppimispäiväkirja on sinun. Sinun ei tarvitse järjestää kaikkea täydellisesti. Sinun ei tarvitse käyttää jokaista ominaisuutta. Sinun ei tarvitse seurata tiettyä oppimismetodia.",
+          "Käytä Notoriaa tavalla, joka tekee oppimisesta helpompaa ja merkityksellisempää. Tavoite ei ole täydellinen tietokanta — tavoite on oppimistila, joka todella kuuluu sinulle."
+        ]
+      }
+    },
+    "howItWorks": {
+      "title": "Miten Notoria toimii",
+      "intro": "Notoria yhdistää oppimisalueet yhdeksi matkaksi:",
+      "flow": {
+        "collect": "Kerää",
+        "understand": "Ymmärrä",
+        "practice": "Harjoittele",
+        "create": "Luo",
+        "listen": "Kuuntele",
+        "speak": "Puhu",
+        "review": "Arvioi"
+      },
+      "anywhereNote": "Voit aloittaa mistä tahansa, mutta moni seuraa polkua kuten tämä:",
+      "steps": {
+        "collect": {
+          "title": "1. Kerää tietosi",
+          "body": "Lisää sanastoa ja teoriaa tunneista, keskusteluista, kirjoista, mediasta tai mistä tahansa kohtaat kielen."
+        },
+        "understand": {
+          "title": "2. Ymmärrä se",
+          "body": "Pidä omat selityksesi, esimerkkisi, kielioppi- ja ääntämismerkinnät — kirjoitettuna sinulle ymmärrettävästi."
+        },
+        "practice": {
+          "title": "3. Harjoittele sitä",
+          "body": "Muuta keräämäsi tieto harjoituksiksi omista sanoistasi ja tiedoistasi."
+        },
+        "use": {
+          "title": "4. Käytä sitä",
+          "body": "Harjoittele kirjoittamista, kuuntelua ja puhumista kielen parissa, jota olet rakentamassa."
+        },
+        "review": {
+          "title": "5. Arvioi se",
+          "body": "Katso takaisin vaikeisiin kohtiin, lisää oppimaasi ja kasvata päiväkirjaasi."
+        }
+      },
+      "connectedNote": "Nämä alueet toimivat yhdessä — eivät erillisinä sovelluksina. Sanastoon ja Teoriaan lisäämäsi ruokkii harjoituksia, kirjoittamista, kuuntelua ja puhumista."
+    },
+    "sections": {
+      "vocabulary": {
+        "title": "Sanasto",
+        "intro": "Sanasto on henkilökohtainen sanakirjastosi — perusta kaikelle muulle Notoriassa.",
+        "bullets": [
+          "Lisää sanoja ja ilmauksia, joita oikeasti kohtaat",
+          "Sisällytä merkitykset, käännökset ja esimerkkilauseet",
+          "Lisää ääntämismerkintöjä tarvittaessa",
+          "Käytä tunnisteita aiheen, tason tai tilanteen mukaan",
+          "Käytä sanastoa uudelleen harjoituksissa ja kertauksessa"
+        ],
+        "body": "Sen sijaan, että opettelisit yleistä sanalistaa, rakennat kirjaston, joka heijastaa todellista oppimismatkaasi.",
+        "exampleIntro": "Esimerkiksi kuulet tänään suomen sanan \"varata\":",
+        "examples": [
+          "Sana: varata",
+          "Merkitys: varata / bookata",
+          "Esimerkki: Haluan varata ajan.",
+          "Tunniste: Arki"
+        ],
+        "exampleNote": "Sana on nyt osa henkilökohtaista Notoria-tietoasi — valmiina kertaukseen ja harjoitteluun.",
+        "emphasis": "Älä lisää jokaista näkemääsi sanaa. Lisää sanoja, jotka ovat sinulle MERKITYKSELLISIÄ."
+      },
+      "theory": {
+        "title": "Teoria",
+        "intro": "Teoria on henkilökohtainen kieliviite — paikka tallentaa tieto, jonka haluat muistaa.",
+        "bullets": [
+          "Kielioppisäännöt ja -mallit",
+          "Ääntämismerkinnät",
+          "Käyttöselitykset",
+          "Esimerkit ja omat muistiinpanot",
+          "Asiat, jotka unohtuvat toistuvasti"
+        ],
+        "body": "Kirjoita selitykset omilla sanoillasi. Kielioppimuistiinpano ei tarvitse kuulostaa oppikirjalta. Jos yksinkertainen selitys on sinulle järkevä, se on hyvä selitys päiväkirjaasi.",
+        "emphasis": "Teoria on muistivihko, johon palaat aina unohtaessasi."
+      },
+      "exercise": {
+        "title": "Harjoitus",
+        "intro": "Harjoitukset antavat aktiivisesti harjoitella keräämääsi tietoa.",
+        "bullets": [
+          "Muistikortit",
+          "Visailut ja monivalinta",
+          "Aukkotehtävät",
+          "Sanastoharjoittelu tallennetuista sanoista",
+          "Kielioppiharjoittelu teoria muistiinpanoista",
+          "Muut muotoilut omasta materiaalistasi"
+        ],
+        "emphasis": "Arvo tulee OMAN tietosi harjoittelusta — ei satunnaisista sanoista yleisestä kurssista, vaan sanoista ja käsitteistä, jotka olet itse päättänyt tärkeiksi."
+      },
+      "writing": {
+        "title": "Kirjoittaminen",
+        "intro": "Kirjoittaminen on kohta, jossa passiivinen tieto muuttuu aktiiviseksi kielenkäytöksi.",
+        "bullets": [
+          "Luonnostele tekstejä sinulle tärkeistä aiheista",
+          "Luo itsellesi tehtäväsarjoja",
+          "Harjoittele oppimiesi sanaston käyttöä",
+          "Kokeile uutta kielioppia",
+          "Arvioi ja paranna kirjoittamistasi ajan myötä",
+          "Prolla: käytä tekoälyä tarkistukseen ja parantamiseen",
+          "Vie kirjoituksesi tarvittaessa"
+        ],
+        "emphasis": "Kirjoituksen ei tarvitse olla täydellistä. Tarkoitus on käyttää kieltä, tehdä virheitä, huomata mitä et vielä tiedä ja parantua ajan myötä."
+      },
+      "listening": {
+        "title": "Kuuntelu",
+        "intro": "Kuuntelu antaa opiskella valitsemaasi aitoa sisältöä — ei vain valmiita oppitunteja.",
+        "bullets": [
+          "Lataa ääntä tai videota",
+          "Luo litterointi",
+          "Opiskele litterointia rivi riviltä",
+          "Muuta materiaali oppitunniksi",
+          "Löydä sanastoa ja ilmauksia aitosta sisällöstä"
+        ],
+        "body": "Tuo Notoriaan jotain, mitä TODELLA haluat ymmärtää:",
+        "examples": [
+          "YouTube-video",
+          "Keskustelun tallenne",
+          "Podcast-jakso",
+          "Luento",
+          "Muu oppimateriaali"
+        ],
+        "emphasis": "Sinä hallitset sisältöä. Notoria auttaa sinua ymmärtämään ja oppimaan siitä."
+      },
+      "speaking": {
+        "title": "Puhuminen",
+        "intro": "Puhuminen on aktiivinen keskusteluosa oppimismatkallasi.",
+        "bullets": [
+          "Puhu tekoälyohjaajan kanssa videolla",
+          "Harjoittele luonnollista puhetta",
+          "Käytä keräämääsi sanastoa ja tietoa",
+          "Arvioi keskustelun litterointi jälkeenpäin",
+          "Lue palaute ja tunnista parannettavat kohdat"
+        ],
+        "emphasis": "Puhumisen ei tarvitse olla täydellistä. Tarkoitus on harjoitella kielen käyttöä realistisessa tilanteessa — ja oppia siitä, mitä tapahtui."
+      }
+    },
+    "connections": {
+      "title": "Tietosi muuttuu harjoitukseksi",
+      "intro": "Notoria hyödyttää enemmän, kun lisäät asioita, jotka ovat tärkeitä oppimisellesi:",
+      "flow": {
+        "vocabTheory": "Sanasto + Teoria",
+        "exercise": "Harjoitus",
+        "writingListening": "Kirjoittaminen + Kuuntelu",
+        "speaking": "Puhuminen",
+        "review": "Arviointi",
+        "addMore": "Lisää tietoa"
+      },
+      "paragraphs": [
+        "Sanastoon ja Teoriaan keräämäsi on lähde harjoituksillesi.",
+        "Kirjoittaminen ja Kuuntelu auttavat käyttämään ja ymmärtämään kieltä uusissa yhteyksissä.",
+        "Puhuminen tuo kaiken aktiiviseen keskusteluun.",
+        "Arviointi sulkee kierroksen — ja usein johtaa uusiin sanoihin ja muistiinpanoihin."
+      ],
+      "highlight": "Mitä enemmän lisäät sinulle merkityksellistä tietoa, sitä hyödyllisempi ja henkilökohtaisempi harjoittelu on."
+    },
+    "philosophy": {
+      "title": "Tämä on sinun päiväkirjasi.",
+      "lead": "Notoria on työkalu oppimisprosessiisi — ei testi siitä, kuinka hyvin opit.",
+      "dontNeed": [
+        "Sinun ei tarvitse tehdä muistiinpanoja täydellisiksi",
+        "Sinun ei tarvitse murehtia, ovatko tunnisteesi \"oikein\"",
+        "Sinun ei tarvitse kirjoittaa oppikirjatasoisia selityksiä",
+        "Sinun ei tarvitse suorittaa jokaista harjoitusta",
+        "Sinun ei tarvitse käyttää jokaista ominaisuutta"
+      ],
+      "canDo": [
+        "Voit muuttaa mieltäsi.",
+        "Voit järjestellä uudelleen.",
+        "Voit tehdä virheitä.",
+        "Voit oppia omalla tahdillasi."
+      ],
+      "quote": "Kukaan ei arvostele päiväkirjaasi. Rakennat sen itsellesi."
+    },
+    "startHere": {
+      "title": "Aloitus ensimmäistä kertaa",
+      "intro": "Sinun ei tarvitse valmistella kaikkea ennen aloittamista. Aloita vain jostain, jonka haluat muistaa.",
+      "firstTen": {
+        "title": "Ensimmäiset 10 minuuttia",
+        "steps": {
+          "language": "Valitse kieli, jota haluat oppia.",
+          "words": "Lisää 5–10 sanaa, jotka haluat oikeasti muistaa.",
+          "theory": "Lisää yksi tai kaksi teoria-/kielioppimuistiinpanoa.",
+          "exercise": "Luo harjoitus tiedoistasi.",
+          "writing": "Kokeile kirjoittaa muutama lause.",
+          "listeningSpeaking": "Kun olet valmis, kokeile kuuntelua tai puhumista.",
+          "return": "Palaa huomenna ja lisää jotain uutta."
+        }
+      },
+      "closing": "Aloita vain jostain, jonka haluat muistaa. Päiväkirjasi kasvaa luonnollisesti siitä eteenpäin."
     }
   }
 }

@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import { Headphones, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -28,6 +28,7 @@ import {
 } from "@/lib/listening/filters";
 import type { ListeningLessonListItem } from "@/lib/listening/types";
 import { isKnownWritingTopic } from "@/lib/writing/meta";
+import { onTutorialPrepare } from "@/lib/onboarding/tutorial-prepare";
 
 const EASE = [0.25, 0.1, 0.25, 1] as const;
 
@@ -47,6 +48,17 @@ export function ListeningView({
   const tMeta = useTranslations("listening.meta");
   const [uploadOpen, setUploadOpen] = useState(false);
   const [query, setQuery] = useState<ListeningListQuery>(DEFAULT_LISTENING_LIST_QUERY);
+
+  useEffect(() => {
+    return onTutorialPrepare((action) => {
+      if (action === "open-listening-upload") {
+        setUploadOpen(true);
+      }
+      if (action === "close-listening-upload") {
+        setUploadOpen(false);
+      }
+    });
+  }, []);
 
   const scopedLessons = useMemo(
     () =>
@@ -97,7 +109,7 @@ export function ListeningView({
             >
               <ShowTutorialButton section="listening" />
               <NewFolderButton />
-              <Button onClick={() => setUploadOpen(true)}>
+              <Button onClick={() => setUploadOpen(true)} data-tutorial="listening-upload">
                 <Plus className="size-4" />
                 {t("upload")}
               </Button>
@@ -119,7 +131,7 @@ export function ListeningView({
                   title={tFolders("emptyFolder")}
                   description={tFolders("emptyFolderDescription")}
                 >
-                  <Button className="mt-5" onClick={() => setUploadOpen(true)}>
+                  <Button className="mt-5" onClick={() => setUploadOpen(true)} data-tutorial="listening-upload">
                     <Plus className="size-4" />
                     {t("upload")}
                   </Button>
@@ -133,7 +145,7 @@ export function ListeningView({
                   <p className="mt-2 max-w-md text-sm text-muted-foreground">
                     {t("emptyDescription")}
                   </p>
-                  <Button className="mt-5" onClick={() => setUploadOpen(true)}>
+                  <Button className="mt-5" onClick={() => setUploadOpen(true)} data-tutorial="listening-upload">
                     <Plus className="size-4" />
                     {t("uploadFirst")}
                   </Button>
@@ -150,14 +162,16 @@ export function ListeningView({
             className="space-y-4"
           >
             {lessons.length > 0 || folders.length > 0 ? (
-              <ListeningFiltersBar
-                lessons={lessons}
-                query={query}
-                onQueryChange={setQuery}
-              />
+              <div data-tutorial="listening-filters">
+                <ListeningFiltersBar
+                  lessons={lessons}
+                  query={query}
+                  onQueryChange={setQuery}
+                />
+              </div>
             ) : null}
 
-            <div className="space-y-4">
+            <div className="space-y-4" data-tutorial="listening-lessons">
               <h2 className="heading-md text-ink">{t("myLessons")}</h2>
               <FolderGrid />
               {filteredLessons.length === 0 ? (

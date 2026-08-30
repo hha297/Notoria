@@ -56,6 +56,7 @@ export function ExerciseStudio({
           role="tablist"
           aria-label={t("sources.label")}
           className="inline-flex w-fit rounded-xl border border-hairline-cloud bg-muted/30 p-1"
+          data-tutorial="exercise-sources"
         >
           {tabs.map((tab) => {
             const active = source === tab.id;

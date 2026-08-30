@@ -1,11 +1,11 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { Download, Loader2, Lock } from "lucide-react";
+import { Download, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
-import { lockedFeatureClassName } from "@/components/billing/locked-styles";
+import { ExportFormatOptions } from "@/components/export/export-format-options";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,6 +16,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { isPaidDocumentFormat } from "@/lib/auth/paid-access";
+import {
+  getDefaultExportFormat,
+  VOCABULARY_EXPORT_FORMATS,
+} from "@/lib/export/formats";
 import {
   DEFAULT_VOCABULARY_EXPORT_OPTIONS,
   exportVocabulary,
@@ -23,7 +28,6 @@ import {
   type VocabularyExportOptions,
 } from "@/lib/vocabulary/export";
 import type { VocabularyExportSourceWord } from "@/lib/vocabulary/export/build-document";
-import { cn } from "@/lib/utils";
 
 type VocabularyExportDialogProps = {
   open: boolean;
@@ -31,49 +35,6 @@ type VocabularyExportDialogProps = {
   workspaceName: string;
   words: VocabularyExportSourceWord[];
 };
-
-function RadioOption({
-  id,
-  name,
-  value,
-  checked,
-  label,
-  locked = false,
-  onChange,
-}: {
-  id: string;
-  name: string;
-  value: string;
-  checked: boolean;
-  label: string;
-  locked?: boolean;
-  onChange: () => void;
-}) {
-  return (
-    <label
-      htmlFor={id}
-      className={cn(
-        "flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2.5 text-sm transition-colors",
-        checked
-          ? "border-accent-lime/50 bg-accent-lime/10 text-ink"
-          : "border-hairline-cloud hover:bg-muted/40",
-        locked && lockedFeatureClassName,
-      )}
-    >
-      <input
-        id={id}
-        type="radio"
-        name={name}
-        value={value}
-        checked={checked}
-        onChange={onChange}
-        className="size-4 accent-[var(--accent-lime)]"
-      />
-      {locked ? <Lock className="size-3.5 text-muted-foreground" /> : null}
-      <span className="font-medium">{label}</span>
-    </label>
-  );
-}
 
 function CheckboxOption({
   id,
@@ -112,19 +73,21 @@ export function VocabularyExportDialog({
   const t = useTranslations("vocabulary.export");
   const tc = useTranslations("common");
   const { hasProAccess, openUpgrade } = useProAccess();
-  const [options, setOptions] = useState<VocabularyExportOptions>(() => ({
-    ...DEFAULT_VOCABULARY_EXPORT_OPTIONS,
-    format: hasProAccess ? DEFAULT_VOCABULARY_EXPORT_OPTIONS.format : "csv",
-  }));
+  const [options, setOptions] = useState<VocabularyExportOptions>(
+    DEFAULT_VOCABULARY_EXPORT_OPTIONS,
+  );
   const [isExporting, setIsExporting] = useState(false);
 
   useEffect(() => {
-    if (!hasProAccess) {
-      setOptions((current) =>
-        current.format === "csv" ? current : { ...current, format: "csv" },
-      );
-    }
-  }, [hasProAccess]);
+    if (!open) return;
+    setOptions((current) => ({
+      ...current,
+      format: getDefaultExportFormat(
+        hasProAccess,
+        VOCABULARY_EXPORT_FORMATS,
+      ) as VocabularyExportFormat,
+    }));
+  }, [open, hasProAccess]);
 
   const countLabel = useMemo(
     () => t("rowCount", { count: words.length }),
@@ -132,7 +95,7 @@ export function VocabularyExportDialog({
   );
 
   function setFormat(format: VocabularyExportFormat) {
-    if (!hasProAccess && format !== "csv") {
+    if (!hasProAccess && isPaidDocumentFormat(format)) {
       openUpgrade();
       return;
     }
@@ -188,34 +151,20 @@ export function VocabularyExportDialog({
         <div className="space-y-5 py-1">
           <div className="space-y-2">
             <Label>{t("format")}</Label>
-            <div className="grid gap-2">
-              <RadioOption
-                id="vocab-export-pdf"
-                name="vocab-export-format"
-                value="pdf"
-                checked={options.format === "pdf"}
-                label={t("formatPdf")}
-                locked={!hasProAccess}
-                onChange={() => setFormat("pdf")}
-              />
-              <RadioOption
-                id="vocab-export-csv"
-                name="vocab-export-format"
-                value="csv"
-                checked={options.format === "csv"}
-                label={t("formatCsv")}
-                onChange={() => setFormat("csv")}
-              />
-              <RadioOption
-                id="vocab-export-docx"
-                name="vocab-export-format"
-                value="docx"
-                checked={options.format === "docx"}
-                label={t("formatDocx")}
-                locked={!hasProAccess}
-                onChange={() => setFormat("docx")}
-              />
-            </div>
+            <ExportFormatOptions
+              idPrefix="vocab-export"
+              name="vocab-export-format"
+              formats={VOCABULARY_EXPORT_FORMATS}
+              value={options.format}
+              onChange={(format) => setFormat(format as VocabularyExportFormat)}
+              hasProAccess={hasProAccess}
+              onLockedSelect={openUpgrade}
+              labels={{
+                pdf: t("formatPdf"),
+                docx: t("formatDocx"),
+                csv: t("formatCsv"),
+              }}
+            />
           </div>
 
           <div className="space-y-1">

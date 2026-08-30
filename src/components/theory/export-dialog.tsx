@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Download, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
+import { ExportFormatOptions } from "@/components/export/export-format-options";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,13 +16,17 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { isPaidDocumentFormat } from "@/lib/auth/paid-access";
+import {
+  DOCUMENT_EXPORT_FORMATS,
+  getDefaultExportFormat,
+} from "@/lib/export/formats";
 import {
   DEFAULT_EXPORT_OPTIONS,
   exportTheoryNote,
   type ExportFormat,
 } from "@/lib/writing/export";
 import type { JSONContent } from "@tiptap/react";
-import { cn } from "@/lib/utils";
 
 type TheoryExportDialogProps = {
   open: boolean;
@@ -30,45 +35,6 @@ type TheoryExportDialogProps = {
   description?: string | null;
   doc: JSONContent;
 };
-
-function RadioOption({
-  id,
-  name,
-  value,
-  checked,
-  label,
-  onChange,
-}: {
-  id: string;
-  name: string;
-  value: string;
-  checked: boolean;
-  label: string;
-  onChange: () => void;
-}) {
-  return (
-    <label
-      htmlFor={id}
-      className={cn(
-        "flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2.5 text-sm transition-colors",
-        checked
-          ? "border-accent-lime/50 bg-accent-lime/10 text-ink"
-          : "border-hairline-cloud hover:bg-muted/40",
-      )}
-    >
-      <input
-        id={id}
-        type="radio"
-        name={name}
-        value={value}
-        checked={checked}
-        onChange={onChange}
-        className="size-4 accent-[var(--accent-lime)]"
-      />
-      <span className="font-medium">{label}</span>
-    </label>
-  );
-}
 
 export function TheoryExportDialog({
   open,
@@ -79,9 +45,24 @@ export function TheoryExportDialog({
 }: TheoryExportDialogProps) {
   const t = useTranslations("theory.export");
   const tc = useTranslations("common");
-  const { openUpgrade } = useProAccess();
+  const { hasProAccess, openUpgrade } = useProAccess();
   const [format, setFormat] = useState<ExportFormat>(DEFAULT_EXPORT_OPTIONS.format);
   const [isExporting, setIsExporting] = useState(false);
+
+  useEffect(() => {
+    if (!open) return;
+    setFormat(
+      getDefaultExportFormat(hasProAccess, DOCUMENT_EXPORT_FORMATS) as ExportFormat,
+    );
+  }, [open, hasProAccess]);
+
+  function handleFormatChange(nextFormat: ExportFormat) {
+    if (!hasProAccess && isPaidDocumentFormat(nextFormat)) {
+      openUpgrade();
+      return;
+    }
+    setFormat(nextFormat);
+  }
 
   async function handleExport() {
     setIsExporting(true);
@@ -128,24 +109,19 @@ export function TheoryExportDialog({
         <div className="space-y-5 py-1">
           <div className="space-y-2">
             <Label>{t("format")}</Label>
-            <div className="grid gap-2">
-              <RadioOption
-                id="theory-export-pdf"
-                name="theory-export-format"
-                value="pdf"
-                checked={format === "pdf"}
-                label={t("formatPdf")}
-                onChange={() => setFormat("pdf")}
-              />
-              <RadioOption
-                id="theory-export-docx"
-                name="theory-export-format"
-                value="docx"
-                checked={format === "docx"}
-                label={t("formatDocx")}
-                onChange={() => setFormat("docx")}
-              />
-            </div>
+            <ExportFormatOptions
+              idPrefix="theory-export"
+              name="theory-export-format"
+              formats={DOCUMENT_EXPORT_FORMATS}
+              value={format}
+              onChange={(nextFormat) => handleFormatChange(nextFormat as ExportFormat)}
+              hasProAccess={hasProAccess}
+              onLockedSelect={openUpgrade}
+              labels={{
+                pdf: t("formatPdf"),
+                docx: t("formatDocx"),
+              }}
+            />
           </div>
         </div>
 

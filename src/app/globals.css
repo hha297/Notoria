@@ -264,3 +264,22 @@
   font-family: var(--font-mono);
   padding: 1rem;
 }
+
+@keyframes tutorial-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 9999px rgba(15, 10, 30, 0.68),
+      0 0 0 0 rgba(212, 255, 91, 0.35);
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 9999px rgba(15, 10, 30, 0.68),
+      0 0 0 4px rgba(212, 255, 91, 0.2);
+  }
+}
+
+.tutorial-spotlight-cutout {
+  animation: tutorial-pulse 2.4s ease-in-out infinite;
+}

@@ -705,7 +705,11 @@
     "activeWorkspace": "Không gian học",
     "guideEyebrow": "Bắt đầu",
     "guideTitle": "Cách dùng Notoria",
-    "guideSubtitle": "Một không gian, một ngôn ngữ. Đi theo thứ tự các mục dưới đây — mục sau dựa trên mục trước. Mở tutorial bất cứ lúc nào cần hướng dẫn.",
+    "guideTagline": "Ngôn ngữ của bạn. Kiến thức của bạn. Nhật ký học của bạn.",
+    "guideSubtitle": "Notoria là không gian học riêng tư — không phải khóa học truyền thống bảo bạn phải học gì. Bạn chọn ngôn ngữ, từ vựng, ghi chú ngữ pháp, ví dụ và tài liệu muốn luyện.",
+    "guideSubtitleSecondary": "Không gian học phát triển cùng hành trình của bạn. Bắt đầu với Từ vựng và Lý thuyết, rồi biến những gì bạn thu thập thành bài tập, viết, nghe và nói.",
+    "guideFullCtaPrompt": "Muốn hiểu rõ hơn Notoria hoạt động thế nào?",
+    "guideFullCta": "Đọc hướng dẫn đầy đủ",
     "modulesTitle": "Khám phá không gian học",
     "modulesSubtitle": "Vào thẳng một mục, hoặc xem tutorial trước.",
     "startHere": "Bắt đầu đây",
@@ -715,27 +719,27 @@
     "steps": {
       "vocabulary": {
         "title": "Từ vựng",
-        "body": "Thêm từ kèm nghĩa, ví dụ và thẻ. Sổ này nuôi các bài tập và ôn tập."
+        "body": "Thêm từ và cụm của riêng bạn kèm nghĩa, câu ví dụ, phát âm và thẻ. Sắp xếp theo chủ đề, trình độ hoặc tình huống — rồi tái sử dụng trong bài tập và ôn tập. Bắt đầu với từ gặp trong đời sống, bài học, sách hoặc media; thư viện này là nền cho mọi luyện tập."
       },
       "theory": {
         "title": "Lý thuyết",
-        "body": "Lưu ngữ pháp, phát âm và cách dùng mà bạn hay quên."
+        "body": "Lưu quy tắc ngữ pháp, ghi chú phát âm, giải thích cách dùng và ví dụ cá nhân bằng lời của bạn. Coi Lý thuyết như sổ tham khảo để quay lại khi quên. Càng ghi chép nhiều, nền kiến thức cá nhân càng vững."
       },
       "exercises": {
         "title": "Luyện tập",
-        "body": "Luyện từ chính sổ từ của bạn — flashcard, quiz, điền chỗ trống và hơn thế."
+        "body": "Luyện với flashcard, quiz, điền chỗ trống và hơn thế — xây từ từ vựng và lý thuyết của bạn. Bài tập phát triển theo kiến thức bạn thêm vào. Càng nhiều tài liệu, luyện tập càng hữu ích và cá nhân hóa."
       },
       "writing": {
         "title": "Viết",
-        "body": "Soạn bài và bộ câu hỏi. Pro có thể kiểm tra, cải thiện và xuất file."
+        "body": "Soạn bài và tạo bộ câu hỏi từ chủ đề và từ vựng của riêng bạn. Viết để chủ động dùng kiến thức, không chỉ học thuộc. Với Pro, AI kiểm tra và cải thiện bài viết; bạn cũng có thể xuất tài liệu khi cần."
       },
       "listening": {
         "title": "Nghe",
-        "body": "Tải audio hoặc video, lấy transcript, biến thành bài học."
+        "body": "Tải audio hoặc video, lấy transcript và biến thành bài học. Dùng transcript để bắt từ và cách diễn đạt chưa quen, rồi luyện với nội dung thật do bạn chọn. Mang tài liệu nghe của riêng bạn thay vì bị giới hạn nội dung có sẵn."
       },
       "speaking": {
         "title": "Nói",
-        "body": "Gọi video với gia sư AI, rồi xem lại transcript và nhận xét."
+        "body": "Gọi video với gia sư AI và luyện nói tự nhiên với kiến thức bạn đã xây dựng. Sau mỗi buổi, xem lại transcript và phản hồi để biết cần cải thiện gì. Hoàn tất vòng học: học → luyện → dùng → xem lại → tiến bộ."
       }
     },
     "modules": {
@@ -940,117 +944,170 @@
     "next": "Tiếp",
     "skip": "Bỏ qua hướng dẫn",
     "done": "Đã hiểu",
+    "stepProgress": "{current} / {total}",
     "vocabulary": {
       "title": "Từ vựng",
-      "description": "Xây sổ từ của bạn và ôn những từ đã học.",
+      "description": "Thêm từ có ý nghĩa với bạn — rồi tìm, sắp xếp và dùng lại xuyên suốt Notoria.",
       "cta": "Thêm từ",
       "steps": {
         "addWord": {
           "title": "1. Thêm một từ",
-          "body": "Tạo mục từ mới kèm nghĩa, ví dụ và ghi chú."
+          "body": "Bắt đầu xây sổ từ cá nhân. Thêm từ và cụm bạn thực sự muốn nhớ — rồi điền nghĩa, ví dụ và thẻ ở màn hình tiếp theo."
         },
-        "tags": {
-          "title": "2. Gắn thẻ",
-          "body": "Sắp xếp từ bằng thẻ dùng lại được để sau này dễ tìm."
+        "search": {
+          "title": "2. Tìm trong thư viện",
+          "body": "Tìm từ thay vì lướt hết danh sách. Thử tìm theo từ, nghĩa hoặc thẻ."
         },
-        "review": {
-          "title": "3. Ôn tập",
-          "body": "Dùng từ trong bài tập và các hoạt động học khi bạn đã có một ít vốn từ."
+        "filters": {
+          "title": "3. Lọc và sắp xếp",
+          "body": "Thu hẹp theo loại từ, thẻ hoặc thứ tự sắp xếp. Dùng thẻ để nhóm theo chủ đề, trình độ hoặc tình huống."
+        },
+        "library": {
+          "title": "4. Thư viện từ của bạn",
+          "body": "Từ đã lưu nằm ở đây. Mở mục để sửa, hoặc dùng trong bài tập và ôn tập sau."
         }
       }
     },
     "writing": {
       "title": "Viết",
-      "description": "Luyện viết với đề bài, bản nháp và các bài bạn có thể quay lại.",
+      "description": "Dùng kiến thức đã học trong câu của riêng bạn — bản nháp, bộ câu hỏi và bài có thể quay lại.",
       "cta": "Bắt đầu viết",
       "steps": {
         "create": {
-          "title": "1. Tạo bài viết",
-          "body": "Bắt đầu một đề, bản nháp hoặc bộ câu hỏi trong không gian học."
+          "title": "1. Bắt đầu viết",
+          "body": "Tạo bài hoặc bài tập viết từ chủ đề bạn muốn luyện. Bài viết không cần hoàn hảo — hãy thử, mắc lỗi và nhận ra phần còn thiếu."
+        },
+        "search": {
+          "title": "2. Tìm kiếm",
+          "body": "Tìm bài nhanh theo tiêu đề hoặc nội dung thay vì duyệt thủ công."
+        },
+        "filters": {
+          "title": "3. Lọc",
+          "body": "Thu hẹp theo trình độ, chủ đề, mức trang trọng hoặc thứ tự sắp xếp."
+        },
+        "library": {
+          "title": "4. Thư viện bài viết",
+          "body": "Mở bài để viết tiếp. Với Pro, bạn có thể dùng AI kiểm tra và cải thiện, hoặc xuất file khi cần."
+        },
+        "newFolder": {
+          "title": "5. Tạo thư mục",
+          "body": "Bấm Thư mục mới để nhóm bài viết theo chủ đề, trình độ hoặc dự án. Thư mục là tùy chọn — bạn vẫn có thể để mọi thứ ở cấp cao nhất."
+        },
+        "nameFolder": {
+          "title": "6. Đặt tên thư mục",
+          "body": "Nhập tên dễ nhớ (ví dụ Bản nháp essay hoặc Bài tập B1). Thư mục được tạo trong vị trí bạn đang xem."
         },
         "organize": {
-          "title": "2. Sắp xếp",
-          "body": "Dùng tìm kiếm, bộ lọc và metadata để dễ tìm lại bài."
+          "title": "7. Thư mục và file",
+          "body": "Thư mục nằm phía trên danh sách bài viết. Mở thư mục để làm việc bên trong — bài mới tạo ở đó sẽ được lưu vào thư mục đó."
         },
-        "practice": {
-          "title": "3. Luyện và xuất",
-          "body": "Mở bài để viết tiếp, hoặc xuất file khi cần bản in."
+        "moveItem": {
+          "title": "8. Di chuyển giữa các thư mục",
+          "body": "Dùng biểu tượng di chuyển trên bài viết, hoặc kéo thả lên thẻ thư mục. Bạn cũng có thể lồng thư mục trong thư mục khác."
         }
       }
     },
     "theory": {
       "title": "Lý thuyết",
-      "description": "Giữ ghi chú về ngữ pháp, phát âm, cách dùng và cách ngôn ngữ vận hành.",
+      "description": "Giữ giải thích bạn muốn nhớ — ngữ pháp, phát âm, cách dùng và ghi chú cá nhân.",
       "cta": "Thêm lý thuyết",
       "steps": {
         "add": {
           "title": "1. Thêm ghi chú",
-          "body": "Tạo ghi chú lý thuyết và chọn danh mục để các chủ đề liên quan nằm cùng nhau."
+          "body": "Tạo ghi chú cho điều bạn muốn nhớ. Khi viết, chọn danh mục để chủ đề liên quan nằm cùng nhau."
         },
-        "browse": {
-          "title": "2. Duyệt",
-          "body": "Tìm kiếm và lọc theo danh mục khi bạn muốn quay lại."
+        "category": {
+          "title": "2. Duyệt theo danh mục",
+          "body": "Lọc theo danh mục để quay lại ngữ pháp, phát âm, cách dùng hoặc chủ đề khác bạn đã lưu."
+        },
+        "search": {
+          "title": "3. Tìm kiếm",
+          "body": "Tìm ghi chú nhanh trong thư viện lý thuyết thay vì lục từng mục."
         },
         "read": {
-          "title": "3. Đọc lại",
-          "body": "Mở ghi chú để học, rồi quay lại bất cứ lúc nào cần ôn."
+          "title": "4. Đọc lại",
+          "body": "Mở ghi chú khi cần ôn. Quay lại bất cứ lúc nào — đây là sổ tham khảo của bạn."
+        },
+        "newFolder": {
+          "title": "5. Tạo thư mục",
+          "body": "Bấm Thư mục mới để nhóm ghi chú theo chủ đề, bài học hoặc kỳ thi. Thư mục là tùy chọn — ghi chú vẫn có thể ở cấp cao nhất."
+        },
+        "nameFolder": {
+          "title": "6. Đặt tên thư mục",
+          "body": "Nhập tên rõ ràng (ví dụ Ngữ pháp B1 hoặc Phát âm). Thư mục được tạo trong vị trí bạn đang xem."
+        },
+        "organize": {
+          "title": "7. Thư mục và file",
+          "body": "Thư mục hiện phía trên ghi chú. Mở thư mục để chỉ xem nội dung bên trong — ghi chú mới tạo ở đó sẽ được lưu vào thư mục đó."
+        },
+        "moveItem": {
+          "title": "8. Di chuyển ghi chú",
+          "body": "Dùng biểu tượng di chuyển trên ghi chú, hoặc kéo thả lên thư mục. Bạn cũng có thể lồng thư mục để sắp xếp theo chủ đề."
         }
       }
     },
     "exercise": {
       "title": "Bài tập",
-      "description": "Luyện với flashcard, quiz và các dạng bài tạo từ sổ từ của bạn.",
+      "description": "Biến kiến thức thành luyện tập — flashcard, quiz, điền chỗ trống và hơn thế.",
       "cta": "Làm bài tập",
       "steps": {
-        "vocabulary": {
-          "title": "1. Thêm từ trước",
-          "body": "Hầu hết bài tập hiệu quả hơn khi có ít nhất {count} từ. Hãy có một bộ sưu tập nhỏ trước khi bắt đầu."
+        "sources": {
+          "title": "1. Chọn nguồn",
+          "body": "Luyện từ từ vựng, lý thuyết hoặc tài liệu import. Càng thêm nhiều, luyện tập càng hữu ích."
         },
-        "choose": {
+        "types": {
           "title": "2. Chọn dạng bài",
-          "body": "Chọn flashcard, trắc nghiệm, nối cặp, điền chỗ trống hoặc gõ đáp án."
-        },
-        "practice": {
-          "title": "3. Luyện tập",
-          "body": "Hoàn thành một phiên ngắn. Quay lại thường xuyên — vài phút cũng tính."
+          "body": "Chọn flashcard, trắc nghiệm, nối cặp, điền chỗ trống hoặc gõ đáp án — rồi bắt đầu phiên ngắn với kiến thức của bạn."
         }
       }
     },
     "listening": {
       "title": "Nghe",
-      "description": "Tải audio hoặc video thật, đọc transcript, rồi luyện từ đó.",
+      "description": "Mang nội dung thật bạn muốn hiểu — tải audio/video, đọc transcript và học từ đó.",
       "cta": "Mở nghe",
       "steps": {
         "upload": {
-          "title": "1. Tải clip",
-          "body": "Thêm file audio hoặc video bạn muốn học — podcast, bài giảng, hoặc bản ghi của chính bạn."
+          "title": "1. Tải tài liệu",
+          "body": "Mang thứ bạn thực sự muốn hiểu — podcast, video, bài giảng hoặc bản ghi của bạn."
         },
-        "transcript": {
-          "title": "2. Đọc transcript",
-          "body": "Mở bài để theo lời thoại. Dùng để bắt những từ nghe sót."
+        "uploadArea": {
+          "title": "2. Chọn file",
+          "body": "Chọn hoặc kéo thả file audio/video. Notoria sẽ tải lên và tạo transcript khi hỗ trợ."
         },
-        "practice": {
-          "title": "3. Luyện",
-          "body": "Chạy phiên nghe, rồi lưu từ hữu ích vào sổ từ vựng."
+        "lessons": {
+          "title": "3. Học bài của bạn",
+          "body": "Mở bài để đọc transcript, bắt từ và cách diễn đạt mới, và luyện với nội dung bạn chọn."
+        },
+        "newFolder": {
+          "title": "4. Tạo thư mục",
+          "body": "Bấm Thư mục mới để nhóm bài nghe theo chủ đề, khóa học hoặc trình độ. Thư mục là tùy chọn — bạn vẫn có thể để mọi thứ ở cấp cao nhất."
+        },
+        "nameFolder": {
+          "title": "5. Đặt tên thư mục",
+          "body": "Nhập tên dễ hiểu (ví dụ Podcast hoặc Ôn thi). Thư mục được tạo trong vị trí bạn đang xem."
+        },
+        "organize": {
+          "title": "6. Thư mục và file",
+          "body": "Thư mục hiện phía trên bài nghe. Mở thư mục để duyệt nhóm đó — bài tải lên khi đang ở trong thư mục sẽ được lưu vào đó."
+        },
+        "moveItem": {
+          "title": "7. Di chuyển bài nghe",
+          "body": "Dùng biểu tượng di chuyển trên bài, hoặc kéo thả lên thẻ thư mục. Bạn cũng có thể lồng thư mục để tổ chức bộ sưu tập lớn hơn."
         }
       }
     },
     "speaking": {
       "title": "Nói",
-      "description": "Gọi video trực tiếp với gia sư AI, rồi xem lại những gì bạn nói.",
+      "description": "Luyện dùng ngôn ngữ trong hội thoại — rồi xem transcript và phản hồi.",
       "cta": "Bắt đầu cuộc gọi",
       "steps": {
         "start": {
-          "title": "1. Tạo phiên",
-          "body": "Chọn chủ đề, trình độ CEFR và ngôn ngữ. Vào cuộc khi sẵn sàng nói."
+          "title": "1. Bắt đầu phiên",
+          "body": "Tạo phiên nói và tham gia khi sẵn sàng. Luyện dùng ngôn ngữ trong hội thoại thật, không chỉ học lý thuyết."
         },
-        "talk": {
-          "title": "2. Nói với gia sư",
-          "body": "Nói tự nhiên. Gia sư bám chủ đề và khớp trình độ của bạn."
-        },
-        "review": {
-          "title": "3. Ôn lại",
-          "body": "Sau cuộc gọi, đọc transcript và tóm tắt để tái sử dụng cụm hữu ích."
+        "sessions": {
+          "title": "2. Xem lại sau buổi",
+          "body": "Mở phiên để đọc transcript và phản hồi. Dùng để thấy lỗi, tái sử dụng cụm hay và quyết định thêm gì vào nhật ký."
         }
       }
     }
@@ -1449,6 +1506,14 @@
     "proDescription": "Bạn đang dùng Notoria Pro.",
     "tagline": "Mở khóa các tính năng học tập dùng AI.",
     "price": "€9,99 / tháng",
+    "priceAmount": "€9,99",
+    "pricePeriod": "mỗi tháng, thanh toán hàng tháng",
+    "freePrice": "€0",
+    "mostPopular": "Phổ biến nhất",
+    "currentPlan": "Gói hiện tại",
+    "choosePro": "Chọn Pro",
+    "freePlanDescription": "Thư viện, luyện tập và xuất CSV.",
+    "proPlanDescription": "Bài AI, nghe, nói và xuất PDF/Word.",
     "upgrade": "Nâng cấp lên Pro",
     "manage": "Quản lý gói đăng ký",
     "proBadge": "Pro",
@@ -1462,7 +1527,7 @@
     "alreadyPro": "Bạn đã có gói Pro đang hoạt động.",
     "notConfigured": "Chưa cấu hình thanh toán.",
     "noCustomer": "Tài khoản này chưa được liên kết với khách hàng thanh toán.",
-    "modalTitle": "Nâng cấp lên Notoria Pro",
+    "modalTitle": "Nâng cấp gói",
     "modalSubtitle": "Bản miễn phí đủ để lưu từ và luyện. Pro thêm bài AI từ từ vựng, Theory và Import — kèm AI viết, nghe, nói, và xuất file in được.",
     "lockedTitle": "Đây là tính năng Pro",
     "lockedDescription": "Nâng cấp để mở khóa bài AI (từ vựng, Theory, Import) — kèm nghe, nói, AI viết, và xuất PDF/Word.",
@@ -1747,6 +1812,238 @@
       "questionLabel": "Câu hỏi",
       "exampleAnswerLabel": "Câu trả lời mẫu",
       "notesLabel": "Ghi chú"
+    }
+  },
+  "gettingStarted": {
+    "backToWorkspace": "Quay lại không gian học",
+    "meta": {
+      "eyebrow": "Hướng dẫn",
+      "title": "Chào mừng đến với Notoria",
+      "description": "Mọi thứ bạn cần biết để xây dựng nhật ký học ngôn ngữ cá nhân và biến kiến thức thành luyện tập."
+    },
+    "toc": {
+      "title": "Trên trang này",
+      "welcome": "Notoria là gì?",
+      "howItWorks": "Cách hoạt động",
+      "vocabulary": "Từ vựng",
+      "theory": "Lý thuyết",
+      "exercise": "Luyện tập",
+      "writing": "Viết",
+      "listening": "Nghe",
+      "speaking": "Nói",
+      "connections": "Kiến thức thành luyện tập",
+      "philosophy": "Nhật ký học của bạn",
+      "startHere": "Bắt đầu"
+    },
+    "welcome": {
+      "title": "Notoria là gì?",
+      "lead": "Notoria là nhật ký học riêng của bạn.",
+      "paragraphs": [
+        "Hãy coi nó như một cuốn sổ tay cho hành trình ngôn ngữ — nhưng mọi thứ bạn ghi lại đều có thể trở thành phần luyện tập.",
+        "Không có chương trình cố định bạn phải theo. Không có cách \"đúng\" để dùng không gian học. Không có giáo viên nhìn qua vai bạn. Không ai chấm điểm ghi chú của bạn."
+      ],
+      "examplesIntro": "Bạn quyết định điều gì thuộc về Notoria của mình. Ví dụ:",
+      "examples": [
+        "Ghi lại từ bạn nghe hôm nay",
+        "Lưu quy tắc ngữ pháp bạn vừa hiểu",
+        "Thêm câu ví dụ có ý nghĩa với bạn",
+        "Tải video bạn muốn học",
+        "Viết về điều bạn muốn luyện nói"
+      ],
+      "overTime": "Theo thời gian, những mảnh nhỏ này trở thành cơ sở kiến thức ngôn ngữ cá nhân của bạn.",
+      "noWrongWay": {
+        "title": "Không có cách đúng hay sai để xây dựng nhật ký.",
+        "paragraphs": [
+          "Nhật ký học là của bạn. Bạn không cần sắp xếp mọi thứ hoàn hảo. Bạn không cần dùng hết mọi tính năng. Bạn không cần theo một phương pháp học cố định.",
+          "Dùng Notoria theo cách giúp học dễ hơn và có ý nghĩa hơn với bạn. Mục tiêu không phải tạo cơ sở dữ liệu hoàn hảo — mà là tạo không gian học thực sự thuộc về bạn."
+        ]
+      }
+    },
+    "howItWorks": {
+      "title": "Notoria hoạt động thế nào",
+      "intro": "Notoria kết nối các khu vực học thành một hành trình:",
+      "flow": {
+        "collect": "Thu thập",
+        "understand": "Hiểu",
+        "practice": "Luyện",
+        "create": "Tạo",
+        "listen": "Nghe",
+        "speak": "Nói",
+        "review": "Xem lại"
+      },
+      "anywhereNote": "Bạn có thể bắt đầu ở bất kỳ đâu, nhưng nhiều người đi theo lộ trình như sau:",
+      "steps": {
+        "collect": {
+          "title": "1. Thu thập kiến thức",
+          "body": "Thêm từ vựng và lý thuyết từ bài học, hội thoại, sách, media hoặc bất cứ đâu bạn gặp ngôn ngữ."
+        },
+        "understand": {
+          "title": "2. Hiểu nó",
+          "body": "Giữ giải thích, ví dụ, ghi chú ngữ pháp và phát âm — viết theo cách bạn hiểu."
+        },
+        "practice": {
+          "title": "3. Luyện tập",
+          "body": "Biến những gì bạn thu thập thành bài tập từ chính từ và kiến thức của bạn."
+        },
+        "use": {
+          "title": "4. Sử dụng",
+          "body": "Luyện viết, nghe và nói với ngôn ngữ bạn đang xây dựng."
+        },
+        "review": {
+          "title": "5. Xem lại",
+          "body": "Nhìn lại phần bạn vướng, thêm điều mới học được, và tiếp tục phát triển nhật ký."
+        }
+      },
+      "connectedNote": "Các khu vực này liên kết với nhau — không phải app riêng lẻ. Từ vựng và Lý thuyết nuôi bài tập, viết, nghe và nói."
+    },
+    "sections": {
+      "vocabulary": {
+        "title": "Từ vựng",
+        "intro": "Từ vựng là thư viện từ cá nhân — nền tảng cho mọi thứ khác trong Notoria.",
+        "bullets": [
+          "Thêm từ và cụm bạn thực sự gặp",
+          "Kèm nghĩa, bản dịch và câu ví dụ",
+          "Thêm ghi chú phát âm khi cần",
+          "Dùng thẻ để sắp xếp theo chủ đề, trình độ, tình huống",
+          "Tái sử dụng từ vựng trong bài tập và ôn tập"
+        ],
+        "body": "Thay vì học thuộc danh sách từ chung, bạn xây thư viện phản ánh hành trình học thực tế.",
+        "exampleIntro": "Ví dụ, hôm nay bạn nghe từ tiếng Phần Lan \"varata\":",
+        "examples": [
+          "Từ: varata",
+          "Nghĩa: đặt / giữ chỗ",
+          "Ví dụ: Haluan varata ajan.",
+          "Thẻ: Đời sống hàng ngày"
+        ],
+        "exampleNote": "Từ đó giờ là một phần kiến thức Notoria của bạn — sẵn sàng để ôn và luyện.",
+        "emphasis": "Đừng thêm mọi từ bạn thấy. Hãy thêm từ có ý nghĩa với BẠN."
+      },
+      "theory": {
+        "title": "Lý thuyết",
+        "intro": "Lý thuyết là tài liệu tham khảo ngôn ngữ cá nhân — nơi lưu kiến thức bạn muốn nhớ.",
+        "bullets": [
+          "Quy tắc và mẫu ngữ pháp",
+          "Ghi chú phát âm",
+          "Giải thích cách dùng",
+          "Ví dụ và ghi chú cá nhân",
+          "Điều bạn hay quên"
+        ],
+        "body": "Viết giải thích bằng lời của bạn. Ghi chú ngữ pháp không cần giống sách giáo khoa. Nếu giải thích đơn giản giúp bạn hiểu, đó là giải thích tốt cho nhật ký.",
+        "emphasis": "Lý thuyết như sổ tham khảo bạn quay lại mỗi khi quên."
+      },
+      "exercise": {
+        "title": "Luyện tập",
+        "intro": "Bài tập giúp bạn chủ động luyện kiến thức đã thu thập.",
+        "bullets": [
+          "Flashcard",
+          "Quiz và trắc nghiệm",
+          "Điền chỗ trống",
+          "Luyện từ vựng từ sổ từ đã lưu",
+          "Luyện ngữ pháp từ ghi chú lý thuyết",
+          "Các dạng khác từ tài liệu của bạn"
+        ],
+        "emphasis": "Giá trị nằm ở việc luyện kiến thức CỦA BẠN — không phải từ ngẫu nhiên từ khóa chung, mà từ và khái niệm bạn quyết định là quan trọng."
+      },
+      "writing": {
+        "title": "Viết",
+        "intro": "Viết là nơi kiến thức thụ động trở thành sử dụng ngôn ngữ chủ động.",
+        "bullets": [
+          "Soạn bài về chủ đề bạn quan tâm",
+          "Tạo bộ câu hỏi cho chính mình",
+          "Luyện dùng từ vựng đã học",
+          "Thử ngữ pháp mới",
+          "Xem lại và cải thiện bài viết theo thời gian",
+          "Với Pro: dùng AI kiểm tra và cải thiện",
+          "Xuất bài viết khi cần"
+        ],
+        "emphasis": "Bài viết không cần hoàn hảo. Điểm là dùng ngôn ngữ, mắc lỗi, nhận ra phần chưa biết, và tiến bộ dần."
+      },
+      "listening": {
+        "title": "Nghe",
+        "intro": "Nghe giúp bạn học nội dung thật do bạn chọn — không chỉ bài có sẵn.",
+        "bullets": [
+          "Tải audio hoặc video",
+          "Tạo transcript",
+          "Học transcript từng dòng",
+          "Biến tài liệu thành bài học",
+          "Khám phá từ và cách diễn đạt từ nội dung thật"
+        ],
+        "body": "Mang thứ BẠN thực sự muốn hiểu vào Notoria:",
+        "examples": [
+          "Video YouTube",
+          "Bản ghi hội thoại",
+          "Tập podcast",
+          "Bài giảng",
+          "Tài liệu học khác"
+        ],
+        "emphasis": "Bạn kiểm soát nội dung. Notoria giúp bạn hiểu và học từ đó."
+      },
+      "speaking": {
+        "title": "Nói",
+        "intro": "Nói là phần hội thoại chủ động trong hành trình học.",
+        "bullets": [
+          "Nói chuyện với gia sư AI qua video",
+          "Luyện nói tự nhiên",
+          "Dùng từ vựng và kiến thức đã thu thập",
+          "Xem lại transcript sau buổi nói",
+          "Đọc phản hồi và xác định phần cần cải thiện"
+        ],
+        "emphasis": "Nói không cần hoàn hảo. Mục đích là luyện dùng ngôn ngữ trong tình huống thực — rồi học từ những gì đã xảy ra."
+      }
+    },
+    "connections": {
+      "title": "Kiến thức của bạn thành luyện tập",
+      "intro": "Notoria càng hữu ích khi bạn tiếp tục thêm điều quan trọng với việc học:",
+      "flow": {
+        "vocabTheory": "Từ vựng + Lý thuyết",
+        "exercise": "Luyện tập",
+        "writingListening": "Viết + Nghe",
+        "speaking": "Nói",
+        "review": "Xem lại",
+        "addMore": "Thêm kiến thức"
+      },
+      "paragraphs": [
+        "Từ vựng và Lý thuyết là nguồn cho bài tập.",
+        "Viết và Nghe giúp dùng và hiểu ngôn ngữ trong ngữ cảnh mới.",
+        "Nói đưa tất cả vào hội thoại chủ động.",
+        "Xem lại khép vòng — và thường dẫn đến từ và ghi chú mới."
+      ],
+      "highlight": "Càng nhiều kiến thức có ý nghĩa với bạn, luyện tập càng hữu ích và cá nhân hóa."
+    },
+    "philosophy": {
+      "title": "Đây là nhật ký của bạn.",
+      "lead": "Notoria là công cụ cho quá trình học — không phải bài kiểm tra mức độ học giỏi của bạn.",
+      "dontNeed": [
+        "Bạn không cần ghi chú hoàn hảo",
+        "Bạn không cần lo thẻ có \"đúng\" không",
+        "Bạn không cần viết giải thích như sách giáo khoa",
+        "Bạn không cần hoàn thành mọi bài tập",
+        "Bạn không cần dùng hết mọi tính năng"
+      ],
+      "canDo": [
+        "Bạn có thể đổi ý.",
+        "Bạn có thể sắp xếp lại.",
+        "Bạn có thể mắc lỗi.",
+        "Bạn có thể học theo nhịp của mình."
+      ],
+      "quote": "Không ai chấm điểm nhật ký của bạn. Bạn đang xây dựng nó cho chính mình."
+    },
+    "startHere": {
+      "title": "Bắt đầu lần đầu",
+      "intro": "Bạn không cần thiết lập mọi thứ trước khi bắt đầu. Chỉ cần bắt đầu với điều bạn muốn nhớ.",
+      "firstTen": {
+        "title": "10 phút đầu tiên",
+        "steps": {
+          "language": "Chọn ngôn ngữ bạn muốn học.",
+          "words": "Thêm 5–10 từ bạn thực sự muốn nhớ.",
+          "theory": "Thêm một hoặc hai ghi chú lý thuyết/ngữ pháp.",
+          "exercise": "Tạo bài tập từ kiến thức của bạn.",
+          "writing": "Thử viết vài câu.",
+          "listeningSpeaking": "Khi sẵn sàng, thử nghe hoặc nói.",
+          "return": "Quay lại ngày mai và thêm điều mới."
+        }
+      },
+      "closing": "Chỉ cần bắt đầu với điều bạn muốn nhớ. Nhật ký sẽ phát triển tự nhiên từ đó."
     }
   }
 }

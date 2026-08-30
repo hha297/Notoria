@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Download, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
+import { ExportFormatOptions } from "@/components/export/export-format-options";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,6 +16,11 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
+import { isPaidDocumentFormat } from "@/lib/auth/paid-access";
+import {
+  DOCUMENT_EXPORT_FORMATS,
+  getDefaultExportFormat,
+} from "@/lib/export/formats";
 import {
   DEFAULT_EXPORT_OPTIONS,
   exportWritingExercise,
@@ -22,7 +28,6 @@ import {
   type ExportOptions,
 } from "@/lib/writing/export";
 import type { WritingEditorState } from "@/lib/writing/content";
-import { cn } from "@/lib/utils";
 
 type WritingExportDialogProps = {
   open: boolean;
@@ -31,45 +36,6 @@ type WritingExportDialogProps = {
   description?: string | null;
   editorState: WritingEditorState;
 };
-
-function RadioOption({
-  id,
-  name,
-  value,
-  checked,
-  label,
-  onChange,
-}: {
-  id: string;
-  name: string;
-  value: string;
-  checked: boolean;
-  label: string;
-  onChange: () => void;
-}) {
-  return (
-    <label
-      htmlFor={id}
-      className={cn(
-        "flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2.5 text-sm transition-colors",
-        checked
-          ? "border-accent-lime/50 bg-accent-lime/10 text-ink"
-          : "border-hairline-cloud hover:bg-muted/40",
-      )}
-    >
-      <input
-        id={id}
-        type="radio"
-        name={name}
-        value={value}
-        checked={checked}
-        onChange={onChange}
-        className="size-4 accent-[var(--accent-lime)]"
-      />
-      <span className="font-medium">{label}</span>
-    </label>
-  );
-}
 
 function CheckboxOption({
   id,
@@ -108,11 +74,26 @@ export function WritingExportDialog({
 }: WritingExportDialogProps) {
   const t = useTranslations("writing.export");
   const tc = useTranslations("common");
-  const { openUpgrade } = useProAccess();
+  const { hasProAccess, openUpgrade } = useProAccess();
   const [options, setOptions] = useState<ExportOptions>(DEFAULT_EXPORT_OPTIONS);
   const [isExporting, setIsExporting] = useState(false);
 
+  useEffect(() => {
+    if (!open) return;
+    setOptions((current) => ({
+      ...current,
+      format: getDefaultExportFormat(
+        hasProAccess,
+        DOCUMENT_EXPORT_FORMATS,
+      ) as ExportFormat,
+    }));
+  }, [open, hasProAccess]);
+
   function setFormat(format: ExportFormat) {
+    if (!hasProAccess && isPaidDocumentFormat(format)) {
+      openUpgrade();
+      return;
+    }
     setOptions((current) => ({ ...current, format }));
   }
 
@@ -161,24 +142,19 @@ export function WritingExportDialog({
         <div className="space-y-5 py-1">
           <div className="space-y-2">
             <Label>{t("format")}</Label>
-            <div className="grid gap-2">
-              <RadioOption
-                id="export-pdf"
-                name="export-format"
-                value="pdf"
-                checked={options.format === "pdf"}
-                label={t("formatPdf")}
-                onChange={() => setFormat("pdf")}
-              />
-              <RadioOption
-                id="export-docx"
-                name="export-format"
-                value="docx"
-                checked={options.format === "docx"}
-                label={t("formatDocx")}
-                onChange={() => setFormat("docx")}
-              />
-            </div>
+            <ExportFormatOptions
+              idPrefix="writing-export"
+              name="writing-export-format"
+              formats={DOCUMENT_EXPORT_FORMATS}
+              value={options.format}
+              onChange={(format) => setFormat(format as ExportFormat)}
+              hasProAccess={hasProAccess}
+              onLockedSelect={openUpgrade}
+              labels={{
+                pdf: t("formatPdf"),
+                docx: t("formatDocx"),
+              }}
+            />
           </div>
 
           <div className="space-y-1">

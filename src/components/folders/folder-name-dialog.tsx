@@ -75,6 +75,7 @@ export function FolderNameDialog({
               placeholder={t("namePlaceholder")}
               autoFocus
               disabled={pending}
+              data-tutorial="folder-name-input"
             />
           </div>
           <DialogFooter>

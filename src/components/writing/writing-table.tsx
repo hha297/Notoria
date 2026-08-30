@@ -310,7 +310,7 @@ export function WritingTable({
           >
             <ShowTutorialButton section="writing" />
             <NewFolderButton />
-            <LinkButton href={createHref}>
+            <LinkButton href={createHref} data-tutorial="writing-create">
               <Plus className="size-4" />
               {t("create")}
             </LinkButton>
@@ -324,9 +324,13 @@ export function WritingTable({
             onChange={(event) => setSearch(event.target.value)}
             placeholder={t("searchPlaceholder")}
             className="h-10 lg:h-8 lg:max-w-sm"
+            data-tutorial="writing-search"
           />
 
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:flex-wrap xl:grid-cols-none">
+          <div
+            className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:flex-wrap xl:grid-cols-none"
+            data-tutorial="writing-filters"
+          >
             <Select
               value={cefrFilter}
               onValueChange={(value) => value && setCefrFilter(value)}
@@ -485,7 +489,7 @@ export function WritingTable({
             </FolderEmptyState>
           ) : null
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-8" data-tutorial="writing-list">
             {groups.map((group) => (
               <WritingDocumentGroup
                 key={group.key}

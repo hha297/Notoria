@@ -184,6 +184,7 @@ export function UploadListeningDialog({
           <div className="space-y-4">
             <button
               type="button"
+              data-tutorial="listening-upload-dropzone"
               onClick={() => inputRef.current?.click()}
               onDragOver={(event) => {
                 event.preventDefault();

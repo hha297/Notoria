@@ -22,6 +22,7 @@ export function MoveItemButton({ id, title, folderId }: MoveItemButtonProps) {
       type="button"
       variant="ghost"
       size="icon-sm"
+      data-tutorial="folder-move-item"
       onPointerDown={(event) => event.stopPropagation()}
       onClick={(event) => {
         event.stopPropagation();
