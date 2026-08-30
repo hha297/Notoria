@@ -885,7 +885,11 @@
     "activeWorkspace": "Active workspace",
     "guideEyebrow": "Getting started",
     "guideTitle": "How to use Notoria",
-    "guideSubtitle": "One workspace, one language. Work through the sections in this order — each one builds on the last. Open a tutorial whenever you want a walkthrough.",
+    "guideTagline": "Your language. Your knowledge. Your learning diary.",
+    "guideSubtitle": "Notoria is a private, personal workspace — not a traditional course that tells you what to learn. You choose your language, your words, your grammar notes, your examples, and the materials you want to practice with.",
+    "guideSubtitleSecondary": "Your workspace grows with your learning journey. Start with Vocabulary and Theory, then turn what you collect into exercises, writing, listening, and speaking.",
+    "guideFullCtaPrompt": "Want to learn more about how Notoria works?",
+    "guideFullCta": "Read the full guide",
     "modulesTitle": "Explore the workspace",
     "modulesSubtitle": "Jump into a section, or open its tutorial first.",
     "startHere": "Start here",
@@ -895,27 +899,27 @@
     "steps": {
       "vocabulary": {
         "title": "Vocabulary",
-        "body": "Add words with meanings, examples, and tags. This library powers exercises and review."
+        "body": "Add your own words and phrases with meanings, example sentences, pronunciation, and tags. Organize by topic, level, or situation — then reuse them in exercises and review. Start with words from daily life, lessons, books, or media; your library becomes the foundation for practice."
       },
       "theory": {
         "title": "Theory",
-        "body": "Save grammar, pronunciation, and usage notes you keep forgetting."
+        "body": "Save grammar rules, pronunciation notes, usage explanations, and personal examples in your own words. Think of Theory as a reference notebook you return to whenever you forget something. The more you document, the stronger your personal knowledge base grows."
       },
       "exercises": {
         "title": "Exercise",
-        "body": "Practice from your own words — flashcards, quizzes, fill-in-the-blank, and more."
+        "body": "Practice with flashcards, quizzes, fill-in-the-blank, and more — built from your own vocabulary and theory. Exercises grow with the knowledge you add. The more material you save, the more useful and personalized your practice becomes."
       },
       "writing": {
         "title": "Writing",
-        "body": "Draft texts and question sets. Pro can check, improve, and export them."
+        "body": "Draft texts and create question sets using your own topics and vocabulary. Writing is for actively using what you learn, not just memorizing it. With Pro, AI can check and improve your work, and you can export materials when needed."
       },
       "listening": {
         "title": "Listening",
-        "body": "Upload audio or video, get a transcript, and turn it into a lesson."
+        "body": "Upload audio or video, get a transcript, and turn it into a lesson. Use the transcript to catch unfamiliar words and expressions, then practice with real content you choose. Bring your own listening materials instead of being limited to predefined content."
       },
       "speaking": {
         "title": "Speaking",
-        "body": "Call an AI tutor on video, then review the transcript and feedback."
+        "body": "Call an AI tutor on video and practice speaking naturally with your own learning knowledge. After each session, review the transcript and feedback to see what to improve. This closes the loop: learn → practice → use → review → improve."
       }
     },
     "modules": {
@@ -1747,6 +1751,238 @@
         "title": "A more personalized learning experience",
         "body": "Use AI-powered tools to make your vocabulary, writing, and practice sessions more useful and tailored to you."
       }
+    }
+  },
+  "gettingStarted": {
+    "backToWorkspace": "Back to workspace",
+    "meta": {
+      "eyebrow": "Guide",
+      "title": "Welcome to Notoria",
+      "description": "Everything you need to know about building your personal language-learning diary and turning your knowledge into practice."
+    },
+    "toc": {
+      "title": "On this page",
+      "welcome": "What is Notoria?",
+      "howItWorks": "How it works",
+      "vocabulary": "Vocabulary",
+      "theory": "Theory",
+      "exercise": "Exercise",
+      "writing": "Writing",
+      "listening": "Listening",
+      "speaking": "Speaking",
+      "connections": "Your knowledge becomes practice",
+      "philosophy": "Your learning diary",
+      "startHere": "Start here"
+    },
+    "welcome": {
+      "title": "What is Notoria?",
+      "lead": "Notoria is your private learning diary.",
+      "paragraphs": [
+        "Think of it as a notebook for your language journey — except everything you write down can become part of your practice.",
+        "There is no predefined curriculum you have to follow. There is no \"correct\" way to use your workspace. There is no teacher watching over your shoulder. Nobody is grading your notes."
+      ],
+      "examplesIntro": "You decide what belongs in your Notoria. For example, you can:",
+      "examples": [
+        "Write down a word you heard today",
+        "Save a grammar rule you finally understood",
+        "Add an example sentence that makes sense to you",
+        "Upload a video you want to study",
+        "Write about something you want to practice saying"
+      ],
+      "overTime": "Over time, these small pieces become your own personal language knowledge base.",
+      "noWrongWay": {
+        "title": "There is no right or wrong way to build your diary.",
+        "paragraphs": [
+          "Your learning diary is yours. You don't have to organize everything perfectly. You don't have to use every feature. You don't have to follow a particular learning method.",
+          "Use Notoria in whatever way makes learning easier and more meaningful to you. The goal is not to create a perfect database — the goal is to create a learning space that actually belongs to you."
+        ]
+      }
+    },
+    "howItWorks": {
+      "title": "How Notoria works",
+      "intro": "Notoria connects your learning areas into one journey:",
+      "flow": {
+        "collect": "Collect",
+        "understand": "Understand",
+        "practice": "Practice",
+        "create": "Create",
+        "listen": "Listen",
+        "speak": "Speak",
+        "review": "Review"
+      },
+      "anywhereNote": "You can start anywhere, but many people follow a path like this:",
+      "steps": {
+        "collect": {
+          "title": "1. Collect your knowledge",
+          "body": "Add vocabulary and theory from lessons, conversations, books, media, or anywhere you encounter the language."
+        },
+        "understand": {
+          "title": "2. Understand it",
+          "body": "Keep your own explanations, examples, grammar notes, and pronunciation notes — written in a way that makes sense to you."
+        },
+        "practice": {
+          "title": "3. Practice it",
+          "body": "Turn what you've collected into exercises built from your own words and knowledge."
+        },
+        "use": {
+          "title": "4. Use it",
+          "body": "Practice writing, listening, and speaking with the language you've been building."
+        },
+        "review": {
+          "title": "5. Review it",
+          "body": "Look back at what you struggled with, add what you learned, and keep growing your diary."
+        }
+      },
+      "connectedNote": "These areas work together — not as separate apps. What you add in Vocabulary and Theory feeds your exercises, writing, listening, and speaking."
+    },
+    "sections": {
+      "vocabulary": {
+        "title": "Vocabulary",
+        "intro": "Vocabulary is your personal word library — the foundation of everything else in Notoria.",
+        "bullets": [
+          "Add words and phrases you actually encounter",
+          "Include meanings, translations, and example sentences",
+          "Add pronunciation notes when helpful",
+          "Use tags to organize by topic, level, situation, or anything that helps you find words later",
+          "Reuse vocabulary in exercises and review sessions"
+        ],
+        "body": "Instead of memorizing from a generic word list, you build a library that reflects your real learning journey.",
+        "exampleIntro": "For example, you hear the Finnish word \"varata\" today:",
+        "examples": [
+          "Word: varata",
+          "Meaning: to book / reserve",
+          "Example: Haluan varata ajan.",
+          "Tag: Daily life"
+        ],
+        "exampleNote": "That word is now part of your personal Notoria knowledge — ready for review and practice.",
+        "emphasis": "Don't add every word you see. Add words that are meaningful to YOU."
+      },
+      "theory": {
+        "title": "Theory",
+        "intro": "Theory is your personal language reference — a place to save knowledge you want to remember.",
+        "bullets": [
+          "Grammar rules and patterns",
+          "Pronunciation notes",
+          "Usage explanations",
+          "Examples and personal notes",
+          "Things you repeatedly forget"
+        ],
+        "body": "Write explanations in your own words. A grammar note doesn't have to sound like a textbook. If a simple explanation makes sense to you, that's a good explanation for your diary.",
+        "emphasis": "Theory is like a reference notebook you return to whenever you forget something."
+      },
+      "exercise": {
+        "title": "Exercise",
+        "intro": "Exercises let you actively practice the knowledge you've collected.",
+        "bullets": [
+          "Flashcards",
+          "Quizzes and multiple choice",
+          "Fill-in-the-blank exercises",
+          "Vocabulary practice from your saved words",
+          "Grammar practice from your theory notes",
+          "Other formats based on your own material"
+        ],
+        "emphasis": "The value comes from practicing YOUR knowledge — not random vocabulary from a generic course, but the words and concepts you've personally decided are important."
+      },
+      "writing": {
+        "title": "Writing",
+        "intro": "Writing is where passive knowledge becomes active language use.",
+        "bullets": [
+          "Draft texts on topics you care about",
+          "Create question sets for yourself",
+          "Practice using vocabulary you've learned",
+          "Experiment with new grammar",
+          "Review and improve your writing over time",
+          "With Pro: use AI to check and improve your work",
+          "Export your writing when you need it"
+        ],
+        "emphasis": "Your writing doesn't have to be perfect. The point is to use the language, make mistakes, notice what you don't know yet, and improve over time."
+      },
+      "listening": {
+        "title": "Listening",
+        "intro": "Listening lets you study real content you choose — not just predefined lessons.",
+        "bullets": [
+          "Upload audio or video",
+          "Generate a transcript",
+          "Study the transcript line by line",
+          "Turn the material into a lesson",
+          "Discover vocabulary and expressions from real content"
+        ],
+        "body": "Bring something YOU actually want to understand into Notoria:",
+        "examples": [
+          "A YouTube video",
+          "A conversation recording",
+          "A podcast episode",
+          "A lecture",
+          "Any other learning material"
+        ],
+        "emphasis": "You control the content. Notoria helps you understand and learn from it."
+      },
+      "speaking": {
+        "title": "Speaking",
+        "intro": "Speaking is the active conversation part of your learning journey.",
+        "bullets": [
+          "Talk with an AI tutor through video",
+          "Practice speaking naturally",
+          "Use vocabulary and knowledge you've collected",
+          "Review the conversation transcript afterward",
+          "Read feedback and identify areas to improve"
+        ],
+        "emphasis": "Speaking doesn't need to be perfect. The purpose is to practice using the language in a realistic situation — then learn from what happened."
+      }
+    },
+    "connections": {
+      "title": "Your knowledge becomes your practice",
+      "intro": "Notoria becomes more useful as you keep adding things that matter to your learning:",
+      "flow": {
+        "vocabTheory": "Vocabulary + Theory",
+        "exercise": "Exercise",
+        "writingListening": "Writing + Listening",
+        "speaking": "Speaking",
+        "review": "Review",
+        "addMore": "Add more knowledge"
+      },
+      "paragraphs": [
+        "What you collect in Vocabulary and Theory becomes the source for your exercises.",
+        "Writing and Listening help you use and understand the language in new contexts.",
+        "Speaking puts it all into active conversation.",
+        "Review closes the loop — and each review often leads to new words and notes to add."
+      ],
+      "highlight": "The more knowledge you add that matters to you, the more useful and personal your practice becomes."
+    },
+    "philosophy": {
+      "title": "This is your diary.",
+      "lead": "Notoria is a tool for your learning process — not a test of how well you are learning.",
+      "dontNeed": [
+        "You don't need to make your notes perfect",
+        "You don't need to worry about whether your tags are \"correct\"",
+        "You don't need to write textbook-quality explanations",
+        "You don't need to finish every exercise",
+        "You don't need to use every feature"
+      ],
+      "canDo": [
+        "You can change your mind.",
+        "You can reorganize things.",
+        "You can make mistakes.",
+        "You can learn at your own pace."
+      ],
+      "quote": "Nobody is grading your diary. You're building it for yourself."
+    },
+    "startHere": {
+      "title": "Getting started for the first time",
+      "intro": "You don't need to set everything up before you begin. Just start with something you want to remember.",
+      "firstTen": {
+        "title": "Your first 10 minutes",
+        "steps": {
+          "language": "Choose the language you want to learn.",
+          "words": "Add 5–10 words you actually want to remember.",
+          "theory": "Add one or two theory or grammar notes.",
+          "exercise": "Create an exercise from your knowledge.",
+          "writing": "Try writing a few sentences.",
+          "listeningSpeaking": "When you're ready, try listening or speaking.",
+          "return": "Come back tomorrow and add something new."
+        }
+      },
+      "closing": "Just start with something you want to remember. Your diary will grow naturally from there."
     }
   }
 }

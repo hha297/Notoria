@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import {
   ArrowRight,
   BookOpen,
@@ -113,9 +114,13 @@ export function DashboardGuide({
           {t("guideEyebrow")}
         </p>
         <h2 className="heading-md mt-2">{t("guideTitle")}</h2>
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-on-dark-muted sm:text-base">
-          {t("guideSubtitle")}
+        <p className="mt-2 text-sm font-medium text-accent-lime sm:text-base">
+          {t("guideTagline")}
         </p>
+        <div className="mt-2 max-w-2xl space-y-3 text-sm leading-relaxed text-on-dark-muted sm:text-base">
+          <p>{t("guideSubtitle")}</p>
+          <p>{t("guideSubtitleSecondary")}</p>
+        </div>
         <ol className="mt-6 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
           {GUIDE_STEPS.map((step, index) => (
             <li
@@ -134,6 +139,16 @@ export function DashboardGuide({
             </li>
           ))}
         </ol>
+        <div className="mt-6 flex flex-col gap-3 border-t border-hairline-violet pt-5 sm:flex-row sm:items-center sm:justify-between">
+          <p className="text-sm text-on-dark-muted">{t("guideFullCtaPrompt")}</p>
+          <Link
+            href="/getting-started"
+            className="inline-flex items-center gap-1.5 text-sm font-medium text-accent-lime transition-colors hover:text-accent-lime/80"
+          >
+            {t("guideFullCta")}
+            <ArrowRight className="size-4" aria-hidden />
+          </Link>
+        </div>
       </div>
 
       <div>
