@@ -28,7 +28,7 @@ export function SpeakingView({ sessions }: SpeakingViewProps) {
         description={t("description")}
       >
         <ShowTutorialButton section="speaking" />
-        <Button onClick={() => setCreateOpen(true)}>
+        <Button onClick={() => setCreateOpen(true)} data-tutorial="speaking-start">
           <Plus className="size-4" />
           {t("newCall")}
         </Button>
@@ -43,13 +43,13 @@ export function SpeakingView({ sessions }: SpeakingViewProps) {
           <p className="mt-2 max-w-md text-sm text-muted-foreground">
             {t("emptyDescription")}
           </p>
-          <Button className="mt-5" onClick={() => setCreateOpen(true)}>
+          <Button className="mt-5" onClick={() => setCreateOpen(true)} data-tutorial="speaking-start">
             <Plus className="size-4" />
             {t("newCallFirst")}
           </Button>
         </div>
       ) : (
-        <div className="space-y-4">
+        <div className="space-y-4" data-tutorial="speaking-sessions">
           <h2 className="heading-md text-ink">{t("mySessions")}</h2>
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {sessions.map((session) => (

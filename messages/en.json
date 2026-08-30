@@ -1124,117 +1124,122 @@
     "next": "Next",
     "skip": "Skip tutorial",
     "done": "Got it",
+    "stepProgress": "{current} / {total}",
     "vocabulary": {
       "title": "Vocabulary",
-      "description": "Build your personal vocabulary collection and review words you’ve learned.",
+      "description": "Add words that matter to you — then search, organize, and reuse them across Notoria.",
       "cta": "Add a word",
       "steps": {
         "addWord": {
           "title": "1. Add a word",
-          "body": "Create a new vocabulary item with meanings, examples, and notes."
+          "body": "Start building your personal vocabulary. Add words and phrases you actually want to remember — then fill in meanings, examples, and tags on the next screen."
         },
-        "tags": {
-          "title": "2. Add tags",
-          "body": "Organize words with reusable tags so you can find and filter them later."
+        "search": {
+          "title": "2. Search your library",
+          "body": "Search your vocabulary instead of scrolling through everything. Try a word, meaning, or tag."
         },
-        "review": {
-          "title": "3. Review",
-          "body": "Use your words in exercises and other learning activities once you have a small collection."
+        "filters": {
+          "title": "3. Filter and organize",
+          "body": "Narrow by part of speech, tags, or sort order. Use tags to group words by topic, level, or situation."
+        },
+        "library": {
+          "title": "4. Your word library",
+          "body": "Your saved words live here. Open any entry to edit it, or use them in exercises and review later."
         }
       }
     },
     "writing": {
       "title": "Writing",
-      "description": "Practice writing with prompts, drafts, and organized pieces you can revisit.",
+      "description": "Use what you've learned in your own sentences — drafts, question sets, and pieces you can revisit.",
       "cta": "Start writing",
       "steps": {
         "create": {
-          "title": "1. Create a writing",
-          "body": "Start a new piece — a prompt, a draft, or a question set — in your workspace."
+          "title": "1. Start writing",
+          "body": "Create a text or writing exercise based on something you want to practice. Your writing doesn't need to be perfect — use it to experiment and notice what you still need to learn."
         },
-        "organize": {
-          "title": "2. Organize",
-          "body": "Use search, filters, and metadata to keep your writing easy to find."
+        "search": {
+          "title": "2. Search",
+          "body": "Find a piece quickly by title or content instead of browsing everything manually."
         },
-        "practice": {
-          "title": "3. Practice and export",
-          "body": "Open a piece to keep writing, or export it when you want a printable copy."
+        "filters": {
+          "title": "3. Filter",
+          "body": "Narrow by level, topic, formality, or sort order to organize your writing library."
+        },
+        "library": {
+          "title": "4. Your writing library",
+          "body": "Open a piece to keep writing. With Pro, you can also use AI to check and improve your work, or export when you need a copy."
         }
       }
     },
     "theory": {
       "title": "Theory",
-      "description": "Keep notes on grammar, pronunciation, usage, and how the language works.",
+      "description": "Keep the explanations you want to remember — grammar, pronunciation, usage, and personal notes.",
       "cta": "Add theory",
       "steps": {
         "add": {
           "title": "1. Add a note",
-          "body": "Create a theory note and choose a category so related topics stay together."
+          "body": "Create a theory note for something you want to remember. When you write it, pick a category so related topics stay together."
         },
-        "browse": {
-          "title": "2. Browse",
-          "body": "Search and filter by category to jump back to what you need."
+        "category": {
+          "title": "2. Browse by category",
+          "body": "Filter notes by category to jump back to grammar, pronunciation, usage, or other topics you've saved."
+        },
+        "search": {
+          "title": "3. Search",
+          "body": "Search your theory library to find a note quickly instead of hunting through everything."
         },
         "read": {
-          "title": "3. Read and revisit",
-          "body": "Open a note to study it, then come back whenever you want a refresher."
+          "title": "4. Read and revisit",
+          "body": "Open a note whenever you need a refresher. Come back as often as you like — this is your reference notebook."
         }
       }
     },
     "exercise": {
       "title": "Exercises",
-      "description": "Practice with flashcards, quizzes, and other activities built from your vocabulary.",
+      "description": "Turn your knowledge into practice — flashcards, quizzes, fill-in-the-blank, and more.",
       "cta": "Try an exercise",
       "steps": {
-        "vocabulary": {
-          "title": "1. Build vocabulary first",
-          "body": "Most exercises work best with at least {count} words. Add a small collection before you start."
+        "sources": {
+          "title": "1. Choose your source",
+          "body": "Practice from vocabulary you've saved, theory notes, or imported material. The more you add, the more useful your practice becomes."
         },
-        "choose": {
-          "title": "2. Choose a type",
-          "body": "Pick flashcards, multiple choice, match pairs, fill in the blank, or type the answer."
-        },
-        "practice": {
-          "title": "3. Practice",
-          "body": "Complete a short session. Come back often — a few minutes still counts."
+        "types": {
+          "title": "2. Pick an exercise type",
+          "body": "Choose flashcards, multiple choice, match pairs, fill in the blank, or type the answer — then start a short session with your own knowledge."
         }
       }
     },
     "listening": {
       "title": "Listening",
-      "description": "Upload real audio or video, read the transcript, and practice from it.",
+      "description": "Bring real content you want to understand — upload audio or video, read the transcript, and study from it.",
       "cta": "Open listening",
       "steps": {
         "upload": {
-          "title": "1. Upload a clip",
-          "body": "Add an audio or video file you want to learn from — a podcast, a lesson, or your own recording."
+          "title": "1. Upload your material",
+          "body": "Bring something you actually want to understand — a podcast, video, lesson, or your own recording."
         },
-        "transcript": {
-          "title": "2. Read the transcript",
-          "body": "Open the lesson to follow along with the text. Use it to catch words you missed by ear."
+        "uploadArea": {
+          "title": "2. Choose a file",
+          "body": "Select or drop an audio or video file. Notoria will upload it and generate a transcript where supported."
         },
-        "practice": {
-          "title": "3. Practice",
-          "body": "Run a listening session, then save useful words back to your vocabulary."
+        "lessons": {
+          "title": "3. Study your lessons",
+          "body": "Open a lesson to read the transcript, catch new words and expressions, and practice with the material you chose."
         }
       }
     },
     "speaking": {
       "title": "Speaking",
-      "description": "Have a live video call with an AI tutor, then review what you said.",
+      "description": "Practice using the language in conversation — then review the transcript and feedback.",
       "cta": "Start a call",
       "steps": {
         "start": {
-          "title": "1. Create a session",
-          "body": "Pick a topic, CEFR level, and language. Join when you are ready to talk."
+          "title": "1. Start a session",
+          "body": "Create a speaking session and join when you're ready. Practice using the language in a real conversation instead of only studying it."
         },
-        "talk": {
-          "title": "2. Talk with the tutor",
-          "body": "Speak naturally. The tutor stays on the topic and matches your level."
-        },
-        "review": {
-          "title": "3. Review",
-          "body": "After the call, read the transcript and summary so you can reuse useful phrases."
+        "sessions": {
+          "title": "2. Review afterward",
+          "body": "Open a session to read the transcript and feedback. Use it to spot mistakes, reuse useful phrases, and decide what to add to your diary next."
         }
       }
     }

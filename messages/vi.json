@@ -944,117 +944,122 @@
     "next": "Tiếp",
     "skip": "Bỏ qua hướng dẫn",
     "done": "Đã hiểu",
+    "stepProgress": "{current} / {total}",
     "vocabulary": {
       "title": "Từ vựng",
-      "description": "Xây sổ từ của bạn và ôn những từ đã học.",
+      "description": "Thêm từ có ý nghĩa với bạn — rồi tìm, sắp xếp và dùng lại xuyên suốt Notoria.",
       "cta": "Thêm từ",
       "steps": {
         "addWord": {
           "title": "1. Thêm một từ",
-          "body": "Tạo mục từ mới kèm nghĩa, ví dụ và ghi chú."
+          "body": "Bắt đầu xây sổ từ cá nhân. Thêm từ và cụm bạn thực sự muốn nhớ — rồi điền nghĩa, ví dụ và thẻ ở màn hình tiếp theo."
         },
-        "tags": {
-          "title": "2. Gắn thẻ",
-          "body": "Sắp xếp từ bằng thẻ dùng lại được để sau này dễ tìm."
+        "search": {
+          "title": "2. Tìm trong thư viện",
+          "body": "Tìm từ thay vì lướt hết danh sách. Thử tìm theo từ, nghĩa hoặc thẻ."
         },
-        "review": {
-          "title": "3. Ôn tập",
-          "body": "Dùng từ trong bài tập và các hoạt động học khi bạn đã có một ít vốn từ."
+        "filters": {
+          "title": "3. Lọc và sắp xếp",
+          "body": "Thu hẹp theo loại từ, thẻ hoặc thứ tự sắp xếp. Dùng thẻ để nhóm theo chủ đề, trình độ hoặc tình huống."
+        },
+        "library": {
+          "title": "4. Thư viện từ của bạn",
+          "body": "Từ đã lưu nằm ở đây. Mở mục để sửa, hoặc dùng trong bài tập và ôn tập sau."
         }
       }
     },
     "writing": {
       "title": "Viết",
-      "description": "Luyện viết với đề bài, bản nháp và các bài bạn có thể quay lại.",
+      "description": "Dùng kiến thức đã học trong câu của riêng bạn — bản nháp, bộ câu hỏi và bài có thể quay lại.",
       "cta": "Bắt đầu viết",
       "steps": {
         "create": {
-          "title": "1. Tạo bài viết",
-          "body": "Bắt đầu một đề, bản nháp hoặc bộ câu hỏi trong không gian học."
+          "title": "1. Bắt đầu viết",
+          "body": "Tạo bài hoặc bài tập viết từ chủ đề bạn muốn luyện. Bài viết không cần hoàn hảo — hãy thử, mắc lỗi và nhận ra phần còn thiếu."
         },
-        "organize": {
-          "title": "2. Sắp xếp",
-          "body": "Dùng tìm kiếm, bộ lọc và metadata để dễ tìm lại bài."
+        "search": {
+          "title": "2. Tìm kiếm",
+          "body": "Tìm bài nhanh theo tiêu đề hoặc nội dung thay vì duyệt thủ công."
         },
-        "practice": {
-          "title": "3. Luyện và xuất",
-          "body": "Mở bài để viết tiếp, hoặc xuất file khi cần bản in."
+        "filters": {
+          "title": "3. Lọc",
+          "body": "Thu hẹp theo trình độ, chủ đề, mức trang trọng hoặc thứ tự sắp xếp."
+        },
+        "library": {
+          "title": "4. Thư viện bài viết",
+          "body": "Mở bài để viết tiếp. Với Pro, bạn có thể dùng AI kiểm tra và cải thiện, hoặc xuất file khi cần."
         }
       }
     },
     "theory": {
       "title": "Lý thuyết",
-      "description": "Giữ ghi chú về ngữ pháp, phát âm, cách dùng và cách ngôn ngữ vận hành.",
+      "description": "Giữ giải thích bạn muốn nhớ — ngữ pháp, phát âm, cách dùng và ghi chú cá nhân.",
       "cta": "Thêm lý thuyết",
       "steps": {
         "add": {
           "title": "1. Thêm ghi chú",
-          "body": "Tạo ghi chú lý thuyết và chọn danh mục để các chủ đề liên quan nằm cùng nhau."
+          "body": "Tạo ghi chú cho điều bạn muốn nhớ. Khi viết, chọn danh mục để chủ đề liên quan nằm cùng nhau."
         },
-        "browse": {
-          "title": "2. Duyệt",
-          "body": "Tìm kiếm và lọc theo danh mục khi bạn muốn quay lại."
+        "category": {
+          "title": "2. Duyệt theo danh mục",
+          "body": "Lọc theo danh mục để quay lại ngữ pháp, phát âm, cách dùng hoặc chủ đề khác bạn đã lưu."
+        },
+        "search": {
+          "title": "3. Tìm kiếm",
+          "body": "Tìm ghi chú nhanh trong thư viện lý thuyết thay vì lục từng mục."
         },
         "read": {
-          "title": "3. Đọc lại",
-          "body": "Mở ghi chú để học, rồi quay lại bất cứ lúc nào cần ôn."
+          "title": "4. Đọc lại",
+          "body": "Mở ghi chú khi cần ôn. Quay lại bất cứ lúc nào — đây là sổ tham khảo của bạn."
         }
       }
     },
     "exercise": {
       "title": "Bài tập",
-      "description": "Luyện với flashcard, quiz và các dạng bài tạo từ sổ từ của bạn.",
+      "description": "Biến kiến thức thành luyện tập — flashcard, quiz, điền chỗ trống và hơn thế.",
       "cta": "Làm bài tập",
       "steps": {
-        "vocabulary": {
-          "title": "1. Thêm từ trước",
-          "body": "Hầu hết bài tập hiệu quả hơn khi có ít nhất {count} từ. Hãy có một bộ sưu tập nhỏ trước khi bắt đầu."
+        "sources": {
+          "title": "1. Chọn nguồn",
+          "body": "Luyện từ từ vựng, lý thuyết hoặc tài liệu import. Càng thêm nhiều, luyện tập càng hữu ích."
         },
-        "choose": {
+        "types": {
           "title": "2. Chọn dạng bài",
-          "body": "Chọn flashcard, trắc nghiệm, nối cặp, điền chỗ trống hoặc gõ đáp án."
-        },
-        "practice": {
-          "title": "3. Luyện tập",
-          "body": "Hoàn thành một phiên ngắn. Quay lại thường xuyên — vài phút cũng tính."
+          "body": "Chọn flashcard, trắc nghiệm, nối cặp, điền chỗ trống hoặc gõ đáp án — rồi bắt đầu phiên ngắn với kiến thức của bạn."
         }
       }
     },
     "listening": {
       "title": "Nghe",
-      "description": "Tải audio hoặc video thật, đọc transcript, rồi luyện từ đó.",
+      "description": "Mang nội dung thật bạn muốn hiểu — tải audio/video, đọc transcript và học từ đó.",
       "cta": "Mở nghe",
       "steps": {
         "upload": {
-          "title": "1. Tải clip",
-          "body": "Thêm file audio hoặc video bạn muốn học — podcast, bài giảng, hoặc bản ghi của chính bạn."
+          "title": "1. Tải tài liệu",
+          "body": "Mang thứ bạn thực sự muốn hiểu — podcast, video, bài giảng hoặc bản ghi của bạn."
         },
-        "transcript": {
-          "title": "2. Đọc transcript",
-          "body": "Mở bài để theo lời thoại. Dùng để bắt những từ nghe sót."
+        "uploadArea": {
+          "title": "2. Chọn file",
+          "body": "Chọn hoặc kéo thả file audio/video. Notoria sẽ tải lên và tạo transcript khi hỗ trợ."
         },
-        "practice": {
-          "title": "3. Luyện",
-          "body": "Chạy phiên nghe, rồi lưu từ hữu ích vào sổ từ vựng."
+        "lessons": {
+          "title": "3. Học bài của bạn",
+          "body": "Mở bài để đọc transcript, bắt từ và cách diễn đạt mới, và luyện với nội dung bạn chọn."
         }
       }
     },
     "speaking": {
       "title": "Nói",
-      "description": "Gọi video trực tiếp với gia sư AI, rồi xem lại những gì bạn nói.",
+      "description": "Luyện dùng ngôn ngữ trong hội thoại — rồi xem transcript và phản hồi.",
       "cta": "Bắt đầu cuộc gọi",
       "steps": {
         "start": {
-          "title": "1. Tạo phiên",
-          "body": "Chọn chủ đề, trình độ CEFR và ngôn ngữ. Vào cuộc khi sẵn sàng nói."
+          "title": "1. Bắt đầu phiên",
+          "body": "Tạo phiên nói và tham gia khi sẵn sàng. Luyện dùng ngôn ngữ trong hội thoại thật, không chỉ học lý thuyết."
         },
-        "talk": {
-          "title": "2. Nói với gia sư",
-          "body": "Nói tự nhiên. Gia sư bám chủ đề và khớp trình độ của bạn."
-        },
-        "review": {
-          "title": "3. Ôn lại",
-          "body": "Sau cuộc gọi, đọc transcript và tóm tắt để tái sử dụng cụm hữu ích."
+        "sessions": {
+          "title": "2. Xem lại sau buổi",
+          "body": "Mở phiên để đọc transcript và phản hồi. Dùng để thấy lỗi, tái sử dụng cụm hay và quyết định thêm gì vào nhật ký."
         }
       }
     }

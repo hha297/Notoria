@@ -581,7 +581,7 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
           <Download className="size-4" />
           {t("export.button")}
         </Button>
-        <LinkButton href="/vocabulary/new">
+        <LinkButton href="/vocabulary/new" data-tutorial="vocab-add-word">
           <Plus className="size-4" />
           {t("addWord")}
         </LinkButton>
@@ -617,10 +617,14 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
               onChange={(event) => setSearch(event.target.value)}
               placeholder={t("searchPlaceholder")}
               className="h-9 border-0 bg-transparent pl-9 shadow-none focus-visible:shadow-none"
+              data-tutorial="vocab-search"
             />
           </div>
 
-          <div className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-1.5">
+          <div
+            className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-1.5"
+            data-tutorial="vocab-filters"
+          >
             <Select
               value={partOfSpeechFilter}
               onValueChange={(value) => value && setPartOfSpeechFilter(value)}
@@ -733,7 +737,7 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
             <p className="text-muted-foreground">{t("noResults")}</p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className="space-y-4" data-tutorial="vocab-word-list">
             {groupedWords.map((group) => (
               <VocabularyPosGroup
                 key={`${group.key}:${search}:${partOfSpeechFilter}:${tagFilter}:${sortValue}`}

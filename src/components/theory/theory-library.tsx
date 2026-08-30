@@ -112,7 +112,7 @@ export function TheoryLibrary({
             >
               <ShowTutorialButton section="theory" />
               <NewFolderButton />
-              <LinkButton href={createHref}>
+              <LinkButton href={createHref} data-tutorial="theory-add-note">
                 <Plus className="size-4" />
                 {t("create")}
               </LinkButton>
@@ -126,7 +126,7 @@ export function TheoryLibrary({
               title={tFolders("emptyFolder")}
               description={tFolders("emptyFolderDescription")}
             >
-              <LinkButton href={createHref} className="mt-5">
+              <LinkButton href={createHref} className="mt-5" data-tutorial="theory-add-note">
                 <Plus className="size-4" />
                 {t("create")}
               </LinkButton>
@@ -140,7 +140,7 @@ export function TheoryLibrary({
               <p className="mt-2 max-w-md text-sm text-muted-foreground">
                 {t("emptyDescription")}
               </p>
-              <LinkButton href={createHref} className="mt-5">
+              <LinkButton href={createHref} className="mt-5" data-tutorial="theory-add-note">
                 <Plus className="size-4" />
                 {t("createFirst")}
               </LinkButton>
@@ -161,10 +161,11 @@ export function TheoryLibrary({
                   onChange={(event) => setSearch(event.target.value)}
                   placeholder={t("searchPlaceholder")}
                   className="h-10 pl-9 lg:h-9"
+                  data-tutorial="theory-search"
                 />
               </div>
 
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-2" data-tutorial="theory-category-filter">
                 <FilterPill
                   active={category === "all"}
                   onClick={() => setCategory("all")}
@@ -219,6 +220,7 @@ export function TheoryLibrary({
                     },
                   }}
                   className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
+                  data-tutorial="theory-note-list"
                 >
                   {filtered.map((note) => (
                     <TheoryCard key={note.id} note={note} />

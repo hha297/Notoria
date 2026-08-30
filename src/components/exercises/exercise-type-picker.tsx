@@ -9,7 +9,10 @@ export function ExerciseTypePicker() {
   const t = useTranslations("exercises");
 
   return (
-    <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+    <div
+      className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3"
+      data-tutorial="exercise-types"
+    >
       {EXERCISE_TYPES.map((item) => (
         <Link
           key={item.slug}

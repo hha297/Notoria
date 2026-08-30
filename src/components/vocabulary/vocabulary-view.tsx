@@ -29,7 +29,7 @@ export function VocabularyView({ words, workspaceName }: VocabularyViewProps) {
           description={t("formDescription")}
         >
           <ShowTutorialButton section="vocabulary" />
-          <LinkButton href="/vocabulary/new">
+          <LinkButton href="/vocabulary/new" data-tutorial="vocab-add-word">
             <Plus className="size-4" />
             {t("addWord")}
           </LinkButton>
@@ -37,7 +37,7 @@ export function VocabularyView({ words, workspaceName }: VocabularyViewProps) {
 
         <div className="empty-state">
           <p className="text-muted-foreground">{t("emptyTitle")}</p>
-          <LinkButton href="/vocabulary/new" className="mt-4">
+          <LinkButton href="/vocabulary/new" className="mt-4" data-tutorial="vocab-add-word">
             {t("addFirst")}
           </LinkButton>
         </div>

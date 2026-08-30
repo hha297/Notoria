@@ -944,117 +944,122 @@
     "next": "Seuraava",
     "skip": "Ohita opas",
     "done": "Selvä",
+    "stepProgress": "{current} / {total}",
     "vocabulary": {
       "title": "Sanasto",
-      "description": "Rakenna oma sanalista ja kertaa oppimiasi sanoja.",
+      "description": "Lisää sinulle merkityksellisiä sanoja — etsi, järjestä ja käytä niitä koko Notoriassa.",
       "cta": "Lisää sana",
       "steps": {
         "addWord": {
           "title": "1. Lisää sana",
-          "body": "Luo uusi sana merkityksineen, esimerkkeineen ja muistiinpanoineen."
+          "body": "Aloita henkilökohtaisen sanaston rakentaminen. Lisää sanoja ja ilmauksia, jotka haluat oikeasti muistaa — täytä merkitykset, esimerkit ja tunnisteet seuraavalla näytöllä."
         },
-        "tags": {
-          "title": "2. Lisää tunnisteita",
-          "body": "Järjestä sanoja tunnisteilla, jotta löydät ne myöhemmin helposti."
+        "search": {
+          "title": "2. Hae kirjastosta",
+          "body": "Etsi sanoja sen sijaan, että selaat kaikkea. Kokeile sanaa, merkitystä tai tunnistetta."
         },
-        "review": {
-          "title": "3. Kertaa",
-          "body": "Käytä sanoja harjoituksissa, kun kokoelma on kasvanut hieman."
+        "filters": {
+          "title": "3. Suodata ja järjestä",
+          "body": "Rajaa sanaluokan, tunnisteen tai lajittelun mukaan. Ryhmittele aiheen, tason tai tilanteen mukaan."
+        },
+        "library": {
+          "title": "4. Sanakirjastosi",
+          "body": "Tallennetut sanat ovat täällä. Avaa merkintä muokataksesi tai käytä niitä harjoituksissa ja kertauksessa."
         }
       }
     },
     "writing": {
       "title": "Kirjoittaminen",
-      "description": "Harjoittele kirjoittamista tehtävillä, luonnoksilla ja tallennetuilla teksteillä.",
+      "description": "Käytä oppimaasi omissa lauseissasi — luonnoksia, kysymyssarjoja ja tekstejä, joihin voit palata.",
       "cta": "Aloita kirjoittaminen",
       "steps": {
         "create": {
-          "title": "1. Luo kirjoitus",
-          "body": "Aloita uusi tehtävä, luonnos tai kysymyssarja työtilassasi."
+          "title": "1. Aloita kirjoittaminen",
+          "body": "Luo teksti tai kirjoitustehtävä aiheesta, jota haluat harjoitella. Kirjoituksen ei tarvitse olla täydellistä — kokeile, tee virheitä ja huomaa mitä vielä puuttuu."
         },
-        "organize": {
-          "title": "2. Järjestä",
-          "body": "Käytä hakua, suodattimia ja metatietoja, jotta tekstit pysyvät löydettävissä."
+        "search": {
+          "title": "2. Hae",
+          "body": "Löydä teksti nopeasti otsikon tai sisällön perusteella."
         },
-        "practice": {
-          "title": "3. Harjoittele ja vie",
-          "body": "Avaa teksti jatkaaksesi kirjoittamista tai vie se tulostettavaksi."
+        "filters": {
+          "title": "3. Suodata",
+          "body": "Rajaa tason, aiheen, muodollisuuden tai lajittelun mukaan."
+        },
+        "library": {
+          "title": "4. Kirjoituskirjastosi",
+          "body": "Avaa teksti jatkaaksesi kirjoittamista. Prolla voit käyttää tekoälyä tarkistukseen ja parantamiseen tai viedä kopion tarvittaessa."
         }
       }
     },
     "theory": {
       "title": "Teoria",
-      "description": "Pidä muistiinpanoja kieliopista, ääntämisestä, käytöstä ja kielen rakenteesta.",
+      "description": "Pidä selitykset, jotka haluat muistaa — kielioppi, ääntäminen, käyttö ja omat muistiinpanot.",
       "cta": "Lisää teoriaa",
       "steps": {
         "add": {
           "title": "1. Lisää muistiinpano",
-          "body": "Luo teoriamuistiinpano ja valitse kategoria, jotta aiheet pysyvät yhdessä."
+          "body": "Luo muistiinpano asiasta, jonka haluat muistaa. Kirjoittaessasi valitse kategoria, jotta aiheet pysyvät yhdessä."
         },
-        "browse": {
-          "title": "2. Selaa",
-          "body": "Hae ja suodata kategorian mukaan, kun haluat palata aiheeseen."
+        "category": {
+          "title": "2. Selaa kategorioittain",
+          "body": "Suodata kategorian mukaan palataksesi kielioppiin, ääntämiseen, käyttöön tai muihin tallentamiisi aiheisiin."
+        },
+        "search": {
+          "title": "3. Hae",
+          "body": "Etsi muistiinpano nopeasti teoriamuistiinpanojen joukosta."
         },
         "read": {
-          "title": "3. Lue uudelleen",
-          "body": "Avaa muistiinpano opiskellaksesi ja palaa siihen tarvittaessa."
+          "title": "4. Lue uudelleen",
+          "body": "Avaa muistiinpano tarvittaessa. Palaa milloin tahansa — tämä on oma muistivihkosi."
         }
       }
     },
     "exercise": {
       "title": "Harjoitukset",
-      "description": "Harjoittele muistikorteilla, visailuilla ja muilla tehtävillä, jotka syntyvät sanastostasi.",
+      "description": "Muuta tietosi harjoitukseksi — muistikortit, visailut, aukot ja muuta.",
       "cta": "Kokeile harjoitusta",
       "steps": {
-        "vocabulary": {
-          "title": "1. Rakenna ensin sanastoa",
-          "body": "Useimmat harjoitukset sujuvat parhaiten, kun sanoja on vähintään {count}. Kerää pieni kokoelma ennen aloitusta."
+        "sources": {
+          "title": "1. Valitse lähde",
+          "body": "Harjoittele tallennetusta sanastosta, teoriasta tai tuoduista materiaaleista. Mitä enemmän lisäät, sitä hyödyllisempi harjoittelu."
         },
-        "choose": {
-          "title": "2. Valitse tyyppi",
-          "body": "Valitse muistikortit, monivalinta, parit, aukkojen täydennys tai kirjoita vastaus."
-        },
-        "practice": {
-          "title": "3. Harjoittele",
-          "body": "Tee lyhyt sessio. Palaa usein — muutama minuutti riittää."
+        "types": {
+          "title": "2. Valitse harjoitustyyppi",
+          "body": "Valitse muistikortit, monivalinta, parit, aukot tai kirjoita vastaus — ja aloita lyhyt sessio omalla tiedollasi."
         }
       }
     },
     "listening": {
       "title": "Kuuntelu",
-      "description": "Lataa aitoa ääntä tai videota, lue litterointi ja harjoittele sen pohjalta.",
+      "description": "Tuo aitoa sisältöä, jonka haluat ymmärtää — lataa ääni/video, lue litterointi ja opiskele siitä.",
       "cta": "Avaa kuuntelu",
       "steps": {
         "upload": {
-          "title": "1. Lataa klippi",
-          "body": "Lisää äänitiedosto tai video, josta haluat oppia — podcast, oppitunti tai oma tallenne."
+          "title": "1. Lataa materiaali",
+          "body": "Tuo jotain, mitä todella haluat ymmärtää — podcast, video, oppitunti tai oma tallenne."
         },
-        "transcript": {
-          "title": "2. Lue litterointi",
-          "body": "Avaa oppitunti ja seuraa tekstiä. Näin saat kiinni sanat, jotka jäivät korvalta."
+        "uploadArea": {
+          "title": "2. Valitse tiedosto",
+          "body": "Valitse tai pudota ääni- tai videotiedosto. Notoria lataa sen ja luo litteroinnin, kun tuettu."
         },
-        "practice": {
-          "title": "3. Harjoittele",
-          "body": "Tee kuuntelusessio ja tallenna hyödylliset sanat sanastoosi."
+        "lessons": {
+          "title": "3. Opiskele oppitunteja",
+          "body": "Avaa oppitunti lukeaksesi litteroinnin, huomataksesi uudet sanat ja ilmaukset ja harjoitellaksesi valitsemallasi materiaalilla."
         }
       }
     },
     "speaking": {
       "title": "Puhuminen",
-      "description": "Pidä live-videopuhelu tekoälyohjaajan kanssa ja kertaa, mitä sanoit.",
+      "description": "Harjoittele kielen käyttöä keskustelussa — lue sitten litterointi ja palaute.",
       "cta": "Aloita puhelu",
       "steps": {
         "start": {
-          "title": "1. Luo sessio",
-          "body": "Valitse aihe, CEFR-taso ja kieli. Liity, kun olet valmis puhumaan."
+          "title": "1. Aloita sessio",
+          "body": "Luo puhumissessio ja liity, kun olet valmis. Harjoittele kielen käyttöä oikeassa keskustelussa, älä vain opettelemalla."
         },
-        "talk": {
-          "title": "2. Puhu ohjaajan kanssa",
-          "body": "Puhu luontevasti. Ohjaaja pysyy aiheessa ja tasollasi."
-        },
-        "review": {
-          "title": "3. Kertaa",
-          "body": "Puhelun jälkeen lue litterointi ja yhteenveto, jotta voit käyttää hyödyllisiä ilmauksia uudelleen."
+        "sessions": {
+          "title": "2. Kertaa jälkeenpäin",
+          "body": "Avaa sessio lukeaksesi litteroinnin ja palautteen. Huomaa virheet, käytä hyviä ilmauksia uudelleen ja päätä, mitä lisätä päiväkirjaan."
         }
       }
     }

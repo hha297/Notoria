@@ -11,6 +11,10 @@ export type TutorialSectionId = (typeof TUTORIAL_SECTIONS)[number];
 
 export type TutorialStepDefinition = {
   id: string;
+  /** Stable `data-tutorial` identifier for guided spotlight steps. */
+  target?: string;
+  /** Optional UI action before the step is shown (e.g. open a dialog). */
+  prepare?: "open-listening-upload" | "close-listening-upload";
 };
 
 export type TutorialDefinition = {
@@ -28,32 +32,61 @@ export const SECTION_TUTORIALS = {
   vocabulary: {
     id: "vocabulary",
     ctaHref: "/vocabulary/new",
-    steps: [{ id: "addWord" }, { id: "tags" }, { id: "review" }],
+    steps: [
+      { id: "addWord", target: "vocab-add-word" },
+      { id: "search", target: "vocab-search" },
+      { id: "filters", target: "vocab-filters" },
+      { id: "library", target: "vocab-word-list" },
+    ],
   },
   theory: {
     id: "theory",
     ctaHref: "/theory/new",
-    steps: [{ id: "add" }, { id: "browse" }, { id: "read" }],
+    steps: [
+      { id: "add", target: "theory-add-note" },
+      { id: "category", target: "theory-category-filter" },
+      { id: "search", target: "theory-search" },
+      { id: "read", target: "theory-note-list" },
+    ],
   },
   exercise: {
     id: "exercise",
     ctaHref: "/exercises",
-    steps: [{ id: "vocabulary" }, { id: "choose" }, { id: "practice" }],
+    steps: [
+      { id: "sources", target: "exercise-sources" },
+      { id: "types", target: "exercise-types" },
+    ],
   },
   writing: {
     id: "writing",
     ctaHref: "/writing/new",
-    steps: [{ id: "create" }, { id: "organize" }, { id: "practice" }],
+    steps: [
+      { id: "create", target: "writing-create" },
+      { id: "search", target: "writing-search" },
+      { id: "filters", target: "writing-filters" },
+      { id: "library", target: "writing-list" },
+    ],
   },
   listening: {
     id: "listening",
     ctaHref: "/listening",
-    steps: [{ id: "upload" }, { id: "transcript" }, { id: "practice" }],
+    steps: [
+      { id: "upload", target: "listening-upload" },
+      {
+        id: "uploadArea",
+        target: "listening-upload-dropzone",
+        prepare: "open-listening-upload",
+      },
+      { id: "lessons", target: "listening-lessons" },
+    ],
   },
   speaking: {
     id: "speaking",
     ctaHref: "/speaking",
-    steps: [{ id: "start" }, { id: "talk" }, { id: "review" }],
+    steps: [
+      { id: "start", target: "speaking-start" },
+      { id: "sessions", target: "speaking-sessions" },
+    ],
   },
 } as const satisfies Record<TutorialSectionId, TutorialDefinition>;
 
