@@ -11,8 +11,11 @@ import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export async function ListeningLibrary({ folderId }: { folderId?: string }) {
-  const t = await getTranslations("listening");
-  const workspace = await getActiveWorkspace();
+  const [t, workspace, proAccess] = await Promise.all([
+    getTranslations("listening"),
+    getActiveWorkspace(),
+    getCurrentProAccess(),
+  ]);
 
   if (!workspace) {
     return (
@@ -28,20 +31,22 @@ export async function ListeningLibrary({ folderId }: { folderId?: string }) {
     );
   }
 
-  const proAccess = await getCurrentProAccess();
   if (!proAccess.hasProAccess) {
     return <ListeningLockedPage />;
   }
 
-  if (folderId) {
-    const folder = await getFolder(folderId, "listening");
-    if (!folder) notFound();
-  }
-
-  const [lessons, folders] = await Promise.all([
+  const folderPromise = folderId
+    ? getFolder(folderId, "listening")
+    : Promise.resolve(null);
+  const [folder, lessons, folders] = await Promise.all([
+    folderPromise,
     getListeningLessons(),
     getFolders("listening"),
   ]);
+
+  if (folderId && !folder) {
+    notFound();
+  }
 
   return (
     <ListeningView

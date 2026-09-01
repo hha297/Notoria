@@ -83,8 +83,7 @@ export function NewSpeakingDialog({
         toast.success(t("created"));
         resetForm();
         onOpenChange(false);
-        router.push(`/speaking/${created.id}`);
-        router.refresh();
+        router.push("/speaking");
       } catch (error) {
         toast.error(errorMessage(error));
       }

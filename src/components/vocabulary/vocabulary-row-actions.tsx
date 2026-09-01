@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Loader2, Pencil, Trash2 } from "lucide-react";
@@ -24,7 +23,6 @@ type VocabularyRowActionsProps = {
 };
 
 export function VocabularyRowActions({ wordId, word }: VocabularyRowActionsProps) {
-  const router = useRouter();
   const t = useTranslations("common");
   const tv = useTranslations("vocabulary");
   const te = useTranslations("errors");
@@ -37,7 +35,6 @@ export function VocabularyRowActions({ wordId, word }: VocabularyRowActionsProps
         await deleteVocabularyWord(wordId);
         toast.success(tv("deleted"));
         setDeleteOpen(false);
-        router.refresh();
       } catch {
         toast.error(te("generic"));
       }

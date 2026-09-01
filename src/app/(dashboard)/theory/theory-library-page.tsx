@@ -10,8 +10,10 @@ import { toTheoryListItem } from "@/lib/theory/content";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export async function TheoryLibraryPage({ folderId }: { folderId?: string }) {
-  const t = await getTranslations("theory");
-  const workspace = await getActiveWorkspace();
+  const [t, workspace] = await Promise.all([
+    getTranslations("theory"),
+    getActiveWorkspace(),
+  ]);
 
   if (!workspace) {
     return (
@@ -27,15 +29,18 @@ export async function TheoryLibraryPage({ folderId }: { folderId?: string }) {
     );
   }
 
-  if (folderId) {
-    const folder = await getFolder(folderId, "theory");
-    if (!folder) notFound();
-  }
-
-  const [notes, folders] = await Promise.all([
+  const folderPromise = folderId
+    ? getFolder(folderId, "theory")
+    : Promise.resolve(null);
+  const [folder, notes, folders] = await Promise.all([
+    folderPromise,
     getTheoryNotes(),
     getFolders("theory"),
   ]);
+
+  if (folderId && !folder) {
+    notFound();
+  }
 
   return (
     <TheoryLibrary

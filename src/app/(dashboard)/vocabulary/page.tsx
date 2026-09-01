@@ -10,7 +10,10 @@ export const dynamic = "force-dynamic";
 
 export default async function VocabularyPage() {
   const t = await getTranslations("vocabulary");
-  const workspace = await getActiveWorkspace();
+  const [workspace, words] = await Promise.all([
+    getActiveWorkspace(),
+    getVocabularyWords(),
+  ]);
 
   if (!workspace) {
     return (
@@ -25,8 +28,6 @@ export default async function VocabularyPage() {
       </PageShell>
     );
   }
-
-  const words = await getVocabularyWords();
 
   const serializedWords = words.map((word) => ({
     id: word.id,

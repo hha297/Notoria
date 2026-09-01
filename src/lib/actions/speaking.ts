@@ -65,6 +65,17 @@ export async function getSpeakingSessions(): Promise<SpeakingSessionListItem[]> 
       eq(speakingSessions.userId, userId),
       eq(speakingSessions.workspaceId, workspace.id),
     ),
+    columns: {
+      id: true,
+      title: true,
+      topic: true,
+      cefrLevel: true,
+      language: true,
+      status: true,
+      createdAt: true,
+      startedAt: true,
+      endedAt: true,
+    },
     orderBy: [desc(speakingSessions.createdAt)],
   });
 

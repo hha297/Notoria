@@ -149,8 +149,7 @@ export function UploadListeningDialog({
         toast.success(t("created"));
         resetForm();
         onOpenChange(false);
-        router.push(`/listening/${created.id}`);
-        router.refresh();
+        router.push("/listening");
       } catch (error) {
         setStep("form");
         toast.error(errorMessage(error));

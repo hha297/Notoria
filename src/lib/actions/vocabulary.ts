@@ -1,5 +1,6 @@
 "use server";
 
+import { cache } from "react";
 import { and, asc, desc, eq, inArray, ne, or, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
@@ -152,6 +153,10 @@ function toSynonymRef(word: {
 }
 
 async function listWorkspaceSynonymOptions(workspaceId: string) {
+  return listWorkspaceSynonymOptionsCached(workspaceId);
+}
+
+const listWorkspaceSynonymOptionsCached = cache(async (workspaceId: string) => {
   const words = await db.query.vocabularyWords.findMany({
     where: eq(vocabularyWords.workspaceId, workspaceId),
     columns: { id: true, word: true },
@@ -165,7 +170,7 @@ async function listWorkspaceSynonymOptions(workspaceId: string) {
   });
 
   return words.map(toSynonymRef);
-}
+});
 
 async function loadSynonymPairsForWord(wordId: string, workspaceId: string) {
   return db
@@ -220,8 +225,6 @@ async function replaceSynonyms(
   synonymIds: string[],
 ) {
   const ids = uniqueSynonymIds(synonymIds, wordId);
-  const previousPairs = await loadSynonymPairsForWord(wordId, workspaceId);
-  const previousIds = previousPairs.map((pair) => synonymPeerId(wordId, pair));
 
   let linked: VocabularySynonymRef[] = [];
   if (ids.length > 0) {
@@ -275,13 +278,6 @@ async function replaceSynonyms(
       updatedAt: new Date(),
     })
     .where(eq(vocabularyWords.id, wordId));
-
-  const affectedIds = uniqueSynonymIds([...previousIds, ...ids, wordId]);
-  for (const id of affectedIds) {
-    revalidatePath(`/vocabulary/${id}`);
-    revalidatePath(`/vocabulary/${id}/edit`);
-  }
-  revalidatePath("/vocabulary");
 }
 
 async function canonicalizeWordTags(workspaceId: string, tags: string[]) {
@@ -362,9 +358,6 @@ export async function getVocabularyWords() {
     with: {
       meanings: {
         orderBy: [asc(wordMeanings.sortOrder)],
-      },
-      examples: {
-        orderBy: [asc(wordExamples.sortOrder)],
       },
       tags: true,
     },
