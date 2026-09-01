@@ -629,11 +629,16 @@ export function VocabularyForm({
           className="h-11 w-full sm:h-9 sm:w-auto"
         >
           {isSaving ? (
-            <Loader2 className="size-4 animate-spin" />
+            <>
+              <Loader2 className="size-4 animate-spin" />
+              {initialData ? t("updatingWord") : t("savingWord")}
+            </>
           ) : (
-            <Save className="size-4" />
+            <>
+              <Save className="size-4" />
+              {initialData ? t("updateWord") : t("saveWord")}
+            </>
           )}
-          {initialData ? t("updateWord") : t("saveWord")}
         </Button>
       </div>
     </form>

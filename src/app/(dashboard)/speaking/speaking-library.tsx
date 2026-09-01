@@ -9,8 +9,11 @@ import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export async function SpeakingLibrary() {
-  const t = await getTranslations("speaking");
-  const workspace = await getActiveWorkspace();
+  const [t, workspace, proAccess] = await Promise.all([
+    getTranslations("speaking"),
+    getActiveWorkspace(),
+    getCurrentProAccess(),
+  ]);
 
   if (!workspace) {
     return (
@@ -26,7 +29,6 @@ export async function SpeakingLibrary() {
     );
   }
 
-  const proAccess = await getCurrentProAccess();
   if (!proAccess.hasProAccess) {
     return <SpeakingLockedPage />;
   }

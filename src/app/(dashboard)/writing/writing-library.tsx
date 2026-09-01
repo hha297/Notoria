@@ -9,8 +9,10 @@ import { getWritingDocuments } from "@/lib/actions/writing";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export async function WritingLibrary({ folderId }: { folderId?: string }) {
-  const t = await getTranslations("writing");
-  const workspace = await getActiveWorkspace();
+  const [t, workspace] = await Promise.all([
+    getTranslations("writing"),
+    getActiveWorkspace(),
+  ]);
 
   if (!workspace) {
     return (
@@ -26,15 +28,18 @@ export async function WritingLibrary({ folderId }: { folderId?: string }) {
     );
   }
 
-  if (folderId) {
-    const folder = await getFolder(folderId, "writing");
-    if (!folder) notFound();
-  }
-
-  const [documents, folders] = await Promise.all([
+  const folderPromise = folderId
+    ? getFolder(folderId, "writing")
+    : Promise.resolve(null);
+  const [folder, documents, folders] = await Promise.all([
+    folderPromise,
     getWritingDocuments(),
     getFolders("writing"),
   ]);
+
+  if (folderId && !folder) {
+    notFound();
+  }
 
   return (
     <WritingView

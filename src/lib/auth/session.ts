@@ -1,21 +1,20 @@
+import { cache } from "react";
 import { auth } from "@/auth";
 
-export async function getSession() {
-  return auth();
-}
+export const getSession = cache(async () => auth());
 
-export async function getCurrentUserId(): Promise<string> {
-  const session = await auth();
+export const getCurrentUserId = cache(async (): Promise<string> => {
+  const session = await getSession();
 
   if (!session?.user?.id) {
     throw new Error("Unauthorized");
   }
 
   return session.user.id;
-}
+});
 
 export async function requireUser() {
-  const session = await auth();
+  const session = await getSession();
 
   if (!session?.user?.id) {
     return null;

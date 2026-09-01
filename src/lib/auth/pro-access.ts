@@ -1,14 +1,14 @@
+import { cache } from "react";
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { users } from "@/db/schema";
-import { auth } from "@/auth";
-import { getCurrentUserId } from "@/lib/auth/session";
+import { getSession, getCurrentUserId } from "@/lib/auth/session";
 import { hasProAccess, ProAccessError } from "@/lib/auth/paid-access";
 
 export { hasProAccess, ProAccessError } from "@/lib/auth/paid-access";
 
-export async function getCurrentProAccess() {
-  const session = await auth();
+export const getCurrentProAccess = cache(async () => {
+  const session = await getSession();
   if (!session?.user?.id) {
     return { hasProAccess: false };
   }
@@ -23,7 +23,7 @@ export async function getCurrentProAccess() {
   });
 
   return { hasProAccess: hasProAccess(user) };
-}
+});
 
 export async function requireProAccess() {
   const userId = await getCurrentUserId();

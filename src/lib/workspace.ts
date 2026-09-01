@@ -1,3 +1,4 @@
+import { cache } from "react";
 import { cookies } from "next/headers";
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
@@ -6,16 +7,16 @@ import { getCurrentUserId } from "@/lib/auth/session";
 
 export const WORKSPACE_COOKIE = "notoria-workspace";
 
-export async function getUserWorkspaces() {
+export const getUserWorkspaces = cache(async () => {
   const userId = await getCurrentUserId();
 
   return db.query.workspaces.findMany({
     where: eq(workspaces.userId, userId),
     orderBy: (table, { asc }) => [asc(table.name)],
   });
-}
+});
 
-export async function getActiveWorkspace() {
+export const getActiveWorkspace = cache(async () => {
   const userId = await getCurrentUserId();
   const cookieStore = await cookies();
   const workspaceId = cookieStore.get(WORKSPACE_COOKIE)?.value;
@@ -36,7 +37,7 @@ export async function getActiveWorkspace() {
   });
 
   return firstWorkspace ?? null;
-}
+});
 
 export async function requireActiveWorkspace() {
   const workspace = await getActiveWorkspace();

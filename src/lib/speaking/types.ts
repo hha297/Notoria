@@ -15,7 +15,18 @@ export type SpeakingSessionListItem = {
 export type SpeakingSessionDetail = SpeakingSession;
 
 export function toSpeakingListItem(
-  session: SpeakingSession,
+  session: Pick<
+    SpeakingSession,
+    | "id"
+    | "title"
+    | "topic"
+    | "cefrLevel"
+    | "language"
+    | "status"
+    | "createdAt"
+    | "startedAt"
+    | "endedAt"
+  >,
 ): SpeakingSessionListItem {
   return {
     id: session.id,

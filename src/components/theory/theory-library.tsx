@@ -152,7 +152,7 @@ export function TheoryLibrary({
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.22, delay: 0.05, ease: EASE }}
-              className="space-y-4"
+              className="space-y-5"
             >
               <div className="relative max-w-md">
                 <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
@@ -165,7 +165,10 @@ export function TheoryLibrary({
                 />
               </div>
 
-              <div className="flex flex-wrap gap-2" data-tutorial="theory-category-filter">
+              <div
+                className="flex flex-wrap gap-x-3 gap-y-3"
+                data-tutorial="theory-category-filter"
+              >
                 <FilterPill
                   active={category === "all"}
                   onClick={() => setCategory("all")}
@@ -184,9 +187,10 @@ export function TheoryLibrary({
               </div>
             </motion.div>
 
-            <FolderGrid />
+            <div className="mt-8 space-y-8">
+              <FolderGrid />
 
-            <AnimatePresence mode="wait">
+              <AnimatePresence mode="wait">
               {filtered.length === 0 ? (
                 hasFilters && matchingFolders.length === 0 ? (
                   <motion.div
@@ -219,7 +223,7 @@ export function TheoryLibrary({
                       transition: { staggerChildren: 0.045, delayChildren: 0.04 },
                     },
                   }}
-                  className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3"
+                  className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3"
                   data-tutorial="theory-note-list"
                 >
                   {filtered.map((note) => (
@@ -228,6 +232,7 @@ export function TheoryLibrary({
                 </motion.div>
               )}
             </AnimatePresence>
+            </div>
           </>
         )}
       </FolderWorkspace>

@@ -177,7 +177,7 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
           return;
         }
         toast.success(t("saved"));
-        router.replace(previewHref ?? `/theory/${initialData.id}`);
+        router.replace("/theory");
       } else {
         const created = await createTheoryNote(payload, { folderId });
         if (!created.ok) {
@@ -185,7 +185,7 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
           return;
         }
         toast.success(t("created"));
-        router.replace(`/theory/${created.id}`);
+        router.replace("/theory");
       }
     } catch {
       toast.error(t("saveFailed"));
