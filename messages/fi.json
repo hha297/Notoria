@@ -170,6 +170,7 @@
     "formatNotes": "Muotoile",
     "formatNotesSuccess": "Muistiinpanot muotoiltu",
     "formatNotesUnchanged": "Muistiinpanot ovat jo muotoiltu",
+    "formatNotesAiFallback": "Tekoälymuotoilu ei onnistunut — tehtiin perussiistiminen",
     "synonyms": "Synonyymit",
     "synonymsSearch": "Hae olemassa olevia sanoja…",
     "synonymsSelect": "Lisää toinen synonyymi…",

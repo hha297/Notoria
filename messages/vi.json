@@ -170,6 +170,7 @@
     "formatNotes": "Định dạng",
     "formatNotesSuccess": "Đã định dạng ghi chú",
     "formatNotesUnchanged": "Ghi chú đã được định dạng",
+    "formatNotesAiFallback": "Không dùng được AI — đã làm sạch cơ bản thay thế",
     "synonyms": "Từ đồng nghĩa",
     "synonymsSearch": "Tìm từ đã có…",
     "synonymsSelect": "Thêm từ đồng nghĩa khác…",

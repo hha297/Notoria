@@ -186,6 +186,18 @@ function nodePlainText(node: JSONContent): string {
     case "orderedList":
     case "taskList":
       return children.map(nodePlainText).join("\n");
+    case "table":
+      return children
+        .map((row) =>
+          (row.content ?? [])
+            .map((cell) => nodePlainText(cell).trim())
+            .join(" | "),
+        )
+        .join("\n");
+    case "tableRow":
+    case "tableCell":
+    case "tableHeader":
+      return childText;
     case "horizontalRule":
       return "";
     default:
@@ -242,6 +254,15 @@ export function vocabularyNotesToPlainText(
         blocks.push("---");
         continue;
       }
+      if (node.type === "table") {
+        const rows = (node.content ?? []).map((row) =>
+          (row.content ?? [])
+            .map((cell) => nodePlainText(cell).trim())
+            .join(" | "),
+        );
+        blocks.push(...rows.filter(Boolean));
+        continue;
+      }
       if (node.type === "paragraph" && !node.content?.length) {
         blocks.push("");
         continue;
@@ -260,6 +281,9 @@ export function isNotesDocEmpty(doc: JSONContent | null | undefined): boolean {
 
   return !doc.content.some((node) => {
     if (node.type === "horizontalRule") return true;
+    if (node.type === "table") {
+      return (node.content?.length ?? 0) > 0;
+    }
     if (node.type === "image") {
       return isPersistedImageSrc(
         typeof node.attrs?.src === "string" ? node.attrs.src : "",
@@ -330,7 +354,8 @@ function isVisuallyEmptyBlock(node: JSONContent): boolean {
     node.type === "taskList" ||
     node.type === "codeBlock" ||
     node.type === "blockquote" ||
-    node.type === "heading"
+    node.type === "heading" ||
+    node.type === "table"
   ) {
     return false;
   }
@@ -368,10 +393,17 @@ function tidyBlockNode(node: JSONContent): JSONContent {
       node.type === "bulletList" ||
       node.type === "orderedList" ||
       node.type === "taskList" ||
-      node.type === "blockquote"
+      node.type === "blockquote" ||
+      node.type === "table" ||
+      node.type === "tableRow"
     ) {
       next.content = next.content.map(tidyBlockNode);
-    } else if (node.type === "listItem" || node.type === "taskItem") {
+    } else if (
+      node.type === "listItem" ||
+      node.type === "taskItem" ||
+      node.type === "tableCell" ||
+      node.type === "tableHeader"
+    ) {
       next.content = next.content.map(tidyBlockNode);
     } else {
       next.content = tidyInlineNodes(next.content, false);

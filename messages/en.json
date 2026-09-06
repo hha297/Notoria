@@ -170,6 +170,7 @@
     "formatNotes": "Format",
     "formatNotesSuccess": "Notes formatted",
     "formatNotesUnchanged": "Notes already formatted",
+    "formatNotesAiFallback": "AI formatting unavailable — applied basic tidy instead",
     "synonyms": "Synonyms",
     "synonymsSearch": "Search existing words…",
     "synonymsSelect": "Add another synonym…",
