@@ -8,10 +8,10 @@ import { FolderItemDrag } from "@/components/folders/folder-dnd";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { DescriptionContent } from "@/components/form/description-content";
 import { WritingMetaBadges } from "@/components/writing/writing-meta-badges";
 import { WritingRowActions } from "@/components/writing/writing-row-actions";
 import { getWritingListMeta } from "@/lib/writing/content";
@@ -51,7 +51,7 @@ export function WritingCard({ document }: WritingCardProps) {
             />
           </div>
           <div className="min-w-0 space-y-2">
-            <CardTitle className="text-lg text-ink">
+            <CardTitle className="line-clamp-2 min-h-[3.25rem] text-lg leading-snug text-ink">
               <Link
                 href={`/writing/${document.id}`}
                 className="hover:underline"
@@ -59,11 +59,15 @@ export function WritingCard({ document }: WritingCardProps) {
                 {document.title}
               </Link>
             </CardTitle>
-            {document.description?.trim() ? (
-              <CardDescription className="line-clamp-3 text-sm leading-relaxed">
-                {document.description.trim()}
-              </CardDescription>
-            ) : null}
+            <div className="min-h-[3.75rem]">
+              {document.description?.trim() ? (
+                <DescriptionContent
+                  value={document.description}
+                  clampLines={3}
+                  className="text-sm text-muted-foreground"
+                />
+              ) : null}
+            </div>
             <WritingMetaBadges meta={listMeta.meta} />
           </div>
         </CardHeader>

@@ -15,6 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { DescriptionContent } from "@/components/form/description-content";
 import {
   Dialog,
   DialogContent,
@@ -121,9 +122,9 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
       </div>
 
       {session.notes ? (
-        <p className="rounded-xl border border-hairline-cloud bg-muted/30 px-4 py-3 text-sm text-muted-foreground">
-          {session.notes}
-        </p>
+        <div className="rounded-xl border border-hairline-cloud bg-muted/30 px-4 py-3 text-sm text-muted-foreground">
+          <DescriptionContent value={session.notes} />
+        </div>
       ) : null}
 
       <div className="flex flex-wrap gap-2">

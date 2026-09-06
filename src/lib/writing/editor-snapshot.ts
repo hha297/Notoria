@@ -3,6 +3,7 @@ import {
   writingContentHasPrompt,
   type WritingEditorState,
 } from "@/lib/writing/content";
+import { normalizeDescription } from "@/lib/description-content";
 
 export type WritingEditorSnapshot = {
   title: string;
@@ -17,7 +18,7 @@ export function buildWritingEditorSnapshot(input: {
 }): WritingEditorSnapshot {
   return {
     title: input.title.trim(),
-    description: input.description.trim(),
+    description: normalizeDescription(input.description),
     content: JSON.stringify(serializeWritingContent(input.editorState)),
   };
 }

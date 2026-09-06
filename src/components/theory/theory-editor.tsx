@@ -7,6 +7,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { DescriptionField } from "@/components/form/description-field";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -24,11 +25,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
 import { useMutationLock } from "@/hooks/use-mutation-lock";
 import { createTheoryNote, updateTheoryNote } from "@/lib/actions/theory";
 import { afterEditorHydration } from "@/lib/editor/hydration";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
+import {
+  descriptionPlainLength,
+  normalizeDescription,
+} from "@/lib/description-content";
 import {
   THEORY_CATEGORIES,
   isKnownTheoryCategory,
@@ -150,6 +154,21 @@ export function TheoryEditor({
     !theoryEditorSnapshotsEqual(baseline, currentSnapshot);
   const canSave = hasRequiredContent && (initialData?.id ? isDirty : true);
 
+  function adoptDescriptionBaseline(nextDescription: string) {
+    const normalized = normalizeDescription(nextDescription);
+    originalFieldsRef.current = {
+      ...originalFieldsRef.current,
+      description: normalized,
+    };
+    setDescription(normalized);
+    latestRef.current = { ...latestRef.current, description: normalized };
+    setBaseline((prev) => {
+      const next = { ...prev, description: normalized };
+      baselineRef.current = next;
+      return next;
+    });
+  }
+
   function adoptBaseline(nextDoc: JSONContent) {
     const next = buildTheoryEditorSnapshot({
       title: originalFieldsRef.current.title,
@@ -180,15 +199,16 @@ export function TheoryEditor({
   }
 
   function buildPayload() {
+    const normalizedDescription = normalizeDescription(description);
     return {
       title: title.trim(),
       category,
-      description: description.trim(),
+      description: normalizedDescription,
       content: serializeTheoryContent({
         kind: "theory",
         version: 1,
         category,
-        description: description.trim(),
+        description: normalizedDescription,
         doc,
       }),
     };
@@ -205,7 +225,8 @@ export function TheoryEditor({
   async function runAutosave() {
     const current = latestRef.current;
     if (!current.id || !current.title.trim()) return;
-    if (current.description.trim().length > THEORY_DESCRIPTION_MAX) return;
+    if (descriptionPlainLength(current.description) > THEORY_DESCRIPTION_MAX)
+      return;
 
     const snapshot = buildTheoryEditorSnapshot(current);
     if (theoryEditorSnapshotsEqual(baselineRef.current, snapshot)) return;
@@ -264,7 +285,7 @@ export function TheoryEditor({
       return;
     }
 
-    if (description.trim().length > THEORY_DESCRIPTION_MAX) {
+    if (descriptionPlainLength(description) > THEORY_DESCRIPTION_MAX) {
       toast.error(t("descriptionTooLong", { max: THEORY_DESCRIPTION_MAX }));
       release();
       return;
@@ -364,36 +385,26 @@ export function TheoryEditor({
           </div>
 
           <div className="space-y-2">
-            <div className="flex items-end justify-between gap-2">
-              <Label htmlFor="theory-description">
-                {t("summaryLabel")}{" "}
-                <span className="font-normal text-muted-foreground">
-                  ({tCommon("optional")})
-                </span>
-              </Label>
-              <span
-                className={
-                  description.length > THEORY_DESCRIPTION_MAX
-                    ? "text-xs text-destructive"
-                    : "text-xs text-muted-foreground"
-                }
-              >
-                {description.length}/{THEORY_DESCRIPTION_MAX}
+            <Label htmlFor="theory-description">
+              {t("summaryLabel")}{" "}
+              <span className="font-normal text-muted-foreground">
+                ({tCommon("optional")})
               </span>
-            </div>
-            <Textarea
+            </Label>
+            <DescriptionField
               id="theory-description"
               value={description}
-              onChange={(event) => {
-                setDescription(event.target.value);
+              onChange={(next) => {
+                setDescription(next);
                 scheduleAutosave();
               }}
+              onReady={adoptDescriptionBaseline}
               placeholder={t("summaryPlaceholder")}
               maxLength={THEORY_DESCRIPTION_MAX}
-              rows={3}
-              className="min-h-20 resize-y"
               aria-invalid={
-                description.length > THEORY_DESCRIPTION_MAX ? true : undefined
+                descriptionPlainLength(description) > THEORY_DESCRIPTION_MAX
+                  ? true
+                  : undefined
               }
             />
           </div>

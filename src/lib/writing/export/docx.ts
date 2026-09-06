@@ -224,18 +224,21 @@ export async function generateWritingDocxBlob(
           }),
         ],
       }),
-      new Paragraph({
-        spacing: { after: 200 },
-        border: headerBorder,
-        children: [
-          new TextRun({
-            text: description,
-            font: FONT_SANS,
-            size: 20,
-            color: "3D3850",
+      ...description.split("\n").map(
+        (line, index, lines) =>
+          new Paragraph({
+            spacing: { after: index === lines.length - 1 ? 200 : 40 },
+            border: index === lines.length - 1 ? headerBorder : undefined,
+            children: [
+              new TextRun({
+                text: line.length > 0 ? line : " ",
+                font: FONT_SANS,
+                size: 20,
+                color: "3D3850",
+              }),
+            ],
           }),
-        ],
-      }),
+      ),
     );
   }
 

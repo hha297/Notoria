@@ -11,7 +11,8 @@ import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { QuestionSetBuilder } from "@/components/writing/question-set-builder";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { WritingAiBar } from "@/components/writing/writing-ai-bar";
-import { CapitalizedInput, CapitalizedTextarea } from "@/components/form/capitalized-text";
+import { CapitalizedInput } from "@/components/form/capitalized-text";
+import { DescriptionField } from "@/components/form/description-field";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -33,6 +34,7 @@ import { useMutationLock } from "@/hooks/use-mutation-lock";
 import { createWritingDocument, updateWritingDocument } from "@/lib/actions/writing";
 import { afterEditorHydration } from "@/lib/editor/hydration";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
+import { normalizeDescription } from "@/lib/description-content";
 import {
   parseWritingContent,
   serializeWritingContent,
@@ -179,6 +181,26 @@ export function WritingEditor({
     !writingEditorSnapshotsEqual(baseline, currentSnapshot);
   const canSave = hasRequiredContent && (initialData?.id ? isDirty : true);
 
+  function adoptDescriptionBaseline(nextDescription: string) {
+    const normalized = normalizeDescription(nextDescription);
+    originalFieldsRef.current = {
+      ...originalFieldsRef.current,
+      description: normalized,
+    };
+    setDescription(normalized);
+    latestRef.current = { ...latestRef.current, description: normalized };
+    const snap = buildWritingEditorSnapshot({
+      title: originalFieldsRef.current.title,
+      description: normalized,
+      editorState: latestRef.current.editorState,
+    });
+    setBaseline((prev) => {
+      const next = { ...prev, description: snap.description };
+      baselineRef.current = next;
+      return next;
+    });
+  }
+
   function adoptRichDocBaseline(doc: JSONContent) {
     const nextState: WritingEditorState = {
       ...latestRef.current.editorState,
@@ -225,7 +247,9 @@ export function WritingEditor({
   ): ExerciseFormValues {
     return {
       title: nextTitle.trim(),
-      description: nextDescription.trim(),
+      description: nextDescription.trim()
+        ? normalizeDescription(nextDescription)
+        : "",
       type,
       content: serializeWritingContent(nextState) as Record<string, unknown>,
     };
@@ -428,16 +452,16 @@ export function WritingEditor({
                 ({t("optional")})
               </span>
             </Label>
-            <CapitalizedTextarea
+            <DescriptionField
               id="description"
               value={description}
-              onChange={(event) => {
-                setDescription(event.target.value);
+              onChange={(next) => {
+                setDescription(next);
                 scheduleAutosave();
               }}
+              onReady={adoptDescriptionBaseline}
               placeholder={t("descriptionPlaceholder")}
-              rows={3}
-              className="min-h-20 resize-y"
+              maxLength={2000}
             />
           </div>
 

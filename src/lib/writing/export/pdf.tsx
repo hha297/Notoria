@@ -66,6 +66,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     color: "#3d3850",
     lineHeight: 1.45,
+    marginBottom: 2,
   },
   divider: {
     borderBottomWidth: 1,
@@ -248,7 +249,11 @@ function QuestionSetPdfDocument({
         {model.description ? (
           <View style={styles.descriptionRow}>
             <Text style={styles.titleLabel}>{labels.descriptionLabel}</Text>
-            <Text style={styles.descriptionBody}>{model.description}</Text>
+            {model.description.split("\n").map((line, index) => (
+              <Text key={index} style={styles.descriptionBody}>
+                {line.length > 0 ? line : " "}
+              </Text>
+            ))}
           </View>
         ) : null}
         <View style={styles.divider} />

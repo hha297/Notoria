@@ -1,4 +1,5 @@
 import type { JSONContent } from "@tiptap/react";
+import { descriptionToPlainText } from "@/lib/description-content";
 import type { WritingEditorState } from "@/lib/writing/content";
 import type {
   ExportDocumentModel,
@@ -49,7 +50,7 @@ export function buildRichDocumentExport(
 ): ExportDocumentModel {
   return {
     title: title.trim(),
-    description: description.trim(),
+    description: descriptionToPlainText(description),
     mode: "rich_document",
     sections: [],
     paragraphs: tipTapToParagraphs(doc),
@@ -64,7 +65,7 @@ export function buildExportDocument(
   description = "",
 ): ExportDocumentModel {
   const trimmedTitle = title.trim();
-  const trimmedDescription = description.trim();
+  const trimmedDescription = descriptionToPlainText(description);
 
   if (state.mode === "rich_document") {
     return buildRichDocumentExport(trimmedTitle, state.doc, trimmedDescription);

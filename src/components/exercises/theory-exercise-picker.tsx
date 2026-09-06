@@ -6,6 +6,7 @@ import { BookOpen, Clock, ListTree, Play, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { LinkButton } from "@/components/ui/link-button";
+import { DescriptionContent } from "@/components/form/description-content";
 import { isKnownTheoryCategory } from "@/lib/theory/content";
 import { cn } from "@/lib/utils";
 
@@ -75,9 +76,15 @@ export function TheoryExercisePicker({ theories }: TheoryExercisePickerProps) {
               {note.title}
             </h3>
 
-            <p className="mt-2 line-clamp-3 min-h-[3.75rem] text-sm leading-relaxed text-muted-foreground">
-              {note.description || "\u00a0"}
-            </p>
+            <div className="mt-2 min-h-[3.75rem]">
+              {note.description ? (
+                <DescriptionContent
+                  value={note.description}
+                  clampLines={3}
+                  className="text-sm text-muted-foreground"
+                />
+              ) : null}
+            </div>
 
             <div className="mt-4 flex flex-wrap items-center gap-x-2 gap-y-1 text-xs leading-5 text-muted-foreground">
               {note.sectionCount > 0 ? (

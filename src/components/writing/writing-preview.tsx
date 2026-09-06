@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { DescriptionContent } from "@/components/form/description-content";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { WritingMetaBadges } from "@/components/writing/writing-meta-badges";
 import { Badge } from "@/components/ui/badge";
@@ -80,9 +81,10 @@ export function WritingPreview({
           </div>
           <h2 className="heading-md text-ink">{title}</h2>
           {trimmedDescription ? (
-            <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
-              {trimmedDescription}
-            </p>
+            <DescriptionContent
+              value={trimmedDescription}
+              className="text-sm text-muted-foreground sm:text-base"
+            />
           ) : null}
         </header>
 

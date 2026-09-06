@@ -1,4 +1,5 @@
 import type { JSONContent } from "@tiptap/react";
+import { normalizeDescription } from "@/lib/description-content";
 import { serializeTheoryContent } from "@/lib/theory/content";
 
 export type TheoryEditorSnapshot = {
@@ -15,7 +16,7 @@ export function buildTheoryEditorSnapshot(input: {
   doc: JSONContent;
 }): TheoryEditorSnapshot {
   const title = input.title.trim();
-  const description = input.description.trim();
+  const description = normalizeDescription(input.description);
   const category = input.category.trim();
   return {
     title,

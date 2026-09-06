@@ -62,6 +62,7 @@ const styles = StyleSheet.create({
     fontWeight: 400,
     color: "#3d3850",
     lineHeight: 1.45,
+    marginBottom: 2,
   },
   divider: {
     borderBottomWidth: 1,
@@ -112,7 +113,11 @@ function RichDocumentPdf({
         {description ? (
           <View style={styles.descriptionRow}>
             <Text style={styles.titleLabel}>{labels.descriptionLabel}</Text>
-            <Text style={styles.descriptionBody}>{description}</Text>
+            {description.split("\n").map((line, index) => (
+              <Text key={index} style={styles.descriptionBody}>
+                {line.length > 0 ? line : " "}
+              </Text>
+            ))}
           </View>
         ) : null}
         {isDocument ? <View style={styles.titleGap} /> : <View style={styles.divider} />}

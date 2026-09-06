@@ -23,7 +23,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+import { DescriptionField } from "@/components/form/description-field";
 import { createSpeakingSession } from "@/lib/actions/speaking";
 import { isSpeakingErrorCode } from "@/lib/speaking/errors";
 import {
@@ -168,12 +168,12 @@ export function NewSpeakingDialog({
                 ({tc("optional")})
               </span>
             </Label>
-            <Textarea
+            <DescriptionField
               id="speaking-notes"
               value={notes}
-              onChange={(event) => setNotes(event.target.value)}
+              onChange={setNotes}
               placeholder={t("notesPlaceholder")}
-              disabled={isPending}
+              maxLength={2000}
             />
           </div>
         </div>

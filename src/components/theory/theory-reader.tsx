@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { DescriptionContent } from "@/components/form/description-content";
 import { TheoryExportDialog } from "@/components/theory/export-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -127,9 +128,10 @@ export function TheoryReader({
           </div>
           <h2 className="heading-md text-ink">{title}</h2>
           {parsed.description ? (
-            <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
-              {parsed.description}
-            </p>
+            <DescriptionContent
+              value={parsed.description}
+              className="text-sm text-muted-foreground sm:text-base"
+            />
           ) : null}
         </header>
         <RichTextEditor
