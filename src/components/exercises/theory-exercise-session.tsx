@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Check, CheckCircle2, ChevronRight, Loader2, RotateCcw, Sparkles, X, XCircle } from "lucide-react";
 import { useProAccess } from "@/components/billing/pro-access-provider";
@@ -93,6 +93,8 @@ export function TheoryExerciseSessionView({
     setRound((r) => r + 1);
   }, []);
 
+  const uiLocale = useLocale();
+
   const generateWithAi = useCallback(async () => {
     if (!hasProAccess) {
       openUpgrade();
@@ -103,7 +105,11 @@ export function TheoryExerciseSessionView({
       const response = await fetch("/api/ai/theory-exercise", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ theoryId: session.theoryId, count: 24 }),
+        body: JSON.stringify({
+          theoryId: session.theoryId,
+          count: 24,
+          uiLocale,
+        }),
       });
       const result = (await response.json()) as {
         ok?: boolean;
@@ -143,6 +149,7 @@ export function TheoryExerciseSessionView({
     session.theoryTitle,
     setStage,
     t,
+    uiLocale,
   ]);
 
   useEffect(() => {
@@ -396,6 +403,7 @@ function FillBlankCard({
   const [checked, setChecked] = useState(false);
   const [peeked, setPeeked] = useState(false);
   const isCorrect = !peeked && answersMatchAny(value, item.acceptedAnswers);
+  const sentenceMeaning = item.sentenceMeaning?.trim() || "";
 
   const scrubbed = scrubFillBlankPresentation({
     prefix: item.prefix,
@@ -516,6 +524,12 @@ function FillBlankCard({
                 </span>
               ) : null}
             </div>
+
+            {checked && sentenceMeaning ? (
+              <p className="mt-6 text-center text-base leading-relaxed text-ink/75 sm:text-lg">
+                ({sentenceMeaning})
+              </p>
+            ) : null}
           </div>
 
           <ExerciseHint

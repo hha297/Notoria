@@ -496,6 +496,8 @@
         "incorrect": "Ei ihan.",
         "incorrectWithAnswer": "Oikea vastaus: {answer}"
       },
+      "sentenceMeaningLoading": "Ladataan merkitystä…",
+
       "types": {
         "multiple_choice": "Monivalinta",
         "true_false": "Tosi / epätosi",
@@ -578,6 +580,7 @@
       "hintExplainWord": "Mieti puuttuvan sanan merkitystä tässä lauseessa.",
       "correct": "Oikein!",
       "incorrect": "Vastaus on {answer}",
+      "sentenceMeaningLoading": "Ladataan merkitystä…",
       "progress": "{current} / {total}",
       "score": "{correct} / {answered} oikein",
       "keyboardHint": "Enter tarkistaa · Enter uudelleen seuraavaan",

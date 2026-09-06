@@ -27,7 +27,10 @@ Requirements:
 14. Do not invent unnecessary facts. Do not change the vocabulary word or meaning.
 15. Keep explanation empty.
 16. Optionally include instruction: a short learner-facing task line in the SAME language as the sentence (e.g. "Fill in the blank with the correct word." / equivalent). Do NOT invent a specific grammar topic unless the word metadata clearly supports it. Prefer a neutral fill-in-the-blank instruction.
-17. Return one exercise per input entry. Copy wordId from the input.
+17. ALWAYS include sentenceMeaning: a short natural translation/gloss of the COMPLETE correct sentence (with the answer filled in).
+    - Write sentenceMeaning in uiLanguage (the website interface language), NOT in the practice/study language (unless they are the same).
+    - Do NOT put sentenceMeaning inside the practice sentence. It is a separate field for post-answer UI.
+18. Return one exercise per input entry. Copy wordId from the input.
 
 Return structured JSON only:
 {
@@ -41,7 +44,8 @@ Return structured JSON only:
       "language": string,
       "instruction": string,
       "explanation": string,
-      "difficulty": string
+      "difficulty": string,
+      "sentenceMeaning": string
     }
   ]
 }
@@ -52,6 +56,7 @@ export function fillBlankUserPayload(input: {
   languageHint: string | null;
   languageCode: string | null;
   level: string | null;
+  uiLanguage: string;
   words: Array<{
     id: string;
     word: string;
@@ -65,7 +70,10 @@ export function fillBlankUserPayload(input: {
     exerciseType: "fill-in-blank" as const,
     languageCode: input.languageCode,
     languageHint: input.languageHint,
+    uiLanguage: input.uiLanguage,
     cefrLevel: input.level ? input.level.toUpperCase() : null,
+    reminder:
+      "Practice sentence/answer must be in languageHint. ALWAYS include sentenceMeaning in uiLanguage (website language), not the study language.",
     words: input.words.map((word) => ({
       wordId: word.id,
       word: word.word,

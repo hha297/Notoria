@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { ChevronLeft, ChevronRight, RotateCcw, Sparkles } from "lucide-react";
 import { CheckCircle2, XCircle } from "lucide-react";
 import { toast } from "sonner";
@@ -50,6 +50,7 @@ export function FillBlankSession({
   const t = useTranslations("exercises.fillInBlank");
   const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
+  const uiLocale = useLocale();
   const { hasProAccess, openUpgrade } = useProAccess();
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [aiItems, setAiItems] = useState<FillBlankItem[] | null>(null);
@@ -148,6 +149,7 @@ export function FillBlankSession({
         exerciseType: "fill-in-blank",
         language: language ?? null,
         level,
+        uiLocale: uiLocale === "en" || uiLocale === "fi" || uiLocale === "vi" ? uiLocale : "en",
         words: payloadWords,
       });
 
@@ -219,6 +221,7 @@ export function FillBlankSession({
     setStage,
     startFromAiItems,
     tAi,
+    uiLocale,
     usedWordIds,
   ]);
 
@@ -417,6 +420,7 @@ function FillBlankCard({
   const blankMinWidth = Math.max(item.word.length + 2, 6);
   const expected = expectedFillBlankAnswer(item);
   const cue = item.meanings.map((m) => m.trim()).filter(Boolean)[0];
+  const sentenceMeaning = item.sentenceMeaning?.trim() || "";
 
   return (
     <div className="mx-auto max-w-3xl rounded-3xl border border-hairline-cloud bg-card p-6 shadow-xl shadow-ink/5 sm:p-10 md:p-12">
@@ -497,6 +501,12 @@ function FillBlankCard({
               </span>
             )}
           </div>
+
+          {revealed && item.aiGenerated && sentenceMeaning ? (
+            <p className="mt-6 text-center text-base leading-relaxed text-ink/75 sm:text-lg">
+              ({sentenceMeaning})
+            </p>
+          ) : null}
         </div>
 
         <ExerciseHint

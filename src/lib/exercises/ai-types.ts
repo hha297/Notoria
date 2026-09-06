@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { locales } from "@/i18n/config";
 
 export const FILL_BLANK_AI_BATCH = 10;
 export const FILL_BLANK_PLACEHOLDER = "________";
@@ -50,6 +51,8 @@ export const exerciseAiRequestSchema = z.object({
   language: z.string().trim().min(2).max(16).optional().nullable(),
   level: exerciseAiCefrSchema,
   words: z.array(exerciseAiWordSchema).min(1).max(FILL_BLANK_AI_BATCH),
+  /** Website UI locale for sentenceMeaning (not the study/workspace language). */
+  uiLocale: z.enum(locales).optional(),
 });
 
 export type ExerciseAiWordInput = z.infer<typeof exerciseAiWordSchema>;
@@ -65,6 +68,8 @@ export const exerciseAiFillBlankSchema = z.object({
   instruction: optionalTextSchema.catch(null),
   explanation: optionalTextSchema.catch(null),
   difficulty: optionalTextSchema.catch(null),
+  /** Full correct sentence gloss in the website UI language. */
+  sentenceMeaning: optionalTextSchema.catch(null),
 });
 
 export const exerciseAiResultSchema = z.object({

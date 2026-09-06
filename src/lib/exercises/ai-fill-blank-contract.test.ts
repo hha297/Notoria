@@ -163,6 +163,24 @@ describe("fill-in-blank AI validation", () => {
     expect(answersMatchAny("kaverini", item?.acceptableAnswers ?? [])).toBe(true);
   });
 
+  it("maps sentenceMeaning onto the fill-in-blank item", () => {
+    const item = fillBlankExerciseToItem(
+      {
+        wordId: kaveri.id,
+        sentence: `Tapasin vanhan ${FILL_BLANK_PLACEHOLDER} kahvilassa eilen.`,
+        answer: "kaverini",
+        baseWord: "kaveri",
+        sentenceMeaning: "I met an old friend at the café yesterday.",
+      },
+      { ...kaveri, meanings: ["friend"] },
+      "meaning-1",
+    );
+
+    expect(item?.sentenceMeaning).toBe(
+      "I met an old friend at the café yesterday.",
+    );
+  });
+
   it("rejects a sentence with no blank, multiple blanks, or a leaked answer", () => {
     expect(
       validateFillBlankExercise(

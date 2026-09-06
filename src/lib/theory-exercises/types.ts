@@ -49,6 +49,8 @@ export type TheoryFillBlankExercise = TheoryExerciseBase & {
   sourceWord?: string;
   /** Full correct sentence/form for reveal. */
   completedSentence?: string;
+  /** Whole-sentence meaning in the website UI language (shown after answer). */
+  sentenceMeaning?: string;
 };
 
 export type TheoryTransformationExercise = TheoryExerciseBase & {

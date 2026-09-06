@@ -15,6 +15,8 @@ export type FillBlankItem = {
   aiGenerated?: boolean;
   /** Learner-facing task line (AI or UI fallback). */
   instruction?: string;
+  /** Whole-sentence meaning in the website UI language (shown after answer). */
+  sentenceMeaning?: string;
 };
 
 export function buildFillBlankAcceptableAnswers(word: string, matchedWord: string) {

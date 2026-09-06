@@ -174,6 +174,7 @@ export function fillBlankExerciseToItem(
     acceptableAnswers: buildFillBlankAcceptableAnswers(word.word, exercise.answer),
     aiGenerated: true,
     instruction: exercise.instruction?.trim() || undefined,
+    sentenceMeaning: exercise.sentenceMeaning?.trim() || undefined,
   };
 }
 

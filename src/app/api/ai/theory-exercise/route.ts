@@ -5,13 +5,22 @@ import { getFlashcardWords } from "@/lib/actions/flashcards";
 import { getTheoryNote } from "@/lib/actions/theory";
 import { generateAiTheoryExercises } from "@/lib/theory-exercises/ai";
 import { parseTheoryContent } from "@/lib/theory/content";
+import { locales, type AppLocale } from "@/i18n/config";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export const runtime = "nodejs";
 
+const UI_LANGUAGE_NAMES: Record<AppLocale, string> = {
+  en: "English",
+  fi: "Finnish",
+  vi: "Vietnamese",
+};
+
 const bodySchema = z.object({
   theoryId: z.string().min(1),
   count: z.number().int().min(1).max(30).optional(),
+  /** Website UI locale (en | fi | vi) for sentenceMeaning. */
+  uiLocale: z.enum(locales).optional(),
 });
 
 export async function POST(request: Request) {
@@ -48,6 +57,7 @@ export async function POST(request: Request) {
     const content = parseTheoryContent(note.content);
     const words = await getFlashcardWords();
     const workspace = await getActiveWorkspace();
+    const uiLocale = parsed.data.uiLocale ?? "en";
     const exercises = await generateAiTheoryExercises({
       theoryId: note.id,
       theoryTitle: note.title,
@@ -59,6 +69,7 @@ export async function POST(request: Request) {
       })),
       count: parsed.data.count,
       studyLanguage: workspace?.language,
+      uiLanguage: UI_LANGUAGE_NAMES[uiLocale],
     });
     return NextResponse.json({ ok: true, exercises });
   } catch (error) {

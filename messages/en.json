@@ -496,6 +496,8 @@
         "incorrect": "Not quite.",
         "incorrectWithAnswer": "Correct answer: {answer}"
       },
+      "sentenceMeaningLoading": "Loading meaning…",
+
       "types": {
         "multiple_choice": "Multiple choice",
         "true_false": "True / false",
@@ -578,6 +580,7 @@
       "hintExplainWord": "Think about the meaning of the missing word in this sentence.",
       "correct": "Correct!",
       "incorrect": "The answer is {answer}",
+      "sentenceMeaningLoading": "Loading meaning…",
       "progress": "{current} / {total}",
       "score": "{correct} / {answered} correct",
       "keyboardHint": "Enter to check · Enter again for next",

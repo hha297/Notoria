@@ -496,6 +496,8 @@
         "incorrect": "Chưa đúng.",
         "incorrectWithAnswer": "Đáp án đúng: {answer}"
       },
+      "sentenceMeaningLoading": "Đang tải nghĩa…",
+
       "types": {
         "multiple_choice": "Trắc nghiệm",
         "true_false": "Đúng / sai",
@@ -578,6 +580,7 @@
       "hintExplainWord": "Hãy nghĩ về nghĩa của từ còn thiếu trong câu này.",
       "correct": "Đúng rồi!",
       "incorrect": "Đáp án là {answer}",
+      "sentenceMeaningLoading": "Đang tải nghĩa…",
       "progress": "{current} / {total}",
       "score": "{correct} / {answered} câu đúng",
       "keyboardHint": "Enter để kiểm tra · Enter lần nữa để sang câu tiếp",
