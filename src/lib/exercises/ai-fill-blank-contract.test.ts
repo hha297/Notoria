@@ -104,6 +104,7 @@ describe("fill-in-blank AI prompt contract", () => {
       languageHint: "Suomi",
       languageCode: "fi",
       level: "a2",
+      uiLanguage: "English",
       words: [kaveri],
     });
 

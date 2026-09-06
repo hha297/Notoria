@@ -120,6 +120,9 @@ function normalizeBlock(
     const items = block.items.map((item) => item.trim()).filter(Boolean);
     return items.length > 0 ? { type: block.type, items } : null;
   }
+  if (block.type !== "table") {
+    return null;
+  }
 
   const headers = block.headers.map((cell) => cell.trim());
   if (headers.some((cell) => !cell) || headers.length === 0) return null;
@@ -191,6 +194,9 @@ export function notesFormatBlocksToDoc(
           content: [cellParagraph(item)],
         })),
       });
+      continue;
+    }
+    if (block.type !== "table") {
       continue;
     }
 

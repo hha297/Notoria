@@ -106,6 +106,7 @@ export function validateFillBlankExercise(
     instruction: raw.instruction?.trim() || null,
     explanation: null,
     difficulty: raw.difficulty ?? null,
+    sentenceMeaning: raw.sentenceMeaning?.trim() || null,
   };
 }
 
