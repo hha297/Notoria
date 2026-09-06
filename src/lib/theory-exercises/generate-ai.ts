@@ -30,6 +30,8 @@ export const theoryAiExerciseSchema = z.object({
   acceptedAnswers: z.array(z.string().min(1).max(200)).max(8).optional(),
   sourceWord: z.string().min(1).max(80).optional(),
   completedSentence: z.string().min(1).max(400).optional(),
+  /** Whole-sentence meaning/gloss in the website UI language (not study language). */
+  sentenceMeaning: z.string().min(1).max(400).optional(),
   promptWord: z.string().min(1).max(80).optional(),
   prompt: z.string().min(1).max(400).optional(),
   options: z.array(z.string().min(1).max(200)).min(2).max(6).optional(),
@@ -508,6 +510,7 @@ export function mapAiDraftsToTheoryExercises(
           if (hits && hits.length > 1) return scrubbed.completedSentence;
           return completedSentence;
         })(),
+        sentenceMeaning: draft.sentenceMeaning?.trim() || undefined,
         prefix: scrubbed.prefix || undefined,
         suffix: scrubbed.suffix || undefined,
         spaced: true,

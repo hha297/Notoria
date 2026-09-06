@@ -21,10 +21,10 @@ import { Badge } from "@/components/ui/badge";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { DescriptionContent } from "@/components/form/description-content";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
 import { sectionCreateHref } from "@/lib/folders/paths";
@@ -35,6 +35,13 @@ import {
   isKnownTheoryCategory,
   type TheoryListItem,
 } from "@/lib/theory/content";
+import {
+  isMultiFilterActive,
+  matchesMultiFilter,
+  multiFilterKey,
+  toggleMultiFilterValue,
+  type MultiFilterValue,
+} from "@/lib/filters/multi-select";
 import { cn } from "@/lib/utils";
 
 const EASE = [0.25, 0.1, 0.25, 1] as const;
@@ -62,21 +69,21 @@ export function TheoryLibrary({
   const t = useTranslations("theory");
   const tFolders = useTranslations("folders");
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState<string>("all");
+  const [categories, setCategories] = useState<MultiFilterValue>([]);
   const createHref = sectionCreateHref("theory", currentFolderId);
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
     const scoped = query ? notes : itemsInFolder(notes, currentFolderId);
     return scoped.filter((note) => {
-      if (category !== "all" && note.category !== category) return false;
+      if (!matchesMultiFilter(categories, note.category)) return false;
       if (!query) return true;
       return [note.title, note.description, categoryLabel(note.category, t)]
         .join(" ")
         .toLowerCase()
         .includes(query);
     });
-  }, [notes, currentFolderId, search, category, t]);
+  }, [notes, currentFolderId, search, categories, t]);
 
   const childFolders = childrenOf(folders, currentFolderId);
   const matchingFolders = search.trim()
@@ -85,10 +92,10 @@ export function TheoryLibrary({
   const isEmptyRoot = !currentFolderId && notes.length === 0 && folders.length === 0;
   const isEmptyFolder =
     !search.trim() &&
-    category === "all" &&
+    !isMultiFilterActive(categories) &&
     childFolders.length === 0 &&
     itemsInFolder(notes, currentFolderId).length === 0;
-  const hasFilters = search.trim() !== "" || category !== "all";
+  const hasFilters = search.trim() !== "" || isMultiFilterActive(categories);
 
   return (
     <PageShell>
@@ -170,16 +177,18 @@ export function TheoryLibrary({
                 data-tutorial="theory-category-filter"
               >
                 <FilterPill
-                  active={category === "all"}
-                  onClick={() => setCategory("all")}
+                  active={!isMultiFilterActive(categories)}
+                  onClick={() => setCategories([])}
                 >
                   {t("filterAll")}
                 </FilterPill>
                 {THEORY_CATEGORIES.map((item) => (
                   <FilterPill
                     key={item}
-                    active={category === item}
-                    onClick={() => setCategory(item)}
+                    active={categories.includes(item)}
+                    onClick={() =>
+                      setCategories(toggleMultiFilterValue(categories, item))
+                    }
                   >
                     {t(`categories.${item}`)}
                   </FilterPill>
@@ -212,7 +221,7 @@ export function TheoryLibrary({
                 ) : null
               ) : (
                 <motion.div
-                  key={`${category}:${search}`}
+                  key={`${multiFilterKey(categories)}:${search}`}
                   initial="hidden"
                   animate="show"
                   exit={{ opacity: 0 }}
@@ -269,8 +278,9 @@ function TheoryCard({ note }: { note: TheoryListItem }) {
   const t = useTranslations("theory");
 
   return (
-    <FolderItemDrag id={note.id}>
+    <FolderItemDrag id={note.id} className="h-full">
       <motion.div
+        className="h-full"
         variants={{
           hidden: { opacity: 0, y: 10 },
           show: { opacity: 1, y: 0, transition: { duration: 0.2, ease: EASE } },
@@ -290,13 +300,19 @@ function TheoryCard({ note }: { note: TheoryListItem }) {
                 folderId={note.folderId}
               />
             </div>
-            <Link href={`/theory/${note.id}`} className="block">
-              <CardTitle className="text-lg text-ink">{note.title}</CardTitle>
-              {note.description ? (
-                <CardDescription className="mt-2 line-clamp-3 text-sm leading-relaxed">
-                  {note.description}
-                </CardDescription>
-              ) : null}
+            <Link href={`/theory/${note.id}`} className="block space-y-2">
+              <CardTitle className="line-clamp-2 min-h-[3.25rem] text-lg leading-snug text-ink">
+                {note.title}
+              </CardTitle>
+              <div className="min-h-[3.75rem]">
+                {note.description ? (
+                  <DescriptionContent
+                    value={note.description}
+                    clampLines={3}
+                    className="text-sm text-muted-foreground"
+                  />
+                ) : null}
+              </div>
             </Link>
           </CardHeader>
           <CardContent className="mt-auto flex items-center gap-3 pb-1 text-xs text-muted-foreground">

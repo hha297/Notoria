@@ -6,9 +6,19 @@ import type {
   FlashcardWord,
 } from "@/types/flashcards";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
+import {
+  matchesMultiFilter,
+  matchesMultiFilterAny,
+  multiFilterKey,
+} from "@/lib/filters/multi-select";
 
 export function getFiltersKey(filters: FlashcardFilters, studyMode: FlashcardStudyMode) {
-  return `${studyMode}:${filters.tag}:${filters.partOfSpeech}:${filters.status}`;
+  return [
+    studyMode,
+    multiFilterKey(filters.tag),
+    multiFilterKey(filters.partOfSpeech),
+    multiFilterKey(filters.status),
+  ].join(":");
 }
 
 export function filterFlashcardWords(
@@ -16,15 +26,15 @@ export function filterFlashcardWords(
   filters: FlashcardFilters,
 ) {
   return words.filter((word) => {
-    if (filters.partOfSpeech !== "all" && word.partOfSpeech !== filters.partOfSpeech) {
+    if (!matchesMultiFilter(filters.partOfSpeech, word.partOfSpeech)) {
       return false;
     }
 
-    if (filters.status !== "all" && word.status !== filters.status) {
+    if (!matchesMultiFilter(filters.status, word.status)) {
       return false;
     }
 
-    if (filters.tag !== "all" && !word.tags.includes(filters.tag)) {
+    if (!matchesMultiFilterAny(filters.tag, word.tags)) {
       return false;
     }
 

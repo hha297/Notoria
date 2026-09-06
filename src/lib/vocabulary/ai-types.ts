@@ -99,3 +99,54 @@ export const vocabularyMeaningInputSchema = z.object({
   partOfSpeech: z.string().trim().max(40).optional().nullable(),
   examples: z.array(z.string().trim().max(240)).max(6).optional(),
 });
+
+export const vocabularyNotesFormatInputSchema = z.object({
+  notes: z.string().trim().min(1).max(20_000),
+  word: z.string().trim().max(120).optional().nullable(),
+  language: z.string().trim().min(2).max(16).optional().nullable(),
+});
+
+const notesFormatParagraphSchema = z.object({
+  type: z.literal("paragraph"),
+  text: z.string().catch(""),
+});
+
+const notesFormatHeadingSchema = z.object({
+  type: z.literal("heading"),
+  level: z.coerce.number().int().min(1).max(3).catch(2),
+  text: z.string().catch(""),
+});
+
+const notesFormatListSchema = z.object({
+  type: z.enum(["bulletList", "orderedList"]),
+  items: z.array(z.string()).max(40).catch([]),
+});
+
+const notesFormatTableSchema = z.object({
+  type: z.literal("table"),
+  headers: z.array(z.string()).min(1).max(8),
+  rows: z.array(z.array(z.string()).min(1).max(8)).min(1).max(40),
+  /** Bold the first column (typical for case/label tables). */
+  boldFirstColumn: z.boolean().optional().catch(true),
+});
+
+export const vocabularyNotesFormatBlockSchema = z.discriminatedUnion("type", [
+  notesFormatParagraphSchema,
+  notesFormatHeadingSchema,
+  notesFormatListSchema,
+  notesFormatTableSchema,
+]);
+
+export const vocabularyNotesFormatResultSchema = z.object({
+  blocks: z.array(vocabularyNotesFormatBlockSchema).min(1).max(60),
+});
+
+export type VocabularyNotesFormatInput = z.infer<
+  typeof vocabularyNotesFormatInputSchema
+>;
+export type VocabularyNotesFormatBlock = z.infer<
+  typeof vocabularyNotesFormatBlockSchema
+>;
+export type VocabularyNotesFormatResult = z.infer<
+  typeof vocabularyNotesFormatResultSchema
+>;

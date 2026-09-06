@@ -2,20 +2,11 @@
 
 import { useMemo } from "react";
 import { useTranslations } from "next-intl";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
 import {
   BUILTIN_TAG_GROUPS,
   getCustomTagName,
-  getTagLabel,
   isCustomTagKey,
   PARTS_OF_SPEECH,
   TAG_PICKER_GROUPS,
@@ -59,6 +50,30 @@ export function VocabularyFiltersBar({
     );
   }, [words]);
 
+  const tagGroups = useMemo(
+    () => [
+      ...TAG_PICKER_GROUPS.map((group) => ({
+        label: tTags(`groups.${group}`),
+        options: BUILTIN_TAG_GROUPS[group].map((tag) => ({
+          value: tag.id,
+          label: tTags(`${group}.${tag.id}`),
+        })),
+      })),
+      ...(customTagOptions.length > 0
+        ? [
+            {
+              label: tTags("groups.custom"),
+              options: customTagOptions.map((tag) => ({
+                value: tag,
+                label: getCustomTagName(tag),
+              })),
+            },
+          ]
+        : []),
+    ],
+    [customTagOptions, tTags],
+  );
+
   return (
     <div className="space-y-4 rounded-2xl border border-hairline-cloud bg-card p-3 sm:p-4">
       {showStudyMode && onStudyModeChange && (
@@ -88,108 +103,40 @@ export function VocabularyFiltersBar({
       )}
 
       <div className="grid gap-3 sm:grid-cols-3">
-        <FilterSelect
+        <MultiFilterSelect
           label={tVocab("filterPartOfSpeech")}
-          value={filters.partOfSpeech}
-          display={
-            filters.partOfSpeech === "all"
-              ? tVocab("filterAll")
-              : tPos(filters.partOfSpeech as (typeof PARTS_OF_SPEECH)[number])
-          }
-          onChange={(value) => onFiltersChange({ ...filters, partOfSpeech: value })}
-        >
-          <SelectItem value="all">{tVocab("filterAll")}</SelectItem>
-          {PARTS_OF_SPEECH.map((pos) => (
-            <SelectItem key={pos} value={pos}>
-              {tPos(pos)}
-            </SelectItem>
-          ))}
-        </FilterSelect>
+          emptyLabel={tVocab("filterAll")}
+          values={filters.partOfSpeech}
+          onChange={(partOfSpeech) => onFiltersChange({ ...filters, partOfSpeech })}
+          triggerClassName="h-10 sm:h-8"
+          options={PARTS_OF_SPEECH.map((pos) => ({
+            value: pos,
+            label: tPos(pos),
+          }))}
+        />
 
-        <FilterSelect
+        <MultiFilterSelect
           label={tFlash("filterStatus")}
-          value={filters.status}
-          display={
-            filters.status === "all"
-              ? tVocab("filterAll")
-              : tFlash(`status.${filters.status}`)
-          }
-          onChange={(value) => onFiltersChange({ ...filters, status: value })}
-        >
-          <SelectItem value="all">{tVocab("filterAll")}</SelectItem>
-          {STATUS_OPTIONS.map((status) => (
-            <SelectItem key={status} value={status}>
-              {tFlash(`status.${status}`)}
-            </SelectItem>
-          ))}
-        </FilterSelect>
+          emptyLabel={tVocab("filterAll")}
+          values={filters.status}
+          onChange={(status) => onFiltersChange({ ...filters, status })}
+          triggerClassName="h-10 sm:h-8"
+          options={STATUS_OPTIONS.map((status) => ({
+            value: status,
+            label: tFlash(`status.${status}`),
+          }))}
+        />
 
-        <FilterSelect
+        <MultiFilterSelect
           label={tVocab("columns.tags")}
-          value={filters.tag}
-          display={
-            filters.tag === "all"
-              ? tVocab("filterAll")
-              : getTagLabel(filters.tag, (key) => tTags(key))
-          }
-          onChange={(value) => onFiltersChange({ ...filters, tag: value })}
+          emptyLabel={tVocab("filterAll")}
+          values={filters.tag}
+          onChange={(tag) => onFiltersChange({ ...filters, tag })}
+          triggerClassName="h-10 sm:h-8"
           contentClassName="max-h-80 min-w-56"
-        >
-          <SelectGroup>
-            <SelectItem value="all">{tVocab("filterAll")}</SelectItem>
-          </SelectGroup>
-          {TAG_PICKER_GROUPS.map((group) => (
-            <SelectGroup key={group}>
-              <SelectLabel>{tTags(`groups.${group}`)}</SelectLabel>
-              {BUILTIN_TAG_GROUPS[group].map((tag) => (
-                <SelectItem key={tag.id} value={tag.id}>
-                  {tTags(`${group}.${tag.id}`)}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          ))}
-          {customTagOptions.length > 0 && (
-            <SelectGroup>
-              <SelectLabel>{tTags("groups.custom")}</SelectLabel>
-              {customTagOptions.map((tag) => (
-                <SelectItem key={tag} value={tag}>
-                  {getCustomTagName(tag)}
-                </SelectItem>
-              ))}
-            </SelectGroup>
-          )}
-        </FilterSelect>
+          groups={tagGroups}
+        />
       </div>
-    </div>
-  );
-}
-
-function FilterSelect({
-  label,
-  value,
-  display,
-  onChange,
-  children,
-  contentClassName,
-}: {
-  label: string;
-  value: string;
-  display: string;
-  onChange: (value: string) => void;
-  children: React.ReactNode;
-  contentClassName?: string;
-}) {
-  return (
-    <div className="space-y-2">
-      <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-        {label}
-      </p>
-      <Select value={value} onValueChange={(v) => v && onChange(v)}>
-        <SelectTrigger className="h-10 w-full cursor-pointer sm:h-8">
-          <SelectValue>{display}</SelectValue>
-        </SelectTrigger>
-        <SelectContent className={contentClassName}>{children}</SelectContent>
-      </Select>
     </div>
   );
 }

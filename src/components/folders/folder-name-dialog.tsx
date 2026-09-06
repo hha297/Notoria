@@ -87,7 +87,15 @@ export function FolderNameDialog({
             >
               {tc("cancel")}
             </Button>
-            <Button type="submit" disabled={pending || !name.trim()}>
+            <Button
+              type="submit"
+              disabled={
+                pending ||
+                !name.trim() ||
+                (mode === "rename" &&
+                  name.trim() === initialName.trim())
+              }
+            >
               {mode === "create" ? t("create") : tc("save")}
             </Button>
           </DialogFooter>

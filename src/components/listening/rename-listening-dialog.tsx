@@ -131,7 +131,16 @@ export function RenameListeningDialog({
           >
             {tc("cancel")}
           </Button>
-          <Button type="button" onClick={handleSave} disabled={isPending}>
+          <Button
+            type="button"
+            onClick={handleSave}
+            disabled={
+              isPending ||
+              !value.trim() ||
+              applyListeningFilenameRename(value, currentFilename) ===
+                currentFilename
+            }
+          >
             {isPending ? <Loader2 className="size-4 animate-spin" /> : null}
             {tc("save")}
           </Button>

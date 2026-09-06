@@ -3,7 +3,7 @@
 import type { Editor, JSONContent } from "@tiptap/react";
 import { Download, Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
@@ -11,7 +11,8 @@ import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { QuestionSetBuilder } from "@/components/writing/question-set-builder";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { WritingAiBar } from "@/components/writing/writing-ai-bar";
-import { CapitalizedInput, CapitalizedTextarea } from "@/components/form/capitalized-text";
+import { CapitalizedInput } from "@/components/form/capitalized-text";
+import { DescriptionField } from "@/components/form/description-field";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -29,7 +30,11 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useMutationLock } from "@/hooks/use-mutation-lock";
 import { createWritingDocument, updateWritingDocument } from "@/lib/actions/writing";
+import { afterEditorHydration } from "@/lib/editor/hydration";
+import { navigateAfterSuccess } from "@/lib/navigation/after-success";
+import { normalizeDescription } from "@/lib/description-content";
 import {
   parseWritingContent,
   serializeWritingContent,
@@ -39,6 +44,12 @@ import {
   type WritingMode,
   type WritingSection,
 } from "@/lib/writing/content";
+import {
+  buildWritingEditorSnapshot,
+  writingEditorHasRequiredContent,
+  writingEditorSnapshotsEqual,
+  type WritingEditorSnapshot,
+} from "@/lib/writing/editor-snapshot";
 import {
   WRITING_CEFR_LEVELS,
   WRITING_FORMALITY,
@@ -91,11 +102,32 @@ export function WritingEditor({
       parseWritingContent(initialData?.content ?? undefined),
     ),
   );
-  const [isSaving, setIsSaving] = useState(false);
+  const { isPending: isSaving, tryBegin, release } = useMutationLock();
   const [imageUploading, setImageUploading] = useState(false);
   const [isAutosaving, setIsAutosaving] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [editor, setEditor] = useState<Editor | null>(null);
+
+  const [baseline, setBaseline] = useState<WritingEditorSnapshot>(() => {
+    const state = writingContentToEditorState(
+      parseWritingContent(initialData?.content ?? undefined),
+    );
+    return buildWritingEditorSnapshot({
+      title: initialData?.title ?? "",
+      description: initialData?.description ?? "",
+      editorState: state,
+    });
+  });
+  const baselineRef = useRef(baseline);
+  const originalFieldsRef = useRef({
+    title: initialData?.title ?? "",
+    description: initialData?.description ?? "",
+  });
+  const [isBaselineReady, setIsBaselineReady] = useState(
+    () => !initialData?.id || editorState.mode === "question_set",
+  );
+  const isBaselineReadyRef = useRef(isBaselineReady);
+  const hydrationCancelRef = useRef<(() => void) | null>(null);
 
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const latestRef = useRef({
@@ -105,6 +137,14 @@ export function WritingEditor({
     type,
     id: initialData?.id,
   });
+
+  useEffect(() => {
+    baselineRef.current = baseline;
+  }, [baseline]);
+
+  useEffect(() => {
+    isBaselineReadyRef.current = isBaselineReady;
+  }, [isBaselineReady]);
 
   useEffect(() => {
     latestRef.current = {
@@ -119,8 +159,86 @@ export function WritingEditor({
   useEffect(() => {
     return () => {
       if (autosaveTimer.current) clearTimeout(autosaveTimer.current);
+      hydrationCancelRef.current?.();
     };
   }, []);
+
+  const currentSnapshot = useMemo(
+    () =>
+      buildWritingEditorSnapshot({
+        title,
+        description,
+        editorState,
+      }),
+    [title, description, editorState],
+  );
+  const hasRequiredContent = writingEditorHasRequiredContent(
+    title,
+    editorState,
+  );
+  const isDirty =
+    isBaselineReady &&
+    !writingEditorSnapshotsEqual(baseline, currentSnapshot);
+  const canSave = hasRequiredContent && (initialData?.id ? isDirty : true);
+
+  function adoptDescriptionBaseline(nextDescription: string) {
+    const normalized = normalizeDescription(nextDescription);
+    originalFieldsRef.current = {
+      ...originalFieldsRef.current,
+      description: normalized,
+    };
+    setDescription(normalized);
+    latestRef.current = { ...latestRef.current, description: normalized };
+    const snap = buildWritingEditorSnapshot({
+      title: originalFieldsRef.current.title,
+      description: normalized,
+      editorState: latestRef.current.editorState,
+    });
+    setBaseline((prev) => {
+      const next = { ...prev, description: snap.description };
+      baselineRef.current = next;
+      return next;
+    });
+  }
+
+  function adoptRichDocBaseline(doc: JSONContent) {
+    const nextState: WritingEditorState = {
+      ...latestRef.current.editorState,
+      mode: "rich_document",
+      doc,
+    };
+    latestRef.current = { ...latestRef.current, editorState: nextState };
+    setEditorState(nextState);
+    const snap = buildWritingEditorSnapshot({
+      title: originalFieldsRef.current.title,
+      description: originalFieldsRef.current.description,
+      editorState: nextState,
+    });
+    setBaseline(snap);
+    baselineRef.current = snap;
+    isBaselineReadyRef.current = true;
+    setIsBaselineReady(true);
+  }
+
+  function handleRichEditorReady(nextEditor: Editor | null) {
+    setEditor(nextEditor);
+    hydrationCancelRef.current?.();
+    hydrationCancelRef.current = null;
+    if (!nextEditor) return;
+    if (!initialData?.id) {
+      isBaselineReadyRef.current = true;
+      setIsBaselineReady(true);
+      return;
+    }
+    if (latestRef.current.editorState.mode !== "rich_document") {
+      isBaselineReadyRef.current = true;
+      setIsBaselineReady(true);
+      return;
+    }
+    hydrationCancelRef.current = afterEditorHydration(() => {
+      adoptRichDocBaseline(nextEditor.getJSON());
+    });
+  }
 
   function buildPayload(
     nextTitle: string,
@@ -129,15 +247,20 @@ export function WritingEditor({
   ): ExerciseFormValues {
     return {
       title: nextTitle.trim(),
-      description: nextDescription.trim(),
+      description: nextDescription.trim()
+        ? normalizeDescription(nextDescription)
+        : "",
       type,
       content: serializeWritingContent(nextState) as Record<string, unknown>,
     };
   }
 
   async function persistExercise(showToast = true) {
+    if (!tryBegin()) return;
+
     if (!title.trim()) {
       if (showToast) toast.error(t("titleRequired"));
+      release();
       return;
     }
 
@@ -146,31 +269,36 @@ export function WritingEditor({
       !writingContentHasPrompt(editorState)
     ) {
       if (showToast) toast.error(t("promptRequired"));
+      release();
       return;
     }
 
-    setIsSaving(true);
+    if (!canSave) {
+      release();
+      return;
+    }
 
     try {
       const payload = buildPayload(title, description, editorState);
 
       if (initialData?.id) {
         await updateWritingDocument(initialData.id, payload);
-        if (showToast) toast.success(t("saved"));
-        router.replace(previewHref ?? listHref);
+        navigateAfterSuccess(router, previewHref ?? listHref, {
+          toast: showToast ? () => toast.success(t("saved")) : undefined,
+        });
       } else {
         await createWritingDocument(payload, { folderId });
-        if (showToast) toast.success(t("created"));
-        router.replace(listHref);
+        navigateAfterSuccess(router, listHref, {
+          toast: showToast ? () => toast.success(t("created")) : undefined,
+        });
       }
     } catch (error) {
+      release();
       if (showToast) {
         toast.error(
           error instanceof Error ? error.message : t("saveFailed"),
         );
       }
-    } finally {
-      setIsSaving(false);
     }
   }
 
@@ -189,12 +317,25 @@ export function WritingEditor({
       return;
     }
 
+    const snapshot = buildWritingEditorSnapshot({
+      title: nextTitle,
+      description: nextDescription,
+      editorState: nextState,
+    });
+    if (writingEditorSnapshotsEqual(baselineRef.current, snapshot)) return;
+
     setIsAutosaving(true);
     try {
       await updateWritingDocument(
         id,
         buildPayload(nextTitle, nextDescription, nextState),
       );
+      setBaseline(snapshot);
+      baselineRef.current = snapshot;
+      originalFieldsRef.current = {
+        title: nextTitle,
+        description: nextDescription,
+      };
     } catch {
       // Autosave failures are silent
     } finally {
@@ -220,7 +361,11 @@ export function WritingEditor({
   }
 
   function setDoc(doc: JSONContent) {
-    setEditorState((current) => ({ ...current, doc }));
+    setEditorState((current) => {
+      const next = { ...current, doc };
+      latestRef.current = { ...latestRef.current, editorState: next };
+      return next;
+    });
   }
 
   function setSections(sections: WritingSection[]) {
@@ -245,6 +390,14 @@ export function WritingEditor({
       doc: nextContent,
     };
     setEditorState(nextState);
+
+    const snapshot = buildWritingEditorSnapshot({
+      title,
+      description,
+      editorState: nextState,
+    });
+    if (writingEditorSnapshotsEqual(baselineRef.current, snapshot)) return;
+
     setIsAutosaving(true);
 
     try {
@@ -252,6 +405,12 @@ export function WritingEditor({
         initialData.id,
         buildPayload(title, description, nextState),
       );
+      setBaseline(snapshot);
+      baselineRef.current = snapshot;
+      originalFieldsRef.current = {
+        title,
+        description,
+      };
     } catch {
       // Autosave failures are silent
     } finally {
@@ -293,16 +452,16 @@ export function WritingEditor({
                 ({t("optional")})
               </span>
             </Label>
-            <CapitalizedTextarea
+            <DescriptionField
               id="description"
               value={description}
-              onChange={(event) => {
-                setDescription(event.target.value);
+              onChange={(next) => {
+                setDescription(next);
                 scheduleAutosave();
               }}
+              onReady={adoptDescriptionBaseline}
               placeholder={t("descriptionPlaceholder")}
-              rows={3}
-              className="min-h-20 resize-y"
+              maxLength={2000}
             />
           </div>
 
@@ -457,8 +616,11 @@ export function WritingEditor({
               <RichTextEditor
                 content={editorState.doc}
                 placeholder={t("contentPlaceholder")}
-                onChange={setDoc}
-                onEditorReady={setEditor}
+                onChange={(next) => {
+                  setDoc(next);
+                  if (!isBaselineReadyRef.current) return;
+                }}
+                onEditorReady={handleRichEditorReady}
                 onImageUploadPendingChange={setImageUploading}
                 onAutosave={
                   initialData?.id && !previewHref
@@ -510,8 +672,8 @@ export function WritingEditor({
             {t("export.button")}
           </LockedFeatureButton>
           <Button
-            onClick={() => persistExercise(true)}
-            disabled={isSaving || imageUploading}
+            onClick={() => void persistExercise(true)}
+            disabled={isSaving || imageUploading || !canSave}
             size="lg"
             className="h-11 w-full sm:h-9 sm:w-auto"
           >

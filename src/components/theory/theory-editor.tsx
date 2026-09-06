@@ -1,12 +1,13 @@
 "use client";
 
-import type { JSONContent } from "@tiptap/react";
+import type { Editor, JSONContent } from "@tiptap/react";
 import { Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { DescriptionField } from "@/components/form/description-field";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -24,14 +25,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Textarea } from "@/components/ui/textarea";
+import { useMutationLock } from "@/hooks/use-mutation-lock";
 import { createTheoryNote, updateTheoryNote } from "@/lib/actions/theory";
+import { afterEditorHydration } from "@/lib/editor/hydration";
+import { navigateAfterSuccess } from "@/lib/navigation/after-success";
+import {
+  descriptionPlainLength,
+  normalizeDescription,
+} from "@/lib/description-content";
 import {
   THEORY_CATEGORIES,
   isKnownTheoryCategory,
   parseTheoryContent,
   serializeTheoryContent,
 } from "@/lib/theory/content";
+import {
+  buildTheoryEditorSnapshot,
+  theoryEditorHasRequiredContent,
+  theoryEditorSnapshotsEqual,
+  type TheoryEditorSnapshot,
+} from "@/lib/theory/editor-snapshot";
 import {
   THEORY_DESCRIPTION_MAX,
   type TheoryFormErrorCode,
@@ -49,19 +62,46 @@ type TheoryEditorProps = {
 
 const AUTOSAVE_MS = 1500;
 
-export function TheoryEditor({ previewHref, folderId = null, initialData }: TheoryEditorProps) {
+export function TheoryEditor({
+  previewHref,
+  folderId = null,
+  initialData,
+}: TheoryEditorProps) {
   const router = useRouter();
   const t = useTranslations("theory");
   const tCommon = useTranslations("common");
-  const parsed = parseTheoryContent(initialData?.content);
+  const parsed = useMemo(
+    () => parseTheoryContent(initialData?.content),
+    [initialData?.content],
+  );
 
   const [title, setTitle] = useState(initialData?.title ?? "");
   const [category, setCategory] = useState(parsed.category);
   const [description, setDescription] = useState(parsed.description);
   const [doc, setDoc] = useState<JSONContent>(parsed.doc);
-  const [isSaving, setIsSaving] = useState(false);
   const [imageUploading, setImageUploading] = useState(false);
   const [isAutosaving, setIsAutosaving] = useState(false);
+  const { isPending: isSaving, tryBegin, release } = useMutationLock();
+
+  const [baseline, setBaseline] = useState<TheoryEditorSnapshot>(() =>
+    buildTheoryEditorSnapshot({
+      title: initialData?.title ?? "",
+      category: parsed.category,
+      description: parsed.description,
+      doc: parsed.doc,
+    }),
+  );
+  const baselineRef = useRef(baseline);
+  /** Original non-editor fields — TipTap hydration must not treat title edits as clean. */
+  const originalFieldsRef = useRef({
+    title: initialData?.title ?? "",
+    category: parsed.category,
+    description: parsed.description,
+  });
+  /** Edit mode stays clean until TipTap finishes normalizing the loaded doc. */
+  const [isBaselineReady, setIsBaselineReady] = useState(!initialData?.id);
+  const isBaselineReadyRef = useRef(isBaselineReady);
+  const hydrationCancelRef = useRef<(() => void) | null>(null);
 
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const latestRef = useRef({
@@ -71,6 +111,14 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
     doc,
     id: initialData?.id,
   });
+
+  useEffect(() => {
+    baselineRef.current = baseline;
+  }, [baseline]);
+
+  useEffect(() => {
+    isBaselineReadyRef.current = isBaselineReady;
+  }, [isBaselineReady]);
 
   useEffect(() => {
     latestRef.current = {
@@ -85,19 +133,82 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
   useEffect(() => {
     return () => {
       if (autosaveTimer.current) clearTimeout(autosaveTimer.current);
+      hydrationCancelRef.current?.();
     };
   }, []);
 
+  const currentSnapshot = useMemo(
+    () =>
+      buildTheoryEditorSnapshot({
+        title,
+        category,
+        description,
+        doc,
+      }),
+    [title, category, description, doc],
+  );
+
+  const hasRequiredContent = theoryEditorHasRequiredContent(currentSnapshot);
+  const isDirty =
+    isBaselineReady &&
+    !theoryEditorSnapshotsEqual(baseline, currentSnapshot);
+  const canSave = hasRequiredContent && (initialData?.id ? isDirty : true);
+
+  function adoptDescriptionBaseline(nextDescription: string) {
+    const normalized = normalizeDescription(nextDescription);
+    originalFieldsRef.current = {
+      ...originalFieldsRef.current,
+      description: normalized,
+    };
+    setDescription(normalized);
+    latestRef.current = { ...latestRef.current, description: normalized };
+    setBaseline((prev) => {
+      const next = { ...prev, description: normalized };
+      baselineRef.current = next;
+      return next;
+    });
+  }
+
+  function adoptBaseline(nextDoc: JSONContent) {
+    const next = buildTheoryEditorSnapshot({
+      title: originalFieldsRef.current.title,
+      category: originalFieldsRef.current.category,
+      description: originalFieldsRef.current.description,
+      doc: nextDoc,
+    });
+    latestRef.current = { ...latestRef.current, doc: nextDoc };
+    setDoc(nextDoc);
+    setBaseline(next);
+    baselineRef.current = next;
+    isBaselineReadyRef.current = true;
+    setIsBaselineReady(true);
+  }
+
+  function handleEditorReady(editor: Editor | null) {
+    hydrationCancelRef.current?.();
+    hydrationCancelRef.current = null;
+    if (!editor) return;
+    if (!initialData?.id) {
+      isBaselineReadyRef.current = true;
+      setIsBaselineReady(true);
+      return;
+    }
+    hydrationCancelRef.current = afterEditorHydration(() => {
+      adoptBaseline(editor.getJSON());
+    });
+  }
+
   function buildPayload() {
+    const normalizedDescription = normalizeDescription(description);
     return {
       title: title.trim(),
       category,
-      description: description.trim(),
+      description: normalizedDescription,
       content: serializeTheoryContent({
         kind: "theory",
         version: 1,
         category,
-        description: description.trim(),
+        description: normalizedDescription,
         doc,
       }),
     };
@@ -114,7 +225,11 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
   async function runAutosave() {
     const current = latestRef.current;
     if (!current.id || !current.title.trim()) return;
-    if (current.description.trim().length > THEORY_DESCRIPTION_MAX) return;
+    if (descriptionPlainLength(current.description) > THEORY_DESCRIPTION_MAX)
+      return;
+
+    const snapshot = buildTheoryEditorSnapshot(current);
+    if (theoryEditorSnapshotsEqual(baselineRef.current, snapshot)) return;
 
     setIsAutosaving(true);
     try {
@@ -130,6 +245,13 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
           doc: current.doc,
         }),
       });
+      setBaseline(snapshot);
+      baselineRef.current = snapshot;
+      originalFieldsRef.current = {
+        title: current.title,
+        category: current.category,
+        description: current.description,
+      };
     } catch {
       // Autosave failures are silent
     } finally {
@@ -155,42 +277,51 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
   }
 
   async function persist() {
+    if (!tryBegin()) return;
+
     if (!title.trim()) {
       toast.error(t("titleRequired"));
+      release();
       return;
     }
 
-    if (description.trim().length > THEORY_DESCRIPTION_MAX) {
-      toast.error(
-        t("descriptionTooLong", { max: THEORY_DESCRIPTION_MAX }),
-      );
+    if (descriptionPlainLength(description) > THEORY_DESCRIPTION_MAX) {
+      toast.error(t("descriptionTooLong", { max: THEORY_DESCRIPTION_MAX }));
+      release();
       return;
     }
 
-    setIsSaving(true);
+    if (!canSave) {
+      release();
+      return;
+    }
+
     try {
       const payload = buildPayload();
       if (initialData?.id) {
         const result = await updateTheoryNote(initialData.id, payload);
         if (!result.ok) {
           toast.error(actionErrorMessage(result.code));
+          release();
           return;
         }
-        toast.success(t("saved"));
-        router.replace("/theory");
+        navigateAfterSuccess(router, "/theory", {
+          toast: () => toast.success(t("saved")),
+        });
       } else {
         const created = await createTheoryNote(payload, { folderId });
         if (!created.ok) {
           toast.error(actionErrorMessage(created.code));
+          release();
           return;
         }
-        toast.success(t("created"));
-        router.replace("/theory");
+        navigateAfterSuccess(router, "/theory", {
+          toast: () => toast.success(t("created")),
+        });
       }
     } catch {
       toast.error(t("saveFailed"));
-    } finally {
-      setIsSaving(false);
+      release();
     }
   }
 
@@ -254,36 +385,26 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
           </div>
 
           <div className="space-y-2">
-            <div className="flex items-end justify-between gap-2">
-              <Label htmlFor="theory-description">
-                {t("summaryLabel")}{" "}
-                <span className="font-normal text-muted-foreground">
-                  ({tCommon("optional")})
-                </span>
-              </Label>
-              <span
-                className={
-                  description.length > THEORY_DESCRIPTION_MAX
-                    ? "text-xs text-destructive"
-                    : "text-xs text-muted-foreground"
-                }
-              >
-                {description.length}/{THEORY_DESCRIPTION_MAX}
+            <Label htmlFor="theory-description">
+              {t("summaryLabel")}{" "}
+              <span className="font-normal text-muted-foreground">
+                ({tCommon("optional")})
               </span>
-            </div>
-            <Textarea
+            </Label>
+            <DescriptionField
               id="theory-description"
               value={description}
-              onChange={(event) => {
-                setDescription(event.target.value);
+              onChange={(next) => {
+                setDescription(next);
                 scheduleAutosave();
               }}
+              onReady={adoptDescriptionBaseline}
               placeholder={t("summaryPlaceholder")}
               maxLength={THEORY_DESCRIPTION_MAX}
-              rows={3}
-              className="min-h-20 resize-y"
               aria-invalid={
-                description.length > THEORY_DESCRIPTION_MAX ? true : undefined
+                descriptionPlainLength(description) > THEORY_DESCRIPTION_MAX
+                  ? true
+                  : undefined
               }
             />
           </div>
@@ -295,8 +416,11 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
               placeholder={t("contentPlaceholder")}
               onChange={(next) => {
                 setDoc(next);
+                latestRef.current = { ...latestRef.current, doc: next };
+                if (!isBaselineReadyRef.current) return;
                 scheduleAutosave();
               }}
+              onEditorReady={handleEditorReady}
               onImageUploadPendingChange={setImageUploading}
             />
           </div>
@@ -327,8 +451,8 @@ export function TheoryEditor({ previewHref, folderId = null, initialData }: Theo
             </Button>
           ) : null}
           <Button
-            onClick={() => persist()}
-            disabled={isSaving || imageUploading}
+            onClick={() => void persist()}
+            disabled={isSaving || imageUploading || !canSave}
             size="lg"
             className="h-11 w-full sm:h-9 sm:w-auto"
           >

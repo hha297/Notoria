@@ -10,13 +10,23 @@ import {
   VocabularyTable,
   type VocabularyWordRow,
 } from "@/components/vocabulary/vocabulary-table";
+import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
 
 type VocabularyViewProps = {
   words: VocabularyWordRow[];
   workspaceName: string;
+  language: string;
+  existingCustomTags: string[];
+  synonymOptions: VocabularySynonymRef[];
 };
 
-export function VocabularyView({ words, workspaceName }: VocabularyViewProps) {
+export function VocabularyView({
+  words,
+  workspaceName,
+  language,
+  existingCustomTags,
+  synonymOptions,
+}: VocabularyViewProps) {
   const t = useTranslations("vocabulary");
 
   if (words.length === 0) {
@@ -46,6 +56,12 @@ export function VocabularyView({ words, workspaceName }: VocabularyViewProps) {
   }
 
   return (
-    <VocabularyTable words={words} workspaceName={workspaceName} />
+    <VocabularyTable
+      words={words}
+      workspaceName={workspaceName}
+      language={language}
+      existingCustomTags={existingCustomTags}
+      synonymOptions={synonymOptions}
+    />
   );
 }

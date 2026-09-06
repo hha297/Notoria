@@ -297,7 +297,15 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                   required
                 />
               </div>
-              <Button type="submit" disabled={isPasswordPending}>
+              <Button
+                type="submit"
+                disabled={
+                  isPasswordPending ||
+                  !currentPassword ||
+                  !newPassword ||
+                  !confirmPassword
+                }
+              >
                 {isPasswordPending ? (
                   <Loader2 className="size-4 animate-spin" />
                 ) : null}

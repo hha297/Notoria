@@ -9,6 +9,7 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { DescriptionContent } from "@/components/form/description-content";
 import { TheoryExportDialog } from "@/components/theory/export-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -22,6 +23,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { deleteTheoryNote } from "@/lib/actions/theory";
+import { navigateAfterSuccess } from "@/lib/navigation/after-success";
 import {
   estimateReadingMinutes,
   isKnownTheoryCategory,
@@ -50,6 +52,7 @@ export function TheoryReader({
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [isLeaving, setIsLeaving] = useState(false);
 
   const parsed = useMemo(() => parseTheoryContent(content), [content]);
   const categoryLabel = isKnownTheoryCategory(parsed.category)
@@ -58,12 +61,15 @@ export function TheoryReader({
   const minutes = estimateReadingMinutes(parsed.doc);
 
   function handleDelete() {
+    if (isLeaving) return;
     startTransition(async () => {
       try {
         await deleteTheoryNote(id);
-        toast.success(t("deleted"));
+        setIsLeaving(true);
         setDeleteOpen(false);
-        router.replace("/theory");
+        navigateAfterSuccess(router, "/theory", {
+          toast: () => toast.success(t("deleted")),
+        });
       } catch {
         toast.error(te("generic"));
       }
@@ -122,9 +128,10 @@ export function TheoryReader({
           </div>
           <h2 className="heading-md text-ink">{title}</h2>
           {parsed.description ? (
-            <p className="text-sm leading-relaxed text-muted-foreground sm:text-base">
-              {parsed.description}
-            </p>
+            <DescriptionContent
+              value={parsed.description}
+              className="text-sm text-muted-foreground sm:text-base"
+            />
           ) : null}
         </header>
         <RichTextEditor
@@ -143,7 +150,7 @@ export function TheoryReader({
       />
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent showCloseButton={!isPending}>
+        <DialogContent showCloseButton={!isPending && !isLeaving}>
           <DialogHeader>
             <DialogTitle>{t("deleteConfirmTitle")}</DialogTitle>
             <DialogDescription>
@@ -155,7 +162,7 @@ export function TheoryReader({
               type="button"
               variant="outline"
               onClick={() => setDeleteOpen(false)}
-              disabled={isPending}
+              disabled={isPending || isLeaving}
             >
               {tCommon("cancel")}
             </Button>
@@ -163,9 +170,9 @@ export function TheoryReader({
               type="button"
               variant="destructive"
               onClick={handleDelete}
-              disabled={isPending}
+              disabled={isPending || isLeaving}
             >
-              {isPending ? (
+              {isPending || isLeaving ? (
                 <Loader2 className="size-4 animate-spin" />
               ) : (
                 <Trash2 className="size-4" />

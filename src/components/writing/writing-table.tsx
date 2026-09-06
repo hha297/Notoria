@@ -25,6 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { WritingCard, type WritingListItem } from "@/components/writing/writing-card";
+import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
 import {
   getWritingListMeta,
   type WritingMode,
@@ -32,6 +33,11 @@ import {
 import { childrenOf, folderMatchesQuery, itemsInFolder } from "@/lib/folders/tree";
 import type { FolderListItem } from "@/lib/folders/types";
 import { sectionCreateHref } from "@/lib/folders/paths";
+import {
+  isMultiFilterActive,
+  matchesMultiFilter,
+  type MultiFilterValue,
+} from "@/lib/filters/multi-select";
 import {
   WRITING_CEFR_LEVELS,
   WRITING_FORMALITY,
@@ -139,9 +145,9 @@ export function WritingTable({
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState<SortOption>("updated:desc");
   const [groupBy, setGroupBy] = useState<GroupByOption>("mode");
-  const [cefrFilter, setCefrFilter] = useState<string>("all");
-  const [topicFilter, setTopicFilter] = useState<string>("all");
-  const [formalityFilter, setFormalityFilter] = useState<string>("all");
+  const [cefrFilter, setCefrFilter] = useState<MultiFilterValue>([]);
+  const [topicFilter, setTopicFilter] = useState<MultiFilterValue>([]);
+  const [formalityFilter, setFormalityFilter] = useState<MultiFilterValue>([]);
   const createHref = sectionCreateHref("writing", currentFolderId);
   const childFolders = childrenOf(folders, currentFolderId);
   const matchingFolders = search.trim()
@@ -149,9 +155,9 @@ export function WritingTable({
     : childFolders;
   const hasFilters =
     search.trim() !== "" ||
-    cefrFilter !== "all" ||
-    topicFilter !== "all" ||
-    formalityFilter !== "all";
+    isMultiFilterActive(cefrFilter) ||
+    isMultiFilterActive(topicFilter) ||
+    isMultiFilterActive(formalityFilter);
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -162,13 +168,13 @@ export function WritingTable({
       const listMeta = getWritingListMeta(document.content);
       const { meta } = listMeta;
 
-      if (cefrFilter !== "all" && meta.cefrLevel !== cefrFilter) {
+      if (!matchesMultiFilter(cefrFilter, meta.cefrLevel)) {
         return false;
       }
-      if (topicFilter !== "all" && meta.topic !== topicFilter) {
+      if (!matchesMultiFilter(topicFilter, meta.topic)) {
         return false;
       }
-      if (formalityFilter !== "all" && meta.formality !== formalityFilter) {
+      if (!matchesMultiFilter(formalityFilter, meta.formality)) {
         return false;
       }
 
@@ -331,79 +337,38 @@ export function WritingTable({
             className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:flex-wrap xl:grid-cols-none"
             data-tutorial="writing-filters"
           >
-            <Select
-              value={cefrFilter}
-              onValueChange={(value) => value && setCefrFilter(value)}
-            >
-              <SelectTrigger
-                size="sm"
-                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
-              >
-                <SelectValue>
-                  {cefrFilter === "all"
-                    ? t("filterCefr")
-                    : tMeta(`cefr.${cefrFilter as WritingCefr}`)}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t("filterAll")}</SelectItem>
-                {WRITING_CEFR_LEVELS.map((level) => (
-                  <SelectItem key={level} value={level}>
-                    {tMeta(`cefr.${level}`)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <MultiFilterSelect
+              emptyLabel={t("filterCefr")}
+              values={cefrFilter}
+              onChange={setCefrFilter}
+              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
+              options={WRITING_CEFR_LEVELS.map((level) => ({
+                value: level,
+                label: tMeta(`cefr.${level}`),
+              }))}
+            />
 
-            <Select
-              value={topicFilter}
-              onValueChange={(value) => value && setTopicFilter(value)}
-            >
-              <SelectTrigger
-                size="sm"
-                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
-              >
-                <SelectValue>
-                  {topicFilter === "all"
-                    ? t("filterTopic")
-                    : tMeta(
-                      `topics.${topicFilter as (typeof WRITING_TOPICS)[number]}`,
-                    )}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t("filterAll")}</SelectItem>
-                {WRITING_TOPICS.map((topic) => (
-                  <SelectItem key={topic} value={topic}>
-                    {tMeta(`topics.${topic}`)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <MultiFilterSelect
+              emptyLabel={t("filterTopic")}
+              values={topicFilter}
+              onChange={setTopicFilter}
+              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
+              options={WRITING_TOPICS.map((topic) => ({
+                value: topic,
+                label: tMeta(`topics.${topic}`),
+              }))}
+            />
 
-            <Select
-              value={formalityFilter}
-              onValueChange={(value) => value && setFormalityFilter(value)}
-            >
-              <SelectTrigger
-                size="sm"
-                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
-              >
-                <SelectValue>
-                  {formalityFilter === "all"
-                    ? t("filterFormality")
-                    : tMeta(`formality.${formalityFilter as WritingFormality}`)}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t("filterAll")}</SelectItem>
-                {WRITING_FORMALITY.map((item) => (
-                  <SelectItem key={item} value={item}>
-                    {tMeta(`formality.${item}`)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <MultiFilterSelect
+              emptyLabel={t("filterFormality")}
+              values={formalityFilter}
+              onChange={setFormalityFilter}
+              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
+              options={WRITING_FORMALITY.map((item) => ({
+                value: item,
+                label: tMeta(`formality.${item}`),
+              }))}
+            />
 
             <Select
               value={groupBy}

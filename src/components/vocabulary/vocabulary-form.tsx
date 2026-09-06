@@ -1,9 +1,9 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { AlignLeft, Loader2, Save } from "lucide-react";
+import { Loader2, Save, Sparkles } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import type { Editor, JSONContent } from "@tiptap/react";
 import { useTranslations } from "next-intl";
@@ -45,11 +45,21 @@ import {
   createVocabularyWord,
   updateVocabularyWord,
 } from "@/lib/actions/vocabulary";
+import { formatVocabularyNotesAi } from "@/lib/actions/vocabulary-ai";
+import { afterEditorHydration } from "@/lib/editor/hydration";
+import { navigateAfterSuccess } from "@/lib/navigation/after-success";
+import {
+  buildVocabularyFormSnapshot,
+  vocabularyFormHasRequiredContent,
+  vocabularyFormSnapshotsEqual,
+  type VocabularyFormSnapshot,
+} from "@/lib/vocabulary/form-snapshot";
 import {
   formatNotesDoc,
   isNotesDocEmpty,
   parseVocabularyNotes,
   serializeVocabularyNotes,
+  vocabularyNotesToPlainText,
 } from "@/lib/vocabulary/notes-content";
 import {
   countPrimaryMeanings,
@@ -57,6 +67,7 @@ import {
 } from "@/lib/vocabulary/primary-meanings";
 import { VOCABULARY_WORD_EXISTS } from "@/lib/vocabulary-errors";
 import { isSameVocabularyIdentity, normalizeVocabularyWord } from "@/lib/vocabulary/word-identity";
+import { cn } from "@/lib/utils";
 import { useVocabularySpellingAi } from "@/hooks/use-vocabulary-spelling-ai";
 import {
   getCustomTagName,
@@ -76,35 +87,41 @@ type VocabularyFormClientValues = Omit<
   "meanings" | "examples" | "tags" | "synonymIds"
 >;
 
+export type VocabularyFormInitialData = {
+  id: string;
+  word: string;
+  partOfSpeech?: string | null;
+  notes?: string | null;
+  synonymRefs?: VocabularySynonymRef[];
+  meanings: Array<{
+    id: string;
+    meaning: string;
+    isPrimary?: boolean;
+    sortOrder: number;
+  }>;
+  examples: Array<{
+    id: string;
+    sentence: string;
+    meaning?: string | null;
+    notes?: string | null;
+    sortOrder: number;
+  }>;
+  tags: Array<{
+    tag: string;
+  }>;
+};
+
 type VocabularyFormProps = {
   /** When set, Cancel returns here and Save navigates here after persisting. */
   previewHref?: string;
   existingCustomTags?: string[];
   synonymOptions?: VocabularySynonymRef[];
   language?: string;
-  initialData?: {
-    id: string;
-    word: string;
-    partOfSpeech?: string | null;
-    notes?: string | null;
-    synonymRefs?: VocabularySynonymRef[];
-    meanings: Array<{
-      id: string;
-      meaning: string;
-      isPrimary?: boolean;
-      sortOrder: number;
-    }>;
-    examples: Array<{
-      id: string;
-      sentence: string;
-      meaning?: string | null;
-      notes?: string | null;
-      sortOrder: number;
-    }>;
-    tags: Array<{
-      tag: string;
-    }>;
-  };
+  initialData?: VocabularyFormInitialData;
+  /** `modal` hides the page card chrome and reports success via `onSuccess`. */
+  mode?: "page" | "modal";
+  onSuccess?: () => void;
+  onCancel?: () => void;
 };
 
 type WordCheckStatus = "idle" | "pending" | "checking" | "duplicate" | "unique" | "error";
@@ -178,12 +195,17 @@ export function VocabularyForm({
   existingCustomTags,
   synonymOptions = [],
   language = "en",
+  mode = "page",
+  onSuccess,
+  onCancel,
 }: VocabularyFormProps) {
   const router = useRouter();
   const t = useTranslations("vocabulary");
   const tCommon = useTranslations("common");
   const tPos = useTranslations("tags.pos");
+  const isModal = mode === "modal";
   const [isSaving, setIsSaving] = useState(false);
+  const savingLockRef = useRef(false);
   const [wordCheckStatus, setWordCheckStatus] =
     useState<WordCheckStatus>("idle");
   const [meanings, setMeanings] = useState<MeaningItem[]>(
@@ -213,6 +235,11 @@ export function VocabularyForm({
     VocabularySynonymRef[]
   >(synonymOptions);
 
+  const initialNotesDoc = useMemo(
+    () => parseVocabularyNotes(initialData?.notes ?? ""),
+    [initialData?.notes],
+  );
+
   const form = useForm<VocabularyFormClientValues>({
     resolver: zodResolver(vocabularyFormClientSchema),
     defaultValues: {
@@ -220,21 +247,129 @@ export function VocabularyForm({
       partOfSpeech:
         (initialData?.partOfSpeech as VocabularyFormClientValues["partOfSpeech"]) ??
         undefined,
-      notes: serializeVocabularyNotes(
-        parseVocabularyNotes(initialData?.notes ?? ""),
-      ),
+      notes: serializeVocabularyNotes(initialNotesDoc),
     },
   });
 
   const [notesDoc, setNotesDoc] = useState<JSONContent>(() =>
-    parseVocabularyNotes(initialData?.notes ?? ""),
+    structuredClone(initialNotesDoc),
   );
   const [notesImageUploading, setNotesImageUploading] = useState(false);
+  const [isFormattingNotes, setIsFormattingNotes] = useState(false);
   const notesEditorRef = useRef<Editor | null>(null);
+  const notesHydrationCancelRef = useRef<(() => void) | null>(null);
+  const [notesBaselineReady, setNotesBaselineReady] = useState(
+    () => !initialData?.id,
+  );
+  const notesBaselineReadyRef = useRef(notesBaselineReady);
+  const [baselineSnapshot, setBaselineSnapshot] =
+    useState<VocabularyFormSnapshot>(() =>
+      buildVocabularyFormSnapshot({
+        word: initialData?.word ?? "",
+        partOfSpeech: initialData?.partOfSpeech,
+        notesDoc: initialNotesDoc,
+        meanings:
+          initialData?.meanings.map((meaning) => ({
+            meaning: meaning.meaning,
+            isPrimary: meaning.isPrimary ?? true,
+          })) ?? createDefaultMeanings(),
+        examples: getInitialExamples(initialData?.examples),
+        tags: initialData?.tags.map((tag) => tag.tag) ?? [],
+        customTags: existingCustomTags,
+        synonymIds: (initialData?.synonymRefs ?? []).map((item) => item.id),
+      }),
+    );
+  const originalFieldsRef = useRef({
+    word: initialData?.word ?? "",
+    partOfSpeech: initialData?.partOfSpeech ?? null,
+    meanings:
+      initialData?.meanings.map((meaning) => ({
+        meaning: meaning.meaning,
+        isPrimary: meaning.isPrimary ?? true,
+      })) ?? createDefaultMeanings(),
+    examples: getInitialExamples(initialData?.examples),
+    tags: initialData?.tags.map((tag) => tag.tag) ?? [],
+    synonymIds: (initialData?.synonymRefs ?? []).map((item) => item.id),
+  });
 
   const watchedWord = form.watch("word");
   const watchedPartOfSpeech = form.watch("partOfSpeech");
   const wordCheckRequestId = useRef(0);
+
+  useEffect(() => {
+    notesBaselineReadyRef.current = notesBaselineReady;
+  }, [notesBaselineReady]);
+
+  useEffect(() => {
+    return () => {
+      notesHydrationCancelRef.current?.();
+    };
+  }, []);
+
+  const currentSnapshot = useMemo(
+    () =>
+      buildVocabularyFormSnapshot({
+        word: watchedWord ?? "",
+        partOfSpeech: watchedPartOfSpeech,
+        notesDoc,
+        meanings,
+        examples,
+        tags,
+        customTags,
+        synonymIds: synonyms.map((item) => item.id),
+      }),
+    [
+      watchedWord,
+      watchedPartOfSpeech,
+      notesDoc,
+      meanings,
+      examples,
+      tags,
+      customTags,
+      synonyms,
+    ],
+  );
+
+  const hasRequiredContent = vocabularyFormHasRequiredContent(currentSnapshot);
+  const isDirty =
+    notesBaselineReady &&
+    !vocabularyFormSnapshotsEqual(baselineSnapshot, currentSnapshot);
+  const canSave = hasRequiredContent && (initialData?.id ? isDirty : true);
+
+  function adoptNotesBaseline(nextDoc: JSONContent) {
+    const next = buildVocabularyFormSnapshot({
+      word: originalFieldsRef.current.word,
+      partOfSpeech: originalFieldsRef.current.partOfSpeech,
+      notesDoc: nextDoc,
+      meanings: originalFieldsRef.current.meanings,
+      examples: originalFieldsRef.current.examples,
+      tags: originalFieldsRef.current.tags,
+      customTags: existingCustomTags,
+      synonymIds: originalFieldsRef.current.synonymIds,
+    });
+    setNotesDoc(nextDoc);
+    form.setValue("notes", serializeVocabularyNotes(nextDoc), {
+      shouldDirty: false,
+    });
+    setBaselineSnapshot(next);
+    notesBaselineReadyRef.current = true;
+    setNotesBaselineReady(true);
+  }
+
+  function handleNotesEditorReady(editor: Editor | null) {
+    notesEditorRef.current = editor;
+    notesHydrationCancelRef.current?.();
+    notesHydrationCancelRef.current = null;
+    if (!editor) return;
+    if (!initialData?.id) {
+      notesBaselineReadyRef.current = true;
+      setNotesBaselineReady(true);
+      return;
+    }
+    notesHydrationCancelRef.current = afterEditorHydration(() => {
+      adoptNotesBaseline(editor.getJSON());
+    });
+  }
 
   useEffect(() => {
     const normalized = normalizeWordInput(watchedWord ?? "");
@@ -292,6 +427,8 @@ export function VocabularyForm({
   ]);
 
   async function onSubmit(values: VocabularyFormClientValues) {
+    if (savingLockRef.current || isSaving) return;
+
     if (
       wordCheckStatus === "duplicate" ||
       wordCheckStatus === "checking" ||
@@ -299,6 +436,8 @@ export function VocabularyForm({
     ) {
       return;
     }
+
+    if (!canSave) return;
 
     const filledMeanings = meanings
       .map((item, index) => ({
@@ -334,6 +473,7 @@ export function VocabularyForm({
       }))
       .filter((item) => item.sentence.length > 0);
 
+    savingLockRef.current = true;
     setIsSaving(true);
 
     try {
@@ -347,14 +487,26 @@ export function VocabularyForm({
 
       if (initialData?.id) {
         await updateVocabularyWord(initialData.id, payload);
-        toast.success(t("updated"));
-        router.replace("/vocabulary");
+        if (onSuccess) {
+          onSuccess();
+          toast.success(t("updated"));
+          // Keep lock true while the modal closes / form unmounts.
+          return;
+        }
+        navigateAfterSuccess(router, previewHref ?? "/vocabulary", {
+          toast: () => toast.success(t("updated")),
+        });
       } else {
         await createVocabularyWord(payload);
-        toast.success(t("saved"));
-        router.replace("/vocabulary");
+        navigateAfterSuccess(router, "/vocabulary", {
+          toast: () => toast.success(t("saved")),
+        });
       }
+      // Keep isSaving/lock true through navigation so Save cannot flash enabled.
     } catch (error) {
+      savingLockRef.current = false;
+      setIsSaving(false);
+
       if (error instanceof Error && error.message === VOCABULARY_WORD_EXISTS) {
         setWordCheckStatus("duplicate");
         toast.error(t("wordExists"));
@@ -364,8 +516,6 @@ export function VocabularyForm({
       toast.error(
         error instanceof Error ? error.message : t("meaningRequired"),
       );
-    } finally {
-      setIsSaving(false);
     }
   }
 
@@ -382,11 +532,12 @@ export function VocabularyForm({
   const isWordBusy = isCheckingWord || spellingAi.isChecking;
   const saveDisabled =
     isSaving ||
+    !canSave ||
     isDuplicate ||
     isCheckingWord ||
     wordCheckStatus === "pending" ||
     notesImageUploading;
-  const formatNotesDisabled = isNotesDocEmpty(notesDoc);
+  const formatNotesDisabled = isNotesDocEmpty(notesDoc) || isFormattingNotes;
 
   function handleNotesChange(doc: JSONContent) {
     setNotesDoc(doc);
@@ -396,15 +547,11 @@ export function VocabularyForm({
     });
   }
 
-  function handleFormatNotes() {
-    if (isNotesDocEmpty(notesDoc)) return;
-
-    const formatted = formatNotesDoc(notesDoc);
+  function applyFormattedNotes(formatted: JSONContent) {
     if (JSON.stringify(formatted) === JSON.stringify(notesDoc)) {
       toast.message(t("formatNotesUnchanged"));
       return;
     }
-
     setNotesDoc(formatted);
     form.setValue("notes", serializeVocabularyNotes(formatted), {
       shouldDirty: true,
@@ -414,19 +561,77 @@ export function VocabularyForm({
     toast.success(t("formatNotesSuccess"));
   }
 
-  return (
-    <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
-      <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
-        <CardHeader className="space-y-2 border-b border-hairline-cloud px-4 pt-5 pb-4 sm:px-6 sm:pt-6 sm:pb-5 md:px-8 md:pt-8 md:pb-6">
-          <CardTitle className="heading-md text-ink">
-            {initialData ? t("editWord") : t("newWord")}
-          </CardTitle>
-          <CardDescription className="text-sm leading-relaxed sm:text-base">
-            {t("formDescription")}
-          </CardDescription>
-        </CardHeader>
+  async function handleFormatNotes() {
+    if (isNotesDocEmpty(notesDoc) || isFormattingNotes) return;
 
-        <CardContent className="space-y-6 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-6 md:px-8 md:py-8">
+    setIsFormattingNotes(true);
+    try {
+      const plain = vocabularyNotesToPlainText(serializeVocabularyNotes(notesDoc));
+      if (!plain.trim()) return;
+
+      const result = await formatVocabularyNotesAi({
+        notes: plain,
+        word: watchedWord?.trim() || null,
+        language,
+      });
+
+      if (result.ok) {
+        applyFormattedNotes(result.doc);
+        return;
+      }
+
+      toast.message(t("formatNotesAiFallback"));
+      applyFormattedNotes(formatNotesDoc(notesDoc));
+    } catch {
+      toast.message(t("formatNotesAiFallback"));
+      applyFormattedNotes(formatNotesDoc(notesDoc));
+    } finally {
+      setIsFormattingNotes(false);
+    }
+  }
+
+  function handleCancel() {
+    if (isSaving) return;
+    if (onCancel) {
+      onCancel();
+      return;
+    }
+    if (previewHref) {
+      router.replace(previewHref);
+    }
+  }
+
+  const showCancel = Boolean(onCancel || previewHref);
+
+  return (
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      className={isModal ? "space-y-4" : "space-y-8"}
+    >
+      <Card
+        className={cn(
+          "gap-0 overflow-hidden p-0 ring-0",
+          isModal ? "border-0 bg-transparent shadow-none" : "card-surface",
+        )}
+      >
+        {!isModal ? (
+          <CardHeader className="space-y-2 border-b border-hairline-cloud px-4 pt-5 pb-4 sm:px-6 sm:pt-6 sm:pb-5 md:px-8 md:pt-8 md:pb-6">
+            <CardTitle className="heading-md text-ink">
+              {initialData ? t("editWord") : t("newWord")}
+            </CardTitle>
+            <CardDescription className="text-sm leading-relaxed sm:text-base">
+              {t("formDescription")}
+            </CardDescription>
+          </CardHeader>
+        ) : null}
+
+        <CardContent
+          className={
+            isModal
+              ? "space-y-5 p-0"
+              : "space-y-6 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-6 md:px-8 md:py-8"
+          }
+        >
           <div className="grid gap-6 sm:grid-cols-2">
             <div className="space-y-2">
               <Label htmlFor="word">{t("word")}</Label>
@@ -521,6 +726,7 @@ export function VocabularyForm({
                     value
                       ? (value as VocabularyFormClientValues["partOfSpeech"])
                       : undefined,
+                    { shouldDirty: true, shouldTouch: true },
                   )
                 }
               >
@@ -587,9 +793,13 @@ export function VocabularyForm({
                 size="sm"
                 className="h-8 shrink-0"
                 disabled={formatNotesDisabled}
-                onClick={handleFormatNotes}
+                onClick={() => void handleFormatNotes()}
               >
-                <AlignLeft className="size-3.5" />
+                {isFormattingNotes ? (
+                  <Loader2 className="size-3.5 animate-spin" />
+                ) : (
+                  <Sparkles className="size-3.5" />
+                )}
                 {t("formatNotes")}
               </Button>
             </div>
@@ -600,9 +810,7 @@ export function VocabularyForm({
                 variant="notes"
                 onChange={handleNotesChange}
                 onImageUploadPendingChange={setNotesImageUploading}
-                onEditorReady={(editor) => {
-                  notesEditorRef.current = editor;
-                }}
+                onEditorReady={handleNotesEditorReady}
               />
             </div>
           </div>
@@ -610,12 +818,12 @@ export function VocabularyForm({
       </Card>
 
       <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
-        {previewHref ? (
+        {showCancel ? (
           <Button
             type="button"
             variant="outline"
             size="lg"
-            onClick={() => router.replace(previewHref)}
+            onClick={handleCancel}
             disabled={isSaving}
             className="h-11 w-full sm:h-9 sm:w-auto"
           >

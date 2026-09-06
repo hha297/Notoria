@@ -1,5 +1,10 @@
 import type { ListeningLessonListItem } from "@/lib/listening/types";
 import {
+  isMultiFilterActive,
+  matchesMultiFilter,
+  type MultiFilterValue,
+} from "@/lib/filters/multi-select";
+import {
   WRITING_CEFR_LEVELS,
   WRITING_FORMALITY,
   WRITING_TOPICS,
@@ -19,17 +24,17 @@ export type ListeningSortOption = (typeof LISTENING_SORT_OPTIONS)[number];
 
 export type ListeningListQuery = {
   search: string;
-  cefr: string;
-  topic: string;
-  formality: string;
+  cefr: MultiFilterValue;
+  topic: MultiFilterValue;
+  formality: MultiFilterValue;
   sort: ListeningSortOption;
 };
 
 export const DEFAULT_LISTENING_LIST_QUERY: ListeningListQuery = {
   search: "",
-  cefr: "all",
-  topic: "all",
-  formality: "all",
+  cefr: [],
+  topic: [],
+  formality: [],
   sort: "created:desc",
 };
 
@@ -46,9 +51,9 @@ export type ListeningSearchLabels = {
 export function isListeningListQueryFiltered(query: ListeningListQuery) {
   return (
     query.search.trim() !== "" ||
-    query.cefr !== "all" ||
-    query.topic !== "all" ||
-    query.formality !== "all"
+    isMultiFilterActive(query.cefr) ||
+    isMultiFilterActive(query.topic) ||
+    isMultiFilterActive(query.formality)
   );
 }
 
@@ -61,13 +66,13 @@ function lessonMatchesQuery(
   query: ListeningListQuery,
   labels: ListeningSearchLabels,
 ) {
-  if (query.cefr !== "all" && lesson.cefrLevel !== query.cefr) {
+  if (!matchesMultiFilter(query.cefr, lesson.cefrLevel)) {
     return false;
   }
-  if (query.topic !== "all" && lesson.topic !== query.topic) {
+  if (!matchesMultiFilter(query.topic, lesson.topic)) {
     return false;
   }
-  if (query.formality !== "all" && lesson.formality !== query.formality) {
+  if (!matchesMultiFilter(query.formality, lesson.formality)) {
     return false;
   }
 

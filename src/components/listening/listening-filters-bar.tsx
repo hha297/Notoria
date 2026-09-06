@@ -2,6 +2,7 @@
 
 import { X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -22,7 +23,7 @@ import {
   type ListeningListQuery,
 } from "@/lib/listening/filters";
 import type { ListeningLessonListItem } from "@/lib/listening/types";
-import { isKnownWritingTopic, type WritingCefr, type WritingFormality } from "@/lib/writing/meta";
+import type { WritingCefr, WritingFormality } from "@/lib/writing/meta";
 
 type ListeningFiltersBarProps = {
   lessons: ListeningLessonListItem[];
@@ -78,75 +79,44 @@ export function ListeningFiltersBar({
         className="h-9 min-w-[12rem] flex-1"
       />
 
-      <Select
-        value={query.cefr}
-        onValueChange={(value) => value && patch({ cefr: value })}
-      >
-        <SelectTrigger size="sm" className={triggerClassName}>
-          <SelectValue>
-            {query.cefr === "all"
-              ? t("filterCefr")
-              : tMeta(`cefr.${query.cefr as WritingCefr}`)}
-          </SelectValue>
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">{t("filterAll")}</SelectItem>
-          {LISTENING_FILTER_CEFR_LEVELS.map((level) => (
-            <SelectItem key={level} value={level}>
-              {tMeta(`cefr.${level}`)}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <MultiFilterSelect
+        emptyLabel={t("filterCefr")}
+        values={query.cefr}
+        onChange={(cefr) => patch({ cefr })}
+        triggerClassName={triggerClassName}
+        options={LISTENING_FILTER_CEFR_LEVELS.map((level) => ({
+          value: level,
+          label: tMeta(`cefr.${level as WritingCefr}`),
+        }))}
+      />
 
-      <Select
-        value={query.topic}
-        onValueChange={(value) => value && patch({ topic: value })}
-      >
-        <SelectTrigger size="sm" className={triggerClassName}>
-          <SelectValue>
-            {query.topic === "all"
-              ? t("filterTopic")
-              : isKnownWritingTopic(query.topic)
-                ? tMeta(`topics.${query.topic}`)
-                : query.topic}
-          </SelectValue>
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">{t("filterAll")}</SelectItem>
-          {LISTENING_FILTER_TOPICS.map((topic) => (
-            <SelectItem key={topic} value={topic}>
-              {tMeta(`topics.${topic}`)}
-            </SelectItem>
-          ))}
-          {customTopics.map((topic) => (
-            <SelectItem key={topic} value={topic}>
-              {topic}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <MultiFilterSelect
+        emptyLabel={t("filterTopic")}
+        values={query.topic}
+        onChange={(topic) => patch({ topic })}
+        triggerClassName={triggerClassName}
+        options={[
+          ...LISTENING_FILTER_TOPICS.map((topic) => ({
+            value: topic,
+            label: tMeta(`topics.${topic}`),
+          })),
+          ...customTopics.map((topic) => ({
+            value: topic,
+            label: topic,
+          })),
+        ]}
+      />
 
-      <Select
-        value={query.formality}
-        onValueChange={(value) => value && patch({ formality: value })}
-      >
-        <SelectTrigger size="sm" className={triggerClassName}>
-          <SelectValue>
-            {query.formality === "all"
-              ? t("filterFormality")
-              : tMeta(`formality.${query.formality as WritingFormality}`)}
-          </SelectValue>
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="all">{t("filterAll")}</SelectItem>
-          {LISTENING_FILTER_FORMALITY.map((item) => (
-            <SelectItem key={item} value={item}>
-              {tMeta(`formality.${item}`)}
-            </SelectItem>
-          ))}
-        </SelectContent>
-      </Select>
+      <MultiFilterSelect
+        emptyLabel={t("filterFormality")}
+        values={query.formality}
+        onChange={(formality) => patch({ formality })}
+        triggerClassName={triggerClassName}
+        options={LISTENING_FILTER_FORMALITY.map((item) => ({
+          value: item,
+          label: tMeta(`formality.${item as WritingFormality}`),
+        }))}
+      />
 
       <Select
         value={query.sort}

@@ -146,10 +146,10 @@ export function UploadListeningDialog({
         setStep("transcribing");
         await transcribeListeningLesson(created.id);
 
-        toast.success(t("created"));
-        resetForm();
-        onOpenChange(false);
         router.push("/listening");
+        toast.success(t("created"));
+        onOpenChange(false);
+        resetForm();
       } catch (error) {
         setStep("form");
         toast.error(errorMessage(error));

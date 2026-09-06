@@ -1,4 +1,5 @@
 import type { JSONContent } from "@tiptap/react";
+import { descriptionToPlainText } from "@/lib/description-content";
 import { stripTransientImages } from "@/lib/editor/images";
 
 export const THEORY_CONTENT_VERSION = 1 as const;
@@ -172,7 +173,8 @@ export function toTheoryListItem(note: {
 }): TheoryListItem {
   const parsed = parseTheoryContent(note.content);
   const excerpt =
-    parsed.description || theoryExcerpt(theoryDocPlainText(parsed.doc));
+    descriptionToPlainText(parsed.description) ||
+    theoryExcerpt(theoryDocPlainText(parsed.doc));
 
   return {
     id: note.id,

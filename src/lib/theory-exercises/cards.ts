@@ -22,6 +22,7 @@ export function toTheoryExerciseCard(note: {
     title: note.title,
     description,
     category: parsed.category,
+    searchText: plain.slice(0, 4_000),
     readingMinutes: estimateReadingMinutes(parsed.doc),
     // Soft estimate for card UI only — actual count comes from AI generation.
     estimatedExercises: Math.min(30, Math.max(10, Math.round(wordCount / 25))),

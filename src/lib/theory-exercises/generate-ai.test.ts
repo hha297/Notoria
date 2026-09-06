@@ -41,6 +41,30 @@ describe("AI theory exercise mapping", () => {
     expect(answersMatchAny("Project", item.acceptedAnswers)).toBe(true);
   });
 
+  it("maps fill_blank sentenceMeaning for post-answer UI gloss", () => {
+    const items = mapAiDraftsToTheoryExercises("theory_1", [
+      {
+        type: "fill_blank",
+        learningObjective: "Form the VA-participle.",
+        targetType: "word_form",
+        sentence: "Saatan nähdä ________ junan.",
+        answer: "tulevan",
+        acceptedAnswers: ["tulevan"],
+        sourceWord: "tulla",
+        hint: "Active present participle.",
+        materialSource: "ai",
+        completedSentence: "Saatan nähdä tulevan junan.",
+        sentenceMeaning: "I might see the coming train.",
+      },
+    ]);
+
+    expect(items).toHaveLength(1);
+    const item = items[0]!;
+    expect(item.type).toBe("fill_blank");
+    if (item.type !== "fill_blank") return;
+    expect(item.sentenceMeaning).toBe("I might see the coming train.");
+  });
+
   it("converts in-word blanks into full-word blanks with source word", () => {
     const items = mapAiDraftsToTheoryExercises("theory_1", [
       {

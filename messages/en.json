@@ -9,7 +9,9 @@
     "create": "Create",
     "loading": "Loading...",
     "optional": "Optional",
-    "required": "Required"
+    "required": "Required",
+    "selectedCount": "{count} selected",
+    "clearFilter": "Clear"
   },
   "editor": {
     "linkTitle": "Insert link",
@@ -168,6 +170,7 @@
     "formatNotes": "Format",
     "formatNotesSuccess": "Notes formatted",
     "formatNotesUnchanged": "Notes already formatted",
+    "formatNotesAiFallback": "AI formatting unavailable — applied basic tidy instead",
     "synonyms": "Synonyms",
     "synonymsSearch": "Search existing words…",
     "synonymsSelect": "Add another synonym…",
@@ -394,6 +397,8 @@
       "importAction": "Import & generate",
       "unlockPro": "Unlock with Pro",
       "myImports": "My imports",
+      "searchPlaceholder": "Search by title…",
+      "noResults": "No imports match that title",
       "practice": "Practice",
       "retry": "Retry",
       "delete": "Delete",
@@ -457,6 +462,11 @@
       "emptyTitle": "No theory notes yet",
       "emptyDescription": "Write a theory note — then practice from it here with AI-generated exercises.",
       "emptyCta": "Create a theory note",
+      "searchPlaceholder": "Search by title or content…",
+      "filterCategory": "Category",
+      "noResults": "No theory notes match",
+      "noResultsDescription": "Try another search or category.",
+      "clearFilters": "Clear filters",
       "sections": "{count, plural, one {# section} other {# sections}}",
       "estimatedExercises": "~{count} exercises",
       "limitedExercises": "Add more content for richer practice",
@@ -494,6 +504,8 @@
         "incorrect": "Not quite.",
         "incorrectWithAnswer": "Correct answer: {answer}"
       },
+      "sentenceMeaningLoading": "Loading meaning…",
+
       "types": {
         "multiple_choice": "Multiple choice",
         "true_false": "True / false",
@@ -539,6 +551,11 @@
         "label": "Type the Answer",
         "description": "Type the missing word or meaning and get instant feedback.",
         "preview": "Type your answer…"
+      },
+      "form-sentence": {
+        "label": "Form a Sentence",
+        "description": "Write a full sentence with your saved vocabulary and get AI grammar feedback.",
+        "preview": "Write a sentence using…"
       }
     },
     "timedHint": {
@@ -571,6 +588,7 @@
       "hintExplainWord": "Think about the meaning of the missing word in this sentence.",
       "correct": "Correct!",
       "incorrect": "The answer is {answer}",
+      "sentenceMeaningLoading": "Loading meaning…",
       "progress": "{current} / {total}",
       "score": "{correct} / {answered} correct",
       "keyboardHint": "Enter to check · Enter again for next",
@@ -636,6 +654,38 @@
       "check": "Check",
       "shuffle": "Shuffle",
       "finish": "Finish round"
+    },
+    "formSentence": {
+      "vocabularyLabel": "Vocabulary",
+      "meaningLabel": "Meaning",
+      "prompt": "Write a complete sentence using this vocabulary.",
+      "placeholder": "Write a full sentence…",
+      "yourSentence": "Your sentence",
+      "corrected": "Corrected",
+      "betterSuggestion": "More natural",
+      "sentenceMeaning": "Meaning / Translation",
+      "correct": "Correct — natural use of the vocabulary",
+      "incorrect": "Needs improvement",
+      "evaluating": "Evaluating your sentence…",
+      "submit": "Submit",
+      "unlockSubmit": "Unlock AI feedback",
+      "saveExample": "Save as example",
+      "saved": "Saved",
+      "savedExample": "Sentence saved as an example",
+      "alreadySaved": "This example is already saved",
+      "continue": "Continue",
+      "finish": "Finish round",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} correct",
+      "keyboardHint": "⌘/Ctrl+Enter to submit · again to continue",
+      "errors": {
+        "empty": "Write a sentence before submitting.",
+        "tooLong": "Keep your sentence under 500 characters.",
+        "unavailable": "Could not evaluate your sentence right now. Please try again.",
+        "forbidden": "AI sentence feedback is available with Pro.",
+        "wordMissing": "This vocabulary word no longer exists.",
+        "saveFailed": "Could not save the example. Please try again."
+      }
     }
   },
   "writing": {
@@ -1239,7 +1289,7 @@
         },
         "types": {
           "title": "2. Pick an exercise type",
-          "body": "Choose flashcards, multiple choice, match pairs, fill in the blank, or type the answer — then start a short session with your own knowledge."
+          "body": "Choose flashcards, multiple choice, match pairs, fill in the blank, type the answer, or form a sentence — then start a short session with your own knowledge."
         }
       }
     },
@@ -1695,7 +1745,7 @@
     "currentPlan": "Current Plan",
     "choosePro": "Choose Pro",
     "freePlanDescription": "Your library, practice, and CSV export.",
-    "proPlanDescription": "AI exercises, listening, speaking, and PDF/Word export.",
+    "proPlanDescription": "AI exercises, form-a-sentence, listening, speaking, and PDF/Word export.",
     "upgrade": "Upgrade to Pro",
     "manage": "Manage subscription",
     "proBadge": "Pro",
@@ -1712,7 +1762,7 @@
     "modalTitle": "Upgrade Plan",
     "modalSubtitle": "Free keeps your library and practice. Pro adds AI exercises from vocabulary, theory, and imports — plus writing, listening, speaking, and printable files.",
     "lockedTitle": "This is a Pro feature",
-    "lockedDescription": "Upgrade to unlock AI exercises (vocabulary, theory, and import) — along with listening, speaking, writing AI, and PDF/Word export.",
+    "lockedDescription": "Upgrade to unlock AI exercises (vocabulary, form-a-sentence, theory, and import) — along with listening, speaking, writing AI, and PDF/Word export.",
     "planName": "Pro",
     "cancelAnytime": "Cancel anytime",
     "compare": {
@@ -1754,6 +1804,10 @@
         "fillBlank": {
           "capability": "AI fill-in-the-blank",
           "impact": "New sentences, not memorized examples"
+        },
+        "formSentence": {
+          "capability": "Form a Sentence (AI feedback)",
+          "impact": "Write with your words and get grammar help"
         },
         "theory": {
           "capability": "Theory notes",

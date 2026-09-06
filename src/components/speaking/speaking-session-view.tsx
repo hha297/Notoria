@@ -15,6 +15,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { DescriptionContent } from "@/components/form/description-content";
 import {
   Dialog,
   DialogContent,
@@ -44,6 +45,7 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
   const router = useRouter();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [isLeaving, setIsLeaving] = useState(false);
   const joinable = isSpeakingJoinable(session.status);
 
   useEffect(() => {
@@ -74,12 +76,14 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
   }
 
   function handleDelete() {
+    if (isLeaving) return;
     startTransition(async () => {
       try {
         await deleteSpeakingSession(session.id);
-        toast.success(t("deleted"));
+        setIsLeaving(true);
+        setDeleteOpen(false);
         router.push("/speaking");
-        router.refresh();
+        toast.success(t("deleted"));
       } catch (error) {
         toast.error(errorMessage(error));
       }
@@ -118,9 +122,9 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
       </div>
 
       {session.notes ? (
-        <p className="rounded-xl border border-hairline-cloud bg-muted/30 px-4 py-3 text-sm text-muted-foreground">
-          {session.notes}
-        </p>
+        <div className="rounded-xl border border-hairline-cloud bg-muted/30 px-4 py-3 text-sm text-muted-foreground">
+          <DescriptionContent value={session.notes} />
+        </div>
       ) : null}
 
       <div className="flex flex-wrap gap-2">
@@ -193,7 +197,7 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
       ) : null}
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent showCloseButton={!isPending}>
+        <DialogContent showCloseButton={!isPending && !isLeaving}>
           <DialogHeader>
             <DialogTitle>{t("deleteConfirmTitle")}</DialogTitle>
             <DialogDescription>
@@ -205,7 +209,7 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
               type="button"
               variant="outline"
               onClick={() => setDeleteOpen(false)}
-              disabled={isPending}
+              disabled={isPending || isLeaving}
             >
               {tc("cancel")}
             </Button>
@@ -213,9 +217,9 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
               type="button"
               variant="destructive"
               onClick={handleDelete}
-              disabled={isPending}
+              disabled={isPending || isLeaving}
             >
-              {isPending ? (
+              {isPending || isLeaving ? (
                 <Loader2 className="size-4 animate-spin" />
               ) : (
                 <Trash2 className="size-4" />

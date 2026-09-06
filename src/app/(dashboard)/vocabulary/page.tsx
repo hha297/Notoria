@@ -3,17 +3,24 @@ import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { VocabularyView } from "@/components/vocabulary/vocabulary-view";
-import { getVocabularyWords } from "@/lib/actions/vocabulary";
+import {
+  getVocabularyWords,
+  listVocabularySynonymOptions,
+} from "@/lib/actions/vocabulary";
+import { getActiveWorkspaceCustomTags } from "@/lib/actions/workspaces";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export const dynamic = "force-dynamic";
 
 export default async function VocabularyPage() {
   const t = await getTranslations("vocabulary");
-  const [workspace, words] = await Promise.all([
-    getActiveWorkspace(),
-    getVocabularyWords(),
-  ]);
+  const [workspace, words, existingCustomTags, synonymOptions] =
+    await Promise.all([
+      getActiveWorkspace(),
+      getVocabularyWords(),
+      getActiveWorkspaceCustomTags(),
+      listVocabularySynonymOptions(),
+    ]);
 
   if (!workspace) {
     return (
@@ -35,15 +42,31 @@ export default async function VocabularyPage() {
     partOfSpeech: word.partOfSpeech,
     notes: word.notes,
     updatedAt: word.updatedAt.toISOString(),
+    createdAt: word.createdAt.toISOString(),
     meanings: word.meanings.map((meaning) => ({
+      id: meaning.id,
       meaning: meaning.meaning,
       isPrimary: meaning.isPrimary,
+      sortOrder: meaning.sortOrder,
     })),
+    examples: word.examples.map((example) => ({
+      id: example.id,
+      sentence: example.sentence,
+      meaning: example.meaning,
+      notes: example.notes,
+      sortOrder: example.sortOrder,
+    })),
+    synonymRefs: word.synonymRefs,
     tags: word.tags.map((tag) => ({ id: tag.id, tag: tag.tag })),
-    createdAt: word.createdAt.toISOString(),
   }));
 
   return (
-    <VocabularyView words={serializedWords} workspaceName={workspace.name} />
+    <VocabularyView
+      words={serializedWords}
+      workspaceName={workspace.name}
+      language={workspace.language}
+      existingCustomTags={existingCustomTags}
+      synonymOptions={synonymOptions}
+    />
   );
 }

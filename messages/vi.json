@@ -9,7 +9,9 @@
     "create": "Tạo",
     "loading": "Đang tải...",
     "optional": "Không bắt buộc",
-    "required": "Bắt buộc"
+    "required": "Bắt buộc",
+    "selectedCount": "{count} đã chọn",
+    "clearFilter": "Xóa"
   },
   "editor": {
     "linkTitle": "Chèn liên kết",
@@ -168,6 +170,7 @@
     "formatNotes": "Định dạng",
     "formatNotesSuccess": "Đã định dạng ghi chú",
     "formatNotesUnchanged": "Ghi chú đã được định dạng",
+    "formatNotesAiFallback": "Không dùng được AI — đã làm sạch cơ bản thay thế",
     "synonyms": "Từ đồng nghĩa",
     "synonymsSearch": "Tìm từ đã có…",
     "synonymsSelect": "Thêm từ đồng nghĩa khác…",
@@ -394,6 +397,8 @@
       "importAction": "Nhập & tạo bài",
       "unlockPro": "Mở khoá với Pro",
       "myImports": "Tài liệu đã nhập",
+      "searchPlaceholder": "Tìm theo tiêu đề…",
+      "noResults": "Không có tài liệu khớp tiêu đề đó",
       "practice": "Luyện tập",
       "retry": "Thử lại",
       "delete": "Xoá",
@@ -457,6 +462,11 @@
       "emptyTitle": "Chưa có ghi chú lý thuyết",
       "emptyDescription": "Viết ghi chú lý thuyết — rồi luyện tập tại đây với bài tập do AI tạo.",
       "emptyCta": "Tạo ghi chú lý thuyết",
+      "searchPlaceholder": "Tìm theo tiêu đề hoặc nội dung…",
+      "filterCategory": "Danh mục",
+      "noResults": "Không có ghi chú lý thuyết phù hợp",
+      "noResultsDescription": "Thử tìm kiếm hoặc danh mục khác.",
+      "clearFilters": "Xóa bộ lọc",
       "sections": "{count, plural, one {# mục} other {# mục}}",
       "estimatedExercises": "~{count} câu",
       "limitedExercises": "Thêm nội dung để luyện phong phú hơn",
@@ -494,6 +504,8 @@
         "incorrect": "Chưa đúng.",
         "incorrectWithAnswer": "Đáp án đúng: {answer}"
       },
+      "sentenceMeaningLoading": "Đang tải nghĩa…",
+
       "types": {
         "multiple_choice": "Trắc nghiệm",
         "true_false": "Đúng / sai",
@@ -539,6 +551,11 @@
         "label": "Gõ đáp án",
         "description": "Gõ từ hoặc nghĩa còn thiếu và biết ngay đúng hay sai.",
         "preview": "Gõ đáp án…"
+      },
+      "form-sentence": {
+        "label": "Đặt câu",
+        "description": "Viết một câu hoàn chỉnh với từ đã lưu và nhận nhận xét ngữ pháp từ AI.",
+        "preview": "Viết câu dùng từ…"
       }
     },
     "timedHint": {
@@ -571,6 +588,7 @@
       "hintExplainWord": "Hãy nghĩ về nghĩa của từ còn thiếu trong câu này.",
       "correct": "Đúng rồi!",
       "incorrect": "Đáp án là {answer}",
+      "sentenceMeaningLoading": "Đang tải nghĩa…",
       "progress": "{current} / {total}",
       "score": "{correct} / {answered} câu đúng",
       "keyboardHint": "Enter để kiểm tra · Enter lần nữa để sang câu tiếp",
@@ -636,6 +654,38 @@
       "check": "Kiểm tra",
       "shuffle": "Xáo thứ tự",
       "finish": "Kết thúc vòng này"
+    },
+    "formSentence": {
+      "vocabularyLabel": "Từ vựng",
+      "meaningLabel": "Nghĩa",
+      "prompt": "Viết một câu hoàn chỉnh dùng từ này.",
+      "placeholder": "Viết một câu đầy đủ…",
+      "yourSentence": "Câu của bạn",
+      "corrected": "Câu đã sửa",
+      "betterSuggestion": "Tự nhiên hơn",
+      "sentenceMeaning": "Nghĩa / bản dịch",
+      "correct": "Đúng — từ được dùng tự nhiên",
+      "incorrect": "Cần chỉnh lại",
+      "evaluating": "Đang chấm câu…",
+      "submit": "Gửi",
+      "unlockSubmit": "Mở khóa phản hồi AI",
+      "saveExample": "Lưu làm ví dụ",
+      "saved": "Đã lưu",
+      "savedExample": "Đã lưu câu làm ví dụ",
+      "alreadySaved": "Ví dụ này đã được lưu",
+      "continue": "Tiếp tục",
+      "finish": "Kết thúc vòng này",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} câu đúng",
+      "keyboardHint": "⌘/Ctrl+Enter để gửi · lần nữa để tiếp",
+      "errors": {
+        "empty": "Hãy viết câu trước khi gửi.",
+        "tooLong": "Giữ câu dưới 500 ký tự.",
+        "unavailable": "Hiện không chấm được câu. Thử lại sau.",
+        "forbidden": "Phản hồi câu bằng AI dành cho Pro.",
+        "wordMissing": "Từ này không còn tồn tại.",
+        "saveFailed": "Không lưu được ví dụ. Thử lại nhé."
+      }
     }
   },
   "flashcards": {
@@ -1059,7 +1109,7 @@
         },
         "types": {
           "title": "2. Chọn dạng bài",
-          "body": "Chọn flashcard, trắc nghiệm, nối cặp, điền chỗ trống hoặc gõ đáp án — rồi bắt đầu phiên ngắn với kiến thức của bạn."
+          "body": "Chọn flashcard, trắc nghiệm, nối cặp, điền chỗ trống, gõ đáp án hoặc đặt câu — rồi bắt đầu phiên ngắn với kiến thức của bạn."
         }
       }
     },
@@ -1515,7 +1565,7 @@
     "currentPlan": "Gói hiện tại",
     "choosePro": "Chọn Pro",
     "freePlanDescription": "Thư viện, luyện tập và xuất CSV.",
-    "proPlanDescription": "Bài AI, nghe, nói và xuất PDF/Word.",
+    "proPlanDescription": "Bài AI, đặt câu, nghe, nói và xuất PDF/Word.",
     "upgrade": "Nâng cấp lên Pro",
     "manage": "Quản lý gói đăng ký",
     "proBadge": "Pro",
@@ -1532,7 +1582,7 @@
     "modalTitle": "Nâng cấp gói",
     "modalSubtitle": "Bản miễn phí đủ để lưu từ và luyện. Pro thêm bài AI từ từ vựng, Theory và Import — kèm AI viết, nghe, nói, và xuất file in được.",
     "lockedTitle": "Đây là tính năng Pro",
-    "lockedDescription": "Nâng cấp để mở khóa bài AI (từ vựng, Theory, Import) — kèm nghe, nói, AI viết, và xuất PDF/Word.",
+    "lockedDescription": "Nâng cấp để mở khóa bài AI (từ vựng, đặt câu, Theory, Import) — kèm nghe, nói, AI viết, và xuất PDF/Word.",
     "planName": "Pro",
     "cancelAnytime": "Hủy bất cứ lúc nào",
     "compare": {
@@ -1574,6 +1624,10 @@
         "fillBlank": {
           "capability": "Điền chỗ trống bằng AI",
           "impact": "Câu mới, không phải thuộc ví dụ cũ"
+        },
+        "formSentence": {
+          "capability": "Đặt câu (phản hồi AI)",
+          "impact": "Viết câu với từ của bạn và được sửa ngữ pháp"
         },
         "theory": {
           "capability": "Ghi chú lý thuyết",

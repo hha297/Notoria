@@ -4,9 +4,15 @@ import {
   theoryAiResponseSchema,
   type TheoryAiExerciseDraft,
 } from "@/lib/theory-exercises/generate-ai";
-import type { TheoryExercise, TheoryVocabWord } from "@/lib/theory-exercises/types";
+import type {
+  TheoryExercise,
+  TheoryFillBlankExercise,
+  TheoryVocabWord,
+} from "@/lib/theory-exercises/types";
 import { theoryDocPlainText } from "@/lib/theory/content";
 import type { JSONContent } from "@tiptap/react";
+import { ensureSentenceMeanings } from "@/lib/exercises/sentence-meaning";
+import type { AppLocale } from "@/i18n/config";
 
 function getOpenAIClient() {
   const apiKey = process.env.OPENAI_API_KEY?.trim();
@@ -61,6 +67,13 @@ NEVER wrap a Finnish/other target form in an English sentence frame.
 NEVER use English (or the UI language) as the sentence unless that is the language being studied.
 Hints may be in any language; practice content must match the studied language.
 
+## CRITICAL — sentenceMeaning (UI language)
+For EVERY fill_blank exercise, ALWAYS include sentenceMeaning:
+- A short natural translation / gloss of the COMPLETE correct sentence (completedSentence).
+- Write sentenceMeaning in uiLanguage (the website interface language), NOT in studyLanguage (unless they are the same).
+- Examples: uiLanguage Finnish → Finnish gloss; uiLanguage English → English gloss; uiLanguage Vietnamese → Vietnamese gloss.
+- Do NOT put sentenceMeaning inside the practice sentence. It is a separate field for post-answer UI.
+
 ## CRITICAL UI RULE — never blank inside a word
 NEVER produce in-word blanks such as: stem________ or aihee________
 ALWAYS use one full-token blank in the studied language.
@@ -98,6 +111,7 @@ Same full-form answer across different sentences is OK.
     "acceptedAnswers"?: string[],
     "sourceWord"?: string,
     "completedSentence"?: string,
+    "sentenceMeaning"?: string,
     "promptWord"?: string,
     "prompt"?: string,
     "options"?: string[],
@@ -111,7 +125,8 @@ Same full-form answer across different sentences is OK.
 }
 6. fill_blank sentence MUST contain exactly one blank as eight underscores: ________
 7. No markdown.
-8. Optional showArrow: false for prompt-line style (cue + blank) instead of cue → blank.`;
+8. Optional showArrow: false for prompt-line style (cue + blank) instead of cue → blank.
+9. fill_blank MUST include sentenceMeaning in uiLanguage.`;
 
 async function requestExerciseBatch(input: {
   client: OpenAI;
@@ -121,6 +136,7 @@ async function requestExerciseBatch(input: {
   maxExercises: number;
   batchIndex: number;
   studyLanguage?: string;
+  uiLanguage?: string;
   avoidSentences?: string[];
 }): Promise<TheoryAiExerciseDraft[]> {
   const completion = await input.client.chat.completions.create({
@@ -135,13 +151,14 @@ async function requestExerciseBatch(input: {
         content: JSON.stringify({
           title: input.title,
           studyLanguage: input.studyLanguage ?? null,
+          uiLanguage: input.uiLanguage ?? "English",
           maxExercises: input.maxExercises,
           batch: input.batchIndex,
           theoryPlainText: input.theoryPlainText,
           vocabularyWords: input.vocabularyWords,
           avoidReusingTheseSentences: (input.avoidSentences ?? []).slice(0, 40),
           reminder:
-            "Practice sentence/answer/sourceWord MUST be in studyLanguage. ALWAYS include sourceWord (base form) for form practice so the UI can show: ________ (sourceWord). Never omit it for case/inflection drills. sourceWord must differ from answer.",
+            "Practice sentence/answer/sourceWord MUST be in studyLanguage. ALWAYS include sourceWord (base form) for form practice so the UI can show: ________ (sourceWord). Never omit it for case/inflection drills. sourceWord must differ from answer. For every fill_blank include sentenceMeaning in uiLanguage (website language), not studyLanguage.",
         }),
       },
     ],
@@ -164,6 +181,8 @@ export async function generateAiTheoryExercises(input: {
   vocabulary?: TheoryVocabWord[];
   count?: number;
   studyLanguage?: string;
+  /** Website UI language name for sentenceMeaning (e.g. "Finnish", "English"). */
+  uiLanguage?: string;
 }): Promise<TheoryExercise[]> {
   const plainText = theoryDocPlainText(input.doc);
   if (!plainText.trim()) return [];
@@ -173,6 +192,7 @@ export async function generateAiTheoryExercises(input: {
   const vocabularyWords = (input.vocabulary ?? []).slice(0, 60).map((w) => w.word);
   const theoryPlainText = plainText.slice(0, 12_000);
   const studyLanguage = input.studyLanguage?.trim() || undefined;
+  const uiLanguage = input.uiLanguage?.trim() || "English";
 
   const batchArgs = {
     client,
@@ -180,6 +200,7 @@ export async function generateAiTheoryExercises(input: {
     theoryPlainText,
     vocabularyWords,
     studyLanguage,
+    uiLanguage,
   };
 
   const first = Math.ceil(count / 2) + 2;
@@ -223,5 +244,32 @@ export async function generateAiTheoryExercises(input: {
     throw new Error("AI_INVALID_RESPONSE");
   }
 
-  return items;
+  const uiLocale = resolveUiLocaleFromLanguageName(uiLanguage);
+  const ensured = await ensureSentenceMeanings(items, {
+    uiLocale,
+    getSentence: (item) => {
+      if (item.type !== "fill_blank") return "";
+      return (
+        item.completedSentence?.trim() ||
+        `${item.prefix ?? ""}${item.answer}${item.suffix ?? ""}`.replace(/\s+/g, " ").trim()
+      );
+    },
+    getMeaning: (item) =>
+      item.type === "fill_blank" ? item.sentenceMeaning : undefined,
+    setMeaning: (item, sentenceMeaning) => {
+      if (item.type !== "fill_blank") return item;
+      return { ...item, sentenceMeaning } satisfies TheoryFillBlankExercise;
+    },
+  });
+
+  return ensured;
 }
+
+function resolveUiLocaleFromLanguageName(languageName: string): AppLocale {
+  const normalized = languageName.trim().toLowerCase();
+  if (normalized.startsWith("fi")) return "fi";
+  if (normalized.startsWith("vi") || normalized.includes("vietnam")) return "vi";
+  return "en";
+}
+
+export { glossSentenceMeaning as glossTheorySentenceMeaning } from "@/lib/exercises/sentence-meaning";

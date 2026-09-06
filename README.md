@@ -2,7 +2,7 @@
 
 **Notoria** is a private web app for language learning. Each account owns its own data: vocabulary, writing, theory notes, exercises, listening lessons, and speaking sessions live in **language-specific workspaces**. The app is not social — no public profiles, no sharing feed, no multiplayer.
 
-Free users can collect words and practice with quizzes built from those words. **Notoria Pro** (€9.99 / month) unlocks the rest of the learning loop: AI writing help, AI fill-in-the-blank generation, PDF/DOCX export, the full **Listening** module, and **Speaking** (live video call with an AI tutor).
+Free users can collect words and practice with quizzes built from those words. **Notoria Pro** (€9.99 / month) unlocks the rest of the learning loop: AI writing help, AI fill-in-the-blank generation, **Form a Sentence** (AI grammar feedback), PDF/DOCX export, the full **Listening** module, and **Speaking** (live video call with an AI tutor).
 
 ---
 
@@ -20,6 +20,7 @@ Access is **Admin or an active Pro subscription** (`active`, `trialing`, or `pas
 | Writing AI: Check / Improve / Grammar | Locked | Yes | Corrections on the learner’s own text |
 | Exercise modes from your examples | Yes | Yes | Practice still works from saved example sentences |
 | Fill in the Blank **Generate with AI** (10 new sentences) | Locked | Yes | Practice the word in *new* contexts, not memorized examples |
+| **Form a Sentence** (AI evaluation + save as example) | Locked (whole mode) | Yes | Produce full sentences with your words and get grammar / translation feedback |
 | Theory notes | Yes | Yes | Grammar/usage notebook for every user |
 | **Listening** (upload, transcript, practice) | Locked (whole module) | Yes | Turns real audio/video into a lesson |
 | **Speaking** (live video call with AI tutor) | Locked (whole module) | Yes | Spoken practice with feedback and a transcript |
@@ -87,7 +88,7 @@ A notebook for **how the language works**, not writing practice.
 
 ### Exercise
 
-Five study modes under `/exercises`. Quiz items come from **workspace vocabulary**, not a third-party dictionary. Sessions sample from the filtered pool (flashcards 30, fill-in-the-blank 15, multiple choice 20, match pairs 10, type-the-answer 15).
+Five study modes under `/exercises`, plus **Form a Sentence** (Pro). Quiz items come from **workspace vocabulary**, not a third-party dictionary. Sessions sample from the filtered pool (flashcards 30, fill-in-the-blank 15, multiple choice 20, match pairs 10, type-the-answer 15, form-a-sentence 5–10).
 
 | Mode | Description |
 | ---- | ----------- |
@@ -96,10 +97,11 @@ Five study modes under `/exercises`. Quiz items come from **workspace vocabulary
 | **Multiple Choice** | Word ↔ meaning; distractors from other workspace words |
 | **Match Pairs** | Quizlet-style boards |
 | **Type the Answer** | Type the word or meaning with instant feedback |
+| **Form a Sentence (Pro)** | Write a full sentence with a saved word; AI checks grammar/usage, suggests corrections, provides a meaning/translation, and optionally saves the sentence as a vocabulary example. Free users see a locked card that opens the upgrade modal |
 
 Shared filters: part of speech, learning status, tags. Study direction (word → meaning / meaning → word / mixed) where it applies.
 
-**Impact:** free users can still drill. Pro FIB stops overfitting to memorized examples and tests whether the learner can *use* the word.
+**Impact:** free users can still drill. Pro FIB and Form a Sentence stop overfitting to memorized examples and test whether the learner can *use* the word in production.
 
 ### Listening (Pro)
 
@@ -222,7 +224,7 @@ src/
 ├── lib/
 │   ├── actions/          # Server Actions
 │   ├── auth/             # Session + paid/Pro/AI access
-│   ├── exercises/        # Quiz generation + AI fill-in-blank
+│   ├── exercises/        # Quiz generation + AI fill-in-blank / form-sentence
 │   ├── flashcards/       # SRS
 │   ├── listening/        # Transcribe, speakers, generate practice
 │   ├── speaking/         # Tutor instructions, Stream, transcript summary
@@ -405,6 +407,7 @@ Schema changes: point Drizzle at the prod `DATABASE_URL`, run `npm run db:push`,
 | `/exercises/multiple-choice` | Multiple choice |
 | `/exercises/match-pairs` | Match pairs |
 | `/exercises/type-answer` | Type the answer |
+| `/exercises/form-sentence` | Form a sentence with AI feedback (Pro) |
 | `/listening` | Listening list (Pro) |
 | `/listening/[id]` | Lesson + practice (Pro) |
 | `/speaking` | Speaking sessions (Pro) |
@@ -412,7 +415,7 @@ Schema changes: point Drizzle at the prod `DATABASE_URL`, run `npm run db:push`,
 | `/speaking/[id]/call` | Full-screen AI video call (Pro) |
 | `/account` | Profile, password, avatar, billing |
 
-API: `POST /api/ai/writing`, `POST /api/ai/exercise` (Pro), `POST /api/stream/webhook`, `POST /api/stripe/create-checkout-session`, `POST /api/stripe/create-portal-session`, `POST /api/stripe/webhook`.
+API: `POST /api/ai/writing`, `POST /api/ai/exercise`, `POST /api/ai/form-sentence` (Pro), `POST /api/stream/webhook`, `POST /api/stripe/create-checkout-session`, `POST /api/stripe/create-portal-session`, `POST /api/stripe/webhook`.
 
 ---
 

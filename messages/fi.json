@@ -9,7 +9,9 @@
     "create": "Luo",
     "loading": "Ladataan...",
     "optional": "Valinnainen",
-    "required": "Pakollinen"
+    "required": "Pakollinen",
+    "selectedCount": "{count} valittu",
+    "clearFilter": "Tyhjennä"
   },
   "editor": {
     "linkTitle": "Lisää linkki",
@@ -168,6 +170,7 @@
     "formatNotes": "Muotoile",
     "formatNotesSuccess": "Muistiinpanot muotoiltu",
     "formatNotesUnchanged": "Muistiinpanot ovat jo muotoiltu",
+    "formatNotesAiFallback": "Tekoälymuotoilu ei onnistunut — tehtiin perussiistiminen",
     "synonyms": "Synonyymit",
     "synonymsSearch": "Hae olemassa olevia sanoja…",
     "synonymsSelect": "Lisää toinen synonyymi…",
@@ -394,6 +397,8 @@
       "importAction": "Tuo ja luo",
       "unlockPro": "Avaa Prolla",
       "myImports": "Omat tuonnit",
+      "searchPlaceholder": "Hae otsikolla…",
+      "noResults": "Ei tuonteja tällä otsikolla",
       "practice": "Harjoittele",
       "retry": "Yritä uudelleen",
       "delete": "Poista",
@@ -457,6 +462,11 @@
       "emptyTitle": "Ei vielä teoriamerkintöjä",
       "emptyDescription": "Kirjoita teoriamerkintä — harjoittele sitten täällä tekoälyn tekemillä tehtävillä.",
       "emptyCta": "Luo teoriamerkintä",
+      "searchPlaceholder": "Hae otsikon tai sisällön perusteella…",
+      "filterCategory": "Kategoria",
+      "noResults": "Ei vastaavia teoriamerkintöjä",
+      "noResultsDescription": "Kokeile toista hakua tai kategoriaa.",
+      "clearFilters": "Tyhjennä suodattimet",
       "sections": "{count, plural, one {# osio} other {# osiota}}",
       "estimatedExercises": "~{count} tehtävää",
       "limitedExercises": "Lisää sisältöä monipuolisempaan harjoitteluun",
@@ -494,6 +504,8 @@
         "incorrect": "Ei ihan.",
         "incorrectWithAnswer": "Oikea vastaus: {answer}"
       },
+      "sentenceMeaningLoading": "Ladataan merkitystä…",
+
       "types": {
         "multiple_choice": "Monivalinta",
         "true_false": "Tosi / epätosi",
@@ -539,6 +551,11 @@
         "label": "Kirjoita vastaus",
         "description": "Kirjoita puuttuva sana tai merkitys ja saa palaute heti.",
         "preview": "Kirjoita vastaus…"
+      },
+      "form-sentence": {
+        "label": "Muodosta lause",
+        "description": "Kirjoita kokonainen lause tallentamallasi sanastolla ja saa tekoälyltä kielioppipalaute.",
+        "preview": "Kirjoita lause käyttäen…"
       }
     },
     "timedHint": {
@@ -571,6 +588,7 @@
       "hintExplainWord": "Mieti puuttuvan sanan merkitystä tässä lauseessa.",
       "correct": "Oikein!",
       "incorrect": "Vastaus on {answer}",
+      "sentenceMeaningLoading": "Ladataan merkitystä…",
       "progress": "{current} / {total}",
       "score": "{correct} / {answered} oikein",
       "keyboardHint": "Enter tarkistaa · Enter uudelleen seuraavaan",
@@ -636,6 +654,38 @@
       "check": "Tarkista",
       "shuffle": "Sekoita",
       "finish": "Lopeta kierros"
+    },
+    "formSentence": {
+      "vocabularyLabel": "Sanasto",
+      "meaningLabel": "Merkitys",
+      "prompt": "Kirjoita kokonainen lause käyttäen tätä sanaa.",
+      "placeholder": "Kirjoita kokonainen lause…",
+      "yourSentence": "Lauseesi",
+      "corrected": "Korjattu",
+      "betterSuggestion": "Luonnollisempi",
+      "sentenceMeaning": "Merkitys / käännös",
+      "correct": "Oikein — sanaa on käytetty luonnollisesti",
+      "incorrect": "Tarvitsee parantamista",
+      "evaluating": "Arvioidaan lausetta…",
+      "submit": "Lähetä",
+      "unlockSubmit": "Avaa tekoälypalaute",
+      "saveExample": "Tallenna esimerkiksi",
+      "saved": "Tallennettu",
+      "savedExample": "Lause tallennettiin esimerkiksi",
+      "alreadySaved": "Tämä esimerkki on jo tallennettu",
+      "continue": "Jatka",
+      "finish": "Lopeta kierros",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} oikein",
+      "keyboardHint": "⌘/Ctrl+Enter lähettää · uudelleen jatkaa",
+      "errors": {
+        "empty": "Kirjoita lause ennen lähettämistä.",
+        "tooLong": "Pidä lause alle 500 merkissä.",
+        "unavailable": "Lausetta ei voitu arvioida juuri nyt. Yritä uudelleen.",
+        "forbidden": "Tekoälypalaute kuuluu Pro-tilaukseen.",
+        "wordMissing": "Tätä sanastoa ei enää ole.",
+        "saveFailed": "Esimerkkiä ei voitu tallentaa. Yritä uudelleen."
+      }
     }
   },
   "flashcards": {
@@ -1059,7 +1109,7 @@
         },
         "types": {
           "title": "2. Valitse harjoitustyyppi",
-          "body": "Valitse muistikortit, monivalinta, parit, aukot tai kirjoita vastaus — ja aloita lyhyt sessio omalla tiedollasi."
+          "body": "Valitse muistikortit, monivalinta, parit, aukot, kirjoita vastaus tai muodosta lause — ja aloita lyhyt sessio omalla tiedollasi."
         }
       }
     },
@@ -1515,7 +1565,7 @@
     "currentPlan": "Nykyinen tilaus",
     "choosePro": "Valitse Pro",
     "freePlanDescription": "Kirjasto, harjoittelu ja CSV-vienti.",
-    "proPlanDescription": "Tekoälyharjoitukset, kuuntelu, puhuminen ja PDF/Word-vienti.",
+    "proPlanDescription": "Tekoälyharjoitukset, muodosta lause, kuuntelu, puhuminen ja PDF/Word-vienti.",
     "upgrade": "Päivitä Pro-tilaukseen",
     "manage": "Hallinnoi tilausta",
     "proBadge": "Pro",
@@ -1532,7 +1582,7 @@
     "modalTitle": "Päivitä tilaus",
     "modalSubtitle": "Ilmaisessa säilyvät kirjasto ja harjoittelu. Pro tuo tekoälyharjoitukset sanastosta, teoriasta ja tuonneista — sekä kirjoittamisen tekoälyn, kuuntelun, puhumisen ja tulostettavat tiedostot.",
     "lockedTitle": "Tämä on Pro-ominaisuus",
-    "lockedDescription": "Päivitä Prohon avataksesi tekoälyharjoitukset (sanasto, teoria, tuonti) — sekä kuuntelun, puhumisen, kirjoittamisen tekoälyn ja PDF/Word-viennin.",
+    "lockedDescription": "Päivitä Prohon avataksesi tekoälyharjoitukset (sanasto, muodosta lause, teoria, tuonti) — sekä kuuntelun, puhumisen, kirjoittamisen tekoälyn ja PDF/Word-viennin.",
     "planName": "Pro",
     "cancelAnytime": "Peru milloin tahansa",
     "compare": {
@@ -1574,6 +1624,10 @@
         "fillBlank": {
           "capability": "Tekoälyn täydennystehtävät",
           "impact": "Uudet lauseet, ei muistettuja esimerkkejä"
+        },
+        "formSentence": {
+          "capability": "Muodosta lause (tekoälypalaute)",
+          "impact": "Kirjoita omilla sanoilla ja saa kielioppiapua"
         },
         "theory": {
           "capability": "Teoriamuistiinpanot",

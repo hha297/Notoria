@@ -9,11 +9,12 @@ import {
   Loader2,
   Play,
   RotateCcw,
+  Search,
   Trash2,
 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { useState, useTransition } from "react";
+import { useMemo, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { Badge } from "@/components/ui/badge";
@@ -26,6 +27,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
 import {
@@ -54,6 +56,7 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
   const [deleteTarget, setDeleteTarget] =
     useState<ExerciseImportListItem | null>(null);
   const [retryId, setRetryId] = useState<string | null>(null);
+  const [search, setSearch] = useState("");
   const {
     state: processing,
     setStage,
@@ -62,6 +65,12 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
     complete,
     isActive: isRetrying,
   } = useAiProcessing();
+
+  const filtered = useMemo(() => {
+    const query = search.trim().toLowerCase();
+    if (!query) return imports;
+    return imports.filter((item) => item.title.toLowerCase().includes(query));
+  }, [imports, search]);
 
   function errorMessage(error: unknown) {
     const code = error instanceof Error ? error.message : "PROCESSING_FAILED";
@@ -101,13 +110,10 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
         await retryExerciseImport(item.id);
         setStage("saving", { title: item.title });
         complete();
-        toast.success(t("ready"));
-        router.refresh();
         router.push(`/exercises/import/${item.id}`);
-        window.setTimeout(() => {
-          resetProcessing();
-          setRetryId(null);
-        }, 400);
+        toast.success(t("ready"));
+        resetProcessing();
+        setRetryId(null);
       } catch (error) {
         fail(errorMessage(error));
         router.refresh();
@@ -122,7 +128,18 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
   return (
     <>
       <div className="space-y-3">
-        <h3 className="text-sm font-medium text-ink">{t("myImports")}</h3>
+        <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+          <h3 className="text-sm font-medium text-ink">{t("myImports")}</h3>
+          <div className="relative w-full sm:max-w-xs">
+            <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+            <Input
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder={t("searchPlaceholder")}
+              className="h-9 pl-9"
+            />
+          </div>
+        </div>
 
         {isRetrying ||
         processing.stage === "error" ||
@@ -149,8 +166,13 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
           />
         ) : null}
 
+        {filtered.length === 0 ? (
+          <p className="py-8 text-center text-sm text-muted-foreground">
+            {t("noResults")}
+          </p>
+        ) : (
         <div className="grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {imports.map((item) => {
+          {filtered.map((item) => {
             const ready = item.status === "COMPLETED" && item.exerciseCount > 0;
             const failed = item.status === "FAILED";
             const incomplete =
@@ -265,6 +287,7 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
             );
           })}
         </div>
+        )}
       </div>
 
       <Dialog
