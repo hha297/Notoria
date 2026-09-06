@@ -539,6 +539,11 @@
         "label": "Kirjoita vastaus",
         "description": "Kirjoita puuttuva sana tai merkitys ja saa palaute heti.",
         "preview": "Kirjoita vastaus…"
+      },
+      "form-sentence": {
+        "label": "Muodosta lause",
+        "description": "Kirjoita kokonainen lause tallentamallasi sanastolla ja saa tekoälyltä kielioppipalaute.",
+        "preview": "Kirjoita lause käyttäen…"
       }
     },
     "timedHint": {
@@ -636,6 +641,38 @@
       "check": "Tarkista",
       "shuffle": "Sekoita",
       "finish": "Lopeta kierros"
+    },
+    "formSentence": {
+      "vocabularyLabel": "Sanasto",
+      "meaningLabel": "Merkitys",
+      "prompt": "Kirjoita kokonainen lause käyttäen tätä sanaa.",
+      "placeholder": "Kirjoita kokonainen lause…",
+      "yourSentence": "Lauseesi",
+      "corrected": "Korjattu",
+      "betterSuggestion": "Luonnollisempi",
+      "sentenceMeaning": "Merkitys / käännös",
+      "correct": "Oikein — sanaa on käytetty luonnollisesti",
+      "incorrect": "Tarvitsee parantamista",
+      "evaluating": "Arvioidaan lausetta…",
+      "submit": "Lähetä",
+      "unlockSubmit": "Avaa tekoälypalaute",
+      "saveExample": "Tallenna esimerkiksi",
+      "saved": "Tallennettu",
+      "savedExample": "Lause tallennettiin esimerkiksi",
+      "alreadySaved": "Tämä esimerkki on jo tallennettu",
+      "continue": "Jatka",
+      "finish": "Lopeta kierros",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} oikein",
+      "keyboardHint": "⌘/Ctrl+Enter lähettää · uudelleen jatkaa",
+      "errors": {
+        "empty": "Kirjoita lause ennen lähettämistä.",
+        "tooLong": "Pidä lause alle 500 merkissä.",
+        "unavailable": "Lausetta ei voitu arvioida juuri nyt. Yritä uudelleen.",
+        "forbidden": "Tekoälypalaute kuuluu Pro-tilaukseen.",
+        "wordMissing": "Tätä sanastoa ei enää ole.",
+        "saveFailed": "Esimerkkiä ei voitu tallentaa. Yritä uudelleen."
+      }
     }
   },
   "flashcards": {
@@ -1059,7 +1096,7 @@
         },
         "types": {
           "title": "2. Valitse harjoitustyyppi",
-          "body": "Valitse muistikortit, monivalinta, parit, aukot tai kirjoita vastaus — ja aloita lyhyt sessio omalla tiedollasi."
+          "body": "Valitse muistikortit, monivalinta, parit, aukot, kirjoita vastaus tai muodosta lause — ja aloita lyhyt sessio omalla tiedollasi."
         }
       }
     },
@@ -1515,7 +1552,7 @@
     "currentPlan": "Nykyinen tilaus",
     "choosePro": "Valitse Pro",
     "freePlanDescription": "Kirjasto, harjoittelu ja CSV-vienti.",
-    "proPlanDescription": "Tekoälyharjoitukset, kuuntelu, puhuminen ja PDF/Word-vienti.",
+    "proPlanDescription": "Tekoälyharjoitukset, muodosta lause, kuuntelu, puhuminen ja PDF/Word-vienti.",
     "upgrade": "Päivitä Pro-tilaukseen",
     "manage": "Hallinnoi tilausta",
     "proBadge": "Pro",
@@ -1532,7 +1569,7 @@
     "modalTitle": "Päivitä tilaus",
     "modalSubtitle": "Ilmaisessa säilyvät kirjasto ja harjoittelu. Pro tuo tekoälyharjoitukset sanastosta, teoriasta ja tuonneista — sekä kirjoittamisen tekoälyn, kuuntelun, puhumisen ja tulostettavat tiedostot.",
     "lockedTitle": "Tämä on Pro-ominaisuus",
-    "lockedDescription": "Päivitä Prohon avataksesi tekoälyharjoitukset (sanasto, teoria, tuonti) — sekä kuuntelun, puhumisen, kirjoittamisen tekoälyn ja PDF/Word-viennin.",
+    "lockedDescription": "Päivitä Prohon avataksesi tekoälyharjoitukset (sanasto, muodosta lause, teoria, tuonti) — sekä kuuntelun, puhumisen, kirjoittamisen tekoälyn ja PDF/Word-viennin.",
     "planName": "Pro",
     "cancelAnytime": "Peru milloin tahansa",
     "compare": {
@@ -1574,6 +1611,10 @@
         "fillBlank": {
           "capability": "Tekoälyn täydennystehtävät",
           "impact": "Uudet lauseet, ei muistettuja esimerkkejä"
+        },
+        "formSentence": {
+          "capability": "Muodosta lause (tekoälypalaute)",
+          "impact": "Kirjoita omilla sanoilla ja saa kielioppiapua"
         },
         "theory": {
           "capability": "Teoriamuistiinpanot",

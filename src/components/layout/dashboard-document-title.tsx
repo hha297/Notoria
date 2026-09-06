@@ -67,6 +67,9 @@ export function DashboardDocumentTitle() {
     if (pathname === "/exercises/type-answer") {
       return tExercises("types.type-answer.label");
     }
+    if (pathname === "/exercises/form-sentence") {
+      return tExercises("types.form-sentence.label");
+    }
     if (pathname === "/exercises/writing") return tWriting("newTitle");
     if (pathname === "/exercises" || pathname.startsWith("/exercises/")) {
       return tNav("exercises");

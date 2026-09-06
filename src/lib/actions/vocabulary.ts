@@ -549,3 +549,69 @@ export async function deleteVocabularyWord(id: string) {
   revalidatePath(`/vocabulary/${id}`);
   revalidatePath(`/vocabulary/${id}/edit`);
 }
+
+export type AppendVocabularyExampleResult =
+  | { ok: true; alreadyExists: boolean }
+  | {
+      ok: false;
+      code: "WORD_NOT_FOUND" | "EMPTY_SENTENCE" | "SENTENCE_TOO_LONG";
+    };
+
+/** Append one example sentence without replacing existing meanings/examples/tags. */
+export async function appendVocabularyExample(input: {
+  wordId: string;
+  sentence: string;
+  meaning?: string | null;
+}): Promise<AppendVocabularyExampleResult> {
+  const sentence = input.sentence.trim();
+  if (!sentence) {
+    return { ok: false, code: "EMPTY_SENTENCE" };
+  }
+  if (sentence.length > 500) {
+    return { ok: false, code: "SENTENCE_TOO_LONG" };
+  }
+
+  const workspace = await requireActiveWorkspace();
+
+  try {
+    await assertWordInWorkspace(input.wordId, workspace.id);
+  } catch {
+    return { ok: false, code: "WORD_NOT_FOUND" };
+  }
+
+  const existing = await db.query.wordExamples.findMany({
+    where: eq(wordExamples.wordId, input.wordId),
+    columns: { sortOrder: true, sentence: true },
+    orderBy: [desc(wordExamples.sortOrder)],
+  });
+
+  const normalized = sentence.toLowerCase();
+  if (
+    existing.some(
+      (example) => example.sentence.trim().toLowerCase() === normalized,
+    )
+  ) {
+    return { ok: true, alreadyExists: true };
+  }
+
+  const nextSortOrder = (existing[0]?.sortOrder ?? -1) + 1;
+
+  await db.insert(wordExamples).values({
+    wordId: input.wordId,
+    sentence,
+    meaning: input.meaning?.trim() || null,
+    notes: null,
+    sortOrder: nextSortOrder,
+  });
+
+  await db
+    .update(vocabularyWords)
+    .set({ updatedAt: new Date() })
+    .where(eq(vocabularyWords.id, input.wordId));
+
+  revalidatePath("/vocabulary");
+  revalidatePath(`/vocabulary/${input.wordId}`);
+  revalidatePath(`/vocabulary/${input.wordId}/edit`);
+
+  return { ok: true, alreadyExists: false };
+}

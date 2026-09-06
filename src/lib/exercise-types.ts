@@ -4,6 +4,7 @@ import {
   Layers,
   Link2,
   ListChecks,
+  PenLine,
   TextCursorInput,
 } from "lucide-react";
 
@@ -12,11 +13,14 @@ export type ExerciseTypeSlug =
   | "fill-in-blank"
   | "multiple-choice"
   | "match-pairs"
-  | "type-answer";
+  | "type-answer"
+  | "form-sentence";
 
 export type ExerciseTypeConfig = {
   slug: ExerciseTypeSlug;
   icon: LucideIcon;
+  /** Whole mode requires Pro (AI evaluation). */
+  pro?: boolean;
 };
 
 export const EXERCISE_TYPES: ExerciseTypeConfig[] = [
@@ -25,6 +29,7 @@ export const EXERCISE_TYPES: ExerciseTypeConfig[] = [
   { slug: "multiple-choice", icon: ListChecks },
   { slug: "match-pairs", icon: Link2 },
   { slug: "type-answer", icon: Keyboard },
+  { slug: "form-sentence", icon: PenLine, pro: true },
 ];
 
 const slugMap = new Map(EXERCISE_TYPES.map((item) => [item.slug, item]));
