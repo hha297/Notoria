@@ -43,6 +43,7 @@ export function ListeningLessonView({ lesson }: ListeningLessonViewProps) {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [renameOpen, setRenameOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [isLeaving, setIsLeaving] = useState(false);
 
   const processing =
     lesson.status === "TRANSCRIBING" ||
@@ -72,12 +73,14 @@ export function ListeningLessonView({ lesson }: ListeningLessonViewProps) {
   }
 
   function handleDelete() {
+    if (isLeaving) return;
     startTransition(async () => {
       try {
         await deleteListeningLesson(lesson.id);
-        toast.success(t("deleted"));
+        setIsLeaving(true);
+        setDeleteOpen(false);
         router.push("/listening");
-        router.refresh();
+        toast.success(t("deleted"));
       } catch (error) {
         toast.error(errorMessage(error));
       }
@@ -175,7 +178,7 @@ export function ListeningLessonView({ lesson }: ListeningLessonViewProps) {
       />
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent showCloseButton={!isPending}>
+        <DialogContent showCloseButton={!isPending && !isLeaving}>
           <DialogHeader>
             <DialogTitle>{t("deleteConfirmTitle")}</DialogTitle>
             <DialogDescription>
@@ -187,7 +190,7 @@ export function ListeningLessonView({ lesson }: ListeningLessonViewProps) {
               type="button"
               variant="outline"
               onClick={() => setDeleteOpen(false)}
-              disabled={isPending}
+              disabled={isPending || isLeaving}
             >
               {tc("cancel")}
             </Button>
@@ -195,9 +198,9 @@ export function ListeningLessonView({ lesson }: ListeningLessonViewProps) {
               type="button"
               variant="destructive"
               onClick={handleDelete}
-              disabled={isPending}
+              disabled={isPending || isLeaving}
             >
-              {isPending ? (
+              {isPending || isLeaving ? (
                 <Loader2 className="size-4 animate-spin" />
               ) : (
                 <Trash2 className="size-4" />

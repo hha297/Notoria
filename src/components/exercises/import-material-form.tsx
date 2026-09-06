@@ -101,13 +101,11 @@ export function ImportMaterialForm() {
     async (importId: string) => {
       setStage("saving");
       complete();
+      router.push(`/exercises/import/${importId}`);
       toast.success(t("ready"));
       resetFormFields();
       retryImportIdRef.current = null;
-      router.refresh();
-      router.push(`/exercises/import/${importId}`);
-      // Allow navigation; clear panel shortly after
-      window.setTimeout(() => resetProcessing(), 400);
+      resetProcessing();
     },
     [complete, resetProcessing, router, setStage, t],
   );

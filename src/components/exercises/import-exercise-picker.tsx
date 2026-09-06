@@ -101,13 +101,10 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
         await retryExerciseImport(item.id);
         setStage("saving", { title: item.title });
         complete();
-        toast.success(t("ready"));
-        router.refresh();
         router.push(`/exercises/import/${item.id}`);
-        window.setTimeout(() => {
-          resetProcessing();
-          setRetryId(null);
-        }, 400);
+        toast.success(t("ready"));
+        resetProcessing();
+        setRetryId(null);
       } catch (error) {
         fail(errorMessage(error));
         router.refresh();

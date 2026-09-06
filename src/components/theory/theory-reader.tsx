@@ -22,6 +22,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { deleteTheoryNote } from "@/lib/actions/theory";
+import { navigateAfterSuccess } from "@/lib/navigation/after-success";
 import {
   estimateReadingMinutes,
   isKnownTheoryCategory,
@@ -50,6 +51,7 @@ export function TheoryReader({
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const [isLeaving, setIsLeaving] = useState(false);
 
   const parsed = useMemo(() => parseTheoryContent(content), [content]);
   const categoryLabel = isKnownTheoryCategory(parsed.category)
@@ -58,12 +60,15 @@ export function TheoryReader({
   const minutes = estimateReadingMinutes(parsed.doc);
 
   function handleDelete() {
+    if (isLeaving) return;
     startTransition(async () => {
       try {
         await deleteTheoryNote(id);
-        toast.success(t("deleted"));
+        setIsLeaving(true);
         setDeleteOpen(false);
-        router.replace("/theory");
+        navigateAfterSuccess(router, "/theory", {
+          toast: () => toast.success(t("deleted")),
+        });
       } catch {
         toast.error(te("generic"));
       }
@@ -143,7 +148,7 @@ export function TheoryReader({
       />
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent showCloseButton={!isPending}>
+        <DialogContent showCloseButton={!isPending && !isLeaving}>
           <DialogHeader>
             <DialogTitle>{t("deleteConfirmTitle")}</DialogTitle>
             <DialogDescription>
@@ -155,7 +160,7 @@ export function TheoryReader({
               type="button"
               variant="outline"
               onClick={() => setDeleteOpen(false)}
-              disabled={isPending}
+              disabled={isPending || isLeaving}
             >
               {tCommon("cancel")}
             </Button>
@@ -163,9 +168,9 @@ export function TheoryReader({
               type="button"
               variant="destructive"
               onClick={handleDelete}
-              disabled={isPending}
+              disabled={isPending || isLeaving}
             >
-              {isPending ? (
+              {isPending || isLeaving ? (
                 <Loader2 className="size-4 animate-spin" />
               ) : (
                 <Trash2 className="size-4" />

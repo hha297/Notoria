@@ -157,7 +157,14 @@ export function EditWorkspaceDialog({
           >
             {tc("cancel")}
           </Button>
-          <Button onClick={handleSave} disabled={isPending || !language}>
+          <Button
+            onClick={handleSave}
+            disabled={
+              isPending ||
+              !name.trim() ||
+              (name.trim() === workspace.name && language === workspace.language)
+            }
+          >
             {tc("save")}
           </Button>
         </DialogFooter>

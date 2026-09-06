@@ -80,10 +80,10 @@ export function NewSpeakingDialog({
         formData.set("topic", topic);
         formData.set("notes", notes);
         const created = await createSpeakingSession(formData);
-        toast.success(t("created"));
-        resetForm();
-        onOpenChange(false);
         router.push("/speaking");
+        toast.success(t("created"));
+        onOpenChange(false);
+        resetForm();
       } catch (error) {
         toast.error(errorMessage(error));
       }
