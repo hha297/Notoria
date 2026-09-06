@@ -30,9 +30,11 @@ import {
   TAG_PICKER_GROUPS,
 } from "@/lib/vocabulary-tags";
 import { VocabularyExportDialog } from "@/components/vocabulary/export-dialog";
+import { VocabularyQuickEditDialog } from "@/components/vocabulary/vocabulary-quick-edit-dialog";
 import { VocabularyRowActions } from "@/components/vocabulary/vocabulary-row-actions";
 import type { VocabularyExportSourceWord } from "@/lib/vocabulary/export/build-document";
 import { vocabularyNotesToPlainText } from "@/lib/vocabulary/notes-content";
+import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
 import { cn } from "@/lib/utils";
 
 export type VocabularyWordRow = {
@@ -42,7 +44,20 @@ export type VocabularyWordRow = {
   notes?: string | null;
   updatedAt: string;
   createdAt?: string;
-  meanings: Array<{ meaning: string; isPrimary?: boolean }>;
+  meanings: Array<{
+    id: string;
+    meaning: string;
+    isPrimary?: boolean;
+    sortOrder: number;
+  }>;
+  examples: Array<{
+    id: string;
+    sentence: string;
+    meaning?: string | null;
+    notes?: string | null;
+    sortOrder: number;
+  }>;
+  synonymRefs: VocabularySynonymRef[];
   tags: Array<{ id: string; tag: string }>;
 };
 
@@ -52,6 +67,9 @@ type SortDirection = "asc" | "desc";
 type VocabularyTableProps = {
   words: VocabularyWordRow[];
   workspaceName: string;
+  language: string;
+  existingCustomTags: string[];
+  synonymOptions: VocabularySynonymRef[];
 };
 
 const GROUP_PAGE_SIZE = 20;
@@ -151,12 +169,27 @@ function MeaningCell({ word }: { word: VocabularyWordRow }) {
   );
 }
 
+function toVocabularyFormInitialData(word: VocabularyWordRow) {
+  return {
+    id: word.id,
+    word: word.word,
+    partOfSpeech: word.partOfSpeech,
+    notes: word.notes,
+    synonymRefs: word.synonymRefs,
+    meanings: word.meanings,
+    examples: word.examples,
+    tags: word.tags.map((tag) => ({ tag: tag.tag })),
+  };
+}
+
 function VocabularyPosGroup({
   title,
   words,
+  onEditWord,
 }: {
   title: string;
   words: VocabularyWordRow[];
+  onEditWord: (word: VocabularyWordRow) => void;
 }) {
   const t = useTranslations("vocabulary");
   const [page, setPage] = useState(1);
@@ -215,7 +248,11 @@ function VocabularyPosGroup({
                   {word.word}
                 </Link>
               </div>
-              <VocabularyRowActions wordId={word.id} word={word.word} />
+              <VocabularyRowActions
+                wordId={word.id}
+                word={word.word}
+                onEdit={() => onEditWord(word)}
+              />
             </div>
             <div className="mt-2">
               <MeaningCell word={word} />
@@ -288,7 +325,11 @@ function VocabularyPosGroup({
                   })}
                 </td>
                 <td className="px-2 py-2.5 align-middle">
-                  <VocabularyRowActions wordId={word.id} word={word.word} />
+                  <VocabularyRowActions
+                    wordId={word.id}
+                    word={word.word}
+                    onEdit={() => onEditWord(word)}
+                  />
                 </td>
               </tr>
             ))}
@@ -359,7 +400,13 @@ function VocabularyPosGroup({
   );
 }
 
-export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) {
+export function VocabularyTable({
+  words,
+  workspaceName,
+  language,
+  existingCustomTags,
+  synonymOptions,
+}: VocabularyTableProps) {
   const t = useTranslations("vocabulary");
   const tTags = useTranslations("tags");
   const tPos = useTranslations("tags.pos");
@@ -369,6 +416,7 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
   const [sortField, setSortField] = useState<SortField>("updated");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [exportOpen, setExportOpen] = useState(false);
+  const [editingWord, setEditingWord] = useState<VocabularyWordRow | null>(null);
 
   const customTagOptions = useMemo(() => {
     const seen = new Set<string>();
@@ -743,10 +791,24 @@ export function VocabularyTable({ words, workspaceName }: VocabularyTableProps) 
                 key={`${group.key}:${search}:${partOfSpeechFilter}:${tagFilter}:${sortValue}`}
                 title={group.title}
                 words={group.words}
+                onEditWord={setEditingWord}
               />
             ))}
           </div>
         )}
+
+        <VocabularyQuickEditDialog
+          open={editingWord !== null}
+          onOpenChange={(open) => {
+            if (!open) setEditingWord(null);
+          }}
+          language={language}
+          existingCustomTags={existingCustomTags}
+          synonymOptions={synonymOptions}
+          initialData={
+            editingWord ? toVocabularyFormInitialData(editingWord) : null
+          }
+        />
 
         <VocabularyExportDialog
           open={exportOpen}

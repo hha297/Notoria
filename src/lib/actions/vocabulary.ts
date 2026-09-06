@@ -190,18 +190,27 @@ async function loadSynonymPairsForWord(wordId: string, workspaceId: string) {
     );
 }
 
-async function resolveSynonymsForWord(
+async function loadSynonymPairsForWorkspace(workspaceId: string) {
+  return db
+    .select({
+      wordId: vocabularySynonyms.wordId,
+      synonymId: vocabularySynonyms.synonymId,
+    })
+    .from(vocabularySynonyms)
+    .where(eq(vocabularySynonyms.workspaceId, workspaceId));
+}
+
+function resolveSynonymsFromPairs(
   wordId: string,
-  workspaceId: string,
   legacyText: string | null | undefined,
+  pairs: Array<{ wordId: string; synonymId: string }>,
+  options: VocabularySynonymRef[],
 ) {
-  const [pairs, options] = await Promise.all([
-    loadSynonymPairsForWord(wordId, workspaceId),
-    listWorkspaceSynonymOptions(workspaceId),
-  ]);
   const optionById = new Map(options.map((option) => [option.id, option]));
   const linked = uniqueSynonymIds(
-    pairs.map((pair) => synonymPeerId(wordId, pair)),
+    pairs
+      .filter((pair) => pair.wordId === wordId || pair.synonymId === wordId)
+      .map((pair) => synonymPeerId(wordId, pair)),
     wordId,
   )
     .map((id) => optionById.get(id))
@@ -217,6 +226,18 @@ async function resolveSynonymsForWord(
     wordId,
   );
   return { linked: legacy.matched, unmatched: legacy.unmatched };
+}
+
+async function resolveSynonymsForWord(
+  wordId: string,
+  workspaceId: string,
+  legacyText: string | null | undefined,
+) {
+  const [pairs, options] = await Promise.all([
+    loadSynonymPairsForWord(wordId, workspaceId),
+    listWorkspaceSynonymOptions(workspaceId),
+  ]);
+  return resolveSynonymsFromPairs(wordId, legacyText, pairs, options);
 }
 
 async function replaceSynonyms(
@@ -350,7 +371,7 @@ export async function getVocabularyWords() {
     return [];
   }
 
-  return db.query.vocabularyWords.findMany({
+  const words = await db.query.vocabularyWords.findMany({
     where: and(
       eq(vocabularyWords.userId, userId),
       eq(vocabularyWords.workspaceId, workspace.id),
@@ -359,9 +380,31 @@ export async function getVocabularyWords() {
       meanings: {
         orderBy: [asc(wordMeanings.sortOrder)],
       },
+      examples: {
+        orderBy: [asc(wordExamples.sortOrder)],
+      },
       tags: true,
     },
     orderBy: [desc(vocabularyWords.updatedAt)],
+  });
+
+  const [pairs, options] = await Promise.all([
+    loadSynonymPairsForWorkspace(workspace.id),
+    listWorkspaceSynonymOptions(workspace.id),
+  ]);
+
+  return words.map((word) => {
+    const synonyms = resolveSynonymsFromPairs(
+      word.id,
+      word.synonyms,
+      pairs,
+      options,
+    );
+    return {
+      ...word,
+      synonymRefs: synonyms.linked,
+      unmatchedSynonyms: synonyms.unmatched,
+    };
   });
 }
 

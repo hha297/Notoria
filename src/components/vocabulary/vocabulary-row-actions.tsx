@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Loader2, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { Button, buttonVariants } from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -15,14 +14,18 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { deleteVocabularyWord } from "@/lib/actions/vocabulary";
-import { cn } from "@/lib/utils";
 
 type VocabularyRowActionsProps = {
   wordId: string;
   word: string;
+  onEdit: () => void;
 };
 
-export function VocabularyRowActions({ wordId, word }: VocabularyRowActionsProps) {
+export function VocabularyRowActions({
+  wordId,
+  word,
+  onEdit,
+}: VocabularyRowActionsProps) {
   const t = useTranslations("common");
   const tv = useTranslations("vocabulary");
   const te = useTranslations("errors");
@@ -44,21 +47,31 @@ export function VocabularyRowActions({ wordId, word }: VocabularyRowActionsProps
   return (
     <>
       <div className="flex justify-end gap-0.5">
-        <Link
-          href={`/vocabulary/${wordId}/edit`}
-          className={cn(
-            buttonVariants({ variant: "ghost", size: "icon-sm" }),
-            "text-muted-foreground hover:text-ink",
-          )}
-        >
-          <Pencil className="size-3.5" />
-          <span className="sr-only">{t("edit")}</span>
-        </Link>
         <Button
+          type="button"
           variant="ghost"
           size="icon-sm"
           className="text-muted-foreground hover:text-ink"
-          onClick={() => setDeleteOpen(true)}
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            onEdit();
+          }}
+          disabled={isPending}
+        >
+          <Pencil className="size-3.5" />
+          <span className="sr-only">{t("edit")}</span>
+        </Button>
+        <Button
+          type="button"
+          variant="ghost"
+          size="icon-sm"
+          className="text-muted-foreground hover:text-ink"
+          onClick={(event) => {
+            event.preventDefault();
+            event.stopPropagation();
+            setDeleteOpen(true);
+          }}
           disabled={isPending}
         >
           <Trash2 className="size-3.5" />
