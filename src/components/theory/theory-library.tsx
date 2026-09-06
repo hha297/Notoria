@@ -35,6 +35,13 @@ import {
   isKnownTheoryCategory,
   type TheoryListItem,
 } from "@/lib/theory/content";
+import {
+  isMultiFilterActive,
+  matchesMultiFilter,
+  multiFilterKey,
+  toggleMultiFilterValue,
+  type MultiFilterValue,
+} from "@/lib/filters/multi-select";
 import { cn } from "@/lib/utils";
 
 const EASE = [0.25, 0.1, 0.25, 1] as const;
@@ -62,21 +69,21 @@ export function TheoryLibrary({
   const t = useTranslations("theory");
   const tFolders = useTranslations("folders");
   const [search, setSearch] = useState("");
-  const [category, setCategory] = useState<string>("all");
+  const [categories, setCategories] = useState<MultiFilterValue>([]);
   const createHref = sectionCreateHref("theory", currentFolderId);
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
     const scoped = query ? notes : itemsInFolder(notes, currentFolderId);
     return scoped.filter((note) => {
-      if (category !== "all" && note.category !== category) return false;
+      if (!matchesMultiFilter(categories, note.category)) return false;
       if (!query) return true;
       return [note.title, note.description, categoryLabel(note.category, t)]
         .join(" ")
         .toLowerCase()
         .includes(query);
     });
-  }, [notes, currentFolderId, search, category, t]);
+  }, [notes, currentFolderId, search, categories, t]);
 
   const childFolders = childrenOf(folders, currentFolderId);
   const matchingFolders = search.trim()
@@ -85,10 +92,10 @@ export function TheoryLibrary({
   const isEmptyRoot = !currentFolderId && notes.length === 0 && folders.length === 0;
   const isEmptyFolder =
     !search.trim() &&
-    category === "all" &&
+    !isMultiFilterActive(categories) &&
     childFolders.length === 0 &&
     itemsInFolder(notes, currentFolderId).length === 0;
-  const hasFilters = search.trim() !== "" || category !== "all";
+  const hasFilters = search.trim() !== "" || isMultiFilterActive(categories);
 
   return (
     <PageShell>
@@ -170,16 +177,18 @@ export function TheoryLibrary({
                 data-tutorial="theory-category-filter"
               >
                 <FilterPill
-                  active={category === "all"}
-                  onClick={() => setCategory("all")}
+                  active={!isMultiFilterActive(categories)}
+                  onClick={() => setCategories([])}
                 >
                   {t("filterAll")}
                 </FilterPill>
                 {THEORY_CATEGORIES.map((item) => (
                   <FilterPill
                     key={item}
-                    active={category === item}
-                    onClick={() => setCategory(item)}
+                    active={categories.includes(item)}
+                    onClick={() =>
+                      setCategories(toggleMultiFilterValue(categories, item))
+                    }
                   >
                     {t(`categories.${item}`)}
                   </FilterPill>
@@ -212,7 +221,7 @@ export function TheoryLibrary({
                 ) : null
               ) : (
                 <motion.div
-                  key={`${category}:${search}`}
+                  key={`${multiFilterKey(categories)}:${search}`}
                   initial="hidden"
                   animate="show"
                   exit={{ opacity: 0 }}

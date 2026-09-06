@@ -9,7 +9,9 @@
     "create": "Create",
     "loading": "Loading...",
     "optional": "Optional",
-    "required": "Required"
+    "required": "Required",
+    "selectedCount": "{count} selected",
+    "clearFilter": "Clear"
   },
   "editor": {
     "linkTitle": "Insert link",

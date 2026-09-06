@@ -9,7 +9,9 @@
     "create": "Tạo",
     "loading": "Đang tải...",
     "optional": "Không bắt buộc",
-    "required": "Bắt buộc"
+    "required": "Bắt buộc",
+    "selectedCount": "{count} đã chọn",
+    "clearFilter": "Xóa"
   },
   "editor": {
     "linkTitle": "Chèn liên kết",

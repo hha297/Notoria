@@ -19,9 +19,9 @@ export type FlashcardWord = {
 };
 
 export type FlashcardFilters = {
-  tag: string;
-  partOfSpeech: string;
-  status: string;
+  tag: string[];
+  partOfSpeech: string[];
+  status: string[];
 };
 
 export type FlashcardSessionState = {
@@ -35,7 +35,7 @@ export type FlashcardSessionState = {
 };
 
 export const DEFAULT_FLASHCARD_FILTERS: FlashcardFilters = {
-  tag: "all",
-  partOfSpeech: "all",
-  status: "all",
+  tag: [],
+  partOfSpeech: [],
+  status: [],
 };

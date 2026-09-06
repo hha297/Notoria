@@ -15,9 +15,7 @@ import { LinkButton } from "@/components/ui/link-button";
 import {
   Select,
   SelectContent,
-  SelectGroup,
   SelectItem,
-  SelectLabel,
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
@@ -32,9 +30,17 @@ import {
 import { VocabularyExportDialog } from "@/components/vocabulary/export-dialog";
 import { VocabularyQuickEditDialog } from "@/components/vocabulary/vocabulary-quick-edit-dialog";
 import { VocabularyRowActions } from "@/components/vocabulary/vocabulary-row-actions";
+import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
 import type { VocabularyExportSourceWord } from "@/lib/vocabulary/export/build-document";
 import { vocabularyNotesToPlainText } from "@/lib/vocabulary/notes-content";
 import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
+import {
+  isMultiFilterActive,
+  matchesMultiFilter,
+  matchesMultiFilterAny,
+  multiFilterKey,
+  type MultiFilterValue,
+} from "@/lib/filters/multi-select";
 import { cn } from "@/lib/utils";
 
 export type VocabularyWordRow = {
@@ -411,8 +417,10 @@ export function VocabularyTable({
   const tTags = useTranslations("tags");
   const tPos = useTranslations("tags.pos");
   const [search, setSearch] = useState("");
-  const [partOfSpeechFilter, setPartOfSpeechFilter] = useState("all");
-  const [tagFilter, setTagFilter] = useState("all");
+  const [partOfSpeechFilter, setPartOfSpeechFilter] = useState<MultiFilterValue>(
+    [],
+  );
+  const [tagFilter, setTagFilter] = useState<MultiFilterValue>([]);
   const [sortField, setSortField] = useState<SortField>("updated");
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [exportOpen, setExportOpen] = useState(false);
@@ -433,7 +441,29 @@ export function VocabularyTable({
     );
   }, [words]);
 
-  const tagFilterGroups = TAG_PICKER_GROUPS;
+  const tagFilterGroups = useMemo(
+    () => [
+      ...TAG_PICKER_GROUPS.map((group) => ({
+        label: tTags(`groups.${group}`),
+        options: BUILTIN_TAG_GROUPS[group].map((tag) => ({
+          value: tag.id,
+          label: tTags(`${group}.${tag.id}`),
+        })),
+      })),
+      ...(customTagOptions.length > 0
+        ? [
+            {
+              label: tTags("groups.custom"),
+              options: customTagOptions.map((tag) => ({
+                value: tag,
+                label: getCustomTagName(tag),
+              })),
+            },
+          ]
+        : []),
+    ],
+    [customTagOptions, tTags],
+  );
 
   const stats = useMemo(() => {
     const weekAgo = Date.now() - WEEK_MS;
@@ -453,11 +483,16 @@ export function VocabularyTable({
     const query = search.trim().toLowerCase();
 
     const result = words.filter((word) => {
-      if (partOfSpeechFilter !== "all" && word.partOfSpeech !== partOfSpeechFilter) {
+      if (!matchesMultiFilter(partOfSpeechFilter, word.partOfSpeech)) {
         return false;
       }
 
-      if (tagFilter !== "all" && !word.tags.some((tag) => tag.tag === tagFilter)) {
+      if (
+        !matchesMultiFilterAny(
+          tagFilter,
+          word.tags.map((tag) => tag.tag),
+        )
+      ) {
         return false;
       }
 
@@ -503,26 +538,6 @@ export function VocabularyTable({
     return pos;
   }
 
-  function getPartOfSpeechFilterLabel(value: string) {
-    if (value === "all") {
-      return t("filterAll");
-    }
-
-    if (PARTS_OF_SPEECH.includes(value as (typeof PARTS_OF_SPEECH)[number])) {
-      return tPos(value as (typeof PARTS_OF_SPEECH)[number]);
-    }
-
-    return value;
-  }
-
-  function getTagFilterLabel(value: string) {
-    if (value === "all") {
-      return t("filterAll");
-    }
-
-    return getTagLabel(value, (key) => tTags(key));
-  }
-
   function getSortLabel(value: string) {
     switch (value) {
       case "updated:desc":
@@ -539,8 +554,8 @@ export function VocabularyTable({
   const sortValue = `${sortField}:${sortDirection}`;
   const filtersActive =
     Boolean(search.trim()) ||
-    partOfSpeechFilter !== "all" ||
-    tagFilter !== "all";
+    isMultiFilterActive(partOfSpeechFilter) ||
+    isMultiFilterActive(tagFilter);
 
   const exportWords = useMemo((): VocabularyExportSourceWord[] => {
     return filteredWords.map((word) => ({
@@ -673,70 +688,25 @@ export function VocabularyTable({
             className="grid grid-cols-1 gap-2 sm:grid-cols-3 sm:gap-1.5"
             data-tutorial="vocab-filters"
           >
-            <Select
-              value={partOfSpeechFilter}
-              onValueChange={(value) => value && setPartOfSpeechFilter(value)}
-            >
-              <SelectTrigger
-                size="sm"
-                className="h-9 w-full min-w-0 sm:min-w-36"
-              >
-                <SelectValue placeholder={t("filterPartOfSpeech")}>
-                  {partOfSpeechFilter === "all"
-                    ? t("filterPartOfSpeech")
-                    : getPartOfSpeechFilterLabel(partOfSpeechFilter)}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">{t("filterAll")}</SelectItem>
-                {PARTS_OF_SPEECH.map((pos) => (
-                  <SelectItem key={pos} value={pos}>
-                    {tPos(pos)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+            <MultiFilterSelect
+              emptyLabel={t("filterPartOfSpeech")}
+              values={partOfSpeechFilter}
+              onChange={setPartOfSpeechFilter}
+              triggerClassName="h-9 w-full min-w-0 sm:min-w-36"
+              options={PARTS_OF_SPEECH.map((pos) => ({
+                value: pos,
+                label: tPos(pos),
+              }))}
+            />
 
-            <Select
-              value={tagFilter}
-              onValueChange={(value) => value && setTagFilter(value)}
-            >
-              <SelectTrigger
-                size="sm"
-                className="h-9 w-full min-w-0 sm:min-w-32"
-              >
-                <SelectValue placeholder={t("columns.tags")}>
-                  {tagFilter === "all"
-                    ? t("columns.tags")
-                    : getTagFilterLabel(tagFilter)}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent className="max-h-80 min-w-56">
-                <SelectGroup>
-                  <SelectItem value="all">{t("filterAll")}</SelectItem>
-                </SelectGroup>
-                {tagFilterGroups.map((group) => (
-                  <SelectGroup key={group}>
-                    <SelectLabel>{tTags(`groups.${group}`)}</SelectLabel>
-                    {BUILTIN_TAG_GROUPS[group].map((tag) => (
-                      <SelectItem key={tag.id} value={tag.id}>
-                        {tTags(`${group}.${tag.id}`)}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                ))}
-                {customTagOptions.length > 0 && (
-                  <SelectGroup>
-                    <SelectLabel>{tTags("groups.custom")}</SelectLabel>
-                    {customTagOptions.map((tag) => (
-                      <SelectItem key={tag} value={tag}>
-                        {getCustomTagName(tag)}
-                      </SelectItem>
-                    ))}
-                  </SelectGroup>
-                )}
-              </SelectContent>
-            </Select>
+            <MultiFilterSelect
+              emptyLabel={t("columns.tags")}
+              values={tagFilter}
+              onChange={setTagFilter}
+              triggerClassName="h-9 w-full min-w-0 sm:min-w-32"
+              contentClassName="max-h-80 min-w-56"
+              groups={tagFilterGroups}
+            />
 
             <Select
               value={sortValue}
@@ -752,11 +722,9 @@ export function VocabularyTable({
             >
               <SelectTrigger
                 size="sm"
-                className="h-9 w-full min-w-0 sm:min-w-40"
+                className="h-9 w-full min-w-0 sm:min-w-36"
               >
-                <SelectValue placeholder={t("sortBy")}>
-                  {getSortLabel(sortValue)}
-                </SelectValue>
+                <SelectValue>{getSortLabel(sortValue)}</SelectValue>
               </SelectTrigger>
               <SelectContent>
                 <SelectItem value="updated:desc">{t("sortUpdated")}</SelectItem>
@@ -788,7 +756,7 @@ export function VocabularyTable({
           <div className="space-y-4" data-tutorial="vocab-word-list">
             {groupedWords.map((group) => (
               <VocabularyPosGroup
-                key={`${group.key}:${search}:${partOfSpeechFilter}:${tagFilter}:${sortValue}`}
+                key={`${group.key}:${search}:${multiFilterKey(partOfSpeechFilter)}:${multiFilterKey(tagFilter)}:${sortValue}`}
                 title={group.title}
                 words={group.words}
                 onEditWord={setEditingWord}

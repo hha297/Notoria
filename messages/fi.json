@@ -9,7 +9,9 @@
     "create": "Luo",
     "loading": "Ladataan...",
     "optional": "Valinnainen",
-    "required": "Pakollinen"
+    "required": "Pakollinen",
+    "selectedCount": "{count} valittu",
+    "clearFilter": "Tyhjennä"
   },
   "editor": {
     "linkTitle": "Lisää linkki",
