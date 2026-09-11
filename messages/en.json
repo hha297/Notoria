@@ -42,7 +42,9 @@
     "format": "Format",
     "formatSuccess": "Content formatted",
     "formatUnchanged": "Already formatted",
-    "tableSelectionInvalid": "Couldn't convert the selection into a table"
+    "tableSelectionInvalid": "Couldn't convert the selection into a table",
+    "headingCollapse": "Collapse section",
+    "headingExpand": "Expand section"
   },
   "nav": {
     "dashboard": "Dashboard",

@@ -107,7 +107,7 @@ function renderTaskList(nodes: JSONContent[] | undefined): string {
   return items ? `<ul data-type="taskList">${items}</ul>` : "";
 }
 
-function renderBlock(node: JSONContent): string {
+export function renderBlock(node: JSONContent): string {
   switch (node.type) {
     case "paragraph": {
       const inner = renderInline(node.content);

@@ -42,7 +42,9 @@
     "format": "Muotoile",
     "formatSuccess": "Sisältö muotoiltu",
     "formatUnchanged": "Sisältö on jo muotoiltu",
-    "tableSelectionInvalid": "Valintaa ei voitu muuntaa taulukoksi"
+    "tableSelectionInvalid": "Valintaa ei voitu muuntaa taulukoksi",
+    "headingCollapse": "Tiivistä osio",
+    "headingExpand": "Laajenna osio"
   },
   "nav": {
     "dashboard": "Etusivu",

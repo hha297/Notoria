@@ -659,6 +659,11 @@ export function WritingEditor({
               <RichTextEditor
                 content={editorState.doc}
                 placeholder={t("contentPlaceholder")}
+                collapseStorageKey={
+                  initialData?.id
+                    ? `heading-collapse:writing:${initialData.id}`
+                    : null
+                }
                 onChange={(next) => {
                   setDoc(next);
                   if (!isBaselineReadyRef.current) return;

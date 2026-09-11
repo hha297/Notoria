@@ -42,7 +42,9 @@
     "format": "Định dạng",
     "formatSuccess": "Đã định dạng nội dung",
     "formatUnchanged": "Nội dung đã được định dạng",
-    "tableSelectionInvalid": "Không thể chuyển vùng chọn thành bảng"
+    "tableSelectionInvalid": "Không thể chuyển vùng chọn thành bảng",
+    "headingCollapse": "Thu gọn mục",
+    "headingExpand": "Mở rộng mục"
   },
   "nav": {
     "dashboard": "Tổng quan",

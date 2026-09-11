@@ -92,6 +92,7 @@ export function WritingPreview({
           <RichTextContent
             content={editorState.doc}
             className="border-0 bg-transparent shadow-none"
+            collapseStorageKey={`heading-collapse:writing:${id}`}
           />
         ) : (
           <div className="space-y-8">

@@ -415,6 +415,9 @@ export function TheoryEditor({
             <RichTextEditor
               content={doc}
               placeholder={t("contentPlaceholder")}
+              collapseStorageKey={
+                initialData?.id ? `heading-collapse:theory:${initialData.id}` : null
+              }
               onChange={(next) => {
                 setDoc(next);
                 latestRef.current = { ...latestRef.current, doc: next };
