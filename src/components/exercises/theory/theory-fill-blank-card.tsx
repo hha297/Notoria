@@ -51,6 +51,10 @@ export function TheoryFillBlankCard({
     completedSentence: item.completedSentence ?? scrubbed.completedSentence,
   });
   const blankMinWidth = Math.max(item.answer.length + 2, 6);
+  const trailingPunctuation = /^[.!?…]+$/.test(suffixText.trim())
+    ? suffixText.trim()
+    : "";
+  const bodySuffix = trailingPunctuation ? "" : suffixText;
 
   const check = () => {
     if (checked || !value.trim()) return;
@@ -101,7 +105,7 @@ export function TheoryFillBlankCard({
               ) : null}
 
               <span
-                className="inline-flex shrink-0 items-center justify-center"
+                className="inline-flex shrink-0 items-center justify-center gap-0"
                 style={{ minWidth: `${blankMinWidth}ch` }}
               >
                 {checked ? (
@@ -137,6 +141,11 @@ export function TheoryFillBlankCard({
                     )}
                   />
                 )}
+                {trailingPunctuation ? (
+                  <span className="pl-0.5 text-xl font-medium text-ink sm:text-2xl md:text-3xl">
+                    {trailingPunctuation}
+                  </span>
+                ) : null}
               </span>
 
               {item.sourceWord ? (
@@ -145,9 +154,9 @@ export function TheoryFillBlankCard({
                 </span>
               ) : null}
 
-              {suffixText ? (
+              {bodySuffix ? (
                 <span className="text-xl font-medium text-ink sm:text-2xl md:text-3xl">
-                  {suffixText}
+                  {bodySuffix}
                 </span>
               ) : null}
             </div>

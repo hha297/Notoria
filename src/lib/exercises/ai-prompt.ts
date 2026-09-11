@@ -14,15 +14,20 @@ Requirements:
 5. Use this exact blank placeholder: ${FILL_BLANK_PLACEHOLDER}
 6. Return the expected answer separately. Do not put the answer in the sentence.
 7. The answer must be a valid form of the target word. Inflected forms are allowed when grammar requires them.
-8. The sentence must provide enough context to infer the answer. Avoid vague sentences like "I like ________."
+8. CRITICAL — meaningful context aligned with the taught meaning:
+   - The sentence must clearly reflect the specific vocabulary meaning provided (if the word has multiple senses, use THAT meaning).
+   - Provide enough context that a learner understands what is happening and why this word fits.
+   - Avoid vague, incomplete, or context-free frames such as "I like ________." / "Tämä päivä on ________."
+   - Prefer natural everyday usage a teacher would accept as a useful example.
+   - Make the answer inferable from context without being trivially spoon-fed.
 9. Do not include the answer or the base word anywhere else in the sentence.
 10. Match the requested language. Do not translate into another language.
 11. Match the CEFR difficulty:
     - A1/A2: short, simple sentences, common vocabulary, clear context
     - B1/B2: more natural structure, slightly longer context
     - C1/C2: more challenging context
-    Do not make an A2 exercise unnecessarily difficult.
-12. Prefer realistic everyday usage.
+    Do not make an A2 exercise unnecessarily difficult — context should clarify, not overcomplicate.
+12. Prefer realistic everyday usage. Avoid artificial AI-sounding sentences.
 13. Vary sentence structure and context. If the same word appears more than once, write a clearly different sentence each time.
 14. Do not invent unnecessary facts. Do not change the vocabulary word or meaning.
 15. Keep explanation empty.
@@ -30,7 +35,9 @@ Requirements:
 17. ALWAYS include sentenceMeaning: a short natural translation/gloss of the COMPLETE correct sentence (with the answer filled in).
     - Write sentenceMeaning in uiLanguage (the website interface language), NOT in the practice/study language (unless they are the same).
     - Do NOT put sentenceMeaning inside the practice sentence. It is a separate field for post-answer UI.
-18. Return one exercise per input entry. Copy wordId from the input.
+18. Prefer sentence-final punctuation attached right after the blank (e.g. "… ________.") — avoid leaving a lone period as a separate fragment.
+19. Return one exercise per input entry. Copy wordId from the input.
+20. Quality test: would a language teacher consider this a useful example for this exact word/meaning? If not, rewrite.
 
 Return structured JSON only:
 {

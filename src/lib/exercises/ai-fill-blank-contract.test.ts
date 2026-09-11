@@ -97,6 +97,10 @@ describe("fill-in-blank AI prompt contract", () => {
     expect(FILL_BLANK_GENERATOR_PROMPT).toContain(
       "Do NOT invent a specific grammar topic",
     );
+    expect(FILL_BLANK_GENERATOR_PROMPT).toContain("meaningful context");
+    expect(FILL_BLANK_GENERATOR_PROMPT).toContain(
+      "Tämä päivä on ________.",
+    );
   });
 
   it("sends examples only as sentences to avoid, never as a source list", () => {

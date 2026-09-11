@@ -421,6 +421,9 @@ function FillBlankCard({
   const expected = expectedFillBlankAnswer(item);
   const cue = item.meanings.map((m) => m.trim()).filter(Boolean)[0];
   const sentenceMeaning = item.sentenceMeaning?.trim() || "";
+  const afterText = item.sentenceAfter?.trim() || "";
+  const trailingPunctuation = /^[.!?…]+$/.test(afterText) ? afterText : "";
+  const bodyAfter = trailingPunctuation ? "" : item.sentenceAfter;
 
   return (
     <div className="mx-auto max-w-3xl rounded-3xl border border-hairline-cloud bg-card p-6 shadow-xl shadow-ink/5 sm:p-10 md:p-12">
@@ -457,7 +460,7 @@ function FillBlankCard({
             )}
 
             <span
-              className="inline-flex shrink-0 items-center justify-center"
+              className="inline-flex shrink-0 items-center justify-center gap-0"
               style={{ minWidth: `${blankMinWidth}ch` }}
             >
               {revealed ? (
@@ -487,6 +490,11 @@ function FillBlankCard({
                   )}
                 />
               )}
+              {trailingPunctuation ? (
+                <span className="pl-0.5 text-xl font-medium text-ink sm:text-2xl md:text-3xl">
+                  {trailingPunctuation}
+                </span>
+              ) : null}
             </span>
 
             {cue ? (
@@ -495,11 +503,11 @@ function FillBlankCard({
               </span>
             ) : null}
 
-            {item.sentenceAfter && (
+            {bodyAfter ? (
               <span className="text-xl font-medium text-ink sm:text-2xl md:text-3xl">
-                {item.sentenceAfter}
+                {bodyAfter}
               </span>
-            )}
+            ) : null}
           </div>
 
           {revealed && item.aiGenerated && sentenceMeaning ? (

@@ -1,10 +1,43 @@
 import { describe, expect, it } from "vitest";
-import { notesFormatBlocksToDoc } from "@/lib/vocabulary/format-notes-ai";
+import {
+  notesFormatBlocksToDoc,
+  sanitizeVocabularyNotesFormatBlocks,
+} from "@/lib/vocabulary/format-notes-ai";
 import {
   isNotesDocEmpty,
   vocabularyNotesToPlainText,
   serializeVocabularyNotes,
 } from "@/lib/vocabulary/notes-content";
+
+describe("sanitizeVocabularyNotesFormatBlocks", () => {
+  it("drops invented paradigm titles and language headings", () => {
+    const blocks = sanitizeVocabularyNotesFormatBlocks(
+      [
+        { type: "heading", level: 1, text: "Rauhallinen – Noun Paradigm" },
+        { type: "heading", level: 2, text: "Suomi" },
+        { type: "heading", level: 2, text: "Rauhallinen" },
+        {
+          type: "table",
+          headers: ["Sija", "Yksikkö", "Monikko"],
+          rows: [["Genetiivi", "rauhallisen", "rauhallisten"]],
+          boldFirstColumn: true,
+        },
+        { type: "paragraph", text: "Keep this note" },
+      ],
+      "Rauhallinen",
+    );
+
+    expect(blocks).toEqual([
+      {
+        type: "table",
+        headers: ["Sija", "Yksikkö", "Monikko"],
+        rows: [["Genetiivi", "rauhallisen", "rauhallisten"]],
+        boldFirstColumn: true,
+      },
+      { type: "paragraph", text: "Keep this note" },
+    ]);
+  });
+});
 
 describe("notesFormatBlocksToDoc", () => {
   it("builds a TipTap table with bold first column like AI case paradigms", () => {
@@ -24,6 +57,11 @@ describe("notesFormatBlocksToDoc", () => {
     const table = doc.content?.[0];
     expect(table?.type).toBe("table");
     expect(table?.content).toHaveLength(3);
+
+    // Trailing empty paragraph only when the doc ends with a table (caret slot).
+    expect(doc.content).toHaveLength(2);
+    expect(doc.content?.[1]?.type).toBe("paragraph");
+    expect(doc.content?.[1]?.content).toBeUndefined();
 
     const headerRow = table?.content?.[0];
     expect(headerRow?.type).toBe("tableRow");
