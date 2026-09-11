@@ -72,8 +72,13 @@ export function SpeakingSessionCard({
 
   return (
     <>
-      <Card className="h-full border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
-        <CardHeader className="gap-3">
+      <Card className="relative h-full cursor-pointer border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
+        <Link
+          href={`/speaking/${session.id}`}
+          className="absolute inset-0 z-0"
+          aria-label={session.title}
+        />
+        <CardHeader className="relative z-10 gap-3 pointer-events-none">
           <div className="flex items-start justify-between gap-2">
             <div className="flex size-10 items-center justify-center rounded-xl border border-hairline-cloud bg-muted/40">
               <Video className="size-5 text-ink" />
@@ -84,15 +89,13 @@ export function SpeakingSessionCard({
           </div>
           <div className="group/title flex min-w-0 items-center gap-1">
             <CardTitle className="min-w-0 truncate text-lg text-ink">
-              <Link href={`/speaking/${session.id}`} className="hover:underline">
-                {session.title}
-              </Link>
+              {session.title}
             </CardTitle>
             <Button
               type="button"
               size="icon-sm"
               variant="ghost"
-              className="size-6 shrink-0 text-muted-foreground opacity-0 hover:text-destructive group-focus-within/title:opacity-100 group-hover/title:opacity-100 max-sm:opacity-100"
+              className="pointer-events-auto size-6 shrink-0 text-muted-foreground opacity-0 hover:text-destructive group-focus-within/title:opacity-100 group-hover/title:opacity-100 max-sm:opacity-100"
               onClick={() => setDeleteOpen(true)}
               disabled={isPending}
             >
@@ -116,7 +119,7 @@ export function SpeakingSessionCard({
             ) : null}
           </CardDescription>
         </CardHeader>
-        <CardContent className="mt-auto flex flex-wrap items-center justify-between gap-3 pb-1">
+        <CardContent className="relative z-10 mt-auto flex flex-wrap items-center justify-between gap-3 pb-1 pointer-events-none">
           <p className="text-sm text-muted-foreground">
             {formatDistanceToNow(new Date(session.createdAt), {
               addSuffix: true,
@@ -126,6 +129,7 @@ export function SpeakingSessionCard({
             href={joinable ? `/speaking/${session.id}/call` : `/speaking/${session.id}`}
             size="sm"
             variant={joinable ? "default" : "outline"}
+            className="pointer-events-auto"
           >
             {joinable
               ? t("join")

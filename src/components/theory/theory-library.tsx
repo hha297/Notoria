@@ -309,21 +309,28 @@ function TheoryCard({
         whileHover={{ y: -3 }}
         transition={{ duration: 0.18, ease: EASE }}
       >
-        <Card className="h-full border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
-          <CardHeader className="gap-3">
+        <Card className="relative h-full cursor-pointer border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
+          <Link
+            href={`/theory/${note.id}`}
+            className="absolute inset-0 z-0"
+            aria-label={note.title}
+          />
+          <CardHeader className="relative z-10 gap-3 pointer-events-none">
             <div className="flex items-start justify-between gap-2">
               <Badge variant="outline" className="w-fit">
                 {categoryLabel(note.category, t)}
               </Badge>
-              <TheoryRowActions
-                id={note.id}
-                title={note.title}
-                description={note.description}
-                folderId={note.folderId}
-                workspaceId={workspaceId}
-              />
+              <div className="pointer-events-auto">
+                <TheoryRowActions
+                  id={note.id}
+                  title={note.title}
+                  description={note.description}
+                  folderId={note.folderId}
+                  workspaceId={workspaceId}
+                />
+              </div>
             </div>
-            <Link href={`/theory/${note.id}`} className="block space-y-2">
+            <div className="block space-y-2">
               <CardTitle className="line-clamp-2 min-h-[3.25rem] text-lg leading-snug text-ink">
                 {note.title}
               </CardTitle>
@@ -336,9 +343,9 @@ function TheoryCard({
                   />
                 ) : null}
               </div>
-            </Link>
+            </div>
           </CardHeader>
-          <CardContent className="mt-auto flex items-center gap-3 pb-1 text-xs text-muted-foreground">
+          <CardContent className="relative z-10 mt-auto flex items-center gap-3 pb-1 text-xs text-muted-foreground pointer-events-none">
             <span className="inline-flex items-center gap-1">
               <Clock className="size-3.5" />
               {t("readingTime", { minutes: note.readingMinutes })}

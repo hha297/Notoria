@@ -137,6 +137,19 @@
   html {
     @apply font-sans;
   }
+
+  /* All interactive controls should advertise clickability. */
+  a[href],
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  summary {
+    @apply cursor-pointer;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    @apply cursor-not-allowed;
+  }
 }
 
 @layer components {
