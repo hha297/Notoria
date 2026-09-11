@@ -1,4 +1,5 @@
 import type { JSONContent } from "@tiptap/react";
+import { normalizeTipTapHeadingLevels } from "@/lib/editor/heading-level";
 import { stripTransientImages } from "@/lib/editor/images";
 import {
   EMPTY_WRITING_META,
@@ -140,7 +141,7 @@ export function parseWritingContent(raw: unknown): WritingContent {
     return {
       mode: "rich_document",
       version: WRITING_CONTENT_VERSION,
-      doc: raw,
+      doc: normalizeTipTapHeadingLevels(raw),
       meta: { ...EMPTY_WRITING_META },
     };
   }
@@ -170,9 +171,9 @@ export function parseWritingContent(raw: unknown): WritingContent {
   }
 
   const doc = isTipTapDoc(raw.doc)
-    ? raw.doc
+    ? normalizeTipTapHeadingLevels(raw.doc)
     : isTipTapDoc(raw)
-      ? raw
+      ? normalizeTipTapHeadingLevels(raw)
       : createEmptyDoc();
 
   return {
@@ -249,12 +250,14 @@ export function countWritingQuestions(sections: WritingSection[]): number {
   );
 }
 
-export function getWritingListMeta(content: unknown): {
+export type WritingListMeta = {
   mode: WritingMode;
   sectionCount: number;
   questionCount: number;
   meta: WritingMeta;
-} {
+};
+
+export function getWritingListMeta(content: unknown): WritingListMeta {
   const parsed = parseWritingContent(content);
 
   if (parsed.mode === "rich_document") {

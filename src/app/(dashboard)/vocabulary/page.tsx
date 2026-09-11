@@ -3,24 +3,20 @@ import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { VocabularyView } from "@/components/vocabulary/vocabulary-view";
-import {
-  getVocabularyWords,
-  listVocabularySynonymOptions,
-} from "@/lib/actions/vocabulary";
+import { getVocabularyWords } from "@/lib/actions/vocabulary";
 import { getActiveWorkspaceCustomTags } from "@/lib/actions/workspaces";
+import { serializeVocabularyListWords } from "@/lib/vocabulary/serialize-list";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export const dynamic = "force-dynamic";
 
 export default async function VocabularyPage() {
   const t = await getTranslations("vocabulary");
-  const [workspace, words, existingCustomTags, synonymOptions] =
-    await Promise.all([
-      getActiveWorkspace(),
-      getVocabularyWords(),
-      getActiveWorkspaceCustomTags(),
-      listVocabularySynonymOptions(),
-    ]);
+  const [workspace, vocabulary, existingCustomTags] = await Promise.all([
+    getActiveWorkspace(),
+    getVocabularyWords(),
+    getActiveWorkspaceCustomTags(),
+  ]);
 
   if (!workspace) {
     return (
@@ -36,33 +32,12 @@ export default async function VocabularyPage() {
     );
   }
 
-  const serializedWords = words.map((word) => ({
-    id: word.id,
-    word: word.word,
-    partOfSpeech: word.partOfSpeech,
-    notes: word.notes,
-    updatedAt: word.updatedAt.toISOString(),
-    createdAt: word.createdAt.toISOString(),
-    meanings: word.meanings.map((meaning) => ({
-      id: meaning.id,
-      meaning: meaning.meaning,
-      isPrimary: meaning.isPrimary,
-      sortOrder: meaning.sortOrder,
-    })),
-    examples: word.examples.map((example) => ({
-      id: example.id,
-      sentence: example.sentence,
-      meaning: example.meaning,
-      notes: example.notes,
-      sortOrder: example.sortOrder,
-    })),
-    synonymRefs: word.synonymRefs,
-    tags: word.tags.map((tag) => ({ id: tag.id, tag: tag.tag })),
-  }));
+  const { words, synonymOptions } = vocabulary;
 
   return (
     <VocabularyView
-      words={serializedWords}
+      words={serializeVocabularyListWords(words)}
+      workspaceId={workspace.id}
       workspaceName={workspace.name}
       language={workspace.language}
       existingCustomTags={existingCustomTags}

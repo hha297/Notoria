@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
-import { useRouter } from "next/navigation";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -30,6 +29,7 @@ type RenameListeningDialogProps = {
   title: string;
   originalFilename: string | null;
   format?: string | null;
+  onRenamed?: (patch: { title: string; originalFilename: string }) => void;
 };
 
 export function RenameListeningDialog({
@@ -39,10 +39,10 @@ export function RenameListeningDialog({
   title,
   originalFilename,
   format,
+  onRenamed,
 }: RenameListeningDialogProps) {
   const t = useTranslations("listening");
   const tc = useTranslations("common");
-  const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const currentFilename = fallbackListeningFilename(
     originalFilename,
@@ -79,10 +79,13 @@ export function RenameListeningDialog({
 
     startTransition(async () => {
       try {
-        await renameListeningLesson(lessonId, nextFilename);
+        const result = await renameListeningLesson(lessonId, nextFilename);
         toast.success(t("renamed"));
         onOpenChange(false);
-        router.refresh();
+        onRenamed?.({
+          title: result.title,
+          originalFilename: result.originalFilename,
+        });
       } catch (caught) {
         const message = errorMessage(caught);
         setError(message);

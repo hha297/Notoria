@@ -27,8 +27,9 @@ import { connectSpeakingTutorToCall } from "@/lib/speaking/tutor";
 import { finalizeSpeakingSession } from "@/lib/speaking/finalize";
 import { createSpeakingSessionSchema } from "@/schemas/speaking";
 
+/** Page-scoped revalidation for session CRUD (speaking has no folder layout tree). */
 function revalidateSpeaking(id?: string) {
-  revalidatePath("/speaking", "layout");
+  revalidatePath("/speaking");
   if (id) {
     revalidatePath(`/speaking/${id}`);
     revalidatePath(`/speaking/${id}/call`);

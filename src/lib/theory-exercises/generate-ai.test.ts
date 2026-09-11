@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
   answersMatchAny,
+  extractSourceWordCueFromHint,
   forceFullWordBlank,
   isValidTheoryExercise,
   mapAiDraftsToTheoryExercises,
@@ -260,6 +261,51 @@ describe("AI theory exercise mapping", () => {
     expect(item.suffix ?? "").not.toMatch(/bookform/i);
     expect(item.sentence).not.toMatch(/\(about\)/i);
     expect(item.hint?.toLowerCase()).toContain("about");
+  });
+
+  it("keeps base-word cues next to the blank instead of burying them in the hint", () => {
+    const items = mapAiDraftsToTheoryExercises("theory_1", [
+      {
+        type: "fill_blank",
+        learningObjective: "Practice the comparative.",
+        targetType: "word_form",
+        sentence: "Tämä talo on ________ (suuri).",
+        answer: "suurempi",
+        hint: "Muista lisätä -mpi.",
+      },
+      {
+        type: "fill_blank",
+        learningObjective: "Practice the comparative.",
+        targetType: "word_form",
+        sentence: "Tämä kaupunki on ________.",
+        answer: "isompi",
+        sourceWord: "iso",
+        hint: "Muista lisätä -mpi. (iso)",
+      },
+    ]);
+
+    expect(items).toHaveLength(2);
+
+    const fromSentence = items[0]!;
+    expect(fromSentence.type).toBe("fill_blank");
+    if (fromSentence.type !== "fill_blank") return;
+    expect(fromSentence.sourceWord).toBe("suuri");
+    expect(fromSentence.sentence).not.toMatch(/\(suuri\)/i);
+    expect(fromSentence.hint?.toLowerCase() ?? "").not.toContain("suuri");
+    expect(fromSentence.hint).toContain("-mpi");
+
+    const fromSource = items[1]!;
+    expect(fromSource.type).toBe("fill_blank");
+    if (fromSource.type !== "fill_blank") return;
+    expect(fromSource.sourceWord).toBe("iso");
+    expect(fromSource.hint?.toLowerCase() ?? "").not.toMatch(/\(iso\)/);
+  });
+
+  it("extracts a base-word cue already stuck in the hint for display", () => {
+    const recovered = extractSourceWordCueFromHint("Muista lisätä -mpi. (suuri)");
+    expect(recovered.cue).toBe("suuri");
+    expect(recovered.hint.toLowerCase()).not.toContain("suuri");
+    expect(recovered.hint).toContain("-mpi");
   });
 
   it("maps transformation drafts with an explicit source word", () => {

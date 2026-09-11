@@ -2,9 +2,8 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
-import { Loader2, Trash2, Video } from "lucide-react";
+import { Trash2, Video } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
@@ -16,15 +15,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { LinkButton } from "@/components/ui/link-button";
+import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
 import { deleteSpeakingSession } from "@/lib/actions/speaking";
 import { isSpeakingErrorCode } from "@/lib/speaking/errors";
 import { isSpeakingJoinable } from "@/lib/speaking/types";
@@ -43,13 +35,16 @@ function statusVariant(status: SpeakingSessionListItem["status"]) {
 
 type SpeakingSessionCardProps = {
   session: SpeakingSessionListItem;
+  onDeleted?: (id: string) => void;
 };
 
-export function SpeakingSessionCard({ session }: SpeakingSessionCardProps) {
+export function SpeakingSessionCard({
+  session,
+  onDeleted,
+}: SpeakingSessionCardProps) {
   const t = useTranslations("speaking");
   const tMeta = useTranslations("speaking.meta");
   const tc = useTranslations("common");
-  const router = useRouter();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -66,7 +61,7 @@ export function SpeakingSessionCard({ session }: SpeakingSessionCardProps) {
         await deleteSpeakingSession(session.id);
         toast.success(t("deleted"));
         setDeleteOpen(false);
-        router.refresh();
+        onDeleted?.(session.id);
       } catch (error) {
         toast.error(errorMessage(error));
       }
@@ -77,8 +72,13 @@ export function SpeakingSessionCard({ session }: SpeakingSessionCardProps) {
 
   return (
     <>
-      <Card className="h-full border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
-        <CardHeader className="gap-3">
+      <Card className="relative h-full cursor-pointer border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
+        <Link
+          href={`/speaking/${session.id}`}
+          className="absolute inset-0 z-0"
+          aria-label={session.title}
+        />
+        <CardHeader className="relative z-10 gap-3 pointer-events-none">
           <div className="flex items-start justify-between gap-2">
             <div className="flex size-10 items-center justify-center rounded-xl border border-hairline-cloud bg-muted/40">
               <Video className="size-5 text-ink" />
@@ -89,15 +89,13 @@ export function SpeakingSessionCard({ session }: SpeakingSessionCardProps) {
           </div>
           <div className="group/title flex min-w-0 items-center gap-1">
             <CardTitle className="min-w-0 truncate text-lg text-ink">
-              <Link href={`/speaking/${session.id}`} className="hover:underline">
-                {session.title}
-              </Link>
+              {session.title}
             </CardTitle>
             <Button
               type="button"
               size="icon-sm"
               variant="ghost"
-              className="size-6 shrink-0 text-muted-foreground opacity-0 hover:text-destructive group-focus-within/title:opacity-100 group-hover/title:opacity-100 max-sm:opacity-100"
+              className="pointer-events-auto size-6 shrink-0 text-muted-foreground opacity-0 hover:text-destructive group-focus-within/title:opacity-100 group-hover/title:opacity-100 max-sm:opacity-100"
               onClick={() => setDeleteOpen(true)}
               disabled={isPending}
             >
@@ -121,7 +119,7 @@ export function SpeakingSessionCard({ session }: SpeakingSessionCardProps) {
             ) : null}
           </CardDescription>
         </CardHeader>
-        <CardContent className="mt-auto flex flex-wrap items-center justify-between gap-3 pb-1">
+        <CardContent className="relative z-10 mt-auto flex flex-wrap items-center justify-between gap-3 pb-1 pointer-events-none">
           <p className="text-sm text-muted-foreground">
             {formatDistanceToNow(new Date(session.createdAt), {
               addSuffix: true,
@@ -131,6 +129,7 @@ export function SpeakingSessionCard({ session }: SpeakingSessionCardProps) {
             href={joinable ? `/speaking/${session.id}/call` : `/speaking/${session.id}`}
             size="sm"
             variant={joinable ? "default" : "outline"}
+            className="pointer-events-auto"
           >
             {joinable
               ? t("join")
@@ -141,39 +140,16 @@ export function SpeakingSessionCard({ session }: SpeakingSessionCardProps) {
         </CardContent>
       </Card>
 
-      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent showCloseButton={!isPending}>
-          <DialogHeader>
-            <DialogTitle>{t("deleteConfirmTitle")}</DialogTitle>
-            <DialogDescription>
-              {t("deleteConfirmDescription", { title: session.title })}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setDeleteOpen(false)}
-              disabled={isPending}
-            >
-              {tc("cancel")}
-            </Button>
-            <Button
-              type="button"
-              variant="destructive"
-              onClick={handleDelete}
-              disabled={isPending}
-            >
-              {isPending ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <Trash2 className="size-4" />
-              )}
-              {tc("delete")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <ConfirmDeleteDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title={t("deleteConfirmTitle")}
+        description={t("deleteConfirmDescription", { title: session.title })}
+        confirmLabel={tc("delete")}
+        cancelLabel={tc("cancel")}
+        pending={isPending}
+        onConfirm={handleDelete}
+      />
     </>
   );
 }

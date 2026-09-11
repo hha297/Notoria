@@ -1,6 +1,6 @@
 "use client";
 
-import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { RichTextContent } from "@/components/editor/rich-text-content";
 import {
   isNotesDocEmpty,
   parseVocabularyNotes,
@@ -24,9 +24,8 @@ export function VocabularyNotesContent({
   }
 
   return (
-    <RichTextEditor
+    <RichTextContent
       content={doc}
-      editable={false}
       variant="notes"
       className={cn("border-0 bg-transparent shadow-none", className)}
     />

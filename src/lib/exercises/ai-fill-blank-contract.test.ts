@@ -35,6 +35,7 @@ function flashcard(overrides: Partial<FlashcardWord> & Pick<FlashcardWord, "id" 
     synonyms: null,
     notes: null,
     status: "NEW",
+    createdAt: "2026-01-01T00:00:00.000Z",
     meanings: ["friend"],
     examples: ["Minun kaverini asuu Helsingissä."],
     tags: [],
@@ -96,6 +97,10 @@ describe("fill-in-blank AI prompt contract", () => {
     expect(FILL_BLANK_GENERATOR_PROMPT).toContain("instruction");
     expect(FILL_BLANK_GENERATOR_PROMPT).toContain(
       "Do NOT invent a specific grammar topic",
+    );
+    expect(FILL_BLANK_GENERATOR_PROMPT).toContain("meaningful context");
+    expect(FILL_BLANK_GENERATOR_PROMPT).toContain(
+      "Tämä päivä on ________.",
     );
   });
 

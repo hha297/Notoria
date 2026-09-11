@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Save, Sparkles } from "lucide-react";
+import { Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -45,21 +45,11 @@ import {
   createVocabularyWord,
   updateVocabularyWord,
 } from "@/lib/actions/vocabulary";
-import { formatVocabularyNotesAi } from "@/lib/actions/vocabulary-ai";
 import { afterEditorHydration } from "@/lib/editor/hydration";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
 import {
-  buildVocabularyFormSnapshot,
-  vocabularyFormHasRequiredContent,
-  vocabularyFormSnapshotsEqual,
-  type VocabularyFormSnapshot,
-} from "@/lib/vocabulary/form-snapshot";
-import {
-  formatNotesDoc,
-  isNotesDocEmpty,
   parseVocabularyNotes,
   serializeVocabularyNotes,
-  vocabularyNotesToPlainText,
 } from "@/lib/vocabulary/notes-content";
 import {
   countPrimaryMeanings,
@@ -68,6 +58,8 @@ import {
 import { VOCABULARY_WORD_EXISTS } from "@/lib/vocabulary-errors";
 import { isSameVocabularyIdentity, normalizeVocabularyWord } from "@/lib/vocabulary/word-identity";
 import { cn } from "@/lib/utils";
+import { useMutationLock } from "@/hooks/use-mutation-lock";
+import { useVocabularyFormDirtyState } from "@/hooks/use-vocabulary-form-dirty-state";
 import { useVocabularySpellingAi } from "@/hooks/use-vocabulary-spelling-ai";
 import {
   getCustomTagName,
@@ -204,8 +196,7 @@ export function VocabularyForm({
   const tCommon = useTranslations("common");
   const tPos = useTranslations("tags.pos");
   const isModal = mode === "modal";
-  const [isSaving, setIsSaving] = useState(false);
-  const savingLockRef = useRef(false);
+  const { isPending: isSaving, tryBegin, release } = useMutationLock();
   const [wordCheckStatus, setWordCheckStatus] =
     useState<WordCheckStatus>("idle");
   const [meanings, setMeanings] = useState<MeaningItem[]>(
@@ -255,50 +246,47 @@ export function VocabularyForm({
     structuredClone(initialNotesDoc),
   );
   const [notesImageUploading, setNotesImageUploading] = useState(false);
-  const [isFormattingNotes, setIsFormattingNotes] = useState(false);
-  const notesEditorRef = useRef<Editor | null>(null);
   const notesHydrationCancelRef = useRef<(() => void) | null>(null);
-  const [notesBaselineReady, setNotesBaselineReady] = useState(
-    () => !initialData?.id,
-  );
-  const notesBaselineReadyRef = useRef(notesBaselineReady);
-  const [baselineSnapshot, setBaselineSnapshot] =
-    useState<VocabularyFormSnapshot>(() =>
-      buildVocabularyFormSnapshot({
-        word: initialData?.word ?? "",
-        partOfSpeech: initialData?.partOfSpeech,
-        notesDoc: initialNotesDoc,
-        meanings:
-          initialData?.meanings.map((meaning) => ({
-            meaning: meaning.meaning,
-            isPrimary: meaning.isPrimary ?? true,
-          })) ?? createDefaultMeanings(),
-        examples: getInitialExamples(initialData?.examples),
-        tags: initialData?.tags.map((tag) => tag.tag) ?? [],
-        customTags: existingCustomTags,
-        synonymIds: (initialData?.synonymRefs ?? []).map((item) => item.id),
-      }),
-    );
-  const originalFieldsRef = useRef({
-    word: initialData?.word ?? "",
-    partOfSpeech: initialData?.partOfSpeech ?? null,
-    meanings:
-      initialData?.meanings.map((meaning) => ({
-        meaning: meaning.meaning,
-        isPrimary: meaning.isPrimary ?? true,
-      })) ?? createDefaultMeanings(),
-    examples: getInitialExamples(initialData?.examples),
-    tags: initialData?.tags.map((tag) => tag.tag) ?? [],
-    synonymIds: (initialData?.synonymRefs ?? []).map((item) => item.id),
-  });
 
   const watchedWord = form.watch("word");
   const watchedPartOfSpeech = form.watch("partOfSpeech");
   const wordCheckRequestId = useRef(0);
+  const synonymIds = useMemo(
+    () => synonyms.map((item) => item.id),
+    [synonyms],
+  );
 
-  useEffect(() => {
-    notesBaselineReadyRef.current = notesBaselineReady;
-  }, [notesBaselineReady]);
+  const {
+    canSave,
+    adoptNotesBaseline,
+    markNotesBaselineReady,
+  } = useVocabularyFormDirtyState({
+    initial: {
+      word: initialData?.word ?? "",
+      partOfSpeech: initialData?.partOfSpeech,
+      notesDoc: initialNotesDoc,
+      meanings:
+        initialData?.meanings.map((meaning) => ({
+          meaning: meaning.meaning,
+          isPrimary: meaning.isPrimary ?? true,
+        })) ?? createDefaultMeanings(),
+      examples: getInitialExamples(initialData?.examples),
+      tags: initialData?.tags.map((tag) => tag.tag) ?? [],
+      synonymIds: (initialData?.synonymRefs ?? []).map((item) => item.id),
+      hasId: Boolean(initialData?.id),
+    },
+    existingCustomTags,
+    current: {
+      word: watchedWord ?? "",
+      partOfSpeech: watchedPartOfSpeech,
+      notesDoc,
+      meanings,
+      examples,
+      tags,
+      customTags,
+      synonymIds,
+    },
+  });
 
   useEffect(() => {
     return () => {
@@ -306,68 +294,24 @@ export function VocabularyForm({
     };
   }, []);
 
-  const currentSnapshot = useMemo(
-    () =>
-      buildVocabularyFormSnapshot({
-        word: watchedWord ?? "",
-        partOfSpeech: watchedPartOfSpeech,
-        notesDoc,
-        meanings,
-        examples,
-        tags,
-        customTags,
-        synonymIds: synonyms.map((item) => item.id),
-      }),
-    [
-      watchedWord,
-      watchedPartOfSpeech,
-      notesDoc,
-      meanings,
-      examples,
-      tags,
-      customTags,
-      synonyms,
-    ],
-  );
-
-  const hasRequiredContent = vocabularyFormHasRequiredContent(currentSnapshot);
-  const isDirty =
-    notesBaselineReady &&
-    !vocabularyFormSnapshotsEqual(baselineSnapshot, currentSnapshot);
-  const canSave = hasRequiredContent && (initialData?.id ? isDirty : true);
-
-  function adoptNotesBaseline(nextDoc: JSONContent) {
-    const next = buildVocabularyFormSnapshot({
-      word: originalFieldsRef.current.word,
-      partOfSpeech: originalFieldsRef.current.partOfSpeech,
-      notesDoc: nextDoc,
-      meanings: originalFieldsRef.current.meanings,
-      examples: originalFieldsRef.current.examples,
-      tags: originalFieldsRef.current.tags,
-      customTags: existingCustomTags,
-      synonymIds: originalFieldsRef.current.synonymIds,
-    });
+  function handleAdoptNotesBaseline(nextDoc: JSONContent) {
     setNotesDoc(nextDoc);
     form.setValue("notes", serializeVocabularyNotes(nextDoc), {
       shouldDirty: false,
     });
-    setBaselineSnapshot(next);
-    notesBaselineReadyRef.current = true;
-    setNotesBaselineReady(true);
+    adoptNotesBaseline(nextDoc);
   }
 
   function handleNotesEditorReady(editor: Editor | null) {
-    notesEditorRef.current = editor;
     notesHydrationCancelRef.current?.();
     notesHydrationCancelRef.current = null;
     if (!editor) return;
     if (!initialData?.id) {
-      notesBaselineReadyRef.current = true;
-      setNotesBaselineReady(true);
+      markNotesBaselineReady();
       return;
     }
     notesHydrationCancelRef.current = afterEditorHydration(() => {
-      adoptNotesBaseline(editor.getJSON());
+      handleAdoptNotesBaseline(editor.getJSON());
     });
   }
 
@@ -427,8 +371,6 @@ export function VocabularyForm({
   ]);
 
   async function onSubmit(values: VocabularyFormClientValues) {
-    if (savingLockRef.current || isSaving) return;
-
     if (
       wordCheckStatus === "duplicate" ||
       wordCheckStatus === "checking" ||
@@ -473,8 +415,7 @@ export function VocabularyForm({
       }))
       .filter((item) => item.sentence.length > 0);
 
-    savingLockRef.current = true;
-    setIsSaving(true);
+    if (!tryBegin()) return;
 
     try {
       const payload = {
@@ -504,8 +445,7 @@ export function VocabularyForm({
       }
       // Keep isSaving/lock true through navigation so Save cannot flash enabled.
     } catch (error) {
-      savingLockRef.current = false;
-      setIsSaving(false);
+      release();
 
       if (error instanceof Error && error.message === VOCABULARY_WORD_EXISTS) {
         setWordCheckStatus("duplicate");
@@ -537,7 +477,6 @@ export function VocabularyForm({
     isCheckingWord ||
     wordCheckStatus === "pending" ||
     notesImageUploading;
-  const formatNotesDisabled = isNotesDocEmpty(notesDoc) || isFormattingNotes;
 
   function handleNotesChange(doc: JSONContent) {
     setNotesDoc(doc);
@@ -545,49 +484,6 @@ export function VocabularyForm({
       shouldDirty: true,
       shouldTouch: true,
     });
-  }
-
-  function applyFormattedNotes(formatted: JSONContent) {
-    if (JSON.stringify(formatted) === JSON.stringify(notesDoc)) {
-      toast.message(t("formatNotesUnchanged"));
-      return;
-    }
-    setNotesDoc(formatted);
-    form.setValue("notes", serializeVocabularyNotes(formatted), {
-      shouldDirty: true,
-      shouldTouch: true,
-    });
-    notesEditorRef.current?.commands.setContent(formatted);
-    toast.success(t("formatNotesSuccess"));
-  }
-
-  async function handleFormatNotes() {
-    if (isNotesDocEmpty(notesDoc) || isFormattingNotes) return;
-
-    setIsFormattingNotes(true);
-    try {
-      const plain = vocabularyNotesToPlainText(serializeVocabularyNotes(notesDoc));
-      if (!plain.trim()) return;
-
-      const result = await formatVocabularyNotesAi({
-        notes: plain,
-        word: watchedWord?.trim() || null,
-        language,
-      });
-
-      if (result.ok) {
-        applyFormattedNotes(result.doc);
-        return;
-      }
-
-      toast.message(t("formatNotesAiFallback"));
-      applyFormattedNotes(formatNotesDoc(notesDoc));
-    } catch {
-      toast.message(t("formatNotesAiFallback"));
-      applyFormattedNotes(formatNotesDoc(notesDoc));
-    } finally {
-      setIsFormattingNotes(false);
-    }
   }
 
   function handleCancel() {
@@ -785,24 +681,7 @@ export function VocabularyForm({
           />
 
           <div className="space-y-2">
-            <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="notes-editor">{t("notes")}</Label>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="h-8 shrink-0"
-                disabled={formatNotesDisabled}
-                onClick={() => void handleFormatNotes()}
-              >
-                {isFormattingNotes ? (
-                  <Loader2 className="size-3.5 animate-spin" />
-                ) : (
-                  <Sparkles className="size-3.5" />
-                )}
-                {t("formatNotes")}
-              </Button>
-            </div>
+            <Label htmlFor="notes-editor">{t("notes")}</Label>
             <div id="notes-editor">
               <RichTextEditor
                 content={notesDoc}

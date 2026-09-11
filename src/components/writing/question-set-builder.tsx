@@ -26,6 +26,8 @@ import {
 } from "@/components/writing/writing-section-card";
 import { Button } from "@/components/ui/button";
 import { useMounted } from "@/hooks/use-mounted";
+import type { WritingAiSuggestion } from "@/lib/writing/ai-types";
+import type { QuestionAiFeedbackMap } from "@/lib/writing/ai-question-feedback";
 import {
   countWritingQuestions,
   createSection,
@@ -36,6 +38,13 @@ import { cn } from "@/lib/utils";
 type QuestionSetBuilderProps = {
   sections: WritingSection[];
   onChange: (sections: WritingSection[]) => void;
+  questionFeedback?: QuestionAiFeedbackMap;
+  onApplyAiSuggestion?: (
+    questionId: string,
+    suggestion: WritingAiSuggestion,
+  ) => void;
+  onSkipAiSuggestion?: (questionId: string, suggestionId: string) => void;
+  onQuestionEdited?: (questionId: string) => void;
 };
 
 function SortableSectionRow({
@@ -46,6 +55,10 @@ function SortableSectionRow({
   onToggleCollapse,
   onChange,
   onDelete,
+  questionFeedback,
+  onApplyAiSuggestion,
+  onSkipAiSuggestion,
+  onQuestionEdited,
 }: {
   section: WritingSection;
   index: number;
@@ -54,6 +67,13 @@ function SortableSectionRow({
   onToggleCollapse: () => void;
   onChange: (section: WritingSection) => void;
   onDelete: () => void;
+  questionFeedback?: QuestionAiFeedbackMap;
+  onApplyAiSuggestion?: (
+    questionId: string,
+    suggestion: WritingAiSuggestion,
+  ) => void;
+  onSkipAiSuggestion?: (questionId: string, suggestionId: string) => void;
+  onQuestionEdited?: (questionId: string) => void;
 }) {
   const {
     attributes,
@@ -81,6 +101,10 @@ function SortableSectionRow({
         onToggleCollapse={onToggleCollapse}
         onChange={onChange}
         onDelete={onDelete}
+        questionFeedback={questionFeedback}
+        onApplyAiSuggestion={onApplyAiSuggestion}
+        onSkipAiSuggestion={onSkipAiSuggestion}
+        onQuestionEdited={onQuestionEdited}
         dragHandle={
           <SectionDragHandle attributes={attributes} listeners={listeners} />
         }
@@ -92,6 +116,10 @@ function SortableSectionRow({
 export function QuestionSetBuilder({
   sections,
   onChange,
+  questionFeedback,
+  onApplyAiSuggestion,
+  onSkipAiSuggestion,
+  onQuestionEdited,
 }: QuestionSetBuilderProps) {
   const t = useTranslations("writing");
   const mounted = useMounted();
@@ -153,6 +181,13 @@ export function QuestionSetBuilder({
     });
   }
 
+  const aiProps = {
+    questionFeedback,
+    onApplyAiSuggestion,
+    onSkipAiSuggestion,
+    onQuestionEdited,
+  };
+
   const list = (
     <div className="space-y-4">
       {sections.map((section, index) =>
@@ -166,6 +201,7 @@ export function QuestionSetBuilder({
             onToggleCollapse={() => toggleCollapse(section.id)}
             onChange={updateSection}
             onDelete={() => deleteSection(section.id)}
+            {...aiProps}
           />
         ) : (
           <WritingSectionCard
@@ -177,6 +213,7 @@ export function QuestionSetBuilder({
             onToggleCollapse={() => toggleCollapse(section.id)}
             onChange={updateSection}
             onDelete={() => deleteSection(section.id)}
+            {...aiProps}
             dragHandle={
               <span className="rounded-md p-1 text-muted-foreground">
                 <GripVertical className="size-4" />

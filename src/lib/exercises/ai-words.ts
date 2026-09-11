@@ -1,25 +1,60 @@
 import type { ExerciseAiWordInput } from "@/lib/exercises/ai-types";
 import { FILL_BLANK_AI_BATCH } from "@/lib/exercises/ai-types";
-import { shuffleArray } from "@/lib/exercises/utils";
+import {
+  sampleItemsWithPreferences,
+  type SessionSamplePreferences,
+} from "@/lib/exercises/session-size";
 import type { FlashcardWord } from "@/types/flashcards";
+
+export type PickFillBlankAiWordsOptions = Pick<
+  SessionSamplePreferences<FlashcardWord>,
+  "softAvoidWordIds" | "softPreferWordIds"
+> & {
+  /** Previously used word ids this page session (soft rotation). */
+  recentlyUsedIds?: string[];
+};
 
 export function pickFillBlankAiWords(
   words: FlashcardWord[],
   count = FILL_BLANK_AI_BATCH,
-  recentlyUsedIds: string[] = [],
+  recentlyUsedIdsOrOptions: string[] | PickFillBlankAiWordsOptions = [],
 ) {
   if (words.length === 0 || count <= 0) return [];
 
-  const recent = new Set(recentlyUsedIds);
-  const unused = shuffleArray(words.filter((word) => !recent.has(word.id)));
-  const used = shuffleArray(words.filter((word) => recent.has(word.id)));
-  const ordered = unused.length > 0 ? [...unused, ...used] : shuffleArray(words);
+  const options: PickFillBlankAiWordsOptions = Array.isArray(
+    recentlyUsedIdsOrOptions,
+  )
+    ? { recentlyUsedIds: recentlyUsedIdsOrOptions }
+    : recentlyUsedIdsOrOptions;
 
-  const picked: FlashcardWord[] = [];
-  for (let index = 0; picked.length < count; index += 1) {
-    picked.push(ordered[index % ordered.length]!);
+  const softAvoid = new Set([
+    ...(options.softAvoidWordIds ?? []),
+    ...(options.recentlyUsedIds ?? []),
+  ]);
+  // Incorrect words from the last section stay preferred even if also "used".
+  for (const wordId of options.softPreferWordIds ?? []) {
+    softAvoid.delete(wordId);
   }
-  return picked;
+
+  const picked = sampleItemsWithPreferences(words, count, {
+    getWordId: (word) => word.id,
+    getCreatedAt: (word) => word.createdAt,
+    softAvoidWordIds: softAvoid,
+    softPreferWordIds: options.softPreferWordIds,
+  });
+
+  if (picked.length >= count || words.length === 0) return picked;
+
+  // Very small banks: cycle until we fill the requested AI batch size.
+  const ordered = [...picked];
+  const remainder = sampleItemsWithPreferences(words, words.length, {
+    getWordId: (word) => word.id,
+    getCreatedAt: (word) => word.createdAt,
+  });
+  for (let index = 0; ordered.length < count; index += 1) {
+    ordered.push(remainder[index % remainder.length]!);
+  }
+  return ordered;
 }
 
 export function toExerciseAiWord(

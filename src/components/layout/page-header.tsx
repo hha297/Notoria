@@ -25,9 +25,9 @@ export function PageHeader({
         className,
       )}
     >
-      <div className="space-y-2">
+      <div className="min-w-0 flex-1 space-y-2">
         {eyebrow && <p className="eyebrow">{eyebrow}</p>}
-        <h1 className="heading-xl text-ink">
+        <h1 className="heading-xl break-words text-ink">
           {highlight ? (
             <>
               {title}{" "}
@@ -38,13 +38,13 @@ export function PageHeader({
           )}
         </h1>
         {description && (
-          <p className="max-w-2xl text-sm leading-relaxed text-muted-foreground sm:text-base">
+          <p className="max-w-2xl text-sm leading-relaxed break-words text-muted-foreground sm:text-base">
             {description}
           </p>
         )}
       </div>
       {children && (
-        <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto sm:shrink-0 sm:justify-end">
+        <div className="flex w-full min-w-0 flex-wrap items-center gap-2 sm:w-auto sm:max-w-full sm:shrink-0 sm:justify-end">
           {children}
         </div>
       )}

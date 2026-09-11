@@ -33,6 +33,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { useMounted } from "@/hooks/use-mounted";
+import type { WritingAiSuggestion } from "@/lib/writing/ai-types";
+import type { QuestionAiFeedbackMap } from "@/lib/writing/ai-question-feedback";
 import {
   createQuestion,
   type WritingQuestion,
@@ -49,6 +51,13 @@ type WritingSectionCardProps = {
   onToggleCollapse: () => void;
   onChange: (section: WritingSection) => void;
   onDelete: () => void;
+  questionFeedback?: QuestionAiFeedbackMap;
+  onApplyAiSuggestion?: (
+    questionId: string,
+    suggestion: WritingAiSuggestion,
+  ) => void;
+  onSkipAiSuggestion?: (questionId: string, suggestionId: string) => void;
+  onQuestionEdited?: (questionId: string) => void;
 };
 
 function SortableQuestionRow({
@@ -58,6 +67,9 @@ function SortableQuestionRow({
   onChange,
   onDuplicate,
   onDelete,
+  aiSuggestions,
+  onApplyAiSuggestion,
+  onSkipAiSuggestion,
 }: {
   question: WritingQuestion;
   index: number;
@@ -65,6 +77,9 @@ function SortableQuestionRow({
   onChange: (question: WritingQuestion) => void;
   onDuplicate: () => void;
   onDelete: () => void;
+  aiSuggestions?: WritingAiSuggestion[];
+  onApplyAiSuggestion?: (suggestion: WritingAiSuggestion) => void;
+  onSkipAiSuggestion?: (suggestionId: string) => void;
 }) {
   const {
     attributes,
@@ -91,6 +106,9 @@ function SortableQuestionRow({
         onChange={onChange}
         onDuplicate={onDuplicate}
         onDelete={onDelete}
+        aiSuggestions={aiSuggestions}
+        onApplyAiSuggestion={onApplyAiSuggestion}
+        onSkipAiSuggestion={onSkipAiSuggestion}
         dragHandle={
           <QuestionDragHandle attributes={attributes} listeners={listeners} />
         }
@@ -108,6 +126,10 @@ export function WritingSectionCard({
   onToggleCollapse,
   onChange,
   onDelete,
+  questionFeedback,
+  onApplyAiSuggestion,
+  onSkipAiSuggestion,
+  onQuestionEdited,
 }: WritingSectionCardProps) {
   const t = useTranslations("writing");
   const mounted = useMounted();
@@ -145,6 +167,7 @@ export function WritingSectionCard({
   }
 
   function updateQuestion(next: WritingQuestion) {
+    onQuestionEdited?.(next.id);
     updateQuestions(
       section.questions.map((question) =>
         question.id === next.id ? next : question,
@@ -170,13 +193,27 @@ export function WritingSectionCard({
 
   function deleteQuestion(id: string) {
     if (section.questions.length <= 1) return;
+    onQuestionEdited?.(id);
     updateQuestions(section.questions.filter((question) => question.id !== id));
   }
 
   const questionList = (
     <div className="space-y-3">
-      {section.questions.map((question, questionIndex) =>
-        mounted ? (
+      {section.questions.map((question, questionIndex) => {
+        const aiSuggestions = questionFeedback?.[question.id];
+        const questionAiProps = {
+          aiSuggestions,
+          onApplyAiSuggestion: onApplyAiSuggestion
+            ? (suggestion: WritingAiSuggestion) =>
+                onApplyAiSuggestion(question.id, suggestion)
+            : undefined,
+          onSkipAiSuggestion: onSkipAiSuggestion
+            ? (suggestionId: string) =>
+                onSkipAiSuggestion(question.id, suggestionId)
+            : undefined,
+        };
+
+        return mounted ? (
           <SortableQuestionRow
             key={question.id}
             question={question}
@@ -185,6 +222,7 @@ export function WritingSectionCard({
             onChange={updateQuestion}
             onDuplicate={() => duplicateQuestion(question.id)}
             onDelete={() => deleteQuestion(question.id)}
+            {...questionAiProps}
           />
         ) : (
           <WritingQuestionCard
@@ -195,14 +233,15 @@ export function WritingSectionCard({
             onChange={updateQuestion}
             onDuplicate={() => duplicateQuestion(question.id)}
             onDelete={() => deleteQuestion(question.id)}
+            {...questionAiProps}
             dragHandle={
               <span className="rounded-md p-1 text-muted-foreground">
                 <GripVertical className="size-4" />
               </span>
             }
           />
-        ),
-      )}
+        );
+      })}
     </div>
   );
 

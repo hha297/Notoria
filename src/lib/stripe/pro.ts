@@ -1,9 +1,9 @@
+import { cache } from "react";
 import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import { db } from "@/db";
 import { users, type User } from "@/db/schema";
-import { auth } from "@/auth";
-import { getCurrentUserId } from "@/lib/auth/session";
+import { getSession, getCurrentUserId } from "@/lib/auth/session";
 import { hasActivePaidPlan } from "@/lib/auth/paid-access";
 import type { BillingState } from "@/lib/stripe/types";
 
@@ -30,26 +30,28 @@ export function hasActiveProSubscription(
   return hasActivePaidPlan(user);
 }
 
-export async function getCurrentSubscription(): Promise<SubscriptionSnapshot | null> {
-  const session = await auth();
-  if (!session?.user?.id) {
-    return null;
-  }
+export const getCurrentSubscription = cache(
+  async (): Promise<SubscriptionSnapshot | null> => {
+    const session = await getSession();
+    if (!session?.user?.id) {
+      return null;
+    }
 
-  const user = await db.query.users.findFirst({
-    where: eq(users.id, session.user.id),
-    columns: {
-      id: true,
-      subscriptionPlan: true,
-      subscriptionStatus: true,
-      stripeCustomerId: true,
-      stripeSubscriptionId: true,
-      stripeCurrentPeriodEnd: true,
-    },
-  });
+    const user = await db.query.users.findFirst({
+      where: eq(users.id, session.user.id),
+      columns: {
+        id: true,
+        subscriptionPlan: true,
+        subscriptionStatus: true,
+        stripeCustomerId: true,
+        stripeSubscriptionId: true,
+        stripeCurrentPeriodEnd: true,
+      },
+    });
 
-  return user ?? null;
-}
+    return user ?? null;
+  },
+);
 
 export async function requireActiveProSubscription() {
   const userId = await getCurrentUserId();
@@ -73,7 +75,7 @@ export async function requireActiveProSubscription() {
 }
 
 export async function requireProApiUser() {
-  const session = await auth();
+  const session = await getSession();
 
   if (!session?.user?.id) {
     return {

@@ -26,10 +26,7 @@ import {
 } from "@/components/ui/select";
 import { WritingCard, type WritingListItem } from "@/components/writing/writing-card";
 import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
-import {
-  getWritingListMeta,
-  type WritingMode,
-} from "@/lib/writing/content";
+import type { WritingMode } from "@/lib/writing/content";
 import { childrenOf, folderMatchesQuery, itemsInFolder } from "@/lib/folders/tree";
 import type { FolderListItem } from "@/lib/folders/types";
 import { sectionCreateHref } from "@/lib/folders/paths";
@@ -65,6 +62,7 @@ type WritingTableProps = {
   documents: WritingListItem[];
   folders: FolderListItem[];
   currentFolderId: string | null;
+  workspaceId: string;
 };
 
 type DocumentGroup = {
@@ -86,9 +84,11 @@ const CEFR_ORDER: Record<WritingCefr, number> = {
 function WritingDocumentGroup({
   title,
   documents,
+  workspaceId,
 }: {
   title: string;
   documents: WritingListItem[];
+  workspaceId: string;
   mode?: WritingMode;
 }) {
   const t = useTranslations("writing");
@@ -106,7 +106,11 @@ function WritingDocumentGroup({
 
       <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
         {documents.map((document) => (
-          <WritingCard key={document.id} document={document} />
+          <WritingCard
+            key={document.id}
+            document={document}
+            workspaceId={workspaceId}
+          />
         ))}
       </div>
     </section>
@@ -138,6 +142,7 @@ export function WritingTable({
   documents,
   folders,
   currentFolderId,
+  workspaceId,
 }: WritingTableProps) {
   const t = useTranslations("writing");
   const tFolders = useTranslations("folders");
@@ -165,7 +170,7 @@ export function WritingTable({
       ? documents
       : itemsInFolder(documents, currentFolderId);
     const result = scoped.filter((document) => {
-      const listMeta = getWritingListMeta(document.content);
+      const listMeta = document.listMeta;
       const { meta } = listMeta;
 
       if (!matchesMultiFilter(cefrFilter, meta.cefrLevel)) {
@@ -208,8 +213,8 @@ export function WritingTable({
       }
 
       if (sort.startsWith("cefr")) {
-        const aLevel = getWritingListMeta(a.content).meta.cefrLevel;
-        const bLevel = getWritingListMeta(b.content).meta.cefrLevel;
+        const aLevel = a.listMeta.meta.cefrLevel;
+        const bLevel = b.listMeta.meta.cefrLevel;
         const aOrder = aLevel ? CEFR_ORDER[aLevel] : 0;
         const bOrder = bLevel ? CEFR_ORDER[bLevel] : 0;
         return sort === "cefr:asc" ? aOrder - bOrder : bOrder - aOrder;
@@ -244,7 +249,7 @@ export function WritingTable({
       const questionSets: WritingListItem[] = [];
 
       for (const document of filtered) {
-        const meta = getWritingListMeta(document.content);
+        const meta = document.listMeta;
         if (meta.mode === "question_set") {
           questionSets.push(document);
         } else {
@@ -324,24 +329,24 @@ export function WritingTable({
         }
       >
       <div className="space-y-4">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+        <div className="flex min-w-0 flex-col gap-3 lg:flex-row lg:items-center">
           <Input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder={t("searchPlaceholder")}
-            className="h-10 lg:h-8 lg:max-w-sm"
+            className="h-10 min-w-0 lg:h-8 lg:max-w-sm"
             data-tutorial="writing-search"
           />
 
           <div
-            className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:flex-wrap xl:grid-cols-none"
+            className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:flex-wrap xl:grid-cols-none"
             data-tutorial="writing-filters"
           >
             <MultiFilterSelect
               emptyLabel={t("filterCefr")}
               values={cefrFilter}
               onChange={setCefrFilter}
-              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
+              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
               options={WRITING_CEFR_LEVELS.map((level) => ({
                 value: level,
                 label: tMeta(`cefr.${level}`),
@@ -352,7 +357,7 @@ export function WritingTable({
               emptyLabel={t("filterTopic")}
               values={topicFilter}
               onChange={setTopicFilter}
-              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
+              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
               options={WRITING_TOPICS.map((topic) => ({
                 value: topic,
                 label: tMeta(`topics.${topic}`),
@@ -363,7 +368,7 @@ export function WritingTable({
               emptyLabel={t("filterFormality")}
               values={formalityFilter}
               onChange={setFormalityFilter}
-              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
+              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
               options={WRITING_FORMALITY.map((item) => ({
                 value: item,
                 label: tMeta(`formality.${item}`),
@@ -378,7 +383,7 @@ export function WritingTable({
             >
               <SelectTrigger
                 size="sm"
-                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-36"
+                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
               >
                 <SelectValue>
                   {groupBy === "mode"
@@ -401,7 +406,7 @@ export function WritingTable({
             >
               <SelectTrigger
                 size="sm"
-                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-45"
+                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-36"
               >
                 <SelectValue>{sortLabel(sort, t)}</SelectValue>
               </SelectTrigger>
@@ -461,6 +466,7 @@ export function WritingTable({
                 mode={group.mode}
                 title={group.title}
                 documents={group.documents}
+                workspaceId={workspaceId}
               />
             ))}
           </div>

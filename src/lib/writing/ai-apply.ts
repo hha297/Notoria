@@ -54,6 +54,7 @@ export function replaceInQuestionSet(
   state: WritingEditorState,
   original: string,
   replacement: string,
+  questionId?: string,
 ): { state: WritingEditorState; replaced: boolean } {
   let replaced = false;
 
@@ -61,6 +62,8 @@ export function replaceInQuestionSet(
     ...section,
     questions: section.questions.map((question) => {
       if (replaced) return question;
+      if (questionId && question.id !== questionId) return question;
+
       if (question.prompt.includes(original)) {
         replaced = true;
         return {

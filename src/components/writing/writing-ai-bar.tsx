@@ -11,7 +11,11 @@ import { WritingAiPanel } from "@/components/writing/writing-ai-panel";
 import { Button } from "@/components/ui/button";
 import { requestWritingAi } from "@/lib/writing/ai-client";
 import type { WritingAiAction, WritingAiSuggestion } from "@/lib/writing/ai-types";
-import { replaceInEditor, replaceInQuestionSet } from "@/lib/writing/ai-apply";
+import { replaceInEditor } from "@/lib/writing/ai-apply";
+import {
+  attributeSuggestionsToQuestions,
+  type QuestionAiFeedbackMap,
+} from "@/lib/writing/ai-question-feedback";
 import type { WritingEditorState } from "@/lib/writing/content";
 import {
   lastSentence,
@@ -24,7 +28,7 @@ type WritingAiBarProps = {
   title: string;
   editorState: WritingEditorState;
   editor: Editor | null;
-  onEditorStateChange: (state: WritingEditorState) => void;
+  onQuestionFeedbackChange: (next: QuestionAiFeedbackMap) => void;
 };
 
 function selectedEditorText(editor: Editor | null) {
@@ -50,16 +54,19 @@ export function WritingAiBar({
   title,
   editorState,
   editor,
-  onEditorStateChange,
+  onQuestionFeedbackChange,
 }: WritingAiBarProps) {
   const t = useTranslations("writing.ai");
   const { hasProAccess, openUpgrade } = useProAccess();
   const [selectedAction, setSelectedAction] = useState<WritingAiAction>("check");
   const [pendingAction, setPendingAction] = useState<WritingAiAction | null>(null);
-  const [suggestions, setSuggestions] = useState<WritingAiSuggestion[]>([]);
+  const [documentSuggestions, setDocumentSuggestions] = useState<
+    WritingAiSuggestion[]
+  >([]);
 
   const content = writingEditorPlainText(editorState);
   const isChecking = pendingAction !== null;
+  const isQuestionSet = editorState.mode === "question_set";
 
   function requireAccess() {
     if (hasProAccess) return true;
@@ -76,7 +83,11 @@ export function WritingAiBar({
     }
 
     setPendingAction(action);
-    setSuggestions([]);
+    if (isQuestionSet) {
+      onQuestionFeedbackChange({});
+    } else {
+      setDocumentSuggestions([]);
+    }
 
     try {
       const result = await requestWritingAi({
@@ -99,7 +110,16 @@ export function WritingAiBar({
         return;
       }
 
-      setSuggestions(result.result.suggestions);
+      if (isQuestionSet) {
+        onQuestionFeedbackChange(
+          attributeSuggestionsToQuestions(
+            editorState.sections,
+            result.result.suggestions,
+          ),
+        );
+      } else {
+        setDocumentSuggestions(result.result.suggestions);
+      }
 
       if (result.result.suggestions.length === 0) {
         toast.message(
@@ -117,26 +137,15 @@ export function WritingAiBar({
     }
   }
 
-  function applySuggestion(suggestion: WritingAiSuggestion) {
-    if (editorState.mode === "rich_document") {
-      if (!editor || !replaceInEditor(editor, suggestion.original, suggestion.replacement)) {
-        toast.error(t("applyFailed"));
-        return;
-      }
-    } else {
-      const next = replaceInQuestionSet(
-        editorState,
-        suggestion.original,
-        suggestion.replacement,
-      );
-      if (!next.replaced) {
-        toast.error(t("applyFailed"));
-        return;
-      }
-      onEditorStateChange(next.state);
+  function applyDocumentSuggestion(suggestion: WritingAiSuggestion) {
+    if (
+      !editor ||
+      !replaceInEditor(editor, suggestion.original, suggestion.replacement)
+    ) {
+      toast.error(t("applyFailed"));
+      return;
     }
-
-    setSuggestions((current) =>
+    setDocumentSuggestions((current) =>
       current.filter((item) => item.id !== suggestion.id),
     );
   }
@@ -173,7 +182,10 @@ export function WritingAiBar({
       </div>
 
       {isChecking ? (
-        <p className="flex items-center gap-1.5 text-xs text-muted-foreground" role="status">
+        <p
+          className="flex items-center gap-1.5 text-xs text-muted-foreground"
+          role="status"
+        >
           <Loader2 className="size-3 animate-spin" />
           {pendingAction === "improve"
             ? t("checkingImprove")
@@ -181,15 +193,19 @@ export function WritingAiBar({
               ? t("checkingGrammar")
               : t("checking")}
         </p>
-      ) : (
+      ) : null}
+
+      {!isQuestionSet && !isChecking ? (
         <WritingAiPanel
-          suggestions={suggestions}
-          onApply={applySuggestion}
+          suggestions={documentSuggestions}
+          onApply={applyDocumentSuggestion}
           onSkip={(id) =>
-            setSuggestions((current) => current.filter((item) => item.id !== id))
+            setDocumentSuggestions((current) =>
+              current.filter((item) => (item.id ?? item.original) !== id),
+            )
           }
         />
-      )}
+      ) : null}
     </div>
   );
 }

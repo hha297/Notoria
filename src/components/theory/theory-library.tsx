@@ -15,8 +15,8 @@ import {
   FolderGrid,
   FolderWorkspace,
 } from "@/components/folders/folder-workspace";
-import { MoveItemButton } from "@/components/folders/move-item-button";
 import { NewFolderButton } from "@/components/folders/new-folder-button";
+import { TheoryRowActions } from "@/components/theory/theory-row-actions";
 import { Badge } from "@/components/ui/badge";
 import {
   Card,
@@ -27,9 +27,12 @@ import {
 import { DescriptionContent } from "@/components/form/description-content";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
+import { useHydratedQuery } from "@/hooks/use-workspace-list-query";
+import { getTheoryNotes } from "@/lib/actions/theory";
 import { sectionCreateHref } from "@/lib/folders/paths";
 import { childrenOf, folderMatchesQuery, itemsInFolder } from "@/lib/folders/tree";
 import type { FolderListItem } from "@/lib/folders/types";
+import { queryKeys } from "@/lib/query/keys";
 import {
   THEORY_CATEGORIES,
   isKnownTheoryCategory,
@@ -50,6 +53,7 @@ type TheoryLibraryProps = {
   notes: TheoryListItem[];
   folders: FolderListItem[];
   currentFolderId: string | null;
+  workspaceId: string;
 };
 
 function categoryLabel(
@@ -62,15 +66,22 @@ function categoryLabel(
 }
 
 export function TheoryLibrary({
-  notes,
+  notes: initialNotes,
   folders,
   currentFolderId,
+  workspaceId,
 }: TheoryLibraryProps) {
   const t = useTranslations("theory");
   const tFolders = useTranslations("folders");
   const [search, setSearch] = useState("");
   const [categories, setCategories] = useState<MultiFilterValue>([]);
   const createHref = sectionCreateHref("theory", currentFolderId);
+  const { data: notes = initialNotes } = useHydratedQuery({
+    queryKey: queryKeys.theory.list(workspaceId),
+    initialData: initialNotes,
+    enabled: Boolean(workspaceId),
+    queryFn: () => getTheoryNotes(),
+  });
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -236,7 +247,11 @@ export function TheoryLibrary({
                   data-tutorial="theory-note-list"
                 >
                   {filtered.map((note) => (
-                    <TheoryCard key={note.id} note={note} />
+                    <TheoryCard
+                      key={note.id}
+                      note={note}
+                      workspaceId={workspaceId}
+                    />
                   ))}
                 </motion.div>
               )}
@@ -274,7 +289,13 @@ function FilterPill({
   );
 }
 
-function TheoryCard({ note }: { note: TheoryListItem }) {
+function TheoryCard({
+  note,
+  workspaceId,
+}: {
+  note: TheoryListItem;
+  workspaceId: string;
+}) {
   const t = useTranslations("theory");
 
   return (
@@ -288,19 +309,28 @@ function TheoryCard({ note }: { note: TheoryListItem }) {
         whileHover={{ y: -3 }}
         transition={{ duration: 0.18, ease: EASE }}
       >
-        <Card className="h-full border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
-          <CardHeader className="gap-3">
+        <Card className="relative h-full cursor-pointer border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
+          <Link
+            href={`/theory/${note.id}`}
+            className="absolute inset-0 z-0"
+            aria-label={note.title}
+          />
+          <CardHeader className="relative z-10 gap-3 pointer-events-none">
             <div className="flex items-start justify-between gap-2">
               <Badge variant="outline" className="w-fit">
                 {categoryLabel(note.category, t)}
               </Badge>
-              <MoveItemButton
-                id={note.id}
-                title={note.title}
-                folderId={note.folderId}
-              />
+              <div className="pointer-events-auto">
+                <TheoryRowActions
+                  id={note.id}
+                  title={note.title}
+                  description={note.description}
+                  folderId={note.folderId}
+                  workspaceId={workspaceId}
+                />
+              </div>
             </div>
-            <Link href={`/theory/${note.id}`} className="block space-y-2">
+            <div className="block space-y-2">
               <CardTitle className="line-clamp-2 min-h-[3.25rem] text-lg leading-snug text-ink">
                 {note.title}
               </CardTitle>
@@ -313,9 +343,9 @@ function TheoryCard({ note }: { note: TheoryListItem }) {
                   />
                 ) : null}
               </div>
-            </Link>
+            </div>
           </CardHeader>
-          <CardContent className="mt-auto flex items-center gap-3 pb-1 text-xs text-muted-foreground">
+          <CardContent className="relative z-10 mt-auto flex items-center gap-3 pb-1 text-xs text-muted-foreground pointer-events-none">
             <span className="inline-flex items-center gap-1">
               <Clock className="size-3.5" />
               {t("readingTime", { minutes: note.readingMinutes })}

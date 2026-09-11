@@ -15,15 +15,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { LinkButton } from "@/components/ui/link-button";
+import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
 import { RenameListeningDialog } from "@/components/listening/rename-listening-dialog";
 import { MoveItemButton } from "@/components/folders/move-item-button";
 import {
@@ -44,6 +37,8 @@ import {
 
 type ListeningLessonCardProps = {
   lesson: ListeningLessonListItem;
+  onDeleted?: (id: string) => void;
+  onRenamed?: (id: string, patch: { title: string; originalFilename: string }) => void;
 };
 
 function statusVariant(status: ListeningLessonListItem["status"]) {
@@ -52,7 +47,11 @@ function statusVariant(status: ListeningLessonListItem["status"]) {
   return "secondary" as const;
 }
 
-export function ListeningLessonCard({ lesson }: ListeningLessonCardProps) {
+export function ListeningLessonCard({
+  lesson,
+  onDeleted,
+  onRenamed,
+}: ListeningLessonCardProps) {
   const t = useTranslations("listening");
   const tMeta = useTranslations("listening.meta");
   const tc = useTranslations("common");
@@ -79,6 +78,7 @@ export function ListeningLessonCard({ lesson }: ListeningLessonCardProps) {
       try {
         await processListeningLesson(lesson.id);
         toast.success(t("created"));
+        // Status transition still needs RSC refresh until listening is on TanStack.
         router.refresh();
       } catch (error) {
         toast.error(errorMessage(error));
@@ -92,7 +92,7 @@ export function ListeningLessonCard({ lesson }: ListeningLessonCardProps) {
         await deleteListeningLesson(lesson.id);
         toast.success(t("deleted"));
         setDeleteOpen(false);
-        router.refresh();
+        onDeleted?.(lesson.id);
       } catch (error) {
         toast.error(errorMessage(error));
       }
@@ -101,8 +101,13 @@ export function ListeningLessonCard({ lesson }: ListeningLessonCardProps) {
 
   return (
     <>
-      <Card className="h-full border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
-        <CardHeader className="gap-3">
+      <Card className="relative h-full cursor-pointer border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
+        <Link
+          href={`/listening/${lesson.id}`}
+          className="absolute inset-0 z-0"
+          aria-label={lesson.title}
+        />
+        <CardHeader className="relative z-10 gap-3 pointer-events-none">
           <div className="flex items-start justify-between gap-2">
             <div className="flex size-10 items-center justify-center rounded-xl border border-hairline-cloud bg-muted/40">
               <Headphones className="size-5 text-ink" />
@@ -113,11 +118,9 @@ export function ListeningLessonCard({ lesson }: ListeningLessonCardProps) {
           </div>
           <div className="group/title flex min-w-0 items-center gap-1">
             <CardTitle className="min-w-0 truncate text-lg text-ink">
-              <Link href={`/listening/${lesson.id}`} className="hover:underline">
-                {lesson.title}
-              </Link>
+              {lesson.title}
             </CardTitle>
-            <div className="flex shrink-0 items-center opacity-0 transition-opacity group-focus-within/title:opacity-100 group-hover/title:opacity-100 max-sm:opacity-100">
+            <div className="pointer-events-auto flex shrink-0 items-center opacity-0 transition-opacity group-focus-within/title:opacity-100 group-hover/title:opacity-100 max-sm:opacity-100">
               <MoveItemButton
                 id={lesson.id}
                 title={lesson.title}
@@ -178,9 +181,9 @@ export function ListeningLessonCard({ lesson }: ListeningLessonCardProps) {
             ) : null}
           </CardDescription>
         </CardHeader>
-        <CardContent className="mt-auto flex flex-wrap items-center justify-between gap-3 pb-1">
+        <CardContent className="relative z-10 mt-auto flex flex-wrap items-center justify-between gap-3 pb-1 pointer-events-none">
           <p className="text-sm text-muted-foreground">{duration ?? "—"}</p>
-          <div className="flex flex-wrap items-center gap-2">
+          <div className="pointer-events-auto flex flex-wrap items-center gap-2">
             {lesson.status === "FAILED" ? (
               <Button
                 type="button"
@@ -215,41 +218,19 @@ export function ListeningLessonCard({ lesson }: ListeningLessonCardProps) {
         title={lesson.title}
         originalFilename={lesson.originalFilename}
         format={lesson.format}
+        onRenamed={(patch) => onRenamed?.(lesson.id, patch)}
       />
 
-      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent showCloseButton={!isPending}>
-          <DialogHeader>
-            <DialogTitle>{t("deleteConfirmTitle")}</DialogTitle>
-            <DialogDescription>
-              {t("deleteConfirmDescription", { title: lesson.title })}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setDeleteOpen(false)}
-              disabled={isPending}
-            >
-              {tc("cancel")}
-            </Button>
-            <Button
-              type="button"
-              variant="destructive"
-              onClick={handleDelete}
-              disabled={isPending}
-            >
-              {isPending ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <Trash2 className="size-4" />
-              )}
-              {tc("delete")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <ConfirmDeleteDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title={t("deleteConfirmTitle")}
+        description={t("deleteConfirmDescription", { title: lesson.title })}
+        confirmLabel={tc("delete")}
+        cancelLabel={tc("cancel")}
+        pending={isPending}
+        onConfirm={handleDelete}
+      />
     </>
   );
 }

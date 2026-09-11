@@ -1,5 +1,6 @@
 import type { JSONContent } from "@tiptap/react";
 import { descriptionToPlainText } from "@/lib/description-content";
+import { normalizeTipTapHeadingLevels } from "@/lib/editor/heading-level";
 import { stripTransientImages } from "@/lib/editor/images";
 
 export const THEORY_CONTENT_VERSION = 1 as const;
@@ -138,7 +139,9 @@ export function parseTheoryContent(raw: unknown): TheoryNoteContent {
     version: THEORY_CONTENT_VERSION,
     category: trimmedCategory,
     description: trimmedDescription,
-    doc: isTipTapDoc(doc) ? doc : createEmptyTheoryDoc(),
+    doc: isTipTapDoc(doc)
+      ? normalizeTipTapHeadingLevels(doc)
+      : createEmptyTheoryDoc(),
   };
 }
 

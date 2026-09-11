@@ -1,6 +1,6 @@
 "use client";
 
-import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { RichTextContent } from "@/components/editor/rich-text-content";
 import {
   descriptionToPlainText,
   isDescriptionEmpty,
@@ -51,11 +51,10 @@ export function DescriptionContent({
 
   return (
     <div className={className}>
-      <RichTextEditor
+      <RichTextContent
         content={doc}
-        editable={false}
         variant="notes"
-        className="border-0 bg-transparent shadow-none [&_.ProseMirror]:p-0"
+        className="border-0 bg-transparent shadow-none"
       />
     </div>
   );

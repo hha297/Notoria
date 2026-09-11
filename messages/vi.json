@@ -38,7 +38,10 @@
     "imageTooLarge": "Ảnh quá lớn (tối đa 5 MB).",
     "imageInvalidType": "Dùng ảnh PNG, JPG, GIF hoặc WebP.",
     "imageUnavailable": "Chưa cấu hình tải ảnh lên.",
-    "or": "hoặc"
+    "or": "hoặc",
+    "format": "Định dạng",
+    "formatSuccess": "Đã định dạng nội dung",
+    "formatUnchanged": "Nội dung đã được định dạng"
   },
   "nav": {
     "dashboard": "Tổng quan",

@@ -11,6 +11,8 @@ import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useExerciseSessionController } from "@/hooks/use-exercise-session-controller";
+import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import { buildTypeAnswerItems } from "@/lib/exercises/type-answer";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { hintInitialLetter } from "@/lib/exercises/hint";
@@ -32,12 +34,20 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [studyMode, setStudyMode] = useState<FlashcardStudyMode>("mixed");
   const [itemIds, setItemIds] = useState<string[]>([]);
-  const [index, setIndex] = useState(0);
   const [input, setInput] = useState("");
-  const [revealed, setRevealed] = useState(false);
-  const [peeked, setPeeked] = useState(false);
-  const [sessionComplete, setSessionComplete] = useState(false);
-  const [score, setScore] = useState({ correct: 0, answered: 0 });
+  const {
+    currentIndex,
+    score,
+    answered,
+    peeked,
+    complete: sessionComplete,
+    restart,
+    next,
+    goPrev,
+    recordAnswer,
+    peek,
+  } = useExerciseSessionController();
+  const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
 
   const filteredWords = useMemo(
     () => filterFlashcardWords(words, filters),
@@ -48,17 +58,23 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
     [filteredWords, studyMode],
   );
   const itemMap = useMemo(() => new Map(poolItems.map((i) => [i.id, i])), [poolItems]);
+  const createdAtByWordId = useMemo(
+    () => new Map(filteredWords.map((word) => [word.id, word.createdAt] as const)),
+    [filteredWords],
+  );
 
   const startSession = useCallback(() => {
-    const sampled = sampleSessionItems(poolItems, "type_answer");
+    const prefs = commitAndBeginNext();
+    const sampled = sampleSessionItems(poolItems, "type_answer", {
+      getWordId: (item) => item.wordId,
+      getCreatedAt: (item) => createdAtByWordId.get(item.wordId),
+      softAvoidWordIds: prefs.softAvoidWordIds,
+      softPreferWordIds: prefs.softPreferWordIds,
+    });
     setItemIds(sampled.map((i) => i.id));
-    setIndex(0);
-    setScore({ correct: 0, answered: 0 });
-    setSessionComplete(false);
+    restart();
     setInput("");
-    setRevealed(false);
-    setPeeked(false);
-  }, [poolItems]);
+  }, [commitAndBeginNext, createdAtByWordId, poolItems, restart]);
 
   useEffect(() => {
     startSession();
@@ -66,11 +82,9 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
 
   useEffect(() => {
     setInput("");
-    setRevealed(false);
-    setPeeked(false);
-  }, [index, itemIds]);
+  }, [currentIndex, itemIds]);
 
-  const current = itemMap.get(itemIds[index] ?? "");
+  const current = itemMap.get(itemIds[currentIndex] ?? "");
   const total = itemIds.length;
   const isCorrect = current
     ? !peeked && answersMatchAny(input, current.acceptableAnswers)
@@ -81,38 +95,24 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
       : current?.word ?? "";
 
   const check = () => {
-    if (!current || revealed || !input.trim()) return;
-    setRevealed(true);
-    setScore((s) => ({
-      correct: s.correct + (answersMatchAny(input, current.acceptableAnswers) ? 1 : 0),
-      answered: s.answered + 1,
-    }));
+    if (!current || answered || !input.trim()) return;
+    const correct = answersMatchAny(input, current.acceptableAnswers);
+    recordAnswer(correct);
+    recordOutcome({ wordId: current.wordId, correct });
   };
 
   const revealAnswer = () => {
-    if (!current || revealed) return;
-    setPeeked(true);
-    setRevealed(true);
-    setScore((s) => ({
-      correct: s.correct,
-      answered: s.answered + 1,
-    }));
-  };
-
-  const next = () => {
-    if (index < total - 1) {
-      setIndex((i) => i + 1);
-      return;
-    }
-    setSessionComplete(true);
+    if (!current || answered) return;
+    peek();
+    recordOutcome({ wordId: current.wordId, correct: false });
   };
 
   useHotkeys("enter", (e) => {
     e.preventDefault();
     if (sessionComplete) return;
-    if (!revealed) check();
-    else next();
-  }, { enableOnFormTags: true }, [revealed, sessionComplete, input, current]);
+    if (!answered) check();
+    else next(total);
+  }, { enableOnFormTags: true }, [answered, sessionComplete, input, current, total, next]);
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
   if (poolItems.length === 0) {
@@ -151,10 +151,10 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
       ) : (
         <>
           <ExerciseProgressHeader
-            progressLabel={t("progress", { current: index + 1, total })}
+            progressLabel={t("progress", { current: currentIndex + 1, total })}
             scoreLabel={t("score", { correct: score.correct, answered: score.answered })}
             hint={t("keyboardHint")}
-            progressValue={total ? ((index + 1) / total) * 100 : 0}
+            progressValue={total ? ((currentIndex + 1) / total) * 100 : 0}
           />
           {current && (
             <div className="mx-auto max-w-2xl rounded-2xl border border-hairline-cloud bg-card p-5 shadow-xl shadow-ink/5 sm:rounded-3xl sm:p-8 md:p-10">
@@ -167,7 +167,7 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
               <div className="mt-6">
                 <ExerciseHint
                   resetKey={current.id}
-                  answered={revealed}
+                  answered={answered}
                   correctAnswer={correctDisplay}
                   onRevealAnswer={revealAnswer}
                 >
@@ -181,7 +181,7 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
                 </ExerciseHint>
               </div>
               <div className="mt-8 space-y-4">
-                {!revealed ? (
+                {!answered ? (
                   <Input
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
@@ -190,15 +190,21 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
                     autoComplete="off"
                   />
                 ) : (
-                  <div className="space-y-3 rounded-xl border border-hairline-cloud bg-muted/30 p-4 text-sm">
-                    <p><span className="font-semibold text-ink">{t("yourAnswer")}:</span> {input || "—"}</p>
-                    <p><span className="font-semibold text-ink">{t("correctAnswer")}:</span> {correctDisplay}</p>
+                  <div className="min-w-0 space-y-3 rounded-xl border border-hairline-cloud bg-muted/30 p-4 text-sm">
+                    <p className="break-words [overflow-wrap:anywhere]">
+                      <span className="font-semibold text-ink">{t("yourAnswer")}:</span>{" "}
+                      {input || "—"}
+                    </p>
+                    <p className="break-words [overflow-wrap:anywhere]">
+                      <span className="font-semibold text-ink">{t("correctAnswer")}:</span>{" "}
+                      {correctDisplay}
+                    </p>
                   </div>
                 )}
-                {revealed && (
-                  <div className={cn("flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium", isCorrect ? "bg-[#f4fae0] text-[#4a6b0a]" : "bg-[#fff1f6] text-[#c7366a]")}>
-                    {isCorrect ? <CheckCircle2 className="size-4" /> : <XCircle className="size-4" />}
-                    {isCorrect ? t("correct") : t("incorrect")}
+                {answered && (
+                  <div className={cn("flex min-w-0 items-start gap-2 rounded-xl px-4 py-3 text-sm font-medium break-words [overflow-wrap:anywhere]", isCorrect ? "bg-[#f4fae0] text-[#4a6b0a]" : "bg-[#fff1f6] text-[#c7366a]")}>
+                    {isCorrect ? <CheckCircle2 className="mt-0.5 size-4 shrink-0" /> : <XCircle className="mt-0.5 size-4 shrink-0" />}
+                    <span className="min-w-0">{isCorrect ? t("correct") : t("incorrect")}</span>
                   </div>
                 )}
               </div>
@@ -210,13 +216,13 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
                 type="button"
                 variant="outline"
                 size="sm"
-                disabled={index === 0}
-                onClick={() => setIndex((i) => i - 1)}
+                disabled={currentIndex === 0}
+                onClick={goPrev}
                 className="h-11 w-full sm:h-8 sm:w-auto"
               >
                 <ChevronLeft className="size-4" />{t("previous")}
               </Button>
-              {!revealed ? (
+              {!answered ? (
                 <Button
                   type="button"
                   size="sm"
@@ -230,10 +236,10 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
                 <Button
                   type="button"
                   size="sm"
-                  onClick={next}
+                  onClick={() => next(total)}
                   className="h-11 w-full sm:h-8 sm:w-auto"
                 >
-                  {index >= total - 1 ? t("finish") : t("next")}
+                  {currentIndex >= total - 1 ? t("finish") : t("next")}
                   <ChevronRight className="size-4" />
                 </Button>
               )}

@@ -189,7 +189,7 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
                 className={cn(
                   "group relative flex h-full min-h-55 flex-col overflow-hidden rounded-xl border border-hairline-cloud bg-card p-5 transition-all",
                   ready &&
-                    "hover:border-accent-lime/50 hover:shadow-[0_0_0_1px_rgba(194,239,78,0.35)]",
+                    "cursor-pointer hover:border-accent-lime/50 hover:shadow-[0_0_0_1px_rgba(194,239,78,0.35)]",
                 )}
               >
                 <div className="mb-3 flex items-start justify-between gap-2">
@@ -279,7 +279,7 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
                 {ready ? (
                   <Link
                     href={`/exercises/import/${item.id}`}
-                    className="absolute inset-0 z-0"
+                    className="absolute inset-0 z-0 cursor-pointer"
                     aria-label={t("practice")}
                   />
                 ) : null}

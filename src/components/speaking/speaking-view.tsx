@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Plus, Video } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/layout/page-header";
@@ -15,9 +15,14 @@ type SpeakingViewProps = {
   sessions: SpeakingSessionListItem[];
 };
 
-export function SpeakingView({ sessions }: SpeakingViewProps) {
+export function SpeakingView({ sessions: initialSessions }: SpeakingViewProps) {
   const t = useTranslations("speaking");
   const [createOpen, setCreateOpen] = useState(false);
+  const [sessions, setSessions] = useState(initialSessions);
+
+  useEffect(() => {
+    setSessions(initialSessions);
+  }, [initialSessions]);
 
   return (
     <PageShell>
@@ -53,7 +58,15 @@ export function SpeakingView({ sessions }: SpeakingViewProps) {
           <h2 className="heading-md text-ink">{t("mySessions")}</h2>
           <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
             {sessions.map((session) => (
-              <SpeakingSessionCard key={session.id} session={session} />
+              <SpeakingSessionCard
+                key={session.id}
+                session={session}
+                onDeleted={(id) =>
+                  setSessions((current) =>
+                    current.filter((item) => item.id !== id),
+                  )
+                }
+              />
             ))}
           </div>
         </div>

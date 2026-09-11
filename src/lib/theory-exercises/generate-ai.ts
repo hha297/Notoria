@@ -139,6 +139,54 @@ export function resolveFullWordAnswer(input: {
 }
 
 /**
+ * Parenthetical after the blank is either:
+ * - a base-word cue for form practice → show next to ________ (not in the hint)
+ * - a translation gloss → move into the hint
+ */
+function isSourceWordCue(gloss: string): boolean {
+  const g = gloss.trim();
+  if (!g || /\s/.test(g)) return false;
+  if (g.length > 40) return false;
+  // Common English glosses / function words — never treat as the lemma cue.
+  if (
+    /^(about|the|a|an|from|to|of|in|on|at|for|with|by|into|over|under|than|as|like|into|onto|upon|this|that|these|those|and|or|but)$/i.test(
+      g,
+    )
+  ) {
+    return false;
+  }
+  // Single token (letters / study-language letters / hyphen) → lemma cue.
+  return /^[\p{L}\p{M}'’-]+$/u.test(g);
+}
+
+/** Pull a trailing "(lemma)" cue out of a hint for display next to the blank. */
+export function extractSourceWordCueFromHint(hint: string): {
+  cue?: string;
+  hint: string;
+} {
+  const normalized = normalize(hint);
+  const match = normalized.match(/\(([^)]+)\)\s*$/u);
+  if (!match?.[1] || !isSourceWordCue(match[1])) {
+    return { hint: normalized };
+  }
+  const cue = normalize(match[1]);
+  return {
+    cue,
+    hint: stripParentheticalCue(normalized, cue),
+  };
+}
+
+function stripParentheticalCue(hint: string, cue: string): string {
+  const escaped = escapeRegExp(cue.trim());
+  if (!escaped) return hint;
+  return normalize(
+    hint
+      .replace(new RegExp(`\\(\\s*${escaped}\\s*\\)`, "giu"), " ")
+      .replace(/\s{2,}/g, " "),
+  );
+}
+
+/**
  * Remove answer leaks and translation glosses from the visible sentence.
  * Glosses like "(about)" move into the hint instead.
  */
@@ -148,30 +196,58 @@ export function scrubFillBlankPresentation(input: {
   answer: string;
   hint: string;
   spaced?: boolean;
+  /** Known lemma cue — keep out of the hint even if also written in the sentence. */
+  sourceWord?: string;
 }): {
   prefix: string;
   suffix: string;
   hint: string;
   sentence: string;
   completedSentence: string;
+  /** Lemma extracted from parentheses for display next to the blank. */
+  sourceWordCue?: string;
 } {
   let prefix = (input.prefix ?? "").replace(/\s+$/, "");
   let suffix = (input.suffix ?? "").replace(/^\s+/, "");
   let hint = normalize(input.hint);
+  let sourceWordCue = normalize(input.sourceWord ?? "") || undefined;
   const answer = normalize(input.answer).replace(/^-/, "");
   const answerKey = normalizeAnswerKey(answer);
 
-  const moveGlosses = (text: string) =>
+  const moveParentheticals = (text: string) =>
     text.replace(/\s*\(([^)]+)\)\s*/g, (_full, gloss: string) => {
       const g = normalize(gloss);
+      if (!g) return " ";
+
+      if (
+        (sourceWordCue &&
+          normalizeAnswerKey(g) === normalizeAnswerKey(sourceWordCue)) ||
+        isSourceWordCue(g)
+      ) {
+        if (
+          !sourceWordCue ||
+          normalizeAnswerKey(g) !== normalizeAnswerKey(answer)
+        ) {
+          sourceWordCue = sourceWordCue ?? g;
+        }
+        return " ";
+      }
+
       if (g && !hint.toLowerCase().includes(g.toLowerCase())) {
         hint = hint ? `${hint} (${g})` : `(${g})`;
       }
       return " ";
     });
 
-  prefix = normalize(moveGlosses(prefix));
-  suffix = normalize(moveGlosses(suffix));
+  prefix = normalize(moveParentheticals(prefix));
+  suffix = normalize(moveParentheticals(suffix));
+
+  if (sourceWordCue) {
+    hint = stripParentheticalCue(hint, sourceWordCue);
+    if (normalizeAnswerKey(sourceWordCue) === answerKey) {
+      sourceWordCue = undefined;
+    }
+  }
 
   if (answerKey) {
     // Drop trailing prefix token that already is the answer (… historiasta ________).
@@ -195,7 +271,7 @@ export function scrubFillBlankPresentation(input: {
     `${prefix} ${answer}${joinTail(suffix)}`.replace(/\s+([.,:;!?])/g, "$1"),
   );
 
-  return { prefix, suffix, hint, sentence, completedSentence };
+  return { prefix, suffix, hint, sentence, completedSentence, sourceWordCue };
 }
 
 function uniqueAnswers(primary: string, extras: string[] = []): string[] {
@@ -469,7 +545,6 @@ export function mapAiDraftsToTheoryExercises(
         if (needsSourceWord) continue;
         sourceWord = undefined;
       }
-      if (needsSourceWord && !sourceWord) continue;
 
       const sentence = forceFullWordBlank(draft.sentence);
       const split = splitSentenceBlank(sentence);
@@ -481,9 +556,13 @@ export function mapAiDraftsToTheoryExercises(
         answer: answerText,
         hint,
         spaced: true,
+        sourceWord,
       });
       if (!isFullWordBlank(scrubbed.sentence)) continue;
       if (isWrongStudyLanguageSentence(scrubbed.sentence, studyLanguage)) continue;
+
+      const resolvedSourceWord = sourceWord || scrubbed.sourceWordCue;
+      if (needsSourceWord && !resolvedSourceWord) continue;
 
       const fill: TheoryFillBlankExercise = {
         id: uid("ai_fill"),
@@ -501,8 +580,8 @@ export function mapAiDraftsToTheoryExercises(
         hint: scrubbed.hint,
         explanation,
         learningObjective,
-        targetType: effectiveTargetType(targetType, Boolean(sourceWord)),
-        sourceWord,
+        targetType: effectiveTargetType(targetType, Boolean(resolvedSourceWord)),
+        sourceWord: resolvedSourceWord,
         completedSentence: (() => {
           if (!completedSentence) return scrubbed.completedSentence;
           const re = new RegExp(escapeRegExp(answerText), "gi");

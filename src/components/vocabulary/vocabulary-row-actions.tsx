@@ -2,28 +2,24 @@
 
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
-import { Loader2, Pencil, Trash2 } from "lucide-react";
+import { Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
+import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
+import { useInvalidateWorkspaceQueries } from "@/hooks/use-invalidate-workspace-queries";
 import { deleteVocabularyWord } from "@/lib/actions/vocabulary";
 
 type VocabularyRowActionsProps = {
   wordId: string;
   word: string;
+  workspaceId: string;
   onEdit: () => void;
 };
 
 export function VocabularyRowActions({
   wordId,
   word,
+  workspaceId,
   onEdit,
 }: VocabularyRowActionsProps) {
   const t = useTranslations("common");
@@ -31,11 +27,13 @@ export function VocabularyRowActions({
   const te = useTranslations("errors");
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const { removeVocabularyWord } = useInvalidateWorkspaceQueries(workspaceId);
 
   function handleDelete() {
     startTransition(async () => {
       try {
         await deleteVocabularyWord(wordId);
+        removeVocabularyWord(wordId);
         toast.success(tv("deleted"));
         setDeleteOpen(false);
       } catch {
@@ -79,39 +77,16 @@ export function VocabularyRowActions({
         </Button>
       </div>
 
-      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent showCloseButton={!isPending}>
-          <DialogHeader>
-            <DialogTitle>{tv("deleteConfirmTitle")}</DialogTitle>
-            <DialogDescription>
-              {tv("deleteConfirmDescription", { word })}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setDeleteOpen(false)}
-              disabled={isPending}
-            >
-              {t("cancel")}
-            </Button>
-            <Button
-              type="button"
-              variant="destructive"
-              onClick={handleDelete}
-              disabled={isPending}
-            >
-              {isPending ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <Trash2 className="size-4" />
-              )}
-              {t("delete")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <ConfirmDeleteDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title={tv("deleteConfirmTitle")}
+        description={tv("deleteConfirmDescription", { word })}
+        confirmLabel={t("delete")}
+        cancelLabel={t("cancel")}
+        pending={isPending}
+        onConfirm={handleDelete}
+      />
     </>
   );
 }

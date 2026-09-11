@@ -13,6 +13,8 @@ export type FlashcardWord = {
   synonyms: string | null;
   notes: string | null;
   status: FlashcardWordStatus;
+  /** ISO timestamp of vocabulary creation (newest → oldest selection). */
+  createdAt: string;
   meanings: string[];
   examples: string[];
   tags: string[];

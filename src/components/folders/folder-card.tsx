@@ -87,7 +87,7 @@ export function FolderCard({
     >
       <button
         type="button"
-        className="flex min-w-0 flex-1 items-center gap-3 text-left"
+        className="flex min-w-0 flex-1 cursor-pointer items-center gap-3 text-left"
         onClick={handleOpen}
       >
         <div className="flex size-10 items-center justify-center rounded-xl border border-hairline-cloud bg-amber-50">

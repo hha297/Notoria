@@ -1,6 +1,14 @@
 import type { JSONContent } from "@tiptap/react";
 import { formatVocabularyNotes } from "@/lib/vocabulary/format-notes";
 import {
+  formatTiptapDocument,
+  tipTapNodePlainText,
+} from "@/lib/editor/format-document";
+import {
+  coerceHeadingLevel,
+  normalizeTipTapHeadingLevels,
+} from "@/lib/editor/heading-level";
+import {
   isPersistedImageSrc,
   stripTransientImages,
 } from "@/lib/editor/images";
@@ -142,7 +150,7 @@ export function parseVocabularyNotes(raw: string | null | undefined): JSONConten
     try {
       const parsed: unknown = JSON.parse(trimmed);
       if (isTipTapDoc(parsed)) {
-        return parsed;
+        return normalizeTipTapHeadingLevels(parsed);
       }
     } catch {
       // Fall through to plain text.
@@ -161,48 +169,7 @@ export function serializeVocabularyNotes(doc: JSONContent): string {
 }
 
 function nodePlainText(node: JSONContent): string {
-  if (node.type === "text") {
-    return node.text ?? "";
-  }
-
-  if (node.type === "hardBreak") {
-    return "\n";
-  }
-
-  const children = node.content ?? [];
-  const childText = children.map(nodePlainText).join("");
-
-  switch (node.type) {
-    case "paragraph":
-    case "heading":
-    case "blockquote":
-      return childText;
-    case "codeBlock":
-      return childText;
-    case "listItem":
-    case "taskItem":
-      return childText;
-    case "bulletList":
-    case "orderedList":
-    case "taskList":
-      return children.map(nodePlainText).join("\n");
-    case "table":
-      return children
-        .map((row) =>
-          (row.content ?? [])
-            .map((cell) => nodePlainText(cell).trim())
-            .join(" | "),
-        )
-        .join("\n");
-    case "tableRow":
-    case "tableCell":
-    case "tableHeader":
-      return childText;
-    case "horizontalRule":
-      return "";
-    default:
-      return childText;
-  }
+  return tipTapNodePlainText(node);
 }
 
 /** Flatten notes for CSV / PDF / flashcards. */
@@ -245,8 +212,7 @@ export function vocabularyNotesToPlainText(
         continue;
       }
       if (node.type === "heading") {
-        const level =
-          typeof node.attrs?.level === "number" ? node.attrs.level : 1;
+        const level = coerceHeadingLevel(node.attrs?.level);
         blocks.push(`${"#".repeat(level)} ${nodePlainText(node).trim()}`);
         continue;
       }
@@ -299,153 +265,31 @@ export function isNotesDocEmpty(doc: JSONContent | null | undefined): boolean {
   });
 }
 
-function collapseSpaces(text: string): string {
-  return text.replace(/[ \t]+/g, " ");
-}
-
-function hasCodeMark(node: JSONContent): boolean {
-  return (node.marks ?? []).some((mark) => mark.type === "code");
-}
-
-function tidyInlineNodes(
-  nodes: JSONContent[] | undefined,
-  inCodeBlock: boolean,
-): JSONContent[] | undefined {
-  if (!nodes?.length) return nodes;
-
-  const next: JSONContent[] = [];
-
-  for (const node of nodes) {
-    if (node.type === "text" && typeof node.text === "string") {
-      const text =
-        inCodeBlock || hasCodeMark(node)
-          ? node.text
-          : collapseSpaces(node.text);
-      if (text.length === 0) continue;
-      next.push({ ...node, text });
-      continue;
-    }
-
-    if (node.type === "hardBreak") {
-      next.push({ type: "hardBreak" });
-      continue;
-    }
-
-    const cloned: JSONContent = { ...node };
-    if (cloned.content) {
-      cloned.content = tidyInlineNodes(cloned.content, inCodeBlock);
-    }
-    next.push(cloned);
-  }
-
-  return next;
-}
-
-function isVisuallyEmptyBlock(node: JSONContent): boolean {
-  if (node.type === "horizontalRule") return false;
-  if (node.type === "image") {
-    return !isPersistedImageSrc(
-      typeof node.attrs?.src === "string" ? node.attrs.src : "",
-    );
-  }
-  if (
-    node.type === "bulletList" ||
-    node.type === "orderedList" ||
-    node.type === "taskList" ||
-    node.type === "codeBlock" ||
-    node.type === "blockquote" ||
-    node.type === "heading" ||
-    node.type === "table"
-  ) {
-    return false;
-  }
-  if (node.type === "paragraph") {
-    return nodePlainText(node).trim().length === 0;
-  }
-  return nodePlainText(node).trim().length === 0;
-}
-
-function tidyBlockNode(node: JSONContent): JSONContent {
-  const inCodeBlock = node.type === "codeBlock";
-  const next: JSONContent = { ...node };
-
-  if (next.content) {
-    if (
-      node.type === "paragraph" ||
-      node.type === "heading" ||
-      node.type === "codeBlock"
-    ) {
-      next.content = tidyInlineNodes(next.content, inCodeBlock);
-      if (!inCodeBlock && next.content?.length) {
-        const first = next.content[0];
-        const last = next.content[next.content.length - 1];
-        if (first?.type === "text" && typeof first.text === "string") {
-          first.text = first.text.replace(/^[ \t]+/, "");
-        }
-        if (last?.type === "text" && typeof last.text === "string") {
-          last.text = last.text.replace(/[ \t]+$/, "");
-        }
-        next.content = next.content.filter(
-          (child) => child.type !== "text" || (child.text?.length ?? 0) > 0,
-        );
-      }
-    } else if (
-      node.type === "bulletList" ||
-      node.type === "orderedList" ||
-      node.type === "taskList" ||
-      node.type === "blockquote" ||
-      node.type === "table" ||
-      node.type === "tableRow"
-    ) {
-      next.content = next.content.map(tidyBlockNode);
-    } else if (
-      node.type === "listItem" ||
-      node.type === "taskItem" ||
-      node.type === "tableCell" ||
-      node.type === "tableHeader"
-    ) {
-      next.content = next.content.map(tidyBlockNode);
-    } else {
-      next.content = tidyInlineNodes(next.content, false);
-    }
-  }
-
-  return next;
+/**
+ * Format notes for the TipTap editor (shared deterministic formatter).
+ */
+export function formatTipTapNotesDoc(doc: JSONContent): JSONContent {
+  return formatTiptapDocument(doc);
 }
 
 /**
- * TipTap-aware notes tidy: collapse spaces, trim edges, drop extra empty
- * paragraphs. Preserves marks and list structure. Idempotent.
+ * Format notes for the TipTap editor.
+ * Uses the shared document formatter for structure cleanup.
+ * Plain-paragraph-only docs still rebuild via the text prettier for legacy markdown.
  */
-export function formatTipTapNotesDoc(doc: JSONContent): JSONContent {
-  const content = (doc.content ?? []).map(tidyBlockNode);
-  const collapsed: JSONContent[] = [];
-  let prevEmpty = false;
+export function formatNotesDoc(doc: JSONContent): JSONContent {
+  const tidied = formatTiptapDocument(doc);
 
-  for (const node of content) {
-    const empty = isVisuallyEmptyBlock(node);
-    if (empty) {
-      if (prevEmpty || collapsed.length === 0) continue;
-      collapsed.push({ type: "paragraph" });
-      prevEmpty = true;
-      continue;
-    }
-    prevEmpty = false;
-    collapsed.push(node);
+  if (!docLooksPlainParagraphsOnly(tidied)) {
+    return tidied;
   }
 
-  while (
-    collapsed.length > 0 &&
-    isVisuallyEmptyBlock(collapsed[collapsed.length - 1]!)
-  ) {
-    collapsed.pop();
-  }
-
-  if (collapsed.length === 0) {
+  // Plain docs: text prettier can still recover markdown-ish structure.
+  const plain = vocabularyNotesToPlainText(serializeVocabularyNotes(tidied));
+  if (!plain.trim()) {
     return structuredClone(EMPTY_NOTES_DOC);
   }
-
-  return { type: "doc", content: collapsed };
+  return formatTiptapDocument(formatableTextToDoc(plain));
 }
 
 function docLooksPlainParagraphsOnly(doc: JSONContent): boolean {
@@ -458,118 +302,4 @@ function docLooksPlainParagraphsOnly(doc: JSONContent): boolean {
     }
     return false;
   });
-}
-
-/**
- * Format notes for the TipTap editor.
- * Rich docs: tidy whitespace / empty paragraphs (keep marks & structure).
- * Plain-paragraph docs: run the text prettier then rebuild lists/headings.
- */
-export function formatNotesDoc(doc: JSONContent): JSONContent {
-  const tidied = formatTipTapNotesDoc(doc);
-
-  if (!docLooksPlainParagraphsOnly(tidied)) {
-    return promoteMarkdownListParagraphs(tidied);
-  }
-
-  const plain = vocabularyNotesToPlainText(serializeVocabularyNotes(tidied));
-  return formatableTextToDoc(plain);
-}
-
-const BULLET_PARA_RE = /^([-*•●◦]|\u2022|\u00B7)\s+(.*)$/;
-const NUMBER_PARA_RE = /^(\d+)[.)]\s+(.*)$/;
-
-/** Turn leftover `- item` paragraphs into real TipTap lists (keeps marks). */
-function promoteMarkdownListParagraphs(doc: JSONContent): JSONContent {
-  const nodes = doc.content ?? [];
-  const result: JSONContent[] = [];
-  let i = 0;
-
-  while (i < nodes.length) {
-    const node = nodes[i]!;
-    if (node.type !== "paragraph") {
-      result.push(node);
-      i += 1;
-      continue;
-    }
-
-    const text = nodePlainText(node);
-    const bullet = text.match(BULLET_PARA_RE);
-    const numbered = text.match(NUMBER_PARA_RE);
-
-    if (!bullet && !numbered) {
-      result.push(node);
-      i += 1;
-      continue;
-    }
-
-    const isBullet = Boolean(bullet);
-    const items: JSONContent[] = [];
-
-    while (i < nodes.length) {
-      const current = nodes[i]!;
-      if (current.type !== "paragraph") break;
-      const currentText = nodePlainText(current);
-      const match = isBullet
-        ? currentText.match(BULLET_PARA_RE)
-        : currentText.match(NUMBER_PARA_RE);
-      if (!match) break;
-
-      const markerLength = currentText.length - (match[2]?.length ?? 0);
-      items.push({
-        type: "listItem",
-        content: [stripParagraphPrefix(current, markerLength)],
-      });
-      i += 1;
-    }
-
-    result.push({
-      type: isBullet ? "bulletList" : "orderedList",
-      content: items,
-    });
-  }
-
-  return { type: "doc", content: result };
-}
-
-function stripParagraphPrefix(
-  paragraph: JSONContent,
-  prefixLength: number,
-): JSONContent {
-  if (prefixLength <= 0) return paragraph;
-
-  let remaining = prefixLength;
-  const nextContent: JSONContent[] = [];
-
-  for (const child of paragraph.content ?? []) {
-    if (remaining <= 0) {
-      nextContent.push(child);
-      continue;
-    }
-
-    if (child.type === "text" && typeof child.text === "string") {
-      if (child.text.length <= remaining) {
-        remaining -= child.text.length;
-        continue;
-      }
-      nextContent.push({
-        ...child,
-        text: child.text.slice(remaining),
-      });
-      remaining = 0;
-      continue;
-    }
-
-    if (child.type === "hardBreak") {
-      remaining -= 1;
-      continue;
-    }
-
-    nextContent.push(child);
-  }
-
-  return {
-    type: "paragraph",
-    content: nextContent.length ? nextContent : undefined,
-  };
 }

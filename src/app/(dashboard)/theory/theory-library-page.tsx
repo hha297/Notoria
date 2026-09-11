@@ -6,7 +6,6 @@ import { TheoryLibrary } from "@/components/theory/theory-library";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getFolder, getFolders } from "@/lib/actions/folders";
 import { getTheoryNotes } from "@/lib/actions/theory";
-import { toTheoryListItem } from "@/lib/theory/content";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export async function TheoryLibraryPage({ folderId }: { folderId?: string }) {
@@ -44,9 +43,10 @@ export async function TheoryLibraryPage({ folderId }: { folderId?: string }) {
 
   return (
     <TheoryLibrary
-      notes={notes.map((note) => toTheoryListItem(note))}
+      notes={notes}
       folders={folders}
       currentFolderId={folderId ?? null}
+      workspaceId={workspace.id}
     />
   );
 }

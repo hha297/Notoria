@@ -50,36 +50,36 @@ export function DashboardContinue({
       }
     >
       {showPractice ? (
-        <div className="card-surface-dark flex flex-col justify-between">
-          <div>
+        <div className="card-surface-dark flex flex-col justify-between gap-5">
+          <div className="min-w-0">
             <p className="text-[15px] font-medium uppercase tracking-[0.2px] text-on-dark-muted">
               {t("practiceNowEyebrow")}
             </p>
-            <h2 className="heading-md mt-2">{t("practiceNowTitle")}</h2>
-            <p className="mt-2 max-w-md text-sm leading-relaxed text-on-dark-muted sm:text-base">
+            <h2 className="heading-md mt-2 break-words">{t("practiceNowTitle")}</h2>
+            <p className="mt-2 max-w-md text-sm leading-relaxed break-words text-on-dark-muted sm:text-base">
               {practiceReadyCount > 0
                 ? t("practiceNowReady", { count: practiceReadyCount })
                 : t("practiceNowNeedsMeaning")}
             </p>
           </div>
-          <div className="mt-5">
+          <div className="mt-auto">
             {practiceReadyCount > 0 ? (
               <LinkButton
                 href="/exercises"
                 variant="secondary"
-                className="bg-on-primary text-ink hover:bg-on-primary/90"
+                className="max-w-full bg-on-primary text-ink hover:bg-on-primary/90"
               >
                 <Dumbbell className="size-4" />
-                {t("practiceNowCta")}
+                <span className="truncate">{t("practiceNowCta")}</span>
                 <ArrowRight className="size-4" />
               </LinkButton>
             ) : (
               <LinkButton
                 href="/vocabulary"
                 variant="secondary"
-                className="bg-on-primary text-ink hover:bg-on-primary/90"
+                className="max-w-full bg-on-primary text-ink hover:bg-on-primary/90"
               >
-                {t("practiceNowVocabCta")}
+                <span className="truncate">{t("practiceNowVocabCta")}</span>
                 <ArrowRight className="size-4" />
               </LinkButton>
             )}
@@ -88,9 +88,9 @@ export function DashboardContinue({
       ) : null}
 
       {showItems ? (
-        <div className="card-surface">
-          <h2 className="heading-md">{t("continueTitle")}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">
+        <div className="card-surface min-w-0">
+          <h2 className="heading-md break-words">{t("continueTitle")}</h2>
+          <p className="mt-1 break-words text-sm text-muted-foreground">
             {t("continueSubtitle")}
           </p>
           <ul className="mt-4 space-y-2">

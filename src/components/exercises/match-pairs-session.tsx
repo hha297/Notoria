@@ -11,6 +11,7 @@ import { Button } from "@/components/ui/button";
 import { buildMatchPairItems, type MatchPairItem } from "@/lib/exercises/match-pairs";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { shuffleArray } from "@/lib/exercises/utils";
+import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
 import { DEFAULT_FLASHCARD_FILTERS } from "@/types/flashcards";
@@ -31,21 +32,34 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
   const [matchedIds, setMatchedIds] = useState<Set<string>>(new Set());
   const [wrongId, setWrongId] = useState<string | null>(null);
   const [sessionComplete, setSessionComplete] = useState(false);
+  const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
 
   const filteredWords = useMemo(
     () => filterFlashcardWords(words, filters),
     [words, filters],
   );
   const poolItems = useMemo(() => buildMatchPairItems(filteredWords), [filteredWords]);
+  const createdAtByWordId = useMemo(
+    () => new Map(filteredWords.map((word) => [word.id, word.createdAt] as const)),
+    [filteredWords],
+  );
 
   const startSession = useCallback(() => {
-    setSessionItems(sampleSessionItems(poolItems, "match_pairs"));
+    const prefs = commitAndBeginNext();
+    setSessionItems(
+      sampleSessionItems(poolItems, "match_pairs", {
+        getWordId: (item) => item.wordId,
+        getCreatedAt: (item) => createdAtByWordId.get(item.wordId),
+        softAvoidWordIds: prefs.softAvoidWordIds,
+        softPreferWordIds: prefs.softPreferWordIds,
+      }),
+    );
     setRound((r) => r + 1);
     setSelectedWordId(null);
     setMatchedIds(new Set());
     setWrongId(null);
     setSessionComplete(false);
-  }, [poolItems]);
+  }, [commitAndBeginNext, createdAtByWordId, poolItems]);
 
   useEffect(() => {
     startSession();
@@ -75,12 +89,14 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
       setMatchedIds(next);
       setSelectedWordId(null);
       setWrongId(null);
+      recordOutcome({ wordId, correct: true });
       if (next.size === sessionItems.length) {
         setSessionComplete(true);
       }
       return;
     }
 
+    recordOutcome({ wordId: selectedWordId, correct: false });
     setWrongId(wordId);
     window.setTimeout(() => {
       setWrongId(null);
@@ -154,7 +170,7 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
 
 function Column({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="space-y-2 rounded-2xl border border-hairline-cloud bg-card p-3 sm:p-4">
+    <div className="min-w-0 space-y-2 rounded-2xl border border-hairline-cloud bg-card p-3 sm:p-4">
       <p className="sticky top-0 z-10 bg-card pb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
         {title}
       </p>
@@ -184,7 +200,7 @@ function MatchButton({
       onClick={onClick}
       disabled={matched}
       className={cn(
-        "w-full min-h-11 cursor-pointer rounded-xl border px-4 py-3 text-left text-sm font-medium transition-all sm:min-h-0",
+        "w-full min-w-0 min-h-11 cursor-pointer rounded-xl border px-4 py-3 text-left text-sm font-medium break-words [overflow-wrap:anywhere] transition-all sm:min-h-0",
         matched && "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a] opacity-80",
         !matched && selected && "border-accent-lime bg-accent-lime/15 text-ink",
         !matched && wrong && "border-[#f3b8cc] bg-[#fff1f6] text-[#c7366a] animate-pulse",

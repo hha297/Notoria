@@ -1,6 +1,5 @@
 "use client";
 
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import {
   Dialog,
@@ -22,6 +21,7 @@ type VocabularyQuickEditDialogProps = {
   initialData: VocabularyFormInitialData | null;
   existingCustomTags: string[];
   synonymOptions: VocabularySynonymRef[];
+  onSuccess?: () => void;
 };
 
 export function VocabularyQuickEditDialog({
@@ -31,8 +31,8 @@ export function VocabularyQuickEditDialog({
   initialData,
   existingCustomTags,
   synonymOptions,
+  onSuccess,
 }: VocabularyQuickEditDialogProps) {
-  const router = useRouter();
   const t = useTranslations("vocabulary");
 
   return (
@@ -55,7 +55,7 @@ export function VocabularyQuickEditDialog({
               onCancel={() => onOpenChange(false)}
               onSuccess={() => {
                 onOpenChange(false);
-                router.refresh();
+                onSuccess?.();
               }}
             />
           ) : null}

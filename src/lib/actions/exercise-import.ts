@@ -539,24 +539,28 @@ export async function generateExerciseImportExercises(id: string) {
       throw new ExerciseImportError("GENERATION_FAILED");
     }
 
-    await db.delete(importedExercises).where(eq(importedExercises.importId, id));
-    await db.insert(importedExercises).values(
-      exercises.map((exercise, index) => ({
-        importId: id,
-        type: exercise.type,
-        data: exercise,
-        sortOrder: index,
-      })),
-    );
+    await db.transaction(async (tx) => {
+      await tx
+        .delete(importedExercises)
+        .where(eq(importedExercises.importId, id));
+      await tx.insert(importedExercises).values(
+        exercises.map((exercise, index) => ({
+          importId: id,
+          type: exercise.type,
+          data: exercise,
+          sortOrder: index,
+        })),
+      );
 
-    await db
-      .update(exerciseImports)
-      .set({
-        status: "COMPLETED",
-        errorCode: null,
-        updatedAt: new Date(),
-      })
-      .where(eq(exerciseImports.id, id));
+      await tx
+        .update(exerciseImports)
+        .set({
+          status: "COMPLETED",
+          errorCode: null,
+          updatedAt: new Date(),
+        })
+        .where(eq(exerciseImports.id, id));
+    });
 
     revalidateImports(id);
     return { id, status: "COMPLETED" as const };

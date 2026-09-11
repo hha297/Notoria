@@ -38,7 +38,10 @@
     "imageTooLarge": "Image is too large (max 5 MB).",
     "imageInvalidType": "Use a PNG, JPG, GIF, or WebP image.",
     "imageUnavailable": "Image upload is not configured.",
-    "or": "or"
+    "or": "or",
+    "format": "Format",
+    "formatSuccess": "Content formatted",
+    "formatUnchanged": "Already formatted"
   },
   "nav": {
     "dashboard": "Dashboard",

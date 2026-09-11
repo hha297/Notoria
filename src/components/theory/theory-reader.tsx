@@ -2,26 +2,19 @@
 
 import { motion } from "motion/react";
 import { formatDistanceToNow } from "date-fns";
-import { Clock, Download, Loader2, Pencil, Trash2 } from "lucide-react";
+import { Clock, Download, Pencil, Trash2 } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
-import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { RichTextContent } from "@/components/editor/rich-text-content";
 import { DescriptionContent } from "@/components/form/description-content";
+import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
 import { TheoryExportDialog } from "@/components/theory/export-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { deleteTheoryNote } from "@/lib/actions/theory";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
 import {
@@ -134,9 +127,8 @@ export function TheoryReader({
             />
           ) : null}
         </header>
-        <RichTextEditor
+        <RichTextContent
           content={parsed.doc}
-          editable={false}
           className="border-0 bg-transparent shadow-none"
         />
       </article>
@@ -149,39 +141,16 @@ export function TheoryReader({
         doc={parsed.doc}
       />
 
-      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent showCloseButton={!isPending && !isLeaving}>
-          <DialogHeader>
-            <DialogTitle>{t("deleteConfirmTitle")}</DialogTitle>
-            <DialogDescription>
-              {t("deleteConfirmDescription", { title })}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setDeleteOpen(false)}
-              disabled={isPending || isLeaving}
-            >
-              {tCommon("cancel")}
-            </Button>
-            <Button
-              type="button"
-              variant="destructive"
-              onClick={handleDelete}
-              disabled={isPending || isLeaving}
-            >
-              {isPending || isLeaving ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <Trash2 className="size-4" />
-              )}
-              {tCommon("delete")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <ConfirmDeleteDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title={t("deleteConfirmTitle")}
+        description={t("deleteConfirmDescription", { title })}
+        confirmLabel={tCommon("delete")}
+        cancelLabel={tCommon("cancel")}
+        pending={isPending || isLeaving}
+        onConfirm={handleDelete}
+      />
     </motion.div>
   );
 }

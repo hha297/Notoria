@@ -48,7 +48,7 @@ export function LocaleSelector({ value }: LocaleSelectorProps) {
       <Select value={value} onValueChange={handleChange} disabled={isPending}>
         <SelectTrigger
           size="sm"
-          className="min-w-0 w-[7.5rem] bg-background sm:w-auto sm:min-w-[140px]"
+          className="w-[7.5rem] min-w-0 bg-background sm:w-auto sm:min-w-[140px]"
         >
           <SelectValue>{LOCALE_LABELS[value]}</SelectValue>
         </SelectTrigger>

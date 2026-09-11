@@ -11,16 +11,35 @@ import {
   exerciseFormSchema,
   type ExerciseFormValues,
 } from "@/schemas/exercise";
+import {
+  getWritingListMeta,
+  type WritingListMeta,
+} from "@/lib/writing/content";
 
+export type WritingDocumentListItem = {
+  id: string;
+  title: string;
+  description: string | null;
+  type: "WRITING";
+  folderId: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  userId: string;
+  workspaceId: string;
+  /** Derived server-side so list clients never receive full content JSONB. */
+  listMeta: WritingListMeta;
+};
+
+/** Page-scoped revalidation for document CRUD. Folder tree ops use folders.ts layout revalidate. */
 function revalidateWriting(id?: string) {
-  revalidatePath("/writing", "layout");
+  revalidatePath("/writing");
   if (id) {
     revalidatePath(`/writing/${id}`);
     revalidatePath(`/writing/${id}/edit`);
   }
 }
 
-export async function getWritingDocuments() {
+export async function getWritingDocuments(): Promise<WritingDocumentListItem[]> {
   const userId = await getCurrentUserId();
   const workspace = await getActiveWorkspace();
 
@@ -28,14 +47,33 @@ export async function getWritingDocuments() {
     return [];
   }
 
-  return db.query.exercises.findMany({
+  // Content is read server-side only to derive lean listMeta, then discarded.
+  const documents = await db.query.exercises.findMany({
     where: and(
       eq(exercises.userId, userId),
       eq(exercises.workspaceId, workspace.id),
       eq(exercises.type, "WRITING"),
     ),
+    columns: {
+      id: true,
+      title: true,
+      description: true,
+      type: true,
+      folderId: true,
+      createdAt: true,
+      updatedAt: true,
+      userId: true,
+      workspaceId: true,
+      content: true,
+    },
     orderBy: [desc(exercises.updatedAt)],
   });
+
+  return documents.map(({ content, ...document }) => ({
+    ...document,
+    type: "WRITING" as const,
+    listMeta: getWritingListMeta(content),
+  }));
 }
 
 export async function getWritingDocument(id: string) {

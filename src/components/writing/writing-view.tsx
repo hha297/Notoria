@@ -1,3 +1,5 @@
+"use client";
+
 import { PenLine, Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/layout/page-header";
@@ -10,22 +12,37 @@ import {
   WritingTable,
   type WritingListItem,
 } from "@/components/writing/writing-table";
+import { useHydratedQuery } from "@/hooks/use-workspace-list-query";
+import { getWritingDocuments } from "@/lib/actions/writing";
 import { sectionCreateHref } from "@/lib/folders/paths";
 import type { FolderListItem } from "@/lib/folders/types";
+import { queryKeys } from "@/lib/query/keys";
+import { serializeWritingListDocuments } from "@/lib/writing/serialize-list";
 
 type WritingViewProps = {
   documents: WritingListItem[];
   folders: FolderListItem[];
   currentFolderId: string | null;
+  workspaceId: string;
 };
 
 export function WritingView({
-  documents,
+  documents: initialDocuments,
   folders,
   currentFolderId,
+  workspaceId,
 }: WritingViewProps) {
   const t = useTranslations("writing");
   const createHref = sectionCreateHref("writing", currentFolderId);
+  const { data: documents = initialDocuments } = useHydratedQuery({
+    queryKey: queryKeys.writing.list(workspaceId),
+    initialData: initialDocuments,
+    enabled: Boolean(workspaceId),
+    queryFn: async () => {
+      const docs = await getWritingDocuments();
+      return serializeWritingListDocuments(docs);
+    },
+  });
 
   if (!currentFolderId && documents.length === 0 && folders.length === 0) {
     return (
@@ -74,6 +91,7 @@ export function WritingView({
       documents={documents}
       folders={folders}
       currentFolderId={currentFolderId}
+      workspaceId={workspaceId}
     />
   );
 }

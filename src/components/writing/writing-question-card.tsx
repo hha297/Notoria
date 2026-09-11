@@ -1,13 +1,15 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { memo, type ReactNode } from "react";
 import type { DraggableAttributes } from "@dnd-kit/core";
 import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { Copy, GripVertical, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { WritingAiPanel } from "@/components/writing/writing-ai-panel";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { CapitalizedTextarea } from "@/components/form/capitalized-text";
+import type { WritingAiSuggestion } from "@/lib/writing/ai-types";
 import type { WritingQuestion } from "@/lib/writing/content";
 import { cn } from "@/lib/utils";
 
@@ -19,10 +21,13 @@ type WritingQuestionCardProps = {
   onChange: (question: WritingQuestion) => void;
   onDuplicate: () => void;
   onDelete: () => void;
+  aiSuggestions?: WritingAiSuggestion[];
+  onApplyAiSuggestion?: (suggestion: WritingAiSuggestion) => void;
+  onSkipAiSuggestion?: (suggestionId: string) => void;
   className?: string;
 };
 
-export function WritingQuestionCard({
+export const WritingQuestionCard = memo(function WritingQuestionCard({
   question,
   index,
   canDelete,
@@ -30,20 +35,24 @@ export function WritingQuestionCard({
   onChange,
   onDuplicate,
   onDelete,
+  aiSuggestions,
+  onApplyAiSuggestion,
+  onSkipAiSuggestion,
   className,
 }: WritingQuestionCardProps) {
   const t = useTranslations("writing");
+  const suggestions = aiSuggestions ?? [];
 
   return (
     <div
       className={cn(
-        "rounded-xl border border-hairline-cloud bg-background p-3 sm:p-4",
+        "min-w-0 max-w-full rounded-xl border border-hairline-cloud bg-background p-3 sm:p-4",
         className,
       )}
     >
-      <div className="mb-3 flex items-center gap-2">
+      <div className="mb-3 flex min-w-0 items-center gap-2">
         {dragHandle}
-        <p className="flex-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <p className="min-w-0 flex-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           {t("question")} {index + 1}
         </p>
         <Button
@@ -116,10 +125,22 @@ export function WritingQuestionCard({
             className="min-h-12"
           />
         </div>
+
+        {suggestions.length > 0 &&
+        onApplyAiSuggestion &&
+        onSkipAiSuggestion ? (
+          <div className="border-t border-hairline-cloud pt-3">
+            <WritingAiPanel
+              suggestions={suggestions}
+              onApply={onApplyAiSuggestion}
+              onSkip={onSkipAiSuggestion}
+            />
+          </div>
+        ) : null}
       </div>
     </div>
   );
-}
+});
 
 export function QuestionDragHandle({
   attributes,

@@ -89,6 +89,27 @@ For word-form / inflection / case / conjugation practice (the usual Theory case)
 ALWAYS set sourceWord to the base form shown in parentheses. Example UI: Meillä on ________ (koira).
 Only omit sourceWord for pure concept/rule completion with no lexical item to transform.
 
+## CRITICAL — contextual, theory-aligned practice sentences
+Do NOT optimize for grammatical correctness alone.
+Optimize for: meaningful context + exact theory application + natural language a teacher would use.
+
+Every fill_blank / transformation sentence MUST pass:
+"Would a teacher consider this a useful example for THIS exact grammar point?"
+
+Rules:
+1. Match the exact Theory focus (e.g. Adjektiivien komparatiivi → comparative adjective forms are required).
+2. Make the target grammar NECESSARY from context — not optional.
+   Bad comparative: "Tämä päivä on ________." (vague; positive form also works)
+   Good comparative: "Tänään on paljon ________ kuin eilen." / "Helsinki on ________ kuin Turku."
+3. Provide enough context: who/what, comparison or situation, why this form is needed.
+4. Prefer natural everyday sentences over artificial AI-sounding ones.
+   Bad: "Tämä talo on ________ kuin toinen talo."
+   Good: "Meidän uusi asunto on paljon ________ kuin vanha asunto."
+5. Make the answer inferable from context, but not trivially spoon-fed with numbers unless Theory needs that.
+6. Match difficulty to Theory level — context should clarify, not overcomplicate.
+7. If vocabularyWords are provided, use them with the intended meaning when relevant.
+8. Reject incomplete or context-free frames. Prefer regenerating a richer sentence.
+
 ## Quantity
 Return EXACTLY maxExercises items (target 20–30). Invent varied contexts for the same rule.
 Same full-form answer across different sentences is OK.
@@ -126,7 +147,8 @@ Same full-form answer across different sentences is OK.
 6. fill_blank sentence MUST contain exactly one blank as eight underscores: ________
 7. No markdown.
 8. Optional showArrow: false for prompt-line style (cue + blank) instead of cue → blank.
-9. fill_blank MUST include sentenceMeaning in uiLanguage.`;
+9. fill_blank MUST include sentenceMeaning in uiLanguage.
+10. Prefer putting sentence-final punctuation immediately after the blank (e.g. "… ________.") — do not leave a lone period as a separate awkward fragment.`;
 
 async function requestExerciseBatch(input: {
   client: OpenAI;
@@ -158,7 +180,7 @@ async function requestExerciseBatch(input: {
           vocabularyWords: input.vocabularyWords,
           avoidReusingTheseSentences: (input.avoidSentences ?? []).slice(0, 40),
           reminder:
-            "Practice sentence/answer/sourceWord MUST be in studyLanguage. ALWAYS include sourceWord (base form) for form practice so the UI can show: ________ (sourceWord). Never omit it for case/inflection drills. sourceWord must differ from answer. For every fill_blank include sentenceMeaning in uiLanguage (website language), not studyLanguage.",
+            "Practice sentence/answer/sourceWord MUST be in studyLanguage. ALWAYS include sourceWord (base form) for form practice so the UI can show: ________ (sourceWord). Never omit it for case/inflection drills. sourceWord must differ from answer. For every fill_blank include sentenceMeaning in uiLanguage (website language), not studyLanguage. Sentences must make the Theory grammar point necessary via natural context (e.g. comparatives need kuin/comparison; avoid vague frames like 'Tämä päivä on ________.').",
         }),
       },
     ],

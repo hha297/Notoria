@@ -35,6 +35,13 @@ import { createWritingDocument, updateWritingDocument } from "@/lib/actions/writ
 import { afterEditorHydration } from "@/lib/editor/hydration";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
 import { normalizeDescription } from "@/lib/description-content";
+import { replaceInQuestionSet } from "@/lib/writing/ai-apply";
+import type { WritingAiSuggestion } from "@/lib/writing/ai-types";
+import {
+  clearQuestionFeedback,
+  removeSuggestionFromMap,
+  type QuestionAiFeedbackMap,
+} from "@/lib/writing/ai-question-feedback";
 import {
   parseWritingContent,
   serializeWritingContent,
@@ -107,6 +114,8 @@ export function WritingEditor({
   const [isAutosaving, setIsAutosaving] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [editor, setEditor] = useState<Editor | null>(null);
+  const [questionFeedback, setQuestionFeedback] =
+    useState<QuestionAiFeedbackMap>({});
 
   const [baseline, setBaseline] = useState<WritingEditorSnapshot>(() => {
     const state = writingContentToEditorState(
@@ -279,7 +288,12 @@ export function WritingEditor({
     }
 
     try {
-      const payload = buildPayload(title, description, editorState);
+      const {
+        title: nextTitle,
+        description: nextDescription,
+        editorState: nextState,
+      } = latestRef.current;
+      const payload = buildPayload(nextTitle, nextDescription, nextState);
 
       if (initialData?.id) {
         await updateWritingDocument(initialData.id, payload);
@@ -357,7 +371,39 @@ export function WritingEditor({
       if (current.mode === mode) return current;
       return { ...current, mode };
     });
+    setQuestionFeedback({});
     scheduleAutosave();
+  }
+
+  function applyQuestionAiSuggestion(
+    questionId: string,
+    suggestion: WritingAiSuggestion,
+  ) {
+    const next = replaceInQuestionSet(
+      editorState,
+      suggestion.original,
+      suggestion.replacement,
+      questionId,
+    );
+    if (!next.replaced) {
+      toast.error(t("ai.applyFailed"));
+      return;
+    }
+    setEditorState(next.state);
+    setQuestionFeedback((current) =>
+      removeSuggestionFromMap(
+        current,
+        questionId,
+        suggestion.id ?? suggestion.original,
+      ),
+    );
+    scheduleAutosave();
+  }
+
+  function skipQuestionAiSuggestion(questionId: string, suggestionId: string) {
+    setQuestionFeedback((current) =>
+      removeSuggestionFromMap(current, questionId, suggestionId),
+    );
   }
 
   function setDoc(doc: JSONContent) {
@@ -604,10 +650,7 @@ export function WritingEditor({
             title={title}
             editorState={editorState}
             editor={editor}
-            onEditorStateChange={(next) => {
-              setEditorState(next);
-              scheduleAutosave();
-            }}
+            onQuestionFeedbackChange={setQuestionFeedback}
           />
 
           {editorState.mode === "rich_document" ? (
@@ -633,6 +676,14 @@ export function WritingEditor({
             <QuestionSetBuilder
               sections={editorState.sections}
               onChange={setSections}
+              questionFeedback={questionFeedback}
+              onApplyAiSuggestion={applyQuestionAiSuggestion}
+              onSkipAiSuggestion={skipQuestionAiSuggestion}
+              onQuestionEdited={(questionId) =>
+                setQuestionFeedback((current) =>
+                  clearQuestionFeedback(current, questionId),
+                )
+              }
             />
           )}
         </CardContent>

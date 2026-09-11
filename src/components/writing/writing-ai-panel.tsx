@@ -26,10 +26,10 @@ export function WritingAiPanel({
       {suggestions.map((item) => (
         <div
           key={item.id}
-          className="rounded-lg border border-accent-lime/40 bg-accent-lime/5 p-3"
+          className="min-w-0 max-w-full rounded-lg border border-accent-lime/40 bg-accent-lime/5 p-3"
         >
           <p className="flex items-center gap-1.5 text-xs font-medium text-ink">
-            <Sparkles className="size-3.5 text-accent-lime" />
+            <Sparkles className="size-3.5 shrink-0 text-accent-lime" />
             {t("suggestion")}
           </p>
           <div className="mt-1.5 flex flex-wrap items-center gap-2">
@@ -47,13 +47,13 @@ export function WritingAiPanel({
               {t(`severities.${item.severity}`)}
             </span>
           </div>
-          <p className="mt-2 text-sm text-ink">
+          <p className="mt-2 break-words text-sm text-ink [overflow-wrap:anywhere]">
             <span className="text-muted-foreground">{item.original}</span>
             {" → "}
             <span className="font-medium">{item.replacement}</span>
           </p>
           {item.explanation ? (
-            <p className="mt-1 text-sm text-muted-foreground">
+            <p className="mt-1 break-words text-sm text-muted-foreground [overflow-wrap:anywhere]">
               {item.explanation}
             </p>
           ) : null}

@@ -73,7 +73,7 @@ export function WorkspaceSelector({
             >
               <SelectTrigger
                 size="sm"
-                className="min-w-0 max-w-[9.5rem] bg-background sm:max-w-[240px] sm:min-w-[160px]"
+                className="w-auto min-w-0 max-w-[9.5rem] bg-background sm:max-w-[240px] sm:min-w-[160px]"
               >
                 <SelectValue>
                   {active && (

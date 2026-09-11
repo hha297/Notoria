@@ -1,6 +1,7 @@
 import type { JSONContent } from "@tiptap/react";
 import { Image, Text, View, StyleSheet } from "@react-pdf/renderer";
 import type { ReactNode } from "react";
+import { coerceHeadingLevel } from "@/lib/editor/heading-level";
 import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
 import type { ExportLayout } from "@/lib/writing/export/types";
 
@@ -517,8 +518,7 @@ function renderBlock(
         </View>
       );
     case "heading": {
-      const headingLevel =
-        typeof node.attrs?.level === "number" ? node.attrs.level : 1;
+        const headingLevel = coerceHeadingLevel(node.attrs?.level);
       return (
         <View key={index} style={blockStyle}>
           <BodyFromNodes

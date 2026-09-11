@@ -13,6 +13,7 @@ export const getCurrentProAccess = cache(async () => {
     return { hasProAccess: false };
   }
 
+  // Include role so admins keep pro access; reuse one user row for layout.
   const user = await db.query.users.findFirst({
     where: eq(users.id, session.user.id),
     columns: {
