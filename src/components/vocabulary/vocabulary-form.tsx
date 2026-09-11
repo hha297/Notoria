@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Loader2, Save, Sparkles } from "lucide-react";
+import { Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -45,15 +45,11 @@ import {
   createVocabularyWord,
   updateVocabularyWord,
 } from "@/lib/actions/vocabulary";
-import { formatVocabularyNotesAi } from "@/lib/actions/vocabulary-ai";
 import { afterEditorHydration } from "@/lib/editor/hydration";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
 import {
-  formatNotesDoc,
-  isNotesDocEmpty,
   parseVocabularyNotes,
   serializeVocabularyNotes,
-  vocabularyNotesToPlainText,
 } from "@/lib/vocabulary/notes-content";
 import {
   countPrimaryMeanings,
@@ -250,8 +246,6 @@ export function VocabularyForm({
     structuredClone(initialNotesDoc),
   );
   const [notesImageUploading, setNotesImageUploading] = useState(false);
-  const [isFormattingNotes, setIsFormattingNotes] = useState(false);
-  const notesEditorRef = useRef<Editor | null>(null);
   const notesHydrationCancelRef = useRef<(() => void) | null>(null);
 
   const watchedWord = form.watch("word");
@@ -309,7 +303,6 @@ export function VocabularyForm({
   }
 
   function handleNotesEditorReady(editor: Editor | null) {
-    notesEditorRef.current = editor;
     notesHydrationCancelRef.current?.();
     notesHydrationCancelRef.current = null;
     if (!editor) return;
@@ -484,7 +477,6 @@ export function VocabularyForm({
     isCheckingWord ||
     wordCheckStatus === "pending" ||
     notesImageUploading;
-  const formatNotesDisabled = isNotesDocEmpty(notesDoc) || isFormattingNotes;
 
   function handleNotesChange(doc: JSONContent) {
     setNotesDoc(doc);
@@ -492,49 +484,6 @@ export function VocabularyForm({
       shouldDirty: true,
       shouldTouch: true,
     });
-  }
-
-  function applyFormattedNotes(formatted: JSONContent) {
-    if (JSON.stringify(formatted) === JSON.stringify(notesDoc)) {
-      toast.message(t("formatNotesUnchanged"));
-      return;
-    }
-    setNotesDoc(formatted);
-    form.setValue("notes", serializeVocabularyNotes(formatted), {
-      shouldDirty: true,
-      shouldTouch: true,
-    });
-    notesEditorRef.current?.commands.setContent(formatted);
-    toast.success(t("formatNotesSuccess"));
-  }
-
-  async function handleFormatNotes() {
-    if (isNotesDocEmpty(notesDoc) || isFormattingNotes) return;
-
-    setIsFormattingNotes(true);
-    try {
-      const plain = vocabularyNotesToPlainText(serializeVocabularyNotes(notesDoc));
-      if (!plain.trim()) return;
-
-      const result = await formatVocabularyNotesAi({
-        notes: plain,
-        word: watchedWord?.trim() || null,
-        language,
-      });
-
-      if (result.ok) {
-        applyFormattedNotes(result.doc);
-        return;
-      }
-
-      toast.message(t("formatNotesAiFallback"));
-      applyFormattedNotes(formatNotesDoc(notesDoc));
-    } catch {
-      toast.message(t("formatNotesAiFallback"));
-      applyFormattedNotes(formatNotesDoc(notesDoc));
-    } finally {
-      setIsFormattingNotes(false);
-    }
   }
 
   function handleCancel() {
@@ -732,24 +681,7 @@ export function VocabularyForm({
           />
 
           <div className="space-y-2">
-            <div className="flex items-center justify-between gap-2">
-              <Label htmlFor="notes-editor">{t("notes")}</Label>
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                className="h-8 shrink-0"
-                disabled={formatNotesDisabled}
-                onClick={() => void handleFormatNotes()}
-              >
-                {isFormattingNotes ? (
-                  <Loader2 className="size-3.5 animate-spin" />
-                ) : (
-                  <Sparkles className="size-3.5" />
-                )}
-                {t("formatNotes")}
-              </Button>
-            </div>
+            <Label htmlFor="notes-editor">{t("notes")}</Label>
             <div id="notes-editor">
               <RichTextEditor
                 content={notesDoc}

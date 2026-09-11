@@ -329,24 +329,24 @@ export function WritingTable({
         }
       >
       <div className="space-y-4">
-        <div className="flex flex-col gap-3 lg:flex-row lg:items-center">
+        <div className="flex min-w-0 flex-col gap-3 lg:flex-row lg:items-center">
           <Input
             value={search}
             onChange={(event) => setSearch(event.target.value)}
             placeholder={t("searchPlaceholder")}
-            className="h-10 lg:h-8 lg:max-w-sm"
+            className="h-10 min-w-0 lg:h-8 lg:max-w-sm"
             data-tutorial="writing-search"
           />
 
           <div
-            className="grid grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:flex-wrap xl:grid-cols-none"
+            className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:flex-wrap xl:grid-cols-none"
             data-tutorial="writing-filters"
           >
             <MultiFilterSelect
               emptyLabel={t("filterCefr")}
               values={cefrFilter}
               onChange={setCefrFilter}
-              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
+              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
               options={WRITING_CEFR_LEVELS.map((level) => ({
                 value: level,
                 label: tMeta(`cefr.${level}`),
@@ -357,7 +357,7 @@ export function WritingTable({
               emptyLabel={t("filterTopic")}
               values={topicFilter}
               onChange={setTopicFilter}
-              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
+              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
               options={WRITING_TOPICS.map((topic) => ({
                 value: topic,
                 label: tMeta(`topics.${topic}`),
@@ -368,7 +368,7 @@ export function WritingTable({
               emptyLabel={t("filterFormality")}
               values={formalityFilter}
               onChange={setFormalityFilter}
-              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
+              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
               options={WRITING_FORMALITY.map((item) => ({
                 value: item,
                 label: tMeta(`formality.${item}`),
@@ -383,7 +383,7 @@ export function WritingTable({
             >
               <SelectTrigger
                 size="sm"
-                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-36"
+                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
               >
                 <SelectValue>
                   {groupBy === "mode"
@@ -406,7 +406,7 @@ export function WritingTable({
             >
               <SelectTrigger
                 size="sm"
-                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-45"
+                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-36"
               >
                 <SelectValue>{sortLabel(sort, t)}</SelectValue>
               </SelectTrigger>

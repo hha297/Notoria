@@ -38,18 +38,22 @@ export function VocabularyAiSuggestionCard({
   const t = useTranslations("vocabulary");
 
   return (
-    <div className="rounded-lg border border-accent-lime/40 bg-accent-lime/5 p-3">
+    <div className="min-w-0 max-w-full rounded-lg border border-accent-lime/40 bg-accent-lime/5 p-3">
       <p className="flex items-center gap-1.5 text-xs font-medium text-ink">
-        <Sparkles className="size-3.5 text-accent-lime" />
+        <Sparkles className="size-3.5 shrink-0 text-accent-lime" />
         {title ?? t("aiSuggestion")}
       </p>
-      <p className="mt-1.5 text-sm leading-snug text-ink">{body}</p>
+      <p className="mt-1.5 break-words text-sm leading-snug text-ink [overflow-wrap:anywhere]">
+        {body}
+      </p>
       {suggestionLabel ? (
-        <div className="mt-2">
+        <div className="mt-2 min-w-0">
           <p className="text-sm text-muted-foreground">
             {t("aiPossibleMeaning")}
           </p>
-          <p className="text-sm font-medium text-ink">{suggestionLabel}</p>
+          <p className="break-words text-sm font-medium text-ink [overflow-wrap:anywhere]">
+            {suggestionLabel}
+          </p>
         </div>
       ) : null}
       <div className="mt-2.5 flex flex-wrap gap-2">

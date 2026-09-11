@@ -4,7 +4,7 @@ import { Download, Pencil } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
-import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { RichTextContent } from "@/components/editor/rich-text-content";
 import { DescriptionContent } from "@/components/form/description-content";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { WritingMetaBadges } from "@/components/writing/writing-meta-badges";
@@ -89,9 +89,8 @@ export function WritingPreview({
         </header>
 
         {editorState.mode === "rich_document" ? (
-          <RichTextEditor
+          <RichTextContent
             content={editorState.doc}
-            editable={false}
             className="border-0 bg-transparent shadow-none"
           />
         ) : (

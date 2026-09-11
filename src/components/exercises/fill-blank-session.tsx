@@ -31,6 +31,7 @@ import {
 } from "@/lib/exercises/fill-blank";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { answersMatchAny, shuffleArray } from "@/lib/exercises/utils";
+import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
 import { DEFAULT_FLASHCARD_FILTERS } from "@/types/flashcards";
@@ -65,6 +66,8 @@ export function FillBlankSession({
   const [usedWordIds, setUsedWordIds] = useState<string[]>([]);
   const avoidByWord = useRef<Record<string, string[]>>({});
   const batchRef = useRef(0);
+  const { recordOutcome, commitAndBeginNext, clearPreferences } =
+    useRecentSectionPreferences();
   const {
     state: processing,
     setStage,
@@ -80,6 +83,10 @@ export function FillBlankSession({
   );
   const exampleItems = useMemo(
     () => buildFillBlankItems(filteredWords),
+    [filteredWords],
+  );
+  const createdAtByWordId = useMemo(
+    () => new Map(filteredWords.map((word) => [word.id, word.createdAt] as const)),
     [filteredWords],
   );
   const sessionItems = aiItems ?? (!hasProAccess ? exampleItems : []);
@@ -99,10 +106,18 @@ export function FillBlankSession({
   }, []);
 
   const startExampleSession = useCallback(() => {
-    const sampled = sampleSessionItems(exampleItems, "fill_blank");
+    const prefs = commitAndBeginNext();
+    const sampled = sampleSessionItems(exampleItems, "fill_blank", {
+      getWordId: (item) => item.wordId,
+      getCreatedAt: (item) => createdAtByWordId.get(item.wordId),
+      getItemKey: (item) => fillBlankItemSentence(item),
+      softAvoidWordIds: prefs.softAvoidWordIds,
+      softPreferWordIds: prefs.softPreferWordIds,
+      softAvoidItemKeys: prefs.softAvoidItemKeys,
+    });
     setAiItems(null);
     resetRound(sampled.map((item) => item.id));
-  }, [exampleItems, resetRound]);
+  }, [commitAndBeginNext, createdAtByWordId, exampleItems, resetRound]);
 
   const startFromAiItems = useCallback(
     (items: FillBlankItem[]) => {
@@ -120,8 +135,9 @@ export function FillBlankSession({
     setAiItems(null);
     setUsedWordIds([]);
     avoidByWord.current = {};
+    clearPreferences();
     resetRound([]);
-  }, [hasProAccess, workspaceId, resetRound]);
+  }, [clearPreferences, hasProAccess, workspaceId, resetRound]);
 
   useEffect(() => {
     setInput("");
@@ -139,11 +155,19 @@ export function FillBlankSession({
       return;
     }
 
+    const prefs = commitAndBeginNext();
     setStage("generating");
     try {
-      const picked = pickFillBlankAiWords(filteredWords, 10, usedWordIds);
+      const picked = pickFillBlankAiWords(filteredWords, 10, {
+        recentlyUsedIds: usedWordIds,
+        softAvoidWordIds: prefs.softAvoidWordIds,
+        softPreferWordIds: prefs.softPreferWordIds,
+      });
       const payloadWords = picked.map((word) =>
-        toExerciseAiWord(word, avoidByWord.current[word.id] ?? []),
+        toExerciseAiWord(word, [
+          ...(avoidByWord.current[word.id] ?? []),
+          ...prefs.softAvoidItemKeys,
+        ]),
       );
       const result = await requestExerciseAi({
         exerciseType: "fill-in-blank",
@@ -210,6 +234,7 @@ export function FillBlankSession({
       fail(tAi("unavailable"));
     }
   }, [
+    commitAndBeginNext,
     completeProcessing,
     fail,
     hasProAccess,
@@ -234,12 +259,18 @@ export function FillBlankSession({
 
   const check = useCallback(() => {
     if (!current || revealed || !input.trim()) return;
+    const correct = answersMatchAny(input, current.acceptableAnswers);
     setRevealed(true);
     setScore((s) => ({
-      correct: s.correct + (answersMatchAny(input, current.acceptableAnswers) ? 1 : 0),
+      correct: s.correct + (correct ? 1 : 0),
       answered: s.answered + 1,
     }));
-  }, [current, input, revealed]);
+    recordOutcome({
+      wordId: current.wordId,
+      correct,
+      itemKey: fillBlankItemSentence(current),
+    });
+  }, [current, input, recordOutcome, revealed]);
 
   const revealAnswer = useCallback(() => {
     if (!current || revealed) return;
@@ -249,7 +280,12 @@ export function FillBlankSession({
       correct: s.correct,
       answered: s.answered + 1,
     }));
-  }, [current, revealed]);
+    recordOutcome({
+      wordId: current.wordId,
+      correct: false,
+      itemKey: fillBlankItemSentence(current),
+    });
+  }, [current, recordOutcome, revealed]);
 
   const next = useCallback(() => {
     if (index < total - 1) {
@@ -261,11 +297,11 @@ export function FillBlankSession({
 
   const tryAgain = useCallback(() => {
     if (aiItems) {
-      startFromAiItems(aiItems);
+      void generateQuestions();
       return;
     }
     startExampleSession();
-  }, [aiItems, startExampleSession, startFromAiItems]);
+  }, [aiItems, generateQuestions, startExampleSession]);
 
   useHotkeys("enter", (e) => {
     e.preventDefault();
@@ -417,7 +453,7 @@ function FillBlankCard({
 }) {
   const t = useTranslations("exercises.fillInBlank");
   const tAi = useTranslations("exercises.ai");
-  const blankMinWidth = Math.max(item.word.length + 2, 6);
+  const blankMinWidth = Math.min(Math.max(item.word.length + 2, 6), 16);
   const expected = expectedFillBlankAnswer(item);
   const cue = item.meanings.map((m) => m.trim()).filter(Boolean)[0];
   const sentenceMeaning = item.sentenceMeaning?.trim() || "";
@@ -426,10 +462,10 @@ function FillBlankCard({
   const bodyAfter = trailingPunctuation ? "" : item.sentenceAfter;
 
   return (
-    <div className="mx-auto max-w-3xl rounded-3xl border border-hairline-cloud bg-card p-6 shadow-xl shadow-ink/5 sm:p-10 md:p-12">
+    <div className="mx-auto w-full min-w-0 max-w-3xl rounded-3xl border border-hairline-cloud bg-card p-6 shadow-xl shadow-ink/5 sm:p-10 md:p-12">
       <div className="space-y-2">
-        <div className="flex items-center justify-between gap-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-violet-mid">
+        <div className="flex min-w-0 items-center justify-between gap-3">
+          <p className="min-w-0 text-xs font-semibold uppercase tracking-[0.2em] text-accent-violet-mid">
             {t("prompt")}
           </p>
           {item.aiGenerated ? (
@@ -451,22 +487,22 @@ function FillBlankCard({
         }}
         className="mt-8 space-y-8"
       >
-        <div className="rounded-2xl border border-hairline-cloud bg-muted/20 px-5 py-10 sm:px-8 sm:py-12 md:py-14">
-          <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-4 text-center leading-snug">
+        <div className="rounded-2xl border border-hairline-cloud bg-muted/20 px-4 py-10 sm:px-8 sm:py-12 md:py-14">
+          <div className="flex min-w-0 flex-wrap items-center justify-center gap-x-3 gap-y-4 text-center leading-snug">
             {item.sentenceBefore && (
-              <span className="text-xl font-medium text-ink sm:text-2xl md:text-3xl">
+              <span className="max-w-full break-words text-xl font-medium text-ink [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
                 {item.sentenceBefore}
               </span>
             )}
 
             <span
-              className="inline-flex shrink-0 items-center justify-center gap-0"
-              style={{ minWidth: `${blankMinWidth}ch` }}
+              className="inline-flex max-w-full min-w-0 shrink items-center justify-center gap-0"
+              style={{ width: `min(100%, ${blankMinWidth}ch)` }}
             >
               {revealed ? (
                 <span
                   className={cn(
-                    "rounded-xl px-3 py-1.5 text-xl font-semibold sm:text-2xl md:text-3xl",
+                    "max-w-full break-words rounded-xl px-3 py-1.5 text-xl font-semibold [overflow-wrap:anywhere] sm:text-2xl md:text-3xl",
                     isCorrect
                       ? "bg-[#f4fae0] text-[#4a6b0a] ring-2 ring-[#b8d96a]/60"
                       : "bg-[#fff1f6] text-destructive ring-2 ring-[#f3b8cc]/60",
@@ -483,7 +519,7 @@ function FillBlankCard({
                   spellCheck={false}
                   placeholder="?"
                   className={cn(
-                    "h-12 min-w-full rounded-xl border-2 border-dashed border-accent-lime/50 bg-background/90 px-4",
+                    "h-12 w-full min-w-0 max-w-full rounded-xl border-2 border-dashed border-accent-lime/50 bg-background/90 px-4",
                     "text-center text-xl font-semibold text-ink shadow-sm sm:h-14 sm:text-2xl md:text-3xl",
                     "placeholder:text-muted-foreground/40",
                     "focus-visible:border-accent-lime focus-visible:bg-background focus-visible:ring-4 focus-visible:ring-accent-lime/20",
@@ -498,20 +534,20 @@ function FillBlankCard({
             </span>
 
             {cue ? (
-              <span className="text-xl font-medium text-muted-foreground sm:text-2xl md:text-3xl">
+              <span className="max-w-full break-words text-xl font-medium text-muted-foreground [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
                 ({cue})
               </span>
             ) : null}
 
             {bodyAfter ? (
-              <span className="text-xl font-medium text-ink sm:text-2xl md:text-3xl">
+              <span className="max-w-full break-words text-xl font-medium text-ink [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
                 {bodyAfter}
               </span>
             ) : null}
           </div>
 
           {revealed && item.aiGenerated && sentenceMeaning ? (
-            <p className="mt-6 text-center text-base leading-relaxed text-ink/75 sm:text-lg">
+            <p className="mt-6 break-words text-center text-base leading-relaxed text-ink/75 [overflow-wrap:anywhere] sm:text-lg">
               ({sentenceMeaning})
             </p>
           ) : null}
@@ -527,16 +563,18 @@ function FillBlankCard({
         {revealed && (
           <div
             className={cn(
-              "flex items-center gap-3 rounded-xl px-5 py-4 text-sm font-medium sm:text-base",
+              "flex min-w-0 items-start gap-3 rounded-xl px-5 py-4 text-sm font-medium sm:text-base",
               isCorrect ? "bg-[#f4fae0] text-[#4a6b0a]" : "bg-[#fff1f6] text-[#c7366a]",
             )}
           >
             {isCorrect ? (
-              <CheckCircle2 className="size-5 shrink-0" />
+              <CheckCircle2 className="mt-0.5 size-5 shrink-0" />
             ) : (
-              <XCircle className="size-5 shrink-0" />
+              <XCircle className="mt-0.5 size-5 shrink-0" />
             )}
-            {isCorrect ? t("correct") : t("incorrect", { answer: expected })}
+            <span className="min-w-0 break-words [overflow-wrap:anywhere]">
+              {isCorrect ? t("correct") : t("incorrect", { answer: expected })}
+            </span>
           </div>
         )}
       </form>

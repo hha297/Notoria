@@ -50,7 +50,7 @@ export function TheoryFillBlankCard({
     sentence: scrubbed.sentence,
     completedSentence: item.completedSentence ?? scrubbed.completedSentence,
   });
-  const blankMinWidth = Math.max(item.answer.length + 2, 6);
+  const blankMinWidth = Math.min(Math.max(item.answer.length + 2, 6), 16);
   const trailingPunctuation = /^[.!?…]+$/.test(suffixText.trim())
     ? suffixText.trim()
     : "";
@@ -71,11 +71,11 @@ export function TheoryFillBlankCard({
   };
 
   return (
-    <div className="space-y-4">
-      <div className="mx-auto max-w-3xl rounded-3xl border border-hairline-cloud bg-card p-6 shadow-xl shadow-ink/5 sm:p-10 md:p-12">
+    <div className="w-full min-w-0 space-y-4">
+      <div className="mx-auto w-full min-w-0 max-w-3xl rounded-3xl border border-hairline-cloud bg-card p-6 shadow-xl shadow-ink/5 sm:p-10 md:p-12">
         <div className="space-y-2">
-          <div className="flex items-center justify-between gap-3">
-            <p className="text-xs font-semibold uppercase tracking-[0.2em] text-accent-violet-mid">
+          <div className="flex min-w-0 items-center justify-between gap-3">
+            <p className="min-w-0 text-xs font-semibold uppercase tracking-[0.2em] text-accent-violet-mid">
               {item.skillLabel || t("types.fill_blank")}
             </p>
             <p className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
@@ -96,22 +96,22 @@ export function TheoryFillBlankCard({
           }}
           className="mt-8 space-y-8"
         >
-          <div className="rounded-2xl border border-hairline-cloud bg-muted/20 px-5 py-10 sm:px-8 sm:py-12 md:py-14">
-            <div className="flex flex-wrap items-center justify-center gap-x-3 gap-y-4 text-center leading-snug">
+          <div className="rounded-2xl border border-hairline-cloud bg-muted/20 px-4 py-10 sm:px-8 sm:py-12 md:py-14">
+            <div className="flex min-w-0 flex-wrap items-center justify-center gap-x-3 gap-y-4 text-center leading-snug">
               {prefixText ? (
-                <span className="text-xl font-medium text-ink sm:text-2xl md:text-3xl">
+                <span className="max-w-full break-words text-xl font-medium text-ink [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
                   {prefixText}
                 </span>
               ) : null}
 
               <span
-                className="inline-flex shrink-0 items-center justify-center gap-0"
-                style={{ minWidth: `${blankMinWidth}ch` }}
+                className="inline-flex max-w-full min-w-0 shrink items-center justify-center gap-0"
+                style={{ width: `min(100%, ${blankMinWidth}ch)` }}
               >
                 {checked ? (
                   <span
                     className={cn(
-                      "rounded-xl px-3 py-1.5 text-xl font-semibold sm:text-2xl md:text-3xl",
+                      "max-w-full break-words rounded-xl px-3 py-1.5 text-xl font-semibold [overflow-wrap:anywhere] sm:text-2xl md:text-3xl",
                       isCorrect
                         ? "bg-[#f4fae0] text-[#4a6b0a] ring-2 ring-[#b8d96a]/60"
                         : "bg-[#fff1f6] text-destructive ring-2 ring-[#f3b8cc]/60",
@@ -134,7 +134,7 @@ export function TheoryFillBlankCard({
                     data-lpignore="true"
                     data-form-type="other"
                     className={cn(
-                      "h-12 min-w-full rounded-xl border-2 border-dashed border-accent-lime/50 bg-background/90 px-4",
+                      "h-12 w-full min-w-0 max-w-full rounded-xl border-2 border-dashed border-accent-lime/50 bg-background/90 px-4",
                       "text-center text-xl font-semibold text-ink shadow-sm sm:h-14 sm:text-2xl md:text-3xl",
                       "placeholder:text-muted-foreground/40",
                       "focus-visible:border-accent-lime focus-visible:bg-background focus-visible:ring-4 focus-visible:ring-accent-lime/20",
@@ -149,20 +149,20 @@ export function TheoryFillBlankCard({
               </span>
 
               {item.sourceWord ? (
-                <span className="text-xl font-medium text-muted-foreground sm:text-2xl md:text-3xl">
+                <span className="max-w-full break-words text-xl font-medium text-muted-foreground [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
                   ({item.sourceWord})
                 </span>
               ) : null}
 
               {bodySuffix ? (
-                <span className="text-xl font-medium text-ink sm:text-2xl md:text-3xl">
+                <span className="max-w-full break-words text-xl font-medium text-ink [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
                   {bodySuffix}
                 </span>
               ) : null}
             </div>
 
             {checked && sentenceMeaning ? (
-              <p className="mt-6 text-center text-base leading-relaxed text-ink/75 sm:text-lg">
+              <p className="mt-6 break-words text-center text-base leading-relaxed text-ink/75 [overflow-wrap:anywhere] sm:text-lg">
                 ({sentenceMeaning})
               </p>
             ) : null}
@@ -180,23 +180,27 @@ export function TheoryFillBlankCard({
           {checked ? (
             <div
               className={cn(
-                "flex items-center gap-3 rounded-xl px-5 py-4 text-sm font-medium sm:text-base",
+                "flex min-w-0 items-start gap-3 rounded-xl px-5 py-4 text-sm font-medium sm:text-base",
                 isCorrect ? "bg-[#f4fae0] text-[#4a6b0a]" : "bg-[#fff1f6] text-[#c7366a]",
               )}
             >
               {isCorrect ? (
-                <CheckCircle2 className="size-5 shrink-0" />
+                <CheckCircle2 className="mt-0.5 size-5 shrink-0" />
               ) : (
-                <XCircle className="size-5 shrink-0" />
+                <XCircle className="mt-0.5 size-5 shrink-0" />
               )}
-              {isCorrect
-                ? t("feedback.correct")
-                : t("feedback.incorrectWithAnswer", { answer: revealDisplay })}
+              <span className="min-w-0 break-words [overflow-wrap:anywhere]">
+                {isCorrect
+                  ? t("feedback.correct")
+                  : t("feedback.incorrectWithAnswer", { answer: revealDisplay })}
+              </span>
             </div>
           ) : null}
 
           {checked && item.explanation ? (
-            <p className="text-sm text-muted-foreground">{item.explanation}</p>
+            <p className="break-words text-sm text-muted-foreground [overflow-wrap:anywhere]">
+              {item.explanation}
+            </p>
           ) : null}
         </form>
       </div>

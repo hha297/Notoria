@@ -10,6 +10,7 @@ import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { Button } from "@/components/ui/button";
 import { useExerciseSessionController } from "@/hooks/use-exercise-session-controller";
+import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import {
   buildMultipleChoiceQuestions,
   type MultipleChoiceQuestion,
@@ -46,21 +47,33 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
     recordAnswer,
     peek,
   } = useExerciseSessionController();
+  const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
 
   const filteredWords = useMemo(
     () => filterFlashcardWords(words, filters),
     [words, filters],
   );
+  const createdAtByWordId = useMemo(
+    () => new Map(filteredWords.map((word) => [word.id, word.createdAt] as const)),
+    [filteredWords],
+  );
 
   const startSession = useCallback(() => {
+    const prefs = commitAndBeginNext();
     const built = sampleSessionItems(
       buildMultipleChoiceQuestions(filteredWords, studyMode),
       "multiple_choice",
+      {
+        getWordId: (item) => item.wordId,
+        getCreatedAt: (item) => createdAtByWordId.get(item.wordId),
+        softAvoidWordIds: prefs.softAvoidWordIds,
+        softPreferWordIds: prefs.softPreferWordIds,
+      },
     );
     setQuestions(built);
     setSelected(null);
     restart();
-  }, [filteredWords, restart, studyMode]);
+  }, [commitAndBeginNext, createdAtByWordId, filteredWords, restart, studyMode]);
 
   useEffect(() => {
     startSession();
@@ -80,12 +93,15 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
   const pick = (option: string) => {
     if (!current || revealed) return;
     setSelected(option);
-    recordAnswer(option === current.correctOption);
+    const correct = option === current.correctOption;
+    recordAnswer(correct);
+    recordOutcome({ wordId: current.wordId, correct });
   };
 
   const revealAnswer = () => {
     if (!current || revealed) return;
     peek();
+    recordOutcome({ wordId: current.wordId, correct: false });
   };
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
@@ -145,11 +161,11 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
             progressValue={total ? ((currentIndex + 1) / total) * 100 : 0}
           />
           {current && (
-            <div className="mx-auto max-w-2xl rounded-2xl border border-hairline-cloud bg-card p-5 shadow-xl shadow-ink/5 sm:rounded-3xl sm:p-8">
+            <div className="mx-auto w-full min-w-0 max-w-2xl rounded-2xl border border-hairline-cloud bg-card p-5 shadow-xl shadow-ink/5 sm:rounded-3xl sm:p-8">
               <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
                 {current.direction === "WORD_TO_MEANING" ? t("questionWord") : t("questionMeaning")}
               </p>
-              <p className="mt-4 break-words font-heading text-2xl font-medium text-ink sm:mt-6 sm:text-3xl md:text-4xl">
+              <p className="mt-4 break-words font-heading text-2xl font-medium text-ink [overflow-wrap:anywhere] sm:mt-6 sm:text-3xl md:text-4xl">
                 {current.prompt}
               </p>
               <div className="mt-6">
@@ -162,7 +178,7 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
                   {tHint("startsWith", { letter: hintInitialLetter(current.correctOption) })}
                 </ExerciseHint>
               </div>
-              <div className="mt-8 grid gap-2 sm:grid-cols-2">
+              <div className="mt-8 grid min-w-0 gap-2 sm:grid-cols-2">
                 {current.options.map((option) => {
                   const isSelected = selected === option;
                   const isAnswer = option === current.correctOption;
@@ -173,7 +189,7 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
                       disabled={revealed && !isSelected && !isAnswer}
                       onClick={() => pick(option)}
                       className={cn(
-                        "min-h-11 cursor-pointer rounded-xl border px-4 py-3 text-left text-sm font-medium transition-all",
+                        "min-h-11 min-w-0 cursor-pointer rounded-xl border px-4 py-3 text-left text-sm font-medium break-words [overflow-wrap:anywhere] transition-all",
                         !revealed && "border-hairline-cloud bg-background hover:border-accent-lime/50 hover:bg-accent-lime/10",
                         revealed && isAnswer && "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a]",
                         revealed && isSelected && !isAnswer && "border-[#f3b8cc] bg-[#fff1f6] text-[#c7366a]",

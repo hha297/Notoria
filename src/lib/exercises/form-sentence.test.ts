@@ -18,6 +18,7 @@ function word(
     synonyms: null,
     notes: null,
     status: "NEW",
+    createdAt: "2026-01-01T00:00:00.000Z",
     meanings: ["durable"],
     examples: [],
     tags: [],

@@ -29,7 +29,7 @@ export default async function VocabularyWordPage({
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-8 pt-1 sm:space-y-10 sm:pt-2">
+    <div className="mx-auto max-w-4xl space-y-8 pt-1 sm:space-y-10 sm:pt-2">
       <div className="space-y-6">
         <Link
           href="/vocabulary"

@@ -44,7 +44,7 @@ function sortLabel(sort: ListeningListQuery["sort"], t: ReturnType<typeof useTra
   }
 }
 
-const triggerClassName = "h-9 w-28 shrink-0 sm:w-32";
+const triggerClassName = "h-9 w-full min-w-0 basis-[calc(50%-0.25rem)] sm:w-28 sm:basis-auto sm:shrink-0 lg:w-32";
 
 export function ListeningFiltersBar({
   lessons,
@@ -71,12 +71,12 @@ export function ListeningFiltersBar({
   }
 
   return (
-    <div className="flex flex-wrap items-center gap-2 lg:flex-nowrap">
+    <div className="flex flex-wrap items-center gap-2">
       <Input
         value={query.search}
         onChange={(event) => patch({ search: event.target.value })}
         placeholder={t("searchPlaceholder")}
-        className="h-9 min-w-[12rem] flex-1"
+        className="h-9 w-full min-w-0 flex-1 basis-full sm:basis-auto sm:min-w-[12rem]"
       />
 
       <MultiFilterSelect
@@ -124,7 +124,10 @@ export function ListeningFiltersBar({
           value && isListeningSortOption(value) && patch({ sort: value })
         }
       >
-        <SelectTrigger size="sm" className="h-9 w-36 shrink-0">
+        <SelectTrigger
+          size="sm"
+          className="h-9 w-full min-w-0 basis-full sm:w-36 sm:basis-auto sm:shrink-0"
+        >
           <SelectValue>{sortLabel(query.sort, t)}</SelectValue>
         </SelectTrigger>
         <SelectContent>

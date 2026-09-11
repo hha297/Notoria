@@ -22,6 +22,7 @@ import {
   Table as TableIcon,
   Underline as UnderlineIcon,
   Undo,
+  Wand2,
 } from "lucide-react";
 import { EditorImageDialog } from "@/components/editor/image-dialog";
 import { EditorLinkDialog } from "@/components/editor/link-dialog";
@@ -32,6 +33,8 @@ import { cn } from "@/lib/utils";
 type EditorToolbarProps = {
   editor: Editor;
   className?: string;
+  onFormat?: () => void;
+  formatLabel?: string;
 };
 
 function ToolbarButton({
@@ -62,7 +65,12 @@ function ToolbarButton({
   );
 }
 
-export function EditorToolbar({ editor, className }: EditorToolbarProps) {
+export function EditorToolbar({
+  editor,
+  className,
+  onFormat,
+  formatLabel = "Format",
+}: EditorToolbarProps) {
   const [linkOpen, setLinkOpen] = useState(false);
   const [imageOpen, setImageOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
@@ -244,6 +252,23 @@ export function EditorToolbar({ editor, className }: EditorToolbarProps) {
         >
           <Redo className="size-4" />
         </ToolbarButton>
+
+        {onFormat ? (
+          <>
+            <Separator orientation="vertical" className="mx-1 h-6" />
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="h-7 gap-1.5 px-2"
+              onClick={onFormat}
+              aria-label={formatLabel}
+            >
+              <Wand2 className="size-4" />
+              <span className="text-xs font-medium">{formatLabel}</span>
+            </Button>
+          </>
+        ) : null}
       </div>
 
       <EditorLinkDialog

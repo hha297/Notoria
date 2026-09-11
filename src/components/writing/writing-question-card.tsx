@@ -46,13 +46,13 @@ export const WritingQuestionCard = memo(function WritingQuestionCard({
   return (
     <div
       className={cn(
-        "rounded-xl border border-hairline-cloud bg-background p-3 sm:p-4",
+        "min-w-0 max-w-full rounded-xl border border-hairline-cloud bg-background p-3 sm:p-4",
         className,
       )}
     >
-      <div className="mb-3 flex items-center gap-2">
+      <div className="mb-3 flex min-w-0 items-center gap-2">
         {dragHandle}
-        <p className="flex-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+        <p className="min-w-0 flex-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           {t("question")} {index + 1}
         </p>
         <Button

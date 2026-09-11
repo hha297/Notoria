@@ -31,6 +31,11 @@ import {
 } from "@/lib/exercises/form-sentence";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
+import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
+import {
+  EMPTY_RECENT_PREFERENCES,
+  type RecentSectionPreferences,
+} from "@/lib/exercises/recent-outcomes";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
 import { DEFAULT_FLASHCARD_FILTERS } from "@/types/flashcards";
 import { cn } from "@/lib/utils";
@@ -56,8 +61,17 @@ type RoundState = {
   score: { correct: number; answered: number };
 };
 
-function createRound(poolItems: FormSentenceItem[]): RoundState {
-  const sampled = sampleSessionItems(poolItems, "form_sentence");
+function createRound(
+  poolItems: FormSentenceItem[],
+  createdAtByWordId: Map<string, string>,
+  prefs: RecentSectionPreferences,
+): RoundState {
+  const sampled = sampleSessionItems(poolItems, "form_sentence", {
+    getWordId: (item) => item.wordId,
+    getCreatedAt: (item) => createdAtByWordId.get(item.wordId),
+    softAvoidWordIds: prefs.softAvoidWordIds,
+    softPreferWordIds: prefs.softPreferWordIds,
+  });
   return {
     itemIds: sampled.map((item) => item.id),
     index: 0,
@@ -81,6 +95,7 @@ export function FormSentenceSession({
     DEFAULT_FLASHCARD_FILTERS,
   );
   const [saving, startSaveTransition] = useTransition();
+  const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
 
   const filteredWords = useMemo(
     () => filterFlashcardWords(words, filters),
@@ -94,12 +109,18 @@ export function FormSentenceSession({
     () => new Map(poolItems.map((item) => [item.id, item])),
     [poolItems],
   );
+  const createdAtByWordId = useMemo(
+    () => new Map(filteredWords.map((word) => [word.id, word.createdAt] as const)),
+    [filteredWords],
+  );
 
   const [sessionSource, setSessionSource] = useState({
     workspaceId,
     poolKey: poolItems.map((item) => item.id).join("|"),
   });
-  const [round, setRound] = useState<RoundState>(() => createRound(poolItems));
+  const [round, setRound] = useState<RoundState>(() =>
+    createRound(poolItems, createdAtByWordId, EMPTY_RECENT_PREFERENCES),
+  );
 
   const poolKey = poolItems.map((item) => item.id).join("|");
   if (
@@ -107,12 +128,12 @@ export function FormSentenceSession({
     sessionSource.poolKey !== poolKey
   ) {
     setSessionSource({ workspaceId, poolKey });
-    setRound(createRound(poolItems));
+    setRound(createRound(poolItems, createdAtByWordId, commitAndBeginNext()));
   }
 
   const startSession = useCallback(() => {
-    setRound(createRound(poolItems));
-  }, [poolItems]);
+    setRound(createRound(poolItems, createdAtByWordId, commitAndBeginNext()));
+  }, [commitAndBeginNext, createdAtByWordId, poolItems]);
 
   const current = itemMap.get(round.itemIds[round.index] ?? "") as
     | FormSentenceItem
@@ -180,6 +201,11 @@ export function FormSentenceSession({
           answered: currentRound.score.answered + 1,
         },
       }));
+      recordOutcome({
+        wordId: current.wordId,
+        correct: result.isCorrect,
+        itemKey: sentence,
+      });
     } catch {
       setRound((currentRound) => ({ ...currentRound, evaluating: false }));
       toast.error(t("errors.unavailable"));
@@ -336,8 +362,8 @@ export function FormSentenceSession({
                     autoComplete="off"
                   />
                 ) : (
-                  <div className="space-y-3 rounded-xl border border-hairline-cloud bg-muted/30 p-4 text-sm">
-                    <p>
+                  <div className="min-w-0 space-y-3 rounded-xl border border-hairline-cloud bg-muted/30 p-4 text-sm">
+                    <p className="break-words [overflow-wrap:anywhere]">
                       <span className="font-semibold text-ink">
                         {t("yourSentence")}:
                       </span>{" "}
@@ -345,7 +371,7 @@ export function FormSentenceSession({
                     </p>
                     {round.feedback.correctedSentence &&
                     !round.feedback.isCorrect ? (
-                      <p>
+                      <p className="break-words [overflow-wrap:anywhere]">
                         <span className="font-semibold text-ink">
                           {t("corrected")}:
                         </span>{" "}
@@ -353,7 +379,7 @@ export function FormSentenceSession({
                       </p>
                     ) : null}
                     {round.feedback.betterSuggestion ? (
-                      <p>
+                      <p className="break-words [overflow-wrap:anywhere]">
                         <span className="font-semibold text-ink">
                           {t("betterSuggestion")}:
                         </span>{" "}
@@ -361,7 +387,7 @@ export function FormSentenceSession({
                       </p>
                     ) : null}
                     {round.feedback.sentenceMeaning ? (
-                      <p>
+                      <p className="break-words [overflow-wrap:anywhere]">
                         <span className="font-semibold text-ink">
                           {t("sentenceMeaning")}:
                         </span>{" "}
@@ -369,7 +395,7 @@ export function FormSentenceSession({
                       </p>
                     ) : null}
                     {round.feedback.grammarExplanation ? (
-                      <p className="text-muted-foreground">
+                      <p className="break-words text-muted-foreground [overflow-wrap:anywhere]">
                         {round.feedback.grammarExplanation}
                       </p>
                     ) : null}
@@ -377,8 +403,8 @@ export function FormSentenceSession({
                 )}
 
                 {round.evaluating ? (
-                  <div className="flex items-center gap-2 rounded-xl bg-muted/40 px-4 py-3 text-sm font-medium text-muted-foreground">
-                    <Loader2 className="size-4 animate-spin" />
+                  <div className="flex min-w-0 items-center gap-2 rounded-xl bg-muted/40 px-4 py-3 text-sm font-medium text-muted-foreground">
+                    <Loader2 className="size-4 shrink-0 animate-spin" />
                     {t("evaluating")}
                   </div>
                 ) : null}
@@ -386,18 +412,20 @@ export function FormSentenceSession({
                 {round.feedback ? (
                   <div
                     className={cn(
-                      "flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium",
+                      "flex min-w-0 items-start gap-2 rounded-xl px-4 py-3 text-sm font-medium",
                       round.feedback.isCorrect
                         ? "bg-[#f4fae0] text-[#4a6b0a]"
                         : "bg-[#fff1f6] text-[#c7366a]",
                     )}
                   >
                     {round.feedback.isCorrect ? (
-                      <CheckCircle2 className="size-4" />
+                      <CheckCircle2 className="mt-0.5 size-4 shrink-0" />
                     ) : (
-                      <XCircle className="size-4" />
+                      <XCircle className="mt-0.5 size-4 shrink-0" />
                     )}
-                    {round.feedback.isCorrect ? t("correct") : t("incorrect")}
+                    <span className="min-w-0 break-words [overflow-wrap:anywhere]">
+                      {round.feedback.isCorrect ? t("correct") : t("incorrect")}
+                    </span>
                   </div>
                 ) : null}
               </div>

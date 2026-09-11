@@ -199,17 +199,18 @@ export function TheoryEditor({
   }
 
   function buildPayload() {
-    const normalizedDescription = normalizeDescription(description);
+    const current = latestRef.current;
+    const normalizedDescription = normalizeDescription(current.description);
     return {
-      title: title.trim(),
-      category,
+      title: current.title.trim(),
+      category: current.category,
       description: normalizedDescription,
       content: serializeTheoryContent({
         kind: "theory",
         version: 1,
-        category,
+        category: current.category,
         description: normalizedDescription,
-        doc,
+        doc: current.doc,
       }),
     };
   }
@@ -305,7 +306,7 @@ export function TheoryEditor({
           release();
           return;
         }
-        navigateAfterSuccess(router, "/theory", {
+        navigateAfterSuccess(router, previewHref ?? "/theory", {
           toast: () => toast.success(t("saved")),
         });
       } else {

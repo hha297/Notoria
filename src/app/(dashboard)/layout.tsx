@@ -52,14 +52,14 @@ export default async function DashboardLayout({
           userImage={session?.user?.image}
           isPro={hasActiveProSubscription(subscription)}
         />
-        <SidebarInset className="bg-background">
+        <SidebarInset className="min-w-0 max-w-full bg-background">
           <header className="flex h-14 shrink-0 items-center gap-2 border-b border-hairline-cloud bg-background px-3 sm:gap-3 sm:px-6">
-            <SidebarTrigger className="-ml-0.5 text-ink sm:-ml-1" />
+            <SidebarTrigger className="-ml-0.5 shrink-0 text-ink sm:-ml-1" />
             <WorkspaceSelector
               workspaces={workspaces}
               activeWorkspaceId={activeWorkspace?.id}
             />
-            <div className="ml-auto flex min-w-0 items-center gap-1.5 sm:gap-2">
+            <div className="ml-auto flex min-w-0 shrink items-center gap-1.5 sm:gap-2">
               <LocaleSelector value={locale} />
             </div>
           </header>
@@ -68,8 +68,8 @@ export default async function DashboardLayout({
             languageCode={activeWorkspace?.language ?? null}
           />
           <WorkspaceOnboardingGate workspaceId={activeWorkspace?.id ?? null} />
-          <main className="flex-1 overflow-auto bg-background px-4 py-6 sm:px-6 sm:py-8">
-            <div className="mx-auto w-full max-w-7xl">{children}</div>
+          <main className="min-w-0 flex-1 overflow-auto bg-background px-4 py-6 sm:px-6 sm:py-8">
+            <div className="mx-auto w-full min-w-0 max-w-7xl">{children}</div>
           </main>
         </SidebarInset>
       </SidebarProvider>

@@ -288,7 +288,12 @@ export function WritingEditor({
     }
 
     try {
-      const payload = buildPayload(title, description, editorState);
+      const {
+        title: nextTitle,
+        description: nextDescription,
+        editorState: nextState,
+      } = latestRef.current;
+      const payload = buildPayload(nextTitle, nextDescription, nextState);
 
       if (initialData?.id) {
         await updateWritingDocument(initialData.id, payload);

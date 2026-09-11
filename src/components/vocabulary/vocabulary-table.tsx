@@ -700,7 +700,7 @@ export function VocabularyTable({
               emptyLabel={t("filterPartOfSpeech")}
               values={partOfSpeechFilter}
               onChange={setPartOfSpeechFilter}
-              triggerClassName="h-9 w-full min-w-0 sm:min-w-36"
+              triggerClassName="h-9 w-full min-w-0"
               options={PARTS_OF_SPEECH.map((pos) => ({
                 value: pos,
                 label: tPos(pos),
@@ -711,7 +711,7 @@ export function VocabularyTable({
               emptyLabel={t("columns.tags")}
               values={tagFilter}
               onChange={setTagFilter}
-              triggerClassName="h-9 w-full min-w-0 sm:min-w-32"
+              triggerClassName="h-9 w-full min-w-0"
               contentClassName="max-h-80 min-w-56"
               groups={tagFilterGroups}
             />
@@ -730,7 +730,7 @@ export function VocabularyTable({
             >
               <SelectTrigger
                 size="sm"
-                className="h-9 w-full min-w-0 sm:min-w-36"
+                className="h-9 w-full min-w-0"
               >
                 <SelectValue>{getSortLabel(sortValue)}</SelectValue>
               </SelectTrigger>

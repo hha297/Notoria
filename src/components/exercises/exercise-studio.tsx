@@ -55,7 +55,7 @@ export function ExerciseStudio({
         <div
           role="tablist"
           aria-label={t("sources.label")}
-          className="inline-flex w-fit rounded-xl border border-hairline-cloud bg-muted/30 p-1"
+          className="inline-flex max-w-full flex-wrap rounded-xl border border-hairline-cloud bg-muted/30 p-1"
           data-tutorial="exercise-sources"
         >
           {tabs.map((tab) => {
@@ -69,14 +69,14 @@ export function ExerciseStudio({
                 aria-selected={active}
                 onClick={() => setSource(tab.id)}
                 className={cn(
-                  "inline-flex cursor-pointer items-center gap-2 rounded-lg px-3.5 py-2 text-sm font-medium transition-colors",
+                  "inline-flex min-w-0 flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors sm:flex-none sm:px-3.5",
                   active
                     ? "bg-card text-ink shadow-sm ring-1 ring-hairline-cloud"
                     : "text-muted-foreground hover:text-ink",
                 )}
               >
-                <Icon className="size-4 opacity-80" />
-                {tab.label}
+                <Icon className="size-4 shrink-0 opacity-80" />
+                <span className="truncate">{tab.label}</span>
               </button>
             );
           })}

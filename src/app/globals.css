@@ -157,19 +157,19 @@
   }
 
   .card-surface {
-    @apply rounded-xl border border-hairline-cloud bg-card p-4 text-ink shadow-none sm:p-6 md:p-8;
+    @apply min-w-0 max-w-full rounded-xl border border-hairline-cloud bg-card p-4 text-ink shadow-none sm:p-6 md:p-8;
   }
 
   .card-surface-dark {
-    @apply rounded-[18px] border border-hairline-violet bg-ink-deep p-4 text-on-primary shadow-none sm:p-6 md:p-8;
+    @apply min-w-0 max-w-full rounded-[18px] border border-hairline-violet bg-ink-deep p-4 text-on-primary shadow-none sm:p-6 md:p-8;
   }
 
   .data-table {
-    @apply w-full overflow-x-auto rounded-xl border border-hairline-cloud bg-card;
+    @apply w-full min-w-0 max-w-full overflow-x-auto rounded-xl border border-hairline-cloud bg-card;
   }
 
   .data-table table {
-    @apply w-full min-w-[640px] border-collapse;
+    @apply w-full border-collapse;
   }
 
   .data-table thead {

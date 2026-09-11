@@ -13,6 +13,8 @@ import TableRow from "@tiptap/extension-table-row";
 import TaskItem from "@tiptap/extension-task-item";
 import TaskList from "@tiptap/extension-task-list";
 import Underline from "@tiptap/extension-underline";
+import Heading from "@tiptap/extension-heading";
+import { mergeAttributes } from "@tiptap/core";
 import {
   EditorContent,
   useEditor,
@@ -36,9 +38,36 @@ import {
   replaceEditorImageSrc,
 } from "@/lib/editor/insert-images";
 import { uploadEditorImageFile } from "@/lib/editor/upload-image";
+import { formatTiptapDocument } from "@/lib/editor/format-document";
+import {
+  coerceHeadingLevel,
+  normalizeTipTapHeadingLevels,
+} from "@/lib/editor/heading-level";
 import { cn } from "@/lib/utils";
 
 const lowlight = createLowlight(common);
+
+/** Coerce level so string "2" from JSON never collapses to TipTap's default H1. */
+const CoercedHeading = Heading.extend({
+  addAttributes() {
+    return {
+      level: {
+        default: 1,
+        rendered: false,
+        parseHTML: (element) =>
+          coerceHeadingLevel(element.tagName.replace(/^h/i, "")),
+      },
+    };
+  },
+  renderHTML({ node, HTMLAttributes }) {
+    const level = coerceHeadingLevel(node.attrs.level);
+    return [
+      `h${level}`,
+      mergeAttributes(this.options.HTMLAttributes, HTMLAttributes),
+      0,
+    ];
+  },
+});
 
 type RichTextEditorProps = {
   content?: JSONContent | null;
@@ -61,6 +90,10 @@ function buildExtensions(placeholder: string) {
       codeBlock: false,
       link: false,
       underline: false,
+      heading: false,
+    }),
+    CoercedHeading.configure({
+      levels: [1, 2, 3, 4, 5, 6],
     }),
     Underline,
     Highlight,
@@ -128,14 +161,23 @@ export function RichTextEditor({
     }
   }
 
+  const onChangeRef = useRef(onChange);
+  onChangeRef.current = onChange;
+  const onAutosaveRef = useRef(onAutosave);
+  onAutosaveRef.current = onAutosave;
+  /** Prevents controlled `content` sync from wiping a local Format before parent state catches up. */
+  const pendingLocalDocRef = useRef<string | null>(null);
+
   const editor = useEditor({
     immediatelyRender: false,
     editable,
     extensions: buildExtensions(placeholder),
-    content: content ?? {
-      type: "doc",
-      content: [{ type: "paragraph" }],
-    },
+    content: normalizeTipTapHeadingLevels(
+      content ?? {
+        type: "doc",
+        content: [{ type: "paragraph" }],
+      },
+    ),
     onUpdate: ({ editor: currentEditor }) => {
       if (pendingUploads.current > 0) return;
 
@@ -145,9 +187,10 @@ export function RichTextEditor({
         return;
       }
 
-      onChange?.(json);
+      onChangeRef.current?.(json);
 
-      if (!onAutosave) return;
+      const autosave = onAutosaveRef.current;
+      if (!autosave) return;
 
       if (autosaveTimer.current) {
         clearTimeout(autosaveTimer.current);
@@ -158,7 +201,7 @@ export function RichTextEditor({
         if (serialized === lastSavedContent.current) return;
         if (pendingUploads.current > 0) return;
 
-        void Promise.resolve(onAutosave(json)).then(() => {
+        void Promise.resolve(autosave(json)).then(() => {
           lastSavedContent.current = serialized;
         });
       }, autosaveDelayMs);
@@ -166,8 +209,12 @@ export function RichTextEditor({
     editorProps: {
       attributes: {
         class: cn(
-          "prose prose-neutral dark:prose-invert max-w-none px-4 py-3 focus:outline-none",
-          "[&_img]:h-auto [&_img]:max-h-80 [&_img]:max-w-full [&_img]:rounded-lg",
+          "prose prose-neutral dark:prose-invert max-w-none break-words px-4 py-3 [overflow-wrap:anywhere] focus:outline-none",
+          "prose-headings:font-heading",
+          "prose-h1:text-2xl prose-h1:font-medium prose-h1:leading-tight",
+          "prose-h2:text-xl prose-h2:font-medium prose-h2:leading-tight",
+          "prose-h3:text-lg prose-h3:font-medium prose-h3:leading-snug",
+          "[&_img]:h-auto [&_img]:max-h-80 [&_img]:max-w-full [&_img]:rounded-lg [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_table]:max-w-full",
           isNotes
             ? editable
               ? "min-h-[140px]"
@@ -196,12 +243,13 @@ export function RichTextEditor({
 
   emitLatestRef.current = (currentEditor) => {
     const json = currentEditor.getJSON();
-    onChange?.(json);
+    onChangeRef.current?.(json);
 
-    if (!onAutosave || pendingUploads.current > 0) return;
+    const autosave = onAutosaveRef.current;
+    if (!autosave || pendingUploads.current > 0) return;
     const serialized = JSON.stringify(json);
     if (serialized === lastSavedContent.current) return;
-    void Promise.resolve(onAutosave(json)).then(() => {
+    void Promise.resolve(autosave(json)).then(() => {
       lastSavedContent.current = serialized;
     });
   };
@@ -288,8 +336,26 @@ export function RichTextEditor({
     const current = JSON.stringify(editor.getJSON());
     const incoming = JSON.stringify(content ?? { type: "doc", content: [] });
 
+    if (pendingLocalDocRef.current) {
+      if (incoming === pendingLocalDocRef.current) {
+        pendingLocalDocRef.current = null;
+      } else if (current === pendingLocalDocRef.current) {
+        // Parent still has pre-Format content; keep the local formatted doc.
+        return;
+      } else {
+        pendingLocalDocRef.current = null;
+      }
+    }
+
     if (current !== incoming) {
-      editor.commands.setContent(content ?? { type: "doc", content: [] });
+      editor.commands.setContent(
+        normalizeTipTapHeadingLevels(
+          content ?? { type: "doc", content: [] },
+        ),
+        {
+          emitUpdate: false,
+        },
+      );
       lastSavedContent.current = incoming;
     }
   }, [content, editor]);
@@ -320,6 +386,35 @@ export function RichTextEditor({
 
   const characters = editor.storage.characterCount.characters();
   const words = editor.storage.characterCount.words();
+  const activeEditor = editor;
+
+  function handleFormat() {
+    const current = activeEditor.getJSON();
+    const formatted = formatTiptapDocument(current);
+    if (JSON.stringify(formatted) === JSON.stringify(current)) {
+      toast.message(tEditor("formatUnchanged"));
+      return;
+    }
+
+    const selection = activeEditor.state.selection;
+    // Apply without relying on onUpdate alone — parent form state must get levels.
+    activeEditor.commands.setContent(formatted, { emitUpdate: false });
+    const next = activeEditor.getJSON();
+    const serialized = JSON.stringify(next);
+    pendingLocalDocRef.current = serialized;
+
+    const maxPos = activeEditor.state.doc.content.size;
+    const from = Math.min(selection.from, maxPos);
+    const to = Math.min(selection.to, maxPos);
+    try {
+      activeEditor.commands.setTextSelection({ from, to });
+    } catch {
+      activeEditor.commands.focus("end");
+    }
+
+    onChangeRef.current?.(next);
+    toast.success(tEditor("formatSuccess"));
+  }
 
   return (
     <div
@@ -328,7 +423,13 @@ export function RichTextEditor({
         className,
       )}
     >
-      {editable && <EditorToolbar editor={editor} />}
+      {editable && (
+        <EditorToolbar
+          editor={editor}
+          onFormat={handleFormat}
+          formatLabel={tEditor("format")}
+        />
+      )}
       <div className="overflow-x-auto">
         <EditorContent
           editor={editor}

@@ -12,6 +12,7 @@ import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useExerciseSessionController } from "@/hooks/use-exercise-session-controller";
+import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import { buildTypeAnswerItems } from "@/lib/exercises/type-answer";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { hintInitialLetter } from "@/lib/exercises/hint";
@@ -46,6 +47,7 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
     recordAnswer,
     peek,
   } = useExerciseSessionController();
+  const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
 
   const filteredWords = useMemo(
     () => filterFlashcardWords(words, filters),
@@ -56,13 +58,23 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
     [filteredWords, studyMode],
   );
   const itemMap = useMemo(() => new Map(poolItems.map((i) => [i.id, i])), [poolItems]);
+  const createdAtByWordId = useMemo(
+    () => new Map(filteredWords.map((word) => [word.id, word.createdAt] as const)),
+    [filteredWords],
+  );
 
   const startSession = useCallback(() => {
-    const sampled = sampleSessionItems(poolItems, "type_answer");
+    const prefs = commitAndBeginNext();
+    const sampled = sampleSessionItems(poolItems, "type_answer", {
+      getWordId: (item) => item.wordId,
+      getCreatedAt: (item) => createdAtByWordId.get(item.wordId),
+      softAvoidWordIds: prefs.softAvoidWordIds,
+      softPreferWordIds: prefs.softPreferWordIds,
+    });
     setItemIds(sampled.map((i) => i.id));
     restart();
     setInput("");
-  }, [poolItems, restart]);
+  }, [commitAndBeginNext, createdAtByWordId, poolItems, restart]);
 
   useEffect(() => {
     startSession();
@@ -84,12 +96,15 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
 
   const check = () => {
     if (!current || answered || !input.trim()) return;
-    recordAnswer(answersMatchAny(input, current.acceptableAnswers));
+    const correct = answersMatchAny(input, current.acceptableAnswers);
+    recordAnswer(correct);
+    recordOutcome({ wordId: current.wordId, correct });
   };
 
   const revealAnswer = () => {
     if (!current || answered) return;
     peek();
+    recordOutcome({ wordId: current.wordId, correct: false });
   };
 
   useHotkeys("enter", (e) => {
@@ -175,15 +190,21 @@ export function TypeAnswerSession({ workspaceId, words }: TypeAnswerSessionProps
                     autoComplete="off"
                   />
                 ) : (
-                  <div className="space-y-3 rounded-xl border border-hairline-cloud bg-muted/30 p-4 text-sm">
-                    <p><span className="font-semibold text-ink">{t("yourAnswer")}:</span> {input || "—"}</p>
-                    <p><span className="font-semibold text-ink">{t("correctAnswer")}:</span> {correctDisplay}</p>
+                  <div className="min-w-0 space-y-3 rounded-xl border border-hairline-cloud bg-muted/30 p-4 text-sm">
+                    <p className="break-words [overflow-wrap:anywhere]">
+                      <span className="font-semibold text-ink">{t("yourAnswer")}:</span>{" "}
+                      {input || "—"}
+                    </p>
+                    <p className="break-words [overflow-wrap:anywhere]">
+                      <span className="font-semibold text-ink">{t("correctAnswer")}:</span>{" "}
+                      {correctDisplay}
+                    </p>
                   </div>
                 )}
                 {answered && (
-                  <div className={cn("flex items-center gap-2 rounded-xl px-4 py-3 text-sm font-medium", isCorrect ? "bg-[#f4fae0] text-[#4a6b0a]" : "bg-[#fff1f6] text-[#c7366a]")}>
-                    {isCorrect ? <CheckCircle2 className="size-4" /> : <XCircle className="size-4" />}
-                    {isCorrect ? t("correct") : t("incorrect")}
+                  <div className={cn("flex min-w-0 items-start gap-2 rounded-xl px-4 py-3 text-sm font-medium break-words [overflow-wrap:anywhere]", isCorrect ? "bg-[#f4fae0] text-[#4a6b0a]" : "bg-[#fff1f6] text-[#c7366a]")}>
+                    {isCorrect ? <CheckCircle2 className="mt-0.5 size-4 shrink-0" /> : <XCircle className="mt-0.5 size-4 shrink-0" />}
+                    <span className="min-w-0">{isCorrect ? t("correct") : t("incorrect")}</span>
                   </div>
                 )}
               </div>

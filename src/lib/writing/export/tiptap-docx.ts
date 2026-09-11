@@ -11,6 +11,7 @@ import {
   type IParagraphOptions,
 } from "docx";
 import type { JSONContent } from "@tiptap/react";
+import { coerceHeadingLevel } from "@/lib/editor/heading-level";
 import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
 
 /** Match Notoria body font across the exported worksheet. */
@@ -229,8 +230,7 @@ function renderBlock(
     case "paragraph":
       return [paragraphFromNodes(node.content)];
     case "heading": {
-      const level =
-        typeof node.attrs?.level === "number" ? node.attrs.level : 1;
+      const level = coerceHeadingLevel(node.attrs?.level);
       return [
         paragraphFromNodes(node.content, {
           heading: headingLevel(level),

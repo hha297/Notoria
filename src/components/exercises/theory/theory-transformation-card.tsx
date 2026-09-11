@@ -45,7 +45,7 @@ export function TheoryTransformationCard({
   };
 
   return (
-    <div className="rounded-2xl border border-hairline-cloud bg-card p-5 sm:p-6">
+    <div className="min-w-0 max-w-full rounded-2xl border border-hairline-cloud bg-card p-5 sm:p-6">
       <SkillHeader
         skillLabel={item.skillLabel}
         instruction={item.instruction}
@@ -56,7 +56,7 @@ export function TheoryTransformationCard({
             : t("instructions.applyRule")
         }
       />
-      <p className="font-heading text-2xl font-medium tracking-tight text-ink sm:text-3xl">
+      <p className="break-words font-heading text-2xl font-medium tracking-tight text-ink [overflow-wrap:anywhere] sm:text-3xl">
         {item.showArrow !== false ? (
           <>
             {item.promptWord} →{" "}
@@ -74,7 +74,7 @@ export function TheoryTransformationCard({
             ) : (
               <span
                 aria-hidden
-                className="inline-block min-w-[7ch] translate-y-[-0.08em] border-b-2 border-dashed border-muted-foreground/55"
+                className="inline-block min-w-[7ch] max-w-full translate-y-[-0.08em] border-b-2 border-dashed border-muted-foreground/55"
               />
             )}
           </>
@@ -95,13 +95,13 @@ export function TheoryTransformationCard({
             ) : (
               <span
                 aria-hidden
-                className="inline-block min-w-[7ch] translate-y-[-0.08em] border-b-2 border-dashed border-muted-foreground/55"
+                className="inline-block min-w-[7ch] max-w-full translate-y-[-0.08em] border-b-2 border-dashed border-muted-foreground/55"
               />
             )}
           </>
         )}
       </p>
-      <div className="mt-5 flex flex-col gap-2 sm:flex-row">
+      <div className="mt-5 flex min-w-0 flex-col gap-2 sm:flex-row">
         <Input
           value={value}
           onChange={(e) => setValue(e.target.value)}
@@ -114,11 +114,11 @@ export function TheoryTransformationCard({
               else check();
             }
           }}
-          className="sm:flex-1"
+          className="min-w-0 sm:flex-1"
           autoFocus
         />
         {!checked ? (
-          <Button type="button" onClick={check} disabled={!value.trim()}>
+          <Button type="button" onClick={check} disabled={!value.trim()} className="shrink-0">
             {t("check")}
           </Button>
         ) : null}

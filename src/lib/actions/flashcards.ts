@@ -1,6 +1,6 @@
 "use server";
 
-import { and, asc, eq, inArray } from "drizzle-orm";
+import { and, asc, desc, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import {
@@ -99,14 +99,15 @@ export async function getFlashcardWords(): Promise<FlashcardWord[]> {
   }
 
   // Lean ID pass first — avoid loading full word graphs for the entire bank.
+  // Prefer newest vocabulary so the capped deck stays relevant for practice.
   const [wordIds, progressRows] = await Promise.all([
     db.query.vocabularyWords.findMany({
       where: and(
         eq(vocabularyWords.userId, userId),
         eq(vocabularyWords.workspaceId, workspace.id),
       ),
-      columns: { id: true, word: true },
-      orderBy: [asc(vocabularyWords.word)],
+      columns: { id: true, createdAt: true },
+      orderBy: [desc(vocabularyWords.createdAt)],
     }),
     db.query.flashcardProgress.findMany({
       where: and(
@@ -127,6 +128,7 @@ export async function getFlashcardWords(): Promise<FlashcardWord[]> {
     return nextReviewAt == null || nextReviewAt.getTime() <= now;
   };
 
+  // Due first (already newest→oldest), then not-due (also newest→oldest).
   const dueIds = wordIds.filter((row) => isDue(row.id)).map((row) => row.id);
   const laterIds = wordIds.filter((row) => !isDue(row.id)).map((row) => row.id);
   const selectedIds = [...dueIds, ...laterIds].slice(0, PRACTICE_DECK_LIMIT);
@@ -207,6 +209,7 @@ export async function getFlashcardWords(): Promise<FlashcardWord[]> {
       synonyms: formatSynonymNames(legacy) || word.synonyms,
       notes: word.notes,
       status: word.status,
+      createdAt: word.createdAt.toISOString(),
       meanings: word.meanings
         .filter((meaning) => meaning.isPrimary)
         .map((meaning) => meaning.meaning),

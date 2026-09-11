@@ -94,14 +94,14 @@ function MeaningRowShell({
     <div className="space-y-2">
       <div
         className={cn(
-          "flex items-center gap-2 rounded-lg border bg-card p-2",
+          "flex min-w-0 items-center gap-2 rounded-lg border bg-card p-2",
           item.isPrimary
             ? "border-accent-lime/50 bg-accent-lime/5"
             : "border-hairline-cloud opacity-90",
         )}
       >
         {dragHandle}
-        <span className="w-6 text-sm font-medium text-muted-foreground">
+        <span className="w-6 shrink-0 text-sm font-medium text-muted-foreground">
           {index + 1}.
         </span>
         <Button
@@ -130,7 +130,7 @@ function MeaningRowShell({
           onChange={(event) => onUpdate(item.id, event.target.value)}
           onBlur={() => onBlur?.(item.id)}
           placeholder={placeholder}
-          className="flex-1"
+          className="min-w-0 flex-1"
         />
         <Button
           type="button"
@@ -139,6 +139,7 @@ function MeaningRowShell({
           onClick={() => onRemove(item.id)}
           disabled={!canRemove}
           aria-label="Remove meaning"
+          className="shrink-0"
         >
           <Trash2 className="size-4" />
         </Button>

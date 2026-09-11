@@ -44,15 +44,17 @@ export function TheoryMultipleChoiceCard({
   };
 
   return (
-    <div className="rounded-2xl border border-hairline-cloud bg-card p-5 sm:p-6">
+    <div className="min-w-0 max-w-full rounded-2xl border border-hairline-cloud bg-card p-5 sm:p-6">
       <SkillHeader
         skillLabel={item.skillLabel}
         instruction={item.instruction}
         fallbackType={t("types.multiple_choice")}
         fallbackInstruction={t("instructions.chooseForm")}
       />
-      <p className="font-heading text-xl font-medium leading-snug text-ink">{item.prompt}</p>
-      <div className="mt-5 grid gap-2">
+      <p className="break-words font-heading text-xl font-medium leading-snug text-ink [overflow-wrap:anywhere]">
+        {item.prompt}
+      </p>
+      <div className="mt-5 grid min-w-0 gap-2">
         {item.options.map((option) => {
           const isSelected = selected === option;
           const showState = checked && isSelected;
@@ -63,7 +65,7 @@ export function TheoryMultipleChoiceCard({
               disabled={checked}
               onClick={() => setSelected(option)}
               className={cn(
-                "rounded-xl border px-4 py-3 text-left text-sm font-medium transition-colors",
+                "min-w-0 rounded-xl border px-4 py-3 text-left text-sm font-medium break-words [overflow-wrap:anywhere] transition-colors",
                 isSelected && !checked && "border-ink bg-muted/40",
                 showState && isCorrect && "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a]",
                 showState && !isCorrect && "border-destructive/40 bg-[#fff1f6] text-destructive",

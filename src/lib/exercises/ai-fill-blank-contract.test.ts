@@ -35,6 +35,7 @@ function flashcard(overrides: Partial<FlashcardWord> & Pick<FlashcardWord, "id" 
     synonyms: null,
     notes: null,
     status: "NEW",
+    createdAt: "2026-01-01T00:00:00.000Z",
     meanings: ["friend"],
     examples: ["Minun kaverini asuu Helsingissä."],
     tags: [],

@@ -13,6 +13,7 @@ import { FlashcardRatingBar } from "@/components/flashcards/flashcard-rating-bar
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { Progress } from "@/components/ui/progress";
 import { recordFlashcardReview } from "@/lib/actions/flashcards";
+import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import {
   canRestoreSession,
   clearSessionState,
@@ -45,6 +46,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
   const [session, setSession] = useState<FlashcardSessionState | null>(null);
   const [sessionComplete, setSessionComplete] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
 
   const filteredWords = useMemo(
     () => filterFlashcardWords(words, filters),
@@ -155,47 +157,41 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
     }));
   }, [updateSession]);
 
-  const handleShuffle = useCallback(() => {
+  const rebuildSession = useCallback(() => {
     if (filteredWords.length === 0) {
       return;
     }
 
+    const prefs = commitAndBeginNext();
     const nextSession = createSessionState({
       workspaceId,
       words: filteredWords,
       filters,
       studyMode,
+      softAvoidWordIds: prefs.softAvoidWordIds,
     });
 
     setSessionComplete(false);
     setSession(nextSession);
     saveSessionState(nextSession);
-  }, [filteredWords, filters, studyMode, workspaceId]);
+  }, [commitAndBeginNext, filteredWords, filters, studyMode, workspaceId]);
+
+  const handleShuffle = useCallback(() => {
+    rebuildSession();
+  }, [rebuildSession]);
 
   const handleRestart = useCallback(() => {
-    if (filteredWords.length === 0) {
-      return;
-    }
-
-    const nextSession = createSessionState({
-      workspaceId,
-      words: filteredWords,
-      filters,
-      studyMode,
-      currentIndex: 0,
-      isFlipped: false,
-    });
-
-    setSessionComplete(false);
-    setSession(nextSession);
-    saveSessionState(nextSession);
-  }, [filteredWords, filters, studyMode, workspaceId]);
+    rebuildSession();
+  }, [rebuildSession]);
 
   const handleRate = useCallback(
     (rating: FlashcardRating) => {
       if (!session || !currentWord) {
         return;
       }
+
+      const feltCorrect = rating === "GOOD" || rating === "EASY";
+      recordOutcome({ wordId: currentWord.id, correct: feltCorrect });
 
       startTransition(async () => {
         try {
@@ -224,8 +220,10 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
     [
       currentDirection,
       currentWord,
+      recordOutcome,
       router,
       session,
+      t,
       updateSession,
     ],
   );
@@ -293,11 +291,11 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
       ) : (
         <>
           <div className="space-y-3">
-            <div className="flex items-center justify-between gap-4 text-sm">
-              <p className="font-medium text-ink">
+            <div className="flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+              <p className="min-w-0 font-medium break-words text-ink">
                 {t("progress", { current: currentNumber, total: totalCards })}
               </p>
-              <p className="text-muted-foreground">{t("keyboardHint")}</p>
+              <p className="shrink-0 text-muted-foreground">{t("keyboardHint")}</p>
             </div>
             <Progress value={progressValue} />
           </div>

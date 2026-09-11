@@ -38,7 +38,10 @@
     "imageTooLarge": "Kuva on liian suuri (enintään 5 Mt).",
     "imageInvalidType": "Käytä PNG-, JPG-, GIF- tai WebP-kuvaa.",
     "imageUnavailable": "Kuvien latausta ei ole määritetty.",
-    "or": "tai"
+    "or": "tai",
+    "format": "Muotoile",
+    "formatSuccess": "Sisältö muotoiltu",
+    "formatUnchanged": "Sisältö on jo muotoiltu"
   },
   "nav": {
     "dashboard": "Etusivu",

@@ -8,7 +8,7 @@ import { useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
-import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { RichTextContent } from "@/components/editor/rich-text-content";
 import { DescriptionContent } from "@/components/form/description-content";
 import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
 import { TheoryExportDialog } from "@/components/theory/export-dialog";
@@ -127,9 +127,8 @@ export function TheoryReader({
             />
           ) : null}
         </header>
-        <RichTextEditor
+        <RichTextContent
           content={parsed.doc}
-          editable={false}
           className="border-0 bg-transparent shadow-none"
         />
       </article>
