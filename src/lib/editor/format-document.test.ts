@@ -86,8 +86,8 @@ describe("formatTiptapDocument", () => {
     expect(formatted.content?.[0]?.type).toBe("bulletList");
     expect(formatted.content?.[0]?.content).toHaveLength(3);
     expect(
-      formatted.content?.[0]?.content?.map((item) =>
-        item.content?.[0]?.content?.[0]?.text,
+      formatted.content?.[0]?.content?.map(
+        (item) => item.content?.[0]?.content?.[0]?.text,
       ),
     ).toEqual(["First item", "Second item", "Third item"]);
   });
@@ -130,9 +130,9 @@ describe("formatTiptapDocument", () => {
       ),
     );
 
-    expect(
-      formatted.content?.map((node) => node.attrs?.level),
-    ).toEqual([1, 2, 3, 2]);
+    expect(formatted.content?.map((node) => node.attrs?.level)).toEqual([
+      1, 2, 3, 2,
+    ]);
   });
 
   it("fixes FI-style trailing dots like 2.1. that were stuck as H1", () => {
@@ -176,14 +176,17 @@ describe("formatTiptapDocument", () => {
 
   it("preserves bold marks inside list items", () => {
     const formatted = formatTiptapDocument(
-      textDoc({
-        type: "paragraph",
-        content: [
-          { type: "text", text: "- " },
-          { type: "text", text: "Important", marks: [{ type: "bold" }] },
-          { type: "text", text: " item" },
-        ],
-      }, paragraph("- Second")),
+      textDoc(
+        {
+          type: "paragraph",
+          content: [
+            { type: "text", text: "- " },
+            { type: "text", text: "Important", marks: [{ type: "bold" }] },
+            { type: "text", text: " item" },
+          ],
+        },
+        paragraph("- Second"),
+      ),
     );
 
     const firstItemText = formatted.content?.[0]?.content?.[0]?.content?.[0];

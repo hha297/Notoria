@@ -130,6 +130,7 @@ export function TheoryReader({
         <RichTextContent
           content={parsed.doc}
           className="border-0 bg-transparent shadow-none"
+          collapseStorageKey={`heading-collapse:theory:${id}`}
         />
       </article>
 

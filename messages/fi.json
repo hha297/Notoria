@@ -41,7 +41,10 @@
     "or": "tai",
     "format": "Muotoile",
     "formatSuccess": "Sisältö muotoiltu",
-    "formatUnchanged": "Sisältö on jo muotoiltu"
+    "formatUnchanged": "Sisältö on jo muotoiltu",
+    "tableSelectionInvalid": "Valintaa ei voitu muuntaa taulukoksi",
+    "headingCollapse": "Tiivistä osio",
+    "headingExpand": "Laajenna osio"
   },
   "nav": {
     "dashboard": "Etusivu",
@@ -508,7 +511,6 @@
         "incorrectWithAnswer": "Oikea vastaus: {answer}"
       },
       "sentenceMeaningLoading": "Ladataan merkitystä…",
-
       "types": {
         "multiple_choice": "Monivalinta",
         "true_false": "Tosi / epätosi",

@@ -83,7 +83,9 @@ describe("notesFormatBlocksToDoc", () => {
       type: "text",
       text: "vuokra",
     });
-    expect(firstBody?.content?.[1]?.content?.[0]?.content?.[0]?.marks).toBeUndefined();
+    expect(
+      firstBody?.content?.[1]?.content?.[0]?.content?.[0]?.marks,
+    ).toBeUndefined();
 
     expect(isNotesDocEmpty(doc)).toBe(false);
     const plain = vocabularyNotesToPlainText(serializeVocabularyNotes(doc));

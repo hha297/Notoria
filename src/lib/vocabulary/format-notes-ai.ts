@@ -88,7 +88,7 @@ export async function formatVocabularyNotesWithAi(
 ): Promise<VocabularyNotesFormatResult> {
   const client = getOpenAIClient();
   const languageHint = input.language
-    ? getLanguageByCode(input.language)?.name ?? input.language
+    ? (getLanguageByCode(input.language)?.name ?? input.language)
     : null;
 
   const completion = await client.chat.completions.create({

@@ -39,6 +39,7 @@ import {
 } from "@/lib/editor/insert-images";
 import { uploadEditorImageFile } from "@/lib/editor/upload-image";
 import { formatTiptapDocument } from "@/lib/editor/format-document";
+import { HeadingCollapse } from "@/lib/editor/heading-collapse-extension";
 import {
   coerceHeadingLevel,
   normalizeTipTapHeadingLevels,
@@ -82,9 +83,21 @@ type RichTextEditorProps = {
   showFooter?: boolean;
   onEditorReady?: (editor: Editor | null) => void;
   onImageUploadPendingChange?: (pending: boolean) => void;
+  /**
+   * Optional sessionStorage key for heading collapse UI state.
+   * Does not alter persisted TipTap JSON.
+   */
+  collapseStorageKey?: string | null;
 };
 
-function buildExtensions(placeholder: string) {
+function buildExtensions(
+  placeholder: string,
+  collapse: {
+    expandLabel: string;
+    collapseLabel: string;
+    storageKey: string | null;
+  },
+) {
   return [
     StarterKit.configure({
       codeBlock: false,
@@ -94,6 +107,11 @@ function buildExtensions(placeholder: string) {
     }),
     CoercedHeading.configure({
       levels: [1, 2, 3, 4, 5, 6],
+    }),
+    HeadingCollapse.configure({
+      expandLabel: collapse.expandLabel,
+      collapseLabel: collapse.collapseLabel,
+      storageKey: collapse.storageKey,
     }),
     Underline,
     Highlight,
@@ -136,14 +154,15 @@ export function RichTextEditor({
   showFooter,
   onEditorReady,
   onImageUploadPendingChange,
+  collapseStorageKey = null,
 }: RichTextEditorProps) {
   const tEditor = useTranslations("editor");
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSavedContent = useRef("");
   const pendingUploads = useRef(0);
-  const insertImagesRef = useRef<(files: File[]) => void>(() => {});
-  const persistTransientRef = useRef<(currentEditor: Editor) => void>(() => {});
-  const emitLatestRef = useRef<(currentEditor: Editor) => void>(() => {});
+  const insertImagesRef = useRef<(files: File[]) => void>(() => { });
+  const persistTransientRef = useRef<(currentEditor: Editor) => void>(() => { });
+  const emitLatestRef = useRef<(currentEditor: Editor) => void>(() => { });
   const isNotes = variant === "notes";
   const footerVisible = showFooter ?? !isNotes;
 
@@ -171,7 +190,11 @@ export function RichTextEditor({
   const editor = useEditor({
     immediatelyRender: false,
     editable,
-    extensions: buildExtensions(placeholder),
+    extensions: buildExtensions(placeholder, {
+      expandLabel: tEditor("headingExpand"),
+      collapseLabel: tEditor("headingCollapse"),
+      storageKey: collapseStorageKey,
+    }),
     content: normalizeTipTapHeadingLevels(
       content ?? {
         type: "doc",

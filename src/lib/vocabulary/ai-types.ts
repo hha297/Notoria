@@ -66,11 +66,14 @@ export const vocabularyMeaningResultSchema = z.object({
     .array(
       z.union([
         vocabularyMeaningSuggestionSchema,
-        z.string().min(1).transform((meaning) => ({
-          meaning,
-          language: "",
-          explanation: "",
-        })),
+        z
+          .string()
+          .min(1)
+          .transform((meaning) => ({
+            meaning,
+            language: "",
+            explanation: "",
+          })),
       ]),
     )
     .max(3)

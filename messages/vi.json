@@ -41,7 +41,10 @@
     "or": "hoặc",
     "format": "Định dạng",
     "formatSuccess": "Đã định dạng nội dung",
-    "formatUnchanged": "Nội dung đã được định dạng"
+    "formatUnchanged": "Nội dung đã được định dạng",
+    "tableSelectionInvalid": "Không thể chuyển vùng chọn thành bảng",
+    "headingCollapse": "Thu gọn mục",
+    "headingExpand": "Mở rộng mục"
   },
   "nav": {
     "dashboard": "Tổng quan",
@@ -508,7 +511,6 @@
         "incorrectWithAnswer": "Đáp án đúng: {answer}"
       },
       "sentenceMeaningLoading": "Đang tải nghĩa…",
-
       "types": {
         "multiple_choice": "Trắc nghiệm",
         "true_false": "Đúng / sai",
