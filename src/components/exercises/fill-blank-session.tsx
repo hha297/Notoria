@@ -534,7 +534,7 @@ function FillBlankCard({
             </span>
 
             {cue ? (
-              <span className="max-w-full break-words text-xl font-medium text-muted-foreground [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
+              <span className="max-w-full break-words text-xl font-medium text-accent-violet-mid [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
                 ({cue})
               </span>
             ) : null}

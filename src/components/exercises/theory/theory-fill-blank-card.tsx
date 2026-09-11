@@ -9,6 +9,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
   answersMatchAny,
+  extractSourceWordCueFromHint,
   revealTextForExercise,
   scrubFillBlankPresentation,
 } from "@/lib/theory-exercises/generate-ai";
@@ -38,15 +39,34 @@ export function TheoryFillBlankCard({
     answer: item.answer,
     hint: item.hint ?? "",
     spaced: true,
+    sourceWord: item.sourceWord,
   });
+  const fromHint = extractSourceWordCueFromHint(scrubbed.hint);
   const prefixText = scrubbed.prefix;
   const suffixText = scrubbed.suffix;
-  const displayHint = scrubbed.hint;
+  const displaySourceWord =
+    scrubbed.sourceWordCue ||
+    item.sourceWord?.trim() ||
+    fromHint.cue ||
+    "";
+  const displayHint = displaySourceWord
+    ? fromHint.hint
+        .replace(
+          new RegExp(
+            `\\(\\s*${displaySourceWord.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*\\)`,
+            "giu",
+          ),
+          " ",
+        )
+        .replace(/\s{2,}/g, " ")
+        .trim()
+    : fromHint.hint;
   const revealDisplay = revealTextForExercise({
     ...item,
     prefix: scrubbed.prefix || undefined,
     suffix: scrubbed.suffix || undefined,
     hint: scrubbed.hint,
+    sourceWord: displaySourceWord || item.sourceWord,
     sentence: scrubbed.sentence,
     completedSentence: item.completedSentence ?? scrubbed.completedSentence,
   });
@@ -148,9 +168,9 @@ export function TheoryFillBlankCard({
                 ) : null}
               </span>
 
-              {item.sourceWord ? (
-                <span className="max-w-full break-words text-xl font-medium text-muted-foreground [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
-                  ({item.sourceWord})
+              {displaySourceWord ? (
+                <span className="max-w-full break-words text-xl font-medium text-accent-violet-mid [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
+                  ({displaySourceWord})
                 </span>
               ) : null}
 
@@ -174,7 +194,7 @@ export function TheoryFillBlankCard({
             correctAnswer={revealDisplay}
             onRevealAnswer={revealAnswer}
           >
-            <HintText text={displayHint} />
+            {displayHint ? <HintText text={displayHint} /> : null}
           </ExerciseHint>
 
           {checked ? (
