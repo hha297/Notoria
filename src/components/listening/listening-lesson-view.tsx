@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -35,7 +35,7 @@ type ListeningLessonViewProps = {
   lesson: ListeningLessonDetail;
 };
 
-export function ListeningLessonView({ lesson }: ListeningLessonViewProps) {
+export function ListeningLessonView({ lesson: initialLesson }: ListeningLessonViewProps) {
   const t = useTranslations("listening");
   const tMeta = useTranslations("listening.meta");
   const tc = useTranslations("common");
@@ -44,6 +44,11 @@ export function ListeningLessonView({ lesson }: ListeningLessonViewProps) {
   const [renameOpen, setRenameOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [isLeaving, setIsLeaving] = useState(false);
+  const [lesson, setLesson] = useState(initialLesson);
+
+  useEffect(() => {
+    setLesson(initialLesson);
+  }, [initialLesson]);
 
   const processing =
     lesson.status === "TRANSCRIBING" ||
@@ -175,6 +180,7 @@ export function ListeningLessonView({ lesson }: ListeningLessonViewProps) {
         title={lesson.title}
         originalFilename={lesson.originalFilename}
         format={lesson.format}
+        onRenamed={(patch) => setLesson((current) => ({ ...current, ...patch }))}
       />
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>

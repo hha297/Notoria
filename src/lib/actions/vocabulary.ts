@@ -37,6 +37,10 @@ import {
   type VocabularySynonymRef,
 } from "@/lib/vocabulary/synonyms";
 import { normalizePartOfSpeech, normalizeVocabularyWord } from "@/lib/vocabulary/word-identity";
+import { withDevTiming } from "@/lib/perf/dev-timing";
+
+/** Drizzle transaction client compatible with db query/mutate APIs. */
+type DbExecutor = Pick<typeof db, "delete" | "insert" | "update" | "query">;
 
 function normalizeWord(word: string) {
   return normalizeVocabularyWord(word);
@@ -100,15 +104,16 @@ async function assertWordInWorkspace(wordId: string, workspaceId: string) {
 async function replaceWordRelations(
   wordId: string,
   data: VocabularyFormValues,
+  tx: DbExecutor = db,
 ) {
-  await db.delete(wordMeanings).where(eq(wordMeanings.wordId, wordId));
-  await db.delete(wordExamples).where(eq(wordExamples.wordId, wordId));
-  await db
+  await tx.delete(wordMeanings).where(eq(wordMeanings.wordId, wordId));
+  await tx.delete(wordExamples).where(eq(wordExamples.wordId, wordId));
+  await tx
     .delete(vocabularyWordTags)
     .where(eq(vocabularyWordTags.wordId, wordId));
 
   if (data.meanings.length > 0) {
-    await db.insert(wordMeanings).values(
+    await tx.insert(wordMeanings).values(
       data.meanings.map((meaning, index) => ({
         wordId,
         meaning: meaning.meaning,
@@ -119,7 +124,7 @@ async function replaceWordRelations(
   }
 
   if (data.examples.length > 0) {
-    await db.insert(wordExamples).values(
+    await tx.insert(wordExamples).values(
       data.examples.map((example, index) => ({
         wordId,
         sentence: example.sentence,
@@ -131,7 +136,7 @@ async function replaceWordRelations(
   }
 
   if (data.tags.length > 0) {
-    await db.insert(vocabularyWordTags).values(
+    await tx.insert(vocabularyWordTags).values(
       normalizeWordTags(data.tags).map((tag) => ({
         wordId,
         tag,
@@ -244,12 +249,13 @@ async function replaceSynonyms(
   wordId: string,
   workspaceId: string,
   synonymIds: string[],
+  tx: DbExecutor = db,
 ) {
   const ids = uniqueSynonymIds(synonymIds, wordId);
 
   let linked: VocabularySynonymRef[] = [];
   if (ids.length > 0) {
-    const found = await db.query.vocabularyWords.findMany({
+    const found = await tx.query.vocabularyWords.findMany({
       where: and(
         eq(vocabularyWords.workspaceId, workspaceId),
         inArray(vocabularyWords.id, ids),
@@ -271,7 +277,7 @@ async function replaceSynonyms(
     linked = ids.map((id) => toSynonymRef(foundById.get(id)!));
   }
 
-  await db
+  await tx
     .delete(vocabularySynonyms)
     .where(
       and(
@@ -284,7 +290,7 @@ async function replaceSynonyms(
     );
 
   if (ids.length > 0) {
-    await db.insert(vocabularySynonyms).values(
+    await tx.insert(vocabularySynonyms).values(
       ids.map((synonymId) => ({
         workspaceId,
         ...orderedSynonymPair(wordId, synonymId),
@@ -292,7 +298,7 @@ async function replaceSynonyms(
     );
   }
 
-  await db
+  await tx
     .update(vocabularyWords)
     .set({
       synonyms: formatSynonymNames(linked) || null,
@@ -364,46 +370,54 @@ export async function checkVocabularyWordExists(
 }
 
 export async function getVocabularyWords() {
-  const userId = await getCurrentUserId();
-  const workspace = await getActiveWorkspace();
+  return withDevTiming("getVocabularyWords", async () => {
+    const userId = await getCurrentUserId();
+    const workspace = await getActiveWorkspace();
 
-  if (!workspace) {
-    return [];
-  }
+    if (!workspace) {
+      return {
+        words: [],
+        synonymOptions: [] as VocabularySynonymRef[],
+      };
+    }
 
-  const words = await db.query.vocabularyWords.findMany({
-    where: and(
-      eq(vocabularyWords.userId, userId),
-      eq(vocabularyWords.workspaceId, workspace.id),
-    ),
-    with: {
-      meanings: {
-        orderBy: [asc(wordMeanings.sortOrder)],
+    const words = await db.query.vocabularyWords.findMany({
+      where: and(
+        eq(vocabularyWords.userId, userId),
+        eq(vocabularyWords.workspaceId, workspace.id),
+      ),
+      with: {
+        meanings: {
+          orderBy: [asc(wordMeanings.sortOrder)],
+        },
+        examples: {
+          orderBy: [asc(wordExamples.sortOrder)],
+        },
+        tags: true,
       },
-      examples: {
-        orderBy: [asc(wordExamples.sortOrder)],
-      },
-      tags: true,
-    },
-    orderBy: [desc(vocabularyWords.updatedAt)],
-  });
+      orderBy: [desc(vocabularyWords.updatedAt)],
+    });
 
-  const [pairs, options] = await Promise.all([
-    loadSynonymPairsForWorkspace(workspace.id),
-    listWorkspaceSynonymOptions(workspace.id),
-  ]);
+    const [pairs, synonymOptions] = await Promise.all([
+      loadSynonymPairsForWorkspace(workspace.id),
+      listWorkspaceSynonymOptions(workspace.id),
+    ]);
 
-  return words.map((word) => {
-    const synonyms = resolveSynonymsFromPairs(
-      word.id,
-      word.synonyms,
-      pairs,
-      options,
-    );
     return {
-      ...word,
-      synonymRefs: synonyms.linked,
-      unmatchedSynonyms: synonyms.unmatched,
+      words: words.map((word) => {
+        const synonyms = resolveSynonymsFromPairs(
+          word.id,
+          word.synonyms,
+          pairs,
+          synonymOptions,
+        );
+        return {
+          ...word,
+          synonymRefs: synonyms.linked,
+          unmatchedSynonyms: synonyms.unmatched,
+        };
+      }),
+      synonymOptions,
     };
   });
 }
@@ -530,20 +544,24 @@ export async function createVocabularyWord(data: VocabularyFormValues) {
   const tags = await canonicalizeWordTags(workspace.id, parsed.tags);
   const payload = { ...parsed, tags };
 
-  const [word] = await db
-    .insert(vocabularyWords)
-    .values({
-      userId,
-      workspaceId: workspace.id,
-      word: parsed.word,
-      partOfSpeech: parsed.partOfSpeech || null,
-      synonyms: null,
-      notes: parsed.notes || null,
-    })
-    .returning();
+  const word = await db.transaction(async (tx) => {
+    const [created] = await tx
+      .insert(vocabularyWords)
+      .values({
+        userId,
+        workspaceId: workspace.id,
+        word: parsed.word,
+        partOfSpeech: parsed.partOfSpeech || null,
+        synonyms: null,
+        notes: parsed.notes || null,
+      })
+      .returning();
 
-  await replaceWordRelations(word.id, payload);
-  await replaceSynonyms(word.id, workspace.id, parsed.synonymIds);
+    await replaceWordRelations(created.id, payload, tx);
+    await replaceSynonyms(created.id, workspace.id, parsed.synonymIds, tx);
+    return created;
+  });
+
   await ensureWorkspaceCustomTags(workspace.id, tags);
 
   revalidatePath("/vocabulary");
@@ -564,18 +582,21 @@ export async function updateVocabularyWord(
   const tags = await canonicalizeWordTags(workspace.id, parsed.tags);
   const payload = { ...parsed, tags };
 
-  await db
-    .update(vocabularyWords)
-    .set({
-      word: parsed.word,
-      partOfSpeech: parsed.partOfSpeech || null,
-      notes: parsed.notes || null,
-      updatedAt: new Date(),
-    })
-    .where(eq(vocabularyWords.id, id));
+  await db.transaction(async (tx) => {
+    await tx
+      .update(vocabularyWords)
+      .set({
+        word: parsed.word,
+        partOfSpeech: parsed.partOfSpeech || null,
+        notes: parsed.notes || null,
+        updatedAt: new Date(),
+      })
+      .where(eq(vocabularyWords.id, id));
 
-  await replaceWordRelations(id, payload);
-  await replaceSynonyms(id, workspace.id, parsed.synonymIds);
+    await replaceWordRelations(id, payload, tx);
+    await replaceSynonyms(id, workspace.id, parsed.synonymIds, tx);
+  });
+
   await ensureWorkspaceCustomTags(workspace.id, tags);
 
   revalidatePath("/vocabulary");

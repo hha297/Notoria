@@ -241,44 +241,64 @@ export const vocabularyWords = pgTable(
       sql`lower(trim(${table.word}))`,
       sql`coalesce(${table.partOfSpeech}, '')`,
     ),
+    index("vocabulary_words_user_workspace_updated_idx").on(
+      table.userId,
+      table.workspaceId,
+      table.updatedAt,
+    ),
   ],
 );
 
-export const wordMeanings = pgTable("word_meanings", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  wordId: uuid("word_id")
-    .notNull()
-    .references(() => vocabularyWords.id, { onDelete: "cascade" }),
-  meaning: text("meaning").notNull(),
-  /** Used by exercises; secondary meanings stay on the word for reference. */
-  isPrimary: boolean("is_primary").notNull().default(true),
-  sortOrder: integer("sort_order").notNull().default(0),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-});
+export const wordMeanings = pgTable(
+  "word_meanings",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    wordId: uuid("word_id")
+      .notNull()
+      .references(() => vocabularyWords.id, { onDelete: "cascade" }),
+    meaning: text("meaning").notNull(),
+    /** Used by exercises; secondary meanings stay on the word for reference. */
+    isPrimary: boolean("is_primary").notNull().default(true),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [index("word_meanings_word_id_idx").on(table.wordId)],
+);
 
-export const wordExamples = pgTable("word_examples", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  wordId: uuid("word_id")
-    .notNull()
-    .references(() => vocabularyWords.id, { onDelete: "cascade" }),
-  sentence: text("sentence").notNull(),
-  meaning: text("meaning"),
-  notes: text("notes"),
-  sortOrder: integer("sort_order").notNull().default(0),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-});
+export const wordExamples = pgTable(
+  "word_examples",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    wordId: uuid("word_id")
+      .notNull()
+      .references(() => vocabularyWords.id, { onDelete: "cascade" }),
+    sentence: text("sentence").notNull(),
+    meaning: text("meaning"),
+    notes: text("notes"),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [index("word_examples_word_id_idx").on(table.wordId)],
+);
 
-export const vocabularyWordTags = pgTable("vocabulary_word_tags", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  wordId: uuid("word_id")
-    .notNull()
-    .references(() => vocabularyWords.id, { onDelete: "cascade" }),
-  tag: text("tag").notNull(),
-});
+export const vocabularyWordTags = pgTable(
+  "vocabulary_word_tags",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    wordId: uuid("word_id")
+      .notNull()
+      .references(() => vocabularyWords.id, { onDelete: "cascade" }),
+    tag: text("tag").notNull(),
+  },
+  (table) => [
+    index("vocabulary_word_tags_word_id_idx").on(table.wordId),
+    index("vocabulary_word_tags_tag_idx").on(table.tag),
+  ],
+);
 
 export const vocabularySynonyms = pgTable(
   "vocabulary_synonyms",
@@ -311,23 +331,32 @@ export const vocabularySynonyms = pgTable(
   ],
 );
 
-export const flashcardReviews = pgTable("flashcard_reviews", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  userId: uuid("user_id")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  wordId: uuid("word_id")
-    .notNull()
-    .references(() => vocabularyWords.id, { onDelete: "cascade" }),
-  workspaceId: uuid("workspace_id")
-    .notNull()
-    .references(() => workspaces.id, { onDelete: "cascade" }),
-  rating: flashcardRatingEnum("rating").notNull(),
-  direction: flashcardStudyDirectionEnum("direction").notNull(),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-});
+export const flashcardReviews = pgTable(
+  "flashcard_reviews",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    wordId: uuid("word_id")
+      .notNull()
+      .references(() => vocabularyWords.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    rating: flashcardRatingEnum("rating").notNull(),
+    direction: flashcardStudyDirectionEnum("direction").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("flashcard_reviews_workspace_created_idx").on(
+      table.workspaceId,
+      table.createdAt,
+    ),
+  ],
+);
 
 export const flashcardProgress = pgTable(
   "flashcard_progress",
@@ -356,6 +385,14 @@ export const flashcardProgress = pgTable(
       table.userId,
       table.wordId,
     ),
+    index("flashcard_progress_workspace_user_idx").on(
+      table.workspaceId,
+      table.userId,
+    ),
+    index("flashcard_progress_user_next_review_idx").on(
+      table.userId,
+      table.nextReviewAt,
+    ),
   ],
 );
 
@@ -383,7 +420,15 @@ export const exercises = pgTable(
       .notNull()
       .defaultNow(),
   },
-  (table) => [index("exercises_folder_id_idx").on(table.folderId)],
+  (table) => [
+    index("exercises_folder_id_idx").on(table.folderId),
+    index("exercises_user_workspace_type_updated_idx").on(
+      table.userId,
+      table.workspaceId,
+      table.type,
+      table.updatedAt,
+    ),
+  ],
 );
 
 export const listeningLessons = pgTable(
@@ -430,23 +475,37 @@ export const listeningLessons = pgTable(
       )
       .where(sql`${table.originalFilename} is not null`),
     index("listening_lessons_folder_id_idx").on(table.folderId),
+    index("listening_lessons_user_workspace_updated_idx").on(
+      table.userId,
+      table.workspaceId,
+      table.updatedAt,
+    ),
   ],
 );
 
-export const listeningExercises = pgTable("listening_exercises", {
-  id: uuid("id").primaryKey().defaultRandom(),
-  lessonId: uuid("lesson_id")
-    .notNull()
-    .references(() => listeningLessons.id, { onDelete: "cascade" }),
-  type: listeningExerciseTypeEnum("type").notNull(),
-  question: text("question").notNull(),
-  data: jsonb("data").notNull(),
-  correctAnswer: jsonb("correct_answer").notNull(),
-  sortOrder: integer("sort_order").notNull().default(0),
-  createdAt: timestamp("created_at", { withTimezone: true })
-    .notNull()
-    .defaultNow(),
-});
+export const listeningExercises = pgTable(
+  "listening_exercises",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    lessonId: uuid("lesson_id")
+      .notNull()
+      .references(() => listeningLessons.id, { onDelete: "cascade" }),
+    type: listeningExerciseTypeEnum("type").notNull(),
+    question: text("question").notNull(),
+    data: jsonb("data").notNull(),
+    correctAnswer: jsonb("correct_answer").notNull(),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("listening_exercises_lesson_id_type_idx").on(
+      table.lessonId,
+      table.type,
+    ),
+  ],
+);
 
 export const grammarNotes = pgTable(
   "grammar_notes",
@@ -470,7 +529,14 @@ export const grammarNotes = pgTable(
       .notNull()
       .defaultNow(),
   },
-  (table) => [index("grammar_notes_folder_id_idx").on(table.folderId)],
+  (table) => [
+    index("grammar_notes_folder_id_idx").on(table.folderId),
+    index("grammar_notes_user_workspace_updated_idx").on(
+      table.userId,
+      table.workspaceId,
+      table.updatedAt,
+    ),
+  ],
 );
 
 export const speakingSessions = pgTable(
@@ -505,6 +571,11 @@ export const speakingSessions = pgTable(
   (table) => [
     index("speaking_sessions_workspace_id_idx").on(table.workspaceId),
     index("speaking_sessions_user_id_idx").on(table.userId),
+    index("speaking_sessions_user_workspace_updated_idx").on(
+      table.userId,
+      table.workspaceId,
+      table.updatedAt,
+    ),
   ],
 );
 

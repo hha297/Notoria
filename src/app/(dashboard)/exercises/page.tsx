@@ -5,8 +5,7 @@ import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button
 import { ExerciseStudio } from "@/components/exercises/exercise-studio";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getExerciseImports } from "@/lib/actions/exercise-import";
-import { getTheoryNotes } from "@/lib/actions/theory";
-import { toTheoryExerciseCard } from "@/lib/theory-exercises/cards";
+import { getTheoryExerciseCards } from "@/lib/actions/theory";
 import { getActiveWorkspace } from "@/lib/workspace";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
 
@@ -30,8 +29,7 @@ export default async function ExercisesPage() {
     );
   }
 
-  const notes = await getTheoryNotes();
-  const theories = notes.map((note) => toTheoryExerciseCard(note));
+  const theories = await getTheoryExerciseCards();
   const { hasProAccess } = await getCurrentProAccess();
   let imports: Awaited<ReturnType<typeof getExerciseImports>> = [];
   if (hasProAccess) {

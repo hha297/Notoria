@@ -14,13 +14,13 @@ import {
 import { DescriptionContent } from "@/components/form/description-content";
 import { WritingMetaBadges } from "@/components/writing/writing-meta-badges";
 import { WritingRowActions } from "@/components/writing/writing-row-actions";
-import { getWritingListMeta } from "@/lib/writing/content";
+import type { WritingListMeta } from "@/lib/writing/content";
 
 export type WritingListItem = {
   id: string;
   title: string;
   description?: string | null;
-  content: unknown;
+  listMeta: WritingListMeta;
   folderId: string | null;
   createdAt: string;
   updatedAt: string;
@@ -28,11 +28,12 @@ export type WritingListItem = {
 
 type WritingCardProps = {
   document: WritingListItem;
+  workspaceId: string;
 };
 
-export function WritingCard({ document }: WritingCardProps) {
+export function WritingCard({ document, workspaceId }: WritingCardProps) {
   const t = useTranslations("writing");
-  const listMeta = getWritingListMeta(document.content);
+  const listMeta = document.listMeta;
 
   return (
     <FolderItemDrag id={document.id} className="h-full">
@@ -46,8 +47,8 @@ export function WritingCard({ document }: WritingCardProps) {
               id={document.id}
               title={document.title}
               description={document.description}
-              content={document.content}
               folderId={document.folderId}
+              workspaceId={workspaceId}
             />
           </div>
           <div className="min-w-0 space-y-2">

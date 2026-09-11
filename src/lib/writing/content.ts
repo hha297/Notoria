@@ -249,12 +249,14 @@ export function countWritingQuestions(sections: WritingSection[]): number {
   );
 }
 
-export function getWritingListMeta(content: unknown): {
+export type WritingListMeta = {
   mode: WritingMode;
   sectionCount: number;
   questionCount: number;
   meta: WritingMeta;
-} {
+};
+
+export function getWritingListMeta(content: unknown): WritingListMeta {
   const parsed = parseWritingContent(content);
 
   if (parsed.mode === "rich_document") {

@@ -151,7 +151,9 @@ export function parseTranscriptionData(
 }
 
 export function toListeningListItem(
-  lesson: ListeningLesson & { exercises?: Pick<ListeningExercise, "id" | "type">[] },
+  lesson: Omit<ListeningLesson, "transcript" | "transcriptionData"> & {
+    exercises?: Pick<ListeningExercise, "id" | "type">[];
+  },
 ): ListeningLessonListItem {
   return {
     id: lesson.id,

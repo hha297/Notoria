@@ -39,7 +39,7 @@ type ListeningViewProps = {
 };
 
 export function ListeningView({
-  lessons,
+  lessons: initialLessons,
   folders,
   currentFolderId,
 }: ListeningViewProps) {
@@ -48,6 +48,11 @@ export function ListeningView({
   const tMeta = useTranslations("listening.meta");
   const [uploadOpen, setUploadOpen] = useState(false);
   const [query, setQuery] = useState<ListeningListQuery>(DEFAULT_LISTENING_LIST_QUERY);
+  const [lessons, setLessons] = useState(initialLessons);
+
+  useEffect(() => {
+    setLessons(initialLessons);
+  }, [initialLessons]);
 
   useEffect(() => {
     return onTutorialPrepare((action) => {
@@ -192,7 +197,21 @@ export function ListeningView({
                       id={lesson.id}
                       className="transition-transform duration-200 hover:-translate-y-0.5"
                     >
-                      <ListeningLessonCard lesson={lesson} />
+                      <ListeningLessonCard
+                        lesson={lesson}
+                        onDeleted={(id) =>
+                          setLessons((current) =>
+                            current.filter((item) => item.id !== id),
+                          )
+                        }
+                        onRenamed={(id, patch) =>
+                          setLessons((current) =>
+                            current.map((item) =>
+                              item.id === id ? { ...item, ...patch } : item,
+                            ),
+                          )
+                        }
+                      />
                     </FolderItemDrag>
                   ))}
                 </div>

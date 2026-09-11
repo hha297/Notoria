@@ -2,9 +2,8 @@
 
 import { useState, useTransition } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
-import { Loader2, Trash2, Video } from "lucide-react";
+import { Trash2, Video } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
@@ -16,15 +15,8 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
 import { LinkButton } from "@/components/ui/link-button";
+import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
 import { deleteSpeakingSession } from "@/lib/actions/speaking";
 import { isSpeakingErrorCode } from "@/lib/speaking/errors";
 import { isSpeakingJoinable } from "@/lib/speaking/types";
@@ -43,13 +35,16 @@ function statusVariant(status: SpeakingSessionListItem["status"]) {
 
 type SpeakingSessionCardProps = {
   session: SpeakingSessionListItem;
+  onDeleted?: (id: string) => void;
 };
 
-export function SpeakingSessionCard({ session }: SpeakingSessionCardProps) {
+export function SpeakingSessionCard({
+  session,
+  onDeleted,
+}: SpeakingSessionCardProps) {
   const t = useTranslations("speaking");
   const tMeta = useTranslations("speaking.meta");
   const tc = useTranslations("common");
-  const router = useRouter();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -66,7 +61,7 @@ export function SpeakingSessionCard({ session }: SpeakingSessionCardProps) {
         await deleteSpeakingSession(session.id);
         toast.success(t("deleted"));
         setDeleteOpen(false);
-        router.refresh();
+        onDeleted?.(session.id);
       } catch (error) {
         toast.error(errorMessage(error));
       }
@@ -141,39 +136,16 @@ export function SpeakingSessionCard({ session }: SpeakingSessionCardProps) {
         </CardContent>
       </Card>
 
-      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent showCloseButton={!isPending}>
-          <DialogHeader>
-            <DialogTitle>{t("deleteConfirmTitle")}</DialogTitle>
-            <DialogDescription>
-              {t("deleteConfirmDescription", { title: session.title })}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setDeleteOpen(false)}
-              disabled={isPending}
-            >
-              {tc("cancel")}
-            </Button>
-            <Button
-              type="button"
-              variant="destructive"
-              onClick={handleDelete}
-              disabled={isPending}
-            >
-              {isPending ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <Trash2 className="size-4" />
-              )}
-              {tc("delete")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <ConfirmDeleteDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title={t("deleteConfirmTitle")}
+        description={t("deleteConfirmDescription", { title: session.title })}
+        confirmLabel={tc("delete")}
+        cancelLabel={tc("cancel")}
+        pending={isPending}
+        onConfirm={handleDelete}
+      />
     </>
   );
 }

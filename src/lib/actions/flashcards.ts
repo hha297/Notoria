@@ -1,6 +1,6 @@
 "use server";
 
-import { and, asc, eq } from "drizzle-orm";
+import { and, asc, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import {
@@ -25,6 +25,7 @@ import {
   uniqueSynonymIds,
   type VocabularySynonymRef,
 } from "@/lib/vocabulary/synonyms";
+import { PRACTICE_DECK_LIMIT } from "@/lib/flashcards/limits";
 
 const STATUS_FROM_RATING = {
   AGAIN: "LEARNING",
@@ -97,18 +98,60 @@ export async function getFlashcardWords(): Promise<FlashcardWord[]> {
     return [];
   }
 
-  const words = await db.query.vocabularyWords.findMany({
+  // Lean ID pass first — avoid loading full word graphs for the entire bank.
+  const [wordIds, progressRows] = await Promise.all([
+    db.query.vocabularyWords.findMany({
+      where: and(
+        eq(vocabularyWords.userId, userId),
+        eq(vocabularyWords.workspaceId, workspace.id),
+      ),
+      columns: { id: true, word: true },
+      orderBy: [asc(vocabularyWords.word)],
+    }),
+    db.query.flashcardProgress.findMany({
+      where: and(
+        eq(flashcardProgress.userId, userId),
+        eq(flashcardProgress.workspaceId, workspace.id),
+      ),
+      columns: { wordId: true, nextReviewAt: true },
+    }),
+  ]);
+
+  const now = Date.now();
+  const nextReviewByWordId = new Map(
+    progressRows.map((row) => [row.wordId, row.nextReviewAt] as const),
+  );
+
+  const isDue = (wordId: string) => {
+    const nextReviewAt = nextReviewByWordId.get(wordId);
+    return nextReviewAt == null || nextReviewAt.getTime() <= now;
+  };
+
+  const dueIds = wordIds.filter((row) => isDue(row.id)).map((row) => row.id);
+  const laterIds = wordIds.filter((row) => !isDue(row.id)).map((row) => row.id);
+  const selectedIds = [...dueIds, ...laterIds].slice(0, PRACTICE_DECK_LIMIT);
+
+  if (selectedIds.length === 0) {
+    return [];
+  }
+
+  const selectedWords = await db.query.vocabularyWords.findMany({
     where: and(
       eq(vocabularyWords.userId, userId),
       eq(vocabularyWords.workspaceId, workspace.id),
+      inArray(vocabularyWords.id, selectedIds),
     ),
     with: {
       meanings: { orderBy: [asc(wordMeanings.sortOrder)] },
       examples: { orderBy: [asc(wordExamples.sortOrder)] },
       tags: true,
     },
-    orderBy: [asc(vocabularyWords.word)],
   });
+
+  const orderIndex = new Map(selectedIds.map((id, index) => [id, index]));
+  selectedWords.sort(
+    (a, b) => (orderIndex.get(a.id) ?? 0) - (orderIndex.get(b.id) ?? 0),
+  );
 
   const pairs = await db
     .select({
@@ -118,7 +161,7 @@ export async function getFlashcardWords(): Promise<FlashcardWord[]> {
     .from(vocabularySynonyms)
     .where(eq(vocabularySynonyms.workspaceId, workspace.id));
 
-  const options: VocabularySynonymRef[] = words.map((word) => ({
+  const options: VocabularySynonymRef[] = selectedWords.map((word) => ({
     id: word.id,
     word: word.word,
     meaning: word.meanings.find((meaning) => meaning.isPrimary)?.meaning ??
@@ -141,7 +184,7 @@ export async function getFlashcardWords(): Promise<FlashcardWord[]> {
     linkedByWordId.set(pair.synonymId, rightPeers);
   }
 
-  return words.map((word) => {
+  return selectedWords.map((word) => {
     const linked = uniqueSynonymIds(
       (linkedByWordId.get(word.id) ?? []).map((item) => item.id),
       word.id,

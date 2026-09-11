@@ -2,7 +2,7 @@ import { AppSidebar } from "@/components/layout/app-sidebar";
 import { DashboardDocumentTitle } from "@/components/layout/dashboard-document-title";
 import { LocaleSelector } from "@/components/layout/locale-selector";
 import { WorkspaceSelector } from "@/components/layout/workspace-selector";
-import { WorkspaceOnboarding } from "@/components/onboarding/workspace-onboarding";
+import { WorkspaceOnboardingGate } from "@/components/onboarding/workspace-onboarding-gate";
 import { WelcomePromptModal } from "@/components/prompts/welcome-prompt";
 import { ProAccessProvider } from "@/components/billing/pro-access-provider";
 import {
@@ -14,8 +14,6 @@ import { locales, type AppLocale } from "@/i18n/config";
 import { LOCALE_COOKIE } from "@/i18n/request";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { getSession } from "@/lib/auth/session";
-import { EMPTY_WORKSPACE_SNAPSHOT } from "@/lib/onboarding/requirements";
-import { getWorkspaceActivitySnapshot } from "@/lib/onboarding/snapshot";
 import {
   getCurrentSubscription,
   hasActiveProSubscription,
@@ -36,10 +34,6 @@ export default async function DashboardLayout({
       getCurrentSubscription(),
       getCurrentProAccess(),
     ]);
-
-  const snapshot = activeWorkspace
-    ? await getWorkspaceActivitySnapshot(activeWorkspace.id)
-    : EMPTY_WORKSPACE_SNAPSHOT;
 
   const cookieStore = await cookies();
   const localeCookie = cookieStore.get(LOCALE_COOKIE)?.value;
@@ -73,10 +67,7 @@ export default async function DashboardLayout({
             hasWorkspace={Boolean(activeWorkspace)}
             languageCode={activeWorkspace?.language ?? null}
           />
-          <WorkspaceOnboarding
-            workspaceId={activeWorkspace?.id ?? null}
-            snapshot={snapshot}
-          />
+          <WorkspaceOnboardingGate workspaceId={activeWorkspace?.id ?? null} />
           <main className="flex-1 overflow-auto bg-background px-4 py-6 sm:px-6 sm:py-8">
             <div className="mx-auto w-full max-w-7xl">{children}</div>
           </main>

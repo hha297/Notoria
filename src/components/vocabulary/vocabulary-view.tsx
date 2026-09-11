@@ -10,10 +10,15 @@ import {
   VocabularyTable,
   type VocabularyWordRow,
 } from "@/components/vocabulary/vocabulary-table";
+import { useHydratedQuery } from "@/hooks/use-workspace-list-query";
+import { getVocabularyWords } from "@/lib/actions/vocabulary";
+import { queryKeys } from "@/lib/query/keys";
+import { serializeVocabularyListWords } from "@/lib/vocabulary/serialize-list";
 import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
 
 type VocabularyViewProps = {
   words: VocabularyWordRow[];
+  workspaceId: string;
   workspaceName: string;
   language: string;
   existingCustomTags: string[];
@@ -21,13 +26,23 @@ type VocabularyViewProps = {
 };
 
 export function VocabularyView({
-  words,
+  words: initialWords,
+  workspaceId,
   workspaceName,
   language,
   existingCustomTags,
   synonymOptions,
 }: VocabularyViewProps) {
   const t = useTranslations("vocabulary");
+  const { data: words = initialWords } = useHydratedQuery({
+    queryKey: queryKeys.vocabulary.list(workspaceId),
+    initialData: initialWords,
+    enabled: Boolean(workspaceId),
+    queryFn: async () => {
+      const result = await getVocabularyWords();
+      return serializeVocabularyListWords(result.words);
+    },
+  });
 
   if (words.length === 0) {
     return (
@@ -58,6 +73,7 @@ export function VocabularyView({
   return (
     <VocabularyTable
       words={words}
+      workspaceId={workspaceId}
       workspaceName={workspaceName}
       language={language}
       existingCustomTags={existingCustomTags}

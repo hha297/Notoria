@@ -9,6 +9,7 @@ import { SessionCompleteCard } from "@/components/exercises/session-complete-car
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { Button } from "@/components/ui/button";
+import { useExerciseSessionController } from "@/hooks/use-exercise-session-controller";
 import {
   buildMultipleChoiceQuestions,
   type MultipleChoiceQuestion,
@@ -32,11 +33,19 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [studyMode, setStudyMode] = useState<FlashcardStudyMode>("mixed");
   const [questions, setQuestions] = useState<MultipleChoiceQuestion[]>([]);
-  const [index, setIndex] = useState(0);
   const [selected, setSelected] = useState<string | null>(null);
-  const [peeked, setPeeked] = useState(false);
-  const [sessionComplete, setSessionComplete] = useState(false);
-  const [score, setScore] = useState({ correct: 0, answered: 0 });
+  const {
+    currentIndex,
+    score,
+    answered,
+    peeked,
+    complete: sessionComplete,
+    restart,
+    next,
+    goPrev,
+    recordAnswer,
+    peek,
+  } = useExerciseSessionController();
 
   const filteredWords = useMemo(
     () => filterFlashcardWords(words, filters),
@@ -49,12 +58,9 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
       "multiple_choice",
     );
     setQuestions(built);
-    setIndex(0);
     setSelected(null);
-    setPeeked(false);
-    setSessionComplete(false);
-    setScore({ correct: 0, answered: 0 });
-  }, [filteredWords, studyMode]);
+    restart();
+  }, [filteredWords, restart, studyMode]);
 
   useEffect(() => {
     startSession();
@@ -62,12 +68,11 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
 
   useEffect(() => {
     setSelected(null);
-    setPeeked(false);
-  }, [index, questions]);
+  }, [currentIndex, questions]);
 
-  const current = questions[index];
+  const current = questions[currentIndex];
   const total = questions.length;
-  const revealed = selected !== null || peeked;
+  const revealed = answered || peeked;
   const isCorrect = Boolean(
     current && !peeked && selected === current.correctOption,
   );
@@ -75,27 +80,12 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
   const pick = (option: string) => {
     if (!current || revealed) return;
     setSelected(option);
-    setScore((s) => ({
-      correct: s.correct + (option === current.correctOption ? 1 : 0),
-      answered: s.answered + 1,
-    }));
+    recordAnswer(option === current.correctOption);
   };
 
   const revealAnswer = () => {
     if (!current || revealed) return;
-    setPeeked(true);
-    setScore((s) => ({
-      correct: s.correct,
-      answered: s.answered + 1,
-    }));
-  };
-
-  const next = () => {
-    if (index < total - 1) {
-      setIndex((i) => i + 1);
-      return;
-    }
-    setSessionComplete(true);
+    peek();
   };
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
@@ -150,9 +140,9 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
       ) : (
         <>
           <ExerciseProgressHeader
-            progressLabel={t("progress", { current: index + 1, total })}
+            progressLabel={t("progress", { current: currentIndex + 1, total })}
             scoreLabel={t("score", { correct: score.correct, answered: score.answered })}
-            progressValue={total ? ((index + 1) / total) * 100 : 0}
+            progressValue={total ? ((currentIndex + 1) / total) * 100 : 0}
           />
           {current && (
             <div className="mx-auto max-w-2xl rounded-2xl border border-hairline-cloud bg-card p-5 shadow-xl shadow-ink/5 sm:rounded-3xl sm:p-8">
@@ -208,8 +198,8 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
                 type="button"
                 variant="outline"
                 size="sm"
-                disabled={index === 0}
-                onClick={() => setIndex((i) => i - 1)}
+                disabled={currentIndex === 0}
+                onClick={goPrev}
                 className="h-11 w-full sm:h-8 sm:w-auto"
               >
                 <ChevronLeft className="size-4" />{t("previous")}
@@ -218,10 +208,10 @@ export function MultipleChoiceSession({ workspaceId, words }: MultipleChoiceSess
                 <Button
                   type="button"
                   size="sm"
-                  onClick={next}
+                  onClick={() => next(total)}
                   className="h-11 w-full sm:h-8 sm:w-auto"
                 >
-                  {index >= total - 1 ? t("finish") : t("next")}
+                  {currentIndex >= total - 1 ? t("finish") : t("next")}
                   <ChevronRight className="size-4" />
                 </Button>
               )}

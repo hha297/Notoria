@@ -31,6 +31,7 @@ import { VocabularyExportDialog } from "@/components/vocabulary/export-dialog";
 import { VocabularyQuickEditDialog } from "@/components/vocabulary/vocabulary-quick-edit-dialog";
 import { VocabularyRowActions } from "@/components/vocabulary/vocabulary-row-actions";
 import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
+import { useInvalidateWorkspaceQueries } from "@/hooks/use-invalidate-workspace-queries";
 import type { VocabularyExportSourceWord } from "@/lib/vocabulary/export/build-document";
 import { vocabularyNotesToPlainText } from "@/lib/vocabulary/notes-content";
 import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
@@ -72,6 +73,7 @@ type SortDirection = "asc" | "desc";
 
 type VocabularyTableProps = {
   words: VocabularyWordRow[];
+  workspaceId: string;
   workspaceName: string;
   language: string;
   existingCustomTags: string[];
@@ -191,10 +193,12 @@ function toVocabularyFormInitialData(word: VocabularyWordRow) {
 function VocabularyPosGroup({
   title,
   words,
+  workspaceId,
   onEditWord,
 }: {
   title: string;
   words: VocabularyWordRow[];
+  workspaceId: string;
   onEditWord: (word: VocabularyWordRow) => void;
 }) {
   const t = useTranslations("vocabulary");
@@ -257,6 +261,7 @@ function VocabularyPosGroup({
               <VocabularyRowActions
                 wordId={word.id}
                 word={word.word}
+                workspaceId={workspaceId}
                 onEdit={() => onEditWord(word)}
               />
             </div>
@@ -334,6 +339,7 @@ function VocabularyPosGroup({
                   <VocabularyRowActions
                     wordId={word.id}
                     word={word.word}
+                    workspaceId={workspaceId}
                     onEdit={() => onEditWord(word)}
                   />
                 </td>
@@ -408,6 +414,7 @@ function VocabularyPosGroup({
 
 export function VocabularyTable({
   words,
+  workspaceId,
   workspaceName,
   language,
   existingCustomTags,
@@ -425,6 +432,7 @@ export function VocabularyTable({
   const [sortDirection, setSortDirection] = useState<SortDirection>("desc");
   const [exportOpen, setExportOpen] = useState(false);
   const [editingWord, setEditingWord] = useState<VocabularyWordRow | null>(null);
+  const { invalidateVocabulary } = useInvalidateWorkspaceQueries(workspaceId);
 
   const customTagOptions = useMemo(() => {
     const seen = new Set<string>();
@@ -759,6 +767,7 @@ export function VocabularyTable({
                 key={`${group.key}:${search}:${multiFilterKey(partOfSpeechFilter)}:${multiFilterKey(tagFilter)}:${sortValue}`}
                 title={group.title}
                 words={group.words}
+                workspaceId={workspaceId}
                 onEditWord={setEditingWord}
               />
             ))}
@@ -776,6 +785,10 @@ export function VocabularyTable({
           initialData={
             editingWord ? toVocabularyFormInitialData(editingWord) : null
           }
+          onSuccess={() => {
+            setEditingWord(null);
+            invalidateVocabulary();
+          }}
         />
 
         <VocabularyExportDialog

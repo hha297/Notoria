@@ -10,7 +10,11 @@ import { getActiveWorkspace, requireActiveWorkspace } from "@/lib/workspace";
 import {
   parseTheoryContent,
   serializeTheoryContent,
+  toTheoryListItem,
+  type TheoryListItem,
 } from "@/lib/theory/content";
+import { toTheoryExerciseCard } from "@/lib/theory-exercises/cards";
+import type { TheoryExerciseCardItem } from "@/components/exercises/theory-exercise-picker";
 import {
   theoryFormErrorCode,
   theoryFormSchema,
@@ -18,8 +22,9 @@ import {
   type TheoryFormValues,
 } from "@/schemas/theory";
 
+/** Page-scoped revalidation for note CRUD. Folder tree ops use folders.ts layout revalidate. */
 function revalidateTheory(id?: string) {
-  revalidatePath("/theory", "layout");
+  revalidatePath("/theory");
   if (id) {
     revalidatePath(`/theory/${id}`);
     revalidatePath(`/theory/${id}/edit`);
@@ -39,7 +44,7 @@ export type TheoryNoteActionResult =
   | { ok: true; id: string }
   | { ok: false; code: TheoryFormErrorCode | "NOT_FOUND" | "SAVE_FAILED" };
 
-export async function getTheoryNotes() {
+async function loadTheoryNoteRows() {
   const userId = await getCurrentUserId();
   const workspace = await getActiveWorkspace();
 
@@ -54,6 +59,18 @@ export async function getTheoryNotes() {
     ),
     orderBy: [desc(grammarNotes.updatedAt)],
   });
+}
+
+/** Lean library rows — full content JSONB is parsed server-side, not shipped. */
+export async function getTheoryNotes(): Promise<TheoryListItem[]> {
+  const notes = await loadTheoryNoteRows();
+  return notes.map((note) => toTheoryListItem(note));
+}
+
+/** Lean exercise-studio cards derived from the same notes without client content. */
+export async function getTheoryExerciseCards(): Promise<TheoryExerciseCardItem[]> {
+  const notes = await loadTheoryNoteRows();
+  return notes.map((note) => toTheoryExerciseCard(note));
 }
 
 export async function getTheoryNote(id: string) {

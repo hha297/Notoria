@@ -50,8 +50,9 @@ import {
 import type { ListeningPracticeType } from "@/lib/listening/types";
 import type { WritingCefr, WritingFormality } from "@/lib/writing/meta";
 
+/** Page-scoped revalidation for lesson CRUD. Folder tree ops use folders.ts layout revalidate. */
 function revalidateListening(id?: string) {
-  revalidatePath("/listening", "layout");
+  revalidatePath("/listening");
   if (id) {
     revalidatePath(`/listening/${id}`);
     revalidatePath(`/listening/${id}/practice`);
@@ -188,6 +189,10 @@ export async function getListeningLessons(): Promise<ListeningLessonListItem[]> 
       eq(listeningLessons.userId, userId),
       eq(listeningLessons.workspaceId, workspace.id),
     ),
+    columns: {
+      transcript: false,
+      transcriptionData: false,
+    },
     orderBy: [desc(listeningLessons.updatedAt)],
     with: {
       exercises: {
@@ -417,41 +422,43 @@ export async function generateListeningExercises(
       fallbackTitle: lesson.title,
     });
 
-    await db
-      .delete(listeningExercises)
-      .where(
-        and(
-          eq(listeningExercises.lessonId, id),
-          eq(listeningExercises.type, exerciseType),
-        ),
-      );
+    await db.transaction(async (tx) => {
+      await tx
+        .delete(listeningExercises)
+        .where(
+          and(
+            eq(listeningExercises.lessonId, id),
+            eq(listeningExercises.type, exerciseType),
+          ),
+        );
 
-    if (generated.exercises.length > 0) {
-      await db.insert(listeningExercises).values(
-        generated.exercises.map((exercise, index) => ({
-          lessonId: id,
-          type: exercise.type,
-          question: exercise.question,
-          data: exercise.data,
-          correctAnswer: exercise.correctAnswer,
-          sortOrder: index,
-        })),
-      );
-    }
+      if (generated.exercises.length > 0) {
+        await tx.insert(listeningExercises).values(
+          generated.exercises.map((exercise, index) => ({
+            lessonId: id,
+            type: exercise.type,
+            question: exercise.question,
+            data: exercise.data,
+            correctAnswer: exercise.correctAnswer,
+            sortOrder: index,
+          })),
+        );
+      }
 
-    await db
-      .update(listeningLessons)
-      .set({
-        title: generated.title || lesson.title,
-        cefrLevel: generated.cefrLevel ?? lesson.cefrLevel,
-        topic: generated.topic ?? lesson.topic,
-        formality: generated.formality ?? lesson.formality,
-        exerciseType: generated.exerciseType,
-        status: "COMPLETED",
-        errorCode: null,
-        updatedAt: new Date(),
-      })
-      .where(eq(listeningLessons.id, id));
+      await tx
+        .update(listeningLessons)
+        .set({
+          title: generated.title || lesson.title,
+          cefrLevel: generated.cefrLevel ?? lesson.cefrLevel,
+          topic: generated.topic ?? lesson.topic,
+          formality: generated.formality ?? lesson.formality,
+          exerciseType: generated.exerciseType,
+          status: "COMPLETED",
+          errorCode: null,
+          updatedAt: new Date(),
+        })
+        .where(eq(listeningLessons.id, id));
+    });
 
     revalidateListening(id);
     return { id, exerciseType, count: generated.exercises.length };
@@ -564,7 +571,11 @@ export async function renameListeningLesson(id: string, filename: string) {
     normalizeListeningFilename(lesson.originalFilename ?? "");
 
   if (sameName && lesson.originalFilename) {
-    return { id, originalFilename: lesson.originalFilename };
+    return {
+      id,
+      originalFilename: lesson.originalFilename,
+      title: lesson.title,
+    };
   }
 
   await assertListeningFilenameIsUnique(nextFilename, workspace.id, id);
@@ -572,13 +583,16 @@ export async function renameListeningLesson(id: string, filename: string) {
   const currentTitleFromFile = titleFromFilename(currentFilename);
   const shouldSyncTitle =
     !lesson.title.trim() || lesson.title === currentTitleFromFile;
+  const nextTitle = shouldSyncTitle
+    ? titleFromFilename(nextFilename)
+    : lesson.title;
 
   try {
     await db
       .update(listeningLessons)
       .set({
         originalFilename: nextFilename,
-        title: shouldSyncTitle ? titleFromFilename(nextFilename) : lesson.title,
+        title: nextTitle,
         updatedAt: new Date(),
       })
       .where(eq(listeningLessons.id, id));
@@ -590,5 +604,5 @@ export async function renameListeningLesson(id: string, filename: string) {
   }
 
   revalidateListening(id);
-  return { id, originalFilename: nextFilename };
+  return { id, originalFilename: nextFilename, title: nextTitle };
 }

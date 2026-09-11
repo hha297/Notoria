@@ -1,27 +1,25 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Download, Loader2, Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { MoveItemButton } from "@/components/folders/move-item-button";
+import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { useInvalidateWorkspaceQueries } from "@/hooks/use-invalidate-workspace-queries";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { deleteWritingDocument } from "@/lib/actions/writing";
+  deleteWritingDocument,
+  getWritingDocument,
+} from "@/lib/actions/writing";
 import {
+  createDefaultEditorState,
   parseWritingContent,
   writingContentToEditorState,
+  type WritingEditorState,
 } from "@/lib/writing/content";
 import { cn } from "@/lib/utils";
 
@@ -29,34 +27,55 @@ type WritingRowActionsProps = {
   id: string;
   title: string;
   description?: string | null;
-  content: unknown;
   folderId?: string | null;
+  workspaceId: string;
 };
 
 export function WritingRowActions({
   id,
   title,
   description,
-  content,
   folderId,
+  workspaceId,
 }: WritingRowActionsProps) {
-  const router = useRouter();
   const t = useTranslations("common");
   const tw = useTranslations("writing");
   const te = useTranslations("errors");
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
+  const [editorState, setEditorState] = useState<WritingEditorState>(
+    createDefaultEditorState(),
+  );
+  const [isLoadingExport, setIsLoadingExport] = useState(false);
   const [isPending, startTransition] = useTransition();
+  const { removeWritingDocument } = useInvalidateWorkspaceQueries(workspaceId);
 
-  const editorState = writingContentToEditorState(parseWritingContent(content));
+  async function handleExportClick() {
+    setIsLoadingExport(true);
+    try {
+      const document = await getWritingDocument(id);
+      if (!document) {
+        toast.error(te("generic"));
+        return;
+      }
+      setEditorState(
+        writingContentToEditorState(parseWritingContent(document.content)),
+      );
+      setExportOpen(true);
+    } catch {
+      toast.error(te("generic"));
+    } finally {
+      setIsLoadingExport(false);
+    }
+  }
 
   function handleDelete() {
     startTransition(async () => {
       try {
         await deleteWritingDocument(id);
+        removeWritingDocument(id);
         toast.success(tw("deleted"));
         setDeleteOpen(false);
-        router.refresh();
       } catch {
         toast.error(te("generic"));
       }
@@ -73,9 +92,17 @@ export function WritingRowActions({
         <LockedFeatureButton
           variant="ghost"
           size="icon-sm"
-          icon={<Download className="size-4" />}
-          onClick={() => setExportOpen(true)}
-          disabled={isPending}
+          icon={
+            isLoadingExport ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Download className="size-4" />
+            )
+          }
+          onClick={() => {
+            void handleExportClick();
+          }}
+          disabled={isPending || isLoadingExport}
         >
           <span className="sr-only">{tw("export.button")}</span>
         </LockedFeatureButton>
@@ -97,39 +124,16 @@ export function WritingRowActions({
         </Button>
       </div>
 
-      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent showCloseButton={!isPending}>
-          <DialogHeader>
-            <DialogTitle>{tw("deleteConfirmTitle")}</DialogTitle>
-            <DialogDescription>
-              {tw("deleteConfirmDescription", { title })}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
-            <Button
-              type="button"
-              variant="outline"
-              onClick={() => setDeleteOpen(false)}
-              disabled={isPending}
-            >
-              {t("cancel")}
-            </Button>
-            <Button
-              type="button"
-              variant="destructive"
-              onClick={handleDelete}
-              disabled={isPending}
-            >
-              {isPending ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <Trash2 className="size-4" />
-              )}
-              {t("delete")}
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
+      <ConfirmDeleteDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        title={tw("deleteConfirmTitle")}
+        description={tw("deleteConfirmDescription", { title })}
+        confirmLabel={t("delete")}
+        cancelLabel={t("cancel")}
+        pending={isPending}
+        onConfirm={handleDelete}
+      />
 
       <WritingExportDialog
         open={exportOpen}
