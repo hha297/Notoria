@@ -141,9 +141,9 @@ export function RichTextEditor({
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSavedContent = useRef("");
   const pendingUploads = useRef(0);
-  const insertImagesRef = useRef<(files: File[]) => void>(() => {});
-  const persistTransientRef = useRef<(currentEditor: Editor) => void>(() => {});
-  const emitLatestRef = useRef<(currentEditor: Editor) => void>(() => {});
+  const insertImagesRef = useRef<(files: File[]) => void>(() => { });
+  const persistTransientRef = useRef<(currentEditor: Editor) => void>(() => { });
+  const emitLatestRef = useRef<(currentEditor: Editor) => void>(() => { });
   const isNotes = variant === "notes";
   const footerVisible = showFooter ?? !isNotes;
 

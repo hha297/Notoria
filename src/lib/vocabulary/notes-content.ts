@@ -8,10 +8,7 @@ import {
   coerceHeadingLevel,
   normalizeTipTapHeadingLevels,
 } from "@/lib/editor/heading-level";
-import {
-  isPersistedImageSrc,
-  stripTransientImages,
-} from "@/lib/editor/images";
+import { isPersistedImageSrc, stripTransientImages } from "@/lib/editor/images";
 
 export const EMPTY_NOTES_DOC: JSONContent = {
   type: "doc",
@@ -83,9 +80,7 @@ export function formatableTextToDoc(text: string): JSONContent {
       content.push({
         type: "heading",
         attrs: { level: heading[1]!.length },
-        content: heading[2]
-          ? [{ type: "text", text: heading[2] }]
-          : undefined,
+        content: heading[2] ? [{ type: "text", text: heading[2] }] : undefined,
       });
       i += 1;
       continue;
@@ -140,7 +135,9 @@ export function formatableTextToDoc(text: string): JSONContent {
 /**
  * Parse stored notes (TipTap JSON string or legacy plain text).
  */
-export function parseVocabularyNotes(raw: string | null | undefined): JSONContent {
+export function parseVocabularyNotes(
+  raw: string | null | undefined,
+): JSONContent {
   if (!raw?.trim()) {
     return structuredClone(EMPTY_NOTES_DOC);
   }
@@ -255,7 +252,11 @@ export function isNotesDocEmpty(doc: JSONContent | null | undefined): boolean {
         typeof node.attrs?.src === "string" ? node.attrs.src : "",
       );
     }
-    if (node.type === "bulletList" || node.type === "orderedList" || node.type === "taskList") {
+    if (
+      node.type === "bulletList" ||
+      node.type === "orderedList" ||
+      node.type === "taskList"
+    ) {
       return (node.content?.length ?? 0) > 0;
     }
     if (node.type === "codeBlock") {

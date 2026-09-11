@@ -41,7 +41,8 @@
     "or": "or",
     "format": "Format",
     "formatSuccess": "Content formatted",
-    "formatUnchanged": "Already formatted"
+    "formatUnchanged": "Already formatted",
+    "tableSelectionInvalid": "Couldn't convert the selection into a table"
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -508,7 +509,6 @@
         "incorrectWithAnswer": "Correct answer: {answer}"
       },
       "sentenceMeaningLoading": "Loading meaning…",
-
       "types": {
         "multiple_choice": "Multiple choice",
         "true_false": "True / false",

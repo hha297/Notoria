@@ -1,4 +1,5 @@
 import type { JSONContent } from "@tiptap/react";
+import { coerceHeadingLevel } from "@/lib/editor/heading-level";
 import { isPersistedImageSrc } from "@/lib/editor/images";
 
 export const EMPTY_TIPTAP_DOC: JSONContent = {
@@ -6,16 +7,23 @@ export const EMPTY_TIPTAP_DOC: JSONContent = {
   content: [{ type: "paragraph" }],
 };
 
+/** TipTap block kinds — classified from node.type, not content assumptions. */
+const TEXTISH_BLOCKS = new Set(["paragraph", "heading", "codeBlock"]);
+const LIST_BLOCKS = new Set(["bulletList", "orderedList", "taskList"]);
+const NESTED_CONTAINERS = new Set(["blockquote", "table", "tableRow"]);
+const ITEM_OR_CELL = new Set([
+  "listItem",
+  "taskItem",
+  "tableCell",
+  "tableHeader",
+]);
+
 const BULLET_MARKER_RE = /^([-*•●◦.]|\u2022|\u00B7)\s+(.*)$/u;
-/** Parenthesized ordered markers: 1) Item */
 const ORDERED_PAREN_RE = /^(\d+)\)\s+(.+)$/u;
 
 /**
- * Parse outline numbering used in theory/notes.
- * Supports trailing section dots common in FI/EU style: `2.1. Title`
- * - `1. Title` → depth 1
- * - `2.1 Title` / `2.1. Title` → depth 2
- * - `2.1.1 Title` / `2.1.1. Title` → depth 3
+ * Parse outline numbering from the line itself.
+ * Depth = number of numeric segments (`1` → 1, `2.1` → 2, `1.3.10` → 3).
  */
 export function parseSectionHeading(text: string): {
   depth: number;
@@ -24,7 +32,6 @@ export function parseSectionHeading(text: string): {
 } | null {
   const trimmed = text.trim();
 
-  // "1. Title", "2.1. Title", "2.1.1. Title"
   const withSectionDot = trimmed.match(/^(\d+(?:\.\d+)*)\.\s+(.+)$/u);
   if (withSectionDot?.[1] && withSectionDot[2]) {
     return {
@@ -34,7 +41,6 @@ export function parseSectionHeading(text: string): {
     };
   }
 
-  // "1.1 Title", "10.2.3 Title" (no trailing dot after the last segment)
   const multiNoTrailingDot = trimmed.match(/^(\d+\.\d+(?:\.\d+)*)\s+(.+)$/u);
   if (multiNoTrailingDot?.[1] && multiNoTrailingDot[2]) {
     return {
@@ -81,16 +87,8 @@ export function tipTapNodePlainText(node: JSONContent): string {
   }
 }
 
-/**
- * Hierarchical section depth from numbering.
- * `1.` → 1, `2.1` / `2.1.` → 2, `1.3.10` → 3
- */
 export function hierarchicalHeadingDepth(text: string): number | null {
   return parseSectionHeading(text)?.depth ?? null;
-}
-
-function headingLevelFromDepth(depth: number): number {
-  return Math.min(Math.max(depth, 1), 6);
 }
 
 function collapseSpaces(text: string): string {
@@ -142,23 +140,10 @@ function isVisuallyEmptyBlock(node: JSONContent): boolean {
       typeof node.attrs?.src === "string" ? node.attrs.src : "",
     );
   }
-  if (node.type === "codeBlock") {
-    return tipTapNodePlainText(node).trim().length === 0;
-  }
-  if (node.type === "heading") {
-    return tipTapNodePlainText(node).trim().length === 0;
-  }
-  if (
-    node.type === "bulletList" ||
-    node.type === "orderedList" ||
-    node.type === "taskList"
-  ) {
+  if (LIST_BLOCKS.has(node.type ?? "")) {
     return (node.content ?? []).length === 0;
   }
   if (node.type === "table" || node.type === "blockquote") {
-    return tipTapNodePlainText(node).trim().length === 0;
-  }
-  if (node.type === "paragraph") {
     return tipTapNodePlainText(node).trim().length === 0;
   }
   return tipTapNodePlainText(node).trim().length === 0;
@@ -171,52 +156,39 @@ function tidyListItems(items: JSONContent[] | undefined): JSONContent[] {
     .filter((item) => tipTapNodePlainText(item).trim().length > 0);
 }
 
+function trimTextBlockEdges(content: JSONContent[]): JSONContent[] {
+  const next = [...content];
+  const first = next[0];
+  const last = next[next.length - 1];
+  if (first?.type === "text" && typeof first.text === "string") {
+    first.text = first.text.replace(/^[ \t]+/, "");
+  }
+  if (last?.type === "text" && typeof last.text === "string") {
+    last.text = last.text.replace(/[ \t]+$/, "");
+  }
+  return next.filter(
+    (child) => child.type !== "text" || (child.text?.length ?? 0) > 0,
+  );
+}
+
 function tidyBlockNode(node: JSONContent): JSONContent {
   const inCodeBlock = node.type === "codeBlock";
   const next: JSONContent = { ...node };
+  if (!next.content) return next;
 
-  if (next.content) {
-    if (
-      node.type === "paragraph" ||
-      node.type === "heading" ||
-      node.type === "codeBlock"
-    ) {
-      next.content = tidyInlineNodes(next.content, inCodeBlock);
-      if (!inCodeBlock && next.content?.length) {
-        const first = next.content[0];
-        const last = next.content[next.content.length - 1];
-        if (first?.type === "text" && typeof first.text === "string") {
-          first.text = first.text.replace(/^[ \t]+/, "");
-        }
-        if (last?.type === "text" && typeof last.text === "string") {
-          last.text = last.text.replace(/[ \t]+$/, "");
-        }
-        next.content = next.content.filter(
-          (child) => child.type !== "text" || (child.text?.length ?? 0) > 0,
-        );
-      }
-    } else if (
-      node.type === "bulletList" ||
-      node.type === "orderedList" ||
-      node.type === "taskList"
-    ) {
-      next.content = tidyListItems(next.content);
-    } else if (
-      node.type === "blockquote" ||
-      node.type === "table" ||
-      node.type === "tableRow"
-    ) {
-      next.content = next.content.map(tidyBlockNode);
-    } else if (
-      node.type === "listItem" ||
-      node.type === "taskItem" ||
-      node.type === "tableCell" ||
-      node.type === "tableHeader"
-    ) {
-      next.content = next.content.map(tidyBlockNode);
-    } else {
-      next.content = tidyInlineNodes(next.content, false);
+  const type = node.type ?? "";
+
+  if (TEXTISH_BLOCKS.has(type)) {
+    next.content = tidyInlineNodes(next.content, inCodeBlock);
+    if (!inCodeBlock && next.content?.length) {
+      next.content = trimTextBlockEdges(next.content);
     }
+  } else if (LIST_BLOCKS.has(type)) {
+    next.content = tidyListItems(next.content);
+  } else if (NESTED_CONTAINERS.has(type) || ITEM_OR_CELL.has(type)) {
+    next.content = next.content.map(tidyBlockNode);
+  } else {
+    next.content = tidyInlineNodes(next.content, false);
   }
 
   return next;
@@ -229,7 +201,11 @@ function collapseEmptyParagraphs(nodes: JSONContent[]): JSONContent[] {
   for (const node of nodes) {
     const empty = isVisuallyEmptyBlock(node);
     if (empty) {
-      if (node.type === "heading" || node.type === "bulletList" || node.type === "orderedList") {
+      if (
+        node.type === "heading" ||
+        node.type === "bulletList" ||
+        node.type === "orderedList"
+      ) {
         continue;
       }
       if (prevEmpty || collapsed.length === 0) continue;
@@ -293,44 +269,27 @@ function stripParagraphPrefix(
   };
 }
 
-function paragraphToHeading(paragraph: JSONContent, level: number): JSONContent {
-  return {
-    type: "heading",
-    attrs: { ...(paragraph.attrs ?? {}), level },
-    content: paragraph.content,
-  };
-}
-
-function looksLikeOrderedListRun(nodes: JSONContent[], start: number): boolean {
-  const items: { n: number; title: string }[] = [];
-  for (let i = start; i < nodes.length; i += 1) {
-    const node = nodes[i]!;
-    if (node.type !== "paragraph" && node.type !== "heading") break;
-    const text = tipTapNodePlainText(node).trim();
-    if (parseSectionHeading(text)) return false;
-    const match = text.match(ORDERED_PAREN_RE);
-    if (!match) break;
-    items.push({ n: Number(match[1]), title: match[2]!.trim() });
-  }
-
-  return items.length >= 2;
-}
-
-function applySectionHeadingLevel(node: JSONContent, level: number): JSONContent {
+function applySectionHeadingLevel(
+  node: JSONContent,
+  level: number,
+): JSONContent {
+  const coerced = coerceHeadingLevel(level);
   if (node.type === "heading") {
     return {
       ...node,
-      attrs: { ...(node.attrs ?? {}), level },
+      attrs: { ...(node.attrs ?? {}), level: coerced },
     };
   }
-  return paragraphToHeading(node, level);
+  return {
+    type: "heading",
+    attrs: { ...(node.attrs ?? {}), level: coerced },
+    content: node.content,
+  };
 }
 
 function normalizeHierarchicalHeadings(nodes: JSONContent[]): JSONContent[] {
   return nodes.map((node) => {
-    if (node.type !== "paragraph" && node.type !== "heading") {
-      return node;
-    }
+    if (node.type !== "paragraph" && node.type !== "heading") return node;
 
     const text = tipTapNodePlainText(node).trim();
     if (!text) return node;
@@ -338,13 +297,59 @@ function normalizeHierarchicalHeadings(nodes: JSONContent[]): JSONContent[] {
     const section = parseSectionHeading(text);
     if (!section) return node;
 
-    return applySectionHeadingLevel(node, headingLevelFromDepth(section.depth));
+    // Level comes from the numbering depth in the text itself.
+    return applySectionHeadingLevel(node, section.depth);
   });
 }
 
-function promoteSingleNumberHeadings(nodes: JSONContent[]): JSONContent[] {
-  // Covered by normalizeHierarchicalHeadings for both paragraphs and headings.
-  return nodes;
+type MarkerMatch = { body: string; prefixLength: number };
+
+function matchBulletMarker(text: string): MarkerMatch | null {
+  const match = text.match(BULLET_MARKER_RE);
+  if (!match?.[2]) return null;
+  return {
+    body: match[2],
+    prefixLength: text.length - match[2].length,
+  };
+}
+
+function matchOrderedParenMarker(text: string): MarkerMatch | null {
+  const match = text.match(ORDERED_PAREN_RE);
+  if (!match?.[2]) return null;
+  if (parseSectionHeading(text)) return null;
+  return {
+    body: match[2],
+    prefixLength: text.length - match[2].length,
+  };
+}
+
+/**
+ * Consume a consecutive run of paragraphs that match `matchMarker`,
+ * turning each into a listItem. Run length is driven by the document.
+ */
+function consumeMarkedListRun(
+  nodes: JSONContent[],
+  start: number,
+  matchMarker: (text: string) => MarkerMatch | null,
+): { items: JSONContent[]; end: number } | null {
+  const items: JSONContent[] = [];
+  let i = start;
+
+  while (i < nodes.length) {
+    const current = nodes[i]!;
+    if (current.type !== "paragraph") break;
+    const text = tipTapNodePlainText(current).trim();
+    const matched = matchMarker(text);
+    if (!matched) break;
+    items.push({
+      type: "listItem",
+      content: [stripParagraphPrefix(current, matched.prefixLength)],
+    });
+    i += 1;
+  }
+
+  if (items.length === 0) return null;
+  return { items, end: i };
 }
 
 function promoteMarkedListParagraphs(nodes: JSONContent[]): JSONContent[] {
@@ -360,44 +365,24 @@ function promoteMarkedListParagraphs(nodes: JSONContent[]): JSONContent[] {
     }
 
     const text = tipTapNodePlainText(node).trim();
-    const bullet = text.match(BULLET_MARKER_RE);
 
-    if (bullet) {
-      const items: JSONContent[] = [];
-      while (i < nodes.length) {
-        const current = nodes[i]!;
-        if (current.type !== "paragraph") break;
-        const currentText = tipTapNodePlainText(current).trim();
-        const match = currentText.match(BULLET_MARKER_RE);
-        if (!match) break;
-        const markerLength = currentText.length - (match[2]?.length ?? 0);
-        items.push({
-          type: "listItem",
-          content: [stripParagraphPrefix(current, markerLength)],
-        });
-        i += 1;
+    if (matchBulletMarker(text)) {
+      const run = consumeMarkedListRun(nodes, i, matchBulletMarker);
+      if (run) {
+        result.push({ type: "bulletList", content: run.items });
+        i = run.end;
+        continue;
       }
-      result.push({ type: "bulletList", content: items });
-      continue;
     }
 
-    if (ORDERED_PAREN_RE.test(text) && looksLikeOrderedListRun(nodes, i)) {
-      const items: JSONContent[] = [];
-      while (i < nodes.length) {
-        const current = nodes[i]!;
-        if (current.type !== "paragraph") break;
-        const currentText = tipTapNodePlainText(current).trim();
-        const match = currentText.match(ORDERED_PAREN_RE);
-        if (!match) break;
-        const markerLength = currentText.length - (match[2]?.length ?? 0);
-        items.push({
-          type: "listItem",
-          content: [stripParagraphPrefix(current, markerLength)],
-        });
-        i += 1;
+    if (matchOrderedParenMarker(text)) {
+      const run = consumeMarkedListRun(nodes, i, matchOrderedParenMarker);
+      // Need a real run (2+), not a lone "1) ..." paragraph.
+      if (run && run.items.length >= 2) {
+        result.push({ type: "orderedList", content: run.items });
+        i = run.end;
+        continue;
       }
-      result.push({ type: "orderedList", content: items });
-      continue;
     }
 
     result.push(node);
@@ -407,19 +392,25 @@ function promoteMarkedListParagraphs(nodes: JSONContent[]): JSONContent[] {
   return result;
 }
 
-function isClearUnmarkedListItem(text: string): boolean {
+/**
+ * Unmarked list labels: inferred from the line shape (short, non-sentence,
+ * single-line), not from a fixed vocabulary or content example.
+ */
+function isUnmarkedListLabel(text: string): boolean {
   const trimmed = text.trim();
-  if (!trimmed || trimmed.length > 48) return false;
+  if (!trimmed || trimmed.includes("\n")) return false;
   if (/[.!?…]$/u.test(trimmed)) return false;
   if (parseSectionHeading(trimmed)) return false;
-  if (BULLET_MARKER_RE.test(trimmed)) return false;
-  if (trimmed.includes("\n")) return false;
-  // Prefer noun-like / short label lines, not full clauses.
+  if (matchBulletMarker(trimmed) || matchOrderedParenMarker(trimmed)) {
+    return false;
+  }
+
   const words = trimmed.split(/\s+/).filter(Boolean);
-  return words.length >= 1 && words.length <= 6;
+  // Compact single-line labels (word/char density of this line), not fixed content.
+  return words.length >= 1 && words.length <= 6 && trimmed.length <= 48;
 }
 
-function promoteClearUnmarkedLists(nodes: JSONContent[]): JSONContent[] {
+function promoteUnmarkedListParagraphs(nodes: JSONContent[]): JSONContent[] {
   const result: JSONContent[] = [];
   let i = 0;
 
@@ -432,7 +423,7 @@ function promoteClearUnmarkedLists(nodes: JSONContent[]): JSONContent[] {
     }
 
     const text = tipTapNodePlainText(node).trim();
-    if (!isClearUnmarkedListItem(text)) {
+    if (!isUnmarkedListLabel(text)) {
       result.push(node);
       i += 1;
       continue;
@@ -444,7 +435,7 @@ function promoteClearUnmarkedLists(nodes: JSONContent[]): JSONContent[] {
       const current = nodes[j]!;
       if (current.type !== "paragraph") break;
       const currentText = tipTapNodePlainText(current).trim();
-      if (!isClearUnmarkedListItem(currentText)) break;
+      if (!isUnmarkedListLabel(currentText)) break;
       items.push({
         type: "listItem",
         content: [{ type: "paragraph", content: current.content }],
@@ -452,6 +443,7 @@ function promoteClearUnmarkedLists(nodes: JSONContent[]): JSONContent[] {
       j += 1;
     }
 
+    // A list needs a run; length comes from how many consecutive labels exist.
     if (items.length >= 3) {
       result.push({ type: "bulletList", content: items });
       i = j;
@@ -467,9 +459,12 @@ function promoteClearUnmarkedLists(nodes: JSONContent[]): JSONContent[] {
 
 /**
  * Deterministic TipTap document formatter.
- * Cleans whitespace, normalizes lists/headings, never rewrites wording.
+ * Cleans whitespace, normalizes lists/headings from document structure,
+ * never rewrites wording.
  */
-export function formatTiptapDocument(doc: JSONContent | null | undefined): JSONContent {
+export function formatTiptapDocument(
+  doc: JSONContent | null | undefined,
+): JSONContent {
   if (!doc || !isTipTapDoc(doc)) {
     return structuredClone(EMPTY_TIPTAP_DOC);
   }
@@ -477,9 +472,8 @@ export function formatTiptapDocument(doc: JSONContent | null | undefined): JSONC
   let content = (doc.content ?? []).map(tidyBlockNode);
   content = collapseEmptyParagraphs(content);
   content = normalizeHierarchicalHeadings(content);
-  content = promoteSingleNumberHeadings(content);
   content = promoteMarkedListParagraphs(content);
-  content = promoteClearUnmarkedLists(content);
+  content = promoteUnmarkedListParagraphs(content);
   content = collapseEmptyParagraphs(content);
 
   if (content.length === 0) {

@@ -24,11 +24,21 @@ import {
   Undo,
   Wand2,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 import { EditorImageDialog } from "@/components/editor/image-dialog";
 import { EditorLinkDialog } from "@/components/editor/link-dialog";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
+import {
+  buildTipTapTableFromMatrix,
+  parseTextToTable,
+} from "@/lib/editor/selection-to-table";
 import { cn } from "@/lib/utils";
+
+/** Empty-table defaults — matches the previous hardcoded insertTable behavior. */
+const EMPTY_TABLE_ROWS = 3;
+const EMPTY_TABLE_COLS = 3;
 
 type EditorToolbarProps = {
   editor: Editor;
@@ -71,6 +81,7 @@ export function EditorToolbar({
   onFormat,
   formatLabel = "Format",
 }: EditorToolbarProps) {
+  const tEditor = useTranslations("editor");
   const [linkOpen, setLinkOpen] = useState(false);
   const [imageOpen, setImageOpen] = useState(false);
   const [linkUrl, setLinkUrl] = useState("");
@@ -94,12 +105,39 @@ export function EditorToolbar({
     editor.chain().focus().setImage({ src: url }).run();
   }
 
-  function insertTable() {
+  function insertEmptyTable() {
     editor
       .chain()
       .focus()
-      .insertTable({ rows: 3, cols: 3, withHeaderRow: true })
+      .insertTable({
+        rows: EMPTY_TABLE_ROWS,
+        cols: EMPTY_TABLE_COLS,
+        withHeaderRow: true,
+      })
       .run();
+  }
+
+  function insertTable() {
+    const { from, to, empty } = editor.state.selection;
+    if (!empty) {
+      const selected = editor.state.doc.textBetween(from, to, "\n", "\n");
+      if (selected.trim().length > 0) {
+        const parsed = parseTextToTable(selected);
+        if (!parsed) {
+          // Never destroy selection when parsing fails.
+          toast.message(tEditor("tableSelectionInvalid"));
+          return;
+        }
+
+        const table = buildTipTapTableFromMatrix(parsed.rows, {
+          withHeaderRow: true,
+        });
+        editor.chain().focus().insertContentAt({ from, to }, table).run();
+        return;
+      }
+    }
+
+    insertEmptyTable();
   }
 
   return (
