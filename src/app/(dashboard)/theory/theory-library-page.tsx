@@ -46,6 +46,7 @@ export async function TheoryLibraryPage({ folderId }: { folderId?: string }) {
       notes={notes}
       folders={folders}
       currentFolderId={folderId ?? null}
+      workspaceId={workspace.id}
     />
   );
 }

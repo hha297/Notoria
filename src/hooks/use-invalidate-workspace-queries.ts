@@ -73,5 +73,18 @@ export function useInvalidateWorkspaceQueries(
         queryKey: queryKeys.writing.detail(workspaceId, id),
       });
     },
+    removeTheoryNote: (id: string) => {
+      if (!workspaceId) return;
+      queryClient.setQueriesData(
+        { queryKey: queryKeys.theory.all(workspaceId) },
+        (old: unknown) => {
+          if (!Array.isArray(old)) return old;
+          return filterById(old as Array<{ id: string }>, id);
+        },
+      );
+      queryClient.removeQueries({
+        queryKey: queryKeys.theory.detail(workspaceId, id),
+      });
+    },
   };
 }
