@@ -1,13 +1,15 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { memo, type ReactNode } from "react";
 import type { DraggableAttributes } from "@dnd-kit/core";
 import type { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
 import { Copy, GripVertical, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { WritingAiPanel } from "@/components/writing/writing-ai-panel";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { CapitalizedTextarea } from "@/components/form/capitalized-text";
+import type { WritingAiSuggestion } from "@/lib/writing/ai-types";
 import type { WritingQuestion } from "@/lib/writing/content";
 import { cn } from "@/lib/utils";
 
@@ -19,10 +21,13 @@ type WritingQuestionCardProps = {
   onChange: (question: WritingQuestion) => void;
   onDuplicate: () => void;
   onDelete: () => void;
+  aiSuggestions?: WritingAiSuggestion[];
+  onApplyAiSuggestion?: (suggestion: WritingAiSuggestion) => void;
+  onSkipAiSuggestion?: (suggestionId: string) => void;
   className?: string;
 };
 
-export function WritingQuestionCard({
+export const WritingQuestionCard = memo(function WritingQuestionCard({
   question,
   index,
   canDelete,
@@ -30,9 +35,13 @@ export function WritingQuestionCard({
   onChange,
   onDuplicate,
   onDelete,
+  aiSuggestions,
+  onApplyAiSuggestion,
+  onSkipAiSuggestion,
   className,
 }: WritingQuestionCardProps) {
   const t = useTranslations("writing");
+  const suggestions = aiSuggestions ?? [];
 
   return (
     <div
@@ -116,10 +125,22 @@ export function WritingQuestionCard({
             className="min-h-12"
           />
         </div>
+
+        {suggestions.length > 0 &&
+        onApplyAiSuggestion &&
+        onSkipAiSuggestion ? (
+          <div className="border-t border-hairline-cloud pt-3">
+            <WritingAiPanel
+              suggestions={suggestions}
+              onApply={onApplyAiSuggestion}
+              onSkip={onSkipAiSuggestion}
+            />
+          </div>
+        ) : null}
       </div>
     </div>
   );
-}
+});
 
 export function QuestionDragHandle({
   attributes,
