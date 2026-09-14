@@ -1,5 +1,7 @@
 "use client";
 
+import dynamic from "next/dynamic";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import {
   Dialog,
@@ -8,19 +10,28 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { ListPageLoading } from "@/components/layout/page-loading";
 import {
-  VocabularyForm,
-  type VocabularyFormInitialData,
-} from "@/components/vocabulary/vocabulary-form";
-import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
+  vocabularyDetailQueryOptions,
+} from "@/lib/query/options";
+
+const VocabularyForm = dynamic(
+  () =>
+    import("@/components/vocabulary/vocabulary-form").then(
+      (mod) => mod.VocabularyForm,
+    ),
+  {
+    loading: () => <ListPageLoading />,
+    ssr: false,
+  },
+);
 
 type VocabularyQuickEditDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   language: string;
-  initialData: VocabularyFormInitialData | null;
-  existingCustomTags: string[];
-  synonymOptions: VocabularySynonymRef[];
+  workspaceId: string;
+  wordId: string | null;
   onSuccess?: () => void;
 };
 
@@ -28,12 +39,28 @@ export function VocabularyQuickEditDialog({
   open,
   onOpenChange,
   language,
-  initialData,
-  existingCustomTags,
-  synonymOptions,
+  workspaceId,
+  wordId,
   onSuccess,
 }: VocabularyQuickEditDialogProps) {
   const t = useTranslations("vocabulary");
+  const detailQuery = useQuery({
+    ...vocabularyDetailQueryOptions(workspaceId, wordId ?? ""),
+    enabled: open && Boolean(workspaceId && wordId),
+  });
+
+  const initialData = detailQuery.data
+    ? {
+        id: detailQuery.data.id,
+        word: detailQuery.data.word,
+        partOfSpeech: detailQuery.data.partOfSpeech,
+        notes: detailQuery.data.notes,
+        synonymRefs: detailQuery.data.synonymRefs,
+        meanings: detailQuery.data.meanings,
+        examples: detailQuery.data.examples,
+        tags: detailQuery.data.tags.map((tag) => ({ tag: tag.tag })),
+      }
+    : null;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
@@ -44,13 +71,12 @@ export function VocabularyQuickEditDialog({
         </DialogHeader>
 
         <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5">
-          {open && initialData ? (
+          {open && wordId && initialData ? (
             <VocabularyForm
               key={initialData.id}
               mode="modal"
               language={language}
-              existingCustomTags={existingCustomTags}
-              synonymOptions={synonymOptions}
+              workspaceId={workspaceId}
               initialData={initialData}
               onCancel={() => onOpenChange(false)}
               onSuccess={() => {
@@ -58,6 +84,8 @@ export function VocabularyQuickEditDialog({
                 onSuccess?.();
               }}
             />
+          ) : open ? (
+            <ListPageLoading />
           ) : null}
         </div>
       </DialogContent>

@@ -9,7 +9,6 @@ import { getListeningLesson } from "@/lib/actions/listening";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { folderHref } from "@/lib/folders/paths";
 
-export const dynamic = "force-dynamic";
 export const maxDuration = 300;
 
 export default async function ListeningLessonPage({

@@ -276,3 +276,32 @@ export function getWritingListMeta(content: unknown): WritingListMeta {
     meta: parsed.meta,
   };
 }
+
+/** Build list meta from SQL jsonb extracts so list queries never load TipTap docs. */
+export function writingListMetaFromParts(input: {
+  mode: string | null;
+  sectionCount: number | string | null;
+  questionCount: number | string | null;
+  meta: unknown;
+}): WritingListMeta {
+  const mode: WritingMode =
+    input.mode === "rich_document" ? "rich_document" : "question_set";
+  const sectionCount = Number(input.sectionCount ?? 0);
+  const questionCount = Number(input.questionCount ?? 0);
+
+  if (mode === "rich_document") {
+    return {
+      mode,
+      sectionCount: 0,
+      questionCount: 0,
+      meta: parseWritingMeta(input.meta),
+    };
+  }
+
+  return {
+    mode,
+    sectionCount: Number.isFinite(sectionCount) ? sectionCount : 0,
+    questionCount: Number.isFinite(questionCount) ? questionCount : 0,
+    meta: parseWritingMeta(input.meta),
+  };
+}

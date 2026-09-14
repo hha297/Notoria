@@ -6,7 +6,6 @@ import { PageHeader } from "@/components/layout/page-header";
 import { TheoryEditor } from "@/components/theory/theory-editor";
 import { getTheoryNote } from "@/lib/actions/theory";
 
-export const dynamic = "force-dynamic";
 
 export default async function EditTheoryPage({
   params,

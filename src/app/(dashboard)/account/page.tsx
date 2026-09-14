@@ -5,8 +5,6 @@ import { PageHeader } from "@/components/layout/page-header";
 import { getAccountUser } from "@/lib/actions/account";
 import { requireUser } from "@/lib/auth/session";
 
-export const dynamic = "force-dynamic";
-
 export default async function AccountPage({
   searchParams,
 }: {

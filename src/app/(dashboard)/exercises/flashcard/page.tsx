@@ -7,12 +7,12 @@ import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getFlashcardWords } from "@/lib/actions/flashcards";
 import { getActiveWorkspace } from "@/lib/workspace";
 
-export const dynamic = "force-dynamic";
-
 export default async function ExerciseFlashcardPage() {
-  const t = await getTranslations("flashcards");
-  const tExercises = await getTranslations("exercises");
-  const workspace = await getActiveWorkspace();
+  const [t, tExercises, workspace] = await Promise.all([
+    getTranslations("flashcards"),
+    getTranslations("exercises"),
+    getActiveWorkspace(),
+  ]);
 
   if (!workspace) {
     return (

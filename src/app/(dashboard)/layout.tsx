@@ -18,14 +18,18 @@ import {
   getCurrentSubscription,
   hasActiveProSubscription,
 } from "@/lib/stripe/pro";
+import { createPerfTimer } from "@/lib/perf/dev-timing";
 import { getUserWorkspaces, getActiveWorkspace } from "@/lib/workspace";
 import { cookies } from "next/headers";
+
+export const preferredRegion = ["fra1"];
 
 export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  const timer = createPerfTimer("dashboard.layout");
   const [workspaces, activeWorkspace, session, subscription, proAccess] =
     await Promise.all([
       getUserWorkspaces(),
@@ -34,6 +38,7 @@ export default async function DashboardLayout({
       getCurrentSubscription(),
       getCurrentProAccess(),
     ]);
+  timer.finish();
 
   const cookieStore = await cookies();
   const localeCookie = cookieStore.get(LOCALE_COOKIE)?.value;
@@ -51,6 +56,7 @@ export default async function DashboardLayout({
           userEmail={session?.user?.email ?? ""}
           userImage={session?.user?.image}
           isPro={hasActiveProSubscription(subscription)}
+          workspaceId={activeWorkspace?.id ?? null}
         />
         <SidebarInset className="min-w-0 max-w-full bg-background">
           <header className="flex h-14 shrink-0 items-center gap-2 border-b border-hairline-cloud bg-background px-3 sm:gap-3 sm:px-6">

@@ -2,7 +2,6 @@ import { notFound, redirect } from "next/navigation";
 import { getExerciseTypeBySlug } from "@/lib/exercise-types";
 import { getExercise } from "@/lib/actions/exercises";
 
-export const dynamic = "force-dynamic";
 
 export default async function LegacyExerciseIdPage({
   params,

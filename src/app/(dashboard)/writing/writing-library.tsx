@@ -4,9 +4,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { WritingView } from "@/components/writing/writing-view";
-import { getFolder, getFolders } from "@/lib/actions/folders";
-import { getWritingDocuments } from "@/lib/actions/writing";
-import { serializeWritingListDocuments } from "@/lib/writing/serialize-list";
+import { getFolder } from "@/lib/actions/folders";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export async function WritingLibrary({ folderId }: { folderId?: string }) {
@@ -29,25 +27,17 @@ export async function WritingLibrary({ folderId }: { folderId?: string }) {
     );
   }
 
-  const folderPromise = folderId
-    ? getFolder(folderId, "writing")
-    : Promise.resolve(null);
-  const [folder, documents, folders] = await Promise.all([
-    folderPromise,
-    getWritingDocuments(),
-    getFolders("writing"),
-  ]);
-
-  if (folderId && !folder) {
-    notFound();
+  if (folderId) {
+    const folder = await getFolder(folderId, "writing");
+    if (!folder) {
+      notFound();
+    }
   }
 
   return (
     <WritingView
       currentFolderId={folderId ?? null}
-      folders={folders}
       workspaceId={workspace.id}
-      documents={serializeWritingListDocuments(documents)}
     />
   );
 }

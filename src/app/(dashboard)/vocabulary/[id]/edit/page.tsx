@@ -4,11 +4,8 @@ import { ArrowLeft } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
 import { VocabularyForm } from "@/components/vocabulary/vocabulary-form";
-import { getVocabularyWord, listVocabularySynonymOptions } from "@/lib/actions/vocabulary";
-import { getActiveWorkspaceCustomTags } from "@/lib/actions/workspaces";
+import { getVocabularyWord } from "@/lib/actions/vocabulary";
 import { getActiveWorkspace } from "@/lib/workspace";
-
-export const dynamic = "force-dynamic";
 
 export default async function EditVocabularyPage({
   params,
@@ -23,11 +20,7 @@ export default async function EditVocabularyPage({
     notFound();
   }
 
-  const [word, existingCustomTags, synonymOptions] = await Promise.all([
-    getVocabularyWord(id),
-    getActiveWorkspaceCustomTags(),
-    listVocabularySynonymOptions(),
-  ]);
+  const word = await getVocabularyWord(id);
 
   if (!word) {
     notFound();
@@ -54,8 +47,7 @@ export default async function EditVocabularyPage({
       </div>
       <VocabularyForm
         previewHref={previewHref}
-        existingCustomTags={existingCustomTags}
-        synonymOptions={synonymOptions}
+        workspaceId={workspace.id}
         language={workspace.language}
         initialData={{
           id: word.id,

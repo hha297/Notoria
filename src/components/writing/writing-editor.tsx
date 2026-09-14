@@ -34,6 +34,7 @@ import { useMutationLock } from "@/hooks/use-mutation-lock";
 import { createWritingDocument, updateWritingDocument } from "@/lib/actions/writing";
 import { afterEditorHydration } from "@/lib/editor/hydration";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
+import { useQueryClient } from "@tanstack/react-query";
 import { normalizeDescription } from "@/lib/description-content";
 import { replaceInQuestionSet } from "@/lib/writing/ai-apply";
 import type { WritingAiSuggestion } from "@/lib/writing/ai-types";
@@ -95,6 +96,7 @@ export function WritingEditor({
   initialData,
 }: WritingEditorProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const t = useTranslations("writing");
   const tMeta = useTranslations("writing.meta");
   const tCommon = useTranslations("common");
@@ -297,11 +299,23 @@ export function WritingEditor({
 
       if (initialData?.id) {
         await updateWritingDocument(initialData.id, payload);
+        void queryClient.invalidateQueries({ queryKey: ["writing"] });
+        try {
+          router.prefetch(previewHref ?? listHref);
+        } catch {
+          // Prefetch is best-effort.
+        }
         navigateAfterSuccess(router, previewHref ?? listHref, {
           toast: showToast ? () => toast.success(t("saved")) : undefined,
         });
       } else {
         await createWritingDocument(payload, { folderId });
+        void queryClient.invalidateQueries({ queryKey: ["writing"] });
+        try {
+          router.prefetch(listHref);
+        } catch {
+          // Prefetch is best-effort.
+        }
         navigateAfterSuccess(router, listHref, {
           toast: showToast ? () => toast.success(t("created")) : undefined,
         });

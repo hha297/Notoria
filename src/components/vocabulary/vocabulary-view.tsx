@@ -1,48 +1,35 @@
 "use client";
 
 import { Plus } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/layout/page-header";
+import { ListPageLoading } from "@/components/layout/page-loading";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { LinkButton } from "@/components/ui/link-button";
-import {
-  VocabularyTable,
-  type VocabularyWordRow,
-} from "@/components/vocabulary/vocabulary-table";
-import { useHydratedQuery } from "@/hooks/use-workspace-list-query";
-import { getVocabularyWords } from "@/lib/actions/vocabulary";
-import { queryKeys } from "@/lib/query/keys";
-import { serializeVocabularyListWords } from "@/lib/vocabulary/serialize-list";
-import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
+import { VocabularyTable } from "@/components/vocabulary/vocabulary-table";
+import { vocabularyListQueryOptions } from "@/lib/query/options";
 
 type VocabularyViewProps = {
-  words: VocabularyWordRow[];
   workspaceId: string;
   workspaceName: string;
   language: string;
-  existingCustomTags: string[];
-  synonymOptions: VocabularySynonymRef[];
 };
 
 export function VocabularyView({
-  words: initialWords,
   workspaceId,
   workspaceName,
   language,
-  existingCustomTags,
-  synonymOptions,
 }: VocabularyViewProps) {
   const t = useTranslations("vocabulary");
-  const { data: words = initialWords } = useHydratedQuery({
-    queryKey: queryKeys.vocabulary.list(workspaceId),
-    initialData: initialWords,
-    enabled: Boolean(workspaceId),
-    queryFn: async () => {
-      const result = await getVocabularyWords();
-      return serializeVocabularyListWords(result.words);
-    },
-  });
+  const { data: words, isPending } = useQuery(
+    vocabularyListQueryOptions(workspaceId),
+  );
+
+  if (isPending || !words) {
+    return <ListPageLoading />;
+  }
 
   if (words.length === 0) {
     return (
@@ -76,8 +63,6 @@ export function VocabularyView({
       workspaceId={workspaceId}
       workspaceName={workspaceName}
       language={language}
-      existingCustomTags={existingCustomTags}
-      synonymOptions={synonymOptions}
     />
   );
 }

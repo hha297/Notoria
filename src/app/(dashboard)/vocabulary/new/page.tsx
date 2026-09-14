@@ -4,11 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { PageHeader } from "@/components/layout/page-header";
 import { VocabularyForm } from "@/components/vocabulary/vocabulary-form";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
-import { listVocabularySynonymOptions } from "@/lib/actions/vocabulary";
-import { getActiveWorkspaceCustomTags } from "@/lib/actions/workspaces";
 import { getActiveWorkspace } from "@/lib/workspace";
-
-export const dynamic = "force-dynamic";
 
 export default async function NewVocabularyPage() {
   const t = await getTranslations("vocabulary");
@@ -27,20 +23,15 @@ export default async function NewVocabularyPage() {
           </Link>
           <PageHeader
             eyebrow={t("title")}
-          title={t("addWord")}
-          highlight={t("addWordHighlight")}
-          description={t("disabledNoWorkspace")}
+            title={t("addWord")}
+            highlight={t("addWordHighlight")}
+            description={t("disabledNoWorkspace")}
           />
         </div>
         <NoWorkspaceEmpty />
       </div>
     );
   }
-
-  const [existingCustomTags, synonymOptions] = await Promise.all([
-    getActiveWorkspaceCustomTags(),
-    listVocabularySynonymOptions(),
-  ]);
 
   return (
     <div className="mx-auto max-w-4xl space-y-8 pt-1 sm:space-y-10 sm:pt-2">
@@ -60,8 +51,7 @@ export default async function NewVocabularyPage() {
         />
       </div>
       <VocabularyForm
-        existingCustomTags={existingCustomTags}
-        synonymOptions={synonymOptions}
+        workspaceId={workspace.id}
         language={workspace.language}
       />
     </div>

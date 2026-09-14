@@ -14,11 +14,11 @@ import { getWorkspaceActivitySnapshot } from "@/lib/onboarding/snapshot";
 import { getLanguageName } from "@/lib/languages";
 import { getActiveWorkspace } from "@/lib/workspace";
 
-export const dynamic = "force-dynamic";
-
 export default async function DashboardPage() {
-  const t = await getTranslations("dashboard");
-  const workspace = await getActiveWorkspace();
+  const [t, workspace] = await Promise.all([
+    getTranslations("dashboard"),
+    getActiveWorkspace(),
+  ]);
 
   if (!workspace) {
     return (

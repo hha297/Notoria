@@ -3,7 +3,6 @@ import { ListeningLockedPage } from "@/components/listening/listening-locked";
 import { getListeningLesson } from "@/lib/actions/listening";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
 
-export const dynamic = "force-dynamic";
 
 export default async function ListeningPracticePage({
   params,

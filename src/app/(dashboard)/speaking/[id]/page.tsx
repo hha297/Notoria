@@ -8,7 +8,6 @@ import { SpeakingSessionView } from "@/components/speaking/speaking-session-view
 import { getSpeakingSession } from "@/lib/actions/speaking";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
 
-export const dynamic = "force-dynamic";
 
 export default async function SpeakingSessionPage({
   params,

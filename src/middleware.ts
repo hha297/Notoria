@@ -1,6 +1,8 @@
 import { auth } from "@/auth";
+import { logPerf } from "@/lib/perf/dev-timing";
 
 export default auth((request) => {
+  const started = performance.now();
   const isLoggedIn = !!request.auth;
   const { pathname } = request.nextUrl;
 
@@ -12,14 +14,18 @@ export default auth((request) => {
     pathname.startsWith("/api/stripe/webhook") ||
     pathname.startsWith("/api/stream/webhook");
 
-  if (!isLoggedIn && !isPublicRoute) {
-    const loginUrl = new URL("/sign-in", request.nextUrl.origin);
-    loginUrl.searchParams.set("callbackUrl", pathname);
-    return Response.redirect(loginUrl);
-  }
+  try {
+    if (!isLoggedIn && !isPublicRoute) {
+      const loginUrl = new URL("/sign-in", request.nextUrl.origin);
+      loginUrl.searchParams.set("callbackUrl", pathname);
+      return Response.redirect(loginUrl);
+    }
 
-  if (isLoggedIn && isAuthRoute) {
-    return Response.redirect(new URL("/", request.nextUrl.origin));
+    if (isLoggedIn && isAuthRoute) {
+      return Response.redirect(new URL("/", request.nextUrl.origin));
+    }
+  } finally {
+    logPerf("middleware", performance.now() - started);
   }
 });
 

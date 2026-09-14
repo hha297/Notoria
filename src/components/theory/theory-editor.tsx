@@ -29,6 +29,7 @@ import { useMutationLock } from "@/hooks/use-mutation-lock";
 import { createTheoryNote, updateTheoryNote } from "@/lib/actions/theory";
 import { afterEditorHydration } from "@/lib/editor/hydration";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
+import { useQueryClient } from "@tanstack/react-query";
 import {
   descriptionPlainLength,
   normalizeDescription,
@@ -68,6 +69,7 @@ export function TheoryEditor({
   initialData,
 }: TheoryEditorProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const t = useTranslations("theory");
   const tCommon = useTranslations("common");
   const parsed = useMemo(
@@ -306,6 +308,12 @@ export function TheoryEditor({
           release();
           return;
         }
+        void queryClient.invalidateQueries({ queryKey: ["theory"] });
+        try {
+          router.prefetch(previewHref ?? "/theory");
+        } catch {
+          // Prefetch is best-effort.
+        }
         navigateAfterSuccess(router, previewHref ?? "/theory", {
           toast: () => toast.success(t("saved")),
         });
@@ -315,6 +323,12 @@ export function TheoryEditor({
           toast.error(actionErrorMessage(created.code));
           release();
           return;
+        }
+        void queryClient.invalidateQueries({ queryKey: ["theory"] });
+        try {
+          router.prefetch("/theory");
+        } catch {
+          // Prefetch is best-effort.
         }
         navigateAfterSuccess(router, "/theory", {
           toast: () => toast.success(t("created")),
