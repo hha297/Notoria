@@ -37,7 +37,7 @@ export function generateVocabularyCsvBlob(
 
     if (columns.partOfSpeech) cells.push(row.partOfSpeech);
     cells.push(joinMeanings(row.meanings, " | "));
-    if (columns.tags) cells.push(joinTags(row.tags));
+    if (columns.tags) cells.push(joinTags(row.tags, " | "));
     if (columns.notes) cells.push(row.notes || "");
     if (columns.updated) cells.push(row.updatedAt);
 

@@ -539,8 +539,8 @@ export function VocabularyForm({
                   aria-invalid={isDuplicate || undefined}
                   aria-describedby={
                     isDuplicate ||
-                    wordCheckStatus === "error" ||
-                    isWordBusy
+                      wordCheckStatus === "error" ||
+                      isWordBusy
                       ? "word-duplicate-status"
                       : undefined
                   }

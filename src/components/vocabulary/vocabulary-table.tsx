@@ -33,7 +33,6 @@ import { VocabularyRowActions } from "@/components/vocabulary/vocabulary-row-act
 import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
 import { useInvalidateWorkspaceQueries } from "@/hooks/use-invalidate-workspace-queries";
 import type { VocabularyExportSourceWord } from "@/lib/vocabulary/export/build-document";
-import { vocabularyNotesToPlainText } from "@/lib/vocabulary/notes-content";
 import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
 import {
   isMultiFilterActive,
@@ -460,14 +459,14 @@ export function VocabularyTable({
       })),
       ...(customTagOptions.length > 0
         ? [
-            {
-              label: tTags("groups.custom"),
-              options: customTagOptions.map((tag) => ({
-                value: tag,
-                label: getCustomTagName(tag),
-              })),
-            },
-          ]
+          {
+            label: tTags("groups.custom"),
+            options: customTagOptions.map((tag) => ({
+              value: tag,
+              label: getCustomTagName(tag),
+            })),
+          },
+        ]
         : []),
     ],
     [customTagOptions, tTags],
@@ -573,7 +572,7 @@ export function VocabularyTable({
       tagLabels: word.tags.map((tag) =>
         getTagLabel(tag.tag, (key) => tTags(key)),
       ),
-      notes: vocabularyNotesToPlainText(word.notes),
+      notes: word.notes ?? "",
       updatedAtLabel: format(new Date(word.updatedAt), "yyyy-MM-dd"),
     }));
   }, [filteredWords, tPos, tTags]);

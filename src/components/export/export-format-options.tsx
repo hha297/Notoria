@@ -15,6 +15,7 @@ type ExportFormatOptionsProps = {
   hasProAccess: boolean;
   onLockedSelect: () => void;
   labels: Partial<Record<ExportFormatId, string>>;
+  compact?: boolean;
 };
 
 function isFormatLocked(format: ExportFormatId, hasProAccess: boolean) {
@@ -30,9 +31,10 @@ export function ExportFormatOptions({
   hasProAccess,
   onLockedSelect,
   labels,
+  compact = false,
 }: ExportFormatOptionsProps) {
   return (
-    <div className="grid gap-2">
+    <div className={cn("grid gap-2", compact && "grid-cols-3 gap-1.5")}>
       {formats.map((format) => {
         const locked = isFormatLocked(format, hasProAccess);
         const id = `${idPrefix}-${format}`;
@@ -44,6 +46,7 @@ export function ExportFormatOptions({
             htmlFor={id}
             className={cn(
               "flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2.5 text-sm transition-colors",
+              compact && "justify-center gap-1.5 px-2 py-2",
               value === format
                 ? "border-accent-lime/50 bg-accent-lime/10 text-ink"
                 : "border-hairline-cloud hover:bg-muted/40",
@@ -63,7 +66,10 @@ export function ExportFormatOptions({
                 }
                 onChange(format);
               }}
-              className="size-4 accent-[var(--accent-lime)]"
+              className={cn(
+                "size-4 accent-[var(--accent-lime)]",
+                compact && "sr-only",
+              )}
             />
             {locked ? <Lock className="size-3.5 text-muted-foreground" /> : null}
             <span className="font-medium">{label}</span>

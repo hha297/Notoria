@@ -1,8 +1,7 @@
 import { buildVocabularyExportDocument, vocabularyExportIsEmpty } from "@/lib/vocabulary/export/build-document";
 import { generateVocabularyCsvBlob } from "@/lib/vocabulary/export/csv";
-import { generateVocabularyDocxBlob } from "@/lib/vocabulary/export/docx";
 import { buildVocabularyExportFilename } from "@/lib/vocabulary/export/filename";
-import { generateVocabularyPdfBlob } from "@/lib/vocabulary/export/pdf";
+import type { VocabularyExportProgressHandler } from "@/lib/vocabulary/export/progress";
 import type {
   VocabularyExportDocument,
   VocabularyExportLabels,
@@ -17,6 +16,7 @@ export type {
   VocabularyExportOptions,
   VocabularyExportLabels,
 } from "@/lib/vocabulary/export/types";
+export type { VocabularyExportProgress } from "@/lib/vocabulary/export/progress";
 export { DEFAULT_VOCABULARY_EXPORT_OPTIONS } from "@/lib/vocabulary/export/types";
 
 export async function exportVocabulary(params: {
@@ -24,15 +24,18 @@ export async function exportVocabulary(params: {
   words: VocabularyExportSourceWord[];
   options: VocabularyExportOptions;
   labels: VocabularyExportLabels;
+  onProgress?: VocabularyExportProgressHandler;
 }): Promise<{ filename: string }> {
   const access = await assertPaidDocumentExport(params.options.format);
   if (!access.ok) {
     throw new Error(access.code);
   }
 
-  const document = buildVocabularyExportDocument(
+  const document = await buildVocabularyExportDocument(
     params.workspaceName,
     params.words,
+    params.options,
+    params.onProgress,
   );
 
   if (vocabularyExportIsEmpty(document)) {
@@ -43,7 +46,12 @@ export async function exportVocabulary(params: {
     params.workspaceName,
     params.options.format,
   );
-  const blob = await generateBlob(document, params.labels, params.options);
+  const blob = await generateBlob(
+    document,
+    params.labels,
+    params.options,
+    params.onProgress,
+  );
   downloadBlob(blob, filename);
 
   return { filename };
@@ -53,14 +61,23 @@ async function generateBlob(
   document: VocabularyExportDocument,
   labels: VocabularyExportLabels,
   options: VocabularyExportOptions,
+  onProgress?: VocabularyExportProgressHandler,
 ): Promise<Blob> {
   switch (options.format) {
     case "csv":
       return generateVocabularyCsvBlob(document, labels, options);
-    case "docx":
-      return generateVocabularyDocxBlob(document, labels, options);
+    case "docx": {
+      const { generateVocabularyDocxBlob } = await import(
+        "@/lib/vocabulary/export/docx"
+      );
+      return generateVocabularyDocxBlob(document, labels, options, onProgress);
+    }
     case "pdf":
-    default:
-      return generateVocabularyPdfBlob(document, labels, options);
+    default: {
+      const { generateVocabularyPdfBlob } = await import(
+        "@/lib/vocabulary/export/pdf"
+      );
+      return generateVocabularyPdfBlob(document, labels, options, onProgress);
+    }
   }
 }
