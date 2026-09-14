@@ -7,7 +7,7 @@ export function matchScoreSql(args: {
   metadata: SQL;
   body: SQL;
   query: PreparedQuery;
-}): SQL<number> {
+}) {
   return sql<number>`greatest(
     case
       when lower(${args.title}) = ${args.query.normalized} then ${SEARCH_RANK.exactTitle}

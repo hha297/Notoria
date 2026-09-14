@@ -209,4 +209,146 @@ describe("formatTiptapDocument", () => {
     const twice = formatTiptapDocument(once);
     expect(twice).toEqual(once);
   });
+
+  it("keeps **markdown** bold", () => {
+    const formatted = formatTiptapDocument(textDoc(paragraph("**important**")));
+    expect(formatted.content?.[0]).toMatchObject({
+      type: "paragraph",
+      content: [{ type: "text", text: "important", marks: [{ type: "bold" }] }],
+    });
+  });
+
+  it("converts a pipe table without turning prose into a table", () => {
+    const formatted = formatTiptapDocument(
+      textDoc(
+        paragraph("Word | Comparative | English"),
+        paragraph("kaunis | kauniimpi | beautiful"),
+        paragraph("suuri | suurempi | big"),
+      ),
+    );
+    expect(formatted.content?.[0]?.type).toBe("table");
+    expect(formatted.content?.[0]?.content).toHaveLength(3);
+
+    const prose = formatTiptapDocument(
+      textDoc(
+        paragraph("This is a normal sentence about grammar."),
+        paragraph("Another complete thought follows here."),
+      ),
+    );
+    expect(prose.content?.every((node) => node.type === "paragraph")).toBe(true);
+  });
+
+  it("nests indented bullet lines", () => {
+    const formatted = formatTiptapDocument(
+      textDoc(paragraph("- parent"), paragraph("  - child")),
+    );
+    expect(formatted.content?.[0]?.type).toBe("bulletList");
+    expect(
+      formatted.content?.[0]?.content?.[0]?.content?.some(
+        (node) => node.type === "bulletList",
+      ),
+    ).toBe(true);
+  });
+
+  it("bolds obvious Term: labels without rewriting the rest", () => {
+    const formatted = formatTiptapDocument(
+      textDoc(paragraph("Term: elämäntapa")),
+    );
+    expect(formatted.content?.[0]?.content?.[0]).toMatchObject({
+      type: "text",
+      text: "Term:",
+      marks: [{ type: "bold" }],
+    });
+  });
+
+  it("treats sequential 1. 2. 3. lines as an ordered list, not H1s", () => {
+    const formatted = formatTiptapDocument(
+      textDoc(
+        paragraph("1. apples"),
+        paragraph("2. bananas"),
+        paragraph("3. oranges"),
+      ),
+    );
+    expect(formatted.content?.[0]?.type).toBe("orderedList");
+    expect(formatted.content?.[0]?.content).toHaveLength(3);
+  });
+
+  it("structures the elämäntapa dictionary dump", () => {
+    const source = `
+- elämäntapa englanniksi
+- Substantiivit
+- lifestyle
+- way of life
+- walk of life
+- idiomaattinen
+- living
+- Määritelmät
+- Substantiivi
+
+yksilölle tai yhteisölle tunnusomainen tapa elää tai toimia
+(sosiologia) arkielämän tapahtumasarja merkityksineen ja pyrkimyksineen
+
+Taivutusmuodot
+Monikko elämäntavat Genetiivi elämäntavan
+Monikon genetiivi elämäntapojen Partitiivi elämäntapaa
+Monikon partitiivi elämäntapoja Inessiivi elämäntavassa
+Monikon inessiivi elämäntavoissa Elatiivi elämäntavasta
+Monikon elatiivi elämäntavoista Illatiivi elämäntapaan
+Monikon illatiivi elämäntapoihin Adessiivi elämäntavalla
+Monikon adessiivi elämäntavoilla Ablatiivi elämäntavalta
+Monikon ablatiivi elämäntavoilta Allatiivi elämäntavalle
+Monikon allatiivi elämäntavoille Essiivi elämäntapana
+Monikon essiivi elämäntapoina Translatiivi elämäntavaksi
+Monikon translatiivi elämäntavoiksi Monikon instruktiivi elämäntavoin
+Abessiivi elämäntavatta Monikon abessiivi elämäntavoitta
+Monikon akkusatiivi elämäntavat
+`.trim();
+
+    const formatted = formatTiptapDocument(
+      textDoc(
+        ...source.split("\n").map((line) => paragraph(line.trim() ? line.trim() : "")),
+      ),
+    );
+    const types = formatted.content?.map((node) => node.type);
+    expect(types?.[0]).toBe("heading");
+    expect(formatted.content?.[0]?.attrs?.level).toBe(1);
+    expect(formatted.content?.[0]?.content?.[0]?.text).toBe(
+      "elämäntapa englanniksi",
+    );
+    expect(types).toContain("bulletList");
+    expect(types).toContain("table");
+    expect(
+      formatted.content?.some(
+        (node) =>
+          node.type === "heading" &&
+          node.content?.[0]?.text === "Määritelmät",
+      ),
+    ).toBe(true);
+    expect(
+      formatted.content?.some(
+        (node) =>
+          node.type === "heading" &&
+          node.content?.[0]?.text === "Taivutusmuodot",
+      ),
+    ).toBe(true);
+
+    const table = formatted.content?.find((node) => node.type === "table");
+    const header = table?.content?.[0]?.content?.map(
+      (cell) => cell.content?.[0]?.content?.[0]?.text,
+    );
+    expect(header).toEqual(["Sija", "Yksikkö", "Monikko"]);
+    const genitive = table?.content?.find((row) =>
+      row.content?.[0]?.content?.[0]?.content?.[0]?.text === "Genetiivi",
+    );
+    expect(genitive?.content?.[1]?.content?.[0]?.content?.[0]?.text).toBe(
+      "elämäntavan",
+    );
+    expect(genitive?.content?.[2]?.content?.[0]?.content?.[0]?.text).toBe(
+      "elämäntapojen",
+    );
+
+    const twice = formatTiptapDocument(formatted);
+    expect(twice).toEqual(formatted);
+  });
 });
+
