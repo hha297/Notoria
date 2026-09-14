@@ -859,6 +859,30 @@
     "continueSubtitle": "Palaa siihen, mitä olit tekemässä.",
     "sidebarFooter": "Yksityinen kielenopiskelun työtila"
   },
+  "search": {
+    "placeholder": "Hae mitä tahansa...",
+    "emptyHint": "Hae sanoja, teoriaa, kirjoituksia ja muuta tästä työtilasta.",
+    "noResults": "Ei osumia haulle “{query}”",
+    "failed": "Haku epäonnistui. Yritä uudelleen.",
+    "clear": "Tyhjennä haku",
+    "shortcut": "Ctrl K",
+    "resultsLabel": "Hakutulokset",
+    "types": {
+      "folder": "Kansio"
+    },
+    "posGroups": {
+      "noun": "Substantiivit",
+      "verb": "Verbit",
+      "adjective": "Adjektiivit",
+      "adverb": "Adverbit",
+      "pronoun": "Pronominit",
+      "preposition": "Prepositiot",
+      "conjunction": "Konjunktiot",
+      "interjection": "Interjektiot",
+      "article": "Artikkelit",
+      "determiner": "Determinaattorit"
+    }
+  },
   "prompts": {
     "skip": "Ohita",
     "gotIt": "Selvä",

@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { DashboardContinue } from "@/components/dashboard/dashboard-continue";
 import { DashboardGuide } from "@/components/dashboard/dashboard-guide";
+import { WorkspaceSearch } from "@/components/search/workspace-search";
 import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { StatCard } from "@/components/layout/stat-card";
@@ -48,6 +49,8 @@ export default async function DashboardPage() {
         highlight={t("workspaceLabel")}
         description={t("description", { language: languageName })}
       />
+
+      <WorkspaceSearch workspaceId={workspace.id} />
 
       <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label={t("wordsSaved")} value={snapshot.vocabularyCount} />

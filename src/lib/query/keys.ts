@@ -40,4 +40,8 @@ export const queryKeys = {
     deck: (workspaceId: string, mode: string, filters?: unknown) =>
       ["exercises", workspaceId, "deck", mode, filters] as const,
   },
+  search: {
+    query: (workspaceId: string, q: string) =>
+      ["search", workspaceId, q] as const,
+  },
 };

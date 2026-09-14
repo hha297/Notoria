@@ -859,6 +859,30 @@
     "continueSubtitle": "Mở lại việc bạn đang làm dở.",
     "sidebarFooter": "Góc học ngôn ngữ riêng của bạn"
   },
+  "search": {
+    "placeholder": "Tìm bất cứ gì...",
+    "emptyHint": "Tìm từ vựng, lý thuyết, bài viết và nội dung khác trong không gian học này.",
+    "noResults": "Không có kết quả cho “{query}”",
+    "failed": "Tìm kiếm thất bại. Thử lại.",
+    "clear": "Xóa tìm kiếm",
+    "shortcut": "Ctrl K",
+    "resultsLabel": "Kết quả tìm kiếm",
+    "types": {
+      "folder": "Thư mục"
+    },
+    "posGroups": {
+      "noun": "Danh từ",
+      "verb": "Động từ",
+      "adjective": "Tính từ",
+      "adverb": "Trạng từ",
+      "pronoun": "Đại từ",
+      "preposition": "Giới từ",
+      "conjunction": "Liên từ",
+      "interjection": "Thán từ",
+      "article": "Mạo từ",
+      "determiner": "Hạn định từ"
+    }
+  },
   "prompts": {
     "skip": "Bỏ qua",
     "gotIt": "Đã hiểu",

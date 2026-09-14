@@ -1039,6 +1039,30 @@
     "continueTitle": "Continue",
     "continueSubtitle": "Pick up the last thing you were working on."
   },
+  "search": {
+    "placeholder": "Search anything...",
+    "emptyHint": "Search vocabulary, theory, writing, and more across this workspace.",
+    "noResults": "No matches for “{query}”",
+    "failed": "Search failed. Try again.",
+    "clear": "Clear search",
+    "shortcut": "Ctrl K",
+    "resultsLabel": "Search results",
+    "types": {
+      "folder": "Folder"
+    },
+    "posGroups": {
+      "noun": "Nouns",
+      "verb": "Verbs",
+      "adjective": "Adjectives",
+      "adverb": "Adverbs",
+      "pronoun": "Pronouns",
+      "preposition": "Prepositions",
+      "conjunction": "Conjunctions",
+      "interjection": "Interjections",
+      "article": "Articles",
+      "determiner": "Determiners"
+    }
+  },
   "prompts": {
     "skip": "Skip",
     "gotIt": "Got it",
