@@ -1,48 +1,41 @@
 "use client";
 
 import { PenLine, Plus } from "lucide-react";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/layout/page-header";
+import { ListPageLoading } from "@/components/layout/page-loading";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { FolderWorkspace } from "@/components/folders/folder-workspace";
 import { NewFolderButton } from "@/components/folders/new-folder-button";
 import { LinkButton } from "@/components/ui/link-button";
-import {
-  WritingTable,
-  type WritingListItem,
-} from "@/components/writing/writing-table";
-import { useHydratedQuery } from "@/hooks/use-workspace-list-query";
-import { getWritingDocuments } from "@/lib/actions/writing";
+import { WritingTable } from "@/components/writing/writing-table";
 import { sectionCreateHref } from "@/lib/folders/paths";
-import type { FolderListItem } from "@/lib/folders/types";
-import { queryKeys } from "@/lib/query/keys";
-import { serializeWritingListDocuments } from "@/lib/writing/serialize-list";
+import {
+  folderListQueryOptions,
+  writingListQueryOptions,
+} from "@/lib/query/options";
 
 type WritingViewProps = {
-  documents: WritingListItem[];
-  folders: FolderListItem[];
   currentFolderId: string | null;
   workspaceId: string;
 };
 
 export function WritingView({
-  documents: initialDocuments,
-  folders,
   currentFolderId,
   workspaceId,
 }: WritingViewProps) {
   const t = useTranslations("writing");
   const createHref = sectionCreateHref("writing", currentFolderId);
-  const { data: documents = initialDocuments } = useHydratedQuery({
-    queryKey: queryKeys.writing.list(workspaceId),
-    initialData: initialDocuments,
-    enabled: Boolean(workspaceId),
-    queryFn: async () => {
-      const docs = await getWritingDocuments();
-      return serializeWritingListDocuments(docs);
-    },
-  });
+  const documentsQuery = useQuery(writingListQueryOptions(workspaceId));
+  const foldersQuery = useQuery(folderListQueryOptions(workspaceId, "writing"));
+  const documents = documentsQuery.data ?? [];
+  const folders = foldersQuery.data ?? [];
+
+  if (documentsQuery.isPending || foldersQuery.isPending) {
+    return <ListPageLoading />;
+  }
 
   if (!currentFolderId && documents.length === 0 && folders.length === 0) {
     return (

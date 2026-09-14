@@ -45,8 +45,15 @@ import {
   createVocabularyWord,
   updateVocabularyWord,
 } from "@/lib/actions/vocabulary";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { afterEditorHydration } from "@/lib/editor/hydration";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
+import {
+  vocabularyListQueryOptions,
+  vocabularySynonymOptionsQueryOptions,
+  workspaceCustomTagsQueryOptions,
+} from "@/lib/query/options";
+import { queryKeys } from "@/lib/query/keys";
 import {
   parseVocabularyNotes,
   serializeVocabularyNotes,
@@ -106,6 +113,7 @@ export type VocabularyFormInitialData = {
 type VocabularyFormProps = {
   /** When set, Cancel returns here and Save navigates here after persisting. */
   previewHref?: string;
+  workspaceId?: string;
   existingCustomTags?: string[];
   synonymOptions?: VocabularySynonymRef[];
   language?: string;
@@ -184,6 +192,7 @@ function getInitialCustomTags(
 export function VocabularyForm({
   initialData,
   previewHref,
+  workspaceId,
   existingCustomTags,
   synonymOptions = [],
   language = "en",
@@ -192,6 +201,7 @@ export function VocabularyForm({
   onCancel,
 }: VocabularyFormProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const t = useTranslations("vocabulary");
   const tCommon = useTranslations("common");
   const tPos = useTranslations("tags.pos");
@@ -216,15 +226,37 @@ export function VocabularyForm({
       existingCustomTags,
     ),
   );
-  const [customTags, setCustomTags] = useState<string[]>(() =>
+  const [localCustomTags, setLocalCustomTags] = useState<string[]>(() =>
     getInitialCustomTags(existingCustomTags, initialData?.tags),
   );
   const [synonyms, setSynonyms] = useState<VocabularySynonymRef[]>(
     initialData?.synonymRefs ?? [],
   );
-  const [availableSynonyms, setAvailableSynonyms] = useState<
-    VocabularySynonymRef[]
-  >(synonymOptions);
+  const [localSynonyms, setLocalSynonyms] = useState<VocabularySynonymRef[]>(
+    synonymOptions,
+  );
+  const synonymQuery = useQuery({
+    ...vocabularySynonymOptionsQueryOptions(workspaceId ?? ""),
+    enabled: Boolean(workspaceId),
+  });
+  const customTagsQuery = useQuery({
+    ...workspaceCustomTagsQueryOptions(workspaceId ?? ""),
+    enabled: Boolean(workspaceId),
+  });
+  const customTags = uniqueCustomTagNames([
+    ...(customTagsQuery.data ?? existingCustomTags ?? []),
+    ...localCustomTags,
+  ]);
+  const availableSynonyms = useMemo(() => {
+    const merged = new Map<string, VocabularySynonymRef>();
+    for (const item of synonymQuery.data ?? []) {
+      merged.set(item.id, item);
+    }
+    for (const item of localSynonyms) {
+      merged.set(item.id, item);
+    }
+    return Array.from(merged.values());
+  }, [synonymQuery.data, localSynonyms]);
 
   const initialNotesDoc = useMemo(
     () => parseVocabularyNotes(initialData?.notes ?? ""),
@@ -428,17 +460,43 @@ export function VocabularyForm({
 
       if (initialData?.id) {
         await updateVocabularyWord(initialData.id, payload);
+        if (workspaceId) {
+          void queryClient.invalidateQueries({
+            queryKey: queryKeys.vocabulary.all(workspaceId),
+          });
+          void queryClient
+            .prefetchQuery(vocabularyListQueryOptions(workspaceId))
+            .catch(() => undefined);
+        }
         if (onSuccess) {
           onSuccess();
           toast.success(t("updated"));
           // Keep lock true while the modal closes / form unmounts.
           return;
         }
+        try {
+          router.prefetch(previewHref ?? "/vocabulary");
+        } catch {
+          // Prefetch is best-effort.
+        }
         navigateAfterSuccess(router, previewHref ?? "/vocabulary", {
           toast: () => toast.success(t("updated")),
         });
       } else {
         await createVocabularyWord(payload);
+        if (workspaceId) {
+          void queryClient.invalidateQueries({
+            queryKey: queryKeys.vocabulary.all(workspaceId),
+          });
+          void queryClient
+            .prefetchQuery(vocabularyListQueryOptions(workspaceId))
+            .catch(() => undefined);
+        }
+        try {
+          router.prefetch("/vocabulary");
+        } catch {
+          // Prefetch is best-effort.
+        }
         navigateAfterSuccess(router, "/vocabulary", {
           toast: () => toast.success(t("saved")),
         });
@@ -539,8 +597,8 @@ export function VocabularyForm({
                   aria-invalid={isDuplicate || undefined}
                   aria-describedby={
                     isDuplicate ||
-                    wordCheckStatus === "error" ||
-                    isWordBusy
+                      wordCheckStatus === "error" ||
+                      isWordBusy
                       ? "word-duplicate-status"
                       : undefined
                   }
@@ -668,14 +726,14 @@ export function VocabularyForm({
             value={tags}
             onChange={setTags}
             customTags={customTags}
-            onCustomTagsChange={setCustomTags}
+            onCustomTagsChange={setLocalCustomTags}
           />
 
           <SynonymPicker
             value={synonyms}
             onChange={setSynonyms}
             options={availableSynonyms}
-            onOptionsChange={setAvailableSynonyms}
+            onOptionsChange={setLocalSynonyms}
             currentWordId={initialData?.id}
             currentWord={watchedWord}
           />

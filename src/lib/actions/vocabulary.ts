@@ -37,7 +37,7 @@ import {
   type VocabularySynonymRef,
 } from "@/lib/vocabulary/synonyms";
 import { normalizePartOfSpeech, normalizeVocabularyWord } from "@/lib/vocabulary/word-identity";
-import { withDevTiming } from "@/lib/perf/dev-timing";
+import { withTiming } from "@/lib/perf/dev-timing";
 
 /** Drizzle transaction client compatible with db query/mutate APIs. */
 type DbExecutor = Pick<typeof db, "delete" | "insert" | "update" | "query">;
@@ -193,16 +193,6 @@ async function loadSynonymPairsForWord(wordId: string, workspaceId: string) {
         ),
       ),
     );
-}
-
-async function loadSynonymPairsForWorkspace(workspaceId: string) {
-  return db
-    .select({
-      wordId: vocabularySynonyms.wordId,
-      synonymId: vocabularySynonyms.synonymId,
-    })
-    .from(vocabularySynonyms)
-    .where(eq(vocabularySynonyms.workspaceId, workspaceId));
 }
 
 function resolveSynonymsFromPairs(
@@ -369,23 +359,57 @@ export async function checkVocabularyWordExists(
   return { exists: Boolean(id), id };
 }
 
-export async function getVocabularyWords() {
-  return withDevTiming("getVocabularyWords", async () => {
+export async function getVocabularyListWords() {
+  return withTiming("vocabulary.list", async () => {
     const userId = await getCurrentUserId();
     const workspace = await getActiveWorkspace();
 
     if (!workspace) {
-      return {
-        words: [],
-        synonymOptions: [] as VocabularySynonymRef[],
-      };
+      return [];
     }
 
-    const words = await db.query.vocabularyWords.findMany({
+    return db.query.vocabularyWords.findMany({
       where: and(
         eq(vocabularyWords.userId, userId),
         eq(vocabularyWords.workspaceId, workspace.id),
       ),
+      columns: {
+        id: true,
+        word: true,
+        partOfSpeech: true,
+        notes: true,
+        createdAt: true,
+        updatedAt: true,
+      },
+      with: {
+        meanings: {
+          columns: {
+            id: true,
+            meaning: true,
+            isPrimary: true,
+            sortOrder: true,
+          },
+          orderBy: [asc(wordMeanings.sortOrder)],
+        },
+        tags: {
+          columns: { id: true, tag: true },
+        },
+      },
+      orderBy: [desc(vocabularyWords.updatedAt)],
+    });
+  });
+}
+
+export async function getVocabularyWord(id: string) {
+  return withTiming("vocabulary.detail", async () => {
+    const workspace = await getActiveWorkspace();
+
+    if (!workspace) {
+      return null;
+    }
+
+    const word = await db.query.vocabularyWords.findFirst({
+      where: eq(vocabularyWords.id, id),
       with: {
         meanings: {
           orderBy: [asc(wordMeanings.sortOrder)],
@@ -395,77 +419,35 @@ export async function getVocabularyWords() {
         },
         tags: true,
       },
-      orderBy: [desc(vocabularyWords.updatedAt)],
     });
 
-    const [pairs, synonymOptions] = await Promise.all([
-      loadSynonymPairsForWorkspace(workspace.id),
-      listWorkspaceSynonymOptions(workspace.id),
-    ]);
+    if (!word || word.workspaceId !== workspace.id) {
+      return null;
+    }
+
+    const synonyms = await resolveSynonymsForWord(
+      word.id,
+      workspace.id,
+      word.synonyms,
+    );
 
     return {
-      words: words.map((word) => {
-        const synonyms = resolveSynonymsFromPairs(
-          word.id,
-          word.synonyms,
-          pairs,
-          synonymOptions,
-        );
-        return {
-          ...word,
-          synonymRefs: synonyms.linked,
-          unmatchedSynonyms: synonyms.unmatched,
-        };
-      }),
-      synonymOptions,
+      ...word,
+      synonymRefs: synonyms.linked,
+      unmatchedSynonyms: synonyms.unmatched,
     };
   });
 }
 
-export async function getVocabularyWord(id: string) {
-  const workspace = await getActiveWorkspace();
-
-  if (!workspace) {
-    return null;
-  }
-
-  const word = await db.query.vocabularyWords.findFirst({
-    where: eq(vocabularyWords.id, id),
-    with: {
-      meanings: {
-        orderBy: [asc(wordMeanings.sortOrder)],
-      },
-      examples: {
-        orderBy: [asc(wordExamples.sortOrder)],
-      },
-      tags: true,
-    },
-  });
-
-  if (!word || word.workspaceId !== workspace.id) {
-    return null;
-  }
-
-  const synonyms = await resolveSynonymsForWord(
-    word.id,
-    workspace.id,
-    word.synonyms,
-  );
-
-  return {
-    ...word,
-    synonymRefs: synonyms.linked,
-    unmatchedSynonyms: synonyms.unmatched,
-  };
-}
-
 export async function listVocabularySynonymOptions() {
-  const workspace = await getActiveWorkspace();
-  if (!workspace) {
-    return [] as VocabularySynonymRef[];
-  }
+  return withTiming("vocabulary.synonymOptions", async () => {
+    const workspace = await getActiveWorkspace();
+    if (!workspace) {
+      return [] as VocabularySynonymRef[];
+    }
 
-  return listWorkspaceSynonymOptions(workspace.id);
+    return listWorkspaceSynonymOptions(workspace.id);
+  });
 }
 
 export async function createSynonymWord(data: {

@@ -1,9 +1,8 @@
 import { cache } from "react";
-import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
-import { db } from "@/db";
-import { users, type User } from "@/db/schema";
-import { getSession, getCurrentUserId } from "@/lib/auth/session";
+import type { User } from "@/db/schema";
+import { getCurrentUserRecord } from "@/lib/auth/current-user";
+import { getSession } from "@/lib/auth/session";
 import { hasActivePaidPlan } from "@/lib/auth/paid-access";
 import type { BillingState } from "@/lib/stripe/types";
 
@@ -32,42 +31,14 @@ export function hasActiveProSubscription(
 
 export const getCurrentSubscription = cache(
   async (): Promise<SubscriptionSnapshot | null> => {
-    const session = await getSession();
-    if (!session?.user?.id) {
-      return null;
-    }
-
-    const user = await db.query.users.findFirst({
-      where: eq(users.id, session.user.id),
-      columns: {
-        id: true,
-        subscriptionPlan: true,
-        subscriptionStatus: true,
-        stripeCustomerId: true,
-        stripeSubscriptionId: true,
-        stripeCurrentPeriodEnd: true,
-      },
-    });
-
-    return user ?? null;
+    return getCurrentUserRecord();
   },
 );
 
 export async function requireActiveProSubscription() {
-  const userId = await getCurrentUserId();
-  const user = await db.query.users.findFirst({
-    where: eq(users.id, userId),
-    columns: {
-      id: true,
-      subscriptionPlan: true,
-      subscriptionStatus: true,
-      stripeCustomerId: true,
-      stripeSubscriptionId: true,
-      stripeCurrentPeriodEnd: true,
-    },
-  });
+  const user = await getCurrentUserRecord();
 
-  if (!hasActiveProSubscription(user)) {
+  if (!user || !hasActiveProSubscription(user)) {
     throw new ProRequiredError();
   }
 
@@ -87,19 +58,7 @@ export async function requireProApiUser() {
     };
   }
 
-  const user = await db.query.users.findFirst({
-    where: eq(users.id, session.user.id),
-    columns: {
-      id: true,
-      email: true,
-      name: true,
-      subscriptionPlan: true,
-      subscriptionStatus: true,
-      stripeCustomerId: true,
-      stripeSubscriptionId: true,
-      stripeCurrentPeriodEnd: true,
-    },
-  });
+  const user = await getCurrentUserRecord();
 
   if (!user) {
     return {

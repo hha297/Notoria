@@ -7,8 +7,6 @@ import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getFlashcardWords } from "@/lib/actions/flashcards";
 import { getActiveWorkspace } from "@/lib/workspace";
 
-export const dynamic = "force-dynamic";
-
 export default async function FillInBlankPage() {
   const t = await getTranslations("exercises");
   const workspace = await getActiveWorkspace();

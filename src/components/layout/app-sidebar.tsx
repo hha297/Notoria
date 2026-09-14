@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import {
   BookOpen,
   Dumbbell,
@@ -12,6 +12,7 @@ import {
   PenLine,
   Video,
 } from "lucide-react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { Logo, LogoWordmark } from "@/components/ui/logo";
 import { useProAccess } from "@/components/billing/pro-access-provider";
@@ -32,6 +33,7 @@ import {
 } from "@/components/ui/sidebar";
 import { UserButton } from "@/components/layout/user-button";
 import { SidebarProCta } from "@/components/layout/sidebar-pro-cta";
+import { prefetchDashboardDestination } from "@/lib/query/prefetch";
 import { cn } from "@/lib/utils";
 
 const navItems = [
@@ -49,6 +51,7 @@ type AppSidebarProps = {
   userEmail: string;
   userImage?: string | null;
   isPro?: boolean;
+  workspaceId?: string | null;
 };
 
 export function AppSidebar({
@@ -56,8 +59,11 @@ export function AppSidebar({
   userEmail,
   userImage,
   isPro = false,
+  workspaceId = null,
 }: AppSidebarProps) {
   const pathname = usePathname();
+  const router = useRouter();
+  const queryClient = useQueryClient();
   const t = useTranslations("nav");
   const { isMobile, setOpenMobile } = useSidebar();
   const { hasProAccess, openUpgrade } = useProAccess();
@@ -68,6 +74,17 @@ export function AppSidebar({
     }
   }
 
+  function prefetchItem(href: string) {
+    try {
+      router.prefetch(href);
+    } catch {
+      // Prefetch is best-effort.
+    }
+    void prefetchDashboardDestination(queryClient, href, workspaceId);
+  }
+
+  const activePath = pathname;
+
   return (
     <Sidebar
       collapsible="icon"
@@ -77,6 +94,8 @@ export function AppSidebar({
         <Link
           href="/"
           onClick={closeMobileSidebar}
+          onPointerEnter={() => prefetchItem("/")}
+          onFocus={() => prefetchItem("/")}
           className={cn(
             "flex items-center rounded-md outline-none transition-opacity hover:opacity-90",
             "group-data-[collapsible=icon]:justify-center",
@@ -99,6 +118,11 @@ export function AppSidebar({
             <SidebarMenu>
               {navItems.map((item) => {
                 const locked = "pro" in item && item.pro && !hasProAccess;
+                const isActive =
+                  !locked &&
+                  (item.href === "/"
+                    ? activePath === "/"
+                    : activePath.startsWith(item.href));
                 return (
                   <SidebarMenuItem key={item.titleKey} className="py-0.5">
                     <SidebarMenuButton
@@ -112,15 +136,15 @@ export function AppSidebar({
                             }}
                           />
                         ) : (
-                          <Link href={item.href} onClick={closeMobileSidebar} />
+                          <Link
+                            href={item.href}
+                            onClick={closeMobileSidebar}
+                            onPointerEnter={() => prefetchItem(item.href)}
+                            onFocus={() => prefetchItem(item.href)}
+                          />
                         )
                       }
-                      isActive={
-                        !locked &&
-                        (item.href === "/"
-                          ? pathname === "/"
-                          : pathname.startsWith(item.href))
-                      }
+                      isActive={isActive}
                       tooltip={t(item.titleKey)}
                       className={cn(
                         "text-sidebar-foreground transition-colors",

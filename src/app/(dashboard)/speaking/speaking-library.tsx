@@ -4,7 +4,6 @@ import { PageShell } from "@/components/layout/page-shell";
 import { SpeakingLockedPage } from "@/components/speaking/speaking-locked";
 import { SpeakingView } from "@/components/speaking/speaking-view";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
-import { getSpeakingSessions } from "@/lib/actions/speaking";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { getActiveWorkspace } from "@/lib/workspace";
 
@@ -33,7 +32,5 @@ export async function SpeakingLibrary() {
     return <SpeakingLockedPage />;
   }
 
-  const sessions = await getSpeakingSessions();
-
-  return <SpeakingView sessions={sessions} />;
+  return <SpeakingView workspaceId={workspace.id} />;
 }

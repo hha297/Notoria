@@ -33,7 +33,6 @@ import { VocabularyRowActions } from "@/components/vocabulary/vocabulary-row-act
 import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
 import { useInvalidateWorkspaceQueries } from "@/hooks/use-invalidate-workspace-queries";
 import type { VocabularyExportSourceWord } from "@/lib/vocabulary/export/build-document";
-import { vocabularyNotesToPlainText } from "@/lib/vocabulary/notes-content";
 import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
 import {
   isMultiFilterActive,
@@ -76,8 +75,6 @@ type VocabularyTableProps = {
   workspaceId: string;
   workspaceName: string;
   language: string;
-  existingCustomTags: string[];
-  synonymOptions: VocabularySynonymRef[];
 };
 
 const GROUP_PAGE_SIZE = 20;
@@ -175,19 +172,6 @@ function MeaningCell({ word }: { word: VocabularyWordRow }) {
       ) : null}
     </p>
   );
-}
-
-function toVocabularyFormInitialData(word: VocabularyWordRow) {
-  return {
-    id: word.id,
-    word: word.word,
-    partOfSpeech: word.partOfSpeech,
-    notes: word.notes,
-    synonymRefs: word.synonymRefs,
-    meanings: word.meanings,
-    examples: word.examples,
-    tags: word.tags.map((tag) => ({ tag: tag.tag })),
-  };
 }
 
 function VocabularyPosGroup({
@@ -417,8 +401,6 @@ export function VocabularyTable({
   workspaceId,
   workspaceName,
   language,
-  existingCustomTags,
-  synonymOptions,
 }: VocabularyTableProps) {
   const t = useTranslations("vocabulary");
   const tTags = useTranslations("tags");
@@ -460,14 +442,14 @@ export function VocabularyTable({
       })),
       ...(customTagOptions.length > 0
         ? [
-            {
-              label: tTags("groups.custom"),
-              options: customTagOptions.map((tag) => ({
-                value: tag,
-                label: getCustomTagName(tag),
-              })),
-            },
-          ]
+          {
+            label: tTags("groups.custom"),
+            options: customTagOptions.map((tag) => ({
+              value: tag,
+              label: getCustomTagName(tag),
+            })),
+          },
+        ]
         : []),
     ],
     [customTagOptions, tTags],
@@ -573,7 +555,7 @@ export function VocabularyTable({
       tagLabels: word.tags.map((tag) =>
         getTagLabel(tag.tag, (key) => tTags(key)),
       ),
-      notes: vocabularyNotesToPlainText(word.notes),
+      notes: word.notes ?? "",
       updatedAtLabel: format(new Date(word.updatedAt), "yyyy-MM-dd"),
     }));
   }, [filteredWords, tPos, tTags]);
@@ -780,11 +762,8 @@ export function VocabularyTable({
             if (!open) setEditingWord(null);
           }}
           language={language}
-          existingCustomTags={existingCustomTags}
-          synonymOptions={synonymOptions}
-          initialData={
-            editingWord ? toVocabularyFormInitialData(editingWord) : null
-          }
+          workspaceId={workspaceId}
+          wordId={editingWord?.id ?? null}
           onSuccess={() => {
             setEditingWord(null);
             invalidateVocabulary();

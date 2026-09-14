@@ -1,3 +1,5 @@
+import type { NoteBlock } from "@/lib/vocabulary/export/note-blocks";
+
 export type VocabularyExportFormat = "pdf" | "csv" | "docx";
 
 export type VocabularyExportOptions = {
@@ -11,6 +13,10 @@ export type VocabularyExportOptions = {
 export type VocabularyExportLabels = {
   documentHeading: string;
   workspaceLabel: string;
+  notesHeading: string;
+  wordCount: string;
+  uncategorizedPos?: string;
+  formatWordCount?: (count: number) => string;
   columns: {
     word: string;
     partOfSpeech: string;
@@ -27,6 +33,7 @@ export type VocabularyExportRow = {
   meanings: string[];
   tags: string[];
   notes: string;
+  noteBlocks: NoteBlock[];
   updatedAt: string;
 };
 

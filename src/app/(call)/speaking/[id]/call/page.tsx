@@ -6,7 +6,6 @@ import { getSpeakingSession } from "@/lib/actions/speaking";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { isSpeakingJoinable } from "@/lib/speaking/types";
 
-export const dynamic = "force-dynamic";
 export const maxDuration = 300;
 
 export async function generateMetadata() {

@@ -1,16 +1,17 @@
 "use server";
 
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { grammarNotes } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
 import { resolveFolderId } from "@/lib/actions/folders";
 import { getActiveWorkspace, requireActiveWorkspace } from "@/lib/workspace";
+import { withTiming } from "@/lib/perf/dev-timing";
 import {
   parseTheoryContent,
   serializeTheoryContent,
-  toTheoryListItem,
+  toTheoryListItemFromMeta,
   type TheoryListItem,
 } from "@/lib/theory/content";
 import { toTheoryExerciseCard } from "@/lib/theory-exercises/cards";
@@ -61,16 +62,45 @@ async function loadTheoryNoteRows() {
   });
 }
 
-/** Lean library rows — full content JSONB is parsed server-side, not shipped. */
+/** Lean library rows — TipTap `doc` stays in Postgres; only list metadata is loaded. */
 export async function getTheoryNotes(): Promise<TheoryListItem[]> {
-  const notes = await loadTheoryNoteRows();
-  return notes.map((note) => toTheoryListItem(note));
+  return withTiming("theory.list", async () => {
+    const userId = await getCurrentUserId();
+    const workspace = await getActiveWorkspace();
+
+    if (!workspace) {
+      return [];
+    }
+
+    const notes = await db
+      .select({
+        id: grammarNotes.id,
+        title: grammarNotes.title,
+        folderId: grammarNotes.folderId,
+        updatedAt: grammarNotes.updatedAt,
+        category: sql<string>`coalesce(${grammarNotes.content}->>'category', 'grammar')`,
+        description: sql<string>`coalesce(${grammarNotes.content}->>'description', '')`,
+        docBytes: sql<number>`octet_length(coalesce(${grammarNotes.content}->'doc', '{}'::jsonb)::text)`,
+      })
+      .from(grammarNotes)
+      .where(
+        and(
+          eq(grammarNotes.userId, userId),
+          eq(grammarNotes.workspaceId, workspace.id),
+        ),
+      )
+      .orderBy(desc(grammarNotes.updatedAt));
+
+    return notes.map((note) => toTheoryListItemFromMeta(note));
+  });
 }
 
 /** Lean exercise-studio cards derived from the same notes without client content. */
 export async function getTheoryExerciseCards(): Promise<TheoryExerciseCardItem[]> {
-  const notes = await loadTheoryNoteRows();
-  return notes.map((note) => toTheoryExerciseCard(note));
+  return withTiming("theory.exerciseCards", async () => {
+    const notes = await loadTheoryNoteRows();
+    return notes.map((note) => toTheoryExerciseCard(note));
+  });
 }
 
 export async function getTheoryNote(id: string) {

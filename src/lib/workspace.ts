@@ -4,39 +4,42 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { workspaces } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
+import { withTiming } from "@/lib/perf/dev-timing";
 
 export const WORKSPACE_COOKIE = "notoria-workspace";
 
 export const getUserWorkspaces = cache(async () => {
-  const userId = await getCurrentUserId();
+  return withTiming("workspace.list", async () => {
+    const userId = await getCurrentUserId();
 
-  return db.query.workspaces.findMany({
-    where: eq(workspaces.userId, userId),
-    orderBy: (table, { asc }) => [asc(table.name)],
+    return db.query.workspaces.findMany({
+      where: eq(workspaces.userId, userId),
+      orderBy: (table, { asc }) => [asc(table.name)],
+    });
   });
 });
 
 export const getActiveWorkspace = cache(async () => {
-  const userId = await getCurrentUserId();
-  const cookieStore = await cookies();
-  const workspaceId = cookieStore.get(WORKSPACE_COOKIE)?.value;
+  return withTiming("workspace.active", async () => {
+    const cookieStore = await cookies();
+    const workspaceId = cookieStore.get(WORKSPACE_COOKIE)?.value;
+    const list = await getUserWorkspaces();
 
-  if (workspaceId) {
-    const workspace = await db.query.workspaces.findFirst({
-      where: eq(workspaces.id, workspaceId),
-    });
-
-    if (workspace && workspace.userId === userId) {
-      return workspace;
+    if (workspaceId) {
+      const match = list.find((workspace) => workspace.id === workspaceId);
+      if (match) {
+        return match;
+      }
     }
-  }
 
-  const firstWorkspace = await db.query.workspaces.findFirst({
-    where: eq(workspaces.userId, userId),
-    orderBy: (table, { asc }) => [asc(table.createdAt)],
+    if (list.length === 0) {
+      return null;
+    }
+
+    return list.reduce((oldest, workspace) =>
+      workspace.createdAt < oldest.createdAt ? workspace : oldest,
+    );
   });
-
-  return firstWorkspace ?? null;
 });
 
 export async function requireActiveWorkspace() {

@@ -14,14 +14,14 @@ type VocabularyListWord = {
     isPrimary?: boolean;
     sortOrder: number;
   }>;
-  examples: Array<{
+  examples?: Array<{
     id: string;
     sentence: string;
     meaning?: string | null;
     notes?: string | null;
     sortOrder: number;
   }>;
-  synonymRefs: VocabularySynonymRef[];
+  synonymRefs?: VocabularySynonymRef[];
   tags: Array<{ id: string; tag: string }>;
 };
 
@@ -45,14 +45,29 @@ export function serializeVocabularyListWords(
       isPrimary: meaning.isPrimary,
       sortOrder: meaning.sortOrder,
     })),
-    examples: word.examples.map((example) => ({
+    examples: (word.examples ?? []).map((example) => ({
       id: example.id,
       sentence: example.sentence,
       meaning: example.meaning,
       notes: example.notes,
       sortOrder: example.sortOrder,
     })),
-    synonymRefs: word.synonymRefs,
+    synonymRefs: word.synonymRefs ?? [],
     tags: word.tags.map((tag) => ({ id: tag.id, tag: tag.tag })),
   }));
+}
+
+export function serializeVocabularyDetailWord(word: {
+  id: string;
+  word: string;
+  partOfSpeech: string | null;
+  notes?: string | null;
+  updatedAt: Date | string;
+  createdAt: Date | string;
+  meanings: VocabularyListWord["meanings"];
+  examples: NonNullable<VocabularyListWord["examples"]>;
+  synonymRefs: VocabularySynonymRef[];
+  tags: Array<{ id: string; tag: string }>;
+}): VocabularyWordRow {
+  return serializeVocabularyListWords([word])[0]!;
 }

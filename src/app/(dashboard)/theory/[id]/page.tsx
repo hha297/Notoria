@@ -7,7 +7,6 @@ import { TheoryReader } from "@/components/theory/theory-reader";
 import { getTheoryNote } from "@/lib/actions/theory";
 import { folderHref } from "@/lib/folders/paths";
 
-export const dynamic = "force-dynamic";
 
 export default async function TheoryNotePage({
   params,

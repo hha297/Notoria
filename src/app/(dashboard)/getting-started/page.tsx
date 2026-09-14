@@ -4,7 +4,6 @@ import { getTranslations } from "next-intl/server";
 import { GettingStartedGuide } from "@/components/getting-started/getting-started-guide";
 import { PageShell } from "@/components/layout/page-shell";
 
-export const dynamic = "force-dynamic";
 
 export default async function GettingStartedPage() {
   const t = await getTranslations("gettingStarted");

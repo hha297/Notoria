@@ -192,3 +192,31 @@ export function toTheoryListItem(note: {
         : note.updatedAt.toISOString(),
   };
 }
+
+function readingMinutesFromDocBytes(docBytes: number) {
+  return Math.max(1, Math.round(Math.max(0, docBytes) / 900));
+}
+
+/** List rows from jsonb metadata — the TipTap `doc` is never loaded into Node. */
+export function toTheoryListItemFromMeta(note: {
+  id: string;
+  title: string;
+  category: string | null;
+  description: string | null;
+  docBytes: number | string | null;
+  folderId?: string | null;
+  updatedAt: Date | string;
+}): TheoryListItem {
+  return {
+    id: note.id,
+    title: note.title,
+    description: descriptionToPlainText(note.description),
+    category: normalizeCategory(note.category),
+    folderId: note.folderId ?? null,
+    readingMinutes: readingMinutesFromDocBytes(Number(note.docBytes ?? 0)),
+    updatedAt:
+      typeof note.updatedAt === "string"
+        ? note.updatedAt
+        : note.updatedAt.toISOString(),
+  };
+}

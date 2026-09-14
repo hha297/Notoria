@@ -1,18 +1,19 @@
 "use server";
 
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { exercises } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
 import { resolveFolderId } from "@/lib/actions/folders";
 import { requireActiveWorkspace, getActiveWorkspace } from "@/lib/workspace";
+import { withTiming } from "@/lib/perf/dev-timing";
 import {
   exerciseFormSchema,
   type ExerciseFormValues,
 } from "@/schemas/exercise";
 import {
-  getWritingListMeta,
+  writingListMetaFromParts,
   type WritingListMeta,
 } from "@/lib/writing/content";
 
@@ -40,40 +41,62 @@ function revalidateWriting(id?: string) {
 }
 
 export async function getWritingDocuments(): Promise<WritingDocumentListItem[]> {
-  const userId = await getCurrentUserId();
-  const workspace = await getActiveWorkspace();
+  return withTiming("writing.list", async () => {
+    const userId = await getCurrentUserId();
+    const workspace = await getActiveWorkspace();
 
-  if (!workspace) {
-    return [];
-  }
+    if (!workspace) {
+      return [];
+    }
 
-  // Content is read server-side only to derive lean listMeta, then discarded.
-  const documents = await db.query.exercises.findMany({
-    where: and(
-      eq(exercises.userId, userId),
-      eq(exercises.workspaceId, workspace.id),
-      eq(exercises.type, "WRITING"),
-    ),
-    columns: {
-      id: true,
-      title: true,
-      description: true,
-      type: true,
-      folderId: true,
-      createdAt: true,
-      updatedAt: true,
-      userId: true,
-      workspaceId: true,
-      content: true,
-    },
-    orderBy: [desc(exercises.updatedAt)],
+    const documents = await db
+      .select({
+        id: exercises.id,
+        title: exercises.title,
+        description: exercises.description,
+        folderId: exercises.folderId,
+        createdAt: exercises.createdAt,
+        updatedAt: exercises.updatedAt,
+        userId: exercises.userId,
+        workspaceId: exercises.workspaceId,
+        mode: sql<string>`coalesce(${exercises.content}->>'mode', 'question_set')`,
+        sectionCount: sql<number>`coalesce(jsonb_array_length(${exercises.content}->'sections'), 0)`,
+        questionCount: sql<number>`coalesce((
+          SELECT sum(jsonb_array_length(coalesce(section->'questions', '[]'::jsonb)))
+          FROM jsonb_array_elements(
+            coalesce(${exercises.content}->'sections', '[]'::jsonb)
+          ) AS section
+        ), 0)`,
+        meta: sql<unknown>`coalesce(${exercises.content}->'meta', '{}'::jsonb)`,
+      })
+      .from(exercises)
+      .where(
+        and(
+          eq(exercises.userId, userId),
+          eq(exercises.workspaceId, workspace.id),
+          eq(exercises.type, "WRITING"),
+        ),
+      )
+      .orderBy(desc(exercises.updatedAt));
+
+    return documents.map((document) => ({
+      id: document.id,
+      title: document.title,
+      description: document.description,
+      type: "WRITING" as const,
+      folderId: document.folderId,
+      createdAt: document.createdAt,
+      updatedAt: document.updatedAt,
+      userId: document.userId,
+      workspaceId: document.workspaceId,
+      listMeta: writingListMetaFromParts({
+        mode: document.mode,
+        sectionCount: document.sectionCount,
+        questionCount: document.questionCount,
+        meta: document.meta,
+      }),
+    }));
   });
-
-  return documents.map(({ content, ...document }) => ({
-    ...document,
-    type: "WRITING" as const,
-    listMeta: getWritingListMeta(content),
-  }));
 }
 
 export async function getWritingDocument(id: string) {

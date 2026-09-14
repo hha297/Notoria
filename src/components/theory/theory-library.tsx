@@ -27,12 +27,14 @@ import {
 import { DescriptionContent } from "@/components/form/description-content";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
-import { useHydratedQuery } from "@/hooks/use-workspace-list-query";
-import { getTheoryNotes } from "@/lib/actions/theory";
+import { ListPageLoading } from "@/components/layout/page-loading";
+import { useQuery } from "@tanstack/react-query";
 import { sectionCreateHref } from "@/lib/folders/paths";
 import { childrenOf, folderMatchesQuery, itemsInFolder } from "@/lib/folders/tree";
-import type { FolderListItem } from "@/lib/folders/types";
-import { queryKeys } from "@/lib/query/keys";
+import {
+  folderListQueryOptions,
+  theoryListQueryOptions,
+} from "@/lib/query/options";
 import {
   THEORY_CATEGORIES,
   isKnownTheoryCategory,
@@ -48,10 +50,9 @@ import {
 import { cn } from "@/lib/utils";
 
 const EASE = [0.25, 0.1, 0.25, 1] as const;
+const EMPTY_THEORY_NOTES: TheoryListItem[] = [];
 
 type TheoryLibraryProps = {
-  notes: TheoryListItem[];
-  folders: FolderListItem[];
   currentFolderId: string | null;
   workspaceId: string;
 };
@@ -66,8 +67,6 @@ function categoryLabel(
 }
 
 export function TheoryLibrary({
-  notes: initialNotes,
-  folders,
   currentFolderId,
   workspaceId,
 }: TheoryLibraryProps) {
@@ -76,12 +75,11 @@ export function TheoryLibrary({
   const [search, setSearch] = useState("");
   const [categories, setCategories] = useState<MultiFilterValue>([]);
   const createHref = sectionCreateHref("theory", currentFolderId);
-  const { data: notes = initialNotes } = useHydratedQuery({
-    queryKey: queryKeys.theory.list(workspaceId),
-    initialData: initialNotes,
-    enabled: Boolean(workspaceId),
-    queryFn: () => getTheoryNotes(),
-  });
+  const notesQuery = useQuery(theoryListQueryOptions(workspaceId));
+  const foldersQuery = useQuery(folderListQueryOptions(workspaceId, "theory"));
+  const notes = notesQuery.data ?? EMPTY_THEORY_NOTES;
+  const folders = foldersQuery.data ?? [];
+  const isLoading = notesQuery.isPending || foldersQuery.isPending;
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -107,6 +105,10 @@ export function TheoryLibrary({
     childFolders.length === 0 &&
     itemsInFolder(notes, currentFolderId).length === 0;
   const hasFilters = search.trim() !== "" || isMultiFilterActive(categories);
+
+  if (isLoading) {
+    return <ListPageLoading />;
+  }
 
   return (
     <PageShell>

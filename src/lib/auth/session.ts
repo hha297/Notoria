@@ -1,7 +1,10 @@
 import { cache } from "react";
 import { auth } from "@/auth";
+import { withTiming } from "@/lib/perf/dev-timing";
 
-export const getSession = cache(async () => auth());
+export const getSession = cache(async () =>
+  withTiming("auth.session", () => auth()),
+);
 
 export const getCurrentUserId = cache(async (): Promise<string> => {
   const session = await getSession();

@@ -1,31 +1,37 @@
 import {
+  BorderStyle,
   Document,
   HeadingLevel,
   Packer,
   Paragraph,
+  ShadingType,
   Table,
   TableCell,
   TableRow,
   TextRun,
+  VerticalAlign,
   WidthType,
-  BorderStyle,
-  ShadingType,
 } from "docx";
+import { joinMeanings, joinTags } from "@/lib/vocabulary/export/build-document";
+import type {
+  ExportTextRun,
+  NoteBlock,
+} from "@/lib/vocabulary/export/note-blocks";
 import {
-  joinMeanings,
-  joinTags,
-  visibleColumns,
-} from "@/lib/vocabulary/export/build-document";
+  reportProgress,
+  yieldToMain,
+  type VocabularyExportProgressHandler,
+} from "@/lib/vocabulary/export/progress";
 import type {
   VocabularyExportDocument,
   VocabularyExportLabels,
   VocabularyExportOptions,
   VocabularyExportRow,
 } from "@/lib/vocabulary/export/types";
+import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
 
 const FONT_SANS = "Chakra Petch";
-
-type ColumnKey = "word" | "partOfSpeech" | "meanings" | "tags" | "notes" | "updated";
+const YIELD_EVERY = 30;
 
 const thinBorder = {
   style: BorderStyle.SINGLE,
@@ -40,119 +46,296 @@ const borders = {
   right: thinBorder,
 };
 
-function headerCell(text: string, width: number) {
-  return new TableCell({
-    borders,
-    width: { size: width, type: WidthType.PERCENTAGE },
-    shading: { type: ShadingType.CLEAR, fill: "F3F1F7" },
-    children: [
-      new Paragraph({
-        children: [
-          new TextRun({
-            text,
-            font: FONT_SANS,
-            bold: true,
-            size: 16,
-            color: "6B6680",
-            allCaps: true,
-          }),
-        ],
-      }),
-    ],
+function txt(value: string) {
+  return sanitizeExportText(value);
+}
+
+function run(
+  text: string,
+  opts: {
+    bold?: boolean;
+    italics?: boolean;
+    size?: number;
+    color?: string;
+  } = {},
+) {
+  return new TextRun({
+    text: txt(text),
+    font: FONT_SANS,
+    bold: opts.bold,
+    italics: opts.italics,
+    size: opts.size ?? 20,
+    color: opts.color,
   });
 }
 
-function bodyCell(text: string, width: number, bold = false) {
-  return new TableCell({
-    borders,
-    width: { size: width, type: WidthType.PERCENTAGE },
-    children: [
-      new Paragraph({
-        children: [
-          new TextRun({
-            text,
-            font: FONT_SANS,
-            bold,
-            size: 18,
-          }),
-        ],
+function runsFromExport(
+  items: ExportTextRun[],
+  size: number,
+  extras: { bold?: boolean; color?: string } = {},
+) {
+  const children = items
+    .map((item) =>
+      run(item.text, {
+        bold: extras.bold || item.bold,
+        italics: item.italic,
+        size,
+        color: extras.color,
       }),
-    ],
+    )
+    .filter((item) => item);
+  return children.length ? children : [run(" ")];
+}
+
+function paragraphFromRuns(
+  items: ExportTextRun[],
+  opts: {
+    size?: number;
+    bold?: boolean;
+    color?: string;
+    after?: number;
+    before?: number;
+    heading?: (typeof HeadingLevel)[keyof typeof HeadingLevel];
+    indent?: number;
+  } = {},
+) {
+  return new Paragraph({
+    heading: opts.heading,
+    spacing: {
+      after: opts.after ?? 80,
+      before: opts.before ?? 0,
+      line: 276,
+    },
+    indent: opts.indent ? { left: opts.indent } : undefined,
+    children: runsFromExport(items, opts.size ?? 20, {
+      bold: opts.bold,
+      color: opts.color,
+    }),
   });
 }
 
-function cellValue(row: VocabularyExportRow, key: ColumnKey): string {
-  switch (key) {
-    case "word":
-      return row.word;
-    case "partOfSpeech":
-      return row.partOfSpeech;
-    case "meanings":
-      return joinMeanings(row.meanings);
-    case "tags":
-      return joinTags(row.tags, ", ");
-    case "notes":
-      return row.notes || "—";
-    case "updated":
-      return row.updatedAt;
+function nestedTable(rows: ExportTextRun[][][]): Table {
+  const colCount = Math.max(1, ...rows.map((row) => row.length));
+  const colWidth = Math.floor(100 / colCount);
+
+  return new Table({
+    width: { size: 100, type: WidthType.PERCENTAGE },
+    rows: rows.map(
+      (row, rowIndex) =>
+        new TableRow({
+          children: Array.from({ length: colCount }, (_, cellIndex) => {
+            const cell = row[cellIndex] ?? [];
+            return new TableCell({
+              borders,
+              width: { size: colWidth, type: WidthType.PERCENTAGE },
+              shading:
+                rowIndex === 0
+                  ? { type: ShadingType.CLEAR, fill: "F3F1F7" }
+                  : undefined,
+              margins: { top: 40, bottom: 40, left: 60, right: 60 },
+              verticalAlign: VerticalAlign.TOP,
+              children: [
+                paragraphFromRuns(cell.length ? cell : [{ text: " " }], {
+                  size: 16,
+                  bold: rowIndex === 0,
+                  color: rowIndex === 0 ? "4D4860" : undefined,
+                  after: 0,
+                }),
+              ],
+            });
+          }),
+        }),
+    ),
+  });
+}
+
+function noteChildren(blocks: NoteBlock[]): (Paragraph | Table)[] {
+  const children: (Paragraph | Table)[] = [];
+
+  for (const block of blocks) {
+    if (block.type === "heading") {
+      children.push(
+        paragraphFromRuns(block.runs, {
+          size: block.level <= 1 ? 22 : block.level === 2 ? 20 : 18,
+          bold: true,
+          after: 80,
+          before: 80,
+        }),
+      );
+      continue;
+    }
+    if (block.type === "paragraph") {
+      children.push(paragraphFromRuns(block.runs, { size: 18, after: 80 }));
+      continue;
+    }
+    if (block.type === "code") {
+      children.push(
+        paragraphFromRuns([{ text: block.text }], {
+          size: 16,
+          color: "3D3850",
+          after: 80,
+        }),
+      );
+      continue;
+    }
+    if (block.type === "rule") {
+      children.push(
+        new Paragraph({
+          spacing: { after: 120, before: 80 },
+          border: {
+            bottom: { style: BorderStyle.SINGLE, size: 6, color: "D5D0E0" },
+          },
+          children: [run(" ")],
+        }),
+      );
+      continue;
+    }
+    if (block.type === "table") {
+      children.push(nestedTable(block.rows));
+      children.push(
+        new Paragraph({ spacing: { after: 120 }, children: [run(" ")] }),
+      );
+      continue;
+    }
+    block.items.forEach((item, index) => {
+      const marker = block.ordered ? `${index + 1}.  ` : "•  ";
+      children.push(
+        paragraphFromRuns([{ text: marker }, ...item], {
+          size: 18,
+          after: 40,
+          indent: 120,
+        }),
+      );
+    });
   }
+
+  return children;
 }
 
-function columnWidth(key: ColumnKey, columns: ReturnType<typeof visibleColumns>) {
-  const widths: Record<ColumnKey, number> = {
-    word: 16,
-    partOfSpeech: 14,
-    meanings: 28,
-    tags: 16,
-    notes: 14,
-    updated: 12,
-  };
-  const active = (Object.keys(widths) as ColumnKey[]).filter((k) => columns[k]);
-  const total = active.reduce((sum, k) => sum + widths[k], 0);
-  return Math.round((widths[key] / total) * 100);
+function metaLine(row: VocabularyExportRow, options: VocabularyExportOptions) {
+  const parts: string[] = [];
+  if (options.includePartOfSpeech && row.partOfSpeech.trim()) {
+    parts.push(row.partOfSpeech.trim());
+  }
+  if (options.includeTags) {
+    const tags = joinTags(row.tags);
+    if (tags) parts.push(tags);
+  }
+  if (options.includeLastUpdated && row.updatedAt.trim()) {
+    parts.push(row.updatedAt.trim());
+  }
+  return parts.join("   ·   ");
 }
 
 export async function generateVocabularyDocxBlob(
   documentModel: VocabularyExportDocument,
   labels: VocabularyExportLabels,
   options: VocabularyExportOptions,
+  onProgress?: VocabularyExportProgressHandler,
 ): Promise<Blob> {
-  const columns = visibleColumns(options);
-  const order: ColumnKey[] = (
-    ["word", "partOfSpeech", "meanings", "tags", "notes", "updated"] as const
-  ).filter((key) => columns[key]);
+  const children: (Paragraph | Table)[] = [
+    new Paragraph({
+      heading: HeadingLevel.HEADING_1,
+      spacing: { after: 80 },
+      children: [run(labels.documentHeading, { bold: true, size: 36 })],
+    }),
+  ];
 
-  const headerLabels: Record<ColumnKey, string> = {
-    word: labels.columns.word,
-    partOfSpeech: labels.columns.partOfSpeech,
-    meanings: labels.columns.meanings,
-    tags: labels.columns.tags,
-    notes: labels.columns.notes,
-    updated: labels.columns.updated,
-  };
-
-  const table = new Table({
-    width: { size: 100, type: WidthType.PERCENTAGE },
-    rows: [
-      new TableRow({
-        tableHeader: true,
-        children: order.map((key) =>
-          headerCell(headerLabels[key], columnWidth(key, columns)),
-        ),
-      }),
-      ...documentModel.rows.map(
-        (row) =>
-          new TableRow({
-            children: order.map((key) =>
-              bodyCell(
-                cellValue(row, key),
-                columnWidth(key, columns),
-                key === "word",
-              ),
-            ),
+  if (documentModel.workspaceName.trim()) {
+    children.push(
+      new Paragraph({
+        spacing: { after: 40 },
+        children: [
+          run(`${labels.workspaceLabel}: ${documentModel.workspaceName}`, {
+            size: 18,
+            color: "6B6680",
           }),
-      ),
-    ],
+        ],
+      }),
+    );
+  }
+
+  children.push(
+    new Paragraph({
+      spacing: { after: 280 },
+      children: [run(labels.wordCount, { size: 18, color: "6B6680" })],
+    }),
+  );
+
+  for (let index = 0; index < documentModel.rows.length; index += 1) {
+    const row = documentModel.rows[index]!;
+    const meanings = joinMeanings(row.meanings);
+    const meta = metaLine(row, options);
+
+    children.push(
+      new Paragraph({
+        heading: HeadingLevel.HEADING_2,
+        spacing: { before: index === 0 ? 80 : 200, after: 40 },
+        keepNext: true,
+        border:
+          index === 0
+            ? undefined
+            : {
+                top: {
+                  style: BorderStyle.SINGLE,
+                  size: 4,
+                  color: "E6E1EE",
+                  space: 12,
+                },
+              },
+        children: [run(row.word || "—", { bold: true, size: 26 })],
+      }),
+    );
+
+    if (meta) {
+      children.push(
+        new Paragraph({
+          spacing: { after: 40 },
+          children: [run(meta, { size: 16, color: "6B6680" })],
+        }),
+      );
+    }
+
+    if (meanings) {
+      children.push(
+        new Paragraph({
+          spacing: {
+            after: options.includeNotes && row.noteBlocks.length ? 80 : 40,
+          },
+          children: [run(meanings, { size: 20 })],
+        }),
+      );
+    }
+
+    if (options.includeNotes && row.noteBlocks.length) {
+      children.push(
+        new Paragraph({
+          spacing: { after: 60, before: 40 },
+          children: [
+            run(labels.notesHeading, { bold: true, size: 16, color: "6B6680" }),
+          ],
+        }),
+      );
+      children.push(...noteChildren(row.noteBlocks));
+    }
+
+    if (
+      (index + 1) % YIELD_EVERY === 0 ||
+      index + 1 === documentModel.rows.length
+    ) {
+      reportProgress(onProgress, {
+        phase: "generating",
+        current: index + 1,
+        total: documentModel.rows.length,
+      });
+      await yieldToMain();
+    }
+  }
+
+  reportProgress(onProgress, {
+    phase: "saving",
+    current: documentModel.rows.length,
+    total: documentModel.rows.length,
   });
 
   const doc = new Document({
@@ -170,32 +353,7 @@ export async function generateVocabularyDocxBlob(
             },
           },
         },
-        children: [
-          new Paragraph({
-            heading: HeadingLevel.HEADING_1,
-            spacing: { after: 80 },
-            children: [
-              new TextRun({
-                text: labels.documentHeading,
-                font: FONT_SANS,
-                bold: true,
-                size: 32,
-              }),
-            ],
-          }),
-          new Paragraph({
-            spacing: { after: 240 },
-            children: [
-              new TextRun({
-                text: `${labels.workspaceLabel}: ${documentModel.workspaceName || "—"}`,
-                font: FONT_SANS,
-                size: 20,
-                color: "6B6680",
-              }),
-            ],
-          }),
-          table,
-        ],
+        children,
       },
     ],
   });

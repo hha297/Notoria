@@ -7,7 +7,6 @@ import { WritingPreview } from "@/components/writing/writing-preview";
 import { getWritingDocument } from "@/lib/actions/writing";
 import { folderHref } from "@/lib/folders/paths";
 
-export const dynamic = "force-dynamic";
 
 export default async function WritingDocumentPage({
   params,

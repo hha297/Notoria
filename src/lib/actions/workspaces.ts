@@ -375,24 +375,25 @@ export async function getActiveWorkspaceCustomTags(): Promise<string[]> {
   const workspace = await getActiveWorkspace();
   if (!workspace) return [];
 
-  const stored = await db.query.workspaceTags.findMany({
-    where: eq(workspaceTags.workspaceId, workspace.id),
-    columns: { name: true },
-  });
-
-  const fromWords = await db
-    .selectDistinct({ tag: vocabularyWordTags.tag })
-    .from(vocabularyWordTags)
-    .innerJoin(
-      vocabularyWords,
-      eq(vocabularyWordTags.wordId, vocabularyWords.id),
-    )
-    .where(
-      and(
-        eq(vocabularyWords.workspaceId, workspace.id),
-        sql`${vocabularyWordTags.tag} like 'custom:%'`,
+  const [stored, fromWords] = await Promise.all([
+    db.query.workspaceTags.findMany({
+      where: eq(workspaceTags.workspaceId, workspace.id),
+      columns: { name: true },
+    }),
+    db
+      .selectDistinct({ tag: vocabularyWordTags.tag })
+      .from(vocabularyWordTags)
+      .innerJoin(
+        vocabularyWords,
+        eq(vocabularyWordTags.wordId, vocabularyWords.id),
+      )
+      .where(
+        and(
+          eq(vocabularyWords.workspaceId, workspace.id),
+          sql`${vocabularyWordTags.tag} like 'custom:%'`,
+        ),
       ),
-    );
+  ]);
 
   return uniqueCustomTagNames([
     ...stored.map((tag) => tag.name),

@@ -8,7 +8,6 @@ import { resolveFolderId } from "@/lib/actions/folders";
 import { folderHref } from "@/lib/folders/paths";
 import { getActiveWorkspace } from "@/lib/workspace";
 
-export const dynamic = "force-dynamic";
 
 export default async function NewWritingPage({
   searchParams,

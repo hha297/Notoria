@@ -7,7 +7,6 @@ import { VocabularyPreview } from "@/components/vocabulary/vocabulary-preview";
 import { getVocabularyWord } from "@/lib/actions/vocabulary";
 import { getActiveWorkspace } from "@/lib/workspace";
 
-export const dynamic = "force-dynamic";
 
 export default async function VocabularyWordPage({
   params,

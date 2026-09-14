@@ -7,7 +7,6 @@ import { WritingEditor } from "@/components/writing/writing-editor";
 import { getWritingDocument } from "@/lib/actions/writing";
 import { getActiveWorkspace } from "@/lib/workspace";
 
-export const dynamic = "force-dynamic";
 
 export default async function EditWritingPage({
   params,

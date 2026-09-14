@@ -4,8 +4,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { TheoryLibrary } from "@/components/theory/theory-library";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
-import { getFolder, getFolders } from "@/lib/actions/folders";
-import { getTheoryNotes } from "@/lib/actions/theory";
+import { getFolder } from "@/lib/actions/folders";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export async function TheoryLibraryPage({ folderId }: { folderId?: string }) {
@@ -28,23 +27,15 @@ export async function TheoryLibraryPage({ folderId }: { folderId?: string }) {
     );
   }
 
-  const folderPromise = folderId
-    ? getFolder(folderId, "theory")
-    : Promise.resolve(null);
-  const [folder, notes, folders] = await Promise.all([
-    folderPromise,
-    getTheoryNotes(),
-    getFolders("theory"),
-  ]);
-
-  if (folderId && !folder) {
-    notFound();
+  if (folderId) {
+    const folder = await getFolder(folderId, "theory");
+    if (!folder) {
+      notFound();
+    }
   }
 
   return (
     <TheoryLibrary
-      notes={notes}
-      folders={folders}
       currentFolderId={folderId ?? null}
       workspaceId={workspace.id}
     />

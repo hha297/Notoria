@@ -47,6 +47,18 @@ export function useInvalidateWorkspaceQueries(
         queryKey: queryKeys.speaking.all(workspaceId),
       });
     },
+    invalidateExercisesStudio: () => {
+      if (!workspaceId) return;
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.exercises.studio(workspaceId),
+      });
+    },
+    invalidateFolders: (section: string) => {
+      if (!workspaceId) return;
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.folders.list(workspaceId, section),
+      });
+    },
     removeVocabularyWord: (id: string) => {
       if (!workspaceId) return;
       queryClient.setQueriesData(

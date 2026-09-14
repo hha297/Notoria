@@ -37,7 +37,9 @@ describe("parseTextToTable", () => {
   });
 
   it("parses multi-space separated rows", () => {
-    const parsed = parseTextToTable("Name    Meaning    Example\nword1   hello      Hello!");
+    const parsed = parseTextToTable(
+      "Name    Meaning    Example\nword1   hello      Hello!",
+    );
     expect(parsed?.columnCount).toBe(3);
     expect(parsed?.rows[0]).toEqual(["Name", "Meaning", "Example"]);
     expect(parsed?.rows[1]).toEqual(["word1", "hello", "Hello!"]);

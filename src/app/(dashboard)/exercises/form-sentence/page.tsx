@@ -9,8 +9,6 @@ import { getFlashcardWords } from "@/lib/actions/flashcards";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { getActiveWorkspace } from "@/lib/workspace";
 
-export const dynamic = "force-dynamic";
-
 export default async function FormSentencePage() {
   const t = await getTranslations("exercises");
   const [workspace, proAccess] = await Promise.all([

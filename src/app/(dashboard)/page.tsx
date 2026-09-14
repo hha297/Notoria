@@ -1,6 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { DashboardContinue } from "@/components/dashboard/dashboard-continue";
 import { DashboardGuide } from "@/components/dashboard/dashboard-guide";
+import { WorkspaceSearch } from "@/components/search/workspace-search";
 import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { StatCard } from "@/components/layout/stat-card";
@@ -13,11 +14,11 @@ import { getWorkspaceActivitySnapshot } from "@/lib/onboarding/snapshot";
 import { getLanguageName } from "@/lib/languages";
 import { getActiveWorkspace } from "@/lib/workspace";
 
-export const dynamic = "force-dynamic";
-
 export default async function DashboardPage() {
-  const t = await getTranslations("dashboard");
-  const workspace = await getActiveWorkspace();
+  const [t, workspace] = await Promise.all([
+    getTranslations("dashboard"),
+    getActiveWorkspace(),
+  ]);
 
   if (!workspace) {
     return (
@@ -48,6 +49,8 @@ export default async function DashboardPage() {
         highlight={t("workspaceLabel")}
         description={t("description", { language: languageName })}
       />
+
+      <WorkspaceSearch workspaceId={workspace.id} />
 
       <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <StatCard label={t("wordsSaved")} value={snapshot.vocabularyCount} />

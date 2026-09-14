@@ -210,6 +210,10 @@ export const workspaceFolders = pgTable(
       table.section,
       table.parentId,
     ),
+    index("workspace_folders_name_fts_idx").using(
+      "gin",
+      sql`to_tsvector('simple', ${table.name})`,
+    ),
   ],
 );
 
@@ -246,6 +250,10 @@ export const vocabularyWords = pgTable(
       table.workspaceId,
       table.updatedAt,
     ),
+    index("vocabulary_words_fts_idx").using(
+      "gin",
+      sql`to_tsvector('simple', coalesce(${table.word}, '') || ' ' || coalesce(${table.partOfSpeech}, '') || ' ' || coalesce(${table.synonyms}, '') || ' ' || coalesce(${table.notes}, ''))`,
+    ),
   ],
 );
 
@@ -264,7 +272,13 @@ export const wordMeanings = pgTable(
       .notNull()
       .defaultNow(),
   },
-  (table) => [index("word_meanings_word_id_idx").on(table.wordId)],
+  (table) => [
+    index("word_meanings_word_id_idx").on(table.wordId),
+    index("word_meanings_fts_idx").using(
+      "gin",
+      sql`to_tsvector('simple', ${table.meaning})`,
+    ),
+  ],
 );
 
 export const wordExamples = pgTable(
@@ -282,7 +296,13 @@ export const wordExamples = pgTable(
       .notNull()
       .defaultNow(),
   },
-  (table) => [index("word_examples_word_id_idx").on(table.wordId)],
+  (table) => [
+    index("word_examples_word_id_idx").on(table.wordId),
+    index("word_examples_fts_idx").using(
+      "gin",
+      sql`to_tsvector('simple', coalesce(${table.sentence}, '') || ' ' || coalesce(${table.meaning}, '') || ' ' || coalesce(${table.notes}, ''))`,
+    ),
+  ],
 );
 
 export const vocabularyWordTags = pgTable(
@@ -297,6 +317,10 @@ export const vocabularyWordTags = pgTable(
   (table) => [
     index("vocabulary_word_tags_word_id_idx").on(table.wordId),
     index("vocabulary_word_tags_tag_idx").on(table.tag),
+    index("vocabulary_word_tags_fts_idx").using(
+      "gin",
+      sql`to_tsvector('simple', ${table.tag})`,
+    ),
   ],
 );
 
@@ -428,6 +452,10 @@ export const exercises = pgTable(
       table.type,
       table.updatedAt,
     ),
+    index("exercises_fts_idx").using(
+      "gin",
+      sql`setweight(to_tsvector('simple', coalesce(${table.title}, '') || ' ' || coalesce(${table.description}, '')), 'A') || setweight(jsonb_to_tsvector('simple', ${table.content}, '["string"]'::jsonb), 'C')`,
+    ),
   ],
 );
 
@@ -479,6 +507,10 @@ export const listeningLessons = pgTable(
       table.userId,
       table.workspaceId,
       table.updatedAt,
+    ),
+    index("listening_lessons_fts_idx").using(
+      "gin",
+      sql`to_tsvector('simple', coalesce(${table.title}, '') || ' ' || coalesce(${table.topic}, '') || ' ' || coalesce(${table.transcript}, ''))`,
     ),
   ],
 );
@@ -536,6 +568,10 @@ export const grammarNotes = pgTable(
       table.workspaceId,
       table.updatedAt,
     ),
+    index("grammar_notes_fts_idx").using(
+      "gin",
+      sql`setweight(to_tsvector('simple', coalesce(${table.title}, '')), 'A') || setweight(jsonb_to_tsvector('simple', ${table.content}, '["string"]'::jsonb), 'C')`,
+    ),
   ],
 );
 
@@ -576,6 +612,10 @@ export const speakingSessions = pgTable(
       table.workspaceId,
       table.updatedAt,
     ),
+    index("speaking_sessions_fts_idx").using(
+      "gin",
+      sql`to_tsvector('simple', coalesce(${table.title}, '') || ' ' || coalesce(${table.topic}, '') || ' ' || coalesce(${table.notes}, '') || ' ' || coalesce(${table.transcript}, '') || ' ' || coalesce(${table.summary}, ''))`,
+    ),
   ],
 );
 
@@ -610,6 +650,10 @@ export const exerciseImports = pgTable(
   (table) => [
     index("exercise_imports_workspace_id_idx").on(table.workspaceId),
     index("exercise_imports_user_id_idx").on(table.userId),
+    index("exercise_imports_fts_idx").using(
+      "gin",
+      sql`to_tsvector('simple', coalesce(${table.title}, '') || ' ' || coalesce(${table.extractedText}, ''))`,
+    ),
   ],
 );
 

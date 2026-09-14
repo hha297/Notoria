@@ -9,7 +9,6 @@ import { getTheoryNote } from "@/lib/actions/theory";
 import { buildTheoryExerciseSession } from "@/lib/theory-exercises/build-session";
 import { getActiveWorkspace } from "@/lib/workspace";
 
-export const dynamic = "force-dynamic";
 
 export default async function TheoryExercisePracticePage({
   params,

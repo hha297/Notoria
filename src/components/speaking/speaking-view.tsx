@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Plus, Video } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { PageHeader } from "@/components/layout/page-header";
@@ -9,20 +9,26 @@ import { NewSpeakingDialog } from "@/components/speaking/new-speaking-dialog";
 import { SpeakingSessionCard } from "@/components/speaking/speaking-session-card";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { Button } from "@/components/ui/button";
+import { ListPageLoading } from "@/components/layout/page-loading";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { speakingListQueryOptions } from "@/lib/query/options";
+import { queryKeys } from "@/lib/query/keys";
 import type { SpeakingSessionListItem } from "@/lib/speaking/types";
 
 type SpeakingViewProps = {
-  sessions: SpeakingSessionListItem[];
+  workspaceId: string;
 };
 
-export function SpeakingView({ sessions: initialSessions }: SpeakingViewProps) {
+export function SpeakingView({ workspaceId }: SpeakingViewProps) {
   const t = useTranslations("speaking");
+  const queryClient = useQueryClient();
   const [createOpen, setCreateOpen] = useState(false);
-  const [sessions, setSessions] = useState(initialSessions);
+  const sessionsQuery = useQuery(speakingListQueryOptions(workspaceId));
+  const sessions = sessionsQuery.data ?? [];
 
-  useEffect(() => {
-    setSessions(initialSessions);
-  }, [initialSessions]);
+  if (sessionsQuery.isPending) {
+    return <ListPageLoading />;
+  }
 
   return (
     <PageShell>
@@ -62,8 +68,10 @@ export function SpeakingView({ sessions: initialSessions }: SpeakingViewProps) {
                 key={session.id}
                 session={session}
                 onDeleted={(id) =>
-                  setSessions((current) =>
-                    current.filter((item) => item.id !== id),
+                  queryClient.setQueryData(
+                    queryKeys.speaking.list(workspaceId),
+                    (current: SpeakingSessionListItem[] | undefined) =>
+                      current?.filter((item) => item.id !== id),
                   )
                 }
               />

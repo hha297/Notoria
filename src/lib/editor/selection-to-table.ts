@@ -102,10 +102,7 @@ function cellParagraph(text: string): JSONContent {
   };
 }
 
-function tableCell(
-  text: string,
-  header: boolean,
-): JSONContent {
+function tableCell(text: string, header: boolean): JSONContent {
   return {
     type: header ? "tableHeader" : "tableCell",
     content: [cellParagraph(text)],

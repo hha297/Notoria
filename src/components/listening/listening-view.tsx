@@ -18,8 +18,9 @@ import { ListeningLessonCard } from "@/components/listening/listening-lesson-car
 import { UploadListeningDialog } from "@/components/listening/upload-listening-dialog";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { Button } from "@/components/ui/button";
+import { ListPageLoading } from "@/components/layout/page-loading";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { childrenOf, itemsInFolder } from "@/lib/folders/tree";
-import type { FolderListItem } from "@/lib/folders/types";
 import {
   DEFAULT_LISTENING_LIST_QUERY,
   filterAndSortListeningLessons,
@@ -27,32 +28,38 @@ import {
   type ListeningListQuery,
 } from "@/lib/listening/filters";
 import type { ListeningLessonListItem } from "@/lib/listening/types";
+import {
+  folderListQueryOptions,
+  listeningListQueryOptions,
+} from "@/lib/query/options";
+import { queryKeys } from "@/lib/query/keys";
 import { isKnownWritingTopic } from "@/lib/writing/meta";
 import { onTutorialPrepare } from "@/lib/onboarding/tutorial-prepare";
 
 const EASE = [0.25, 0.1, 0.25, 1] as const;
+const EMPTY_LESSONS: ListeningLessonListItem[] = [];
 
 type ListeningViewProps = {
-  lessons: ListeningLessonListItem[];
-  folders: FolderListItem[];
   currentFolderId: string | null;
+  workspaceId: string;
 };
 
 export function ListeningView({
-  lessons: initialLessons,
-  folders,
   currentFolderId,
+  workspaceId,
 }: ListeningViewProps) {
   const t = useTranslations("listening");
   const tFolders = useTranslations("folders");
   const tMeta = useTranslations("listening.meta");
+  const queryClient = useQueryClient();
   const [uploadOpen, setUploadOpen] = useState(false);
   const [query, setQuery] = useState<ListeningListQuery>(DEFAULT_LISTENING_LIST_QUERY);
-  const [lessons, setLessons] = useState(initialLessons);
-
-  useEffect(() => {
-    setLessons(initialLessons);
-  }, [initialLessons]);
+  const lessonsQuery = useQuery(listeningListQueryOptions(workspaceId));
+  const foldersQuery = useQuery(
+    folderListQueryOptions(workspaceId, "listening"),
+  );
+  const folders = foldersQuery.data ?? [];
+  const lessons = lessonsQuery.data ?? EMPTY_LESSONS;
 
   useEffect(() => {
     return onTutorialPrepare((action) => {
@@ -91,6 +98,10 @@ export function ListeningView({
     !isListeningListQueryFiltered(query) &&
     childFolders.length === 0 &&
     itemsInFolder(lessons, currentFolderId).length === 0;
+
+  if (lessonsQuery.isPending || foldersQuery.isPending) {
+    return <ListPageLoading />;
+  }
 
   return (
     <PageShell>
@@ -200,15 +211,19 @@ export function ListeningView({
                       <ListeningLessonCard
                         lesson={lesson}
                         onDeleted={(id) =>
-                          setLessons((current) =>
-                            current.filter((item) => item.id !== id),
+                          queryClient.setQueryData(
+                            queryKeys.listening.list(workspaceId),
+                            (current: ListeningLessonListItem[] | undefined) =>
+                              current?.filter((item) => item.id !== id),
                           )
                         }
                         onRenamed={(id, patch) =>
-                          setLessons((current) =>
-                            current.map((item) =>
-                              item.id === id ? { ...item, ...patch } : item,
-                            ),
+                          queryClient.setQueryData(
+                            queryKeys.listening.list(workspaceId),
+                            (current: ListeningLessonListItem[] | undefined) =>
+                              current?.map((item) =>
+                                item.id === id ? { ...item, ...patch } : item,
+                              ),
                           )
                         }
                       />

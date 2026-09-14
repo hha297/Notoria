@@ -8,7 +8,6 @@ import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getExerciseImport } from "@/lib/actions/exercise-import";
 import { getActiveWorkspace } from "@/lib/workspace";
 
-export const dynamic = "force-dynamic";
 
 export default async function ImportExercisePracticePage({
   params,

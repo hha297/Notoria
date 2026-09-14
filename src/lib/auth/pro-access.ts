@@ -1,44 +1,24 @@
 import { cache } from "react";
-import { eq } from "drizzle-orm";
-import { db } from "@/db";
-import { users } from "@/db/schema";
-import { getSession, getCurrentUserId } from "@/lib/auth/session";
+import { getCurrentUserRecord } from "@/lib/auth/current-user";
+import { getCurrentUserId } from "@/lib/auth/session";
 import { hasProAccess, ProAccessError } from "@/lib/auth/paid-access";
 
 export { hasProAccess, ProAccessError } from "@/lib/auth/paid-access";
 
 export const getCurrentProAccess = cache(async () => {
-  const session = await getSession();
-  if (!session?.user?.id) {
+  const user = await getCurrentUserRecord();
+  if (!user) {
     return { hasProAccess: false };
   }
-
-  // Include role so admins keep pro access; reuse one user row for layout.
-  const user = await db.query.users.findFirst({
-    where: eq(users.id, session.user.id),
-    columns: {
-      role: true,
-      subscriptionPlan: true,
-      subscriptionStatus: true,
-    },
-  });
 
   return { hasProAccess: hasProAccess(user) };
 });
 
 export async function requireProAccess() {
-  const userId = await getCurrentUserId();
-  const user = await db.query.users.findFirst({
-    where: eq(users.id, userId),
-    columns: {
-      id: true,
-      role: true,
-      subscriptionPlan: true,
-      subscriptionStatus: true,
-    },
-  });
+  await getCurrentUserId();
+  const user = await getCurrentUserRecord();
 
-  if (!hasProAccess(user)) {
+  if (!user || !hasProAccess(user)) {
     throw new ProAccessError();
   }
 
