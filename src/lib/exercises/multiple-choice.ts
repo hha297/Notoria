@@ -1,7 +1,11 @@
 import type { FlashcardWord } from "@/types/flashcards";
 import {
+  blankMeaningHintFromItem,
+  resolveValidBlankMeaningHint,
+  withBlankMeaningHint,
+} from "@/lib/exercises/blank-hint";
+import {
   assignWordMeanings,
-  buildMixedDirections,
   isMeaningOwnedByWord,
   normalizeMeaningKey,
   pickDistractors,
@@ -9,13 +13,27 @@ import {
   type StudyDirection,
 } from "@/lib/exercises/utils";
 
+export type MultipleChoiceStudyMode =
+  | "word-to-meaning"
+  | "meaning-to-word"
+  | "contextual";
+
 export type MultipleChoiceQuestion = {
   id: string;
   wordId: string;
-  direction: StudyDirection;
+  direction: StudyDirection | "CONTEXTUAL";
   prompt: string;
   options: string[];
   correctOption: string;
+  /** Exact grammatical form inserted into the blank when revealed (Contextual). */
+  answerForm?: string;
+  /** Saved vocabulary / base form (Contextual). */
+  baseWord?: string;
+  /** Non-empty vocabulary meaning cue next to the Contextual blank. */
+  meaningHint?: string;
+  meanings?: string[];
+  aiGenerated?: boolean;
+  sentenceMeaning?: string | null;
 };
 
 const OPTION_COUNT = 4;
@@ -57,7 +75,7 @@ function buildQuestion(
   const distractors = pickDistractors(pool, correct, OPTION_COUNT - 1, equals);
   const options = shuffleArray([correct, ...distractors]);
 
-  if (options.length < 2) return null;
+  if (options.length !== OPTION_COUNT) return null;
 
   return {
     id: `${word.id}-${direction}-${normalizeMeaningKey(assignedMeaning)}`,
@@ -70,29 +88,109 @@ function buildQuestion(
   };
 }
 
+/** Deterministic Word→Meaning / Meaning→Word questions only. */
 export function buildMultipleChoiceQuestions(
   words: FlashcardWord[],
-  studyMode: "word-to-meaning" | "meaning-to-word" | "mixed",
+  studyMode: "word-to-meaning" | "meaning-to-word",
 ): MultipleChoiceQuestion[] {
   const assignments = assignWordMeanings(words);
-  const directions =
-    studyMode === "mixed"
-      ? buildMixedDirections(words.map((word) => word.id))
-      : {};
-
   const questions: MultipleChoiceQuestion[] = [];
 
   for (const word of words) {
-    const direction =
-      studyMode === "word-to-meaning"
-        ? "WORD_TO_MEANING"
-        : studyMode === "meaning-to-word"
-          ? "MEANING_TO_WORD"
-          : directions[word.id] ?? "WORD_TO_MEANING";
+    const direction: StudyDirection =
+      studyMode === "word-to-meaning" ? "WORD_TO_MEANING" : "MEANING_TO_WORD";
 
     const question = buildQuestion(word, direction, words, assignments);
     if (question) questions.push(question);
   }
 
   return shuffleArray(questions);
+}
+
+export function contextualExerciseToQuestion(
+  exercise: {
+    wordId: string;
+    prompt: string;
+    options: string[];
+    correctOption: string;
+    baseWord?: string | null;
+    answerForm?: string | null;
+    sentenceMeaning?: string | null;
+  },
+  word: FlashcardWord | undefined,
+  index: number,
+): MultipleChoiceQuestion | null {
+  if (exercise.options.length !== OPTION_COUNT) return null;
+  if (
+    !exercise.options.some(
+      (option) =>
+        normalizeMeaningKey(option) === normalizeMeaningKey(exercise.correctOption),
+    )
+  ) {
+    return null;
+  }
+  if (!word) return null;
+
+  const answerForm = exercise.answerForm?.trim()
+    ? exercise.answerForm.trim()
+    : exercise.correctOption;
+  const baseWord = exercise.baseWord?.trim() || exercise.correctOption;
+  const meaningHint = resolveValidBlankMeaningHint({
+    meanings: word.meanings,
+    answer: answerForm,
+    baseWord,
+  });
+  if (!meaningHint) return null;
+
+  return {
+    id: `${exercise.wordId}-contextual-${index}`,
+    wordId: exercise.wordId,
+    direction: "CONTEXTUAL",
+    prompt: exercise.prompt,
+    options: exercise.options,
+    correctOption: exercise.correctOption,
+    baseWord,
+    answerForm,
+    meaningHint,
+    meanings: word.meanings,
+    aiGenerated: true,
+    sentenceMeaning: exercise.sentenceMeaning,
+  };
+}
+
+/** Show vocabulary meaning next to the Contextual blank (same cue as Fill Blank). */
+export function contextualPromptWithMeaningHint(
+  question: MultipleChoiceQuestion,
+): string {
+  if (question.direction !== "CONTEXTUAL") return question.prompt;
+  const cue = blankMeaningHintFromItem(question);
+  if (!cue) return question.prompt;
+  return withBlankMeaningHint(question.prompt, cue);
+}
+
+/** Replace the contextual blank with the grammatical answer form. */
+export function fillContextualBlank(prompt: string, answerForm: string): string {
+  const form = applyAnswerFormCasing(prompt, answerForm);
+  if (prompt.includes("________")) {
+    return prompt.replace("________", form);
+  }
+  return prompt;
+}
+
+/** Capitalize only when the blank starts a sentence; otherwise lowercase the lead letter. */
+export function applyAnswerFormCasing(prompt: string, answerForm: string): string {
+  const form = answerForm.trim();
+  if (!form) return form;
+
+  const blankIndex = prompt.indexOf("________");
+  if (blankIndex < 0) return form;
+
+  const prefix = prompt.slice(0, blankIndex);
+  const atSentenceStart =
+    prefix.trim().length === 0 || /[.!?…]\s*$/u.test(prefix) || /\n\s*$/u.test(prefix);
+
+  if (atSentenceStart) {
+    return form.charAt(0).toLocaleUpperCase() + form.slice(1);
+  }
+  return form.charAt(0).toLocaleLowerCase() + form.slice(1);
 }

@@ -42,6 +42,9 @@
     "format": "Định dạng",
     "formatSuccess": "Đã định dạng nội dung",
     "formatUnchanged": "Nội dung đã được định dạng",
+    "formatWorking": "Đang định dạng…",
+    "formatAiFallback": "Không dùng được AI — đã làm sạch cơ bản thay thế",
+    "formatFailed": "Không định dạng được nội dung. Thử lại.",
     "tableSelectionInvalid": "Không thể chuyển vùng chọn thành bảng",
     "headingCollapse": "Thu gọn mục",
     "headingExpand": "Mở rộng mục"
@@ -298,27 +301,27 @@
       "c2": "C2"
     },
     "topic": {
-      "daily": "Đời thường",
-      "home": "Nhà cửa",
-      "food": "Ăn uống",
-      "travel": "Du lịch",
-      "work": "Công việc",
-      "people": "Con người",
-      "feelings": "Cảm xúc",
-      "culture": "Văn hóa",
-      "school": "Trường học",
-      "business": "Kinh doanh",
-      "technology": "Công nghệ",
-      "health": "Sức khỏe",
-      "shopping": "Mua sắm",
-      "family": "Gia đình",
-      "nature": "Thiên nhiên",
-      "sports": "Thể thao"
+      "everyday_life": "Đời thường",
+      "home_housing": "Nhà ở và sinh hoạt",
+      "food_drink": "Ăn uống",
+      "travel": "Du lịch / đi lại",
+      "transport_mobility": "Giao thông và di chuyển",
+      "work_working_life": "Công việc và đời sống nghề nghiệp",
+      "education_studying": "Giáo dục và học tập",
+      "health_wellbeing": "Sức khỏe và hạnh phúc",
+      "services_shopping": "Dịch vụ và mua sắm",
+      "people_family_relationships": "Con người, gia đình và quan hệ",
+      "feelings_opinions_experiences": "Cảm xúc, ý kiến và trải nghiệm",
+      "culture_leisure": "Văn hóa và giải trí",
+      "nature_environment": "Thiên nhiên và môi trường",
+      "society_community": "Xã hội và cộng đồng"
     },
     "grammar": {
       "formal": "Trang trọng",
       "informal": "Thân mật",
+      "spoken": "Văn nói",
       "slang": "Tiếng lóng",
+      "academic": "Học thuật",
       "idiom": "Thành ngữ",
       "grammar": "Ngữ pháp",
       "expression": "Cụm từ"
@@ -355,6 +358,17 @@
     "updated": "Đã cập nhật",
     "backToStudio": "Về trang luyện tập",
     "studyMode": "Kiểu học",
+    "difficulty": {
+      "label": "Độ khó",
+      "easy": "Dễ",
+      "medium": "Trung bình",
+      "hard": "Khó",
+      "intensive": "Tăng cường",
+      "easyHint": "Gợi ý rõ và luyện tập trực tiếp với từ của bạn.",
+      "mediumHint": "Kết hợp câu hỏi trực tiếp và theo ngữ cảnh từ từ vựng của bạn.",
+      "hardHint": "Nhiều ngữ cảnh hơn, gợi ý ít rõ hơn — vẫn là từ của bạn.",
+      "intensiveHint": "Ngữ cảnh tinh tế và suy luận sâu hơn — vẫn là từ của bạn."
+    },
     "sources": {
       "label": "Nguồn bài tập",
       "vocabulary": "Từ vựng",
@@ -617,6 +631,7 @@
       "emptyTitle": "Tạo câu điền chỗ trống",
       "emptyDescription": "Tạo 10 câu mới từ từ vựng của bạn. Mỗi câu được viết từ đầu — không dùng lại câu ví dụ có sẵn.",
       "generated": "Do AI tạo",
+      "enriching": "Đang trộn câu AI vào các thẻ tiếp theo…",
       "unavailable": "Hiện không tạo được câu hỏi. Thử lại sau.",
       "forbidden": "Tạo bài tập bằng AI dành cho Pro.",
       "upgradeHint": "Tạo bài tập bằng AI dành cho Pro.",
@@ -632,6 +647,15 @@
     "multipleChoice": {
       "questionWord": "Từ này nghĩa là gì?",
       "questionMeaning": "Từ nào khớp với nghĩa này?",
+      "questionContext": "Chọn từ phù hợp",
+      "modes": {
+        "contextual": "Ngữ cảnh"
+      },
+      "contextualLanguageHint": "Câu hỏi được tạo bằng {language} (ngôn ngữ workspace).",
+      "contextualEmptyTitle": "Tạo câu hỏi ngữ cảnh",
+      "contextualEmptyDescription": "Tạo câu trắc nghiệm điền chỗ trống từ từ vựng của bạn.",
+      "contextualProDescription": "Câu hỏi ngữ cảnh bằng AI dành cho Pro.",
+      "unlockContextual": "Mở khóa với Pro",
       "correct": "Đúng rồi!",
       "incorrect": "Đáp án đúng: {answer}",
       "progress": "{current} / {total}",
@@ -652,6 +676,14 @@
     "typeAnswer": {
       "questionWord": "Nghĩa là gì?",
       "questionMeaning": "Từ nào khớp nghĩa này?",
+      "questionContext": "Điền từ đúng",
+      "modes": {
+        "contextual": "Ngữ cảnh"
+      },
+      "contextualEmptyTitle": "Tạo câu hỏi ngữ cảnh",
+      "contextualEmptyDescription": "Tạo câu điền chỗ trống để gõ đáp án từ từ vựng của bạn.",
+      "contextualProDescription": "Câu hỏi ngữ cảnh bằng AI dành cho Pro.",
+      "unlockContextual": "Mở khóa với Pro",
       "placeholder": "Gõ đáp án…",
       "yourAnswer": "Bạn đã gõ",
       "correctAnswer": "Đáp án đúng",
@@ -1391,16 +1423,6 @@
         "c1": "C1",
         "c2": "C2"
       },
-      "topics": {
-        "travel": "Du lịch",
-        "work": "Công việc",
-        "daily": "Đời sống",
-        "food": "Ẩm thực",
-        "shopping": "Mua sắm",
-        "home": "Nhà cửa",
-        "people": "Con người",
-        "culture": "Văn hóa"
-      },
       "formality": {
         "formal": "Trang trọng",
         "informal": "Thân mật",
@@ -1499,16 +1521,6 @@
         "b2": "B2",
         "c1": "C1",
         "c2": "C2"
-      },
-      "topics": {
-        "travel": "Du lịch",
-        "work": "Công việc",
-        "daily": "Đời sống",
-        "food": "Ẩm thực",
-        "shopping": "Mua sắm",
-        "home": "Nhà cửa",
-        "people": "Con người",
-        "culture": "Văn hóa"
       }
     },
     "call": {
@@ -1660,6 +1672,10 @@
           "capability": "Điền chỗ trống bằng AI",
           "impact": "Câu mới, không phải thuộc ví dụ cũ"
         },
+        "exerciseDifficulty": {
+          "capability": "Trắc nghiệm & gõ đáp án ngữ cảnh AI",
+          "impact": "Điền chỗ trống từ từ vựng của bạn (Dễ–Tăng cường)"
+        },
         "formSentence": {
           "capability": "Đặt câu (phản hồi AI)",
           "impact": "Viết câu với từ của bạn và được sửa ngữ pháp"
@@ -1769,16 +1785,6 @@
         "b2": "B2",
         "c1": "C1",
         "c2": "C2"
-      },
-      "topics": {
-        "travel": "Du lịch",
-        "work": "Công việc",
-        "daily": "Đời sống",
-        "food": "Ẩm thực",
-        "shopping": "Mua sắm",
-        "home": "Nhà cửa",
-        "people": "Con người",
-        "culture": "Văn hóa"
       },
       "formality": {
         "formal": "Trang trọng",

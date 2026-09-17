@@ -54,6 +54,7 @@ import {
 type TheoryEditorProps = {
   previewHref?: string;
   folderId?: string | null;
+  language?: string;
   initialData?: {
     id: string;
     title: string;
@@ -66,6 +67,7 @@ const AUTOSAVE_MS = 1500;
 export function TheoryEditor({
   previewHref,
   folderId = null,
+  language,
   initialData,
 }: TheoryEditorProps) {
   const router = useRouter();
@@ -429,6 +431,7 @@ export function TheoryEditor({
             <RichTextEditor
               content={doc}
               placeholder={t("contentPlaceholder")}
+              language={language}
               collapseStorageKey={
                 initialData?.id ? `heading-collapse:theory:${initialData.id}` : null
               }

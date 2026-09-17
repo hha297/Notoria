@@ -66,6 +66,7 @@ export async function POST(request: Request) {
         id: w.id,
         word: w.word,
         partOfSpeech: w.partOfSpeech,
+        tags: w.tags,
       })),
       count: parsed.data.count,
       studyLanguage: workspace?.language,

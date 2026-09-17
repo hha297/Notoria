@@ -41,6 +41,7 @@ export function WritingView({
     return (
       <PageShell>
         <FolderWorkspace
+          workspaceId={workspaceId}
           section="writing"
           folders={folders}
           currentFolderId={currentFolderId}

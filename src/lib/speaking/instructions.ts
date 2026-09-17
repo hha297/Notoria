@@ -1,16 +1,9 @@
 import { getLanguageName } from "@/lib/languages";
+import {
+  canonicalizeTopicId,
+  topicPromptLabel,
+} from "@/lib/taxonomy/topics";
 import { isKnownWritingTopic, type WritingCefr } from "@/lib/writing/meta";
-
-const TOPIC_LABELS: Record<string, string> = {
-  travel: "travel",
-  work: "work",
-  daily: "daily life",
-  food: "food",
-  shopping: "shopping",
-  home: "home",
-  people: "people",
-  culture: "culture",
-};
 
 export function speakingTutorInstructions(input: {
   language: string;
@@ -20,10 +13,7 @@ export function speakingTutorInstructions(input: {
 }) {
   const languageName = getLanguageName(input.language);
   const cefr = input.cefrLevel?.toUpperCase() ?? "B1";
-  const topic =
-    input.topic && isKnownWritingTopic(input.topic)
-      ? TOPIC_LABELS[input.topic]
-      : input.topic?.trim() || "everyday conversation";
+  const topic = topicPromptLabel(input.topic);
   const notes = input.notes?.trim();
 
   return [
@@ -47,9 +37,10 @@ export function defaultSpeakingTitle(input: {
   cefrLevel?: string | null;
 }) {
   const topicKey = input.topic?.trim();
-  const topic = topicKey
-    ? (TOPIC_LABELS[topicKey] ?? topicKey)
-    : undefined;
+  const canonical = topicKey ? canonicalizeTopicId(topicKey) : null;
+  const topic = canonical
+    ? topicPromptLabel(canonical)
+    : topicKey || undefined;
   const cefr = input.cefrLevel?.toUpperCase();
   if (topic && cefr) return `${topic} · ${cefr}`;
   if (topic) return topic;
@@ -65,10 +56,14 @@ export function speakingFeedbackPrompt(input: {
 }) {
   const languageName = getLanguageName(input.language);
   const cefr = (input.cefrLevel as WritingCefr | null)?.toUpperCase() ?? "B1";
+  const topic =
+    input.topic && isKnownWritingTopic(input.topic)
+      ? topicPromptLabel(input.topic)
+      : input.topic || "conversation";
 
   return `You are a language tutor writing post-call feedback for a speaking session.
 Write in ${languageName}, with brief English glosses only if the learner's target language is not English.
-CEFR target: ${cefr}. Session title: ${input.title}. Topic: ${input.topic || "conversation"}.
+CEFR target: ${cefr}. Session title: ${input.title}. Topic: ${topic}.
 
 Use this markdown structure:
 

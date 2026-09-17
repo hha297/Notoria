@@ -45,6 +45,8 @@ type EditorToolbarProps = {
   className?: string;
   onFormat?: () => void;
   formatLabel?: string;
+  formatPending?: boolean;
+  formatPendingLabel?: string;
 };
 
 function ToolbarButton({
@@ -80,6 +82,8 @@ export function EditorToolbar({
   className,
   onFormat,
   formatLabel = "Format",
+  formatPending = false,
+  formatPendingLabel = "Formatting…",
 }: EditorToolbarProps) {
   const tEditor = useTranslations("editor");
   const [linkOpen, setLinkOpen] = useState(false);
@@ -300,10 +304,16 @@ export function EditorToolbar({
               size="sm"
               className="h-7 gap-1.5 px-2"
               onClick={onFormat}
-              aria-label={formatLabel}
+              disabled={formatPending}
+              aria-label={formatPending ? formatPendingLabel : formatLabel}
+              aria-busy={formatPending}
             >
-              <Wand2 className="size-4" />
-              <span className="text-xs font-medium">{formatLabel}</span>
+              <Wand2
+                className={cn("size-4", formatPending && "animate-pulse")}
+              />
+              <span className="text-xs font-medium">
+                {formatPending ? formatPendingLabel : formatLabel}
+              </span>
             </Button>
           </>
         ) : null}

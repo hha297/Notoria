@@ -36,7 +36,11 @@ export default async function TypeAnswerPage() {
         </Link>
         <PageHeader eyebrow={t("title")} title={t("types.type-answer.label")} highlight={t("practice")} description={t("types.type-answer.description")} />
       </div>
-      <TypeAnswerSession workspaceId={workspace.id} words={words} />
+      <TypeAnswerSession
+        workspaceId={workspace.id}
+        words={words}
+        language={workspace.language}
+      />
     </div>
   );
 }

@@ -9,6 +9,8 @@ export type FillBlankItem = {
   wordId: string;
   word: string;
   meanings: string[];
+  /** Non-empty vocabulary meaning cue shown next to the blank (AI items). */
+  meaningHint?: string;
   sentenceBefore: string;
   sentenceAfter: string;
   acceptableAnswers: string[];

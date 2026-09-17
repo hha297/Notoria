@@ -3,6 +3,7 @@ import { formatVocabularyNotes } from "@/lib/vocabulary/format-notes";
 import {
   formatTiptapDocument,
   tipTapNodePlainText,
+  type FormatContext,
 } from "@/lib/editor/format-document";
 import {
   coerceHeadingLevel,
@@ -269,8 +270,11 @@ export function isNotesDocEmpty(doc: JSONContent | null | undefined): boolean {
 /**
  * Format notes for the TipTap editor (shared deterministic formatter).
  */
-export function formatTipTapNotesDoc(doc: JSONContent): JSONContent {
-  return formatTiptapDocument(doc);
+export function formatTipTapNotesDoc(
+  doc: JSONContent,
+  context: FormatContext = {},
+): JSONContent {
+  return formatTiptapDocument(doc, context);
 }
 
 /**
@@ -278,19 +282,21 @@ export function formatTipTapNotesDoc(doc: JSONContent): JSONContent {
  * Uses the shared document formatter for structure cleanup.
  * Plain-paragraph-only docs still rebuild via the text prettier for legacy markdown.
  */
-export function formatNotesDoc(doc: JSONContent): JSONContent {
-  const tidied = formatTiptapDocument(doc);
+export function formatNotesDoc(
+  doc: JSONContent,
+  context: FormatContext = {},
+): JSONContent {
+  const tidied = formatTiptapDocument(doc, context);
 
   if (!docLooksPlainParagraphsOnly(tidied)) {
     return tidied;
   }
 
-  // Plain docs: text prettier can still recover markdown-ish structure.
   const plain = vocabularyNotesToPlainText(serializeVocabularyNotes(tidied));
   if (!plain.trim()) {
     return structuredClone(EMPTY_NOTES_DOC);
   }
-  return formatTiptapDocument(formatableTextToDoc(plain));
+  return formatTiptapDocument(formatableTextToDoc(plain), context);
 }
 
 function docLooksPlainParagraphsOnly(doc: JSONContent): boolean {

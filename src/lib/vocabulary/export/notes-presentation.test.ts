@@ -5,9 +5,9 @@ describe("parseNotesForPresentation", () => {
   it("renders pipe-separated paradigm dumps as a table, not a paragraph", () => {
     const blocks = parseNotesForPresentation(
       [
-        "Sijamuoto | Yksikkö | Monikko",
-        "Nominatiivi | välivuosi | välivuodet",
-        "Genetiivi | välivuoden | välivuosien",
+        "Category | Form A | Form B",
+        "Present | walk | walks",
+        "Past | walked | walked",
       ].join("\n"),
     );
 
@@ -15,9 +15,9 @@ describe("parseNotesForPresentation", () => {
       {
         type: "table",
         rows: [
-          ["Sijamuoto", "Yksikkö", "Monikko"],
-          ["Nominatiivi", "välivuosi", "välivuodet"],
-          ["Genetiivi", "välivuoden", "välivuosien"],
+          ["Category", "Form A", "Form B"],
+          ["Present", "walk", "walks"],
+          ["Past", "walked", "walked"],
         ],
       },
     ]);
@@ -64,8 +64,8 @@ describe("parseNotesForPresentation", () => {
         "## Usage",
         "Short note.",
         "",
-        "Sija | Yksikkö | Monikko",
-        "Nominatiivi | talo | talot",
+        "Category | Form A | Form B",
+        "Present | walk | walks",
         "",
         "- compound",
         "- loan",

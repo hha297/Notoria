@@ -1,22 +1,37 @@
 import type { FlashcardWord } from "@/types/flashcards";
-import type { FlashcardStudyMode } from "@/types/flashcards";
+import {
+  blankMeaningHintFromItem,
+  resolveValidBlankMeaningHint,
+  withBlankMeaningHint,
+} from "@/lib/exercises/blank-hint";
 import {
   assignWordMeanings,
-  buildMixedDirections,
   isMeaningOwnedByWord,
   normalizeMeaningKey,
   shuffleArray,
   type StudyDirection,
 } from "@/lib/exercises/utils";
+import { fillContextualBlank } from "@/lib/exercises/multiple-choice";
+
+export type TypeAnswerStudyMode =
+  | "word-to-meaning"
+  | "meaning-to-word"
+  | "contextual";
 
 export type TypeAnswerItem = {
   id: string;
   wordId: string;
-  direction: StudyDirection;
+  direction: StudyDirection | "CONTEXTUAL";
   prompt: string;
   acceptableAnswers: string[];
+  /** Primary display / reveal form (exact blank fill for Contextual). */
+  answerDisplay: string;
   word: string;
   meanings: string[];
+  /** Non-empty vocabulary meaning cue next to the Contextual blank. */
+  meaningHint?: string;
+  aiGenerated?: boolean;
+  sentenceMeaning?: string | null;
 };
 
 function buildAnswers(values: string[]) {
@@ -30,16 +45,12 @@ function buildAnswers(values: string[]) {
   return [...answers];
 }
 
+/** Deterministic Word→Meaning / Meaning→Word items only. */
 export function buildTypeAnswerItems(
   words: FlashcardWord[],
-  studyMode: FlashcardStudyMode,
+  studyMode: "word-to-meaning" | "meaning-to-word",
 ): TypeAnswerItem[] {
   const assignments = assignWordMeanings(words);
-  const directions =
-    studyMode === "mixed"
-      ? buildMixedDirections(words.map((word) => word.id))
-      : {};
-
   const items: TypeAnswerItem[] = [];
 
   for (const word of words) {
@@ -47,11 +58,7 @@ export function buildTypeAnswerItems(
     if (!assignedMeaning) continue;
 
     const direction: StudyDirection =
-      studyMode === "word-to-meaning"
-        ? "WORD_TO_MEANING"
-        : studyMode === "meaning-to-word"
-          ? "MEANING_TO_WORD"
-          : directions[word.id] ?? "WORD_TO_MEANING";
+      studyMode === "word-to-meaning" ? "WORD_TO_MEANING" : "MEANING_TO_WORD";
 
     if (
       direction === "MEANING_TO_WORD" &&
@@ -61,19 +68,83 @@ export function buildTypeAnswerItems(
     }
 
     const isWordPrompt = direction === "WORD_TO_MEANING";
+    const acceptable = buildAnswers(
+      isWordPrompt ? word.meanings : [word.word],
+    );
+    const answerDisplay = isWordPrompt
+      ? word.meanings.join(" · ")
+      : word.word;
 
     items.push({
       id: `${word.id}-${direction}-${normalizeMeaningKey(assignedMeaning)}`,
       wordId: word.id,
       direction,
       prompt: isWordPrompt ? word.word : assignedMeaning,
-      acceptableAnswers: buildAnswers(
-        isWordPrompt ? word.meanings : [word.word],
-      ),
+      acceptableAnswers: acceptable,
+      answerDisplay,
       word: word.word,
       meanings: word.meanings,
     });
   }
 
   return shuffleArray(items);
+}
+
+export function contextualExerciseToTypeAnswerItem(
+  exercise: {
+    wordId: string;
+    prompt: string;
+    answer: string;
+    sentenceMeaning?: string | null;
+  },
+  word: FlashcardWord | undefined,
+  index: number,
+): TypeAnswerItem | null {
+  const answer = exercise.answer.trim();
+  const prompt = exercise.prompt.trim();
+  if (!answer || !prompt) return null;
+  if (!prompt.includes("________")) return null;
+  if (!word) return null;
+
+  const meaningHint = resolveValidBlankMeaningHint({
+    meanings: word.meanings,
+    answer,
+    baseWord: word.word,
+  });
+  if (!meaningHint) return null;
+
+  return {
+    id: `${exercise.wordId}-contextual-${index}`,
+    wordId: exercise.wordId,
+    direction: "CONTEXTUAL",
+    prompt,
+    acceptableAnswers: buildAnswers([answer, word.word]),
+    answerDisplay: answer,
+    word: word.word,
+    meanings: word.meanings,
+    meaningHint,
+    aiGenerated: true,
+    sentenceMeaning: exercise.sentenceMeaning,
+  };
+}
+
+/** Filled sentence for Contextual reveal / feedback. */
+export function typeAnswerRevealPrompt(item: TypeAnswerItem): string {
+  if (item.direction !== "CONTEXTUAL") return item.prompt;
+  const cue = blankMeaningHintFromItem(item);
+  if (!item.prompt.includes("________")) {
+    return fillContextualBlank(item.prompt, item.answerDisplay);
+  }
+  const fill = cue
+    ? `${item.answerDisplay} (${cue})`
+    : item.answerDisplay;
+  return fillContextualBlank(item.prompt, fill);
+}
+
+/** Show vocabulary meaning next to the blank, like Fill in the Blank. */
+export function typeAnswerPromptWithMeaningHint(item: TypeAnswerItem): string {
+  if (item.direction !== "CONTEXTUAL") return item.prompt;
+  const cue = blankMeaningHintFromItem(item);
+  if (!cue) return item.prompt;
+  return withBlankMeaningHint(item.prompt, cue);
 }

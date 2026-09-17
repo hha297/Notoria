@@ -82,6 +82,7 @@ export function createSessionState({
   currentIndex = 0,
   isFlipped = false,
   softAvoidWordIds,
+  softPreferWordIds,
 }: {
   workspaceId: string;
   words: FlashcardWord[];
@@ -90,11 +91,13 @@ export function createSessionState({
   currentIndex?: number;
   isFlipped?: boolean;
   softAvoidWordIds?: Iterable<string>;
+  softPreferWordIds?: Iterable<string>;
 }): FlashcardSessionState {
   const sessionWords = sampleSessionItems(words, "flashcards", {
     getWordId: (word) => word.id,
     getCreatedAt: (word) => word.createdAt,
     softAvoidWordIds,
+    softPreferWordIds,
   });
 
   return {

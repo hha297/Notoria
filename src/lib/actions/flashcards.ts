@@ -26,6 +26,7 @@ import {
   type VocabularySynonymRef,
 } from "@/lib/vocabulary/synonyms";
 import { PRACTICE_DECK_LIMIT } from "@/lib/flashcards/limits";
+import { canonicalizeTagId } from "@/lib/vocabulary-tags";
 
 const STATUS_FROM_RATING = {
   AGAIN: "LEARNING",
@@ -214,7 +215,13 @@ export async function getFlashcardWords(): Promise<FlashcardWord[]> {
         .filter((meaning) => meaning.isPrimary)
         .map((meaning) => meaning.meaning),
       examples: word.examples.map((example) => example.sentence),
-      tags: word.tags.map((tag) => tag.tag),
+      tags: [
+        ...new Set(
+          word.tags
+            .map((tag) => canonicalizeTagId(tag.tag) ?? tag.tag.trim())
+            .filter(Boolean),
+        ),
+      ],
     };
   });
 }

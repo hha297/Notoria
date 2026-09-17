@@ -87,4 +87,5 @@ export type TheoryVocabWord = {
   id: string;
   word: string;
   partOfSpeech?: string | null;
+  tags?: string[];
 };

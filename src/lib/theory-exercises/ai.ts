@@ -13,7 +13,6 @@ import { theoryDocPlainText } from "@/lib/theory/content";
 import type { JSONContent } from "@tiptap/react";
 import { ensureSentenceMeanings } from "@/lib/exercises/sentence-meaning";
 import type { AppLocale } from "@/i18n/config";
-
 function getOpenAIClient() {
   const apiKey = process.env.OPENAI_API_KEY?.trim();
   if (!apiKey) {
@@ -106,9 +105,8 @@ Rules:
    Bad: "Tämä talo on ________ kuin toinen talo."
    Good: "Meidän uusi asunto on paljon ________ kuin vanha asunto."
 5. Make the answer inferable from context, but not trivially spoon-fed with numbers unless Theory needs that.
-6. Match difficulty to Theory level — context should clarify, not overcomplicate.
-7. If vocabularyWords are provided, use them with the intended meaning when relevant.
-8. Reject incomplete or context-free frames. Prefer regenerating a richer sentence.
+6. If vocabularyWords are provided, use them with the intended meaning when relevant.
+7. Reject incomplete or context-free frames. Prefer regenerating a richer sentence.
 
 ## Quantity
 Return EXACTLY maxExercises items (target 20–30). Invent varied contexts for the same rule.

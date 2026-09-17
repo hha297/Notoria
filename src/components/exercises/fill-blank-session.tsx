@@ -18,12 +18,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
 import { requestExerciseAi } from "@/lib/exercises/ai-client";
-import type { ExerciseAiCefr } from "@/lib/exercises/ai-types";
 import {
   fillBlankExerciseToItem,
   fillBlankItemSentence,
 } from "@/lib/exercises/ai-validate";
 import { pickFillBlankAiWords, toExerciseAiWord } from "@/lib/exercises/ai-words";
+import { blankMeaningHintFromItem, wordHasBlankMeaningHint } from "@/lib/exercises/blank-hint";
 import {
   expectedFillBlankAnswer,
   buildFillBlankItems,
@@ -31,6 +31,7 @@ import {
 } from "@/lib/exercises/fill-blank";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { answersMatchAny, shuffleArray } from "@/lib/exercises/utils";
+import { useExerciseDifficulty } from "@/hooks/use-exercise-difficulty";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
@@ -62,7 +63,7 @@ export function FillBlankSession({
   const [peeked, setPeeked] = useState(false);
   const [sessionComplete, setSessionComplete] = useState(false);
   const [score, setScore] = useState({ correct: 0, answered: 0 });
-  const [level, setLevel] = useState<ExerciseAiCefr>("a2");
+  const { difficulty, setDifficulty } = useExerciseDifficulty("fill_blank");
   const [usedWordIds, setUsedWordIds] = useState<string[]>([]);
   const avoidByWord = useRef<Record<string, string[]>>({});
   const batchRef = useRef(0);
@@ -158,7 +159,12 @@ export function FillBlankSession({
     const prefs = commitAndBeginNext();
     setStage("generating");
     try {
-      const picked = pickFillBlankAiWords(filteredWords, 10, {
+      const eligibleWords = filteredWords.filter(wordHasBlankMeaningHint);
+      if (eligibleWords.length === 0) {
+        fail(tAi("emptyWords"));
+        return;
+      }
+      const picked = pickFillBlankAiWords(eligibleWords, 10, {
         recentlyUsedIds: usedWordIds,
         softAvoidWordIds: prefs.softAvoidWordIds,
         softPreferWordIds: prefs.softPreferWordIds,
@@ -172,7 +178,7 @@ export function FillBlankSession({
       const result = await requestExerciseAi({
         exerciseType: "fill-in-blank",
         language: language ?? null,
-        level,
+        difficulty,
         uiLocale: uiLocale === "en" || uiLocale === "fi" || uiLocale === "vi" ? uiLocale : "en",
         words: payloadWords,
       });
@@ -236,12 +242,12 @@ export function FillBlankSession({
   }, [
     commitAndBeginNext,
     completeProcessing,
+    difficulty,
     fail,
     hasProAccess,
     openUpgrade,
     filteredWords,
     language,
-    level,
     resetProcessing,
     setStage,
     startFromAiItems,
@@ -315,9 +321,9 @@ export function FillBlankSession({
     <ExerciseAiBar
       generating={generating}
       hasSession={Boolean(aiItems)}
-      level={level}
+      difficulty={difficulty}
       disabled={filteredWords.length === 0}
-      onLevelChange={setLevel}
+      onDifficultyChange={setDifficulty}
       onGenerate={() => void generateQuestions()}
     />
   );
@@ -455,7 +461,7 @@ function FillBlankCard({
   const tAi = useTranslations("exercises.ai");
   const blankMinWidth = Math.min(Math.max(item.word.length + 2, 6), 16);
   const expected = expectedFillBlankAnswer(item);
-  const cue = item.meanings.map((m) => m.trim()).filter(Boolean)[0];
+  const cue = blankMeaningHintFromItem(item);
   const sentenceMeaning = item.sentenceMeaning?.trim() || "";
   const afterText = item.sentenceAfter?.trim() || "";
   const trailingPunctuation = /^[.!?…]+$/.test(afterText) ? afterText : "";

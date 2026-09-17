@@ -30,12 +30,12 @@ export function ExerciseTypePicker() {
 
         const content = (
           <>
-            {item.pro ? (
+            {locked ? (
               <Badge
                 variant="outline"
                 className="absolute top-3 right-3 z-10 gap-1 text-[11px]"
               >
-                {locked ? <Lock className="size-3" aria-hidden /> : null}
+                <Lock className="size-3" aria-hidden />
                 {tBilling("planName")}
               </Badge>
             ) : null}

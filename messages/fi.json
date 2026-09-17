@@ -42,6 +42,9 @@
     "format": "Muotoile",
     "formatSuccess": "Sisältö muotoiltu",
     "formatUnchanged": "Sisältö on jo muotoiltu",
+    "formatWorking": "Muotoillaan…",
+    "formatAiFallback": "Tekoälymuotoilu ei onnistunut — tehtiin perussiistiminen",
+    "formatFailed": "Sisältöä ei voitu muotoilla. Yritä uudelleen.",
     "tableSelectionInvalid": "Valintaa ei voitu muuntaa taulukoksi",
     "headingCollapse": "Tiivistä osio",
     "headingExpand": "Laajenna osio"
@@ -298,27 +301,27 @@
       "c2": "C2"
     },
     "topic": {
-      "daily": "Arki",
-      "home": "Koti",
-      "food": "Ruoka",
-      "travel": "Matkailu",
-      "work": "Työ",
-      "people": "Ihmiset",
-      "feelings": "Tunteet",
-      "culture": "Kulttuuri",
-      "school": "Koulu",
-      "business": "Liiketoiminta",
-      "technology": "Teknologia",
-      "health": "Terveys",
-      "shopping": "Ostokset",
-      "family": "Perhe",
-      "nature": "Luonto",
-      "sports": "Urheilu"
+      "everyday_life": "Arki",
+      "home_housing": "Koti ja asuminen",
+      "food_drink": "Ruoka ja juoma",
+      "travel": "Matkustaminen",
+      "transport_mobility": "Liikenne ja liikkuminen",
+      "work_working_life": "Työ ja työelämä",
+      "education_studying": "Koulutus ja opiskelu",
+      "health_wellbeing": "Terveys ja hyvinvointi",
+      "services_shopping": "Palvelut ja ostokset",
+      "people_family_relationships": "Ihmiset, perhe ja ihmissuhteet",
+      "feelings_opinions_experiences": "Tunteet, mielipiteet ja kokemukset",
+      "culture_leisure": "Kulttuuri ja vapaa-aika",
+      "nature_environment": "Luonto ja ympäristö",
+      "society_community": "Yhteiskunta ja yhteisö"
     },
     "grammar": {
       "formal": "Muodollinen",
       "informal": "Epämuodollinen",
+      "spoken": "Puhekieli",
       "slang": "Slangi",
+      "academic": "Akateeminen",
       "idiom": "Idiomi",
       "grammar": "Kielioppi",
       "expression": "Ilmaisu"
@@ -355,6 +358,17 @@
     "updated": "Päivitetty",
     "backToStudio": "Takaisin harjoituksiin",
     "studyMode": "Opiskelutila",
+    "difficulty": {
+      "label": "Vaikeustaso",
+      "easy": "Helppo",
+      "medium": "Keskitaso",
+      "hard": "Vaikea",
+      "intensive": "Intensiivinen",
+      "easyHint": "Selkeät vihjeet ja suora harjoitus omilla sanoillasi.",
+      "mediumHint": "Suoria ja kontekstikysymyksiä omasta sanastostasi.",
+      "hardHint": "Enemmän kontekstia ja vähemmän ilmeisiä vihjeitä — silti omat sanat.",
+      "intensiveHint": "Nyansseja ja vahvempaa päättelyä — silti omat sanat."
+    },
     "sources": {
       "label": "Harjoituslähde",
       "vocabulary": "Sanasto",
@@ -617,6 +631,7 @@
       "emptyTitle": "Luo täydennä aukko -kysymyksiä",
       "emptyDescription": "Luo 10 uutta lausetta sanastostasi. Jokainen lause kirjoitetaan alusta — olemassa olevia esimerkkejä ei käytetä uudelleen.",
       "generated": "Tekoälyn luoma",
+      "enriching": "Lisätään tekoälykysymyksiä seuraaviin kortteihin…",
       "unavailable": "Kysymyksiä ei voitu luoda juuri nyt. Yritä myöhemmin.",
       "forbidden": "Tekoälyharjoitukset kuuluvat Pro-tilaukseen.",
       "upgradeHint": "Tekoälyharjoitukset kuuluvat Pro-tilaukseen.",
@@ -632,6 +647,15 @@
     "multipleChoice": {
       "questionWord": "Mikä on tämän sanan merkitys?",
       "questionMeaning": "Mikä sana vastaa tätä merkitystä?",
+      "questionContext": "Valitse sopiva sana",
+      "modes": {
+        "contextual": "Konteksti"
+      },
+      "contextualLanguageHint": "Kysymykset luodaan kielellä {language} (työtilan kieli).",
+      "contextualEmptyTitle": "Luo kontekstikysymyksiä",
+      "contextualEmptyDescription": "Luo aukkotehtävä-monivalintoja sanastostasi.",
+      "contextualProDescription": "Konteksti-tekoälykysymykset kuuluvat Pro-tilaukseen.",
+      "unlockContextual": "Avaa Prolla",
       "correct": "Oikein!",
       "incorrect": "Oikea vastaus: {answer}",
       "progress": "{current} / {total}",
@@ -652,6 +676,14 @@
     "typeAnswer": {
       "questionWord": "Mikä on merkitys?",
       "questionMeaning": "Mikä sana vastaa tätä merkitystä?",
+      "questionContext": "Täydennä oikealla sanalla",
+      "modes": {
+        "contextual": "Konteksti"
+      },
+      "contextualEmptyTitle": "Luo kontekstikysymyksiä",
+      "contextualEmptyDescription": "Luo aukkotehtävä-kirjoituspromptteja sanastostasi.",
+      "contextualProDescription": "Konteksti-tekoälykysymykset kuuluvat Pro-tilaukseen.",
+      "unlockContextual": "Avaa Prolla",
       "placeholder": "Kirjoita vastaus…",
       "yourAnswer": "Vastauksesi",
       "correctAnswer": "Oikea vastaus",
@@ -1391,16 +1423,6 @@
         "c1": "C1",
         "c2": "C2"
       },
-      "topics": {
-        "travel": "Matkailu",
-        "work": "Työ",
-        "daily": "Arki",
-        "food": "Ruoka",
-        "shopping": "Ostokset",
-        "home": "Koti",
-        "people": "Ihmiset",
-        "culture": "Kulttuuri"
-      },
       "formality": {
         "formal": "Muodollinen",
         "informal": "Epämuodollinen",
@@ -1499,16 +1521,6 @@
         "b2": "B2",
         "c1": "C1",
         "c2": "C2"
-      },
-      "topics": {
-        "travel": "Matkailu",
-        "work": "Työ",
-        "daily": "Arki",
-        "food": "Ruoka",
-        "shopping": "Ostokset",
-        "home": "Koti",
-        "people": "Ihmiset",
-        "culture": "Kulttuuri"
       }
     },
     "call": {
@@ -1660,6 +1672,10 @@
           "capability": "Tekoälyn täydennystehtävät",
           "impact": "Uudet lauseet, ei muistettuja esimerkkejä"
         },
+        "exerciseDifficulty": {
+          "capability": "Konteksti-MC ja kirjoitus tekoälyllä",
+          "impact": "Aukkotehtäviä omasta sanastosta tasoilla Helppo–Intensiivinen"
+        },
         "formSentence": {
           "capability": "Muodosta lause (tekoälypalaute)",
           "impact": "Kirjoita omilla sanoilla ja saa kielioppiapua"
@@ -1769,16 +1785,6 @@
         "b2": "B2",
         "c1": "C1",
         "c2": "C2"
-      },
-      "topics": {
-        "travel": "Matkailu",
-        "work": "Työ",
-        "daily": "Arki",
-        "food": "Ruoka",
-        "shopping": "Ostokset",
-        "home": "Koti",
-        "people": "Ihmiset",
-        "culture": "Kulttuuri"
       },
       "formality": {
         "formal": "Muodollinen",

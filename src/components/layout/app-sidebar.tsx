@@ -33,6 +33,7 @@ import {
 } from "@/components/ui/sidebar";
 import { UserButton } from "@/components/layout/user-button";
 import { SidebarProCta } from "@/components/layout/sidebar-pro-cta";
+import { LinkPendingIndicator } from "@/components/layout/link-pending-indicator";
 import { prefetchDashboardDestination } from "@/lib/query/prefetch";
 import { cn } from "@/lib/utils";
 
@@ -155,6 +156,7 @@ export function AppSidebar({
                     >
                       {locked ? <Lock /> : <item.icon />}
                       <span className="font-medium">{t(item.titleKey)}</span>
+                      {!locked ? <LinkPendingIndicator /> : null}
                     </SidebarMenuButton>
                   </SidebarMenuItem>
                 );

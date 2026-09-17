@@ -4,6 +4,7 @@ import {
   matchesMultiFilter,
   type MultiFilterValue,
 } from "@/lib/filters/multi-select";
+import { canonicalizeTopicId } from "@/lib/taxonomy/topics";
 import {
   WRITING_CEFR_LEVELS,
   WRITING_FORMALITY,
@@ -69,7 +70,9 @@ function lessonMatchesQuery(
   if (!matchesMultiFilter(query.cefr, lesson.cefrLevel)) {
     return false;
   }
-  if (!matchesMultiFilter(query.topic, lesson.topic)) {
+  const lessonTopic =
+    (lesson.topic && canonicalizeTopicId(lesson.topic)) || lesson.topic;
+  if (!matchesMultiFilter(query.topic, lessonTopic)) {
     return false;
   }
   if (!matchesMultiFilter(query.formality, lesson.formality)) {
@@ -131,7 +134,10 @@ export function filterAndSortListeningLessons(
 export function extraListeningTopics(lessons: ListeningLessonListItem[]) {
   const extras = new Set<string>();
   for (const lesson of lessons) {
-    if (lesson.topic && !isKnownWritingTopic(lesson.topic)) {
+    if (!lesson.topic) continue;
+    const canonical = canonicalizeTopicId(lesson.topic);
+    if (canonical) continue;
+    if (!isKnownWritingTopic(lesson.topic)) {
       extras.add(lesson.topic);
     }
   }

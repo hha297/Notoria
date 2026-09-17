@@ -113,6 +113,7 @@ export function TheoryLibrary({
   return (
     <PageShell>
       <FolderWorkspace
+        workspaceId={workspaceId}
         section="theory"
         folders={folders}
         currentFolderId={currentFolderId}

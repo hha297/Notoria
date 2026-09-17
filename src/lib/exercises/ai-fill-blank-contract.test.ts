@@ -20,55 +20,60 @@ import { pickFillBlankAiWords, toExerciseAiWord } from "@/lib/exercises/ai-words
 import { answersMatchAny } from "@/lib/exercises/utils";
 import type { FlashcardWord } from "@/types/flashcards";
 
-const kaveri: ExerciseAiWordInput = {
-  id: "word-kaveri",
-  word: "kaveri",
-  meaning: "friend",
+const AVOID_SENTENCE = "I already used alpha in this avoided sentence.";
+const SAMPLE_BLANK = `I met an old ${FILL_BLANK_PLACEHOLDER} at the cafe yesterday.`;
+
+const alpha: ExerciseAiWordInput = {
+  id: "word-alpha",
+  word: "alpha",
+  meaning: "abc",
   partOfSpeech: "noun",
   topic: null,
-  avoidSentences: ["Minun kaverini asuu Helsingissä."],
+  avoidSentences: [AVOID_SENTENCE],
 };
 
-function flashcard(overrides: Partial<FlashcardWord> & Pick<FlashcardWord, "id" | "word">): FlashcardWord {
+function flashcard(
+  overrides: Partial<FlashcardWord> & Pick<FlashcardWord, "id" | "word">,
+): FlashcardWord {
   return {
     partOfSpeech: "noun",
     synonyms: null,
     notes: null,
     status: "NEW",
     createdAt: "2026-01-01T00:00:00.000Z",
-    meanings: ["friend"],
-    examples: ["Minun kaverini asuu Helsingissä."],
+    meanings: ["abc"],
+    examples: [AVOID_SENTENCE],
     tags: [],
     ...overrides,
   };
 }
 
 describe("fill-in-blank AI request schema", () => {
-  it("accepts a 10-word fill-in-blank request with CEFR and avoid sentences", () => {
+  it("accepts a 10-word fill-in-blank request with difficulty and avoid sentences", () => {
     const parsed = exerciseAiRequestSchema.parse({
       exerciseType: "fill-in-blank",
-      language: "fi",
+      language: "xx",
       level: "A2",
+      difficulty: "medium",
       words: Array.from({ length: 10 }, (_, index) => ({
         id: `word-${index}`,
-        word: "kaveri",
-        meaning: "friend",
-        avoidSentences: ["Minun kaverini asuu Helsingissä."],
+        word: "alpha",
+        meaning: "abc",
+        avoidSentences: [AVOID_SENTENCE],
       })),
     });
 
     expect(parsed.exerciseType).toBe("fill-in-blank");
     expect(parsed.level).toBe("a2");
+    expect(parsed.difficulty).toBe("medium");
     expect(parsed.words).toHaveLength(FILL_BLANK_AI_BATCH);
-    expect(parsed.words[0]?.avoidSentences).toEqual([
-      "Minun kaverini asuu Helsingissä.",
-    ]);
+    expect(parsed.words[0]?.avoidSentences).toEqual([AVOID_SENTENCE]);
   });
 
   it("rejects other exercise types", () => {
     const parsed = exerciseAiRequestSchema.safeParse({
       exerciseType: "translation",
-      words: [{ id: "1", word: "kaveri" }],
+      words: [{ id: "1", word: "alpha" }],
     });
     expect(parsed.success).toBe(false);
   });
@@ -78,7 +83,7 @@ describe("fill-in-blank AI request schema", () => {
       exerciseType: "fill-in-blank",
       words: Array.from({ length: 11 }, (_, index) => ({
         id: `word-${index}`,
-        word: "kaveri",
+        word: "alpha",
       })),
     });
     expect(parsed.success).toBe(false);
@@ -93,33 +98,48 @@ describe("fill-in-blank AI prompt contract", () => {
     expect(FILL_BLANK_GENERATOR_PROMPT).toContain(
       "Do NOT reuse existing example sentences or previous exercise questions",
     );
-    expect(FILL_BLANK_GENERATOR_PROMPT).toContain("CEFR");
+    expect(FILL_BLANK_GENERATOR_PROMPT).toContain("exerciseDifficulty");
     expect(FILL_BLANK_GENERATOR_PROMPT).toContain("instruction");
     expect(FILL_BLANK_GENERATOR_PROMPT).toContain(
       "Do NOT invent a specific grammar topic",
     );
     expect(FILL_BLANK_GENERATOR_PROMPT).toContain("meaningful context");
-    expect(FILL_BLANK_GENERATOR_PROMPT).toContain(
-      "Tämä päivä on ________.",
-    );
+    expect(FILL_BLANK_GENERATOR_PROMPT).toContain("I like ________.");
+  });
+
+  it("includes structured difficulty guidance in the user payload", () => {
+    const payload = fillBlankUserPayload({
+      languageHint: "StudyLang",
+      languageCode: "xx",
+      level: "a2",
+      difficulty: "hard",
+      uiLanguage: "English",
+      words: [alpha],
+    });
+
+    expect(payload.exerciseDifficulty).toBe("hard");
+    expect(payload).not.toHaveProperty("sentenceComplexityHint");
+    expect(payload.difficultyGuidance).toContain("Hard");
+    expect(payload.fillBlankGuidance).toContain("Fill in the Blank");
   });
 
   it("sends examples only as sentences to avoid, never as a source list", () => {
     const payload = fillBlankUserPayload({
-      languageHint: "Suomi",
-      languageCode: "fi",
+      languageHint: "StudyLang",
+      languageCode: "xx",
       level: "a2",
       uiLanguage: "English",
-      words: [kaveri],
+      words: [alpha],
     });
 
+    expect(payload.exerciseDifficulty).toBe("easy");
     expect(payload.words[0]).toEqual({
-      wordId: "word-kaveri",
-      word: "kaveri",
-      meaning: "friend",
+      wordId: "word-alpha",
+      word: "alpha",
+      meaning: "abc",
       partOfSpeech: "noun",
       topic: null,
-      avoidSentences: ["Minun kaverini asuu Helsingissä."],
+      avoidSentences: [AVOID_SENTENCE],
     });
     expect(payload.words[0]).not.toHaveProperty("examples");
     expect(payload.words[0]).not.toHaveProperty("existingQuestions");
@@ -130,97 +150,122 @@ describe("fill-in-blank AI validation", () => {
   it("accepts one blank and an inflected answer", () => {
     const validated = validateFillBlankExercise(
       {
-        wordId: kaveri.id,
-        sentence: `Tapasin vanhan ${FILL_BLANK_PLACEHOLDER} kahvilassa eilen.`,
-        answer: "kaverini",
-        baseWord: "kaveri",
+        wordId: alpha.id,
+        sentence: SAMPLE_BLANK,
+        answer: "alphas",
+        baseWord: "alpha",
       },
-      kaveri,
+      alpha,
     );
 
     expect(validated).not.toBeNull();
     expect(countFillBlanks(validated!.sentence)).toBe(1);
-    expect(isRelatedWordForm("kaveri", "kaverini")).toBe(true);
-    expect(answersMatchAny("Kaverini", validated!.answer ? [validated!.answer, "kaveri"] : [])).toBe(
-      true,
-    );
+    expect(isRelatedWordForm("alpha", "alphas")).toBe(true);
+    expect(
+      answersMatchAny("alphas", validated!.answer ? [validated!.answer, "alpha"] : []),
+    ).toBe(true);
   });
 
   it("maps a blanked sentence onto the existing fill-in-blank item shape", () => {
     const item = fillBlankExerciseToItem(
       {
-        wordId: kaveri.id,
-        sentence: `Tapasin vanhan ${FILL_BLANK_PLACEHOLDER} kahvilassa eilen.`,
-        answer: "kaverini",
-        baseWord: "kaveri",
+        wordId: alpha.id,
+        sentence: SAMPLE_BLANK,
+        answer: "alphas",
+        baseWord: "alpha",
       },
-      { ...kaveri, meanings: ["friend"] },
+      { ...alpha, meanings: ["abc"] },
       "1",
     );
 
     expect(item).toMatchObject({
-      wordId: kaveri.id,
-      word: "kaveri",
-      sentenceBefore: "Tapasin vanhan ",
-      sentenceAfter: " kahvilassa eilen.",
+      wordId: alpha.id,
+      word: "alpha",
+      sentenceBefore: "I met an old ",
+      sentenceAfter: " at the cafe yesterday.",
       aiGenerated: true,
     });
-    expect(item?.acceptableAnswers).toContain("kaverini");
-    expect(answersMatchAny("kaverini", item?.acceptableAnswers ?? [])).toBe(true);
+    expect(item?.acceptableAnswers).toContain("alphas");
+    expect(answersMatchAny("alphas", item?.acceptableAnswers ?? [])).toBe(true);
   });
 
   it("maps sentenceMeaning onto the fill-in-blank item", () => {
     const item = fillBlankExerciseToItem(
       {
-        wordId: kaveri.id,
-        sentence: `Tapasin vanhan ${FILL_BLANK_PLACEHOLDER} kahvilassa eilen.`,
-        answer: "kaverini",
-        baseWord: "kaveri",
-        sentenceMeaning: "I met an old friend at the café yesterday.",
+        wordId: alpha.id,
+        sentence: SAMPLE_BLANK,
+        answer: "alphas",
+        baseWord: "alpha",
+        sentenceMeaning: "Sentence gloss in the UI language.",
       },
-      { ...kaveri, meanings: ["friend"] },
+      { ...alpha, meanings: ["abc"] },
       "meaning-1",
     );
 
-    expect(item?.sentenceMeaning).toBe(
-      "I met an old friend at the café yesterday.",
-    );
+    expect(item?.sentenceMeaning).toBe("Sentence gloss in the UI language.");
+  });
+
+  it("rejects fill-blank AI items without a vocabulary meaning hint", () => {
+    expect(
+      fillBlankExerciseToItem(
+        {
+          wordId: alpha.id,
+          sentence: SAMPLE_BLANK,
+          answer: "alphas",
+          baseWord: "alpha",
+        },
+        { ...alpha, meaning: null, meanings: [] },
+        "no-hint",
+      ),
+    ).toBeNull();
+
+    expect(
+      validateFillBlankExercise(
+        {
+          wordId: alpha.id,
+          sentence: SAMPLE_BLANK,
+          answer: "alphas",
+          baseWord: "alpha",
+        },
+        { ...alpha, meaning: null },
+      ),
+    ).toBeNull();
   });
 
   it("rejects a sentence with no blank, multiple blanks, or a leaked answer", () => {
     expect(
       validateFillBlankExercise(
         {
-          sentence: "Tapasin vanhan kaverini kahvilassa eilen.",
-          answer: "kaverini",
+          sentence: "I met an old alphas at the cafe yesterday.",
+          answer: "alphas",
         },
-        kaveri,
+        alpha,
       ),
     ).toBeNull();
 
     expect(
       validateFillBlankExercise(
         {
-          sentence: `Tapasin ${FILL_BLANK_PLACEHOLDER} ja ${FILL_BLANK_PLACEHOLDER} eilen.`,
-          answer: "kaverini",
+          sentence: `I saw ${FILL_BLANK_PLACEHOLDER} and ${FILL_BLANK_PLACEHOLDER} yesterday.`,
+          answer: "alphas",
         },
-        kaveri,
+        alpha,
       ),
     ).toBeNull();
 
     expect(
       sentenceLeaksAnswer(
-        `Kaveri tapasi vanhan ${FILL_BLANK_PLACEHOLDER} kahvilassa.`,
-        "kaveri",
+        `alpha met an old ${FILL_BLANK_PLACEHOLDER} at the cafe.`,
+        "alpha",
       ),
     ).toBe(true);
     expect(
       validateFillBlankExercise(
         {
-          sentence: `Kaveri tapasi vanhan ${FILL_BLANK_PLACEHOLDER} kahvilassa.`,
-          answer: "kaverini",
+          sentence: `alpha met an old ${FILL_BLANK_PLACEHOLDER} at the cafe.`,
+          answer: "alphas",
         },
-        kaveri,
+        alpha,
       ),
     ).toBeNull();
   });
@@ -229,27 +274,27 @@ describe("fill-in-blank AI validation", () => {
     expect(
       validateFillBlankExercise(
         {
-          sentence: `Minun ${FILL_BLANK_PLACEHOLDER} asuu Helsingissä.`,
-          answer: "kaverini",
+          sentence: `I already used ${FILL_BLANK_PLACEHOLDER} in this avoided sentence.`,
+          answer: "alpha",
         },
-        kaveri,
+        alpha,
       ),
     ).toBeNull();
   });
 
   it("allows the same word more than once when sentences differ", () => {
-    const words = [kaveri, { ...kaveri, id: "word-kaveri" }];
+    const words = [alpha, { ...alpha, id: "word-alpha" }];
     const selected = selectValidFillBlankExercises(
       [
         {
-          wordId: kaveri.id,
-          sentence: `Tapasin vanhan ${FILL_BLANK_PLACEHOLDER} kahvilassa eilen.`,
-          answer: "kaverini",
+          wordId: alpha.id,
+          sentence: SAMPLE_BLANK,
+          answer: "alphas",
         },
         {
-          wordId: kaveri.id,
-          sentence: `Uusi ${FILL_BLANK_PLACEHOLDER} muutti naapuriin viime viikolla.`,
-          answer: "kaveri",
+          wordId: alpha.id,
+          sentence: `A new ${FILL_BLANK_PLACEHOLDER} moved in last week.`,
+          answer: "alpha",
         },
       ],
       words,
@@ -262,30 +307,30 @@ describe("fill-in-blank AI validation", () => {
     const parsed = exerciseAiResultSchema.parse({
       exercises: [
         {
-          wordId: kaveri.id,
+          wordId: alpha.id,
           type: "fill-in-blank",
-          sentence: `Tapasin vanhan ${FILL_BLANK_PLACEHOLDER} kahvilassa eilen.`,
-          answer: "kaverini",
-          baseWord: "kaveri",
+          sentence: SAMPLE_BLANK,
+          answer: "alphas",
+          baseWord: "alpha",
         },
         {
-          wordId: kaveri.id,
+          wordId: alpha.id,
           sentence: "This has no blank.",
-          answer: "kaveri",
+          answer: "alpha",
         },
       ],
     });
 
-    expect(selectValidFillBlankExercises(parsed.exercises, [kaveri])).toHaveLength(1);
+    expect(selectValidFillBlankExercises(parsed.exercises, [alpha])).toHaveLength(1);
   });
 });
 
 describe("fill-in-blank AI word picking", () => {
   it("repeats words to fill a batch of 10", () => {
     const words = [
-      flashcard({ id: "1", word: "kaveri" }),
-      flashcard({ id: "2", word: "talo" }),
-      flashcard({ id: "3", word: "kissa" }),
+      flashcard({ id: "1", word: "alpha" }),
+      flashcard({ id: "2", word: "beta" }),
+      flashcard({ id: "3", word: "gamma" }),
     ];
 
     const picked = pickFillBlankAiWords(words, 10);
@@ -294,22 +339,21 @@ describe("fill-in-blank AI word picking", () => {
   });
 
   it("puts existing examples into avoidSentences", () => {
-    const input = toExerciseAiWord(
-      flashcard({ id: "1", word: "kaveri" }),
-      ["Tapasin vanhan kaverini kahvilassa eilen."],
-    );
+    const input = toExerciseAiWord(flashcard({ id: "1", word: "alpha" }), [
+      "Another avoided alpha sentence from before.",
+    ]);
 
     expect(input.avoidSentences).toEqual([
-      "Minun kaverini asuu Helsingissä.",
-      "Tapasin vanhan kaverini kahvilassa eilen.",
+      AVOID_SENTENCE,
+      "Another avoided alpha sentence from before.",
     ]);
   });
 });
 
 describe("blank splitting", () => {
   it("splits a sentence on a single placeholder", () => {
-    expect(splitSentenceAtBlank(`Minulla on uusi ${FILL_BLANK_PLACEHOLDER}.`)).toEqual({
-      before: "Minulla on uusi ",
+    expect(splitSentenceAtBlank(`I have a new ${FILL_BLANK_PLACEHOLDER}.`)).toEqual({
+      before: "I have a new ",
       after: ".",
     });
   });

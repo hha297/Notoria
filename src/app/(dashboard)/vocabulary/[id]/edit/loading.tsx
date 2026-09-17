@@ -1,5 +1,5 @@
-import { DetailPageLoading } from "@/components/layout/page-loading";
+import { FormPageLoading } from "@/components/layout/page-loading";
 
-export default function EditVocabularyLoading() {
-  return <DetailPageLoading />;
+export default function Loading() {
+  return <FormPageLoading />;
 }

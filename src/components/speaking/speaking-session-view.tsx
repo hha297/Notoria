@@ -30,9 +30,9 @@ import { isSpeakingErrorCode } from "@/lib/speaking/errors";
 import { isSpeakingJoinable } from "@/lib/speaking/types";
 import type { SpeakingSessionDetail } from "@/lib/speaking/types";
 import {
-  isKnownWritingTopic,
   type WritingCefr,
 } from "@/lib/writing/meta";
+import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 
 type SpeakingSessionViewProps = {
   session: SpeakingSessionDetail;
@@ -41,6 +41,7 @@ type SpeakingSessionViewProps = {
 export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
   const t = useTranslations("speaking");
   const tMeta = useTranslations("speaking.meta");
+  const tTags = useTranslations("tags");
   const tc = useTranslations("common");
   const router = useRouter();
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -106,9 +107,9 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
         </Badge>
         {session.topic ? (
           <span className="text-sm text-muted-foreground">
-            {isKnownWritingTopic(session.topic)
-              ? tMeta(`topics.${session.topic}`)
-              : session.topic}
+            {session.topic
+              ? resolveTopicLabel(session.topic, (key) => tTags(key))
+              : null}
           </span>
         ) : null}
         {session.cefrLevel ? (

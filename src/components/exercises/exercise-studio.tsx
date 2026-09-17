@@ -8,6 +8,7 @@ import { ExerciseTypePicker } from "@/components/exercises/exercise-type-picker"
 import { ImportExercisePanel } from "@/components/exercises/import-exercise-panel";
 import { TheoryExercisePicker } from "@/components/exercises/theory-exercise-picker";
 import type { TheoryExerciseCardItem } from "@/components/exercises/theory-exercise-picker";
+import { ContentTransition } from "@/components/layout/content-transition";
 import type { ExerciseImportListItem } from "@/lib/exercise-import/types";
 import { cn } from "@/lib/utils";
 
@@ -93,22 +94,30 @@ export function ExerciseStudio({
       </div>
 
       <div role="tabpanel">
-        {source === "vocabulary" ? (
-          <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">{t("sources.vocabularyHint")}</p>
-            <ExerciseTypePicker />
-          </div>
-        ) : source === "theory" ? (
-          <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">{t("sources.theoryHint")}</p>
-            <TheoryExercisePicker theories={theories} />
-          </div>
-        ) : (
-          <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">{t("sources.importHint")}</p>
-            <ImportExercisePanel imports={imports} />
-          </div>
-        )}
+        <ContentTransition transitionKey={source}>
+          {source === "vocabulary" ? (
+            <div className="space-y-3">
+              <p className="text-sm text-muted-foreground">
+                {t("sources.vocabularyHint")}
+              </p>
+              <ExerciseTypePicker />
+            </div>
+          ) : source === "theory" ? (
+            <div className="space-y-3">
+              <p className="text-sm text-muted-foreground">
+                {t("sources.theoryHint")}
+              </p>
+              <TheoryExercisePicker theories={theories} />
+            </div>
+          ) : (
+            <div className="space-y-3">
+              <p className="text-sm text-muted-foreground">
+                {t("sources.importHint")}
+              </p>
+              <ImportExercisePanel imports={imports} />
+            </div>
+          )}
+        </ContentTransition>
       </div>
     </div>
   );

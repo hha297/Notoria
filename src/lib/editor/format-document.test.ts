@@ -38,17 +38,9 @@ describe("hierarchicalHeadingDepth", () => {
   });
 
   it("accepts trailing section dots (2.1. / 2.1.1.)", () => {
-    expect(
-      hierarchicalHeadingDepth(
-        "2. Using the Superlative / Superlatiivin käyttö",
-      ),
-    ).toBe(1);
-    expect(
-      hierarchicalHeadingDepth(
-        "2.1. Not All Adjectives Have a Superlative / Kaikilla adjektiiveilla ei ole superlatiivia",
-      ),
-    ).toBe(2);
-    expect(hierarchicalHeadingDepth("2.1.1. Examples")).toBe(3);
+    expect(hierarchicalHeadingDepth("2. Generic heading")).toBe(1);
+    expect(hierarchicalHeadingDepth("2.1. Nested heading")).toBe(2);
+    expect(hierarchicalHeadingDepth("2.1.1. Deeper heading")).toBe(3);
   });
 });
 
@@ -135,15 +127,12 @@ describe("formatTiptapDocument", () => {
     ]);
   });
 
-  it("fixes FI-style trailing dots like 2.1. that were stuck as H1", () => {
+  it("fixes numbered headings with a trailing section dot that were stuck as H1", () => {
     const formatted = formatTiptapDocument(
       textDoc(
-        heading(1, "2. Using the Superlative / Superlatiivin käyttö"),
-        heading(
-          1,
-          "2.1. Not All Adjectives Have a Superlative / Kaikilla adjektiiveilla ei ole superlatiivia",
-        ),
-        heading(1, "2.1.1. Examples"),
+        heading(1, "2. Generic heading"),
+        heading(1, "2.1. Nested heading"),
+        heading(1, "2.1.1. Deeper heading"),
       ),
     );
 
@@ -222,8 +211,8 @@ describe("formatTiptapDocument", () => {
     const formatted = formatTiptapDocument(
       textDoc(
         paragraph("Word | Comparative | English"),
-        paragraph("kaunis | kauniimpi | beautiful"),
-        paragraph("suuri | suurempi | big"),
+        paragraph("wide | wider | broad"),
+        paragraph("tall | taller | high"),
       ),
     );
     expect(formatted.content?.[0]?.type).toBe("table");
@@ -235,7 +224,9 @@ describe("formatTiptapDocument", () => {
         paragraph("Another complete thought follows here."),
       ),
     );
-    expect(prose.content?.every((node) => node.type === "paragraph")).toBe(true);
+    expect(prose.content?.every((node) => node.type === "paragraph")).toBe(
+      true,
+    );
   });
 
   it("nests indented bullet lines", () => {
@@ -252,7 +243,7 @@ describe("formatTiptapDocument", () => {
 
   it("bolds obvious Term: labels without rewriting the rest", () => {
     const formatted = formatTiptapDocument(
-      textDoc(paragraph("Term: elämäntapa")),
+      textDoc(paragraph("Term: example")),
     );
     expect(formatted.content?.[0]?.content?.[0]).toMatchObject({
       type: "text",
@@ -273,82 +264,56 @@ describe("formatTiptapDocument", () => {
     expect(formatted.content?.[0]?.content).toHaveLength(3);
   });
 
-  it("structures the elämäntapa dictionary dump", () => {
+  it("structures a dictionary dump without inventing paradigm tables", () => {
     const source = `
-- elämäntapa englanniksi
-- Substantiivit
-- lifestyle
-- way of life
-- walk of life
-- idiomaattinen
-- living
-- Määritelmät
-- Substantiivi
+- widget in english
+- Nouns
+- gadget
+- device
+- Definitions
+- Noun
 
-yksilölle tai yhteisölle tunnusomainen tapa elää tai toimia
-(sosiologia) arkielämän tapahtumasarja merkityksineen ja pyrkimyksineen
+a short generic definition
 
-Taivutusmuodot
-Monikko elämäntavat Genetiivi elämäntavan
-Monikon genetiivi elämäntapojen Partitiivi elämäntapaa
-Monikon partitiivi elämäntapoja Inessiivi elämäntavassa
-Monikon inessiivi elämäntavoissa Elatiivi elämäntavasta
-Monikon elatiivi elämäntavoista Illatiivi elämäntapaan
-Monikon illatiivi elämäntapoihin Adessiivi elämäntavalla
-Monikon adessiivi elämäntavoilla Ablatiivi elämäntavalta
-Monikon ablatiivi elämäntavoilta Allatiivi elämäntavalle
-Monikon allatiivi elämäntavoille Essiivi elämäntapana
-Monikon essiivi elämäntapoina Translatiivi elämäntavaksi
-Monikon translatiivi elämäntavoiksi Monikon instruktiivi elämäntavoin
-Abessiivi elämäntavatta Monikon abessiivi elämäntavoitta
-Monikon akkusatiivi elämäntavat
+Inflection
+Present walk walks
+Past walked walked
+Future will-walk will-walk
 `.trim();
 
     const formatted = formatTiptapDocument(
       textDoc(
-        ...source.split("\n").map((line) => paragraph(line.trim() ? line.trim() : "")),
+        ...source
+          .split("\n")
+          .map((line) => paragraph(line.trim() ? line.trim() : "")),
       ),
     );
     const types = formatted.content?.map((node) => node.type);
     expect(types?.[0]).toBe("heading");
     expect(formatted.content?.[0]?.attrs?.level).toBe(1);
-    expect(formatted.content?.[0]?.content?.[0]?.text).toBe(
-      "elämäntapa englanniksi",
-    );
+    expect(formatted.content?.[0]?.content?.[0]?.text).toBe("widget in english");
     expect(types).toContain("bulletList");
-    expect(types).toContain("table");
     expect(
       formatted.content?.some(
         (node) =>
-          node.type === "heading" &&
-          node.content?.[0]?.text === "Määritelmät",
+          node.type === "heading" && node.content?.[0]?.text === "Definitions",
       ),
     ).toBe(true);
-    expect(
-      formatted.content?.some(
-        (node) =>
-          node.type === "heading" &&
-          node.content?.[0]?.text === "Taivutusmuodot",
+    // Deterministic Format does not invent labeled paradigm tables.
+    expect(types).not.toContain("table");
+  });
+
+  it("does not invent tables from unlabeled prose lines", () => {
+    const formatted = formatTiptapDocument(
+      textDoc(
+        paragraph("Category alpha form-a form-b"),
+        paragraph("Category beta form-c form-d"),
+        paragraph("Category gamma form-e form-f"),
+        paragraph("Category delta form-g form-h"),
       ),
-    ).toBe(true);
-
-    const table = formatted.content?.find((node) => node.type === "table");
-    const header = table?.content?.[0]?.content?.map(
-      (cell) => cell.content?.[0]?.content?.[0]?.text,
     );
-    expect(header).toEqual(["Sija", "Yksikkö", "Monikko"]);
-    const genitive = table?.content?.find((row) =>
-      row.content?.[0]?.content?.[0]?.content?.[0]?.text === "Genetiivi",
+    expect(formatted.content?.some((node) => node.type === "table")).toBe(
+      false,
     );
-    expect(genitive?.content?.[1]?.content?.[0]?.content?.[0]?.text).toBe(
-      "elämäntavan",
-    );
-    expect(genitive?.content?.[2]?.content?.[0]?.content?.[0]?.text).toBe(
-      "elämäntapojen",
-    );
-
-    const twice = formatTiptapDocument(formatted);
-    expect(twice).toEqual(formatted);
   });
 });
-

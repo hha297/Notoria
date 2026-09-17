@@ -1,5 +1,8 @@
 import { parseSectionHeading } from "@/lib/editor/format/headings";
-import { applyEmphasisLabels, paragraphFromLine } from "@/lib/editor/format/nodes";
+import {
+  applyEmphasisLabels,
+  paragraphFromLine,
+} from "@/lib/editor/format/nodes";
 import {
   EMPHASIS_LABELS,
   SECTION_PATTERNS,
@@ -9,7 +12,10 @@ import {
 import { stripBulletPrefix } from "@/lib/editor/format/detect/lists";
 import type { Detection, FormatLine } from "@/lib/editor/format/types";
 
-export function detectTitle(lines: FormatLine[], index: number): Detection | null {
+export function detectTitle(
+  lines: FormatLine[],
+  index: number,
+): Detection | null {
   const line = lines[index];
   if (!line) return null;
   const body = stripBulletPrefix(line.text).body;

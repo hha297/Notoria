@@ -119,6 +119,7 @@ export async function generateFillBlankExercises(
               languageHint: languageHint(input.language),
               languageCode: input.language ?? null,
               level: input.level,
+              difficulty: input.difficulty,
               uiLanguage: uiLanguageName(input.uiLocale),
               words,
             }),

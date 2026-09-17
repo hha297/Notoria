@@ -1,3 +1,15 @@
+import {
+  canonicalizeTopicId,
+  canonicalizeUsageId,
+  isKnownTopicId,
+  isKnownUsageId,
+  LEGACY_USAGE_IDS,
+  TOPIC_IDS,
+  USAGE_IDS,
+  type TopicId,
+  type UsageId,
+} from "@/lib/taxonomy/topics";
+
 export type TagGroupKey = "difficulty" | "topic" | "grammar";
 
 export type BuiltinTag = {
@@ -5,7 +17,7 @@ export type BuiltinTag = {
   group: TagGroupKey;
 };
 
-/** Tags shown in the picker — kept short and everyday-friendly. */
+/** Tags shown in the picker — shared taxonomy ids only. */
 export const BUILTIN_TAG_GROUPS: Record<TagGroupKey, BuiltinTag[]> = {
   difficulty: [
     { id: "a1", group: "difficulty" },
@@ -15,36 +27,15 @@ export const BUILTIN_TAG_GROUPS: Record<TagGroupKey, BuiltinTag[]> = {
     { id: "c1", group: "difficulty" },
     { id: "c2", group: "difficulty" },
   ],
-  topic: [
-    { id: "daily", group: "topic" },
-    { id: "home", group: "topic" },
-    { id: "food", group: "topic" },
-    { id: "travel", group: "topic" },
-    { id: "work", group: "topic" },
-    { id: "people", group: "topic" },
-    { id: "feelings", group: "topic" },
-    { id: "culture", group: "topic" },
-  ],
-  grammar: [
-    { id: "formal", group: "grammar" },
-    { id: "informal", group: "grammar" },
-    { id: "slang", group: "grammar" },
-    { id: "idiom", group: "grammar" },
-  ],
+  topic: TOPIC_IDS.map((id) => ({ id, group: "topic" as const })),
+  grammar: USAGE_IDS.map((id) => ({ id, group: "grammar" as const })),
 };
 
-/** Older tag ids that may still exist on saved words. */
+/** Older tag ids that may still exist on saved words (usage / learning status). */
 const LEGACY_TAG_GROUPS: Record<string, TagGroupKey | "learningStatus"> = {
-  school: "topic",
-  business: "topic",
-  technology: "topic",
-  health: "topic",
-  shopping: "topic",
-  family: "topic",
-  nature: "topic",
-  sports: "topic",
-  grammar: "grammar",
-  expression: "grammar",
+  ...Object.fromEntries(
+    LEGACY_USAGE_IDS.map((id) => [id, "grammar" as const]),
+  ),
   new: "learningStatus",
   learning: "learningStatus",
   review: "learningStatus",
@@ -74,6 +65,16 @@ export const PARTS_OF_SPEECH = [
 
 const CUSTOM_TAG_PREFIX = "custom:";
 export const CUSTOM_TAG_MAX_LENGTH = 40;
+
+const DIFFICULTY_IDS = new Set(
+  BUILTIN_TAG_GROUPS.difficulty.map((tag) => tag.id),
+);
+const LEARNING_STATUS_IDS = new Set([
+  "new",
+  "learning",
+  "review",
+  "mastered",
+]);
 
 export function customTagKey(name: string): string {
   return `${CUSTOM_TAG_PREFIX}${name.trim()}`;
@@ -140,6 +141,33 @@ export function listTagOptions(customNames: string[]): VocabularyTagOption[] {
   return [...listBuiltinTagOptions(), ...listCustomTagOptions(customNames)];
 }
 
+/**
+ * Map a raw stored tag to a language-independent builtin id when possible.
+ * Custom tags pass through unchanged (after trim).
+ */
+export function canonicalizeTagId(raw: string): string | null {
+  if (typeof raw !== "string") return null;
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+
+  if (isCustomTagKey(trimmed)) {
+    const name = getCustomTagName(trimmed).trim();
+    return isValidCustomTagName(name) ? customTagKey(name) : null;
+  }
+
+  if (DIFFICULTY_IDS.has(trimmed) || LEARNING_STATUS_IDS.has(trimmed)) {
+    return trimmed;
+  }
+
+  const topic = canonicalizeTopicId(trimmed);
+  if (topic) return topic;
+
+  const usage = canonicalizeUsageId(trimmed);
+  if (usage) return usage;
+
+  return null;
+}
+
 /** Canonicalize and de-dupe tags stored on a word. */
 export function normalizeWordTags(
   tags: string[],
@@ -151,7 +179,7 @@ export function normalizeWordTags(
 
   for (const raw of tags) {
     if (typeof raw !== "string") continue;
-    let tag = raw.trim();
+    let tag = canonicalizeTagId(raw);
     if (!tag) continue;
 
     if (isCustomTagKey(tag)) {
@@ -178,15 +206,10 @@ export function isBuiltinTag(tag: string): boolean {
 }
 
 export function getTagGroupForId(tagId: string): TagGroupKey | "learningStatus" {
-  if (BUILTIN_TAG_GROUPS.difficulty.some((tag) => tag.id === tagId)) {
-    return "difficulty";
-  }
-  if (BUILTIN_TAG_GROUPS.topic.some((tag) => tag.id === tagId)) {
-    return "topic";
-  }
-  if (BUILTIN_TAG_GROUPS.grammar.some((tag) => tag.id === tagId)) {
-    return "grammar";
-  }
+  if (DIFFICULTY_IDS.has(tagId)) return "difficulty";
+  if (isKnownTopicId(tagId) || canonicalizeTopicId(tagId)) return "topic";
+  if (isKnownUsageId(tagId)) return "grammar";
+  if (LEARNING_STATUS_IDS.has(tagId)) return "learningStatus";
   return LEGACY_TAG_GROUPS[tagId] ?? "topic";
 }
 
@@ -198,6 +221,9 @@ export function getTagLabel(
     return getCustomTagName(tag);
   }
 
-  const group = getTagGroupForId(tag);
-  return translate(`${group}.${tag}`);
+  const canonical = canonicalizeTagId(tag) ?? tag;
+  const group = getTagGroupForId(canonical);
+  return translate(`${group}.${canonical}`);
 }
+
+export type { TopicId, UsageId };

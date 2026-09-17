@@ -42,6 +42,10 @@ export type Detector = {
   detect: (lines: FormatLine[], index: number) => Detection | null;
 };
 
+export type FormatContext = {
+  language?: string | null;
+};
+
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null;
 }

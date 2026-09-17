@@ -44,7 +44,7 @@ describe("notesToBlocks", () => {
                   content: [
                     {
                       type: "paragraph",
-                      content: [{ type: "text", text: "Sija" }],
+                      content: [{ type: "text", text: "Category" }],
                     },
                   ],
                 },
@@ -53,7 +53,7 @@ describe("notesToBlocks", () => {
                   content: [
                     {
                       type: "paragraph",
-                      content: [{ type: "text", text: "Yksikkö" }],
+                      content: [{ type: "text", text: "Form A" }],
                     },
                   ],
                 },
@@ -67,7 +67,7 @@ describe("notesToBlocks", () => {
                   content: [
                     {
                       type: "paragraph",
-                      content: [{ type: "text", text: "Nominatiivi" }],
+                      content: [{ type: "text", text: "Present" }],
                     },
                   ],
                 },
@@ -76,7 +76,7 @@ describe("notesToBlocks", () => {
                   content: [
                     {
                       type: "paragraph",
-                      content: [{ type: "text", text: "talo" }],
+                      content: [{ type: "text", text: "walk" }],
                     },
                   ],
                 },
@@ -102,7 +102,7 @@ describe("notesToBlocks", () => {
         { text: "." },
       ],
     });
-    expect(noteBlocksToPlainText(blocks)).toContain("Sija | Yksikkö");
+    expect(noteBlocksToPlainText(blocks)).toContain("Category | Form A");
   });
 
   it("skips empty paragraphs", () => {
@@ -124,13 +124,13 @@ describe("notesToBlocks", () => {
 
   it("still presents flattened pipe tables from plain notes", () => {
     const blocks = notesToBlocks(
-      ["Sija | Yksikkö | Monikko", "Nominatiivi | talo | talot"].join("\n"),
+      ["Category | Form A | Form B", "Present | walk | walks"].join("\n"),
     );
     expect(blocks[0]).toMatchObject({
       type: "table",
       rows: [
-        [[{ text: "Sija" }], [{ text: "Yksikkö" }], [{ text: "Monikko" }]],
-        [[{ text: "Nominatiivi" }], [{ text: "talo" }], [{ text: "talot" }]],
+        [[{ text: "Category" }], [{ text: "Form A" }], [{ text: "Form B" }]],
+        [[{ text: "Present" }], [{ text: "walk" }], [{ text: "walks" }]],
       ],
     });
   });

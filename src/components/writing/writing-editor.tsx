@@ -13,6 +13,7 @@ import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { WritingAiBar } from "@/components/writing/writing-ai-bar";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { DescriptionField } from "@/components/form/description-field";
+import { ContentTransition } from "@/components/layout/content-transition";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -62,11 +63,11 @@ import {
   WRITING_CEFR_LEVELS,
   WRITING_FORMALITY,
   WRITING_TOPICS,
-  isKnownWritingTopic,
   type WritingCefr,
   type WritingFormality,
   type WritingMeta,
 } from "@/lib/writing/meta";
+import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 import type { ExerciseFormValues } from "@/schemas/exercise";
 
 type WritingEditorProps = {
@@ -99,6 +100,7 @@ export function WritingEditor({
   const queryClient = useQueryClient();
   const t = useTranslations("writing");
   const tMeta = useTranslations("writing.meta");
+  const tTags = useTranslations("tags");
   const tCommon = useTranslations("common");
   const type = initialData?.type ?? exerciseType;
 
@@ -574,9 +576,9 @@ export function WritingEditor({
                 >
                   <SelectValue placeholder={tMeta("topicPlaceholder")}>
                     {editorState.meta.topic
-                      ? isKnownWritingTopic(editorState.meta.topic)
-                        ? tMeta(`topics.${editorState.meta.topic}`)
-                        : editorState.meta.topic
+                      ? resolveTopicLabel(editorState.meta.topic, (key) =>
+                          tTags(key),
+                        )
                       : tMeta("none")}
                   </SelectValue>
                 </SelectTrigger>
@@ -584,7 +586,7 @@ export function WritingEditor({
                   <SelectItem value="none">{tMeta("none")}</SelectItem>
                   {WRITING_TOPICS.map((topic) => (
                     <SelectItem key={topic} value={topic}>
-                      {tMeta(`topics.${topic}`)}
+                      {resolveTopicLabel(topic, (key) => tTags(key))}
                     </SelectItem>
                   ))}
                 </SelectContent>
@@ -667,44 +669,47 @@ export function WritingEditor({
             onQuestionFeedbackChange={setQuestionFeedback}
           />
 
-          {editorState.mode === "rich_document" ? (
-            <div className="space-y-2">
-              <Label>{t("content")}</Label>
-              <RichTextEditor
-                content={editorState.doc}
-                placeholder={t("contentPlaceholder")}
-                collapseStorageKey={
-                  initialData?.id
-                    ? `heading-collapse:writing:${initialData.id}`
-                    : null
-                }
-                onChange={(next) => {
-                  setDoc(next);
-                  if (!isBaselineReadyRef.current) return;
-                }}
-                onEditorReady={handleRichEditorReady}
-                onImageUploadPendingChange={setImageUploading}
-                onAutosave={
-                  initialData?.id && !previewHref
-                    ? handleRichAutosave
-                    : undefined
+          <ContentTransition transitionKey={editorState.mode}>
+            {editorState.mode === "rich_document" ? (
+              <div className="space-y-2">
+                <Label>{t("content")}</Label>
+                <RichTextEditor
+                  content={editorState.doc}
+                  placeholder={t("contentPlaceholder")}
+                  language={language}
+                  collapseStorageKey={
+                    initialData?.id
+                      ? `heading-collapse:writing:${initialData.id}`
+                      : null
+                  }
+                  onChange={(next) => {
+                    setDoc(next);
+                    if (!isBaselineReadyRef.current) return;
+                  }}
+                  onEditorReady={handleRichEditorReady}
+                  onImageUploadPendingChange={setImageUploading}
+                  onAutosave={
+                    initialData?.id && !previewHref
+                      ? handleRichAutosave
+                      : undefined
+                  }
+                />
+              </div>
+            ) : (
+              <QuestionSetBuilder
+                sections={editorState.sections}
+                onChange={setSections}
+                questionFeedback={questionFeedback}
+                onApplyAiSuggestion={applyQuestionAiSuggestion}
+                onSkipAiSuggestion={skipQuestionAiSuggestion}
+                onQuestionEdited={(questionId) =>
+                  setQuestionFeedback((current) =>
+                    clearQuestionFeedback(current, questionId),
+                  )
                 }
               />
-            </div>
-          ) : (
-            <QuestionSetBuilder
-              sections={editorState.sections}
-              onChange={setSections}
-              questionFeedback={questionFeedback}
-              onApplyAiSuggestion={applyQuestionAiSuggestion}
-              onSkipAiSuggestion={skipQuestionAiSuggestion}
-              onQuestionEdited={(questionId) =>
-                setQuestionFeedback((current) =>
-                  clearQuestionFeedback(current, questionId),
-                )
-              }
-            />
-          )}
+            )}
+          </ContentTransition>
         </CardContent>
       </Card>
 

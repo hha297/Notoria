@@ -6,7 +6,8 @@ import {
   type VocabularyNotesFormatInput,
   type VocabularyNotesFormatResult,
 } from "@/lib/vocabulary/ai-types";
-import { getLanguageByCode } from "@/lib/languages";
+import { WORKPLACE_LANGUAGES, getLanguageByCode } from "@/lib/languages";
+import { PARADIGM_AI_RULES } from "@/lib/editor/format/paradigm-ai-rules";
 
 function getOpenAIClient() {
   const apiKey = process.env.OPENAI_API_KEY?.trim();
@@ -25,44 +26,23 @@ function parseJsonContent(content: string | null | undefined) {
   }
 }
 
-const NOTES_FORMAT_PROMPT = `You restructure vocabulary NOTES for a language-learning app editor.
+function notesFormatSystemPrompt(): string {
+  return `You restructure vocabulary NOTES for a language-learning app editor.
 
-Goal: turn messy pasted notes into clean, copyable structured content — especially inflection / conjugation / case paradigms as TABLES.
+Goal: turn messy pasted notes into clean, copyable structured content. Convert a paradigm into a table only when the notes themselves contain that paradigm.
 
 Rules:
-1. Preserve the learner's information. Do not invent forms that are not in the notes.
-2. When notes look like a paradigm (cases, singular/plural, tenses, persons), convert them into ONE table.
-3. Preferred table headers for Finnish noun cases (when applicable):
-   - Sija | Yksikkö | Monikko
-   Or the equivalent labels already present in the notes / study language.
-4. Put the case/label in the first column. Set boldFirstColumn true for label columns.
-5. CRITICAL — pair singular and plural of the SAME case on ONE row:
-   - Row label = the case name only (Nominatiivi, Genetiivi, Partitiivi, Inessiivi, …).
-   - Yksikkö column = singular form of that case.
-   - Monikko column = plural form of that case.
-   - NEVER create separate rows like "Monikon genetiivi" or "Monikon partitiivi" when headers are Sija|Yksikkö|Monikko.
-   - NEVER put a singular form into the Monikko column.
-   - NEVER leave Yksikkö empty when the notes contain the singular form.
-   Example (Finnish "ilma"):
-   | Sija | Yksikkö | Monikko |
-   | Genetiivi | ilman | ilmojen |
-   | Partitiivi | ilmaa | ilmoja |
-   | Inessiivi | ilmassa | ilmoissa |
-   Wrong (do NOT do this):
-   | Genetiivi |  | ilman |
-   | Monikon genetiivi |  | ilmojen |
-6. Raw dumps often interleave labels and forms across lines — regroup by case using rule 5.
-7. Keep non-table notes as paragraph / heading / bulletList / orderedList blocks ONLY when that text already exists in the notes.
-8. Do NOT invent titles or headings. Especially do NOT add meta headings like:
-   - "Word – Noun Paradigm"
-   - "Ilma – Noun Paradigm"
-   - "Rauhallinen – Adjective Paradigm"
-   - study-language labels such as "Suomi" / "Finnish" as a heading
-   - any decorative title summarizing the table
+1. Preserve the learner's information. Do not invent forms that are unsupported by the notes. You MAY normalize morphology; that is analysis, not invention.
+2. When notes look like a paradigm for the study language, convert them into ONE table whose headers match that language and the notes. Do not force every language into the same columns or headers.
+3. Do not invent a table layout from another language. Use headers and columns that already appear in the notes / study language. If the notes are not a paradigm, keep paragraphs, headings, and lists.
+4. Put the category/label in the first column when the notes are a paradigm. Set boldFirstColumn true for label columns.
+5. Map each form to its actual grammatical category using linguistic analysis of the study language. Do not fill cells sequentially from top to bottom. Do not trust source labels blindly when a dump is long, repeated, or inconsistent.
+6. Keep non-table notes as paragraph / heading / bulletList / orderedList blocks ONLY when that text already exists in the notes.
+7. Do NOT invent titles or headings. Especially do NOT add meta headings like "Word – Noun Paradigm", study-language labels as a heading, or decorative titles summarizing the table.
    If the notes are only a paradigm dump, return the table alone (plus any genuine non-table lines that were already present).
-9. Do not wrap everything in a table if it is not tabular.
-10. Do NOT emit empty paragraphs, placeholder text, or blank filler blocks after tables or headings.
-11. Return JSON only:
+8. Do not wrap everything in a table if it is not tabular.
+9. Do NOT emit empty paragraphs, placeholder text, or blank filler blocks after tables or headings.
+10. Return JSON only:
 {
   "blocks": [
     { "type": "heading", "level": 1|2|3, "text": string },
@@ -77,8 +57,56 @@ Rules:
     }
   ]
 }
-12. Each table row must have the same number of cells as headers.
-13. No markdown. No commentary outside JSON.`;
+11. Each table row must have the same number of cells as headers.
+12. No markdown. No commentary outside JSON.
+
+${PARADIGM_AI_RULES}`;
+}
+
+/**
+ * Merge rows that share the same first-column label.
+ * Differing later cells become formA/formB (language-agnostic).
+ */
+export function mergeTableRowsByLabel(rows: string[][]): string[][] {
+  const order: string[] = [];
+  const merged = new Map<string, string[]>();
+  const unlabeled: string[][] = [];
+
+  for (const row of rows) {
+    const label = row[0]?.trim() ?? "";
+    if (!label) {
+      unlabeled.push(row);
+      continue;
+    }
+    const key = label.toLocaleLowerCase();
+    const existing = merged.get(key);
+    if (!existing) {
+      order.push(key);
+      merged.set(key, [...row]);
+      continue;
+    }
+    for (let i = 1; i < Math.max(existing.length, row.length); i += 1) {
+      existing[i] = mergeCellVariants(existing[i] ?? "", row[i] ?? "");
+    }
+    // Keep the original casing of the first-seen label.
+  }
+
+  return [...order.map((key) => merged.get(key)!), ...unlabeled];
+}
+
+function mergeCellVariants(left: string, right: string): string {
+  const parts: string[] = [];
+  const seen = new Set<string>();
+  for (const raw of [...left.split("/"), ...right.split("/")]) {
+    const value = raw.trim();
+    if (!value) continue;
+    const key = value.toLocaleLowerCase();
+    if (seen.has(key)) continue;
+    seen.add(key);
+    parts.push(value);
+  }
+  return parts.join("/");
+}
 
 /**
  * Ask AI to restructure vocabulary notes into typed blocks (tables when useful).
@@ -92,18 +120,20 @@ export async function formatVocabularyNotesWithAi(
     : null;
 
   const completion = await client.chat.completions.create({
-    model: "gpt-4o-mini",
-    temperature: 0.15,
+    model: "gpt-4o",
+    temperature: 0.1,
     max_tokens: 4_000,
     response_format: { type: "json_object" },
     messages: [
-      { role: "system", content: NOTES_FORMAT_PROMPT },
+      { role: "system", content: notesFormatSystemPrompt() },
       {
         role: "user",
         content: JSON.stringify({
           word: input.word?.trim() || null,
           studyLanguageHint: languageHint,
           notes: input.notes,
+          reminder:
+            "Merge same-label rows with formA/formB. Strip person/possessive endings. First column = category labels only.",
         }),
       },
     ],
@@ -170,30 +200,28 @@ function normalizeBlock(
   return {
     type: "table",
     headers,
-    rows,
+    rows: mergeTableRowsByLabel(rows),
     boldFirstColumn: block.boldFirstColumn !== false,
   };
 }
 
-/** Drop AI-invented titles like "Rauhallinen – Noun Paradigm" / lone language labels. */
+/** Drop AI-invented titles like "Word – Noun Paradigm" / lone language labels. */
 function isInventedParadigmHeading(text: string, word?: string | null) {
   const normalized = text.trim().toLowerCase();
   if (!normalized) return true;
 
-  if (
-    /\b(noun|adjective|verb|adverb)\s+paradigm\b/i.test(text) ||
-    /\bparadigma\b/i.test(text) ||
-    /\b(taivutus|taivutuskaava|sanaluokka)\b/i.test(text)
-  ) {
+  if (/\b(noun|adjective|verb|adverb)\s+paradigm\b/i.test(text)) {
     return true;
   }
 
-  // Lone language labels the model sometimes prepends.
-  if (
-    /^(suomi|finnish|english|englanti|vietnamese|tiếng việt|vietnam)$/i.test(
-      normalized,
-    )
-  ) {
+  // Lone study-language labels the model sometimes prepends.
+  const languageLabels = new Set(
+    WORKPLACE_LANGUAGES.flatMap((language) => [
+      language.name.trim().toLowerCase(),
+      language.code.trim().toLowerCase(),
+    ]),
+  );
+  if (languageLabels.has(normalized)) {
     return true;
   }
 

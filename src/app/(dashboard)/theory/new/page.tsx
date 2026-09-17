@@ -58,7 +58,7 @@ export default async function NewTheoryPage({
           description={t("formDescription")}
         />
       </div>
-      <TheoryEditor folderId={folderId} />
+      <TheoryEditor folderId={folderId} language={workspace.language} />
     </div>
   );
 }

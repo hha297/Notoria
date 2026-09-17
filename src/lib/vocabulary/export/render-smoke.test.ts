@@ -37,7 +37,7 @@ const tableNotes = JSON.stringify({
               content: [
                 {
                   type: "paragraph",
-                  content: [{ type: "text", text: "Sija" }],
+                  content: [{ type: "text", text: "Category" }],
                 },
               ],
             },
@@ -46,7 +46,7 @@ const tableNotes = JSON.stringify({
               content: [
                 {
                   type: "paragraph",
-                  content: [{ type: "text", text: "Yksikkö" }],
+                  content: [{ type: "text", text: "Form A" }],
                 },
               ],
             },
@@ -60,7 +60,7 @@ const tableNotes = JSON.stringify({
               content: [
                 {
                   type: "paragraph",
-                  content: [{ type: "text", text: "Nominatiivi" }],
+                  content: [{ type: "text", text: "Present" }],
                 },
               ],
             },
@@ -159,10 +159,10 @@ describe("vocabulary export document rendering", () => {
     expect(body.indexOf("talo")).toBeLessThan(body.indexOf("Välivuosi"));
     expect(body.indexOf("NOUN")).toBeLessThan(body.indexOf("kissa"));
     expect(body.indexOf("VERB")).toBeLessThan(body.indexOf("oppia"));
-    expect(body).toContain("Nominatiivi");
+    expect(body).toContain("Present");
     expect(body).toContain("Usage");
     expect(body).toContain("kerrostalo");
-    expect(body).not.toContain("Sija | Yksikkö");
+    expect(body).not.toContain("Category | Form A");
   });
 
   it("generates a large PDF without building a React document tree", async () => {

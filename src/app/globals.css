@@ -348,3 +348,63 @@
 .tutorial-spotlight-cutout {
   animation: tutorial-pulse 2.4s ease-in-out infinite;
 }
+
+/* Route / panel enter — short, non-blocking perceived responsiveness */
+@keyframes notoria-fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.notoria-page-enter,
+.notoria-content-enter,
+.notoria-route-loading {
+  animation: notoria-fade-up 160ms ease-out both;
+}
+
+@keyframes notoria-link-pending {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.notoria-link-pending {
+  display: inline-block;
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-inline-start: 0.35rem;
+  border-radius: 9999px;
+  background: currentColor;
+  opacity: 0;
+  flex-shrink: 0;
+  vertical-align: middle;
+}
+
+.notoria-link-pending[data-pending="true"] {
+  /* Delay avoids flash on instant/prefetched navigations */
+  animation: notoria-link-pending 120ms ease-out 100ms forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .notoria-page-enter,
+  .notoria-content-enter,
+  .notoria-route-loading,
+  .notoria-link-pending[data-pending="true"] {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .notoria-link-pending[data-pending="true"] {
+    opacity: 0.55;
+  }
+}
+
