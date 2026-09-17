@@ -49,7 +49,13 @@ export const exerciseAiWordSchema = z.object({
 export const exerciseAiRequestSchema = z.object({
   exerciseType: z.literal("fill-in-blank"),
   language: z.string().trim().min(2).max(16).optional().nullable(),
-  level: exerciseAiCefrSchema,
+  /** Legacy optional CEFR field — ignored for vocabulary selection; prefer `difficulty`. */
+  level: exerciseAiCefrSchema.optional(),
+  /** Session difficulty (easy → intensive). Controls how words are tested, not which words. */
+  difficulty: z
+    .enum(["easy", "medium", "hard", "intensive"])
+    .optional()
+    .nullable(),
   words: z.array(exerciseAiWordSchema).min(1).max(FILL_BLANK_AI_BATCH),
   /** Website UI locale for sentenceMeaning (not the study/workspace language). */
   uiLocale: z.enum(locales).optional(),

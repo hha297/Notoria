@@ -98,7 +98,15 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
 
     setSession(nextSession);
     saveSessionState(nextSession);
-  }, [workspaceId, filtersKey, filteredWordIdsKey, availableIds, filteredWords, filters, studyMode]);
+  }, [
+    workspaceId,
+    filtersKey,
+    filteredWordIdsKey,
+    availableIds,
+    filteredWords,
+    filters,
+    studyMode,
+  ]);
 
   useEffect(() => {
     if (session) {
@@ -169,6 +177,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
       filters,
       studyMode,
       softAvoidWordIds: prefs.softAvoidWordIds,
+      softPreferWordIds: prefs.softPreferWordIds,
     });
 
     setSessionComplete(false);
@@ -255,7 +264,15 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
           filters={filters}
           studyMode={studyMode}
           onFiltersChange={setFilters}
-          onStudyModeChange={setStudyMode}
+          onStudyModeChange={(mode) => {
+            if (
+              mode === "word-to-meaning" ||
+              mode === "meaning-to-word" ||
+              mode === "mixed"
+            ) {
+              setStudyMode(mode);
+            }
+          }}
           showStudyMode
         />
         <VocabularyEmpty variant="no-filtered" />
@@ -274,10 +291,17 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
         filters={filters}
         studyMode={studyMode}
         onFiltersChange={setFilters}
-        onStudyModeChange={setStudyMode}
+        onStudyModeChange={(mode) => {
+          if (
+            mode === "word-to-meaning" ||
+            mode === "meaning-to-word" ||
+            mode === "mixed"
+          ) {
+            setStudyMode(mode);
+          }
+        }}
         showStudyMode
       />
-
       {sessionComplete ? (
         <SessionCompleteCard
           title={t("sessionComplete")}

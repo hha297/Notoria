@@ -1,4 +1,9 @@
 import { FILL_BLANK_PLACEHOLDER } from "@/lib/exercises/ai-types";
+import {
+  getExerciseDifficultyProfile,
+  parseExerciseDifficulty,
+  type ExerciseDifficulty,
+} from "@/lib/exercises/difficulty";
 
 export const FILL_BLANK_GENERATOR_PROMPT = `You are an AI language-learning exercise generator.
 
@@ -22,11 +27,10 @@ Requirements:
    - Make the answer inferable from context without being trivially spoon-fed.
 9. Do not include the answer or the base word anywhere else in the sentence.
 10. Match the requested language. Do not translate into another language.
-11. Match the CEFR difficulty:
-    - A1/A2: short, simple sentences, common vocabulary, clear context
-    - B1/B2: more natural structure, slightly longer context
-    - C1/C2: more challenging context
-    Do not make an A2 exercise unnecessarily difficult — context should clarify, not overcomplicate.
+11. Follow exerciseDifficulty + fillBlankGuidance in the user payload exactly (Easy / Medium / Hard / Intensive).
+    Difficulty means how the *same* learner word is tested (context complexity / cognitive demand) — NOT selecting harder vocabulary and NOT longer/obscure/unnatural sentences.
+    Keep a clear, defensible correct answer. Never change the taught meaning just to feel harder.
+    NEVER introduce a new target word that was not provided in the input list.
 12. Prefer realistic everyday usage. Avoid artificial AI-sounding sentences.
 13. Vary sentence structure and context. If the same word appears more than once, write a clearly different sentence each time.
 14. Do not invent unnecessary facts. Do not change the vocabulary word or meaning.
@@ -38,6 +42,7 @@ Requirements:
 18. Prefer sentence-final punctuation attached right after the blank (e.g. "… ________.") — avoid leaving a lone period as a separate fragment.
 19. Return one exercise per input entry. Copy wordId from the input.
 20. Quality test: would a language teacher consider this a useful example for this exact word/meaning? If not, rewrite.
+21. Put the selected exerciseDifficulty id into the difficulty field of each exercise.
 
 Return structured JSON only:
 {
@@ -62,7 +67,8 @@ Do not include markdown.`;
 export function fillBlankUserPayload(input: {
   languageHint: string | null;
   languageCode: string | null;
-  level: string | null;
+  level?: string | null;
+  difficulty?: ExerciseDifficulty | null;
   uiLanguage: string;
   words: Array<{
     id: string;
@@ -73,14 +79,24 @@ export function fillBlankUserPayload(input: {
     avoidSentences?: string[];
   }>;
 }) {
+  const difficulty = parseExerciseDifficulty(
+    input.difficulty ?? null,
+    input.level
+      ? mapLegacyCefrToDifficulty(input.level)
+      : "medium",
+  );
+  const profile = getExerciseDifficultyProfile(difficulty);
+
   return {
     exerciseType: "fill-in-blank" as const,
     languageCode: input.languageCode,
     languageHint: input.languageHint,
     uiLanguage: input.uiLanguage,
-    cefrLevel: input.level ? input.level.toUpperCase() : null,
+    exerciseDifficulty: profile.id,
+    difficultyGuidance: profile.aiGuidance,
+    fillBlankGuidance: profile.fillBlankGuidance,
     reminder:
-      "Practice sentence/answer must be in languageHint. ALWAYS include sentenceMeaning in uiLanguage (website language), not the study language.",
+      "Practice sentence/answer must be in languageHint. ALWAYS include sentenceMeaning in uiLanguage (website language), not the study language. Obey difficultyGuidance and fillBlankGuidance. Target words must come from the provided list only. Difficulty controls sentence construction only — never swap targets.",
     words: input.words.map((word) => ({
       wordId: word.id,
       word: word.word,
@@ -90,4 +106,13 @@ export function fillBlankUserPayload(input: {
       avoidSentences: word.avoidSentences?.slice(0, 12) ?? [],
     })),
   };
+}
+
+function mapLegacyCefrToDifficulty(level: string): ExerciseDifficulty {
+  const normalized = level.trim().toLowerCase().replace(/^cefr-/, "");
+  if (normalized === "a1" || normalized === "a2") return "easy";
+  if (normalized === "b1") return "medium";
+  if (normalized === "b2") return "hard";
+  if (normalized === "c1" || normalized === "c2") return "intensive";
+  return "medium";
 }

@@ -2,7 +2,7 @@
 
 **Notoria** is a private web app for language learning. Each account owns its own data: vocabulary, writing, theory notes, exercises, listening lessons, and speaking sessions live in **language-specific workspaces**. The app is not social — no public profiles, no sharing feed, no multiplayer.
 
-Free users can collect words and practice with quizzes built from those words. **Notoria Pro** (€9.99 / month) unlocks the rest of the learning loop: AI writing help, AI fill-in-the-blank generation, **Form a Sentence** (AI grammar feedback), PDF/DOCX export, the full **Listening** module, and **Speaking** (live video call with an AI tutor).
+Free users can collect words and practice with quizzes built from those words. **Notoria Pro** (€9.99 / month) unlocks the rest of the learning loop: AI writing help, AI fill-in-the-blank generation, **AI exercise difficulty** (contextual Multiple Choice and Type the Answer), **Form a Sentence** (AI grammar feedback), PDF/DOCX export, the full **Listening** module, and **Speaking** (live video call with an AI tutor).
 
 ---
 
@@ -20,6 +20,7 @@ Access is **Admin or an active Pro subscription** (`active`, `trialing`, or `pas
 | Writing AI: Check / Improve / Grammar | Locked | Yes | Corrections on the learner’s own text |
 | Exercise modes from your examples | Yes | Yes | Practice still works from saved example sentences |
 | Fill in the Blank **Generate with AI** (10 new sentences) | Locked | Yes | Practice the word in *new* contexts, not memorized examples |
+| AI Contextual Multiple Choice & Type the Answer | Locked | Yes | Fill-in-the-blank practice from *your* vocabulary in the workspace language |
 | **Form a Sentence** (AI evaluation + save as example) | Locked (whole mode) | Yes | Produce full sentences with your words and get grammar / translation feedback |
 | Theory notes | Yes | Yes | Grammar/usage notebook for every user |
 | **Listening** (upload, transcript, practice) | Locked (whole module) | Yes | Turns real audio/video into a lesson |
@@ -92,16 +93,34 @@ Five study modes under `/exercises`, plus **Form a Sentence** (Pro). Quiz items 
 
 | Mode | Description |
 | ---- | ----------- |
-| **Flashcards** | Flip cards, keyboard shortcuts; Again / Hard / Good / Easy update learning status (SRS) |
-| **Fill in the Blank** | Free: blanks in **your example sentences**. Pro: **Generate with AI** invents 10 new sentences per batch (CEFR A1–C2), then 10 more after a round. Inflected answers allowed when grammar requires them |
-| **Multiple Choice** | Word ↔ meaning; distractors from other workspace words |
-| **Match Pairs** | Quizlet-style boards |
-| **Type the Answer** | Type the word or meaning with instant feedback |
-| **Form a Sentence (Pro)** | Write a full sentence with a saved word; AI checks grammar/usage, suggests corrections, provides a meaning/translation, and optionally saves the sentence as a vocabulary example. Free users see a locked card that opens the upgrade modal |
+| **Flashcards** | Flip cards, keyboard shortcuts; Again / Hard / Good / Easy update learning status (SRS). No exercise-difficulty selector. |
+| **Fill in the Blank** | Free: blanks in **your example sentences**. Pro: **Generate with AI** invents 10 new sentences per batch from your selected words, with **Easy / Medium / Hard / Intensive** controlling sentence complexity (not which words are chosen). |
+| **Multiple Choice** | Three study modes (see below). Filters: part of speech, learning status, tags. Difficulty applies only to **Contextual**. |
+| **Match Pairs** | Quizlet-style boards. No exercise-difficulty selector. |
+| **Type the Answer** | Three study modes: **Word → Meaning** / **Meaning → Word** (deterministic, free); **Contextual** (Pro AI fill-in-the-blank typing in the workspace language, Easy–Intensive). |
+| **Form a Sentence (Pro)** | Write a full sentence with a saved word; AI checks grammar/usage. No exercise-difficulty selector in the current implementation. |
 
-Shared filters: part of speech, learning status, tags. Study direction (word → meaning / meaning → word / mixed) where it applies.
+#### Multiple Choice
 
-**Impact:** free users can still drill. Pro FIB and Form a Sentence stop overfitting to memorized examples and test whether the learner can *use* the word in production.
+| Study mode | Access | How it works |
+| ---------- | ------ | ------------ |
+| **Word → Meaning** | Free | Deterministic: show the saved word, pick the meaning. No AI. |
+| **Meaning → Word** | Free | Deterministic: show the meaning, pick the word. No AI. |
+| **Contextual** | Pro | AI generates fill-in-the-blank questions from your filtered vocabulary in the **active workspace language**. Easy / Medium / Hard / Intensive change context, clues, and distractors — not which words are chosen. Target answers never invent vocabulary outside your selection. Used by Multiple Choice (pick an option) and Type the Answer (type the form). |
+
+Filters (all modes): part of speech, learning status, tags. Difficulty is shown only for Contextual and is **not** used as a CEFR vocabulary filter.
+
+#### Exercise difficulty (Pro AI)
+
+Available in **Fill in the Blank**, **Multiple Choice (Contextual)**, and **Type the Answer (Contextual)**:
+
+- Levels: **Easy**, **Medium**, **Hard**, **Intensive**
+- Difficulty changes **how** your existing vocabulary is tested (context, clue strength, distractors) — it does **not** swap in higher-CEFR words or introduce new target vocabulary
+- Flashcards, Match Pairs, and Form a Sentence do not use this control
+
+Shared filters: part of speech, learning status, tags. Study direction (word → meaning / meaning → word / mixed or Contextual) where it applies.
+
+**Impact:** free users can still drill. Pro AI tests whether the learner can *use* their own words in new contexts without inventing a new word list.
 
 ### Listening (Pro)
 

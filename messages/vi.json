@@ -358,6 +358,17 @@
     "updated": "Đã cập nhật",
     "backToStudio": "Về trang luyện tập",
     "studyMode": "Kiểu học",
+    "difficulty": {
+      "label": "Độ khó",
+      "easy": "Dễ",
+      "medium": "Trung bình",
+      "hard": "Khó",
+      "intensive": "Tăng cường",
+      "easyHint": "Gợi ý rõ và luyện tập trực tiếp với từ của bạn.",
+      "mediumHint": "Kết hợp câu hỏi trực tiếp và theo ngữ cảnh từ từ vựng của bạn.",
+      "hardHint": "Nhiều ngữ cảnh hơn, gợi ý ít rõ hơn — vẫn là từ của bạn.",
+      "intensiveHint": "Ngữ cảnh tinh tế và suy luận sâu hơn — vẫn là từ của bạn."
+    },
     "sources": {
       "label": "Nguồn bài tập",
       "vocabulary": "Từ vựng",
@@ -620,6 +631,7 @@
       "emptyTitle": "Tạo câu điền chỗ trống",
       "emptyDescription": "Tạo 10 câu mới từ từ vựng của bạn. Mỗi câu được viết từ đầu — không dùng lại câu ví dụ có sẵn.",
       "generated": "Do AI tạo",
+      "enriching": "Đang trộn câu AI vào các thẻ tiếp theo…",
       "unavailable": "Hiện không tạo được câu hỏi. Thử lại sau.",
       "forbidden": "Tạo bài tập bằng AI dành cho Pro.",
       "upgradeHint": "Tạo bài tập bằng AI dành cho Pro.",
@@ -635,6 +647,15 @@
     "multipleChoice": {
       "questionWord": "Từ này nghĩa là gì?",
       "questionMeaning": "Từ nào khớp với nghĩa này?",
+      "questionContext": "Chọn từ phù hợp",
+      "modes": {
+        "contextual": "Ngữ cảnh"
+      },
+      "contextualLanguageHint": "Câu hỏi được tạo bằng {language} (ngôn ngữ workspace).",
+      "contextualEmptyTitle": "Tạo câu hỏi ngữ cảnh",
+      "contextualEmptyDescription": "Tạo câu trắc nghiệm điền chỗ trống từ từ vựng của bạn.",
+      "contextualProDescription": "Câu hỏi ngữ cảnh bằng AI dành cho Pro.",
+      "unlockContextual": "Mở khóa với Pro",
       "correct": "Đúng rồi!",
       "incorrect": "Đáp án đúng: {answer}",
       "progress": "{current} / {total}",
@@ -655,6 +676,14 @@
     "typeAnswer": {
       "questionWord": "Nghĩa là gì?",
       "questionMeaning": "Từ nào khớp nghĩa này?",
+      "questionContext": "Điền từ đúng",
+      "modes": {
+        "contextual": "Ngữ cảnh"
+      },
+      "contextualEmptyTitle": "Tạo câu hỏi ngữ cảnh",
+      "contextualEmptyDescription": "Tạo câu điền chỗ trống để gõ đáp án từ từ vựng của bạn.",
+      "contextualProDescription": "Câu hỏi ngữ cảnh bằng AI dành cho Pro.",
+      "unlockContextual": "Mở khóa với Pro",
       "placeholder": "Gõ đáp án…",
       "yourAnswer": "Bạn đã gõ",
       "correctAnswer": "Đáp án đúng",
@@ -1662,6 +1691,10 @@
         "fillBlank": {
           "capability": "Điền chỗ trống bằng AI",
           "impact": "Câu mới, không phải thuộc ví dụ cũ"
+        },
+        "exerciseDifficulty": {
+          "capability": "Trắc nghiệm & gõ đáp án ngữ cảnh AI",
+          "impact": "Điền chỗ trống từ từ vựng của bạn (Dễ–Tăng cường)"
         },
         "formSentence": {
           "capability": "Đặt câu (phản hồi AI)",

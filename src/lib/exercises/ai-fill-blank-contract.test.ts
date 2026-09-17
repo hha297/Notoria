@@ -44,11 +44,12 @@ function flashcard(overrides: Partial<FlashcardWord> & Pick<FlashcardWord, "id" 
 }
 
 describe("fill-in-blank AI request schema", () => {
-  it("accepts a 10-word fill-in-blank request with CEFR and avoid sentences", () => {
+  it("accepts a 10-word fill-in-blank request with difficulty and avoid sentences", () => {
     const parsed = exerciseAiRequestSchema.parse({
       exerciseType: "fill-in-blank",
       language: "fi",
       level: "A2",
+      difficulty: "medium",
       words: Array.from({ length: 10 }, (_, index) => ({
         id: `word-${index}`,
         word: "kaveri",
@@ -59,6 +60,7 @@ describe("fill-in-blank AI request schema", () => {
 
     expect(parsed.exerciseType).toBe("fill-in-blank");
     expect(parsed.level).toBe("a2");
+    expect(parsed.difficulty).toBe("medium");
     expect(parsed.words).toHaveLength(FILL_BLANK_AI_BATCH);
     expect(parsed.words[0]?.avoidSentences).toEqual([
       "Minun kaverini asuu Helsingissä.",
@@ -93,7 +95,7 @@ describe("fill-in-blank AI prompt contract", () => {
     expect(FILL_BLANK_GENERATOR_PROMPT).toContain(
       "Do NOT reuse existing example sentences or previous exercise questions",
     );
-    expect(FILL_BLANK_GENERATOR_PROMPT).toContain("CEFR");
+    expect(FILL_BLANK_GENERATOR_PROMPT).toContain("exerciseDifficulty");
     expect(FILL_BLANK_GENERATOR_PROMPT).toContain("instruction");
     expect(FILL_BLANK_GENERATOR_PROMPT).toContain(
       "Do NOT invent a specific grammar topic",
@@ -102,6 +104,22 @@ describe("fill-in-blank AI prompt contract", () => {
     expect(FILL_BLANK_GENERATOR_PROMPT).toContain(
       "Tämä päivä on ________.",
     );
+  });
+
+  it("includes structured difficulty guidance in the user payload", () => {
+    const payload = fillBlankUserPayload({
+      languageHint: "Suomi",
+      languageCode: "fi",
+      level: "a2",
+      difficulty: "hard",
+      uiLanguage: "English",
+      words: [kaveri],
+    });
+
+    expect(payload.exerciseDifficulty).toBe("hard");
+    expect(payload).not.toHaveProperty("sentenceComplexityHint");
+    expect(payload.difficultyGuidance).toContain("Hard");
+    expect(payload.fillBlankGuidance).toContain("Fill in the Blank");
   });
 
   it("sends examples only as sentences to avoid, never as a source list", () => {
@@ -113,6 +131,7 @@ describe("fill-in-blank AI prompt contract", () => {
       words: [kaveri],
     });
 
+    expect(payload.exerciseDifficulty).toBe("easy");
     expect(payload.words[0]).toEqual({
       wordId: "word-kaveri",
       word: "kaveri",

@@ -2,6 +2,7 @@
 
 import { useMemo } from "react";
 import { useTranslations } from "next-intl";
+import { Badge } from "@/components/ui/badge";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
 import {
@@ -12,6 +13,9 @@ import {
   TAG_PICKER_GROUPS,
 } from "@/lib/vocabulary-tags";
 import type { FlashcardFilters, FlashcardStudyMode, FlashcardWord } from "@/types/flashcards";
+import type { MultipleChoiceStudyMode } from "@/lib/exercises/multiple-choice";
+import type { TypeAnswerStudyMode } from "@/lib/exercises/type-answer";
+import { cn } from "@/lib/utils";
 
 const STATUS_OPTIONS = ["NEW", "LEARNING", "REVIEW", "MASTERED"] as const;
 
@@ -19,9 +23,13 @@ type VocabularyFiltersBarProps = {
   words: FlashcardWord[];
   filters: FlashcardFilters;
   onFiltersChange: (filters: FlashcardFilters) => void;
-  studyMode?: FlashcardStudyMode;
-  onStudyModeChange?: (mode: FlashcardStudyMode) => void;
+  studyMode?: FlashcardStudyMode | MultipleChoiceStudyMode | TypeAnswerStudyMode;
+  onStudyModeChange?: (mode: string) => void;
   showStudyMode?: boolean;
+  /** Flashcards keep Mixed; MC / Type the Answer show Contextual. */
+  studyModeVariant?: "standard" | "with-contextual";
+  /** When Contextual is Pro-locked, show Pro badge. */
+  contextualPro?: boolean;
 };
 
 export function VocabularyFiltersBar({
@@ -31,9 +39,13 @@ export function VocabularyFiltersBar({
   studyMode = "word-to-meaning",
   onStudyModeChange,
   showStudyMode = false,
+  studyModeVariant = "standard",
+  contextualPro = false,
 }: VocabularyFiltersBarProps) {
   const t = useTranslations("exercises");
   const tFlash = useTranslations("flashcards");
+  const tMc = useTranslations("exercises.multipleChoice");
+  const tBilling = useTranslations("billing");
   const tTags = useTranslations("tags");
   const tPos = useTranslations("tags.pos");
   const tVocab = useTranslations("vocabulary");
@@ -84,7 +96,7 @@ export function VocabularyFiltersBar({
           <ToggleGroup
             value={[studyMode]}
             onValueChange={(value) => {
-              const next = value[0] as FlashcardStudyMode | undefined;
+              const next = value[0];
               if (next) onStudyModeChange(next);
             }}
             className="flex w-full flex-wrap gap-2"
@@ -95,9 +107,29 @@ export function VocabularyFiltersBar({
             <ToggleGroupItem value="meaning-to-word" className="flex-1 cursor-pointer">
               {tFlash("modes.meaningToWord")}
             </ToggleGroupItem>
-            <ToggleGroupItem value="mixed" className="flex-1 cursor-pointer">
-              {tFlash("modes.mixed")}
-            </ToggleGroupItem>
+            {studyModeVariant === "with-contextual" ? (
+              <ToggleGroupItem
+                value="contextual"
+                className={cn(
+                  "flex-1 cursor-pointer gap-1.5",
+                  contextualPro && "data-[state=on]:bg-accent-lime/20",
+                )}
+              >
+                {tMc("modes.contextual")}
+                {contextualPro ? (
+                  <Badge
+                    variant="secondary"
+                    className="bg-accent-lime/25 px-1.5 py-0 text-[10px] font-semibold uppercase tracking-wide text-ink"
+                  >
+                    {tBilling("proBadge")}
+                  </Badge>
+                ) : null}
+              </ToggleGroupItem>
+            ) : (
+              <ToggleGroupItem value="mixed" className="flex-1 cursor-pointer">
+                {tFlash("modes.mixed")}
+              </ToggleGroupItem>
+            )}
           </ToggleGroup>
         </div>
       )}

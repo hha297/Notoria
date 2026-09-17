@@ -36,7 +36,11 @@ export default async function MultipleChoicePage() {
         </Link>
         <PageHeader eyebrow={t("title")} title={t("types.multiple-choice.label")} highlight={t("practice")} description={t("types.multiple-choice.description")} />
       </div>
-      <MultipleChoiceSession workspaceId={workspace.id} words={words} />
+      <MultipleChoiceSession
+        workspaceId={workspace.id}
+        words={words}
+        language={workspace.language}
+      />
     </div>
   );
 }

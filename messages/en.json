@@ -358,6 +358,17 @@
     "updated": "Updated",
     "backToStudio": "Back to exercises",
     "studyMode": "Study mode",
+    "difficulty": {
+      "label": "Difficulty",
+      "easy": "Easy",
+      "medium": "Medium",
+      "hard": "Hard",
+      "intensive": "Intensive",
+      "easyHint": "Clear clues and straightforward practice with your words.",
+      "mediumHint": "Mix of direct and contextual questions using your vocabulary.",
+      "hardHint": "More context and less obvious clues — still your words.",
+      "intensiveHint": "Nuanced context and stronger reasoning — still your words."
+    },
     "sources": {
       "label": "Exercise source",
       "vocabulary": "Vocabulary",
@@ -620,6 +631,7 @@
       "emptyTitle": "Generate fill-in-the-blank questions",
       "emptyDescription": "Create 10 new sentences from your vocabulary. Every sentence is written from scratch — existing examples are not reused.",
       "generated": "AI generated",
+      "enriching": "Mixing AI questions into upcoming cards…",
       "unavailable": "Could not generate questions right now. Please try again later.",
       "forbidden": "AI exercise generation is available with Pro.",
       "upgradeHint": "AI exercise generation is available with Pro.",
@@ -635,6 +647,15 @@
     "multipleChoice": {
       "questionWord": "What is the meaning of this word?",
       "questionMeaning": "Which word matches this meaning?",
+      "questionContext": "Choose the word that fits",
+      "modes": {
+        "contextual": "Contextual"
+      },
+      "contextualLanguageHint": "Questions are generated in {language} (workspace language).",
+      "contextualEmptyTitle": "Generate contextual questions",
+      "contextualEmptyDescription": "Create fill-in-the-blank multiple choice questions from your vocabulary.",
+      "contextualProDescription": "Contextual AI questions are available with Pro.",
+      "unlockContextual": "Unlock with Pro",
       "correct": "Correct!",
       "incorrect": "Correct answer: {answer}",
       "progress": "{current} / {total}",
@@ -655,6 +676,14 @@
     "typeAnswer": {
       "questionWord": "What is the meaning?",
       "questionMeaning": "Which word matches this meaning?",
+      "questionContext": "Complete with the correct word",
+      "modes": {
+        "contextual": "Contextual"
+      },
+      "contextualEmptyTitle": "Generate contextual questions",
+      "contextualEmptyDescription": "Create fill-in-the-blank typing prompts from your vocabulary.",
+      "contextualProDescription": "Contextual AI questions are available with Pro.",
+      "unlockContextual": "Unlock with Pro",
       "placeholder": "Type your answer…",
       "yourAnswer": "Your answer",
       "correctAnswer": "Correct answer",
@@ -1842,6 +1871,10 @@
         "fillBlank": {
           "capability": "AI fill-in-the-blank",
           "impact": "New sentences, not memorized examples"
+        },
+        "exerciseDifficulty": {
+          "capability": "AI Contextual MC & Type the Answer",
+          "impact": "Fill-in-the-blank practice from your vocabulary at Easy–Intensive"
         },
         "formSentence": {
           "capability": "Form a Sentence (AI feedback)",
