@@ -301,27 +301,27 @@
       "c2": "C2"
     },
     "topic": {
-      "daily": "Everyday",
-      "home": "Home",
-      "food": "Food",
-      "travel": "Travel",
-      "work": "Work",
-      "people": "People",
-      "feelings": "Feelings",
-      "culture": "Culture",
-      "school": "School",
-      "business": "Business",
-      "technology": "Technology",
-      "health": "Health",
-      "shopping": "Shopping",
-      "family": "Family",
-      "nature": "Nature",
-      "sports": "Sports"
+      "everyday_life": "Everyday life",
+      "home_housing": "Home and Housing",
+      "food_drink": "Food and Drink",
+      "travel": "Travelling",
+      "transport_mobility": "Transport and Mobility",
+      "work_working_life": "Work and Working Life",
+      "education_studying": "Education and Studying",
+      "health_wellbeing": "Health and Well-being",
+      "services_shopping": "Services and Shopping",
+      "people_family_relationships": "People, Family and Relationships",
+      "feelings_opinions_experiences": "Feelings, Opinions and Experiences",
+      "culture_leisure": "Culture and Free Time",
+      "nature_environment": "Nature and the Environment",
+      "society_community": "Society and Community"
     },
     "grammar": {
       "formal": "Formal",
       "informal": "Informal",
+      "spoken": "Spoken / Colloquial",
       "slang": "Slang",
+      "academic": "Academic",
       "idiom": "Idiom",
       "grammar": "Grammar",
       "expression": "Expression"
@@ -775,16 +775,6 @@
         "b2": "B2",
         "c1": "C1",
         "c2": "C2"
-      },
-      "topics": {
-        "travel": "Travel",
-        "work": "Work",
-        "daily": "Daily life",
-        "food": "Food",
-        "shopping": "Shopping",
-        "home": "Home",
-        "people": "People",
-        "culture": "Culture"
       },
       "formality": {
         "formal": "Formal",
@@ -1603,16 +1593,6 @@
         "c1": "C1",
         "c2": "C2"
       },
-      "topics": {
-        "travel": "Travel",
-        "work": "Work",
-        "daily": "Daily life",
-        "food": "Food",
-        "shopping": "Shopping",
-        "home": "Home",
-        "people": "People",
-        "culture": "Culture"
-      },
       "formality": {
         "formal": "Formal",
         "informal": "Informal",
@@ -1711,16 +1691,6 @@
         "b2": "B2",
         "c1": "C1",
         "c2": "C2"
-      },
-      "topics": {
-        "travel": "Travel",
-        "work": "Work",
-        "daily": "Daily life",
-        "food": "Food",
-        "shopping": "Shopping",
-        "home": "Home",
-        "people": "People",
-        "culture": "Culture"
       }
     },
     "call": {

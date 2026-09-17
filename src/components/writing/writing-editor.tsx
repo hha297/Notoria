@@ -63,11 +63,11 @@ import {
   WRITING_CEFR_LEVELS,
   WRITING_FORMALITY,
   WRITING_TOPICS,
-  isKnownWritingTopic,
   type WritingCefr,
   type WritingFormality,
   type WritingMeta,
 } from "@/lib/writing/meta";
+import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 import type { ExerciseFormValues } from "@/schemas/exercise";
 
 type WritingEditorProps = {
@@ -100,6 +100,7 @@ export function WritingEditor({
   const queryClient = useQueryClient();
   const t = useTranslations("writing");
   const tMeta = useTranslations("writing.meta");
+  const tTags = useTranslations("tags");
   const tCommon = useTranslations("common");
   const type = initialData?.type ?? exerciseType;
 
@@ -575,9 +576,9 @@ export function WritingEditor({
                 >
                   <SelectValue placeholder={tMeta("topicPlaceholder")}>
                     {editorState.meta.topic
-                      ? isKnownWritingTopic(editorState.meta.topic)
-                        ? tMeta(`topics.${editorState.meta.topic}`)
-                        : editorState.meta.topic
+                      ? resolveTopicLabel(editorState.meta.topic, (key) =>
+                          tTags(key),
+                        )
                       : tMeta("none")}
                   </SelectValue>
                 </SelectTrigger>
@@ -585,7 +586,7 @@ export function WritingEditor({
                   <SelectItem value="none">{tMeta("none")}</SelectItem>
                   {WRITING_TOPICS.map((topic) => (
                     <SelectItem key={topic} value={topic}>
-                      {tMeta(`topics.${topic}`)}
+                      {resolveTopicLabel(topic, (key) => tTags(key))}
                     </SelectItem>
                   ))}
                 </SelectContent>

@@ -30,10 +30,10 @@ import {
   splitListeningFilename,
 } from "@/lib/listening/utils";
 import {
-  isKnownWritingTopic,
   type WritingCefr,
   type WritingFormality,
 } from "@/lib/writing/meta";
+import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 
 type ListeningLessonCardProps = {
   lesson: ListeningLessonListItem;
@@ -54,6 +54,7 @@ export function ListeningLessonCard({
 }: ListeningLessonCardProps) {
   const t = useTranslations("listening");
   const tMeta = useTranslations("listening.meta");
+  const tTags = useTranslations("tags");
   const tc = useTranslations("common");
   const router = useRouter();
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -156,9 +157,9 @@ export function ListeningLessonCard({
           <CardDescription className="flex flex-wrap items-center gap-1.5 text-sm">
             {lesson.topic ? (
               <span>
-                {isKnownWritingTopic(lesson.topic)
-                  ? tMeta(`topics.${lesson.topic}`)
-                  : lesson.topic}
+                {lesson.topic
+                  ? resolveTopicLabel(lesson.topic, (key) => tTags(key))
+                  : null}
               </span>
             ) : null}
             {lesson.topic && lesson.cefrLevel ? <span aria-hidden="true">·</span> : null}

@@ -7,16 +7,16 @@ import {
 } from "@/lib/exercises/exercise-instruction";
 
 const source = `
-Monikon partitiivi – adjektiivit
-Kirjoita lause, jossa adjektiivi on monikon partitiivissa.
-a. makea:
-b. kaunis:
+Plural adjectives
+Write a sentence where the adjective is in the plural form.
+a. sweet:
+b. beautiful:
 `;
 
 describe("exercise instruction fidelity", () => {
   it("keeps grounded source instructions", () => {
     const instruction =
-      "Kirjoita lause, jossa adjektiivi on monikon partitiivissa.";
+      "Write a sentence where the adjective is in the plural form.";
     expect(instructionGroundedInSource(instruction, source)).toBe(true);
     expect(
       resolveImportInstruction({ instruction, sourceText: source }),
@@ -24,7 +24,7 @@ describe("exercise instruction fidelity", () => {
   });
 
   it("rejects invented grammar instructions", () => {
-    const invented = "Write the adjective in the Finnish plural partitive case.";
+    const invented = "Write the adjective in the advanced dual instrumental case.";
     expect(instructionGroundedInSource(invented, source)).toBe(false);
     expect(
       resolveImportInstruction({ instruction: invented, sourceText: source }),
@@ -39,9 +39,9 @@ describe("exercise instruction fidelity", () => {
   it("detects write-a-sentence tasks", () => {
     expect(
       isWriteSentenceTask(
-        "Kirjoita lause, jossa adjektiivi on monikon partitiivissa.",
+        "Write a sentence where the adjective is in the plural form.",
       ),
     ).toBe(true);
-    expect(isWriteSentenceTask("T-monikko")).toBe(false);
+    expect(isWriteSentenceTask("Fill in the blank.")).toBe(false);
   });
 });

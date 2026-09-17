@@ -16,6 +16,7 @@ import {
 } from "@/lib/exercises/contextual-ai-types";
 import type { ExerciseDifficulty } from "@/lib/exercises/difficulty";
 import { promptMatchesDifficulty } from "@/lib/exercises/prompt-matches-difficulty";
+import { resolveValidBlankMeaningHint } from "@/lib/exercises/blank-hint";
 import {
   answersMatchAny,
   normalizeMeaningKey,
@@ -145,6 +146,13 @@ function validateMc(
   if (!isRelatedTargetForm(rawAnswerForm, word.word)) return null;
   if (!promptMatchesDifficulty(prompt, difficulty)) return null;
 
+  const meaningHint = resolveValidBlankMeaningHint({
+    meaning: word.meaning,
+    answer: rawAnswerForm,
+    baseWord,
+  });
+  if (!meaningHint) return null;
+
   const correctOption = baseWord;
   const answerForm = applyAnswerFormCasingForBlank(prompt, rawAnswerForm);
   const options = buildExactMcOptions(
@@ -195,6 +203,13 @@ function validateTypeAnswer(
   }
   if (!isRelatedTargetForm(rawAnswer, word.word)) return null;
   if (!promptMatchesDifficulty(prompt, difficulty)) return null;
+
+  const meaningHint = resolveValidBlankMeaningHint({
+    meaning: word.meaning,
+    answer: rawAnswer,
+    baseWord: word.word,
+  });
+  if (!meaningHint) return null;
 
   const answer = applyAnswerFormCasingForBlank(prompt, rawAnswer);
   return {

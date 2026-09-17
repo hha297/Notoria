@@ -27,10 +27,12 @@ import { DescriptionField } from "@/components/form/description-field";
 import { createSpeakingSession } from "@/lib/actions/speaking";
 import { isSpeakingErrorCode } from "@/lib/speaking/errors";
 import {
+  DEFAULT_TOPIC_ID,
   WRITING_CEFR_LEVELS,
   WRITING_TOPICS,
   type WritingCefr,
 } from "@/lib/writing/meta";
+import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 
 type NewSpeakingDialogProps = {
   open: boolean;
@@ -43,18 +45,19 @@ export function NewSpeakingDialog({
 }: NewSpeakingDialogProps) {
   const t = useTranslations("speaking");
   const tMeta = useTranslations("speaking.meta");
+  const tTags = useTranslations("tags");
   const tc = useTranslations("common");
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [cefrLevel, setCefrLevel] = useState("b1");
-  const [topic, setTopic] = useState("daily");
+  const [topic, setTopic] = useState(DEFAULT_TOPIC_ID);
   const [notes, setNotes] = useState("");
   const [isPending, startTransition] = useTransition();
 
   function resetForm() {
     setTitle("");
     setCefrLevel("b1");
-    setTopic("daily");
+    setTopic(DEFAULT_TOPIC_ID);
     setNotes("");
   }
 
@@ -147,13 +150,13 @@ export function NewSpeakingDialog({
               >
                 <SelectTrigger className="h-10! w-full rounded-md bg-background px-3 data-[size=default]:h-10!">
                   <SelectValue>
-                    {tMeta(`topics.${topic as (typeof WRITING_TOPICS)[number]}`)}
+                    {resolveTopicLabel(topic, (key) => tTags(key))}
                   </SelectValue>
                 </SelectTrigger>
                 <SelectContent>
                   {WRITING_TOPICS.map((item) => (
                     <SelectItem key={item} value={item}>
-                      {tMeta(`topics.${item}`)}
+                      {resolveTopicLabel(item, (key) => tTags(key))}
                     </SelectItem>
                   ))}
                 </SelectContent>

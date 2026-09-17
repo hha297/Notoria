@@ -11,8 +11,7 @@ export const CONTEXTUAL_MC_GENERATOR_PROMPT = `You generate Contextual Multiple 
 
 CRITICAL — study / workspace language:
 - The practice sentence (prompt) MUST be written entirely in studyLanguage (languageHint / languageCode).
-- If studyLanguage is Finnish (fi / Suomi), write Finnish sentences — NEVER English frames.
-- If studyLanguage is English, write English sentences.
+- Never write the sentence in a different language than studyLanguage.
 - Options (correctOption + distractors) are the learner's vocabulary forms in the study language.
 - sentenceMeaning is the ONLY field written in uiLanguage (website interface language).
 
@@ -23,7 +22,7 @@ CRITICAL — target vocabulary + grammatical form:
 - Give each exercise a genuinely different context (not a near-paraphrase of another item in the batch).
 - ALWAYS store BOTH fields (never omit answerForm):
   - baseWord: the learner's saved vocabulary form (dictionary/base), same as correctOption
-  - answerForm: the EXACT surface form that replaces ${CONTEXTUAL_BLANK} — including the required case/ending/number/tense (e.g. base "hana" → "hanasta" / "hanassa" / "hanan" / "hanalle" as the sentence requires)
+  - answerForm: the EXACT surface form that replaces ${CONTEXTUAL_BLANK} — including required case/ending/number/tense when grammar needs it
 - Do NOT put the bare dictionary form in the blank when grammar requires another form.
 - answerForm casing: lowercase mid-sentence; capitalize only when the blank is the first word of the sentence (or starts a new sentence). Do not capitalize just because the vocabulary entry is stored capitalized.
 - correctOption MUST equal baseWord (the option the learner clicks).
@@ -70,8 +69,7 @@ export const CONTEXTUAL_TYPE_ANSWER_GENERATOR_PROMPT = `You generate Contextual 
 
 CRITICAL — study / workspace language:
 - The practice sentence (prompt) MUST be written entirely in studyLanguage (languageHint / languageCode).
-- If studyLanguage is Finnish (fi / Suomi), write Finnish sentences — NEVER English frames.
-- If studyLanguage is English, write English sentences.
+- Never write the sentence in a different language than studyLanguage.
 - sentenceMeaning is the ONLY field written in uiLanguage (website interface language).
 
 CRITICAL — target vocabulary + grammatical form:

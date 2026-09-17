@@ -19,6 +19,7 @@ import { DeleteFolderDialog } from "@/components/folders/delete-folder-dialog";
 import { FolderDndProvider } from "@/components/folders/folder-dnd";
 import { FolderNameDialog } from "@/components/folders/folder-name-dialog";
 import { MoveToFolderDialog } from "@/components/folders/move-to-folder-dialog";
+import { useInvalidateWorkspaceQueries } from "@/hooks/use-invalidate-workspace-queries";
 import {
   createFolder,
   deleteFolder,
@@ -78,6 +79,7 @@ export function useFolderWorkspace() {
 }
 
 type FolderWorkspaceProps = {
+  workspaceId: string;
   section: FolderSection;
   folders: FolderListItem[];
   currentFolderId: string | null;
@@ -90,6 +92,7 @@ type FolderWorkspaceProps = {
 };
 
 export function FolderWorkspace({
+  workspaceId,
   section,
   folders,
   currentFolderId,
@@ -103,6 +106,12 @@ export function FolderWorkspace({
   const t = useTranslations("folders");
   const te = useTranslations("errors");
   const router = useRouter();
+  const {
+    invalidateFolders,
+    invalidateWriting,
+    invalidateTheory,
+    invalidateListening,
+  } = useInvalidateWorkspaceQueries(workspaceId);
   const [internalCreateOpen, setInternalCreateOpen] = useState(false);
   const [renameTarget, setRenameTarget] = useState<FolderListItem | null>(null);
   const [deleteTarget, setDeleteTarget] = useState<FolderListItem | null>(null);
@@ -178,6 +187,21 @@ export function FolderWorkspace({
     return te("generic");
   }
 
+  function invalidateSectionItems() {
+    if (section === "writing") invalidateWriting();
+    else if (section === "theory") invalidateTheory();
+    else if (section === "listening") invalidateListening();
+  }
+
+  /** Folder lists come from TanStack Query; router.refresh alone leaves them stale. */
+  function refreshFolderQueries(options?: { itemsChanged?: boolean }) {
+    invalidateFolders(section);
+    if (options?.itemsChanged) {
+      invalidateSectionItems();
+    }
+    router.refresh();
+  }
+
   function handleCreate(name: string) {
     startTransition(async () => {
       try {
@@ -188,7 +212,7 @@ export function FolderWorkspace({
         });
         toast.success(t("created"));
         setCreateOpen(false);
-        router.refresh();
+        refreshFolderQueries();
       } catch (error) {
         toast.error(errorMessage(error));
       }
@@ -202,7 +226,7 @@ export function FolderWorkspace({
         await renameFolder({ id: renameTarget.id, name });
         toast.success(t("renamed"));
         setRenameTarget(null);
-        router.refresh();
+        refreshFolderQueries();
       } catch (error) {
         toast.error(errorMessage(error));
       }
@@ -221,7 +245,8 @@ export function FolderWorkspace({
         if (deletingCurrent) {
           router.push(folderHref(section, parentId));
         }
-        router.refresh();
+        // Cascade deletes nested items — refresh both folder and section lists.
+        refreshFolderQueries({ itemsChanged: true });
       } catch (error) {
         toast.error(errorMessage(error));
       }
@@ -242,7 +267,9 @@ export function FolderWorkspace({
         });
         toast.success(t("moved"));
         setMoveTarget(null);
-        router.refresh();
+        refreshFolderQueries({
+          itemsChanged: input.type !== "folder",
+        });
       } catch (error) {
         toast.error(errorMessage(error));
       }

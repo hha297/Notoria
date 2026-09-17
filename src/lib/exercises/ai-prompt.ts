@@ -22,7 +22,7 @@ Requirements:
 8. CRITICAL — meaningful context aligned with the taught meaning:
    - The sentence must clearly reflect the specific vocabulary meaning provided (if the word has multiple senses, use THAT meaning).
    - Provide enough context that a learner understands what is happening and why this word fits.
-   - Avoid vague, incomplete, or context-free frames such as "I like ________." / "Tämä päivä on ________."
+   - Avoid vague, incomplete, or context-free frames such as "I like ________." / "This day is ________."
    - Prefer natural everyday usage a teacher would accept as a useful example.
    - Make the answer inferable from context without being trivially spoon-fed.
 9. Do not include the answer or the base word anywhere else in the sentence.

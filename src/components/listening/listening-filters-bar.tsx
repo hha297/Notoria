@@ -24,6 +24,7 @@ import {
 } from "@/lib/listening/filters";
 import type { ListeningLessonListItem } from "@/lib/listening/types";
 import type { WritingCefr, WritingFormality } from "@/lib/writing/meta";
+import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 
 type ListeningFiltersBarProps = {
   lessons: ListeningLessonListItem[];
@@ -53,6 +54,7 @@ export function ListeningFiltersBar({
 }: ListeningFiltersBarProps) {
   const t = useTranslations("listening");
   const tMeta = useTranslations("listening.meta");
+  const tTags = useTranslations("tags");
   const customTopics = extraListeningTopics(lessons);
   const filtersActive = isListeningListQueryFiltered(query);
 
@@ -98,7 +100,7 @@ export function ListeningFiltersBar({
         options={[
           ...LISTENING_FILTER_TOPICS.map((topic) => ({
             value: topic,
-            label: tMeta(`topics.${topic}`),
+            label: resolveTopicLabel(topic, (key) => tTags(key)),
           })),
           ...customTopics.map((topic) => ({
             value: topic,

@@ -22,9 +22,9 @@ import { isSpeakingErrorCode } from "@/lib/speaking/errors";
 import { isSpeakingJoinable } from "@/lib/speaking/types";
 import type { SpeakingSessionListItem } from "@/lib/speaking/types";
 import {
-  isKnownWritingTopic,
   type WritingCefr,
 } from "@/lib/writing/meta";
+import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 
 function statusVariant(status: SpeakingSessionListItem["status"]) {
   if (status === "completed") return "outline" as const;
@@ -44,6 +44,7 @@ export function SpeakingSessionCard({
 }: SpeakingSessionCardProps) {
   const t = useTranslations("speaking");
   const tMeta = useTranslations("speaking.meta");
+  const tTags = useTranslations("tags");
   const tc = useTranslations("common");
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -106,9 +107,9 @@ export function SpeakingSessionCard({
           <CardDescription className="flex flex-wrap items-center gap-1.5 text-sm">
             {session.topic ? (
               <span>
-                {isKnownWritingTopic(session.topic)
-                  ? tMeta(`topics.${session.topic}`)
-                  : session.topic}
+                {session.topic
+                  ? resolveTopicLabel(session.topic, (key) => tTags(key))
+                  : null}
               </span>
             ) : null}
             {session.topic && session.cefrLevel ? (

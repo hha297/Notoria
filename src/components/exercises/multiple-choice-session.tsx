@@ -22,9 +22,11 @@ import {
   CONTEXTUAL_DISTRACTOR_POOL_MAX,
 } from "@/lib/exercises/contextual-ai-types";
 import { pickDistinctContextualWords } from "@/lib/exercises/contextual-word-pick";
+import { wordHasBlankMeaningHint } from "@/lib/exercises/blank-hint";
 import {
   buildMultipleChoiceQuestions,
   contextualExerciseToQuestion,
+  contextualPromptWithMeaningHint,
   fillContextualBlank,
   type MultipleChoiceQuestion,
   type MultipleChoiceStudyMode,
@@ -127,8 +129,9 @@ export function MultipleChoiceSession({
     if (filteredWords.length < 2) return;
 
     const prefs = commitAndBeginNext();
+    const eligibleWords = filteredWords.filter(wordHasBlankMeaningHint);
     const sampledWords = pickDistinctContextualWords(
-      filteredWords,
+      eligibleWords,
       CONTEXTUAL_AI_BATCH,
       {
         getWordId: (word) => word.id,
@@ -139,6 +142,10 @@ export function MultipleChoiceSession({
     );
 
     if (sampledWords.length === 0) return;
+
+    const sampledById = new Map(
+      sampledWords.map((word) => [word.id, word] as const),
+    );
 
     setQuestions([]);
     setSelected(null);
@@ -189,7 +196,13 @@ export function MultipleChoiceSession({
 
       const nextQuestions = result.exercises
         .filter((exercise) => exercise.type === "multiple-choice")
-        .map((exercise, index) => contextualExerciseToQuestion(exercise, index))
+        .map((exercise, index) =>
+          contextualExerciseToQuestion(
+            exercise,
+            sampledById.get(exercise.wordId),
+            index,
+          ),
+        )
         .filter((question): question is MultipleChoiceQuestion => question != null)
         .filter((question) => question.options.length === 4);
 
@@ -347,13 +360,13 @@ export function MultipleChoiceSession({
         : t("questionMeaning");
 
   const displayPrompt =
-    current &&
-    revealed &&
-    current.direction === "CONTEXTUAL"
-      ? fillContextualBlank(
-          current.prompt,
-          current.answerForm ?? current.correctOption,
-        )
+    current && current.direction === "CONTEXTUAL"
+      ? revealed
+        ? fillContextualBlank(
+            current.prompt,
+            current.answerForm ?? current.correctOption,
+          )
+        : contextualPromptWithMeaningHint(current)
       : current?.prompt;
 
   const feedbackAnswer =

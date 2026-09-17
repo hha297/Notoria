@@ -43,6 +43,7 @@ import {
   type WritingCefr,
   type WritingFormality,
 } from "@/lib/writing/meta";
+import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 
 export type { WritingListItem };
 
@@ -147,6 +148,7 @@ export function WritingTable({
   const t = useTranslations("writing");
   const tFolders = useTranslations("folders");
   const tMeta = useTranslations("writing.meta");
+  const tTags = useTranslations("tags");
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState<SortOption>("updated:desc");
   const [groupBy, setGroupBy] = useState<GroupByOption>("mode");
@@ -190,10 +192,9 @@ export function WritingTable({
         document.description ?? "",
         writingMetaSearchText(meta),
         meta.cefrLevel ? tMeta(`cefr.${meta.cefrLevel}`) : "",
-        meta.topic &&
-          (WRITING_TOPICS as readonly string[]).includes(meta.topic)
-          ? tMeta(`topics.${meta.topic as (typeof WRITING_TOPICS)[number]}`)
-          : (meta.topic ?? ""),
+        meta.topic
+          ? resolveTopicLabel(meta.topic, (key) => tTags(key))
+          : "",
         meta.formality
           ? tMeta(`formality.${meta.formality as WritingFormality}`)
           : "",
@@ -307,6 +308,7 @@ export function WritingTable({
   return (
     <PageShell>
       <FolderWorkspace
+        workspaceId={workspaceId}
         section="writing"
         folders={folders}
         currentFolderId={currentFolderId}
@@ -360,7 +362,7 @@ export function WritingTable({
               triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
               options={WRITING_TOPICS.map((topic) => ({
                 value: topic,
-                label: tMeta(`topics.${topic}`),
+                label: resolveTopicLabel(topic, (key) => tTags(key)),
               }))}
             />
 

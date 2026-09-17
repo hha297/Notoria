@@ -10,19 +10,25 @@ import type { FlashcardWord } from "@/types/flashcards";
 const sampleWord = (overrides: Partial<FlashcardWord> = {}): FlashcardWord =>
   ({
     id: "w1",
-    word: "hana",
-    meanings: ["tap", "faucet"],
+    word: "alpha",
+    meanings: ["abc"],
     partOfSpeech: "noun",
+    synonyms: null,
+    notes: null,
+    status: "NEW",
     tags: [],
-    learningStatus: "NEW",
-    createdAt: new Date("2024-01-01"),
+    examples: [],
+    createdAt: "2024-01-01T00:00:00.000Z",
     ...overrides,
   }) as FlashcardWord;
 
 describe("type-answer study modes", () => {
   it("builds deterministic word-to-meaning items without mixed directions", () => {
     const items = buildTypeAnswerItems(
-      [sampleWord(), sampleWord({ id: "w2", word: "ovi", meanings: ["door"] })],
+      [
+        sampleWord(),
+        sampleWord({ id: "w2", word: "beta", meanings: ["xyz"] }),
+      ],
       "word-to-meaning",
     );
     expect(items.every((item) => item.direction === "WORD_TO_MEANING")).toBe(
@@ -34,22 +40,21 @@ describe("type-answer study modes", () => {
     const item = contextualExerciseToTypeAnswerItem(
       {
         wordId: "w1",
-        prompt: "Mistä tulee ________ keittiössä?",
-        answer: "hanasta",
-        sentenceMeaning: "Where does it come from in the kitchen?",
+        prompt: "This is a ________ test.",
+        answer: "alphas",
+        sentenceMeaning: "Sentence gloss in the UI language.",
       },
       sampleWord(),
       0,
     );
     expect(item).not.toBeNull();
     expect(item!.direction).toBe("CONTEXTUAL");
-    expect(item!.answerDisplay).toBe("hanasta");
+    expect(item!.answerDisplay).toBe("alphas");
+    expect(item!.meaningHint).toBe("abc");
     expect(typeAnswerPromptWithMeaningHint(item!)).toBe(
-      "Mistä tulee ________ (tap) keittiössä?",
+      "This is a ________ (abc) test.",
     );
-    expect(typeAnswerRevealPrompt(item!)).toBe(
-      "Mistä tulee hanasta (tap) keittiössä?",
-    );
+    expect(typeAnswerRevealPrompt(item!)).toBe("This is a alphas (abc) test.");
   });
 
   it("rejects contextual drafts without a blank", () => {
@@ -57,10 +62,36 @@ describe("type-answer study modes", () => {
       contextualExerciseToTypeAnswerItem(
         {
           wordId: "w1",
-          prompt: "What does hana mean?",
-          answer: "hana",
+          prompt: "What does alpha mean?",
+          answer: "alpha",
         },
         sampleWord(),
+        0,
+      ),
+    ).toBeNull();
+  });
+
+  it("rejects contextual drafts without a vocabulary meaning hint", () => {
+    expect(
+      contextualExerciseToTypeAnswerItem(
+        {
+          wordId: "w1",
+          prompt: "This is a ________ test.",
+          answer: "alphas",
+        },
+        sampleWord({ meanings: [] }),
+        0,
+      ),
+    ).toBeNull();
+
+    expect(
+      contextualExerciseToTypeAnswerItem(
+        {
+          wordId: "w1",
+          prompt: "This is a ________ test.",
+          answer: "alphas",
+        },
+        undefined,
         0,
       ),
     ).toBeNull();

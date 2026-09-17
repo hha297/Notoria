@@ -60,7 +60,7 @@ export function TheoryFillBlankCard({
         )
         .replace(/\s{2,}/g, " ")
         .trim()
-    : fromHint.hint;
+    : fromHint.hint.trim();
   const revealDisplay = revealTextForExercise({
     ...item,
     prefix: scrubbed.prefix || undefined,

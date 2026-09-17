@@ -33,7 +33,7 @@ import {
   listeningListQueryOptions,
 } from "@/lib/query/options";
 import { queryKeys } from "@/lib/query/keys";
-import { isKnownWritingTopic } from "@/lib/writing/meta";
+import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 import { onTutorialPrepare } from "@/lib/onboarding/tutorial-prepare";
 
 const EASE = [0.25, 0.1, 0.25, 1] as const;
@@ -51,6 +51,7 @@ export function ListeningView({
   const t = useTranslations("listening");
   const tFolders = useTranslations("folders");
   const tMeta = useTranslations("listening.meta");
+  const tTags = useTranslations("tags");
   const queryClient = useQueryClient();
   const [uploadOpen, setUploadOpen] = useState(false);
   const [query, setQuery] = useState<ListeningListQuery>(DEFAULT_LISTENING_LIST_QUERY);
@@ -85,7 +86,9 @@ export function ListeningView({
       filterAndSortListeningLessons(scopedLessons, query, {
         cefr: (level) => tMeta(`cefr.${level}`),
         topic: (topic) =>
-          isKnownWritingTopic(topic) ? tMeta(`topics.${topic}`) : topic,
+          topic
+            ? resolveTopicLabel(topic, (key) => tTags(key))
+            : topic,
         formality: (formality) => tMeta(`formality.${formality}`),
       }),
     [scopedLessons, query, tMeta],
@@ -106,6 +109,7 @@ export function ListeningView({
   return (
     <PageShell>
       <FolderWorkspace
+        workspaceId={workspaceId}
         section="listening"
         folders={folders}
         currentFolderId={currentFolderId}

@@ -18,8 +18,8 @@ import {
 } from "@/lib/listening/speakers";
 import type { ListeningPracticeType, ListeningUtterance } from "@/lib/listening/types";
 import { tokenizeSentence, transcriptContains } from "@/lib/listening/utils";
+import { canonicalizeTopicId } from "@/lib/taxonomy/topics";
 import {
-  WRITING_TOPICS,
   type WritingCefr,
   type WritingFormality,
 } from "@/lib/writing/meta";
@@ -61,8 +61,7 @@ function asTopic(value: string | null | undefined): string | null {
   if (!value) return null;
   const trimmed = value.trim();
   if (!trimmed) return null;
-  const lower = trimmed.toLowerCase();
-  return (WRITING_TOPICS as readonly string[]).includes(lower) ? lower : trimmed;
+  return canonicalizeTopicId(trimmed) ?? trimmed;
 }
 
 function getOpenAIClient() {

@@ -3,12 +3,12 @@ import { pickDistinctContextualWords } from "@/lib/exercises/contextual-word-pic
 
 describe("pickDistinctContextualWords", () => {
   const words = [
-    { id: "1", word: "hana" },
-    { id: "2", word: "viemäri" },
-    { id: "3", word: "roska" },
-    { id: "4", word: "porras" },
-    { id: "5", word: "komero" },
-    { id: "6", word: "Hana" }, // same surface form
+    { id: "1", word: "alpha" },
+    { id: "2", word: "beta" },
+    { id: "3", word: "gamma" },
+    { id: "4", word: "delta" },
+    { id: "5", word: "epsilon" },
+    { id: "6", word: "Alpha" }, // same surface form
   ];
 
   it("spreads across distinct surface forms before reuse", () => {

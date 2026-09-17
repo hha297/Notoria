@@ -1,5 +1,10 @@
 import type { FlashcardWord } from "@/types/flashcards";
 import {
+  blankMeaningHintFromItem,
+  resolveValidBlankMeaningHint,
+  withBlankMeaningHint,
+} from "@/lib/exercises/blank-hint";
+import {
   assignWordMeanings,
   isMeaningOwnedByWord,
   normalizeMeaningKey,
@@ -24,6 +29,9 @@ export type MultipleChoiceQuestion = {
   answerForm?: string;
   /** Saved vocabulary / base form (Contextual). */
   baseWord?: string;
+  /** Non-empty vocabulary meaning cue next to the Contextual blank. */
+  meaningHint?: string;
+  meanings?: string[];
   aiGenerated?: boolean;
   sentenceMeaning?: string | null;
 };
@@ -109,6 +117,7 @@ export function contextualExerciseToQuestion(
     answerForm?: string | null;
     sentenceMeaning?: string | null;
   },
+  word: FlashcardWord | undefined,
   index: number,
 ): MultipleChoiceQuestion | null {
   if (exercise.options.length !== OPTION_COUNT) return null;
@@ -120,10 +129,19 @@ export function contextualExerciseToQuestion(
   ) {
     return null;
   }
+  if (!word) return null;
 
   const answerForm = exercise.answerForm?.trim()
     ? exercise.answerForm.trim()
     : exercise.correctOption;
+  const baseWord = exercise.baseWord?.trim() || exercise.correctOption;
+  const meaningHint = resolveValidBlankMeaningHint({
+    meanings: word.meanings,
+    answer: answerForm,
+    baseWord,
+  });
+  if (!meaningHint) return null;
+
   return {
     id: `${exercise.wordId}-contextual-${index}`,
     wordId: exercise.wordId,
@@ -131,11 +149,23 @@ export function contextualExerciseToQuestion(
     prompt: exercise.prompt,
     options: exercise.options,
     correctOption: exercise.correctOption,
-    baseWord: exercise.baseWord?.trim() || exercise.correctOption,
+    baseWord,
     answerForm,
+    meaningHint,
+    meanings: word.meanings,
     aiGenerated: true,
     sentenceMeaning: exercise.sentenceMeaning,
   };
+}
+
+/** Show vocabulary meaning next to the Contextual blank (same cue as Fill Blank). */
+export function contextualPromptWithMeaningHint(
+  question: MultipleChoiceQuestion,
+): string {
+  if (question.direction !== "CONTEXTUAL") return question.prompt;
+  const cue = blankMeaningHintFromItem(question);
+  if (!cue) return question.prompt;
+  return withBlankMeaningHint(question.prompt, cue);
 }
 
 /** Replace the contextual blank with the grammatical answer form. */

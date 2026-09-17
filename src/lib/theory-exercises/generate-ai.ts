@@ -560,6 +560,7 @@ export function mapAiDraftsToTheoryExercises(
       });
       if (!isFullWordBlank(scrubbed.sentence)) continue;
       if (isWrongStudyLanguageSentence(scrubbed.sentence, studyLanguage)) continue;
+      if (!scrubbed.hint.trim()) continue;
 
       const resolvedSourceWord = sourceWord || scrubbed.sourceWordCue;
       if (needsSourceWord && !resolvedSourceWord) continue;

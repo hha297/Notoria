@@ -1,5 +1,6 @@
 import type { VocabularyWordRow } from "@/components/vocabulary/vocabulary-table";
 import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
+import { canonicalizeTagId } from "@/lib/vocabulary-tags";
 
 type VocabularyListWord = {
   id: string;
@@ -29,6 +30,24 @@ function toIso(value: Date | string) {
   return typeof value === "string" ? value : value.toISOString();
 }
 
+function serializeTags(
+  tags: Array<{ id: string; tag: string }>,
+): Array<{ id: string; tag: string }> {
+  const seen = new Set<string>();
+  const result: Array<{ id: string; tag: string }> = [];
+
+  for (const item of tags) {
+    const tag = canonicalizeTagId(item.tag) ?? item.tag.trim();
+    if (!tag) continue;
+    const key = tag.startsWith("custom:") ? tag.toLowerCase() : tag;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    result.push({ id: item.id, tag });
+  }
+
+  return result;
+}
+
 export function serializeVocabularyListWords(
   words: VocabularyListWord[],
 ): VocabularyWordRow[] {
@@ -53,7 +72,7 @@ export function serializeVocabularyListWords(
       sortOrder: example.sortOrder,
     })),
     synonymRefs: word.synonymRefs ?? [],
-    tags: word.tags.map((tag) => ({ id: tag.id, tag: tag.tag })),
+    tags: serializeTags(word.tags),
   }));
 }
 

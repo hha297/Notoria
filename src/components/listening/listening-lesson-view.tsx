@@ -26,10 +26,10 @@ import { isListeningErrorCode } from "@/lib/listening/errors";
 import type { ListeningLessonDetail } from "@/lib/listening/types";
 import { formatListeningDuration } from "@/lib/listening/utils";
 import {
-  isKnownWritingTopic,
   type WritingCefr,
   type WritingFormality,
 } from "@/lib/writing/meta";
+import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 
 type ListeningLessonViewProps = {
   lesson: ListeningLessonDetail;
@@ -38,6 +38,7 @@ type ListeningLessonViewProps = {
 export function ListeningLessonView({ lesson: initialLesson }: ListeningLessonViewProps) {
   const t = useTranslations("listening");
   const tMeta = useTranslations("listening.meta");
+  const tTags = useTranslations("tags");
   const tc = useTranslations("common");
   const router = useRouter();
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -106,9 +107,9 @@ export function ListeningLessonView({ lesson: initialLesson }: ListeningLessonVi
           ) : null}
           {lesson.topic ? (
             <Badge variant="outline">
-              {isKnownWritingTopic(lesson.topic)
-                ? tMeta(`topics.${lesson.topic}`)
-                : lesson.topic}
+              {lesson.topic
+                ? resolveTopicLabel(lesson.topic, (key) => tTags(key))
+                : null}
             </Badge>
           ) : null}
           {lesson.formality ? (

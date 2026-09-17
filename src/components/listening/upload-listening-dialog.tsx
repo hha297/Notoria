@@ -40,6 +40,7 @@ import {
   type WritingCefr,
   type WritingFormality,
 } from "@/lib/writing/meta";
+import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 import { cn } from "@/lib/utils";
 
 type UploadStep = "form" | "uploading" | "transcribing";
@@ -59,6 +60,7 @@ export function UploadListeningDialog({
 }: UploadListeningDialogProps) {
   const t = useTranslations("listening");
   const tMeta = useTranslations("listening.meta");
+  const tTags = useTranslations("tags");
   const tc = useTranslations("common");
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -266,14 +268,16 @@ export function UploadListeningDialog({
                 <Select value={topic} onValueChange={(value) => value && setTopic(value)}>
                   <SelectTrigger className="h-10! w-full rounded-md bg-background px-3 data-[size=default]:h-10!">
                     <SelectValue>
-                      {topic === "none" ? tMeta("none") : tMeta(`topics.${topic as (typeof WRITING_TOPICS)[number]}`)}
+                      {topic === "none"
+                        ? tMeta("none")
+                        : resolveTopicLabel(topic, (key) => tTags(key))}
                     </SelectValue>
                   </SelectTrigger>
                   <SelectContent>
                     <SelectItem value="none">{tMeta("none")}</SelectItem>
                     {WRITING_TOPICS.map((item) => (
                       <SelectItem key={item} value={item}>
-                        {tMeta(`topics.${item}`)}
+                        {resolveTopicLabel(item, (key) => tTags(key))}
                       </SelectItem>
                     ))}
                   </SelectContent>

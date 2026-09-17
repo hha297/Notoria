@@ -1,5 +1,10 @@
 import type { FlashcardWord } from "@/types/flashcards";
 import {
+  blankMeaningHintFromItem,
+  resolveValidBlankMeaningHint,
+  withBlankMeaningHint,
+} from "@/lib/exercises/blank-hint";
+import {
   assignWordMeanings,
   isMeaningOwnedByWord,
   normalizeMeaningKey,
@@ -23,6 +28,8 @@ export type TypeAnswerItem = {
   answerDisplay: string;
   word: string;
   meanings: string[];
+  /** Non-empty vocabulary meaning cue next to the Contextual blank. */
+  meaningHint?: string;
   aiGenerated?: boolean;
   sentenceMeaning?: string | null;
 };
@@ -97,18 +104,25 @@ export function contextualExerciseToTypeAnswerItem(
   const prompt = exercise.prompt.trim();
   if (!answer || !prompt) return null;
   if (!prompt.includes("________")) return null;
+  if (!word) return null;
+
+  const meaningHint = resolveValidBlankMeaningHint({
+    meanings: word.meanings,
+    answer,
+    baseWord: word.word,
+  });
+  if (!meaningHint) return null;
 
   return {
     id: `${exercise.wordId}-contextual-${index}`,
     wordId: exercise.wordId,
     direction: "CONTEXTUAL",
     prompt,
-    acceptableAnswers: buildAnswers(
-      word ? [answer, word.word] : [answer],
-    ),
+    acceptableAnswers: buildAnswers([answer, word.word]),
     answerDisplay: answer,
-    word: word?.word ?? answer,
-    meanings: word?.meanings ?? [],
+    word: word.word,
+    meanings: word.meanings,
+    meaningHint,
     aiGenerated: true,
     sentenceMeaning: exercise.sentenceMeaning,
   };
@@ -117,7 +131,7 @@ export function contextualExerciseToTypeAnswerItem(
 /** Filled sentence for Contextual reveal / feedback. */
 export function typeAnswerRevealPrompt(item: TypeAnswerItem): string {
   if (item.direction !== "CONTEXTUAL") return item.prompt;
-  const cue = meaningCue(item.meanings);
+  const cue = blankMeaningHintFromItem(item);
   if (!item.prompt.includes("________")) {
     return fillContextualBlank(item.prompt, item.answerDisplay);
   }
@@ -130,12 +144,7 @@ export function typeAnswerRevealPrompt(item: TypeAnswerItem): string {
 /** Show vocabulary meaning next to the blank, like Fill in the Blank. */
 export function typeAnswerPromptWithMeaningHint(item: TypeAnswerItem): string {
   if (item.direction !== "CONTEXTUAL") return item.prompt;
-  const cue = meaningCue(item.meanings);
-  if (!cue || !item.prompt.includes("________")) return item.prompt;
-  return item.prompt.replace("________", `________ (${cue})`);
-}
-
-function meaningCue(meanings: string[]): string | null {
-  const cue = meanings.map((meaning) => meaning.trim()).filter(Boolean)[0];
-  return cue || null;
+  const cue = blankMeaningHintFromItem(item);
+  if (!cue) return item.prompt;
+  return withBlankMeaningHint(item.prompt, cue);
 }

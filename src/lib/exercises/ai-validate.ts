@@ -4,6 +4,7 @@ import {
   type ExerciseAiFillBlankDraft,
   type ExerciseAiWordInput,
 } from "@/lib/exercises/ai-types";
+import { resolveValidBlankMeaningHint } from "@/lib/exercises/blank-hint";
 import {
   buildFillBlankAcceptableAnswers,
   type FillBlankItem,
@@ -95,6 +96,15 @@ export function validateFillBlankExercise(
   }
   if (sentenceLeaksAnswer(sentence, answer, word.word, baseWord)) return null;
   if (isDuplicateAvoidedSentence(sentence, answer, word.avoidSentences)) return null;
+  if (
+    !resolveValidBlankMeaningHint({
+      meaning: word.meaning,
+      answer,
+      baseWord: word.word,
+    })
+  ) {
+    return null;
+  }
 
   return {
     wordId: word.id,
@@ -165,14 +175,27 @@ export function fillBlankExerciseToItem(
   const split = splitSentenceAtBlank(exercise.sentence);
   if (!split) return null;
 
+  const answer = exercise.answer.trim();
+  const meaningHint = resolveValidBlankMeaningHint({
+    meanings: word.meanings,
+    meaning: word.meaning,
+    answer,
+    baseWord: word.word,
+  });
+  if (!meaningHint) return null;
+
   return {
     id: `${word.id}-ai-${suffix}`,
     wordId: word.id,
     word: word.word,
-    meanings: word.meanings,
+    meanings:
+      word.meanings.map((item) => item.trim()).filter(Boolean).length > 0
+        ? word.meanings
+        : [meaningHint],
+    meaningHint,
     sentenceBefore: split.before,
     sentenceAfter: split.after,
-    acceptableAnswers: buildFillBlankAcceptableAnswers(word.word, exercise.answer),
+    acceptableAnswers: buildFillBlankAcceptableAnswers(word.word, answer),
     aiGenerated: true,
     instruction: exercise.instruction?.trim() || undefined,
     sentenceMeaning: exercise.sentenceMeaning?.trim() || undefined,

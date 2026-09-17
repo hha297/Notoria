@@ -28,6 +28,7 @@ import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferen
 import { requestContextualExerciseAi } from "@/lib/exercises/contextual-ai-client";
 import { CONTEXTUAL_AI_BATCH } from "@/lib/exercises/contextual-ai-types";
 import { pickDistinctContextualWords } from "@/lib/exercises/contextual-word-pick";
+import { wordHasBlankMeaningHint } from "@/lib/exercises/blank-hint";
 import {
   buildTypeAnswerItems,
   contextualExerciseToTypeAnswerItem,
@@ -97,10 +98,6 @@ export function TypeAnswerSession({
     () => new Map(filteredWords.map((word) => [word.id, word.createdAt] as const)),
     [filteredWords],
   );
-  const wordById = useMemo(
-    () => new Map(filteredWords.map((word) => [word.id, word] as const)),
-    [filteredWords],
-  );
   const isContextual = studyMode === "contextual";
 
   const startDeterministicSession = useCallback(() => {
@@ -139,8 +136,9 @@ export function TypeAnswerSession({
     if (filteredWords.length < 2) return;
 
     const prefs = commitAndBeginNext();
+    const eligibleWords = filteredWords.filter(wordHasBlankMeaningHint);
     const sampledWords = pickDistinctContextualWords(
-      filteredWords,
+      eligibleWords,
       CONTEXTUAL_AI_BATCH,
       {
         getWordId: (word) => word.id,
@@ -150,6 +148,10 @@ export function TypeAnswerSession({
       },
     );
     if (sampledWords.length === 0) return;
+
+    const sampledById = new Map(
+      sampledWords.map((word) => [word.id, word] as const),
+    );
 
     setItems([]);
     setInput("");
@@ -193,7 +195,7 @@ export function TypeAnswerSession({
         .map((exercise, index) =>
           contextualExerciseToTypeAnswerItem(
             exercise,
-            wordById.get(exercise.wordId),
+            sampledById.get(exercise.wordId),
             index,
           ),
         )
@@ -225,7 +227,6 @@ export function TypeAnswerSession({
     setStage,
     tAi,
     uiLocale,
-    wordById,
   ]);
 
   const startSession = useCallback(() => {

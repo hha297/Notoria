@@ -23,6 +23,7 @@ import {
   fillBlankItemSentence,
 } from "@/lib/exercises/ai-validate";
 import { pickFillBlankAiWords, toExerciseAiWord } from "@/lib/exercises/ai-words";
+import { blankMeaningHintFromItem, wordHasBlankMeaningHint } from "@/lib/exercises/blank-hint";
 import {
   expectedFillBlankAnswer,
   buildFillBlankItems,
@@ -158,7 +159,12 @@ export function FillBlankSession({
     const prefs = commitAndBeginNext();
     setStage("generating");
     try {
-      const picked = pickFillBlankAiWords(filteredWords, 10, {
+      const eligibleWords = filteredWords.filter(wordHasBlankMeaningHint);
+      if (eligibleWords.length === 0) {
+        fail(tAi("emptyWords"));
+        return;
+      }
+      const picked = pickFillBlankAiWords(eligibleWords, 10, {
         recentlyUsedIds: usedWordIds,
         softAvoidWordIds: prefs.softAvoidWordIds,
         softPreferWordIds: prefs.softPreferWordIds,
@@ -455,7 +461,7 @@ function FillBlankCard({
   const tAi = useTranslations("exercises.ai");
   const blankMinWidth = Math.min(Math.max(item.word.length + 2, 6), 16);
   const expected = expectedFillBlankAnswer(item);
-  const cue = item.meanings.map((m) => m.trim()).filter(Boolean)[0];
+  const cue = blankMeaningHintFromItem(item);
   const sentenceMeaning = item.sentenceMeaning?.trim() || "";
   const afterText = item.sentenceAfter?.trim() || "";
   const trailingPunctuation = /^[.!?…]+$/.test(afterText) ? afterText : "";

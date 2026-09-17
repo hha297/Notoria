@@ -1,3 +1,10 @@
+import {
+  canonicalizeTopicId,
+  DEFAULT_TOPIC_ID,
+  TOPIC_IDS,
+  type TopicId,
+} from "@/lib/taxonomy/topics";
+
 export const WRITING_CEFR_LEVELS = [
   "a1",
   "a2",
@@ -7,21 +14,15 @@ export const WRITING_CEFR_LEVELS = [
   "c2",
 ] as const;
 
-export const WRITING_TOPICS = [
-  "travel",
-  "work",
-  "daily",
-  "food",
-  "shopping",
-  "home",
-  "people",
-  "culture",
-] as const;
+/** Same stable topic IDs as vocabulary — labels via `tags.topic.*`. */
+export const WRITING_TOPICS = TOPIC_IDS;
+
+export { DEFAULT_TOPIC_ID };
 
 export const WRITING_FORMALITY = ["formal", "informal", "neutral"] as const;
 
 export type WritingCefr = (typeof WRITING_CEFR_LEVELS)[number];
-export type WritingTopic = (typeof WRITING_TOPICS)[number];
+export type WritingTopic = TopicId;
 export type WritingFormality = (typeof WRITING_FORMALITY)[number];
 
 /**
@@ -64,7 +65,8 @@ function asFormality(value: unknown): WritingFormality | null {
 function asTopic(value: unknown): string | null {
   if (typeof value !== "string") return null;
   const trimmed = value.trim();
-  return trimmed.length > 0 ? trimmed : null;
+  if (!trimmed) return null;
+  return canonicalizeTopicId(trimmed) ?? trimmed;
 }
 
 export function parseWritingMeta(raw: unknown): WritingMeta {
