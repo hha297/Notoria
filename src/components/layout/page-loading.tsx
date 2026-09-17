@@ -1,8 +1,14 @@
 import { Skeleton } from "@/components/ui/skeleton";
 
+const loadingProps = {
+  "aria-busy": true as const,
+  "aria-label": "Loading",
+  className: "notoria-route-loading space-y-8",
+};
+
 export function ListPageLoading() {
   return (
-    <div className="space-y-8" aria-busy="true" aria-label="Loading">
+    <div {...loadingProps}>
       <div className="space-y-3">
         <Skeleton className="h-4 w-24" />
         <Skeleton className="h-9 w-72 max-w-full" />
@@ -24,7 +30,11 @@ export function ListPageLoading() {
 
 export function DetailPageLoading() {
   return (
-    <div className="mx-auto max-w-3xl space-y-8" aria-busy="true" aria-label="Loading">
+    <div
+      aria-busy="true"
+      aria-label="Loading"
+      className="notoria-route-loading mx-auto max-w-3xl space-y-8"
+    >
       <Skeleton className="h-4 w-32" />
       <div className="space-y-3">
         <Skeleton className="h-4 w-24" />
@@ -40,9 +50,36 @@ export function DetailPageLoading() {
   );
 }
 
+/** Form / editor shells (theory, writing, vocabulary edit). */
+export function FormPageLoading() {
+  return (
+    <div
+      aria-busy="true"
+      aria-label="Loading"
+      className="notoria-route-loading mx-auto max-w-4xl space-y-8"
+    >
+      <div className="space-y-3">
+        <Skeleton className="h-4 w-28" />
+        <Skeleton className="h-9 w-56 max-w-full" />
+        <Skeleton className="h-4 w-full max-w-md" />
+      </div>
+      <div className="space-y-4 rounded-xl border border-hairline-cloud p-4 sm:p-6">
+        <Skeleton className="h-10 w-full" />
+        <Skeleton className="h-10 w-1/2 max-w-xs" />
+        <Skeleton className="h-24 w-full" />
+        <Skeleton className="min-h-[16rem] w-full rounded-lg sm:min-h-[22rem]" />
+      </div>
+      <div className="flex justify-end gap-2">
+        <Skeleton className="h-10 w-24" />
+        <Skeleton className="h-10 w-28" />
+      </div>
+    </div>
+  );
+}
+
 export function DashboardPageLoading() {
   return (
-    <div className="space-y-8" aria-busy="true" aria-label="Loading">
+    <div {...loadingProps}>
       <div className="space-y-3">
         <Skeleton className="h-4 w-28" />
         <Skeleton className="h-9 w-80 max-w-full" />
@@ -56,6 +93,28 @@ export function DashboardPageLoading() {
       <div className="grid gap-4 lg:grid-cols-2">
         <Skeleton className="h-48 w-full rounded-xl" />
         <Skeleton className="h-48 w-full rounded-xl" />
+      </div>
+    </div>
+  );
+}
+
+/** Compact session / practice shell. */
+export function SessionPageLoading() {
+  return (
+    <div
+      aria-busy="true"
+      aria-label="Loading"
+      className="notoria-route-loading mx-auto max-w-3xl space-y-6"
+    >
+      <div className="space-y-3">
+        <Skeleton className="h-4 w-24" />
+        <Skeleton className="h-8 w-64 max-w-full" />
+      </div>
+      <Skeleton className="h-48 w-full rounded-xl" />
+      <div className="flex flex-wrap gap-2">
+        <Skeleton className="h-10 w-24" />
+        <Skeleton className="h-10 w-24" />
+        <Skeleton className="h-10 w-24" />
       </div>
     </div>
   );

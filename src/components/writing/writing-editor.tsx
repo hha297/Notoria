@@ -13,6 +13,7 @@ import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { WritingAiBar } from "@/components/writing/writing-ai-bar";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { DescriptionField } from "@/components/form/description-field";
+import { ContentTransition } from "@/components/layout/content-transition";
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -667,45 +668,47 @@ export function WritingEditor({
             onQuestionFeedbackChange={setQuestionFeedback}
           />
 
-          {editorState.mode === "rich_document" ? (
-            <div className="space-y-2">
-              <Label>{t("content")}</Label>
-              <RichTextEditor
-                content={editorState.doc}
-                placeholder={t("contentPlaceholder")}
-                language={language}
-                collapseStorageKey={
-                  initialData?.id
-                    ? `heading-collapse:writing:${initialData.id}`
-                    : null
-                }
-                onChange={(next) => {
-                  setDoc(next);
-                  if (!isBaselineReadyRef.current) return;
-                }}
-                onEditorReady={handleRichEditorReady}
-                onImageUploadPendingChange={setImageUploading}
-                onAutosave={
-                  initialData?.id && !previewHref
-                    ? handleRichAutosave
-                    : undefined
+          <ContentTransition transitionKey={editorState.mode}>
+            {editorState.mode === "rich_document" ? (
+              <div className="space-y-2">
+                <Label>{t("content")}</Label>
+                <RichTextEditor
+                  content={editorState.doc}
+                  placeholder={t("contentPlaceholder")}
+                  language={language}
+                  collapseStorageKey={
+                    initialData?.id
+                      ? `heading-collapse:writing:${initialData.id}`
+                      : null
+                  }
+                  onChange={(next) => {
+                    setDoc(next);
+                    if (!isBaselineReadyRef.current) return;
+                  }}
+                  onEditorReady={handleRichEditorReady}
+                  onImageUploadPendingChange={setImageUploading}
+                  onAutosave={
+                    initialData?.id && !previewHref
+                      ? handleRichAutosave
+                      : undefined
+                  }
+                />
+              </div>
+            ) : (
+              <QuestionSetBuilder
+                sections={editorState.sections}
+                onChange={setSections}
+                questionFeedback={questionFeedback}
+                onApplyAiSuggestion={applyQuestionAiSuggestion}
+                onSkipAiSuggestion={skipQuestionAiSuggestion}
+                onQuestionEdited={(questionId) =>
+                  setQuestionFeedback((current) =>
+                    clearQuestionFeedback(current, questionId),
+                  )
                 }
               />
-            </div>
-          ) : (
-            <QuestionSetBuilder
-              sections={editorState.sections}
-              onChange={setSections}
-              questionFeedback={questionFeedback}
-              onApplyAiSuggestion={applyQuestionAiSuggestion}
-              onSkipAiSuggestion={skipQuestionAiSuggestion}
-              onQuestionEdited={(questionId) =>
-                setQuestionFeedback((current) =>
-                  clearQuestionFeedback(current, questionId),
-                )
-              }
-            />
-          )}
+            )}
+          </ContentTransition>
         </CardContent>
       </Card>
 
