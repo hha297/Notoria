@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
 import { TheoryEditor } from "@/components/theory/theory-editor";
 import { getTheoryNote } from "@/lib/actions/theory";
-
+import { getActiveWorkspace } from "@/lib/workspace";
 
 export default async function EditTheoryPage({
   params,
@@ -14,7 +14,10 @@ export default async function EditTheoryPage({
 }) {
   const { id } = await params;
   const t = await getTranslations("theory");
-  const note = await getTheoryNote(id);
+  const [note, workspace] = await Promise.all([
+    getTheoryNote(id),
+    getActiveWorkspace(),
+  ]);
 
   if (!note) {
     notFound();
@@ -41,6 +44,7 @@ export default async function EditTheoryPage({
       </div>
       <TheoryEditor
         previewHref={previewHref}
+        language={workspace?.language ?? "en"}
         initialData={{
           id: note.id,
           title: note.title,

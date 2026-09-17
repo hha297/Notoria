@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  mergeTableRowsByLabel,
   notesFormatBlocksToDoc,
   sanitizeVocabularyNotesFormatBlocks,
 } from "@/lib/vocabulary/format-notes-ai";
@@ -13,41 +14,79 @@ describe("sanitizeVocabularyNotesFormatBlocks", () => {
   it("drops invented paradigm titles and language headings", () => {
     const blocks = sanitizeVocabularyNotesFormatBlocks(
       [
-        { type: "heading", level: 1, text: "Rauhallinen – Noun Paradigm" },
-        { type: "heading", level: 2, text: "Suomi" },
-        { type: "heading", level: 2, text: "Rauhallinen" },
+        { type: "heading", level: 1, text: "Sample – Noun Paradigm" },
+        { type: "heading", level: 2, text: "English" },
+        { type: "heading", level: 2, text: "Sample" },
         {
           type: "table",
-          headers: ["Sija", "Yksikkö", "Monikko"],
-          rows: [["Genetiivi", "rauhallisen", "rauhallisten"]],
+          headers: ["Category", "Form A", "Form B"],
+          rows: [["Present", "walk", "walks"]],
           boldFirstColumn: true,
         },
         { type: "paragraph", text: "Keep this note" },
       ],
-      "Rauhallinen",
+      "Sample",
     );
 
     expect(blocks).toEqual([
       {
         type: "table",
-        headers: ["Sija", "Yksikkö", "Monikko"],
-        rows: [["Genetiivi", "rauhallisen", "rauhallisten"]],
+        headers: ["Category", "Form A", "Form B"],
+        rows: [["Present", "walk", "walks"]],
         boldFirstColumn: true,
       },
       { type: "paragraph", text: "Keep this note" },
     ]);
   });
+
+  it("merges same-label rows and joins cell variants with /", () => {
+    const blocks = sanitizeVocabularyNotesFormatBlocks([
+      {
+        type: "table",
+        headers: ["Category", "Form A", "Form B"],
+        rows: [
+          ["Genitive", "stem", "variantA"],
+          ["Genitive", "stem", "variantB"],
+          ["Partitive", "p1", "p2"],
+        ],
+        boldFirstColumn: true,
+      },
+    ]);
+
+    expect(blocks).toEqual([
+      {
+        type: "table",
+        headers: ["Category", "Form A", "Form B"],
+        rows: [
+          ["Genitive", "stem", "variantA/variantB"],
+          ["Partitive", "p1", "p2"],
+        ],
+        boldFirstColumn: true,
+      },
+    ]);
+  });
+});
+
+describe("mergeTableRowsByLabel", () => {
+  it("dedupes identical variants case-insensitively", () => {
+    expect(
+      mergeTableRowsByLabel([
+        ["Label", "A", "B"],
+        ["label", "a", "C"],
+      ]),
+    ).toEqual([["Label", "A", "B/C"]]);
+  });
 });
 
 describe("notesFormatBlocksToDoc", () => {
-  it("builds a TipTap table with bold first column like AI case paradigms", () => {
+  it("builds a TipTap table with bold first column from AI table blocks", () => {
     const doc = notesFormatBlocksToDoc([
       {
         type: "table",
-        headers: ["Sija", "Yksikkö", "Monikko"],
+        headers: ["Category", "Form A", "Form B"],
         rows: [
-          ["Nominatiivi", "vuokra", "vuokrat"],
-          ["Genetiivi", "vuokran", "vuokrien"],
+          ["Present", "walk", "walks"],
+          ["Past", "walked", "walked"],
         ],
         boldFirstColumn: true,
       },
@@ -58,7 +97,6 @@ describe("notesFormatBlocksToDoc", () => {
     expect(table?.type).toBe("table");
     expect(table?.content).toHaveLength(3);
 
-    // Trailing empty paragraph only when the doc ends with a table (caret slot).
     expect(doc.content).toHaveLength(2);
     expect(doc.content?.[1]?.type).toBe("paragraph");
     expect(doc.content?.[1]?.content).toBeUndefined();
@@ -68,7 +106,7 @@ describe("notesFormatBlocksToDoc", () => {
     expect(headerRow?.content?.[0]?.type).toBe("tableHeader");
     expect(headerRow?.content?.[0]?.content?.[0]?.content?.[0]).toMatchObject({
       type: "text",
-      text: "Sija",
+      text: "Category",
       marks: [{ type: "bold" }],
     });
 
@@ -76,12 +114,12 @@ describe("notesFormatBlocksToDoc", () => {
     expect(firstBody?.content?.[0]?.type).toBe("tableCell");
     expect(firstBody?.content?.[0]?.content?.[0]?.content?.[0]).toMatchObject({
       type: "text",
-      text: "Nominatiivi",
+      text: "Present",
       marks: [{ type: "bold" }],
     });
     expect(firstBody?.content?.[1]?.content?.[0]?.content?.[0]).toMatchObject({
       type: "text",
-      text: "vuokra",
+      text: "walk",
     });
     expect(
       firstBody?.content?.[1]?.content?.[0]?.content?.[0]?.marks,
@@ -89,7 +127,7 @@ describe("notesFormatBlocksToDoc", () => {
 
     expect(isNotesDocEmpty(doc)).toBe(false);
     const plain = vocabularyNotesToPlainText(serializeVocabularyNotes(doc));
-    expect(plain).toContain("Sija | Yksikkö | Monikko");
-    expect(plain).toContain("Nominatiivi | vuokra | vuokrat");
+    expect(plain).toContain("Category | Form A | Form B");
+    expect(plain).toContain("Present | walk | walks");
   });
 });

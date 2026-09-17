@@ -673,6 +673,7 @@ export function WritingEditor({
               <RichTextEditor
                 content={editorState.doc}
                 placeholder={t("contentPlaceholder")}
+                language={language}
                 collapseStorageKey={
                   initialData?.id
                     ? `heading-collapse:writing:${initialData.id}`

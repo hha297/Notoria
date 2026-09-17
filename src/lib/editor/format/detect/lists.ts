@@ -37,8 +37,8 @@ function isSectionish(text: string): boolean {
   const body = stripBulletPrefix(text).body;
   return Boolean(
     matchSectionPattern(body, TITLE_PATTERNS) ||
-      matchSectionPattern(body, SECTION_PATTERNS) ||
-      parseSectionHeading(body),
+    matchSectionPattern(body, SECTION_PATTERNS) ||
+    parseSectionHeading(body),
   );
 }
 
@@ -49,12 +49,18 @@ function matchParenOrdered(text: string): string | null {
   return match[2];
 }
 
-function toBulletItem(line: FormatLine, stripped: { body: string; prefixLength: number }) {
+function toBulletItem(
+  line: FormatLine,
+  stripped: { body: string; prefixLength: number },
+) {
   return listItemFromParagraph(paragraphFromLine(line, stripped.prefixLength));
 }
 
 function nestMarkedItems(
-  entries: Array<{ line: FormatLine; stripped: ReturnType<typeof stripBulletPrefix> }>,
+  entries: Array<{
+    line: FormatLine;
+    stripped: ReturnType<typeof stripBulletPrefix>;
+  }>,
 ): JSONContent[] {
   const items: JSONContent[] = [];
   let i = 0;
@@ -63,12 +69,18 @@ function nestMarkedItems(
     const item = toBulletItem(current.line, current.stripped);
     i += 1;
     const nested: typeof entries = [];
-    while (i < entries.length && entries[i]!.line.indent > current.line.indent) {
+    while (
+      i < entries.length &&
+      entries[i]!.line.indent > current.line.indent
+    ) {
       nested.push(entries[i]!);
       i += 1;
     }
     if (nested.length > 0) {
-      item.content = [...(item.content ?? []), bulletList(nestMarkedItems(nested))];
+      item.content = [
+        ...(item.content ?? []),
+        bulletList(nestMarkedItems(nested)),
+      ];
     }
     items.push(item);
   }

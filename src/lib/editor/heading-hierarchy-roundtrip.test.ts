@@ -33,7 +33,7 @@ function sampleOutlineDoc(): JSONContent {
       heading(1, "2.1 Food"),
       heading(1, "2.1.1 Fruits"),
       heading(1, "1.3.10 Special cases"),
-      heading(1, "2.1. Not All Adjectives"),
+      heading(1, "2.1. Nested heading"),
     ],
   };
 }

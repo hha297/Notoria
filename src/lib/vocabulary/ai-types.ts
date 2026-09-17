@@ -129,7 +129,7 @@ const notesFormatTableSchema = z.object({
   type: z.literal("table"),
   headers: z.array(z.string()).min(1).max(8),
   rows: z.array(z.array(z.string()).min(1).max(8)).min(1).max(40),
-  /** Bold the first column (typical for case/label tables). */
+  /** Bold the first column (typical for label columns). */
   boldFirstColumn: z.boolean().optional().catch(true),
 });
 

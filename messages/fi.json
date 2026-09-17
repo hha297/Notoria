@@ -42,6 +42,9 @@
     "format": "Muotoile",
     "formatSuccess": "Sisältö muotoiltu",
     "formatUnchanged": "Sisältö on jo muotoiltu",
+    "formatWorking": "Muotoillaan…",
+    "formatAiFallback": "Tekoälymuotoilu ei onnistunut — tehtiin perussiistiminen",
+    "formatFailed": "Sisältöä ei voitu muotoilla. Yritä uudelleen.",
     "tableSelectionInvalid": "Valintaa ei voitu muuntaa taulukoksi",
     "headingCollapse": "Tiivistä osio",
     "headingExpand": "Laajenna osio"

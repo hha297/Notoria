@@ -1,5 +1,4 @@
 import type { JSONContent } from "@tiptap/react";
-import { detectInflection } from "@/lib/editor/format/detect/inflection";
 import {
   detectMarkdownHeading,
   detectNumberedHeading,
@@ -17,8 +16,14 @@ import {
   detectTitle,
 } from "@/lib/editor/format/detect/sections";
 import { detectGenericTable } from "@/lib/editor/format/detect/tables";
-import { flattenDocument, splitUnitsIntoRuns } from "@/lib/editor/format/tokenize";
-import { collapseEmptyParagraphs, tidyBlockNode } from "@/lib/editor/format/tidy";
+import {
+  flattenDocument,
+  splitUnitsIntoRuns,
+} from "@/lib/editor/format/tokenize";
+import {
+  collapseEmptyParagraphs,
+  tidyBlockNode,
+} from "@/lib/editor/format/tidy";
 import { parseSectionHeading } from "@/lib/editor/format/headings";
 import { coerceHeadingLevel } from "@/lib/editor/heading-level";
 import { tipTapNodePlainText } from "@/lib/editor/format/types";
@@ -28,27 +33,33 @@ import {
   isTipTapDoc,
   type Detection,
   type Detector,
+  type FormatContext,
   type FormatLine,
 } from "@/lib/editor/format/types";
 
-const DETECTORS: Detector[] = [
-  { id: "inflection", detect: detectInflection },
-  { id: "table", detect: detectGenericTable },
-  { id: "markdown-heading", detect: detectMarkdownHeading },
-  { id: "numbered-heading", detect: detectNumberedHeading },
-  { id: "title", detect: detectTitle },
-  { id: "section", detect: detectSectionHeading },
-  { id: "ordered-list", detect: detectOrderedList },
-  { id: "paren-ordered-list", detect: detectParenOrderedList },
-  { id: "marked-list", detect: detectMarkedBulletList },
-  { id: "emphasis-label", detect: detectEmphasisLabel },
-  { id: "unmarked-list", detect: detectUnmarkedList },
-  { id: "paragraph", detect: detectParagraph },
-];
+function detectorsFor(_context: FormatContext): Detector[] {
+  return [
+    { id: "table", detect: detectGenericTable },
+    { id: "markdown-heading", detect: detectMarkdownHeading },
+    { id: "numbered-heading", detect: detectNumberedHeading },
+    { id: "title", detect: detectTitle },
+    { id: "section", detect: detectSectionHeading },
+    { id: "ordered-list", detect: detectOrderedList },
+    { id: "paren-ordered-list", detect: detectParenOrderedList },
+    { id: "marked-list", detect: detectMarkedBulletList },
+    { id: "emphasis-label", detect: detectEmphasisLabel },
+    { id: "unmarked-list", detect: detectUnmarkedList },
+    { id: "paragraph", detect: detectParagraph },
+  ];
+}
 
-function pickDetection(lines: FormatLine[], index: number): Detection {
+function pickDetection(
+  lines: FormatLine[],
+  index: number,
+  detectors: Detector[],
+): Detection {
   const found: Detection[] = [];
-  for (const detector of DETECTORS) {
+  for (const detector of detectors) {
     const detection = detector.detect(lines, index);
     if (detection && detection.confidence >= MIN_DETECTION_CONFIDENCE) {
       found.push(detection);
@@ -70,18 +81,25 @@ function pickDetection(lines: FormatLine[], index: number): Detection {
   );
 }
 
-function classifyLines(lines: FormatLine[]): JSONContent[] {
+function classifyLines(
+  lines: FormatLine[],
+  context: FormatContext,
+): JSONContent[] {
+  const detectors = detectorsFor(context);
   const nodes: JSONContent[] = [];
   let index = 0;
   while (index < lines.length) {
-    const detection = pickDetection(lines, index);
+    const detection = pickDetection(lines, index, detectors);
     nodes.push(...detection.nodes);
     index += Math.max(1, detection.consumed);
   }
   return nodes;
 }
 
-function applySectionHeadingLevel(node: JSONContent, level: number): JSONContent {
+function applySectionHeadingLevel(
+  node: JSONContent,
+  level: number,
+): JSONContent {
   const coerced = coerceHeadingLevel(level);
   if (node.type === "heading") {
     return {
@@ -109,6 +127,7 @@ function normalizeHierarchicalHeadings(nodes: JSONContent[]): JSONContent[] {
 
 export function formatTiptapDocument(
   doc: JSONContent | null | undefined,
+  context: FormatContext = {},
 ): JSONContent {
   if (!doc || !isTipTapDoc(doc)) {
     return structuredClone(EMPTY_TIPTAP_DOC);
@@ -128,7 +147,7 @@ export function formatTiptapDocument(
     const lines = run.flatMap((unit) =>
       unit.kind === "line" ? [unit.line] : [],
     );
-    content.push(...classifyLines(lines));
+    content.push(...classifyLines(lines, context));
   }
 
   let next = collapseEmptyParagraphs(content);

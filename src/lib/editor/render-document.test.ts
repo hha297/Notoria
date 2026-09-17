@@ -63,17 +63,15 @@ describe("tipTapDocumentToHtml Preview renderer", () => {
     const html = tipTapDocumentToHtml({
       type: "doc",
       content: [
-        heading("1", "2. Using the Superlative"),
-        heading("2", "2.1. Not All Adjectives Have a Superlative"),
-        heading("3", "2.1.1. Example"),
+        heading("1", "2. Generic heading"),
+        heading("2", "2.1. Nested heading"),
+        heading("3", "2.1.1. Deeper heading"),
       ],
     });
 
-    expect(html).toContain("<h1>2. Using the Superlative</h1>");
-    expect(html).toContain(
-      "<h2>2.1. Not All Adjectives Have a Superlative</h2>",
-    );
-    expect(html).toContain("<h3>2.1.1. Example</h3>");
+    expect(html).toContain("<h1>2. Generic heading</h1>");
+    expect(html).toContain("<h2>2.1. Nested heading</h2>");
+    expect(html).toContain("<h3>2.1.1. Deeper heading</h3>");
   });
 
   it("Format → Save → Load → Preview keeps heading tags", () => {

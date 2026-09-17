@@ -42,6 +42,9 @@
     "format": "Format",
     "formatSuccess": "Content formatted",
     "formatUnchanged": "Already formatted",
+    "formatWorking": "Formatting…",
+    "formatAiFallback": "AI formatting unavailable — applied basic tidy instead",
+    "formatFailed": "Could not format the content. Try again.",
     "tableSelectionInvalid": "Couldn't convert the selection into a table",
     "headingCollapse": "Collapse section",
     "headingExpand": "Expand section"

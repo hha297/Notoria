@@ -1,8 +1,10 @@
 /**
  * Extensible pattern registries for the rule-based formatter.
- * Add new dictionary/section/case patterns here — do not special-case
- * individual pasted documents in detector control flow.
+ * Keep these language-neutral. Do not special-case individual documents
+ * or bake language-specific grammar terms into detector control flow.
  */
+
+import { WORKPLACE_LANGUAGES } from "@/lib/languages";
 
 export type SectionPattern = {
   id: string;
@@ -11,13 +13,16 @@ export type SectionPattern = {
   match: RegExp;
 };
 
-/** Language-target titles such as "elämäntapa englanniksi". */
+const languageTargetAlternation = WORKPLACE_LANGUAGES.map((language) =>
+  language.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
+).join("|");
+
+/** Dictionary titles such as "widget in English". */
 export const TITLE_PATTERNS: readonly SectionPattern[] = [
   {
     id: "language-target",
     level: 1,
-    match:
-      /^.+\s+(englanniksi|suomeksi|in english|in finnish|in vietnamese|tiếng việt)$/iu,
+    match: new RegExp(`^.+\\s+in\\s+(${languageTargetAlternation})$`, "iu"),
   },
 ];
 
@@ -25,26 +30,23 @@ export const SECTION_PATTERNS: readonly SectionPattern[] = [
   {
     id: "inflection",
     level: 2,
-    match:
-      /^(taivutusmuodot|taivutuskaava|taivutus|paradigma|inflection|declension|conjugation)$/iu,
+    match: /^(inflection|declension|conjugation|paradigm)$/iu,
   },
   {
     id: "definitions",
     level: 2,
     match:
-      /^(määritelmät|merkitykset|definitions|meanings|käyttö|usage|esimerkit|examples|synonyymit|synonyms|etymologia|etymology)$/iu,
+      /^(definitions|meanings|usage|examples|synonyms|etymology)$/iu,
   },
   {
     id: "pos-group",
     level: 2,
-    match:
-      /^(substantiivit|adjektiivit|verbit|adverbit|pronominit|nouns|adjectives|verbs|adverbs|pronouns)$/iu,
+    match: /^(nouns|adjectives|verbs|adverbs|pronouns)$/iu,
   },
   {
     id: "pos-item",
     level: 3,
-    match:
-      /^(substantiivi|adjektiivi|verbi|adverbi|pronomini|noun|adjective|verb|adverb|pronoun)$/iu,
+    match: /^(noun|adjective|verb|adverb|pronoun)$/iu,
   },
 ];
 
@@ -56,35 +58,7 @@ export const EMPHASIS_LABELS = [
   "meaning",
   "translation",
   "usage",
-  "huom",
-  "huomautus",
-  "esimerkki",
-  "määritelmä",
-  "käyttö",
 ] as const;
-
-/** Canonical Finnish noun-case order for inflection tables. */
-export const FINNISH_CASES = [
-  "nominatiivi",
-  "genetiivi",
-  "partitiivi",
-  "akkusatiivi",
-  "inessiivi",
-  "elatiivi",
-  "illatiivi",
-  "adessiivi",
-  "ablatiivi",
-  "allatiivi",
-  "essiivi",
-  "translatiivi",
-  "instruktiivi",
-  "abessiivi",
-  "komitatiivi",
-] as const;
-
-export type FinnishCase = (typeof FINNISH_CASES)[number];
-
-export const INFLECTION_TABLE_HEADERS = ["Sija", "Yksikkö", "Monikko"] as const;
 
 export const BULLET_MARKER_RE = /^([-*+•●◦.]|\u2022|\u00B7)\s+(.*)$/u;
 export const ORDERED_MARKER_RE = /^(\d+)[.)]\s+(.+)$/u;
@@ -99,8 +73,4 @@ export function matchSectionPattern(
   const trimmed = text.trim();
   if (!trimmed) return null;
   return patterns.find((pattern) => pattern.match.test(trimmed)) ?? null;
-}
-
-export function displayCaseName(value: FinnishCase): string {
-  return value.charAt(0).toUpperCase() + value.slice(1);
 }

@@ -23,10 +23,11 @@ import {
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { common, createLowlight } from "lowlight";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { EditorToolbar } from "@/components/editor/editor-toolbar";
+import { formatEditorDocumentAi } from "@/lib/actions/editor-format-ai";
 import {
   collectImageFiles,
   editorDocHasTransientImages,
@@ -88,6 +89,13 @@ type RichTextEditorProps = {
    * Does not alter persisted TipTap JSON.
    */
   collapseStorageKey?: string | null;
+  /**
+   * Study-language code passed to AI Format as a hint.
+   * Does not unlock language-specific hardcoded grammar tables.
+   */
+  language?: string | null;
+  /** Optional vocabulary headword for notes Format context. */
+  formatWord?: string | null;
 };
 
 function buildExtensions(
@@ -155,12 +163,15 @@ export function RichTextEditor({
   onEditorReady,
   onImageUploadPendingChange,
   collapseStorageKey = null,
+  language = null,
+  formatWord = null,
 }: RichTextEditorProps) {
   const tEditor = useTranslations("editor");
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSavedContent = useRef("");
   const pendingUploads = useRef(0);
   const insertImagesRef = useRef<(files: File[]) => void>(() => { });
+  const [formatting, setFormatting] = useState(false);
   const persistTransientRef = useRef<(currentEditor: Editor) => void>(() => { });
   const emitLatestRef = useRef<(currentEditor: Editor) => void>(() => { });
   const isNotes = variant === "notes";
@@ -184,6 +195,10 @@ export function RichTextEditor({
   onChangeRef.current = onChange;
   const onAutosaveRef = useRef(onAutosave);
   onAutosaveRef.current = onAutosave;
+  const languageRef = useRef(language);
+  languageRef.current = language;
+  const formatWordRef = useRef(formatWord);
+  formatWordRef.current = formatWord;
   /** Prevents controlled `content` sync from wiping a local Format before parent state catches up. */
   const pendingLocalDocRef = useRef<string | null>(null);
 
@@ -411,32 +426,70 @@ export function RichTextEditor({
   const words = editor.storage.characterCount.words();
   const activeEditor = editor;
 
-  function handleFormat() {
+  async function handleFormat() {
+    if (formatting) return;
     const current = activeEditor.getJSON();
-    const formatted = formatTiptapDocument(current);
-    if (JSON.stringify(formatted) === JSON.stringify(current)) {
-      toast.message(tEditor("formatUnchanged"));
-      return;
-    }
-
-    const selection = activeEditor.state.selection;
-    // Apply without relying on onUpdate alone — parent form state must get levels.
-    activeEditor.commands.setContent(formatted, { emitUpdate: false });
-    const next = activeEditor.getJSON();
-    const serialized = JSON.stringify(next);
-    pendingLocalDocRef.current = serialized;
-
-    const maxPos = activeEditor.state.doc.content.size;
-    const from = Math.min(selection.from, maxPos);
-    const to = Math.min(selection.to, maxPos);
+    setFormatting(true);
     try {
-      activeEditor.commands.setTextSelection({ from, to });
-    } catch {
-      activeEditor.commands.focus("end");
-    }
+      const result = await formatEditorDocumentAi({
+        doc: current,
+        language: languageRef.current,
+        word: formatWordRef.current,
+      });
 
-    onChangeRef.current?.(next);
-    toast.success(tEditor("formatSuccess"));
+      if (!result.ok) {
+        if (result.code === "EMPTY") {
+          toast.message(tEditor("formatUnchanged"));
+        } else {
+          toast.error(tEditor("formatFailed"));
+        }
+        return;
+      }
+
+      const formatted = result.doc;
+      if (JSON.stringify(formatted) === JSON.stringify(current)) {
+        toast.message(tEditor("formatUnchanged"));
+        return;
+      }
+
+      const selection = activeEditor.state.selection;
+      activeEditor.commands.setContent(formatted, { emitUpdate: false });
+      const next = activeEditor.getJSON();
+      const serialized = JSON.stringify(next);
+      pendingLocalDocRef.current = serialized;
+
+      const maxPos = activeEditor.state.doc.content.size;
+      const from = Math.min(selection.from, maxPos);
+      const to = Math.min(selection.to, maxPos);
+      try {
+        activeEditor.commands.setTextSelection({ from, to });
+      } catch {
+        activeEditor.commands.focus("end");
+      }
+
+      onChangeRef.current?.(next);
+      if (result.source === "fallback") {
+        toast.message(tEditor("formatAiFallback"));
+      } else {
+        toast.success(tEditor("formatSuccess"));
+      }
+    } catch {
+      // Last-resort local tidy if the server action itself throws.
+      const formatted = formatTiptapDocument(current, {
+        language: languageRef.current,
+      });
+      if (JSON.stringify(formatted) === JSON.stringify(current)) {
+        toast.error(tEditor("formatFailed"));
+        return;
+      }
+      activeEditor.commands.setContent(formatted, { emitUpdate: false });
+      const next = activeEditor.getJSON();
+      pendingLocalDocRef.current = JSON.stringify(next);
+      onChangeRef.current?.(next);
+      toast.message(tEditor("formatAiFallback"));
+    } finally {
+      setFormatting(false);
+    }
   }
 
   return (
@@ -449,8 +502,12 @@ export function RichTextEditor({
       {editable && (
         <EditorToolbar
           editor={editor}
-          onFormat={handleFormat}
+          onFormat={() => {
+            void handleFormat();
+          }}
           formatLabel={tEditor("format")}
+          formatPending={formatting}
+          formatPendingLabel={tEditor("formatWorking")}
         />
       )}
       <div className="overflow-x-auto">

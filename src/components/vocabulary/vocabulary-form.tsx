@@ -745,6 +745,8 @@ export function VocabularyForm({
                 content={notesDoc}
                 placeholder={t("notesPlaceholder")}
                 variant="notes"
+                language={language}
+                formatWord={watchedWord}
                 onChange={handleNotesChange}
                 onImageUploadPendingChange={setNotesImageUploading}
                 onEditorReady={handleNotesEditorReady}
