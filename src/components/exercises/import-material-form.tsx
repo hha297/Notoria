@@ -242,8 +242,8 @@ export function ImportMaterialForm() {
           blob instanceof File && blob.name
             ? blob
             : new File([blob], `pasted-image.${ext}`, {
-                type: item.type || "image/png",
-              });
+              type: item.type || "image/png",
+            });
         setMode("image");
         void processFile(file, { requireImage: true });
         return;

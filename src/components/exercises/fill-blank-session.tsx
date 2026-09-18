@@ -354,8 +354,8 @@ export function FillBlankSession({
       {aiBar}
 
       {generating ||
-      processing.stage === "error" ||
-      processing.stage === "completed" ? (
+        processing.stage === "error" ||
+        processing.stage === "completed" ? (
         <AiProcessingProgress
           state={processing}
           pipeline="aiGenerate"
@@ -493,7 +493,7 @@ function FillBlankCard({
         }}
         className="mt-8 space-y-8"
       >
-        <div className="rounded-2xl border border-hairline-cloud bg-muted/20 px-4 py-10 sm:px-8 sm:py-12 md:py-14">
+        <div className="rounded-sm border border-hairline-cloud bg-surface-elevated px-4 py-10 sm:px-8 sm:py-12 md:py-14">
           <div className="flex min-w-0 flex-wrap items-center justify-center gap-x-3 gap-y-4 text-center leading-snug">
             {item.sentenceBefore && (
               <span className="max-w-full break-words text-xl font-medium text-ink [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
@@ -510,8 +510,8 @@ function FillBlankCard({
                   className={cn(
                     "max-w-full break-words rounded-xl px-3 py-1.5 text-xl font-semibold [overflow-wrap:anywhere] sm:text-2xl md:text-3xl",
                     isCorrect
-                      ? "bg-[#f4fae0] text-[#4a6b0a] ring-2 ring-[#b8d96a]/60"
-                      : "bg-[#fff1f6] text-destructive ring-2 ring-[#f3b8cc]/60",
+                      ? "feedback-success ring-2 ring-success-border/60"
+                      : "feedback-error ring-2 ring-error-border/60",
                   )}
                 >
                   {isCorrect ? input : expected}
@@ -525,10 +525,10 @@ function FillBlankCard({
                   spellCheck={false}
                   placeholder="?"
                   className={cn(
-                    "h-12 w-full min-w-0 max-w-full rounded-xl border-2 border-dashed border-accent-lime/50 bg-background/90 px-4",
-                    "text-center text-xl font-semibold text-ink shadow-sm sm:h-14 sm:text-2xl md:text-3xl",
+                    "h-12 w-full min-w-0 max-w-full rounded-sm border-2 border-dashed border-primary/50 bg-surface px-4",
+                    "text-center text-xl font-semibold text-ink sm:h-14 sm:text-2xl md:text-3xl",
                     "placeholder:text-muted-foreground/40",
-                    "focus-visible:border-accent-lime focus-visible:bg-background focus-visible:ring-4 focus-visible:ring-accent-lime/20",
+                    "focus-visible:border-primary focus-visible:bg-surface-elevated focus-visible:ring-2 focus-visible:ring-ring/50",
                   )}
                 />
               )}
@@ -570,7 +570,7 @@ function FillBlankCard({
           <div
             className={cn(
               "flex min-w-0 items-start gap-3 rounded-xl px-5 py-4 text-sm font-medium sm:text-base",
-              isCorrect ? "bg-[#f4fae0] text-[#4a6b0a]" : "bg-[#fff1f6] text-[#c7366a]",
+              isCorrect ? "bg-success-muted text-success" : "bg-error-muted text-destructive",
             )}
           >
             {isCorrect ? (

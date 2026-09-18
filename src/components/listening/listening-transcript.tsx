@@ -53,9 +53,9 @@ export function ListeningTranscript({
             : "border-l-hairline-cloud bg-muted/30";
           const name = turn.speaker
             ? speakerDisplayName(
-                { speaker: turn.speaker, displayName: turn.displayName },
-                (id) => t("speakerLabel", { id }),
-              )
+              { speaker: turn.speaker, displayName: turn.displayName },
+              (id) => t("speakerLabel", { id }),
+            )
             : null;
 
           return (
@@ -71,17 +71,17 @@ export function ListeningTranscript({
               )}
               {...(interactive
                 ? {
-                    role: "button" as const,
-                    tabIndex: 0,
-                    "aria-label": tPlayer("playSegment"),
-                    onClick: () => onSeekMs?.(turn.start ?? 0),
-                    onKeyDown: (event: KeyboardEvent<HTMLDivElement>) => {
-                      if (event.key === "Enter" || event.key === " ") {
-                        event.preventDefault();
-                        onSeekMs?.(turn.start ?? 0);
-                      }
-                    },
-                  }
+                  role: "button" as const,
+                  tabIndex: 0,
+                  "aria-label": tPlayer("playSegment"),
+                  onClick: () => onSeekMs?.(turn.start ?? 0),
+                  onKeyDown: (event: KeyboardEvent<HTMLDivElement>) => {
+                    if (event.key === "Enter" || event.key === " ") {
+                      event.preventDefault();
+                      onSeekMs?.(turn.start ?? 0);
+                    }
+                  },
+                }
                 : {})}
             >
               {showSpeakers && name ? (

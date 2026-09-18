@@ -13,7 +13,7 @@ export default async function CallLayout({
 
   return (
     <ProAccessProvider hasProAccess={proAccess.hasProAccess}>
-      <div className="speaking-call min-h-svh bg-[#150f23] text-white">
+      <div className="speaking-call min-h-svh bg-surface-inverse text-on-inverse">
         {children}
       </div>
     </ProAccessProvider>

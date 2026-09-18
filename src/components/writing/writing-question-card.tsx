@@ -46,7 +46,7 @@ export const WritingQuestionCard = memo(function WritingQuestionCard({
   return (
     <div
       className={cn(
-        "min-w-0 max-w-full rounded-xl border border-hairline-cloud bg-background p-3 sm:p-4",
+        "min-w-0 max-w-full rounded-sm border border-hairline-cloud bg-surface p-3 sm:p-4",
         className,
       )}
     >
@@ -127,8 +127,8 @@ export const WritingQuestionCard = memo(function WritingQuestionCard({
         </div>
 
         {suggestions.length > 0 &&
-        onApplyAiSuggestion &&
-        onSkipAiSuggestion ? (
+          onApplyAiSuggestion &&
+          onSkipAiSuggestion ? (
           <div className="border-t border-hairline-cloud pt-3">
             <WritingAiPanel
               suggestions={suggestions}

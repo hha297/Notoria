@@ -136,31 +136,31 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
               value={search}
               onChange={(event) => setSearch(event.target.value)}
               placeholder={t("searchPlaceholder")}
-              className="h-9 pl-9"
+              className="h-10 pl-9"
             />
           </div>
         </div>
 
         {isRetrying ||
-        processing.stage === "error" ||
-        processing.stage === "completed" ? (
+          processing.stage === "error" ||
+          processing.stage === "completed" ? (
           <AiProcessingProgress
             state={processing}
             pipeline="import"
             onRetry={
               processing.stage === "error" && retryId
                 ? () => {
-                    const item = imports.find((row) => row.id === retryId);
-                    if (item) handleRetry(item);
-                  }
+                  const item = imports.find((row) => row.id === retryId);
+                  if (item) handleRetry(item);
+                }
                 : undefined
             }
             onDismissError={
               processing.stage === "error"
                 ? () => {
-                    resetProcessing();
-                    setRetryId(null);
-                  }
+                  resetProcessing();
+                  setRetryId(null);
+                }
                 : undefined
             }
           />
@@ -171,122 +171,122 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
             {t("noResults")}
           </p>
         ) : (
-        <div className="grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-3">
-          {filtered.map((item) => {
-            const ready = item.status === "COMPLETED" && item.exerciseCount > 0;
-            const failed = item.status === "FAILED";
-            const incomplete =
-              item.status === "COMPLETED" && item.exerciseCount === 0;
-            const processingStatus =
-              item.status === "UPLOADING" ||
-              item.status === "EXTRACTING" ||
-              item.status === "ANALYZING" ||
-              item.status === "GENERATING";
+          <div className="grid auto-rows-fr gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {filtered.map((item) => {
+              const ready = item.status === "COMPLETED" && item.exerciseCount > 0;
+              const failed = item.status === "FAILED";
+              const incomplete =
+                item.status === "COMPLETED" && item.exerciseCount === 0;
+              const processingStatus =
+                item.status === "UPLOADING" ||
+                item.status === "EXTRACTING" ||
+                item.status === "ANALYZING" ||
+                item.status === "GENERATING";
 
-            return (
-              <article
-                key={item.id}
-                className={cn(
-                  "group relative flex h-full min-h-55 flex-col overflow-hidden rounded-xl border border-hairline-cloud bg-card p-5 transition-all",
-                  ready &&
+              return (
+                <article
+                  key={item.id}
+                  className={cn(
+                    "group relative flex h-full min-h-55 flex-col overflow-hidden rounded-xl border border-hairline-cloud bg-card p-5 transition-all",
+                    ready &&
                     "cursor-pointer hover:border-accent-lime/50 hover:shadow-[0_0_0_1px_rgba(194,239,78,0.35)]",
-                )}
-              >
-                <div className="mb-3 flex items-start justify-between gap-2">
-                  <Badge
-                    variant="outline"
-                    className="inline-flex items-center gap-1.5"
-                  >
-                    <SourceIcon type={item.sourceType} />
-                    {t(`sourceTypes.${item.sourceType}`)}
-                  </Badge>
-                  <Badge
-                    variant={
-                      failed || incomplete
-                        ? "destructive"
-                        : ready
-                          ? "secondary"
-                          : "outline"
-                    }
-                  >
-                    {processingStatus ? (
-                      <span className="inline-flex items-center gap-1">
-                        <Loader2 className="size-3 animate-spin" />
-                        {t(`status.${item.status}`)}
-                      </span>
-                    ) : incomplete ? (
-                      t("status.FAILED")
-                    ) : (
-                      t(`status.${item.status}`)
-                    )}
-                  </Badge>
-                </div>
+                  )}
+                >
+                  <div className="mb-3 flex items-start justify-between gap-2">
+                    <Badge
+                      variant="outline"
+                      className="inline-flex items-center gap-1.5"
+                    >
+                      <SourceIcon type={item.sourceType} />
+                      {t(`sourceTypes.${item.sourceType}`)}
+                    </Badge>
+                    <Badge
+                      variant={
+                        failed || incomplete
+                          ? "destructive"
+                          : ready
+                            ? "secondary"
+                            : "outline"
+                      }
+                    >
+                      {processingStatus ? (
+                        <span className="inline-flex items-center gap-1">
+                          <Loader2 className="size-3 animate-spin" />
+                          {t(`status.${item.status}`)}
+                        </span>
+                      ) : incomplete ? (
+                        t("status.FAILED")
+                      ) : (
+                        t(`status.${item.status}`)
+                      )}
+                    </Badge>
+                  </div>
 
-                <h3 className="line-clamp-2 font-heading text-lg font-medium leading-snug text-ink">
-                  {item.title}
-                </h3>
+                  <h3 className="line-clamp-2 font-heading text-lg font-medium leading-snug text-ink">
+                    {item.title}
+                  </h3>
 
-                <p className="mt-2 text-sm text-muted-foreground">
-                  {ready
-                    ? t("exerciseCount", { count: item.exerciseCount })
-                    : failed &&
+                  <p className="mt-2 text-sm text-muted-foreground">
+                    {ready
+                      ? t("exerciseCount", { count: item.exerciseCount })
+                      : failed &&
                         item.errorCode &&
                         isExerciseImportErrorCode(item.errorCode)
-                      ? t(`errors.${item.errorCode}`)
-                      : incomplete
-                        ? t("errors.GENERATION_FAILED")
-                        : t(`status.${item.status}`)}
-                </p>
+                        ? t(`errors.${item.errorCode}`)
+                        : incomplete
+                          ? t("errors.GENERATION_FAILED")
+                          : t(`status.${item.status}`)}
+                  </p>
 
-                <p className="mt-auto pt-4 text-xs text-muted-foreground">
-                  {t("importedAgo", {
-                    time: formatDistanceToNow(new Date(item.createdAt), {
-                      addSuffix: true,
-                    }),
-                  })}
-                </p>
+                  <p className="mt-auto pt-4 text-xs text-muted-foreground">
+                    {t("importedAgo", {
+                      time: formatDistanceToNow(new Date(item.createdAt), {
+                        addSuffix: true,
+                      }),
+                    })}
+                  </p>
 
-                <div className="relative z-10 mt-4 flex flex-wrap gap-2">
-                  {ready ? (
-                    <LinkButton href={`/exercises/import/${item.id}`} size="sm">
-                      <Play className="size-3.5" />
-                      {t("practice")}
-                    </LinkButton>
-                  ) : null}
-                  {failed || incomplete ? (
+                  <div className="relative z-10 mt-4 flex flex-wrap gap-2">
+                    {ready ? (
+                      <LinkButton href={`/exercises/import/${item.id}`} size="sm">
+                        <Play className="size-3.5" />
+                        {t("practice")}
+                      </LinkButton>
+                    ) : null}
+                    {failed || incomplete ? (
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="outline"
+                        disabled={isPending || isRetrying}
+                        onClick={() => handleRetry(item)}
+                      >
+                        <RotateCcw className="size-3.5" />
+                        {t("retry")}
+                      </Button>
+                    ) : null}
                     <Button
                       type="button"
                       size="sm"
-                      variant="outline"
-                      disabled={isPending || isRetrying}
-                      onClick={() => handleRetry(item)}
+                      variant="ghost"
+                      disabled={isPending || isRetrying || processingStatus}
+                      onClick={() => setDeleteTarget(item)}
                     >
-                      <RotateCcw className="size-3.5" />
-                      {t("retry")}
+                      <Trash2 className="size-3.5" />
+                      {t("delete")}
                     </Button>
+                  </div>
+                  {ready ? (
+                    <Link
+                      href={`/exercises/import/${item.id}`}
+                      className="absolute inset-0 z-0 cursor-pointer"
+                      aria-label={t("practice")}
+                    />
                   ) : null}
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    disabled={isPending || isRetrying || processingStatus}
-                    onClick={() => setDeleteTarget(item)}
-                  >
-                    <Trash2 className="size-3.5" />
-                    {t("delete")}
-                  </Button>
-                </div>
-                {ready ? (
-                  <Link
-                    href={`/exercises/import/${item.id}`}
-                    className="absolute inset-0 z-0 cursor-pointer"
-                    aria-label={t("practice")}
-                  />
-                ) : null}
-              </article>
-            );
-          })}
-        </div>
+                </article>
+              );
+            })}
+          </div>
         )}
       </div>
 

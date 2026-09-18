@@ -152,7 +152,7 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
       Boolean(lesson.transcript?.trim()) &&
       !isMultiSpeakerTranscript(utterances) &&
       (lesson.transcriptionData?.speakerAssignmentVersion ?? 0) <
-        SPEAKER_ASSIGNMENT_VERSION;
+      SPEAKER_ASSIGNMENT_VERSION;
     if (!needsSpeakers || speakersRequested.current) return;
 
     speakersRequested.current = true;
@@ -197,9 +197,9 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
   );
   const total = isFillBlank
     ? practiceExercises.reduce(
-        (count, exercise) => count + asStringArray(exercise.correctAnswer).length,
-        0,
-      )
+      (count, exercise) => count + asStringArray(exercise.correctAnswer).length,
+      0,
+    )
     : practiceExercises.length;
   const correctCount = isFillBlank
     ? blankResults.filter(Boolean).length
@@ -492,11 +492,11 @@ function FillBlankQuestion({
                   className={cn(
                     "mx-1 inline-flex h-9 max-w-[min(100%,18rem)] align-baseline",
                     checked &&
-                      blankResults[index] &&
-                      "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a]",
+                    blankResults[index] &&
+                    "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a]",
                     checked &&
-                      !blankResults[index] &&
-                      "border-destructive/40 bg-destructive/10 text-destructive",
+                    !blankResults[index] &&
+                    "border-destructive/40 bg-destructive/10 text-destructive",
                   )}
                 />
                 {checked && !blankResults[index] ? (
@@ -544,12 +544,12 @@ function MultipleChoicePrompt({
               selected && !checked && "border-accent-lime bg-accent-lime/20",
               checked && isCorrect && "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a]",
               checked &&
-                selected &&
-                !isCorrect &&
-                "border-destructive/40 bg-destructive/10 text-destructive",
+              selected &&
+              !isCorrect &&
+              "border-destructive/40 bg-destructive/10 text-destructive",
               !selected &&
-                !checked &&
-                "border-hairline-cloud hover:border-accent-lime/50 hover:bg-muted/40",
+              !checked &&
+              "border-hairline-cloud hover:border-accent-lime/50 hover:bg-muted/40",
             )}
           >
             {option}

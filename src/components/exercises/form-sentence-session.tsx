@@ -258,9 +258,9 @@ export function FormSentenceSession({
       setRound((currentRound) =>
         currentRound.feedback
           ? {
-              ...currentRound,
-              feedback: { ...currentRound.feedback, saved: true },
-            }
+            ...currentRound,
+            feedback: { ...currentRound.feedback, saved: true },
+          }
           : currentRound,
       );
       toast.success(
@@ -330,7 +330,7 @@ export function FormSentenceSession({
             progressValue={total ? ((round.index + 1) / total) * 100 : 0}
           />
           {current && (
-            <div className="mx-auto max-w-2xl rounded-2xl border border-hairline-cloud bg-card p-5 shadow-xl shadow-ink/5 sm:rounded-3xl sm:p-8 md:p-10">
+            <div className="mx-auto max-w-2xl rounded-sm border border-hairline-cloud bg-surface-elevated p-5 sm:p-8 md:p-10">
               <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
                 {t("vocabularyLabel")}
               </p>
@@ -362,7 +362,7 @@ export function FormSentenceSession({
                     autoComplete="off"
                   />
                 ) : (
-                  <div className="min-w-0 space-y-3 rounded-xl border border-hairline-cloud bg-muted/30 p-4 text-sm">
+                  <div className="min-w-0 space-y-2 rounded-sm border border-hairline-cloud bg-surface p-3 text-sm leading-relaxed">
                     <p className="break-words [overflow-wrap:anywhere]">
                       <span className="font-semibold text-ink">
                         {t("yourSentence")}:
@@ -370,7 +370,7 @@ export function FormSentenceSession({
                       {round.feedback.sentence}
                     </p>
                     {round.feedback.correctedSentence &&
-                    !round.feedback.isCorrect ? (
+                      !round.feedback.isCorrect ? (
                       <p className="break-words [overflow-wrap:anywhere]">
                         <span className="font-semibold text-ink">
                           {t("corrected")}:
@@ -403,7 +403,7 @@ export function FormSentenceSession({
                 )}
 
                 {round.evaluating ? (
-                  <div className="flex min-w-0 items-center gap-2 rounded-xl bg-muted/40 px-4 py-3 text-sm font-medium text-muted-foreground">
+                  <div className="flex min-w-0 items-center gap-2 rounded-sm bg-surface-hover px-4 py-3 text-sm font-medium text-muted-foreground">
                     <Loader2 className="size-4 shrink-0 animate-spin" />
                     {t("evaluating")}
                   </div>
@@ -412,10 +412,10 @@ export function FormSentenceSession({
                 {round.feedback ? (
                   <div
                     className={cn(
-                      "flex min-w-0 items-start gap-2 rounded-xl px-4 py-3 text-sm font-medium",
+                      "flex min-w-0 items-start gap-2 rounded-sm px-4 py-3 text-sm font-medium",
                       round.feedback.isCorrect
-                        ? "bg-[#f4fae0] text-[#4a6b0a]"
-                        : "bg-[#fff1f6] text-[#c7366a]",
+                        ? "feedback-success"
+                        : "feedback-error",
                     )}
                   >
                     {round.feedback.isCorrect ? (

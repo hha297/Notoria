@@ -214,51 +214,51 @@ export function TheoryLibrary({
               <FolderGrid />
 
               <AnimatePresence mode="wait">
-              {filtered.length === 0 ? (
-                hasFilters && matchingFolders.length === 0 ? (
+                {filtered.length === 0 ? (
+                  hasFilters && matchingFolders.length === 0 ? (
+                    <motion.div
+                      key="empty"
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      exit={{ opacity: 0, y: -6 }}
+                      transition={{ duration: 0.18, ease: EASE }}
+                      className="empty-state"
+                    >
+                      <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-hairline-cloud bg-muted/40">
+                        <BookOpen className="size-6 text-muted-foreground" />
+                      </div>
+                      <p className="font-medium text-ink">{t("noResults")}</p>
+                      <p className="mt-2 max-w-md text-sm text-muted-foreground">
+                        {t("noResultsDescription")}
+                      </p>
+                    </motion.div>
+                  ) : null
+                ) : (
                   <motion.div
-                    key="empty"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.18, ease: EASE }}
-                    className="empty-state"
+                    key={`${multiFilterKey(categories)}:${search}`}
+                    initial="hidden"
+                    animate="show"
+                    exit={{ opacity: 0 }}
+                    variants={{
+                      hidden: { opacity: 0 },
+                      show: {
+                        opacity: 1,
+                        transition: { staggerChildren: 0.045, delayChildren: 0.04 },
+                      },
+                    }}
+                    className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3"
+                    data-tutorial="theory-note-list"
                   >
-                    <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-hairline-cloud bg-muted/40">
-                      <BookOpen className="size-6 text-muted-foreground" />
-                    </div>
-                    <p className="font-medium text-ink">{t("noResults")}</p>
-                    <p className="mt-2 max-w-md text-sm text-muted-foreground">
-                      {t("noResultsDescription")}
-                    </p>
+                    {filtered.map((note) => (
+                      <TheoryCard
+                        key={note.id}
+                        note={note}
+                        workspaceId={workspaceId}
+                      />
+                    ))}
                   </motion.div>
-                ) : null
-              ) : (
-                <motion.div
-                  key={`${multiFilterKey(categories)}:${search}`}
-                  initial="hidden"
-                  animate="show"
-                  exit={{ opacity: 0 }}
-                  variants={{
-                    hidden: { opacity: 0 },
-                    show: {
-                      opacity: 1,
-                      transition: { staggerChildren: 0.045, delayChildren: 0.04 },
-                    },
-                  }}
-                  className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3"
-                  data-tutorial="theory-note-list"
-                >
-                  {filtered.map((note) => (
-                    <TheoryCard
-                      key={note.id}
-                      note={note}
-                      workspaceId={workspaceId}
-                    />
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
+                )}
+              </AnimatePresence>
             </div>
           </>
         )}

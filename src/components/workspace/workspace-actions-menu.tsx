@@ -39,7 +39,7 @@ export function WorkspaceActionsMenu({
       <DropdownMenu>
         <DropdownMenuTrigger
           className={cn(
-            buttonVariants({ size: "sm", variant: "outline" }),
+            buttonVariants({ variant: "outline" }),
             "shrink-0",
           )}
           aria-label={t("manage")}

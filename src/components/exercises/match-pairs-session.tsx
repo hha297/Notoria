@@ -170,7 +170,7 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
 
 function Column({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="min-w-0 space-y-2 rounded-2xl border border-hairline-cloud bg-card p-3 sm:p-4">
+    <div className="min-w-0 space-y-2 rounded-sm border border-hairline-cloud bg-surface-elevated p-3 sm:p-4">
       <p className="sticky top-0 z-10 bg-card pb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
         {title}
       </p>
@@ -200,11 +200,11 @@ function MatchButton({
       onClick={onClick}
       disabled={matched}
       className={cn(
-        "w-full min-w-0 min-h-11 cursor-pointer rounded-xl border px-4 py-3 text-left text-sm font-medium break-words [overflow-wrap:anywhere] transition-all sm:min-h-0",
-        matched && "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a] opacity-80",
-        !matched && selected && "border-accent-lime bg-accent-lime/15 text-ink",
-        !matched && wrong && "border-[#f3b8cc] bg-[#fff1f6] text-[#c7366a] animate-pulse",
-        !matched && !selected && !wrong && "border-hairline-cloud bg-background hover:border-accent-lime/50 hover:bg-accent-lime/10",
+        "w-full min-w-0 min-h-11 cursor-pointer rounded-sm border px-4 py-3 text-left text-sm font-medium break-words [overflow-wrap:anywhere] transition-all sm:min-h-0",
+        matched && "feedback-success opacity-80",
+        !matched && selected && "border-primary bg-surface-active text-ink",
+        !matched && wrong && "feedback-error animate-pulse",
+        !matched && !selected && !wrong && "border-hairline-cloud bg-surface-elevated hover:border-primary/50 hover:bg-surface-active",
       )}
     >
       {label}

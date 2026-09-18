@@ -63,7 +63,7 @@ export function VocabularyPreview({
 
   const partOfSpeechLabel =
     partOfSpeech &&
-    PARTS_OF_SPEECH.includes(partOfSpeech as (typeof PARTS_OF_SPEECH)[number])
+      PARTS_OF_SPEECH.includes(partOfSpeech as (typeof PARTS_OF_SPEECH)[number])
       ? tPos(partOfSpeech as (typeof PARTS_OF_SPEECH)[number])
       : partOfSpeech;
 

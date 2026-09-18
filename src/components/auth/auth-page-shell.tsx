@@ -22,7 +22,7 @@ export function AuthPageShell({
   return (
     <div className="flex min-h-svh flex-col items-center justify-center px-4 py-8 sm:py-10">
       <div className="w-full max-w-[420px]">
-        <Card className="gap-0 overflow-visible rounded-xl border border-hairline-cloud bg-card p-0 shadow-none ring-0 md:rounded-none md:border-0 md:bg-transparent">
+        <Card className="gap-0 overflow-visible rounded-sm border border-hairline-cloud bg-surface p-0 shadow-none ring-0">
           <CardHeader className="gap-4 border-0 px-5 pb-4 pt-6 text-center sm:px-8 sm:pb-6 sm:pt-8">
             <Link
               href="/sign-in"
@@ -32,7 +32,9 @@ export function AuthPageShell({
               <LogoWordmark tone="ink" />
             </Link>
             <div className="space-y-1.5">
-              <CardTitle className="text-xl text-ink sm:text-2xl">{title}</CardTitle>
+              <CardTitle className="font-heading text-xl font-bold tracking-tight text-ink sm:text-2xl">
+                {title}
+              </CardTitle>
               <CardDescription className="text-sm leading-relaxed">
                 {description}
               </CardDescription>

@@ -136,7 +136,7 @@ export function FlashcardCard({
         )}
 
         {word.notes &&
-        !isNotesDocEmpty(parseVocabularyNotes(word.notes)) ? (
+          !isNotesDocEmpty(parseVocabularyNotes(word.notes)) ? (
           <div>
             <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
               {t("notes")}

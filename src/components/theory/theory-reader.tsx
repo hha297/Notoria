@@ -80,7 +80,7 @@ export function TheoryReader({
         <LinkButton
           href={`/theory/${id}/edit`}
           size="lg"
-          className="h-11 w-full sm:h-9 sm:w-auto"
+          className="w-full sm:w-auto"
         >
           <Pencil className="size-4" />
           {t("edit")}
@@ -91,7 +91,7 @@ export function TheoryReader({
           size="lg"
           icon={<Download className="size-4" />}
           onClick={() => setExportOpen(true)}
-          className="h-11 w-full sm:h-9 sm:w-auto"
+          className="w-full sm:w-auto"
         >
           {t("export.button")}
         </LockedFeatureButton>
@@ -100,15 +100,15 @@ export function TheoryReader({
           variant="outline"
           size="lg"
           onClick={() => setDeleteOpen(true)}
-          className="h-11 w-full sm:h-9 sm:w-auto"
+          className="w-full sm:w-auto"
         >
           <Trash2 className="size-4" />
           {tCommon("delete")}
         </Button>
       </div>
 
-      <article className="card-surface space-y-6 p-4 sm:space-y-8 sm:p-6 md:p-8">
-        <header className="space-y-3 border-b border-hairline-cloud pb-5">
+      <article className="mx-auto max-w-3xl space-y-7">
+        <header className="space-y-3">
           <div className="flex flex-wrap items-center gap-2">
             <Badge variant="secondary">{categoryLabel}</Badge>
             <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
@@ -119,17 +119,17 @@ export function TheoryReader({
               {formatDistanceToNow(new Date(updatedAt), { addSuffix: true })}
             </span>
           </div>
-          <h2 className="heading-md text-ink">{title}</h2>
+          <h1 className="heading-xl text-ink">{title}</h1>
           {parsed.description ? (
             <DescriptionContent
               value={parsed.description}
-              className="text-sm text-muted-foreground sm:text-base"
+              className="text-[15px] leading-[1.7] text-muted-foreground"
             />
           ) : null}
         </header>
         <RichTextContent
           content={parsed.doc}
-          className="border-0 bg-transparent shadow-none"
+          className="border-0 bg-transparent p-0 shadow-none"
           collapseStorageKey={`heading-collapse:theory:${id}`}
         />
       </article>

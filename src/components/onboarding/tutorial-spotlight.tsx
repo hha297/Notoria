@@ -42,7 +42,7 @@ export function TutorialBackdrop({ onClick }: TutorialBackdropProps) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.18, ease: EASE }}
-      className="fixed inset-0 z-[189] bg-ink-deep/55"
+      className="fixed inset-0 z-[189] bg-surface-inverse/55"
       onClick={onClick}
       aria-hidden
     />

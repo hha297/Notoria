@@ -330,150 +330,150 @@ export function WritingTable({
           </PageHeader>
         }
       >
-      <div className="space-y-4">
-        <div className="flex min-w-0 flex-col gap-3 lg:flex-row lg:items-center">
-          <Input
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder={t("searchPlaceholder")}
-            className="h-10 min-w-0 lg:h-8 lg:max-w-sm"
-            data-tutorial="writing-search"
-          />
-
-          <div
-            className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:flex-wrap xl:grid-cols-none"
-            data-tutorial="writing-filters"
-          >
-            <MultiFilterSelect
-              emptyLabel={t("filterCefr")}
-              values={cefrFilter}
-              onChange={setCefrFilter}
-              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
-              options={WRITING_CEFR_LEVELS.map((level) => ({
-                value: level,
-                label: tMeta(`cefr.${level}`),
-              }))}
+        <div className="space-y-4">
+          <div className="flex min-w-0 flex-col gap-3 lg:flex-row lg:items-center">
+            <Input
+              value={search}
+              onChange={(event) => setSearch(event.target.value)}
+              placeholder={t("searchPlaceholder")}
+              className="h-10 min-w-0 lg:h-8 lg:max-w-sm"
+              data-tutorial="writing-search"
             />
 
-            <MultiFilterSelect
-              emptyLabel={t("filterTopic")}
-              values={topicFilter}
-              onChange={setTopicFilter}
-              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
-              options={WRITING_TOPICS.map((topic) => ({
-                value: topic,
-                label: resolveTopicLabel(topic, (key) => tTags(key)),
-              }))}
-            />
-
-            <MultiFilterSelect
-              emptyLabel={t("filterFormality")}
-              values={formalityFilter}
-              onChange={setFormalityFilter}
-              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
-              options={WRITING_FORMALITY.map((item) => ({
-                value: item,
-                label: tMeta(`formality.${item}`),
-              }))}
-            />
-
-            <Select
-              value={groupBy}
-              onValueChange={(value) =>
-                value && setGroupBy(value as GroupByOption)
-              }
+            <div
+              className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:flex-wrap xl:grid-cols-none"
+              data-tutorial="writing-filters"
             >
-              <SelectTrigger
-                size="sm"
-                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
-              >
-                <SelectValue>
-                  {groupBy === "mode"
-                    ? t("groupByMode")
-                    : groupBy === "week"
-                      ? t("groupByWeek")
-                      : t("groupByMonth")}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="mode">{t("groupByMode")}</SelectItem>
-                <SelectItem value="week">{t("groupByWeek")}</SelectItem>
-                <SelectItem value="month">{t("groupByMonth")}</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select
-              value={sort}
-              onValueChange={(value) => value && setSort(value as SortOption)}
-            >
-              <SelectTrigger
-                size="sm"
-                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-36"
-              >
-                <SelectValue>{sortLabel(sort, t)}</SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="updated:desc">
-                  {t("sortUpdatedDesc")}
-                </SelectItem>
-                <SelectItem value="updated:asc">
-                  {t("sortUpdatedAsc")}
-                </SelectItem>
-                <SelectItem value="created:desc">
-                  {t("sortCreatedDesc")}
-                </SelectItem>
-                <SelectItem value="created:asc">
-                  {t("sortCreatedAsc")}
-                </SelectItem>
-                <SelectItem value="title:asc">{t("sortTitleAsc")}</SelectItem>
-                <SelectItem value="title:desc">{t("sortTitleDesc")}</SelectItem>
-                <SelectItem value="cefr:asc">{t("sortCefrAsc")}</SelectItem>
-                <SelectItem value="cefr:desc">{t("sortCefrDesc")}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        <FolderGrid />
-
-        {groups.length === 0 ? (
-          hasFilters ? (
-            matchingFolders.length === 0 ? (
-              <div className="empty-state">
-                <p className="text-muted-foreground">{t("noResults")}</p>
-              </div>
-            ) : null
-          ) : childFolders.length === 0 ? (
-            <FolderEmptyState
-              title={
-                currentFolderId ? tFolders("emptyFolder") : t("emptyTitle")
-              }
-              description={
-                currentFolderId
-                  ? tFolders("emptyFolderDescription")
-                  : t("emptyDescription")
-              }
-            >
-              <LinkButton href={createHref} className="mt-5">
-                <Plus className="size-4" />
-                {currentFolderId ? t("create") : t("createFirst")}
-              </LinkButton>
-            </FolderEmptyState>
-          ) : null
-        ) : (
-          <div className="space-y-8" data-tutorial="writing-list">
-            {groups.map((group) => (
-              <WritingDocumentGroup
-                key={group.key}
-                mode={group.mode}
-                title={group.title}
-                documents={group.documents}
-                workspaceId={workspaceId}
+              <MultiFilterSelect
+                emptyLabel={t("filterCefr")}
+                values={cefrFilter}
+                onChange={setCefrFilter}
+                triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
+                options={WRITING_CEFR_LEVELS.map((level) => ({
+                  value: level,
+                  label: tMeta(`cefr.${level}`),
+                }))}
               />
-            ))}
+
+              <MultiFilterSelect
+                emptyLabel={t("filterTopic")}
+                values={topicFilter}
+                onChange={setTopicFilter}
+                triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
+                options={WRITING_TOPICS.map((topic) => ({
+                  value: topic,
+                  label: resolveTopicLabel(topic, (key) => tTags(key)),
+                }))}
+              />
+
+              <MultiFilterSelect
+                emptyLabel={t("filterFormality")}
+                values={formalityFilter}
+                onChange={setFormalityFilter}
+                triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
+                options={WRITING_FORMALITY.map((item) => ({
+                  value: item,
+                  label: tMeta(`formality.${item}`),
+                }))}
+              />
+
+              <Select
+                value={groupBy}
+                onValueChange={(value) =>
+                  value && setGroupBy(value as GroupByOption)
+                }
+              >
+                <SelectTrigger
+                  size="sm"
+                  className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
+                >
+                  <SelectValue>
+                    {groupBy === "mode"
+                      ? t("groupByMode")
+                      : groupBy === "week"
+                        ? t("groupByWeek")
+                        : t("groupByMonth")}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="mode">{t("groupByMode")}</SelectItem>
+                  <SelectItem value="week">{t("groupByWeek")}</SelectItem>
+                  <SelectItem value="month">{t("groupByMonth")}</SelectItem>
+                </SelectContent>
+              </Select>
+
+              <Select
+                value={sort}
+                onValueChange={(value) => value && setSort(value as SortOption)}
+              >
+                <SelectTrigger
+                  size="sm"
+                  className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-36"
+                >
+                  <SelectValue>{sortLabel(sort, t)}</SelectValue>
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="updated:desc">
+                    {t("sortUpdatedDesc")}
+                  </SelectItem>
+                  <SelectItem value="updated:asc">
+                    {t("sortUpdatedAsc")}
+                  </SelectItem>
+                  <SelectItem value="created:desc">
+                    {t("sortCreatedDesc")}
+                  </SelectItem>
+                  <SelectItem value="created:asc">
+                    {t("sortCreatedAsc")}
+                  </SelectItem>
+                  <SelectItem value="title:asc">{t("sortTitleAsc")}</SelectItem>
+                  <SelectItem value="title:desc">{t("sortTitleDesc")}</SelectItem>
+                  <SelectItem value="cefr:asc">{t("sortCefrAsc")}</SelectItem>
+                  <SelectItem value="cefr:desc">{t("sortCefrDesc")}</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
           </div>
-        )}
-      </div>
+
+          <FolderGrid />
+
+          {groups.length === 0 ? (
+            hasFilters ? (
+              matchingFolders.length === 0 ? (
+                <div className="empty-state">
+                  <p className="text-muted-foreground">{t("noResults")}</p>
+                </div>
+              ) : null
+            ) : childFolders.length === 0 ? (
+              <FolderEmptyState
+                title={
+                  currentFolderId ? tFolders("emptyFolder") : t("emptyTitle")
+                }
+                description={
+                  currentFolderId
+                    ? tFolders("emptyFolderDescription")
+                    : t("emptyDescription")
+                }
+              >
+                <LinkButton href={createHref} className="mt-5">
+                  <Plus className="size-4" />
+                  {currentFolderId ? t("create") : t("createFirst")}
+                </LinkButton>
+              </FolderEmptyState>
+            ) : null
+          ) : (
+            <div className="space-y-8" data-tutorial="writing-list">
+              {groups.map((group) => (
+                <WritingDocumentGroup
+                  key={group.key}
+                  mode={group.mode}
+                  title={group.title}
+                  documents={group.documents}
+                  workspaceId={workspaceId}
+                />
+              ))}
+            </div>
+          )}
+        </div>
       </FolderWorkspace>
     </PageShell>
   );

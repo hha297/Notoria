@@ -1,4 +1,4 @@
-import type { VocabularyWordRow } from "@/components/vocabulary/vocabulary-table";
+import type { VocabularyWordRow } from "@/lib/vocabulary/types";
 import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
 import { canonicalizeTagId } from "@/lib/vocabulary-tags";
 

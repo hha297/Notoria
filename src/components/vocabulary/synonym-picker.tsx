@@ -407,12 +407,12 @@ export function SynonymPicker({
                 <SelectTrigger className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!">
                   <SelectValue placeholder={t("partOfSpeechPlaceholder")}>
                     {createPartOfSpeech &&
-                    PARTS_OF_SPEECH.includes(
-                      createPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
-                    )
+                      PARTS_OF_SPEECH.includes(
+                        createPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
+                      )
                       ? tPos(
-                          createPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
-                        )
+                        createPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
+                      )
                       : null}
                   </SelectValue>
                 </SelectTrigger>

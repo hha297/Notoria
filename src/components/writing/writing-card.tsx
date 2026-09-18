@@ -37,7 +37,7 @@ export function WritingCard({ document, workspaceId }: WritingCardProps) {
 
   return (
     <FolderItemDrag id={document.id} className="h-full">
-      <Card className="relative h-full cursor-pointer border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
+      <Card className="relative h-full cursor-pointer border-hairline-cloud bg-surface-elevated transition-colors hover:border-primary/40 hover:bg-surface-hover">
         <Link
           href={`/writing/${document.id}`}
           className="absolute inset-0 z-0"
@@ -45,8 +45,8 @@ export function WritingCard({ document, workspaceId }: WritingCardProps) {
         />
         <CardHeader className="relative z-10 gap-3 pointer-events-none">
           <div className="flex items-start justify-between gap-2">
-            <div className="flex size-10 items-center justify-center rounded-xl border border-hairline-cloud bg-muted/40">
-              <PenLine className="size-5 text-ink" />
+            <div className="flex size-9 items-center justify-center rounded-sm border border-hairline-cloud bg-surface-active">
+              <PenLine className="size-4 text-primary" />
             </div>
             <div className="pointer-events-auto">
               <WritingRowActions

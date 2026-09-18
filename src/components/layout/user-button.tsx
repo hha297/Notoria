@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ChevronsUpDown, LogOut, User } from "lucide-react";
+import { LogOut, User } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { UserAvatar } from "@/components/account/user-avatar";
@@ -16,7 +16,6 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { useSidebar } from "@/components/ui/sidebar";
 import { cn } from "@/lib/utils";
 
 type UserButtonProps = {
@@ -24,22 +23,22 @@ type UserButtonProps = {
   email: string;
   image?: string | null;
   isPro?: boolean;
+  onNavigate?: () => void;
 };
 
-export function UserButton({ name, email, image, isPro = false }: UserButtonProps) {
+export function UserButton({
+  name,
+  email,
+  image,
+  isPro = false,
+  onNavigate,
+}: UserButtonProps) {
   const router = useRouter();
   const t = useTranslations("auth");
   const tb = useTranslations("billing");
-  const { isMobile, setOpenMobile } = useSidebar();
-
-  function closeMobileSidebar() {
-    if (isMobile) {
-      setOpenMobile(false);
-    }
-  }
 
   async function handleSignOut() {
-    closeMobileSidebar();
+    onNavigate?.();
     await signOut({ redirect: false });
     router.push("/sign-in");
     router.refresh();
@@ -49,36 +48,24 @@ export function UserButton({ name, email, image, isPro = false }: UserButtonProp
     <DropdownMenu>
       <DropdownMenuTrigger
         className={cn(
-          "flex w-full cursor-pointer items-center gap-2 rounded-lg border border-sidebar-border bg-sidebar/40 px-2 py-2 text-left text-sm transition-colors",
-          "hover:bg-accent-lime/10 data-popup-open:bg-accent-lime/10",
-          "group-data-[collapsible=icon]:size-8 group-data-[collapsible=icon]:justify-center group-data-[collapsible=icon]:border-0 group-data-[collapsible=icon]:bg-transparent group-data-[collapsible=icon]:p-0",
+          "flex w-full cursor-pointer items-center gap-2 rounded-lg border border-hairline-cloud bg-surface-elevated px-2 py-1.5 text-left text-sm outline-none transition-colors",
+          "hover:bg-surface-hover focus-visible:ring-2 focus-visible:ring-ring",
         )}
       >
-        <UserAvatar
-          name={name}
-          image={image}
-          size="sm"
-          className="group-data-[collapsible=icon]:size-8"
-        />
-        <span className="min-w-0 flex-1 group-data-[collapsible=icon]:hidden">
+        <UserAvatar name={name} image={image} size="sm" />
+        <span className="min-w-0 flex-1">
           <span className="flex min-w-0 items-center gap-1.5">
-            <span className="block truncate font-medium text-sidebar-foreground">
-              {name}
-            </span>
+            <span className="block truncate font-medium text-ink">{name}</span>
             {isPro ? (
-              <Badge
-                variant="secondary"
-                className="h-4 px-1.5 text-[10px] tracking-wide"
-              >
+              <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">
                 {tb("proBadge")}
               </Badge>
             ) : null}
           </span>
-          <span className="block truncate text-xs text-on-dark-muted">
+          <span className="block truncate font-heading text-[11px] text-muted-foreground">
             {email}
           </span>
         </span>
-        <ChevronsUpDown className="size-4 shrink-0 text-on-dark-muted group-data-[collapsible=icon]:hidden" />
       </DropdownMenuTrigger>
 
       <DropdownMenuContent align="start" side="top" className="w-56">
@@ -86,7 +73,7 @@ export function UserButton({ name, email, image, isPro = false }: UserButtonProp
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col gap-0.5">
               <span className="flex items-center gap-1.5">
-                <span className="font-medium">{name}</span>
+                <span className="font-medium text-ink">{name}</span>
                 {isPro ? (
                   <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">
                     {tb("proBadge")}
@@ -100,7 +87,7 @@ export function UserButton({ name, email, image, isPro = false }: UserButtonProp
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem
-            render={<Link href="/account" onClick={closeMobileSidebar} />}
+            render={<Link href="/account" onClick={onNavigate} />}
           >
             <User className="size-4" />
             {t("accountSettings")}

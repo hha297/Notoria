@@ -65,7 +65,7 @@ export function TheoryTransformationCard({
                 className={cn(
                   "border-b-2 font-semibold",
                   isCorrect
-                    ? "border-[#b8d96a] text-[#4a6b0a]"
+                    ? "border-success-border text-success"
                     : "border-destructive/50 text-destructive",
                 )}
               >
@@ -86,7 +86,7 @@ export function TheoryTransformationCard({
                 className={cn(
                   "border-b-2 font-semibold",
                   isCorrect
-                    ? "border-[#b8d96a] text-[#4a6b0a]"
+                    ? "border-success-border text-success"
                     : "border-destructive/50 text-destructive",
                 )}
               >

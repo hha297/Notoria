@@ -17,27 +17,15 @@ export function StatCard({
   return (
     <div
       className={cn(
-        "rounded-xl border p-4 sm:p-6 md:p-8",
-        featured
-          ? "border-hairline-violet bg-surface-night text-on-primary"
-          : "border-hairline-cloud bg-card text-ink",
+        "rounded-md border border-hairline-cloud px-4 py-3",
+        featured ? "bg-surface-active" : "bg-surface-elevated",
         className,
       )}
     >
-      <p
-        className={cn(
-          "text-2xl font-medium leading-tight sm:text-[30px]",
-          featured ? "text-on-primary" : "text-ink",
-        )}
-      >
+      <p className="font-heading text-xl font-bold leading-none tracking-tight text-ink sm:text-2xl">
         {value}
       </p>
-      <p
-        className={cn(
-          "mt-2 text-sm font-medium",
-          featured ? "text-on-dark-muted" : "text-muted-foreground",
-        )}
-      >
+      <p className="mt-1.5 font-heading text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
         {label}
       </p>
     </div>

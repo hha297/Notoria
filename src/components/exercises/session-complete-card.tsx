@@ -27,10 +27,10 @@ export function SessionCompleteCard({
   extraAction,
 }: SessionCompleteCardProps) {
   return (
-    <div className="mx-auto max-w-lg rounded-2xl border border-[#b8d96a] bg-[#f4fae0] p-5 text-center sm:p-8">
-      <p className="font-heading text-xl font-medium text-[#4a6b0a]">{title}</p>
+    <div className="feedback-success mx-auto max-w-lg rounded-sm p-5 text-center sm:p-8">
+      <p className="font-heading text-xl font-bold">{title}</p>
       {scoreLabel && (
-        <p className="mt-2 text-sm font-medium text-[#4a6b0a]/80">{scoreLabel}</p>
+        <p className="mt-2 text-sm font-medium opacity-80">{scoreLabel}</p>
       )}
       <div className="mt-6 flex flex-col items-center gap-2 sm:flex-row sm:justify-center">
         <Button type="button" onClick={onTryAgain} disabled={extraAction?.loading}>

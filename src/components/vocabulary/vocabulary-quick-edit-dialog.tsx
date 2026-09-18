@@ -64,7 +64,7 @@ export function VocabularyQuickEditDialog({
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="flex max-h-[min(90dvh,52rem)] w-full flex-col gap-0 overflow-hidden p-0 sm:max-w-3xl sm:p-0">
+      <DialogContent className="flex max-h-[min(92dvh,56rem)] w-full flex-col gap-0 overflow-hidden p-0 sm:max-w-4xl sm:p-0 lg:max-w-5xl">
         <DialogHeader className="shrink-0 space-y-1 border-b border-hairline-cloud px-4 py-4 pr-12 sm:px-6">
           <DialogTitle>{t("editWord")}</DialogTitle>
           <DialogDescription>{t("editDescription")}</DialogDescription>

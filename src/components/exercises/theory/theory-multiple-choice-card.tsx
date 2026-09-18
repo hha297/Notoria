@@ -67,8 +67,8 @@ export function TheoryMultipleChoiceCard({
               className={cn(
                 "min-w-0 rounded-xl border px-4 py-3 text-left text-sm font-medium break-words [overflow-wrap:anywhere] transition-colors",
                 isSelected && !checked && "border-ink bg-muted/40",
-                showState && isCorrect && "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a]",
-                showState && !isCorrect && "border-destructive/40 bg-[#fff1f6] text-destructive",
+                showState && isCorrect && "border-success-border bg-success-muted text-success",
+                showState && !isCorrect && "feedback-error",
                 !isSelected && "border-hairline-cloud hover:bg-muted/30",
               )}
             >

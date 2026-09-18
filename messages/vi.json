@@ -59,7 +59,13 @@
     "speaking": "Nói",
     "account": "Tài khoản",
     "settings": "Cài đặt",
-    "workspace": "Không gian học"
+    "workspace": "Không gian học",
+    "gettingStarted": "Cách dùng",
+    "groups": {
+      "main": "Menu chính",
+      "listenSpeak": "Nghe và nói",
+      "more": "Thêm"
+    }
   },
   "folders": {
     "new": "Thư mục mới",
@@ -96,6 +102,11 @@
     "invalidMove": "Không thể chuyển thư mục vào chính nó",
     "tooDeep": "Thư mục này đã lồng quá sâu",
     "notFound": "Không tìm thấy thư mục"
+  },
+  "theme": {
+    "toggle": "Đổi giao diện",
+    "light": "Sáng",
+    "dark": "Tối"
   },
   "header": {
     "createWorkspace": "Tạo không gian học",
@@ -194,8 +205,8 @@
     "synonymsCannotLinkSelf": "Một từ không thể đồng nghĩa với chính nó",
     "synonymsRemove": "Gỡ {word}",
     "formDescription": "Thêm từ kèm nghĩa, câu ví dụ và thẻ. Kéo thả để đổi thứ tự.",
-    "emptyTitle": "Sổ tay còn trống",
-    "emptyDescription": "Thêm vài từ vào sổ tay trong không gian học hiện tại để bắt đầu.",
+    "emptyTitle": "Ngân hàng từ vựng còn trống",
+    "emptyDescription": "Hãy thu thập từ và nghĩa để xây thư viện ngôn ngữ của riêng bạn.",
     "addFirst": "Thêm từ đầu tiên",
     "disabledNoWorkspace": "Hãy tạo không gian học trước đã, rồi mới thêm từ nhé.",
     "saved": "Đã lưu từ",
@@ -220,11 +231,20 @@
     "sortWord": "Theo từ",
     "sortAsc": "A → Z",
     "sortDesc": "Z → A",
-    "noResults": "Không tìm thấy từ nào khớp bộ lọc",
+    "noResults": "Không tìm thấy từ nào",
+    "noResultsDescription": "Thử đổi từ khóa hoặc bộ lọc.",
+    "loadError": "Không tải được từ vựng",
+    "loadErrorDescription": "Kiểm tra kết nối rồi thử lại.",
+    "retry": "Thử lại",
+    "viewList": "Danh sách",
+    "viewCards": "Thẻ",
+    "viewMode": "Chế độ hiển thị",
+    "moreTags": "+{count}",
+    "updatedAgo": "Cập nhật {time}",
     "shownOfTotal": "{shown} / {total}",
     "stats": {
-      "total": "Tổng",
-      "recent": "Tuần này"
+      "total": "Tổng từ vựng",
+      "recent": "Thêm tuần này"
     },
     "uncategorizedPos": "Chưa phân loại",
     "groupCount": "{count, plural, other {# từ}}",
@@ -350,6 +370,8 @@
     "studio": "cùng Notoria",
     "description": "Chọn một kiểu bài để ôn từ trong sổ tay của bạn.",
     "studioDescription": "Luyện từ vựng, lý thuyết, hoặc tài liệu đã nhập — chọn nguồn, rồi bắt đầu phiên tập trung.",
+    "startActivity": "Bắt đầu",
+    "unlockActivity": "Mở khóa",
     "practice": "hôm nay",
     "editor": "soạn thảo",
     "edit": "Chỉnh sửa",
@@ -371,12 +393,19 @@
     },
     "sources": {
       "label": "Nguồn bài tập",
+      "heading": "Nguồn",
       "vocabulary": "Từ vựng",
       "theory": "Lý thuyết",
       "import": "Nhập",
+      "imported": "Đã nhập",
+      "lastUsed": "Dùng gần đây",
+      "selected": "Đang chọn",
       "vocabularyHint": "Các kiểu bài xây từ từ trong không gian học đang dùng.",
       "theoryHint": "AI biến ghi chú Theory thành bài điền chỗ trống.",
-      "importHint": "Nhập worksheet hoặc ghi chú — giữ đúng cue từ nguồn và tạo thẻ luyện, không bịa bài mới."
+      "importHint": "Nhập worksheet hoặc ghi chú — giữ đúng cue từ nguồn và tạo thẻ luyện, không bịa bài mới.",
+      "vocabularyCount": "{count, plural, one {# từ} other {# từ}}",
+      "theoryCount": "{count, plural, one {# ghi chú} other {# ghi chú}}",
+      "importCount": "{count, plural, one {# bản nhập} other {# bản nhập}}"
     },
     "processing": {
       "workingTitle": "Đang xử lý bài tập",
@@ -555,7 +584,10 @@
       "flashcard": {
         "label": "Thẻ flashcard",
         "description": "Lật thẻ để nhớ từ và nghĩa, rồi tự đánh giá mức nhớ.",
-        "preview": "Lật · Đánh giá · Ôn"
+        "preview": "Lật · Đánh giá · Ôn",
+        "previewHint": "Từ tiếng Phần Lan",
+        "previewWord": "suomalainen",
+        "previewFlow": "LẬT → ĐÁNH GIÁ → ÔN"
       },
       "fill-in-blank": {
         "label": "Điền chỗ trống",
@@ -565,12 +597,20 @@
       "multiple-choice": {
         "label": "Trắc nghiệm",
         "description": "Chọn nghĩa hoặc từ đúng. Đáp án nhiễu cũng lấy từ sổ tay của bạn.",
-        "preview": "Nghĩa nào đúng?"
+        "preview": "Nghĩa nào đúng?",
+        "previewPrompt": "Nghĩa nào đúng?",
+        "previewA": "người Phần Lan",
+        "previewB": "thời tiết",
+        "previewC": "tòa nhà"
       },
       "match-pairs": {
         "label": "Ghép cặp",
         "description": "Ghép từng từ với đúng nghĩa — kiểu Quizlet.",
-        "preview": "Từ ↔ Nghĩa"
+        "preview": "Từ ↔ Nghĩa",
+        "previewLeft": "talo",
+        "previewRight": "house",
+        "previewLeftB": "koti",
+        "previewRightB": "home"
       },
       "type-answer": {
         "label": "Gõ đáp án",
@@ -580,7 +620,10 @@
       "form-sentence": {
         "label": "Đặt câu",
         "description": "Viết một câu hoàn chỉnh với từ đã lưu và nhận nhận xét ngữ pháp từ AI.",
-        "preview": "Viết câu dùng từ…"
+        "preview": "Viết câu dùng từ…",
+        "previewChipA": "Minä",
+        "previewChipB": "asun",
+        "previewChipC": "Helsingissä"
       }
     },
     "timedHint": {
@@ -889,7 +932,17 @@
     "practiceNowVocabCta": "Mở từ vựng",
     "continueTitle": "Tiếp tục",
     "continueSubtitle": "Mở lại việc bạn đang làm dở.",
-    "sidebarFooter": "Góc học ngôn ngữ riêng của bạn"
+    "sidebarFooter": "Góc học ngôn ngữ riêng của bạn",
+    "helloTitle": "Xin chào, {name}",
+    "continueLearning": "Tiếp tục học",
+    "continueLearningSubtitle": "Vào một mục trong không gian học.",
+    "snapshotTitle": "Nhìn nhanh",
+    "quickActions": "Thao tác nhanh",
+    "quickAddWord": "Thêm từ",
+    "quickStartExercise": "Bắt đầu luyện",
+    "quickOpenWriting": "Mở viết",
+    "quickOpenTheory": "Mở lý thuyết",
+    "nextStepTitle": "Bước tiếp theo"
   },
   "search": {
     "placeholder": "Tìm bất cứ gì...",

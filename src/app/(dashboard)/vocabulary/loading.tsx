@@ -1,5 +1,5 @@
-﻿import { ListPageLoading } from "@/components/layout/page-loading";
+﻿import { VocabularyPageLoading } from "@/components/vocabulary/vocabulary-page-loading";
 
 export default function Loading() {
-  return <ListPageLoading />;
+  return <VocabularyPageLoading />;
 }

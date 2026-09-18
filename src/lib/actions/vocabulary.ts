@@ -36,7 +36,10 @@ import {
   uniqueSynonymIds,
   type VocabularySynonymRef,
 } from "@/lib/vocabulary/synonyms";
-import { normalizePartOfSpeech, normalizeVocabularyWord } from "@/lib/vocabulary/word-identity";
+import {
+  normalizePartOfSpeech,
+  normalizeVocabularyWord,
+} from "@/lib/vocabulary/word-identity";
 import { withTiming } from "@/lib/perf/dev-timing";
 
 /** Drizzle transaction client compatible with db query/mutate APIs. */
@@ -309,10 +312,7 @@ async function canonicalizeWordTags(workspaceId: string, tags: string[]) {
   );
 }
 
-async function ensureWorkspaceCustomTags(
-  workspaceId: string,
-  tags: string[],
-) {
+async function ensureWorkspaceCustomTags(workspaceId: string, tags: string[]) {
   const names = uniqueCustomTagNames(
     tags.filter(isCustomTagKey).map(getCustomTagName),
   );
@@ -521,7 +521,12 @@ export async function createVocabularyWord(data: VocabularyFormValues) {
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
 
-  await assertWordIsUnique(parsed.word, workspace.id, undefined, parsed.partOfSpeech);
+  await assertWordIsUnique(
+    parsed.word,
+    workspace.id,
+    undefined,
+    parsed.partOfSpeech,
+  );
 
   const tags = await canonicalizeWordTags(workspace.id, parsed.tags);
   const payload = { ...parsed, tags };

@@ -1,0 +1,104 @@
+"use client";
+
+import { useState, type ReactNode } from "react";
+import { Menu } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
+import { LocaleSelector } from "@/components/layout/locale-selector";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { WorkspaceSelector } from "@/components/layout/workspace-selector";
+import { FloatingSidebar, SidebarNav } from "@/components/layout/floating-sidebar";
+import { WorkspaceSearch } from "@/components/search/workspace-search";
+import {
+  Sheet,
+  SheetContent,
+  SheetHeader,
+  SheetTitle,
+} from "@/components/ui/sheet";
+import type { Workspace } from "@/db/schema";
+import type { AppLocale } from "@/i18n/config";
+
+type DashboardStudioProps = {
+  children: ReactNode;
+  locale: AppLocale;
+  workspaces: Workspace[];
+  activeWorkspaceId?: string;
+  userName: string;
+  userEmail: string;
+  userImage?: string | null;
+  isPro: boolean;
+};
+
+export function DashboardStudio({
+  children,
+  locale,
+  workspaces,
+  activeWorkspaceId,
+  userName,
+  userEmail,
+  userImage,
+  isPro,
+}: DashboardStudioProps) {
+  const [navOpen, setNavOpen] = useState(false);
+  const t = useTranslations("nav");
+  const sidebarUser = { userName, userEmail, userImage, isPro };
+
+  return (
+    <div className="min-h-svh bg-background p-3">
+      <div className="mx-auto flex max-w-[90rem] items-start gap-3">
+        <FloatingSidebar workspaceId={activeWorkspaceId} {...sidebarUser} />
+
+        <div className="studio-paper flex h-[calc(100svh-1.5rem)] min-h-0 min-w-0 flex-1 flex-col self-stretch overflow-hidden">
+          <header className="studio-chrome sticky top-0 z-20">
+            <div className="flex h-14 min-w-0 items-center gap-2 px-3 sm:px-4">
+              <Button
+                type="button"
+                variant="outline"
+                size="icon"
+                className="shrink-0 lg:hidden"
+                onClick={() => setNavOpen(true)}
+                aria-label="Open navigation"
+              >
+                <Menu className="size-4" />
+              </Button>
+              {activeWorkspaceId ? (
+                <div className="min-w-0 flex-1">
+                  <WorkspaceSearch workspaceId={activeWorkspaceId} compact />
+                </div>
+              ) : (
+                <div className="min-w-0 flex-1" />
+              )}
+              <WorkspaceSelector
+                workspaces={workspaces}
+                activeWorkspaceId={activeWorkspaceId}
+              />
+              <LocaleSelector value={locale} />
+              <ThemeToggle />
+            </div>
+          </header>
+          <main className="min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden px-4 py-6 sm:px-6 sm:py-8">
+            <div className="mx-auto w-full min-w-0 max-w-6xl">
+              {children}
+            </div>
+          </main>
+        </div>
+      </div>
+
+      <Sheet open={navOpen} onOpenChange={setNavOpen}>
+        <SheetContent
+          side="left"
+          className="w-[17.5rem] gap-0 border-hairline-cloud bg-surface-elevated p-3 sm:max-w-[17.5rem]"
+        >
+          <SheetHeader className="sr-only">
+            <SheetTitle>{t("workspace")}</SheetTitle>
+          </SheetHeader>
+          <SidebarNav
+            workspaceId={activeWorkspaceId}
+            onNavigate={() => setNavOpen(false)}
+            {...sidebarUser}
+          />
+        </SheetContent>
+      </Sheet>
+    </div>
+  );
+}

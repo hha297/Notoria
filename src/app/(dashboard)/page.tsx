@@ -1,23 +1,19 @@
 import { getTranslations } from "next-intl/server";
-import { DashboardContinue } from "@/components/dashboard/dashboard-continue";
-import { DashboardGuide } from "@/components/dashboard/dashboard-guide";
-import { WorkspaceSearch } from "@/components/search/workspace-search";
+import { DashboardHome } from "@/components/dashboard/dashboard-home";
 import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
-import { StatCard } from "@/components/layout/stat-card";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
-import {
-  countPracticeReadyWords,
-  getDashboardContinueItems,
-} from "@/lib/dashboard/activity";
+import { getSession } from "@/lib/auth/session";
+import { countPracticeReadyWords } from "@/lib/dashboard/activity";
 import { getWorkspaceActivitySnapshot } from "@/lib/onboarding/snapshot";
 import { getLanguageName } from "@/lib/languages";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export default async function DashboardPage() {
-  const [t, workspace] = await Promise.all([
+  const [t, workspace, session] = await Promise.all([
     getTranslations("dashboard"),
     getActiveWorkspace(),
+    getSession(),
   ]);
 
   if (!workspace) {
@@ -35,43 +31,17 @@ export default async function DashboardPage() {
   }
 
   const languageName = getLanguageName(workspace.language);
-  const [snapshot, practiceReadyWords, continueItems] = await Promise.all([
+  const [snapshot, practiceReadyWords] = await Promise.all([
     getWorkspaceActivitySnapshot(workspace.id),
     countPracticeReadyWords(workspace.id),
-    getDashboardContinueItems(workspace.id),
   ]);
 
   return (
     <PageShell>
-      <PageHeader
-        eyebrow={t("overview")}
-        title={t("your")}
-        highlight={t("workspaceLabel")}
-        description={t("description", { language: languageName })}
-      />
-
-      <WorkspaceSearch workspaceId={workspace.id} />
-
-      <div className="grid gap-3 sm:gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <StatCard label={t("wordsSaved")} value={snapshot.vocabularyCount} />
-        <StatCard
-          label={t("wordsReadyToPractice")}
-          value={practiceReadyWords}
-          featured
-        />
-        <StatCard label={t("theoryNotes")} value={snapshot.theoryCount} />
-        <StatCard label={t("writingPieces")} value={snapshot.writingCount} />
-      </div>
-
-      <DashboardContinue
-        items={continueItems}
-        wordCount={snapshot.vocabularyCount}
-        practiceReadyCount={practiceReadyWords}
-      />
-
-      <DashboardGuide
+      <DashboardHome
+        userName={session?.user?.name ?? "there"}
+        languageName={languageName}
         snapshot={snapshot}
-        wordCount={snapshot.vocabularyCount}
         practiceReadyCount={practiceReadyWords}
       />
     </PageShell>

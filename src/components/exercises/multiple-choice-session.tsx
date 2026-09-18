@@ -363,9 +363,9 @@ export function MultipleChoiceSession({
     current && current.direction === "CONTEXTUAL"
       ? revealed
         ? fillContextualBlank(
-            current.prompt,
-            current.answerForm ?? current.correctOption,
-          )
+          current.prompt,
+          current.answerForm ?? current.correctOption,
+        )
         : contextualPromptWithMeaningHint(current)
       : current?.prompt;
 
@@ -406,7 +406,7 @@ export function MultipleChoiceSession({
             })}
             progressValue={total ? ((currentIndex + 1) / total) * 100 : 0}
           />
-          <div className="mx-auto w-full min-w-0 max-w-2xl rounded-2xl border border-hairline-cloud bg-card p-5 shadow-xl shadow-ink/5 sm:rounded-3xl sm:p-8">
+          <div className="mx-auto w-full min-w-0 max-w-2xl rounded-sm border border-hairline-cloud bg-surface-elevated p-5 sm:p-8">
             <div className="flex min-w-0 items-center justify-between gap-3">
               <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
                 {promptLabel}
@@ -457,16 +457,16 @@ export function MultipleChoiceSession({
                     disabled={revealed && !isSelected && !isAnswer}
                     onClick={() => pick(option)}
                     className={cn(
-                      "min-h-11 min-w-0 cursor-pointer rounded-xl border px-4 py-3 text-left text-sm font-medium break-words [overflow-wrap:anywhere] transition-all",
+                      "min-h-11 min-w-0 cursor-pointer rounded-sm border px-4 py-3 text-left text-sm font-medium break-words [overflow-wrap:anywhere] transition-all",
                       !revealed &&
-                        "border-hairline-cloud bg-background hover:border-accent-lime/50 hover:bg-accent-lime/10",
+                      "border-hairline-cloud bg-surface-elevated hover:border-primary/50 hover:bg-surface-active",
                       revealed &&
-                        isAnswer &&
-                        "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a]",
+                      isAnswer &&
+                      "feedback-success",
                       revealed &&
-                        isSelected &&
-                        !isAnswer &&
-                        "border-[#f3b8cc] bg-[#fff1f6] text-[#c7366a]",
+                      isSelected &&
+                      !isAnswer &&
+                      "feedback-error",
                       revealed && !isSelected && !isAnswer && "opacity-40",
                     )}
                   >
@@ -479,7 +479,7 @@ export function MultipleChoiceSession({
               <p
                 className={cn(
                   "mt-6 text-sm font-medium",
-                  isCorrect ? "text-[#4a6b0a]" : "text-[#c7366a]",
+                  isCorrect ? "text-success" : "text-error",
                 )}
               >
                 {isCorrect

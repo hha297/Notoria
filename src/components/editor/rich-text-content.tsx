@@ -29,11 +29,12 @@ type RichTextContentProps = {
 
 const PROSE_CLASSES =
   "prose prose-neutral dark:prose-invert max-w-none break-words [overflow-wrap:anywhere] " +
-  "prose-headings:font-heading " +
-  "prose-h1:text-2xl prose-h1:font-medium prose-h1:leading-tight " +
-  "prose-h2:text-xl prose-h2:font-medium prose-h2:leading-tight " +
-  "prose-h3:text-lg prose-h3:font-medium prose-h3:leading-snug " +
-  "[&_img]:h-auto [&_img]:max-h-80 [&_img]:max-w-full [&_img]:rounded-lg " +
+  "prose-headings:font-heading prose-headings:font-bold prose-headings:tracking-tight " +
+  "prose-p:font-sans prose-p:leading-[1.7] prose-p:text-[1.05rem] " +
+  "prose-h1:text-[1.5rem] prose-h1:leading-[1.25] " +
+  "prose-h2:text-[1.2rem] prose-h2:leading-[1.3] " +
+  "prose-h3:text-[1.05rem] prose-h3:leading-snug " +
+  "[&_img]:h-auto [&_img]:max-h-80 [&_img]:max-w-full [&_img]:rounded-sm " +
   "[&_pre]:max-w-full [&_pre]:overflow-x-auto [&_table]:max-w-full";
 
 function blockStableKey(block: JSONContent, index: number): string {

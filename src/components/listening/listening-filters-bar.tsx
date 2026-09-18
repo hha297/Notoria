@@ -45,7 +45,7 @@ function sortLabel(sort: ListeningListQuery["sort"], t: ReturnType<typeof useTra
   }
 }
 
-const triggerClassName = "h-9 w-full min-w-0 basis-[calc(50%-0.25rem)] sm:w-28 sm:basis-auto sm:shrink-0 lg:w-32";
+const triggerClassName = "h-10 w-full min-w-0 basis-[calc(50%-0.25rem)] sm:w-28 sm:basis-auto sm:shrink-0 lg:w-32";
 
 export function ListeningFiltersBar({
   lessons,
@@ -78,7 +78,7 @@ export function ListeningFiltersBar({
         value={query.search}
         onChange={(event) => patch({ search: event.target.value })}
         placeholder={t("searchPlaceholder")}
-        className="h-9 w-full min-w-0 flex-1 basis-full sm:basis-auto sm:min-w-[12rem]"
+        className="h-10 w-full min-w-0 flex-1 basis-full sm:basis-auto sm:min-w-[12rem]"
       />
 
       <MultiFilterSelect
@@ -127,8 +127,7 @@ export function ListeningFiltersBar({
         }
       >
         <SelectTrigger
-          size="sm"
-          className="h-9 w-full min-w-0 basis-full sm:w-36 sm:basis-auto sm:shrink-0"
+          className="h-10 w-full min-w-0 basis-full sm:w-36 sm:basis-auto sm:shrink-0"
         >
           <SelectValue>{sortLabel(query.sort, t)}</SelectValue>
         </SelectTrigger>
@@ -145,7 +144,7 @@ export function ListeningFiltersBar({
           type="button"
           variant="ghost"
           size="icon-sm"
-          className="size-9 shrink-0"
+          className="size-10 shrink-0"
           onClick={clearFilters}
           aria-label={t("clearFilters")}
         >

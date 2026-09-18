@@ -51,15 +51,15 @@ export function TheoryFillBlankCard({
     "";
   const displayHint = displaySourceWord
     ? fromHint.hint
-        .replace(
-          new RegExp(
-            `\\(\\s*${displaySourceWord.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*\\)`,
-            "giu",
-          ),
-          " ",
-        )
-        .replace(/\s{2,}/g, " ")
-        .trim()
+      .replace(
+        new RegExp(
+          `\\(\\s*${displaySourceWord.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*\\)`,
+          "giu",
+        ),
+        " ",
+      )
+      .replace(/\s{2,}/g, " ")
+      .trim()
     : fromHint.hint.trim();
   const revealDisplay = revealTextForExercise({
     ...item,
@@ -133,8 +133,8 @@ export function TheoryFillBlankCard({
                     className={cn(
                       "max-w-full break-words rounded-xl px-3 py-1.5 text-xl font-semibold [overflow-wrap:anywhere] sm:text-2xl md:text-3xl",
                       isCorrect
-                        ? "bg-[#f4fae0] text-[#4a6b0a] ring-2 ring-[#b8d96a]/60"
-                        : "bg-[#fff1f6] text-destructive ring-2 ring-[#f3b8cc]/60",
+                        ? "feedback-success ring-2 ring-success-border/60"
+                        : "feedback-error ring-2 ring-error-border/60",
                     )}
                   >
                     {isCorrect ? value.trim() : item.answer}
@@ -201,7 +201,7 @@ export function TheoryFillBlankCard({
             <div
               className={cn(
                 "flex min-w-0 items-start gap-3 rounded-xl px-5 py-4 text-sm font-medium sm:text-base",
-                isCorrect ? "bg-[#f4fae0] text-[#4a6b0a]" : "bg-[#fff1f6] text-[#c7366a]",
+                isCorrect ? "bg-success-muted text-success" : "bg-error-muted text-destructive",
               )}
             >
               {isCorrect ? (

@@ -4,49 +4,35 @@ import { useState } from "react";
 import { Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ProUpgradeDialog } from "@/components/billing/pro-upgrade-dialog";
-import {
-  SidebarMenu,
-  SidebarMenuButton,
-  SidebarMenuItem,
-  useSidebar,
-} from "@/components/ui/sidebar";
+import { Button } from "@/components/ui/button";
 
 type SidebarProCtaProps = {
   isPro: boolean;
+  onNavigate?: () => void;
 };
 
-export function SidebarProCta({ isPro }: SidebarProCtaProps) {
+export function SidebarProCta({ isPro, onNavigate }: SidebarProCtaProps) {
   const t = useTranslations("billing");
-  const { isMobile, setOpenMobile } = useSidebar();
   const [upgradeOpen, setUpgradeOpen] = useState(false);
 
   if (isPro) {
     return null;
   }
 
-  function closeMobileSidebar() {
-    if (isMobile) {
-      setOpenMobile(false);
-    }
-  }
-
   return (
     <>
-      <SidebarMenu>
-        <SidebarMenuItem>
-          <SidebarMenuButton
-            tooltip={t("upgrade")}
-            onClick={() => {
-              closeMobileSidebar();
-              setUpgradeOpen(true);
-            }}
-            className="bg-accent-lime/20! font-medium text-accent-lime! transition-colors hover:bg-accent-lime/30! hover:text-accent-lime!"
-          >
-            <Sparkles />
-            <span>{t("upgrade")}</span>
-          </SidebarMenuButton>
-        </SidebarMenuItem>
-      </SidebarMenu>
+      <Button
+        type="button"
+        variant="ghost"
+        className="h-8 w-full justify-start gap-2 px-2 font-heading text-[13px] font-medium text-primary hover:bg-surface-active"
+        onClick={() => {
+          onNavigate?.();
+          setUpgradeOpen(true);
+        }}
+      >
+        <Sparkles className="size-3.5" />
+        {t("upgrade")}
+      </Button>
       <ProUpgradeDialog open={upgradeOpen} onOpenChange={setUpgradeOpen} />
     </>
   );

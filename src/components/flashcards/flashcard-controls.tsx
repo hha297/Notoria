@@ -87,7 +87,7 @@ export function FlashcardControls({
         <Button
           type="button"
           onClick={onRestart}
-          className="h-10 gap-2 border-transparent bg-accent-lime px-4 text-sm font-bold text-ink hover:bg-accent-lime/90"
+          className="h-10 gap-2 border-transparent bg-primary px-4 text-sm font-bold text-on-primary hover:bg-primary-hover"
         >
           <RotateCcw className="size-4" />
           {t("restart")}

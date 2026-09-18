@@ -35,7 +35,10 @@ export default async function ExercisesPage() {
         <ShowTutorialButton section="exercise" />
       </PageHeader>
 
-      <ExerciseStudioClient workspaceId={workspace.id} />
+      <ExerciseStudioClient
+        workspaceId={workspace.id}
+        workspaceName={workspace.name}
+      />
     </PageShell>
   );
 }

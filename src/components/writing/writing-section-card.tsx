@@ -205,11 +205,11 @@ export function WritingSectionCard({
           aiSuggestions,
           onApplyAiSuggestion: onApplyAiSuggestion
             ? (suggestion: WritingAiSuggestion) =>
-                onApplyAiSuggestion(question.id, suggestion)
+              onApplyAiSuggestion(question.id, suggestion)
             : undefined,
           onSkipAiSuggestion: onSkipAiSuggestion
             ? (suggestionId: string) =>
-                onSkipAiSuggestion(question.id, suggestionId)
+              onSkipAiSuggestion(question.id, suggestionId)
             : undefined,
         };
 

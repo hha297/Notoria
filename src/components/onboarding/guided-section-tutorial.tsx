@@ -188,7 +188,7 @@ export function GuidedSectionTutorial({
 
         <div className="space-y-4">
           <div className="flex items-start gap-3">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-accent-lime text-ink">
+            <div className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-primary text-on-primary">
               <Icon className="size-5" aria-hidden />
             </div>
             <div className="min-w-0 space-y-1">

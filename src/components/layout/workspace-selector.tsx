@@ -60,7 +60,7 @@ export function WorkspaceSelector({
     <>
       <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
         {workspaces.length === 0 ? (
-          <Button size="sm" onClick={() => setCreateOpen(true)}>
+          <Button onClick={() => setCreateOpen(true)}>
             <Plus className="size-4" />
             <span className="hidden sm:inline">{t("createWorkspace")}</span>
           </Button>
@@ -72,8 +72,7 @@ export function WorkspaceSelector({
               disabled={isPending}
             >
               <SelectTrigger
-                size="sm"
-                className="w-auto min-w-0 max-w-[9.5rem] bg-background sm:max-w-[240px] sm:min-w-[160px]"
+                className="h-10 w-auto min-w-0 max-w-[9.5rem] bg-surface-elevated sm:max-w-[240px] sm:min-w-[160px]"
               >
                 <SelectValue>
                   {active && (
@@ -100,7 +99,6 @@ export function WorkspaceSelector({
             </Select>
 
             <Button
-              size="sm"
               variant="outline"
               onClick={() => setCreateOpen(true)}
               className="shrink-0"

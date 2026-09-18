@@ -59,7 +59,13 @@
     "speaking": "Puhuminen",
     "account": "Tili",
     "settings": "Asetukset",
-    "workspace": "Työtila"
+    "workspace": "Työtila",
+    "gettingStarted": "Näin käytät",
+    "groups": {
+      "main": "Päävalikko",
+      "listenSpeak": "Kuuntelu ja puhe",
+      "more": "Lisää"
+    }
   },
   "folders": {
     "new": "Uusi kansio",
@@ -96,6 +102,11 @@
     "invalidMove": "Kansiota ei voi siirtää itseensä",
     "tooDeep": "Kansio on liian syvällä",
     "notFound": "Kansiota ei löytynyt"
+  },
+  "theme": {
+    "toggle": "Vaihda teema",
+    "light": "Vaalea",
+    "dark": "Tumma"
   },
   "header": {
     "createWorkspace": "Luo työtila",
@@ -194,8 +205,8 @@
     "synonymsCannotLinkSelf": "Sana ei voi olla itsensä synonyymi",
     "synonymsRemove": "Poista {word}",
     "formDescription": "Lisää sana merkityksillä, esimerkeillä ja tunnisteilla. Järjestä vetämällä.",
-    "emptyTitle": "Ei sanoja vielä",
-    "emptyDescription": "Aloita sanaston rakentaminen aktiivisessa työtilassa.",
+    "emptyTitle": "Sanapankkisi on tyhjä",
+    "emptyDescription": "Kerää sanoja ja merkityksiä omaan kielikirjastoosi.",
     "addFirst": "Lisää ensimmäinen sana",
     "disabledNoWorkspace": "Luo työtila ennen sanojen lisäämistä.",
     "saved": "Sana tallennettu",
@@ -220,11 +231,20 @@
     "sortWord": "Sana",
     "sortAsc": "A → Ö",
     "sortDesc": "Ö → A",
-    "noResults": "Yksikään sana ei vastaa suodattimia",
+    "noResults": "Sanoja ei löytynyt",
+    "noResultsDescription": "Kokeile muuttaa hakua tai suodattimia.",
+    "loadError": "Sanastoa ei voitu ladata",
+    "loadErrorDescription": "Tarkista yhteys ja yritä uudelleen.",
+    "retry": "Yritä uudelleen",
+    "viewList": "Lista",
+    "viewCards": "Kortit",
+    "viewMode": "Näkymä",
+    "moreTags": "+{count}",
+    "updatedAgo": "Päivitetty {time}",
     "shownOfTotal": "{shown} / {total}",
     "stats": {
-      "total": "Yhteensä",
-      "recent": "Tällä viikolla"
+      "total": "Sanastoa yhteensä",
+      "recent": "Lisätty tällä viikolla"
     },
     "uncategorizedPos": "Luokittelematon",
     "groupCount": "{count, plural, one {# sana} other {# sanaa}}",
@@ -350,6 +370,8 @@
     "studio": "studio",
     "description": "Valitse harjoittelutila sanastollesi.",
     "studioDescription": "Harjoittele sanastosta, teoriasta tai tuodusta materiaalista — valitse lähde ja aloita keskittynyt sessio.",
+    "startActivity": "Aloita",
+    "unlockActivity": "Avaa",
     "practice": "harjoittelu",
     "editor": "editori",
     "edit": "Muokkaa",
@@ -371,12 +393,19 @@
     },
     "sources": {
       "label": "Harjoituslähde",
+      "heading": "Lähde",
       "vocabulary": "Sanasto",
       "theory": "Teoria",
       "import": "Tuo",
+      "imported": "Tuodut",
+      "lastUsed": "Viimeksi käytetty",
+      "selected": "Valittu",
       "vocabularyHint": "Tavat rakentuvat aktiivisen työtilan sanoista.",
       "theoryHint": "Tekoäly muuttaa teoriamerkinnän aukkoharjoitukseksi.",
-      "importHint": "Tuo harjoituspaperi tai muistiinpanot — säilytämme lähteen vihjeet ja teemme niistä harjoituskortteja."
+      "importHint": "Tuo harjoituspaperi tai muistiinpanot — säilytämme lähteen vihjeet ja teemme niistä harjoituskortteja.",
+      "vocabularyCount": "{count, plural, one {# sana} other {# sanaa}}",
+      "theoryCount": "{count, plural, one {# merkintä} other {# merkintää}}",
+      "importCount": "{count, plural, one {# tuonti} other {# tuontia}}"
     },
     "processing": {
       "workingTitle": "Harjoitusta valmistellaan",
@@ -555,7 +584,10 @@
       "flashcard": {
         "label": "Muistikortit",
         "description": "Käännä kortteja opiskellaksesi sanoja ja merkityksiä toistoväleillä.",
-        "preview": "Käännä · Arvioi · Kertaa"
+        "preview": "Käännä · Arvioi · Kertaa",
+        "previewHint": "Suomen kielen sana",
+        "previewWord": "suomalainen",
+        "previewFlow": "KÄÄNNÄ → ARVIOI → KERTAA"
       },
       "fill-in-blank": {
         "label": "Täytä aukko",
@@ -565,12 +597,20 @@
       "multiple-choice": {
         "label": "Monivalinta",
         "description": "Valitse oikea merkitys tai sana — häiriövastaukset tulevat sanastostasi.",
-        "preview": "Mikä merkitys sopii?"
+        "preview": "Mikä merkitys sopii?",
+        "previewPrompt": "Mikä merkitys sopii?",
+        "previewA": "suomalainen henkilö",
+        "previewB": "sää",
+        "previewC": "rakennus"
       },
       "match-pairs": {
         "label": "Yhdistä parit",
         "description": "Yhdistä jokainen sana oikeaan merkitykseen Quizlet-tyylisessä ruudukossa.",
-        "preview": "Sana ↔ Merkitys"
+        "preview": "Sana ↔ Merkitys",
+        "previewLeft": "talo",
+        "previewRight": "house",
+        "previewLeftB": "koti",
+        "previewRightB": "home"
       },
       "type-answer": {
         "label": "Kirjoita vastaus",
@@ -580,7 +620,10 @@
       "form-sentence": {
         "label": "Muodosta lause",
         "description": "Kirjoita kokonainen lause tallentamallasi sanastolla ja saa tekoälyltä kielioppipalaute.",
-        "preview": "Kirjoita lause käyttäen…"
+        "preview": "Kirjoita lause käyttäen…",
+        "previewChipA": "Minä",
+        "previewChipB": "asun",
+        "previewChipC": "Helsingissä"
       }
     },
     "timedHint": {
@@ -889,7 +932,17 @@
     "practiceNowVocabCta": "Avaa sanasto",
     "continueTitle": "Jatka",
     "continueSubtitle": "Palaa siihen, mitä olit tekemässä.",
-    "sidebarFooter": "Yksityinen kielenopiskelun työtila"
+    "sidebarFooter": "Yksityinen kielenopiskelun työtila",
+    "helloTitle": "Hei, {name}",
+    "continueLearning": "Jatka oppimista",
+    "continueLearningSubtitle": "Siirry työtilan osioon.",
+    "snapshotTitle": "Pikakatsaus",
+    "quickActions": "Pikatoiminnot",
+    "quickAddWord": "Lisää sana",
+    "quickStartExercise": "Aloita harjoitus",
+    "quickOpenWriting": "Avaa kirjoittaminen",
+    "quickOpenTheory": "Avaa teoria",
+    "nextStepTitle": "Seuraava askel"
   },
   "search": {
     "placeholder": "Hae mitä tahansa...",

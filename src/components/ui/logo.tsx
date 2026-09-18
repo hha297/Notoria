@@ -13,7 +13,7 @@ function LogoFrame({
   return (
     <div
       className={cn(
-        "shrink-0 overflow-hidden rounded-xl border-2 border-accent-lime",
+        "shrink-0 overflow-hidden rounded-sm border border-hairline-cloud",
         className,
       )}
     >
@@ -45,7 +45,7 @@ export function Logo({ className, size = "sm" }: LogoProps) {
 }
 
 type LogoWordmarkProps = LogoProps & {
-  /** `ink` for light backgrounds; `sidebar` for the dark sidebar */
+  /** `ink` for cream surfaces; `sidebar` for the floating sidebar */
   tone?: "ink" | "sidebar";
 };
 
@@ -56,13 +56,13 @@ export function LogoWordmark({
   return (
     <span
       className={cn(
-        "font-heading text-2xl font-medium tracking-[-0.03em]",
+        "font-heading text-lg font-bold tracking-tight",
         tone === "sidebar" ? "text-sidebar-foreground" : "text-ink",
         className,
       )}
     >
       Noto
-      <span className="text-accent-lime">ria</span>
+      <span className="text-primary">ria</span>
     </span>
   );
 }

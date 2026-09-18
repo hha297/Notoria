@@ -54,10 +54,10 @@ export function GettingStartedGuide() {
   const t = useTranslations("gettingStarted");
 
   return (
-    <div className="mt-8 lg:grid lg:grid-cols-[minmax(0,13rem)_minmax(0,1fr)] lg:gap-10 xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)] xl:gap-12">
+    <div className="mt-8 lg:grid lg:grid-cols-[minmax(0,13rem)_minmax(0,1fr)] xl:grid-cols-[minmax(0,15rem)_minmax(0,1fr)]">
       <GuideToc />
 
-      <div className="mt-10 space-y-16 lg:mt-0 lg:max-w-3xl xl:max-w-4xl">
+      <div className="mt-10 min-w-0 space-y-16 lg:mt-0 lg:border-l lg:border-hairline-cloud lg:pl-8 xl:pl-10">
         <header className="space-y-3">
           <p className="text-[15px] font-medium uppercase tracking-[0.2px] text-muted-foreground">
             {t("meta.eyebrow")}
@@ -79,11 +79,12 @@ export function GettingStartedGuide() {
             {t("welcome.overTime")}
           </p>
           <GuideCallout variant="dark">
-            <p className="font-heading text-lg font-medium text-on-primary">
+            <p className="font-heading text-lg font-medium text-on-inverse">
               {t("welcome.noWrongWay.title")}
             </p>
             <GuideParagraphs
-              className="mt-3 text-on-dark-muted"
+              className="mt-3"
+              tone="inverse"
               items={t.raw("welcome.noWrongWay.paragraphs") as string[]}
             />
           </GuideCallout>
@@ -146,7 +147,7 @@ export function GettingStartedGuide() {
           <GuideBulletList items={t.raw("philosophy.dontNeed") as string[]} />
           <GuideParagraphs items={t.raw("philosophy.canDo") as string[]} />
           <GuideCallout variant="dark">
-            <p className="font-heading text-lg font-medium text-accent-lime">
+            <p className="font-heading text-lg font-medium text-primary">
               {t("philosophy.quote")}
             </p>
           </GuideCallout>
@@ -163,7 +164,7 @@ export function GettingStartedGuide() {
             <ol className="mt-4 space-y-3">
               {FIRST_STEPS.map((step, index) => (
                 <li key={step} className="flex gap-3 text-sm leading-relaxed sm:text-base">
-                  <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-accent-lime text-xs font-semibold text-ink">
+                  <span className="flex size-6 shrink-0 items-center justify-center rounded-md bg-primary text-xs font-semibold text-on-primary">
                     {index + 1}
                   </span>
                   <span className="text-muted-foreground">
@@ -186,7 +187,7 @@ function GuideToc() {
   return (
     <nav
       aria-label={t("toc.title")}
-      className="lg:sticky lg:top-8 lg:self-start"
+      className="lg:sticky lg:top-0 lg:z-10 lg:self-start lg:bg-surface-elevated lg:pr-6 xl:pr-8"
     >
       <p className="hidden text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground lg:block">
         {t("toc.title")}
@@ -213,12 +214,12 @@ function ModuleSection({
 }: {
   id: TocId;
   module:
-    | "vocabulary"
-    | "theory"
-    | "exercise"
-    | "writing"
-    | "listening"
-    | "speaking";
+  | "vocabulary"
+  | "theory"
+  | "exercise"
+  | "writing"
+  | "listening"
+  | "speaking";
 }) {
   const t = useTranslations("gettingStarted");
   const bullets = t.raw(`sections.${module}.bullets`) as string[];
@@ -285,14 +286,22 @@ function GuideSection({
 function GuideParagraphs({
   items,
   className,
+  tone = "default",
 }: {
   items: string[];
   className?: string;
+  tone?: "default" | "inverse";
 }) {
   return (
     <div className={cn("space-y-3", className)}>
       {items.map((paragraph) => (
-        <p key={paragraph} className="text-base leading-relaxed text-muted-foreground">
+        <p
+          key={paragraph}
+          className={cn(
+            "text-base leading-relaxed",
+            tone === "inverse" ? "text-on-inverse-muted" : "text-muted-foreground",
+          )}
+        >
           {paragraph}
         </p>
       ))}
@@ -334,8 +343,8 @@ function GuideCallout({
       className={cn(
         "rounded-xl p-5 sm:p-6",
         variant === "dark"
-          ? "card-surface-dark"
-          : "border border-hairline-cloud bg-accent-lime/10",
+          ? "bg-surface-inverse text-on-inverse"
+          : "border border-hairline-cloud bg-accent-soft text-ink",
       )}
     >
       <div className="text-sm leading-relaxed sm:text-base">{children}</div>
@@ -345,14 +354,14 @@ function GuideCallout({
 
 function FlowDiagram({ stages }: { stages: string[] }) {
   return (
-    <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-3 rounded-xl border border-hairline-violet bg-ink-deep px-4 py-6">
+    <div className="flex flex-wrap items-center justify-center gap-x-2 gap-y-3 rounded-xl bg-surface-inverse px-4 py-6">
       {stages.map((stage, index) => (
         <span key={stage} className="inline-flex items-center gap-2">
-          <span className="rounded-md bg-accent-lime/20 px-2.5 py-1 text-xs font-medium text-accent-lime sm:text-sm">
+          <span className="rounded-md bg-primary px-2.5 py-1 text-xs font-semibold text-on-primary sm:text-sm">
             {stage}
           </span>
           {index < stages.length - 1 ? (
-            <ArrowRight className="size-3.5 text-on-dark-muted" aria-hidden />
+            <ArrowRight className="size-3.5 text-on-inverse-muted" aria-hidden />
           ) : null}
         </span>
       ))}

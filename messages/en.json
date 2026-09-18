@@ -59,7 +59,13 @@
     "speaking": "Speaking",
     "account": "Account",
     "settings": "Settings",
-    "workspace": "Workspace"
+    "workspace": "Workspace",
+    "gettingStarted": "How to use",
+    "groups": {
+      "main": "Main menu",
+      "listenSpeak": "Listen and speak",
+      "more": "More"
+    }
   },
   "folders": {
     "new": "New folder",
@@ -96,6 +102,11 @@
     "invalidMove": "Can't move a folder into itself",
     "tooDeep": "This folder is nested too deeply",
     "notFound": "Folder not found"
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark"
   },
   "header": {
     "createWorkspace": "Create workspace",
@@ -194,8 +205,8 @@
     "synonymsCannotLinkSelf": "A word can’t be a synonym of itself",
     "synonymsRemove": "Remove {word}",
     "formDescription": "Add a word with meanings, examples, and tags. Drag to reorder.",
-    "emptyTitle": "No words yet",
-    "emptyDescription": "Start building vocabulary in your active workspace.",
+    "emptyTitle": "Your vocabulary bank is empty",
+    "emptyDescription": "Start collecting words and meanings to build your personal language library.",
     "addFirst": "Add your first word",
     "disabledNoWorkspace": "Create a workspace before adding vocabulary.",
     "saved": "Word saved",
@@ -220,11 +231,20 @@
     "sortWord": "Word",
     "sortAsc": "A → Z",
     "sortDesc": "Z → A",
-    "noResults": "No words match your filters",
+    "noResults": "No words found",
+    "noResultsDescription": "Try changing your search or filters.",
+    "loadError": "Couldn’t load vocabulary",
+    "loadErrorDescription": "Check your connection and try again.",
+    "retry": "Try again",
+    "viewList": "List",
+    "viewCards": "Cards",
+    "viewMode": "Display mode",
+    "moreTags": "+{count}",
+    "updatedAgo": "Updated {time}",
     "shownOfTotal": "{shown} of {total}",
     "stats": {
-      "total": "Total",
-      "recent": "This week"
+      "total": "Total vocabulary",
+      "recent": "Added this week"
     },
     "uncategorizedPos": "Uncategorized",
     "groupCount": "{count, plural, one {# word} other {# words}}",
@@ -251,7 +271,7 @@
     "export": {
       "button": "Export",
       "title": "Export Vocabulary",
-      "description": "Export the words currently shown in the table.",
+      "description": "Export the words currently shown.",
       "rowCount": "{count, plural, one {# word} other {# words}}",
       "summaryWithNote": "{count, plural, one {# word} other {# words}} · Includes note",
       "format": "Format",
@@ -350,6 +370,8 @@
     "studio": "studio",
     "description": "Choose a study mode to practice your vocabulary.",
     "studioDescription": "Practice from your vocabulary, theory notes, or imported material — pick a source, then start a focused session.",
+    "startActivity": "Start",
+    "unlockActivity": "Unlock",
     "practice": "practice",
     "editor": "editor",
     "edit": "Edit",
@@ -371,12 +393,19 @@
     },
     "sources": {
       "label": "Exercise source",
+      "heading": "Source",
       "vocabulary": "Vocabulary",
       "theory": "Theory",
       "import": "Import",
+      "imported": "Imported",
+      "lastUsed": "Last used",
+      "selected": "Selected",
       "vocabularyHint": "Modes built from words in your active workspace.",
       "theoryHint": "AI turns a theory note into fill-in-the-blank practice.",
-      "importHint": "Import a worksheet or notes — we keep the source cues and turn them into practice cards."
+      "importHint": "Import a worksheet or notes — we keep the source cues and turn them into practice cards.",
+      "vocabularyCount": "{count, plural, one {# word} other {# words}}",
+      "theoryCount": "{count, plural, one {# note} other {# notes}}",
+      "importCount": "{count, plural, one {# import} other {# imports}}"
     },
     "processing": {
       "workingTitle": "Working on your exercise",
@@ -555,7 +584,10 @@
       "flashcard": {
         "label": "Flashcards",
         "description": "Flip cards to study words and meanings with spaced-repetition ratings.",
-        "preview": "Flip · Rate · Review"
+        "preview": "Flip · Rate · Review",
+        "previewHint": "Finnish word",
+        "previewWord": "suomalainen",
+        "previewFlow": "FLIP → RATE → REVIEW"
       },
       "fill-in-blank": {
         "label": "Fill in the Blank",
@@ -565,12 +597,20 @@
       "multiple-choice": {
         "label": "Multiple Choice",
         "description": "Pick the correct meaning or word — distractors come from your vocabulary.",
-        "preview": "Which meaning fits?"
+        "preview": "Which meaning fits?",
+        "previewPrompt": "Which meaning fits?",
+        "previewA": "Finnish person",
+        "previewB": "weather",
+        "previewC": "building"
       },
       "match-pairs": {
         "label": "Match Pairs",
         "description": "Match each word to its meaning in a Quizlet-style grid.",
-        "preview": "Word ↔ Meaning"
+        "preview": "Word ↔ Meaning",
+        "previewLeft": "talo",
+        "previewRight": "house",
+        "previewLeftB": "koti",
+        "previewRightB": "home"
       },
       "type-answer": {
         "label": "Type the Answer",
@@ -580,7 +620,10 @@
       "form-sentence": {
         "label": "Form a Sentence",
         "description": "Write a full sentence with your saved vocabulary and get AI grammar feedback.",
-        "preview": "Write a sentence using…"
+        "preview": "Write a sentence using…",
+        "previewChipA": "Minä",
+        "previewChipB": "asun",
+        "previewChipC": "Helsingissä"
       }
     },
     "timedHint": {
@@ -1059,7 +1102,17 @@
     "practiceNowCta": "Start an exercise",
     "practiceNowVocabCta": "Open vocabulary",
     "continueTitle": "Continue",
-    "continueSubtitle": "Pick up the last thing you were working on."
+    "continueSubtitle": "Pick up the last thing you were working on.",
+    "helloTitle": "Hello, {name}",
+    "continueLearning": "Continue learning",
+    "continueLearningSubtitle": "Jump into a workspace section.",
+    "snapshotTitle": "Quick glance",
+    "quickActions": "Quick actions",
+    "quickAddWord": "Add a word",
+    "quickStartExercise": "Start an exercise",
+    "quickOpenWriting": "Open writing",
+    "quickOpenTheory": "Open theory",
+    "nextStepTitle": "Next step"
   },
   "search": {
     "placeholder": "Search anything...",

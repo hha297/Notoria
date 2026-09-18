@@ -404,7 +404,7 @@ export function TypeAnswerSession({
             hint={t("keyboardHint")}
             progressValue={total ? ((currentIndex + 1) / total) * 100 : 0}
           />
-          <div className="mx-auto max-w-2xl rounded-2xl border border-hairline-cloud bg-card p-5 shadow-xl shadow-ink/5 sm:rounded-3xl sm:p-8 md:p-10">
+          <div className="mx-auto max-w-2xl rounded-sm border border-hairline-cloud bg-surface-elevated p-5 sm:p-8 md:p-10">
             <div className="flex min-w-0 items-center justify-between gap-3">
               <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
                 {promptLabel}
@@ -442,9 +442,9 @@ export function TypeAnswerSession({
                 className={cn(
                   "h-12 text-center text-lg font-medium sm:h-14 sm:text-xl",
                   revealed &&
-                    (isCorrect
-                      ? "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a]"
-                      : "border-[#f3b8cc] bg-[#fff1f6] text-[#c7366a]"),
+                  (isCorrect
+                    ? "feedback-success"
+                    : "feedback-error"),
                 )}
               />
               <ExerciseHint
@@ -462,8 +462,8 @@ export function TypeAnswerSession({
                   className={cn(
                     "flex items-start gap-3 rounded-xl px-4 py-3 text-sm font-medium",
                     isCorrect
-                      ? "bg-[#f4fae0] text-[#4a6b0a]"
-                      : "bg-[#fff1f6] text-[#c7366a]",
+                      ? "feedback-success"
+                      : "feedback-error",
                   )}
                 >
                   {isCorrect ? (

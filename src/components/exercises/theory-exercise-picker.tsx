@@ -219,7 +219,7 @@ export function TheoryExercisePicker({ theories }: TheoryExercisePickerProps) {
                   <Link
                     href={`/exercises/theory/${note.id}`}
                     className={cn(
-                      "inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-ink px-3 py-2.5 text-sm font-medium text-background transition-opacity",
+                      "inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-surface-inverse px-3 py-2.5 text-sm font-medium text-on-inverse transition-opacity",
                       "hover:opacity-90",
                     )}
                   >
