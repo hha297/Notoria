@@ -1,0 +1,65 @@
+"use client";
+
+import { ChevronLeft, ChevronRight, RotateCcw } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Button } from "@/components/ui/button";
+
+type MultipleChoiceActionsProps = {
+  canPrev: boolean;
+  revealed: boolean;
+  isLast: boolean;
+  tryAgainLabel: string;
+  onPrev: () => void;
+  onNext: () => void;
+  onTryAgain: () => void;
+};
+
+export function MultipleChoiceActions({
+  canPrev,
+  revealed,
+  isLast,
+  tryAgainLabel,
+  onPrev,
+  onNext,
+  onTryAgain,
+}: MultipleChoiceActionsProps) {
+  const t = useTranslations("exercises.multipleChoice");
+
+  return (
+    <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-3 pt-2">
+      <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-center sm:gap-3">
+        {revealed ? (
+          <Button
+            type="button"
+            size="lg"
+            onClick={onNext}
+            className="h-12 w-full sm:order-2 sm:h-11 sm:w-auto sm:min-w-52"
+          >
+            {isLast ? t("finish") : t("next")}
+            <ChevronRight className="size-4" />
+          </Button>
+        ) : null}
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={onPrev}
+          disabled={!canPrev}
+          className="h-11 text-muted-foreground sm:order-1 sm:h-10 sm:flex-none"
+        >
+          <ChevronLeft className="size-4" />
+          {t("previous")}
+        </Button>
+      </div>
+      <Button
+        type="button"
+        variant="ghost"
+        size="sm"
+        onClick={onTryAgain}
+        className="text-muted-foreground"
+      >
+        <RotateCcw className="size-4" />
+        {tryAgainLabel}
+      </Button>
+    </div>
+  );
+}

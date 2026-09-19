@@ -272,6 +272,8 @@ export function TheoryExerciseSessionView({
         <div className="min-w-0 flex-1">
           <ExerciseProgressHeader
             progressLabel={t("progress", { current: index + 1, total })}
+            current={index + 1}
+            total={total}
             scoreLabel={t("score", {
               correct: score.correct,
               answered: score.answered,

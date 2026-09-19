@@ -1,5 +1,6 @@
 "use client";
 
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useRouter } from "next/navigation";
@@ -9,8 +10,8 @@ import { FlashcardCard } from "@/components/flashcards/flashcard-card";
 import { FlashcardControls } from "@/components/flashcards/flashcard-controls";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
+import { FlashcardProgress } from "@/components/flashcards/flashcard-progress";
 import { FlashcardRatingBar } from "@/components/flashcards/flashcard-rating-bar";
-import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { recordFlashcardReview } from "@/lib/actions/flashcards";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
@@ -45,7 +46,9 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
   const [studyMode, setStudyMode] = useState<FlashcardStudyMode>("word-to-meaning");
   const [session, setSession] = useState<FlashcardSessionState | null>(null);
   const [sessionComplete, setSessionComplete] = useState(false);
+  const [navDirection, setNavDirection] = useState<1 | -1>(1);
   const [isPending, startTransition] = useTransition();
+  const reduceMotion = useReducedMotion();
   const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
 
   const filteredWords = useMemo(
@@ -81,14 +84,13 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
       return;
     }
 
-    setSessionComplete(false);
-
     const saved = loadSessionState(workspaceId);
     if (canRestoreSession(saved, workspaceId, filtersKey, availableIds)) {
       setSession(saved);
       return;
     }
 
+    setSessionComplete(false);
     const nextSession = createSessionState({
       workspaceId,
       words: filteredWords,
@@ -125,7 +127,6 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
 
   const totalCards = session?.cardIds.length ?? 0;
   const currentNumber = totalCards > 0 ? session!.currentIndex + 1 : 0;
-  const progressValue = totalCards > 0 ? (currentNumber / totalCards) * 100 : 0;
 
   const updateSession = useCallback(
     (updater: (current: FlashcardSessionState) => FlashcardSessionState) => {
@@ -150,6 +151,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
   }, [updateSession]);
 
   const handlePrevious = useCallback(() => {
+    setNavDirection(-1);
     updateSession((current) => ({
       ...current,
       currentIndex: Math.max(0, current.currentIndex - 1),
@@ -158,6 +160,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
   }, [updateSession]);
 
   const handleNext = useCallback(() => {
+    setNavDirection(1);
     updateSession((current) => ({
       ...current,
       currentIndex: Math.min(current.cardIds.length - 1, current.currentIndex + 1),
@@ -211,6 +214,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
           });
 
           if (session.currentIndex < session.cardIds.length - 1) {
+            setNavDirection(1);
             updateSession((current) => ({
               ...current,
               currentIndex: current.currentIndex + 1,
@@ -237,20 +241,53 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
     ],
   );
 
-  useHotkeys("space", (event) => {
-    event.preventDefault();
-    handleFlip();
-  });
+  useHotkeys(
+    "space",
+    (event) => {
+      if (sessionComplete) return;
+      event.preventDefault();
+      handleFlip();
+    },
+    [sessionComplete, handleFlip],
+  );
 
-  useHotkeys("arrowleft", (event) => {
-    event.preventDefault();
-    handlePrevious();
-  });
+  useHotkeys(
+    "arrowleft",
+    (event) => {
+      if (sessionComplete) return;
+      event.preventDefault();
+      handlePrevious();
+    },
+    [sessionComplete, handlePrevious],
+  );
 
-  useHotkeys("arrowright", (event) => {
-    event.preventDefault();
-    handleNext();
-  });
+  useHotkeys(
+    "arrowright",
+    (event) => {
+      if (sessionComplete) return;
+      event.preventDefault();
+      handleNext();
+    },
+    [sessionComplete, handleNext],
+  );
+
+  useHotkeys(
+    "1,2,3,4",
+    (event) => {
+      if (sessionComplete || !session?.isFlipped || isPending) return;
+      const ratings = {
+        "1": "AGAIN",
+        "2": "HARD",
+        "3": "GOOD",
+        "4": "EASY",
+      } as const;
+      const rating = ratings[event.key as keyof typeof ratings];
+      if (!rating) return;
+      event.preventDefault();
+      handleRate(rating);
+    },
+    [sessionComplete, session?.isFlipped, isPending, handleRate],
+  );
 
   if (words.length === 0) {
     return <VocabularyEmpty variant="no-words" />;
@@ -285,7 +322,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
   }
 
   return (
-    <div className="space-y-6">
+    <div className="flex flex-col gap-5 sm:gap-6">
       <VocabularyFiltersBar
         words={words}
         filters={filters}
@@ -314,36 +351,53 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
         />
       ) : (
         <>
-          <ExerciseProgressHeader
+          <FlashcardProgress
             current={currentNumber}
             total={totalCards}
-            progressLabel={t("progress", { current: currentNumber, total: totalCards })}
-            hint={t("keyboardHint")}
-            progressValue={progressValue}
+            progressLabel={t("progress", {
+              current: currentNumber,
+              total: totalCards,
+            })}
+            shuffleLabel={t("shuffle")}
+            restartLabel={t("restart")}
+            onShuffle={handleShuffle}
+            onRestart={handleRestart}
           />
 
-          <FlashcardCard
-            word={currentWord!}
-            direction={currentDirection}
-            isFlipped={session.isFlipped}
-            onFlip={handleFlip}
-          />
+          <div className="relative min-h-0 flex-1">
+            <AnimatePresence mode="wait" initial={false}>
+              <motion.div
+                key={currentWord!.id}
+                initial={
+                  reduceMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, x: navDirection * 28 }
+                }
+                animate={
+                  reduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }
+                }
+                exit={
+                  reduceMotion
+                    ? { opacity: 0 }
+                    : { opacity: 0, x: navDirection * -18 }
+                }
+                transition={{ duration: reduceMotion ? 0.12 : 0.2, ease: [0.22, 1, 0.36, 1] }}
+                className="overflow-visible"
+              >
+                <FlashcardCard
+                  word={currentWord!}
+                  direction={currentDirection}
+                  isFlipped={session.isFlipped}
+                  onFlip={handleFlip}
+                />
+              </motion.div>
+            </AnimatePresence>
+          </div>
 
-          {session.isFlipped ? (
-            <div className="mx-auto flex w-full max-w-lg flex-col items-center gap-4">
+          <div className="sticky bottom-0 z-10 -mx-4 mt-auto space-y-3 border-t border-hairline-cloud bg-background px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:px-0 sm:pt-2 sm:pb-0">
+            {session.isFlipped ? (
               <FlashcardRatingBar onRate={handleRate} isSubmitting={isPending} />
-              <FlashcardControls
-                canGoPrevious={session.currentIndex > 0}
-                canGoNext={session.currentIndex < session.cardIds.length - 1}
-                isFlipped={session.isFlipped}
-                onPrevious={handlePrevious}
-                onNext={handleNext}
-                onFlip={handleFlip}
-                onShuffle={handleShuffle}
-                onRestart={handleRestart}
-              />
-            </div>
-          ) : (
+            ) : null}
             <FlashcardControls
               canGoPrevious={session.currentIndex > 0}
               canGoNext={session.currentIndex < session.cardIds.length - 1}
@@ -351,10 +405,11 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
               onPrevious={handlePrevious}
               onNext={handleNext}
               onFlip={handleFlip}
-              onShuffle={handleShuffle}
-              onRestart={handleRestart}
             />
-          )}
+            <p className="hidden text-center text-[0.7rem] text-muted-foreground sm:block">
+              {t("keyboardHint")}
+            </p>
+          </div>
         </>
       )}
     </div>

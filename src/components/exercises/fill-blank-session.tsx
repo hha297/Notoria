@@ -3,19 +3,18 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useLocale, useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight, RotateCcw, Sparkles } from "lucide-react";
-import { CheckCircle2, XCircle } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseAiBar } from "@/components/exercises/exercise-ai-bar";
-import { ExerciseHint } from "@/components/exercises/exercise-hint";
+import { FillBlankActions } from "@/components/exercises/fill-blank-actions";
+import { FillBlankStage } from "@/components/exercises/fill-blank-stage";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
 import { requestExerciseAi } from "@/lib/exercises/ai-client";
 import {
@@ -23,9 +22,8 @@ import {
   fillBlankItemSentence,
 } from "@/lib/exercises/ai-validate";
 import { pickFillBlankAiWords, toExerciseAiWord } from "@/lib/exercises/ai-words";
-import { blankMeaningHintFromItem, wordHasBlankMeaningHint } from "@/lib/exercises/blank-hint";
+import { wordHasBlankMeaningHint } from "@/lib/exercises/blank-hint";
 import {
-  expectedFillBlankAnswer,
   buildFillBlankItems,
   type FillBlankItem,
 } from "@/lib/exercises/fill-blank";
@@ -36,7 +34,6 @@ import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferen
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
 import { DEFAULT_FLASHCARD_FILTERS } from "@/types/flashcards";
-import { cn } from "@/lib/utils";
 
 type FillBlankSessionProps = {
   workspaceId: string;
@@ -394,17 +391,18 @@ export function FillBlankSession({
             hint={t("keyboardHint")}
             progressValue={total ? ((index + 1) / total) * 100 : 0}
           />
-          <FillBlankCard
+          <FillBlankStage
+            key={current.id}
             item={current}
             input={input}
             revealed={revealed}
+            peeked={peeked}
             isCorrect={isCorrect}
             onInputChange={setInput}
             onCheck={check}
             onRevealAnswer={revealAnswer}
           />
-          <ExerciseNav
-            t={t}
+          <FillBlankActions
             canPrev={index > 0}
             revealed={revealed}
             onPrev={() => setIndex((i) => i - 1)}
@@ -427,201 +425,26 @@ function EmptyGenerateCard({ onGenerate }: { onGenerate: () => void }) {
   const tAi = useTranslations("exercises.ai");
 
   return (
-    <div className="mx-auto max-w-lg border border-hairline-cloud bg-background p-6 text-center sm:p-10">
-      <div className="mx-auto mb-5 flex size-12 items-center justify-center bg-(--exercise-accent-soft) text-(--exercise-accent)">
-        <Sparkles className="size-5" />
-      </div>
-      <p className="text-lg font-medium text-ink">{tAi("emptyTitle")}</p>
-      <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-        {tAi("emptyDescription")}
-      </p>
-      <Button type="button" className="mt-6" onClick={onGenerate}>
-        <Sparkles className="size-4" />
-        {tAi("generate")}
-      </Button>
-    </div>
-  );
-}
-
-function FillBlankCard({
-  item,
-  input,
-  revealed,
-  isCorrect,
-  onInputChange,
-  onCheck,
-  onRevealAnswer,
-}: {
-  item: FillBlankItem;
-  input: string;
-  revealed: boolean;
-  isCorrect: boolean;
-  onInputChange: (v: string) => void;
-  onCheck: () => void;
-  onRevealAnswer: () => void;
-}) {
-  const t = useTranslations("exercises.fillInBlank");
-  const tAi = useTranslations("exercises.ai");
-  const expected = expectedFillBlankAnswer(item);
-  const cue = blankMeaningHintFromItem(item);
-  const sentenceMeaning = item.sentenceMeaning?.trim() || "";
-  const afterText = item.sentenceAfter?.trim() || "";
-  const trailingPunctuation = /^[.!?…]+$/.test(afterText) ? afterText : "";
-  const bodyAfter = trailingPunctuation ? "" : item.sentenceAfter;
-
-  return (
-    <div className="mx-auto w-full min-w-0 max-w-4xl">
-      <div className="flex min-w-0 items-center justify-between gap-3">
-        <p className="min-w-0 text-xs font-semibold tracking-[0.14em] text-(--exercise-accent) uppercase">
-          {t("prompt")}
+    <div className="relative mx-auto max-w-lg overflow-hidden px-4 py-10 text-center sm:px-8 sm:py-14">
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-[radial-gradient(ellipse_at_top,var(--exercise-accent-soft),transparent_70%)]"
+      />
+      <div className="relative">
+        <div className="mx-auto mb-5 flex size-12 items-center justify-center border border-(--exercise-accent)/25 bg-(--exercise-accent-soft) text-(--exercise-accent)">
+          <Sparkles className="size-5" />
+        </div>
+        <p className="font-heading text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+          {tAi("emptyTitle")}
         </p>
-        {item.aiGenerated ? (
-          <p className="inline-flex items-center gap-1 text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
-            <Sparkles className="size-3" />
-            {tAi("generated")}
-          </p>
-        ) : null}
-      </div>
-      <p className="mt-2 text-sm leading-relaxed text-ink">
-        {item.instruction?.trim() || t("instruction")}
-      </p>
-
-      <form
-        onSubmit={(e) => {
-          e.preventDefault();
-          onCheck();
-        }}
-        className="mt-8 space-y-6"
-      >
-        <p className="font-heading text-[1.65rem] leading-snug font-semibold text-pretty text-ink sm:text-3xl md:text-[2.15rem]">
-          {item.sentenceBefore ? <>{item.sentenceBefore} </> : null}
-          <span
-            className={cn(
-              "inline-block min-w-[5.5rem] border-b-2 px-1 text-center font-medium",
-              revealed
-                ? isCorrect
-                  ? "border-success text-success"
-                  : "border-error text-error"
-                : "border-(--exercise-accent) text-(--exercise-accent)",
-            )}
-          >
-            {revealed ? (isCorrect ? input : expected) : "\u00a0"}
-          </span>
-          {cue ? (
-            <span className="font-medium text-muted-foreground"> ({cue})</span>
-          ) : null}
-          {bodyAfter ? <> {bodyAfter}</> : null}
-          {trailingPunctuation}
+        <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
+          {tAi("emptyDescription")}
         </p>
-
-        {revealed && item.aiGenerated && sentenceMeaning ? (
-          <p className="break-words text-base leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
-            {sentenceMeaning}
-          </p>
-        ) : null}
-
-        {!revealed ? (
-          <Input
-            value={input}
-            onChange={(e) => onInputChange(e.target.value)}
-            autoFocus
-            autoComplete="off"
-            spellCheck={false}
-            placeholder={t("placeholder")}
-            className="h-12 max-w-xl text-lg font-medium sm:h-14"
-          />
-        ) : (
-          <div
-            className={cn(
-              "flex min-w-0 max-w-xl items-start gap-3 px-4 py-3 text-sm font-medium sm:text-base",
-              isCorrect ? "feedback-success" : "feedback-error",
-            )}
-          >
-            {isCorrect ? (
-              <CheckCircle2 className="mt-0.5 size-5 shrink-0" />
-            ) : (
-              <XCircle className="mt-0.5 size-5 shrink-0" />
-            )}
-            <span className="min-w-0 break-words [overflow-wrap:anywhere]">
-              {isCorrect ? t("correct") : t("incorrect", { answer: expected })}
-            </span>
-          </div>
-        )}
-
-        <ExerciseHint
-          resetKey={item.id}
-          answered={revealed}
-          correctAnswer={expected}
-          onRevealAnswer={onRevealAnswer}
-        />
-      </form>
-    </div>
-  );
-}
-
-function ExerciseNav({
-  t,
-  canPrev,
-  revealed,
-  onPrev,
-  onNext,
-  onCheck,
-  onTryAgain,
-  tryAgainLabel,
-  canCheck,
-  isLast,
-}: {
-  t: (key: string) => string;
-  canPrev: boolean;
-  revealed: boolean;
-  onPrev: () => void;
-  onNext: () => void;
-  onCheck: () => void;
-  onTryAgain: () => void;
-  tryAgainLabel: string;
-  canCheck: boolean;
-  isLast: boolean;
-}) {
-  return (
-    <div className="flex flex-col items-center gap-4 pt-2 sm:gap-5">
-      <div className="flex w-full max-w-sm flex-col gap-2 sm:w-auto sm:max-w-none sm:flex-row sm:flex-wrap sm:justify-center sm:gap-3">
-        <Button
-          type="button"
-          variant="outline"
-          size="default"
-          onClick={onPrev}
-          disabled={!canPrev}
-          className="h-11 w-full sm:h-9 sm:w-auto"
-        >
-          <ChevronLeft className="size-4" />
-          {t("previous")}
+        <Button type="button" size="lg" className="mt-7 h-12 sm:h-11" onClick={onGenerate}>
+          <Sparkles className="size-4" />
+          {tAi("generate")}
         </Button>
-        {revealed ? (
-          <Button
-            type="button"
-            size="default"
-            onClick={onNext}
-            className="h-11 w-full sm:h-9 sm:w-auto"
-          >
-            {isLast ? t("finish") : t("next")}
-            <ChevronRight className="size-4" />
-          </Button>
-        ) : (
-          <Button
-            type="button"
-            size="default"
-            onClick={onCheck}
-            disabled={!canCheck}
-            className="h-11 w-full sm:h-9 sm:w-auto"
-          >
-            {t("check")}
-          </Button>
-        )}
       </div>
-      <Button type="button" variant="ghost" onClick={onTryAgain}>
-        <RotateCcw className="size-4" />
-        {tryAgainLabel}
-      </Button>
     </div>
   );
 }

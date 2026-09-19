@@ -711,11 +711,12 @@
       "next": "Tiếp",
       "shuffle": "Xáo câu hỏi",
       "finish": "Kết thúc vòng này",
-      "keyboardHint": "1–4 để chọn"
+      "keyboardHint": "1–4 để chọn · Enter để tiếp"
     },
     "matchPairs": {
       "words": "Từ",
       "meanings": "Nghĩa",
+      "roundProgress": "Vòng {current} / {total}",
       "progress": "Đã ghép {matched} / {total}",
       "hint": "Chọn một từ, rồi chọn nghĩa tương ứng",
       "complete": "Ghép hết rồi — giỏi quá!",
@@ -805,7 +806,7 @@
     "questionWord": "Nghĩa là gì?",
     "questionMeaning": "Từ nào khớp nghĩa này?",
     "answer": "Đáp án",
-    "tapToFlip": "Chạm hoặc nhấn Space để lật thẻ",
+    "tapToFlip": "Chạm thẻ hoặc nhấn Space để xem đáp án",
     "showAnswer": "Xem đáp án",
     "hideAnswer": "Ẩn đáp án",
     "flip": "Lật thẻ",
@@ -814,7 +815,7 @@
     "shuffle": "Xáo thẻ",
     "restart": "Học lại từ đầu",
     "progress": "{current} / {total}",
-    "keyboardHint": "Space để lật · ← → để chuyển thẻ",
+    "keyboardHint": "Space xem đáp án · ← → chuyển thẻ · 1–4 đánh giá",
     "meanings": "Nghĩa",
     "examples": "Ví dụ",
     "synonyms": "Từ đồng nghĩa",

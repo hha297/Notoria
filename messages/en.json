@@ -711,11 +711,12 @@
       "next": "Next",
       "shuffle": "Shuffle questions",
       "finish": "Finish round",
-      "keyboardHint": "1–4 to choose"
+      "keyboardHint": "1–4 to choose · Enter for next"
     },
     "matchPairs": {
       "words": "Words",
       "meanings": "Meanings",
+      "roundProgress": "Round {current} / {total}",
       "progress": "{matched} / {total} matched",
       "hint": "Select a word, then tap its meaning",
       "complete": "All pairs matched — great job!",
@@ -975,7 +976,7 @@
     "questionWord": "What is the meaning?",
     "questionMeaning": "Which word matches this meaning?",
     "answer": "Answer",
-    "tapToFlip": "Tap or press Space to flip",
+    "tapToFlip": "Tap the card or press Space to reveal",
     "showAnswer": "Show answer",
     "hideAnswer": "Hide answer",
     "flip": "Flip",
@@ -984,7 +985,7 @@
     "shuffle": "Shuffle",
     "restart": "Restart session",
     "progress": "{current} / {total}",
-    "keyboardHint": "Space flip · ← → navigate",
+    "keyboardHint": "Space reveal · ← → move · 1–4 rate",
     "meanings": "Meanings",
     "examples": "Examples",
     "synonyms": "Synonyms",

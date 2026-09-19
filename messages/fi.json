@@ -711,11 +711,12 @@
       "next": "Seuraava",
       "shuffle": "Sekoita kysymykset",
       "finish": "Lopeta kierros",
-      "keyboardHint": "1–4 valitsee"
+      "keyboardHint": "1–4 valitsee · Enter seuraavaan"
     },
     "matchPairs": {
       "words": "Sanat",
       "meanings": "Merkitykset",
+      "roundProgress": "Kierros {current} / {total}",
       "progress": "{matched} / {total} yhdistetty",
       "hint": "Valitse sana, sitten napauta sen merkitystä",
       "complete": "Kaikki parit yhdistetty — hienoa!",
@@ -805,7 +806,7 @@
     "questionWord": "Mikä on merkitys?",
     "questionMeaning": "Mikä sana vastaa tätä merkitystä?",
     "answer": "Vastaus",
-    "tapToFlip": "Napauta tai paina välilyöntiä kääntääksesi",
+    "tapToFlip": "Napauta korttia tai paina välilyöntiä paljastaaksesi",
     "showAnswer": "Näytä vastaus",
     "hideAnswer": "Piilota vastaus",
     "flip": "Käännä",
@@ -814,7 +815,7 @@
     "shuffle": "Sekoita",
     "restart": "Aloita alusta",
     "progress": "{current} / {total}",
-    "keyboardHint": "Välilyönti kääntää · ← → navigoi",
+    "keyboardHint": "Välilyönti paljastaa · ← → siirry · 1–4 arvioi",
     "meanings": "Merkitykset",
     "examples": "Esimerkit",
     "synonyms": "Synonyymit",
