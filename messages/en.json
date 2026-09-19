@@ -651,6 +651,7 @@
     },
     "fillInBlank": {
       "prompt": "Fill in the blank",
+      "placeholder": "Type your answer…",
       "instruction": "Fill in the blank with the correct word form.",
       "hint": "Hint",
       "hintExplainWord": "Think about the meaning of the missing word in this sentence.",
@@ -682,10 +683,13 @@
       "noneValid": "AI could not create valid questions for these words. Try again."
     },
     "session": {
-      "complete": "Session complete!",
+      "complete": "Session complete",
       "score": "{correct} / {total} correct",
       "pairsMatched": "Matched {count} pairs",
-      "tryAgain": "Try again"
+      "tryAgain": "Try again",
+      "questionsLabel": "Questions",
+      "correctLabel": "Correct",
+      "reviewLabel": "To review"
     },
     "multipleChoice": {
       "questionWord": "What is the meaning of this word?",
@@ -706,7 +710,8 @@
       "previous": "Previous",
       "next": "Next",
       "shuffle": "Shuffle questions",
-      "finish": "Finish round"
+      "finish": "Finish round",
+      "keyboardHint": "1–4 to choose"
     },
     "matchPairs": {
       "words": "Words",
@@ -746,6 +751,7 @@
       "meaningLabel": "Meaning",
       "prompt": "Write a complete sentence using this vocabulary.",
       "placeholder": "Write a full sentence…",
+      "insertWord": "Add to sentence",
       "yourSentence": "Your sentence",
       "corrected": "Corrected",
       "betterSuggestion": "More natural",

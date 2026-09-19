@@ -142,6 +142,18 @@ export function FormSentenceSession({
   const canSubmit =
     Boolean(round.input.trim()) && !round.evaluating && !round.feedback;
 
+  const insertCurrentWord = () => {
+    if (!current || round.feedback || round.evaluating) return;
+    const token = current.word;
+    setRound((currentRound) => {
+      const value = currentRound.input.trim();
+      return {
+        ...currentRound,
+        input: value ? `${value} ${token}` : token,
+      };
+    });
+  };
+
   const submit = async () => {
     if (!current || round.evaluating || round.feedback) return;
     const sentence = round.input.trim();
@@ -308,16 +320,16 @@ export function FormSentenceSession({
       {round.sessionComplete ? (
         <SessionCompleteCard
           title={tSession("complete")}
-          scoreLabel={tSession("score", {
-            correct: round.score.correct,
-            total: round.score.answered,
-          })}
+          questions={round.score.answered}
+          correct={round.score.correct}
           tryAgainLabel={tSession("tryAgain")}
           onTryAgain={startSession}
         />
       ) : (
         <>
           <ExerciseProgressHeader
+            current={round.index + 1}
+            total={total}
             progressLabel={t("progress", {
               current: round.index + 1,
               total,
@@ -330,21 +342,28 @@ export function FormSentenceSession({
             progressValue={total ? ((round.index + 1) / total) * 100 : 0}
           />
           {current && (
-            <div className="mx-auto max-w-2xl rounded-sm border border-hairline-cloud bg-surface-elevated p-5 sm:p-8 md:p-10">
-              <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
-                {t("vocabularyLabel")}
-              </p>
-              <p className="mt-4 break-words font-heading text-2xl font-medium text-ink sm:mt-6 sm:text-3xl md:text-4xl">
-                {current.word}
-              </p>
-              <div className="mt-4 space-y-1">
-                <p className="text-sm font-medium text-muted-foreground">
-                  {t("meaningLabel")}
+            <div className="mx-auto w-full max-w-3xl space-y-6">
+              <div>
+                <p className="text-xs font-semibold tracking-[0.14em] text-(--exercise-accent) uppercase">
+                  {t("vocabularyLabel")}
                 </p>
-                <p className="text-base text-ink sm:text-lg">{current.meaning}</p>
+                <div className="mt-3 flex flex-wrap gap-2">
+                  <button
+                    type="button"
+                    onClick={insertCurrentWord}
+                    disabled={Boolean(round.feedback) || round.evaluating}
+                    className="border border-(--exercise-accent) bg-(--exercise-accent-soft) px-3 py-1.5 text-sm font-medium text-ink transition-transform disabled:cursor-not-allowed disabled:opacity-50 hover:enabled:-translate-y-0.5"
+                    aria-label={t("insertWord")}
+                  >
+                    {current.word}
+                  </button>
+                </div>
+                <p className="mt-3 text-sm text-muted-foreground">
+                  {current.meaning}
+                </p>
               </div>
 
-              <div className="mt-8 space-y-4">
+              <div className="space-y-3">
                 <p className="text-sm font-medium text-ink">{t("prompt")}</p>
                 {!round.feedback ? (
                   <Textarea
@@ -356,13 +375,13 @@ export function FormSentenceSession({
                       }))
                     }
                     placeholder={t("placeholder")}
-                    className="min-h-28 resize-y text-base"
+                    className="min-h-32 resize-y border-(--exercise-accent)/35 text-base leading-relaxed"
                     maxLength={FORM_SENTENCE_MAX_LENGTH}
                     disabled={round.evaluating}
                     autoComplete="off"
                   />
                 ) : (
-                  <div className="min-w-0 space-y-2 rounded-sm border border-hairline-cloud bg-surface p-3 text-sm leading-relaxed">
+                  <div className="min-w-0 space-y-4 border border-hairline-cloud bg-background p-4 text-sm leading-relaxed">
                     <p className="break-words [overflow-wrap:anywhere]">
                       <span className="font-semibold text-ink">
                         {t("yourSentence")}:
@@ -370,7 +389,7 @@ export function FormSentenceSession({
                       {round.feedback.sentence}
                     </p>
                     {round.feedback.correctedSentence &&
-                      !round.feedback.isCorrect ? (
+                    !round.feedback.isCorrect ? (
                       <p className="break-words [overflow-wrap:anywhere]">
                         <span className="font-semibold text-ink">
                           {t("corrected")}:
@@ -403,7 +422,7 @@ export function FormSentenceSession({
                 )}
 
                 {round.evaluating ? (
-                  <div className="flex min-w-0 items-center gap-2 rounded-sm bg-surface-hover px-4 py-3 text-sm font-medium text-muted-foreground">
+                  <div className="flex min-w-0 items-center gap-2 bg-surface-hover px-4 py-3 text-sm font-medium text-muted-foreground">
                     <Loader2 className="size-4 shrink-0 animate-spin" />
                     {t("evaluating")}
                   </div>
@@ -412,7 +431,7 @@ export function FormSentenceSession({
                 {round.feedback ? (
                   <div
                     className={cn(
-                      "flex min-w-0 items-start gap-2 rounded-sm px-4 py-3 text-sm font-medium",
+                      "flex min-w-0 items-start gap-2 px-4 py-3 text-sm font-medium",
                       round.feedback.isCorrect
                         ? "feedback-success"
                         : "feedback-error",

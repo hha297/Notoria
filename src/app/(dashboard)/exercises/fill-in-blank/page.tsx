@@ -1,7 +1,5 @@
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import { getTranslations } from "next-intl/server";
-import { PageHeader } from "@/components/layout/page-header";
+import { ExerciseSessionPageFrame } from "@/components/exercises/exercise-session-page-frame";
 import { FillBlankSession } from "@/components/exercises/fill-blank-session";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getFlashcardWords } from "@/lib/actions/flashcards";
@@ -13,33 +11,30 @@ export default async function FillInBlankPage() {
 
   if (!workspace) {
     return (
-      <div className="mx-auto max-w-5xl space-y-10 pt-2">
-        <div className="space-y-6">
-          <Link href="/exercises" className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-ink">
-            <ArrowLeft className="size-4" />{t("backToStudio")}
-          </Link>
-          <PageHeader eyebrow={t("title")} title={t("types.fill-in-blank.label")} highlight={t("practice")} description={t("noWorkspace")} />
-        </div>
+      <ExerciseSessionPageFrame
+        slug="fill-in-blank"
+        title={t("types.fill-in-blank.label")}
+        backLabel={t("backToStudio")}
+      >
         <NoWorkspaceEmpty />
-      </div>
+      </ExerciseSessionPageFrame>
     );
   }
 
   const words = await getFlashcardWords();
 
   return (
-    <div className="mx-auto max-w-5xl space-y-10 pt-2">
-      <div className="space-y-6">
-        <Link href="/exercises" className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-ink">
-          <ArrowLeft className="size-4" />{t("backToStudio")}
-        </Link>
-        <PageHeader eyebrow={t("title")} title={t("types.fill-in-blank.label")} highlight={t("practice")} description={t("types.fill-in-blank.description")} />
-      </div>
+    <ExerciseSessionPageFrame
+      slug="fill-in-blank"
+      title={t("types.fill-in-blank.label")}
+      sourceLabel={workspace.name}
+      backLabel={t("backToStudio")}
+    >
       <FillBlankSession
         workspaceId={workspace.id}
         words={words}
         language={workspace.language}
       />
-    </div>
+    </ExerciseSessionPageFrame>
   );
 }

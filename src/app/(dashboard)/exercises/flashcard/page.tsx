@@ -1,7 +1,5 @@
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import { getTranslations } from "next-intl/server";
-import { PageHeader } from "@/components/layout/page-header";
+import { ExerciseSessionPageFrame } from "@/components/exercises/exercise-session-page-frame";
 import { FlashcardSession } from "@/components/flashcards/flashcard-session";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getFlashcardWords } from "@/lib/actions/flashcards";
@@ -16,48 +14,26 @@ export default async function ExerciseFlashcardPage() {
 
   if (!workspace) {
     return (
-      <div className="mx-auto max-w-5xl space-y-10 pt-2">
-        <div className="space-y-6">
-          <Link
-            href="/exercises"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-ink"
-          >
-            <ArrowLeft className="size-4" />
-            {tExercises("backToStudio")}
-          </Link>
-          <PageHeader
-            eyebrow={tExercises("title")}
-            title={t("title")}
-            highlight={t("mode")}
-            description={t("noWorkspace")}
-          />
-        </div>
+      <ExerciseSessionPageFrame
+        slug="flashcard"
+        title={t("title")}
+        backLabel={tExercises("backToStudio")}
+      >
         <NoWorkspaceEmpty />
-      </div>
+      </ExerciseSessionPageFrame>
     );
   }
 
   const words = await getFlashcardWords();
 
   return (
-    <div className="mx-auto max-w-5xl space-y-10 pt-2">
-      <div className="space-y-6">
-        <Link
-          href="/exercises"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-ink"
-        >
-          <ArrowLeft className="size-4" />
-          {tExercises("backToStudio")}
-        </Link>
-        <PageHeader
-          eyebrow={tExercises("title")}
-          title={t("title")}
-          highlight={t("mode")}
-          description={t("description")}
-        />
-      </div>
-
+    <ExerciseSessionPageFrame
+      slug="flashcard"
+      title={t("title")}
+      sourceLabel={workspace.name}
+      backLabel={tExercises("backToStudio")}
+    >
       <FlashcardSession workspaceId={workspace.id} words={words} />
-    </div>
+    </ExerciseSessionPageFrame>
   );
 }

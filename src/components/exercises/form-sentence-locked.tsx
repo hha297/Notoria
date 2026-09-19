@@ -1,11 +1,10 @@
 "use client";
 
-import Link from "next/link";
-import { ArrowLeft, Lock } from "lucide-react";
+import { Lock } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { Button } from "@/components/ui/button";
-import { PageHeader } from "@/components/layout/page-header";
+import { ExerciseSessionPageFrame } from "@/components/exercises/exercise-session-page-frame";
 
 export function FormSentenceLocked() {
   const t = useTranslations("exercises");
@@ -13,24 +12,13 @@ export function FormSentenceLocked() {
   const { openUpgrade } = useProAccess();
 
   return (
-    <div className="mx-auto max-w-5xl space-y-10 pt-2">
-      <div className="space-y-6">
-        <Link
-          href="/exercises"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-ink"
-        >
-          <ArrowLeft className="size-4" />
-          {t("backToStudio")}
-        </Link>
-        <PageHeader
-          eyebrow={t("title")}
-          title={t("types.form-sentence.label")}
-          highlight={t("practice")}
-          description={t("types.form-sentence.description")}
-        />
-      </div>
+    <ExerciseSessionPageFrame
+      slug="form-sentence"
+      title={t("types.form-sentence.label")}
+      backLabel={t("backToStudio")}
+    >
       <div className="empty-state">
-        <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-hairline-cloud bg-muted/40 text-muted-foreground">
+        <div className="mb-4 flex size-14 items-center justify-center border border-hairline-cloud bg-muted/40 text-muted-foreground">
           <Lock className="size-6" />
         </div>
         <p className="font-medium text-ink">{tBilling("lockedTitle")}</p>
@@ -41,6 +29,6 @@ export function FormSentenceLocked() {
           {tBilling("upgrade")}
         </Button>
       </div>
-    </div>
+    </ExerciseSessionPageFrame>
   );
 }

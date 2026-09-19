@@ -1,9 +1,12 @@
 import type { FlashcardWord } from "@/types/flashcards";
 import {
   blankMeaningHintFromItem,
+  normalizePromptBlank,
+  promptHasBlank,
   resolveValidBlankMeaningHint,
   withBlankMeaningHint,
 } from "@/lib/exercises/blank-hint";
+import { surfaceAnswersForBlank } from "@/lib/exercises/lexical-surface";
 import {
   assignWordMeanings,
   isMeaningOwnedByWord,
@@ -68,12 +71,8 @@ export function buildTypeAnswerItems(
     }
 
     const isWordPrompt = direction === "WORD_TO_MEANING";
-    const acceptable = buildAnswers(
-      isWordPrompt ? word.meanings : [word.word],
-    );
-    const answerDisplay = isWordPrompt
-      ? word.meanings.join(" · ")
-      : word.word;
+    const acceptable = buildAnswers(isWordPrompt ? word.meanings : [word.word]);
+    const answerDisplay = isWordPrompt ? word.meanings.join(" · ") : word.word;
 
     items.push({
       id: `${word.id}-${direction}-${normalizeMeaningKey(assignedMeaning)}`,
@@ -101,9 +100,9 @@ export function contextualExerciseToTypeAnswerItem(
   index: number,
 ): TypeAnswerItem | null {
   const answer = exercise.answer.trim();
-  const prompt = exercise.prompt.trim();
+  const prompt = normalizePromptBlank(exercise.prompt.trim());
   if (!answer || !prompt) return null;
-  if (!prompt.includes("________")) return null;
+  if (!promptHasBlank(prompt)) return null;
   if (!word) return null;
 
   const meaningHint = resolveValidBlankMeaningHint({
@@ -118,7 +117,7 @@ export function contextualExerciseToTypeAnswerItem(
     wordId: exercise.wordId,
     direction: "CONTEXTUAL",
     prompt,
-    acceptableAnswers: buildAnswers([answer, word.word]),
+    acceptableAnswers: surfaceAnswersForBlank(word.word, answer),
     answerDisplay: answer,
     word: word.word,
     meanings: word.meanings,
@@ -132,12 +131,10 @@ export function contextualExerciseToTypeAnswerItem(
 export function typeAnswerRevealPrompt(item: TypeAnswerItem): string {
   if (item.direction !== "CONTEXTUAL") return item.prompt;
   const cue = blankMeaningHintFromItem(item);
-  if (!item.prompt.includes("________")) {
+  if (!promptHasBlank(item.prompt)) {
     return fillContextualBlank(item.prompt, item.answerDisplay);
   }
-  const fill = cue
-    ? `${item.answerDisplay} (${cue})`
-    : item.answerDisplay;
+  const fill = cue ? `${item.answerDisplay} (${cue})` : item.answerDisplay;
   return fillContextualBlank(item.prompt, fill);
 }
 

@@ -25,10 +25,7 @@ const sampleWord = (overrides: Partial<FlashcardWord> = {}): FlashcardWord =>
 describe("type-answer study modes", () => {
   it("builds deterministic word-to-meaning items without mixed directions", () => {
     const items = buildTypeAnswerItems(
-      [
-        sampleWord(),
-        sampleWord({ id: "w2", word: "beta", meanings: ["xyz"] }),
-      ],
+      [sampleWord(), sampleWord({ id: "w2", word: "beta", meanings: ["xyz"] })],
       "word-to-meaning",
     );
     expect(items.every((item) => item.direction === "WORD_TO_MEANING")).toBe(
@@ -51,6 +48,8 @@ describe("type-answer study modes", () => {
     expect(item!.direction).toBe("CONTEXTUAL");
     expect(item!.answerDisplay).toBe("alphas");
     expect(item!.meaningHint).toBe("abc");
+    expect(item!.acceptableAnswers).toContain("alphas");
+    expect(item!.acceptableAnswers).not.toContain("alpha");
     expect(typeAnswerPromptWithMeaningHint(item!)).toBe(
       "This is a ________ (abc) test.",
     );

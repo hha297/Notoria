@@ -651,6 +651,7 @@
     },
     "fillInBlank": {
       "prompt": "Täytä aukko",
+      "placeholder": "Kirjoita vastaus…",
       "instruction": "Täytä aukko sanan oikealla muodolla.",
       "hint": "Vihje",
       "hintExplainWord": "Mieti puuttuvan sanan merkitystä tässä lauseessa.",
@@ -682,10 +683,13 @@
       "noneValid": "Tekoäly ei saanut luotua kelvollisia kysymyksiä näille sanoille. Yritä uudelleen."
     },
     "session": {
-      "complete": "Harjoitus valmis!",
+      "complete": "Harjoitus valmis",
       "score": "{correct} / {total} oikein",
       "pairsMatched": "{count} paria yhdistetty",
-      "tryAgain": "Yritä uudelleen"
+      "tryAgain": "Yritä uudelleen",
+      "questionsLabel": "Kysymykset",
+      "correctLabel": "Oikein",
+      "reviewLabel": "Kertaa"
     },
     "multipleChoice": {
       "questionWord": "Mikä on tämän sanan merkitys?",
@@ -706,7 +710,8 @@
       "previous": "Edellinen",
       "next": "Seuraava",
       "shuffle": "Sekoita kysymykset",
-      "finish": "Lopeta kierros"
+      "finish": "Lopeta kierros",
+      "keyboardHint": "1–4 valitsee"
     },
     "matchPairs": {
       "words": "Sanat",
@@ -746,6 +751,7 @@
       "meaningLabel": "Merkitys",
       "prompt": "Kirjoita kokonainen lause käyttäen tätä sanaa.",
       "placeholder": "Kirjoita kokonainen lause…",
+      "insertWord": "Lisää lauseeseen",
       "yourSentence": "Lauseesi",
       "corrected": "Korjattu",
       "betterSuggestion": "Luonnollisempi",

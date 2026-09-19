@@ -4,14 +4,21 @@ import {
   type ExerciseAiFillBlankDraft,
   type ExerciseAiWordInput,
 } from "@/lib/exercises/ai-types";
-import { resolveValidBlankMeaningHint } from "@/lib/exercises/blank-hint";
+import {
+  normalizePromptBlank,
+  resolveValidBlankMeaningHint,
+} from "@/lib/exercises/blank-hint";
+import {
+  acceptResolvedSurfaceForm,
+  isRelatedWordForm,
+} from "@/lib/exercises/lexical-surface";
 import {
   buildFillBlankAcceptableAnswers,
   type FillBlankItem,
 } from "@/lib/exercises/fill-blank";
 import { normalizeAnswer } from "@/lib/exercises/utils";
 
-export { FILL_BLANK_PLACEHOLDER };
+export { FILL_BLANK_PLACEHOLDER, isRelatedWordForm };
 
 function blankRegex(global = false) {
   return global ? /_{3,}/g : /_{3,}/;
@@ -35,19 +42,6 @@ export function splitSentenceAtBlank(sentence: string) {
   };
 }
 
-export function isRelatedWordForm(baseWord: string, answer: string) {
-  const base = normalizeAnswer(baseWord);
-  const form = normalizeAnswer(answer);
-  if (!base || !form) return false;
-  if (base === form) return true;
-  if (form.includes(base) || base.includes(form)) return true;
-  const need =
-    base.length <= 4
-      ? 2
-      : Math.max(3, Math.ceil(Math.min(base.length, form.length) * 0.5));
-  return base.slice(0, need) === form.slice(0, need);
-}
-
 function containsWholeWord(haystack: string, needle: string) {
   const value = needle.trim();
   if (!value) return false;
@@ -60,11 +54,17 @@ function containsWholeWord(haystack: string, needle: string) {
 
 export function sentenceLeaksAnswer(sentence: string, ...candidates: string[]) {
   const withoutBlank = sentence.replace(blankRegex(true), " ");
-  return candidates.some((candidate) => containsWholeWord(withoutBlank, candidate));
+  return candidates.some((candidate) =>
+    containsWholeWord(withoutBlank, candidate),
+  );
 }
 
 function normalizeSentence(value: string) {
-  return value.replace(blankRegex(true), " ").replace(/\s+/g, " ").trim().toLowerCase();
+  return value
+    .replace(blankRegex(true), " ")
+    .replace(/\s+/g, " ")
+    .trim()
+    .toLowerCase();
 }
 
 export function isDuplicateAvoidedSentence(
@@ -84,23 +84,38 @@ export function validateFillBlankExercise(
   raw: ExerciseAiFillBlankDraft,
   word: ExerciseAiWordInput,
 ): ExerciseAiFillBlank | null {
-  const sentence = raw.sentence.trim();
-  const answer = raw.answer.trim();
-  const baseWord = (raw.baseWord?.trim() || word.word).trim();
+  const sentence = normalizePromptBlank(raw.sentence.trim());
+  const proposed = raw.answer.trim();
+  const lemma = word.word.trim();
 
-  if (!sentence || !answer) return null;
+  if (!sentence || !proposed || !lemma) return null;
   if (countFillBlanks(sentence) !== 1) return null;
   if (!splitSentenceAtBlank(sentence)) return null;
-  if (!isRelatedWordForm(word.word, answer) && !isRelatedWordForm(baseWord, answer)) {
+
+  const answer =
+    acceptResolvedSurfaceForm({
+      prompt: sentence,
+      lemma,
+      proposed,
+    }) ??
+    acceptResolvedSurfaceForm({
+      prompt: sentence,
+      lemma: raw.baseWord?.trim() || lemma,
+      proposed,
+    });
+  if (!answer) return null;
+
+  if (sentenceLeaksAnswer(sentence, answer, lemma, raw.baseWord ?? "")) {
     return null;
   }
-  if (sentenceLeaksAnswer(sentence, answer, word.word, baseWord)) return null;
-  if (isDuplicateAvoidedSentence(sentence, answer, word.avoidSentences)) return null;
+  if (isDuplicateAvoidedSentence(sentence, answer, word.avoidSentences)) {
+    return null;
+  }
   if (
     !resolveValidBlankMeaningHint({
       meaning: word.meaning,
       answer,
-      baseWord: word.word,
+      baseWord: lemma,
     })
   ) {
     return null;
@@ -111,7 +126,7 @@ export function validateFillBlankExercise(
     type: "fill-in-blank",
     sentence,
     answer,
-    baseWord: word.word,
+    baseWord: lemma,
     language: raw.language ?? null,
     instruction: raw.instruction?.trim() || null,
     explanation: null,
@@ -172,7 +187,8 @@ export function fillBlankExerciseToItem(
   word: ExerciseAiWordInput & { meanings: string[] },
   suffix: string,
 ): FillBlankItem | null {
-  const split = splitSentenceAtBlank(exercise.sentence);
+  const sentence = normalizePromptBlank(exercise.sentence);
+  const split = splitSentenceAtBlank(sentence);
   if (!split) return null;
 
   const answer = exercise.answer.trim();

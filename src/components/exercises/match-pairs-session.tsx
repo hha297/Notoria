@@ -120,18 +120,21 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
       {sessionComplete ? (
         <SessionCompleteCard
           title={t("complete")}
-          scoreLabel={tSession("pairsMatched", { count: sessionItems.length })}
+          questions={sessionItems.length}
+          correct={sessionItems.length}
           tryAgainLabel={tSession("tryAgain")}
           onTryAgain={startSession}
         />
       ) : (
         <>
           <ExerciseProgressHeader
+            current={matchedIds.size}
+            total={sessionItems.length}
             progressLabel={t("progress", { matched: matchedIds.size, total: sessionItems.length })}
             progressValue={sessionItems.length ? (matchedIds.size / sessionItems.length) * 100 : 0}
             hint={t("hint")}
           />
-          <div className="grid gap-3 sm:grid-cols-2 sm:gap-4">
+          <div className="grid gap-8 md:grid-cols-2 md:gap-10">
             <Column title={t("words")}>
               {wordColumn.map((item) => (
                 <MatchButton
@@ -140,6 +143,7 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
                   selected={selectedWordId === item.wordId}
                   matched={matchedIds.has(item.wordId)}
                   wrong={wrongId !== null && selectedWordId === item.wordId}
+                  pairing={false}
                   onClick={() => handleWordClick(item.wordId)}
                 />
               ))}
@@ -152,6 +156,7 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
                   selected={false}
                   matched={matchedIds.has(item.wordId)}
                   wrong={wrongId === item.wordId}
+                  pairing={Boolean(selectedWordId) && !matchedIds.has(item.wordId)}
                   onClick={() => handleMeaningClick(item.wordId)}
                 />
               ))}
@@ -170,8 +175,8 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
 
 function Column({ title, children }: { title: string; children: React.ReactNode }) {
   return (
-    <div className="min-w-0 space-y-2 rounded-sm border border-hairline-cloud bg-surface-elevated p-3 sm:p-4">
-      <p className="sticky top-0 z-10 bg-card pb-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
+    <div className="min-w-0 space-y-3">
+      <p className="text-xs font-semibold tracking-[0.14em] text-(--exercise-accent) uppercase">
         {title}
       </p>
       <div className="max-h-[min(42vh,360px)] space-y-2 overflow-y-auto overscroll-contain sm:max-h-none sm:overflow-visible">
@@ -186,12 +191,14 @@ function MatchButton({
   selected,
   matched,
   wrong,
+  pairing,
   onClick,
 }: {
   label: string;
   selected: boolean;
   matched: boolean;
   wrong: boolean;
+  pairing: boolean;
   onClick: () => void;
 }) {
   return (
@@ -200,11 +207,12 @@ function MatchButton({
       onClick={onClick}
       disabled={matched}
       className={cn(
-        "w-full min-w-0 min-h-11 cursor-pointer rounded-sm border px-4 py-3 text-left text-sm font-medium break-words [overflow-wrap:anywhere] transition-all sm:min-h-0",
-        matched && "feedback-success opacity-80",
-        !matched && selected && "border-primary bg-surface-active text-ink",
-        !matched && wrong && "feedback-error animate-pulse",
-        !matched && !selected && !wrong && "border-hairline-cloud bg-surface-elevated hover:border-primary/50 hover:bg-surface-active",
+        "w-full min-h-12 min-w-0 cursor-pointer border px-4 py-3 text-left text-sm font-medium break-words [overflow-wrap:anywhere] transition-all sm:min-h-11",
+        matched && "border-success-border bg-success-muted/50 text-muted-foreground opacity-50",
+        !matched && selected && "border-(--exercise-accent) bg-(--exercise-accent-soft) text-ink",
+        !matched && wrong && "feedback-error exercise-shake",
+        !matched && pairing && !selected && !wrong && "border-(--exercise-accent)/40 bg-surface-elevated hover:border-(--exercise-accent)",
+        !matched && !selected && !wrong && !pairing && "border-hairline-cloud bg-surface-elevated hover:border-(--exercise-accent) hover:bg-(--exercise-accent-soft)",
       )}
     >
       {label}

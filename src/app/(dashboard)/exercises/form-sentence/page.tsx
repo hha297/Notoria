@@ -1,7 +1,5 @@
-import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import { getTranslations } from "next-intl/server";
-import { PageHeader } from "@/components/layout/page-header";
+import { ExerciseSessionPageFrame } from "@/components/exercises/exercise-session-page-frame";
 import { FormSentenceLocked } from "@/components/exercises/form-sentence-locked";
 import { FormSentenceSession } from "@/components/exercises/form-sentence-session";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
@@ -22,51 +20,30 @@ export default async function FormSentencePage() {
 
   if (!workspace) {
     return (
-      <div className="mx-auto max-w-5xl space-y-10 pt-2">
-        <div className="space-y-6">
-          <Link
-            href="/exercises"
-            className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-ink"
-          >
-            <ArrowLeft className="size-4" />
-            {t("backToStudio")}
-          </Link>
-          <PageHeader
-            eyebrow={t("title")}
-            title={t("types.form-sentence.label")}
-            highlight={t("practice")}
-            description={t("noWorkspace")}
-          />
-        </div>
+      <ExerciseSessionPageFrame
+        slug="form-sentence"
+        title={t("types.form-sentence.label")}
+        backLabel={t("backToStudio")}
+      >
         <NoWorkspaceEmpty />
-      </div>
+      </ExerciseSessionPageFrame>
     );
   }
 
   const words = await getFlashcardWords();
 
   return (
-    <div className="mx-auto max-w-5xl space-y-10 pt-2">
-      <div className="space-y-6">
-        <Link
-          href="/exercises"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-ink"
-        >
-          <ArrowLeft className="size-4" />
-          {t("backToStudio")}
-        </Link>
-        <PageHeader
-          eyebrow={t("title")}
-          title={t("types.form-sentence.label")}
-          highlight={t("practice")}
-          description={t("types.form-sentence.description")}
-        />
-      </div>
+    <ExerciseSessionPageFrame
+      slug="form-sentence"
+      title={t("types.form-sentence.label")}
+      sourceLabel={workspace.name}
+      backLabel={t("backToStudio")}
+    >
       <FormSentenceSession
         workspaceId={workspace.id}
         words={words}
         language={workspace.language}
       />
-    </div>
+    </ExerciseSessionPageFrame>
   );
 }

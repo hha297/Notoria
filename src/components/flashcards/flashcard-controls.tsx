@@ -9,7 +9,6 @@ import {
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 type FlashcardControlsProps = {
   canGoPrevious: boolean;
@@ -70,11 +69,7 @@ export function FlashcardControls({
         </Button>
       </div>
 
-      <div
-        className={cn(
-          "grid w-full grid-cols-1 gap-2.5 rounded-xl border border-hairline-cloud bg-muted/40 p-3 sm:grid-cols-2",
-        )}
-      >
+      <div className="grid w-full grid-cols-1 gap-2 sm:grid-cols-2">
         <Button
           type="button"
           variant="outline"

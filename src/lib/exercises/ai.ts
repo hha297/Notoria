@@ -1,6 +1,9 @@
 import OpenAI from "openai";
 import { getLanguageByCode } from "@/lib/languages";
-import { FILL_BLANK_GENERATOR_PROMPT, fillBlankUserPayload } from "@/lib/exercises/ai-prompt";
+import {
+  FILL_BLANK_GENERATOR_PROMPT,
+  fillBlankUserPayload,
+} from "@/lib/exercises/ai-prompt";
 import {
   FILL_BLANK_AI_BATCH,
   FILL_BLANK_PLACEHOLDER,
@@ -10,6 +13,7 @@ import {
   type ExerciseAiWordInput,
 } from "@/lib/exercises/ai-types";
 import { selectValidFillBlankExercises } from "@/lib/exercises/ai-validate";
+import { normalizePromptBlank } from "@/lib/exercises/blank-hint";
 import { ensureSentenceMeanings } from "@/lib/exercises/sentence-meaning";
 import type { AppLocale } from "@/i18n/config";
 import { isValidLocale } from "@/i18n/config";
@@ -55,7 +59,7 @@ function resolveUiLocale(locale: string | null | undefined): AppLocale {
 }
 
 function completedFillBlankSentence(exercise: ExerciseAiFillBlank) {
-  return exercise.sentence
+  return normalizePromptBlank(exercise.sentence)
     .split(FILL_BLANK_PLACEHOLDER)
     .join(exercise.answer)
     .replace(/\s+/g, " ")
@@ -79,7 +83,9 @@ function mergeValidExercises(
   extra: ExerciseAiFillBlank[],
 ) {
   const seen = new Set(
-    current.map((exercise) => exercise.sentence.replace(/\s+/g, " ").trim().toLowerCase()),
+    current.map((exercise) =>
+      exercise.sentence.replace(/\s+/g, " ").trim().toLowerCase(),
+    ),
   );
   const merged = [...current];
 
@@ -99,12 +105,15 @@ export async function generateFillBlankExercises(
 ): Promise<ExerciseAiFillBlank[]> {
   const client = getOpenAIClient();
 
-  async function requestBatch(words: ExerciseAiWordInput[]) {
+  async function requestBatch(
+    words: ExerciseAiWordInput[],
+    retry = false,
+  ) {
     if (words.length === 0) return [];
 
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
-      temperature: 0.7,
+      temperature: retry ? 0.45 : 0.7,
       max_tokens: 2500,
       response_format: { type: "json_object" },
       messages: [
@@ -122,6 +131,9 @@ export async function generateFillBlankExercises(
               difficulty: input.difficulty,
               uiLanguage: uiLanguageName(input.uiLocale),
               words,
+              regenerateReason: retry
+                ? "Previous drafts were rejected. Keep each assigned wordId. Write a new natural sentence. answer must be the exact surface form required by grammar — never a pasted lemma when another form is required."
+                : undefined,
             }),
           ),
         },
@@ -148,7 +160,7 @@ export async function generateFillBlankExercises(
 
   if (missing.length > 0) {
     try {
-      const extra = await requestBatch(missing);
+      const extra = await requestBatch(missing, true);
       valid = mergeValidExercises(valid, extra);
     } catch (error) {
       console.error(
@@ -166,14 +178,20 @@ export async function generateFillBlankExercises(
   const wordsById = new Map(input.words.map((word) => [word.id, word]));
 
   // Prefetch glosses during generation so submit never waits on a meaning API.
-  const withMeanings = await ensureSentenceMeanings(valid.slice(0, FILL_BLANK_AI_BATCH), {
-    uiLocale,
-    getSentence: completedFillBlankSentence,
-    getMeaning: (exercise) => exercise.sentenceMeaning,
-    setMeaning: (exercise, sentenceMeaning) => ({ ...exercise, sentenceMeaning }),
-    getFallbackMeaning: (exercise) =>
-      exercise.wordId ? wordsById.get(exercise.wordId)?.meaning : null,
-  });
+  const withMeanings = await ensureSentenceMeanings(
+    valid.slice(0, FILL_BLANK_AI_BATCH),
+    {
+      uiLocale,
+      getSentence: completedFillBlankSentence,
+      getMeaning: (exercise) => exercise.sentenceMeaning,
+      setMeaning: (exercise, sentenceMeaning) => ({
+        ...exercise,
+        sentenceMeaning,
+      }),
+      getFallbackMeaning: (exercise) =>
+        exercise.wordId ? wordsById.get(exercise.wordId)?.meaning : null,
+    },
+  );
 
   return withMeanings;
 }

@@ -10,8 +10,8 @@ import { FlashcardControls } from "@/components/flashcards/flashcard-controls";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { FlashcardRatingBar } from "@/components/flashcards/flashcard-rating-bar";
+import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
-import { Progress } from "@/components/ui/progress";
 import { recordFlashcardReview } from "@/lib/actions/flashcards";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import {
@@ -314,15 +314,13 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
         />
       ) : (
         <>
-          <div className="space-y-3">
-            <div className="flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-4">
-              <p className="min-w-0 font-medium break-words text-ink">
-                {t("progress", { current: currentNumber, total: totalCards })}
-              </p>
-              <p className="shrink-0 text-muted-foreground">{t("keyboardHint")}</p>
-            </div>
-            <Progress value={progressValue} />
-          </div>
+          <ExerciseProgressHeader
+            current={currentNumber}
+            total={totalCards}
+            progressLabel={t("progress", { current: currentNumber, total: totalCards })}
+            hint={t("keyboardHint")}
+            progressValue={progressValue}
+          />
 
           <FlashcardCard
             word={currentWord!}

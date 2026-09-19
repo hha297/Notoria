@@ -651,6 +651,7 @@
     },
     "fillInBlank": {
       "prompt": "Điền vào chỗ trống",
+      "placeholder": "Gõ đáp án…",
       "instruction": "Điền chỗ trống bằng dạng đúng của từ.",
       "hint": "Gợi ý",
       "hintExplainWord": "Hãy nghĩ về nghĩa của từ còn thiếu trong câu này.",
@@ -682,10 +683,13 @@
       "noneValid": "AI không tạo được câu hỏi hợp lệ cho các từ này. Thử lại."
     },
     "session": {
-      "complete": "Xong một vòng luyện!",
+      "complete": "Hoàn thành phiên học",
       "score": "{correct} / {total} câu đúng",
       "pairsMatched": "Đã ghép {count} cặp",
-      "tryAgain": "Làm lại"
+      "tryAgain": "Làm lại",
+      "questionsLabel": "Câu hỏi",
+      "correctLabel": "Đúng",
+      "reviewLabel": "Cần ôn"
     },
     "multipleChoice": {
       "questionWord": "Từ này nghĩa là gì?",
@@ -706,7 +710,8 @@
       "previous": "Trước",
       "next": "Tiếp",
       "shuffle": "Xáo câu hỏi",
-      "finish": "Kết thúc vòng này"
+      "finish": "Kết thúc vòng này",
+      "keyboardHint": "1–4 để chọn"
     },
     "matchPairs": {
       "words": "Từ",
@@ -746,6 +751,7 @@
       "meaningLabel": "Nghĩa",
       "prompt": "Viết một câu hoàn chỉnh dùng từ này.",
       "placeholder": "Viết một câu đầy đủ…",
+      "insertWord": "Thêm vào câu",
       "yourSentence": "Câu của bạn",
       "corrected": "Câu đã sửa",
       "betterSuggestion": "Tự nhiên hơn",

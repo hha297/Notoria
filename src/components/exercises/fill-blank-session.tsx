@@ -373,7 +373,8 @@ export function FillBlankSession({
       ) : sessionComplete && hasSession ? (
         <SessionCompleteCard
           title={tSession("complete")}
-          scoreLabel={tSession("score", { correct: score.correct, total })}
+          questions={total}
+          correct={score.correct}
           tryAgainLabel={tSession("tryAgain")}
           onTryAgain={tryAgain}
           extraAction={{
@@ -386,6 +387,8 @@ export function FillBlankSession({
       ) : current ? (
         <>
           <ExerciseProgressHeader
+            current={index + 1}
+            total={total}
             progressLabel={t("progress", { current: index + 1, total })}
             scoreLabel={t("score", { correct: score.correct, answered: score.answered })}
             hint={t("keyboardHint")}
@@ -424,8 +427,8 @@ function EmptyGenerateCard({ onGenerate }: { onGenerate: () => void }) {
   const tAi = useTranslations("exercises.ai");
 
   return (
-    <div className="mx-auto max-w-lg rounded-3xl border border-hairline-cloud bg-card p-6 text-center shadow-xl shadow-ink/5 sm:p-10">
-      <div className="mx-auto mb-5 flex size-12 items-center justify-center rounded-full bg-accent-lime/20 text-ink">
+    <div className="mx-auto max-w-lg border border-hairline-cloud bg-background p-6 text-center sm:p-10">
+      <div className="mx-auto mb-5 flex size-12 items-center justify-center bg-(--exercise-accent-soft) text-(--exercise-accent)">
         <Sparkles className="size-5" />
       </div>
       <p className="text-lg font-medium text-ink">{tAi("emptyTitle")}</p>
@@ -459,7 +462,6 @@ function FillBlankCard({
 }) {
   const t = useTranslations("exercises.fillInBlank");
   const tAi = useTranslations("exercises.ai");
-  const blankMinWidth = Math.min(Math.max(item.word.length + 2, 6), 16);
   const expected = expectedFillBlankAnswer(item);
   const cue = blankMeaningHintFromItem(item);
   const sentenceMeaning = item.sentenceMeaning?.trim() || "";
@@ -468,109 +470,71 @@ function FillBlankCard({
   const bodyAfter = trailingPunctuation ? "" : item.sentenceAfter;
 
   return (
-    <div className="mx-auto w-full min-w-0 max-w-3xl rounded-3xl border border-hairline-cloud bg-card p-6 shadow-xl shadow-ink/5 sm:p-10 md:p-12">
-      <div className="space-y-2">
-        <div className="flex min-w-0 items-center justify-between gap-3">
-          <p className="min-w-0 text-xs font-semibold uppercase tracking-[0.2em] text-accent-violet-mid">
-            {t("prompt")}
-          </p>
-          {item.aiGenerated ? (
-            <p className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-              <Sparkles className="size-3" />
-              {tAi("generated")}
-            </p>
-          ) : null}
-        </div>
-        <p className="text-sm leading-relaxed text-ink">
-          {item.instruction?.trim() || t("instruction")}
+    <div className="mx-auto w-full min-w-0 max-w-4xl">
+      <div className="flex min-w-0 items-center justify-between gap-3">
+        <p className="min-w-0 text-xs font-semibold tracking-[0.14em] text-(--exercise-accent) uppercase">
+          {t("prompt")}
         </p>
+        {item.aiGenerated ? (
+          <p className="inline-flex items-center gap-1 text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
+            <Sparkles className="size-3" />
+            {tAi("generated")}
+          </p>
+        ) : null}
       </div>
+      <p className="mt-2 text-sm leading-relaxed text-ink">
+        {item.instruction?.trim() || t("instruction")}
+      </p>
 
       <form
         onSubmit={(e) => {
           e.preventDefault();
           onCheck();
         }}
-        className="mt-8 space-y-8"
+        className="mt-8 space-y-6"
       >
-        <div className="rounded-sm border border-hairline-cloud bg-surface-elevated px-4 py-10 sm:px-8 sm:py-12 md:py-14">
-          <div className="flex min-w-0 flex-wrap items-center justify-center gap-x-3 gap-y-4 text-center leading-snug">
-            {item.sentenceBefore && (
-              <span className="max-w-full break-words text-xl font-medium text-ink [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
-                {item.sentenceBefore}
-              </span>
+        <p className="font-heading text-[1.65rem] leading-snug font-semibold text-pretty text-ink sm:text-3xl md:text-[2.15rem]">
+          {item.sentenceBefore ? <>{item.sentenceBefore} </> : null}
+          <span
+            className={cn(
+              "inline-block min-w-[5.5rem] border-b-2 px-1 text-center font-medium",
+              revealed
+                ? isCorrect
+                  ? "border-success text-success"
+                  : "border-error text-error"
+                : "border-(--exercise-accent) text-(--exercise-accent)",
             )}
-
-            <span
-              className="inline-flex max-w-full min-w-0 shrink items-center justify-center gap-0"
-              style={{ width: `min(100%, ${blankMinWidth}ch)` }}
-            >
-              {revealed ? (
-                <span
-                  className={cn(
-                    "max-w-full break-words rounded-xl px-3 py-1.5 text-xl font-semibold [overflow-wrap:anywhere] sm:text-2xl md:text-3xl",
-                    isCorrect
-                      ? "feedback-success ring-2 ring-success-border/60"
-                      : "feedback-error ring-2 ring-error-border/60",
-                  )}
-                >
-                  {isCorrect ? input : expected}
-                </span>
-              ) : (
-                <Input
-                  value={input}
-                  onChange={(e) => onInputChange(e.target.value)}
-                  autoFocus
-                  autoComplete="off"
-                  spellCheck={false}
-                  placeholder="?"
-                  className={cn(
-                    "h-12 w-full min-w-0 max-w-full rounded-sm border-2 border-dashed border-primary/50 bg-surface px-4",
-                    "text-center text-xl font-semibold text-ink sm:h-14 sm:text-2xl md:text-3xl",
-                    "placeholder:text-muted-foreground/40",
-                    "focus-visible:border-primary focus-visible:bg-surface-elevated focus-visible:ring-2 focus-visible:ring-ring/50",
-                  )}
-                />
-              )}
-              {trailingPunctuation ? (
-                <span className="pl-0.5 text-xl font-medium text-ink sm:text-2xl md:text-3xl">
-                  {trailingPunctuation}
-                </span>
-              ) : null}
-            </span>
-
-            {cue ? (
-              <span className="max-w-full break-words text-xl font-medium text-accent-violet-mid [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
-                ({cue})
-              </span>
-            ) : null}
-
-            {bodyAfter ? (
-              <span className="max-w-full break-words text-xl font-medium text-ink [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
-                {bodyAfter}
-              </span>
-            ) : null}
-          </div>
-
-          {revealed && item.aiGenerated && sentenceMeaning ? (
-            <p className="mt-6 break-words text-center text-base leading-relaxed text-ink/75 [overflow-wrap:anywhere] sm:text-lg">
-              ({sentenceMeaning})
-            </p>
+          >
+            {revealed ? (isCorrect ? input : expected) : "\u00a0"}
+          </span>
+          {cue ? (
+            <span className="font-medium text-muted-foreground"> ({cue})</span>
           ) : null}
-        </div>
+          {bodyAfter ? <> {bodyAfter}</> : null}
+          {trailingPunctuation}
+        </p>
 
-        <ExerciseHint
-          resetKey={item.id}
-          answered={revealed}
-          correctAnswer={expected}
-          onRevealAnswer={onRevealAnswer}
-        />
+        {revealed && item.aiGenerated && sentenceMeaning ? (
+          <p className="break-words text-base leading-relaxed text-muted-foreground [overflow-wrap:anywhere]">
+            {sentenceMeaning}
+          </p>
+        ) : null}
 
-        {revealed && (
+        {!revealed ? (
+          <Input
+            value={input}
+            onChange={(e) => onInputChange(e.target.value)}
+            autoFocus
+            autoComplete="off"
+            spellCheck={false}
+            placeholder={t("placeholder")}
+            className="h-12 max-w-xl text-lg font-medium sm:h-14"
+          />
+        ) : (
           <div
             className={cn(
-              "flex min-w-0 items-start gap-3 rounded-xl px-5 py-4 text-sm font-medium sm:text-base",
-              isCorrect ? "bg-success-muted text-success" : "bg-error-muted text-destructive",
+              "flex min-w-0 max-w-xl items-start gap-3 px-4 py-3 text-sm font-medium sm:text-base",
+              isCorrect ? "feedback-success" : "feedback-error",
             )}
           >
             {isCorrect ? (
@@ -583,6 +547,13 @@ function FillBlankCard({
             </span>
           </div>
         )}
+
+        <ExerciseHint
+          resetKey={item.id}
+          answered={revealed}
+          correctAnswer={expected}
+          onRevealAnswer={onRevealAnswer}
+        />
       </form>
     </div>
   );

@@ -33,7 +33,7 @@ function FlashcardFace({
   return (
     <div
       className={cn(
-        "absolute inset-0 flex flex-col rounded-2xl border border-hairline-cloud bg-card p-5 shadow-xl shadow-ink/5 sm:rounded-3xl sm:p-8",
+        "absolute inset-0 flex flex-col rounded-md border border-hairline-cloud bg-surface-elevated p-5 shadow-[0_8px_24px_rgba(35,37,29,0.08)] sm:p-8",
         className,
       )}
       style={{ backfaceVisibility: "hidden" }}
@@ -158,11 +158,11 @@ export function FlashcardCard({
   }
 
   return (
-    <div className="mx-auto w-full max-w-2xl px-0 sm:px-2">
+    <div className="mx-auto w-full max-w-3xl">
       <motion.button
         type="button"
         onClick={onFlip}
-        className="relative h-[min(62vh,440px)] w-full cursor-pointer border-0 bg-transparent p-0 outline-none focus-visible:ring-3 focus-visible:ring-ring/50 sm:h-[min(70vh,520px)]"
+        className="relative h-[min(58vh,420px)] w-full cursor-pointer border-0 bg-transparent p-0 outline-none focus-visible:ring-2 focus-visible:ring-ring/50 sm:h-[min(64vh,480px)]"
         style={{ perspective: 1200 }}
         aria-label={isFlipped ? t("hideAnswer") : t("showAnswer")}
       >
@@ -192,7 +192,7 @@ export function FlashcardCard({
           </FlashcardFace>
 
           <FlashcardFace className="[transform:rotateY(180deg)]">
-            <p className="text-sm font-medium uppercase tracking-[0.2px] text-accent-lime">
+            <p className="text-sm font-medium tracking-[0.14em] text-(--exercise-accent) uppercase">
               {t("answer")}
             </p>
             <div className="flex flex-1 flex-col justify-center overflow-y-auto text-center">

@@ -17,6 +17,7 @@ import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import { ExerciseDifficultySelect } from "@/components/exercises/exercise-difficulty-select";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
+import { ContextualBlankSentence } from "@/components/exercises/contextual-blank-sentence";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { Button } from "@/components/ui/button";
@@ -32,8 +33,6 @@ import { wordHasBlankMeaningHint } from "@/lib/exercises/blank-hint";
 import {
   buildTypeAnswerItems,
   contextualExerciseToTypeAnswerItem,
-  typeAnswerPromptWithMeaningHint,
-  typeAnswerRevealPrompt,
   type TypeAnswerItem,
   type TypeAnswerStudyMode,
 } from "@/lib/exercises/type-answer";
@@ -271,9 +270,7 @@ export function TypeAnswerSession({
   const displayPrompt = !current
     ? undefined
     : current.direction === "CONTEXTUAL"
-      ? revealed
-        ? typeAnswerRevealPrompt(current)
-        : typeAnswerPromptWithMeaningHint(current)
+      ? null
       : current.prompt;
 
   const check = () => {
@@ -389,13 +386,16 @@ export function TypeAnswerSession({
       {sessionComplete ? (
         <SessionCompleteCard
           title={tSession("complete")}
-          scoreLabel={tSession("score", { correct: score.correct, total })}
+          questions={total}
+          correct={score.correct}
           tryAgainLabel={tSession("tryAgain")}
           onTryAgain={startSession}
         />
       ) : current ? (
         <>
           <ExerciseProgressHeader
+            current={currentIndex + 1}
+            total={total}
             progressLabel={t("progress", { current: currentIndex + 1, total })}
             scoreLabel={t("score", {
               correct: score.correct,
@@ -404,24 +404,35 @@ export function TypeAnswerSession({
             hint={t("keyboardHint")}
             progressValue={total ? ((currentIndex + 1) / total) * 100 : 0}
           />
-          <div className="mx-auto max-w-2xl rounded-sm border border-hairline-cloud bg-surface-elevated p-5 sm:p-8 md:p-10">
+          <div className="mx-auto w-full max-w-3xl">
             <div className="flex min-w-0 items-center justify-between gap-3">
-              <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
+              <p className="text-xs font-semibold tracking-[0.14em] text-(--exercise-accent) uppercase">
                 {promptLabel}
               </p>
               {current.aiGenerated ? (
-                <p className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
+                <p className="inline-flex items-center gap-1 text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
                   <Sparkles className="size-3" />
                   {tAi("generated")}
                 </p>
               ) : null}
             </div>
-            <p className="mt-4 break-words font-heading text-2xl font-medium text-ink sm:mt-6 sm:text-3xl md:text-4xl">
-              {displayPrompt}
-            </p>
+            {current.direction === "CONTEXTUAL" ? (
+              <ContextualBlankSentence
+                prompt={current.prompt}
+                meaningHint={current.meaningHint}
+                fill={isCorrect ? input : current.answerDisplay}
+                revealed={revealed}
+                isCorrect={isCorrect}
+                className="mt-4 break-words font-heading text-3xl font-bold tracking-tight text-ink sm:mt-5 sm:text-4xl"
+              />
+            ) : (
+              <p className="mt-4 break-words font-heading text-3xl font-bold tracking-tight text-ink sm:mt-5 sm:text-4xl">
+                {displayPrompt}
+              </p>
+            )}
             {revealed && current.sentenceMeaning ? (
               <p className="mt-3 text-sm text-muted-foreground">
-                ({current.sentenceMeaning})
+                {current.sentenceMeaning}
               </p>
             ) : null}
             <form
@@ -431,22 +442,59 @@ export function TypeAnswerSession({
                 if (!revealed) check();
               }}
             >
-              <Input
-                value={revealed ? (isCorrect ? input : correctDisplay) : input}
-                onChange={(e) => setInput(e.target.value)}
-                disabled={revealed}
-                autoFocus
-                autoComplete="off"
-                spellCheck={false}
-                placeholder={t("placeholder")}
-                className={cn(
-                  "h-12 text-center text-lg font-medium sm:h-14 sm:text-xl",
-                  revealed &&
-                  (isCorrect
-                    ? "feedback-success"
-                    : "feedback-error"),
-                )}
-              />
+              {!revealed ? (
+                <Input
+                  value={input}
+                  onChange={(e) => setInput(e.target.value)}
+                  autoFocus
+                  autoComplete="off"
+                  spellCheck={false}
+                  placeholder={t("placeholder")}
+                  className="h-14 border-(--exercise-accent)/40 text-xl font-medium sm:h-16 sm:text-2xl"
+                />
+              ) : (
+                <div
+                  className={cn(
+                    "space-y-2 px-4 py-4 text-sm font-medium sm:text-base",
+                    isCorrect ? "feedback-success" : "feedback-error",
+                  )}
+                >
+                  <p className="flex items-start gap-2">
+                    {isCorrect ? (
+                      <CheckCircle2 className="mt-0.5 size-5 shrink-0" />
+                    ) : (
+                      <XCircle className="mt-0.5 size-5 shrink-0" />
+                    )}
+                    <span>
+                      {isCorrect
+                        ? t("correct")
+                        : t("incorrect", { answer: correctDisplay })}
+                    </span>
+                  </p>
+                  {!isCorrect ? (
+                    <dl className="space-y-1 pl-7">
+                      <div>
+                        <dt className="text-xs tracking-wide uppercase opacity-80">
+                          {t("yourAnswer")}
+                        </dt>
+                        <dd className="break-words [overflow-wrap:anywhere]">
+                          {input}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt className="text-xs tracking-wide uppercase opacity-80">
+                          {t("correctAnswer")}
+                        </dt>
+                        <dd className="break-words [overflow-wrap:anywhere]">
+                          {correctDisplay}
+                        </dd>
+                      </div>
+                    </dl>
+                  ) : (
+                    <p className="pl-7 font-heading text-xl">{correctDisplay}</p>
+                  )}
+                </div>
+              )}
               <ExerciseHint
                 resetKey={current.id}
                 answered={revealed}
@@ -457,27 +505,6 @@ export function TypeAnswerSession({
                   letter: hintInitialLetter(correctDisplay),
                 })}
               </ExerciseHint>
-              {revealed && (
-                <div
-                  className={cn(
-                    "flex items-start gap-3 rounded-xl px-4 py-3 text-sm font-medium",
-                    isCorrect
-                      ? "feedback-success"
-                      : "feedback-error",
-                  )}
-                >
-                  {isCorrect ? (
-                    <CheckCircle2 className="mt-0.5 size-5 shrink-0" />
-                  ) : (
-                    <XCircle className="mt-0.5 size-5 shrink-0" />
-                  )}
-                  <span>
-                    {isCorrect
-                      ? t("correct")
-                      : t("incorrect", { answer: correctDisplay })}
-                  </span>
-                </div>
-              )}
             </form>
           </div>
           <div className="flex flex-col items-center gap-3 sm:gap-4">
@@ -528,7 +555,7 @@ export function TypeAnswerSession({
           </div>
         </>
       ) : isContextual ? (
-        <div className="rounded-2xl border border-hairline-cloud bg-card p-8 text-center">
+        <div className="border border-hairline-cloud bg-background p-8 text-center">
           <p className="font-heading text-lg font-medium text-ink">
             {t("contextualEmptyTitle")}
           </p>

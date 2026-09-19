@@ -48,7 +48,7 @@ export const EXERCISE_DIFFICULTY_PROFILES: Record<
     multipleChoiceGuidance: `Multiple Choice — Easy
 - One distinct exercise per provided wordId — never reuse the same target across the batch.
 - ALWAYS use a short fill-in-the-blank sentence with a unique everyday context per word.
-- options MUST contain exactly 4 items: correctOption (base form) + 3 distractors from the learner pool.
+- options MUST contain exactly 4 items: correctOption (contextual surface form for the blank) + 3 distractors from the learner pool.
 - Distractors must be obviously different in meaning.
 - One answer must clearly fit; no close near-misses.`,
     typeAnswerGuidance: `Type the Answer — Easy

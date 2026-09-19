@@ -465,6 +465,23 @@
     }
   }
 
+  @keyframes exercise-shake {
+    0%,
+    100% {
+      transform: translateX(0);
+    }
+    25% {
+      transform: translateX(-5px);
+    }
+    75% {
+      transform: translateX(5px);
+    }
+  }
+
+  .exercise-shake {
+    animation: exercise-shake 0.32s ease-in-out;
+  }
+
   .feedback-success {
     @apply border border-success-border bg-success-muted text-success;
   }
