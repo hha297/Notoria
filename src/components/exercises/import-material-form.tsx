@@ -324,46 +324,59 @@ export function ImportMaterialForm() {
     isBusy || processing.stage === "error" || processing.stage === "completed";
 
   return (
-    <div className="space-y-5 rounded-2xl border border-hairline-cloud bg-card p-5 sm:p-6">
-      <div>
-        <h3 className="font-heading text-lg font-medium text-ink">
-          {t("formTitle")}
-        </h3>
-        <p className="mt-1 text-sm text-muted-foreground">{t("formDescription")}</p>
+    <div className="space-y-8" data-import-mode={mode}>
+      <div className="space-y-4">
+        <p className="text-[0.68rem] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
+          {t("chooseSource")}
+        </p>
+        <div className="grid grid-cols-2 gap-1 sm:grid-cols-4 sm:gap-2">
+          {modes.map((item, index) => {
+            const Icon = item.icon;
+            const active = mode === item.id;
+            return (
+              <button
+                key={item.id}
+                type="button"
+                disabled={isBusy}
+                data-import-mode={item.id}
+                aria-pressed={active}
+                onClick={() => setMode(item.id)}
+                className={cn(
+                  "import-mode flex cursor-pointer flex-col gap-3 rounded-md px-3 py-4 text-left sm:px-4 sm:py-5",
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--import-mode-fg)/40",
+                  active ? "text-ink" : "text-muted-foreground hover:text-ink",
+                )}
+              >
+                <span
+                  className="font-mono text-[1.35rem] leading-none tabular-nums text-(--import-mode-fg) sm:text-[1.55rem]"
+                  aria-hidden
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </span>
+                <span className="flex items-center gap-2 text-sm font-semibold">
+                  <Icon className="size-4 shrink-0 text-(--import-mode-fg)" />
+                  {item.label}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+        <p className="max-w-xl text-sm leading-relaxed text-muted-foreground">
+          {t("formDescription")}
+        </p>
       </div>
 
-      <div className="inline-flex flex-wrap gap-1 rounded-xl border border-hairline-cloud bg-muted/30 p-1">
-        {modes.map((item) => {
-          const Icon = item.icon;
-          const active = mode === item.id;
-          return (
-            <button
-              key={item.id}
-              type="button"
-              disabled={isBusy}
-              onClick={() => setMode(item.id)}
-              className={cn(
-                "inline-flex cursor-pointer items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium transition-colors",
-                active
-                  ? "bg-card text-ink shadow-sm ring-1 ring-hairline-cloud"
-                  : "text-muted-foreground hover:text-ink",
-              )}
-            >
-              <Icon className="size-3.5 opacity-80" />
-              {item.label}
-            </button>
-          );
-        })}
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="import-title">{t("titleLabel")}</Label>
+      <div className="space-y-2 px-1">
+        <Label htmlFor="import-title" className="text-[0.68rem] font-semibold tracking-[0.16em] text-muted-foreground uppercase">
+          {t("titleLabel")}
+        </Label>
         <Input
           id="import-title"
           value={title}
           onChange={(e) => setTitle(e.target.value)}
           placeholder={t("titlePlaceholder")}
           disabled={isBusy}
+          className="h-11 rounded-none border-0 border-b border-hairline-cloud bg-transparent px-0 shadow-none focus-visible:border-(--import-mode-fg) focus-visible:ring-0"
         />
       </div>
 
@@ -386,15 +399,19 @@ export function ImportMaterialForm() {
           }
         />
       ) : mode === "url" ? (
-        <div className="space-y-3">
-          <div className="space-y-2">
-            <Label htmlFor="import-url">{t("urlLabel")}</Label>
+        <div className="import-stage import-dropzone space-y-5 rounded-md px-5 py-8 sm:px-7 sm:py-10">
+          <StageDecor />
+          <div className="relative space-y-2">
+            <Label htmlFor="import-url" className="text-[0.68rem] font-semibold tracking-[0.16em] text-(--import-mode-fg) uppercase">
+              {t("urlLabel")}
+            </Label>
             <Input
               id="import-url"
               type="url"
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder={t("urlPlaceholder")}
+              className="h-12 rounded-none border-0 border-b border-hairline-cloud bg-transparent px-0 font-heading text-lg shadow-none focus-visible:border-(--import-mode-fg) focus-visible:ring-0"
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
@@ -408,22 +425,28 @@ export function ImportMaterialForm() {
             onClick={() => void handleUrlImport()}
             disabled={!url.trim()}
             aria-disabled={!hasProAccess || undefined}
-            className={cn(!hasProAccess && lockedFeatureClassName)}
+            className={cn(
+              "relative border-transparent bg-(--import-mode-fg) text-background hover:opacity-90",
+              !hasProAccess && lockedFeatureClassName,
+            )}
           >
             {hasProAccess ? t("importAction") : t("unlockPro")}
           </Button>
         </div>
       ) : mode === "text" ? (
-        <div className="space-y-3">
-          <div className="space-y-2">
-            <Label htmlFor="import-text">{t("textLabel")}</Label>
+        <div className="import-stage import-dropzone space-y-5 rounded-md px-5 py-8 sm:px-7 sm:py-10">
+          <StageDecor />
+          <div className="relative space-y-2">
+            <Label htmlFor="import-text" className="text-[0.68rem] font-semibold tracking-[0.16em] text-(--import-mode-fg) uppercase">
+              {t("textLabel")}
+            </Label>
             <Textarea
               id="import-text"
               value={text}
               onChange={(e) => setText(e.target.value)}
               rows={10}
               placeholder={t("textPlaceholder")}
-              className="min-h-40 font-mono text-sm"
+              className="min-h-44 resize-y rounded-md border border-(--import-mode-fg)/28 bg-transparent px-3.5 py-3 font-heading text-lg leading-relaxed shadow-none focus-visible:border-(--import-mode-fg)/50 focus-visible:ring-0"
             />
           </div>
           <Button
@@ -431,7 +454,10 @@ export function ImportMaterialForm() {
             onClick={() => void handleTextImport()}
             disabled={text.trim().length < 20}
             aria-disabled={!hasProAccess || undefined}
-            className={cn(!hasProAccess && lockedFeatureClassName)}
+            className={cn(
+              "relative border-transparent bg-(--import-mode-fg) text-background hover:opacity-90",
+              !hasProAccess && lockedFeatureClassName,
+            )}
           >
             {hasProAccess ? t("importAction") : t("unlockPro")}
           </Button>
@@ -464,28 +490,36 @@ export function ImportMaterialForm() {
             void processFile(file, { requireImage: mode === "image" });
           }}
           className={cn(
-            "flex min-h-44 cursor-pointer flex-col items-center justify-center gap-3 rounded-xl border border-dashed px-6 py-10 text-center transition-colors",
-            dragOver
-              ? "border-accent-lime bg-accent-lime/10"
-              : "border-hairline-cloud bg-muted/20 hover:border-accent-lime/50",
+            "import-stage import-dropzone flex min-h-60 cursor-pointer flex-col items-center justify-center gap-5 rounded-md px-6 py-12 text-center sm:min-h-72 sm:py-14",
+            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--import-mode-fg)/40",
+            dragOver && "import-dropzone-active",
             !hasProAccess && lockedFeatureClassName,
           )}
         >
-          <div className="flex size-12 items-center justify-center rounded-2xl border border-hairline-cloud bg-card">
-            <Upload className="size-5 text-muted-foreground" />
+          <StageDecor />
+          <div
+            className={cn(
+              "relative flex size-14 items-center justify-center rotate-45 border border-(--import-mode-fg)/35 text-(--import-mode-fg)",
+              dragOver && "border-(--import-mode-fg) bg-(--import-mode-bg)",
+            )}
+          >
+            <Upload className="size-5 -rotate-45" />
           </div>
-          <div className="space-y-1">
-            <p className="font-heading text-lg font-medium text-ink">
-              {mode === "image" ? t("dropImageTitle") : t("dropFileTitle")}
+          <div className="relative space-y-2">
+            <p className="font-heading text-[1.65rem] font-bold tracking-tight text-ink sm:text-[1.95rem]">
+              {dragOver
+                ? t("dropActive")
+                : mode === "image"
+                  ? t("dropImageTitle")
+                  : t("dropFileTitle")}
             </p>
             <p className="text-sm text-muted-foreground">{t("dropDescription")}</p>
           </div>
-          {mode === "image" ? (
-            <p className="text-sm text-muted-foreground">{t("pasteHint")}</p>
-          ) : (
-            <p className="text-xs text-muted-foreground">{t("supportedFiles")}</p>
-          )}
-          <p className="text-xs text-muted-foreground">{t("pasteAlwaysHint")}</p>
+          <p className="relative max-w-md text-xs leading-5 text-muted-foreground">
+            {mode === "image" ? t("pasteHint") : t("supportedFiles")}
+            <span aria-hidden> · </span>
+            {t("pasteAlwaysHint")}
+          </p>
           <input
             ref={inputRef}
             type="file"
@@ -500,6 +534,16 @@ export function ImportMaterialForm() {
           />
         </div>
       )}
+    </div>
+  );
+}
+
+function StageDecor() {
+  return (
+    <div aria-hidden className="theory-decor">
+      <span className="theory-blob top-[-24%] left-[8%] size-36 bg-(--import-mode-fg)" />
+      <span className="theory-blob right-[4%] bottom-[-30%] size-32 bg-(--exercise-accent)" />
+      <span className="theory-diamond top-5 right-7 text-(--import-mode-fg)" />
     </div>
   );
 }

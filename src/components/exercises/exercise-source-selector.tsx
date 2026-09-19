@@ -25,27 +25,35 @@ export function ExerciseSourceSelector({
   const t = useTranslations("exercises");
 
   const tabs = [
-    { id: "vocabulary" as const, label: t("sources.vocabulary") },
-    { id: "theory" as const, label: t("sources.theory") },
-    { id: "import" as const, label: t("sources.imported") },
+    {
+      id: "vocabulary" as const,
+      label: t("sources.vocabulary"),
+      count: t("sources.vocabularyCount", { count: vocabularyCount }),
+    },
+    {
+      id: "theory" as const,
+      label: t("sources.theory"),
+      count: t("sources.theoryCount", { count: theoryCount }),
+    },
+    {
+      id: "import" as const,
+      label: t("sources.imported"),
+      count: t("sources.importCount", { count: importCount }),
+    },
   ];
 
-  const countLabel =
-    value === "vocabulary"
-      ? t("sources.vocabularyCount", { count: vocabularyCount })
-      : value === "theory"
-        ? t("sources.theoryCount", { count: theoryCount })
-        : t("sources.importCount", { count: importCount });
-
   return (
-    <div
-      className="flex flex-col gap-3 rounded-md border border-hairline-cloud bg-surface-elevated px-3 py-3 sm:flex-row sm:items-center sm:gap-5 sm:px-4"
-      data-tutorial="exercise-sources"
-    >
+    <div className="space-y-3" data-tutorial="exercise-sources">
+      <p className="text-xs font-medium tracking-wide text-muted-foreground">
+        <span className="truncate">{workspaceName}</span>
+        <span aria-hidden> · </span>
+        {t("sources.label")}
+      </p>
+
       <div
         role="tablist"
         aria-label={t("sources.label")}
-        className="flex min-w-0 flex-wrap gap-1"
+        className="grid grid-cols-3 border-b border-hairline-cloud"
       >
         {tabs.map((tab) => {
           const active = value === tab.id;
@@ -54,29 +62,31 @@ export function ExerciseSourceSelector({
               key={tab.id}
               type="button"
               role="tab"
+              id={`studio-tab-${tab.id}`}
+              aria-controls={`studio-panel-${tab.id}`}
               aria-selected={active}
               onClick={() => onChange(tab.id)}
               className={cn(
-                "relative cursor-pointer rounded-md px-3 py-1.5 text-sm font-semibold transition-colors",
-                active
-                  ? "bg-foreground text-background"
-                  : "text-muted-foreground hover:bg-muted hover:text-ink",
+                "relative min-w-0 cursor-pointer px-2 py-2.5 text-left transition-colors sm:px-3",
+                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
+                active ? "text-ink" : "text-muted-foreground hover:text-ink",
               )}
             >
-              {tab.label}
+              <span className="block truncate text-sm font-semibold">{tab.label}</span>
+              <span className="mt-0.5 block truncate text-xs font-medium text-muted-foreground">
+                {tab.count}
+              </span>
+              <span
+                aria-hidden
+                className={cn(
+                  "absolute inset-x-2 bottom-0 h-0.5 rounded-full transition-colors sm:inset-x-3",
+                  active ? "bg-ink" : "bg-transparent",
+                )}
+              />
             </button>
           );
         })}
       </div>
-
-      <p className="min-w-0 text-xs leading-snug text-muted-foreground sm:ml-auto sm:text-right">
-        <span className="block truncate font-medium text-ink">{workspaceName}</span>
-        <span>
-          {countLabel}
-          <span aria-hidden> · </span>
-          {t("sources.selected")} {tabs.find((tab) => tab.id === value)?.label}
-        </span>
-      </p>
     </div>
   );
 }

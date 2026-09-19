@@ -47,7 +47,7 @@ export function VocabularyStats({
       {items.map((item) => (
         <div
           key={item.label}
-          className="rounded-xl border border-hairline-cloud bg-surface-elevated px-4 py-3.5"
+          className="studio-stat rounded-xl border border-hairline-cloud px-4 py-3.5"
         >
           <div className="flex items-start justify-between gap-3">
             <p className="text-xs font-medium text-muted-foreground">

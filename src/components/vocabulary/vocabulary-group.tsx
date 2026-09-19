@@ -10,6 +10,7 @@ import type { VocabularyViewMode, VocabularyWordRow } from "@/lib/vocabulary/typ
 
 type VocabularyGroupProps = {
   title: string;
+  posKey?: string;
   words: VocabularyWordRow[];
   viewMode: VocabularyViewMode;
   workspaceId: string;
@@ -18,6 +19,7 @@ type VocabularyGroupProps = {
 
 export function VocabularyGroup({
   title,
+  posKey,
   words,
   viewMode,
   workspaceId,
@@ -38,11 +40,14 @@ export function VocabularyGroup({
   const rangeEnd = Math.min(currentPage * VOCABULARY_GROUP_PAGE_SIZE, words.length);
 
   return (
-    <section className="rounded-xl border border-hairline-cloud bg-surface-elevated">
-      <header className="sticky top-0 z-10 flex flex-wrap items-center justify-between gap-2 rounded-t-xl border-b border-hairline-cloud bg-muted px-3 py-2.5 sm:px-4">
+    <section
+      data-vocab-pos={posKey || "none"}
+      className="vocab-group rounded-xl border border-hairline-cloud"
+    >
+      <header className="sticky top-0 z-10 flex flex-wrap items-center justify-between gap-2 overflow-hidden rounded-t-xl border-b border-hairline-cloud bg-muted/70 px-3 py-2.5 backdrop-blur-md sm:px-4">
         <div className="flex min-w-0 items-center gap-2.5">
           <span
-            className="h-4 w-1 shrink-0 rounded-full bg-accent-lime"
+            className="h-4 w-1 shrink-0 rounded-full bg-(--vocab-pos-accent)"
             aria-hidden
           />
           <h2 className="font-heading text-lg font-medium tracking-tight text-ink sm:text-xl">

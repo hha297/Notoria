@@ -11,7 +11,6 @@ import { ImportExercisePanel } from "@/components/exercises/import-exercise-pane
 import { TheoryExercisePicker } from "@/components/exercises/theory-exercise-picker";
 import type { TheoryExerciseCardItem } from "@/components/exercises/theory-exercise-picker";
 import { ContentTransition } from "@/components/layout/content-transition";
-import { LinkButton } from "@/components/ui/link-button";
 import type { ExerciseImportListItem } from "@/lib/exercise-import/types";
 
 const STUDIO_SOURCE_KEY = "notoria.exercise.studioSource";
@@ -81,7 +80,11 @@ export function ExerciseStudio({
         importCount={imports.length}
       />
 
-      <div role="tabpanel">
+      <div
+        role="tabpanel"
+        id={`studio-panel-${source}`}
+        aria-labelledby={`studio-tab-${source}`}
+      >
         <ContentTransition transitionKey={source}>
           {source === "vocabulary" ? (
             <div className="space-y-2">
@@ -91,24 +94,9 @@ export function ExerciseStudio({
               <ExerciseTypePicker />
             </div>
           ) : source === "theory" ? (
-            <div className="space-y-4">
-              <div className="flex flex-wrap items-end justify-between gap-2">
-                <p className="text-sm text-muted-foreground">
-                  {t("sources.theoryHint")}
-                </p>
-                <LinkButton href="/theory" variant="ghost" size="sm">
-                  {t("theory.openLibrary")}
-                </LinkButton>
-              </div>
-              <TheoryExercisePicker theories={theories} />
-            </div>
+            <TheoryExercisePicker theories={theories} />
           ) : (
-            <div className="space-y-3">
-              <p className="text-sm text-muted-foreground">
-                {t("sources.importHint")}
-              </p>
-              <ImportExercisePanel imports={imports} />
-            </div>
+            <ImportExercisePanel imports={imports} />
           )}
         </ContentTransition>
       </div>

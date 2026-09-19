@@ -67,10 +67,9 @@ function ActivityModule({
   preview: ReactNode;
 }) {
   const className = cn(
-    "group grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-4 px-1 py-8 sm:px-2 sm:py-10",
+    "activity-module group grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-4 px-1 py-8 sm:px-2 sm:py-10",
     "lg:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:gap-x-8",
     "rounded-md transition-colors duration-200",
-    "hover:bg-[color-mix(in_srgb,var(--exercise-accent-soft)_72%,transparent)]",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
     locked && lockedFeatureClassName,
   );
@@ -148,7 +147,7 @@ function ActivityCta({ locked, label }: { locked: boolean; label: string }) {
         buttonVariants({ variant: locked ? "outline" : "default" }),
         "mt-1 inline-flex",
         !locked &&
-          "border-transparent bg-(--exercise-accent) text-background hover:opacity-90",
+        "border-transparent bg-(--exercise-accent) text-background hover:opacity-90",
       )}
     >
       {label}
@@ -210,14 +209,14 @@ function ActivityPreview({ slug }: { slug: ExerciseTypeSlug }) {
                 className={cn(
                   "flex items-center gap-2.5 border border-hairline-cloud px-3 py-2 text-sm text-ink transition-colors",
                   optionIndex === 0 &&
-                    "group-hover:border-(--exercise-accent) group-hover:bg-(--exercise-accent-soft)",
+                  "group-hover:border-(--exercise-accent) group-hover:bg-(--exercise-accent-soft)",
                 )}
               >
                 <span
                   className={cn(
                     "size-3.5 shrink-0 rounded-full border border-hairline-cloud",
                     optionIndex === 0 &&
-                      "border-(--exercise-accent) group-hover:bg-(--exercise-accent)",
+                    "border-(--exercise-accent) group-hover:bg-(--exercise-accent)",
                   )}
                 />
                 {option}

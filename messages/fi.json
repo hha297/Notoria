@@ -426,10 +426,13 @@
     },
     "import": {
       "eyebrow": "Tuotu harjoitus",
+      "hubTitle": "Sivulta harjoitukseksi",
       "practiceTitle": "Tuodut harjoitukset",
       "practiceDescription": "Harjoituskortit rakennetaan tuodun materiaalin vihjeistä ja järjestyksestä — ei keksittyjä lauseita.",
       "formTitle": "Tuo oppimateriaalia",
       "formDescription": "Anna lähde. Poimimme rakenteen ja rakennamme harjoitukset vain lähteen vihjeistä.",
+      "chooseSource": "Mitä voit tuoda?",
+      "dropActive": "Pudota tuodaksesi",
       "modes": {
         "image": "Kuva",
         "file": "Tiedosto",
@@ -509,6 +512,8 @@
     },
     "theory": {
       "eyebrow": "Teoriaharjoitus",
+      "hubTitle": "Opi kielen taustalla olevat ajatukset",
+      "hubDescription": "Tutki kielioppia, rakenteita ja käsitteitä interaktiivisissa opeissa.",
       "practiceTitle": "Teoriaharjoitus",
       "practiceDescription": "Tekoäly muuttaa tämän merkinnän aukkotehtäviksi — vihjeillä ja selityksillä.",
       "openLibrary": "Avaa teoriakirjasto",
@@ -519,6 +524,13 @@
       "emptyCta": "Luo teoriamerkintä",
       "searchPlaceholder": "Hae otsikon tai sisällön perusteella…",
       "filterCategory": "Kategoria",
+      "viewMode": "Näkymä",
+      "viewList": "Lista",
+      "viewCards": "Kortit",
+      "pageOf": "Sivu {page} / {totalPages}",
+      "previousPage": "Edellinen sivu",
+      "nextPage": "Seuraava sivu",
+      "goToPage": "Siirry sivulle {page}",
       "noResults": "Ei vastaavia teoriamerkintöjä",
       "noResultsDescription": "Kokeile toista hakua tai kategoriaa.",
       "clearFilters": "Tyhjennä suodattimet",
@@ -578,7 +590,35 @@
         "completeExercise": "Suorita harjoitus.",
         "theoryCheck": "Teoriantarkistus"
       },
-      "trueFalseLabel": "Tosi tai epätosi"
+      "trueFalseLabel": "Tosi tai epätosi",
+      "lesson": {
+        "label": "Oppitunti",
+        "concept": "Käsite",
+        "theIdea": "Ajatus",
+        "seeIt": "Kontekstissa",
+        "notice": "Huomaa",
+        "example": "Esimerkki",
+        "revealNote": "Näytä huomio",
+        "hideNote": "Piilota huomio",
+        "continue": "Jatka",
+        "quickReview": "Pikakertaus",
+        "skipReview": "Ohita kertaus",
+        "startPractice": "Aloita harjoitus",
+        "openTheory": "Avaa koko teoria",
+        "tryIt": "Kokeile",
+        "outline": "Tässä osiossa",
+        "keyIdea": "Ydinajatus",
+        "nowPractice": "Nyt harjoitellaan",
+        "learnThis": "Opettele tämä käsite",
+        "applyNow": "Käytetään nyt sitä, mitä juuri opit.",
+        "preparing": "Valmistellaan harjoitusta…",
+        "yourAnswer": "Vastauksesi",
+        "correctForm": "Muoto",
+        "theRule": "Sääntö",
+        "why": "Miksi",
+        "complete": "Selvä",
+        "completeHint": "Voit jatkaa, kun olet valmis."
+      }
     },
     "types": {
       "flashcard": {

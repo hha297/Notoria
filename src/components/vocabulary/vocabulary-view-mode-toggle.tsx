@@ -39,18 +39,16 @@ export function VocabularyViewModeToggle({
       <ToggleGroupItem
         value="list"
         aria-label={t("viewList")}
-        className="h-9 cursor-pointer gap-1.5 rounded-[5px] border-0 px-2.5 text-xs font-semibold data-[state=on]:bg-muted data-[state=on]:text-ink data-[state=on]:shadow-none sm:px-3"
+        className="size-9 cursor-pointer rounded-[5px] border-0 px-0 data-[state=on]:bg-muted data-[state=on]:text-ink data-[state=on]:shadow-none"
       >
         <LayoutList className="size-4" />
-        <span className="hidden sm:inline">{t("viewList")}</span>
       </ToggleGroupItem>
       <ToggleGroupItem
         value="cards"
         aria-label={t("viewCards")}
-        className="h-9 cursor-pointer gap-1.5 rounded-[5px] border-0 px-2.5 text-xs font-semibold data-[state=on]:bg-muted data-[state=on]:text-ink data-[state=on]:shadow-none sm:px-3"
+        className="size-9 cursor-pointer rounded-[5px] border-0 px-0 data-[state=on]:bg-muted data-[state=on]:text-ink data-[state=on]:shadow-none"
       >
         <LayoutGrid className="size-4" />
-        <span className="hidden sm:inline">{t("viewCards")}</span>
       </ToggleGroupItem>
     </ToggleGroup>
   );

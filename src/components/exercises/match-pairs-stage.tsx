@@ -414,8 +414,8 @@ function MatchTile({
         reduceMotion
           ? undefined
           : {
-              opacity: matched ? 0.82 : idleMeaning ? 0.72 : 1,
-            }
+            opacity: matched ? 0.82 : idleMeaning ? 0.72 : 1,
+          }
       }
       transition={{ duration: 0.16 }}
       className={cn(
@@ -424,16 +424,16 @@ function MatchTile({
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
         "disabled:cursor-default",
         !matched &&
-          !selected &&
-          !wrong &&
-          !pairing &&
-          "border-hairline-cloud bg-surface-elevated shadow-sm shadow-ink/4 hover:border-(--exercise-accent)/50 hover:bg-(--exercise-accent-soft)/55",
+        !selected &&
+        !wrong &&
+        !pairing &&
+        "border-hairline-cloud bg-surface-elevated shadow-sm shadow-ink/4 hover:border-(--exercise-accent)/50 hover:bg-(--exercise-accent-soft)/55",
         pairing &&
-          !wrong &&
-          "border-(--exercise-accent)/45 bg-surface-elevated shadow-sm shadow-ink/4 hover:border-(--exercise-accent) hover:bg-(--exercise-accent-soft)/80",
+        !wrong &&
+        "border-(--exercise-accent)/45 bg-surface-elevated shadow-sm shadow-ink/4 hover:border-(--exercise-accent) hover:bg-(--exercise-accent-soft)/80",
         selected &&
-          !wrong &&
-          "border-(--exercise-accent) bg-(--exercise-accent-soft) shadow-sm",
+        !wrong &&
+        "border-(--exercise-accent) bg-(--exercise-accent-soft) shadow-sm",
         matched && "bg-surface-elevated text-muted-foreground",
         wrong && !reduceMotion && "feedback-error exercise-shake",
         wrong && reduceMotion && "feedback-error",

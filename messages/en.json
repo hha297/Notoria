@@ -426,10 +426,13 @@
     },
     "import": {
       "eyebrow": "Imported practice",
+      "hubTitle": "From the page into practice",
       "practiceTitle": "Imported exercises",
       "practiceDescription": "Practice cards built from your imported material — same cues and order, no invented drills.",
       "formTitle": "Import learning material",
       "formDescription": "Provide a source. We extract its structure and build practice from those cues only.",
+      "chooseSource": "What can you import?",
+      "dropActive": "Drop to import",
       "modes": {
         "image": "Image",
         "file": "File",
@@ -509,6 +512,8 @@
     },
     "theory": {
       "eyebrow": "Theory practice",
+      "hubTitle": "Learn the ideas behind the language",
+      "hubDescription": "Explore grammar, patterns, and concepts through interactive lessons.",
       "practiceTitle": "Theory exercise",
       "practiceDescription": "AI turns this note into fill-in-the-blank practice — with hints and explanations.",
       "openLibrary": "Open theory library",
@@ -519,6 +524,13 @@
       "emptyCta": "Create a theory note",
       "searchPlaceholder": "Search by title or content…",
       "filterCategory": "Category",
+      "viewMode": "Display mode",
+      "viewList": "List",
+      "viewCards": "Cards",
+      "pageOf": "Page {page} of {totalPages}",
+      "previousPage": "Previous page",
+      "nextPage": "Next page",
+      "goToPage": "Go to page {page}",
       "noResults": "No theory notes match",
       "noResultsDescription": "Try another search or category.",
       "clearFilters": "Clear filters",
@@ -578,7 +590,35 @@
         "completeExercise": "Complete the exercise.",
         "theoryCheck": "Theory Check"
       },
-      "trueFalseLabel": "True or False"
+      "trueFalseLabel": "True or False",
+      "lesson": {
+        "label": "Lesson",
+        "concept": "Concept",
+        "theIdea": "The idea",
+        "seeIt": "See it",
+        "notice": "Notice",
+        "example": "Example",
+        "revealNote": "Show note",
+        "hideNote": "Hide note",
+        "continue": "Continue",
+        "quickReview": "Quick review",
+        "skipReview": "Skip review",
+        "startPractice": "Start practice",
+        "openTheory": "Open full theory",
+        "tryIt": "Try it",
+        "outline": "In this lesson",
+        "keyIdea": "Key idea",
+        "nowPractice": "Now practice",
+        "learnThis": "Learn this concept",
+        "applyNow": "Now let's use what you just learned.",
+        "preparing": "Preparing practice…",
+        "yourAnswer": "Your answer",
+        "correctForm": "The form",
+        "theRule": "The rule",
+        "why": "Why",
+        "complete": "Understood",
+        "completeHint": "You can move on when you're ready."
+      }
     },
     "types": {
       "flashcard": {

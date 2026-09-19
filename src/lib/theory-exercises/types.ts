@@ -1,3 +1,5 @@
+import type { JSONContent } from "@tiptap/react";
+
 /**
  * Theory exercise item shapes — AI-generated only.
  * Vocabulary exercises remain a separate system.
@@ -5,7 +7,10 @@
 
 export type TheoryMaterialSource = "theory" | "vocabulary" | "ai";
 
-export type TheoryExerciseType = "fill_blank" | "transformation" | "multiple_choice";
+export type TheoryExerciseType =
+  | "fill_blank"
+  | "transformation"
+  | "multiple_choice";
 
 /** What the exercise isolates and tests (from Theory knowledge). */
 export type TheoryLearningTargetType =
@@ -81,6 +86,10 @@ export type TheoryExerciseSession = {
   theoryId: string;
   theoryTitle: string;
   items: TheoryExercise[];
+  /** Optional Theory-note fields for lesson presentation only. */
+  category?: string;
+  description?: string;
+  doc?: JSONContent;
 };
 
 export type TheoryVocabWord = {

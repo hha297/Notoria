@@ -1,14 +1,13 @@
 "use client";
 
 import {
-  VocabularyCardTags,
   VocabularyPosRail,
   VocabularyUpdatedAt,
   VocabularyWordLink,
-  useVocabularyItemLabels,
 } from "@/components/vocabulary/vocabulary-item-meta";
 import { VocabularyMeaningPreview } from "@/components/vocabulary/vocabulary-meaning-preview";
 import { VocabularyRowActions } from "@/components/vocabulary/vocabulary-row-actions";
+import { VocabularyWordTags } from "@/components/vocabulary/vocabulary-word-tags";
 import type { VocabularyWordRow } from "@/lib/vocabulary/types";
 
 type VocabularyCardViewProps = {
@@ -45,8 +44,6 @@ function VocabularyCard({
   workspaceId: string;
   onEditWord: (word: VocabularyWordRow) => void;
 }) {
-  const { difficultyLabel } = useVocabularyItemLabels(word);
-
   return (
     <article
       data-vocab-pos={word.partOfSpeech || "none"}
@@ -58,24 +55,23 @@ function VocabularyCard({
       />
       <div className="flex min-w-0 flex-1 flex-col">
         <div className="flex min-w-0 flex-1 flex-col p-3.5">
-          {difficultyLabel ? (
-            <p className="min-w-0 text-[11px] font-medium tracking-wide text-muted-foreground">
-              {difficultyLabel}
-            </p>
-          ) : null}
-
           <VocabularyWordLink
             word={word}
-            className={difficultyLabel ? "mt-2 text-lg leading-snug" : "text-lg leading-snug"}
+            className="text-lg leading-snug"
           />
           <VocabularyMeaningPreview
             word={word}
             className="mt-1.5 text-sm leading-relaxed"
           />
 
-          <div className="mt-3 min-h-6">
-            <VocabularyCardTags word={word} />
-          </div>
+          {word.tags.length > 0 ? (
+            <div className="mt-auto pt-3">
+              <VocabularyWordTags
+                tags={word.tags}
+                limit={word.tags.length}
+              />
+            </div>
+          ) : null}
         </div>
 
         <div className="flex items-center justify-between gap-2 border-t border-hairline-cloud px-3.5 py-2">

@@ -234,6 +234,7 @@ export function VocabularyBank({
                     ? tPos(group.key)
                     : t("uncategorizedPos")
                 }
+                posKey={group.key}
                 words={group.words}
                 viewMode={viewMode}
                 workspaceId={workspaceId}

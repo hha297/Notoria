@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, type ReactNode } from "react";
+import { usePathname } from "next/navigation";
 import { Menu } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,16 @@ import {
 } from "@/components/ui/sheet";
 import type { Workspace } from "@/db/schema";
 import type { AppLocale } from "@/i18n/config";
+
+function studioSceneFromPath(pathname: string) {
+  if (pathname.startsWith("/vocabulary")) return "vocabulary";
+  if (pathname.startsWith("/exercises")) return "exercises";
+  if (pathname.startsWith("/theory")) return "theory";
+  if (pathname.startsWith("/writing")) return "writing";
+  if (pathname.startsWith("/listening")) return "listen";
+  if (pathname.startsWith("/speaking")) return "speak";
+  return "home";
+}
 
 type DashboardStudioProps = {
   children: ReactNode;
@@ -40,15 +51,19 @@ export function DashboardStudio({
   isPro,
 }: DashboardStudioProps) {
   const [navOpen, setNavOpen] = useState(false);
+  const pathname = usePathname();
   const t = useTranslations("nav");
   const sidebarUser = { userName, userEmail, userImage, isPro };
 
   return (
-    <div className="min-h-svh bg-background p-3">
+    <div className="studio-shell min-h-svh p-3">
       <div className="mx-auto flex max-w-[90rem] items-start gap-3">
         <FloatingSidebar workspaceId={activeWorkspaceId} {...sidebarUser} />
 
-        <div className="studio-paper flex h-[calc(100svh-1.5rem)] min-h-0 min-w-0 flex-1 flex-col self-stretch overflow-hidden">
+        <div
+          className="studio-paper flex h-[calc(100svh-1.5rem)] min-h-0 min-w-0 flex-1 flex-col self-stretch overflow-hidden"
+          data-studio-scene={studioSceneFromPath(pathname)}
+        >
           <header className="studio-chrome sticky top-0 z-20">
             <div className="flex h-14 min-w-0 items-center gap-2 px-3 sm:px-4">
               <Button
