@@ -92,11 +92,24 @@ export function DashboardStudio({
               <ThemeToggle />
             </div>
           </header>
-          <main className="min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden px-4 py-6 sm:px-6 sm:py-8">
+          <main
+            className={cn(
+              "min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden px-4 pt-6 sm:px-6 sm:pt-8",
+              pathname === "/writing" ||
+                pathname.startsWith("/writing/folders") ||
+                pathname === "/theory" ||
+                pathname.startsWith("/theory/folders")
+                ? "pb-3 sm:pb-4"
+                : "pb-6 sm:pb-8",
+            )}
+          >
             <div
               className={cn(
                 "mx-auto w-full min-w-0",
-                pathname.startsWith("/writing/") ? "max-w-[90rem]" : "max-w-6xl",
+                pathname.startsWith("/writing/") ||
+                  pathname.startsWith("/theory/")
+                  ? "max-w-[90rem]"
+                  : "max-w-6xl",
               )}
             >
               {children}

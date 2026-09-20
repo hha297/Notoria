@@ -14,6 +14,7 @@ import {
   parseWritingContent,
   writingContentToEditorState,
 } from "@/lib/writing/content";
+import { writingEditorHasExportableContent } from "@/lib/writing/export";
 
 type WritingPreviewProps = {
   id: string;
@@ -46,6 +47,7 @@ export function WritingPreview({
 
   const trimmedDescription = description?.trim() ?? "";
   const isQuestionSet = editorState.mode === "question_set";
+  const canExport = writingEditorHasExportableContent(editorState);
 
   return (
     <div className="writing-paper">
@@ -64,6 +66,8 @@ export function WritingPreview({
             size="lg"
             icon={<Download className="size-4" />}
             onClick={() => setExportOpen(true)}
+            disabled={!canExport}
+            title={canExport ? undefined : t("export.empty")}
             className="h-11 w-full sm:h-9 sm:w-auto"
           >
             {t("export.button")}

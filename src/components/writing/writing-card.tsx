@@ -111,6 +111,7 @@ export function WritingCard({
               description={document.description}
               folderId={document.folderId}
               workspaceId={workspaceId}
+              canExport={listMeta.hasExportableContent}
             />
           </div>
         </article>
@@ -153,6 +154,7 @@ export function WritingCard({
             description={document.description}
             folderId={document.folderId}
             workspaceId={workspaceId}
+            canExport={listMeta.hasExportableContent}
           />
         </div>
       </article>

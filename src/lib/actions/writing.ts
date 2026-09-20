@@ -115,6 +115,24 @@ export async function getWritingDocuments(): Promise<WritingDocumentListItem[]> 
           ) AS section
         ), 0)`,
         meta: sql<unknown>`coalesce(${exercises.content}->'meta', '{}'::jsonb)`,
+        hasExportableContent: sql<boolean>`
+          CASE
+            WHEN coalesce(${exercises.content}->>'mode', 'question_set') = 'rich_document' THEN
+              coalesce((${exercises.content}->'doc')::text, '')
+                ~ '"text"[[:space:]]*:[[:space:]]*"[^[:space:]"]'
+            ELSE
+              EXISTS (
+                SELECT 1
+                FROM jsonb_array_elements(
+                  coalesce(${exercises.content}->'sections', '[]'::jsonb)
+                ) AS section,
+                jsonb_array_elements(
+                  coalesce(section->'questions', '[]'::jsonb)
+                ) AS question
+                WHERE length(btrim(coalesce(question->>'prompt', ''))) > 0
+              )
+          END
+        `,
       })
       .from(exercises)
       .where(
@@ -141,6 +159,7 @@ export async function getWritingDocuments(): Promise<WritingDocumentListItem[]> 
         sectionCount: document.sectionCount,
         questionCount: document.questionCount,
         meta: document.meta,
+        hasExportableContent: document.hasExportableContent,
       }),
     }));
   });

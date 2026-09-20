@@ -164,6 +164,7 @@ export type TheoryListItem = {
   category: string;
   folderId: string | null;
   readingMinutes: number;
+  hasExportableContent: boolean;
   updatedAt: string;
 };
 
@@ -186,6 +187,7 @@ export function toTheoryListItem(note: {
     category: parsed.category,
     folderId: note.folderId ?? null,
     readingMinutes: estimateReadingMinutes(parsed.doc),
+    hasExportableContent: theoryDocPlainText(parsed.doc).length > 0,
     updatedAt:
       typeof note.updatedAt === "string"
         ? note.updatedAt
@@ -198,12 +200,22 @@ function readingMinutesFromDocBytes(docBytes: number) {
 }
 
 /** List rows from jsonb metadata — the TipTap `doc` is never loaded into Node. */
+function coerceSqlBoolean(value: unknown): boolean {
+  if (value === true || value === 1) return true;
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+    return normalized === "t" || normalized === "true" || normalized === "1";
+  }
+  return false;
+}
+
 export function toTheoryListItemFromMeta(note: {
   id: string;
   title: string;
   category: string | null;
   description: string | null;
   docBytes: number | string | null;
+  hasExportableContent?: unknown;
   folderId?: string | null;
   updatedAt: Date | string;
 }): TheoryListItem {
@@ -214,6 +226,7 @@ export function toTheoryListItemFromMeta(note: {
     category: normalizeCategory(note.category),
     folderId: note.folderId ?? null,
     readingMinutes: readingMinutesFromDocBytes(Number(note.docBytes ?? 0)),
+    hasExportableContent: coerceSqlBoolean(note.hasExportableContent),
     updatedAt:
       typeof note.updatedAt === "string"
         ? note.updatedAt

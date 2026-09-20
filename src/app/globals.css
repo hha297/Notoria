@@ -1933,13 +1933,22 @@
   }
 
   .writing-atelier-shell,
+  .theory-atelier-shell,
   .writing-paper,
+  .theory-paper,
   .writing-sheet {
     --writing-ink: var(--module-writing-fg);
     --writing-wash: var(--module-writing-bg);
   }
 
+  .theory-atelier-shell,
+  .theory-paper {
+    --writing-ink: var(--module-theory-fg);
+    --writing-wash: var(--module-theory-bg);
+  }
+
   .writing-atelier,
+  .theory-atelier,
   .writing-paper-page,
   .writing-sheet,
   .writing-feature,
@@ -1950,13 +1959,14 @@
   }
 
   .writing-atelier::before,
+  .theory-atelier::before,
   .writing-paper-page::before,
   .writing-sheet::before,
   .writing-feature::before,
   .writing-empty-desk::before {
     content: "";
     position: absolute;
-    inset: -18% -10%;
+    inset: -18% -10% 0;
     z-index: 0;
     pointer-events: none;
     -webkit-mask-image:
@@ -1984,6 +1994,48 @@
       );
   }
 
+  .writing-sheet[data-writing-kind="question_set"]::before {
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--module-theory-bg) 68%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-writing-bg) 26%, transparent),
+        transparent 70%
+      );
+  }
+
+  .theory-sheet::before {
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--theory-cat-bg) 68%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-theory-bg) 28%, transparent),
+        transparent 70%
+      );
+  }
+
+  .theory-atelier::before {
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--module-theory-bg) 68%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-writing-bg) 26%, transparent),
+        transparent 70%
+      );
+  }
+
   .writing-feature::before,
   .writing-empty-desk::before,
   .writing-paper-page::before {
@@ -1995,7 +2047,17 @@
       );
   }
 
+  .theory-paper .writing-paper-page::before {
+    background:
+      radial-gradient(
+        ellipse 80% 70% at 12% 18%,
+        color-mix(in oklab, var(--module-theory-bg) 74%, transparent),
+        transparent 74%
+      );
+  }
+
   .writing-atelier > *,
+  .theory-atelier > *,
   .writing-paper-page > *,
   .writing-sheet > *,
   .writing-feature > *,
@@ -2006,6 +2068,63 @@
 
   .writing-atelier {
     min-width: 0;
+    overflow: clip;
+  }
+
+  .theory-atelier {
+    min-width: 0;
+    overflow: clip;
+    --theory-cat-fg: var(--module-theory-fg);
+    --theory-cat-bg: var(--module-theory-bg);
+  }
+
+  .theory-sheet,
+  .theory-paper {
+    --theory-cat-fg: var(--module-theory-fg);
+    --theory-cat-bg: var(--module-theory-bg);
+  }
+
+  [data-theory-category="grammar"] {
+    --theory-cat-fg: var(--module-theory-fg);
+    --theory-cat-bg: var(--module-theory-bg);
+  }
+
+  [data-theory-category="vocabulary"] {
+    --theory-cat-fg: var(--module-vocab-fg);
+    --theory-cat-bg: var(--module-vocab-bg);
+  }
+
+  [data-theory-category="pronunciation"] {
+    --theory-cat-fg: var(--module-listen-fg);
+    --theory-cat-bg: var(--module-listen-bg);
+  }
+
+  [data-theory-category="writing"] {
+    --theory-cat-fg: var(--module-writing-fg);
+    --theory-cat-bg: var(--module-writing-bg);
+  }
+
+  [data-theory-category="communication"] {
+    --theory-cat-fg: var(--module-speak-fg);
+    --theory-cat-bg: var(--module-speak-bg);
+  }
+
+  [data-theory-category="usage"] {
+    --theory-cat-fg: var(--module-exercise-fg);
+    --theory-cat-bg: var(--module-exercise-bg);
+  }
+
+  [data-theory-category="culture"] {
+    --theory-cat-fg: color-mix(
+      in oklab,
+      var(--module-listen-fg) 42%,
+      var(--module-vocab-fg)
+    );
+    --theory-cat-bg: color-mix(
+      in oklab,
+      var(--module-listen-bg) 50%,
+      var(--module-vocab-bg)
+    );
   }
 
   .writing-atelier-empty {
@@ -2013,17 +2132,118 @@
   }
 
   .writing-atelier-rule {
-    height: 6px;
+    height: 2px;
     border-radius: 999px;
     background: linear-gradient(
       90deg,
       transparent 0%,
-      var(--module-writing-fg) 16%,
+      var(--module-writing-fg) 18%,
       var(--module-theory-fg) 48%,
-      var(--warning) 84%,
+      var(--warning) 82%,
       transparent 100%
     );
-    box-shadow: 0 0 20px color-mix(in oklab, var(--module-writing-fg) 32%, transparent);
+    box-shadow: none;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 14%,
+      #000 86%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 14%,
+      #000 86%,
+      transparent 100%
+    );
+    filter: drop-shadow(
+      0 0 6px color-mix(in oklab, var(--module-writing-fg) 42%, transparent)
+    );
+  }
+
+  .theory-atelier-rule {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--module-theory-fg) 18%,
+      var(--module-writing-fg) 52%,
+      var(--warning) 82%,
+      transparent 100%
+    );
+    filter: drop-shadow(
+      0 0 6px color-mix(in oklab, var(--module-theory-fg) 42%, transparent)
+    );
+  }
+
+  .theory-atelier .writing-kicker,
+  .theory-paper .writing-kicker,
+  .theory-sheet .writing-kicker {
+    color: var(--theory-cat-fg);
+  }
+
+  .theory-atelier .writing-chapter-title {
+    color: var(--theory-cat-fg);
+  }
+
+  .theory-atelier .writing-spine-search {
+    border-bottom-color: color-mix(
+      in oklab,
+      var(--module-theory-fg) 38%,
+      transparent
+    ) !important;
+  }
+
+  .theory-atelier .writing-spine-search:focus-visible {
+    border-bottom-color: var(--module-theory-fg) !important;
+  }
+
+  .theory-atelier .writing-entry:hover .writing-entry-title,
+  .theory-atelier .writing-entry:focus-within .writing-entry-title {
+    color: var(--theory-cat-fg);
+  }
+
+  .theory-paper .writing-paper-body {
+    border-top-color: color-mix(in oklab, var(--theory-cat-fg) 22%, transparent);
+  }
+
+  .theory-paper .writing-back:hover,
+  .theory-sheet .writing-back:hover {
+    color: var(--theory-cat-fg);
+  }
+
+  .theory-cat-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .theory-filter-pill.theory-cat-chip {
+    color: var(--theory-cat-fg);
+    border-color: color-mix(in oklab, var(--theory-cat-fg) 32%, var(--hairline-cloud));
+    background: color-mix(in oklab, var(--theory-cat-bg) 42%, var(--surface-elevated));
+  }
+
+  .theory-filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .theory-filter-pill {
+    height: 2.25rem;
+    padding: 0 0.9rem;
+    border: 1px solid var(--hairline-cloud);
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--surface-elevated) 88%, transparent);
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      box-shadow 160ms ease,
+      color 160ms ease;
   }
 
   .writing-kicker {
@@ -2158,19 +2378,20 @@
   .writing-collection-item {
     display: flex;
     width: auto;
-    min-width: 11.5rem;
+    min-width: 14.5rem;
     max-width: 100%;
     align-items: center;
-    gap: 0.25rem;
-    padding: 0.35rem 0.4rem 0.35rem 0.45rem;
-    border: 1px solid var(--hairline-cloud);
-    border-radius: 0.25rem;
-    background: color-mix(in oklab, var(--surface-elevated) 88%, transparent);
+    gap: 0.45rem;
+    padding: 0.55rem 0.6rem 0.55rem 0.65rem;
+    border: 1px solid color-mix(in oklab, var(--writing-ink) 28%, transparent);
+    border-radius: 0.35rem;
+    background: transparent;
   }
 
   .writing-collection-item:hover,
   .writing-collection-item:focus-within {
-    border-color: color-mix(in oklab, var(--module-writing-fg) 35%, var(--hairline-cloud));
+    border-color: color-mix(in oklab, var(--writing-ink) 48%, transparent);
+    background: color-mix(in oklab, var(--writing-wash) 36%, transparent);
   }
 
   .writing-collection-open {
@@ -2181,15 +2402,20 @@
 
   .writing-collection-icon {
     display: flex;
-    width: 2rem;
-    height: 2rem;
+    width: 2.5rem;
+    height: 2.5rem;
     flex-shrink: 0;
     align-items: center;
     justify-content: center;
-    border: 1px solid var(--hairline-cloud);
-    border-radius: 0.25rem;
-    background: var(--surface-active);
-    color: var(--warning);
+    border: 1px solid color-mix(in oklab, var(--writing-ink) 28%, transparent);
+    border-radius: 0.3rem;
+    background: transparent;
+    color: var(--writing-ink);
+  }
+
+  .writing-collection-icon svg {
+    fill: var(--writing-wash);
+    stroke: var(--writing-ink);
   }
 
   .writing-collection-copy {
@@ -2205,23 +2431,24 @@
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
-    font-size: 0.92rem;
+    font-size: 1rem;
     font-weight: 600;
   }
 
   .writing-collection-count {
     flex-shrink: 0;
-    font-size: 0.7rem;
+    font-size: 0.75rem;
     color: var(--muted-foreground);
   }
 
   .writing-collection-root.is-current,
   .writing-collection-item.is-current .writing-collection-name {
-    color: var(--module-writing-fg);
+    color: var(--writing-ink);
   }
 
   .writing-collection-item.is-current {
-    border-color: color-mix(in oklab, var(--module-writing-fg) 40%, var(--hairline-cloud));
+    border-color: color-mix(in oklab, var(--writing-ink) 48%, transparent);
+    background: color-mix(in oklab, var(--writing-wash) 42%, transparent);
   }
 
   .writing-collection-item.is-over {
@@ -2445,17 +2672,43 @@
     left: 0;
     top: 1.4rem;
     bottom: 1.4rem;
-    width: 2px;
+    width: 3px;
     border-radius: 999px;
-    background: color-mix(in oklab, var(--module-writing-fg) 72%, transparent);
+    background: var(--module-writing-fg);
+    box-shadow: 0 0 12px color-mix(in oklab, var(--module-writing-fg) 42%, transparent);
   }
 
   .writing-entry[data-writing-kind="question_set"]::before {
-    background: color-mix(in oklab, var(--module-theory-fg) 78%, transparent);
+    background: var(--module-theory-fg);
+    box-shadow: 0 0 12px color-mix(in oklab, var(--module-theory-fg) 42%, transparent);
   }
 
   .writing-entry:not([data-writing-kind])::before {
     background: color-mix(in oklab, var(--muted-foreground) 48%, transparent);
+    box-shadow: none;
+  }
+
+  .writing-atelier .writing-entry-wrap + .writing-entry-wrap {
+    border-top-color: color-mix(
+      in oklab,
+      var(--module-writing-fg) 26%,
+      transparent
+    );
+  }
+
+  .theory-atelier .writing-entry::before,
+  .theory-atelier .writing-entry:not([data-writing-kind])::before {
+    width: 3px;
+    background: var(--theory-cat-fg);
+    box-shadow: 0 0 12px color-mix(in oklab, var(--theory-cat-fg) 42%, transparent);
+  }
+
+  .theory-atelier .writing-entry-wrap + .writing-entry-wrap {
+    border-top-color: color-mix(
+      in oklab,
+      var(--theory-cat-fg) 26%,
+      transparent
+    );
   }
 
   .writing-entry-title {
@@ -2562,6 +2815,13 @@
     gap: 1.55rem;
     padding-top: 0.35rem;
     padding-bottom: 2rem;
+    --writing-accent-fg: var(--module-writing-fg);
+    --writing-accent-bg: var(--module-writing-bg);
+  }
+
+  .writing-sheet[data-writing-kind="question_set"] {
+    --writing-accent-fg: var(--module-theory-fg);
+    --writing-accent-bg: var(--module-theory-bg);
   }
 
   .writing-sheet-title {
@@ -2595,6 +2855,14 @@
     color: var(--module-theory-fg);
   }
 
+  .writing-sheet[data-writing-kind="rich_document"] .writing-back:hover {
+    color: var(--module-writing-fg);
+  }
+
+  .writing-sheet[data-writing-kind="question_set"] .writing-back:hover {
+    color: var(--module-theory-fg);
+  }
+
   .writing-paper-page[data-writing-kind="question_set"] .writing-paper-body {
     border-top-color: color-mix(in oklab, var(--module-theory-fg) 22%, transparent);
   }
@@ -2616,6 +2884,36 @@
     box-shadow:
       inset 4px 0 0 var(--module-writing-fg),
       0 0 0 1px color-mix(in oklab, var(--module-writing-fg) 12%, transparent);
+  }
+
+  .writing-sheet[data-writing-kind="question_set"] .writing-sheet-surface {
+    padding: 1.15rem 1.2rem 0.55rem;
+    border-radius: 1rem;
+    background:
+      linear-gradient(
+        165deg,
+        color-mix(in oklab, var(--module-theory-bg) 72%, transparent),
+        color-mix(in oklab, var(--module-theory-bg) 22%, transparent) 70%,
+        transparent
+      );
+    box-shadow:
+      inset 4px 0 0 var(--module-theory-fg),
+      0 0 0 1px color-mix(in oklab, var(--module-theory-fg) 12%, transparent);
+  }
+
+  .theory-sheet-surface {
+    padding: 1.15rem 1.2rem 0.55rem;
+    border-radius: 1rem;
+    background:
+      linear-gradient(
+        165deg,
+        color-mix(in oklab, var(--theory-cat-bg) 72%, transparent),
+        color-mix(in oklab, var(--theory-cat-bg) 22%, transparent) 70%,
+        transparent
+      );
+    box-shadow:
+      inset 4px 0 0 var(--theory-cat-fg),
+      0 0 0 1px color-mix(in oklab, var(--theory-cat-fg) 12%, transparent);
   }
 
   .writing-mode-toggle {
@@ -2667,9 +2965,46 @@
   }
 
   .writing-sheet-meta {
-    display: grid;
-    grid-template-columns: 1fr;
-    gap: 0.75rem 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .writing-chip-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .writing-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    height: 2.25rem;
+    padding: 0 0.9rem;
+    border: 1px solid var(--hairline-cloud);
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--surface-elevated) 88%, transparent);
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      box-shadow 160ms ease,
+      color 160ms ease;
+  }
+
+  .writing-chip[data-writing-kind="rich_document"] {
+    color: var(--module-writing-fg);
+    border-color: color-mix(in oklab, var(--module-writing-fg) 32%, var(--hairline-cloud));
+    background: color-mix(in oklab, var(--module-writing-bg) 42%, var(--surface-elevated));
+  }
+
+  .writing-chip[data-writing-kind="question_set"] {
+    color: var(--module-theory-fg);
+    border-color: color-mix(in oklab, var(--module-theory-fg) 32%, var(--hairline-cloud));
+    background: color-mix(in oklab, var(--module-theory-bg) 42%, var(--surface-elevated));
   }
 
   @media (min-width: 640px) {
@@ -2692,7 +3027,7 @@
     .writing-collection-item,
     .writing-collection-root {
       width: auto;
-      min-width: 12rem;
+      min-width: 15.5rem;
       max-width: 100%;
     }
 
@@ -2720,10 +3055,6 @@
       flex-direction: row;
     }
 
-    .writing-sheet-meta {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-
     .writing-entry-actions,
     .writing-feature-tools {
       opacity: 0;
@@ -2744,10 +3075,6 @@
 
     .writing-entry-title {
       font-size: 1.5rem;
-    }
-
-    .writing-sheet-meta {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
     }
   }
 
@@ -2988,4 +3315,285 @@ body {
   box-shadow:
     0 0 0 1px color-mix(in oklab, var(--module-writing-fg) 20%, transparent),
     0 10px 22px color-mix(in oklab, var(--module-writing-fg) 12%, transparent);
+}
+
+.theory-filter-pill:hover {
+  border-color: color-mix(in oklab, var(--theory-cat-fg) 42%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--theory-cat-bg) 58%, var(--surface-elevated));
+  color: var(--foreground);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--theory-cat-fg) 16%, transparent),
+    0 10px 22px color-mix(in oklab, var(--theory-cat-fg) 12%, transparent);
+}
+
+.theory-filter-pill.is-active {
+  border-color: color-mix(in oklab, var(--theory-cat-fg) 55%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--theory-cat-bg) 72%, var(--surface-elevated));
+  color: var(--theory-cat-fg);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--theory-cat-fg) 20%, transparent),
+    0 10px 22px color-mix(in oklab, var(--theory-cat-fg) 14%, transparent);
+}
+
+.writing-chip:hover {
+  border-color: color-mix(in oklab, var(--writing-accent-fg) 42%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--writing-accent-bg) 58%, var(--surface-elevated));
+  color: var(--foreground);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--writing-accent-fg) 16%, transparent),
+    0 10px 22px color-mix(in oklab, var(--writing-accent-fg) 12%, transparent);
+}
+
+.writing-chip[data-writing-kind="rich_document"]:hover {
+  border-color: color-mix(in oklab, var(--module-writing-fg) 42%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-writing-bg) 58%, var(--surface-elevated));
+  color: var(--module-writing-fg);
+}
+
+.writing-chip[data-writing-kind="question_set"]:hover {
+  border-color: color-mix(in oklab, var(--module-theory-fg) 42%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-theory-bg) 58%, var(--surface-elevated));
+  color: var(--module-theory-fg);
+}
+
+.writing-chip.is-active {
+  border-color: color-mix(in oklab, var(--writing-accent-fg) 55%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--writing-accent-bg) 72%, var(--surface-elevated));
+  color: var(--writing-accent-fg);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--writing-accent-fg) 20%, transparent),
+    0 10px 22px color-mix(in oklab, var(--writing-accent-fg) 14%, transparent);
+}
+
+.writing-chip[data-writing-kind="rich_document"].is-active {
+  border-color: color-mix(in oklab, var(--module-writing-fg) 55%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-writing-bg) 72%, var(--surface-elevated));
+  color: var(--module-writing-fg);
+}
+
+.writing-chip[data-writing-kind="question_set"].is-active {
+  border-color: color-mix(in oklab, var(--module-theory-fg) 55%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-theory-bg) 72%, var(--surface-elevated));
+  color: var(--module-theory-fg);
+}
+
+.export-sheet {
+  --export-accent-fg: var(--module-writing-fg);
+  --export-accent-bg: var(--module-writing-bg);
+  gap: 1.3rem;
+  overflow: hidden;
+  padding: 1.35rem 1.4rem 1.2rem;
+  border-radius: 1.25rem;
+  border-color: color-mix(in oklab, var(--export-accent-fg) 16%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--export-accent-bg) 28%, var(--popover)) 0%,
+      var(--popover) 42%
+    );
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--export-accent-fg) 8%, transparent),
+    0 24px 48px color-mix(in oklab, var(--export-accent-fg) 10%, transparent);
+}
+
+.export-sheet[data-export-surface="writing"][data-writing-kind="question_set"] {
+  --export-accent-fg: var(--module-theory-fg);
+  --export-accent-bg: var(--module-theory-bg);
+}
+
+.export-sheet[data-export-surface="theory"] {
+  --export-accent-fg: var(--theory-cat-fg, var(--module-theory-fg));
+  --export-accent-bg: var(--theory-cat-bg, var(--module-theory-bg));
+}
+
+.export-sheet[data-export-surface="vocabulary"] {
+  --export-accent-fg: var(--module-vocab-fg);
+  --export-accent-bg: var(--module-vocab-bg);
+}
+
+.export-sheet-header {
+  gap: 0.45rem;
+}
+
+.export-sheet-kicker {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--export-accent-fg);
+}
+
+.export-sheet-title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+}
+
+.export-sheet-lede {
+  max-width: 32rem;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.export-sheet-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.export-sheet-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+}
+
+.export-sheet-label {
+  margin: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.export-sheet-footer {
+  margin: 0.15rem 0 0;
+  padding: 0.85rem 0 0;
+  border-top: 1px solid color-mix(in oklab, var(--export-accent-fg) 14%, var(--hairline-cloud));
+  border-radius: 0;
+  background: transparent;
+}
+
+.export-format-grid {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.export-format-chip {
+  display: flex;
+  min-height: 5.1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.12rem;
+  padding: 0.85rem 0.95rem 0.8rem;
+  border: 1px solid var(--hairline-cloud);
+  border-radius: 1rem;
+  background: color-mix(in oklab, var(--surface-elevated) 88%, transparent);
+  color: var(--muted-foreground);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
+}
+
+.export-format-chip:hover {
+  border-color: color-mix(in oklab, var(--export-accent-fg) 42%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--export-accent-bg) 48%, var(--surface-elevated));
+  color: var(--foreground);
+}
+
+.export-format-chip.is-active {
+  border-color: color-mix(in oklab, var(--export-accent-fg) 55%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--export-accent-bg) 68%, var(--surface-elevated));
+  color: var(--export-accent-fg);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--export-accent-fg) 18%, transparent),
+    0 10px 22px color-mix(in oklab, var(--export-accent-fg) 12%, transparent);
+}
+
+.export-format-icon {
+  display: inline-flex;
+  margin-bottom: 0.28rem;
+  color: inherit;
+}
+
+.export-format-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: inherit;
+}
+
+.export-format-hint {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: color-mix(in oklab, var(--muted-foreground) 82%, currentColor);
+}
+
+.export-format-chip.is-active .export-format-hint {
+  color: color-mix(in oklab, var(--export-accent-fg) 72%, var(--muted-foreground));
+}
+
+.export-option-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.export-option-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.25rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.7rem;
+  border: 1px solid var(--hairline-cloud);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--surface-elevated) 88%, transparent);
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
+}
+
+.export-option-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--muted-foreground) 45%, transparent);
+}
+
+.export-option-chip:hover {
+  border-color: color-mix(in oklab, var(--export-accent-fg) 42%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--export-accent-bg) 48%, var(--surface-elevated));
+  color: var(--foreground);
+}
+
+.export-option-chip.is-on {
+  border-color: color-mix(in oklab, var(--export-accent-fg) 55%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--export-accent-bg) 68%, var(--surface-elevated));
+  color: var(--export-accent-fg);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--export-accent-fg) 16%, transparent);
+}
+
+.export-option-chip.is-on .export-option-dot {
+  background: var(--export-accent-fg);
+}
+
+.export-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid color-mix(in oklab, var(--export-accent-fg) 16%, var(--hairline-cloud));
+  border-radius: 0.95rem;
+  background: color-mix(in oklab, var(--export-accent-bg) 28%, var(--surface-elevated));
+}
+
+.export-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
 }

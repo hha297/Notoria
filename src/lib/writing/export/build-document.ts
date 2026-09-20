@@ -115,3 +115,18 @@ export function exportDocumentIsEmpty(model: ExportDocumentModel): boolean {
     model.sections.every((section) => section.questions.length === 0)
   );
 }
+
+export function writingEditorHasExportableContent(
+  state: WritingEditorState,
+): boolean {
+  return !exportDocumentIsEmpty(
+    buildExportDocument("", state, {
+      includeExampleAnswers: false,
+      includeNotes: false,
+    }),
+  );
+}
+
+export function theoryDocHasExportableContent(doc: JSONContent): boolean {
+  return !exportDocumentIsEmpty(buildRichDocumentExport("", doc));
+}

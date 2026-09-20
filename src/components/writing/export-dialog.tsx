@@ -1,22 +1,16 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Download, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
-import { CheckboxOption } from "@/components/export/checkbox-option";
-import { ExportFormatOptions } from "@/components/export/export-format-options";
-import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+  ExportFormatOptions,
+  ExportOptionChip,
+} from "@/components/export/export-format-options";
+import { ExportSheet, ExportSheetSection } from "@/components/export/export-sheet";
+import { Button } from "@/components/ui/button";
 import { isPaidDocumentFormat } from "@/lib/auth/paid-access";
 import {
   DOCUMENT_EXPORT_FORMATS,
@@ -25,6 +19,7 @@ import {
 import {
   DEFAULT_EXPORT_OPTIONS,
   exportWritingExercise,
+  writingEditorHasExportableContent,
   type ExportFormat,
   type ExportOptions,
 } from "@/lib/writing/export";
@@ -50,6 +45,9 @@ export function WritingExportDialog({
   const { hasProAccess, openUpgrade } = useProAccess();
   const [options, setOptions] = useState<ExportOptions>(DEFAULT_EXPORT_OPTIONS);
   const [isExporting, setIsExporting] = useState(false);
+  const canExport = writingEditorHasExportableContent(editorState);
+  const isQuestionSet = editorState.mode === "question_set";
+  const pieceTitle = title.trim() || t("untitled");
 
   useEffect(() => {
     if (!open) return;
@@ -71,6 +69,7 @@ export function WritingExportDialog({
   }
 
   async function handleExport() {
+    if (!canExport) return;
     setIsExporting(true);
     try {
       await exportWritingExercise({
@@ -105,72 +104,19 @@ export function WritingExportDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md" showCloseButton={!isExporting}>
-        <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
-          <DialogDescription>{t("description")}</DialogDescription>
-        </DialogHeader>
-
-        <div className="space-y-5 py-1">
-          <div className="space-y-2">
-            <Label>{t("format")}</Label>
-            <ExportFormatOptions
-              idPrefix="writing-export"
-              name="writing-export-format"
-              formats={DOCUMENT_EXPORT_FORMATS}
-              value={options.format}
-              onChange={(format) => setFormat(format as ExportFormat)}
-              hasProAccess={hasProAccess}
-              onLockedSelect={openUpgrade}
-              labels={{
-                pdf: t("formatPdf"),
-                docx: t("formatDocx"),
-              }}
-            />
-          </div>
-
-          <div className="space-y-1">
-            <Label>{t("options")}</Label>
-            <div className="rounded-lg border border-hairline-cloud bg-muted/20 px-2 py-1">
-              <CheckboxOption
-                id="export-examples"
-                checked={options.includeExampleAnswers}
-                label={t("includeExamples")}
-                onChange={(checked) =>
-                  setOptions((current) => ({
-                    ...current,
-                    includeExampleAnswers: checked,
-                  }))
-                }
-              />
-              <CheckboxOption
-                id="export-notes"
-                checked={options.includeNotes}
-                label={t("includeNotes")}
-                onChange={(checked) =>
-                  setOptions((current) => ({
-                    ...current,
-                    includeNotes: checked,
-                  }))
-                }
-              />
-              <CheckboxOption
-                id="export-blank"
-                checked={options.leaveBlankSpace}
-                label={t("leaveBlankSpace")}
-                onChange={(checked) =>
-                  setOptions((current) => ({
-                    ...current,
-                    leaveBlankSpace: checked,
-                  }))
-                }
-              />
-            </div>
-          </div>
-        </div>
-
-        <DialogFooter>
+    <ExportSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      surface="writing"
+      writingKind={editorState.mode}
+      preventClose={isExporting}
+      kicker={t("kicker")}
+      title={pieceTitle}
+      description={
+        isQuestionSet ? t("descriptionQuestionSet") : t("descriptionDocument")
+      }
+      footer={
+        <>
           <Button
             type="button"
             variant="outline"
@@ -179,7 +125,11 @@ export function WritingExportDialog({
           >
             {tc("cancel")}
           </Button>
-          <Button type="button" onClick={handleExport} disabled={isExporting}>
+          <Button
+            type="button"
+            onClick={() => void handleExport()}
+            disabled={isExporting || !canExport}
+          >
             {isExporting ? (
               <Loader2 className="size-4 animate-spin" />
             ) : (
@@ -187,8 +137,65 @@ export function WritingExportDialog({
             )}
             {t("confirm")}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </>
+      }
+    >
+      <ExportSheetSection label={t("format")}>
+        <ExportFormatOptions
+          idPrefix="writing-export"
+          name="writing-export-format"
+          formats={DOCUMENT_EXPORT_FORMATS}
+          value={options.format}
+          onChange={(format) => setFormat(format as ExportFormat)}
+          hasProAccess={hasProAccess}
+          onLockedSelect={openUpgrade}
+          labels={{
+            pdf: t("formatPdf"),
+            docx: t("formatDocx"),
+          }}
+          hints={{
+            pdf: t("formatPdfHint"),
+            docx: t("formatDocxHint"),
+          }}
+        />
+      </ExportSheetSection>
+
+      {isQuestionSet ? (
+        <ExportSheetSection label={t("options")}>
+          <div className="export-option-list">
+            <ExportOptionChip
+              checked={options.includeExampleAnswers}
+              label={t("includeExamples")}
+              onChange={(checked) =>
+                setOptions((current) => ({
+                  ...current,
+                  includeExampleAnswers: checked,
+                }))
+              }
+            />
+            <ExportOptionChip
+              checked={options.includeNotes}
+              label={t("includeNotes")}
+              onChange={(checked) =>
+                setOptions((current) => ({
+                  ...current,
+                  includeNotes: checked,
+                }))
+              }
+            />
+            <ExportOptionChip
+              checked={options.leaveBlankSpace}
+              label={t("leaveBlankSpace")}
+              onChange={(checked) =>
+                setOptions((current) => ({
+                  ...current,
+                  leaveBlankSpace: checked,
+                }))
+              }
+            />
+          </div>
+        </ExportSheetSection>
+      ) : null}
+    </ExportSheet>
   );
 }

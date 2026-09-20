@@ -418,14 +418,8 @@ export function WritingTable({
           </section>
 
           <div
-            className="writing-atelier-rule h-1.5 w-full shrink-0 rounded-full"
+            className="writing-atelier-rule w-full shrink-0 rounded-full"
             aria-hidden="true"
-            style={{
-              background:
-                "linear-gradient(90deg, transparent 0%, var(--module-writing-fg) 16%, var(--module-theory-fg) 48%, var(--warning) 84%, transparent 100%)",
-              boxShadow:
-                "0 0 20px color-mix(in oklab, var(--module-writing-fg) 32%, transparent)",
-            }}
           />
 
           <section className="writing-stage" data-tutorial="writing-list">

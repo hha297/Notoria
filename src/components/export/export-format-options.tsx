@@ -1,6 +1,7 @@
 "use client";
 
-import { Lock } from "lucide-react";
+import { FileSpreadsheet, FileText, FileType, Lock } from "lucide-react";
+import type { ReactNode } from "react";
 import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import { isPaidDocumentFormat } from "@/lib/auth/paid-access";
 import type { ExportFormatId } from "@/lib/export/formats";
@@ -15,11 +16,17 @@ type ExportFormatOptionsProps = {
   hasProAccess: boolean;
   onLockedSelect: () => void;
   labels: Partial<Record<ExportFormatId, string>>;
-  compact?: boolean;
+  hints?: Partial<Record<ExportFormatId, string>>;
 };
 
 function isFormatLocked(format: ExportFormatId, hasProAccess: boolean) {
   return !hasProAccess && isPaidDocumentFormat(format);
+}
+
+function formatIcon(format: ExportFormatId) {
+  if (format === "csv") return FileSpreadsheet;
+  if (format === "docx") return FileType;
+  return FileText;
 }
 
 export function ExportFormatOptions({
@@ -31,51 +38,78 @@ export function ExportFormatOptions({
   hasProAccess,
   onLockedSelect,
   labels,
-  compact = false,
+  hints,
 }: ExportFormatOptionsProps) {
   return (
-    <div className={cn("grid gap-2", compact && "grid-cols-3 gap-1.5")}>
+    <div
+      className="export-format-grid"
+      role="radiogroup"
+      data-export-group={name}
+      style={{
+        gridTemplateColumns: `repeat(${Math.min(formats.length, 3)}, minmax(0, 1fr))`,
+      }}
+    >
       {formats.map((format) => {
         const locked = isFormatLocked(format, hasProAccess);
+        const selected = value === format;
         const id = `${idPrefix}-${format}`;
         const label = labels[format] ?? format.toUpperCase();
+        const hint = hints?.[format];
+        const Icon = formatIcon(format);
 
         return (
-          <label
+          <button
             key={format}
-            htmlFor={id}
+            id={id}
+            type="button"
+            role="radio"
+            aria-checked={selected}
+            aria-label={label}
+            data-export-format={format}
             className={cn(
-              "flex cursor-pointer items-center gap-3 rounded-lg border px-3 py-2.5 text-sm transition-colors",
-              compact && "justify-center gap-1.5 px-2 py-2",
-              value === format
-                ? "border-accent-lime/50 bg-accent-lime/10 text-ink"
-                : "border-hairline-cloud hover:bg-muted/40",
+              "export-format-chip",
+              selected && "is-active",
               locked && lockedFeatureClassName,
             )}
+            onClick={() => {
+              if (locked) {
+                onLockedSelect();
+                return;
+              }
+              onChange(format);
+            }}
           >
-            <input
-              id={id}
-              type="radio"
-              name={name}
-              value={format}
-              checked={value === format}
-              onChange={() => {
-                if (locked) {
-                  onLockedSelect();
-                  return;
-                }
-                onChange(format);
-              }}
-              className={cn(
-                "size-4 accent-[var(--accent-lime)]",
-                compact && "sr-only",
-              )}
-            />
-            {locked ? <Lock className="size-3.5 text-muted-foreground" /> : null}
-            <span className="font-medium">{label}</span>
-          </label>
+            <span className="export-format-icon">
+              {locked ? <Lock className="size-4" /> : <Icon className="size-4" />}
+            </span>
+            <span className="export-format-name">{label}</span>
+            {hint ? <span className="export-format-hint">{hint}</span> : null}
+          </button>
         );
       })}
     </div>
+  );
+}
+
+export function ExportOptionChip({
+  checked,
+  label,
+  onChange,
+}: {
+  checked: boolean;
+  label: ReactNode;
+  onChange: (checked: boolean) => void;
+}) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      className={cn("export-option-chip", checked && "is-on")}
+      onClick={() => onChange(!checked)}
+    >
+      <span className="export-option-dot" aria-hidden="true" />
+      <span>{label}</span>
+    </button>
   );
 }

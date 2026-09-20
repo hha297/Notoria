@@ -9,11 +9,13 @@ describe("writingListMetaFromParts", () => {
         sectionCount: 4,
         questionCount: 9,
         meta: { cefrLevel: "b1", topic: "travel" },
+        hasExportableContent: true,
       }),
     ).toEqual({
       mode: "rich_document",
       sectionCount: 0,
       questionCount: 0,
+      hasExportableContent: true,
       meta: expect.objectContaining({
         cefrLevel: "b1",
         topic: "travel",
@@ -28,14 +30,27 @@ describe("writingListMetaFromParts", () => {
         sectionCount: "2",
         questionCount: "5",
         meta: { formality: "formal" },
+        hasExportableContent: "t",
       }),
     ).toEqual({
       mode: "question_set",
       sectionCount: 2,
       questionCount: 5,
+      hasExportableContent: true,
       meta: expect.objectContaining({
         formality: "formal",
       }),
     });
+  });
+
+  it("treats missing exportable flags as empty", () => {
+    expect(
+      writingListMetaFromParts({
+        mode: "rich_document",
+        sectionCount: 0,
+        questionCount: 0,
+        meta: {},
+      }).hasExportableContent,
+    ).toBe(false);
   });
 });

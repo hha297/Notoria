@@ -1,5 +1,5 @@
-﻿import { FormPageLoading } from "@/components/layout/page-loading";
+﻿import { WritingFormLoading } from "@/components/writing/writing-loading";
 
 export default function Loading() {
-  return <FormPageLoading />;
+  return <WritingFormLoading />;
 }

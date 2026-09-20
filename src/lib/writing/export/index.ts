@@ -19,6 +19,8 @@ export {
   buildExportDocument,
   buildRichDocumentExport,
   exportDocumentIsEmpty,
+  theoryDocHasExportableContent,
+  writingEditorHasExportableContent,
 } from "@/lib/writing/export/build-document";
 export { buildExportFilename } from "@/lib/writing/export/filename";
 

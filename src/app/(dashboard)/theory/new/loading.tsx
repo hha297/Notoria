@@ -1,5 +1,5 @@
-﻿import { FormPageLoading } from "@/components/layout/page-loading";
+﻿import { TheoryFormLoading } from "@/components/theory/theory-loading";
 
 export default function Loading() {
-  return <FormPageLoading />;
+  return <TheoryFormLoading />;
 }

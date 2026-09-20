@@ -1,31 +1,19 @@
 "use client";
 
 import type { Editor, JSONContent } from "@tiptap/react";
-import { Loader2, Save } from "lucide-react";
+import { ArrowLeft, Loader2, Save } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
+import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { DescriptionField } from "@/components/form/description-field";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { useMutationLock } from "@/hooks/use-mutation-lock";
+import { cn } from "@/lib/utils";
 import { createTheoryNote, updateTheoryNote } from "@/lib/actions/theory";
 import { afterEditorHydration } from "@/lib/editor/hydration";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
@@ -53,6 +41,7 @@ import {
 
 type TheoryEditorProps = {
   previewHref?: string;
+  listHref?: string;
   folderId?: string | null;
   language?: string;
   initialData?: {
@@ -66,6 +55,7 @@ const AUTOSAVE_MS = 1500;
 
 export function TheoryEditor({
   previewHref,
+  listHref = "/theory",
   folderId = null,
   language,
   initialData,
@@ -342,123 +332,18 @@ export function TheoryEditor({
     }
   }
 
+  const categoryHeading = isKnownTheoryCategory(category)
+    ? t(`categories.${category}`)
+    : category;
+
   return (
-    <div className="space-y-8">
-      <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
-        <CardHeader className="space-y-2 border-b border-hairline-cloud px-4 pt-5 pb-4 sm:px-6 sm:pt-6 sm:pb-5 md:px-8 md:pt-8 md:pb-6">
-          <CardTitle className="heading-md text-ink">
-            {initialData ? t("editTitle") : t("newTitle")}
-          </CardTitle>
-          <CardDescription className="text-sm leading-relaxed sm:text-base">
-            {t("formDescription")}
-          </CardDescription>
-        </CardHeader>
-
-        <CardContent className="space-y-6 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-6 md:px-8 md:py-8">
-          <div className="space-y-2">
-            <Label htmlFor="theory-title">{t("documentTitle")}</Label>
-            <Input
-              id="theory-title"
-              value={title}
-              onChange={(event) => {
-                setTitle(event.target.value);
-                scheduleAutosave();
-              }}
-              placeholder={t("titlePlaceholder")}
-              className="h-10"
-            />
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="theory-category">{t("categoryLabel")}</Label>
-              <Select
-                value={category}
-                onValueChange={(value) => {
-                  if (!value) return;
-                  setCategory(value);
-                  scheduleAutosave();
-                }}
-              >
-                <SelectTrigger
-                  id="theory-category"
-                  className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!"
-                >
-                  <SelectValue>
-                    {isKnownTheoryCategory(category)
-                      ? t(`categories.${category}`)
-                      : category}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  {THEORY_CATEGORIES.map((item) => (
-                    <SelectItem key={item} value={item}>
-                      {t(`categories.${item}`)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="theory-description">
-              {t("summaryLabel")}{" "}
-              <span className="font-normal text-muted-foreground">
-                ({tCommon("optional")})
-              </span>
-            </Label>
-            <DescriptionField
-              id="theory-description"
-              value={description}
-              onChange={(next) => {
-                setDescription(next);
-                scheduleAutosave();
-              }}
-              onReady={adoptDescriptionBaseline}
-              placeholder={t("summaryPlaceholder")}
-              maxLength={THEORY_DESCRIPTION_MAX}
-              aria-invalid={
-                descriptionPlainLength(description) > THEORY_DESCRIPTION_MAX
-                  ? true
-                  : undefined
-              }
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label>{t("content")}</Label>
-            <RichTextEditor
-              content={doc}
-              placeholder={t("contentPlaceholder")}
-              language={language}
-              collapseStorageKey={
-                initialData?.id ? `heading-collapse:theory:${initialData.id}` : null
-              }
-              onChange={(next) => {
-                setDoc(next);
-                latestRef.current = { ...latestRef.current, doc: next };
-                if (!isBaselineReadyRef.current) return;
-                scheduleAutosave();
-              }}
-              onEditorReady={handleEditorReady}
-              onImageUploadPendingChange={setImageUploading}
-            />
-          </div>
-        </CardContent>
-      </Card>
-
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-muted-foreground">
-          {previewHref
-            ? t("editSaveHint")
-            : isAutosaving
-              ? t("autosaving")
-              : initialData
-                ? t("autosaveReady")
-                : t("autosavePending")}
-        </p>
-        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
+    <div className="writing-sheet theory-sheet" data-theory-category={category}>
+      <div className="writing-paper-chrome">
+        <Link href={previewHref ?? listHref} className="writing-back">
+          <ArrowLeft className="size-4" />
+          {previewHref ? t("backToPreview") : t("backToList")}
+        </Link>
+        <div className="writing-paper-actions">
           {previewHref ? (
             <Button
               type="button"
@@ -486,6 +371,111 @@ export function TheoryEditor({
           </Button>
         </div>
       </div>
+
+      <p className="writing-kicker">{categoryHeading}</p>
+      <label className="sr-only" htmlFor="theory-title">
+        {t("documentTitle")}
+      </label>
+      <CapitalizedInput
+        id="theory-title"
+        value={title}
+        onChange={(event) => {
+          setTitle(event.target.value);
+          scheduleAutosave();
+        }}
+        placeholder={t("titlePlaceholder")}
+        className="writing-sheet-title"
+      />
+      <p className="writing-brand-lede">{t("formDescription")}</p>
+
+      <div className="space-y-2">
+        <Label id="theory-category-label">{t("categoryLabel")}</Label>
+        <div
+          className="theory-cat-picker"
+          role="radiogroup"
+          aria-labelledby="theory-category-label"
+        >
+          {THEORY_CATEGORIES.map((item) => {
+            const selected = category === item;
+            return (
+              <button
+                key={item}
+                type="button"
+                role="radio"
+                aria-checked={selected}
+                data-theory-category={item}
+                className={cn(
+                  "theory-filter-pill theory-cat-chip",
+                  selected && "is-active",
+                )}
+                onClick={() => {
+                  setCategory(item);
+                  scheduleAutosave();
+                }}
+              >
+                {t(`categories.${item}`)}
+              </button>
+            );
+          })}
+        </div>
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="theory-description">
+          {t("summaryLabel")}{" "}
+          <span className="font-normal text-muted-foreground">
+            ({tCommon("optional")})
+          </span>
+        </Label>
+        <DescriptionField
+          id="theory-description"
+          value={description}
+          onChange={(next) => {
+            setDescription(next);
+            scheduleAutosave();
+          }}
+          onReady={adoptDescriptionBaseline}
+          placeholder={t("summaryPlaceholder")}
+          maxLength={THEORY_DESCRIPTION_MAX}
+          aria-invalid={
+            descriptionPlainLength(description) > THEORY_DESCRIPTION_MAX
+              ? true
+              : undefined
+          }
+        />
+      </div>
+
+      <div className="writing-sheet-surface theory-sheet-surface">
+        <div className="space-y-2">
+          <Label>{t("content")}</Label>
+          <RichTextEditor
+            content={doc}
+            placeholder={t("contentPlaceholder")}
+            language={language}
+            collapseStorageKey={
+              initialData?.id ? `heading-collapse:theory:${initialData.id}` : null
+            }
+            onChange={(next) => {
+              setDoc(next);
+              latestRef.current = { ...latestRef.current, doc: next };
+              if (!isBaselineReadyRef.current) return;
+              scheduleAutosave();
+            }}
+            onEditorReady={handleEditorReady}
+            onImageUploadPendingChange={setImageUploading}
+          />
+        </div>
+      </div>
+
+      <p className="text-sm text-muted-foreground">
+        {previewHref
+          ? t("editSaveHint")
+          : isAutosaving
+            ? t("autosaving")
+            : initialData
+              ? t("autosaveReady")
+              : t("autosavePending")}
+      </p>
     </div>
   );
 }

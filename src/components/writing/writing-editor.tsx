@@ -4,7 +4,7 @@ import type { Editor, JSONContent } from "@tiptap/react";
 import { ArrowLeft, Download, FileText, ListChecks, Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
@@ -17,14 +17,6 @@ import { DescriptionField } from "@/components/form/description-field";
 import { ContentTransition } from "@/components/layout/content-transition";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { cn } from "@/lib/utils";
 import { useMutationLock } from "@/hooks/use-mutation-lock";
 import { createWritingDocument, updateWritingDocument } from "@/lib/actions/writing";
@@ -54,6 +46,7 @@ import {
   writingEditorSnapshotsEqual,
   type WritingEditorSnapshot,
 } from "@/lib/writing/editor-snapshot";
+import { writingEditorHasExportableContent } from "@/lib/writing/export";
 import {
   WRITING_CEFR_LEVELS,
   WRITING_FORMALITY,
@@ -188,6 +181,7 @@ export function WritingEditor({
     isBaselineReady &&
     !writingEditorSnapshotsEqual(baseline, currentSnapshot);
   const canSave = hasRequiredContent && (initialData?.id ? isDirty : true);
+  const canExport = writingEditorHasExportableContent(editorState);
 
   function adoptDescriptionBaseline(nextDescription: string) {
     const normalized = normalizeDescription(nextDescription);
@@ -510,6 +504,8 @@ export function WritingEditor({
             size="lg"
             icon={<Download className="size-4" />}
             onClick={() => setExportOpen(true)}
+            disabled={!canExport}
+            title={canExport ? undefined : t("export.empty")}
             className="h-11 w-full sm:h-9 sm:w-auto"
           >
             {t("export.button")}
@@ -551,150 +547,93 @@ export function WritingEditor({
       <p className="writing-brand-lede">{t("formDescription")}</p>
 
       <div className="writing-sheet-meta">
-        <div className="space-y-2">
-          <Label htmlFor="writing-cefr">{tMeta("cefrLabel")}</Label>
-              <Select
-                value={editorState.meta.cefrLevel ?? "none"}
-                onValueChange={(value) =>
-                  value &&
-                  setMeta({
-                    cefrLevel:
-                      value === "none" ? null : (value as WritingCefr),
-                  })
-                }
-              >
-                <SelectTrigger
-                  id="writing-cefr"
-                  className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!"
-                >
-                  <SelectValue placeholder={tMeta("cefrPlaceholder")}>
-                    {editorState.meta.cefrLevel
-                      ? tMeta(`cefr.${editorState.meta.cefrLevel}`)
-                      : tMeta("none")}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">{tMeta("none")}</SelectItem>
-                  {WRITING_CEFR_LEVELS.map((level) => (
-                    <SelectItem key={level} value={level}>
-                      {tMeta(`cefr.${level}`)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+        <ChipPicker
+          labelId="writing-mode-label"
+          label={t("mode")}
+          value={editorState.mode}
+          onChange={(value) => setMode(value as WritingMode)}
+          options={[
+            {
+              value: "rich_document",
+              kind: "rich_document",
+              label: (
+                <>
+                  <FileText className="size-3.5" />
+                  {t("modes.richDocument")}
+                </>
+              ),
+            },
+            {
+              value: "question_set",
+              kind: "question_set",
+              label: (
+                <>
+                  <ListChecks className="size-3.5" />
+                  {t("modes.questionSet")}
+                </>
+              ),
+            },
+          ]}
+        />
+        <p className="text-xs text-muted-foreground">
+          {editorState.mode === "rich_document"
+            ? t("modes.richDocumentHint")
+            : t("modes.questionSetHint")}
+        </p>
 
-            <div className="space-y-2">
-              <Label htmlFor="writing-topic">{tMeta("topicLabel")}</Label>
-              <Select
-                value={editorState.meta.topic ?? "none"}
-                onValueChange={(value) =>
-                  value &&
-                  setMeta({ topic: value === "none" ? null : value })
-                }
-              >
-                <SelectTrigger
-                  id="writing-topic"
-                  className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!"
-                >
-                  <SelectValue placeholder={tMeta("topicPlaceholder")}>
-                    {editorState.meta.topic
-                      ? resolveTopicLabel(editorState.meta.topic, (key) =>
-                        tTags(key),
-                      )
-                      : tMeta("none")}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">{tMeta("none")}</SelectItem>
-                  {WRITING_TOPICS.map((topic) => (
-                    <SelectItem key={topic} value={topic}>
-                      {resolveTopicLabel(topic, (key) => tTags(key))}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+        <ChipPicker
+          labelId="writing-cefr-label"
+          label={tMeta("cefrLabel")}
+          value={editorState.meta.cefrLevel ?? "none"}
+          onChange={(value) =>
+            setMeta({
+              cefrLevel: value === "none" ? null : (value as WritingCefr),
+            })
+          }
+          options={[
+            { value: "none", label: tMeta("none") },
+            ...WRITING_CEFR_LEVELS.map((level) => ({
+              value: level,
+              label: tMeta(`cefr.${level}`),
+            })),
+          ]}
+        />
 
-            <div className="space-y-2">
-              <Label htmlFor="writing-formality">
-                {tMeta("formalityLabel")}
-              </Label>
-              <Select
-                value={editorState.meta.formality ?? "none"}
-                onValueChange={(value) =>
-                  value &&
-                  setMeta({
-                    formality:
-                      value === "none"
-                        ? null
-                        : (value as WritingFormality),
-                  })
-                }
-              >
-                <SelectTrigger
-                  id="writing-formality"
-                  className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!"
-                >
-                  <SelectValue placeholder={tMeta("formalityPlaceholder")}>
-                    {editorState.meta.formality
-                      ? tMeta(`formality.${editorState.meta.formality}`)
-                      : tMeta("none")}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">{tMeta("none")}</SelectItem>
-                  {WRITING_FORMALITY.map((item) => (
-                    <SelectItem key={item} value={item}>
-                      {tMeta(`formality.${item}`)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+        <ChipPicker
+          labelId="writing-formality-label"
+          label={tMeta("formalityLabel")}
+          value={editorState.meta.formality ?? "none"}
+          onChange={(value) =>
+            setMeta({
+              formality:
+                value === "none" ? null : (value as WritingFormality),
+            })
+          }
+          options={[
+            { value: "none", label: tMeta("none") },
+            ...WRITING_FORMALITY.map((item) => ({
+              value: item,
+              label: tMeta(`formality.${item}`),
+            })),
+          ]}
+        />
 
-        <div className="space-y-2">
-          <Label>{t("mode")}</Label>
-          <ToggleGroup
-            value={[editorState.mode]}
-            onValueChange={(value) => {
-              const next = value[0] as WritingMode | undefined;
-              if (next) setMode(next);
-            }}
-            className="writing-mode-toggle"
-          >
-            <ToggleGroupItem
-              value="rich_document"
-              className={cn(
-                "writing-mode-rich flex-1 cursor-pointer gap-2 border border-transparent",
-                editorState.mode === "rich_document"
-                  ? "border-module-writing-fg/40! bg-module-writing-bg! text-module-writing-fg!"
-                  : "hover:bg-module-writing-bg/45 hover:text-module-writing-fg",
-              )}
-            >
-              <FileText className="size-4" />
-              {t("modes.richDocument")}
-            </ToggleGroupItem>
-            <ToggleGroupItem
-              value="question_set"
-              className={cn(
-                "writing-mode-questions flex-1 cursor-pointer gap-2 border border-transparent",
-                editorState.mode === "question_set"
-                  ? "border-module-theory-fg/40! bg-module-theory-bg! text-module-theory-fg!"
-                  : "hover:bg-module-theory-bg/45 hover:text-module-theory-fg",
-              )}
-            >
-              <ListChecks className="size-4" />
-              {t("modes.questionSet")}
-            </ToggleGroupItem>
-          </ToggleGroup>
-        </div>
+        <ChipPicker
+          labelId="writing-topic-label"
+          label={tMeta("topicLabel")}
+          value={editorState.meta.topic ?? "none"}
+          onChange={(value) =>
+            setMeta({ topic: value === "none" ? null : value })
+          }
+          options={[
+            { value: "none", label: tMeta("none") },
+            ...WRITING_TOPICS.map((topic) => ({
+              value: topic,
+              label: resolveTopicLabel(topic, (key) => tTags(key)),
+            })),
+          ]}
+        />
       </div>
-      <p className="text-xs text-muted-foreground">
-        {editorState.mode === "rich_document"
-          ? t("modes.richDocumentHint")
-          : t("modes.questionSetHint")}
-      </p>
 
       <div className="space-y-2">
         <Label htmlFor="description">
@@ -785,6 +724,52 @@ export function WritingEditor({
         description={description}
         editorState={editorState}
       />
+    </div>
+  );
+}
+
+function ChipPicker({
+  labelId,
+  label,
+  value,
+  options,
+  onChange,
+}: {
+  labelId: string;
+  label: string;
+  value: string;
+  options: {
+    value: string;
+    label: ReactNode;
+    kind?: WritingMode;
+  }[];
+  onChange: (value: string) => void;
+}) {
+  return (
+    <div className="space-y-2">
+      <Label id={labelId}>{label}</Label>
+      <div
+        className="writing-chip-picker"
+        role="radiogroup"
+        aria-labelledby={labelId}
+      >
+        {options.map((option) => {
+          const selected = value === option.value;
+          return (
+            <button
+              key={option.value}
+              type="button"
+              role="radio"
+              aria-checked={selected}
+              data-writing-kind={option.kind}
+              className={cn("writing-chip", selected && "is-active")}
+              onClick={() => onChange(option.value)}
+            >
+              {option.label}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }

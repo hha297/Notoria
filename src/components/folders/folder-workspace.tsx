@@ -299,88 +299,90 @@ export function FolderWorkspace({
 
   return (
     <FolderWorkspaceContext.Provider value={contextValue}>
-      <FolderDndProvider
-        folders={folders}
-        currentFolderId={currentFolderId}
-        overlayLabel={(kind, id) => {
-          if (kind === "folder") {
-            return folders.find((folder) => folder.id === id)?.name ?? null;
-          }
-          return items.find((item) => item.id === id)?.title ?? null;
-        }}
-        onMove={({ kind, id, folderId }) =>
-          runMove({
-            type: kind === "folder" ? "folder" : section,
-            id,
-            folderId,
-          })
-        }
-      >
-        <div className="space-y-4">
-          {header}
-          {showBreadcrumbs ? (
-            <FolderBreadcrumbs
-              section={section}
-              folders={folders}
-              currentFolderId={currentFolderId}
-            />
-          ) : null}
-          <div data-tutorial="folder-organize">{children}</div>
-        </div>
-      </FolderDndProvider>
-
-      <FolderNameDialog
-        open={isCreateOpen}
-        onOpenChange={setCreateOpen}
-        mode="create"
-        occupiedNames={occupiedNames}
-        pending={isPending}
-        onSubmit={handleCreate}
-      />
-      <FolderNameDialog
-        open={renameTarget !== null}
-        onOpenChange={(open) => {
-          if (!open) setRenameTarget(null);
-        }}
-        mode="rename"
-        initialName={renameTarget?.name ?? ""}
-        occupiedNames={occupiedNames}
-        pending={isPending}
-        onSubmit={handleRename}
-      />
-      {deleteTarget ? (
-        <DeleteFolderDialog
-          open
-          onOpenChange={(open) => {
-            if (!open) setDeleteTarget(null);
-          }}
-          name={deleteTarget.name}
-          folderCount={deleteFolderCount}
-          itemCount={deleteItemCount}
-          pending={isPending}
-          onConfirm={handleDelete}
-        />
-      ) : null}
-      {moveTarget ? (
-        <MoveToFolderDialog
-          open
-          onOpenChange={(open) => {
-            if (!open) setMoveTarget(null);
-          }}
+      <div className="min-w-0">
+        <FolderDndProvider
           folders={folders}
-          itemType={moveTarget.type}
-          itemId={moveTarget.id}
-          currentFolderId={moveTarget.folderId}
-          pending={isPending}
-          onMove={(folderId) =>
+          currentFolderId={currentFolderId}
+          overlayLabel={(kind, id) => {
+            if (kind === "folder") {
+              return folders.find((folder) => folder.id === id)?.name ?? null;
+            }
+            return items.find((item) => item.id === id)?.title ?? null;
+          }}
+          onMove={({ kind, id, folderId }) =>
             runMove({
-              type: moveTarget.type,
-              id: moveTarget.id,
+              type: kind === "folder" ? "folder" : section,
+              id,
               folderId,
             })
           }
+        >
+          <div className="space-y-4">
+            {header}
+            {showBreadcrumbs ? (
+              <FolderBreadcrumbs
+                section={section}
+                folders={folders}
+                currentFolderId={currentFolderId}
+              />
+            ) : null}
+            <div data-tutorial="folder-organize">{children}</div>
+          </div>
+        </FolderDndProvider>
+
+        <FolderNameDialog
+          open={isCreateOpen}
+          onOpenChange={setCreateOpen}
+          mode="create"
+          occupiedNames={occupiedNames}
+          pending={isPending}
+          onSubmit={handleCreate}
         />
-      ) : null}
+        <FolderNameDialog
+          open={renameTarget !== null}
+          onOpenChange={(open) => {
+            if (!open) setRenameTarget(null);
+          }}
+          mode="rename"
+          initialName={renameTarget?.name ?? ""}
+          occupiedNames={occupiedNames}
+          pending={isPending}
+          onSubmit={handleRename}
+        />
+        {deleteTarget ? (
+          <DeleteFolderDialog
+            open
+            onOpenChange={(open) => {
+              if (!open) setDeleteTarget(null);
+            }}
+            name={deleteTarget.name}
+            folderCount={deleteFolderCount}
+            itemCount={deleteItemCount}
+            pending={isPending}
+            onConfirm={handleDelete}
+          />
+        ) : null}
+        {moveTarget ? (
+          <MoveToFolderDialog
+            open
+            onOpenChange={(open) => {
+              if (!open) setMoveTarget(null);
+            }}
+            folders={folders}
+            itemType={moveTarget.type}
+            itemId={moveTarget.id}
+            currentFolderId={moveTarget.folderId}
+            pending={isPending}
+            onMove={(folderId) =>
+              runMove({
+                type: moveTarget.type,
+                id: moveTarget.id,
+                folderId,
+              })
+            }
+          />
+        ) : null}
+      </div>
     </FolderWorkspaceContext.Provider>
   );
 }

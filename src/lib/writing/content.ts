@@ -255,7 +255,25 @@ export type WritingListMeta = {
   sectionCount: number;
   questionCount: number;
   meta: WritingMeta;
+  hasExportableContent: boolean;
 };
+
+export function coerceSqlBoolean(value: unknown): boolean {
+  if (value === true || value === 1) return true;
+  if (typeof value === "string") {
+    const normalized = value.trim().toLowerCase();
+    return normalized === "t" || normalized === "true" || normalized === "1";
+  }
+  return false;
+}
+
+function tipTapHasVisibleText(node: JSONContent | undefined): boolean {
+  if (!node) return false;
+  if (node.type === "text" && typeof node.text === "string") {
+    return node.text.trim().length > 0;
+  }
+  return Boolean(node.content?.some((child) => tipTapHasVisibleText(child)));
+}
 
 export function getWritingListMeta(content: unknown): WritingListMeta {
   const parsed = parseWritingContent(content);
@@ -266,6 +284,7 @@ export function getWritingListMeta(content: unknown): WritingListMeta {
       sectionCount: 0,
       questionCount: 0,
       meta: parsed.meta,
+      hasExportableContent: tipTapHasVisibleText(parsed.doc),
     };
   }
 
@@ -274,6 +293,9 @@ export function getWritingListMeta(content: unknown): WritingListMeta {
     sectionCount: parsed.sections.length,
     questionCount: countWritingQuestions(parsed.sections),
     meta: parsed.meta,
+    hasExportableContent: parsed.sections.some((section) =>
+      section.questions.some((question) => question.prompt.trim().length > 0),
+    ),
   };
 }
 
@@ -283,6 +305,7 @@ export function writingListMetaFromParts(input: {
   sectionCount: number | string | null;
   questionCount: number | string | null;
   meta: unknown;
+  hasExportableContent?: unknown;
 }): WritingListMeta {
   const mode: WritingMode =
     input.mode === "rich_document" ? "rich_document" : "question_set";
@@ -295,6 +318,7 @@ export function writingListMetaFromParts(input: {
       sectionCount: 0,
       questionCount: 0,
       meta: parseWritingMeta(input.meta),
+      hasExportableContent: coerceSqlBoolean(input.hasExportableContent),
     };
   }
 
@@ -303,5 +327,6 @@ export function writingListMetaFromParts(input: {
     sectionCount: Number.isFinite(sectionCount) ? sectionCount : 0,
     questionCount: Number.isFinite(questionCount) ? questionCount : 0,
     meta: parseWritingMeta(input.meta),
+    hasExportableContent: coerceSqlBoolean(input.hasExportableContent),
   };
 }

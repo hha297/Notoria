@@ -81,6 +81,10 @@ export async function getTheoryNotes(): Promise<TheoryListItem[]> {
         category: sql<string>`coalesce(${grammarNotes.content}->>'category', 'grammar')`,
         description: sql<string>`coalesce(${grammarNotes.content}->>'description', '')`,
         docBytes: sql<number>`octet_length(coalesce(${grammarNotes.content}->'doc', '{}'::jsonb)::text)`,
+        hasExportableContent: sql<boolean>`
+          coalesce((${grammarNotes.content}->'doc')::text, '')
+            ~ '"text"[[:space:]]*:[[:space:]]*"[^[:space:]"]'
+        `,
       })
       .from(grammarNotes)
       .where(

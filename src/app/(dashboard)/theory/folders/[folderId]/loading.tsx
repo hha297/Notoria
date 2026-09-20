@@ -1,5 +1,5 @@
-import { ListPageLoading } from "@/components/layout/page-loading";
+import { TheoryListLoading } from "@/components/theory/theory-loading";
 
 export default function Loading() {
-  return <ListPageLoading />;
+  return <TheoryListLoading />;
 }

@@ -70,7 +70,8 @@ function WritingCollectionItem({
 
   function handleOpen() {
     if (dnd?.skipNextClick()) return;
-    router.push(folderHref("writing", folder.id));
+    if (!workspace) return;
+    router.push(folderHref(workspace.section, folder.id));
   }
 
   return (
@@ -91,7 +92,7 @@ function WritingCollectionItem({
         onClick={handleOpen}
       >
         <span className="writing-collection-icon" aria-hidden="true">
-          <Folder className="size-4" />
+          <Folder className="size-5" fill="currentColor" />
         </span>
         <span className="writing-collection-copy">
           <span className="writing-collection-name">{folder.name}</span>
@@ -140,9 +141,10 @@ export function WritingCollections({
 }: {
   currentFolderId: string | null;
 }) {
-  const t = useTranslations("writing");
-  const tFolders = useTranslations("folders");
   const workspace = useFolderWorkspace();
+  const section = workspace?.section === "theory" ? "theory" : "writing";
+  const t = useTranslations(section);
+  const tFolders = useTranslations("folders");
   const folders = workspace?.visibleFolders ?? [];
 
   return (

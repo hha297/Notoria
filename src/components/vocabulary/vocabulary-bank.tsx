@@ -172,6 +172,9 @@ export function VocabularyBank({
           variant="outline"
           onClick={() => setExportOpen(true)}
           disabled={filteredWords.length === 0}
+          title={
+            filteredWords.length === 0 ? t("export.empty") : undefined
+          }
         >
           <Download className="size-4" />
           {t("export.button")}

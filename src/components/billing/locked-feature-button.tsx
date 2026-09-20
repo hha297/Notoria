@@ -18,15 +18,17 @@ export function LockedFeatureButton({
   children,
   onClick,
   className,
+  disabled,
   ...props
 }: LockedFeatureButtonProps) {
   const { hasProAccess, openUpgrade } = useProAccess();
-  const isLocked = locked ?? !hasProAccess;
+  const isLocked = Boolean(!disabled && (locked ?? !hasProAccess));
 
   return (
     <Button
       {...props}
-      aria-disabled={isLocked || undefined}
+      disabled={disabled}
+      aria-disabled={isLocked || disabled || undefined}
       className={cn(isLocked && lockedFeatureClassName, className)}
       onClick={(event) => {
         if (isLocked) {
