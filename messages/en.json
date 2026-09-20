@@ -1931,6 +1931,8 @@
       "capability": "What you get",
       "free": "Free",
       "pro": "Pro",
+      "freeIncludes": "Included on Free",
+      "proUnlocks": "Pro unlocks",
       "impact": "Why it matters",
       "yes": "Yes",
       "locked": "Locked",

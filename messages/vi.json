@@ -1748,6 +1748,8 @@
       "capability": "Bạn nhận được gì",
       "free": "Miễn phí",
       "pro": "Pro",
+      "freeIncludes": "Đã có trên Free",
+      "proUnlocks": "Pro mở khóa",
       "impact": "Để làm gì",
       "yes": "Có",
       "locked": "Khóa",

@@ -1748,6 +1748,8 @@
       "capability": "Mitä saat",
       "free": "Ilmainen",
       "pro": "Pro",
+      "freeIncludes": "Sisältyy ilmaiseen",
+      "proUnlocks": "Pro avaa",
       "impact": "Miksi se auttaa",
       "yes": "Kyllä",
       "locked": "Lukittu",
