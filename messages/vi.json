@@ -1723,8 +1723,8 @@
     "mostPopular": "Phổ biến nhất",
     "currentPlan": "Gói hiện tại",
     "choosePro": "Chọn Pro",
-    "freePlanDescription": "Thư viện, luyện tập và xuất CSV.",
-    "proPlanDescription": "Bài AI, đặt câu, nghe, nói và xuất PDF/Word.",
+    "freePlanDescription": "Luyện cơ bản, AI thêm từ, soạn viết và CSV.",
+    "proPlanDescription": "Bài AI, hỗ trợ viết, nghe, nói và PDF/Word.",
     "upgrade": "Nâng cấp lên Pro",
     "manage": "Quản lý gói đăng ký",
     "proBadge": "Pro",
@@ -1739,9 +1739,9 @@
     "notConfigured": "Chưa cấu hình thanh toán.",
     "noCustomer": "Tài khoản này chưa được liên kết với khách hàng thanh toán.",
     "modalTitle": "Nâng cấp gói",
-    "modalSubtitle": "Bản miễn phí đủ để lưu từ và luyện. Pro thêm bài AI từ từ vựng, Theory và Import — kèm AI viết, nghe, nói, và xuất file in được.",
+    "modalSubtitle": "Miễn phí đủ luyện mỗi ngày và thư viện. Pro mở bài AI, hỗ trợ viết, nghe, nói và file in được.",
     "lockedTitle": "Đây là tính năng Pro",
-    "lockedDescription": "Nâng cấp để mở khóa bài AI (từ vựng, đặt câu, Theory, Import) — kèm nghe, nói, AI viết, và xuất PDF/Word.",
+    "lockedDescription": "Nâng cấp để mở bài AI, hỗ trợ viết, nghe, nói và xuất PDF/Word.",
     "planName": "Pro",
     "cancelAnytime": "Hủy bất cứ lúc nào",
     "compare": {
@@ -1752,57 +1752,33 @@
       "yes": "Có",
       "locked": "Khóa",
       "rows": {
-        "vocab": {
-          "capability": "Sổ từ, thẻ, tìm kiếm",
-          "impact": "Lưu từ mà không cần trả phí"
+        "practice": {
+          "capability": "Flashcard, ghép cặp, trắc nghiệm & gõ đáp án",
+          "impact": "Luyện cơ bản từ từ của bạn"
         },
         "vocabAi": {
-          "capability": "AI chính tả và nghĩa",
-          "impact": "Thêm từ nhanh và đúng hơn"
+          "capability": "AI chính tả & nghĩa khi thêm từ",
+          "impact": "Thêm từ nhanh với AI miễn phí"
+        },
+        "studio": {
+          "capability": "Trình soạn viết & ghi chú Theory",
+          "impact": "Soạn bài và lưu ngữ pháp"
         },
         "csv": {
           "capability": "Xuất CSV",
           "impact": "Sao lưu từ ra bảng tính"
         },
-        "export": {
-          "capability": "Xuất PDF và Word",
-          "impact": "In phiếu bài hoặc chia sẻ file"
-        },
-        "writing": {
-          "capability": "Trình soạn viết",
-          "impact": "Tự soạn bài và phiếu bài"
+        "aiPractice": {
+          "capability": "Bài AI từ từ vựng, Theory & Import",
+          "impact": "Điền trống, ngữ cảnh, đặt câu"
         },
         "writingAi": {
-          "capability": "AI viết (sửa và cải thiện)",
+          "capability": "AI viết (sửa & cải thiện)",
           "impact": "Sửa lỗi trên bài của bạn"
         },
-        "exercises": {
-          "capability": "Bài tập từ ví dụ đã lưu",
-          "impact": "Luyện đúng câu bạn đã thêm"
-        },
-        "fillBlank": {
-          "capability": "Điền chỗ trống bằng AI",
-          "impact": "Câu mới, không phải thuộc ví dụ cũ"
-        },
-        "exerciseDifficulty": {
-          "capability": "Trắc nghiệm & gõ đáp án ngữ cảnh AI",
-          "impact": "Điền chỗ trống từ từ vựng của bạn (Dễ–Tăng cường)"
-        },
-        "formSentence": {
-          "capability": "Đặt câu (phản hồi AI)",
-          "impact": "Viết câu với từ của bạn và được sửa ngữ pháp"
-        },
-        "theory": {
-          "capability": "Ghi chú lý thuyết",
-          "impact": "Lưu ngữ pháp và cách dùng"
-        },
-        "theoryAi": {
-          "capability": "Bài tập Theory bằng AI",
-          "impact": "Luyện Theory của bạn với bài điền chỗ trống do AI tạo"
-        },
-        "importAi": {
-          "capability": "Bài tập Import bằng AI",
-          "impact": "Biến worksheet, ảnh, PDF hoặc URL thành thẻ luyện"
+        "export": {
+          "capability": "Xuất PDF & Word",
+          "impact": "In phiếu bài hoặc chia sẻ file"
         },
         "listening": {
           "capability": "Bài nghe",

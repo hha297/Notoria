@@ -1723,8 +1723,8 @@
     "mostPopular": "Suosituin",
     "currentPlan": "Nykyinen tilaus",
     "choosePro": "Valitse Pro",
-    "freePlanDescription": "Kirjasto, harjoittelu ja CSV-vienti.",
-    "proPlanDescription": "Tekoälyharjoitukset, muodosta lause, kuuntelu, puhuminen ja PDF/Word-vienti.",
+    "freePlanDescription": "Perusharjoitukset, sanasto-tekoäly, kirjoitus ja CSV.",
+    "proPlanDescription": "Tekoälyharjoitukset, kirjoitusapu, kuuntelu, puhuminen ja PDF/Word.",
     "upgrade": "Päivitä Pro-tilaukseen",
     "manage": "Hallinnoi tilausta",
     "proBadge": "Pro",
@@ -1739,9 +1739,9 @@
     "notConfigured": "Laskutusta ei ole vielä määritetty.",
     "noCustomer": "Tähän tiliin ei ole vielä liitetty laskutusasiakasta.",
     "modalTitle": "Päivitä tilaus",
-    "modalSubtitle": "Ilmaisessa säilyvät kirjasto ja harjoittelu. Pro tuo tekoälyharjoitukset sanastosta, teoriasta ja tuonneista — sekä kirjoittamisen tekoälyn, kuuntelun, puhumisen ja tulostettavat tiedostot.",
+    "modalSubtitle": "Ilmainen kattaa arjen harjoittelun ja kirjaston. Pro avaa tekoälyharjoitukset, kirjoitusavun, kuuntelun, puhumisen ja tulostettavat tiedostot.",
     "lockedTitle": "Tämä on Pro-ominaisuus",
-    "lockedDescription": "Päivitä Prohon avataksesi tekoälyharjoitukset (sanasto, muodosta lause, teoria, tuonti) — sekä kuuntelun, puhumisen, kirjoittamisen tekoälyn ja PDF/Word-viennin.",
+    "lockedDescription": "Päivitä Prohon saadaksesi tekoälyharjoitukset, kirjoitusavun, kuuntelun, puhumisen ja PDF/Word-viennin.",
     "planName": "Pro",
     "cancelAnytime": "Peru milloin tahansa",
     "compare": {
@@ -1752,57 +1752,33 @@
       "yes": "Kyllä",
       "locked": "Lukittu",
       "rows": {
-        "vocab": {
-          "capability": "Sanakirjasto, tunnisteet, haku",
-          "impact": "Säilytä sanat ilman maksua"
+        "practice": {
+          "capability": "Muistikortit, paritus, visailu & kirjoitusvastaus",
+          "impact": "Perusharjoituksia omista sanoistasi"
         },
         "vocabAi": {
-          "capability": "Tekoäly: oikeinkirjoitus ja merkitys",
-          "impact": "Lisää sanoja nopeammin ja tarkemmin"
+          "capability": "Tekoäly: oikeinkirjoitus & merkitys sanoja lisättäessä",
+          "impact": "Lisää sanoja nopeammin ilmaisen tekoälyn avulla"
+        },
+        "studio": {
+          "capability": "Kirjoituseditori & teoriamuistiinpanot",
+          "impact": "Luo tekstejä ja tallenna kielioppi"
         },
         "csv": {
           "capability": "CSV-vienti",
           "impact": "Varmuuskopioi sanat taulukkoon"
         },
-        "export": {
-          "capability": "PDF- ja Word-vienti",
-          "impact": "Tulosta tehtävät tai jaa tiedostot"
-        },
-        "writing": {
-          "capability": "Kirjoituseditori",
-          "impact": "Luo luonnoksia ja tehtäväarkkeja itse"
+        "aiPractice": {
+          "capability": "Tekoälyharjoitukset sanastosta, teoriasta & tuonnista",
+          "impact": "Aukkotehtävät, konteksti, muodosta lause"
         },
         "writingAi": {
-          "capability": "Kirjoittamisen tekoäly",
+          "capability": "Kirjoittamisen tekoäly (tarkista & paranna)",
           "impact": "Korjauksia omaan tekstiisi"
         },
-        "exercises": {
-          "capability": "Harjoitukset omista esimerkeistä",
-          "impact": "Harjoittele tallennetuilla lauseilla"
-        },
-        "fillBlank": {
-          "capability": "Tekoälyn täydennystehtävät",
-          "impact": "Uudet lauseet, ei muistettuja esimerkkejä"
-        },
-        "exerciseDifficulty": {
-          "capability": "Konteksti-MC ja kirjoitus tekoälyllä",
-          "impact": "Aukkotehtäviä omasta sanastosta tasoilla Helppo–Intensiivinen"
-        },
-        "formSentence": {
-          "capability": "Muodosta lause (tekoälypalaute)",
-          "impact": "Kirjoita omilla sanoilla ja saa kielioppiapua"
-        },
-        "theory": {
-          "capability": "Teoriamuistiinpanot",
-          "impact": "Tallenna kielioppi ja käyttö"
-        },
-        "theoryAi": {
-          "capability": "Theory-tekoälyharjoitukset",
-          "impact": "Harjoittele omaa Teoriaasi tekoälyn aukkotehtävillä"
-        },
-        "importAi": {
-          "capability": "Tuontiharjoitukset tekoälyllä",
-          "impact": "Muuta harjoituspaperit, kuvat, PDF:t tai URL:it harjoituskorteiksi"
+        "export": {
+          "capability": "PDF- & Word-vienti",
+          "impact": "Tulosta tehtävät tai jaa tiedostot"
         },
         "listening": {
           "capability": "Kuuntelutunnit",

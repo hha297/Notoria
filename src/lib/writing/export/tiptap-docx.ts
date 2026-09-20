@@ -13,9 +13,20 @@ import {
 import type { JSONContent } from "@tiptap/react";
 import { coerceHeadingLevel } from "@/lib/editor/heading-level";
 import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
+import {
+  DOCX_FONT_SANS,
+  PRINT_HAIRLINE,
+  PRINT_INK,
+  PRINT_LEDE_WASH,
+  PRINT_RULE,
+  hexForDocx,
+} from "@/lib/export/print-theme";
 
-/** Match Notoria body font across the exported worksheet. */
-const FONT_SANS = "Chakra Petch";
+const FONT_SANS = DOCX_FONT_SANS;
+const INK = hexForDocx(PRINT_INK);
+const HAIRLINE = hexForDocx(PRINT_HAIRLINE);
+const RULE = hexForDocx(PRINT_RULE);
+const WASH = hexForDocx(PRINT_LEDE_WASH);
 
 const BODY_SIZE = 22;
 const HEADING_SIZES: Record<number, number> = {
@@ -85,7 +96,7 @@ function textRunFromNode(node: JSONContent, size: number): TextRun {
     underline: marks.underline ? {} : undefined,
     highlight: marks.highlight ? "yellow" : undefined,
     strike: marks.strike,
-    color: "2F4A08",
+    color: INK,
   });
 }
 
@@ -139,7 +150,7 @@ function paragraphFromNodes(
         font: FONT_SANS,
         size,
         bold: Boolean(heading),
-        color: "1A1528",
+        color: INK,
       }),
     );
   }
@@ -202,7 +213,7 @@ function renderTable(node: JSONContent): Table {
                 type: WidthType.PERCENTAGE,
               },
               shading: isHeader
-                ? { type: ShadingType.CLEAR, fill: "F4F2F8" }
+                ? { type: ShadingType.CLEAR, fill: WASH }
                 : undefined,
               children: [
                 new Paragraph({
@@ -258,7 +269,7 @@ function renderBlock(
             left: {
               style: BorderStyle.SINGLE,
               size: 12,
-              color: "C8C2D6",
+              color: RULE,
               space: 8,
             },
           },
@@ -269,7 +280,7 @@ function renderBlock(
         paragraphFromNodes(
           [{ type: "text", text: collectPlainText(node) || " " }],
           {
-            shading: { type: ShadingType.CLEAR, fill: "F4F2F8" },
+            shading: { type: ShadingType.CLEAR, fill: WASH },
           },
         ),
       ];
@@ -281,7 +292,7 @@ function renderBlock(
             bottom: {
               style: BorderStyle.SINGLE,
               size: 6,
-              color: "D5D0E0",
+              color: HAIRLINE,
               space: 1,
             },
           },

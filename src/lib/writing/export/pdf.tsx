@@ -18,125 +18,117 @@ import { BLANK_LINE_COUNT } from "@/lib/writing/export/types";
 import { generateRichDocumentPdfBlob } from "@/lib/writing/export/rich-document-pdf";
 import { wrapTextOntoLines } from "@/lib/writing/export/wrap-text";
 import { ensurePdfFonts, PDF_FONT_SANS } from "@/lib/export/pdf-fonts";
+import { PdfMasthead } from "@/lib/export/pdf-masthead";
+import {
+  PRINT_FOOTER,
+  PRINT_INK,
+  PRINT_MUTED,
+  PRINT_NOTE_WASH,
+  PRINT_PAPER,
+  PRINT_RULE,
+  printAccent,
+  type PrintSurface,
+} from "@/lib/export/print-theme";
+import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
 
 const FONT_SANS = PDF_FONT_SANS;
 
 const styles = StyleSheet.create({
   page: {
-    paddingTop: 48,
-    paddingBottom: 56,
+    paddingTop: 44,
+    paddingBottom: 52,
     paddingHorizontal: 48,
     fontFamily: FONT_SANS,
     fontSize: 11,
-    // Avoid unitless lineHeight on Page — breaks long docs with fixed footers
-    // (react-pdf: unsupported number …e+21).
-    color: "#1a1528",
-  },
-  heading: {
-    fontSize: 20,
-    fontFamily: FONT_SANS,
-    fontWeight: 700,
-    marginBottom: 8,
-    lineHeight: 1.3,
-  },
-  titleRow: {
-    marginBottom: 16,
-  },
-  titleLabel: {
-    fontSize: 10,
-    fontFamily: FONT_SANS,
-    fontWeight: 500,
-    color: "#6b6680",
-    marginBottom: 2,
-    textTransform: "uppercase",
-    letterSpacing: 0.6,
-  },
-  titleValue: {
-    fontSize: 16,
-    fontFamily: FONT_SANS,
-    fontWeight: 700,
-    lineHeight: 1.3,
-  },
-  descriptionRow: {
-    marginBottom: 16,
-  },
-  descriptionBody: {
-    fontSize: 11,
-    fontFamily: FONT_SANS,
-    fontWeight: 400,
-    color: "#3d3850",
-    lineHeight: 1.45,
-    marginBottom: 2,
-  },
-  divider: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#d5d0e0",
-    marginBottom: 18,
+    color: PRINT_INK,
+    backgroundColor: PRINT_PAPER,
   },
   section: {
-    marginBottom: 20,
+    marginBottom: 22,
   },
   sectionTitle: {
-    fontSize: 14,
+    fontSize: 9,
     fontFamily: FONT_SANS,
     fontWeight: 700,
-    marginBottom: 10,
+    letterSpacing: 1.4,
+    textTransform: "uppercase",
+    marginBottom: 12,
   },
   questionBlock: {
-    marginBottom: 16,
+    marginBottom: 18,
   },
-  questionLabel: {
-    fontSize: 10,
+  questionRow: {
+    flexDirection: "row",
+    gap: 10,
+    marginBottom: 8,
+  },
+  questionIndex: {
+    width: 18,
+    height: 18,
+    borderRadius: 9,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 1,
+  },
+  questionIndexText: {
     fontFamily: FONT_SANS,
-    fontWeight: 500,
-    color: "#6b6680",
-    marginBottom: 4,
-    textTransform: "uppercase",
-    letterSpacing: 0.6,
+    fontSize: 9,
+    fontWeight: 700,
+    color: "#ffffff",
   },
   prompt: {
+    flex: 1,
     fontSize: 12,
     fontFamily: FONT_SANS,
     fontWeight: 500,
-    marginBottom: 8,
+    color: PRINT_INK,
+    lineHeight: 1.4,
   },
   answerLine: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#c8c2d6",
-    marginBottom: 8,
-    minHeight: 22,
+    borderBottomWidth: 0.8,
+    borderBottomColor: PRINT_RULE,
+    marginBottom: 7,
+    minHeight: 20,
     justifyContent: "flex-end",
     paddingBottom: 2,
   },
   answerText: {
     fontFamily: FONT_SANS,
-    fontSize: 12,
+    fontSize: 11,
     fontWeight: 400,
-    color: "#2f4a08",
+    fontStyle: "italic",
+    color: PRINT_MUTED,
   },
-  metaLabel: {
-    fontSize: 10,
+  callout: {
+    marginTop: 6,
+    paddingVertical: 6,
+    paddingHorizontal: 8,
+    backgroundColor: PRINT_NOTE_WASH,
+    borderLeftWidth: 2,
+  },
+  calloutLabel: {
+    fontSize: 8,
     fontFamily: FONT_SANS,
     fontWeight: 700,
-    color: "#4a6b0a",
-    marginTop: 4,
+    letterSpacing: 1.1,
+    textTransform: "uppercase",
     marginBottom: 2,
   },
-  metaBody: {
+  calloutBody: {
     fontSize: 10,
     fontFamily: FONT_SANS,
-    color: "#3d3850",
-    marginBottom: 6,
+    color: PRINT_INK,
+    lineHeight: 1.4,
   },
   footer: {
     position: "absolute",
-    bottom: 28,
+    bottom: 26,
     left: 48,
     right: 48,
-    fontSize: 9,
+    fontSize: 8,
     fontFamily: FONT_SANS,
-    color: "#8a849c",
-    textAlign: "center",
+    color: PRINT_FOOTER,
+    letterSpacing: 0.4,
   },
 });
 
@@ -159,11 +151,13 @@ function QuestionBlock({
   index,
   labels,
   leaveBlankSpace,
+  accent,
 }: {
   question: ExportQuestion;
   index: number;
   labels: ExportLabels;
   leaveBlankSpace: boolean;
+  accent: string;
 }) {
   const exampleOnLines = Boolean(leaveBlankSpace && question.exampleAnswer);
   const showSeparateExample = Boolean(
@@ -172,10 +166,12 @@ function QuestionBlock({
 
   return (
     <View style={styles.questionBlock} wrap={false}>
-      <Text style={styles.questionLabel}>
-        {labels.questionLabel} {index + 1}
-      </Text>
-      <Text style={styles.prompt}>{question.prompt}</Text>
+      <View style={styles.questionRow}>
+        <View style={[styles.questionIndex, { backgroundColor: accent }]}>
+          <Text style={styles.questionIndexText}>{index + 1}</Text>
+        </View>
+        <Text style={styles.prompt}>{sanitizeExportText(question.prompt)}</Text>
+      </View>
       {leaveBlankSpace ? (
         <AnswerLines
           text={exampleOnLines ? question.exampleAnswer : undefined}
@@ -183,15 +179,23 @@ function QuestionBlock({
         />
       ) : null}
       {showSeparateExample ? (
-        <View>
-          <Text style={styles.metaLabel}>{labels.exampleAnswerLabel}</Text>
-          <Text style={styles.answerText}>{question.exampleAnswer}</Text>
+        <View style={[styles.callout, { borderLeftColor: accent }]}>
+          <Text style={[styles.calloutLabel, { color: accent }]}>
+            {labels.exampleAnswerLabel}
+          </Text>
+          <Text style={styles.calloutBody}>
+            {sanitizeExportText(question.exampleAnswer ?? "")}
+          </Text>
         </View>
       ) : null}
       {question.notes ? (
-        <View>
-          <Text style={styles.metaLabel}>{labels.notesLabel}</Text>
-          <Text style={styles.metaBody}>{question.notes}</Text>
+        <View style={[styles.callout, { borderLeftColor: accent }]}>
+          <Text style={[styles.calloutLabel, { color: accent }]}>
+            {labels.notesLabel}
+          </Text>
+          <Text style={styles.calloutBody}>
+            {sanitizeExportText(question.notes)}
+          </Text>
         </View>
       ) : null}
     </View>
@@ -203,19 +207,21 @@ function SectionBlock({
   index,
   labels,
   leaveBlankSpace,
+  accent,
 }: {
   section: ExportSection;
   index: number;
   labels: ExportLabels;
   leaveBlankSpace: boolean;
+  accent: string;
 }) {
   const heading = section.title
-    ? `${labels.sectionLabel} ${index + 1}: ${section.title}`
+    ? `${labels.sectionLabel} ${index + 1}  ·  ${section.title}`
     : `${labels.sectionLabel} ${index + 1}`;
 
   return (
     <View style={styles.section}>
-      <Text style={styles.sectionTitle}>{heading}</Text>
+      <Text style={[styles.sectionTitle, { color: accent }]}>{heading}</Text>
       {section.questions.map((question, questionIndex) => (
         <QuestionBlock
           key={questionIndex}
@@ -223,6 +229,7 @@ function SectionBlock({
           index={questionIndex}
           labels={labels}
           leaveBlankSpace={leaveBlankSpace}
+          accent={accent}
         />
       ))}
     </View>
@@ -233,30 +240,26 @@ function QuestionSetPdfDocument({
   model,
   labels,
   options,
+  surface,
 }: {
   model: ExportDocumentModel;
   labels: ExportLabels;
   options: ExportOptions;
+  surface: PrintSurface;
 }) {
+  const accent = printAccent(surface);
+  const title = sanitizeExportText(model.title) || "—";
+  const description = sanitizeExportText(model.description);
+
   return (
     <Document>
       <Page size="A4" style={styles.page} wrap>
-        <Text style={styles.heading}>{labels.documentHeading}</Text>
-        <View style={styles.titleRow}>
-          <Text style={styles.titleLabel}>{labels.titleLabel}</Text>
-          <Text style={styles.titleValue}>{model.title || "—"}</Text>
-        </View>
-        {model.description ? (
-          <View style={styles.descriptionRow}>
-            <Text style={styles.titleLabel}>{labels.descriptionLabel}</Text>
-            {model.description.split("\n").map((line, index) => (
-              <Text key={index} style={styles.descriptionBody}>
-                {line.length > 0 ? line : " "}
-              </Text>
-            ))}
-          </View>
-        ) : null}
-        <View style={styles.divider} />
+        <PdfMasthead
+          kicker={labels.documentHeading}
+          title={title}
+          lede={description || undefined}
+          accent={accent}
+        />
         {model.sections.map((section, index) => (
           <SectionBlock
             key={index}
@@ -264,12 +267,13 @@ function QuestionSetPdfDocument({
             index={index}
             labels={labels}
             leaveBlankSpace={options.leaveBlankSpace}
+            accent={accent}
           />
         ))}
         <Text
           style={styles.footer}
           render={({ pageNumber, totalPages }) =>
-            `${pageNumber} / ${totalPages}`
+            `Notoria  ·  ${pageNumber} / ${totalPages}`
           }
           fixed
         />
@@ -282,15 +286,21 @@ export async function generateWritingPdfBlob(
   model: ExportDocumentModel,
   labels: ExportLabels,
   options: ExportOptions,
-  layout: ExportLayout = "worksheet",
+  _layout: ExportLayout = "worksheet",
+  surface: PrintSurface = "writing",
 ): Promise<Blob> {
   await ensurePdfFonts();
 
   if (model.mode === "rich_document") {
-    return generateRichDocumentPdfBlob(model, labels, layout);
+    return generateRichDocumentPdfBlob(model, labels, "document", surface);
   }
 
   return pdf(
-    <QuestionSetPdfDocument model={model} labels={labels} options={options} />,
+    <QuestionSetPdfDocument
+      model={model}
+      labels={labels}
+      options={options}
+      surface={surface}
+    />,
   ).toBlob();
 }

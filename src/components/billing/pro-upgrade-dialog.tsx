@@ -21,22 +21,25 @@ import {
 import { cn } from "@/lib/utils";
 
 const COMPARE_ROWS = [
-  { id: "vocab", free: "yes" },
+  { id: "practice", free: "yes" },
   { id: "vocabAi", free: "yes" },
+  { id: "studio", free: "yes" },
   { id: "csv", free: "yes" },
-  { id: "export", free: "locked" },
-  { id: "writing", free: "yes" },
+  { id: "aiPractice", free: "locked" },
   { id: "writingAi", free: "locked" },
-  { id: "exercises", free: "yes" },
-  { id: "fillBlank", free: "locked" },
-  { id: "exerciseDifficulty", free: "locked" },
-  { id: "formSentence", free: "locked" },
-  { id: "theory", free: "yes" },
-  { id: "theoryAi", free: "locked" },
-  { id: "importAi", free: "locked" },
+  { id: "export", free: "locked" },
   { id: "listening", free: "locked" },
   { id: "speaking", free: "locked" },
 ] as const;
+
+type CompareRowId = (typeof COMPARE_ROWS)[number]["id"];
+
+function compareRowCapability(
+  t: (key: `compare.rows.${CompareRowId}.capability`) => string,
+  id: CompareRowId,
+) {
+  return t(`compare.rows.${id}.capability`);
+}
 
 type ProUpgradeDialogProps = {
   open: boolean;
@@ -213,7 +216,7 @@ export function ProUpgradeDialog({
                     )}
                   >
                     <td className="px-3 py-2 leading-snug break-words text-ink">
-                      {t(`compare.rows.${row.id}.capability`)}
+                      {compareRowCapability(t, row.id)}
                     </td>
                     <td className="px-2 py-2 text-center">
                       <CompareValue included={row.free === "yes"} />

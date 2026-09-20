@@ -3,10 +3,19 @@ import { Image, Text, View, StyleSheet } from "@react-pdf/renderer";
 import type { ReactNode } from "react";
 import { coerceHeadingLevel } from "@/lib/editor/heading-level";
 import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
+import { PDF_FONT_SANS } from "@/lib/export/pdf-fonts";
+import {
+  PRINT_ACCENT,
+  PRINT_HAIRLINE,
+  PRINT_INK,
+  PRINT_MUTED,
+  PRINT_NOTE_WASH,
+  PRINT_RULE,
+} from "@/lib/export/print-theme";
 import type { ExportLayout } from "@/lib/writing/export/types";
 
-/** Matches Question Set export body typography (Chakra Petch / ink). */
-const FONT_SANS = "ChakraPetch";
+const FONT_SANS = PDF_FONT_SANS;
+const DEFAULT_ACCENT = PRINT_ACCENT.writing;
 
 const styles = StyleSheet.create({
   body: {
@@ -16,75 +25,82 @@ const styles = StyleSheet.create({
     marginBottom: 12,
   },
   docBlock: {
-    marginBottom: 10,
+    marginBottom: 9,
   },
   docSpacer: {
     marginBottom: 8,
   },
-  /** Ruled line — same look as Question Set answer lines. */
   ruledLine: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#c8c2d6",
-    marginBottom: 8,
-    minHeight: 22,
+    borderBottomWidth: 0.8,
+    borderBottomColor: PRINT_RULE,
+    marginBottom: 7,
+    minHeight: 20,
     justifyContent: "flex-end",
     paddingBottom: 2,
   },
   ruledText: {
     fontFamily: FONT_SANS,
-    fontSize: 12,
+    fontSize: 11.5,
     fontWeight: 400,
-    color: "#2f4a08",
+    color: PRINT_INK,
   },
   ruledHeading: {
     fontFamily: FONT_SANS,
-    fontSize: 12,
+    fontSize: 13,
     fontWeight: 700,
-    color: "#1a1528",
+    color: PRINT_INK,
   },
   docText: {
     fontFamily: FONT_SANS,
     fontSize: 11,
     fontWeight: 400,
-    color: "#1a1528",
-    lineHeight: 1.5,
+    color: PRINT_INK,
+    lineHeight: 1.55,
   },
   docH1: {
     fontFamily: FONT_SANS,
     fontSize: 16,
     fontWeight: 700,
-    color: "#1a1528",
-    lineHeight: 1.3,
-    marginTop: 6,
+    color: PRINT_INK,
+    lineHeight: 1.28,
+    marginTop: 10,
+    marginBottom: 2,
+    paddingBottom: 4,
+    borderBottomWidth: 1,
+    borderBottomColor: PRINT_HAIRLINE,
   },
   docH2: {
     fontFamily: FONT_SANS,
     fontSize: 13,
     fontWeight: 700,
-    color: "#1a1528",
+    color: PRINT_INK,
     lineHeight: 1.3,
-    marginTop: 4,
+    marginTop: 10,
+    marginBottom: 1,
   },
   docH3: {
     fontFamily: FONT_SANS,
-    fontSize: 12,
+    fontSize: 11.5,
     fontWeight: 700,
-    color: "#1a1528",
+    color: PRINT_MUTED,
     lineHeight: 1.3,
-    marginTop: 2,
+    marginTop: 8,
   },
   listBlock: {
-    marginBottom: 12,
+    marginBottom: 10,
   },
   blockquote: {
-    borderLeftWidth: 3,
-    borderLeftColor: "#c8c2d6",
+    borderLeftWidth: 2.5,
+    borderLeftColor: PRINT_HAIRLINE,
+    backgroundColor: PRINT_NOTE_WASH,
     paddingLeft: 10,
+    paddingVertical: 6,
+    paddingRight: 8,
     marginBottom: 12,
     marginTop: 2,
   },
   codeBlock: {
-    backgroundColor: "#f4f2f8",
+    backgroundColor: PRINT_NOTE_WASH,
     borderRadius: 4,
     padding: 8,
     marginBottom: 12,
@@ -92,12 +108,12 @@ const styles = StyleSheet.create({
   codeText: {
     fontFamily: FONT_SANS,
     fontSize: 10,
-    color: "#1a1528",
+    color: PRINT_INK,
     lineHeight: 1.4,
   },
   hr: {
     borderBottomWidth: 1,
-    borderBottomColor: "#d5d0e0",
+    borderBottomColor: PRINT_HAIRLINE,
     marginVertical: 12,
   },
   image: {
@@ -109,30 +125,30 @@ const styles = StyleSheet.create({
     width: "100%",
     marginBottom: 12,
     borderWidth: 1,
-    borderColor: "#d5d0e0",
+    borderColor: PRINT_HAIRLINE,
   },
   tableRow: {
     flexDirection: "row",
     borderBottomWidth: 1,
-    borderBottomColor: "#d5d0e0",
+    borderBottomColor: PRINT_HAIRLINE,
   },
   tableCell: {
     flex: 1,
     padding: 6,
     borderRightWidth: 1,
-    borderRightColor: "#d5d0e0",
+    borderRightColor: PRINT_HAIRLINE,
   },
   tableHeaderCell: {
     flex: 1,
     padding: 6,
     borderRightWidth: 1,
-    borderRightColor: "#d5d0e0",
-    backgroundColor: "#f4f2f8",
+    borderRightColor: PRINT_HAIRLINE,
+    backgroundColor: PRINT_NOTE_WASH,
   },
   tableCellText: {
     fontFamily: FONT_SANS,
-    fontSize: 11,
-    color: "#1a1528",
+    fontSize: 10.5,
+    color: PRINT_INK,
   },
 });
 
@@ -211,6 +227,7 @@ function renderRun(
   run: TextRun,
   variant: "body" | "heading",
   layout: ExportLayout,
+  accent: string,
   key?: string | number,
 ): ReactNode {
   const marks = run.marks;
@@ -221,13 +238,7 @@ function renderRun(
     textDecoration: (marks.underline || marks.linkHref
       ? "underline"
       : "none") as "underline" | "none",
-    color: marks.linkHref
-      ? "#3d6b0a"
-      : isDocument
-        ? "#1a1528"
-        : variant === "heading"
-          ? "#1a1528"
-          : "#2f4a08",
+    color: marks.linkHref ? accent : PRINT_INK,
     ...(marks.highlight ? { backgroundColor: "#f2f6c8" } : {}),
   };
 
@@ -334,10 +345,12 @@ function RuledLines({
   runs,
   variant = "body",
   prefix,
+  accent,
 }: {
   runs: TextRun[];
   variant?: "body" | "heading";
   prefix?: string;
+  accent: string;
 }): ReactNode {
   const lines = packRunsOntoLines(
     prefix
@@ -352,7 +365,7 @@ function RuledLines({
           <Text>
             {lineRuns.length > 0 ? (
               lineRuns.map((run, runIndex) =>
-                renderRun(run, variant, "worksheet", runIndex),
+                renderRun(run, variant, "worksheet", accent, runIndex),
               )
             ) : (
               <Text
@@ -374,10 +387,12 @@ function RuledFromNodes({
   nodes,
   variant = "body",
   prefix,
+  accent,
 }: {
   nodes: JSONContent[] | undefined;
   variant?: "body" | "heading";
   prefix?: string;
+  accent: string;
 }): ReactNode {
   const runs = collectRuns(nodes);
   if (runs.length === 0 && !prefix) {
@@ -389,7 +404,7 @@ function RuledFromNodes({
       </View>
     );
   }
-  return <RuledLines runs={runs} variant={variant} prefix={prefix} />;
+  return <RuledLines runs={runs} variant={variant} prefix={prefix} accent={accent} />;
 }
 
 function documentHeadingStyle(level: number) {
@@ -403,11 +418,13 @@ function DocumentFromNodes({
   variant = "body",
   prefix,
   headingLevel = 1,
+  accent,
 }: {
   nodes: JSONContent[] | undefined;
   variant?: "body" | "heading";
   prefix?: string;
   headingLevel?: number;
+  accent: string;
 }): ReactNode {
   const runs = collectRuns(nodes);
   const allRuns = prefix
@@ -420,7 +437,7 @@ function DocumentFromNodes({
 
   return (
     <Text style={variant === "heading" ? documentHeadingStyle(headingLevel) : styles.docText}>
-      {allRuns.map((run, index) => renderRun(run, variant, "document", index))}
+      {allRuns.map((run, index) => renderRun(run, variant, "document", accent, index))}
     </Text>
   );
 }
@@ -431,12 +448,14 @@ function BodyFromNodes({
   prefix,
   layout,
   headingLevel,
+  accent,
 }: {
   nodes: JSONContent[] | undefined;
   variant?: "body" | "heading";
   prefix?: string;
   layout: ExportLayout;
   headingLevel?: number;
+  accent: string;
 }): ReactNode {
   if (layout === "document") {
     return (
@@ -445,16 +464,18 @@ function BodyFromNodes({
         variant={variant}
         prefix={prefix}
         headingLevel={headingLevel}
+        accent={accent}
       />
     );
   }
-  return <RuledFromNodes nodes={nodes} variant={variant} prefix={prefix} />;
+  return <RuledFromNodes nodes={nodes} variant={variant} prefix={prefix} accent={accent} />;
 }
 
 function renderListItems(
   items: JSONContent[] | undefined,
   ordered: boolean,
   layout: ExportLayout,
+  accent: string,
 ): ReactNode[] {
   if (!items?.length) return [];
 
@@ -471,6 +492,7 @@ function renderListItems(
           nodes={inlineNodes}
           prefix={marker}
           layout={layout}
+          accent={accent}
         />
       </View>
     );
@@ -507,6 +529,7 @@ function renderBlock(
   node: JSONContent,
   index: number,
   layout: ExportLayout,
+  accent: string,
 ): ReactNode {
   const blockStyle = layout === "document" ? styles.docBlock : styles.block;
 
@@ -514,7 +537,7 @@ function renderBlock(
     case "paragraph":
       return (
         <View key={index} style={blockStyle}>
-          <BodyFromNodes nodes={node.content} layout={layout} />
+          <BodyFromNodes nodes={node.content} layout={layout} accent={accent} />
         </View>
       );
     case "heading": {
@@ -526,6 +549,7 @@ function renderBlock(
             variant="heading"
             layout={layout}
             headingLevel={headingLevel}
+            accent={accent}
           />
         </View>
       );
@@ -533,13 +557,13 @@ function renderBlock(
     case "bulletList":
       return (
         <View key={index} style={styles.listBlock}>
-          {renderListItems(node.content, false, layout)}
+          {renderListItems(node.content, false, layout, accent)}
         </View>
       );
     case "orderedList":
       return (
         <View key={index} style={styles.listBlock}>
-          {renderListItems(node.content, true, layout)}
+          {renderListItems(node.content, true, layout, accent)}
         </View>
       );
     case "taskList":
@@ -557,6 +581,7 @@ function renderBlock(
                   nodes={inlineNodes}
                   prefix={checked ? "[x]" : "[ ]"}
                   layout={layout}
+                  accent={accent}
                 />
               </View>
             );
@@ -565,10 +590,10 @@ function renderBlock(
       );
     case "blockquote":
       return (
-        <View key={index} style={styles.blockquote}>
+        <View key={index} style={[styles.blockquote, { borderLeftColor: accent }]}>
           {(node.content ?? []).map((child, childIndex) => (
             <View key={childIndex} style={blockStyle}>
-              <BodyFromNodes nodes={child.content} layout={layout} />
+              <BodyFromNodes nodes={child.content} layout={layout} accent={accent} />
             </View>
           ))}
         </View>
@@ -579,6 +604,7 @@ function renderBlock(
           <BodyFromNodes
             nodes={[{ type: "text", text: collectPlainText(node) || " " }]}
             layout={layout}
+            accent={accent}
           />
         </View>
       );
@@ -599,7 +625,7 @@ function renderBlock(
         return (
           <View key={index}>
             {node.content.map((child, childIndex) =>
-              renderBlock(child, childIndex, layout),
+              renderBlock(child, childIndex, layout, accent),
             )}
           </View>
         );
@@ -611,19 +637,20 @@ function renderBlock(
 /** Continuous TipTap → PDF body. Worksheet keeps ruled lines; document does not. */
 export function renderTipTapDocToPdf(
   doc: JSONContent | null,
-  layout: ExportLayout = "worksheet",
+  layout: ExportLayout = "document",
+  accent: string = DEFAULT_ACCENT,
 ): ReactNode {
   if (!doc?.content?.length) {
     return (
       <View style={layout === "document" ? styles.docBlock : styles.block}>
-        <BodyFromNodes nodes={undefined} layout={layout} />
+        <BodyFromNodes nodes={undefined} layout={layout} accent={accent} />
       </View>
     );
   }
 
   return (
     <View style={styles.body}>
-      {doc.content.map((node, index) => renderBlock(node, index, layout))}
+      {doc.content.map((node, index) => renderBlock(node, index, layout, accent))}
     </View>
   );
 }

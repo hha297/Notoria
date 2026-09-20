@@ -26,26 +26,34 @@ import type {
   VocabularyExportRow,
 } from "@/lib/vocabulary/export/types";
 import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
+import { PRINT_RGB } from "@/lib/export/print-theme";
+
+function toRgb(parts: readonly [number, number, number]) {
+  return rgb(parts[0] / 255, parts[1] / 255, parts[2] / 255);
+}
 
 const PAGE_WIDTH = 595.28;
 const PAGE_HEIGHT = 841.89;
 const MARGIN_X = 48;
-const MARGIN_TOP = 48;
+const MARGIN_TOP = 44;
 const MARGIN_BOTTOM = 52;
 const CONTENT_WIDTH = PAGE_WIDTH - MARGIN_X * 2;
 const YIELD_EVERY = 20;
 
-const INK = rgb(26 / 255, 21 / 255, 40 / 255);
-const MUTED = rgb(107 / 255, 102 / 255, 128 / 255);
-const HAIRLINE = rgb(213 / 255, 208 / 255, 224 / 255);
-const HEADER_FILL = rgb(243 / 255, 241 / 255, 247 / 255);
-const RULE = rgb(230 / 255, 225 / 255, 238 / 255);
+const INK = toRgb(PRINT_RGB.ink);
+const MUTED = toRgb(PRINT_RGB.muted);
+const HAIRLINE = toRgb(PRINT_RGB.hairline);
+const HEADER_FILL = toRgb(PRINT_RGB.ledeWash);
+const RULE = toRgb(PRINT_RGB.rule);
+const ACCENT = toRgb(PRINT_RGB.accent.vocabulary);
+const PAPER = toRgb(PRINT_RGB.paper);
+const FOOTER = toRgb(PRINT_RGB.footer);
 
 const FONT_FILES = {
-  regular: "ChakraPetch-Regular.ttf",
-  italic: "ChakraPetch-Italic.ttf",
-  bold: "ChakraPetch-Bold.ttf",
-  boldItalic: "ChakraPetch-BoldItalic.ttf",
+  regular: "IBMPlexSans-Regular.ttf",
+  italic: "IBMPlexSans-Italic.ttf",
+  bold: "IBMPlexSans-Bold.ttf",
+  boldItalic: "IBMPlexSans-BoldItalic.ttf",
 } as const;
 
 type FontSet = {
@@ -241,6 +249,7 @@ class PdfWriter {
     private readonly fonts: FontSet,
   ) {
     this.page = this.pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+    this.paintPaper();
     this.y = PAGE_HEIGHT - MARGIN_TOP;
   }
 
@@ -257,8 +266,19 @@ class PdfWriter {
     return { page: this.page, y: this.y };
   }
 
+  paintPaper() {
+    this.page.drawRectangle({
+      x: 0,
+      y: 0,
+      width: PAGE_WIDTH,
+      height: PAGE_HEIGHT,
+      color: PAPER,
+    });
+  }
+
   newPage() {
     this.page = this.pdf.addPage([PAGE_WIDTH, PAGE_HEIGHT]);
+    this.paintPaper();
     this.y = PAGE_HEIGHT - MARGIN_TOP;
   }
 
@@ -500,13 +520,14 @@ function drawEntry(
   const word = sanitizeExportText(row.word) || "—";
   const meta = metaLine(row, options);
   const meanings = joinMeanings(row.meanings);
-  const headerHeight = 16 + (meta ? 12 : 0) + (meanings ? 14 : 0) + 6;
-  writer.ensureSpace(Math.min(headerHeight, 64));
+  const headerHeight = 18 + (meta ? 12 : 0) + (meanings ? 14 : 0) + 8;
+  writer.ensureSpace(Math.min(headerHeight, 72));
 
   writer.drawPlain(word, {
     font: fonts.bold,
-    size: 12,
-    lineHeight: 15,
+    size: 13,
+    color: INK,
+    lineHeight: 16,
   });
   if (meta) {
     writer.drawPlain(meta, {
@@ -516,19 +537,19 @@ function drawEntry(
     });
   }
   if (meanings) {
-    writer.advance(1);
+    writer.advance(2);
     writer.drawPlain(meanings, {
-      size: 9.5,
-      lineHeight: 13,
+      size: 10,
+      lineHeight: 14,
     });
   }
 
   if (options.includeNotes && row.noteBlocks.length) {
-    writer.advance(4);
+    writer.advance(5);
     writer.drawPlain(sanitizeExportText(labels.notesHeading), {
       font: fonts.bold,
       size: 8,
-      color: MUTED,
+      color: ACCENT,
       lineHeight: 11,
     });
     writer.advance(1);
@@ -544,29 +565,28 @@ function drawCover(
 ) {
   writer.drawPlain(sanitizeExportText(labels.documentHeading), {
     font: fonts.bold,
-    size: 22,
-    lineHeight: 26,
+    size: 9,
+    color: ACCENT,
+    lineHeight: 12,
   });
-  writer.advance(4);
+  writer.advance(6);
   const workspace = sanitizeExportText(document.workspaceName);
   if (workspace) {
-    writer.drawPlain(
-      `${sanitizeExportText(labels.workspaceLabel)}: ${workspace}`,
-      {
-        size: 9,
-        color: MUTED,
-        lineHeight: 13,
-      },
-    );
+    writer.drawPlain(workspace, {
+      font: fonts.bold,
+      size: 22,
+      lineHeight: 26,
+    });
+    writer.advance(4);
   }
   writer.drawPlain(sanitizeExportText(labels.wordCount), {
-    size: 9,
+    size: 10,
     color: MUTED,
-    lineHeight: 13,
+    lineHeight: 14,
   });
-  writer.advance(8);
-  writer.drawLine(HAIRLINE, 1);
-  writer.advance(14);
+  writer.advance(10);
+  writer.drawLine(ACCENT, 2);
+  writer.advance(16);
 }
 
 function drawPosSection(
@@ -579,15 +599,16 @@ function drawPosSection(
   const dest = writer.bookmarkDest();
   writer.drawPlain(sanitizeExportText(title).toLocaleUpperCase(), {
     font: fonts.bold,
-    size: 12,
-    lineHeight: 15,
+    size: 9,
+    color: ACCENT,
+    lineHeight: 13,
   });
   writer.drawPlain(sanitizeExportText(countLabel), {
     size: 8,
     color: MUTED,
     lineHeight: 11,
   });
-  writer.advance(6);
+  writer.advance(8);
   return dest;
 }
 
@@ -649,14 +670,14 @@ function stampFooters(pdf: PDFDocument, fonts: FontSet) {
   const pages = pdf.getPages();
   const total = pages.length;
   pages.forEach((page, index) => {
-    const label = `${index + 1} / ${total}`;
+    const label = `Notoria  ·  ${index + 1} / ${total}`;
     const width = fonts.regular.widthOfTextAtSize(label, 8);
     page.drawText(label, {
       x: (PAGE_WIDTH - width) / 2,
       y: 24,
       size: 8,
       font: fonts.regular,
-      color: MUTED,
+      color: FOOTER,
     });
   });
 }

@@ -1906,8 +1906,8 @@
     "mostPopular": "Most Popular",
     "currentPlan": "Current Plan",
     "choosePro": "Choose Pro",
-    "freePlanDescription": "Your library, practice, and CSV export.",
-    "proPlanDescription": "AI exercises, form-a-sentence, listening, speaking, and PDF/Word export.",
+    "freePlanDescription": "Core practice, vocab AI help, writing, and CSV.",
+    "proPlanDescription": "AI exercises, writing help, listening, speaking, and PDF/Word.",
     "upgrade": "Upgrade to Pro",
     "manage": "Manage subscription",
     "proBadge": "Pro",
@@ -1922,9 +1922,9 @@
     "notConfigured": "Billing is not configured yet.",
     "noCustomer": "No billing customer is linked to this account yet.",
     "modalTitle": "Upgrade Plan",
-    "modalSubtitle": "Free keeps your library and practice. Pro adds AI exercises from vocabulary, theory, and imports — plus writing, listening, speaking, and printable files.",
+    "modalSubtitle": "Free covers everyday practice and your library. Pro unlocks AI exercises, writing help, listening, speaking, and printable files.",
     "lockedTitle": "This is a Pro feature",
-    "lockedDescription": "Upgrade to unlock AI exercises (vocabulary, form-a-sentence, theory, and import) — along with listening, speaking, writing AI, and PDF/Word export.",
+    "lockedDescription": "Upgrade for AI exercises, writing help, listening, speaking, and PDF/Word export.",
     "planName": "Pro",
     "cancelAnytime": "Cancel anytime",
     "compare": {
@@ -1935,57 +1935,33 @@
       "yes": "Yes",
       "locked": "Locked",
       "rows": {
-        "vocab": {
-          "capability": "Word library, tags, search",
-          "impact": "Keep your words without paying"
+        "practice": {
+          "capability": "Flashcards, match pairs, quizzes & type-answer",
+          "impact": "Core drills from your own words"
         },
         "vocabAi": {
-          "capability": "AI spelling and meaning",
-          "impact": "Add words faster and more accurately"
+          "capability": "AI spelling & meaning when adding words",
+          "impact": "Add words faster with free AI help"
+        },
+        "studio": {
+          "capability": "Writing editor & theory notes",
+          "impact": "Draft texts and keep grammar notes"
         },
         "csv": {
           "capability": "CSV export",
           "impact": "Backup words to a spreadsheet"
         },
-        "export": {
-          "capability": "PDF and Word export",
-          "impact": "Print worksheets or share files"
-        },
-        "writing": {
-          "capability": "Writing editor",
-          "impact": "Draft texts and worksheets yourself"
+        "aiPractice": {
+          "capability": "AI exercises from vocab, theory & import",
+          "impact": "Fill-blank, contextual drills, form-a-sentence"
         },
         "writingAi": {
-          "capability": "Writing AI (check and improve)",
+          "capability": "Writing AI (check & improve)",
           "impact": "Get corrections on your own text"
         },
-        "exercises": {
-          "capability": "Exercises from your examples",
-          "impact": "Practice sentences you already saved"
-        },
-        "fillBlank": {
-          "capability": "AI fill-in-the-blank",
-          "impact": "New sentences, not memorized examples"
-        },
-        "exerciseDifficulty": {
-          "capability": "AI Contextual MC & Type the Answer",
-          "impact": "Fill-in-the-blank practice from your vocabulary at Easy–Intensive"
-        },
-        "formSentence": {
-          "capability": "Form a Sentence (AI feedback)",
-          "impact": "Write with your words and get grammar help"
-        },
-        "theory": {
-          "capability": "Theory notes",
-          "impact": "Save grammar and usage for later"
-        },
-        "theoryAi": {
-          "capability": "AI Theory Exercises",
-          "impact": "Practice your own Theory with AI fill-in-the-blank exercises"
-        },
-        "importAi": {
-          "capability": "AI Import Exercises",
-          "impact": "Turn worksheets, images, PDFs, or URLs into practice cards"
+        "export": {
+          "capability": "PDF & Word export",
+          "impact": "Print worksheets or share files"
         },
         "listening": {
           "capability": "Listening lessons",
