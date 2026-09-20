@@ -57,10 +57,10 @@ export function VocabularyGroup({
         <p className="text-xs text-muted-foreground sm:text-sm">
           {showPagination
             ? t("groupPageRange", {
-                start: rangeStart,
-                end: rangeEnd,
-                count: words.length,
-              })
+              start: rangeStart,
+              end: rangeEnd,
+              count: words.length,
+            })
             : t("groupCount", { count: words.length })}
         </p>
       </header>

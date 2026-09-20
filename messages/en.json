@@ -205,6 +205,7 @@
     "synonymsCannotLinkSelf": "A word can’t be a synonym of itself",
     "synonymsRemove": "Remove {word}",
     "formDescription": "Add a word with meanings, examples, and tags. Drag to reorder.",
+    "addingTo": "Adding to",
     "emptyTitle": "Your vocabulary bank is empty",
     "emptyDescription": "Start collecting words and meanings to build your personal language library.",
     "addFirst": "Add your first word",

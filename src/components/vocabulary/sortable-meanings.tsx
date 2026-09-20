@@ -94,10 +94,10 @@ function MeaningRowShell({
     <div className="space-y-2">
       <div
         className={cn(
-          "flex min-w-0 items-center gap-2 rounded-lg border bg-card p-2",
+          "vocab-composer-item flex min-w-0 items-center gap-2 rounded-md p-2",
           item.isPrimary
-            ? "border-accent-lime/50 bg-accent-lime/5"
-            : "border-hairline-cloud opacity-90",
+            ? "vocab-composer-item-primary"
+            : "opacity-95",
         )}
       >
         {dragHandle}
@@ -627,7 +627,9 @@ export function SortableMeanings({
     <div className="space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="space-y-0.5">
-          <label className="text-sm font-medium">{t("meanings")}</label>
+          <label className="vocab-composer-kicker font-heading text-base font-bold tracking-tight">
+            {t("meanings")}
+          </label>
           <p className="text-xs text-muted-foreground">
             {t("primaryMeaningHint", { max: MAX_PRIMARY_MEANINGS })}
           </p>

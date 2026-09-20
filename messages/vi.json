@@ -205,6 +205,7 @@
     "synonymsCannotLinkSelf": "Một từ không thể đồng nghĩa với chính nó",
     "synonymsRemove": "Gỡ {word}",
     "formDescription": "Thêm từ kèm nghĩa, câu ví dụ và thẻ. Kéo thả để đổi thứ tự.",
+    "addingTo": "Thêm vào",
     "emptyTitle": "Ngân hàng từ vựng còn trống",
     "emptyDescription": "Hãy thu thập từ và nghĩa để xây thư viện ngôn ngữ của riêng bạn.",
     "addFirst": "Thêm từ đầu tiên",

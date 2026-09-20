@@ -98,14 +98,14 @@ export function VocabularyBank({
       })),
       ...(customTagOptions.length > 0
         ? [
-            {
-              label: tTags("groups.custom"),
-              options: customTagOptions.map((tag) => ({
-                value: tag,
-                label: getCustomTagName(tag),
-              })),
-            },
-          ]
+          {
+            label: tTags("groups.custom"),
+            options: customTagOptions.map((tag) => ({
+              value: tag,
+              label: getCustomTagName(tag),
+            })),
+          },
+        ]
         : []),
     ];
   }, [customTagOptions, tTags]);

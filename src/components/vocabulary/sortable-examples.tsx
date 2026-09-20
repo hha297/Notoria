@@ -75,7 +75,7 @@ function ExampleRowShell({
   const hasDetails = Boolean(item.meaning.trim() || item.notes.trim());
 
   return (
-    <div className="rounded-lg border border-hairline-cloud bg-card">
+    <div className="vocab-composer-item rounded-md">
       <div className="flex items-start gap-2 p-2 sm:items-center sm:p-2.5">
         {dragHandle}
         <span className="mt-2 w-6 shrink-0 text-sm font-medium text-muted-foreground sm:mt-0">
@@ -359,7 +359,9 @@ export function SortableExamples({
   return (
     <div className="space-y-3">
       <div className="flex items-center justify-between gap-2">
-        <label className="text-sm font-medium">{t("examples")}</label>
+        <label className="vocab-composer-kicker font-heading text-base font-bold tracking-tight">
+          {t("examples")}
+        </label>
         <Button type="button" variant="outline" size="sm" onClick={addExample}>
           <Plus className="size-4" />
           {t("addExample")}

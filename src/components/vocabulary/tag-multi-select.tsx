@@ -310,8 +310,10 @@ export function TagMultiSelect({
   return (
     <div className="space-y-4">
       <div className="space-y-2">
-        <Label>{tv("tags")}</Label>
-        <div className="overflow-hidden rounded-lg border border-hairline-cloud bg-card">
+        <Label className="vocab-composer-kicker font-heading text-base font-bold tracking-tight">
+          {tv("tags")}
+        </Label>
+        <div className="vocab-composer-panel overflow-hidden rounded-md">
           <div className="space-y-3 px-3 py-3">
             {builtinGroups.map((item) => (
               <div key={item.group} className="space-y-1">
@@ -365,7 +367,7 @@ export function TagMultiSelect({
             ({tCommon("optional")})
           </span>
         </Label>
-        <div className="overflow-hidden rounded-lg border border-hairline-cloud bg-card">
+        <div className="vocab-composer-panel overflow-hidden rounded-md">
           <div className="flex items-start gap-2 px-3 py-2">
             <div
               className="flex min-h-10 min-w-0 flex-1 cursor-text flex-wrap items-center gap-1.5"
