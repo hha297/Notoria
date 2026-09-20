@@ -1,8 +1,9 @@
 "use client";
 
 import type { Editor, JSONContent } from "@tiptap/react";
-import { Download, Loader2, Save } from "lucide-react";
+import { ArrowLeft, Download, FileText, ListChecks, Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -15,13 +16,6 @@ import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { DescriptionField } from "@/components/form/description-field";
 import { ContentTransition } from "@/components/layout/content-transition";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import {
   Select,
@@ -31,6 +25,7 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { cn } from "@/lib/utils";
 import { useMutationLock } from "@/hooks/use-mutation-lock";
 import { createWritingDocument, updateWritingDocument } from "@/lib/actions/writing";
 import { afterEditorHydration } from "@/lib/editor/hydration";
@@ -324,10 +319,12 @@ export function WritingEditor({
       }
     } catch (error) {
       release();
-      if (showToast) {
-        toast.error(
-          error instanceof Error ? error.message : t("saveFailed"),
-        );
+      const taken =
+        error instanceof Error && error.message === "NAME_TAKEN";
+      if (showToast || taken) {
+        toast.error(taken ? t("titleTaken") : t("saveFailed"), {
+          id: taken ? "writing-title-taken" : undefined,
+        });
       }
     }
   }
@@ -366,8 +363,10 @@ export function WritingEditor({
         title: nextTitle,
         description: nextDescription,
       };
-    } catch {
-      // Autosave failures are silent
+    } catch (error) {
+      if (error instanceof Error && error.message === "NAME_TAKEN") {
+        toast.error(t("titleTaken"), { id: "writing-title-taken" });
+      }
     } finally {
       setIsAutosaving(false);
     }
@@ -473,63 +472,87 @@ export function WritingEditor({
         title,
         description,
       };
-    } catch {
-      // Autosave failures are silent
+    } catch (error) {
+      if (error instanceof Error && error.message === "NAME_TAKEN") {
+        toast.error(t("titleTaken"), { id: "writing-title-taken" });
+      }
     } finally {
       setIsAutosaving(false);
     }
   }
 
   return (
-    <div className="space-y-8">
-      <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
-        <CardHeader className="space-y-2 border-b border-hairline-cloud px-4 pt-5 pb-4 sm:px-6 sm:pt-6 sm:pb-5 md:px-8 md:pt-8 md:pb-6">
-          <CardTitle className="heading-md text-ink">
-            {initialData ? t("editTitle") : t("newTitle")}
-          </CardTitle>
-          <CardDescription className="text-sm leading-relaxed sm:text-base">
-            {t("formDescription")}
-          </CardDescription>
-        </CardHeader>
+    <div className="writing-sheet" data-writing-kind={editorState.mode}>
+      <div className="writing-paper-chrome">
+        <Link
+          href={previewHref ?? listHref}
+          className="writing-back"
+        >
+          <ArrowLeft className="size-4" />
+          {previewHref ? t("backToPreview") : t("backToList")}
+        </Link>
+        <div className="writing-paper-actions">
+          {previewHref ? (
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              onClick={() => router.replace(previewHref)}
+              disabled={isSaving}
+              className="h-11 w-full sm:h-9 sm:w-auto"
+            >
+              {tCommon("cancel")}
+            </Button>
+          ) : null}
+          <LockedFeatureButton
+            type="button"
+            variant="outline"
+            size="lg"
+            icon={<Download className="size-4" />}
+            onClick={() => setExportOpen(true)}
+            className="h-11 w-full sm:h-9 sm:w-auto"
+          >
+            {t("export.button")}
+          </LockedFeatureButton>
+          <Button
+            onClick={() => void persistExercise(true)}
+            disabled={isSaving || imageUploading || !canSave}
+            size="lg"
+            className="h-11 w-full sm:h-9 sm:w-auto"
+          >
+            {isSaving ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Save className="size-4" />
+            )}
+            {t("save")}
+          </Button>
+        </div>
+      </div>
 
-        <CardContent className="space-y-6 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-6 md:px-8 md:py-8">
-          <div className="space-y-2">
-            <Label htmlFor="title">{t("documentTitle")}</Label>
-            <CapitalizedInput
-              id="title"
-              value={title}
-              onChange={(event) => {
-                setTitle(event.target.value);
-                scheduleAutosave();
-              }}
-              placeholder={t("titlePlaceholder")}
-              className="h-10"
-            />
-          </div>
+      <p className="writing-kicker">
+        {editorState.mode === "question_set"
+          ? t("modes.questionSet")
+          : t("modes.richDocument")}
+      </p>
+      <label className="sr-only" htmlFor="title">
+        {t("documentTitle")}
+      </label>
+      <CapitalizedInput
+        id="title"
+        value={title}
+        onChange={(event) => {
+          setTitle(event.target.value);
+          scheduleAutosave();
+        }}
+        placeholder={t("titlePlaceholder")}
+        className="writing-sheet-title"
+      />
+      <p className="writing-brand-lede">{t("formDescription")}</p>
 
-          <div className="space-y-2">
-            <Label htmlFor="description">
-              {t("documentDescription")}{" "}
-              <span className="font-normal text-muted-foreground">
-                ({t("optional")})
-              </span>
-            </Label>
-            <DescriptionField
-              id="description"
-              value={description}
-              onChange={(next) => {
-                setDescription(next);
-                scheduleAutosave();
-              }}
-              onReady={adoptDescriptionBaseline}
-              placeholder={t("descriptionPlaceholder")}
-              maxLength={2000}
-            />
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-3">
-            <div className="space-y-2">
-              <Label htmlFor="writing-cefr">{tMeta("cefrLabel")}</Label>
+      <div className="writing-sheet-meta">
+        <div className="space-y-2">
+          <Label htmlFor="writing-cefr">{tMeta("cefrLabel")}</Label>
               <Select
                 value={editorState.meta.cefrLevel ?? "none"}
                 onValueChange={(value) =>
@@ -577,8 +600,8 @@ export function WritingEditor({
                   <SelectValue placeholder={tMeta("topicPlaceholder")}>
                     {editorState.meta.topic
                       ? resolveTopicLabel(editorState.meta.topic, (key) =>
-                          tTags(key),
-                        )
+                        tTags(key),
+                      )
                       : tMeta("none")}
                   </SelectValue>
                 </SelectTrigger>
@@ -629,37 +652,69 @@ export function WritingEditor({
                 </SelectContent>
               </Select>
             </div>
-          </div>
 
-          <div className="space-y-2">
-            <Label>{t("mode")}</Label>
-            <ToggleGroup
-              value={[editorState.mode]}
-              onValueChange={(value) => {
-                const next = value[0] as WritingMode | undefined;
-                if (next) setMode(next);
-              }}
-              className="flex w-full max-w-md flex-wrap gap-2"
+        <div className="space-y-2">
+          <Label>{t("mode")}</Label>
+          <ToggleGroup
+            value={[editorState.mode]}
+            onValueChange={(value) => {
+              const next = value[0] as WritingMode | undefined;
+              if (next) setMode(next);
+            }}
+            className="writing-mode-toggle"
+          >
+            <ToggleGroupItem
+              value="rich_document"
+              className={cn(
+                "writing-mode-rich flex-1 cursor-pointer gap-2 border border-transparent",
+                editorState.mode === "rich_document"
+                  ? "border-module-writing-fg/40! bg-module-writing-bg! text-module-writing-fg!"
+                  : "hover:bg-module-writing-bg/45 hover:text-module-writing-fg",
+              )}
             >
-              <ToggleGroupItem
-                value="rich_document"
-                className="flex-1 cursor-pointer"
-              >
-                {t("modes.richDocument")}
-              </ToggleGroupItem>
-              <ToggleGroupItem
-                value="question_set"
-                className="flex-1 cursor-pointer"
-              >
-                {t("modes.questionSet")}
-              </ToggleGroupItem>
-            </ToggleGroup>
-            <p className="text-xs text-muted-foreground">
-              {editorState.mode === "rich_document"
-                ? t("modes.richDocumentHint")
-                : t("modes.questionSetHint")}
-            </p>
-          </div>
+              <FileText className="size-4" />
+              {t("modes.richDocument")}
+            </ToggleGroupItem>
+            <ToggleGroupItem
+              value="question_set"
+              className={cn(
+                "writing-mode-questions flex-1 cursor-pointer gap-2 border border-transparent",
+                editorState.mode === "question_set"
+                  ? "border-module-theory-fg/40! bg-module-theory-bg! text-module-theory-fg!"
+                  : "hover:bg-module-theory-bg/45 hover:text-module-theory-fg",
+              )}
+            >
+              <ListChecks className="size-4" />
+              {t("modes.questionSet")}
+            </ToggleGroupItem>
+          </ToggleGroup>
+        </div>
+      </div>
+      <p className="text-xs text-muted-foreground">
+        {editorState.mode === "rich_document"
+          ? t("modes.richDocumentHint")
+          : t("modes.questionSetHint")}
+      </p>
+
+      <div className="space-y-2">
+        <Label htmlFor="description">
+          {t("documentDescription")}{" "}
+          <span className="font-normal text-muted-foreground">
+            ({t("optional")})
+          </span>
+        </Label>
+        <DescriptionField
+          id="description"
+          value={description}
+          onChange={(next) => {
+            setDescription(next);
+            scheduleAutosave();
+          }}
+          onReady={adoptDescriptionBaseline}
+          placeholder={t("descriptionPlaceholder")}
+          maxLength={2000}
+        />
+      </div>
 
           <WritingAiBar
             language={language}
@@ -669,6 +724,7 @@ export function WritingEditor({
             onQuestionFeedbackChange={setQuestionFeedback}
           />
 
+          <div className="writing-sheet-surface">
           <ContentTransition transitionKey={editorState.mode}>
             {editorState.mode === "rich_document" ? (
               <div className="space-y-2">
@@ -710,57 +766,17 @@ export function WritingEditor({
               />
             )}
           </ContentTransition>
-        </CardContent>
-      </Card>
+          </div>
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-muted-foreground">
-          {previewHref
-            ? t("editSaveHint")
-            : isAutosaving
-              ? t("autosaving")
-              : initialData
-                ? t("autosaveReady")
-                : t("autosavePending")}
-        </p>
-        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
-          {previewHref ? (
-            <Button
-              type="button"
-              variant="outline"
-              size="lg"
-              onClick={() => router.replace(previewHref)}
-              disabled={isSaving}
-              className="h-11 w-full sm:h-9 sm:w-auto"
-            >
-              {tCommon("cancel")}
-            </Button>
-          ) : null}
-          <LockedFeatureButton
-            type="button"
-            variant="outline"
-            size="lg"
-            icon={<Download className="size-4" />}
-            onClick={() => setExportOpen(true)}
-            className="h-11 w-full sm:h-9 sm:w-auto"
-          >
-            {t("export.button")}
-          </LockedFeatureButton>
-          <Button
-            onClick={() => void persistExercise(true)}
-            disabled={isSaving || imageUploading || !canSave}
-            size="lg"
-            className="h-11 w-full sm:h-9 sm:w-auto"
-          >
-            {isSaving ? (
-              <Loader2 className="size-4 animate-spin" />
-            ) : (
-              <Save className="size-4" />
-            )}
-            {t("save")}
-          </Button>
-        </div>
-      </div>
+      <p className="text-sm text-muted-foreground">
+        {previewHref
+          ? t("editSaveHint")
+          : isAutosaving
+            ? t("autosaving")
+            : initialData
+              ? t("autosaveReady")
+              : t("autosavePending")}
+      </p>
 
       <WritingExportDialog
         open={exportOpen}

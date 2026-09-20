@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/sheet";
 import type { Workspace } from "@/db/schema";
 import type { AppLocale } from "@/i18n/config";
+import { cn } from "@/lib/utils";
 
 function studioSceneFromPath(pathname: string) {
   if (pathname.startsWith("/vocabulary")) return "vocabulary";
@@ -92,7 +93,12 @@ export function DashboardStudio({
             </div>
           </header>
           <main className="min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden px-4 py-6 sm:px-6 sm:py-8">
-            <div className="mx-auto w-full min-w-0 max-w-6xl">
+            <div
+              className={cn(
+                "mx-auto w-full min-w-0",
+                pathname.startsWith("/writing/") ? "max-w-[90rem]" : "max-w-6xl",
+              )}
+            >
               {children}
             </div>
           </main>

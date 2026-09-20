@@ -101,7 +101,8 @@
     "nameRequired": "Anna kansion nimi",
     "invalidMove": "Kansiota ei voi siirtää itseensä",
     "tooDeep": "Kansio on liian syvällä",
-    "notFound": "Kansiota ei löytynyt"
+    "notFound": "Kansiota ei löytynyt",
+    "nameTaken": "Kansio tai kirjoitus käyttää jo tätä nimeä"
   },
   "theme": {
     "toggle": "Vaihda teema",
@@ -1849,9 +1850,15 @@
     "disabledNoWorkspace": "Luo työtila ennen kirjoitusten lisäämistä.",
     "create": "Luo kirjoitus",
     "createFirst": "Luo ensimmäinen kirjoitus",
+    "onTheDesk": "Pöydällä",
+    "library": "Kirjasto",
+    "allWritings": "Kaikki kirjoitukset",
+    "collections": "Kokoelmat",
+    "refine": "Rajaa",
+    "openWriting": "Avaa",
     "emptyTitle": "Et ole vielä luonut kirjoituksia",
     "emptyDescription": "Luo ensimmäinen kirjoitustehtävä aloittaaksesi harjoittelun.",
-    "searchPlaceholder": "Hae otsikolla, kuvauksella, CEFR-tasolla…",
+    "searchPlaceholder": "Hae kirjoituksia…",
     "noResults": "Yksikään kirjoitus ei vastaa hakua",
     "groupCount": "{count, plural, one {# asiakirja} other {# asiakirjaa}}",
     "filterAll": "Kaikki",
@@ -1920,6 +1927,7 @@
     "documentDescription": "Kuvaus",
     "descriptionPlaceholder": "Lyhyt yhteenveto tai ohje tälle kirjoitukselle…",
     "titleRequired": "Otsikko on pakollinen",
+    "titleTaken": "Kirjoitus tai kansio käyttää jo tätä otsikkoa",
     "promptRequired": "Lisää vähintään yksi kysymys",
     "mode": "Tila",
     "modes": {

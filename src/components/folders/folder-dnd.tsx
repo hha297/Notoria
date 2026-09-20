@@ -18,7 +18,9 @@ import {
   useSensors,
   type DragEndEvent,
   type DragStartEvent,
+  type Modifier,
 } from "@dnd-kit/core";
+import { getEventCoordinates } from "@dnd-kit/utilities";
 import { Folder } from "lucide-react";
 import { cn } from "@/lib/utils";
 import {
@@ -29,6 +31,26 @@ import {
 } from "@/lib/folders/dnd-ids";
 import { wouldCreateCycle } from "@/lib/folders/tree";
 import type { FolderListItem } from "@/lib/folders/types";
+
+const snapCenterToCursor: Modifier = ({
+  activatorEvent,
+  draggingNodeRect,
+  transform,
+}) => {
+  if (!draggingNodeRect || !activatorEvent) return transform;
+
+  const activatorCoordinates = getEventCoordinates(activatorEvent);
+  if (!activatorCoordinates) return transform;
+
+  const offsetX = activatorCoordinates.x - draggingNodeRect.left;
+  const offsetY = activatorCoordinates.y - draggingNodeRect.top;
+
+  return {
+    ...transform,
+    x: transform.x + offsetX - draggingNodeRect.width / 2,
+    y: transform.y + offsetY - draggingNodeRect.height / 2,
+  };
+};
 
 type DragKind = "folder" | "item";
 
@@ -132,9 +154,9 @@ export function FolderDndProvider({
         onDragCancel={handleDragCancel}
       >
         {children}
-        <DragOverlay dropAnimation={null}>
+        <DragOverlay dropAnimation={null} modifiers={[snapCenterToCursor]}>
           {active ? (
-            <div className="flex max-w-xs items-center gap-2 rounded-lg border border-hairline-cloud bg-card px-3 py-2 text-sm font-medium text-ink shadow-md">
+            <div className="flex max-w-xs cursor-grabbing items-center gap-2 rounded-lg border border-hairline-cloud bg-card px-3 py-2 text-sm font-medium text-ink shadow-md">
               {active.kind === "folder" ? (
                 <Folder className="size-4 text-amber-500" />
               ) : null}

@@ -46,7 +46,7 @@ export const WritingQuestionCard = memo(function WritingQuestionCard({
   return (
     <div
       className={cn(
-        "min-w-0 max-w-full rounded-sm border border-hairline-cloud bg-surface p-3 sm:p-4",
+        "writing-qs-question min-w-0 max-w-full rounded-sm border p-4 sm:p-5",
         className,
       )}
     >
@@ -86,44 +86,46 @@ export const WritingQuestionCard = memo(function WritingQuestionCard({
               onChange({ ...question, prompt: event.target.value })
             }
             placeholder={t("promptPlaceholder")}
-            className="min-h-18"
+            className="min-h-24"
           />
         </div>
 
-        <div className="space-y-1.5">
-          <Label htmlFor={`example-${question.id}`}>
-            {t("exampleAnswer")}{" "}
-            <span className="font-normal text-muted-foreground">
-              ({t("optional")})
-            </span>
-          </Label>
-          <CapitalizedTextarea
-            id={`example-${question.id}`}
-            value={question.exampleAnswer}
-            onChange={(event) =>
-              onChange({ ...question, exampleAnswer: event.target.value })
-            }
-            placeholder={t("exampleAnswerPlaceholder")}
-            className="min-h-14"
-          />
-        </div>
+        <div className="grid gap-3 xl:grid-cols-2">
+          <div className="space-y-1.5">
+            <Label htmlFor={`example-${question.id}`}>
+              {t("exampleAnswer")}{" "}
+              <span className="font-normal text-muted-foreground">
+                ({t("optional")})
+              </span>
+            </Label>
+            <CapitalizedTextarea
+              id={`example-${question.id}`}
+              value={question.exampleAnswer}
+              onChange={(event) =>
+                onChange({ ...question, exampleAnswer: event.target.value })
+              }
+              placeholder={t("exampleAnswerPlaceholder")}
+              className="min-h-20"
+            />
+          </div>
 
-        <div className="space-y-1.5">
-          <Label htmlFor={`notes-${question.id}`}>
-            {t("notes")}{" "}
-            <span className="font-normal text-muted-foreground">
-              ({t("optional")})
-            </span>
-          </Label>
-          <CapitalizedTextarea
-            id={`notes-${question.id}`}
-            value={question.notes}
-            onChange={(event) =>
-              onChange({ ...question, notes: event.target.value })
-            }
-            placeholder={t("notesPlaceholder")}
-            className="min-h-12"
-          />
+          <div className="space-y-1.5">
+            <Label htmlFor={`notes-${question.id}`}>
+              {t("notes")}{" "}
+              <span className="font-normal text-muted-foreground">
+                ({t("optional")})
+              </span>
+            </Label>
+            <CapitalizedTextarea
+              id={`notes-${question.id}`}
+              value={question.notes}
+              onChange={(event) =>
+                onChange({ ...question, notes: event.target.value })
+              }
+              placeholder={t("notesPlaceholder")}
+              className="min-h-20"
+            />
+          </div>
         </div>
 
         {suggestions.length > 0 &&

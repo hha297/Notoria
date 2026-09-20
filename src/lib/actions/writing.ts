@@ -3,7 +3,7 @@
 import { and, desc, eq, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
-import { exercises } from "@/db/schema";
+import { exercises, workspaceFolders } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
 import { resolveFolderId } from "@/lib/actions/folders";
 import { requireActiveWorkspace, getActiveWorkspace } from "@/lib/workspace";
@@ -16,6 +16,7 @@ import {
   writingListMetaFromParts,
   type WritingListMeta,
 } from "@/lib/writing/content";
+import { isUniqueNameTaken } from "@/lib/unique-name";
 
 export type WritingDocumentListItem = {
   id: string;
@@ -37,6 +38,52 @@ function revalidateWriting(id?: string) {
   if (id) {
     revalidatePath(`/writing/${id}`);
     revalidatePath(`/writing/${id}/edit`);
+  }
+}
+
+async function assertUniqueWritingTitle(input: {
+  userId: string;
+  workspaceId: string;
+  title: string;
+  excludeId?: string;
+}) {
+  const [documents, folders] = await Promise.all([
+    db
+      .select({
+        id: exercises.id,
+        title: exercises.title,
+      })
+      .from(exercises)
+      .where(
+        and(
+          eq(exercises.userId, input.userId),
+          eq(exercises.workspaceId, input.workspaceId),
+          eq(exercises.type, "WRITING"),
+        ),
+      ),
+    db
+      .select({
+        name: workspaceFolders.name,
+      })
+      .from(workspaceFolders)
+      .where(
+        and(
+          eq(workspaceFolders.userId, input.userId),
+          eq(workspaceFolders.workspaceId, input.workspaceId),
+          eq(workspaceFolders.section, "writing"),
+        ),
+      ),
+  ]);
+
+  const occupied = [
+    ...documents
+      .filter((document) => document.id !== input.excludeId)
+      .map((document) => document.title),
+    ...folders.map((folder) => folder.name),
+  ];
+
+  if (isUniqueNameTaken(input.title, occupied)) {
+    throw new Error("NAME_TAKEN");
   }
 }
 
@@ -128,6 +175,12 @@ export async function createWritingDocument(
   const workspace = await requireActiveWorkspace();
   const folderId = await resolveFolderId(options?.folderId, "writing");
 
+  await assertUniqueWritingTitle({
+    userId,
+    workspaceId: workspace.id,
+    title: parsed.title,
+  });
+
   const [document] = await db
     .insert(exercises)
     .values({
@@ -165,6 +218,13 @@ export async function updateWritingDocument(
   ) {
     throw new Error("Writing document not found");
   }
+
+  await assertUniqueWritingTitle({
+    userId,
+    workspaceId: workspace.id,
+    title: parsed.title,
+    excludeId: id,
+  });
 
   const [document] = await db
     .update(exercises)

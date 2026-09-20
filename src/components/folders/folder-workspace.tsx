@@ -88,6 +88,7 @@ type FolderWorkspaceProps = {
   createOpen?: boolean;
   onCreateOpenChange?: (open: boolean) => void;
   header?: ReactNode;
+  showBreadcrumbs?: boolean;
   children: ReactNode;
 };
 
@@ -101,6 +102,7 @@ export function FolderWorkspace({
   createOpen,
   onCreateOpenChange,
   header,
+  showBreadcrumbs = true,
   children,
 }: FolderWorkspaceProps) {
   const t = useTranslations("folders");
@@ -178,11 +180,20 @@ export function FolderWorkspace({
     [section, folders, items, visibleFolders, query],
   );
 
+  const occupiedNames = useMemo(() => {
+    const folderNames = folders
+      .filter((folder) => folder.id !== renameTarget?.id)
+      .map((folder) => folder.name);
+    if (section !== "writing") return folderNames;
+    return [...folderNames, ...items.map((item) => item.title)];
+  }, [folders, items, renameTarget?.id, section]);
+
   function errorMessage(error: unknown) {
     if (error instanceof Error) {
       if (error.message === "INVALID_FOLDER_MOVE") return t("invalidMove");
       if (error.message === "FOLDER_TOO_DEEP") return t("tooDeep");
       if (error.message === "FOLDER_NOT_FOUND") return t("notFound");
+      if (error.message === "NAME_TAKEN") return t("nameTaken");
     }
     return te("generic");
   }
@@ -307,11 +318,13 @@ export function FolderWorkspace({
       >
         <div className="space-y-4">
           {header}
-          <FolderBreadcrumbs
-            section={section}
-            folders={folders}
-            currentFolderId={currentFolderId}
-          />
+          {showBreadcrumbs ? (
+            <FolderBreadcrumbs
+              section={section}
+              folders={folders}
+              currentFolderId={currentFolderId}
+            />
+          ) : null}
           <div data-tutorial="folder-organize">{children}</div>
         </div>
       </FolderDndProvider>
@@ -320,6 +333,7 @@ export function FolderWorkspace({
         open={isCreateOpen}
         onOpenChange={setCreateOpen}
         mode="create"
+        occupiedNames={occupiedNames}
         pending={isPending}
         onSubmit={handleCreate}
       />
@@ -330,6 +344,7 @@ export function FolderWorkspace({
         }}
         mode="rename"
         initialName={renameTarget?.name ?? ""}
+        occupiedNames={occupiedNames}
         pending={isPending}
         onSubmit={handleRename}
       />

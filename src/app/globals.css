@@ -742,7 +742,8 @@
   }
 
   .vocab-composer-lang {
-    border: 1px solid color-mix(in oklab, var(--module-vocab-fg) 22%, transparent);
+    border: 1px solid
+      color-mix(in oklab, var(--module-vocab-fg) 22%, transparent);
     background: color-mix(in oklab, var(--module-vocab-bg) 22%, transparent);
   }
 
@@ -816,7 +817,8 @@
 
   .vocab-composer-word-field:focus-visible {
     border-color: var(--composer-word);
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--composer-word) 18%, transparent);
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--composer-word) 18%, transparent);
     background: color-mix(in oklab, var(--module-vocab-bg) 24%, transparent);
   }
 
@@ -825,7 +827,8 @@
   }
 
   .vocab-composer-item {
-    border: 1px solid color-mix(in oklab, var(--composer-accent) 22%, transparent);
+    border: 1px solid
+      color-mix(in oklab, var(--composer-accent) 22%, transparent);
     background: radial-gradient(
       ellipse 88% 140% at 8% 50%,
       color-mix(in oklab, var(--composer-accent) 12%, transparent),
@@ -848,7 +851,8 @@
   }
 
   .vocab-composer-panel {
-    border: 1px solid color-mix(in oklab, var(--composer-accent) 22%, transparent);
+    border: 1px solid
+      color-mix(in oklab, var(--composer-accent) 22%, transparent);
     background: radial-gradient(
       ellipse 80% 70% at 8% 0%,
       color-mix(in oklab, var(--composer-accent) 10%, transparent),
@@ -857,7 +861,8 @@
   }
 
   .vocab-composer-ai {
-    border: 1px solid color-mix(in oklab, var(--module-vocab-fg) 28%, transparent);
+    border: 1px solid
+      color-mix(in oklab, var(--module-vocab-fg) 28%, transparent);
     background: color-mix(in oklab, var(--module-vocab-bg) 28%, transparent);
   }
 
@@ -1926,6 +1931,832 @@
     --tw-prose-th-borders: #4d4f46;
     --tw-prose-td-borders: #4d4f46;
   }
+
+  .writing-atelier-shell,
+  .writing-paper,
+  .writing-sheet {
+    --writing-ink: var(--module-writing-fg);
+    --writing-wash: var(--module-writing-bg);
+  }
+
+  .writing-atelier,
+  .writing-paper-page,
+  .writing-sheet,
+  .writing-feature,
+  .writing-empty-desk {
+    position: relative;
+    isolation: isolate;
+    overflow: visible;
+  }
+
+  .writing-atelier::before,
+  .writing-paper-page::before,
+  .writing-sheet::before,
+  .writing-feature::before,
+  .writing-empty-desk::before {
+    content: "";
+    position: absolute;
+    inset: -18% -10%;
+    z-index: 0;
+    pointer-events: none;
+    -webkit-mask-image:
+      linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent 0%, #000 12%, #000 88%, transparent 100%),
+      linear-gradient(to bottom, transparent 0%, #000 14%, #000 86%, transparent 100%);
+    mask-composite: intersect;
+  }
+
+  .writing-atelier::before,
+  .writing-sheet::before {
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--module-writing-bg) 62%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-theory-bg) 28%, transparent),
+        transparent 70%
+      );
+  }
+
+  .writing-feature::before,
+  .writing-empty-desk::before,
+  .writing-paper-page::before {
+    background:
+      radial-gradient(
+        ellipse 80% 70% at 12% 18%,
+        color-mix(in oklab, var(--module-writing-bg) 70%, transparent),
+        transparent 74%
+      );
+  }
+
+  .writing-atelier > *,
+  .writing-paper-page > *,
+  .writing-sheet > *,
+  .writing-feature > *,
+  .writing-empty-desk > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .writing-atelier {
+    min-width: 0;
+  }
+
+  .writing-atelier-empty {
+    min-width: 0;
+  }
+
+  .writing-atelier-rule {
+    height: 6px;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--module-writing-fg) 16%,
+      var(--module-theory-fg) 48%,
+      var(--warning) 84%,
+      transparent 100%
+    );
+    box-shadow: 0 0 20px color-mix(in oklab, var(--module-writing-fg) 32%, transparent);
+  }
+
+  .writing-kicker {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--module-writing-fg);
+  }
+
+  .writing-hero {
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.35rem 2rem;
+    align-items: start;
+  }
+
+  .writing-hero-copy {
+    min-width: 0;
+  }
+
+  .writing-hero-actions,
+  .writing-mast-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+  }
+
+  .writing-brand-title {
+    margin: 0.55rem 0 0;
+    font-family: var(--font-heading);
+    font-size: clamp(2.35rem, 5.2vw, 3.45rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    color: var(--ink);
+  }
+
+  .writing-brand-lede {
+    max-width: 40rem;
+    margin-top: 0.85rem;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--muted-foreground);
+  }
+
+  .writing-workspace,
+  .writing-mast {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    min-width: 0;
+  }
+
+  .writing-mast-head {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.75rem 1rem;
+  }
+
+  .writing-spine {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    min-width: 0;
+  }
+
+  .writing-spine-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+
+  .writing-collections {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 0;
+    padding-top: 0;
+  }
+
+  .writing-collections-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem min(1.5rem, 4vw);
+  }
+
+  .writing-collections-head .writing-spine-folder {
+    align-self: center;
+    padding-inline: 0;
+  }
+
+  .writing-collection-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0.45rem;
+    min-width: 0;
+  }
+
+  .writing-collection-root,
+  .writing-collection-open {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .writing-collection-root {
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding-inline: 0.15rem;
+  }
+
+  .writing-collection-item {
+    display: flex;
+    width: auto;
+    min-width: 11.5rem;
+    max-width: 100%;
+    align-items: center;
+    gap: 0.25rem;
+    padding: 0.35rem 0.4rem 0.35rem 0.45rem;
+    border: 1px solid var(--hairline-cloud);
+    border-radius: 0.25rem;
+    background: color-mix(in oklab, var(--surface-elevated) 88%, transparent);
+  }
+
+  .writing-collection-item:hover,
+  .writing-collection-item:focus-within {
+    border-color: color-mix(in oklab, var(--module-writing-fg) 35%, var(--hairline-cloud));
+  }
+
+  .writing-collection-open {
+    padding: 0;
+    flex: 1;
+    justify-content: flex-start;
+  }
+
+  .writing-collection-icon {
+    display: flex;
+    width: 2rem;
+    height: 2rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--hairline-cloud);
+    border-radius: 0.25rem;
+    background: var(--surface-active);
+    color: var(--warning);
+  }
+
+  .writing-collection-copy {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.05rem;
+  }
+
+  .writing-collection-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+
+  .writing-collection-count {
+    flex-shrink: 0;
+    font-size: 0.7rem;
+    color: var(--muted-foreground);
+  }
+
+  .writing-collection-root.is-current,
+  .writing-collection-item.is-current .writing-collection-name {
+    color: var(--module-writing-fg);
+  }
+
+  .writing-collection-item.is-current {
+    border-color: color-mix(in oklab, var(--module-writing-fg) 40%, var(--hairline-cloud));
+  }
+
+  .writing-collection-item.is-over {
+    box-shadow: 0 0 0 2px var(--accent-lime);
+  }
+
+  .writing-spine-folder {
+    align-self: flex-start;
+    padding-inline: 0;
+  }
+
+  .writing-spine-search-wrap {
+    position: relative;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .writing-spine-search-icon {
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 1rem;
+    height: 1rem;
+    transform: translateY(-50%);
+    color: var(--muted-foreground);
+  }
+
+  .writing-spine-search {
+    border: 0 !important;
+    border-bottom: 1px solid
+      color-mix(in oklab, var(--module-writing-fg) 22%, transparent) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding-left: 1.6rem !important;
+  }
+
+  .writing-spine-search:focus-visible {
+    border-bottom-color: var(--module-writing-fg) !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  .writing-spine-tools {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.65rem 1.25rem;
+  }
+
+  .writing-workspace .writing-spine-search-wrap,
+  .writing-mast .writing-spine-search-wrap {
+    flex: 1;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .writing-refine {
+    display: grid;
+    align-items: stretch;
+    gap: 0.5rem;
+  }
+
+  @media (min-width: 640px) {
+    .writing-refine {
+      grid-template-columns: repeat(auto-fit, minmax(10.5rem, 1fr));
+    }
+  }
+
+  .writing-refine-toggle {
+    align-self: flex-start;
+  }
+
+  .writing-feature {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem 1rem;
+    padding: 0.25rem 0 0.5rem;
+  }
+
+  .writing-feature-title {
+    margin: 0.15rem 0 0;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4.6vw, 3.35rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+
+  .writing-feature-title a,
+  .writing-entry-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .writing-feature-excerpt,
+  .writing-entry-excerpt {
+    margin-top: 0.45rem;
+    max-width: 38rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--muted-foreground);
+  }
+
+  .writing-kind-facts {
+    margin-top: 0.45rem;
+    font-size: 0.8rem;
+    color: var(--muted-foreground);
+  }
+
+  .writing-open-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1.15rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--module-writing-fg);
+    text-decoration: none;
+  }
+
+  .writing-open-link:hover,
+  .writing-open-link:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .writing-empty-desk {
+    max-width: 36rem;
+    padding: 0.25rem 0 1rem;
+  }
+
+  .writing-empty-title {
+    margin: 0.15rem 0 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+
+  .writing-empty-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .writing-stage-empty {
+    padding: 0.75rem 0 1rem;
+    color: var(--muted-foreground);
+  }
+
+  .writing-stage-kicker {
+    margin-bottom: 1.35rem;
+  }
+
+  .writing-chapter {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .writing-chapter + .writing-chapter {
+    margin-top: 2.75rem;
+  }
+
+  .writing-chapter-title {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 0.4rem;
+    margin: 0 0 0.35rem;
+    padding: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    border: 0;
+    border-radius: 0;
+    background: none;
+  }
+
+  .writing-chapter[data-writing-kind="rich_document"] .writing-chapter-title {
+    color: var(--module-writing-fg);
+  }
+
+  .writing-chapter[data-writing-kind="question_set"] .writing-chapter-title {
+    color: var(--module-theory-fg);
+  }
+
+  .writing-entry-wrap + .writing-entry-wrap {
+    border-top: 1px solid
+      color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+  }
+
+  .writing-entry {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.35rem 1.25rem;
+    padding: 1.25rem 0 1.25rem 1.2rem;
+    border: 0;
+    background: transparent;
+  }
+
+  .writing-entry::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.4rem;
+    bottom: 1.4rem;
+    width: 2px;
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--module-writing-fg) 72%, transparent);
+  }
+
+  .writing-entry[data-writing-kind="question_set"]::before {
+    background: color-mix(in oklab, var(--module-theory-fg) 78%, transparent);
+  }
+
+  .writing-entry:not([data-writing-kind])::before {
+    background: color-mix(in oklab, var(--muted-foreground) 48%, transparent);
+  }
+
+  .writing-entry-title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 650;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .writing-entry:hover .writing-entry-title,
+  .writing-entry:focus-within .writing-entry-title,
+  .writing-feature:hover .writing-feature-title,
+  .writing-feature:focus-within .writing-feature-title {
+    color: var(--module-writing-fg);
+  }
+
+  .writing-entry[data-writing-kind="question_set"]:hover .writing-entry-title,
+  .writing-entry[data-writing-kind="question_set"]:focus-within .writing-entry-title {
+    color: var(--module-theory-fg);
+  }
+
+  .writing-entry-actions,
+  .writing-feature-tools {
+    pointer-events: auto;
+    opacity: 1;
+  }
+
+  .writing-paper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .writing-paper-chrome {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .writing-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--muted-foreground);
+    text-decoration: none;
+  }
+
+  .writing-back:hover {
+    color: var(--ink);
+  }
+
+  .writing-paper-actions {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .writing-paper-page {
+    max-width: 70rem;
+    margin-inline: auto;
+    width: 100%;
+    padding: 0.5rem 0 3rem;
+  }
+
+  .writing-paper-title {
+    margin: 0.55rem 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.85rem, 3.4vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+  }
+
+  .writing-paper-body {
+    margin-top: 2rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid
+      color-mix(in oklab, var(--module-writing-fg) 18%, transparent);
+  }
+
+  .writing-paper-body .prose p {
+    font-size: 1.125rem;
+    line-height: 1.85;
+  }
+
+  .writing-paper-num {
+    color: var(--module-writing-fg);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .writing-sheet {
+    display: flex;
+    max-width: 80rem;
+    margin-inline: auto;
+    width: 100%;
+    flex-direction: column;
+    gap: 1.55rem;
+    padding-top: 0.35rem;
+    padding-bottom: 2rem;
+  }
+
+  .writing-sheet-title {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    font-family: var(--font-heading);
+    font-size: clamp(1.85rem, 3.2vw, 2.6rem) !important;
+    font-weight: 700;
+    line-height: 1.15 !important;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+
+  .writing-sheet-title:focus-visible {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  .writing-paper-page[data-writing-kind="rich_document"] .writing-kicker,
+  .writing-sheet[data-writing-kind="rich_document"] .writing-kicker {
+    color: var(--module-writing-fg);
+  }
+
+  .writing-paper-page[data-writing-kind="question_set"] .writing-kicker,
+  .writing-sheet[data-writing-kind="question_set"] .writing-kicker {
+    color: var(--module-theory-fg);
+  }
+
+  .writing-paper-page[data-writing-kind="question_set"] .writing-paper-body {
+    border-top-color: color-mix(in oklab, var(--module-theory-fg) 22%, transparent);
+  }
+
+  .writing-paper-page[data-writing-kind="question_set"] .writing-paper-num {
+    color: var(--module-theory-fg);
+  }
+
+  .writing-sheet[data-writing-kind="rich_document"] .writing-sheet-surface {
+    padding: 1.15rem 1.2rem 0.55rem;
+    border-radius: 1rem;
+    background:
+      linear-gradient(
+        165deg,
+        color-mix(in oklab, var(--module-writing-bg) 72%, transparent),
+        color-mix(in oklab, var(--module-writing-bg) 22%, transparent) 70%,
+        transparent
+      );
+    box-shadow:
+      inset 4px 0 0 var(--module-writing-fg),
+      0 0 0 1px color-mix(in oklab, var(--module-writing-fg) 12%, transparent);
+  }
+
+  .writing-mode-toggle {
+    display: flex;
+    width: 100%;
+    gap: 0.5rem;
+    padding: 0.3rem;
+    border: 1px solid var(--hairline-cloud);
+    border-radius: 0.7rem;
+    background: color-mix(in oklab, var(--surface-elevated) 78%, transparent);
+  }
+
+  .writing-mode-toggle [data-slot="toggle-group-item"] {
+    height: 2.5rem;
+    border: 1px solid transparent;
+    border-radius: 0.5rem;
+    font-weight: 650;
+  }
+
+  .writing-mode-rich[data-state="on"],
+  .writing-mode-rich[aria-pressed="true"] {
+    background: color-mix(in oklab, var(--module-writing-bg) 88%, transparent);
+    color: var(--module-writing-fg);
+    border-color: color-mix(in oklab, var(--module-writing-fg) 38%, transparent);
+    box-shadow: none;
+  }
+
+  .writing-mode-questions[data-state="on"],
+  .writing-mode-questions[aria-pressed="true"] {
+    background: color-mix(in oklab, var(--module-theory-bg) 88%, transparent);
+    color: var(--module-theory-fg);
+    border-color: color-mix(in oklab, var(--module-theory-fg) 38%, transparent);
+    box-shadow: none;
+  }
+
+  .writing-qs-section {
+    border-color: color-mix(in oklab, var(--module-theory-fg) 22%, var(--hairline-cloud));
+    background: color-mix(in oklab, var(--module-theory-bg) 42%, var(--card));
+  }
+
+  .writing-qs-section-head {
+    background: color-mix(in oklab, var(--module-theory-bg) 58%, transparent);
+    border-bottom-color: color-mix(in oklab, var(--module-theory-fg) 16%, transparent);
+  }
+
+  .writing-qs-question {
+    border-color: color-mix(in oklab, var(--module-theory-fg) 16%, var(--hairline-cloud));
+    background: color-mix(in oklab, var(--surface) 86%, var(--module-theory-bg));
+  }
+
+  .writing-sheet-meta {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 0.75rem 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .writing-hero {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .writing-hero-actions {
+      justify-content: flex-end;
+      padding-top: 0.2rem;
+    }
+
+    .writing-collection-list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: 0.45rem;
+    }
+
+    .writing-collection-item,
+    .writing-collection-root {
+      width: auto;
+      min-width: 12rem;
+      max-width: 100%;
+    }
+
+    .writing-spine-tools {
+      flex-direction: row;
+      align-items: center;
+    }
+
+    .writing-spine-search-wrap {
+      flex: 1;
+    }
+
+    .writing-feature {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .writing-paper-chrome {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .writing-paper-actions {
+      width: auto;
+      flex-direction: row;
+    }
+
+    .writing-sheet-meta {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .writing-entry-actions,
+    .writing-feature-tools {
+      opacity: 0;
+    }
+
+    .writing-entry:hover .writing-entry-actions,
+    .writing-entry:focus-within .writing-entry-actions,
+    .writing-feature:hover .writing-feature-tools,
+    .writing-feature:focus-within .writing-feature-tools {
+      opacity: 1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .writing-atelier-empty {
+      min-width: 0;
+    }
+
+    .writing-entry-title {
+      font-size: 1.5rem;
+    }
+
+    .writing-sheet-meta {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .writing-entry-title,
+    .writing-feature-title {
+      transition: none;
+    }
+  }
 }
 
 .tiptap p.is-editor-empty:first-child::before {
@@ -2126,4 +2957,35 @@ html.dark {
 body {
   background-color: var(--background);
   color: var(--foreground);
+}
+
+.writing-refine [data-slot="select-trigger"],
+.writing-refine [data-slot="dropdown-menu-trigger"] {
+  height: 2.5rem;
+  min-height: 2.5rem;
+  border-radius: 0.55rem;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.writing-refine [data-slot="select-trigger"]:hover,
+.writing-refine [data-slot="dropdown-menu-trigger"]:hover {
+  border-color: color-mix(in oklab, var(--module-writing-fg) 42%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-writing-bg) 58%, var(--surface-elevated));
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--module-writing-fg) 16%, transparent),
+    0 10px 22px color-mix(in oklab, var(--module-writing-fg) 12%, transparent);
+}
+
+.writing-refine [data-slot="select-trigger"]:focus-visible,
+.writing-refine [data-slot="dropdown-menu-trigger"]:focus-visible,
+.writing-refine [data-slot="dropdown-menu-trigger"][aria-expanded="true"],
+.writing-refine [data-slot="select-trigger"][data-popup-open] {
+  border-color: color-mix(in oklab, var(--module-writing-fg) 48%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-writing-bg) 62%, var(--surface-elevated));
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--module-writing-fg) 20%, transparent),
+    0 10px 22px color-mix(in oklab, var(--module-writing-fg) 12%, transparent);
 }

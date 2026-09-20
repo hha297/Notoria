@@ -246,8 +246,8 @@ export function WritingSectionCard({
   );
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-hairline-cloud bg-card">
-      <div className="flex items-start gap-2.5 border-b border-hairline-cloud bg-muted/30 px-3 py-3.5 sm:gap-3 sm:px-4 sm:py-4">
+    <div className="writing-qs-section overflow-hidden rounded-2xl border">
+      <div className="writing-qs-section-head flex items-start gap-2.5 border-b border-hairline-cloud px-4 py-4 sm:gap-3 sm:px-5 sm:py-5">
         <div className="flex items-center gap-0.5 pt-2.5">
           {dragHandle}
           <button
@@ -298,7 +298,7 @@ export function WritingSectionCard({
       </div>
 
       {!collapsed && (
-        <div className="space-y-4 p-3 sm:p-4">
+        <div className="space-y-4 p-4 sm:p-5">
           {mounted ? (
             <DndContext
               id={`writing-section-questions-${section.id}`}

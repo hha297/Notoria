@@ -2,15 +2,9 @@
 
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
-import { PenLine } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { FolderItemDrag } from "@/components/folders/folder-dnd";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { DescriptionContent } from "@/components/form/description-content";
 import { WritingMetaBadges } from "@/components/writing/writing-meta-badges";
 import { WritingRowActions } from "@/components/writing/writing-row-actions";
@@ -29,71 +23,139 @@ export type WritingListItem = {
 type WritingCardProps = {
   document: WritingListItem;
   workspaceId: string;
+  variant?: "feature" | "entry";
 };
 
-export function WritingCard({ document, workspaceId }: WritingCardProps) {
+function WritingKindFacts({
+  document,
+}: {
+  document: WritingListItem;
+}) {
   const t = useTranslations("writing");
   const listMeta = document.listMeta;
+  const isQuestionSet = listMeta.mode === "question_set";
 
   return (
-    <FolderItemDrag id={document.id} className="h-full">
-      <Card className="relative h-full cursor-pointer border-hairline-cloud bg-surface-elevated transition-colors hover:border-primary/40 hover:bg-surface-hover">
-        <Link
-          href={`/writing/${document.id}`}
-          className="absolute inset-0 z-0"
-          aria-label={document.title}
-        />
-        <CardHeader className="relative z-10 gap-3 pointer-events-none">
-          <div className="flex items-start justify-between gap-2">
-            <div className="flex size-9 items-center justify-center rounded-sm border border-hairline-cloud bg-surface-active">
-              <PenLine className="size-4 text-primary" />
-            </div>
-            <div className="pointer-events-auto">
-              <WritingRowActions
-                id={document.id}
-                title={document.title}
-                description={document.description}
-                folderId={document.folderId}
-                workspaceId={workspaceId}
+    <p className="writing-kind-facts">
+      {isQuestionSet ? (
+        <>
+          <span>{t("sectionCount", { count: listMeta.sectionCount })}</span>
+          <span aria-hidden="true"> · </span>
+          <span>{t("questionCount", { count: listMeta.questionCount })}</span>
+        </>
+      ) : (
+        <span>{t("modes.richDocument")}</span>
+      )}
+      <span aria-hidden="true"> · </span>
+      <span>
+        {formatDistanceToNow(new Date(document.updatedAt), {
+          addSuffix: true,
+        })}
+      </span>
+    </p>
+  );
+}
+
+export function WritingCard({
+  document,
+  workspaceId,
+  variant = "entry",
+}: WritingCardProps) {
+  const t = useTranslations("writing");
+  const listMeta = document.listMeta;
+  const isQuestionSet = listMeta.mode === "question_set";
+  const href = `/writing/${document.id}`;
+
+  if (variant === "feature") {
+    return (
+      <FolderItemDrag id={document.id}>
+        <article
+          className="writing-feature"
+          data-writing-kind={listMeta.mode}
+        >
+          <div className="writing-feature-copy">
+            <h2 className="writing-feature-title">
+              <Link
+                href={href}
+                onPointerDown={(event) => event.stopPropagation()}
+                onClick={(event) => event.stopPropagation()}
+              >
+                {document.title}
+              </Link>
+            </h2>
+            {document.description?.trim() ? (
+              <DescriptionContent
+                value={document.description}
+                clampLines={4}
+                className="writing-feature-excerpt"
               />
+            ) : null}
+            <WritingKindFacts document={document} />
+            <div className="mt-3">
+              <WritingMetaBadges meta={listMeta.meta} />
             </div>
+            <Link
+              href={href}
+              className="writing-open-link"
+              onPointerDown={(event) => event.stopPropagation()}
+              onClick={(event) => event.stopPropagation()}
+            >
+              {t("openWriting")}
+              <ArrowRight className="size-4" aria-hidden="true" />
+            </Link>
           </div>
-          <div className="min-w-0 space-y-2">
-            <CardTitle className="line-clamp-2 min-h-[3.25rem] text-lg leading-snug text-ink">
+          <div className="writing-feature-tools">
+            <WritingRowActions
+              id={document.id}
+              title={document.title}
+              description={document.description}
+              folderId={document.folderId}
+              workspaceId={workspaceId}
+            />
+          </div>
+        </article>
+      </FolderItemDrag>
+    );
+  }
+
+  return (
+    <FolderItemDrag id={document.id} className="writing-entry-wrap">
+      <article
+        className="writing-entry"
+        data-writing-kind={listMeta.mode}
+      >
+        <div className="writing-entry-body">
+          <h3 className="writing-entry-title">
+            <Link
+              href={href}
+              onPointerDown={(event) => event.stopPropagation()}
+              onClick={(event) => event.stopPropagation()}
+            >
               {document.title}
-            </CardTitle>
-            <div className="min-h-[3.75rem]">
-              {document.description?.trim() ? (
-                <DescriptionContent
-                  value={document.description}
-                  clampLines={3}
-                  className="text-sm text-muted-foreground"
-                />
-              ) : null}
-            </div>
+            </Link>
+          </h3>
+          {!isQuestionSet && document.description?.trim() ? (
+            <DescriptionContent
+              value={document.description}
+              clampLines={2}
+              className="writing-entry-excerpt"
+            />
+          ) : null}
+          <WritingKindFacts document={document} />
+          <div className="mt-1.5">
             <WritingMetaBadges meta={listMeta.meta} />
           </div>
-        </CardHeader>
-        <CardContent className="relative z-10 mt-auto flex flex-wrap items-center gap-x-3 gap-y-1 pb-1 text-xs text-muted-foreground pointer-events-none">
-          {listMeta.mode === "question_set" ? (
-            <>
-              <span>
-                {t("sectionCount", { count: listMeta.sectionCount })}
-              </span>
-              <span aria-hidden="true">·</span>
-              <span>
-                {t("questionCount", { count: listMeta.questionCount })}
-              </span>
-              <span aria-hidden="true">·</span>
-            </>
-          ) : null}
-          <span>
-            {formatDistanceToNow(new Date(document.updatedAt), {
-              addSuffix: true,
-            })}
-          </span>
-        </CardContent>
-      </Card>
+        </div>
+        <div className="writing-entry-actions">
+          <WritingRowActions
+            id={document.id}
+            title={document.title}
+            description={document.description}
+            folderId={document.folderId}
+            workspaceId={workspaceId}
+          />
+        </div>
+      </article>
     </FolderItemDrag>
   );
 }

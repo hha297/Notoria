@@ -101,7 +101,8 @@
     "nameRequired": "Nhập tên thư mục",
     "invalidMove": "Không thể chuyển thư mục vào chính nó",
     "tooDeep": "Thư mục này đã lồng quá sâu",
-    "notFound": "Không tìm thấy thư mục"
+    "notFound": "Không tìm thấy thư mục",
+    "nameTaken": "Đã có thư mục hoặc bài viết dùng tên này"
   },
   "theme": {
     "toggle": "Đổi giao diện",
@@ -1849,9 +1850,15 @@
     "disabledNoWorkspace": "Hãy tạo không gian học trước khi thêm bài viết.",
     "create": "Tạo bài viết",
     "createFirst": "Tạo bài viết đầu tiên",
+    "onTheDesk": "Trên bàn",
+    "library": "Thư viện",
+    "allWritings": "Tất cả bài viết",
+    "collections": "Bộ sưu tập",
+    "refine": "Lọc",
+    "openWriting": "Mở",
     "emptyTitle": "Chưa có bài viết nào",
     "emptyDescription": "Tạo phiếu viết đầu tiên để bắt đầu luyện.",
-    "searchPlaceholder": "Tìm theo tiêu đề, mô tả, CEFR, chủ đề…",
+    "searchPlaceholder": "Tìm bài viết…",
     "noResults": "Không tìm thấy bài viết nào",
     "groupCount": "{count, plural, other {# bài}}",
     "filterAll": "Tất cả",
@@ -1920,6 +1927,7 @@
     "documentDescription": "Mô tả",
     "descriptionPlaceholder": "Vài dòng tóm tắt hoặc gợi ý cho bài viết…",
     "titleRequired": "Cần có tiêu đề",
+    "titleTaken": "Đã có bài viết hoặc thư mục dùng tiêu đề này",
     "promptRequired": "Thêm ít nhất một câu hỏi",
     "mode": "Kiểu bài",
     "modes": {

@@ -101,7 +101,8 @@
     "nameRequired": "Enter a folder name",
     "invalidMove": "Can't move a folder into itself",
     "tooDeep": "This folder is nested too deeply",
-    "notFound": "Folder not found"
+    "notFound": "Folder not found",
+    "nameTaken": "A folder or writing already uses this name"
   },
   "theme": {
     "toggle": "Toggle theme",
@@ -829,9 +830,15 @@
     "disabledNoWorkspace": "Create a workspace before adding writing documents.",
     "create": "Create writing",
     "createFirst": "Create your first writing",
+    "onTheDesk": "On the desk",
+    "library": "Library",
+    "allWritings": "All writings",
+    "collections": "Collections",
+    "refine": "Refine",
+    "openWriting": "Open",
     "emptyTitle": "You haven't created any writing yet",
     "emptyDescription": "Create your first writing worksheet to start practicing.",
-    "searchPlaceholder": "Search by title, description, CEFR, topic…",
+    "searchPlaceholder": "Search writings…",
     "noResults": "No writing matches your search",
     "groupCount": "{count, plural, one {# document} other {# documents}}",
     "filterAll": "All",
@@ -900,6 +907,7 @@
     "documentDescription": "Description",
     "descriptionPlaceholder": "Short summary or prompt for this writing…",
     "titleRequired": "Title is required",
+    "titleTaken": "A writing or folder already uses this title",
     "promptRequired": "Add at least one question prompt",
     "mode": "Mode",
     "modes": {

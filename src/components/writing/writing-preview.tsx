@@ -1,6 +1,7 @@
 "use client";
 
-import { Download, Pencil } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft, Download, Pencil } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
@@ -8,7 +9,6 @@ import { RichTextContent } from "@/components/editor/rich-text-content";
 import { DescriptionContent } from "@/components/form/description-content";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { WritingMetaBadges } from "@/components/writing/writing-meta-badges";
-import { Badge } from "@/components/ui/badge";
 import { LinkButton } from "@/components/ui/link-button";
 import {
   parseWritingContent,
@@ -20,6 +20,7 @@ type WritingPreviewProps = {
   title: string;
   description?: string | null;
   content: unknown;
+  backHref: string;
 };
 
 export function WritingPreview({
@@ -27,6 +28,7 @@ export function WritingPreview({
   title,
   description,
   content,
+  backHref,
 }: WritingPreviewProps) {
   const t = useTranslations("writing");
   const [exportOpen, setExportOpen] = useState(false);
@@ -43,11 +45,19 @@ export function WritingPreview({
   );
 
   const trimmedDescription = description?.trim() ?? "";
+  const isQuestionSet = editorState.mode === "question_set";
 
   return (
-    <div className="space-y-6 sm:space-y-8">
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-end">
-        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:items-center">
+    <div className="writing-paper">
+      <div className="writing-paper-chrome">
+        <Link
+          href={backHref}
+          className="writing-back"
+        >
+          <ArrowLeft className="size-4" />
+          {t("backToList")}
+        </Link>
+        <div className="writing-paper-actions">
           <LockedFeatureButton
             type="button"
             variant="outline"
@@ -69,82 +79,80 @@ export function WritingPreview({
         </div>
       </div>
 
-      <article className="card-surface space-y-6 p-4 sm:space-y-8 sm:p-6 md:p-8">
-        <header className="space-y-3 border-b border-hairline-cloud pb-5">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="secondary">
-              {editorState.mode === "question_set"
-                ? t("modes.questionSet")
-                : t("modes.richDocument")}
-            </Badge>
-            <WritingMetaBadges meta={editorState.meta} />
-          </div>
-          <h2 className="heading-md text-ink">{title}</h2>
-          {trimmedDescription ? (
-            <DescriptionContent
-              value={trimmedDescription}
-              className="text-sm text-muted-foreground sm:text-base"
-            />
-          ) : null}
-        </header>
-
-        {editorState.mode === "rich_document" ? (
-          <RichTextContent
-            content={editorState.doc}
-            className="border-0 bg-transparent shadow-none"
-            collapseStorageKey={`heading-collapse:writing:${id}`}
+      <article
+        className="writing-paper-page"
+        data-writing-kind={editorState.mode}
+      >
+        <p className="writing-kicker">
+          {isQuestionSet ? t("modes.questionSet") : t("modes.richDocument")}
+        </p>
+        <h1 className="writing-paper-title wrap-break-word">{title}</h1>
+        <WritingMetaBadges meta={editorState.meta} />
+        {trimmedDescription ? (
+          <DescriptionContent
+            value={trimmedDescription}
+            className="writing-feature-excerpt mt-3"
           />
-        ) : (
-          <div className="space-y-8">
-            {sections.map((section, sectionIndex) => {
-              const questions = [...section.questions]
-                .sort((a, b) => a.sortOrder - b.sortOrder)
-                .filter((question) => question.prompt.trim().length > 0);
+        ) : null}
 
-              if (questions.length === 0 && !section.title.trim()) {
-                return null;
-              }
+        <div className="writing-paper-body">
+          {editorState.mode === "rich_document" ? (
+            <RichTextContent
+              content={editorState.doc}
+              className="border-0 bg-transparent shadow-none"
+              collapseStorageKey={`heading-collapse:writing:${id}`}
+            />
+          ) : (
+            <div className="space-y-12">
+              {sections.map((section, sectionIndex) => {
+                const questions = [...section.questions]
+                  .sort((a, b) => a.sortOrder - b.sortOrder)
+                  .filter((question) => question.prompt.trim().length > 0);
 
-              return (
-                <section key={section.id} className="space-y-4">
-                  <h3 className="font-heading text-lg font-medium tracking-tight text-ink sm:text-xl">
-                    {section.title.trim() ||
-                      `${t("section")} ${sectionIndex + 1}`}
-                  </h3>
+                if (questions.length === 0 && !section.title.trim()) {
+                  return null;
+                }
 
-                  <ol className="space-y-5">
-                    {questions.map((question, questionIndex) => (
-                      <li key={question.id} className="space-y-2">
-                        <p className="text-sm font-medium text-ink sm:text-base">
-                          <span className="mr-2 text-muted-foreground">
-                            {questionIndex + 1}.
-                          </span>
-                          {question.prompt.trim()}
-                        </p>
-                        {question.exampleAnswer.trim() ? (
-                          <p className="pl-5 text-sm text-muted-foreground sm:pl-6">
-                            <span className="font-medium text-ink/70">
-                              {t("export.exampleAnswerLabel")}:{" "}
+                return (
+                  <section key={section.id} className="space-y-5">
+                    <h2 className="font-heading text-lg font-semibold tracking-tight text-ink sm:text-xl">
+                      {section.title.trim() ||
+                        `${t("section")} ${sectionIndex + 1}`}
+                    </h2>
+                    <ol className="space-y-6">
+                      {questions.map((question, questionIndex) => (
+                        <li key={question.id} className="space-y-2">
+                          <p className="text-base leading-[1.75] text-ink sm:text-lg">
+                            <span className="writing-paper-num mr-2 font-heading font-medium">
+                              {questionIndex + 1}.
                             </span>
-                            {question.exampleAnswer.trim()}
+                            {question.prompt.trim()}
                           </p>
-                        ) : null}
-                        {question.notes.trim() ? (
-                          <p className="pl-5 text-sm text-muted-foreground sm:pl-6">
-                            <span className="font-medium text-ink/70">
-                              {t("export.notesLabel")}:{" "}
-                            </span>
-                            {question.notes.trim()}
-                          </p>
-                        ) : null}
-                      </li>
-                    ))}
-                  </ol>
-                </section>
-              );
-            })}
-          </div>
-        )}
+                          {question.exampleAnswer.trim() ? (
+                            <p className="pl-7 text-sm leading-relaxed text-muted-foreground sm:pl-8">
+                              <span className="font-medium text-ink/70">
+                                {t("export.exampleAnswerLabel")}:{" "}
+                              </span>
+                              {question.exampleAnswer.trim()}
+                            </p>
+                          ) : null}
+                          {question.notes.trim() ? (
+                            <p className="pl-7 text-sm leading-relaxed text-muted-foreground sm:pl-8">
+                              <span className="font-medium text-ink/70">
+                                {t("export.notesLabel")}:{" "}
+                              </span>
+                              {question.notes.trim()}
+                            </p>
+                          ) : null}
+                        </li>
+                      ))}
+                    </ol>
+                  </section>
+                );
+              })}
+            </div>
+          )}
+        </div>
       </article>
 
       <WritingExportDialog
