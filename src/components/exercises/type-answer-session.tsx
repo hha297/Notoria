@@ -172,6 +172,10 @@ export function TypeAnswerSession({
           openUpgrade();
           return;
         }
+        if (result.code === "AI_DISABLED") {
+          fail(tAi("disabled"));
+          return;
+        }
         fail(tAi("unavailable"));
         return;
       }

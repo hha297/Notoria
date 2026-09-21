@@ -1,5 +1,6 @@
 import type { JSONContent } from "@tiptap/react";
 import OpenAI from "openai";
+import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import {
   vocabularyNotesFormatResultSchema,
   type VocabularyNotesFormatBlock,
@@ -96,7 +97,12 @@ export async function formatEditorDocumentWithAi(
     max_tokens: 8_000,
     response_format: { type: "json_object" },
     messages: [
-      { role: "system", content: documentFormatSystemPrompt() },
+      {
+        role: "system",
+        content: await aiSystemPrompt(documentFormatSystemPrompt(), {
+          responseStyle: true,
+        }),
+      },
       {
         role: "user",
         content: JSON.stringify({

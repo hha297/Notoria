@@ -5,8 +5,10 @@ import { DashboardStudio } from "@/components/layout/dashboard-studio";
 import { WorkspaceOnboardingGate } from "@/components/onboarding/workspace-onboarding-gate";
 import { WelcomePromptModal } from "@/components/prompts/welcome-prompt";
 import { ProAccessProvider } from "@/components/billing/pro-access-provider";
+import { AiPreferencesProvider } from "@/components/providers/ai-preferences-provider";
 import { locales, type AppLocale } from "@/i18n/config";
 import { LOCALE_COOKIE } from "@/i18n/request";
+import { getResolvedAiPreferences } from "@/lib/ai/preferences-server";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { getSession } from "@/lib/auth/session";
 import {
@@ -24,13 +26,14 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const timer = createPerfTimer("dashboard.layout");
-  const [workspaces, activeWorkspace, session, subscription, proAccess] =
+  const [workspaces, activeWorkspace, session, subscription, proAccess, aiPreferences] =
     await Promise.all([
       getUserWorkspaces(),
       getActiveWorkspace(),
       getSession(),
       getCurrentSubscription(),
       getCurrentProAccess(),
+      getResolvedAiPreferences(),
     ]);
   timer.finish();
 
@@ -47,6 +50,7 @@ export default async function DashboardLayout({
 
   return (
     <ProAccessProvider hasProAccess={proAccess.hasProAccess}>
+      <AiPreferencesProvider initial={aiPreferences}>
       <DashboardDocumentTitle />
       <DashboardStudio
         locale={locale}
@@ -64,6 +68,7 @@ export default async function DashboardLayout({
         <WorkspaceOnboardingGate workspaceId={activeWorkspace?.id ?? null} />
         {children}
       </DashboardStudio>
+      </AiPreferencesProvider>
     </ProAccessProvider>
   );
 }

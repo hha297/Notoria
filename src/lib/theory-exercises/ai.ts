@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import {
   mapAiDraftsToTheoryExercises,
   theoryAiResponseSchema,
@@ -165,7 +166,12 @@ async function requestExerciseBatch(input: {
     max_tokens: 8_000,
     response_format: { type: "json_object" },
     messages: [
-      { role: "system", content: THEORY_EXERCISE_AI_PROMPT },
+      {
+        role: "system",
+        content: await aiSystemPrompt(THEORY_EXERCISE_AI_PROMPT, {
+          responseStyle: true,
+        }),
+      },
       {
         role: "user",
         content: JSON.stringify({

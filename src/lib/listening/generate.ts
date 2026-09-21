@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { ListeningError, toListeningError } from "@/lib/listening/errors";
 import { mergeFillBlankQuestions } from "@/lib/listening/fill-blank-passage";
 import {
@@ -422,7 +423,8 @@ async function requestExerciseJson(input: {
     messages: [
       {
         role: "system",
-        content: `You are a language-learning content designer for Notoria Listening lessons.
+        content: await aiSystemPrompt(
+          `You are a language-learning content designer for Notoria Listening lessons.
 Create one Listening exercise SET of a single type.
 
 Rules:
@@ -436,8 +438,10 @@ Rules:
 - ${splitRule}
 - Return JSON only.
 ${instructions.rules.map((rule) => `- ${rule}`).join("\n")}${
-          input.extraInstruction ? `\n- ${input.extraInstruction}` : ""
-        }`,
+            input.extraInstruction ? `\n- ${input.extraInstruction}` : ""
+          }`,
+          { responseStyle: true },
+        ),
       },
       {
         role: "user",

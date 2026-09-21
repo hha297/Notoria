@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { getLanguageByCode } from "@/lib/languages";
 import {
   FILL_BLANK_GENERATOR_PROMPT,
@@ -120,7 +121,9 @@ export async function generateFillBlankExercises(
       messages: [
         {
           role: "system",
-          content: FILL_BLANK_GENERATOR_PROMPT,
+          content: await aiSystemPrompt(FILL_BLANK_GENERATOR_PROMPT, {
+            responseStyle: true,
+          }),
         },
         {
           role: "user",

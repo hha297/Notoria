@@ -108,6 +108,10 @@ export function TheoryExerciseSessionView({
           openUpgrade();
           return;
         }
+        if (result.code === "AI_DISABLED") {
+          fail(t("aiDisabled"));
+          return;
+        }
         fail(t("aiUnavailable"));
         return;
       }

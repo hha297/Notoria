@@ -23,6 +23,7 @@ import {
 import { clearAppLocalPreferences } from "@/lib/preferences/app-preferences";
 import type { ReduceMotionPreference } from "@/lib/preferences/app-preferences";
 import { KeyboardShortcutsSection } from "@/components/settings/keyboard-shortcuts-section";
+import { AiAssistanceSection } from "@/components/settings/ai-assistance-section";
 import styles from "@/components/style/settings/settings.module.css";
 import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
@@ -55,6 +56,7 @@ export function SettingsView() {
         <div className={mx(styles, "settings-stack")}>
           <AppearanceSection />
           <AccessibilitySection />
+          <AiAssistanceSection />
           <LearningSection />
           <KeyboardShortcutsSection />
           <DataPrivacySection />

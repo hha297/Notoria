@@ -1,18 +1,18 @@
 /* --- Settings atelier --- */
 .settings-atelier :global(.writing-hero) {
-  width: min(100%, 52rem);
+  width: min(100%, 58rem);
   margin-inline: auto;
 }
 
 .settings-atelier :global(.writing-brand-lede) {
-  max-width: 38rem;
+  max-width: 40rem;
 }
 
 .settings-stack {
   display: grid;
   gap: 1rem;
-  width: min(100%, 52rem);
-  max-width: 52rem;
+  width: min(100%, 58rem);
+  max-width: 58rem;
   margin-inline: auto;
 }
 
@@ -103,7 +103,7 @@
 
 .settings-row-hint {
   margin: 0.25rem 0 0;
-  max-width: 28rem;
+  max-width: 26rem;
   font-size: 0.84rem;
   line-height: 1.45;
   color: var(--muted-foreground);
@@ -118,8 +118,9 @@
 
 @media (min-width: 640px) {
   .settings-choice-row {
+    flex-wrap: nowrap;
     justify-content: flex-end;
-    max-width: 18rem;
+    max-width: min(100%, 28rem);
   }
 }
 
@@ -127,12 +128,13 @@
   display: inline-flex;
   align-items: center;
   height: 2.15rem;
-  padding: 0 0.85rem;
+  padding: 0 0.75rem;
   border: 1px solid var(--hairline-cloud);
   border-radius: 0.55rem;
   background: transparent;
   color: var(--muted-foreground);
   font-size: 0.875rem;
+  white-space: nowrap;
   cursor: pointer;
   transition:
     border-color 140ms ease,

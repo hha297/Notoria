@@ -187,6 +187,10 @@ export function FillBlankSession({
           openUpgrade();
           return;
         }
+        if (result.code === "AI_DISABLED") {
+          fail(tAi("disabled"));
+          return;
+        }
         fail(
           result.code === "AI_EMPTY" ? tAi("emptyWords") : tAi("unavailable"),
         );

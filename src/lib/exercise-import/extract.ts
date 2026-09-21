@@ -1,6 +1,7 @@
 import mammoth from "mammoth";
 import { extractText, getDocumentProxy } from "unpdf";
 import OpenAI from "openai";
+import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import {
   cloudinaryResourceTypeForMime,
   downloadCloudinaryAsset,
@@ -134,7 +135,8 @@ const imageExtractor: ContentExtractor = {
       messages: [
         {
           role: "system",
-          content: `Extract ALL readable learning content from the image as plain text only.
+          content: await aiSystemPrompt(
+            `Extract ALL readable learning content from the image as plain text only.
 
 Rules:
 - Extract the FULL page: theory/explanations AND every exercise section (Tehtävä, Bài tập, tables, verb lists, example sentences).
@@ -147,6 +149,8 @@ Rules:
 - Do not invent words, forms, sentences, or instructions that are not clearly visible.
 - Ignore handwriting unless it is clearly part of a printed answer key (prefer leaving blanks empty).
 - Keep original language(s). No commentary.`,
+            { responseStyle: true },
+          ),
         },
         {
           role: "user",

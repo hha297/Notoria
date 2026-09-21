@@ -28,6 +28,7 @@ import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { EditorToolbar } from "@/components/editor/editor-toolbar";
 import { formatEditorDocumentAi } from "@/lib/actions/editor-format-ai";
+import { useAiPreferences } from "@/components/providers/ai-preferences-provider";
 import {
   collectImageFiles,
   editorDocHasTransientImages,
@@ -168,6 +169,8 @@ export function RichTextEditor({
   formatWord = null,
 }: RichTextEditorProps) {
   const tEditor = useTranslations("editor");
+  const tAi = useTranslations("settings.ai");
+  const { preferences, shouldConfirmContentChange } = useAiPreferences();
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSavedContent = useRef("");
   const pendingUploads = useRef(0);
@@ -430,6 +433,14 @@ export function RichTextEditor({
 
   async function handleFormat() {
     if (formatting) return;
+    if (!preferences.enabled) {
+      toast.message(tAi("disabledToast"));
+      return;
+    }
+    if (shouldConfirmContentChange) {
+      const confirmed = window.confirm(tAi("formatConfirm"));
+      if (!confirmed) return;
+    }
     const current = activeEditor.getJSON();
     setFormatting(true);
     try {

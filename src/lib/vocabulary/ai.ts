@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import {
   MEANING_GLOSS_PROMPT,
   MEANING_VALIDATOR_PROMPT,
@@ -46,7 +47,8 @@ export async function analyzeVocabularySpelling(input: {
     messages: [
       {
         role: "system",
-        content: `You are a multilingual vocabulary-learning assistant for Notoria.
+        content: await aiSystemPrompt(
+          `You are a multilingual vocabulary-learning assistant for Notoria.
 
 Judge only the WORD string. This is a spelling check of the word the learner is studying.
 
@@ -77,6 +79,8 @@ Rules:
 - suggestion must be a corrected spelling of the same word, not a translation or related word.
 - explanation should be short, gentle, and suitable to show as "Did you mean ...?"
 - Do not include markdown.`,
+          { responseStyle: true, correctionStyle: true },
+        ),
       },
       {
         role: "user",
@@ -113,7 +117,13 @@ async function completeMeaningJson(system: string, payload: unknown) {
     max_tokens: 280,
     response_format: { type: "json_object" },
     messages: [
-      { role: "system", content: system },
+      {
+        role: "system",
+        content: await aiSystemPrompt(system, {
+          responseStyle: true,
+          correctionStyle: true,
+        }),
+      },
       { role: "user", content: JSON.stringify(payload) },
     ],
   });

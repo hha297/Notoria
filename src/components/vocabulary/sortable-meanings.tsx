@@ -58,6 +58,8 @@ type SortableMeaningsProps = {
     language: string;
     partOfSpeech?: string | null;
     examples: string[];
+    /** When true, apply the first suggestion without an Accept click. */
+    autoApply?: boolean;
   };
 };
 
@@ -334,6 +336,19 @@ export function SortableMeanings({
       }
 
       if (result.result.isLikelyCorrect !== false) {
+        clearAi(id);
+        return;
+      }
+
+      const firstSuggestion = result.result.suggestions[0]?.meaning?.trim();
+      if (aiNow.autoApply && firstSuggestion) {
+        lastChecked.current.add(key);
+        skipped.current.add(key);
+        onChange(
+          meaningsRef.current.map((meaning) =>
+            meaning.id === id ? { ...meaning, meaning: firstSuggestion } : meaning,
+          ),
+        );
         clearAi(id);
         return;
       }

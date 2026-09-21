@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { getLanguageByCode } from "@/lib/languages";
 import { normalizeWritingAiResult } from "@/lib/writing/ai-filter";
 import { writingActionPrompt } from "@/lib/writing/ai-prompt";
@@ -38,6 +39,8 @@ export async function analyzeWriting(input: WritingAiRequest): Promise<WritingAi
     input.content,
     input.selectedText,
   );
+  const usesCorrection =
+    input.action === "check" || input.action === "correct";
 
   const completion = await client.chat.completions.create({
     model: "gpt-4o-mini",
@@ -48,7 +51,10 @@ export async function analyzeWriting(input: WritingAiRequest): Promise<WritingAi
     messages: [
       {
         role: "system",
-        content: writingActionPrompt(input.action),
+        content: await aiSystemPrompt(writingActionPrompt(input.action), {
+          responseStyle: true,
+          correctionStyle: usesCorrection,
+        }),
       },
       {
         role: "user",

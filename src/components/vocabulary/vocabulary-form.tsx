@@ -20,6 +20,7 @@ import {
 import { TagMultiSelect } from "@/components/vocabulary/tag-multi-select";
 import { SynonymPicker } from "@/components/vocabulary/synonym-picker";
 import { VocabularyAiChecking, VocabularyAiSuggestionCard } from "@/components/vocabulary/ai-suggestion-card";
+import { useAiPreferences } from "@/components/providers/ai-preferences-provider";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { Button } from "@/components/ui/button";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
@@ -200,6 +201,7 @@ export function VocabularyForm({
   const router = useRouter();
   const queryClient = useQueryClient();
   const t = useTranslations("vocabulary");
+  const { suggestionsAllowed, shouldAutoApplyContentChange } = useAiPreferences();
   const tCommon = useTranslations("common");
   const tPos = useTranslations("tags.pos");
   const isModal = mode === "modal";
@@ -517,12 +519,26 @@ export function VocabularyForm({
 
   const selectedPartOfSpeech = form.watch("partOfSpeech");
   const spellingAi = useVocabularySpellingAi({
-    enabled: wordCheckStatus === "unique" || wordCheckStatus === "error",
+    enabled:
+      (wordCheckStatus === "unique" || wordCheckStatus === "error") &&
+      suggestionsAllowed,
     word: watchedWord ?? "",
     language,
     partOfSpeech: selectedPartOfSpeech,
     initialWord: initialData?.word,
   });
+
+  useEffect(() => {
+    const nextWord = spellingAi.suggestion?.suggestion;
+    if (!shouldAutoApplyContentChange || !nextWord) return;
+    spellingAi.accept(nextWord);
+    form.setValue("word", nextWord, {
+      shouldDirty: true,
+      shouldTouch: true,
+    });
+    // Only react to a new suggestion payload, not the whole spellingAi object.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- accept/setValue are stable enough for this apply-once path
+  }, [shouldAutoApplyContentChange, spellingAi.suggestion?.suggestion]);
   const isDuplicate = wordCheckStatus === "duplicate";
   const isCheckingWord = wordCheckStatus === "checking";
   const isWordBusy = isCheckingWord || spellingAi.isChecking;
@@ -754,7 +770,7 @@ export function VocabularyForm({
           meanings={meanings}
           onChange={setMeanings}
           ai={{
-            enabled: true,
+            enabled: suggestionsAllowed,
             word: watchedWord ?? "",
             language,
             partOfSpeech: selectedPartOfSpeech,
@@ -762,6 +778,7 @@ export function VocabularyForm({
               .map((example) => example.sentence.trim())
               .filter(Boolean)
               .slice(0, 6),
+            autoApply: shouldAutoApplyContentChange,
           }}
         />
       </VocabularyComposerSection>

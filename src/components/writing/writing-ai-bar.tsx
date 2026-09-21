@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
+import { useAiPreferences } from "@/components/providers/ai-preferences-provider";
 import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import { WritingAiPanel } from "@/components/writing/writing-ai-panel";
 import { Button } from "@/components/ui/button";
@@ -58,6 +59,10 @@ export function WritingAiBar({
 }: WritingAiBarProps) {
   const t = useTranslations("writing.ai");
   const { hasProAccess, openUpgrade } = useProAccess();
+  const {
+    preferences,
+    shouldAutoApplyContentChange,
+  } = useAiPreferences();
   const [selectedAction, setSelectedAction] = useState<WritingAiAction>("check");
   const [pendingAction, setPendingAction] = useState<WritingAiAction | null>(null);
   const [documentSuggestions, setDocumentSuggestions] = useState<
@@ -77,6 +82,10 @@ export function WritingAiBar({
   async function runAction(action: WritingAiAction) {
     setSelectedAction(action);
     if (!requireAccess()) return;
+    if (!preferences.enabled) {
+      toast.message(t("disabled"));
+      return;
+    }
     if (!content.trim()) {
       toast.error(t("empty"));
       return;
@@ -106,22 +115,33 @@ export function WritingAiBar({
           openUpgrade();
           return;
         }
+        if (result.code === "AI_DISABLED") {
+          toast.message(t("disabled"));
+          return;
+        }
         toast.error(t("unavailable"));
         return;
       }
+
+      const suggestions = result.result.suggestions;
 
       if (isQuestionSet) {
         onQuestionFeedbackChange(
           attributeSuggestionsToQuestions(
             editorState.sections,
-            result.result.suggestions,
+            suggestions,
           ),
         );
+      } else if (shouldAutoApplyContentChange && editor) {
+        for (const suggestion of suggestions) {
+          replaceInEditor(editor, suggestion.original, suggestion.replacement);
+        }
+        setDocumentSuggestions([]);
       } else {
-        setDocumentSuggestions(result.result.suggestions);
+        setDocumentSuggestions(suggestions);
       }
 
-      if (result.result.suggestions.length === 0) {
+      if (suggestions.length === 0) {
         toast.message(
           action === "improve"
             ? t("noImprove")

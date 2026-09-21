@@ -2,6 +2,10 @@
 
 import type { JSONContent } from "@tiptap/react";
 import { z } from "zod";
+import {
+  AiAssistanceDisabledError,
+  getResolvedAiPreferences,
+} from "@/lib/ai/preferences-server";
 import { getCurrentUserId } from "@/lib/auth/session";
 import {
   editorDocToFormatPlainText,
@@ -14,7 +18,7 @@ import { isTipTapDoc } from "@/lib/editor/format/types";
 export type FormatEditorDocumentAiResult =
   | { ok: true; doc: JSONContent; source: "ai" }
   | { ok: true; doc: JSONContent; source: "fallback" }
-  | { ok: false; code: "EMPTY" | "AI_UNAVAILABLE" };
+  | { ok: false; code: "EMPTY" | "AI_UNAVAILABLE" | "AI_DISABLED" };
 
 const inputSchema = z.object({
   doc: z.unknown(),
@@ -24,7 +28,7 @@ const inputSchema = z.object({
 
 /**
  * AI Format for any TipTap editor (theory / writing / vocabulary notes).
- * Falls back to the deterministic formatter when AI is unavailable.
+ * Falls back to the deterministic formatter when AI is unavailable or disabled.
  */
 export async function formatEditorDocumentAi(
   input: unknown,
@@ -47,6 +51,12 @@ export async function formatEditorDocumentAi(
     return { ok: false, code: "AI_UNAVAILABLE" };
   }
 
+  const prefs = await getResolvedAiPreferences();
+  if (!prefs.enabled) {
+    const fallback = formatTiptapDocument(doc, { language });
+    return { ok: true, source: "fallback", doc: fallback };
+  }
+
   try {
     const aiDoc = await formatEditorDocumentWithAi({
       text: plain,
@@ -60,6 +70,10 @@ export async function formatEditorDocumentAi(
       doc: mergePreservedEditorNodes(doc, tidied),
     };
   } catch (error) {
+    if (error instanceof AiAssistanceDisabledError) {
+      const fallback = formatTiptapDocument(doc, { language });
+      return { ok: true, source: "fallback", doc: fallback };
+    }
     console.error("formatEditorDocumentAi failed", error);
     const fallback = formatTiptapDocument(doc, { language });
     return {
