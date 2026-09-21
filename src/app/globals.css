@@ -7273,6 +7273,56 @@ body {
   box-shadow: 0 0 0 2px color-mix(in oklab, var(--ring) 55%, transparent);
 }
 
+.auth-forgot-link {
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--muted-foreground) 35%, transparent);
+  text-underline-offset: 0.16em;
+  transition: color 140ms ease, text-decoration-color 140ms ease;
+}
+
+.auth-forgot-link:hover {
+  color: var(--ink);
+  text-decoration-color: var(--ink);
+}
+
+.auth-forgot-link:focus-visible {
+  outline: none;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--ring) 55%, transparent);
+}
+
+.auth-success {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 0.9rem 0.95rem;
+  border-radius: 0.75rem;
+  border: 1px solid
+    color-mix(in oklab, var(--success-border, #2c8c66) 28%, var(--hairline-cloud));
+  background: color-mix(
+    in oklab,
+    var(--success-muted, #d9eddf) 55%,
+    transparent
+  );
+}
+
+.auth-success-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+
+.auth-success-body {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
 .auth-skeleton {
   border-radius: 0.65rem;
   background: color-mix(in oklab, var(--muted) 55%, transparent);

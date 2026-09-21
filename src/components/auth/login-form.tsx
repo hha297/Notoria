@@ -82,9 +82,14 @@ export function LoginForm() {
       </div>
 
       <div className="auth-field">
-        <Label htmlFor="password" className="auth-label">
-          {t("password")}
-        </Label>
+        <div className="flex items-center justify-between gap-3">
+          <Label htmlFor="password" className="auth-label">
+            {t("password")}
+          </Label>
+          <Link href="/forgot-password" className="auth-forgot-link">
+            {t("forgotPassword")}
+          </Link>
+        </div>
         <PasswordInput
           id="password"
           name="password"
