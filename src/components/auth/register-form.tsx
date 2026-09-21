@@ -6,10 +6,13 @@ import { useId, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
+import {
+  AuthGoogleSection,
+} from "@/components/auth/google-sign-in-button";
+import { PasswordInput } from "@/components/auth/password-input";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PasswordInput } from "@/components/auth/password-input";
 import { registerUser } from "@/lib/actions/auth";
 
 type FieldErrors = {
@@ -18,7 +21,11 @@ type FieldErrors = {
   password?: string;
 };
 
-export function RegisterForm() {
+export function RegisterForm({
+  googleEnabled = false,
+}: {
+  googleEnabled?: boolean;
+}) {
   const router = useRouter();
   const t = useTranslations("auth");
   const formErrorId = useId();
@@ -102,133 +109,140 @@ export function RegisterForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="auth-form"
-      aria-describedby={formError ? formErrorId : undefined}
-    >
-      <div className="auth-field">
-        <Label htmlFor="name" className="auth-label">
-          {t("name")}
-        </Label>
-        <Input
-          id="name"
-          name="name"
-          autoComplete="name"
-          value={name}
-          onChange={(event) => {
-            setName(event.target.value);
-            clearErrors();
-          }}
-          className="auth-input"
-          required
-          minLength={2}
-          maxLength={80}
-          disabled={isLoading}
-          aria-invalid={fieldErrors.name ? true : undefined}
-          aria-describedby={fieldErrors.name ? nameHintId : undefined}
-        />
-        {fieldErrors.name ? (
-          <p id={nameHintId} className="auth-field-error" role="alert">
-            {fieldErrors.name}
-          </p>
-        ) : null}
-      </div>
+    <div className="auth-form-stack">
+      {/* Google skips the email/password form entirely. */}
+      <AuthGoogleSection enabled={googleEnabled} disabled={isLoading} />
 
-      <div className="auth-field">
-        <Label htmlFor="email" className="auth-label">
-          {t("email")}
-        </Label>
-        <Input
-          id="email"
-          type="email"
-          name="email"
-          inputMode="email"
-          autoComplete="email"
-          autoCapitalize="none"
-          autoCorrect="off"
-          spellCheck={false}
-          value={email}
-          onChange={(event) => {
-            setEmail(event.target.value);
-            clearErrors();
-          }}
-          className="auth-input"
-          required
-          disabled={isLoading}
-          aria-invalid={fieldErrors.email ? true : undefined}
-          aria-describedby={fieldErrors.email ? emailHintId : undefined}
-        />
-        {fieldErrors.email ? (
-          <p id={emailHintId} className="auth-field-error" role="alert">
-            {fieldErrors.email}
-          </p>
-        ) : null}
-      </div>
-
-      <div className="auth-field">
-        <Label htmlFor="password" className="auth-label">
-          {t("password")}
-        </Label>
-        <PasswordInput
-          id="password"
-          name="password"
-          autoComplete="new-password"
-          value={password}
-          onChange={(event) => {
-            setPassword(event.target.value);
-            clearErrors();
-          }}
-          className="auth-input"
-          minLength={8}
-          maxLength={128}
-          required
-          disabled={isLoading}
-          aria-invalid={fieldErrors.password ? true : undefined}
-          aria-describedby={
-            fieldErrors.password ? passwordHintId : `${passwordHintId}-hint`
-          }
-        />
-        {fieldErrors.password ? (
-          <p id={passwordHintId} className="auth-field-error" role="alert">
-            {fieldErrors.password}
-          </p>
-        ) : (
-          <p id={`${passwordHintId}-hint`} className="auth-field-hint">
-            {t("passwordHint")}
-          </p>
-        )}
-      </div>
-
-      {formError ? (
-        <p
-          id={formErrorId}
-          className="auth-form-error"
-          role="alert"
-          aria-live="assertive"
-        >
-          {formError}
-        </p>
-      ) : null}
-
-      <Button
-        type="submit"
-        size="lg"
-        className="auth-submit"
-        disabled={
-          isLoading || !name.trim() || !email.trim() || password.length < 8
-        }
+      <form
+        onSubmit={handleSubmit}
+        className="auth-form"
+        aria-describedby={formError ? formErrorId : undefined}
       >
-        {isLoading ? <Loader2 className="size-4 animate-spin" aria-hidden /> : null}
-        {isLoading ? t("creatingAccount") : t("createAccount")}
-      </Button>
+        <div className="auth-field">
+          <Label htmlFor="name" className="auth-label">
+            {t("name")}
+          </Label>
+          <Input
+            id="name"
+            name="name"
+            autoComplete="name"
+            value={name}
+            onChange={(event) => {
+              setName(event.target.value);
+              clearErrors();
+            }}
+            className="auth-input"
+            required
+            minLength={2}
+            maxLength={80}
+            disabled={isLoading}
+            aria-invalid={fieldErrors.name ? true : undefined}
+            aria-describedby={fieldErrors.name ? nameHintId : undefined}
+          />
+          {fieldErrors.name ? (
+            <p id={nameHintId} className="auth-field-error" role="alert">
+              {fieldErrors.name}
+            </p>
+          ) : null}
+        </div>
 
-      <p className="auth-switch">
-        {t("hasAccount")}{" "}
-        <Link href="/sign-in" className="auth-switch-link">
-          {t("signIn")}
-        </Link>
-      </p>
-    </form>
+        <div className="auth-field">
+          <Label htmlFor="email" className="auth-label">
+            {t("email")}
+          </Label>
+          <Input
+            id="email"
+            type="email"
+            name="email"
+            inputMode="email"
+            autoComplete="email"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+              clearErrors();
+            }}
+            className="auth-input"
+            required
+            disabled={isLoading}
+            aria-invalid={fieldErrors.email ? true : undefined}
+            aria-describedby={fieldErrors.email ? emailHintId : undefined}
+          />
+          {fieldErrors.email ? (
+            <p id={emailHintId} className="auth-field-error" role="alert">
+              {fieldErrors.email}
+            </p>
+          ) : null}
+        </div>
+
+        <div className="auth-field">
+          <Label htmlFor="password" className="auth-label">
+            {t("password")}
+          </Label>
+          <PasswordInput
+            id="password"
+            name="password"
+            autoComplete="new-password"
+            value={password}
+            onChange={(event) => {
+              setPassword(event.target.value);
+              clearErrors();
+            }}
+            className="auth-input"
+            minLength={8}
+            maxLength={128}
+            required
+            disabled={isLoading}
+            aria-invalid={fieldErrors.password ? true : undefined}
+            aria-describedby={
+              fieldErrors.password ? passwordHintId : `${passwordHintId}-hint`
+            }
+          />
+          {fieldErrors.password ? (
+            <p id={passwordHintId} className="auth-field-error" role="alert">
+              {fieldErrors.password}
+            </p>
+          ) : (
+            <p id={`${passwordHintId}-hint`} className="auth-field-hint">
+              {t("passwordHint")}
+            </p>
+          )}
+        </div>
+
+        {formError ? (
+          <p
+            id={formErrorId}
+            className="auth-form-error"
+            role="alert"
+            aria-live="assertive"
+          >
+            {formError}
+          </p>
+        ) : null}
+
+        <Button
+          type="submit"
+          size="lg"
+          className="auth-submit"
+          disabled={
+            isLoading || !name.trim() || !email.trim() || password.length < 8
+          }
+        >
+          {isLoading ? (
+            <Loader2 className="size-4 animate-spin" aria-hidden />
+          ) : null}
+          {isLoading ? t("creatingAccount") : t("createAccount")}
+        </Button>
+
+        <p className="auth-switch">
+          {t("hasAccount")}{" "}
+          <Link href="/sign-in" className="auth-switch-link">
+            {t("signIn")}
+          </Link>
+        </p>
+      </form>
+    </div>
   );
 }

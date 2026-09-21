@@ -8,6 +8,7 @@ import {
   jsonb,
   pgEnum,
   pgTable,
+  primaryKey,
   text,
   timestamp,
   uniqueIndex,
@@ -108,6 +109,10 @@ export const users = pgTable(
     id: uuid("id").primaryKey().defaultRandom(),
     name: text("name").notNull(),
     email: text("email").notNull().unique(),
+    emailVerified: timestamp("email_verified", {
+      withTimezone: true,
+      mode: "date",
+    }),
     passwordHash: text("password_hash"),
     image: text("image"),
     role: userRoleEnum("role").notNull().default("USER"),
@@ -134,6 +139,35 @@ export const users = pgTable(
     uniqueIndex("users_stripe_subscription_id_unique")
       .on(table.stripeSubscriptionId)
       .where(sql`${table.stripeSubscriptionId} is not null`),
+  ],
+);
+
+/**
+ * Auth.js OAuth account links (Google, etc.).
+ * Column JS names match Auth.js adapter expectations.
+ */
+export const accounts = pgTable(
+  "accounts",
+  {
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    type: text("type").notNull(),
+    provider: text("provider").notNull(),
+    providerAccountId: text("provider_account_id").notNull(),
+    refresh_token: text("refresh_token"),
+    access_token: text("access_token"),
+    expires_at: integer("expires_at"),
+    token_type: text("token_type"),
+    scope: text("scope"),
+    id_token: text("id_token"),
+    session_state: text("session_state"),
+  },
+  (table) => [
+    primaryKey({
+      columns: [table.provider, table.providerAccountId],
+    }),
+    index("accounts_user_id_idx").on(table.userId),
   ],
 );
 
@@ -697,6 +731,7 @@ export const importedExercises = pgTable(
 );
 
 export const usersRelations = relations(users, ({ many }) => ({
+  accounts: many(accounts),
   workspaces: many(workspaces),
   vocabularyWords: many(vocabularyWords),
   exercises: many(exercises),
@@ -706,6 +741,13 @@ export const usersRelations = relations(users, ({ many }) => ({
   folders: many(workspaceFolders),
   exerciseImports: many(exerciseImports),
   passwordResetTokens: many(passwordResetTokens),
+}));
+
+export const accountsRelations = relations(accounts, ({ one }) => ({
+  user: one(users, {
+    fields: [accounts.userId],
+    references: [users.id],
+  }),
 }));
 
 export const passwordResetTokensRelations = relations(
@@ -958,6 +1000,7 @@ export const importedExercisesRelations = relations(
 );
 
 export type User = typeof users.$inferSelect;
+export type Account = typeof accounts.$inferSelect;
 export type SubscriptionPlan = (typeof subscriptionPlanEnum.enumValues)[number];
 export type Workspace = typeof workspaces.$inferSelect;
 export type WorkspaceTag = typeof workspaceTags.$inferSelect;

@@ -32,12 +32,12 @@ const FLOW_STAGES = [
 ] as const;
 
 const CONNECTION_STAGES = [
-  "vocabTheory",
-  "exercise",
-  "writingListening",
-  "speaking",
-  "review",
-  "addMore",
+  { key: "vocabTheory", tint: "vocab-theory" },
+  { key: "exercise", tint: "exercise" },
+  { key: "writingListening", tint: "writing-listen" },
+  { key: "speaking", tint: "speak" },
+  { key: "review", tint: "exercise" },
+  { key: "addMore", tint: "home" },
 ] as const;
 
 const FIRST_STEPS = [
@@ -132,9 +132,10 @@ export function GettingStartedGuide() {
         <GuideSection id="connections" title={t("connections.title")}>
           <p className="guide-body">{t("connections.intro")}</p>
           <ConnectionDiagram
-            stages={CONNECTION_STAGES.map((stage) =>
-              t(`connections.flow.${stage}`),
-            )}
+            stages={CONNECTION_STAGES.map((stage) => ({
+              label: t(`connections.flow.${stage.key}`),
+              tint: stage.tint,
+            }))}
           />
           <GuideParagraphs items={t.raw("connections.paragraphs") as string[]} />
           <GuideCallout variant="lime">{t("connections.highlight")}</GuideCallout>
@@ -328,7 +329,14 @@ function GuideCallout({
         variant === "dark" ? "is-dark" : "is-soft",
       )}
     >
-      <div className="text-sm leading-relaxed sm:text-base">{children}</div>
+      <div
+        className={cn(
+          "text-sm leading-relaxed sm:text-base",
+          variant === "lime" && "guide-callout-title text-primary",
+        )}
+      >
+        {children}
+      </div>
     </div>
   );
 }
@@ -351,12 +359,21 @@ function FlowDiagram({ stages }: { stages: string[] }) {
   );
 }
 
-function ConnectionDiagram({ stages }: { stages: string[] }) {
+function ConnectionDiagram({
+  stages,
+}: {
+  stages: { label: string; tint: string }[];
+}) {
   return (
     <div className="guide-connection">
       {stages.map((stage, index) => (
-        <div key={stage} className="guide-connection-row">
-          <p className="guide-connection-stage">{stage}</p>
+        <div key={stage.label} className="guide-connection-row">
+          <p
+            className="guide-connection-stage"
+            data-connection-tint={stage.tint}
+          >
+            {stage.label}
+          </p>
           {index < stages.length - 1 ? (
             <span className="guide-connection-arrow" aria-hidden>
               ↓

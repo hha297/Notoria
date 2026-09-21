@@ -34,7 +34,7 @@ export type CompleteFirstLanguageResult = {
  * first workspace. Safe to call again if the user already has a workspace
  * (returns the existing one instead of creating a duplicate).
  *
- * Reusable for email/password signup and future Google OAuth.
+ * Reusable for email/password signup and Google OAuth.
  */
 export async function completeFirstLanguageOnboarding(
   data: z.infer<typeof completeSchema>,

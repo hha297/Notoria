@@ -6441,9 +6441,8 @@ body {
 }
 
 .guide-callout.is-soft {
-  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
-  background: color-mix(in oklab, var(--module-guide-bg) 42%, transparent);
-  color: var(--ink);
+  background: var(--surface-inverse);
+  color: var(--primary);
 }
 
 .guide-callout-title {
@@ -6563,12 +6562,70 @@ body {
   margin: 0;
   width: 100%;
   border-radius: 0.65rem;
-  background: color-mix(in oklab, var(--module-guide-bg) 48%, transparent);
   padding: 0.65rem 1rem;
   text-align: center;
   font-size: 0.95rem;
-  font-weight: 600;
+  font-weight: 650;
+  background: color-mix(in oklab, var(--module-guide-bg) 48%, transparent);
   color: var(--ink);
+}
+
+.guide-connection-stage[data-connection-tint="vocab"] {
+  background: color-mix(in oklab, var(--module-vocab-bg) 78%, transparent);
+  color: var(--module-vocab-fg);
+}
+
+.guide-connection-stage[data-connection-tint="vocab-theory"] {
+  background: linear-gradient(
+    105deg,
+    color-mix(in oklab, var(--module-vocab-bg) 88%, transparent),
+    color-mix(in oklab, var(--module-theory-bg) 88%, transparent)
+  );
+  color: var(--module-vocab-fg);
+}
+
+.guide-connection-stage[data-connection-tint="exercise"] {
+  background: color-mix(in oklab, var(--module-exercise-bg) 78%, transparent);
+  color: var(--module-exercise-fg);
+}
+
+.guide-connection-stage[data-connection-tint="writing"] {
+  background: color-mix(in oklab, var(--module-writing-bg) 78%, transparent);
+  color: var(--module-writing-fg);
+}
+
+.guide-connection-stage[data-connection-tint="writing-listen"] {
+  background: linear-gradient(
+    105deg,
+    color-mix(in oklab, var(--module-writing-bg) 88%, transparent),
+    color-mix(in oklab, var(--module-listen-bg) 88%, transparent)
+  );
+  color: var(--module-writing-fg);
+}
+
+.guide-connection-stage[data-connection-tint="listen"] {
+  background: color-mix(in oklab, var(--module-listen-bg) 78%, transparent);
+  color: var(--module-listen-fg);
+}
+
+.guide-connection-stage[data-connection-tint="speak"] {
+  background: color-mix(in oklab, var(--module-speak-bg) 78%, transparent);
+  color: var(--module-speak-fg);
+}
+
+.guide-connection-stage[data-connection-tint="theory"] {
+  background: color-mix(in oklab, var(--module-theory-bg) 78%, transparent);
+  color: var(--module-theory-fg);
+}
+
+.guide-connection-stage[data-connection-tint="home"] {
+  background: color-mix(in oklab, var(--module-home-bg) 78%, transparent);
+  color: var(--module-home-fg);
+}
+
+.guide-connection-stage[data-connection-tint="guide"] {
+  background: color-mix(in oklab, var(--module-guide-bg) 78%, transparent);
+  color: var(--module-guide-fg);
 }
 
 .guide-connection-arrow {
@@ -7150,10 +7207,58 @@ body {
   }
 }
 
+.auth-form-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1.05rem;
+}
+
 .auth-form {
   display: flex;
   flex-direction: column;
   gap: 1.05rem;
+}
+
+.auth-oauth-button {
+  width: 100%;
+  min-height: 2.85rem;
+  justify-content: center;
+  gap: 0.65rem;
+  border-radius: 0.75rem;
+  border-color: color-mix(in oklab, var(--hairline-cloud) 88%, var(--ink));
+  background: color-mix(in oklab, var(--surface-elevated) 92%, transparent);
+  font-weight: 650;
+}
+
+.auth-oauth-button:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--surface-elevated) 78%, var(--ink) 4%);
+}
+
+.auth-oauth-glyph {
+  width: 1.15rem;
+  height: 1.15rem;
+  flex-shrink: 0;
+}
+
+.auth-oauth-divider {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.auth-oauth-divider-line {
+  height: 1px;
+  background: color-mix(in oklab, var(--hairline-cloud) 90%, var(--ink));
+}
+
+.auth-oauth-divider-label {
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  white-space: nowrap;
 }
 
 .auth-field {

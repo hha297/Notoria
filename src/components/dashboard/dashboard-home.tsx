@@ -19,7 +19,6 @@ import type { WorkspaceActivitySnapshot } from "@/lib/onboarding/requirements";
 
 type DashboardHomeProps = {
   userName: string;
-  languageName: string;
   snapshot: WorkspaceActivitySnapshot;
   practiceReadyCount: number;
 };
@@ -80,7 +79,6 @@ function moduleCount(
 
 export function DashboardHome({
   userName,
-  languageName,
   snapshot,
   practiceReadyCount,
 }: DashboardHomeProps) {
@@ -127,7 +125,7 @@ export function DashboardHome({
             {t("helloTitle", { name: firstName })}
           </h1>
           <p className="writing-brand-lede">
-            {t("description", { language: languageName })}
+            {t("description")}
           </p>
           <ul className="home-canopy mt-6" aria-label={t("snapshotTitle")}>
             {stats.map((stat) => (

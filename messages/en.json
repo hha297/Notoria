@@ -1074,7 +1074,7 @@
     "overview": "Overview",
     "your": "Your",
     "workspaceLabel": "workspace",
-    "description": "{language} lives here. Notoria is a private study workspace: collect words, save theory, practice, write, then listen and speak.",
+    "description": "A private study workspace for the language you care about — collect words, keep theory close, practice in your own words, then write, listen, and speak until it feels yours.",
     "wordsSaved": "Words saved",
     "wordsReadyToPractice": "Words ready to practice",
     "theoryNotes": "Theory notes",
@@ -2134,7 +2134,14 @@
     "saveName": "Save name",
     "nameUpdated": "Name updated",
     "nameUpdateFailed": "Could not update name",
-    "nameTooShort": "Name must be at least 2 characters"
+    "nameTooShort": "Name must be at least 2 characters",
+    "continueWithGoogle": "Continue with Google",
+    "continuingWithGoogle": "Connecting to Google…",
+    "orContinueWith": "or continue with email",
+    "oauthCancelled": "Google sign-in was cancelled. You can try again.",
+    "oauthFailed": "Google sign-in failed. Please try again.",
+    "oauthAccountNotLinked": "This email is already used with another sign-in method.",
+    "oauthNotConfigured": "Google sign-in is not configured yet."
   },
   "account": {
     "eyebrow": "Account",

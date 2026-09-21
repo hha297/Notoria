@@ -2,17 +2,41 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useId, useState } from "react";
+import { useId, useMemo, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
+import {
+  AuthGoogleSection,
+} from "@/components/auth/google-sign-in-button";
+import { PasswordInput } from "@/components/auth/password-input";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { PasswordInput } from "@/components/auth/password-input";
 import { requestWelcomeModalOnLogin } from "@/lib/prompts/storage";
 
-export function LoginForm() {
+function oauthErrorMessage(
+  error: string | null,
+  t: ReturnType<typeof useTranslations<"auth">>,
+): string | null {
+  if (!error) return null;
+  if (error === "AccessDenied" || error === "OAuthCallback") {
+    return t("oauthCancelled");
+  }
+  if (error === "OAuthAccountNotLinked") {
+    return t("oauthAccountNotLinked");
+  }
+  if (error === "Configuration") {
+    return t("oauthNotConfigured");
+  }
+  return t("oauthFailed");
+}
+
+export function LoginForm({
+  googleEnabled = false,
+}: {
+  googleEnabled?: boolean;
+}) {
   const router = useRouter();
   const searchParams = useSearchParams();
   const t = useTranslations("auth");
@@ -21,6 +45,13 @@ export function LoginForm() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  const oauthError = useMemo(
+    () => oauthErrorMessage(searchParams.get("error"), t),
+    [searchParams, t],
+  );
+
+  const displayError = error ?? oauthError;
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
@@ -51,88 +82,94 @@ export function LoginForm() {
   }
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="auth-form"
-      aria-describedby={error ? formErrorId : undefined}
-    >
-      <div className="auth-field">
-        <Label htmlFor="email" className="auth-label">
-          {t("email")}
-        </Label>
-        <Input
-          id="email"
-          type="email"
-          name="email"
-          inputMode="email"
-          autoComplete="email"
-          autoCapitalize="none"
-          autoCorrect="off"
-          spellCheck={false}
-          value={email}
-          onChange={(event) => {
-            setEmail(event.target.value);
-            if (error) setError(null);
-          }}
-          className="auth-input"
-          required
-          disabled={isLoading}
-          aria-invalid={error ? true : undefined}
-        />
-      </div>
+    <div className="auth-form-stack">
+      <AuthGoogleSection enabled={googleEnabled} disabled={isLoading} />
 
-      <div className="auth-field">
-        <div className="flex items-center justify-between gap-3">
-          <Label htmlFor="password" className="auth-label">
-            {t("password")}
-          </Label>
-          <Link href="/forgot-password" className="auth-forgot-link">
-            {t("forgotPassword")}
-          </Link>
-        </div>
-        <PasswordInput
-          id="password"
-          name="password"
-          autoComplete="current-password"
-          value={password}
-          onChange={(event) => {
-            setPassword(event.target.value);
-            if (error) setError(null);
-          }}
-          className="auth-input"
-          required
-          disabled={isLoading}
-          aria-invalid={error ? true : undefined}
-        />
-      </div>
-
-      {error ? (
-        <p
-          id={formErrorId}
-          className="auth-form-error"
-          role="alert"
-          aria-live="assertive"
-        >
-          {error}
-        </p>
-      ) : null}
-
-      <Button
-        type="submit"
-        size="lg"
-        className="auth-submit"
-        disabled={isLoading || !email.trim() || !password}
+      <form
+        onSubmit={handleSubmit}
+        className="auth-form"
+        aria-describedby={displayError ? formErrorId : undefined}
       >
-        {isLoading ? <Loader2 className="size-4 animate-spin" aria-hidden /> : null}
-        {isLoading ? t("signingIn") : t("signIn")}
-      </Button>
+        <div className="auth-field">
+          <Label htmlFor="email" className="auth-label">
+            {t("email")}
+          </Label>
+          <Input
+            id="email"
+            type="email"
+            name="email"
+            inputMode="email"
+            autoComplete="email"
+            autoCapitalize="none"
+            autoCorrect="off"
+            spellCheck={false}
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+              if (error) setError(null);
+            }}
+            className="auth-input"
+            required
+            disabled={isLoading}
+            aria-invalid={displayError ? true : undefined}
+          />
+        </div>
 
-      <p className="auth-switch">
-        {t("noAccount")}{" "}
-        <Link href="/sign-up" className="auth-switch-link">
-          {t("createAccount")}
-        </Link>
-      </p>
-    </form>
+        <div className="auth-field">
+          <div className="flex items-center justify-between gap-3">
+            <Label htmlFor="password" className="auth-label">
+              {t("password")}
+            </Label>
+            <Link href="/forgot-password" className="auth-forgot-link">
+              {t("forgotPassword")}
+            </Link>
+          </div>
+          <PasswordInput
+            id="password"
+            name="password"
+            autoComplete="current-password"
+            value={password}
+            onChange={(event) => {
+              setPassword(event.target.value);
+              if (error) setError(null);
+            }}
+            className="auth-input"
+            required
+            disabled={isLoading}
+            aria-invalid={displayError ? true : undefined}
+          />
+        </div>
+
+        {displayError ? (
+          <p
+            id={formErrorId}
+            className="auth-form-error"
+            role="alert"
+            aria-live="assertive"
+          >
+            {displayError}
+          </p>
+        ) : null}
+
+        <Button
+          type="submit"
+          size="lg"
+          className="auth-submit"
+          disabled={isLoading || !email.trim() || !password}
+        >
+          {isLoading ? (
+            <Loader2 className="size-4 animate-spin" aria-hidden />
+          ) : null}
+          {isLoading ? t("signingIn") : t("signIn")}
+        </Button>
+
+        <p className="auth-switch">
+          {t("noAccount")}{" "}
+          <Link href="/sign-up" className="auth-switch-link">
+            {t("createAccount")}
+          </Link>
+        </p>
+      </form>
+    </div>
   );
 }

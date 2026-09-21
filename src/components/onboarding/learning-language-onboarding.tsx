@@ -18,7 +18,7 @@ import { cn } from "@/lib/utils";
 
 /**
  * Reusable post-auth onboarding: choose the first learning language.
- * Email/password and future Google OAuth both land here for new users.
+ * Email/password and Google OAuth both land here for new users.
  */
 export function LearningLanguageOnboarding() {
   const router = useRouter();

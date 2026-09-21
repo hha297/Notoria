@@ -1,9 +1,11 @@
 import { getTranslations } from "next-intl/server";
 import { AuthPageShell } from "@/components/auth/auth-page-shell";
 import { RegisterForm } from "@/components/auth/register-form";
+import { isGoogleAuthConfigured } from "@/lib/auth/google";
 
 export default async function SignUpPage() {
   const t = await getTranslations("auth");
+  const googleEnabled = isGoogleAuthConfigured();
 
   return (
     <AuthPageShell
@@ -11,7 +13,7 @@ export default async function SignUpPage() {
       title={t("createAccountTitle")}
       description={t("registerDescription")}
     >
-      <RegisterForm />
+      <RegisterForm googleEnabled={googleEnabled} />
     </AuthPageShell>
   );
 }

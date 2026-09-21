@@ -6,7 +6,6 @@ import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getSession } from "@/lib/auth/session";
 import { countPracticeReadyWords } from "@/lib/dashboard/activity";
 import { getWorkspaceActivitySnapshot } from "@/lib/onboarding/snapshot";
-import { getLanguageName } from "@/lib/languages";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export default async function DashboardPage() {
@@ -23,14 +22,13 @@ export default async function DashboardPage() {
           eyebrow={t("overview")}
           title={t("your")}
           highlight={t("workspaceLabel")}
-          description={t("description", { language: "—" })}
+          description={t("description")}
         />
         <NoWorkspaceEmpty />
       </PageShell>
     );
   }
 
-  const languageName = getLanguageName(workspace.language);
   const [snapshot, practiceReadyWords] = await Promise.all([
     getWorkspaceActivitySnapshot(workspace.id),
     countPracticeReadyWords(workspace.id),
@@ -40,7 +38,6 @@ export default async function DashboardPage() {
     <PageShell>
       <DashboardHome
         userName={session?.user?.name ?? "there"}
-        languageName={languageName}
         snapshot={snapshot}
         practiceReadyCount={practiceReadyWords}
       />

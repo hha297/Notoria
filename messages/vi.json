@@ -890,7 +890,7 @@
     "overview": "Tổng quan",
     "your": "Không gian",
     "workspaceLabel": "của bạn",
-    "description": "{language} nằm trong không gian này. Notoria là góc học riêng: gom từ, lưu lý thuyết, luyện tập, viết, rồi nghe và nói.",
+    "description": "Góc học riêng cho ngôn ngữ bạn quan tâm — gom từ, giữ lý thuyết gần tay, luyện bằng lời của chính mình, rồi viết, nghe và nói cho đến khi nó thật sự thuộc về bạn.",
     "wordsSaved": "Từ đã lưu",
     "wordsReadyToPractice": "Từ sẵn sàng luyện",
     "theoryNotes": "Ghi chú lý thuyết",
@@ -1950,7 +1950,14 @@
     "saveName": "Lưu tên",
     "nameUpdated": "Đã cập nhật tên",
     "nameUpdateFailed": "Không cập nhật được tên",
-    "nameTooShort": "Tên cần ít nhất 2 ký tự"
+    "nameTooShort": "Tên cần ít nhất 2 ký tự",
+    "continueWithGoogle": "Tiếp tục với Google",
+    "continuingWithGoogle": "Đang kết nối Google…",
+    "orContinueWith": "hoặc dùng email",
+    "oauthCancelled": "Bạn đã hủy đăng nhập Google. Thử lại nhé.",
+    "oauthFailed": "Đăng nhập Google không thành công. Vui lòng thử lại.",
+    "oauthAccountNotLinked": "Email này đã dùng với cách đăng nhập khác.",
+    "oauthNotConfigured": "Đăng nhập Google chưa được cấu hình."
   },
   "account": {
     "eyebrow": "Tài khoản",

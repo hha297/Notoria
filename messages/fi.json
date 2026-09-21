@@ -890,7 +890,7 @@
     "overview": "Yleiskatsaus",
     "your": "Sinun",
     "workspaceLabel": "työtilasi",
-    "description": "{language} asuu tässä. Notoria on yksityinen opiskelutyötila: kerää sanoja, tallenna teoriaa, harjoittele, kirjoita, kuuntele ja puhu.",
+    "description": "Yksityinen opiskelutyötila kielelle, josta välität — kerää sanoja, pidä teoria lähellä, harjoittele omilla sanoillasi, sitten kirjoita, kuuntele ja puhu, kunnes kieli tuntuu omalta.",
     "wordsSaved": "Tallennetut sanat",
     "wordsReadyToPractice": "Harjoiteltavat sanat",
     "theoryNotes": "Teoriamuistiinpanot",
@@ -1950,7 +1950,14 @@
     "saveName": "Tallenna nimi",
     "nameUpdated": "Nimi päivitetty",
     "nameUpdateFailed": "Nimen päivitys epäonnistui",
-    "nameTooShort": "Nimen on oltava vähintään 2 merkkiä"
+    "nameTooShort": "Nimen on oltava vähintään 2 merkkiä",
+    "continueWithGoogle": "Jatka Googlella",
+    "continuingWithGoogle": "Yhdistetään Googleen…",
+    "orContinueWith": "tai jatka sähköpostilla",
+    "oauthCancelled": "Googlen kirjautuminen peruutettiin. Voit yrittää uudelleen.",
+    "oauthFailed": "Googlen kirjautuminen epäonnistui. Yritä uudelleen.",
+    "oauthAccountNotLinked": "Tätä sähköpostia käytetään jo toisella kirjautumistavalla.",
+    "oauthNotConfigured": "Googlen kirjautumista ei ole vielä määritetty."
   },
   "account": {
     "eyebrow": "Tili",
