@@ -13,6 +13,8 @@ import { PasswordInput } from "@/components/auth/password-input";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import styles from "@/components/style/auth/auth.module.css";
+import { mx } from "@/lib/css-module";
 import { requestWelcomeModalOnLogin } from "@/lib/prompts/storage";
 
 function oauthErrorMessage(
@@ -82,16 +84,16 @@ export function LoginForm({
   }
 
   return (
-    <div className="auth-form-stack">
+    <div className={mx(styles, "auth-form-stack")}>
       <AuthGoogleSection enabled={googleEnabled} disabled={isLoading} />
 
       <form
         onSubmit={handleSubmit}
-        className="auth-form"
+        className={mx(styles, "auth-form")}
         aria-describedby={displayError ? formErrorId : undefined}
       >
-        <div className="auth-field">
-          <Label htmlFor="email" className="auth-label">
+        <div className={mx(styles, "auth-field")}>
+          <Label htmlFor="email" className={mx(styles, "auth-label")}>
             {t("email")}
           </Label>
           <Input
@@ -108,19 +110,22 @@ export function LoginForm({
               setEmail(event.target.value);
               if (error) setError(null);
             }}
-            className="auth-input"
+            className={mx(styles, "auth-input")}
             required
             disabled={isLoading}
             aria-invalid={displayError ? true : undefined}
           />
         </div>
 
-        <div className="auth-field">
+        <div className={mx(styles, "auth-field")}>
           <div className="flex items-center justify-between gap-3">
-            <Label htmlFor="password" className="auth-label">
+            <Label htmlFor="password" className={mx(styles, "auth-label")}>
               {t("password")}
             </Label>
-            <Link href="/forgot-password" className="auth-forgot-link">
+            <Link
+              href="/forgot-password"
+              className={mx(styles, "auth-forgot-link")}
+            >
               {t("forgotPassword")}
             </Link>
           </div>
@@ -133,7 +138,7 @@ export function LoginForm({
               setPassword(event.target.value);
               if (error) setError(null);
             }}
-            className="auth-input"
+            className={mx(styles, "auth-input")}
             required
             disabled={isLoading}
             aria-invalid={displayError ? true : undefined}
@@ -143,7 +148,7 @@ export function LoginForm({
         {displayError ? (
           <p
             id={formErrorId}
-            className="auth-form-error"
+            className={mx(styles, "auth-form-error")}
             role="alert"
             aria-live="assertive"
           >
@@ -154,7 +159,7 @@ export function LoginForm({
         <Button
           type="submit"
           size="lg"
-          className="auth-submit"
+          className={mx(styles, "auth-submit")}
           disabled={isLoading || !email.trim() || !password}
         >
           {isLoading ? (
@@ -163,9 +168,9 @@ export function LoginForm({
           {isLoading ? t("signingIn") : t("signIn")}
         </Button>
 
-        <p className="auth-switch">
+        <p className={mx(styles, "auth-switch")}>
           {t("noAccount")}{" "}
-          <Link href="/sign-up" className="auth-switch-link">
+          <Link href="/sign-up" className={mx(styles, "auth-switch-link")}>
             {t("createAccount")}
           </Link>
         </p>

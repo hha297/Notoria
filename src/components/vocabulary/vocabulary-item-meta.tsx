@@ -9,6 +9,8 @@ import {
   visibleTags,
 } from "@/lib/vocabulary/display";
 import { getTagLabel } from "@/lib/vocabulary-tags";
+import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 import type { VocabularyWordRow } from "@/lib/vocabulary/types";
 
@@ -22,7 +24,7 @@ export function VocabularyPosRail({
   return (
     <span
       data-vocab-pos={partOfSpeech || "none"}
-      className={cn("vocab-pos-rail", className)}
+      className={cn(mx(featureStyles, "vocab-pos-rail"), className)}
       aria-hidden
     />
   );

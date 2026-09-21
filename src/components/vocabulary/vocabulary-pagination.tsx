@@ -4,6 +4,8 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { buildPageList } from "@/lib/vocabulary/display";
+import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 type VocabularyPaginationProps = {
@@ -29,7 +31,7 @@ export function VocabularyPagination({
   return (
     <div
       className={cn(
-        "vocab-pagination",
+        mx(featureStyles, "vocab-pagination"),
         className,
       )}
     >

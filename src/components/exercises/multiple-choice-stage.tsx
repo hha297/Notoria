@@ -14,6 +14,8 @@ import {
   displayContextualOption,
   type MultipleChoiceQuestion,
 } from "@/lib/exercises/multiple-choice";
+import featureStyles from "@/components/style/exercises/session.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 type MultipleChoiceStageProps = {
@@ -306,7 +308,7 @@ function ChoiceOption({
         showReveal &&
           "border-(--exercise-accent) bg-(--exercise-accent-soft) text-ink shadow-sm",
         dimmed && "opacity-40",
-        showWrong && !reduceMotion && "exercise-shake",
+        showWrong && !reduceMotion && mx(featureStyles, "exercise-shake"),
       )}
     >
       <span

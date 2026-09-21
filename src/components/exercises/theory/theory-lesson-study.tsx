@@ -19,6 +19,8 @@ import {
   type TheoryLessonBeatKind,
   type TheoryLessonSection,
 } from "@/lib/theory-exercises/lesson-content";
+import featureStyles from "@/components/style/exercises/theory.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -166,10 +168,10 @@ function LessonDecor({
   }[tone];
 
   return (
-    <div aria-hidden className="theory-decor">
-      <span className={cn("theory-blob", palette.a)} />
-      <span className={cn("theory-blob", palette.b)} />
-      <span className={cn("theory-diamond", palette.c)} />
+    <div aria-hidden className={mx(featureStyles, "theory-decor")}>
+      <span className={cn(mx(featureStyles, "theory-blob"), palette.a)} />
+      <span className={cn(mx(featureStyles, "theory-blob"), palette.b)} />
+      <span className={cn(mx(featureStyles, "theory-diamond"), palette.c)} />
     </div>
   );
 }
@@ -454,7 +456,7 @@ function ReviewDocument({
         ))}
       </div>
 
-      <div className="theory-zone-practice relative mt-6 -mx-4 px-5 py-8 sm:-mx-6 sm:mt-8 sm:px-7 sm:py-10">
+      <div className={mx(featureStyles, "theory-zone-practice relative mt-6 -mx-4 px-5 py-8 sm:-mx-6 sm:mt-8 sm:px-7 sm:py-10")}>
         <LessonDecor tone="practice" />
         <div className="relative">
           <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--lesson-practice) uppercase">
@@ -540,10 +542,10 @@ function LessonSection({
       }}
       className={cn(
         "relative min-w-0 scroll-mt-24 -mx-4 px-5 py-7 sm:-mx-6 sm:px-7 sm:py-8",
-        zone === "idea" && "theory-zone-idea",
-        zone === "examples" && "theory-zone-examples",
-        zone === "insight" && "theory-zone-insight",
-        zone === "detail" && "theory-zone-detail px-5 py-6 sm:px-7",
+        zone === "idea" && mx(featureStyles, "theory-zone-idea"),
+        zone === "examples" && mx(featureStyles, "theory-zone-examples"),
+        zone === "insight" && mx(featureStyles, "theory-zone-insight"),
+        zone === "detail" && mx(featureStyles, "theory-zone-detail px-5 py-6 sm:px-7"),
       )}
     >
       {zone !== "detail" ? <LessonDecor tone={zone} /> : null}
@@ -695,7 +697,7 @@ function LessonExample({
     <figure
       className={cn(
         "relative min-w-0 pl-4 sm:pl-5",
-        compareSlot === "b" ? "theory-example-b" : "theory-example-a",
+        compareSlot === "b" ? mx(featureStyles, "theory-example-b") : mx(featureStyles, "theory-example-a"),
       )}
     >
       <span

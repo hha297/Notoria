@@ -5,6 +5,8 @@ import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import styles from "@/components/style/auth/auth.module.css";
+import { mx } from "@/lib/css-module";
 import { requestWelcomeModalOnLogin } from "@/lib/prompts/storage";
 
 function GoogleGlyph({ className }: { className?: string }) {
@@ -67,14 +69,14 @@ export function GoogleSignInButton({
       type="button"
       variant="outline"
       size="lg"
-      className="auth-oauth-button"
+      className={mx(styles, "auth-oauth-button")}
       disabled={disabled || isLoading}
       onClick={handleClick}
     >
       {isLoading ? (
         <Loader2 className="size-4 animate-spin" aria-hidden />
       ) : (
-        <GoogleGlyph className="auth-oauth-glyph size-4" />
+        <GoogleGlyph className={mx(styles, "auth-oauth-glyph size-4")} />
       )}
       {isLoading ? t("continuingWithGoogle") : t("continueWithGoogle")}
     </Button>
@@ -86,13 +88,15 @@ export function AuthOAuthDivider() {
 
   return (
     <div
-      className="auth-oauth-divider"
+      className={mx(styles, "auth-oauth-divider")}
       role="separator"
       aria-label={t("orContinueWith")}
     >
-      <span className="auth-oauth-divider-line" aria-hidden />
-      <span className="auth-oauth-divider-label">{t("orContinueWith")}</span>
-      <span className="auth-oauth-divider-line" aria-hidden />
+      <span className={mx(styles, "auth-oauth-divider-line")} aria-hidden />
+      <span className={mx(styles, "auth-oauth-divider-label")}>
+        {t("orContinueWith")}
+      </span>
+      <span className={mx(styles, "auth-oauth-divider-line")} aria-hidden />
     </div>
   );
 }

@@ -8,8 +8,9 @@ import { Loader2 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/auth/password-input";
+import styles from "@/components/style/auth/auth.module.css";
+import { mx } from "@/lib/css-module";
 import { resetPassword } from "@/lib/actions/password-reset";
-import { cn } from "@/lib/utils";
 
 type ResetPasswordFormProps = {
   token: string;
@@ -79,14 +80,22 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
 
   if (done) {
     return (
-      <div className="auth-form">
-        <div className="auth-success" role="status">
-          <p className="auth-success-title">{t("resetPasswordSuccessTitle")}</p>
-          <p className="auth-success-body">{t("resetPasswordSuccess")}</p>
+      <div className={mx(styles, "auth-form")}>
+        <div className={mx(styles, "auth-success")} role="status">
+          <p className={mx(styles, "auth-success-title")}>
+            {t("resetPasswordSuccessTitle")}
+          </p>
+          <p className={mx(styles, "auth-success-body")}>
+            {t("resetPasswordSuccess")}
+          </p>
         </div>
         <Link
           href="/sign-in"
-          className={cn(buttonVariants({ size: "lg" }), "auth-submit w-full")}
+          className={mx(
+            styles,
+            buttonVariants({ size: "lg" }),
+            "auth-submit w-full",
+          )}
         >
           {t("signIn")}
         </Link>
@@ -97,11 +106,11 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   return (
     <form
       onSubmit={handleSubmit}
-      className="auth-form"
+      className={mx(styles, "auth-form")}
       aria-describedby={formError ? formErrorId : undefined}
     >
-      <div className="auth-field">
-        <Label htmlFor="new-password" className="auth-label">
+      <div className={mx(styles, "auth-field")}>
+        <Label htmlFor="new-password" className={mx(styles, "auth-label")}>
           {t("newPassword")}
         </Label>
         <PasswordInput
@@ -113,7 +122,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
             setPassword(event.target.value);
             clearErrors();
           }}
-          className="auth-input"
+          className={mx(styles, "auth-input")}
           minLength={8}
           maxLength={128}
           required
@@ -124,18 +133,25 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
           }
         />
         {fieldError ? (
-          <p id={passwordHintId} className="auth-field-error" role="alert">
+          <p
+            id={passwordHintId}
+            className={mx(styles, "auth-field-error")}
+            role="alert"
+          >
             {fieldError}
           </p>
         ) : (
-          <p id={`${passwordHintId}-hint`} className="auth-field-hint">
+          <p
+            id={`${passwordHintId}-hint`}
+            className={mx(styles, "auth-field-hint")}
+          >
             {t("passwordHint")}
           </p>
         )}
       </div>
 
-      <div className="auth-field">
-        <Label htmlFor="confirm-password" className="auth-label">
+      <div className={mx(styles, "auth-field")}>
+        <Label htmlFor="confirm-password" className={mx(styles, "auth-label")}>
           {t("confirmPassword")}
         </Label>
         <PasswordInput
@@ -147,7 +163,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
             setConfirmPassword(event.target.value);
             clearErrors();
           }}
-          className="auth-input"
+          className={mx(styles, "auth-input")}
           minLength={8}
           maxLength={128}
           required
@@ -159,7 +175,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       {formError ? (
         <p
           id={formErrorId}
-          className="auth-form-error"
+          className={mx(styles, "auth-form-error")}
           role="alert"
           aria-live="assertive"
         >
@@ -170,17 +186,19 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       <Button
         type="submit"
         size="lg"
-        className="auth-submit"
+        className={mx(styles, "auth-submit")}
         disabled={
           isPending || password.length < 8 || confirmPassword.length < 8
         }
       >
-        {isPending ? <Loader2 className="size-4 animate-spin" aria-hidden /> : null}
+        {isPending ? (
+          <Loader2 className="size-4 animate-spin" aria-hidden />
+        ) : null}
         {isPending ? t("resettingPassword") : t("resetPassword")}
       </Button>
 
-      <p className="auth-switch">
-        <Link href="/sign-in" className="auth-switch-link">
+      <p className={mx(styles, "auth-switch")}>
+        <Link href="/sign-in" className={mx(styles, "auth-switch-link")}>
           {t("backToSignIn")}
         </Link>
       </p>

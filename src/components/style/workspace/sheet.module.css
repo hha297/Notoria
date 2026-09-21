@@ -1,0 +1,221 @@
+/* —— Workspace create sheet —— */
+.workspace-sheet,
+:global([data-slot="dialog-content"]).workspace-sheet {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  max-height: min(92dvh, calc(100% - 2rem));
+  overflow: hidden;
+  padding: 0;
+  border-radius: 1.25rem;
+  border-color: color-mix(in oklab, var(--ink) 12%, var(--hairline-cloud));
+  background: linear-gradient(
+    165deg,
+    color-mix(in oklab, var(--surface-muted) 55%, var(--popover)) 0%,
+    var(--popover) 40%
+  );
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--ink) 6%, transparent),
+    0 24px 48px color-mix(in oklab, var(--ink) 12%, transparent);
+}
+
+.workspace-sheet-header {
+  flex-shrink: 0;
+  padding: 1.3rem 1.35rem 1rem;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 85%, transparent);
+}
+
+.workspace-sheet-kicker {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.workspace-sheet-title {
+  font-family: var(--font-heading);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.workspace-sheet-lede {
+  max-width: 28rem;
+  margin: 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+.workspace-sheet-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 1.05rem;
+  min-height: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding: 1.15rem 1.35rem 0.35rem;
+  overscroll-behavior: contain;
+}
+
+.workspace-sheet-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  min-width: 0;
+}
+
+.workspace-sheet-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.workspace-sheet[data-sheet-route="listen"] {
+  --sheet-route-fg: var(--module-listen-fg);
+  --sheet-route-bg: var(--module-listen-bg);
+  --writing-accent-fg: var(--module-listen-fg);
+  --writing-accent-bg: var(--module-listen-bg);
+  --writing-ink: var(--module-listen-fg);
+}
+
+.workspace-sheet[data-sheet-route="speak"] {
+  --sheet-route-fg: var(--module-speak-fg);
+  --sheet-route-bg: var(--module-speak-bg);
+  --writing-accent-fg: var(--module-speak-fg);
+  --writing-accent-bg: var(--module-speak-bg);
+  --writing-ink: var(--module-speak-fg);
+}
+
+.workspace-sheet-input {
+  min-height: 2.65rem;
+  border-radius: 0.85rem;
+  border-color: color-mix(in oklab, var(--hairline-cloud) 90%, transparent);
+  background: color-mix(in oklab, var(--surface-elevated) 94%, transparent);
+  box-shadow: inset 0 1px 0
+    color-mix(in oklab, var(--surface-elevated) 70%, transparent);
+}
+
+.workspace-sheet-input:focus-visible {
+  border-color: color-mix(
+    in oklab,
+    var(--accent-lime) 45%,
+    var(--hairline-cloud)
+  );
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--accent-lime) 18%, transparent);
+}
+
+.workspace-sheet-hint {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0.1rem 0 0;
+  padding: 0.4rem 0.65rem;
+  width: fit-content;
+  max-width: 100%;
+  border-radius: 16px;
+  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 80%, transparent);
+  background: color-mix(
+    in oklab,
+    var(--surface-muted) 55%,
+    var(--surface-elevated)
+  );
+  font-size: 0.75rem;
+  line-height: 1.35;
+  color: var(--muted-foreground);
+}
+
+.workspace-sheet-footer {
+  display: grid;
+  flex-shrink: 0;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6rem;
+  margin-top: 0;
+  padding: 0.95rem 1.35rem 1.2rem;
+  border-top: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 85%, transparent);
+  background: color-mix(in oklab, var(--surface) 50%, var(--popover));
+}
+
+.workspace-sheet-cancel,
+.workspace-sheet-cta {
+  width: 100%;
+}
+
+:global(.dark) .workspace-sheet {
+  background: linear-gradient(
+    165deg,
+    color-mix(in oklab, var(--surface-muted) 35%, var(--popover)) 0%,
+    var(--popover) 42%
+  );
+}
+
+.workspace-sheet[data-sheet-route="speak"] :global(.writing-chip-picker) {
+  max-height: 7.5rem;
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-right: 0.15rem;
+  overscroll-behavior: contain;
+}
+
+.speaking-notes-field {
+  min-height: 5.5rem;
+  max-height: 8rem;
+  resize: vertical;
+}
+
+.workspace-sheet[data-sheet-route="listen"] .workspace-sheet-kicker,
+.workspace-sheet[data-sheet-route="speak"] .workspace-sheet-kicker {
+  color: var(--sheet-route-fg);
+}
+
+.workspace-sheet[data-sheet-route="listen"]
+  .workspace-sheet-input:focus-visible,
+.workspace-sheet[data-sheet-route="speak"]
+  .workspace-sheet-input:focus-visible {
+  border-color: color-mix(
+    in oklab,
+    var(--sheet-route-fg) 45%,
+    var(--hairline-cloud)
+  );
+  box-shadow: 0 0 0 3px
+    color-mix(in oklab, var(--sheet-route-bg) 55%, transparent);
+}
+
+.workspace-sheet-dropzone {
+  display: flex;
+  width: 100%;
+  cursor: pointer;
+  flex-direction: column;
+  align-items: center;
+  border-radius: 0.95rem;
+  border: 1px dashed color-mix(in oklab, var(--hairline-cloud) 90%, transparent);
+  background: color-mix(in oklab, var(--surface-muted) 40%, transparent);
+  padding: 1.6rem 1rem;
+  text-align: center;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.workspace-sheet-dropzone:hover,
+.workspace-sheet-dropzone.is-active {
+  border-color: color-mix(
+    in oklab,
+    var(--sheet-route-fg, var(--module-listen-fg)) 55%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(
+    in oklab,
+    var(--sheet-route-bg, var(--module-listen-bg)) 42%,
+    transparent
+  );
+}

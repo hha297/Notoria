@@ -1,5 +1,7 @@
 "use client";
 
+import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
+import { mx } from "@/lib/css-module";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useVocabularyViewMode } from "@/hooks/use-vocabulary-view-mode";
 
@@ -10,7 +12,7 @@ export function VocabularyPageLoading() {
     <div
       aria-busy="true"
       aria-label="Loading"
-      className="notoria-route-loading vocab-lexicon writing-atelier flex flex-col gap-10 lg:gap-12"
+      className={mx(featureStyles, "notoria-route-loading vocab-lexicon writing-atelier flex flex-col gap-10 lg:gap-12")}
     >
       <div className="writing-hero">
         <div className="writing-hero-copy space-y-3">

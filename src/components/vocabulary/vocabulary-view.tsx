@@ -1,5 +1,7 @@
 "use client";
 
+import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
+import { mx } from "@/lib/css-module";
 import { Plus } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
@@ -38,7 +40,7 @@ export function VocabularyView({
   if (isError && !words) {
     return (
       <PageShell className="vocab-lexicon-shell">
-        <div className="vocab-lexicon writing-atelier flex flex-col gap-10">
+        <div className={mx(featureStyles, "vocab-lexicon writing-atelier flex flex-col gap-10")}>
           <header className="writing-hero">
             <div className="writing-hero-copy">
               <p className="writing-kicker">{workspaceName}</p>
@@ -74,7 +76,7 @@ export function VocabularyView({
   if (!words || words.length === 0) {
     return (
       <PageShell className="vocab-lexicon-shell">
-        <div className="vocab-lexicon writing-atelier writing-atelier-empty flex flex-col gap-10">
+        <div className={mx(featureStyles, "vocab-lexicon writing-atelier writing-atelier-empty flex flex-col gap-10")}>
           <header className="writing-hero">
             <div className="writing-hero-copy">
               <p className="writing-kicker">{workspaceName}</p>

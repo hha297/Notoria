@@ -12,6 +12,8 @@ import {
 } from "@/lib/exercises/blank-hint";
 import { hintInitialLetter } from "@/lib/exercises/hint";
 import type { TypeAnswerItem } from "@/lib/exercises/type-answer";
+import featureStyles from "@/components/style/exercises/session.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 type TypeAnswerStageProps = {
@@ -266,7 +268,7 @@ function RecallPrompt({
         <div
           className={cn(
             "mt-10 w-full max-w-xl",
-            revealed && tone === "error" && !reduceMotion && "exercise-shake",
+            revealed && tone === "error" && !reduceMotion && mx(featureStyles, "exercise-shake"),
           )}
         >
           <div
@@ -367,7 +369,7 @@ function BlankSlot({
     <span
       className={cn(
         "inline-flex max-w-full flex-col items-center align-baseline",
-        revealed && tone === "error" && !reduceMotion && "exercise-shake",
+        revealed && tone === "error" && !reduceMotion && mx(featureStyles, "exercise-shake"),
       )}
     >
       <span

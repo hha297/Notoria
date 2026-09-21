@@ -1,0 +1,549 @@
+:global([data-exercise="theory"]) {
+  --exercise-accent: var(--module-theory-fg);
+  --exercise-accent-soft: var(--module-theory-bg);
+  --lesson-concept: var(--module-theory-fg);
+  --lesson-concept-soft: var(--module-theory-bg);
+  --lesson-explain: var(--module-listen-fg);
+  --lesson-explain-soft: var(--module-listen-bg);
+  --lesson-example: var(--module-vocab-fg);
+  --lesson-example-soft: var(--module-vocab-bg);
+  --lesson-insight: var(--module-exercise-fg);
+  --lesson-insight-soft: var(--module-exercise-bg);
+  --lesson-compare: var(--module-speak-fg);
+  --lesson-compare-soft: var(--module-speak-bg);
+  --lesson-practice: var(--module-writing-fg);
+  --lesson-practice-soft: var(--module-writing-bg);
+  --lesson-row-fg: var(--module-theory-fg);
+  --lesson-row-bg: var(--module-theory-bg);
+  --lesson-row-on: var(--background);
+}
+
+:global([data-exercise="theory"] [data-theory-category="vocabulary"]) {
+  --lesson-row-fg: var(--module-vocab-fg);
+  --lesson-row-bg: var(--module-vocab-bg);
+}
+
+:global([data-exercise="theory"] [data-theory-category="pronunciation"]) {
+  --lesson-row-fg: var(--module-listen-fg);
+  --lesson-row-bg: var(--module-listen-bg);
+}
+
+:global([data-exercise="theory"] [data-theory-category="writing"]) {
+  --lesson-row-fg: var(--module-writing-fg);
+  --lesson-row-bg: var(--module-writing-bg);
+}
+
+:global([data-exercise="theory"] [data-theory-category="communication"]) {
+  --lesson-row-fg: var(--module-speak-fg);
+  --lesson-row-bg: var(--module-speak-bg);
+}
+
+:global([data-exercise="theory"] [data-theory-category="usage"]) {
+  --lesson-row-fg: var(--module-exercise-fg);
+  --lesson-row-bg: var(--module-exercise-bg);
+}
+
+:global([data-exercise="theory"] [data-theory-category="culture"]) {
+  --lesson-row-fg: var(--module-listen-fg);
+  --lesson-row-bg: var(--module-listen-bg);
+}
+
+.theory-lesson-term {
+  color: var(--exercise-accent);
+  background: color-mix(
+    in oklab,
+    var(--exercise-accent-soft) 88%,
+    transparent
+  );
+  border-radius: 0.25rem;
+  padding: 0.05em 0.28em;
+  font-weight: 600;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.theory-lesson-prose {
+  font-size: 1.0625rem;
+  line-height: 1.8;
+  color: var(--ink);
+}
+
+.theory-lesson-prose p {
+  margin-top: 1.05em;
+}
+
+.theory-lesson-prose > :first-child p:first-child {
+  margin-top: 0;
+}
+
+.theory-lesson-prose p,
+.theory-lesson-prose li {
+  overflow-wrap: anywhere;
+  text-wrap: pretty;
+}
+
+.theory-lesson-prose h1,
+.theory-lesson-prose h2,
+.theory-lesson-prose h3,
+.theory-lesson-prose h4 {
+  font-family: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+  font-weight: 650;
+  letter-spacing: -0.03em;
+  line-height: 1.25;
+  margin-top: 1.4em;
+}
+
+.theory-lesson-prose h1 {
+  font-size: 1.45rem;
+}
+.theory-lesson-prose h2 {
+  font-size: 1.22rem;
+}
+.theory-lesson-prose h3,
+.theory-lesson-prose h4 {
+  font-size: 1.05rem;
+}
+
+.theory-lesson-prose strong,
+.theory-lesson-prose b,
+.theory-lesson-prose code,
+.theory-lesson-prose mark {
+  color: var(--exercise-accent);
+  background: color-mix(
+    in oklab,
+    var(--exercise-accent-soft) 88%,
+    transparent
+  );
+  border-radius: 0.25rem;
+  padding: 0.04em 0.26em;
+  font-weight: 650;
+  font-family: inherit;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
+}
+
+.theory-lesson-prose mark {
+  background: color-mix(
+    in oklab,
+    var(--exercise-accent-soft) 100%,
+    transparent
+  );
+}
+
+.theory-lesson-prose ul,
+.theory-lesson-prose ol {
+  padding-left: 1.15rem;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.theory-lesson-prose blockquote {
+  border-left: 1px solid
+    color-mix(in oklab, var(--exercise-accent) 35%, transparent);
+  padding-left: 1rem;
+  color: var(--ink);
+}
+
+.theory-lesson-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.theory-lesson-prose th,
+.theory-lesson-prose td {
+  border-bottom: 1px solid var(--border);
+  padding: 0.55rem 0.7rem 0.55rem 0;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+
+.theory-lesson-prose th {
+  font-size: 0.68rem;
+  font-weight: 650;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.theory-lesson-example {
+  font-family: var(--font-heading), ui-sans-serif, system-ui, sans-serif;
+  font-size: 1.55rem;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.4;
+}
+
+.theory-lesson-example p {
+  margin: 0;
+}
+
+.theory-lesson-note {
+  font-size: 0.95rem;
+  line-height: 1.65;
+  color: var(--muted-foreground);
+}
+
+.theory-library-hero,
+.theory-zone-hero,
+.theory-zone-idea,
+.theory-zone-examples,
+.theory-zone-insight,
+.theory-zone-practice,
+.theory-practice-stage {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  background: none;
+}
+
+.theory-library-hero > *:not(.theory-decor),
+.theory-zone-hero > *:not(.theory-decor),
+.theory-zone-idea > *:not(.theory-decor),
+.theory-zone-examples > *:not(.theory-decor),
+.theory-zone-insight > *:not(.theory-decor),
+.theory-zone-practice > *:not(.theory-decor),
+.theory-practice-stage > * {
+  position: relative;
+  z-index: 1;
+}
+
+.theory-library-hero::before,
+.theory-zone-hero::before,
+.theory-zone-idea::before,
+.theory-zone-examples::before,
+.theory-zone-insight::before,
+.theory-zone-practice::before,
+.theory-practice-stage::before {
+  content: "";
+  position: absolute;
+  inset: -18% -14%;
+  z-index: 0;
+  pointer-events: none;
+  -webkit-mask-image:
+    linear-gradient(
+      to right,
+      transparent 0%,
+      #000 14%,
+      #000 86%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 16%,
+      #000 82%,
+      transparent 100%
+    );
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(
+      to right,
+      transparent 0%,
+      #000 14%,
+      #000 86%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 16%,
+      #000 82%,
+      transparent 100%
+    );
+  mask-composite: intersect;
+}
+
+.theory-library-hero::before,
+.theory-zone-hero::before {
+  background:
+    radial-gradient(
+      ellipse 68% 62% at 18% 22%,
+      color-mix(in oklab, var(--lesson-row-bg) 62%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 52% 55% at 86% 18%,
+      color-mix(in oklab, var(--lesson-explain-soft) 48%, transparent),
+      transparent 70%
+    );
+}
+
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="0"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="0"] {
+  --lesson-row-fg: var(--primary);
+  --lesson-row-bg: color-mix(in oklab, var(--primary) 28%, transparent);
+  --lesson-row-on: var(--primary-foreground);
+}
+
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="1"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="1"] {
+  --lesson-row-fg: var(--module-theory-fg);
+  --lesson-row-bg: var(--module-theory-bg);
+  --lesson-row-on: var(--background);
+}
+
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="2"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="2"] {
+  --lesson-row-fg: var(--module-vocab-fg);
+  --lesson-row-bg: var(--module-vocab-bg);
+  --lesson-row-on: var(--background);
+}
+
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="3"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="3"] {
+  --lesson-row-fg: var(--module-listen-fg);
+  --lesson-row-bg: var(--module-listen-bg);
+  --lesson-row-on: var(--background);
+}
+
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="4"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="4"] {
+  --lesson-row-fg: var(--module-writing-fg);
+  --lesson-row-bg: var(--module-writing-bg);
+  --lesson-row-on: var(--background);
+}
+
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="5"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="5"] {
+  --lesson-row-fg: var(--module-speak-fg);
+  --lesson-row-bg: var(--module-speak-bg);
+  --lesson-row-on: var(--background);
+}
+
+.theory-library-row,
+.theory-library-card {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  background: none;
+  border: 1px solid color-mix(in oklab, var(--lesson-row-fg) 25%, transparent);
+  transition: border-color 0.2s ease;
+}
+
+.theory-library-row:hover,
+.theory-library-row:focus-within,
+.theory-library-card:hover,
+.theory-library-card:focus-within {
+  border-color: color-mix(in oklab, var(--lesson-row-fg) 40%, transparent);
+}
+
+.theory-library-row:hover,
+.theory-library-row:focus-within {
+  background: radial-gradient(
+    ellipse 90% 85% at 12% 50%,
+    color-mix(in oklab, var(--lesson-row-bg) 38%, transparent),
+    transparent 72%
+  );
+}
+
+.theory-library-row[data-featured] {
+  background: radial-gradient(
+    ellipse 58% 78% at 22% 50%,
+    color-mix(in oklab, var(--lesson-row-bg) 48%, transparent),
+    transparent 72%
+  );
+}
+
+.theory-library-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 78% 70% at 12% 0%,
+    color-mix(in oklab, var(--lesson-row-bg) 58%, transparent),
+    transparent 74%
+  );
+}
+
+.theory-library-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.theory-zone-idea {
+  --exercise-accent: var(--lesson-concept);
+  --exercise-accent-soft: var(--lesson-concept-soft);
+}
+
+.theory-zone-idea::before {
+  background:
+    radial-gradient(
+      ellipse 70% 64% at 20% 22%,
+      color-mix(in oklab, var(--lesson-concept-soft) 58%, transparent),
+      transparent 74%
+    ),
+    radial-gradient(
+      ellipse 48% 50% at 88% 72%,
+      color-mix(in oklab, var(--lesson-explain-soft) 32%, transparent),
+      transparent 72%
+    );
+}
+
+.theory-zone-examples {
+  --exercise-accent: var(--lesson-example);
+  --exercise-accent-soft: var(--lesson-example-soft);
+}
+
+.theory-zone-examples::before {
+  background:
+    radial-gradient(
+      ellipse 66% 60% at 80% 16%,
+      color-mix(in oklab, var(--lesson-example-soft) 56%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 42% 48% at 14% 86%,
+      color-mix(in oklab, var(--lesson-explain-soft) 28%, transparent),
+      transparent 70%
+    );
+}
+
+.theory-zone-insight {
+  --exercise-accent: var(--lesson-insight);
+  --exercise-accent-soft: var(--lesson-insight-soft);
+}
+
+.theory-zone-insight::before {
+  background:
+    radial-gradient(
+      ellipse 70% 64% at 22% 20%,
+      color-mix(in oklab, var(--lesson-insight-soft) 58%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 46% 50% at 88% 80%,
+      color-mix(in oklab, var(--lesson-practice-soft) 30%, transparent),
+      transparent 70%
+    );
+}
+
+.theory-zone-detail {
+  --exercise-accent: var(--lesson-explain);
+  --exercise-accent-soft: var(--lesson-explain-soft);
+  border-top: 1px solid
+    color-mix(in oklab, var(--lesson-explain) 22%, transparent);
+}
+
+.theory-zone-practice,
+.theory-practice-stage {
+  --exercise-accent: var(--lesson-practice);
+  --exercise-accent-soft: var(--lesson-practice-soft);
+}
+
+.theory-zone-practice::before,
+.theory-practice-stage::before {
+  background:
+    radial-gradient(
+      ellipse 66% 62% at 16% 24%,
+      color-mix(in oklab, var(--lesson-practice-soft) 58%, transparent),
+      transparent 74%
+    ),
+    radial-gradient(
+      ellipse 50% 54% at 86% 28%,
+      color-mix(in oklab, var(--lesson-insight-soft) 34%, transparent),
+      transparent 72%
+    );
+}
+
+.theory-decor {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: visible;
+  pointer-events: none;
+  -webkit-mask-image:
+    linear-gradient(
+      to right,
+      transparent 0%,
+      #000 10%,
+      #000 90%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 12%,
+      #000 88%,
+      transparent 100%
+    );
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(
+      to right,
+      transparent 0%,
+      #000 10%,
+      #000 90%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 12%,
+      #000 88%,
+      transparent 100%
+    );
+  mask-composite: intersect;
+}
+
+.theory-example-a {
+  --exercise-accent: var(--lesson-example);
+  --exercise-accent-soft: var(--lesson-example-soft);
+}
+
+.theory-example-b {
+  --exercise-accent: var(--lesson-compare);
+  --exercise-accent-soft: var(--lesson-compare-soft);
+}
+
+.theory-blob {
+  position: absolute;
+  border-radius: 999px;
+  filter: blur(42px);
+  opacity: 0.45;
+  pointer-events: none;
+  animation: theory-glow 7s ease-in-out infinite;
+}
+
+.theory-diamond {
+  position: absolute;
+  width: 0.55rem;
+  height: 0.55rem;
+  rotate: 45deg;
+  border: 1.5px solid currentColor;
+  background: color-mix(in oklab, currentColor 18%, transparent);
+}
+
+@keyframes theory-glow {
+  0%,
+  100% {
+    opacity: 0.32;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.06);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .theory-blob {
+    animation: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .theory-lesson-example {
+    font-size: 1.85rem;
+  }
+}
+
+@media (min-width: 768px) {
+  .theory-lesson-example {
+    font-size: 2.05rem;
+  }
+}

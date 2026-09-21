@@ -1,0 +1,171 @@
+.export-format-grid {
+  display: grid;
+  gap: 0.55rem;
+}
+
+.export-format-chip {
+  display: flex;
+  min-height: 5.1rem;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.12rem;
+  padding: 0.85rem 0.95rem 0.8rem;
+  border: 1px solid var(--hairline-cloud);
+  border-radius: 1rem;
+  background: color-mix(in oklab, var(--surface-elevated) 88%, transparent);
+  color: var(--muted-foreground);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
+}
+
+.export-format-chip:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--export-accent-fg) 42%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(
+    in oklab,
+    var(--export-accent-bg) 48%,
+    var(--surface-elevated)
+  );
+  color: var(--foreground);
+}
+
+.export-format-chip.is-active {
+  border-color: color-mix(
+    in oklab,
+    var(--export-accent-fg) 55%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(
+    in oklab,
+    var(--export-accent-bg) 68%,
+    var(--surface-elevated)
+  );
+  color: var(--export-accent-fg);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--export-accent-fg) 18%, transparent),
+    0 10px 22px color-mix(in oklab, var(--export-accent-fg) 12%, transparent);
+}
+
+.export-format-icon {
+  display: inline-flex;
+  margin-bottom: 0.28rem;
+  color: inherit;
+}
+
+.export-format-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: inherit;
+}
+
+.export-format-hint {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: color-mix(in oklab, var(--muted-foreground) 82%, currentColor);
+}
+
+.export-format-chip.is-active .export-format-hint {
+  color: color-mix(
+    in oklab,
+    var(--export-accent-fg) 72%,
+    var(--muted-foreground)
+  );
+}
+
+.export-option-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.export-option-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-height: 2.25rem;
+  padding: 0.35rem 0.85rem 0.35rem 0.7rem;
+  border: 1px solid var(--hairline-cloud);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--surface-elevated) 88%, transparent);
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
+}
+
+.export-option-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--muted-foreground) 45%, transparent);
+}
+
+.export-option-chip:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--export-accent-fg) 42%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(
+    in oklab,
+    var(--export-accent-bg) 48%,
+    var(--surface-elevated)
+  );
+  color: var(--foreground);
+}
+
+.export-option-chip.is-on {
+  border-color: color-mix(
+    in oklab,
+    var(--export-accent-fg) 55%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(
+    in oklab,
+    var(--export-accent-bg) 68%,
+    var(--surface-elevated)
+  );
+  color: var(--export-accent-fg);
+  box-shadow: 0 0 0 1px
+    color-mix(in oklab, var(--export-accent-fg) 16%, transparent);
+}
+
+.export-option-chip.is-on .export-option-dot {
+  background: var(--export-accent-fg);
+}
+
+.export-progress {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.8rem 0.9rem;
+  border: 1px solid
+    color-mix(in oklab, var(--export-accent-fg) 16%, var(--hairline-cloud));
+  border-radius: 0.95rem;
+  background: color-mix(
+    in oklab,
+    var(--export-accent-bg) 28%,
+    var(--surface-elevated)
+  );
+}
+
+.export-progress-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}

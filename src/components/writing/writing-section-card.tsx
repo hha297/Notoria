@@ -32,7 +32,9 @@ import {
 } from "@/components/writing/writing-question-card";
 import { Button } from "@/components/ui/button";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
+import qsStyles from "@/components/style/writing/question-set.module.css";
 import { useMounted } from "@/hooks/use-mounted";
+import { mx } from "@/lib/css-module";
 import type { WritingAiSuggestion } from "@/lib/writing/ai-types";
 import type { QuestionAiFeedbackMap } from "@/lib/writing/ai-question-feedback";
 import {
@@ -246,8 +248,18 @@ export function WritingSectionCard({
   );
 
   return (
-    <div className="writing-qs-section overflow-hidden rounded-2xl border">
-      <div className="writing-qs-section-head flex items-start gap-2.5 border-b border-hairline-cloud px-4 py-4 sm:gap-3 sm:px-5 sm:py-5">
+    <div
+      className={mx(
+        qsStyles,
+        "writing-qs-section overflow-hidden rounded-2xl border",
+      )}
+    >
+      <div
+        className={mx(
+          qsStyles,
+          "writing-qs-section-head flex items-start gap-2.5 border-b border-hairline-cloud px-4 py-4 sm:gap-3 sm:px-5 sm:py-5",
+        )}
+      >
         <div className="flex items-center gap-0.5 pt-2.5">
           {dragHandle}
           <button

@@ -17,9 +17,7 @@ export default async function VocabularyPage() {
               <p className="writing-kicker">{t("title")}</p>
               <h1 className="writing-brand-title">
                 {t("title")}{" "}
-                <span className="text-module-vocab-fg">
-                  {t("bank")}
-                </span>
+                <span className="text-module-vocab-fg">{t("bank")}</span>
               </h1>
               <p className="writing-brand-lede">{t("disabledNoWorkspace")}</p>
             </div>

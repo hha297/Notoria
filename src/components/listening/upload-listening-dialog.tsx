@@ -40,7 +40,8 @@ import {
   type WritingFormality,
 } from "@/lib/writing/meta";
 import { resolveTopicLabel } from "@/lib/taxonomy/topics";
-import { cn } from "@/lib/utils";
+import styles from "@/components/style/workspace/sheet.module.css";
+import { mx } from "@/lib/css-module";
 
 type UploadStep = "form" | "uploading" | "transcribing";
 
@@ -169,28 +170,28 @@ export function UploadListeningDialog({
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
-        className="workspace-sheet sm:max-w-lg"
+        className={mx(styles, "workspace-sheet sm:max-w-lg")}
         data-sheet-route="listen"
         showCloseButton={!busy}
       >
-        <DialogHeader className="workspace-sheet-header gap-2 space-y-0 pr-8 text-left">
-          <p className="workspace-sheet-kicker">{t("title")}</p>
-          <DialogTitle className="workspace-sheet-title">
+        <DialogHeader className={mx(styles, "workspace-sheet-header gap-2 space-y-0 pr-8 text-left")}>
+          <p className={mx(styles, "workspace-sheet-kicker")}>{t("title")}</p>
+          <DialogTitle className={mx(styles, "workspace-sheet-title")}>
             {t("uploadTitle")}
           </DialogTitle>
-          <DialogDescription className="workspace-sheet-lede">
+          <DialogDescription className={mx(styles, "workspace-sheet-lede")}>
             {t("uploadDescription")}
           </DialogDescription>
         </DialogHeader>
 
         {stepLabel ? (
-          <div className="workspace-sheet-body items-center py-10 text-center">
+          <div className={mx(styles, "workspace-sheet-body items-center py-10 text-center")}>
             <Loader2 className="size-8 animate-spin text-module-listen-fg" />
             <p className="font-medium text-ink">{stepLabel}</p>
             <p className="text-sm text-muted-foreground">{t("steps.wait")}</p>
           </div>
         ) : (
-          <div className="workspace-sheet-body">
+          <div className={mx(styles, "workspace-sheet-body")}>
             <button
               type="button"
               data-tutorial="listening-upload-dropzone"
@@ -205,7 +206,8 @@ export function UploadListeningDialog({
                 setDragOver(false);
                 chooseFile(event.dataTransfer.files[0]);
               }}
-              className={cn(
+              className={mx(
+                styles,
                 "workspace-sheet-dropzone",
                 dragOver && "is-active",
               )}
@@ -232,8 +234,8 @@ export function UploadListeningDialog({
               onChange={(event) => chooseFile(event.target.files?.[0])}
             />
 
-            <div className="workspace-sheet-field">
-              <Label htmlFor="listening-title" className="workspace-sheet-label">
+            <div className={mx(styles, "workspace-sheet-field")}>
+              <Label htmlFor="listening-title" className={mx(styles, "workspace-sheet-label")}>
                 {t("titleLabel")}{" "}
                 <span className="font-normal normal-case tracking-normal text-muted-foreground">
                   ({tc("optional")})
@@ -244,18 +246,18 @@ export function UploadListeningDialog({
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
                 placeholder={t("titlePlaceholder")}
-                className="workspace-sheet-input"
+                className={mx(styles, "workspace-sheet-input")}
               />
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3">
-              <div className="workspace-sheet-field">
-                <Label className="workspace-sheet-label">{tMeta("cefrLabel")}</Label>
+              <div className={mx(styles, "workspace-sheet-field")}>
+                <Label className={mx(styles, "workspace-sheet-label")}>{tMeta("cefrLabel")}</Label>
                 <Select
                   value={cefrLevel}
                   onValueChange={(value) => value && setCefrLevel(value)}
                 >
-                  <SelectTrigger className="workspace-sheet-input w-full">
+                  <SelectTrigger className={mx(styles, "workspace-sheet-input w-full")}>
                     <SelectValue>
                       {cefrLevel === "none"
                         ? tMeta("none")
@@ -272,13 +274,13 @@ export function UploadListeningDialog({
                   </SelectContent>
                 </Select>
               </div>
-              <div className="workspace-sheet-field">
-                <Label className="workspace-sheet-label">{tMeta("topicLabel")}</Label>
+              <div className={mx(styles, "workspace-sheet-field")}>
+                <Label className={mx(styles, "workspace-sheet-label")}>{tMeta("topicLabel")}</Label>
                 <Select
                   value={topic}
                   onValueChange={(value) => value && setTopic(value)}
                 >
-                  <SelectTrigger className="workspace-sheet-input w-full">
+                  <SelectTrigger className={mx(styles, "workspace-sheet-input w-full")}>
                     <SelectValue>
                       {topic === "none"
                         ? tMeta("none")
@@ -295,15 +297,15 @@ export function UploadListeningDialog({
                   </SelectContent>
                 </Select>
               </div>
-              <div className="workspace-sheet-field">
-                <Label className="workspace-sheet-label">
+              <div className={mx(styles, "workspace-sheet-field")}>
+                <Label className={mx(styles, "workspace-sheet-label")}>
                   {tMeta("formalityLabel")}
                 </Label>
                 <Select
                   value={formality}
                   onValueChange={(value) => value && setFormality(value)}
                 >
-                  <SelectTrigger className="workspace-sheet-input w-full">
+                  <SelectTrigger className={mx(styles, "workspace-sheet-input w-full")}>
                     <SelectValue>
                       {formality === "none"
                         ? tMeta("none")
@@ -324,11 +326,11 @@ export function UploadListeningDialog({
           </div>
         )}
 
-        <div className="workspace-sheet-footer">
+        <div className={mx(styles, "workspace-sheet-footer")}>
           <Button
             type="button"
             variant="outline"
-            className="workspace-sheet-cancel"
+            className={mx(styles, "workspace-sheet-cancel")}
             onClick={() => handleOpenChange(false)}
             disabled={busy}
           >
@@ -336,7 +338,7 @@ export function UploadListeningDialog({
           </Button>
           <Button
             type="button"
-            className="workspace-sheet-cta"
+            className={mx(styles, "workspace-sheet-cta")}
             onClick={handleSubmit}
             disabled={!file || busy}
           >

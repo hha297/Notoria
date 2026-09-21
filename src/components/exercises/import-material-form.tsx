@@ -34,6 +34,9 @@ import {
   MAX_IMPORT_FILE_SIZE,
   resolveImportMime,
 } from "@/lib/exercise-import/utils";
+import importStyles from "@/components/style/exercises/import.module.css";
+import theoryStyles from "@/components/style/exercises/theory.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 type SourceMode = "file" | "image" | "url" | "text";
@@ -342,7 +345,10 @@ export function ImportMaterialForm() {
                 aria-pressed={active}
                 onClick={() => setMode(item.id)}
                 className={cn(
-                  "import-mode flex cursor-pointer flex-col gap-3 rounded-md px-3 py-4 text-left sm:px-4 sm:py-5",
+                  mx(
+                    importStyles,
+                    "import-mode flex cursor-pointer flex-col gap-3 rounded-md px-3 py-4 text-left sm:px-4 sm:py-5",
+                  ),
                   "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--import-mode-fg)/40",
                   active ? "text-ink" : "text-muted-foreground hover:text-ink",
                 )}
@@ -399,7 +405,7 @@ export function ImportMaterialForm() {
           }
         />
       ) : mode === "url" ? (
-        <div className="import-stage import-dropzone space-y-5 rounded-md px-5 py-8 sm:px-7 sm:py-10">
+        <div className={mx(importStyles, "import-stage import-dropzone space-y-5 rounded-md px-5 py-8 sm:px-7 sm:py-10")}>
           <StageDecor />
           <div className="relative space-y-2">
             <Label htmlFor="import-url" className="text-[0.68rem] font-semibold tracking-[0.16em] text-(--import-mode-fg) uppercase">
@@ -434,7 +440,7 @@ export function ImportMaterialForm() {
           </Button>
         </div>
       ) : mode === "text" ? (
-        <div className="import-stage import-dropzone space-y-5 rounded-md px-5 py-8 sm:px-7 sm:py-10">
+        <div className={mx(importStyles, "import-stage import-dropzone space-y-5 rounded-md px-5 py-8 sm:px-7 sm:py-10")}>
           <StageDecor />
           <div className="relative space-y-2">
             <Label htmlFor="import-text" className="text-[0.68rem] font-semibold tracking-[0.16em] text-(--import-mode-fg) uppercase">
@@ -490,9 +496,9 @@ export function ImportMaterialForm() {
             void processFile(file, { requireImage: mode === "image" });
           }}
           className={cn(
-            "import-stage import-dropzone flex min-h-60 cursor-pointer flex-col items-center justify-center gap-5 rounded-md px-6 py-12 text-center sm:min-h-72 sm:py-14",
+            mx(importStyles, "import-stage import-dropzone flex min-h-60 cursor-pointer flex-col items-center justify-center gap-5 rounded-md px-6 py-12 text-center sm:min-h-72 sm:py-14"),
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--import-mode-fg)/40",
-            dragOver && "import-dropzone-active",
+            dragOver && mx(importStyles, "import-dropzone-active"),
             !hasProAccess && lockedFeatureClassName,
           )}
         >
@@ -540,10 +546,10 @@ export function ImportMaterialForm() {
 
 function StageDecor() {
   return (
-    <div aria-hidden className="theory-decor">
-      <span className="theory-blob top-[-24%] left-[8%] size-36 bg-(--import-mode-fg)" />
-      <span className="theory-blob right-[4%] bottom-[-30%] size-32 bg-(--exercise-accent)" />
-      <span className="theory-diamond top-5 right-7 text-(--import-mode-fg)" />
+    <div aria-hidden className={mx(theoryStyles, "theory-decor")}>
+      <span className={mx(theoryStyles, "theory-blob top-[-24%] left-[8%] size-36 bg-(--import-mode-fg)")} />
+      <span className={mx(theoryStyles, "theory-blob right-[4%] bottom-[-30%] size-32 bg-(--exercise-accent)")} />
+      <span className={mx(theoryStyles, "theory-diamond top-5 right-7 text-(--import-mode-fg)")} />
     </div>
   );
 }

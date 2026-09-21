@@ -1,0 +1,107 @@
+/* TipTap / ProseMirror editor chrome. Class names are TipTap conventions
+ * applied on the editor DOM, so every selector stays fully :global. */
+
+:global(.tiptap p.is-editor-empty:first-child::before) {
+  color: var(--muted-foreground);
+  content: attr(data-placeholder);
+  float: left;
+  height: 0;
+  pointer-events: none;
+}
+
+:global(.tiptap .heading-collapse-btn) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1em;
+  height: 1.1em;
+  margin-right: 0.2rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.75em;
+  line-height: 1;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+}
+
+:global(.tiptap .heading-collapse-btn:hover) {
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--foreground) 8%, transparent);
+}
+
+:global(.tiptap .heading-collapse-hidden) {
+  display: none !important;
+}
+
+:global(.prose .heading-collapse-btn) {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.1em;
+  height: 1.1em;
+  margin-right: 0.35rem;
+  padding: 0;
+  border: 0;
+  border-radius: 0.25rem;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.75em;
+  line-height: 1;
+  vertical-align: middle;
+  cursor: pointer;
+  user-select: none;
+}
+
+:global(.prose .heading-collapse-btn:hover) {
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--foreground) 8%, transparent);
+}
+
+:global(.tiptap table) {
+  border-collapse: collapse;
+  margin: 1rem 0;
+  width: 100%;
+}
+
+:global(.tiptap th),
+:global(.tiptap td) {
+  border: 1px solid var(--hairline-cloud);
+  min-width: 80px;
+  padding: 0.45rem 0.7rem;
+}
+
+:global(.tiptap th) {
+  background: var(--surface-elevated);
+  font-weight: 600;
+}
+
+:global(.tiptap ul[data-type="taskList"]) {
+  list-style: none;
+  padding-left: 0;
+}
+
+:global(.tiptap ul[data-type="taskList"] li) {
+  align-items: flex-start;
+  display: flex;
+  gap: 0.5rem;
+}
+
+:global(.tiptap ul[data-type="taskList"] li > label) {
+  margin-top: 0.2rem;
+}
+
+:global(.tiptap code) {
+  font-family: var(--font-mono);
+}
+
+:global(.tiptap pre) {
+  background: var(--surface-inverse);
+  border-radius: 6px;
+  color: var(--on-inverse);
+  font-family: var(--font-mono);
+  padding: 1rem;
+}

@@ -3,7 +3,8 @@
 import { motion } from "motion/react";
 import type { TutorialPlacement } from "@/lib/onboarding/tutorial-position";
 import type { TutorialSectionId } from "@/lib/onboarding/tutorials";
-import { cn } from "@/lib/utils";
+import styles from "@/components/style/onboarding/tutorial.module.css";
+import { mx } from "@/lib/css-module";
 
 const EASE = [0.25, 0.1, 0.25, 1] as const;
 const TARGET_PADDING = 6;
@@ -32,7 +33,10 @@ export function TutorialSpotlight({
       exit={{ opacity: 0 }}
       transition={{ duration: 0.22, ease: EASE }}
       data-tutorial-section={section}
-      className="tutorial-spotlight-cutout pointer-events-none fixed z-[190]"
+      className={mx(
+        styles,
+        "tutorial-spotlight-cutout pointer-events-none fixed z-[190]",
+      )}
       aria-hidden
     />
   );
@@ -49,7 +53,7 @@ export function TutorialBackdrop({ onClick }: TutorialBackdropProps) {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
       transition={{ duration: 0.18, ease: EASE }}
-      className="tutorial-backdrop fixed inset-0 z-[189]"
+      className={mx(styles, "tutorial-backdrop fixed inset-0 z-[189]")}
       onClick={onClick}
       aria-hidden
     />
@@ -66,7 +70,8 @@ export function TutorialArrow({ placement }: TutorialArrowProps) {
   return (
     <span
       aria-hidden
-      className={cn(
+      className={mx(
+        styles,
         "tutorial-sheet-arrow absolute size-3 rotate-45",
         placement === "bottom" &&
           "-top-1.5 left-1/2 -translate-x-1/2 border-b-0 border-r-0",

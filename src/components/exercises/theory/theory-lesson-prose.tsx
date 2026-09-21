@@ -2,6 +2,8 @@
 
 import type { JSONContent } from "@tiptap/react";
 import { renderBlock } from "@/lib/editor/render-document";
+import featureStyles from "@/components/style/exercises/theory.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 type TheoryLessonProseProps = {
@@ -21,9 +23,9 @@ export function TheoryLessonProse({
   return (
     <div
       className={cn(
-        "theory-lesson-prose min-w-0 max-w-full wrap-anywhere",
-        variant === "example" && "theory-lesson-example",
-        variant === "note" && "theory-lesson-note",
+        mx(featureStyles, "theory-lesson-prose min-w-0 max-w-full wrap-anywhere"),
+        variant === "example" && mx(featureStyles, "theory-lesson-example"),
+        variant === "note" && mx(featureStyles, "theory-lesson-note"),
         className,
       )}
     >

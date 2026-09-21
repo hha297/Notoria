@@ -1,5 +1,7 @@
 "use client";
 
+import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
+import { mx } from "@/lib/css-module";
 import {
   VocabularyUpdatedAt,
   VocabularyWordLink,
@@ -21,7 +23,7 @@ export function VocabularyCardView({
   onEditWord,
 }: VocabularyCardViewProps) {
   return (
-    <div className="vocab-card-grid grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4">
+    <div className={mx(featureStyles, "vocab-card-grid grid grid-cols-1 gap-3 sm:grid-cols-2 xl:grid-cols-3 2xl:grid-cols-4")}>
       {words.map((word) => (
         <VocabularyCard
           key={word.id}
@@ -46,7 +48,7 @@ function VocabularyCard({
   return (
     <article
       data-vocab-pos={word.partOfSpeech || "none"}
-      className="vocab-slip"
+      className={mx(featureStyles, "vocab-slip")}
     >
       <div className="min-w-0 flex-1">
         <VocabularyWordLink word={word} className="text-lg leading-snug" />
@@ -61,7 +63,7 @@ function VocabularyCard({
         ) : null}
       </div>
 
-      <div className="vocab-slip-foot">
+      <div className={mx(featureStyles, "vocab-slip-foot")}>
         <VocabularyUpdatedAt updatedAt={word.updatedAt} />
         <VocabularyRowActions
           wordId={word.id}

@@ -3,6 +3,9 @@
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import type { ReactNode } from "react";
+import connectionStyles from "@/components/style/guide/connection.module.css";
+import styles from "@/components/style/guide/guide.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 const TOC_IDS = [
@@ -66,11 +69,11 @@ export function GettingStartedGuide() {
   const t = useTranslations("gettingStarted");
 
   return (
-    <div className="guide-layout">
+    <div className={mx(styles, "guide-layout")}>
       <GuideToc />
 
-      <div className="guide-main">
-        <header className="writing-hero guide-hero">
+      <div className={mx(styles, "guide-main")}>
+        <header className={mx(styles, "writing-hero guide-hero")}>
           <div className="writing-hero-copy">
             <p className="writing-kicker">{t("meta.eyebrow")}</p>
             <h1 className="writing-brand-title">{t("meta.title")}</h1>
@@ -79,13 +82,13 @@ export function GettingStartedGuide() {
         </header>
 
         <GuideSection id="welcome" title={t("welcome.title")}>
-          <p className="guide-lead">{t("welcome.lead")}</p>
+          <p className={mx(styles, "guide-lead")}>{t("welcome.lead")}</p>
           <GuideParagraphs items={t.raw("welcome.paragraphs") as string[]} />
-          <p className="guide-body">{t("welcome.examplesIntro")}</p>
+          <p className={mx(styles, "guide-body")}>{t("welcome.examplesIntro")}</p>
           <GuideBulletList items={t.raw("welcome.examples") as string[]} />
-          <p className="guide-body">{t("welcome.overTime")}</p>
+          <p className={mx(styles, "guide-body")}>{t("welcome.overTime")}</p>
           <GuideCallout variant="dark">
-            <p className="guide-callout-title text-on-inverse">
+            <p className={mx(styles, "guide-callout-title text-on-inverse")}>
               {t("welcome.noWrongWay.title")}
             </p>
             <GuideParagraphs
@@ -97,29 +100,36 @@ export function GettingStartedGuide() {
         </GuideSection>
 
         <GuideSection id="how-it-works" title={t("howItWorks.title")}>
-          <p className="guide-body">{t("howItWorks.intro")}</p>
+          <p className={mx(styles, "guide-body")}>{t("howItWorks.intro")}</p>
           <FlowDiagram
             stages={FLOW_STAGES.map((stage) => t(`howItWorks.flow.${stage}`))}
           />
-          <p className="guide-body">{t("howItWorks.anywhereNote")}</p>
-          <div className="guide-step-stack">
+          <p className={mx(styles, "guide-body")}>
+            {t("howItWorks.anywhereNote")}
+          </p>
+          <div className={mx(styles, "guide-step-stack")}>
             {(
               ["collect", "understand", "practice", "use", "review"] as const
             ).map((step, index) => (
-              <article key={step} className="guide-step-card">
-                <span className="guide-step-index" aria-hidden="true">
+              <article key={step} className={mx(styles, "guide-step-card")}>
+                <span
+                  className={mx(styles, "guide-step-index")}
+                  aria-hidden="true"
+                >
                   {index + 1}
                 </span>
-                <h3 className="guide-step-title">
+                <h3 className={mx(styles, "guide-step-title")}>
                   {t(`howItWorks.steps.${step}.title`)}
                 </h3>
-                <p className="guide-step-body">
+                <p className={mx(styles, "guide-step-body")}>
                   {t(`howItWorks.steps.${step}.body`)}
                 </p>
               </article>
             ))}
           </div>
-          <p className="guide-body">{t("howItWorks.connectedNote")}</p>
+          <p className={mx(styles, "guide-body")}>
+            {t("howItWorks.connectedNote")}
+          </p>
         </GuideSection>
 
         <ModuleSection id="vocabulary" module="vocabulary" />
@@ -130,7 +140,7 @@ export function GettingStartedGuide() {
         <ModuleSection id="speaking" module="speaking" />
 
         <GuideSection id="connections" title={t("connections.title")}>
-          <p className="guide-body">{t("connections.intro")}</p>
+          <p className={mx(styles, "guide-body")}>{t("connections.intro")}</p>
           <ConnectionDiagram
             stages={CONNECTION_STAGES.map((stage) => ({
               label: t(`connections.flow.${stage.key}`),
@@ -142,24 +152,29 @@ export function GettingStartedGuide() {
         </GuideSection>
 
         <GuideSection id="philosophy" title={t("philosophy.title")}>
-          <p className="guide-lead">{t("philosophy.lead")}</p>
+          <p className={mx(styles, "guide-lead")}>{t("philosophy.lead")}</p>
           <GuideBulletList items={t.raw("philosophy.dontNeed") as string[]} />
           <GuideParagraphs items={t.raw("philosophy.canDo") as string[]} />
           <GuideCallout variant="dark">
-            <p className="guide-callout-title text-primary">
+            <p className={mx(styles, "guide-callout-title text-primary")}>
               {t("philosophy.quote")}
             </p>
           </GuideCallout>
         </GuideSection>
 
         <GuideSection id="start-here" title={t("startHere.title")}>
-          <p className="guide-body">{t("startHere.intro")}</p>
-          <div className="guide-start-panel">
-            <h3 className="guide-step-title">{t("startHere.firstTen.title")}</h3>
-            <ol className="guide-start-list">
+          <p className={mx(styles, "guide-body")}>{t("startHere.intro")}</p>
+          <div className={mx(styles, "guide-start-panel")}>
+            <h3 className={mx(styles, "guide-step-title")}>
+              {t("startHere.firstTen.title")}
+            </h3>
+            <ol className={mx(styles, "guide-start-list")}>
               {FIRST_STEPS.map((step, index) => (
-                <li key={step} className="guide-start-item">
-                  <span className="guide-start-num" aria-hidden="true">
+                <li key={step} className={mx(styles, "guide-start-item")}>
+                  <span
+                    className={mx(styles, "guide-start-num")}
+                    aria-hidden="true"
+                  >
                     {index + 1}
                   </span>
                   <span>{t(`startHere.firstTen.steps.${step}`)}</span>
@@ -178,12 +193,12 @@ function GuideToc() {
   const t = useTranslations("gettingStarted");
 
   return (
-    <nav aria-label={t("toc.title")} className="guide-toc">
-      <p className="guide-toc-title">{t("toc.title")}</p>
-      <ul className="guide-toc-list">
+    <nav aria-label={t("toc.title")} className={mx(styles, "guide-toc")}>
+      <p className={mx(styles, "guide-toc-title")}>{t("toc.title")}</p>
+      <ul className={mx(styles, "guide-toc-list")}>
         {TOC_IDS.map((id) => (
           <li key={id}>
-            <a href={`#${id}`} className="guide-toc-link">
+            <a href={`#${id}`} className={mx(styles, "guide-toc-link")}>
               {t(`toc.${tocKey(id)}`)}
             </a>
           </li>
@@ -221,16 +236,22 @@ function ModuleSection({
       title={t(`sections.${module}.title`)}
       moduleTint={MODULE_TINT[module]}
     >
-      <p className="guide-body">{t(`sections.${module}.intro`)}</p>
+      <p className={mx(styles, "guide-body")}>
+        {t(`sections.${module}.intro`)}
+      </p>
       {bullets ? <GuideBulletList items={bullets} /> : null}
       {t.has(`sections.${module}.body`) ? (
-        <p className="guide-body">{t(`sections.${module}.body`)}</p>
+        <p className={mx(styles, "guide-body")}>
+          {t(`sections.${module}.body`)}
+        </p>
       ) : null}
       {t.has(`sections.${module}.exampleIntro`) ? (
-        <p className="guide-lead">{t(`sections.${module}.exampleIntro`)}</p>
+        <p className={mx(styles, "guide-lead")}>
+          {t(`sections.${module}.exampleIntro`)}
+        </p>
       ) : null}
       {examples ? (
-        <div className="guide-example-block">
+        <div className={mx(styles, "guide-example-block")}>
           <GuideBulletList
             items={examples}
             className="font-mono text-sm text-ink"
@@ -238,7 +259,9 @@ function ModuleSection({
         </div>
       ) : null}
       {t.has(`sections.${module}.exampleNote`) ? (
-        <p className="guide-body">{t(`sections.${module}.exampleNote`)}</p>
+        <p className={mx(styles, "guide-body")}>
+          {t(`sections.${module}.exampleNote`)}
+        </p>
       ) : null}
       {emphasis ? <GuideCallout variant="lime">{emphasis}</GuideCallout> : null}
     </GuideSection>
@@ -259,11 +282,11 @@ function GuideSection({
   return (
     <section
       id={id}
-      className="guide-section"
+      className={mx(styles, "guide-section")}
       data-guide-module={moduleTint}
     >
-      <h2 className="guide-section-title">{title}</h2>
-      <div className="guide-section-body">{children}</div>
+      <h2 className={mx(styles, "guide-section-title")}>{title}</h2>
+      <div className={mx(styles, "guide-section-body")}>{children}</div>
     </section>
   );
 }
@@ -304,10 +327,10 @@ function GuideBulletList({
   className?: string;
 }) {
   return (
-    <ul className={cn("guide-bullets", className)}>
+    <ul className={mx(styles, "guide-bullets", className)}>
       {items.map((item) => (
-        <li key={item} className="guide-bullet">
-          <span className="guide-bullet-dot" aria-hidden="true" />
+        <li key={item} className={mx(styles, "guide-bullet")}>
+          <span className={mx(styles, "guide-bullet-dot")} aria-hidden="true" />
           <span>{item}</span>
         </li>
       ))}
@@ -324,13 +347,15 @@ function GuideCallout({
 }) {
   return (
     <div
-      className={cn(
+      className={mx(
+        styles,
         "guide-callout",
         variant === "dark" ? "is-dark" : "is-soft",
       )}
     >
       <div
-        className={cn(
+        className={mx(
+          styles,
           "text-sm leading-relaxed sm:text-base",
           variant === "lime" && "guide-callout-title text-primary",
         )}
@@ -343,10 +368,10 @@ function GuideCallout({
 
 function FlowDiagram({ stages }: { stages: string[] }) {
   return (
-    <div className="guide-flow">
+    <div className={mx(styles, "guide-flow")}>
       {stages.map((stage, index) => (
-        <span key={stage} className="guide-flow-item">
-          <span className="guide-flow-chip">{stage}</span>
+        <span key={stage} className={mx(styles, "guide-flow-item")}>
+          <span className={mx(styles, "guide-flow-chip")}>{stage}</span>
           {index < stages.length - 1 ? (
             <ArrowRight
               className="size-3.5 shrink-0 text-on-inverse-muted"
@@ -365,17 +390,17 @@ function ConnectionDiagram({
   stages: { label: string; tint: string }[];
 }) {
   return (
-    <div className="guide-connection">
+    <div className={connectionStyles.connection}>
       {stages.map((stage, index) => (
-        <div key={stage.label} className="guide-connection-row">
+        <div key={stage.label} className={connectionStyles.row}>
           <p
-            className="guide-connection-stage"
+            className={connectionStyles.stage}
             data-connection-tint={stage.tint}
           >
             {stage.label}
           </p>
           {index < stages.length - 1 ? (
-            <span className="guide-connection-arrow" aria-hidden>
+            <span className={connectionStyles.arrow} aria-hidden>
               ↓
             </span>
           ) : null}

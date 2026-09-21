@@ -2,20 +2,30 @@ import { Suspense } from "react";
 import { getTranslations } from "next-intl/server";
 import { AuthPageShell } from "@/components/auth/auth-page-shell";
 import { LoginForm } from "@/components/auth/login-form";
+import styles from "@/components/style/auth/auth.module.css";
+import { mx } from "@/lib/css-module";
 import { isGoogleAuthConfigured } from "@/lib/auth/google";
 
 function LoginFormFallback() {
   return (
-    <div className="auth-form" aria-hidden>
-      <div className="auth-field">
-        <div className="auth-skeleton auth-skeleton-label" />
-        <div className="auth-skeleton auth-skeleton-input" />
+    <div className={mx(styles, "auth-form")} aria-hidden>
+      <div className={mx(styles, "auth-field")}>
+        <div
+          className={mx(styles, "auth-skeleton auth-skeleton-label")}
+        />
+        <div
+          className={mx(styles, "auth-skeleton auth-skeleton-input")}
+        />
       </div>
-      <div className="auth-field">
-        <div className="auth-skeleton auth-skeleton-label" />
-        <div className="auth-skeleton auth-skeleton-input" />
+      <div className={mx(styles, "auth-field")}>
+        <div
+          className={mx(styles, "auth-skeleton auth-skeleton-label")}
+        />
+        <div
+          className={mx(styles, "auth-skeleton auth-skeleton-input")}
+        />
       </div>
-      <div className="auth-skeleton auth-skeleton-button" />
+      <div className={mx(styles, "auth-skeleton auth-skeleton-button")} />
     </div>
   );
 }

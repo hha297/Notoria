@@ -5,6 +5,8 @@ import { useTranslations } from "next-intl";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { Button } from "@/components/ui/button";
 import { PageShell } from "@/components/layout/page-shell";
+import styles from "@/components/style/speaking/session.module.css";
+import { mx } from "@/lib/css-module";
 
 export function SpeakingLockedPage() {
   const t = useTranslations("speaking");
@@ -43,17 +45,17 @@ export function SpeakingLockedPage() {
           </div>
         </header>
 
-        <section className="speaking-guide" aria-label={t("guide.aria")}>
+        <section className={mx(styles, "speaking-guide")} aria-label={t("guide.aria")}>
           {guide.map((item, index) => (
-            <article key={item.title} className="speaking-guide-card">
-              <div className="speaking-guide-index" aria-hidden="true">
+            <article key={item.title} className={mx(styles, "speaking-guide-card")}>
+              <div className={mx(styles, "speaking-guide-index")} aria-hidden="true">
                 {index + 1}
               </div>
-              <div className="speaking-guide-icon" aria-hidden="true">
+              <div className={mx(styles, "speaking-guide-icon")} aria-hidden="true">
                 <item.icon className="size-4" />
               </div>
-              <h2 className="speaking-guide-title">{item.title}</h2>
-              <p className="speaking-guide-body">{item.body}</p>
+              <h2 className={mx(styles, "speaking-guide-title")}>{item.title}</h2>
+              <p className={mx(styles, "speaking-guide-body")}>{item.body}</p>
             </article>
           ))}
         </section>

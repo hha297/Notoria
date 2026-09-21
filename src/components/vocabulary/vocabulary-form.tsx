@@ -26,6 +26,7 @@ import { CapitalizedInput } from "@/components/form/capitalized-text";
 import {
   VocabularyComposerHero,
   VocabularyComposerSection,
+  composerStyles,
 } from "@/components/vocabulary/vocabulary-composer";
 import { Label } from "@/components/ui/label";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
@@ -42,6 +43,7 @@ import {
   updateVocabularyWord,
 } from "@/lib/actions/vocabulary";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { mx } from "@/lib/css-module";
 import { afterEditorHydration } from "@/lib/editor/hydration";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
 import {
@@ -60,7 +62,6 @@ import {
 } from "@/lib/vocabulary/primary-meanings";
 import { VOCABULARY_WORD_EXISTS } from "@/lib/vocabulary-errors";
 import { isSameVocabularyIdentity, normalizeVocabularyWord } from "@/lib/vocabulary/word-identity";
-import { cn } from "@/lib/utils";
 import { useMutationLock } from "@/hooks/use-mutation-lock";
 import { useVocabularyFormDirtyState } from "@/hooks/use-vocabulary-form-dirty-state";
 import { useVocabularySpellingAi } from "@/hooks/use-vocabulary-spelling-ai";
@@ -569,7 +570,11 @@ export function VocabularyForm({
     <form
       ref={formRef}
       onSubmit={form.handleSubmit(onSubmit)}
-      className={cn("vocab-composer", isModal ? "space-y-6" : "space-y-8")}
+      className={mx(
+        composerStyles,
+        "vocab-composer",
+        isModal ? "space-y-6" : "space-y-8",
+      )}
     >
       {!isModal ? (
         <VocabularyComposerHero
@@ -592,7 +597,10 @@ export function VocabularyForm({
         <div className="grid grid-cols-1 gap-x-5 gap-y-2 lg:grid-cols-[minmax(0,1.45fr)_minmax(14rem,0.55fr)]">
           <Label
             htmlFor="word"
-            className="vocab-composer-kicker text-[0.68rem] font-semibold tracking-[0.18em] uppercase lg:col-start-1 lg:row-start-1"
+            className={mx(
+              composerStyles,
+              "vocab-composer-kicker text-[0.68rem] font-semibold tracking-[0.18em] uppercase lg:col-start-1 lg:row-start-1",
+            )}
           >
             {t("word")}
           </Label>
@@ -603,7 +611,8 @@ export function VocabularyForm({
             <CapitalizedInput
               id="word"
               placeholder={t("wordPlaceholder")}
-              className={cn(
+              className={mx(
+                composerStyles,
                 "vocab-composer-word-field vocab-composer-control pr-12 font-heading text-[1.3rem] sm:text-[1.5rem]",
                 wordCheckStatus === "unique" && "vocab-composer-word-ok",
               )}
@@ -624,7 +633,12 @@ export function VocabularyForm({
               />
             ) : null}
           </div>
-          <Label className="vocab-composer-kicker mt-3 text-[0.68rem] font-semibold tracking-[0.18em] uppercase lg:col-start-2 lg:row-start-1 lg:mt-0">
+          <Label
+            className={mx(
+              composerStyles,
+              "vocab-composer-kicker mt-3 text-[0.68rem] font-semibold tracking-[0.18em] uppercase lg:col-start-2 lg:row-start-1 lg:mt-0",
+            )}
+          >
             {t("partOfSpeech")}
           </Label>
           <div
@@ -643,7 +657,12 @@ export function VocabularyForm({
                 )
               }
             >
-              <SelectTrigger className="vocab-composer-word-field vocab-composer-control h-16! w-full rounded-md px-3 py-0! data-[size=default]:h-16!">
+              <SelectTrigger
+                className={mx(
+                  composerStyles,
+                  "vocab-composer-word-field vocab-composer-control h-16! w-full rounded-md px-3 py-0! data-[size=default]:h-16!",
+                )}
+              >
                 <SelectValue placeholder={t("partOfSpeechPlaceholder")}>
                   {selectedPartOfSpeech &&
                     PARTS_OF_SPEECH.includes(
@@ -778,7 +797,10 @@ export function VocabularyForm({
         <div className="space-y-2" data-tutorial="vocab-composer-notes">
           <Label
             htmlFor="notes-editor"
-            className="vocab-composer-kicker font-heading text-base font-bold tracking-tight"
+            className={mx(
+              composerStyles,
+              "vocab-composer-kicker font-heading text-base font-bold tracking-tight",
+            )}
           >
             {t("notes")}
           </Label>
@@ -797,7 +819,12 @@ export function VocabularyForm({
         </div>
       </VocabularyComposerSection>
 
-      <div className="vocab-composer-actions sticky bottom-0 z-10 -mx-1 flex flex-col gap-2 px-1 py-3 sm:static sm:flex-row sm:justify-end sm:py-0">
+      <div
+        className={mx(
+          composerStyles,
+          "vocab-composer-actions sticky bottom-0 z-10 -mx-1 flex flex-col gap-2 px-1 py-3 sm:static sm:flex-row sm:justify-end sm:py-0",
+        )}
+      >
         {showCancel ? (
           <Button
             type="button"
@@ -815,7 +842,10 @@ export function VocabularyForm({
           disabled={saveDisabled}
           size="lg"
           data-tutorial="vocab-composer-save"
-          className="vocab-composer-submit h-12 w-full sm:h-11 sm:min-w-44 sm:w-auto"
+          className={mx(
+            composerStyles,
+            "vocab-composer-submit h-12 w-full sm:h-11 sm:min-w-44 sm:w-auto",
+          )}
         >
           {isSaving ? (
             <>

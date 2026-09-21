@@ -13,6 +13,8 @@ import { ListPageLoading } from "@/components/layout/page-loading";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { speakingListQueryOptions } from "@/lib/query/options";
 import { queryKeys } from "@/lib/query/keys";
+import styles from "@/components/style/speaking/session.module.css";
+import { mx } from "@/lib/css-module";
 import {
   isSpeakingJoinable,
   type SpeakingSessionListItem,
@@ -87,24 +89,24 @@ export function SpeakingView({ workspaceId }: SpeakingViewProps) {
               <span className="text-module-speak-fg">{t("highlight")}</span>
             </h1>
             <p className="writing-brand-lede">{t("description")}</p>
-            <ul className="speaking-canopy mt-5" aria-label={t("stats.aria")}>
-              <li className="speaking-canopy-item">
-                <span className="speaking-canopy-value">{stats.total}</span>
-                <span className="speaking-canopy-label">{t("stats.total")}</span>
+            <ul className={mx(styles, "speaking-canopy mt-5")} aria-label={t("stats.aria")}>
+              <li className={mx(styles, "speaking-canopy-item")}>
+                <span className={mx(styles, "speaking-canopy-value")}>{stats.total}</span>
+                <span className={mx(styles, "speaking-canopy-label")}>{t("stats.total")}</span>
               </li>
-              <li className="speaking-canopy-item">
-                <span className="speaking-canopy-value">{stats.completed}</span>
-                <span className="speaking-canopy-label">
+              <li className={mx(styles, "speaking-canopy-item")}>
+                <span className={mx(styles, "speaking-canopy-value")}>{stats.completed}</span>
+                <span className={mx(styles, "speaking-canopy-label")}>
                   {t("stats.completed")}
                 </span>
               </li>
-              <li className="speaking-canopy-item">
-                <span className="speaking-canopy-value">{stats.ready}</span>
-                <span className="speaking-canopy-label">{t("stats.ready")}</span>
+              <li className={mx(styles, "speaking-canopy-item")}>
+                <span className={mx(styles, "speaking-canopy-value")}>{stats.ready}</span>
+                <span className={mx(styles, "speaking-canopy-label")}>{t("stats.ready")}</span>
               </li>
-              <li className="speaking-canopy-item">
-                <span className="speaking-canopy-value">{stats.topics}</span>
-                <span className="speaking-canopy-label">{t("stats.topics")}</span>
+              <li className={mx(styles, "speaking-canopy-item")}>
+                <span className={mx(styles, "speaking-canopy-value")}>{stats.topics}</span>
+                <span className={mx(styles, "speaking-canopy-label")}>{t("stats.topics")}</span>
               </li>
             </ul>
           </div>
@@ -121,17 +123,17 @@ export function SpeakingView({ workspaceId }: SpeakingViewProps) {
           </div>
         </header>
 
-        <section className="speaking-guide" aria-label={t("guide.aria")}>
+        <section className={mx(styles, "speaking-guide")} aria-label={t("guide.aria")}>
           {guide.map((item, index) => (
-            <article key={item.title} className="speaking-guide-card">
-              <div className="speaking-guide-index" aria-hidden="true">
+            <article key={item.title} className={mx(styles, "speaking-guide-card")}>
+              <div className={mx(styles, "speaking-guide-index")} aria-hidden="true">
                 {index + 1}
               </div>
-              <div className="speaking-guide-icon" aria-hidden="true">
+              <div className={mx(styles, "speaking-guide-icon")} aria-hidden="true">
                 <item.icon className="size-4" />
               </div>
-              <h2 className="speaking-guide-title">{item.title}</h2>
-              <p className="speaking-guide-body">{item.body}</p>
+              <h2 className={mx(styles, "speaking-guide-title")}>{item.title}</h2>
+              <p className={mx(styles, "speaking-guide-body")}>{item.body}</p>
             </article>
           ))}
         </section>

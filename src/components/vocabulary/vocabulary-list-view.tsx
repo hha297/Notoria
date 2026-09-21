@@ -1,5 +1,7 @@
 "use client";
 
+import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
+import { mx } from "@/lib/css-module";
 import {
   VocabularyPosRail,
   VocabularyUpdatedAt,
@@ -48,12 +50,12 @@ function VocabularyListItem({
     <li>
       <article
         data-vocab-pos={word.partOfSpeech || "none"}
-        className="vocab-entry"
+        className={mx(featureStyles, "vocab-entry")}
       >
         <VocabularyPosRail partOfSpeech={word.partOfSpeech} />
-        <div className="vocab-entry-body">
-          <div className="vocab-entry-top">
-            <div className="vocab-entry-copy">
+        <div className={mx(featureStyles, "vocab-entry-body")}>
+          <div className={mx(featureStyles, "vocab-entry-top")}>
+            <div className={mx(featureStyles, "vocab-entry-copy")}>
               <VocabularyWordLink
                 word={word}
                 className="text-[1.15rem] leading-snug sm:text-[1.25rem]"
@@ -63,7 +65,7 @@ function VocabularyListItem({
                 className="mt-1 text-[13.5px] leading-relaxed text-muted-foreground"
               />
             </div>
-            <div className="vocab-entry-meta">
+            <div className={mx(featureStyles, "vocab-entry-meta")}>
               <VocabularyUpdatedAt
                 updatedAt={word.updatedAt}
                 className="hidden text-right sm:block"

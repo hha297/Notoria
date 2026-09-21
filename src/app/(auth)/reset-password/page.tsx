@@ -3,7 +3,8 @@ import { getTranslations } from "next-intl/server";
 import { AuthPageShell } from "@/components/auth/auth-page-shell";
 import { ResetPasswordForm } from "@/components/auth/reset-password-form";
 import { buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
+import styles from "@/components/style/auth/auth.module.css";
+import { mx } from "@/lib/css-module";
 
 export async function generateMetadata() {
   const t = await getTranslations("auth");
@@ -28,18 +29,22 @@ export default async function ResetPasswordPage({
       {safeToken ? (
         <ResetPasswordForm token={safeToken} />
       ) : (
-        <div className="auth-form">
-          <div className="auth-form-error" role="alert">
+        <div className={mx(styles, "auth-form")}>
+          <div className={mx(styles, "auth-form-error")} role="alert">
             {t("resetTokenMissing")}
           </div>
           <Link
             href="/forgot-password"
-            className={cn(buttonVariants({ size: "lg" }), "auth-submit w-full")}
+            className={mx(
+              styles,
+              buttonVariants({ size: "lg" }),
+              "auth-submit w-full",
+            )}
           >
             {t("sendResetLink")}
           </Link>
-          <p className="auth-switch">
-            <Link href="/sign-in" className="auth-switch-link">
+          <p className={mx(styles, "auth-switch")}>
+            <Link href="/sign-in" className={mx(styles, "auth-switch-link")}>
               {t("backToSignIn")}
             </Link>
           </p>

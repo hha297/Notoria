@@ -1,5 +1,7 @@
 "use client";
 
+import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
+import { mx } from "@/lib/css-module";
 import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
@@ -68,7 +70,7 @@ export function VocabularyToolbar({
   }
 
   return (
-    <div className="vocab-spine-tools writing-spine-tools">
+    <div className={mx(featureStyles, "vocab-spine-tools writing-spine-tools")}>
       <div className="writing-spine-search-wrap">
         <Search className="writing-spine-search-icon" aria-hidden="true" />
         <Input
@@ -80,9 +82,9 @@ export function VocabularyToolbar({
         />
       </div>
 
-      <div className="vocab-spine-footer">
+      <div className={mx(featureStyles, "vocab-spine-footer")}>
         <div
-          className="vocab-spine-filters min-w-0 flex-1"
+          className={mx(featureStyles, "vocab-spine-filters min-w-0 flex-1")}
           data-tutorial="vocab-filters"
         >
           <MultiFilterSelect
@@ -120,10 +122,10 @@ export function VocabularyToolbar({
                 onSortChange(field, direction);
               }}
             >
-              <SelectTrigger className="vocab-filter-trigger">
+              <SelectTrigger className={mx(featureStyles, "vocab-filter-trigger")}>
                 <SelectValue>{getSortLabel(sortValue)}</SelectValue>
               </SelectTrigger>
-              <SelectContent className="vocab-filter-menu">
+              <SelectContent className={mx(featureStyles, "vocab-filter-menu")}>
                 <SelectItem value="updated:desc">{t("sortUpdated")}</SelectItem>
                 <SelectItem value="word:asc">
                   {t("sortWord")} ({t("sortAsc")})

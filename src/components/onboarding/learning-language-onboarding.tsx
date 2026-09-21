@@ -14,6 +14,8 @@ import {
   requestFirstEntryOnboarding,
   requestWorkspaceOnboarding,
 } from "@/lib/onboarding/storage";
+import styles from "@/components/style/onboarding/learning-language.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 /**
@@ -70,40 +72,40 @@ export function LearningLanguageOnboarding() {
   }
 
   return (
-    <div className="learning-onboarding-shell relative isolate flex min-h-svh items-center justify-center px-4 py-6 sm:px-6 sm:py-10">
-      <div className="learning-onboarding relative z-10 flex w-full max-w-xl flex-col gap-5">
-        <header className="learning-onboarding-hero flex flex-col">
+    <div className={mx(styles, "learning-onboarding-shell relative isolate flex min-h-svh items-center justify-center px-4 py-6 sm:px-6 sm:py-10")}>
+      <div className={mx(styles, "learning-onboarding relative z-10 flex w-full max-w-xl flex-col gap-5")}>
+        <header className={mx(styles, "learning-onboarding-hero flex flex-col")}>
           <div
-            className="learning-onboarding-brand mb-4 inline-flex items-center gap-2.5"
+            className={mx(styles, "learning-onboarding-brand mb-4 inline-flex items-center gap-2.5")}
             aria-hidden
           >
             <Logo size="md" />
             <LogoWordmark
               tone="ink"
-              className="learning-onboarding-wordmark text-[clamp(1.45rem,3.8vw,1.75rem)] tracking-tight"
+              className={mx(styles, "learning-onboarding-wordmark text-[clamp(1.45rem,3.8vw,1.75rem)] tracking-tight")}
             />
           </div>
 
-          <p className="learning-onboarding-step m-0 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-[var(--module-home-fg)]">
+          <p className={mx(styles, "learning-onboarding-step m-0 text-[0.72rem] font-bold uppercase tracking-[0.12em] text-[var(--module-home-fg)]")}>
             {t("step")}
           </p>
-          <h1 className="learning-onboarding-title mt-1.5 font-heading text-[clamp(1.7rem,4.5vw,2.2rem)] font-bold leading-tight tracking-tight text-ink">
+          <h1 className={mx(styles, "learning-onboarding-title mt-1.5 font-heading text-[clamp(1.7rem,4.5vw,2.2rem)] font-bold leading-tight tracking-tight text-ink")}>
             {t("title")}
           </h1>
-          <p className="learning-onboarding-lede mt-2 max-w-md text-base leading-relaxed text-muted-foreground">
+          <p className={mx(styles, "learning-onboarding-lede mt-2 max-w-md text-base leading-relaxed text-muted-foreground")}>
             {t("description")}
           </p>
         </header>
 
         <section
-          className="learning-onboarding-panel flex flex-col gap-4 rounded-[0.95rem] border border-hairline-cloud bg-surface-elevated/70 p-4 sm:gap-5 sm:p-5"
+          className={mx(styles, "learning-onboarding-panel flex flex-col gap-4 rounded-[0.95rem] border border-hairline-cloud bg-surface-elevated/70 p-4 sm:gap-5 sm:p-5")}
           aria-labelledby="learning-onboarding-heading"
         >
           <h2 id="learning-onboarding-heading" className="sr-only">
             {t("title")}
           </h2>
 
-          <div className="learning-onboarding-search relative">
+          <div className={mx(styles, "learning-onboarding-search relative")}>
             <Search
               className="pointer-events-none absolute top-1/2 left-3 z-10 size-4 -translate-y-1/2 text-muted-foreground"
               aria-hidden
@@ -121,7 +123,7 @@ export function LearningLanguageOnboarding() {
           </div>
 
           <div
-            className="learning-onboarding-list grid max-h-[min(42svh,22rem)] grid-cols-1 gap-2 overflow-y-auto overflow-x-hidden [scrollbar-gutter:stable] py-0.5 sm:max-h-[min(48svh,26rem)] sm:grid-cols-2"
+            className={mx(styles, "learning-onboarding-list grid max-h-[min(42svh,22rem)] grid-cols-1 gap-2 overflow-y-auto overflow-x-hidden [scrollbar-gutter:stable] py-0.5 sm:max-h-[min(48svh,26rem)] sm:grid-cols-2")}
             role="radiogroup"
             aria-label={t("title")}
           >

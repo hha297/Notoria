@@ -4,6 +4,8 @@ import { useEffect, useRef, useState } from "react";
 import { Pause, Play, RotateCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import featureStyles from "@/components/style/speaking/session.module.css";
+import { mx } from "@/lib/css-module";
 import { formatListeningDuration } from "@/lib/listening/utils";
 import { cn } from "@/lib/utils";
 
@@ -89,7 +91,7 @@ export function ListeningAudioPlayer({
 
   return (
     <div
-      className={cn("listening-media-deck", className)}
+      className={mx(featureStyles, "listening-media-deck", className)}
     >
       {isVideo ? (
         <video

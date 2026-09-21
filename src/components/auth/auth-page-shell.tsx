@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { Logo, LogoWordmark } from "@/components/ui/logo";
+import styles from "@/components/style/auth/auth.module.css";
+import { mx } from "@/lib/css-module";
 
 type AuthPageShellProps = {
   eyebrow: string;
@@ -15,27 +17,30 @@ export function AuthPageShell({
   children,
 }: AuthPageShellProps) {
   return (
-    <div className="auth-atelier-shell">
-      <div className="auth-atelier">
-        <header className="auth-hero">
+    <div className={mx(styles, "auth-atelier-shell")}>
+      <div className={mx(styles, "auth-atelier")}>
+        <header className={mx(styles, "auth-hero")}>
           <Link
             href="/sign-in"
-            className="auth-brand-link"
+            className={mx(styles, "auth-brand-link")}
             aria-label="Notoria"
           >
             <Logo size="md" />
-            <LogoWordmark tone="ink" className="auth-brand-wordmark" />
+            <LogoWordmark
+              tone="ink"
+              className={mx(styles, "auth-brand-wordmark")}
+            />
           </Link>
 
-          <div className="auth-hero-copy">
-            <p className="auth-kicker">{eyebrow}</p>
-            <h1 className="auth-title">{title}</h1>
-            <p className="auth-lede">{description}</p>
+          <div className={mx(styles, "auth-hero-copy")}>
+            <p className={mx(styles, "auth-kicker")}>{eyebrow}</p>
+            <h1 className={mx(styles, "auth-title")}>{title}</h1>
+            <p className={mx(styles, "auth-lede")}>{description}</p>
           </div>
         </header>
 
-        <section className="auth-panel" aria-label={title}>
-          <div className="auth-panel-body">{children}</div>
+        <section className={mx(styles, "auth-panel")} aria-label={title}>
+          <div className={mx(styles, "auth-panel-body")}>{children}</div>
         </section>
       </div>
     </div>

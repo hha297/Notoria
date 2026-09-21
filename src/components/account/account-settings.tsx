@@ -1,5 +1,7 @@
 "use client";
 
+import styles from "@/components/style/account/account.module.css";
+import { mx } from "@/lib/css-module";
 import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
@@ -169,19 +171,19 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
   }
 
   return (
-    <div className="account-stack">
+    <div className={mx(styles, "account-stack")}>
       <ProSubscriptionCard
         billing={user.billing}
         checkoutResult={checkoutResult}
       />
 
-      <section className="account-panel">
-        <header className="account-panel-head">
-          <h2 className="account-panel-title">{t("profile.title")}</h2>
-          <p className="account-panel-lede">{t("profile.description")}</p>
+      <section className={mx(styles, "account-panel")}>
+        <header className={mx(styles, "account-panel-head")}>
+          <h2 className={mx(styles, "account-panel-title")}>{t("profile.title")}</h2>
+          <p className={mx(styles, "account-panel-lede")}>{t("profile.description")}</p>
         </header>
-        <div className="account-panel-body account-profile-grid">
-          <div className="account-avatar-block">
+        <div className={mx(styles, "account-panel-body account-profile-grid")}>
+          <div className={mx(styles, "account-avatar-block")}>
             <UserAvatar name={name} image={image} size="xl" />
             <div className="flex flex-wrap gap-2">
               <input
@@ -218,12 +220,12 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                 </Button>
               ) : null}
             </div>
-            <p className="account-avatar-hint">{tAuth("avatarDescription")}</p>
+            <p className={mx(styles, "account-avatar-hint")}>{tAuth("avatarDescription")}</p>
           </div>
 
-          <form onSubmit={handleProfileSubmit} className="account-form">
-            <div className="account-field">
-              <Label htmlFor="profile-name" className="account-label">
+          <form onSubmit={handleProfileSubmit} className={mx(styles, "account-form")}>
+            <div className={mx(styles, "account-field")}>
+              <Label htmlFor="profile-name" className={mx(styles, "account-label")}>
                 {tAuth("name")}
               </Label>
               <Input
@@ -233,13 +235,13 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                 autoComplete="name"
                 maxLength={80}
                 required
-                className="account-input"
+                className={mx(styles, "account-input")}
               />
             </div>
-            <div className="account-field">
-              <p className="account-label">{tAuth("email")}</p>
-              <p className="account-email">{user.email}</p>
-              <p className="account-field-hint">{t("profile.emailHint")}</p>
+            <div className={mx(styles, "account-field")}>
+              <p className={mx(styles, "account-label")}>{tAuth("email")}</p>
+              <p className={mx(styles, "account-email")}>{user.email}</p>
+              <p className={mx(styles, "account-field-hint")}>{t("profile.emailHint")}</p>
             </div>
             <Button
               type="submit"
@@ -255,15 +257,15 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
       </section>
 
       {user.passwordHash ? (
-        <section className="account-panel">
-          <header className="account-panel-head">
-            <h2 className="account-panel-title">{t("security.title")}</h2>
-            <p className="account-panel-lede">{t("security.description")}</p>
+        <section className={mx(styles, "account-panel")}>
+          <header className={mx(styles, "account-panel-head")}>
+            <h2 className={mx(styles, "account-panel-title")}>{t("security.title")}</h2>
+            <p className={mx(styles, "account-panel-lede")}>{t("security.description")}</p>
           </header>
-          <div className="account-panel-body">
-            <form onSubmit={handlePasswordSubmit} className="account-form">
-              <div className="account-field">
-                <Label htmlFor="current-password" className="account-label">
+          <div className={mx(styles, "account-panel-body")}>
+            <form onSubmit={handlePasswordSubmit} className={mx(styles, "account-form")}>
+              <div className={mx(styles, "account-field")}>
+                <Label htmlFor="current-password" className={mx(styles, "account-label")}>
                   {tAuth("currentPassword")}
                 </Label>
                 <PasswordInput
@@ -272,11 +274,11 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                   value={currentPassword}
                   onChange={(event) => setCurrentPassword(event.target.value)}
                   required
-                  className="account-input"
+                  className={mx(styles, "account-input")}
                 />
               </div>
-              <div className="account-field">
-                <Label htmlFor="new-password" className="account-label">
+              <div className={mx(styles, "account-field")}>
+                <Label htmlFor="new-password" className={mx(styles, "account-label")}>
                   {tAuth("newPassword")}
                 </Label>
                 <PasswordInput
@@ -285,11 +287,11 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                   value={newPassword}
                   onChange={(event) => setNewPassword(event.target.value)}
                   required
-                  className="account-input"
+                  className={mx(styles, "account-input")}
                 />
               </div>
-              <div className="account-field">
-                <Label htmlFor="confirm-password" className="account-label">
+              <div className={mx(styles, "account-field")}>
+                <Label htmlFor="confirm-password" className={mx(styles, "account-label")}>
                   {tAuth("confirmPassword")}
                 </Label>
                 <PasswordInput
@@ -298,10 +300,10 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                   value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}
                   required
-                  className="account-input"
+                  className={mx(styles, "account-input")}
                 />
               </div>
-              <p className="account-field-hint">{tAuth("passwordHint")}</p>
+              <p className={mx(styles, "account-field-hint")}>{tAuth("passwordHint")}</p>
               <Button
                 type="submit"
                 disabled={
@@ -321,15 +323,15 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
         </section>
       ) : null}
 
-      <section className="account-panel account-panel-danger">
-        <header className="account-panel-head">
-          <h2 className="account-panel-title">{t("danger.title")}</h2>
-          <p className="account-panel-lede">{t("danger.description")}</p>
+      <section className={mx(styles, "account-panel account-panel-danger")}>
+        <header className={mx(styles, "account-panel-head")}>
+          <h2 className={mx(styles, "account-panel-title")}>{t("danger.title")}</h2>
+          <p className={mx(styles, "account-panel-lede")}>{t("danger.description")}</p>
         </header>
-        <div className="account-panel-body account-danger-row">
-          <div className="account-danger-copy">
-            <p className="account-danger-title">{t("danger.deleteTitle")}</p>
-            <p className="account-danger-hint">{t("danger.deleteHint")}</p>
+        <div className={mx(styles, "account-panel-body account-danger-row")}>
+          <div className={mx(styles, "account-danger-copy")}>
+            <p className={mx(styles, "account-danger-title")}>{t("danger.deleteTitle")}</p>
+            <p className={mx(styles, "account-danger-hint")}>{t("danger.deleteHint")}</p>
           </div>
           <Button
             type="button"

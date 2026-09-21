@@ -25,7 +25,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
+import { composerStyles } from "@/components/vocabulary/vocabulary-composer";
 import { createSynonymWord } from "@/lib/actions/vocabulary";
+import { mx } from "@/lib/css-module";
 import { VOCABULARY_WORD_EXISTS } from "@/lib/vocabulary-errors";
 import {
   normalizeVocabularyWord,
@@ -216,14 +218,25 @@ export function SynonymPicker({
 
   return (
     <div className="space-y-2">
-      <Label htmlFor="synonyms-search" className="vocab-composer-kicker font-heading text-base font-bold tracking-tight">
+      <Label
+        htmlFor="synonyms-search"
+        className={mx(
+          composerStyles,
+          "vocab-composer-kicker font-heading text-base font-bold tracking-tight",
+        )}
+      >
         {t("synonyms")}{" "}
         <span className="font-normal text-muted-foreground">
           ({tCommon("optional")})
         </span>
       </Label>
 
-      <div className="vocab-composer-panel overflow-hidden rounded-md">
+      <div
+        className={mx(
+          composerStyles,
+          "vocab-composer-panel overflow-hidden rounded-md",
+        )}
+      >
         <div className="flex items-start gap-2 px-3 py-2">
           <div
             className="flex min-h-10 min-w-0 flex-1 cursor-text flex-wrap items-center gap-1.5"

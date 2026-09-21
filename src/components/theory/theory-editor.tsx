@@ -14,7 +14,8 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { useMutationLock } from "@/hooks/use-mutation-lock";
-import { cn } from "@/lib/utils";
+import libraryStyles from "@/components/style/theory/library.module.css";
+import { mx } from "@/lib/css-module";
 import { createTheoryNote, updateTheoryNote } from "@/lib/actions/theory";
 import { afterEditorHydration } from "@/lib/editor/hydration";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
@@ -403,7 +404,7 @@ export function TheoryEditor({
       <div className="space-y-2">
         <Label id="theory-category-label">{t("categoryLabel")}</Label>
         <div
-          className="theory-cat-picker"
+          className={mx(libraryStyles, "theory-cat-picker")}
           role="radiogroup"
           aria-labelledby="theory-category-label"
         >
@@ -416,7 +417,8 @@ export function TheoryEditor({
                 role="radio"
                 aria-checked={selected}
                 data-theory-category={item}
-                className={cn(
+                className={mx(
+                  libraryStyles,
                   "theory-filter-pill theory-cat-chip",
                   selected && "is-active",
                 )}

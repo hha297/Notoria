@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { SectionTutorial } from "@/components/onboarding/section-tutorial";
 import { Button } from "@/components/ui/button";
+import tutorialStyles from "@/components/style/onboarding/tutorial.module.css";
+import { mx } from "@/lib/css-module";
 import { isSectionTutorialCompleted } from "@/lib/onboarding/storage";
 import type { TutorialSectionId } from "@/lib/onboarding/tutorials";
 import { cn } from "@/lib/utils";
@@ -40,7 +42,7 @@ export function ShowTutorialButton({
         variant={variant}
         size="sm"
         data-tutorial-section={section}
-        className={cn("route-tutorial-btn", className)}
+        className={cn(mx(tutorialStyles, "route-tutorial-btn"), className)}
         onClick={() => setOpen(true)}
       >
         <CircleHelp className="size-4" />

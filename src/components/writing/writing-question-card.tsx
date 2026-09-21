@@ -9,6 +9,8 @@ import { WritingAiPanel } from "@/components/writing/writing-ai-panel";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { CapitalizedTextarea } from "@/components/form/capitalized-text";
+import qsStyles from "@/components/style/writing/question-set.module.css";
+import { mx } from "@/lib/css-module";
 import type { WritingAiSuggestion } from "@/lib/writing/ai-types";
 import type { WritingQuestion } from "@/lib/writing/content";
 import { cn } from "@/lib/utils";
@@ -46,7 +48,10 @@ export const WritingQuestionCard = memo(function WritingQuestionCard({
   return (
     <div
       className={cn(
-        "writing-qs-question min-w-0 max-w-full rounded-sm border p-4 sm:p-5",
+        mx(
+          qsStyles,
+          "writing-qs-question min-w-0 max-w-full rounded-sm border p-4 sm:p-5",
+        ),
         className,
       )}
     >

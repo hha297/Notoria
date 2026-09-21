@@ -1,0 +1,78 @@
+/* Theory notes library / editor category filters.
+ * Hover/active stay unlayered (module CSS) so they beat shadcn defaults. */
+
+.theory-cat-picker {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.theory-filter-pill.theory-cat-chip {
+  color: var(--theory-cat-fg);
+  border-color: color-mix(
+    in oklab,
+    var(--theory-cat-fg) 32%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(
+    in oklab,
+    var(--theory-cat-bg) 42%,
+    var(--surface-elevated)
+  );
+}
+
+.theory-filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.theory-filter-pill {
+  height: 2.25rem;
+  padding: 0 0.9rem;
+  border: 1px solid var(--hairline-cloud);
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--surface-elevated) 88%, transparent);
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease,
+    color 160ms ease;
+}
+
+.theory-filter-pill:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--theory-cat-fg) 42%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(
+    in oklab,
+    var(--theory-cat-bg) 58%,
+    var(--surface-elevated)
+  );
+  color: var(--foreground);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--theory-cat-fg) 16%, transparent),
+    0 10px 22px color-mix(in oklab, var(--theory-cat-fg) 12%, transparent);
+}
+
+.theory-filter-pill.is-active {
+  border-color: color-mix(
+    in oklab,
+    var(--theory-cat-fg) 55%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(
+    in oklab,
+    var(--theory-cat-bg) 72%,
+    var(--surface-elevated)
+  );
+  color: var(--theory-cat-fg);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--theory-cat-fg) 20%, transparent),
+    0 10px 22px color-mix(in oklab, var(--theory-cat-fg) 14%, transparent);
+}

@@ -12,8 +12,10 @@ import {
 import { ExportSheet, ExportSheetSection } from "@/components/export/export-sheet";
 import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
+import formatStyles from "@/components/style/export/export-format.module.css";
 import { isPaidDocumentFormat } from "@/lib/auth/paid-access";
+import { mx } from "@/lib/css-module";
+import { cn } from "@/lib/utils";
 import {
   getDefaultExportFormat,
   VOCABULARY_EXPORT_FORMATS,
@@ -214,7 +216,7 @@ export function VocabularyExportDialog({
         </ExportSheetSection>
 
         <ExportSheetSection label={t("content")}>
-          <div className="export-option-list">
+          <div className={mx(formatStyles, "export-option-list")}>
             <ExportOptionChip
               checked={options.includePartOfSpeech}
               label={t("includePartOfSpeech")}
@@ -260,8 +262,8 @@ export function VocabularyExportDialog({
       </div>
 
       {isExporting ? (
-        <div className="export-progress">
-          <div className="export-progress-meta">
+        <div className={mx(formatStyles, "export-progress")}>
+          <div className={mx(formatStyles, "export-progress-meta")}>
             <span>{progressLabel}</span>
             {progress ? (
               <span>

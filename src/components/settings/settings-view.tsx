@@ -23,6 +23,8 @@ import {
 import { clearAppLocalPreferences } from "@/lib/preferences/app-preferences";
 import type { ReduceMotionPreference } from "@/lib/preferences/app-preferences";
 import { KeyboardShortcutsSection } from "@/components/settings/keyboard-shortcuts-section";
+import styles from "@/components/style/settings/settings.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 export function SettingsView() {
@@ -30,7 +32,15 @@ export function SettingsView() {
 
   return (
     <PageShell className="writing-atelier-shell settings-atelier-shell">
-      <div className="writing-atelier settings-atelier flex flex-col gap-10 lg:gap-12">
+      <div
+        className={cn(
+          "settings-atelier",
+          mx(
+            styles,
+            "writing-atelier settings-atelier flex flex-col gap-10 lg:gap-12",
+          ),
+        )}
+      >
         <header className="writing-hero">
           <div className="writing-hero-copy">
             <p className="writing-kicker">{t("eyebrow")}</p>
@@ -42,7 +52,7 @@ export function SettingsView() {
           </div>
         </header>
 
-        <div className="settings-stack">
+        <div className={mx(styles, "settings-stack")}>
           <AppearanceSection />
           <AccessibilitySection />
           <LearningSection />
@@ -66,14 +76,14 @@ function SettingsPanel({
   children: ReactNode;
 }) {
   return (
-    <section className="settings-panel" aria-labelledby={id}>
-      <header className="settings-panel-head">
-        <h2 id={id} className="settings-panel-title">
+    <section className={mx(styles, "settings-panel")} aria-labelledby={id}>
+      <header className={mx(styles, "settings-panel-head")}>
+        <h2 id={id} className={mx(styles, "settings-panel-title")}>
           {title}
         </h2>
-        <p className="settings-panel-lede">{description}</p>
+        <p className={mx(styles, "settings-panel-lede")}>{description}</p>
       </header>
-      <div className="settings-panel-body settings-prefs">{children}</div>
+      <div className={mx(styles, "settings-panel-body settings-prefs")}>{children}</div>
     </section>
   );
 }
@@ -96,19 +106,19 @@ function ChoiceRow({
   ready?: boolean;
 }) {
   return (
-    <div className="settings-row">
-      <div className="settings-row-copy">
-        <p className="settings-row-title">{title}</p>
-        <p className="settings-row-hint">{hint}</p>
+    <div className={mx(styles, "settings-row")}>
+      <div className={mx(styles, "settings-row-copy")}>
+        <p className={mx(styles, "settings-row-title")}>{title}</p>
+        <p className={mx(styles, "settings-row-hint")}>{hint}</p>
       </div>
-      <div className="settings-choice-row" role="group" aria-label={ariaLabel}>
+      <div className={mx(styles, "settings-choice-row")} role="group" aria-label={ariaLabel}>
         {options.map(([optionValue, label]) => (
           <button
             key={optionValue}
             type="button"
             className={cn(
-              "settings-choice-chip",
-              ready && value === optionValue && "is-active",
+              mx(styles, "settings-choice-chip"),
+              ready && value === optionValue && mx(styles, "is-active"),
             )}
             aria-pressed={ready && value === optionValue}
             disabled={!ready}
@@ -205,10 +215,10 @@ function LearningSection() {
       title={t("learning")}
       description={t("learningDescription")}
     >
-      <div className="settings-row settings-row-action">
-        <div className="settings-row-copy">
-          <p className="settings-row-title">{t("tutorials")}</p>
-          <p className="settings-row-hint">{t("tutorialsDescription")}</p>
+      <div className={mx(styles, "settings-row settings-row-action")}>
+        <div className={mx(styles, "settings-row-copy")}>
+          <p className={mx(styles, "settings-row-title")}>{t("tutorials")}</p>
+          <p className={mx(styles, "settings-row-hint")}>{t("tutorialsDescription")}</p>
         </div>
         <Button
           type="button"
@@ -245,10 +255,10 @@ function DataPrivacySection() {
       title={t("data.title")}
       description={t("data.description")}
     >
-      <div className="settings-row settings-row-action">
-        <div className="settings-row-copy">
-          <p className="settings-row-title">{t("data.clear")}</p>
-          <p className="settings-row-hint">{t("data.clearDescription")}</p>
+      <div className={mx(styles, "settings-row settings-row-action")}>
+        <div className={mx(styles, "settings-row-copy")}>
+          <p className={mx(styles, "settings-row-title")}>{t("data.clear")}</p>
+          <p className={mx(styles, "settings-row-hint")}>{t("data.clearDescription")}</p>
         </div>
         <Button
           type="button"

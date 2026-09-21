@@ -3,6 +3,8 @@
 import { Loader2, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { composerStyles } from "@/components/vocabulary/vocabulary-composer";
+import { mx } from "@/lib/css-module";
 
 type VocabularyAiSuggestionCardProps = {
   title?: string;
@@ -38,7 +40,12 @@ export function VocabularyAiSuggestionCard({
   const t = useTranslations("vocabulary");
 
   return (
-    <div className="vocab-composer-ai min-w-0 max-w-full rounded-md p-3">
+    <div
+      className={mx(
+        composerStyles,
+        "vocab-composer-ai min-w-0 max-w-full rounded-md p-3",
+      )}
+    >
       <p className="flex items-center gap-1.5 text-xs font-medium text-ink">
         <Sparkles className="size-3.5 shrink-0 text-(--module-vocab-fg)" />
         {title ?? t("aiSuggestion")}

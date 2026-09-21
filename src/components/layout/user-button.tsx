@@ -16,6 +16,8 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import navStyles from "@/components/style/layout/nav.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 type UserButtonProps = {
@@ -50,9 +52,12 @@ export function UserButton({
     <DropdownMenu>
       <DropdownMenuTrigger
         className={cn(
-          "nav-account-trigger flex w-full cursor-pointer items-center gap-2 rounded-lg border px-2 py-1.5 text-left text-sm outline-none",
+          mx(
+            navStyles,
+            "nav-account-trigger flex w-full cursor-pointer items-center gap-2 rounded-lg border px-2 py-1.5 text-left text-sm outline-none",
+            active && "is-active",
+          ),
           "focus-visible:ring-2 focus-visible:ring-ring",
-          active && "is-active",
         )}
       >
         <UserAvatar name={name} image={image} size="sm" />

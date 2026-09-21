@@ -31,7 +31,8 @@ import {
   getSectionTutorial,
   type TutorialSectionId,
 } from "@/lib/onboarding/tutorials";
-import { cn } from "@/lib/utils";
+import styles from "@/components/style/onboarding/tutorial.module.css";
+import { mx } from "@/lib/css-module";
 import {
   TutorialArrow,
   TutorialBackdrop,
@@ -184,7 +185,8 @@ export function GuidedSectionTutorial({
           left: position.left,
         }}
         transition={{ duration: 0.22, ease: EASE }}
-        className={cn(
+        className={mx(
+          styles,
           "tutorial-sheet fixed z-[191] w-[min(100vw-2rem,24rem)]",
           guided ? "" : "max-w-md",
         )}
@@ -192,19 +194,21 @@ export function GuidedSectionTutorial({
       >
         <TutorialArrow placement={position.placement} />
 
-        <header className="tutorial-sheet-header">
-          <span className="tutorial-sheet-icon" aria-hidden>
+        <header className={mx(styles, "tutorial-sheet-header")}>
+          <span className={mx(styles, "tutorial-sheet-icon")} aria-hidden>
             <Icon className="size-4" />
           </span>
-          <div className="tutorial-sheet-heading">
-            <p className="tutorial-sheet-kicker">{t("guideLabel")}</p>
+          <div className={mx(styles, "tutorial-sheet-heading")}>
+            <p className={mx(styles, "tutorial-sheet-kicker")}>
+              {t("guideLabel")}
+            </p>
             <p
               id={`tutorial-${section}-title`}
-              className="tutorial-sheet-title"
+              className={mx(styles, "tutorial-sheet-title")}
             >
               {t(`${section}.title`)}
             </p>
-            <p className="tutorial-sheet-progress">
+            <p className={mx(styles, "tutorial-sheet-progress")}>
               {t("stepProgress", {
                 current: stepIndex + 1,
                 total: tutorial.steps.length,
@@ -221,20 +225,21 @@ export function GuidedSectionTutorial({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -6 }}
             transition={{ duration: 0.18, ease: EASE }}
-            className="tutorial-sheet-step"
+            className={mx(styles, "tutorial-sheet-step")}
           >
-            <p className="tutorial-sheet-step-title">
+            <p className={mx(styles, "tutorial-sheet-step-title")}>
               {t(`${section}.steps.${step.id}.title`)}
             </p>
-            <p className="tutorial-sheet-step-body">{stepBody}</p>
+            <p className={mx(styles, "tutorial-sheet-step-body")}>{stepBody}</p>
           </motion.div>
         </AnimatePresence>
 
-        <div className="tutorial-sheet-dots" aria-hidden>
+        <div className={mx(styles, "tutorial-sheet-dots")} aria-hidden>
           {tutorial.steps.map((item, index) => (
             <span
               key={item.id}
-              className={cn(
+              className={mx(
+                styles,
                 "tutorial-sheet-dot",
                 index === stepIndex && "is-active",
               )}
@@ -242,11 +247,11 @@ export function GuidedSectionTutorial({
           ))}
         </div>
 
-        <footer className="tutorial-sheet-footer">
+        <footer className={mx(styles, "tutorial-sheet-footer")}>
           <Button
             type="button"
             variant="outline"
-            className="tutorial-sheet-skip"
+            className={mx(styles, "tutorial-sheet-skip")}
             onClick={() => close(true)}
           >
             {t("skip")}
@@ -254,7 +259,7 @@ export function GuidedSectionTutorial({
           {isLast && tutorial.ctaHref ? (
             <LinkButton
               href={tutorial.ctaHref}
-              className="tutorial-sheet-cta"
+              className={mx(styles, "tutorial-sheet-cta")}
               onClick={() => close(true)}
             >
               {t(`${section}.cta`)}
@@ -262,7 +267,7 @@ export function GuidedSectionTutorial({
           ) : (
             <Button
               type="button"
-              className="tutorial-sheet-cta"
+              className={mx(styles, "tutorial-sheet-cta")}
               onClick={handleNext}
             >
               {isLast ? t("done") : t("next")}

@@ -26,6 +26,8 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { createWorkspace } from "@/lib/actions/workspaces";
+import styles from "@/components/style/workspace/sheet.module.css";
+import { mx } from "@/lib/css-module";
 import { getLanguageByCode, WORKPLACE_LANGUAGES } from "@/lib/languages";
 import { requestWorkspaceOnboarding } from "@/lib/onboarding/storage";
 
@@ -119,21 +121,21 @@ export function CreateWorkspaceDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         showCloseButton={!isPending}
-        className="workspace-sheet sm:max-w-md"
+        className={mx(styles, "workspace-sheet sm:max-w-md")}
       >
-        <DialogHeader className="workspace-sheet-header gap-2 space-y-0 pr-8 text-left">
-          <p className="workspace-sheet-kicker">{t("title")}</p>
-          <DialogTitle className="workspace-sheet-title">
+        <DialogHeader className={mx(styles, "workspace-sheet-header gap-2 space-y-0 pr-8 text-left")}>
+          <p className={mx(styles, "workspace-sheet-kicker")}>{t("title")}</p>
+          <DialogTitle className={mx(styles, "workspace-sheet-title")}>
             {t("createFirst")}
           </DialogTitle>
-          <DialogDescription className="workspace-sheet-lede">
+          <DialogDescription className={mx(styles, "workspace-sheet-lede")}>
             {t("languageHint")}
           </DialogDescription>
         </DialogHeader>
 
-        <div className="workspace-sheet-body">
-          <div className="workspace-sheet-field">
-            <Label htmlFor="workspace-name" className="workspace-sheet-label">
+        <div className={mx(styles, "workspace-sheet-body")}>
+          <div className={mx(styles, "workspace-sheet-field")}>
+            <Label htmlFor="workspace-name" className={mx(styles, "workspace-sheet-label")}>
               {t("name")}
             </Label>
             <Input
@@ -142,19 +144,19 @@ export function CreateWorkspaceDialog({
               onChange={(event) => setName(event.target.value)}
               placeholder={t("namePlaceholder")}
               disabled={isPending}
-              className="workspace-sheet-input"
+              className={mx(styles, "workspace-sheet-input")}
               autoComplete="off"
             />
           </div>
 
-          <div className="workspace-sheet-field">
-            <Label className="workspace-sheet-label">{t("language")}</Label>
+          <div className={mx(styles, "workspace-sheet-field")}>
+            <Label className={mx(styles, "workspace-sheet-label")}>{t("language")}</Label>
             <Select
               value={selectedCode}
               onValueChange={(value) => value && setLanguage(value)}
               disabled={isPending || availableLanguages.length === 0}
             >
-              <SelectTrigger className="workspace-sheet-input w-full">
+              <SelectTrigger className={mx(styles, "workspace-sheet-input w-full")}>
                 <SelectValue>
                   {selectedLanguage ? (
                     <span className="flex items-center gap-2.5">
@@ -185,7 +187,7 @@ export function CreateWorkspaceDialog({
               </SelectContent>
             </Select>
             {selectedLanguage ? (
-              <p className="workspace-sheet-hint">
+              <p className={mx(styles, "workspace-sheet-hint")}>
                 <CountryFlag
                   code={selectedLanguage.flagCode}
                   className="h-3 w-4 shrink-0"
@@ -196,11 +198,11 @@ export function CreateWorkspaceDialog({
           </div>
         </div>
 
-        <div className="workspace-sheet-footer">
+        <div className={mx(styles, "workspace-sheet-footer")}>
           <Button
             type="button"
             variant="outline"
-            className="workspace-sheet-cancel"
+            className={mx(styles, "workspace-sheet-cancel")}
             disabled={isPending}
             onClick={() => handleOpenChange(false)}
           >
@@ -208,7 +210,7 @@ export function CreateWorkspaceDialog({
           </Button>
           <Button
             type="button"
-            className="workspace-sheet-cta"
+            className={mx(styles, "workspace-sheet-cta")}
             onClick={handleCreate}
             disabled={isPending || availableLanguages.length === 0}
           >

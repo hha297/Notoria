@@ -4,8 +4,9 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { LinkButton } from "@/components/ui/link-button";
+import homeStyles from "@/components/style/dashboard/home.module.css";
+import { mx } from "@/lib/css-module";
 import type { WorkspaceActivitySnapshot } from "@/lib/onboarding/requirements";
-import { cn } from "@/lib/utils";
 
 type DashboardGuideProps = {
   snapshot: WorkspaceActivitySnapshot;
@@ -97,9 +98,11 @@ export function DashboardGuide({
   const t = useTranslations("dashboard");
 
   return (
-    <section className="home-guide">
-      <header className="home-guide-head">
-        <p className="writing-kicker home-kicker">{t("guideEyebrow")}</p>
+    <section className={mx(homeStyles, "home-guide")}>
+      <header className={mx(homeStyles, "home-guide-head")}>
+        <p className={mx(homeStyles, "writing-kicker home-kicker")}>
+          {t("guideEyebrow")}
+        </p>
         <h2 className="mt-2 font-heading text-2xl font-bold tracking-tight text-ink sm:text-[1.75rem]">
           {t("guideTitle")}
         </h2>
@@ -121,7 +124,7 @@ export function DashboardGuide({
         </Link>
       </header>
 
-      <div className="home-guide-grid">
+      <div className={mx(homeStyles, "home-guide-grid")}>
         {MODULES.map((module, index) => (
           <ModuleCard
             key={module.id}
@@ -160,10 +163,14 @@ function ModuleCard({
   return (
     <article
       data-home-accent={module.accent}
-      className={cn("home-guide-card", highlighted && "is-highlighted")}
+      className={mx(
+        homeStyles,
+        "home-guide-card",
+        highlighted && "is-highlighted",
+      )}
     >
       <div className="flex items-start gap-3">
-        <span className="home-guide-index" aria-hidden>
+        <span className={mx(homeStyles, "home-guide-index")} aria-hidden>
           {index}
         </span>
         <div className="min-w-0">
@@ -181,11 +188,11 @@ function ModuleCard({
         {t(`steps.${module.id}.body`)}
       </p>
       {showCount ? (
-        <p className="home-hub-count mt-3">
+        <p className={mx(homeStyles, "home-hub-count mt-3")}>
           {t(`counts.${module.countKey}`, { count })}
         </p>
       ) : (
-        <p className="home-hub-count mt-3">{t("pro")}</p>
+        <p className={mx(homeStyles, "home-hub-count mt-3")}>{t("pro")}</p>
       )}
       <LinkButton href={module.href} variant="outline" size="sm" className="mt-4 w-fit">
         {t("open")}

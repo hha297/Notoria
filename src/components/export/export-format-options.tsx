@@ -3,9 +3,10 @@
 import { FileSpreadsheet, FileText, FileType, Lock } from "lucide-react";
 import type { ReactNode } from "react";
 import { lockedFeatureClassName } from "@/components/billing/locked-styles";
+import styles from "@/components/style/export/export-format.module.css";
 import { isPaidDocumentFormat } from "@/lib/auth/paid-access";
+import { mx } from "@/lib/css-module";
 import type { ExportFormatId } from "@/lib/export/formats";
-import { cn } from "@/lib/utils";
 
 type ExportFormatOptionsProps = {
   idPrefix: string;
@@ -42,7 +43,7 @@ export function ExportFormatOptions({
 }: ExportFormatOptionsProps) {
   return (
     <div
-      className="export-format-grid"
+      className={mx(styles, "export-format-grid")}
       role="radiogroup"
       data-export-group={name}
       style={{
@@ -66,7 +67,8 @@ export function ExportFormatOptions({
             aria-checked={selected}
             aria-label={label}
             data-export-format={format}
-            className={cn(
+            className={mx(
+              styles,
               "export-format-chip",
               selected && "is-active",
               locked && lockedFeatureClassName,
@@ -79,11 +81,13 @@ export function ExportFormatOptions({
               onChange(format);
             }}
           >
-            <span className="export-format-icon">
+            <span className={mx(styles, "export-format-icon")}>
               {locked ? <Lock className="size-4" /> : <Icon className="size-4" />}
             </span>
-            <span className="export-format-name">{label}</span>
-            {hint ? <span className="export-format-hint">{hint}</span> : null}
+            <span className={mx(styles, "export-format-name")}>{label}</span>
+            {hint ? (
+              <span className={mx(styles, "export-format-hint")}>{hint}</span>
+            ) : null}
           </button>
         );
       })}
@@ -105,10 +109,10 @@ export function ExportOptionChip({
       type="button"
       role="switch"
       aria-checked={checked}
-      className={cn("export-option-chip", checked && "is-on")}
+      className={mx(styles, "export-option-chip", checked && "is-on")}
       onClick={() => onChange(!checked)}
     >
-      <span className="export-option-dot" aria-hidden="true" />
+      <span className={mx(styles, "export-option-dot")} aria-hidden="true" />
       <span>{label}</span>
     </button>
   );

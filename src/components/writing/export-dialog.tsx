@@ -1,5 +1,7 @@
 "use client";
 
+import formatStyles from "@/components/style/export/export-format.module.css";
+import { mx } from "@/lib/css-module";
 import { Download, Loader2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
@@ -162,7 +164,7 @@ export function WritingExportDialog({
 
       {isQuestionSet ? (
         <ExportSheetSection label={t("options")}>
-          <div className="export-option-list">
+          <div className={mx(formatStyles, "export-option-list")}>
             <ExportOptionChip
               checked={options.includeExampleAnswers}
               label={t("includeExamples")}

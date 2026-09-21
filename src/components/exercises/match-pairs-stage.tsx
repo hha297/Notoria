@@ -11,6 +11,8 @@ import {
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import type { MatchPairItem } from "@/lib/exercises/match-pairs";
+import featureStyles from "@/components/style/exercises/session.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 type MeaningTile = {
@@ -435,8 +437,8 @@ function MatchTile({
         !wrong &&
         "border-(--exercise-accent) bg-(--exercise-accent-soft) shadow-sm",
         matched && "bg-surface-elevated text-muted-foreground",
-        wrong && !reduceMotion && "feedback-error exercise-shake",
-        wrong && reduceMotion && "feedback-error",
+        wrong && !reduceMotion && mx(featureStyles, "feedback-error exercise-shake"),
+        wrong && reduceMotion && mx(featureStyles, "feedback-error"),
         idleMeaning && reduceMotion && "opacity-70",
       )}
       style={

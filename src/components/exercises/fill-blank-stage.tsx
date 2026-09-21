@@ -12,6 +12,8 @@ import {
   expectedFillBlankAnswer,
   type FillBlankItem,
 } from "@/lib/exercises/fill-blank";
+import featureStyles from "@/components/style/exercises/session.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 type FillBlankStageProps = {
@@ -208,7 +210,7 @@ function BlankSlot({
     <span
       className={cn(
         "inline-flex max-w-full flex-col items-center align-baseline",
-        revealed && tone === "error" && !reduceMotion && "exercise-shake",
+        revealed && tone === "error" && !reduceMotion && mx(featureStyles, "exercise-shake"),
       )}
     >
       <span

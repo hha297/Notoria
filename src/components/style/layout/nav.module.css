@@ -1,0 +1,172 @@
+/* Floating sidebar / account nav — layout-owned chrome. */
+
+.floating-panel {
+  height: fit-content;
+  border-radius: 1rem;
+  border: 1px solid var(--hairline-cloud);
+  background: var(--surface-elevated);
+  color: var(--ink);
+  box-shadow: 0 1px 2px rgba(35, 37, 29, 0.04);
+  position: relative;
+  isolation: isolate;
+}
+
+.floating-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 80% 50% at 20% 0%,
+      color-mix(in oklab, var(--module-theory-bg) 46%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 70% 45% at 90% 100%,
+      color-mix(in oklab, var(--module-vocab-bg) 34%, transparent),
+      transparent 68%
+    );
+}
+
+.floating-panel > * {
+  position: relative;
+  z-index: 1;
+}
+
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ink);
+  transition:
+    background-color 160ms ease,
+    color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.nav-link:hover {
+  background: color-mix(
+    in oklab,
+    var(--nav-route-bg, var(--muted)) 48%,
+    transparent
+  );
+  color: var(--nav-route-fg, var(--ink));
+}
+
+.nav-link.is-active {
+  background: color-mix(
+    in oklab,
+    var(--nav-route-bg, var(--primary)) 78%,
+    var(--surface-elevated)
+  );
+  color: var(--nav-route-fg, var(--on-primary));
+  box-shadow: inset 0 0 0 1px
+    color-mix(in oklab, var(--nav-route-fg, var(--primary)) 28%, transparent);
+}
+
+.nav-link.is-active :global(.nav-link-icon),
+.nav-link:hover :global(.nav-link-icon) {
+  color: var(--nav-route-fg, var(--ink));
+}
+
+.nav-link[data-nav="home"] {
+  --nav-route-bg: var(--module-home-bg);
+  --nav-route-fg: var(--module-home-fg);
+}
+
+.nav-link[data-nav="vocabulary"] {
+  --nav-route-bg: var(--module-vocab-bg);
+  --nav-route-fg: var(--module-vocab-fg);
+}
+
+.nav-link[data-nav="exercises"] {
+  --nav-route-bg: var(--module-exercise-bg);
+  --nav-route-fg: var(--module-exercise-fg);
+}
+
+.nav-link[data-nav="writing"] {
+  --nav-route-bg: var(--module-writing-bg);
+  --nav-route-fg: var(--module-writing-fg);
+}
+
+.nav-link[data-nav="theory"] {
+  --nav-route-bg: var(--module-theory-bg);
+  --nav-route-fg: var(--module-theory-fg);
+}
+
+.nav-link[data-nav="listening"] {
+  --nav-route-bg: var(--module-listen-bg);
+  --nav-route-fg: var(--module-listen-fg);
+}
+
+.nav-link[data-nav="speaking"] {
+  --nav-route-bg: var(--module-speak-bg);
+  --nav-route-fg: var(--module-speak-fg);
+}
+
+.nav-link[data-nav="guide"] {
+  --nav-route-bg: var(--module-guide-bg);
+  --nav-route-fg: var(--module-guide-fg);
+}
+
+.nav-link[data-nav="account"] {
+  --nav-route-bg: var(--module-account-bg);
+  --nav-route-fg: var(--module-account-fg);
+}
+
+.nav-link[data-nav="settings"] {
+  --nav-route-bg: var(--module-settings-bg);
+  --nav-route-fg: var(--module-settings-fg);
+}
+
+.nav-account-trigger {
+  border-color: color-mix(
+    in oklab,
+    var(--module-account-fg) 22%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(in oklab, var(--module-account-bg) 32%, transparent);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.nav-account-trigger:hover,
+.nav-account-trigger[data-popup-open],
+.nav-account-trigger[data-state="open"] {
+  border-color: color-mix(
+    in oklab,
+    var(--module-account-fg) 40%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(
+    in oklab,
+    var(--module-account-bg) 58%,
+    var(--surface-elevated)
+  );
+}
+
+.nav-account-trigger.is-active {
+  border-color: color-mix(
+    in oklab,
+    var(--module-account-fg) 48%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(
+    in oklab,
+    var(--module-account-bg) 72%,
+    var(--surface-elevated)
+  );
+  box-shadow: inset 0 0 0 1px
+    color-mix(in oklab, var(--module-account-fg) 22%, transparent);
+}
+
+.sidebar-starfield {
+  background-color: var(--sidebar);
+}

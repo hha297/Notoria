@@ -18,7 +18,10 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { LinkButton } from "@/components/ui/link-button";
+import featureStyles from "@/components/style/speaking/session.module.css";
+import sheetStyles from "@/components/style/workspace/sheet.module.css";
 import { deleteSpeakingSession, endSpeakingSession } from "@/lib/actions/speaking";
+import { mx } from "@/lib/css-module";
 import { isSpeakingErrorCode } from "@/lib/speaking/errors";
 import { isSpeakingJoinable } from "@/lib/speaking/types";
 import type { SpeakingSessionDetail } from "@/lib/speaking/types";
@@ -159,34 +162,34 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
         <p className="writing-brand-lede mt-3">{t("sessionDescription")}</p>
 
         {session.notes ? (
-          <div className="speaking-panel mt-6">
+          <div className={mx(featureStyles, "speaking-panel mt-6")}>
             <DescriptionContent value={session.notes} />
           </div>
         ) : null}
 
         <div className="mt-6">
           {session.status === "processing" ? (
-            <div className="speaking-panel">
-              <h2 className="speaking-panel-title">{t("processingTitle")}</h2>
-              <p className="speaking-panel-lede">{t("processingDescription")}</p>
+            <div className={mx(featureStyles, "speaking-panel")}>
+              <h2 className={mx(featureStyles, "speaking-panel-title")}>{t("processingTitle")}</h2>
+              <p className={mx(featureStyles, "speaking-panel-lede")}>{t("processingDescription")}</p>
             </div>
           ) : null}
 
           {session.summary ? (
-            <div className="speaking-panel">
-              <h2 className="speaking-panel-title">{t("feedbackTitle")}</h2>
-              <p className="speaking-panel-lede">{t("feedbackDescription")}</p>
-              <div className="speaking-panel-body prose prose-sm max-w-none whitespace-pre-wrap text-ink">
+            <div className={mx(featureStyles, "speaking-panel")}>
+              <h2 className={mx(featureStyles, "speaking-panel-title")}>{t("feedbackTitle")}</h2>
+              <p className={mx(featureStyles, "speaking-panel-lede")}>{t("feedbackDescription")}</p>
+              <div className={mx(featureStyles, "speaking-panel-body prose prose-sm max-w-none whitespace-pre-wrap text-ink")}>
                 {session.summary}
               </div>
             </div>
           ) : null}
 
           {session.transcript ? (
-            <div className="speaking-panel">
-              <h2 className="speaking-panel-title">{t("transcriptTitle")}</h2>
-              <div className="speaking-panel-body">
-                <pre className="speaking-transcript">{session.transcript}</pre>
+            <div className={mx(featureStyles, "speaking-panel")}>
+              <h2 className={mx(featureStyles, "speaking-panel-title")}>{t("transcriptTitle")}</h2>
+              <div className={mx(featureStyles, "speaking-panel-body")}>
+                <pre className={mx(featureStyles, "speaking-transcript")}>{session.transcript}</pre>
               </div>
             </div>
           ) : null}
@@ -196,23 +199,23 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <DialogContent
           showCloseButton={!isPending && !isLeaving}
-          className="workspace-sheet sm:max-w-md"
+          className={mx(sheetStyles, "workspace-sheet sm:max-w-md")}
           data-sheet-route="speak"
         >
-          <DialogHeader className="workspace-sheet-header gap-2 space-y-0 pr-8 text-left">
-            <p className="workspace-sheet-kicker">{t("title")}</p>
-            <DialogTitle className="workspace-sheet-title">
+          <DialogHeader className={mx(sheetStyles, "workspace-sheet-header gap-2 space-y-0 pr-8 text-left")}>
+            <p className={mx(sheetStyles, "workspace-sheet-kicker")}>{t("title")}</p>
+            <DialogTitle className={mx(sheetStyles, "workspace-sheet-title")}>
               {t("deleteConfirmTitle")}
             </DialogTitle>
-            <DialogDescription className="workspace-sheet-lede">
+            <DialogDescription className={mx(sheetStyles, "workspace-sheet-lede")}>
               {t("deleteConfirmDescription", { title: session.title })}
             </DialogDescription>
           </DialogHeader>
-          <div className="workspace-sheet-footer">
+          <div className={mx(sheetStyles, "workspace-sheet-footer")}>
             <Button
               type="button"
               variant="outline"
-              className="workspace-sheet-cancel"
+              className={mx(sheetStyles, "workspace-sheet-cancel")}
               onClick={() => setDeleteOpen(false)}
               disabled={isPending || isLeaving}
             >
@@ -221,7 +224,7 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
             <Button
               type="button"
               variant="destructive"
-              className="workspace-sheet-cta"
+              className={mx(sheetStyles, "workspace-sheet-cta")}
               onClick={handleDelete}
               disabled={isPending || isLeaving}
             >

@@ -1,5 +1,7 @@
 "use client";
 
+import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
+import { mx } from "@/lib/css-module";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { VocabularyCardView } from "@/components/vocabulary/vocabulary-card-view";
@@ -40,10 +42,10 @@ export function VocabularyGroup({
   const rangeEnd = Math.min(currentPage * VOCABULARY_GROUP_PAGE_SIZE, words.length);
 
   return (
-    <section data-vocab-pos={posKey || "none"} className="vocab-group">
-      <header className="vocab-group-head">
-        <h2 className="vocab-group-title">{title}</h2>
-        <p className="vocab-group-count">
+    <section data-vocab-pos={posKey || "none"} className={mx(featureStyles, "vocab-group")}>
+      <header className={mx(featureStyles, "vocab-group-head")}>
+        <h2 className={mx(featureStyles, "vocab-group-title")}>{title}</h2>
+        <p className={mx(featureStyles, "vocab-group-count")}>
           {showPagination
             ? t("groupPageRange", {
               start: rangeStart,

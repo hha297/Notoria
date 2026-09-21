@@ -13,6 +13,8 @@ import { PasswordInput } from "@/components/auth/password-input";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import styles from "@/components/style/auth/auth.module.css";
+import { mx } from "@/lib/css-module";
 import { registerUser } from "@/lib/actions/auth";
 
 type FieldErrors = {
@@ -109,17 +111,17 @@ export function RegisterForm({
   }
 
   return (
-    <div className="auth-form-stack">
+    <div className={mx(styles, "auth-form-stack")}>
       {/* Google skips the email/password form entirely. */}
       <AuthGoogleSection enabled={googleEnabled} disabled={isLoading} />
 
       <form
         onSubmit={handleSubmit}
-        className="auth-form"
+        className={mx(styles, "auth-form")}
         aria-describedby={formError ? formErrorId : undefined}
       >
-        <div className="auth-field">
-          <Label htmlFor="name" className="auth-label">
+        <div className={mx(styles, "auth-field")}>
+          <Label htmlFor="name" className={mx(styles, "auth-label")}>
             {t("name")}
           </Label>
           <Input
@@ -131,7 +133,7 @@ export function RegisterForm({
               setName(event.target.value);
               clearErrors();
             }}
-            className="auth-input"
+            className={mx(styles, "auth-input")}
             required
             minLength={2}
             maxLength={80}
@@ -140,14 +142,18 @@ export function RegisterForm({
             aria-describedby={fieldErrors.name ? nameHintId : undefined}
           />
           {fieldErrors.name ? (
-            <p id={nameHintId} className="auth-field-error" role="alert">
+            <p
+              id={nameHintId}
+              className={mx(styles, "auth-field-error")}
+              role="alert"
+            >
               {fieldErrors.name}
             </p>
           ) : null}
         </div>
 
-        <div className="auth-field">
-          <Label htmlFor="email" className="auth-label">
+        <div className={mx(styles, "auth-field")}>
+          <Label htmlFor="email" className={mx(styles, "auth-label")}>
             {t("email")}
           </Label>
           <Input
@@ -164,21 +170,25 @@ export function RegisterForm({
               setEmail(event.target.value);
               clearErrors();
             }}
-            className="auth-input"
+            className={mx(styles, "auth-input")}
             required
             disabled={isLoading}
             aria-invalid={fieldErrors.email ? true : undefined}
             aria-describedby={fieldErrors.email ? emailHintId : undefined}
           />
           {fieldErrors.email ? (
-            <p id={emailHintId} className="auth-field-error" role="alert">
+            <p
+              id={emailHintId}
+              className={mx(styles, "auth-field-error")}
+              role="alert"
+            >
               {fieldErrors.email}
             </p>
           ) : null}
         </div>
 
-        <div className="auth-field">
-          <Label htmlFor="password" className="auth-label">
+        <div className={mx(styles, "auth-field")}>
+          <Label htmlFor="password" className={mx(styles, "auth-label")}>
             {t("password")}
           </Label>
           <PasswordInput
@@ -190,7 +200,7 @@ export function RegisterForm({
               setPassword(event.target.value);
               clearErrors();
             }}
-            className="auth-input"
+            className={mx(styles, "auth-input")}
             minLength={8}
             maxLength={128}
             required
@@ -201,11 +211,18 @@ export function RegisterForm({
             }
           />
           {fieldErrors.password ? (
-            <p id={passwordHintId} className="auth-field-error" role="alert">
+            <p
+              id={passwordHintId}
+              className={mx(styles, "auth-field-error")}
+              role="alert"
+            >
               {fieldErrors.password}
             </p>
           ) : (
-            <p id={`${passwordHintId}-hint`} className="auth-field-hint">
+            <p
+              id={`${passwordHintId}-hint`}
+              className={mx(styles, "auth-field-hint")}
+            >
               {t("passwordHint")}
             </p>
           )}
@@ -214,7 +231,7 @@ export function RegisterForm({
         {formError ? (
           <p
             id={formErrorId}
-            className="auth-form-error"
+            className={mx(styles, "auth-form-error")}
             role="alert"
             aria-live="assertive"
           >
@@ -225,7 +242,7 @@ export function RegisterForm({
         <Button
           type="submit"
           size="lg"
-          className="auth-submit"
+          className={mx(styles, "auth-submit")}
           disabled={
             isLoading || !name.trim() || !email.trim() || password.length < 8
           }
@@ -236,9 +253,9 @@ export function RegisterForm({
           {isLoading ? t("creatingAccount") : t("createAccount")}
         </Button>
 
-        <p className="auth-switch">
+        <p className={mx(styles, "auth-switch")}>
           {t("hasAccount")}{" "}
-          <Link href="/sign-in" className="auth-switch-link">
+          <Link href="/sign-in" className={mx(styles, "auth-switch-link")}>
             {t("signIn")}
           </Link>
         </p>

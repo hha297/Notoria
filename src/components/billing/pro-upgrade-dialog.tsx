@@ -13,11 +13,12 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import styles from "@/components/style/billing/pro-upgrade.module.css";
+import { mx } from "@/lib/css-module";
 import {
   billingErrorKey,
   createCheckoutSession,
 } from "@/lib/stripe/client-billing";
-import { cn } from "@/lib/utils";
 
 const COMPARE_ROWS = [
   { id: "practice", free: "yes" },
@@ -54,14 +55,17 @@ function StatusMark({ included }: { included: boolean }) {
 
   if (included) {
     return (
-      <span className="pro-upgrade-mark is-yes" aria-label={t("yes")}>
+      <span className={mx(styles, "pro-upgrade-mark is-yes")} aria-label={t("yes")}>
         <Check className="size-3.5" strokeWidth={2.5} aria-hidden />
       </span>
     );
   }
 
   return (
-    <span className="pro-upgrade-mark is-locked" aria-label={t("locked")}>
+    <span
+      className={mx(styles, "pro-upgrade-mark is-locked")}
+      aria-label={t("locked")}
+    >
       <Lock className="size-3.5" aria-hidden />
     </span>
   );
@@ -81,36 +85,41 @@ function PlanCard({
 
   return (
     <article
-      className={cn(
+      className={mx(
+        styles,
         "pro-upgrade-plan",
         featured && "is-featured",
         isCurrent && "is-current",
       )}
     >
-      <div className="pro-upgrade-plan-top">
-        <p className="pro-upgrade-plan-name">
+      <div className={mx(styles, "pro-upgrade-plan-top")}>
+        <p className={mx(styles, "pro-upgrade-plan-name")}>
           {isPro ? t("planName") : t("freeBadge")}
         </p>
         {isCurrent ? (
-          <span className="pro-upgrade-plan-badge">{t("currentPlan")}</span>
+          <span className={mx(styles, "pro-upgrade-plan-badge")}>
+            {t("currentPlan")}
+          </span>
         ) : featured ? (
-          <span className="pro-upgrade-plan-badge is-popular">
+          <span className={mx(styles, "pro-upgrade-plan-badge is-popular")}>
             <Sparkles className="size-3" aria-hidden />
             {t("mostPopular")}
           </span>
         ) : null}
       </div>
 
-      <div className="pro-upgrade-plan-price">
-        <span className="pro-upgrade-plan-amount">
+      <div className={mx(styles, "pro-upgrade-plan-price")}>
+        <span className={mx(styles, "pro-upgrade-plan-amount")}>
           {isPro ? t("priceAmount") : t("freePrice")}
         </span>
         {isPro ? (
-          <span className="pro-upgrade-plan-period">{t("pricePeriod")}</span>
+          <span className={mx(styles, "pro-upgrade-plan-period")}>
+            {t("pricePeriod")}
+          </span>
         ) : null}
       </div>
 
-      <p className="pro-upgrade-plan-copy">
+      <p className={mx(styles, "pro-upgrade-plan-copy")}>
         {isPro ? t("proPlanDescription") : t("freePlanDescription")}
       </p>
     </article>
@@ -129,19 +138,21 @@ function CompareSection({
   const tCompare = useTranslations("billing.compare");
 
   return (
-    <section className="pro-upgrade-section">
-      <div className="pro-upgrade-section-head">
-        <p className="pro-upgrade-section-label">{label}</p>
-        <div className="pro-upgrade-col-labels" aria-hidden>
+    <section className={mx(styles, "pro-upgrade-section")}>
+      <div className={mx(styles, "pro-upgrade-section-head")}>
+        <p className={mx(styles, "pro-upgrade-section-label")}>{label}</p>
+        <div className={mx(styles, "pro-upgrade-col-labels")} aria-hidden>
           <span>{tCompare("free")}</span>
           <span>{tCompare("pro")}</span>
         </div>
       </div>
-      <ul className="pro-upgrade-list">
+      <ul className={mx(styles, "pro-upgrade-list")}>
         {rows.map((row) => (
-          <li key={row.id} className="pro-upgrade-row">
-            <p className="pro-upgrade-row-label">{capability(row.id)}</p>
-            <div className="pro-upgrade-row-marks">
+          <li key={row.id} className={mx(styles, "pro-upgrade-row")}>
+            <p className={mx(styles, "pro-upgrade-row-label")}>
+              {capability(row.id)}
+            </p>
+            <div className={mx(styles, "pro-upgrade-row-marks")}>
               <StatusMark included={row.free === "yes"} />
               <StatusMark included />
             </div>
@@ -190,26 +201,29 @@ export function ProUpgradeDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         showCloseButton={!isPending}
-        className="pro-upgrade-sheet flex max-h-[min(92dvh,880px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-2xl"
+        className={mx(
+          styles,
+          "pro-upgrade-sheet flex max-h-[min(92dvh,880px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-2xl",
+        )}
       >
-        <div className="pro-upgrade-hero shrink-0">
+        <div className={mx(styles, "pro-upgrade-hero shrink-0")}>
           <DialogHeader className="gap-2 space-y-0 pr-8 text-left">
-            <p className="pro-upgrade-kicker">{t("planName")}</p>
-            <DialogTitle className="pro-upgrade-title">
+            <p className={mx(styles, "pro-upgrade-kicker")}>{t("planName")}</p>
+            <DialogTitle className={mx(styles, "pro-upgrade-title")}>
               {isLocked ? t("lockedTitle") : t("modalTitle")}
             </DialogTitle>
-            <DialogDescription className="pro-upgrade-lede">
+            <DialogDescription className={mx(styles, "pro-upgrade-lede")}>
               {isLocked ? t("lockedDescription") : t("modalSubtitle")}
             </DialogDescription>
           </DialogHeader>
 
-          <div className="pro-upgrade-plans">
+          <div className={mx(styles, "pro-upgrade-plans")}>
             <PlanCard plan="free" isCurrent={!hasProAccess} />
             <PlanCard plan="pro" featured isCurrent={hasProAccess} />
           </div>
         </div>
 
-        <div className="pro-upgrade-body min-h-0 flex-1 overflow-y-auto">
+        <div className={mx(styles, "pro-upgrade-body min-h-0 flex-1 overflow-y-auto")}>
           <CompareSection
             label={tCompare("freeIncludes")}
             rows={FREE_ROWS}
@@ -222,12 +236,12 @@ export function ProUpgradeDialog({
           />
         </div>
 
-        <div className="pro-upgrade-footer shrink-0">
-          <div className="pro-upgrade-actions">
+        <div className={mx(styles, "pro-upgrade-footer shrink-0")}>
+          <div className={mx(styles, "pro-upgrade-actions")}>
             <Button
               type="button"
               variant="outline"
-              className="pro-upgrade-cancel"
+              className={mx(styles, "pro-upgrade-cancel")}
               disabled={isPending}
               onClick={() => handleOpenChange(false)}
             >
@@ -236,7 +250,7 @@ export function ProUpgradeDialog({
             <Button
               type="button"
               size="lg"
-              className="pro-upgrade-cta"
+              className={mx(styles, "pro-upgrade-cta")}
               disabled={isPending || hasProAccess}
               onClick={handleUpgrade}
             >
@@ -244,7 +258,9 @@ export function ProUpgradeDialog({
               {hasProAccess ? t("currentPlan") : t("choosePro")}
             </Button>
           </div>
-          <p className="pro-upgrade-fineprint">{t("cancelAnytime")}</p>
+          <p className={mx(styles, "pro-upgrade-fineprint")}>
+            {t("cancelAnytime")}
+          </p>
         </div>
       </DialogContent>
     </Dialog>

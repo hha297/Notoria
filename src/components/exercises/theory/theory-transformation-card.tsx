@@ -10,6 +10,9 @@ import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import { Button } from "@/components/ui/button";
 import { answersMatchAny, revealTextForExercise } from "@/lib/theory-exercises/generate-ai";
 import type { TheoryTransformationExercise } from "@/lib/theory-exercises/types";
+import theoryStyles from "@/components/style/exercises/theory.module.css";
+import sessionStyles from "@/components/style/exercises/session.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -95,7 +98,7 @@ export function TheoryTransformationCard({
             <span
               className={cn(
                 "inline-flex max-w-full min-w-0 flex-col items-center align-baseline",
-                checked && !isCorrect && !reduceMotion && "exercise-shake",
+                checked && !isCorrect && !reduceMotion && mx(sessionStyles, "exercise-shake"),
               )}
             >
               <span

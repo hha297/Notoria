@@ -44,6 +44,8 @@ import {
   type ShortcutConflict,
   type ShortcutId,
 } from "@/lib/preferences/shortcuts";
+import styles from "@/components/style/settings/settings.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 type ShortcutEditorState =
@@ -62,14 +64,14 @@ function SettingsPanel({
   children: ReactNode;
 }) {
   return (
-    <section className="settings-panel" aria-labelledby={id}>
-      <header className="settings-panel-head">
-        <h2 id={id} className="settings-panel-title">
+    <section className={mx(styles, "settings-panel")} aria-labelledby={id}>
+      <header className={mx(styles, "settings-panel-head")}>
+        <h2 id={id} className={mx(styles, "settings-panel-title")}>
           {title}
         </h2>
-        <p className="settings-panel-lede">{description}</p>
+        <p className={mx(styles, "settings-panel-lede")}>{description}</p>
       </header>
-      <div className="settings-panel-body settings-prefs">{children}</div>
+      <div className={mx(styles, "settings-panel-body settings-prefs")}>{children}</div>
     </section>
   );
 }
@@ -262,15 +264,15 @@ export function KeyboardShortcutsSection() {
       title={t("shortcuts.title")}
       description={t("shortcuts.description")}
     >
-      <div className="settings-row settings-row-action">
-        <div className="settings-row-copy">
-          <p className="settings-row-title">{t("shortcuts.enabled")}</p>
-          <p className="settings-row-hint">{t("shortcuts.enabledDescription")}</p>
+      <div className={mx(styles, "settings-row settings-row-action")}>
+        <div className={mx(styles, "settings-row-copy")}>
+          <p className={mx(styles, "settings-row-title")}>{t("shortcuts.enabled")}</p>
+          <p className={mx(styles, "settings-row-hint")}>{t("shortcuts.enabledDescription")}</p>
         </div>
-        <div className="settings-choice-row" role="group">
+        <div className={mx(styles, "settings-choice-row")} role="group">
           <button
             type="button"
-            className={cn("settings-choice-chip", enabled && "is-active")}
+            className={cn(mx(styles, "settings-choice-chip"), enabled && mx(styles, "is-active"))}
             aria-pressed={enabled}
             onClick={() => setShortcutsEnabled(true)}
           >
@@ -278,7 +280,7 @@ export function KeyboardShortcutsSection() {
           </button>
           <button
             type="button"
-            className={cn("settings-choice-chip", !enabled && "is-active")}
+            className={cn(mx(styles, "settings-choice-chip"), !enabled && mx(styles, "is-active"))}
             aria-pressed={!enabled}
             onClick={() => setShortcutsEnabled(false)}
           >
@@ -287,7 +289,7 @@ export function KeyboardShortcutsSection() {
         </div>
       </div>
 
-      <div className="settings-shortcut-list" role="list">
+      <div className={mx(styles, "settings-shortcut-list")} role="list">
         {entries.map((entry) => {
           const actionName = t(`shortcuts.actions.${entry.id}`);
           const actionDescription = t(
@@ -298,28 +300,28 @@ export function KeyboardShortcutsSection() {
           return (
             <div
               key={`${entry.id}-${entry.index}`}
-              className="settings-shortcut-row"
+              className={mx(styles, "settings-shortcut-row")}
               role="listitem"
             >
-              <div className="settings-shortcut-action">
+              <div className={mx(styles, "settings-shortcut-action")}>
                 <p
                   className={cn(
-                    "settings-row-title",
-                    entry.isExtra && "settings-shortcut-continuation",
+                    mx(styles, "settings-row-title"),
+                    entry.isExtra && mx(styles, "settings-shortcut-continuation"),
                   )}
                 >
                   {actionName}
                 </p>
                 {!entry.isExtra ? (
-                  <p className="settings-shortcut-meta">{actionDescription}</p>
+                  <p className={mx(styles, "settings-shortcut-meta")}>{actionDescription}</p>
                 ) : null}
                 {entry.isDefault ? (
-                  <p className="settings-shortcut-meta settings-shortcut-badge">
+                  <p className={mx(styles, "settings-shortcut-meta settings-shortcut-badge")}>
                     {t("shortcuts.defaultBadge")}
                   </p>
                 ) : null}
                 {entry.isCustomized && !entry.isExtra && hasDefault ? (
-                  <p className="settings-shortcut-meta settings-shortcut-custom">
+                  <p className={mx(styles, "settings-shortcut-meta settings-shortcut-custom")}>
                     {t("shortcuts.customized")}
                     {" · "}
                     {t("shortcuts.defaultWas", {
@@ -328,24 +330,24 @@ export function KeyboardShortcutsSection() {
                   </p>
                 ) : null}
                 {entry.isExtra ? (
-                  <p className="settings-shortcut-meta settings-shortcut-extra">
+                  <p className={mx(styles, "settings-shortcut-meta settings-shortcut-extra")}>
                     {t("shortcuts.extraBadge")}
                   </p>
                 ) : null}
               </div>
-              <div className="settings-shortcut-keys">
+              <div className={mx(styles, "settings-shortcut-keys")}>
                 <kbd
                   className={cn(
-                    "settings-kbd",
-                    entry.isCustomized && "is-custom",
-                    entry.isExtra && "is-extra",
-                    !hasDefault && "is-custom",
+                    mx(styles, "settings-kbd"),
+                    entry.isCustomized && mx(styles, "is-custom"),
+                    entry.isExtra && mx(styles, "is-extra"),
+                    !hasDefault && mx(styles, "is-custom"),
                   )}
                 >
                   {formatChord(entry.chord, platform)}
                 </kbd>
               </div>
-              <div className="settings-shortcut-actions">
+              <div className={mx(styles, "settings-shortcut-actions")}>
                 <Button
                   type="button"
                   variant="outline"
@@ -385,7 +387,7 @@ export function KeyboardShortcutsSection() {
         })}
       </div>
 
-      <div className="settings-shortcut-toolbar">
+      <div className={mx(styles, "settings-shortcut-toolbar")}>
         <Button
           type="button"
           variant="outline"
@@ -398,10 +400,10 @@ export function KeyboardShortcutsSection() {
         </Button>
       </div>
 
-      <div className="settings-row settings-row-action">
-        <div className="settings-row-copy">
-          <p className="settings-row-title">{t("shortcuts.resetAll")}</p>
-          <p className="settings-row-hint">{t("shortcuts.resetAllDescription")}</p>
+      <div className={mx(styles, "settings-row settings-row-action")}>
+        <div className={mx(styles, "settings-row-copy")}>
+          <p className={mx(styles, "settings-row-title")}>{t("shortcuts.resetAll")}</p>
+          <p className={mx(styles, "settings-row-hint")}>{t("shortcuts.resetAllDescription")}</p>
         </div>
         <Button
           type="button"
@@ -421,7 +423,7 @@ export function KeyboardShortcutsSection() {
           if (!open) closeEditor();
         }}
       >
-        <DialogContent className="settings-shortcut-dialog flex h-[min(92dvh,52rem)] max-h-[min(92dvh,52rem)] w-[min(100%-1.5rem,72rem)] max-w-[min(100%-1.5rem,72rem)] flex-col gap-4 overflow-hidden sm:max-w-[min(100%-1.5rem,72rem)]">
+        <DialogContent className={mx(styles, "settings-shortcut-dialog flex h-[min(92dvh,52rem)] max-h-[min(92dvh,52rem)] w-[min(100%-1.5rem,72rem)] max-w-[min(100%-1.5rem,72rem)] flex-col gap-4 overflow-hidden sm:max-w-[min(100%-1.5rem,72rem)]")}>
           <DialogHeader>
             <DialogTitle>
               {editor?.mode === "add"
@@ -441,16 +443,16 @@ export function KeyboardShortcutsSection() {
 
           <div
             className={cn(
-              "settings-shortcut-dialog-body",
-              editor?.mode === "add" && "is-add",
+              mx(styles, "settings-shortcut-dialog-body"),
+              editor?.mode === "add" && mx(styles, "is-add"),
             )}
           >
             {editor?.mode === "add" ? (
-              <div className="settings-shortcut-pick" role="listbox">
-                <p className="settings-shortcut-pick-label">
+              <div className={mx(styles, "settings-shortcut-pick")} role="listbox">
+                <p className={mx(styles, "settings-shortcut-pick-label")}>
                   {t("shortcuts.chooseAction")}
                 </p>
-                <div className="settings-shortcut-pick-list">
+                <div className={mx(styles, "settings-shortcut-pick-list")}>
                   {APP_SHORTCUTS.map((item) => {
                     const selected = editor.id === item.id;
                     return (
@@ -460,18 +462,18 @@ export function KeyboardShortcutsSection() {
                         role="option"
                         aria-selected={selected}
                         className={cn(
-                          "settings-shortcut-pick-option",
-                          selected && "is-active",
+                          mx(styles, "settings-shortcut-pick-option"),
+                          selected && mx(styles, "is-active"),
                         )}
                         onClick={() => {
                           setEditor({ mode: "add", id: item.id });
                           resetCapture(null);
                         }}
                       >
-                        <span className="settings-shortcut-pick-name">
+                        <span className={mx(styles, "settings-shortcut-pick-name")}>
                           {t(`shortcuts.actions.${item.actionKey}`)}
                         </span>
-                        <span className="settings-shortcut-pick-desc">
+                        <span className={mx(styles, "settings-shortcut-pick-desc")}>
                           {t(`shortcuts.actionDescriptions.${item.actionKey}`)}
                         </span>
                       </button>
@@ -481,16 +483,16 @@ export function KeyboardShortcutsSection() {
               </div>
             ) : null}
 
-            <div className="settings-shortcut-recorder">
+            <div className={mx(styles, "settings-shortcut-recorder")}>
               <button
                 key={editorActionId ?? "capture"}
                 type="button"
                 className={cn(
-                  "settings-shortcut-capture",
-                  !captureReady && "is-waiting",
-                  captureStatus === "available" && "is-available",
-                  captureStatus === "conflict" && "is-conflict",
-                  captureStatus === "reserved" && "is-reserved",
+                  mx(styles, "settings-shortcut-capture"),
+                  !captureReady && mx(styles, "is-waiting"),
+                  captureStatus === "available" && mx(styles, "is-available"),
+                  captureStatus === "conflict" && mx(styles, "is-conflict"),
+                  captureStatus === "reserved" && mx(styles, "is-reserved"),
                 )}
                 onKeyDown={handleCaptureKeyDown}
                 onKeyUp={handleCaptureKeyUp}
@@ -498,23 +500,23 @@ export function KeyboardShortcutsSection() {
                 disabled={!captureReady}
                 autoFocus={captureReady}
               >
-                <span className="settings-shortcut-capture-label">
+                <span className={mx(styles, "settings-shortcut-capture-label")}>
                   {captureReady
                     ? t("shortcuts.pressKeys")
                     : t("shortcuts.pickActionFirst")}
                 </span>
                 {editorActionId ? (
-                  <span className="settings-shortcut-capture-action">
+                  <span className={mx(styles, "settings-shortcut-capture-action")}>
                     {t(`shortcuts.actions.${editorActionId}`)}
                   </span>
                 ) : null}
-                <kbd className="settings-kbd settings-kbd-lg">
+                <kbd className={mx(styles, "settings-kbd settings-kbd-lg")}>
                   {displayLabel ?? "—"}
                 </kbd>
               </button>
 
               {captureStatus === "available" && draft ? (
-                <p className="settings-shortcut-status is-ok">
+                <p className={mx(styles, "settings-shortcut-status is-ok")}>
                   {t("shortcuts.statusAvailable", {
                     keys: formatChord(draft, platform),
                   })}
@@ -522,7 +524,7 @@ export function KeyboardShortcutsSection() {
               ) : null}
 
               {captureStatus === "conflict" && conflict && draft ? (
-                <p className="settings-shortcut-status is-warn">
+                <p className={mx(styles, "settings-shortcut-status is-warn")}>
                   {t("shortcuts.statusConflict", {
                     keys: formatChord(draft, platform),
                     action: t(`shortcuts.actions.${conflict.id}`),
@@ -531,33 +533,33 @@ export function KeyboardShortcutsSection() {
               ) : null}
 
               {captureStatus === "reserved" && draft ? (
-                <p className="settings-shortcut-status is-error">
+                <p className={mx(styles, "settings-shortcut-status is-error")}>
                   {t("shortcuts.statusReserved", {
                     keys: formatChord(draft, platform),
                   })}
                 </p>
               ) : null}
 
-              <aside className="settings-shortcut-reserved">
-                <p className="settings-shortcut-reserved-title">
+              <aside className={mx(styles, "settings-shortcut-reserved")}>
+                <p className={mx(styles, "settings-shortcut-reserved-title")}>
                   {t("shortcuts.reservedTitle")}
                 </p>
-                <p className="settings-shortcut-reserved-lede">
+                <p className={mx(styles, "settings-shortcut-reserved-lede")}>
                   {t("shortcuts.reservedDescription")}
                 </p>
-                <div className="settings-shortcut-reserved-sections">
+                <div className={mx(styles, "settings-shortcut-reserved-sections")}>
                   {reservedSections.map((section) => (
                     <div
                       key={section.group}
-                      className="settings-shortcut-reserved-section"
+                      className={mx(styles, "settings-shortcut-reserved-section")}
                     >
-                      <p className="settings-shortcut-reserved-section-title">
+                      <p className={mx(styles, "settings-shortcut-reserved-section-title")}>
                         {section.title}
                       </p>
-                      <ul className="settings-shortcut-reserved-list">
+                      <ul className={mx(styles, "settings-shortcut-reserved-list")}>
                         {section.items.map((item) => (
                           <li key={`${section.group}-${item.purposeKey}`}>
-                            <kbd className="settings-kbd settings-kbd-sm">
+                            <kbd className={mx(styles, "settings-kbd settings-kbd-sm")}>
                               {item.keys}
                             </kbd>
                             <span>{item.purpose}</span>

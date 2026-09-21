@@ -18,10 +18,13 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import featureStyles from "@/components/style/speaking/session.module.css";
+import sheetStyles from "@/components/style/workspace/sheet.module.css";
 import {
   deleteListeningLesson,
   processListeningLesson,
 } from "@/lib/actions/listening";
+import { mx } from "@/lib/css-module";
 import { isListeningErrorCode } from "@/lib/listening/errors";
 import type { ListeningLessonDetail } from "@/lib/listening/types";
 import { formatListeningDuration } from "@/lib/listening/utils";
@@ -170,7 +173,7 @@ export function ListeningLessonView({
 
         <div className="mt-8 flex flex-col gap-4">
           {lesson.status === "FAILED" && !ready ? (
-            <div className="listening-status-strip is-error">
+            <div className={mx(featureStyles, "listening-status-strip is-error")}>
               {lesson.errorCode && isListeningErrorCode(lesson.errorCode)
                 ? t(`errors.${lesson.errorCode}`)
                 : t("errors.PROCESSING_FAILED")}
@@ -178,14 +181,14 @@ export function ListeningLessonView({
           ) : null}
 
           {processing ? (
-            <div className="listening-status-strip">
+            <div className={mx(featureStyles, "listening-status-strip")}>
               <Loader2 className="size-4 animate-spin" />
               {t(`steps.${lesson.status.toLowerCase()}`)}
             </div>
           ) : null}
 
           {ready ? (
-            <div className="listening-practice-stage">
+            <div className={mx(featureStyles, "listening-practice-stage")}>
               <ListeningPracticeSession lesson={lesson} />
             </div>
           ) : (
@@ -210,23 +213,23 @@ export function ListeningLessonView({
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <DialogContent
           showCloseButton={!isPending && !isLeaving}
-          className="workspace-sheet sm:max-w-md"
+          className={mx(sheetStyles, "workspace-sheet sm:max-w-md")}
           data-sheet-route="listen"
         >
-          <DialogHeader className="workspace-sheet-header gap-2 space-y-0 pr-8 text-left">
-            <p className="workspace-sheet-kicker">{t("title")}</p>
-            <DialogTitle className="workspace-sheet-title">
+          <DialogHeader className={mx(sheetStyles, "workspace-sheet-header gap-2 space-y-0 pr-8 text-left")}>
+            <p className={mx(sheetStyles, "workspace-sheet-kicker")}>{t("title")}</p>
+            <DialogTitle className={mx(sheetStyles, "workspace-sheet-title")}>
               {t("deleteConfirmTitle")}
             </DialogTitle>
-            <DialogDescription className="workspace-sheet-lede">
+            <DialogDescription className={mx(sheetStyles, "workspace-sheet-lede")}>
               {t("deleteConfirmDescription", { title: lesson.title })}
             </DialogDescription>
           </DialogHeader>
-          <div className="workspace-sheet-footer">
+          <div className={mx(sheetStyles, "workspace-sheet-footer")}>
             <Button
               type="button"
               variant="outline"
-              className="workspace-sheet-cancel"
+              className={mx(sheetStyles, "workspace-sheet-cancel")}
               onClick={() => setDeleteOpen(false)}
               disabled={isPending || isLeaving}
             >
@@ -235,7 +238,7 @@ export function ListeningLessonView({
             <Button
               type="button"
               variant="destructive"
-              className="workspace-sheet-cta"
+              className={mx(sheetStyles, "workspace-sheet-cta")}
               onClick={handleDelete}
               disabled={isPending || isLeaving}
             >

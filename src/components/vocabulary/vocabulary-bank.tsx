@@ -1,5 +1,7 @@
 "use client";
 
+import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
+import { mx } from "@/lib/css-module";
 import { format } from "date-fns";
 import { Download, Plus } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -188,7 +190,7 @@ export function VocabularyBank({
 
   return (
     <PageShell className="vocab-lexicon-shell">
-      <div className="vocab-lexicon writing-atelier flex flex-col gap-10 lg:gap-12">
+      <div className={mx(featureStyles, "vocab-lexicon writing-atelier flex flex-col gap-10 lg:gap-12")}>
         <header className="writing-hero">
           <div className="writing-hero-copy">
             <p className="writing-kicker">{workspaceName}</p>

@@ -1,0 +1,325 @@
+/* —— Pro upgrade sheet —— */
+.pro-upgrade-sheet {
+  overflow: hidden;
+  border-radius: 1.35rem;
+  border-color: color-mix(
+    in oklab,
+    var(--accent-lime) 22%,
+    var(--hairline-cloud)
+  );
+  background: linear-gradient(
+    165deg,
+    color-mix(in oklab, var(--accent-soft) 55%, var(--popover)) 0%,
+    var(--popover) 38%
+  );
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--accent-lime) 10%, transparent),
+    0 28px 56px color-mix(in oklab, var(--ink) 14%, transparent);
+}
+
+.pro-upgrade-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  padding: 1.35rem 1.35rem 1.1rem;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--accent-lime) 14%, var(--hairline-cloud));
+}
+
+.pro-upgrade-kicker {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--accent-lime) 72%, var(--ink));
+}
+
+.pro-upgrade-title {
+  font-family: var(--font-heading);
+  font-size: clamp(1.45rem, 2.4vw, 1.85rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.12;
+  color: var(--ink);
+}
+
+.pro-upgrade-lede {
+  max-width: 36rem;
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+.pro-upgrade-plans {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.7rem;
+}
+
+@media (min-width: 640px) {
+  .pro-upgrade-plans {
+    grid-template-columns: 1fr 1.15fr;
+    gap: 0.85rem;
+  }
+}
+
+.pro-upgrade-plan {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.95rem 1rem 1rem;
+  border-radius: 1rem;
+  border: 1px solid var(--hairline-cloud);
+  background: color-mix(in oklab, var(--surface) 88%, transparent);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    transform 160ms ease;
+}
+
+.pro-upgrade-plan.is-featured {
+  border-color: color-mix(
+    in oklab,
+    var(--accent-lime) 55%,
+    var(--hairline-cloud)
+  );
+  background: linear-gradient(
+    160deg,
+    color-mix(in oklab, var(--accent-soft) 70%, var(--surface-elevated)) 0%,
+    var(--surface-elevated) 70%
+  );
+  box-shadow: 0 10px 28px
+    color-mix(in oklab, var(--accent-lime) 16%, transparent);
+}
+
+.pro-upgrade-plan.is-current:not(.is-featured) {
+  border-color: color-mix(in oklab, var(--ink) 22%, var(--hairline-cloud));
+}
+
+.pro-upgrade-plan-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.pro-upgrade-plan-name {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+}
+
+.pro-upgrade-plan-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  padding: 0.18rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid var(--hairline-cloud);
+  background: var(--surface-elevated);
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  white-space: nowrap;
+}
+
+.pro-upgrade-plan-badge.is-popular {
+  border-color: color-mix(in oklab, var(--accent-lime) 40%, transparent);
+  background: color-mix(
+    in oklab,
+    var(--accent-lime) 18%,
+    var(--surface-elevated)
+  );
+  color: var(--ink);
+}
+
+.pro-upgrade-plan-price {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.4rem 0.55rem;
+}
+
+.pro-upgrade-plan-amount {
+  font-family: var(--font-heading);
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.pro-upgrade-plan-period {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--muted-foreground);
+}
+
+.pro-upgrade-plan-copy {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+.pro-upgrade-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  padding: 1rem 1.35rem 0.35rem;
+}
+
+.pro-upgrade-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.pro-upgrade-section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: 0.75rem;
+  padding: 0 0.15rem;
+}
+
+.pro-upgrade-section-label {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.pro-upgrade-col-labels {
+  display: grid;
+  grid-template-columns: 2.4rem 2.4rem;
+  gap: 0.35rem;
+  text-align: center;
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.pro-upgrade-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  overflow: hidden;
+  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+  border-radius: 0.95rem;
+  background: color-mix(in oklab, var(--surface-elevated) 92%, transparent);
+}
+
+.pro-upgrade-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.72rem 0.85rem;
+  border-top: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 70%, transparent);
+}
+
+.pro-upgrade-row:first-child {
+  border-top: 0;
+}
+
+.pro-upgrade-row-label {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.35;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.pro-upgrade-row-marks {
+  display: grid;
+  grid-template-columns: 2.4rem 2.4rem;
+  gap: 0.35rem;
+  justify-items: center;
+}
+
+.pro-upgrade-mark {
+  display: inline-flex;
+  width: 1.65rem;
+  height: 1.65rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+}
+
+.pro-upgrade-mark.is-yes {
+  background: color-mix(in oklab, var(--accent-lime) 22%, transparent);
+  color: color-mix(in oklab, var(--accent-lime) 35%, var(--ink));
+}
+
+.pro-upgrade-mark.is-locked {
+  background: color-mix(in oklab, var(--muted) 70%, transparent);
+  color: var(--muted-foreground);
+}
+
+.pro-upgrade-footer {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.95rem 1.35rem 1.2rem;
+  border-top: 1px solid
+    color-mix(in oklab, var(--accent-lime) 12%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--surface) 55%, var(--popover));
+}
+
+.pro-upgrade-actions {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+}
+
+@media (min-width: 640px) {
+  .pro-upgrade-actions {
+    grid-template-columns: minmax(7rem, 0.7fr) minmax(0, 1.3fr);
+    gap: 0.7rem;
+  }
+}
+
+.pro-upgrade-cta {
+  width: 100%;
+}
+
+.pro-upgrade-cancel {
+  width: 100%;
+}
+
+.pro-upgrade-fineprint {
+  margin: 0;
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--muted-foreground);
+}
+
+:global(.dark) .pro-upgrade-sheet {
+  background: linear-gradient(
+    165deg,
+    color-mix(in oklab, var(--accent-lime) 10%, var(--popover)) 0%,
+    var(--popover) 42%
+  );
+}
+
+:global(.dark) .pro-upgrade-plan.is-featured {
+  background: linear-gradient(
+    160deg,
+    color-mix(in oklab, var(--accent-lime) 14%, var(--surface-elevated)) 0%,
+    var(--surface-elevated) 75%
+  );
+}

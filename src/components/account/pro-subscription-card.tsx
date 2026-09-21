@@ -1,5 +1,7 @@
 "use client";
 
+import styles from "@/components/style/account/account.module.css";
+import { mx } from "@/lib/css-module";
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
@@ -94,23 +96,23 @@ export function ProSubscriptionCard({
 
   return (
     <>
-      <section className="account-panel account-panel-pro">
-        <header className="account-panel-head">
+      <section className={mx(styles, "account-panel account-panel-pro")}>
+        <header className={mx(styles, "account-panel-head")}>
           <div className="flex flex-wrap items-center gap-2">
-            <h2 className="account-panel-title">{t("title")}</h2>
+            <h2 className={mx(styles, "account-panel-title")}>{t("title")}</h2>
             <Badge variant={billing.isPro ? "pro" : "outline"}>
               {billing.isPro ? t("proBadge") : t("freeBadge")}
             </Badge>
           </div>
-          <p className="account-panel-lede">
+          <p className={mx(styles, "account-panel-lede")}>
             {billing.isPro ? tAccount("activeLede") : tAccount("freeLede")}
           </p>
         </header>
 
-        <div className="account-panel-body account-pro-body">
-          <div className="account-pro-row">
+        <div className={mx(styles, "account-panel-body account-pro-body")}>
+          <div className={mx(styles, "account-pro-row")}>
             <div className="space-y-1">
-              <p className="account-pro-price">{t("price")}</p>
+              <p className={mx(styles, "account-pro-price")}>{t("price")}</p>
               {billing.isPro && periodEnd ? (
                 <p className="text-sm text-muted-foreground">
                   {t("renewsOn", { date: periodEnd })}
@@ -146,19 +148,19 @@ export function ProSubscriptionCard({
             )}
           </div>
 
-          <div className="account-pro-features">
-            <p className="account-pro-features-label">
+          <div className={mx(styles, "account-pro-features")}>
+            <p className={mx(styles, "account-pro-features-label")}>
               {billing.isPro
                 ? tAccount("includedLabel")
                 : tAccount("unlockLabel")}
             </p>
-            <ul className="account-pro-feature-list">
+            <ul className={mx(styles, "account-pro-feature-list")}>
               {PRO_FEATURES.map((id) => (
                 <ProFeatureRow key={id} id={id} />
               ))}
             </ul>
             {!billing.isPro ? (
-              <p className="account-pro-fineprint">{t("cancelAnytime")}</p>
+              <p className={mx(styles, "account-pro-fineprint")}>{t("cancelAnytime")}</p>
             ) : null}
           </div>
         </div>
@@ -173,15 +175,15 @@ function ProFeatureRow({ id }: { id: ProFeatureId }) {
   const tAccount = useTranslations("account.pro.features");
 
   return (
-    <li className="account-pro-feature">
-      <span className="account-pro-feature-mark" aria-hidden>
+    <li className={mx(styles, "account-pro-feature")}>
+      <span className={mx(styles, "account-pro-feature-mark")} aria-hidden>
         <Check className="size-3.5" strokeWidth={2.5} />
       </span>
       <div>
-        <p className="account-pro-feature-title">
+        <p className={mx(styles, "account-pro-feature-title")}>
           {tBilling(`${id}.capability`)}
         </p>
-        <p className="account-pro-feature-impact">{tAccount(id)}</p>
+        <p className={mx(styles, "account-pro-feature-impact")}>{tAccount(id)}</p>
       </div>
     </li>
   );

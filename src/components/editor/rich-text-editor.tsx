@@ -45,6 +45,7 @@ import {
   coerceHeadingLevel,
   normalizeTipTapHeadingLevels,
 } from "@/lib/editor/heading-level";
+import "@/components/style/editor/tiptap.module.css";
 import { cn } from "@/lib/utils";
 
 const lowlight = createLowlight(common);

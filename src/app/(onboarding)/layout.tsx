@@ -1,5 +1,7 @@
 import { redirect } from "next/navigation";
+import styles from "@/components/style/onboarding/learning-language.module.css";
 import { requireUser } from "@/lib/auth/session";
+import { mx } from "@/lib/css-module";
 
 export default async function OnboardingLayout({
   children,
@@ -12,5 +14,5 @@ export default async function OnboardingLayout({
     redirect("/sign-in?callbackUrl=/onboarding");
   }
 
-  return <div className="onboarding-layout">{children}</div>;
+  return <div className={mx(styles, "onboarding-layout")}>{children}</div>;
 }

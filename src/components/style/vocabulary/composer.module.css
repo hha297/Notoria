@@ -1,0 +1,242 @@
+.vocab-composer {
+  --composer-word: var(--module-vocab-fg);
+  --composer-meaning: var(--success);
+  --composer-example: var(--module-writing-fg);
+  --composer-extra: var(--module-listen-fg);
+  min-width: 0;
+  overflow: visible;
+}
+
+.vocab-composer-hero,
+.vocab-composer-section {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  background: none;
+}
+
+.vocab-composer-hero::before,
+.vocab-composer-section::before {
+  content: "";
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  -webkit-mask-image:
+    linear-gradient(
+      to right,
+      transparent 0%,
+      #000 16%,
+      #000 84%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 18%,
+      #000 78%,
+      transparent 100%
+    );
+  -webkit-mask-composite: source-in;
+  mask-image:
+    linear-gradient(
+      to right,
+      transparent 0%,
+      #000 16%,
+      #000 84%,
+      transparent 100%
+    ),
+    linear-gradient(
+      to bottom,
+      transparent 0%,
+      #000 18%,
+      #000 78%,
+      transparent 100%
+    );
+  mask-composite: intersect;
+}
+
+.vocab-composer-hero::before {
+  inset: -8% -5%;
+  background: radial-gradient(
+    ellipse 48% 90% at 10% 32%,
+    color-mix(in oklab, var(--module-vocab-bg) 52%, transparent),
+    transparent 72%
+  );
+}
+
+.vocab-composer-hero > *,
+.vocab-composer-section > * {
+  position: relative;
+  z-index: 1;
+}
+
+.vocab-composer-lang {
+  border: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 22%, transparent);
+  background: color-mix(in oklab, var(--module-vocab-bg) 22%, transparent);
+}
+
+.vocab-composer-section {
+  animation: vocab-composer-in 0.42s ease both;
+}
+
+.vocab-composer-section[data-composer="word"] {
+  --composer-accent: var(--composer-word);
+  animation-delay: 0.04s;
+}
+
+.vocab-composer-section[data-composer="meaning"] {
+  --composer-accent: var(--composer-meaning);
+  animation-delay: 0.1s;
+}
+
+.vocab-composer-section[data-composer="example"] {
+  --composer-accent: var(--composer-example);
+  animation-delay: 0.16s;
+}
+
+.vocab-composer-section[data-composer="extra"] {
+  --composer-accent: var(--composer-extra);
+  animation-delay: 0.22s;
+}
+
+.vocab-composer-section::before {
+  inset: -12% -8%;
+  background: radial-gradient(
+    ellipse 38% 60% at 8% 8%,
+    color-mix(in oklab, var(--composer-accent) 26%, transparent),
+    transparent 70%
+  );
+}
+
+.vocab-composer-kicker {
+  color: var(--composer-accent);
+}
+
+.vocab-composer-control {
+  height: 3.5rem !important;
+  min-height: 3.5rem !important;
+  box-sizing: border-box;
+}
+
+.vocab-composer-control[data-slot="select-trigger"] {
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+@media (min-width: 640px) {
+  .vocab-composer-control {
+    height: 4rem !important;
+    min-height: 4rem !important;
+  }
+}
+
+.vocab-composer-word-field {
+  border-color: color-mix(in oklab, var(--composer-word) 28%, transparent);
+  background: color-mix(in oklab, var(--module-vocab-bg) 18%, transparent);
+  transition:
+    border-color 0.2s ease,
+    box-shadow 0.2s ease,
+    background-color 0.2s ease;
+}
+
+.vocab-composer-word-field:hover {
+  border-color: color-mix(in oklab, var(--composer-word) 42%, transparent);
+}
+
+.vocab-composer-word-field:focus-visible {
+  border-color: var(--composer-word);
+  box-shadow: 0 0 0 3px
+    color-mix(in oklab, var(--composer-word) 18%, transparent);
+  background: color-mix(in oklab, var(--module-vocab-bg) 24%, transparent);
+}
+
+.vocab-composer-word-ok:not(:focus-visible) {
+  border-color: color-mix(in oklab, var(--success) 45%, transparent);
+}
+
+.vocab-composer-item {
+  border: 1px solid
+    color-mix(in oklab, var(--composer-accent) 22%, transparent);
+  background: radial-gradient(
+    ellipse 88% 140% at 8% 50%,
+    color-mix(in oklab, var(--composer-accent) 12%, transparent),
+    transparent 72%
+  );
+  transition: border-color 0.2s ease;
+}
+
+.vocab-composer-item:focus-within {
+  border-color: color-mix(in oklab, var(--composer-accent) 42%, transparent);
+}
+
+.vocab-composer-item-primary {
+  border-color: color-mix(in oklab, var(--accent-lime) 45%, transparent);
+  background: radial-gradient(
+    ellipse 88% 140% at 8% 50%,
+    color-mix(in oklab, var(--accent-lime) 14%, transparent),
+    transparent 72%
+  );
+}
+
+.vocab-composer-panel {
+  border: 1px solid
+    color-mix(in oklab, var(--composer-accent) 22%, transparent);
+  background: radial-gradient(
+    ellipse 80% 70% at 8% 0%,
+    color-mix(in oklab, var(--composer-accent) 10%, transparent),
+    transparent 72%
+  );
+}
+
+.vocab-composer-ai {
+  border: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 28%, transparent);
+  background: color-mix(in oklab, var(--module-vocab-bg) 28%, transparent);
+}
+
+.vocab-composer-submit {
+  box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 0%, transparent);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.2s ease,
+    background-color 0.15s ease;
+}
+
+.vocab-composer-submit:hover:not(:disabled) {
+  box-shadow: 0 8px 24px color-mix(in oklab, var(--primary) 22%, transparent);
+}
+
+.vocab-composer-actions {
+  background: color-mix(in oklab, var(--background) 78%, transparent);
+  backdrop-filter: blur(12px);
+}
+
+@keyframes vocab-composer-in {
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (min-width: 640px) {
+  .vocab-composer-actions {
+    background: none;
+    backdrop-filter: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .vocab-composer-section,
+  .vocab-composer-hero,
+  .vocab-composer-submit,
+  .vocab-composer-word-field,
+  .vocab-composer-item {
+    animation: none;
+    transition: none;
+  }
+}

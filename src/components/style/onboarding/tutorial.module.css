@@ -1,0 +1,298 @@
+/* Soft translucent veil: theme-tinted, background stays visible. */
+:is(.tutorial-spotlight-cutout, .tutorial-backdrop) {
+  --tutorial-veil-tint: color-mix(
+    in oklab,
+    var(--ink) 62%,
+    var(--tutorial-accent-bg, var(--accent-soft))
+  );
+  --tutorial-veil: color-mix(
+    in oklab,
+    var(--tutorial-veil-tint) 28%,
+    transparent
+  );
+}
+
+@keyframes tutorial-pulse {
+  0%,
+  100% {
+    box-shadow:
+      0 0 0 9999px var(--tutorial-veil),
+      0 0 0 0
+        color-mix(
+          in oklab,
+          var(--tutorial-accent-fg, var(--accent-lime)) 22%,
+          transparent
+        );
+  }
+
+  50% {
+    box-shadow:
+      0 0 0 9999px var(--tutorial-veil),
+      0 0 0 3px
+        color-mix(
+          in oklab,
+          var(--tutorial-accent-fg, var(--accent-lime)) 16%,
+          transparent
+        );
+  }
+}
+
+.tutorial-spotlight-cutout {
+  border-radius: 0.85rem;
+  box-shadow: 0 0 0 9999px var(--tutorial-veil);
+  outline: 2px solid
+    color-mix(
+      in oklab,
+      var(--tutorial-accent-fg, var(--accent-lime)) 65%,
+      transparent
+    );
+  outline-offset: 0;
+  animation: tutorial-pulse 2.4s ease-in-out infinite;
+}
+
+.tutorial-backdrop {
+  background: var(--tutorial-veil);
+  backdrop-filter: blur(2px) saturate(1.04);
+}
+
+.tutorial-sheet {
+  --tutorial-accent-fg: var(--accent-lime);
+  --tutorial-accent-bg: var(--accent-soft);
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  padding: 1.15rem 1.2rem 1.1rem;
+  border-radius: 1.25rem;
+  border: 1px solid
+    color-mix(in oklab, var(--tutorial-accent-fg) 18%, var(--hairline-cloud));
+  background: linear-gradient(
+    165deg,
+    color-mix(in oklab, var(--tutorial-accent-bg) 42%, var(--popover)) 0%,
+    var(--popover) 46%
+  );
+  color: var(--popover-foreground);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--tutorial-accent-fg) 8%, transparent),
+    0 24px 48px color-mix(in oklab, var(--ink) 16%, transparent);
+}
+
+.tutorial-sheet[data-tutorial-section="vocabulary"],
+.tutorial-sheet[data-tutorial-section="vocabularyAdd"],
+.tutorial-spotlight-cutout[data-tutorial-section="vocabulary"],
+.tutorial-spotlight-cutout[data-tutorial-section="vocabularyAdd"] {
+  --tutorial-accent-fg: var(--module-vocab-fg);
+  --tutorial-accent-bg: var(--module-vocab-bg);
+}
+
+.tutorial-sheet[data-tutorial-section="theory"],
+.tutorial-spotlight-cutout[data-tutorial-section="theory"] {
+  --tutorial-accent-fg: var(--module-theory-fg);
+  --tutorial-accent-bg: var(--module-theory-bg);
+}
+
+.tutorial-sheet[data-tutorial-section="exercise"],
+.tutorial-spotlight-cutout[data-tutorial-section="exercise"] {
+  --tutorial-accent-fg: var(--module-exercise-fg);
+  --tutorial-accent-bg: var(--module-exercise-bg);
+}
+
+.tutorial-sheet[data-tutorial-section="writing"],
+.tutorial-spotlight-cutout[data-tutorial-section="writing"] {
+  --tutorial-accent-fg: var(--module-writing-fg);
+  --tutorial-accent-bg: var(--module-writing-bg);
+}
+
+.tutorial-sheet[data-tutorial-section="listening"],
+.tutorial-spotlight-cutout[data-tutorial-section="listening"] {
+  --tutorial-accent-fg: var(--module-listen-fg);
+  --tutorial-accent-bg: var(--module-listen-bg);
+}
+
+.tutorial-sheet[data-tutorial-section="speaking"],
+.tutorial-spotlight-cutout[data-tutorial-section="speaking"] {
+  --tutorial-accent-fg: var(--module-speak-fg);
+  --tutorial-accent-bg: var(--module-speak-bg);
+}
+
+.tutorial-sheet-arrow {
+  border: 1px solid
+    color-mix(in oklab, var(--tutorial-accent-fg) 18%, var(--hairline-cloud));
+  background: var(--popover);
+}
+
+.tutorial-sheet-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+}
+
+.tutorial-sheet-icon {
+  display: inline-flex;
+  width: 2.35rem;
+  height: 2.35rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.8rem;
+  border: 1px solid
+    color-mix(in oklab, var(--tutorial-accent-fg) 28%, transparent);
+  background: color-mix(in oklab, var(--tutorial-accent-bg) 55%, transparent);
+  color: var(--tutorial-accent-fg);
+}
+
+.tutorial-sheet-heading {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.tutorial-sheet-kicker {
+  margin: 0;
+  font-size: 0.65rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--tutorial-accent-fg);
+}
+
+.tutorial-sheet-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.tutorial-sheet-progress {
+  margin: 0;
+  font-size: 0.75rem;
+  color: var(--muted-foreground);
+}
+
+.tutorial-sheet-step {
+  padding: 0.85rem 0.95rem;
+  border-radius: 0.95rem;
+  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+  background: transparent;
+}
+
+.tutorial-sheet-step-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.tutorial-sheet-step-body {
+  margin: 0.45rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+.tutorial-sheet-dots {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+}
+
+.tutorial-sheet-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--ink) 18%, transparent);
+  transition:
+    background-color 160ms ease,
+    transform 160ms ease,
+    width 160ms ease;
+}
+
+.tutorial-sheet-dot.is-active {
+  width: 1rem;
+  background: var(--tutorial-accent-fg);
+}
+
+.tutorial-sheet-footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  padding-top: 0.85rem;
+  border-top: 1px solid
+    color-mix(in oklab, var(--tutorial-accent-fg) 12%, var(--hairline-cloud));
+}
+
+.tutorial-sheet-skip,
+.tutorial-sheet-cta {
+  width: 100%;
+}
+
+.tutorial-sheet-skip {
+  background: transparent;
+  border-color: var(--hairline-cloud);
+}
+
+:global(.dark) .tutorial-sheet {
+  background: linear-gradient(
+    165deg,
+    color-mix(in oklab, var(--tutorial-accent-fg) 10%, var(--popover)) 0%,
+    var(--popover) 48%
+  );
+}
+
+/* Route “show tutorial” control — owned by onboarding, section-tinted via data attrs. */
+.route-tutorial-btn {
+  --route-tutorial-fg: var(--module-home-fg);
+  --route-tutorial-bg: var(--module-home-bg);
+  height: 2rem;
+  border: 1px solid var(--hairline-cloud) !important;
+  border-radius: 0.45rem;
+  background: transparent !important;
+  color: var(--ink) !important;
+  box-shadow: none !important;
+}
+
+.route-tutorial-btn:hover:not(:disabled) {
+  border-color: color-mix(
+    in oklab,
+    var(--route-tutorial-fg) 48%,
+    var(--hairline-cloud)
+  ) !important;
+  background: var(--route-tutorial-bg) !important;
+  color: var(--route-tutorial-fg) !important;
+}
+
+.route-tutorial-btn[data-tutorial-section="vocabulary"],
+.route-tutorial-btn[data-tutorial-section="vocabularyAdd"] {
+  --route-tutorial-fg: var(--module-vocab-fg);
+  --route-tutorial-bg: var(--module-vocab-bg);
+}
+
+.route-tutorial-btn[data-tutorial-section="writing"] {
+  --route-tutorial-fg: var(--module-writing-fg);
+  --route-tutorial-bg: var(--module-writing-bg);
+}
+
+.route-tutorial-btn[data-tutorial-section="theory"] {
+  --route-tutorial-fg: var(--module-theory-fg);
+  --route-tutorial-bg: var(--module-theory-bg);
+}
+
+.route-tutorial-btn[data-tutorial-section="exercise"] {
+  --route-tutorial-fg: var(--module-exercise-fg);
+  --route-tutorial-bg: var(--module-exercise-bg);
+}
+
+.route-tutorial-btn[data-tutorial-section="listening"] {
+  --route-tutorial-fg: var(--module-listen-fg);
+  --route-tutorial-bg: var(--module-listen-bg);
+}
+
+.route-tutorial-btn[data-tutorial-section="speaking"] {
+  --route-tutorial-fg: var(--module-speak-fg);
+  --route-tutorial-bg: var(--module-speak-bg);
+}

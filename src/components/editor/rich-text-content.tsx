@@ -13,6 +13,7 @@ import {
   normalizeTipTapHeadingLevels,
 } from "@/lib/editor/heading-level";
 import { renderBlock } from "@/lib/editor/render-document";
+import "@/components/style/editor/tiptap.module.css";
 import { cn } from "@/lib/utils";
 
 type RichTextContentProps = {

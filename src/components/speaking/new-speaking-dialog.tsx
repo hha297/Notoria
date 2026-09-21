@@ -17,7 +17,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { WritingChipPicker } from "@/components/writing/writing-chip-picker";
+import styles from "@/components/style/workspace/sheet.module.css";
 import { createSpeakingSession } from "@/lib/actions/speaking";
+import { mx } from "@/lib/css-module";
 import { isSpeakingErrorCode } from "@/lib/speaking/errors";
 import {
   DEFAULT_TOPIC_ID,
@@ -43,7 +45,7 @@ export function NewSpeakingDialog({
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [cefrLevel, setCefrLevel] = useState("b1");
-  const [topic, setTopic] = useState(DEFAULT_TOPIC_ID);
+  const [topic, setTopic] = useState<string>(DEFAULT_TOPIC_ID);
   const [notes, setNotes] = useState("");
   const [isPending, startTransition] = useTransition();
 
@@ -89,27 +91,30 @@ export function NewSpeakingDialog({
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
-        className="workspace-sheet flex max-h-[min(92dvh,calc(100%-2rem))] flex-col gap-0 overflow-hidden p-0 sm:max-w-xl"
+        className={mx(
+          styles,
+          "workspace-sheet flex max-h-[min(92dvh,calc(100%-2rem))] flex-col gap-0 overflow-hidden p-0 sm:max-w-xl",
+        )}
         data-sheet-route="speak"
         showCloseButton={!isPending}
       >
-        <DialogHeader className="workspace-sheet-header gap-2 space-y-0 pr-8 text-left">
-          <p className="workspace-sheet-kicker">{t("title")}</p>
-          <DialogTitle className="workspace-sheet-title">
+        <DialogHeader className={mx(styles, "workspace-sheet-header gap-2 space-y-0 pr-8 text-left")}>
+          <p className={mx(styles, "workspace-sheet-kicker")}>{t("title")}</p>
+          <DialogTitle className={mx(styles, "workspace-sheet-title")}>
             {t("newTitle")}
           </DialogTitle>
-          <DialogDescription className="workspace-sheet-lede">
+          <DialogDescription className={mx(styles, "workspace-sheet-lede")}>
             {t("newDescription")}
           </DialogDescription>
         </DialogHeader>
 
-        <div className="workspace-sheet-body">
-          <p className="workspace-sheet-hint max-w-none">
+        <div className={mx(styles, "workspace-sheet-body")}>
+          <p className={mx(styles, "workspace-sheet-hint max-w-none")}>
             {t("modalTip")}
           </p>
 
-          <div className="workspace-sheet-field">
-            <Label htmlFor="speaking-title" className="workspace-sheet-label">
+          <div className={mx(styles, "workspace-sheet-field")}>
+            <Label htmlFor="speaking-title" className={mx(styles, "workspace-sheet-label")}>
               {t("titleLabel")}{" "}
               <span className="font-normal normal-case tracking-normal text-muted-foreground">
                 ({tc("optional")})
@@ -120,12 +125,12 @@ export function NewSpeakingDialog({
               value={title}
               onChange={(event) => setTitle(event.target.value)}
               placeholder={t("titlePlaceholder")}
-              className="workspace-sheet-input"
+              className={mx(styles, "workspace-sheet-input")}
               disabled={isPending}
             />
           </div>
 
-          <div className="workspace-sheet-field">
+          <div className={mx(styles, "workspace-sheet-field")}>
             <WritingChipPicker
               labelId="speaking-cefr"
               label={tMeta("cefrLabel")}
@@ -138,7 +143,7 @@ export function NewSpeakingDialog({
             />
           </div>
 
-          <div className="workspace-sheet-field">
+          <div className={mx(styles, "workspace-sheet-field")}>
             <WritingChipPicker
               labelId="speaking-topic"
               label={tMeta("topicLabel")}
@@ -151,8 +156,8 @@ export function NewSpeakingDialog({
             />
           </div>
 
-          <div className="workspace-sheet-field">
-            <Label htmlFor="speaking-notes" className="workspace-sheet-label">
+          <div className={mx(styles, "workspace-sheet-field")}>
+            <Label htmlFor="speaking-notes" className={mx(styles, "workspace-sheet-label")}>
               {t("notesLabel")}{" "}
               <span className="font-normal normal-case tracking-normal text-muted-foreground">
                 ({tc("optional")})
@@ -166,16 +171,16 @@ export function NewSpeakingDialog({
               maxLength={2000}
               rows={3}
               disabled={isPending}
-              className="workspace-sheet-input speaking-notes-field"
+              className={mx(styles, "workspace-sheet-input speaking-notes-field")}
             />
           </div>
         </div>
 
-        <div className="workspace-sheet-footer">
+        <div className={mx(styles, "workspace-sheet-footer")}>
           <Button
             type="button"
             variant="outline"
-            className="workspace-sheet-cancel"
+            className={mx(styles, "workspace-sheet-cancel")}
             onClick={() => handleOpenChange(false)}
             disabled={isPending}
           >
@@ -183,7 +188,7 @@ export function NewSpeakingDialog({
           </Button>
           <Button
             type="button"
-            className="workspace-sheet-cta"
+            className={mx(styles, "workspace-sheet-cta")}
             onClick={handleSubmit}
             disabled={isPending}
           >

@@ -9,6 +9,8 @@ import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { EXERCISE_TYPES, type ExerciseTypeSlug } from "@/lib/exercise-types";
+import featureStyles from "@/components/style/exercises/session.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 export function ExerciseTypePicker() {
@@ -67,7 +69,10 @@ function ActivityModule({
   preview: ReactNode;
 }) {
   const className = cn(
-    "activity-module group grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-4 px-1 py-8 sm:px-2 sm:py-10",
+    mx(
+      featureStyles,
+      "activity-module group grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-4 px-1 py-8 sm:px-2 sm:py-10",
+    ),
     "lg:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:gap-x-8",
     "rounded-md transition-colors duration-200",
     "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
@@ -254,7 +259,7 @@ function ActivityPreview({ slug }: { slug: ExerciseTypeSlug }) {
           <span className="truncate text-sm text-muted-foreground">
             {t("types.type-answer.preview")}
           </span>
-          <span className="exercise-caret ml-0.5 inline-block h-4 w-px bg-(--exercise-accent)" />
+          <span className={mx(featureStyles, "exercise-caret ml-0.5 inline-block h-4 w-px bg-(--exercise-accent)")} />
         </div>
       );
 

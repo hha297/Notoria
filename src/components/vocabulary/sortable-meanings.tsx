@@ -33,10 +33,12 @@ import {
   countPrimaryMeanings,
   MAX_PRIMARY_MEANINGS,
 } from "@/lib/vocabulary/primary-meanings";
-import { cn } from "@/lib/utils";
+import { composerStyles } from "@/components/vocabulary/vocabulary-composer";
 import { validateVocabularyMeaning } from "@/lib/actions/vocabulary-ai";
+import { mx } from "@/lib/css-module";
 import { sanitizeMeaningSuggestions } from "@/lib/vocabulary/ai-sanitize";
 import type { VocabularyMeaningResult } from "@/lib/vocabulary/ai-types";
+import { cn } from "@/lib/utils";
 
 const MEANING_DEBOUNCE_MS = 400;
 
@@ -93,11 +95,10 @@ function MeaningRowShell({
   return (
     <div className="space-y-2">
       <div
-        className={cn(
+        className={mx(
+          composerStyles,
           "vocab-composer-item flex min-w-0 items-center gap-2 rounded-md p-2",
-          item.isPrimary
-            ? "vocab-composer-item-primary"
-            : "opacity-95",
+          item.isPrimary ? "vocab-composer-item-primary" : "opacity-95",
         )}
       >
         {dragHandle}
@@ -627,7 +628,12 @@ export function SortableMeanings({
     <div className="space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <div className="space-y-0.5">
-          <label className="vocab-composer-kicker font-heading text-base font-bold tracking-tight">
+          <label
+            className={mx(
+              composerStyles,
+              "vocab-composer-kicker font-heading text-base font-bold tracking-tight",
+            )}
+          >
             {t("meanings")}
           </label>
           <p className="text-xs text-muted-foreground">

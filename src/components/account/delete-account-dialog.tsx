@@ -1,5 +1,7 @@
 "use client";
 
+import styles from "@/components/style/account/account.module.css";
+import { mx } from "@/lib/css-module";
 import { useState, useTransition } from "react";
 import { signOut } from "next-auth/react";
 import { AlertTriangle, Download, Loader2, Trash2 } from "lucide-react";
@@ -88,26 +90,26 @@ export function DeleteAccountDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         showCloseButton={!isDeletePending}
-        className="account-delete-sheet flex max-h-[min(92dvh,720px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-lg"
+        className={mx(styles, "account-delete-sheet flex max-h-[min(92dvh,720px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-lg")}
       >
-        <div className="account-delete-hero shrink-0">
+        <div className={mx(styles, "account-delete-hero shrink-0")}>
           <DialogHeader className="gap-2 space-y-0 pr-8 text-left">
-            <p className="account-delete-kicker">{t("kicker")}</p>
-            <DialogTitle className="account-delete-title">
+            <p className={mx(styles, "account-delete-kicker")}>{t("kicker")}</p>
+            <DialogTitle className={mx(styles, "account-delete-title")}>
               {t("title")}
             </DialogTitle>
-            <DialogDescription className="account-delete-lede">
+            <DialogDescription className={mx(styles, "account-delete-lede")}>
               {t("description", { email })}
             </DialogDescription>
           </DialogHeader>
         </div>
 
-        <div className="account-delete-body min-h-0 flex-1 overflow-y-auto">
-          <div className="account-delete-warning" role="alert">
+        <div className={mx(styles, "account-delete-body min-h-0 flex-1 overflow-y-auto")}>
+          <div className={mx(styles, "account-delete-warning")} role="alert">
             <AlertTriangle className="size-4 shrink-0" aria-hidden />
             <div>
-              <p className="account-delete-warning-title">{t("warningTitle")}</p>
-              <ul className="account-delete-warning-list">
+              <p className={mx(styles, "account-delete-warning-title")}>{t("warningTitle")}</p>
+              <ul className={mx(styles, "account-delete-warning-list")}>
                 <li>{t("warnings.workspaces")}</li>
                 <li>{t("warnings.billing")}</li>
                 <li>{t("warnings.media")}</li>
@@ -116,10 +118,10 @@ export function DeleteAccountDialog({
             </div>
           </div>
 
-          <div className="account-delete-backup">
+          <div className={mx(styles, "account-delete-backup")}>
             <div>
-              <p className="account-delete-backup-title">{t("backupTitle")}</p>
-              <p className="account-delete-backup-hint">{t("backupHint")}</p>
+              <p className={mx(styles, "account-delete-backup-title")}>{t("backupTitle")}</p>
+              <p className={mx(styles, "account-delete-backup-hint")}>{t("backupHint")}</p>
             </div>
             <Button
               type="button"
@@ -138,8 +140,8 @@ export function DeleteAccountDialog({
             </Button>
           </div>
 
-          <div className="account-field">
-            <Label htmlFor="delete-account-confirm" className="account-label">
+          <div className={mx(styles, "account-field")}>
+            <Label htmlFor="delete-account-confirm" className={mx(styles, "account-label")}>
               {t("confirmLabel", { phrase: DELETE_ACCOUNT_CONFIRMATION })}
             </Label>
             <Input
@@ -150,12 +152,12 @@ export function DeleteAccountDialog({
               autoComplete="off"
               spellCheck={false}
               disabled={isDeletePending}
-              className="account-input"
+              className={mx(styles, "account-input")}
             />
           </div>
         </div>
 
-        <DialogFooter className="account-delete-footer shrink-0">
+        <DialogFooter className={mx(styles, "account-delete-footer shrink-0")}>
           <Button
             type="button"
             variant="outline"

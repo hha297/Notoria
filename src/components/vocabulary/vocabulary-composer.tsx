@@ -2,8 +2,12 @@
 
 import type { ReactNode } from "react";
 import { CountryFlag } from "@/components/layout/country-flag";
+import styles from "@/components/style/vocabulary/composer.module.css";
+import { mx } from "@/lib/css-module";
 import { getLanguageByCode } from "@/lib/languages";
 import { cn } from "@/lib/utils";
+
+export { styles as composerStyles };
 
 type VocabularyComposerHeroProps = {
   eyebrow: string;
@@ -27,7 +31,12 @@ export function VocabularyComposerHero({
   const language = languageCode ? getLanguageByCode(languageCode) : undefined;
 
   return (
-    <header className="vocab-composer-hero relative -mx-1 px-1 py-6 sm:py-7">
+    <header
+      className={mx(
+        styles,
+        "vocab-composer-hero relative -mx-1 px-1 py-6 sm:py-7",
+      )}
+    >
       <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
         <div className="min-w-0 space-y-3">
           <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-primary uppercase">
@@ -46,7 +55,12 @@ export function VocabularyComposerHero({
             {description}
           </p>
           {language ? (
-            <p className="vocab-composer-lang mt-1 inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-md px-2.5 py-1.5 text-sm">
+            <p
+              className={mx(
+                styles,
+                "vocab-composer-lang mt-1 inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-md px-2.5 py-1.5 text-sm",
+              )}
+            >
               <span className="text-muted-foreground">{addingToLabel}</span>
               <span className="inline-flex items-center gap-2 font-medium text-ink">
                 <CountryFlag code={language.flagCode} className="h-3.5 w-5" />
@@ -82,7 +96,7 @@ export function VocabularyComposerSection({
     <section
       data-composer={slot}
       data-tutorial={dataTutorial}
-      className={cn("vocab-composer-section", className)}
+      className={cn(mx(styles, "vocab-composer-section"), className)}
     >
       {children}
     </section>

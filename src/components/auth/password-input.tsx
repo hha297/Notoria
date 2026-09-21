@@ -4,6 +4,8 @@ import { useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Input } from "@/components/ui/input";
+import styles from "@/components/style/auth/auth.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 type PasswordInputProps = Omit<
@@ -23,7 +25,7 @@ export function PasswordInput({
   const [visible, setVisible] = useState(false);
 
   return (
-    <div className="auth-password-wrap">
+    <div className={mx(styles, "auth-password-wrap")}>
       <Input
         id={id}
         type={visible ? "text" : "password"}
@@ -36,7 +38,7 @@ export function PasswordInput({
         tabIndex={0}
         disabled={disabled}
         onClick={() => setVisible((current) => !current)}
-        className="auth-password-toggle"
+        className={mx(styles, "auth-password-toggle")}
         aria-label={visible ? t("hidePassword") : t("showPassword")}
         aria-controls={id}
         aria-pressed={visible}

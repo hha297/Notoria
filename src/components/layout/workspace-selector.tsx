@@ -58,45 +58,61 @@ export function WorkspaceSelector({
 
   return (
     <>
-      <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
+      <div className="flex min-w-0 items-center gap-2 sm:gap-2.5">
         {workspaces.length === 0 ? (
           <Button onClick={() => setCreateOpen(true)}>
             <Plus className="size-4" />
             <span className="hidden sm:inline">{t("createWorkspace")}</span>
           </Button>
         ) : (
-          <div className="flex min-w-0 items-center gap-1.5 sm:gap-2">
-            <Select
-              value={active?.id}
-              onValueChange={handleChange}
-              disabled={isPending}
-            >
-              <SelectTrigger
-                className="h-10 w-auto min-w-0 max-w-[9.5rem] bg-surface-elevated sm:max-w-[240px] sm:min-w-[160px]"
+          <>
+            {/* One visual unit: switch active workspace + manage that workspace */}
+            <div className="flex min-w-0 items-center overflow-hidden rounded-md border border-input bg-surface-elevated">
+              <Select
+                value={active?.id}
+                onValueChange={handleChange}
+                disabled={isPending}
               >
-                <SelectValue>
-                  {active && (
-                    <WorkspaceOption
-                      name={active.name}
-                      languageCode={active.language}
-                    />
-                  )}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent className="max-h-72">
-                <SelectGroup>
-                  <SelectLabel>{t("switchWorkspace")}</SelectLabel>
-                  {workspaces.map((workspace) => (
-                    <SelectItem key={workspace.id} value={workspace.id}>
+                <SelectTrigger
+                  className="h-10 w-auto min-w-0 max-w-[9.5rem] rounded-none border-0 bg-transparent shadow-none focus-visible:ring-0 sm:max-w-[220px] sm:min-w-[148px]"
+                >
+                  <SelectValue>
+                    {active && (
                       <WorkspaceOption
-                        name={workspace.name}
-                        languageCode={workspace.language}
+                        name={active.name}
+                        languageCode={active.language}
                       />
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+                    )}
+                  </SelectValue>
+                </SelectTrigger>
+                <SelectContent className="max-h-72">
+                  <SelectGroup>
+                    <SelectLabel>{t("switchWorkspace")}</SelectLabel>
+                    {workspaces.map((workspace) => (
+                      <SelectItem key={workspace.id} value={workspace.id}>
+                        <WorkspaceOption
+                          name={workspace.name}
+                          languageCode={workspace.language}
+                        />
+                      </SelectItem>
+                    ))}
+                  </SelectGroup>
+                </SelectContent>
+              </Select>
+
+              {active ? (
+                <>
+                  <span
+                    aria-hidden
+                    className="h-5 w-px shrink-0 bg-hairline-cloud"
+                  />
+                  <WorkspaceActionsMenu
+                    workspace={active}
+                    workspaces={workspaces}
+                  />
+                </>
+              ) : null}
+            </div>
 
             <Button
               variant="outline"
@@ -107,13 +123,7 @@ export function WorkspaceSelector({
               <Plus className="size-4" />
               <span className="hidden md:inline">{t("createWorkspace")}</span>
             </Button>
-            {active && (
-              <WorkspaceActionsMenu
-                workspace={active}
-                workspaces={workspaces}
-              />
-            )}
-          </div>
+          </>
         )}
       </div>
 

@@ -23,6 +23,8 @@ import { LinkPendingIndicator } from "@/components/layout/link-pending-indicator
 import { SidebarProCta } from "@/components/layout/sidebar-pro-cta";
 import { UserButton } from "@/components/layout/user-button";
 import { Logo, LogoWordmark } from "@/components/ui/logo";
+import navStyles from "@/components/style/layout/nav.module.css";
+import { mx } from "@/lib/css-module";
 import { prefetchDashboardDestination } from "@/lib/query/prefetch";
 import { cn } from "@/lib/utils";
 
@@ -216,9 +218,8 @@ export function SidebarNav({
               const active =
                 !locked && isActivePath(pathname, item.href, item.match);
               const className = cn(
-                "nav-link",
+                mx(navStyles, "nav-link", active && "is-active"),
                 locked && lockedFeatureClassName,
-                active && "is-active",
               );
 
               if (locked) {
@@ -296,7 +297,7 @@ export function FloatingSidebar({
 }: FloatingSidebarProps) {
   return (
     <aside className="sticky top-3 hidden h-fit w-[15.5rem] shrink-0 self-start lg:block">
-      <div className="floating-panel p-2.5">
+      <div className={mx(navStyles, "floating-panel p-2.5")}>
         <SidebarNav workspaceId={workspaceId} {...user} />
       </div>
     </aside>

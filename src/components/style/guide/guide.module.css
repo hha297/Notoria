@@ -1,0 +1,359 @@
+/* --- Guide (How to use) atelier --- */
+.guide-layout {
+  display: grid;
+  gap: 2rem;
+}
+
+@media (min-width: 1024px) {
+  .guide-layout {
+    grid-template-columns: minmax(0, 14rem) minmax(0, 1fr);
+    gap: 0;
+    align-items: start;
+  }
+}
+
+.guide-toc {
+  position: relative;
+}
+
+@media (min-width: 1024px) {
+  .guide-toc {
+    position: sticky;
+    top: 0.5rem;
+    z-index: 2;
+    padding: 0.85rem 1rem 0.85rem 0;
+    margin-right: 0.5rem;
+  }
+}
+
+.guide-toc-title {
+  display: none;
+  margin: 0 0 0.65rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--module-guide-fg);
+}
+
+@media (min-width: 1024px) {
+  .guide-toc-title {
+    display: block;
+  }
+}
+
+.guide-toc-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 1024px) {
+  .guide-toc-list {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    gap: 0.15rem;
+  }
+}
+
+.guide-toc-link {
+  display: inline-block;
+  padding: 0.4rem 0.65rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+  transition:
+    color 140ms ease,
+    background-color 140ms ease;
+}
+
+.guide-toc-link:hover {
+  color: var(--module-guide-fg);
+  background: color-mix(in oklab, var(--module-guide-bg) 55%, transparent);
+}
+
+@media (min-width: 1024px) {
+  .guide-toc-link {
+    display: block;
+    padding: 0.45rem 0.7rem;
+  }
+}
+
+.guide-main {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 2.75rem;
+}
+
+@media (min-width: 1024px) {
+  .guide-main {
+    padding-left: 2rem;
+    border-left: 1px solid
+      color-mix(in oklab, var(--module-guide-fg) 18%, var(--hairline-cloud));
+  }
+}
+
+.guide-hero {
+  margin-bottom: 0.25rem;
+}
+
+.guide-atelier :global(.writing-kicker) {
+  color: var(--module-guide-fg);
+}
+
+.guide-section {
+  scroll-margin-top: 5.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.guide-section-title {
+  margin: 0;
+  padding-bottom: 0.75rem;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--module-guide-fg) 22%, var(--hairline-cloud));
+  font-family: var(--font-heading);
+  font-size: clamp(1.2rem, 1.8vw, 1.45rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.guide-section[data-guide-module] .guide-section-title {
+  border-bottom-color: color-mix(
+    in oklab,
+    var(--guide-module-fg, var(--module-guide-fg)) 28%,
+    var(--hairline-cloud)
+  );
+}
+
+.guide-section[data-guide-module="vocab"] {
+  --guide-module-fg: var(--module-vocab-fg);
+  --guide-module-bg: var(--module-vocab-bg);
+}
+.guide-section[data-guide-module="theory"] {
+  --guide-module-fg: var(--module-theory-fg);
+  --guide-module-bg: var(--module-theory-bg);
+}
+.guide-section[data-guide-module="exercise"] {
+  --guide-module-fg: var(--module-exercise-fg);
+  --guide-module-bg: var(--module-exercise-bg);
+}
+.guide-section[data-guide-module="writing"] {
+  --guide-module-fg: var(--module-writing-fg);
+  --guide-module-bg: var(--module-writing-bg);
+}
+.guide-section[data-guide-module="listen"] {
+  --guide-module-fg: var(--module-listen-fg);
+  --guide-module-bg: var(--module-listen-bg);
+}
+.guide-section[data-guide-module="speak"] {
+  --guide-module-fg: var(--module-speak-fg);
+  --guide-module-bg: var(--module-speak-bg);
+}
+
+.guide-section-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.guide-lead {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 1.55;
+  color: var(--ink);
+}
+
+.guide-body {
+  margin: 0;
+  font-size: 1rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+.guide-bullets {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide-bullet {
+  display: flex;
+  gap: 0.65rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+.guide-bullet-dot {
+  width: 0.4rem;
+  height: 0.4rem;
+  margin-top: 0.55rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--guide-module-fg, var(--module-guide-fg));
+}
+
+.guide-callout {
+  border-radius: 0.95rem;
+  padding: 1.15rem 1.2rem;
+}
+
+.guide-callout.is-dark {
+  background: var(--surface-inverse);
+  color: var(--on-inverse);
+}
+
+.guide-callout.is-soft {
+  background: var(--surface-inverse);
+  color: var(--primary);
+}
+
+.guide-callout-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.guide-step-stack {
+  display: grid;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .guide-step-stack {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.guide-step-card {
+  position: relative;
+  min-width: 0;
+  padding: 1.05rem 1.1rem 1.15rem;
+  border-radius: 0.9rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-guide-fg) 16%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--module-guide-bg) 48%, transparent),
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 40%, transparent);
+}
+
+.guide-step-index {
+  position: absolute;
+  top: 0.9rem;
+  right: 1rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: color-mix(in oklab, var(--module-guide-fg) 75%, transparent);
+}
+
+.guide-step-title {
+  margin: 0;
+  padding-right: 1.5rem;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.guide-step-body {
+  margin: 0.4rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+.guide-example-block {
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+  background: color-mix(in oklab, var(--surface-muted) 45%, transparent);
+  padding: 1rem 1.1rem;
+}
+
+.guide-flow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem 0.65rem;
+  border-radius: 0.95rem;
+  background: var(--surface-inverse);
+  padding: 1.15rem 1rem;
+}
+
+.guide-flow-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.guide-flow-chip {
+  border-radius: 0.45rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  padding: 0.35rem 0.7rem;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.guide-start-panel {
+  border-radius: 0.95rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-guide-fg) 16%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-guide-bg) 50%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 40%, transparent);
+  padding: 1.15rem 1.2rem;
+}
+
+.guide-start-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin: 1rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.guide-start-item {
+  display: flex;
+  gap: 0.75rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+.guide-start-num {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  width: 1.6rem;
+  height: 1.6rem;
+  border-radius: 0.4rem;
+  background: var(--primary);
+  color: var(--primary-foreground);
+  font-size: 0.72rem;
+  font-weight: 700;
+}

@@ -9,7 +9,8 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { cn } from "@/lib/utils";
+import styles from "@/components/style/export/export.module.css";
+import { mx } from "@/lib/css-module";
 
 export type ExportSheetSurface = "writing" | "theory" | "vocabulary";
 
@@ -50,20 +51,27 @@ export function ExportSheet({
     >
       <DialogContent
         showCloseButton={!preventClose}
-        className="export-sheet sm:max-w-lg"
+        className={mx(styles, "export-sheet sm:max-w-lg")}
         data-export-surface={surface}
         data-writing-kind={writingKind}
         data-theory-category={theoryCategory || undefined}
       >
-        <DialogHeader className="export-sheet-header">
-          <p className="export-sheet-kicker">{kicker}</p>
-          <DialogTitle className="export-sheet-title">{title}</DialogTitle>
-          <DialogDescription className="export-sheet-lede">
+        <DialogHeader className={mx(styles, "export-sheet-header")}>
+          <p className={mx(styles, "export-sheet-kicker")}>{kicker}</p>
+          <DialogTitle className={mx(styles, "export-sheet-title")}>
+            {title}
+          </DialogTitle>
+          <DialogDescription className={mx(styles, "export-sheet-lede")}>
             {description}
           </DialogDescription>
         </DialogHeader>
-        <div className="export-sheet-body">{children}</div>
-        <DialogFooter className="export-sheet-footer mx-0 mb-0 rounded-none border-t bg-transparent p-0 pt-3 sm:justify-end">
+        <div className={mx(styles, "export-sheet-body")}>{children}</div>
+        <DialogFooter
+          className={mx(
+            styles,
+            "export-sheet-footer mx-0 mb-0 rounded-none border-t bg-transparent p-0 pt-3 sm:justify-end",
+          )}
+        >
           {footer}
         </DialogFooter>
       </DialogContent>
@@ -81,8 +89,8 @@ export function ExportSheetSection({
   className?: string;
 }) {
   return (
-    <section className={cn("export-sheet-section", className)}>
-      <p className="export-sheet-label">{label}</p>
+    <section className={mx(styles, "export-sheet-section", className)}>
+      <p className={mx(styles, "export-sheet-label")}>{label}</p>
       {children}
     </section>
   );

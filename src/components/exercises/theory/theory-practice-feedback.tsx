@@ -4,6 +4,8 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import featureStyles from "@/components/style/exercises/theory.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 const EASE = [0.22, 1, 0.36, 1] as const;
@@ -81,7 +83,7 @@ export function TheoryPracticeFeedback({
                 {t("lesson.correctForm")}
               </dt>
               <dd className="mt-1">
-                <span className="theory-lesson-term wrap-anywhere">
+                <span className={mx(featureStyles, "theory-lesson-term wrap-anywhere")}>
                   {revealDisplay}
                 </span>
               </dd>

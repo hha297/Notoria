@@ -30,6 +30,8 @@ import {
   isKnownTheoryCategory,
 } from "@/lib/theory/content";
 import { buildPageList } from "@/lib/vocabulary/display";
+import featureStyles from "@/components/style/exercises/theory.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 export type TheoryExerciseCardItem = {
@@ -133,7 +135,7 @@ export function TheoryExercisePicker({ theories }: TheoryExercisePickerProps) {
 
   return (
     <div className="space-y-8" data-exercise="theory">
-      <header className="theory-library-hero relative -mx-1 px-4 py-7 sm:px-6 sm:py-8">
+      <header className={mx(featureStyles, "theory-library-hero relative -mx-1 px-4 py-7 sm:px-6 sm:py-8")}>
         <LibraryDecor />
         <div className="relative flex flex-col gap-5 sm:flex-row sm:items-end sm:justify-between">
           <div className="min-w-0 max-w-2xl space-y-2">
@@ -312,7 +314,7 @@ function TheoryListRow({
       data-theory-category={note.category}
       data-theory-slot={slot}
       data-featured={featured ? "" : undefined}
-      className="theory-library-row group grid gap-4 rounded-md px-4 py-6 sm:grid-cols-[4.25rem_minmax(0,1fr)_auto] sm:items-start sm:gap-x-5 sm:px-5 sm:py-7"
+      className={mx(featureStyles, "theory-library-row group grid gap-4 rounded-md px-4 py-6 sm:grid-cols-[4.25rem_minmax(0,1fr)_auto] sm:items-start sm:gap-x-5 sm:px-5 sm:py-7")}
     >
       <p
         className="font-mono text-[1.7rem] leading-none font-semibold tabular-nums text-(--lesson-row-fg) sm:pt-1 sm:text-[2rem]"
@@ -403,7 +405,7 @@ function TheoryCard({
     <article
       data-theory-category={note.category}
       data-theory-slot={slot}
-      className="theory-library-card group flex h-full flex-col gap-4 rounded-md px-5 py-5"
+      className={mx(featureStyles, "theory-library-card group flex h-full flex-col gap-4 rounded-md px-5 py-5")}
     >
       <div className="flex items-start justify-between gap-3">
         <p
@@ -589,10 +591,10 @@ function PickerPagination({
 
 function LibraryDecor() {
   return (
-    <div aria-hidden className="theory-decor">
-      <span className="theory-blob top-[-30%] left-[-6%] size-40 bg-(--lesson-concept)" />
-      <span className="theory-blob right-[-8%] bottom-[-40%] size-36 bg-(--lesson-explain)" />
-      <span className="theory-diamond top-6 right-8 text-(--lesson-insight)" />
+    <div aria-hidden className={mx(featureStyles, "theory-decor")}>
+      <span className={mx(featureStyles, "theory-blob top-[-30%] left-[-6%] size-40 bg-(--lesson-concept)")} />
+      <span className={mx(featureStyles, "theory-blob right-[-8%] bottom-[-40%] size-36 bg-(--lesson-explain)")} />
+      <span className={mx(featureStyles, "theory-diamond top-6 right-8 text-(--lesson-insight)")} />
     </div>
   );
 }
@@ -607,7 +609,7 @@ function TheoryEmpty({
   children?: ReactNode;
 }) {
   return (
-    <div className="theory-library-hero relative px-6 py-12 text-center sm:py-14">
+    <div className={mx(featureStyles, "theory-library-hero relative px-6 py-12 text-center sm:py-14")}>
       <LibraryDecor />
       <div className="relative flex flex-col items-center">
         <div className="mb-4 flex size-12 items-center justify-center border border-(--lesson-concept)/25 bg-(--lesson-concept-soft)/80">
@@ -629,7 +631,7 @@ export function TheoryExercisePickerLoading() {
       className="space-y-8"
       data-exercise="theory"
     >
-      <div className="theory-library-hero h-36 w-full" />
+      <div className={mx(featureStyles, "theory-library-hero h-36 w-full")} />
       <div className="space-y-3">
         {Array.from({ length: 4 }, (_, index) => (
           <div

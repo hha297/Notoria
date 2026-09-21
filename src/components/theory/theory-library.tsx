@@ -37,7 +37,8 @@ import {
   toggleMultiFilterValue,
   type MultiFilterValue,
 } from "@/lib/filters/multi-select";
-import { cn } from "@/lib/utils";
+import libraryStyles from "@/components/style/theory/library.module.css";
+import { mx } from "@/lib/css-module";
 
 const EMPTY_THEORY_NOTES: TheoryListItem[] = [];
 
@@ -222,7 +223,7 @@ export function TheoryLibrary({
                   </div>
                 </div>
                 <div
-                  className="theory-filter-row"
+                  className={mx(libraryStyles, "theory-filter-row")}
                   data-tutorial="theory-category-filter"
                 >
                   <FilterPill
@@ -316,7 +317,7 @@ function FilterPill({
       type="button"
       onClick={onClick}
       data-theory-category={category}
-      className={cn("theory-filter-pill", active && "is-active")}
+      className={mx(libraryStyles, "theory-filter-pill", active && "is-active")}
     >
       {children}
     </button>

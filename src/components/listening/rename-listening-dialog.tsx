@@ -15,6 +15,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { renameListeningLesson } from "@/lib/actions/listening";
+import styles from "@/components/style/workspace/sheet.module.css";
+import { mx } from "@/lib/css-module";
 import { isListeningErrorCode } from "@/lib/listening/errors";
 import {
   applyListeningFilenameRename,
@@ -97,21 +99,21 @@ export function RenameListeningDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         showCloseButton={!isPending}
-        className="workspace-sheet sm:max-w-md"
+        className={mx(styles, "workspace-sheet sm:max-w-md")}
         data-sheet-route="listen"
       >
-        <DialogHeader className="workspace-sheet-header gap-2 space-y-0 pr-8 text-left">
-          <p className="workspace-sheet-kicker">{t("title")}</p>
-          <DialogTitle className="workspace-sheet-title">
+        <DialogHeader className={mx(styles, "workspace-sheet-header gap-2 space-y-0 pr-8 text-left")}>
+          <p className={mx(styles, "workspace-sheet-kicker")}>{t("title")}</p>
+          <DialogTitle className={mx(styles, "workspace-sheet-title")}>
             {t("renameFileTitle")}
           </DialogTitle>
-          <DialogDescription className="workspace-sheet-lede">
+          <DialogDescription className={mx(styles, "workspace-sheet-lede")}>
             {t("renameFileDescription")}
           </DialogDescription>
         </DialogHeader>
-        <div className="workspace-sheet-body">
-          <div className="workspace-sheet-field">
-            <Label htmlFor="listening-filename" className="workspace-sheet-label">
+        <div className={mx(styles, "workspace-sheet-body")}>
+          <div className={mx(styles, "workspace-sheet-field")}>
+            <Label htmlFor="listening-filename" className={mx(styles, "workspace-sheet-label")}>
               {t("fileNameLabel")}
             </Label>
             <Input
@@ -130,18 +132,18 @@ export function RenameListeningDialog({
               maxLength={200}
               disabled={isPending}
               aria-invalid={error ? true : undefined}
-              className="workspace-sheet-input"
+              className={mx(styles, "workspace-sheet-input")}
             />
             {error ? (
               <p className="text-sm text-destructive">{error}</p>
             ) : null}
           </div>
         </div>
-        <div className="workspace-sheet-footer">
+        <div className={mx(styles, "workspace-sheet-footer")}>
           <Button
             type="button"
             variant="outline"
-            className="workspace-sheet-cancel"
+            className={mx(styles, "workspace-sheet-cancel")}
             onClick={() => handleOpenChange(false)}
             disabled={isPending}
           >
@@ -149,7 +151,7 @@ export function RenameListeningDialog({
           </Button>
           <Button
             type="button"
-            className="workspace-sheet-cta"
+            className={mx(styles, "workspace-sheet-cta")}
             onClick={handleSave}
             disabled={
               isPending ||
