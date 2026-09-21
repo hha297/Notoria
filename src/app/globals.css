@@ -378,19 +378,24 @@
     background-color: var(--background);
     background-image:
       radial-gradient(
-        ellipse 52% 42% at 0% 0%,
-        color-mix(in oklab, var(--module-theory-bg) 42%, transparent),
-        transparent 72%
+        ellipse 78% 64% at 0% 0%,
+        color-mix(in oklab, var(--module-theory-bg) 68%, transparent),
+        transparent 80%
       ),
       radial-gradient(
-        ellipse 46% 38% at 100% 0%,
-        color-mix(in oklab, var(--module-listen-bg) 34%, transparent),
-        transparent 70%
+        ellipse 70% 58% at 100% 0%,
+        color-mix(in oklab, var(--module-listen-bg) 56%, transparent),
+        transparent 78%
       ),
       radial-gradient(
-        ellipse 40% 32% at 88% 100%,
-        color-mix(in oklab, var(--module-writing-bg) 28%, transparent),
-        transparent 72%
+        ellipse 66% 54% at 92% 100%,
+        color-mix(in oklab, var(--module-writing-bg) 50%, transparent),
+        transparent 80%
+      ),
+      radial-gradient(
+        ellipse 58% 48% at 0% 100%,
+        color-mix(in oklab, var(--module-vocab-bg) 46%, transparent),
+        transparent 78%
       );
   }
 
@@ -1412,11 +1417,7 @@
       var(--module-vocab-fg) 48%,
       var(--hairline-cloud)
     );
-    background: color-mix(
-      in oklab,
-      var(--module-vocab-bg) 52%,
-      transparent
-    );
+    background: color-mix(in oklab, var(--module-vocab-bg) 52%, transparent);
     color: var(--module-vocab-fg);
   }
 
@@ -1520,7 +1521,8 @@
   }
 
   .vocab-custom-tag-menu [data-slot="dropdown-menu-checkbox-item"]:focus,
-  .vocab-custom-tag-menu [data-slot="dropdown-menu-checkbox-item"][data-highlighted],
+  .vocab-custom-tag-menu
+    [data-slot="dropdown-menu-checkbox-item"][data-highlighted],
   .vocab-custom-tag-menu [data-slot="dropdown-menu-item"]:focus,
   .vocab-custom-tag-menu [data-slot="dropdown-menu-item"][data-highlighted] {
     background: color-mix(

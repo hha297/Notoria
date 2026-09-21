@@ -76,7 +76,11 @@ export function UserButton({
         </span>
       </DropdownMenuTrigger>
 
-      <DropdownMenuContent align="start" side="top" className="w-56">
+      <DropdownMenuContent
+        align="start"
+        side="top"
+        className={cn("w-56", mx(navStyles, "nav-account-menu"))}
+      >
         <DropdownMenuGroup>
           <DropdownMenuLabel className="font-normal">
             <div className="flex flex-col gap-0.5">
