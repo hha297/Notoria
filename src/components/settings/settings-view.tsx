@@ -24,11 +24,16 @@ import { clearAppLocalPreferences } from "@/lib/preferences/app-preferences";
 import type { ReduceMotionPreference } from "@/lib/preferences/app-preferences";
 import { KeyboardShortcutsSection } from "@/components/settings/keyboard-shortcuts-section";
 import { AiAssistanceSection } from "@/components/settings/ai-assistance-section";
+import { TagManagerSettingsSection } from "@/components/settings/tag-manager-settings-section";
 import styles from "@/components/style/settings/settings.module.css";
 import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
-export function SettingsView() {
+export function SettingsView({
+  workspaceId = null,
+}: {
+  workspaceId?: string | null;
+}) {
   const t = useTranslations("settings");
 
   return (
@@ -57,6 +62,7 @@ export function SettingsView() {
           <AppearanceSection />
           <AccessibilitySection />
           <AiAssistanceSection />
+          <TagManagerSettingsSection workspaceId={workspaceId} />
           <LearningSection />
           <KeyboardShortcutsSection />
           <DataPrivacySection />
