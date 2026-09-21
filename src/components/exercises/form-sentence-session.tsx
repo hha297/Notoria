@@ -177,6 +177,10 @@ export function FormSentenceSession({
           openUpgrade();
           return;
         }
+        if (result.code === "AI_DISABLED") {
+          toast.error(t("errors.disabled"));
+          return;
+        }
         if (result.code === "AI_EMPTY") {
           toast.error(t("errors.empty"));
           return;

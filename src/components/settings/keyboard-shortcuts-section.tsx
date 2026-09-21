@@ -14,7 +14,6 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
-  APP_SHORTCUTS,
   BROWSER_RESERVED_SHORTCUTS,
   RESERVED_SHORTCUT_GROUPS,
   addShortcutChord,
@@ -31,6 +30,7 @@ import {
   getShortcutDefinition,
   isBlockedChord,
   listShortcutBindings,
+  addableAppShortcuts,
   removeShortcutChord,
   resetAllShortcuts,
   resetShortcut,
@@ -361,8 +361,9 @@ export function KeyboardShortcutsSection() {
                 {entry.isExtra || !hasDefault ? (
                   <Button
                     type="button"
-                    variant="ghost"
+                    variant="outline"
                     size="sm"
+                    className={mx(styles, "settings-shortcut-remove")}
                     onClick={() =>
                       entry.isExtra
                         ? handleRemoveExtra(entry.id, entry.index)
@@ -453,7 +454,7 @@ export function KeyboardShortcutsSection() {
                   {t("shortcuts.chooseAction")}
                 </p>
                 <div className={mx(styles, "settings-shortcut-pick-list")}>
-                  {APP_SHORTCUTS.map((item) => {
+                  {addableAppShortcuts().map((item) => {
                     const selected = editor.id === item.id;
                     return (
                       <button

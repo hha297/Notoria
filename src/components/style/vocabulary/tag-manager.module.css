@@ -1,0 +1,308 @@
+.tag-manager {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: min(70dvh, 36rem);
+}
+
+.tag-manager-groups {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.tag-manager-group-chip {
+  display: inline-flex;
+  align-items: center;
+  height: 2.15rem;
+  padding: 0 0.85rem;
+  border: 1px solid var(--hairline-cloud);
+  border-radius: 0.55rem;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease;
+}
+
+.tag-manager-group-chip:hover {
+  color: var(--module-vocab-fg);
+  border-color: color-mix(in oklab, var(--module-vocab-fg) 40%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-vocab-bg) 55%, transparent);
+}
+
+.tag-manager-group-chip.is-active {
+  color: var(--module-vocab-fg);
+  border-color: color-mix(in oklab, var(--module-vocab-fg) 45%, transparent);
+  background: color-mix(in oklab, var(--module-vocab-bg) 70%, transparent);
+  font-weight: 600;
+}
+
+.tag-manager-layout {
+  display: grid;
+  gap: 0.85rem;
+  min-height: 0;
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .tag-manager-layout {
+    grid-template-columns: minmax(12rem, 16rem) minmax(0, 1fr);
+    gap: 1rem;
+    align-items: stretch;
+  }
+}
+
+.tag-manager-tags,
+.tag-manager-words {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 90%, transparent);
+  border-radius: 0.75rem;
+  background: color-mix(in oklab, var(--surface-elevated) 55%, transparent);
+  overflow: hidden;
+}
+
+.tag-manager-pane-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  padding: 0.75rem 0.85rem;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 85%, transparent);
+}
+
+.tag-manager-pane-title {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  color: var(--muted-foreground);
+  text-transform: uppercase;
+}
+
+.tag-manager-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.45rem;
+  overflow-y: auto;
+  max-height: 14rem;
+}
+
+@media (min-width: 768px) {
+  .tag-manager-list {
+    max-height: none;
+    flex: 1;
+  }
+}
+
+.tag-manager-tag {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0.55rem 0.65rem;
+  border: 1px solid transparent;
+  border-radius: 0.55rem;
+  background: transparent;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease;
+}
+
+.tag-manager-tag:hover {
+  background: color-mix(in oklab, var(--module-vocab-bg) 55%, transparent);
+}
+
+.tag-manager-tag.is-active {
+  border-color: color-mix(in oklab, var(--module-vocab-fg) 35%, transparent);
+  background: color-mix(in oklab, var(--module-vocab-bg) 72%, transparent);
+  color: var(--module-vocab-fg);
+  font-weight: 600;
+}
+
+.tag-manager-tag-label {
+  min-width: 0;
+  font-size: 0.9rem;
+  line-height: 1.3;
+}
+
+.tag-manager-tag-count {
+  flex-shrink: 0;
+  font-size: 0.78rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-foreground);
+}
+
+.tag-manager-tag.is-active .tag-manager-tag-count {
+  color: color-mix(in oklab, var(--module-vocab-fg) 75%, var(--muted-foreground));
+}
+
+.tag-manager-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.tag-manager-word-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  padding: 0.45rem;
+  overflow-y: auto;
+  max-height: 18rem;
+  flex: 1;
+}
+
+@media (min-width: 768px) {
+  .tag-manager-word-list {
+    max-height: none;
+  }
+}
+
+.tag-manager-word {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.5rem 0.55rem;
+  border: 1px solid transparent;
+  border-left-width: 3px;
+  border-radius: 0.5rem;
+  background: transparent;
+  transition:
+    background-color 140ms ease,
+    border-color 140ms ease,
+    opacity 140ms ease;
+}
+
+.tag-manager-word:hover:not(.is-disabled) {
+  background: color-mix(in oklab, var(--surface-active) 55%, transparent);
+}
+
+/* Membership: subtle background + thin border (not selection). */
+.tag-manager-word.is-member {
+  background: color-mix(in oklab, var(--module-vocab-bg) 48%, transparent);
+  border-top-color: color-mix(in oklab, var(--module-vocab-fg) 18%, transparent);
+  border-right-color: color-mix(in oklab, var(--module-vocab-fg) 18%, transparent);
+  border-bottom-color: color-mix(in oklab, var(--module-vocab-fg) 18%, transparent);
+  border-left-color: color-mix(in oklab, var(--module-vocab-fg) 18%, transparent);
+  border-left-width: 1px;
+}
+
+.tag-manager-word.is-member:hover:not(.is-disabled) {
+  background: color-mix(in oklab, var(--module-vocab-bg) 58%, transparent);
+}
+
+/* Selection for the active operation: thick left + thin other sides. */
+.tag-manager-word.is-selected {
+  border-left-width: 3px;
+  border-top-color: color-mix(in oklab, var(--module-vocab-fg) 28%, transparent);
+  border-right-color: color-mix(in oklab, var(--module-vocab-fg) 28%, transparent);
+  border-bottom-color: color-mix(in oklab, var(--module-vocab-fg) 28%, transparent);
+  border-left-color: color-mix(in oklab, var(--module-vocab-fg) 72%, transparent);
+}
+
+.tag-manager-word.is-selected:not(.is-member) {
+  background: color-mix(in oklab, var(--module-vocab-bg) 28%, transparent);
+}
+
+.tag-manager-word.is-selected:not(.is-member):hover:not(.is-disabled) {
+  background: color-mix(in oklab, var(--module-vocab-bg) 38%, transparent);
+}
+
+.tag-manager-word.is-member.is-selected {
+  border-left-width: 3px;
+  background: color-mix(in oklab, var(--module-vocab-bg) 62%, transparent);
+  border-top-color: color-mix(in oklab, var(--module-vocab-fg) 36%, transparent);
+  border-right-color: color-mix(in oklab, var(--module-vocab-fg) 36%, transparent);
+  border-bottom-color: color-mix(in oklab, var(--module-vocab-fg) 36%, transparent);
+  border-left-color: color-mix(in oklab, var(--module-vocab-fg) 85%, transparent);
+}
+
+/* Incompatible with the current Add/Remove mode — visible but not selectable. */
+.tag-manager-word.is-disabled {
+  opacity: 0.48;
+  cursor: not-allowed;
+}
+
+.tag-manager-word.is-disabled .tag-manager-word-check {
+  cursor: not-allowed;
+}
+
+.tag-manager-word-check {
+  width: 1rem;
+  height: 1rem;
+  accent-color: var(--module-vocab-fg);
+}
+
+.tag-manager-word-check:disabled {
+  opacity: 0.7;
+}
+
+.tag-manager-word-copy {
+  min-width: 0;
+}
+
+.tag-manager-word-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 600;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tag-manager-word-meta {
+  margin: 0.1rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tag-manager-empty {
+  margin: 0;
+  padding: 1.5rem 1rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+}
+
+.tag-manager-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding-top: 0.15rem;
+}
+
+.tag-manager-selection {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--muted-foreground);
+}
+
+.tag-manager-selection-breakdown {
+  margin: 0.2rem 0 0;
+  font-size: 0.78rem;
+  color: color-mix(in oklab, var(--muted-foreground) 88%, var(--module-vocab-fg));
+}
+
+.tag-manager-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}

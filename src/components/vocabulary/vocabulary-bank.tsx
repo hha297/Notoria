@@ -16,8 +16,8 @@ import { LinkButton } from "@/components/ui/link-button";
 import { VocabularyExportDialog } from "@/components/vocabulary/export-dialog";
 import { VocabularyGroup } from "@/components/vocabulary/vocabulary-group";
 import { VocabularyQuickEditDialog } from "@/components/vocabulary/vocabulary-quick-edit-dialog";
-import { VocabularyStats } from "@/components/vocabulary/vocabulary-stats";
 import { VocabularyToolbar } from "@/components/vocabulary/vocabulary-toolbar";
+import { VocabularyViewModeToggle } from "@/components/vocabulary/vocabulary-view-mode-toggle";
 import { useInvalidateWorkspaceQueries } from "@/hooks/use-invalidate-workspace-queries";
 import { useVocabularyViewMode } from "@/hooks/use-vocabulary-view-mode";
 import {
@@ -27,7 +27,6 @@ import {
 } from "@/lib/filters/multi-select";
 import {
   filterVocabularyWords,
-  getVocabularyStats,
   groupVocabularyWordsByPos,
   isKnownPartOfSpeech,
   sortVocabularyWords,
@@ -96,29 +95,23 @@ export function VocabularyBank({
   }, [words]);
 
   const tagFilterGroups = useMemo((): MultiFilterOptionGroup[] => {
-    return [
-      ...TAG_PICKER_GROUPS.map((group) => ({
-        label: tTags(`groups.${group}`),
-        options: BUILTIN_TAG_GROUPS[group].map((tag) => ({
-          value: tag.id,
-          label: tTags(`${group}.${tag.id}`),
-        })),
+    return TAG_PICKER_GROUPS.map((group) => ({
+      label: tTags(`groups.${group}`),
+      options: BUILTIN_TAG_GROUPS[group].map((tag) => ({
+        value: tag.id,
+        label: tTags(`${group}.${tag.id}`),
       })),
-      ...(customTagOptions.length > 0
-        ? [
-          {
-            label: tTags("groups.custom"),
-            options: customTagOptions.map((tag) => ({
-              value: tag,
-              label: getCustomTagName(tag),
-            })),
-          },
-        ]
-        : []),
-    ];
-  }, [customTagOptions, tTags]);
+    }));
+  }, [tTags]);
 
-  const stats = useMemo(() => getVocabularyStats(words), [words]);
+  const customTagFilterOptions = useMemo(
+    () =>
+      customTagOptions.map((tag) => ({
+        value: tag,
+        label: getCustomTagName(tag),
+      })),
+    [customTagOptions],
+  );
 
   const filteredWords = useMemo(() => {
     return sortVocabularyWords(
@@ -194,21 +187,8 @@ export function VocabularyBank({
         <header className="writing-hero">
           <div className="writing-hero-copy">
             <p className="writing-kicker">{workspaceName}</p>
-            <h1 className="writing-brand-title">
-              {t("title")}{" "}
-              <span className="text-module-vocab-fg">
-                {t("bank")}
-              </span>
-            </h1>
+            <h1 className="writing-brand-title">{t("title")}</h1>
             <p className="writing-brand-lede">{t("description")}</p>
-            <div className="mt-5">
-              <VocabularyStats
-                total={stats.total}
-                nouns={stats.nouns}
-                verbs={stats.verbs}
-                recent={stats.recent}
-              />
-            </div>
           </div>
           <div className="writing-hero-actions">{actions}</div>
         </header>
@@ -222,54 +202,57 @@ export function VocabularyBank({
             tagFilter={tagFilter}
             onTagFilterChange={setTagFilter}
             tagFilterGroups={tagFilterGroups}
+            customTagOptions={customTagFilterOptions}
             sortField={sortField}
             sortDirection={sortDirection}
             onSortChange={(field, direction) => {
               setSortField(field);
               setSortDirection(direction);
             }}
-            viewMode={viewMode}
-            onViewModeChange={setViewMode}
           />
-          {filtersActive ? (
-            <p className="text-xs text-muted-foreground">
-              {t("shownOfTotal", {
-                shown: filteredWords.length,
-                total: words.length,
-              })}
-            </p>
-          ) : null}
         </section>
 
-        <div className="vocab-lexicon-rule shrink-0" aria-hidden="true" />
-
         <section className="writing-stage" data-tutorial="vocab-word-list">
+          <div className="writing-stage-toolbar">
+            <div className="writing-stage-heading">
+              <p className="writing-kicker writing-stage-kicker">
+                {t("library")}
+              </p>
+              <p className="writing-stage-count">
+                {filtersActive
+                  ? t("shownOfTotal", {
+                      shown: filteredWords.length,
+                      total: words.length,
+                    })
+                  : t("groupCount", { count: words.length })}
+              </p>
+            </div>
+            <VocabularyViewModeToggle
+              value={viewMode}
+              onChange={setViewMode}
+            />
+          </div>
           {filteredWords.length === 0 ? (
             <div className="writing-empty-desk">
               <p className="writing-empty-title">{t("noResults")}</p>
               <p className="writing-brand-lede">{t("noResultsDescription")}</p>
             </div>
           ) : (
-            <>
-              <p className="writing-kicker writing-stage-kicker">
-                {t("library")}
-              </p>
-              {groupedWords.map((group) => (
-                <VocabularyGroup
-                  key={`${group.key}:${search}:${multiFilterKey(partOfSpeechFilter)}:${multiFilterKey(tagFilter)}:${sortValue}`}
-                  title={
-                    isKnownPartOfSpeech(group.key)
-                      ? tPos(group.key)
-                      : t("uncategorizedPos")
-                  }
-                  posKey={group.key}
-                  words={group.words}
-                  viewMode={viewMode}
-                  workspaceId={workspaceId}
-                  onEditWord={setEditingWord}
-                />
-              ))}
-            </>
+            groupedWords.map((group) => (
+              <VocabularyGroup
+                key={`${group.key}:${search}:${multiFilterKey(partOfSpeechFilter)}:${multiFilterKey(tagFilter)}:${sortValue}`}
+                title={
+                  isKnownPartOfSpeech(group.key)
+                    ? tPos(group.key)
+                    : t("uncategorizedPos")
+                }
+                posKey={group.key}
+                words={group.words}
+                viewMode={viewMode}
+                workspaceId={workspaceId}
+                onEditWord={setEditingWord}
+              />
+            ))
           )}
         </section>
       </div>

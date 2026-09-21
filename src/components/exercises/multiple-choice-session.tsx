@@ -18,6 +18,7 @@ import { useAiProcessing } from "@/hooks/use-ai-processing";
 import { useExerciseDifficulty } from "@/hooks/use-exercise-difficulty";
 import { useExerciseSessionController } from "@/hooks/use-exercise-session-controller";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
+import { isValidLocale } from "@/i18n/config";
 import { requestContextualExerciseAi } from "@/lib/exercises/contextual-ai-client";
 import {
   CONTEXTUAL_AI_BATCH,
@@ -168,10 +169,7 @@ export function MultipleChoiceSession({
         exerciseType: "multiple-choice",
         language: languageCode,
         difficulty,
-        uiLocale:
-          uiLocale === "en" || uiLocale === "fi" || uiLocale === "vi"
-            ? uiLocale
-            : "en",
+        uiLocale: isValidLocale(uiLocale) ? uiLocale : "en",
         words: sampledWords.map((word) => ({
           id: word.id,
           word: word.word.trim().slice(0, 120),
@@ -187,6 +185,10 @@ export function MultipleChoiceSession({
         if (result.code === "AI_FORBIDDEN") {
           fail(tAi("forbidden"));
           openUpgrade();
+          return;
+        }
+        if (result.code === "AI_DISABLED") {
+          fail(tAi("disabled"));
           return;
         }
         fail(tAi("unavailable"));

@@ -8,6 +8,7 @@ import {
   listeningLessons,
 } from "@/db/schema";
 import { requireProAccess } from "@/lib/auth/pro-access";
+import { requireAiAssistanceEnabled } from "@/lib/ai/preferences-server";
 import { getCurrentUserId } from "@/lib/auth/session";
 import {
   configureCloudinary,
@@ -402,6 +403,7 @@ export async function generateListeningExercises(
   type: ListeningPracticeType,
 ) {
   await requireProAccess();
+  await requireAiAssistanceEnabled();
   const exerciseType = listeningPracticeTypeSchema.parse(type);
   const { lesson } = await requireOwnedLesson(id);
 

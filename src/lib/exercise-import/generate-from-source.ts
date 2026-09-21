@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { ExerciseImportError } from "@/lib/exercise-import/errors";
 import {
   instructionGroundedInSource,
@@ -456,7 +457,12 @@ export async function generateExercisesFromSourceText(input: {
     max_tokens: 8_000,
     response_format: { type: "json_object" },
     messages: [
-      { role: "system", content: IMPORT_SOURCE_FIDELITY_PROMPT },
+      {
+        role: "system",
+        content: await aiSystemPrompt(IMPORT_SOURCE_FIDELITY_PROMPT, {
+          responseStyle: true,
+        }),
+      },
       {
         role: "user",
         content: JSON.stringify({

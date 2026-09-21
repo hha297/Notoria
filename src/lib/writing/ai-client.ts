@@ -4,6 +4,7 @@ export type WritingAiClientFailure = {
   ok: false;
   code:
     | "AI_FORBIDDEN"
+    | "AI_DISABLED"
     | "AI_UNAVAILABLE"
     | "AI_INVALID_REQUEST"
     | "AI_EMPTY";

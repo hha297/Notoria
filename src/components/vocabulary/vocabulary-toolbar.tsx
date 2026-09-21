@@ -1,27 +1,26 @@
 "use client";
 
-import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
-import { mx } from "@/lib/css-module";
 import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
-import type { MultiFilterOptionGroup } from "@/components/filters/multi-filter-select";
-import { Input } from "@/components/ui/input";
+import { CollapsibleRefine } from "@/components/filters/collapsible-refine";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { VocabularyViewModeToggle } from "@/components/vocabulary/vocabulary-view-mode-toggle";
+  MultiFilterSelect,
+  type MultiFilterOption,
+  type MultiFilterOptionGroup,
+} from "@/components/filters/multi-filter-select";
+import {
+  WritingChipPicker,
+  WritingFilterChipPicker,
+} from "@/components/writing/writing-chip-picker";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
+import { isMultiFilterActive } from "@/lib/filters/multi-select";
 import { PARTS_OF_SPEECH } from "@/lib/vocabulary-tags";
+import type { MultiFilterValue } from "@/lib/filters/multi-select";
 import type {
   VocabularySortDirection,
   VocabularySortField,
-  VocabularyViewMode,
 } from "@/lib/vocabulary/types";
-import type { MultiFilterValue } from "@/lib/filters/multi-select";
 
 type VocabularyToolbarProps = {
   search: string;
@@ -31,12 +30,29 @@ type VocabularyToolbarProps = {
   tagFilter: MultiFilterValue;
   onTagFilterChange: (value: MultiFilterValue) => void;
   tagFilterGroups: MultiFilterOptionGroup[];
+  customTagOptions: MultiFilterOption[];
   sortField: VocabularySortField;
   sortDirection: VocabularySortDirection;
   onSortChange: (field: VocabularySortField, direction: VocabularySortDirection) => void;
-  viewMode: VocabularyViewMode;
-  onViewModeChange: (value: VocabularyViewMode) => void;
 };
+
+function scopedGroupValues(
+  allValues: MultiFilterValue,
+  optionValues: readonly string[],
+): MultiFilterValue {
+  const allowed = new Set(optionValues);
+  return allValues.filter((value) => allowed.has(value));
+}
+
+function replaceGroupValues(
+  allValues: MultiFilterValue,
+  optionValues: readonly string[],
+  nextGroupValues: MultiFilterValue,
+): MultiFilterValue {
+  const allowed = new Set(optionValues);
+  const others = allValues.filter((value) => !allowed.has(value));
+  return [...others, ...nextGroupValues];
+}
 
 export function VocabularyToolbar({
   search,
@@ -46,100 +62,123 @@ export function VocabularyToolbar({
   tagFilter,
   onTagFilterChange,
   tagFilterGroups,
+  customTagOptions,
   sortField,
   sortDirection,
   onSortChange,
-  viewMode,
-  onViewModeChange,
 }: VocabularyToolbarProps) {
   const t = useTranslations("vocabulary");
+  const tCommon = useTranslations("common");
+  const tTags = useTranslations("tags");
   const tPos = useTranslations("tags.pos");
   const sortValue = `${sortField}:${sortDirection}`;
-
-  function getSortLabel(value: string) {
-    switch (value) {
-      case "updated:desc":
-        return t("sortUpdated");
-      case "word:asc":
-        return `${t("sortWord")} (${t("sortAsc")})`;
-      case "word:desc":
-        return `${t("sortWord")} (${t("sortDesc")})`;
-      default:
-        return value;
-    }
-  }
+  const customOptionValues = customTagOptions.map((option) => option.value);
+  const customFilterValues = scopedGroupValues(tagFilter, customOptionValues);
+  const filtersActive =
+    isMultiFilterActive(partOfSpeechFilter) ||
+    isMultiFilterActive(tagFilter) ||
+    sortValue !== "updated:desc";
 
   return (
-    <div className={mx(featureStyles, "vocab-spine-tools writing-spine-tools")}>
-      <div className="writing-spine-search-wrap">
-        <Search className="writing-spine-search-icon" aria-hidden="true" />
-        <Input
-          value={search}
-          onChange={(event) => onSearchChange(event.target.value)}
-          placeholder={t("searchPlaceholder")}
-          className="writing-spine-search"
-          data-tutorial="vocab-search"
-        />
-      </div>
-
-      <div className={mx(featureStyles, "vocab-spine-footer")}>
-        <div
-          className={mx(featureStyles, "vocab-spine-filters min-w-0 flex-1")}
-          data-tutorial="vocab-filters"
-        >
-          <MultiFilterSelect
-            emptyLabel={t("filterPartOfSpeech")}
-            values={partOfSpeechFilter}
-            onChange={onPartOfSpeechFilterChange}
-            className="min-w-0 w-full"
-            triggerClassName="vocab-filter-trigger"
-            contentClassName="vocab-filter-menu"
-            options={PARTS_OF_SPEECH.map((pos) => ({
-              value: pos,
-              label: tPos(pos),
-            }))}
-          />
-
-          <MultiFilterSelect
-            emptyLabel={t("columns.tags")}
-            values={tagFilter}
-            onChange={onTagFilterChange}
-            className="min-w-0 w-full"
-            triggerClassName="vocab-filter-trigger"
-            contentClassName="vocab-filter-menu max-h-80 min-w-56"
-            groups={tagFilterGroups}
-          />
-
-          <div className="min-w-0 w-full">
-            <Select
-              value={sortValue}
-              onValueChange={(value) => {
-                if (!value) return;
-                const [field, direction] = value.split(":") as [
-                  VocabularySortField,
-                  VocabularySortDirection,
-                ];
-                onSortChange(field, direction);
-              }}
-            >
-              <SelectTrigger className={mx(featureStyles, "vocab-filter-trigger")}>
-                <SelectValue>{getSortLabel(sortValue)}</SelectValue>
-              </SelectTrigger>
-              <SelectContent className={mx(featureStyles, "vocab-filter-menu")}>
-                <SelectItem value="updated:desc">{t("sortUpdated")}</SelectItem>
-                <SelectItem value="word:asc">
-                  {t("sortWord")} ({t("sortAsc")})
-                </SelectItem>
-                <SelectItem value="word:desc">
-                  {t("sortWord")} ({t("sortDesc")})
-                </SelectItem>
-              </SelectContent>
-            </Select>
+    <div className="writing-spine-tools" data-tutorial="vocab-filters">
+      <CollapsibleRefine
+        routeAction="vocab"
+        label={tCommon("filters")}
+        hideLabel={tCommon("hideFilters")}
+        active={filtersActive}
+        search={
+          <div className="writing-spine-search-wrap">
+            <Search className="writing-spine-search-icon" aria-hidden="true" />
+            <Input
+              value={search}
+              onChange={(event) => onSearchChange(event.target.value)}
+              placeholder={t("searchPlaceholder")}
+              className="writing-spine-search"
+              data-tutorial="vocab-search"
+            />
           </div>
-        </div>
+        }
+      >
+        <WritingFilterChipPicker
+          labelId="vocab-filter-pos"
+          label={t("filterPartOfSpeech")}
+          allLabel={t("filterAll")}
+          values={partOfSpeechFilter}
+          onChange={onPartOfSpeechFilterChange}
+          options={PARTS_OF_SPEECH.map((pos) => ({
+            value: pos,
+            label: tPos(pos),
+          }))}
+        />
 
-        <VocabularyViewModeToggle value={viewMode} onChange={onViewModeChange} />
-      </div>
+        {tagFilterGroups.map((group) => {
+          const optionValues = group.options.map((option) => option.value);
+          return (
+            <WritingFilterChipPicker
+              key={group.label}
+              labelId={`vocab-filter-tag-${group.label}`}
+              label={group.label}
+              allLabel={t("filterAll")}
+              values={scopedGroupValues(tagFilter, optionValues)}
+              onChange={(next) =>
+                onTagFilterChange(
+                  replaceGroupValues(tagFilter, optionValues, next),
+                )
+              }
+              options={group.options.map((option) => ({
+                value: option.value,
+                label: option.label,
+              }))}
+            />
+          );
+        })}
+
+        {customTagOptions.length > 0 ? (
+          <div className="space-y-2">
+            <Label id="vocab-filter-custom-tags">
+              {tTags("groups.custom")}
+            </Label>
+            <MultiFilterSelect
+              emptyLabel={t("filterAll")}
+              values={customFilterValues}
+              onChange={(next) =>
+                onTagFilterChange(
+                  replaceGroupValues(tagFilter, customOptionValues, next),
+                )
+              }
+              options={customTagOptions}
+              searchable
+              className="max-w-xs"
+              triggerClassName="vocab-custom-tag-trigger"
+              contentClassName="vocab-custom-tag-menu max-h-72"
+            />
+          </div>
+        ) : null}
+
+        <WritingChipPicker
+          labelId="vocab-filter-sort"
+          label={t("sortBy")}
+          value={sortValue}
+          onChange={(value) => {
+            const [field, direction] = value.split(":") as [
+              VocabularySortField,
+              VocabularySortDirection,
+            ];
+            onSortChange(field, direction);
+          }}
+          options={[
+            { value: "updated:desc", label: t("sortUpdated") },
+            {
+              value: "word:asc",
+              label: `${t("sortWord")} (${t("sortAsc")})`,
+            },
+            {
+              value: "word:desc",
+              label: `${t("sortWord")} (${t("sortDesc")})`,
+            },
+          ]}
+        />
+      </CollapsibleRefine>
     </div>
   );
 }

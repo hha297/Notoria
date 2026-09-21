@@ -1,31 +1,13 @@
 import { NextResponse } from "next/server";
-import { AiAccessError, requireAiAccess } from "@/lib/auth/ai-access";
+import { guardAiRoute } from "@/lib/ai/guard-route";
 import { generateFillBlankExercises } from "@/lib/exercises/ai";
 import { exerciseAiRequestSchema } from "@/lib/exercises/ai-types";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  try {
-    await requireAiAccess();
-  } catch (error) {
-    if (error instanceof AiAccessError) {
-      return NextResponse.json(
-        { ok: false, code: "AI_FORBIDDEN" },
-        { status: 403 },
-      );
-    }
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return NextResponse.json(
-        { ok: false, code: "AI_FORBIDDEN" },
-        { status: 401 },
-      );
-    }
-    return NextResponse.json(
-      { ok: false, code: "AI_UNAVAILABLE" },
-      { status: 500 },
-    );
-  }
+  const access = await guardAiRoute();
+  if (!access.ok) return access.response;
 
   let body: unknown;
   try {

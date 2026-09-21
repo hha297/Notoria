@@ -167,6 +167,20 @@
     color-mix(in oklab, var(--module-account-fg) 22%, transparent);
 }
 
+/* Match the open userbutton surface — not the olive panel behind it. */
+.nav-account-menu {
+  border-color: color-mix(
+    in oklab,
+    var(--module-account-fg) 40%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(
+    in oklab,
+    var(--module-account-bg) 58%,
+    var(--surface-elevated)
+  );
+}
+
 .sidebar-starfield {
   background-color: var(--sidebar);
 }

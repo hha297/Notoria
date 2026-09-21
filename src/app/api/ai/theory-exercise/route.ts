@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { AiAccessError, requireAiAccess } from "@/lib/auth/ai-access";
+import { guardAiRoute } from "@/lib/ai/guard-route";
 import { getFlashcardWords } from "@/lib/actions/flashcards";
 import { getTheoryNote } from "@/lib/actions/theory";
 import { generateAiTheoryExercises } from "@/lib/theory-exercises/ai";
@@ -13,28 +13,20 @@ export const runtime = "nodejs";
 const UI_LANGUAGE_NAMES: Record<AppLocale, string> = {
   en: "English",
   fi: "Finnish",
+  sv: "Swedish",
   vi: "Vietnamese",
 };
 
 const bodySchema = z.object({
   theoryId: z.string().min(1),
   count: z.number().int().min(1).max(30).optional(),
-  /** Website UI locale (en | fi | vi) for sentenceMeaning. */
+  /** Website UI locale for sentenceMeaning. */
   uiLocale: z.enum(locales).optional(),
 });
 
 export async function POST(request: Request) {
-  try {
-    await requireAiAccess();
-  } catch (error) {
-    if (error instanceof AiAccessError) {
-      return NextResponse.json({ ok: false, code: "AI_FORBIDDEN" }, { status: 403 });
-    }
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return NextResponse.json({ ok: false, code: "AI_FORBIDDEN" }, { status: 401 });
-    }
-    return NextResponse.json({ ok: false, code: "AI_UNAVAILABLE" }, { status: 500 });
-  }
+  const access = await guardAiRoute();
+  if (!access.ok) return access.response;
 
   let body: unknown;
   try {

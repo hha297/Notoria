@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { getLanguageByCode } from "@/lib/languages";
 import {
   CONTEXTUAL_MC_GENERATOR_PROMPT,
@@ -58,6 +59,7 @@ function languageHint(code: string | null | undefined) {
 
 function uiLanguageName(locale: string | undefined) {
   if (locale === "fi") return "Finnish";
+  if (locale === "sv") return "Swedish";
   if (locale === "vi") return "Vietnamese";
   return "English";
 }
@@ -293,7 +295,10 @@ async function requestExercises(
     max_tokens: 2500,
     response_format: { type: "json_object" },
     messages: [
-      { role: "system", content: system },
+      {
+        role: "system",
+        content: await aiSystemPrompt(system, { responseStyle: true }),
+      },
       {
         role: "user",
         content: JSON.stringify(payload),

@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { getLanguageByCode } from "@/lib/languages";
 import {
   FORM_SENTENCE_EVALUATOR_PROMPT,
@@ -45,7 +46,10 @@ export async function evaluateFormSentence(
     messages: [
       {
         role: "system",
-        content: FORM_SENTENCE_EVALUATOR_PROMPT,
+        content: await aiSystemPrompt(FORM_SENTENCE_EVALUATOR_PROMPT, {
+          responseStyle: true,
+          correctionStyle: true,
+        }),
       },
       {
         role: "user",

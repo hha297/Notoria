@@ -5,7 +5,7 @@ import type {
 
 export type ContextualAiClientFailure = {
   ok: false;
-  code: "AI_FORBIDDEN" | "AI_UNAVAILABLE" | "AI_INVALID_REQUEST" | "AI_EMPTY";
+  code: "AI_FORBIDDEN" | "AI_DISABLED" | "AI_UNAVAILABLE" | "AI_INVALID_REQUEST" | "AI_EMPTY";
 };
 
 export type ContextualAiClientResult =

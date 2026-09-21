@@ -1,0 +1,2627 @@
+{
+  "common": {
+    "save": "Spara",
+    "cancel": "Avbryt",
+    "delete": "Ta bort",
+    "edit": "Redigera",
+    "view": "Visa",
+    "back": "Tillbaka",
+    "create": "Skapa",
+    "loading": "Laddar...",
+    "optional": "Valfritt",
+    "required": "Obligatoriskt",
+    "selectedCount": "{count} valda",
+    "clearFilter": "Rensa",
+    "filters": "Filter",
+    "hideFilters": "Dölj filter"
+  },
+  "editor": {
+    "linkTitle": "Infoga länk",
+    "linkEditTitle": "Redigera länk",
+    "linkDescription": "Lägg till en URL för den valda texten.",
+    "linkUrl": "URL",
+    "linkUrlPlaceholder": "https://",
+    "linkInvalid": "Ange en giltig http- eller https-URL.",
+    "linkInsert": "Infoga länk",
+    "linkSave": "Spara",
+    "linkRemove": "Ta bort länk",
+    "imageTitle": "Infoga bild",
+    "imageDescription": "Ladda upp en fil eller klistra in en bild-URL.",
+    "imageUpload": "Ladda upp bild",
+    "imageUploadHint": "PNG, JPG, GIF eller WebP. Max 5 MB.",
+    "imageChooseFile": "Välj fil",
+    "imageUrl": "Bild-URL",
+    "imageUrlPlaceholder": "https://",
+    "imageInvalidUrl": "Ange en giltig bild-URL.",
+    "imageInsert": "Infoga bild",
+    "imageUploading": "Laddar upp…",
+    "imageUploadFailed": "Kunde inte ladda upp bilden. Försök igen.",
+    "imagePasteFailed": "Kunde inte spara den inklistrade bilden.",
+    "imageTooLarge": "Bilden är för stor (max 5 MB).",
+    "imageInvalidType": "Använd en PNG, JPG, GIF eller WebP-bild.",
+    "imageUnavailable": "Bilduppladdning är inte konfigurerad.",
+    "or": "eller",
+    "format": "Format",
+    "formatSuccess": "Innehållet formaterat",
+    "formatUnchanged": "Redan formaterat",
+    "formatWorking": "Formaterar…",
+    "formatAiFallback": "AI-formatering är inte tillgänglig — grundläggande städning tillämpades istället",
+    "formatFailed": "Kunde inte formatera innehållet. Försök igen.",
+    "tableSelectionInvalid": "Kunde inte konvertera urvalet till en tabell",
+    "headingCollapse": "Kollapsa avsnitt",
+    "headingExpand": "Expandera avsnitt"
+  },
+  "nav": {
+    "dashboard": "Instrumentpanel",
+    "vocabulary": "Ordlista",
+    "writing": "Skrivande",
+    "theory": "Teori",
+    "exercises": "Övningar",
+    "listening": "Lyssnande",
+    "speaking": "Tala",
+    "account": "Konto",
+    "settings": "Inställningar",
+    "workspace": "Arbetsyta",
+    "gettingStarted": "Hur man använder",
+    "groups": {
+      "main": "Huvudmeny",
+      "listenSpeak": "Lyssna och tala",
+      "more": "Mer"
+    }
+  },
+  "folders": {
+    "new": "Ny mapp",
+    "create": "Skapa mapp",
+    "createTitle": "Ny mapp",
+    "createDescription": "Mappar är valfria. Använd dem för att organisera skrivande, lyssnande eller teori.",
+    "renameTitle": "Döp om mapp",
+    "renameDescription": "Välj ett nytt namn för denna mapp.",
+    "name": "Namn",
+    "namePlaceholder": "Mappnamn",
+    "untitled": "Untitled mapp",
+    "created": "Mapp skapad",
+    "renamed": "Mapp omdöpt",
+    "deleted": "Mapp raderad",
+    "moved": "Flyttad",
+    "delete": "Radera",
+    "deleteTitle": "Vill du radera denna mapp?",
+    "deleteDescription": "“{name}” och allt inuti den ({folderCount, plural, one {# mapp} other {# mappar}}, {itemCount, plural, one {# objekt} other {# objekt}}) kommer att raderas permanent.",
+    "deleteDescriptionEmpty": "“{name}” kommer att raderas permanent.",
+    "root": "Alla filer",
+    "open": "Öppna",
+    "rename": "Döp om",
+    "move": "Flytta till…",
+    "moveTitle": "Flytta till",
+    "moveDescription": "Välj en mapp, eller behåll den på högsta nivå.",
+    "moveHere": "Flytta hit",
+    "emptyFolder": "Denna mapp är tom",
+    "emptyFolderDescription": "Lägg till något här, eller skapa en undermapp. Du kan också behålla filer på högsta nivå — mappar är endast för organisering.",
+    "itemCount": "{count, plural, one {# objekt} other {# objekt}}",
+    "foldersHeading": "Mappar",
+    "folderActions": "Mappåtgärder",
+    "breadcrumbs": "Mappsökväg",
+    "nameRequired": "Ange ett mappnamn",
+    "invalidMove": "Kan inte flytta en mapp in i sig själv",
+    "tooDeep": "Denna mapp är nästlad för djupt",
+    "notFound": "Mapp hittades inte",
+    "nameTaken": "En mapp eller skrivande använder redan detta namn"
+  },
+  "theme": {
+    "toggle": "Väx tema",
+    "light": "Ljus",
+    "dark": "Mörk"
+  },
+  "header": {
+    "createWorkspace": "Skapa arbetsyta",
+    "switchWorkspace": "Byt arbetsyta",
+    "switchFailed": "Kunde inte byta arbetsyta"
+  },
+  "workspace": {
+    "title": "Arbetsytor",
+    "emptyTitle": "Skapa din första arbetsyta",
+    "emptyDescription": "En arbetsyta är språket du lär dig. Ordförråd, skrivande, övningar och studiedata finns i en arbetsyta.",
+    "createFirst": "Skapa arbetsyta",
+    "name": "Arbetsytans namn",
+    "namePlaceholder": "Valfritt — vi kommer att generera ett åt dig",
+    "language": "Arbetsytans språk",
+    "languageHint": "En arbetsyta per språk. Du kan inte skapa dubbletter.",
+    "languageExists": "En arbetsyta för detta språk finns redan.",
+    "created": "Arbetsyta skapad",
+    "updated": "Arbetsyta uppdaterad",
+    "deleted": "Arbetsyta raderad",
+    "editTitle": "Redigera arbetsyta",
+    "editDescription": "Uppdatera namnet och språket för denna arbetsyta.",
+    "editAction": "Redigera arbetsyta",
+    "deleteAction": "Radera arbetsyta",
+    "manage": "Inställningar för arbetsyta",
+    "manageNamed": "Hantera “{name}”",
+    "nameRequired": "Ange ett arbetsytans namn",
+    "deleteTitle": "Radera arbetsyta?",
+    "deleteDescription": "Detta kommer permanent att radera “{name}” och allt dess ordförråd, skrivande, teori, lyssnande och övningar. Detta kan inte ångras.",
+    "deleteLastDescription": "Detta är din enda arbetsyta. Att radera “{name}” kommer att ta bort all din inlärningsdata. Detta kan inte ångras.",
+    "switched": "Arbetsyta bytt",
+    "noActive": "Ingen aktiv arbetsyta"
+  },
+  "vocabulary": {
+    "title": "Ordlista",
+    "bank": "bank",
+    "description": "Ord du samlar här — sök, filtrera och återanvänd dem i övningar, skrivande och granskning.",
+    "library": "Ordbank",
+    "addWordHighlight": "bank",
+    "newWord": "Nytt ord",
+    "editWord": "Redigera ord",
+    "edit": "Redigera",
+    "backToList": "Tillbaka till ordlistan",
+    "backToPreview": "Tillbaka till förhandsgranskning",
+    "previewTitle": "Förhandsgranskning av ord",
+    "previewDescription": "Skrivskyddad vy av detta ord. Öppna Redigera för att göra ändringar.",
+    "editDescription": "Spara för att behålla dina ändringar. Avbryt för att kassera osparade ändringar.",
+    "addWord": "Lägg till ord",
+    "saveWord": "Spara ord",
+    "savingWord": "Sparar…",
+    "updateWord": "Uppdatera ord",
+    "updatingWord": "Uppdaterar…",
+    "word": "Ord",
+    "wordPlaceholder": "Skriv ordet du lär dig…",
+    "partOfSpeech": "Ordklass",
+    "partOfSpeechPlaceholder": "Välj ordklass",
+    "meanings": "Betydelser",
+    "addMeaning": "Lägg till betydelse",
+    "meaningPlaceholder": "Ange betydelse",
+    "primaryMeaning": "Primär betydelse",
+    "markAsPrimary": "Markera som primär",
+    "primaryMeaningHint": "Stjärna upp till {max} primära betydelser för övningar. Andra förblir som referens.",
+    "primaryMeaningRequired": "Markera minst en primär betydelse",
+    "primaryMeaningLimit": "Du kan markera högst {max} primära betydelser",
+    "primaryMeanings": "Primära betydelser",
+    "otherMeanings": "Andra betydelser",
+    "examples": "Exempelmeningar",
+    "addExample": "Lägg till exempel",
+    "removeExample": "Ta bort exempel",
+    "examplePlaceholder": "Ange en exempelmening",
+    "exampleDetails": "Ytterligare detaljer",
+    "exampleDetailsFilled": "Fyllt",
+    "exampleMeaning": "Betydelse / Översättning",
+    "exampleMeaningPlaceholder": "Översätt eller förklara denna mening…",
+    "exampleNotes": "Anteckningar / Förklaring",
+    "exampleNotesPlaceholder": "Grammatiktips, användningsnot…",
+    "optional": "valfritt",
+    "tags": "Taggar",
+    "selectTags": "Välj taggar",
+    "searchOrCreateTags": "Sök eller skapa anpassade taggar…",
+    "createTag": "Skapa “{name}”",
+    "noMatchingTags": "Inga matchande taggar",
+    "createCustomTag": "Skapa anpassad tagg",
+    "addCustomTag": "Lägg till",
+    "notes": "Anteckningar",
+    "notesPlaceholder": "Minnestekniker, grammatiktips, personliga påminnelser...",
+    "formatNotes": "Formatera",
+    "formatNotesSuccess": "Anteckningar formaterade",
+    "formatNotesUnchanged": "Anteckningar redan formaterade",
+    "formatNotesAiFallback": "AI-formatering otillgänglig — tillämpade istället grundläggande städning",
+    "synonyms": "Synonymer",
+    "synonymsSearch": "Sök befintliga ord…",
+    "synonymsSelect": "Lägg till en annan synonym…",
+    "synonymsNoResults": "Inga matchande ord",
+    "synonymsAddNew": "Lägg till “{word}”",
+    "synonymsCreateTitle": "Lägg till en synonym",
+    "synonymsCreateDescription": "Länka ett befintligt ord, eller skapa ett nytt med en betydelse. Varje ord öppnar då det andra.",
+    "synonymsMeaning": "Betydelse",
+    "synonymsMeaningPlaceholder": "Ange en betydelse",
+    "synonymsCreated": "Ord skapat och redo att länkas",
+    "synonymsAlreadyLinked": "Redan tillagt som synonym",
+    "synonymsCannotLinkSelf": "Ett ord kan inte vara en synonym till sig själv",
+    "synonymsRemove": "Ta bort {word}",
+    "formDescription": "Lägg till ett ord med betydelser, exempel och taggar. Dra för att omordna.",
+    "addingTo": "Lägger till i",
+    "emptyTitle": "Din ordbank är tom",
+    "emptyDescription": "Börja samla ord och betydelser för att bygga ditt personliga språkbibliotek.",
+    "addFirst": "Lägg till ditt första ord",
+    "disabledNoWorkspace": "Skapa en arbetsyta innan du lägger till ord.",
+    "saved": "Ord sparat",
+    "updated": "Ord uppdaterat",
+    "deleted": "Ord raderat",
+    "meaningRequired": "Lägg till minst en betydelse",
+    "columns": {
+      "word": "Ord",
+      "partOfSpeech": "Ordklass",
+      "meaning": "Betydelse",
+      "tags": "Taggar",
+      "updated": "Senast uppdaterad",
+      "actions": "Åtgärder"
+    },
+    "moreMeanings": "+{count} fler",
+    "searchPlaceholder": "Sök ord eller betydelser...",
+    "filterPartOfSpeech": "Ordklass",
+    "filterTag": "Tagg",
+    "filterAll": "Alla",
+    "sortBy": "Sortera efter",
+    "sortUpdated": "Senast uppdaterad",
+    "sortWord": "Ord",
+    "sortAsc": "A → Ö",
+    "sortDesc": "Ö → A",
+    "noResults": "Inga ord hittades",
+    "noResultsDescription": "Försök att ändra din sökning eller filter.",
+    "loadError": "Kunde inte ladda ordlistan",
+    "loadErrorDescription": "Kontrollera din anslutning och försök igen.",
+    "retry": "Försök igen",
+    "viewList": "Lista",
+    "viewCards": "Kort",
+    "viewMode": "Visningsläge",
+    "tagManager": {
+      "open": "Hantera taggar",
+      "title": "Tagghanterare",
+      "description": "Markera ett ord först — Lägg till eller Ta bort styrs av om ordet redan har taggen.",
+      "groupsLabel": "Tagggrupper",
+      "tagsHeading": "Taggar",
+      "wordsHeading": "Ord · {tag}",
+      "searchPlaceholder": "Sök ord eller betydelser…",
+      "wordCount": "{count}",
+      "loading": "Laddar ordförråd…",
+      "emptyBank": "Ditt ordförråd är tomt.",
+      "emptyFilter": "Inga ord matchar den här sökningen.",
+      "selectVisible": "Markera synliga",
+      "showing": "{count} visas",
+      "showingSelectable": "{selectable} valbara · {count} visas",
+      "selected": "{count} markerade",
+      "modeHintIdle": "Markera ett ord för att börja. Det låser Lägg till eller Ta bort.",
+      "modeHintAdd": "Första valet saknar taggen — bara ord utan taggen kan markeras.",
+      "modeHintRemove": "Första valet har redan taggen — bara taggade ord kan markeras.",
+      "addToTag": "Lägg till i tagg",
+      "removeFromTag": "Ta bort från tagg",
+      "applyAdd": "Lägg till i tagg ({count})",
+      "applyRemove": "Ta bort från tagg ({count})",
+      "added": "Lade till {count} ord i {tag}",
+      "removed": "Tog bort {count} ord från {tag}",
+      "error": "Kunde inte uppdatera taggmedlemskap"
+    },
+    "moreTags": "+{count}",
+    "updatedAgo": "Uppdaterad {time} sedan",
+    "shownOfTotal": "{shown} av {total}",
+    "stats": {
+      "total": "Totalt ordförråd",
+      "recent": "Tillagt denna vecka"
+    },
+    "uncategorizedPos": "Oklassificerad",
+    "groupCount": "{count, plural, one {# ord} other {# ord}}",
+    "groupPageRange": "{start}–{end} av {count}",
+    "pageOf": "Sida {page} av {totalPages}",
+    "previousPage": "Föregående sida",
+    "nextPage": "Nästa sida",
+    "goToPage": "Gå till sida {page}",
+    "deleteConfirmTitle": "Ta bort detta ord?",
+    "deleteConfirmDescription": "\"{word}\" kommer att tas bort permanent från ditt ordförråd.",
+    "wordExists": "Detta ord finns redan i ditt ordförråd.",
+    "wordExistsCheckFailed": "Kunde inte verifiera om detta ord redan finns. Du kan försöka igen eller spara ändå.",
+    "wordExistsChecking": "Kontrollerar…",
+    "aiSuggestion": "AI-förslag",
+    "aiChecking": "Kontrollerar med AI…",
+    "aiDisclaimer": "AI-förslag kan vara felaktiga.",
+    "aiSkip": "Hoppa över",
+    "aiUseWord": "Använd {word}",
+    "aiDidYouMean": "Menade du \"{word}\"?",
+    "aiPossibleMeaning": "Möjlig betydelse",
+    "aiLikelyMeaning": "En trolig betydelse är \"{meaning}\".",
+    "aiUseSuggestion": "Använd förslag",
+    "aiMeaningMismatch": "\"{meaning}\" verkar inte vara en betydelse av \"{word}\".",
+    "export": {
+      "button": "Exportera",
+      "title": "Exportera Ordbok",
+      "kicker": "Exportera ordbok",
+      "description": "Exportera de ord som för närvarande visas.",
+      "rowCount": "{count, plural, one {# ord} other {# ord}}",
+      "summaryWithNote": "{count, plural, one {# ord} other {# ord}} · Inkluderar anteckning",
+      "format": "Format",
+      "formatPdf": "PDF",
+      "formatCsv": "CSV",
+      "formatDocx": "Word",
+      "formatPdfHint": "Utskriftsvänlig sida",
+      "formatDocxHint": "Redigerbar fil",
+      "formatCsvHint": "Kalkylblad",
+      "options": "Inkludera",
+      "content": "Innehåll",
+      "includePartOfSpeech": "Ordklass",
+      "includeTags": "Taggar",
+      "includeLastUpdated": "Senast uppdaterad",
+      "includeNotes": "Anteckning",
+      "preparing": "Förbereder anteckningar…",
+      "generating": "Skriver dokument…",
+      "writingFile": "Sparar fil…",
+      "progressCount": "{current} / {total}",
+      "confirm": "Exportera",
+      "success": "Nedladdning påbörjad",
+      "failed": "Export misslyckades",
+      "empty": "Inga ord att exportera",
+      "documentHeading": "Ordlista",
+      "workspaceLabel": "Arbetsyta",
+      "columns": {
+        "word": "Ord",
+        "partOfSpeech": "Ordklass",
+        "meanings": "Betydelser",
+        "tags": "Taggar",
+        "notes": "Anteckningar",
+        "updated": "Senast uppdaterad"
+      }
+    }
+  },
+  "tags": {
+    "groups": {
+      "difficulty": "Svårighetsgrad",
+      "topic": "Ämne",
+      "grammar": "Användning",
+      "learningStatus": "Inlärningsstatus",
+      "custom": "Anpassade taggar"
+    },
+    "difficulty": {
+      "a1": "A1",
+      "a2": "A2",
+      "b1": "B1",
+      "b2": "B2",
+      "c1": "C1",
+      "c2": "C2"
+    },
+    "topic": {
+      "everyday_life": "Vardagsliv",
+      "home_housing": "Hem och Boende",
+      "food_drink": "Mat och Dryck",
+      "travel": "Resande",
+      "transport_mobility": "Transport och Mobilitet",
+      "work_working_life": "Arbete och Arbetsliv",
+      "education_studying": "Utbildning och Studier",
+      "health_wellbeing": "Hälsa och Välbefinnande",
+      "services_shopping": "Tjänster och Shopping",
+      "people_family_relationships": "Människor, Familj och Relationer",
+      "feelings_opinions_experiences": "Känslor, Åsikter och Upplevelser",
+      "culture_leisure": "Kultur och Fritid",
+      "nature_environment": "Natur och Miljö",
+      "society_community": "Samhälle och Gemenskap"
+    },
+    "grammar": {
+      "formal": "Formell",
+      "informal": "Informell",
+      "spoken": "Talad / Umgängesspråk",
+      "slang": "Slang",
+      "academic": "Akademisk",
+      "idiom": "Idiom",
+      "grammar": "Grammatik",
+      "expression": "Uttryck"
+    },
+    "learningStatus": {
+      "new": "Ny",
+      "learning": "Lärande",
+      "review": "Granskning",
+      "mastered": "Behärskad"
+    },
+    "pos": {
+      "noun": "Substantiv",
+      "verb": "Verb",
+      "adjective": "Adjektiv",
+      "adverb": "Adverb",
+      "pronoun": "Pronomen",
+      "preposition": "Preposition",
+      "conjunction": "Konjunktion",
+      "interjection": "Interjektion",
+      "article": "Artikel",
+      "determiner": "Bestämning"
+    }
+  },
+  "exercises": {
+    "title": "Övning",
+    "studio": "studio",
+    "description": "Välj ett studieläge för att öva ditt ordförråd.",
+    "studioDescription": "Öva från ditt ordförråd, teorinoter eller importerade material — välj en källa och börja en fokuserad session.",
+    "startActivity": "Starta",
+    "unlockActivity": "Lås upp",
+    "practice": "öva",
+    "editor": "redigerare",
+    "edit": "Redigera",
+    "editDescription": "Ändringar sparas automatiskt efter den första sparningen.",
+    "noWorkspace": "Skapa en arbetsyta innan du börjar övningar.",
+    "updated": "Uppdaterad",
+    "backToStudio": "Tillbaka till övningar",
+    "studyMode": "Studieläge",
+    "difficulty": {
+      "label": "Svårighetsgrad",
+      "easy": "Lätt",
+      "medium": "Medel",
+      "hard": "Svår",
+      "intensive": "Intensiv",
+      "easyHint": "Tydliga ledtrådar och enkel övning med dina ord.",
+      "mediumHint": "Blandning av direkta och kontextuella frågor med ditt ordförråd.",
+      "hardHint": "Mer kontext och mindre uppenbara ledtrådar — fortfarande dina ord.",
+      "intensiveHint": "Nyansrik kontext och starkare resonemang — fortfarande dina ord."
+    },
+    "sources": {
+      "label": "Övningskälla",
+      "heading": "Källa",
+      "vocabulary": "Ordförråd",
+      "theory": "Teori",
+      "import": "Importera",
+      "imported": "Importerad",
+      "lastUsed": "Senast använd",
+      "selected": "Vald",
+      "vocabularyHint": "Lägen byggda av ord i din aktiva arbetsyta.",
+      "theoryHint": "AI omvandlar en teorinot till övning med fyll-i-blanks.",
+      "importHint": "Importera ett arbetsblad eller anteckningar — vi behåller källledtrådarna och omvandlar dem till övningskort.",
+      "vocabularyCount": "{count, plural, one {# ord} other {# ord}}",
+      "theoryCount": "{count, plural, one {# not} other {# noter}}",
+      "importCount": "{count, plural, one {# import} other {# importer}}"
+    },
+    "processing": {
+      "workingTitle": "Arbetar med din övning",
+      "readyTitle": "Övning klar",
+      "errorTitle": "Något gick fel",
+      "cancel": "Avbryt",
+      "retry": "Försök igen",
+      "dismiss": "Avfärda",
+      "stages": {
+        "uploading": "Laddar upp…",
+        "extracting": "Extraherar innehåll…",
+        "analyzing": "Analyserar innehåll…",
+        "generating": "Genererar övning…",
+        "saving": "Sparar övning…",
+        "completed": "Övning klar",
+        "error": "Generering misslyckades"
+      }
+    },
+    "import": {
+      "eyebrow": "Importerad övning",
+      "hubTitle": "Från sidan till övning",
+      "practiceTitle": "Importerade övningar",
+      "practiceDescription": "Övningskort byggda från ditt importerade material — samma ledtrådar och ordning, inga påhittade övningar.",
+      "formTitle": "Importera lärmaterial",
+      "formDescription": "Ange en källa. Vi extraherar dess struktur och bygger övning från dessa ledtrådar endast.",
+      "chooseSource": "Vad kan du importera?",
+      "dropActive": "Släpp för att importera",
+      "modes": {
+        "image": "Bild",
+        "file": "Fil",
+        "url": "URL",
+        "text": "Text"
+      },
+      "titleLabel": "Titel",
+      "titlePlaceholder": "Valfritt — standard från källan",
+      "urlLabel": "URL",
+      "urlPlaceholder": "https://…",
+      "textLabel": "Lärande text",
+      "textPlaceholder": "Klistra in eller skriv lärmaterial…",
+      "dropImageTitle": "Släpp bild här",
+      "dropFileTitle": "Släpp fil här",
+      "dropDescription": "eller klicka för att ladda upp",
+      "pasteHint": "Du kan också klistra in en bild med Ctrl + V",
+      "pasteAlwaysHint": "Tips: Ctrl + V klistrar in en bild från urklipp i valfritt importläge.",
+      "supportedFiles": "PDF, DOCX, bilder och vanlig text (.txt, .md)",
+      "pastedImageTitle": "Klistrad bild",
+      "importAction": "Importera & generera",
+      "unlockPro": "Lås upp med Pro",
+      "myImports": "Mina importer",
+      "searchPlaceholder": "Sök efter titel…",
+      "noResults": "Inga importer matchar den titeln",
+      "practice": "Öva",
+      "retry": "Försök igen",
+      "delete": "Ta bort",
+      "deleteConfirmTitle": "Ta bort denna import?",
+      "deleteConfirmDescription": "\"{title}\" och dess genererade övningar kommer att tas bort permanent.",
+      "ready": "Övningar klara",
+      "deleted": "Import borttagen",
+      "exerciseCount": "{count, plural, one {# övning} other {# övningar}}",
+      "importedAgo": "Importerad {time}",
+      "processingHint": "Extraherar innehåll och genererar övningar…",
+      "extractingHint": "Läser och analyserar ditt material…",
+      "generatingHint": "Skapar övningsuppgifter från innehållet…",
+      "uploadBytes": "{loaded} / {total}",
+      "cancelUpload": "Avbryt",
+      "uploadCancelled": "Uppladdning avbruten",
+      "sourceTypes": {
+        "image": "Bild",
+        "file": "Fil",
+        "url": "URL"
+      },
+      "status": {
+        "UPLOADING": "Laddar upp",
+        "EXTRACTING": "Extraherar",
+        "ANALYZING": "Bearbetar",
+        "GENERATING": "Genererar",
+        "COMPLETED": "Klar",
+        "FAILED": "Misslyckades"
+      },
+      "steps": {
+        "uploading": "Laddar upp…",
+        "extracting": "Analyserar innehåll…",
+        "generating": "Genererar övningar…",
+        "complete": "Klar",
+        "processing": "Bearbetar…"
+      },
+      "errors": {
+        "CLOUDINARY_NOT_CONFIGURED": "Fil lagring är inte konfigurerad.",
+        "OPENAI_NOT_CONFIGURED": "AI-bearbetning är inte konfigurerad.",
+        "INVALID_FILE": "Välj en fil att importera.",
+        "INVALID_FILE_TYPE": "Den filtypen stöds inte. Använd en bild, PDF, DOCX eller vanlig text.",
+        "FILE_TOO_LARGE": "Den filen är för stor. Vänligen använd en fil under 10 MB.",
+        "INVALID_URL": "Ange en giltig http(s) URL.",
+        "URL_FETCH_FAILED": "Kunde inte hämta den URL:en. Försök med en annan länk.",
+        "UNSUPPORTED_PARSE": "Kunde inte läsa det dokumentet. Använd PDF eller DOCX (inte gammal .doc).",
+        "EMPTY_CONTENT": "Inga användbara lärinnehåll hittades.",
+        "ANALYSIS_FAILED": "Kunde inte bearbeta det materialet. Försök igen.",
+        "GENERATION_FAILED": "Kunde inte generera övningar från det materialet.",
+        "GENERATION_UNAVAILABLE": "Övningsgenerering är för närvarande inte tillgänglig. Försök igen senare.",
+        "IMPORT_NOT_FOUND": "Importen hittades inte.",
+        "PROCESSING_FAILED": "Något gick fel under bearbetningen av denna import.",
+        "ALREADY_PROCESSING": "Denna import bearbetas redan."
+      }
+    },
+    "theory": {
+      "eyebrow": "Teoriövning",
+      "hubTitle": "Lär dig idéerna bakom språket",
+      "hubDescription": "Utforska grammatik, mönster och koncept genom interaktiva lektioner.",
+      "practiceTitle": "Teoriövning",
+      "practiceDescription": "AI omvandlar denna not till övning med fyll-i-blanks — med ledtrådar och förklaringar.",
+      "openLibrary": "Öppna teoribibliotek",
+      "practice": "Öva",
+      "view": "Visa",
+      "emptyTitle": "Inga teorinoter än",
+      "emptyDescription": "Skriv en teorinot — öva sedan från den här med AI-genererade övningar.",
+      "emptyCta": "Skapa en teorinot",
+      "searchPlaceholder": "Sök efter titel eller innehåll…",
+      "filterCategory": "Kategori",
+      "viewMode": "Visningsläge",
+      "viewList": "Lista",
+      "viewCards": "Kort",
+      "pageOf": "Sida {page} av {totalPages}",
+      "previousPage": "Föregående sida",
+      "nextPage": "Nästa sida",
+      "goToPage": "Gå till sida {page}",
+      "noResults": "Inga teorinoter matchar",
+      "noResultsDescription": "Försök med en annan sökning eller kategori.",
+      "clearFilters": "Rensa filter",
+      "sections": "{count, plural, one {# sektion} other {# sektioner}}",
+      "estimatedExercises": "~{count} övningar",
+      "limitedExercises": "Lägg till mer innehåll för rikare övning",
+      "practicing": "Övar",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} korrekt",
+      "next": "Nästa",
+      "check": "Kontrollera",
+      "true": "Sant",
+      "false": "Falskt",
+      "fillPlaceholder": "Skriv den saknade delen…",
+      "sourceWordLabel": "Ord att omvandla: {word}",
+      "hint": "Ledtråd: {hint}",
+      "endingHint": "Ledtråd: {hint}",
+      "matchHint": "Matcha varje basord med sin korrekta form.",
+      "matchBase": "Basord",
+      "matchForm": "Form",
+      "reshuffle": "Blanda om",
+      "backToStudio": "Tillbaka till övningar",
+      "editTheory": "Redigera teori",
+      "needAiTitle": "Generera AI-övning",
+      "needAiDescription": "AI kommer att läsa denna teori och skapa fyll-i-blanks övningar med nya kontexter.",
+      "needAiProDescription": "Uppgradera till Pro för att omvandla dina teorinoter till AI-genererade övningsuppgifter.",
+      "generatingTitle": "Skapar din övning…",
+      "generatingDescription": "AI läser din teori och skriver fyll-i-blanks övningar.",
+      "generateAi": "Generera övningar",
+      "generateMore": "Generera nytt set",
+      "regenerate": "Nytt set",
+      "unlockAi": "Lås upp med Pro",
+      "aiReady": "Övning klar",
+      "aiUnavailable": "Kunde inte generera AI-frågor just nu.",
+      "aiForbidden": "AI-teoriövningar är tillgängliga med Pro.",
+      "aiDisabled": "AI-hjälp är avstängd i Inställningar.",
+      "feedback": {
+        "correct": "Korrekt!",
+        "incorrect": "Inte riktigt.",
+        "incorrectWithAnswer": "Korrekt svar: {answer}"
+      },
+      "sentenceMeaningLoading": "Laddar betydelse…",
+      "types": {
+        "multiple_choice": "Flervalsfrågor",
+        "true_false": "Sant / falskt",
+        "match_pairs": "Matcha par",
+        "fill_blank": "Fyll i det tomma",
+        "transformation": "Formövning",
+        "theory_question": "Teori kontroll"
+      },
+      "instructions": {
+        "applyRule": "Fyll i formuläret.",
+        "chooseForm": "Välj rätt form.",
+        "chooseInContext": "Välj den form som passar denna kontext.",
+        "fillBlank": "Fyll i det tomma.",
+        "completeConstruction": "Slutför konstruktionen.",
+        "completeRule": "Slutför regeln.",
+        "completeExercise": "Slutför övningen.",
+        "theoryCheck": "Teori Kontroll"
+      },
+      "trueFalseLabel": "Sant eller falskt",
+      "lesson": {
+        "label": "Lektion",
+        "concept": "Koncept",
+        "theIdea": "Idén",
+        "seeIt": "Se det",
+        "notice": "Lägg märke till",
+        "example": "Exempel",
+        "revealNote": "Visa not",
+        "hideNote": "Dölj not",
+        "continue": "Fortsätt",
+        "quickReview": "Snabb översyn",
+        "skipReview": "Hoppa över översyn",
+        "startPractice": "Börja öva",
+        "openTheory": "Öppna full teori",
+        "tryIt": "Försök",
+        "outline": "I denna lektion",
+        "keyIdea": "Huvudidé",
+        "nowPractice": "Nu öva",
+        "learnThis": "Lär dig detta koncept",
+        "applyNow": "Nu ska vi använda det du just lärt dig.",
+        "preparing": "Förbereder övning…",
+        "yourAnswer": "Ditt svar",
+        "correctForm": "Formen",
+        "theRule": "Regeln",
+        "why": "Varför",
+        "complete": "Förstått",
+        "completeHint": "Du kan gå vidare när du är redo."
+      }
+    },
+    "types": {
+      "flashcard": {
+        "label": "Flashcards",
+        "description": "Vänd kort för att studera ord och betydelser med intervallbedömningar.",
+        "preview": "Vänd · Betygsätt · Granska",
+        "previewHint": "Finskt ord",
+        "previewWord": "suomalainen",
+        "previewFlow": "VÄND → BETYG → GRANSKA"
+      },
+      "fill-in-blank": {
+        "label": "Fyll i det tomma",
+        "description": "Fyll i exempelmeningar med det saknade ordförrådet.",
+        "preview": "Minulla on uusi ______."
+      },
+      "multiple-choice": {
+        "label": "Flervalsfrågor",
+        "description": "Välj den korrekta betydelsen eller ordet — distraktorer kommer från ditt ordförråd.",
+        "preview": "Vilken betydelse passar?",
+        "previewPrompt": "Vilken betydelse passar?",
+        "previewA": "Finsk person",
+        "previewB": "väder",
+        "previewC": "byggnad"
+      },
+      "match-pairs": {
+        "label": "Matcha par",
+        "description": "Matcha varje ord med sin betydelse i ett Quizlet-stil rutnät.",
+        "preview": "Ord ↔ Betydelse",
+        "previewLeft": "talo",
+        "previewRight": "hus",
+        "previewLeftB": "koti",
+        "previewRightB": "hem"
+      },
+      "type-answer": {
+        "label": "Skriv svaret",
+        "description": "Skriv det saknade ordet eller betydelsen och få omedelbar feedback.",
+        "preview": "Skriv ditt svar…"
+      },
+      "form-sentence": {
+        "label": "Skriv en mening",
+        "description": "Skriv en fullständig mening med ditt sparade ordförråd och få AI:s grammatikfeedback.",
+        "preview": "Skriv en mening som använder…",
+        "previewChipA": "Minä",
+        "previewChipB": "asun",
+        "previewChipC": "Helsingissä"
+      }
+    },
+    "timedHint": {
+      "availableIn": "💡 Ledtråd tillgänglig om {seconds}s",
+      "showNow": "Visa ledtråd nu",
+      "answerAvailableIn": "💡 Svar tillgängligt om {seconds}s",
+      "showAnswerNow": "Visa svaret nu",
+      "label": "Ledtråd",
+      "startsWith": "Börjar med “{letter}”",
+      "revealPrompt": "Fortfarande fast? Du kan avslöja hela svaret.",
+      "revealAnswer": "Avslöja svaret"
+    },
+    "empty": {
+      "noWordsTitle": "Inga ord ännu",
+      "noWordsDescription": "Lägg till ord till din arbetsyta först, kom sedan tillbaka för att öva.",
+      "addWords": "Lägg till ord",
+      "noMeaningsTitle": "Inga betydelser att öva",
+      "noMeaningsDescription": "Lägg till minst en betydelse till dina ordförrådsord för att använda denna övning.",
+      "noExamplesTitle": "Inga exempelmeningar än",
+      "noExamplesDescription": "Lägg till exempelmeningar som inkluderar ordförrådsordet för att generera fyll-i-blanks frågor.",
+      "editVocabulary": "Redigera ordförråd",
+      "needMoreWordsTitle": "Behöver mer ordförråd",
+      "needMoreWordsDescription": "Lägg till minst {count} ord med betydelser i denna arbetsyta för att använda denna övning.",
+      "noFiltered": "Inga ord matchar dina filter. Försök justera dem för att fortsätta."
+    },
+    "fillInBlank": {
+      "prompt": "Fyll i det tomma",
+      "placeholder": "Skriv ditt svar…",
+      "instruction": "Fyll i det tomma med rätt ordform.",
+      "hint": "Ledtråd",
+      "hintExplainWord": "Tänk på betydelsen av det saknade ordet i denna mening.",
+      "correct": "Korrekt!",
+      "incorrect": "Svaret är {answer}",
+      "sentenceMeaningLoading": "Laddar betydelse…",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} korrekt",
+      "keyboardHint": "Enter för att kontrollera · Enter igen för nästa",
+      "previous": "Föregående",
+      "next": "Nästa",
+      "check": "Kontrollera",
+      "shuffle": "Blanda",
+      "finish": "Avsluta rundan"
+    },
+    "ai": {
+      "generate": "Generera med AI",
+      "generateMore": "Generera 10 till",
+      "generating": "Genererar frågor…",
+      "levelLabel": "CEFR-nivå",
+      "emptyTitle": "Generera fyll-i-blanks frågor",
+      "emptyDescription": "Skapa 10 nya meningar från ditt ordförråd. Varje mening skrivs från grunden — befintliga exempel återanvänds inte.",
+      "generated": "AI-genererad",
+      "enriching": "Blandar AI-frågor i kommande kort…",
+      "unavailable": "Kunde inte generera frågor just nu. Försök igen senare.",
+      "forbidden": "AI-övningsgenerering är tillgänglig med Pro.",
+      "disabled": "AI-hjälp är avstängd i Inställningar.",
+      "upgradeHint": "AI-övningsgenerering är tillgänglig med Pro.",
+      "emptyWords": "Lägg till ordförrådsord innan du genererar frågor.",
+      "noneValid": "AI kunde inte skapa giltiga frågor för dessa ord. Försök igen."
+    },
+    "session": {
+      "complete": "Session komplett",
+      "score": "{correct} / {total} korrekt",
+      "pairsMatched": "Matchade {count} par",
+      "tryAgain": "Försök igen",
+      "questionsLabel": "Frågor",
+      "correctLabel": "Korrekt",
+      "reviewLabel": "För att granska"
+    },
+    "multipleChoice": {
+      "questionWord": "Vad är betydelsen av detta ord?",
+      "questionMeaning": "Vilket ord matchar denna betydelse?",
+      "questionContext": "Välj ordet som passar",
+      "modes": {
+        "contextual": "Kontextuell"
+      },
+      "contextualLanguageHint": "Frågor genereras på {language} (arbetsytans språk).",
+      "contextualEmptyTitle": "Generera kontextuella frågor",
+      "contextualEmptyDescription": "Skapa fyll-i-blanks flervalsfrågor från ditt ordförråd.",
+      "contextualProDescription": "Kontextuella AI-frågor är tillgängliga med Pro.",
+      "unlockContextual": "Lås upp med Pro",
+      "correct": "Korrekt!",
+      "incorrect": "Korrekt svar: {answer}",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} korrekt",
+      "previous": "Föregående",
+      "next": "Nästa",
+      "shuffle": "Blanda frågor",
+      "finish": "Avsluta rundan",
+      "keyboardHint": "1–4 för att välja · Enter för nästa"
+    },
+    "matchPairs": {
+      "words": "Ord",
+      "meanings": "Betydelser",
+      "roundProgress": "Runda {current} / {total}",
+      "progress": "{matched} / {total} matchade",
+      "hint": "Välj ett ord, tryck sedan på dess betydelse",
+      "complete": "Alla par matchade — bra jobbat!",
+      "shuffle": "Blanda kolumner"
+    },
+    "typeAnswer": {
+      "questionWord": "Vad är betydelsen?",
+      "questionMeaning": "Vilket ord matchar denna betydelse?",
+      "questionContext": "Fyll i med rätt ord",
+      "modes": {
+        "contextual": "Kontextuell"
+      },
+      "contextualEmptyTitle": "Generera kontextuella frågor",
+      "contextualEmptyDescription": "Skapa fyll-i-blanks skrivpromptar från ditt ordförråd.",
+      "contextualProDescription": "Kontextuella AI-frågor är tillgängliga med Pro.",
+      "unlockContextual": "Lås upp med Pro",
+      "placeholder": "Skriv ditt svar…",
+      "yourAnswer": "Ditt svar",
+      "correctAnswer": "Korrekt svar",
+      "correct": "Korrekt!",
+      "incorrect": "Inte riktigt — se det korrekta svaret ovan",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} korrekt",
+      "keyboardHint": "Enter för att kontrollera · Enter igen för nästa",
+      "previous": "Föregående",
+      "next": "Nästa",
+      "check": "Kontrollera",
+      "shuffle": "Blanda",
+      "finish": "Avsluta rundan"
+    },
+    "formSentence": {
+      "vocabularyLabel": "Ordförråd",
+      "meaningLabel": "Betydelse",
+      "prompt": "Skriv en fullständig mening med detta ordförråd.",
+      "placeholder": "Skriv en fullständig mening…",
+      "insertWord": "Lägg till i mening",
+      "yourSentence": "Din mening",
+      "corrected": "Korrigerad",
+      "betterSuggestion": "Mer naturlig",
+      "sentenceMeaning": "Betydelse / Översättning",
+      "correct": "Korrekt — naturlig användning av ordförrådet",
+      "incorrect": "Behöver förbättras",
+      "evaluating": "Utvärderar din mening…",
+      "submit": "Skicka",
+      "unlockSubmit": "Lås upp AI-feedback",
+      "saveExample": "Spara som exempel",
+      "saved": "Sparad",
+      "savedExample": "Mening sparad som exempel",
+      "alreadySaved": "Detta exempel är redan sparat",
+      "continue": "Fortsätt",
+      "finish": "Avsluta rundan",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} korrekt",
+      "keyboardHint": "⌘/Ctrl+Enter för att skicka · igen för att fortsätta",
+      "errors": {
+        "empty": "Skriv en mening innan du skickar.",
+        "tooLong": "Håll din mening under 500 tecken.",
+        "unavailable": "Kunde inte utvärdera din mening just nu. Försök igen.",
+        "forbidden": "AI-meningfeedback är tillgänglig med Pro.",
+        "disabled": "AI-hjälp är avstängd i Inställningar.",
+        "wordMissing": "Detta ordförrådsord finns inte längre.",
+        "saveFailed": "Kunde inte spara exemplet. Försök igen."
+      }
+    }
+  },
+  "writing": {
+    "title": "Skrivande",
+    "studio": "studio",
+    "description": "Skapa arbetsblad och uppmaningar för språket du lär dig.",
+    "disabledNoWorkspace": "Skapa ett arbetsutrymme innan du lägger till skrivdokument.",
+    "create": "Skapa skrivande",
+    "createFirst": "Skapa ditt första skrivande",
+    "onTheDesk": "På skrivbordet",
+    "library": "Bibliotek",
+    "allWritings": "Alla skrifter",
+    "collections": "Samlingar",
+    "refine": "Förfina",
+    "openWriting": "Öppna",
+    "emptyTitle": "Du har ännu inte skapat något skrivande",
+    "emptyDescription": "Skapa ditt första skrivblad för att börja öva.",
+    "searchPlaceholder": "Sök skrifter…",
+    "noResults": "Inget skrivande matchar din sökning",
+    "groupCount": "{count, plural, one {# dokument} other {# dokument}}",
+    "filterAll": "Alla",
+    "filterCefr": "CEFR",
+    "filterTopic": "Ämne",
+    "filterFormality": "Formalitet",
+    "groupBy": "Gruppera efter",
+    "groupByMode": "Dokumenttyp",
+    "groupByWeek": "Vecka",
+    "groupByMonth": "Månad",
+    "weekOf": "Vecka av {date}",
+    "sortBy": "Sortera efter",
+    "sortUpdatedDesc": "Senast uppdaterad",
+    "sortUpdatedAsc": "Äldst uppdaterad",
+    "sortCreatedDesc": "Nyast skapad",
+    "sortCreatedAsc": "Äldst skapad",
+    "sortTitleAsc": "Titel (A → Z)",
+    "sortTitleDesc": "Titel (Z → A)",
+    "sortCefrAsc": "CEFR (A1 → C2)",
+    "sortCefrDesc": "CEFR (C2 → A1)",
+    "meta": {
+      "none": "Inte angiven",
+      "cefrLabel": "CEFR-nivå",
+      "cefrPlaceholder": "Välj nivå",
+      "topicLabel": "Ämne",
+      "topicPlaceholder": "Välj ämne",
+      "formalityLabel": "Formalitet",
+      "formalityPlaceholder": "Välj formalitet",
+      "cefr": {
+        "a1": "A1",
+        "a2": "A2",
+        "b1": "B1",
+        "b2": "B2",
+        "c1": "C1",
+        "c2": "C2"
+      },
+      "formality": {
+        "formal": "Formell",
+        "informal": "Informell",
+        "neutral": "Neutral"
+      }
+    },
+    "columns": {
+      "title": "Titel",
+      "sections": "Sektioner",
+      "questions": "Frågor",
+      "updated": "Senast uppdaterad",
+      "actions": "Åtgärder"
+    },
+    "sectionCount": "{count, plural, one {# sektion} other {# sektioner}}",
+    "questionCount": "{count, plural, one {# fråga} other {# frågor}}",
+    "backToList": "Tillbaka till skrivande",
+    "backToPreview": "Tillbaka till förhandsgranskning",
+    "previewTitle": "Förhandsgranskning av skrivande",
+    "previewDescription": "Skrivskyddad vy av ditt skrivande. Öppna Redigera för att göra ändringar.",
+    "edit": "Redigera",
+    "editDescription": "Spara för att behålla dina ändringar. Avbryt för att kassera osparade redigeringar.",
+    "editSaveHint": "Spara för att uppdatera förhandsgranskningen. Avbryt kassera osparade redigeringar.",
+    "deleted": "Skrivande raderat",
+    "deleteConfirmTitle": "Radera detta skrivande?",
+    "deleteConfirmDescription": "\"{title}\" kommer att tas bort permanent.",
+    "newTitle": "Nytt skrivande",
+    "editTitle": "Redigera skrivande",
+    "formDescription": "Namnge stycket, välj en typ och skriv sedan.",
+    "documentTitle": "Titel",
+    "titlePlaceholder": "t.ex. Min livshistoria",
+    "documentDescription": "Beskrivning",
+    "descriptionPlaceholder": "Kort sammanfattning eller uppmaning för detta skrivande…",
+    "titleRequired": "Titel krävs",
+    "titleTaken": "Ett skrivande eller en mapp använder redan denna titel",
+    "promptRequired": "Lägg till minst en frågauppmaning",
+    "mode": "Läge",
+    "modes": {
+      "richDocument": "Rikt dokument",
+      "questionSet": "Frågeset",
+      "richDocumentHint": "Skrivande i fri form med den rika textredigeraren.",
+      "questionSetHint": "Strukturerade sektioner och frågor — som ett läroboksarbetsblad."
+    },
+    "content": "Innehåll",
+    "contentPlaceholder": "Börja skriva ditt innehåll här...",
+    "ai": {
+      "check": "Kontrollera med AI",
+      "improve": "Förbättra mening",
+      "grammar": "Kontrollera grammatik",
+      "checking": "Kontrollerar med AI…",
+      "checkingImprove": "Förbättrar mening…",
+      "checkingGrammar": "Kontrollerar grammatik…",
+      "suggestion": "AI-förslag",
+      "apply": "Använd",
+      "skip": "Hoppa över",
+      "disclaimer": "AI-förslag kan vara felaktiga.",
+      "empty": "Skriv något innan du kontrollerar med AI.",
+      "unavailable": "AI-förslag är tillfälligt otillgängliga. Försök igen senare.",
+      "forbidden": "AI-skrivassistans är tillgänglig med Pro.",
+      "disabled": "AI-hjälp är avstängd i Inställningar.",
+      "noIssues": "Inga problem hittades.",
+      "noImprove": "Denna mening låter redan naturlig.",
+      "noGrammar": "Inga grammatikproblem hittades.",
+      "applyFailed": "Kunde inte tillämpa det förslaget automatiskt.",
+      "upgradeHint": "AI-skrivassistans är tillgänglig med Pro.",
+      "types": {
+        "grammar": "Grammatik",
+        "spelling": "Stavning",
+        "vocabulary": "Ordförråd",
+        "style": "Stil",
+        "clarity": "Klarhet"
+      },
+      "severities": {
+        "error": "Felaktig",
+        "suggestion": "Valfritt"
+      }
+    },
+    "sections": "Sektioner",
+    "section": "Sektion",
+    "sectionTitlePlaceholder": "Sektions titel (valfritt)",
+    "question": "Fråga",
+    "prompt": "Uppmaning",
+    "promptPlaceholder": "Var föddes du?",
+    "exampleAnswer": "Exempel svar",
+    "exampleAnswerPlaceholder": "Valfritt modell svar…",
+    "notes": "Anteckningar / tips",
+    "notesPlaceholder": "Valfria undervisningsanteckningar eller tips…",
+    "optional": "valfritt",
+    "addQuestion": "Lägg till fråga",
+    "addSection": "Lägg till sektion",
+    "deleteQuestion": "Radera fråga",
+    "duplicateQuestion": "Duplicera fråga",
+    "deleteSection": "Radera sektion",
+    "dragQuestion": "Dra för att omordna fråga",
+    "dragSection": "Dra för att omordna sektion",
+    "collapseSection": "Kollapsa sektion",
+    "expandSection": "Expandera sektion",
+    "save": "Spara",
+    "saved": "Skrivande sparat",
+    "created": "Skrivande skapat",
+    "saveFailed": "Misslyckades med att spara skrivande",
+    "autosaving": "Sparar automatiskt...",
+    "autosaveReady": "Ändringar sparas automatiskt",
+    "autosavePending": "Spara för att aktivera automatisk sparande",
+    "export": {
+      "button": "Exportera",
+      "title": "Exportera skrivande",
+      "kicker": "Exportera skrivande",
+      "untitled": "Utan titel skrivande",
+      "description": "Välj ett format för ett utskriftsvänligt arbetsblad.",
+      "descriptionDocument": "Ladda ner detta stycke som en utskriftsvänlig sida eller en redigerbar fil.",
+      "descriptionQuestionSet": "Ladda ner ett arbetsblad från dessa frågor.",
+      "format": "Format",
+      "formatPdf": "PDF",
+      "formatDocx": "Word",
+      "formatPdfHint": "Utskriftsvänlig sida",
+      "formatDocxHint": "Redigerbar fil",
+      "options": "Inkludera",
+      "includeExamples": "Exempel svar",
+      "includeNotes": "Anteckningar / tips",
+      "leaveBlankSpace": "Tomt skrivutrymme",
+      "confirm": "Exportera",
+      "success": "Nedladdning påbörjad",
+      "failed": "Export misslyckades",
+      "empty": "Lägg till minst en fråga eller något dokumentinnehåll innan du exporterar",
+      "documentHeading": "Skrivande",
+      "titleLabel": "Titel",
+      "descriptionLabel": "Beskrivning",
+      "sectionLabel": "Sektion",
+      "questionLabel": "Fråga",
+      "exampleAnswerLabel": "Exempel Svar",
+      "notesLabel": "Anteckningar"
+    }
+  },
+  "flashcards": {
+    "title": "Flashcards",
+    "mode": "läge",
+    "description": "Studera vokabulär med smidiga kort, tangentbordsgenvägar och betyg för spridningsåterkoppling.",
+    "noWorkspace": "Skapa en arbetsyta innan du börjar en flashcard-session.",
+    "emptyTitle": "Inga vokabulär än",
+    "emptyDescription": "Lägg till ord i din arbetsyta först, kom sedan tillbaka för att studera med flashcards.",
+    "addWords": "Lägg till ord",
+    "noFilteredCards": "Inga kort matchar dina filter. Försök justera dem för att fortsätta.",
+    "studyMode": "Studieläge",
+    "modes": {
+      "wordToMeaning": "Ord → Betydelse",
+      "meaningToWord": "Betydelse → Ord",
+      "mixed": "Blandat"
+    },
+    "filterStatus": "Inlärningsstatus",
+    "status": {
+      "NEW": "Ny",
+      "LEARNING": "Lärande",
+      "REVIEW": "Granskning",
+      "MASTERED": "Behärskad"
+    },
+    "questionWord": "Vad betyder det?",
+    "questionMeaning": "Vilket ord matchar denna betydelse?",
+    "answer": "Svar",
+    "tapToFlip": "Tryck på kortet eller tryck på mellanslag för att avslöja",
+    "showAnswer": "Visa svar",
+    "hideAnswer": "Dölj svar",
+    "flip": "Vänd",
+    "previous": "Föregående",
+    "next": "Nästa",
+    "shuffle": "Blanda",
+    "restart": "Starta om sessionen",
+    "progress": "{current} / {total}",
+    "keyboardHint": "Mellanslag avslöja · ← → flytta · 1–4 betyg",
+    "meanings": "Betydelser",
+    "examples": "Exempel",
+    "synonyms": "Synonymer",
+    "notes": "Anteckningar",
+    "noMeaning": "Ingen betydelse än",
+    "ratePrompt": "Hur väl kände du till detta?",
+    "ratings": {
+      "AGAIN": "Igen",
+      "HARD": "Svår",
+      "GOOD": "Bra",
+      "EASY": "Lätt"
+    },
+    "ratingHints": {
+      "AGAIN": "< 1 min",
+      "HARD": "Snart",
+      "GOOD": "Bra",
+      "EASY": "Lätt"
+    },
+    "sessionComplete": "Sessionen är komplett!",
+    "tryAgain": "Försök igen",
+    "ratingFailed": "Kunde inte spara ditt betyg"
+  },
+  "dashboard": {
+    "overview": "Översikt",
+    "your": "Din",
+    "workspaceLabel": "arbetsyta",
+    "description": "En privat studiemiljö för språket du bryr dig om – samla ord, håll teorin nära, öva med dina egna ord, och skriv, lyssna och prata tills det känns som ditt.",
+    "wordsSaved": "Ord sparade",
+    "wordsReadyToPractice": "Ord redo att övas",
+    "theoryNotes": "Teorinoteringar",
+    "writingPieces": "Skrivarbeten",
+    "activeWorkspace": "Aktiv arbetsyta",
+    "guideEyebrow": "Kom igång",
+    "guideTitle": "Hur du använder Notoria",
+    "guideTagline": "Ditt språk. Din kunskap. Din lärdagbok.",
+    "guideSubtitle": "Notoria är en privat, personlig arbetsyta – inte en traditionell kurs som säger vad du ska lära dig. Du väljer ditt språk, dina ord, dina grammatiknoteringar, dina exempel och de material du vill öva med.",
+    "guideSubtitleSecondary": "Din arbetsyta växer med din lärande resa. Börja med vokabulär och teori, och omvandla sedan det du samlar till övningar, skrivande, lyssnande och talande.",
+    "guideFullCtaPrompt": "Vill du lära dig mer om hur Notoria fungerar?",
+    "guideFullCta": "Läs hela guiden",
+    "modulesTitle": "Utforska arbetsytan",
+    "modulesSubtitle": "Hoppa in i en sektion, eller öppna dess handledning först.",
+    "startHere": "Börja här",
+    "pro": "Pro",
+    "unlock": "Lås upp Pro",
+    "open": "Öppna",
+    "steps": {
+      "vocabulary": {
+        "title": "Vokabulär",
+        "body": "Lägg till dina egna ord och fraser med betydelser, exempelmeningar, uttal och taggar. Organisera efter ämne, nivå eller situation – och återanvänd dem i övningar och repetition. Börja med ord från vardagen, lektioner, böcker eller media; ditt bibliotek blir grunden för övning."
+      },
+      "theory": {
+        "title": "Teori",
+        "body": "Spara grammatikregler, uttalsnoteringar, användningsförklaringar och personliga exempel med dina egna ord. Tänk på teori som en referensnotebook som du återvänder till när du glömmer något. Ju mer du dokumenterar, desto starkare växer din personliga kunskapsbas."
+      },
+      "exercises": {
+        "title": "Övning",
+        "body": "Öva med flashcards, quiz, fyll i luckor och mer – byggt från din egen vokabulär och teori. Övningar växer med den kunskap du lägger till. Ju mer material du sparar, desto mer användbar och personlig blir din övning."
+      },
+      "writing": {
+        "title": "Skrivande",
+        "body": "Skriv ut texter och skapa frågeset med dina egna ämnen och vokabulär. Skrivande handlar om att aktivt använda det du lär dig, inte bara memorera det. Med Pro kan AI kontrollera och förbättra ditt arbete, och du kan exportera material vid behov."
+      },
+      "listening": {
+        "title": "Lyssnande",
+        "body": "Ladda upp ljud eller video, få en transkription och omvandla det till en lektion. Använd transkriptionen för att fånga obekanta ord och uttryck, och öva med verkligt innehåll du väljer. Ta med dina egna lyssningsmaterial istället för att vara begränsad till fördefinierat innehåll."
+      },
+      "speaking": {
+        "title": "Tala",
+        "body": "Ring en AI-tutor på video och öva att tala naturligt med din egen lärande kunskap. Efter varje session, granska transkriptionen och feedbacken för att se vad som kan förbättras. Detta sluter cirkeln: lär → öva → använd → repetera → förbättra."
+      }
+    },
+    "modules": {
+      "vocabulary": {
+        "title": "Vokabulär",
+        "description": "Din personliga ordbank för detta språk.",
+        "how": "Lägg till ett ord, markera primära betydelser och fäst exempelmeningar. Använd taggar och sök för att hitta dem senare.",
+        "cta": "Öppna vokabulär"
+      },
+      "theory": {
+        "title": "Teori",
+        "description": "En anteckningsbok för hur språket fungerar – inte skrivövningar.",
+        "how": "Skapa en anteckning, välj en kategori och kom tillbaka när du behöver en uppfräschning.",
+        "cta": "Öppna teori"
+      },
+      "exercises": {
+        "title": "Övning",
+        "description": "Korta sessioner byggda från de ord du redan sparat.",
+        "how": "Lägg till en handfull ord först, välj sedan ett läge. Kom tillbaka ofta – några minuter räknas fortfarande.",
+        "cta": "Öppna övningar"
+      },
+      "writing": {
+        "title": "Skrivande",
+        "description": "Rika dokument och frågeset som du kan återbesöka och exportera.",
+        "how": "Börja ett utkast, organisera med mappar och använd Pro AI för att kontrollera eller förbättra din text.",
+        "cta": "Öppna skrivande"
+      },
+      "listening": {
+        "title": "Lyssnande",
+        "description": "Omvandla verkligt ljud eller video till en lektion.",
+        "how": "Ladda upp ett klipp, läs transkriptionen och öva sedan. Hela denna modul är Pro.",
+        "cta": "Öppna lyssnande"
+      },
+      "speaking": {
+        "title": "Tala",
+        "description": "Live videokonversation med en AI-tutor.",
+        "how": "Skapa en session, gå med i samtalet och granska sedan transkriptionen och sammanfattningen. Endast Pro.",
+        "cta": "Öppna tala"
+      }
+    },
+    "counts": {
+      "words": "{count, plural, one {# ord} other {# ord}}",
+      "notes": "{count, plural, one {# not} other {# noter}}",
+      "writings": "{count, plural, one {# stycke} other {# stycken}}",
+      "practiceReady": "{count, plural, one {# ord redo} other {# ord redo}}"
+    },
+    "sidebarFooter": "Privat språkinlärningsarbetsyta",
+    "practiceNowEyebrow": "Idag",
+    "practiceNowTitle": "Öva nu",
+    "practiceNowReady": "{count, plural, one {# ord är redo för övningar.} other {# ord är redo för övningar.}}",
+    "practiceNowNeedsMeaning": "Markera en primär betydelse på ett ord så att det kan visas i övningar.",
+    "practiceNowCta": "Börja en övning",
+    "practiceNowVocabCta": "Öppna vokabulär",
+    "continueTitle": "Fortsätt",
+    "continueSubtitle": "Plocka upp det senaste du arbetade med.",
+    "helloTitle": "Hej, {name}",
+    "continueLearning": "Fortsätt lära",
+    "continueLearningSubtitle": "Hoppa in i en sektion av arbetsytan.",
+    "snapshotTitle": "Snabb översikt",
+    "quickActions": "Snabba åtgärder",
+    "quickAddWord": "Lägg till ett ord",
+    "quickStartExercise": "Börja en övning",
+    "quickOpenWriting": "Öppna skrivande",
+    "quickOpenTheory": "Öppna teori",
+    "nextStepTitle": "Nästa steg"
+  },
+  "search": {
+    "placeholder": "Sök efter vad som helst...",
+    "emptyHint": "Sök i vokabulär, teori, skrivande och mer i detta arbetsutrymme.",
+    "noResults": "Inga träffar för “{query}”",
+    "failed": "Sökningen misslyckades. Försök igen.",
+    "clear": "Rensa sökning",
+    "shortcut": "Ctrl K",
+    "resultsLabel": "Sökresultat",
+    "types": {
+      "folder": "Mapp"
+    },
+    "posGroups": {
+      "noun": "Substantiv",
+      "verb": "Verb",
+      "adjective": "Adjektiv",
+      "adverb": "Adverb",
+      "pronoun": "Pronomen",
+      "preposition": "Prepositioner",
+      "conjunction": "Konjunktioner",
+      "interjection": "Interjektioner",
+      "article": "Artiklar",
+      "determiner": "Bestämningar"
+    }
+  },
+  "prompts": {
+    "skip": "Hoppa över",
+    "gotIt": "Förstått",
+    "titles": {
+      "greeting": "Välkommen tillbaka! 👋",
+      "motivation": "Ett litet knuff",
+      "language": "Ditt språk idag",
+      "activity": "Ett förslag"
+    },
+    "greeting": {
+      "morning": {
+        "title": "God morgon! ☀️",
+        "message": "Redo att lära dig något nytt?"
+      },
+      "afternoon": {
+        "title": "God eftermiddag!",
+        "message": "Vad skulle du vilja lära dig idag?"
+      },
+      "evening": {
+        "title": "God kväll!",
+        "message": "Vill du öva lite innan dagen tar slut?"
+      },
+      "welcomeBack": {
+        "title": "Välkommen tillbaka! 👋",
+        "message": "Vad skulle du vilja lära dig idag?"
+      },
+      "hello": {
+        "title": "Hej!",
+        "message": "Låt oss göra idag meningsfullt — även några minuter hjälper."
+      }
+    },
+    "motivation": {
+      "whatToPractice": {
+        "title": "Redo när du är det",
+        "message": "Vad vill du öva på idag?"
+      },
+      "fewMinutes": {
+        "title": "Några minuter gör stor skillnad",
+        "message": "Ett kort pass kan göra skillnad. Vad arbetar du med idag?"
+      },
+      "oneStep": {
+        "title": "Håll igång din närvaro",
+        "message": "Ett litet steg idag är fortfarande framsteg."
+      },
+      "curious": {
+        "title": "Följ din nyfikenhet",
+        "message": "Välj ett ämne och dyka in — allt du börjar med räknas."
+      }
+    },
+    "language": {
+      "practiceToday": {
+        "title": "Ditt språk idag",
+        "message": "Redo att öva <lang></lang> idag?"
+      },
+      "learnWords": {
+        "title": "Utöka ditt ordförråd",
+        "message": "Vill du lära dig några nya <lang></lang> ord?"
+      },
+      "whatToLearn": {
+        "title": "Välj ett fokus",
+        "message": "Vad skulle du vilja lära dig i <lang></lang> idag?"
+      },
+      "keepGoing": {
+        "title": "Du bygger en vana",
+        "message": "Fortsätt med <lang></lang> — lite övning ger resultat."
+      }
+    },
+    "activity": {
+      "vocabulary": {
+        "title": "Ett förslag",
+        "message": "Vad sägs om att repetera lite ordförråd idag?"
+      },
+      "writing": {
+        "title": "Ett förslag",
+        "message": "Vill du öva på ditt skrivande?"
+      },
+      "theoryOrExercise": {
+        "title": "Ett förslag",
+        "message": "Du kan repetera ett teorämne eller prova en övning."
+      },
+      "exercise": {
+        "title": "Ett förslag",
+        "message": "Redo för en snabb övning?"
+      },
+      "theory": {
+        "title": "Ett förslag",
+        "message": "Vad sägs om att läsa en teorinot för att fräscha upp ditt minne?"
+      }
+    }
+  },
+  "onboarding": {
+    "skip": "Hoppa över",
+    "skipForNow": "Hoppa över för nu",
+    "getStarted": "Kom igång",
+    "close": "Stäng",
+    "welcome": {
+      "title": "Välkommen till Notoria! 👋",
+      "message": "Ditt arbetsutrymme är klart. Låt oss komma igång med några enkla steg.",
+      "features": {
+        "vocabulary": "Bygg ditt ordförråd",
+        "writing": "Öva skrivande",
+        "exercises": "Lär dig genom övningar",
+        "theory": "Granska teori och lärmaterial"
+      }
+    },
+    "firstAction": {
+      "title": "Låt oss börja lära!",
+      "message": "Lägg till lite ordförråd först, sedan kan du utforska övningar och andra lärfunktioner."
+    },
+    "actions": {
+      "addVocabulary": {
+        "empty": {
+          "title": "Börja med dina första ord",
+          "description": "Lägg till lite ordförråd för att bygga din lärgrund."
+        },
+        "starting": {
+          "title": "Fortsätt bygga ditt ordförråd",
+          "description": "Lägg till några fler ord innan du försöker en övning."
+        },
+        "almost": {
+          "title": "Du är nästan redo!",
+          "description": "Lägg till några fler ord för en bättre övningsupplevelse."
+        }
+      },
+      "tryExercise": {
+        "title": "Redo att öva?",
+        "description": "Du har tillräckligt med ordförråd för att börja din första övning."
+      },
+      "startWriting": {
+        "title": "Börja skriva",
+        "description": "Skapa din första skrivövning."
+      },
+      "exploreTheory": {
+        "title": "Utforska teori",
+        "description": "Spara anteckningar om grammatik, användning och hur språket fungerar."
+      },
+      "exploreWorkspace": {
+        "title": "Utforska arbetsutrymmet",
+        "description": "Titta runt och fortsätt lära i din egen takt."
+      }
+    }
+  },
+  "tutorials": {
+    "show": "Visa tutorial",
+    "showShort": "Tutorial",
+    "guideLabel": "Guide",
+    "next": "Nästa",
+    "skip": "Hoppa över tutorial",
+    "done": "Förstått",
+    "stepProgress": "{current} / {total}",
+    "vocabulary": {
+      "title": "Ordlista",
+      "description": "Lägg till ord som är viktiga för dig — sök, organisera och återanvänd dem i Notoria.",
+      "cta": "Lägg till ett ord",
+      "steps": {
+        "addWord": {
+          "title": "1. Lägg till ett ord",
+          "body": "Börja bygga din personliga ordlista. Lägg till ord och fraser som du faktiskt vill komma ihåg — fyll sedan i betydelser, exempel och taggar på nästa skärm."
+        },
+        "search": {
+          "title": "2. Sök i ditt bibliotek",
+          "body": "Sök i din ordlista istället för att bläddra igenom allt. Prova ett ord, en betydelse eller en tagg."
+        },
+        "filters": {
+          "title": "3. Filtrera och organisera",
+          "body": "Avgränsa efter ordklass, taggar eller sorteringsordning. Använd taggar för att gruppera ord efter ämne, nivå eller situation."
+        },
+        "library": {
+          "title": "4. Ditt ordbibliotek",
+          "body": "Dina sparade ord finns här. Öppna en post för att redigera den, eller använd dem i övningar och granska senare."
+        }
+      }
+    },
+    "vocabularyAdd": {
+      "title": "Lägg till ett ord",
+      "description": "Detta formulär är hjärtat av Notoria — varje fält hjälper dig att komma ihåg och återanvända ordet senare.",
+      "cta": "Förstått",
+      "steps": {
+        "word": {
+          "title": "1. Skriv ordet",
+          "body": "Ange ordet eller frasen du lär dig. Detta blir huvudposten i din ordbank."
+        },
+        "partOfSpeech": {
+          "title": "2. Ordklass",
+          "body": "Välj substantiv, verb, adjektiv och så vidare. Det hjälper filtren och AI-förslagen att förbli korrekta."
+        },
+        "meanings": {
+          "title": "3. Betydelser",
+          "body": "Lägg till en eller flera betydelser. Stjärnmärk upp till 5 primära betydelser för övningar — andra stannar för referens. Dra för att ändra ordning."
+        },
+        "examples": {
+          "title": "4. Exempelmeningar",
+          "body": "Lägg till meningar som visar hur ordet används. Öppna Ytterligare detaljer för en översättning eller anteckning om du behöver en."
+        },
+        "tags": {
+          "title": "5. Taggar",
+          "body": "Tagga efter nivå, ämne eller situation så att du kan hitta och öva relaterade ord senare."
+        },
+        "synonyms": {
+          "title": "6. Synonymer",
+          "body": "Koppla relaterade ord från din bank för att koppla samman poster och fördjupa minnet."
+        },
+        "notes": {
+          "title": "7. Anteckningar",
+          "body": "Valfria fria anteckningar — uttalstips, användningssätt eller vad som helst du vill komma ihåg."
+        },
+        "save": {
+          "title": "8. Spara",
+          "body": "När du är redo, spara ordet. Du kan redigera det när som helst från ditt ordbibliotek."
+        }
+      }
+    },
+    "writing": {
+      "title": "Skrivande",
+      "description": "Använd det du lärt dig i dina egna meningar — utkast, frågeset och stycken som du kan återbesöka.",
+      "cta": "Börja skriva",
+      "steps": {
+        "create": {
+          "title": "1. Börja skriva",
+          "body": "Skapa en text eller skrivövning baserat på något du vill öva. Ditt skrivande behöver inte vara perfekt — använd det för att experimentera och märka vad du fortfarande behöver lära dig."
+        },
+        "search": {
+          "title": "2. Sök",
+          "body": "Hitta ett stycke snabbt genom titel eller innehåll istället för att bläddra igenom allt manuellt."
+        },
+        "filters": {
+          "title": "3. Filtrera",
+          "body": "Avgränsa efter nivå, ämne, formalitet eller sorteringsordning för att organisera ditt skrivbibliotek."
+        },
+        "library": {
+          "title": "4. Ditt skrivbibliotek",
+          "body": "Öppna ett stycke för att fortsätta skriva. Med Pro kan du också använda AI för att kontrollera och förbättra ditt arbete, eller exportera när du behöver en kopia."
+        },
+        "newFolder": {
+          "title": "5. Skapa en mapp",
+          "body": "Klicka på Ny mapp för att gruppera skrivande efter ämne, nivå eller projekt. Mappar är valfria — du kan också behålla allt på högsta nivån."
+        },
+        "nameFolder": {
+          "title": "6. Namnge din mapp",
+          "body": "Skriv ett namn som hjälper dig att hitta saker senare (till exempel Utkast till uppsats eller B1-arbetsblad). Mappen skapas inom den plats du tittar på."
+        },
+        "organize": {
+          "title": "7. Mappar och filer",
+          "body": "Mappar ligger ovanför din skrivlista. Öppna en mapp för att arbeta inuti den — nya stycken du skapar där sparas automatiskt i den mappen."
+        },
+        "moveItem": {
+          "title": "8. Flytta mellan mappar",
+          "body": "Använd flyttikonen på vilket stycke som helst, eller dra det till en mappkort. Du kan också dra mappar till andra mappar för att gruppera ämnen."
+        }
+      }
+    },
+    "theory": {
+      "title": "Teori",
+      "description": "Behåll de förklaringar du vill komma ihåg — grammatik, uttal, användning och personliga anteckningar.",
+      "cta": "Lägg till teori",
+      "steps": {
+        "add": {
+          "title": "1. Lägg till en anteckning",
+          "body": "Skapa en teorianteckning för något du vill komma ihåg. När du skriver det, välj en kategori så att relaterade ämnen hålls tillsammans."
+        },
+        "category": {
+          "title": "2. Bläddra efter kategori",
+          "body": "Filtrera anteckningar efter kategori för att snabbt återvända till grammatik, uttal, användning eller andra ämnen du sparat."
+        },
+        "search": {
+          "title": "3. Sök",
+          "body": "Sök i ditt teoribibliotek för att snabbt hitta en anteckning istället för att leta igenom allt."
+        },
+        "read": {
+          "title": "4. Läs och återbesök",
+          "body": "Öppna en anteckning när du behöver en uppfräschning. Kom tillbaka så ofta du vill — detta är din referensnotebook."
+        },
+        "newFolder": {
+          "title": "5. Skapa en mapp",
+          "body": "Klicka på Ny mapp för att gruppera teorianteckningar efter ämne, enhet eller prov. Mappar är valfria — dina anteckningar kan också stanna på högsta nivån."
+        },
+        "nameFolder": {
+          "title": "6. Namnge din mapp",
+          "body": "Skriv ett tydligt namn (till exempel Grammatik B1 eller Uttal). Mappen skapas inom den plats du tittar på."
+        },
+        "organize": {
+          "title": "7. Mappar och filer",
+          "body": "Mappar visas ovanför dina anteckningar. Öppna en mapp för att se endast vad som finns inuti — nya anteckningar du skapar där sparas i den mappen."
+        },
+        "moveItem": {
+          "title": "8. Flytta anteckningar mellan mappar",
+          "body": "Använd flyttikonen på vilken anteckning som helst, eller dra den till en mapp. Du kan också gruppera mappar inuti varandra för att organisera efter ämne."
+        }
+      }
+    },
+    "exercise": {
+      "title": "Övningar",
+      "description": "Omvandla din kunskap till praktik — flashcards, quiz, fyll i luckorna och mer.",
+      "cta": "Prova en övning",
+      "steps": {
+        "sources": {
+          "title": "1. Välj din källa",
+          "body": "Öva med ordlistan du sparat, teorianteckningar eller importerad material. Ju mer du lägger till, desto mer användbar blir din övning."
+        },
+        "types": {
+          "title": "2. Välj en övningstyp",
+          "body": "Välj flashcards, flervalsfrågor, matcha par, fyll i luckan, skriv svaret eller bilda en mening — börja sedan en kort session med din egen kunskap."
+        }
+      }
+    },
+    "listening": {
+      "title": "Lyssnande",
+      "description": "Ta med verkligt innehåll som du vill förstå — ladda upp ljud eller video, läs transkriptionen och studera från den.",
+      "cta": "Öppna lyssnande",
+      "steps": {
+        "upload": {
+          "title": "1. Ladda upp ditt material",
+          "body": "Ta med något du faktiskt vill förstå — en podcast, video, lektion eller din egen inspelning."
+        },
+        "uploadArea": {
+          "title": "2. Välj en fil",
+          "body": "Välj eller släpp en ljud- eller videofil. Notoria kommer att ladda upp den och generera en transkription där det stöds."
+        },
+        "lessons": {
+          "title": "3. Studera dina lektioner",
+          "body": "Öppna en lektion för att läsa transkriptionen, fånga nya ord och uttryck, och öva med det material du valt."
+        },
+        "newFolder": {
+          "title": "4. Skapa en mapp",
+          "body": "Klicka på Ny mapp för att gruppera lektioner efter ämne, kurs eller färdighetsnivå. Mappar är valfria — du kan behålla allt på högsta nivån."
+        },
+        "nameFolder": {
+          "title": "5. Namnge din mapp",
+          "body": "Skriv ett namn som ger mening för dig (till exempel Podcasts eller Provförberedelse). Mappen skapas inom den plats du tittar på."
+        },
+        "organize": {
+          "title": "6. Mappar och filer",
+          "body": "Mappar visas ovanför dina lektioner. Öppna en mapp för att bläddra endast i den gruppen — uppladdningar du lägger till medan du är inne i en mapp sparas där."
+        },
+        "moveItem": {
+          "title": "7. Flytta lektioner mellan mappar",
+          "body": "Använd flyttikonen på vilken lektion som helst, eller dra den till en mappkort. Du kan också gruppera mappar för att organisera större samlingar."
+        }
+      }
+    },
+    "speaking": {
+      "title": "Tala",
+      "description": "Öva på att använda språket i samtal — granska sedan transkriptionen och feedbacken.",
+      "cta": "Starta ett samtal",
+      "steps": {
+        "start": {
+          "title": "1. Starta en session",
+          "body": "Skapa en tal-session och gå med när du är redo. Öva på att använda språket i ett verkligt samtal istället för att bara studera det."
+        },
+        "sessions": {
+          "title": "2. Granska efteråt",
+          "body": "Öppna en session för att läsa transkriptionen och feedbacken. Använd den för att upptäcka misstag, återanvända användbara fraser och bestämma vad du ska lägga till i din dagbok nästa gång."
+        }
+      }
+    }
+  },
+  "settings": {
+    "eyebrow": "Inställningar",
+    "title": "App",
+    "highlight": "inställningar",
+    "description": "Hur Notoria ska se ut och fungera för dig — inte arbetsyta eller kontoinställningar.",
+    "appearance": "Utseende",
+    "appearanceDescription": "Visuella inställningar för hela appen.",
+    "theme": "Tema",
+    "themeDescription": "Välj ljus, mörk eller matcha ditt system.",
+    "themeLight": "Ljus",
+    "themeDark": "Mörk",
+    "themeSystem": "System",
+    "accessibility": "Tillgänglighet",
+    "accessibilityDescription": "Alternativ som ändrar hur rörelse och interaktion känns över hela Notoria.",
+    "motion": "Minska rörelse",
+    "motionDescription": "Begränsa animationer. Systemet följer din enhetsinställning.",
+    "motionSystem": "System",
+    "motionReduce": "Minska",
+    "motionFull": "Full rörelse",
+    "learning": "Lärande",
+    "learningDescription": "Vägledningsinställningar som gäller över sektioner.",
+    "ai": {
+      "title": "AI-hjälp",
+      "description": "Styr hur AI-funktioner beter sig i Notoria.",
+      "enabled": "AI-hjälp",
+      "enabledDescription": "Tillåt Notoria att använda AI-funktioner.",
+      "on": "På",
+      "off": "Av",
+      "responseStyle": "Svarsstil",
+      "responseStyleDescription": "Hur detaljerade AI-svar ska vara.",
+      "responseConcise": "Kortfattat",
+      "responseBalanced": "Balanserat",
+      "responseDetailed": "Detaljerat",
+      "correctionStyle": "Korrigeringsstil",
+      "correctionStyleDescription": "Hur ska AI förklara dina språkfel?",
+      "correctionMinimal": "Minimal",
+      "correctionExplain": "Förklara fel",
+      "correctionDetailed": "Detaljerat",
+      "suggestions": "AI-förslag",
+      "suggestionsDescription": "Visa proaktiva AI-förslag när du redigerar ordförråd, när det finns.",
+      "confirmActions": "Bekräfta AI-åtgärder",
+      "confirmActionsDescription": "Fråga innan AI ändrar ditt innehåll.",
+      "confirmAlways": "Alltid",
+      "confirmContentChange": "Endast vid innehållsändring",
+      "confirmNever": "Aldrig",
+      "saveFailed": "Kunde inte spara AI-inställningar",
+      "disabledToast": "AI-hjälp är avstängd i Inställningar",
+      "formatConfirm": "AI kommer att skriva om detta innehåll. Fortsätta?"
+    },
+    "tutorials": "Sektionstutorials",
+    "tutorialsDescription": "Återställ genomförda sektiongenomgångar så att \"Visa tutorial\" börjar från början igen.",
+    "tutorialsReset": "Återställ tutorials",
+    "tutorialsResetDone": "Sektionstutorials återställda",
+    "shortcuts": {
+      "title": "Tangentbordsgenvägar",
+      "description": "Globala genvägar för Notoria webbappen. Funktionsspecifika tangenter hålls inom varje aktivitet.",
+      "enabled": "Aktivera genvägar",
+      "enabledDescription": "Slå på eller av alla globala genvägar utan att förlora dina anpassade bindningar.",
+      "on": "På",
+      "off": "Av",
+      "action": "Åtgärd",
+      "keys": "Genväg",
+      "edit": "Redigera",
+      "add": "Lägg till genväg",
+      "addTitle": "Lägg till genväg",
+      "addDescription": "Välj en åtgärd som du vill få snabb åtkomst till, tryck sedan på den tangentkombination du vill använda.",
+      "chooseAction": "Välj åtgärd",
+      "customized": "Anpassad",
+      "defaultBadge": "Standard",
+      "defaultWas": "Standard var {keys}",
+      "extraBadge": "Ytterligare",
+      "remove": "Ta bort",
+      "removed": "Genväg borttagen",
+      "replace": "Ersätt",
+      "resetOne": "Återställ till standard",
+      "resetOneDone": "Genväg återställd till standard",
+      "resetAll": "Återställ alla genvägar",
+      "resetAllDescription": "Återställ varje global genväg till sin standard tangentkombination.",
+      "resetAllConfirmTitle": "Återställ alla tangentbordsgenvägar till sina standardinställningar?",
+      "resetAllConfirmDescription": "Anpassade globala genvägar kommer att raderas. Funktionsgenvägar påverkas inte.",
+      "resetAllDone": "Alla genvägar återställda",
+      "editTitle": "Redigera: {action}",
+      "editDescription": "Tryck på en tangentkombination. Webbläsarreserverade genvägar kan inte användas av Notoria.",
+      "pressKeys": "Tryck på en tangentkombination",
+      "pickActionFirst": "Välj en åtgärd, tryck sedan på en tangentkombination",
+      "saved": "Genväg sparad",
+      "conflict": "Denna genväg är redan tilldelad till \"{action}\".",
+      "reserved": "Reserverad av webbläsaren och kan inte användas av Notoria.",
+      "statusAvailable": "✓ {keys}",
+      "statusConflict": "⚠ {keys} — redan tilldelad till {action}.",
+      "statusReserved": "⚠ {keys} — reserverad av webbläsaren och kan inte användas av Notoria.",
+      "reservedTitle": "Vissa genvägar kan inte användas",
+      "reservedDescription": "Webbläsaren och Windows reserverar tangenter som Ctrl + N, Ctrl + Shift + T och Win + E. Notoria kan inte åsidosätta dem.",
+      "reservedGroups": {
+        "ctrl": "Ctrl",
+        "ctrlShift": "Ctrl + Shift",
+        "alt": "Alt",
+        "win": "Windows"
+      },
+      "reservedPurposes": {
+        "newWindow": "Nytt fönster",
+        "newTab": "Ny flik",
+        "closeTab": "Stäng flik",
+        "reopenTab": "Öppna stängd flik",
+        "closeWindow": "Stäng fönster",
+        "newIncognito": "Nytt privat fönster",
+        "addressBar": "Adressfält",
+        "reload": "Ladda om",
+        "hardReload": "Hård omladdning",
+        "nextTab": "Nästa flik",
+        "prevTab": "Föregående flik",
+        "print": "Skriv ut",
+        "openFile": "Öppna fil",
+        "browserSave": "Webbläsarens spara sida",
+        "bookmark": "Bokmärk sida",
+        "history": "Historik",
+        "downloads": "Nedladdningar",
+        "viewSource": "Visa källa",
+        "findInPage": "Hitta på sidan",
+        "findNext": "Hitta nästa",
+        "findPrev": "Hitta föregående",
+        "devtools": "Utvecklarverktyg",
+        "console": "JavaScript-konsol",
+        "inspect": "Inspektera element",
+        "clearData": "Rensa webbläsardata",
+        "taskManager": "Webbläsarens aktivitetsmanager",
+        "altClose": "Stäng fönster",
+        "altTab": "Byt appar",
+        "winExplorer": "Filutforskare",
+        "winDesktop": "Visa skrivbord",
+        "winLock": "Lås PC",
+        "winRun": "Kör-dialog",
+        "winSettings": "Windows-inställningar",
+        "winTaskView": "Aktivitetsvy",
+        "winClipboard": "Urklippets historik"
+      },
+      "actions": {
+        "openSearch": "Sök",
+        "toggleTheme": "Växla tema",
+        "quickSave": "Snabb spara",
+        "quickEdit": "Snabb redigera",
+        "quickView": "Snabb vy",
+        "download": "Ladda ner",
+        "deleteItem": "Ta bort",
+        "createNew": "Skapa ny",
+        "goBack": "Gå tillbaka",
+        "goForward": "Gå framåt"
+      },
+      "actionDescriptions": {
+        "openSearch": "Sök över din arbetsyta",
+        "toggleTheme": "Växla mellan ljust och mörkt läge",
+        "quickSave": "Spara det aktuella objektet",
+        "quickEdit": "Börja redigera det aktuella objektet",
+        "quickView": "Öppna det aktuella objektet i visningsläge",
+        "download": "Ladda ner det aktuella objektet",
+        "deleteItem": "Ta bort det valda objektet",
+        "createNew": "Skapa ett nytt objekt i denna sektion",
+        "goBack": "Återvänd till föregående sida",
+        "goForward": "Gå framåt i din webbläsarhistorik"
+      }
+    },
+    "data": {
+      "title": "Data & integritet",
+      "description": "Lokala preferensdata lagrade i denna webbläsare. Konto- och arbetsytainnehåll hanteras på annat håll.",
+      "clear": "Rensa lokala inställningar",
+      "clearDescription": "Tar bort temaoberoende appinställningar som lagras på denna enhet: rörelse, genvägar, tutorials och liknande lokala inställningar. Tar inte bort ditt konto eller arbetsytadata.",
+      "clearConfirmTitle": "Rensa lokala inställningar?",
+      "clearConfirmDescription": "Detta rensar endast inställningar i denna webbläsare. Ditt konto, fakturering och lärandeinnehåll raderas inte.",
+      "clearDone": "Lokala inställningar rensade"
+    },
+    "tagManager": {
+      "sectionTitle": "Ordförråd",
+      "sectionDescription": "Organisera hur taggar används i ditt ordförråd.",
+      "title": "Tagghanterare",
+      "description": "Hantera taggarna som används för att organisera ditt ordförråd.",
+      "open": "Hantera taggar"
+    },
+    "customTags": "Anpassade taggar",
+    "customTagsDescription": "Skapa arbetsytaspecifika taggar för ordförråd. Inbyggda taggar är alltid tillgängliga.",
+    "tagName": "Taggnamn",
+    "tagNamePlaceholder": "t.ex. YKI, JLPT N5, IELTS",
+    "tagNameRequired": "Ange ett taggnamn.",
+    "addTag": "Lägg till tagg",
+    "renameTag": "Byt namn",
+    "editTagTitle": "Byt namn på tagg",
+    "editTagDescription": "Det nya namnet kommer att tillämpas på varje ord som använder denna tagg.",
+    "tagCreated": "Tagg skapad",
+    "tagUpdated": "Tagg omdöpt",
+    "tagDeleted": "Tagg borttagen",
+    "tagExists": "En tagg med detta namn finns redan",
+    "noCustomTags": "Inga anpassade taggar ännu",
+    "deleteTagTitle": "Ta bort denna tagg?",
+    "deleteTagConfirm": "Ta bort denna tagg? Den kommer att tas bort från alla ord.",
+    "deleteTagDescription": "\"{name}\" kommer att tas bort från alla ord. Själva orden kommer inte att raderas."
+  },
+  "theory": {
+    "eyebrow": "Teori",
+    "title": "Teori",
+    "highlight": "lär dig",
+    "description": "Anteckningar om grammatik, uttal, tal och hur språket fungerar — inte skrivövningar.",
+    "library": "Bibliotek",
+    "collections": "Samlingar",
+    "disabledNoWorkspace": "Skapa en arbetsyta innan du lägger till teorianteckningar.",
+    "create": "Lägg till teori",
+    "createFirst": "Lägg till din första anteckning",
+    "emptyTitle": "Inga teorianteckningar än",
+    "emptyDescription": "Håll förklaringar här: kasus, uttal, lyssnande, tal och användning. Använd Skrivande för faktisk skrivövning.",
+    "searchPlaceholder": "Sök ämnen…",
+    "filterAll": "Alla",
+    "noResults": "Inga matchande ämnen",
+    "noResultsDescription": "Försök med en annan sökning eller kategori.",
+    "readingTime": "{minutes, plural, one {# min läsning} other {# min läsning}}",
+    "backToList": "Tillbaka till teori",
+    "backToPreview": "Tillbaka till anteckning",
+    "previewTitle": "Teori anteckning",
+    "previewDescription": "Läs denna anteckning. Öppna Redigera för att göra ändringar.",
+    "edit": "Redigera",
+    "editTitle": "Redigera teori",
+    "editDescription": "Spara för att behålla dina ändringar. Avbryt för att kassera osparade ändringar.",
+    "editSaveHint": "Spara för att uppdatera anteckningen. Avbryt för att kassera osparade ändringar.",
+    "newTitle": "Ny teori",
+    "formDescription": "Namnge regeln, välj en kategori, och förklara den med dina egna ord.",
+    "documentTitle": "Titel",
+    "titlePlaceholder": "t.ex. Hur finsk partitiv fungerar",
+    "categoryLabel": "Kategori",
+    "summaryLabel": "Kort beskrivning",
+    "summaryPlaceholder": "En eller två meningar för bibliotekskortet…",
+    "content": "Förklaring",
+    "contentPlaceholder": "Förklara regeln, mönstret eller användningen. Lägg till exempel om det är till hjälp…",
+    "titleRequired": "Titel krävs",
+    "descriptionTooLong": "Kort beskrivning måste vara {max} tecken eller färre.",
+    "categoryInvalid": "Välj en giltig kategori.",
+    "notFound": "Teori anteckning hittades inte.",
+    "saved": "Teori anteckning sparad",
+    "created": "Teori anteckning skapad",
+    "saveFailed": "Misslyckades med att spara teorianteckning",
+    "deleted": "Teori anteckning raderad",
+    "deleteConfirmTitle": "Radera denna teorianteckning?",
+    "deleteConfirmDescription": "\"{title}\" kommer att tas bort permanent.",
+    "autosaving": "Sparar automatiskt...",
+    "autosaveReady": "Ändringar sparas automatiskt",
+    "autosavePending": "Spara för att aktivera automatisk sparning",
+    "categories": {
+      "grammar": "Grammatik",
+      "vocabulary": "Ordförråd",
+      "pronunciation": "Uttal",
+      "writing": "Skrivande",
+      "communication": "Kommunikation",
+      "usage": "Användning",
+      "culture": "Kultur & Kontext"
+    },
+    "export": {
+      "button": "Exportera",
+      "title": "Exportera teori",
+      "kicker": "Exportera teori",
+      "untitled": "Untitled anteckning",
+      "description": "Ladda ner denna anteckning som en utskrivbar sida eller en redigerbar fil.",
+      "format": "Format",
+      "formatPdf": "PDF",
+      "formatDocx": "Word",
+      "formatPdfHint": "Utskrivbar sida",
+      "formatDocxHint": "Redigerbar fil",
+      "confirm": "Exportera",
+      "success": "Nedladdning påbörjad",
+      "failed": "Export misslyckades",
+      "empty": "Lägg till något innehåll innan du exporterar",
+      "documentHeading": "Teori",
+      "titleLabel": "Titel",
+      "descriptionLabel": "Beskrivning"
+    }
+  },
+  "listening": {
+    "eyebrow": "Lyssnande",
+    "title": "Lyssnande",
+    "highlight": "övning",
+    "description": "Ladda upp en MP3 eller MP4 och omvandla den till en interaktiv lyssningslektion.",
+    "disabledNoWorkspace": "Skapa en arbetsyta innan du lägger till lyssningslektioner.",
+    "upload": "Ladda upp Lyssnande",
+    "uploadFirst": "Ladda upp din första lyssning",
+    "uploadTitle": "Ladda upp Lyssnande",
+    "uploadDescription": "Dra en MP3 eller MP4-fil hit. Vi kommer att transkribera den så att du kan öva på att lyssna.",
+    "dropTitle": "Dra en MP3 eller MP4-fil hit",
+    "dropDescription": "eller bläddra på din dator",
+    "replaceFile": "Klicka för att välja en annan fil",
+    "uploadAction": "Ladda upp",
+    "titleLabel": "Titel",
+    "titlePlaceholder": "Valfritt — genererat från ljudet",
+    "emptyTitle": "Inga lyssningslektioner ännu",
+    "emptyDescription": "Ladda upp en ljud- eller videofil för att skapa din första lyssningslektion.",
+    "myLessons": "Mina Lyssningslektioner",
+    "collections": "Samlingar",
+    "searchPlaceholder": "Sök efter titel eller filnamn…",
+    "filterAll": "Alla",
+    "filterCefr": "CEFR",
+    "filterTopic": "Ämne",
+    "filterFormality": "Formellhet",
+    "filterStatus": "Status",
+    "sortNewest": "Nyast först",
+    "sortOldest": "Äldst först",
+    "sortTitleAsc": "Titel (A → Z)",
+    "sortTitleDesc": "Titel (Z → A)",
+    "clearFilters": "Rensa filter",
+    "sortBy": "Sortera efter",
+    "noResults": "Inga lyssningslektioner matchar din sökning",
+    "noResultsDescription": "Försök med en annan sökning eller rensa filtren.",
+    "continue": "Fortsätt",
+    "open": "Öppna",
+    "viewProgress": "Visa",
+    "retry": "Försök igen",
+    "created": "Lyssningslektionen skapades framgångsrikt.",
+    "deleted": "Lyssningslektionen raderades",
+    "renameFile": "Byt namn på fil",
+    "renameFileTitle": "Byt namn på fil",
+    "renameFileDescription": "Ändra filnamnet. Ljudet laddas inte upp igen.",
+    "fileNameLabel": "Filnamn",
+    "renamed": "Filnamnet uppdaterades",
+    "deleteConfirmTitle": "Radera denna lyssningslektion?",
+    "deleteConfirmDescription": "\"{title}\" och dess övningar kommer att tas bort permanent.",
+    "backToList": "Tillbaka till Lyssnande",
+    "backToLesson": "Tillbaka till lektionen",
+    "lessonDescription": "Lyssna, välj en övningstyp och svara på alla frågor på en sida.",
+    "practiceDescription": "Spela upp ljudet, svara och kontrollera din lyssning.",
+    "startPractice": "Börja öva",
+    "transcript": "Transkript",
+    "showTranscript": "Visa transkript",
+    "hideTranscript": "Dölj transkript",
+    "speakerLabel": "Talare {id}",
+    "identifyingSpeakers": "Identifierar talare...",
+    "exerciseTitle": "Lyssningsövning",
+    "chooseExerciseType": "Välj övningstyp:",
+    "chooseTypeHint": "Välj Fyll i luckan eller Flervalsfråga för att generera frågor.",
+    "exercisesGenerated": "Övningar genererade.",
+    "exercisesTitle": "Övningar",
+    "exerciseCount": "{count, plural, one {# övning} other {# övningar}}",
+    "status": {
+      "UPLOADING": "Laddar upp",
+      "TRANSCRIBING": "Transkriberar",
+      "GENERATING": "Genererar övningar",
+      "COMPLETED": "Avslutad",
+      "FAILED": "Misslyckades"
+    },
+    "steps": {
+      "uploading": "Laddar upp...",
+      "transcribing": "Transkriberar...",
+      "generating": "Genererar övningar...",
+      "wait": "Detta kan ta en minut. Håll detta fönster öppet."
+    },
+    "types": {
+      "FILL_BLANK": "Fyll i luckan",
+      "MULTIPLE_CHOICE": "Flervalsfråga",
+      "DICTATION": "Diktamen",
+      "WORD_ORDERING": "Ordning på ord"
+    },
+    "player": {
+      "play": "Spela",
+      "pause": "Pausa",
+      "replay": "Spela om",
+      "seek": "Sök",
+      "playSegment": "Spela denna del"
+    },
+    "meta": {
+      "none": "Inte angivet",
+      "cefrLabel": "CEFR-nivå",
+      "topicLabel": "Ämne",
+      "formalityLabel": "Formellhet",
+      "cefr": {
+        "a1": "A1",
+        "a2": "A2",
+        "b1": "B1",
+        "b2": "B2",
+        "c1": "C1",
+        "c2": "C2"
+      },
+      "formality": {
+        "formal": "Formell",
+        "informal": "Informell",
+        "neutral": "Neutral"
+      }
+    },
+    "fillBlankOverview": "Fyll i luckorna i texten.",
+    "practice": {
+      "progress": "{current} / {total}",
+      "score": "{correct} korrekt",
+      "check": "Kontrollera",
+      "checkAnswers": "Kontrollera svar",
+      "questionLabel": "Fråga {number}",
+      "blankLabel": "Lucka {number}",
+      "listenPrompt": "Lyssna på denna del av ljudet.",
+      "next": "Nästa",
+      "previous": "Föregående",
+      "finish": "Avsluta",
+      "correct": "Korrekt",
+      "incorrect": "Inte riktigt",
+      "expected": "Korrekt svar",
+      "completeTitle": "Lyssnande Avslutat",
+      "completeScore": "{correct} / {total} korrekt",
+      "completePercent": "{percent}%",
+      "review": "Granska svar",
+      "tryAgain": "Försök igen",
+      "back": "Tillbaka till Lyssnande",
+      "backToResults": "Tillbaka till resultat"
+    },
+    "errors": {
+      "CLOUDINARY_NOT_CONFIGURED": "Medielagring är inte konfigurerad.",
+      "ASSEMBLYAI_NOT_CONFIGURED": "Tal-till-text är inte konfigurerat.",
+      "OPENAI_NOT_CONFIGURED": "Övningsgenerering är inte konfigurerad.",
+      "INVALID_FILE": "Välj en MP3 eller MP4-fil.",
+      "INVALID_FILE_TYPE": "Endast MP3- och MP4-filer stöds.",
+      "FILE_TOO_LARGE": "Den filen är för stor. Använd en fil under 25 MB.",
+      "TRANSCRIPTION_FAILED": "Vi kunde inte transkribera det ljudet. Försök igen.",
+      "GENERATION_FAILED": "Vi kunde inte generera övningar. Försök igen.",
+      "GENERATION_UNAVAILABLE": "Övningsgenerering är för närvarande inte tillgänglig. Försök igen senare.",
+      "VALIDATION_FAILED": "De genererade övningarna var inte användbara. Försök igen.",
+      "LESSON_NOT_FOUND": "Lyssningslektionen hittades inte.",
+      "PROCESSING_FAILED": "Något gick fel när denna lektion skapades. Försök igen.",
+      "EMPTY_TRANSCRIPT": "Inget tal hittades i den filen.",
+      "DUPLICATE_FILENAME": "En fil med detta namn finns redan.",
+      "FILENAME_REQUIRED": "Ange ett filnamn."
+    }
+  },
+  "speaking": {
+    "eyebrow": "Tala",
+    "title": "Tala",
+    "highlight": "träna",
+    "description": "Gå med i ett videomöte med en AI-tutor och öva konversation på ditt arbetsområdes språk.",
+    "disabledNoWorkspace": "Skapa ett arbetsområde innan du börjar en tal-session.",
+    "newCall": "Nytt samtal",
+    "newCallFirst": "Starta ditt första samtal",
+    "newTitle": "Nytt tal-samtal",
+    "newDescription": "Välj en nivå och ett ämne. En AI-tutor kommer att gå med i samtalet och prata med dig.",
+    "modalTip": "Välj hur svårt samtalet ska kännas, lämna sedan en kort anteckning så att tutorn vet vad som ska övas.",
+    "create": "Skapa samtal",
+    "created": "Tal-samtal skapat",
+    "titleLabel": "Titel",
+    "titlePlaceholder": "Valfritt — genererat från ämnet",
+    "notesLabel": "Anteckningar för tutorn",
+    "notesPlaceholder": "Vad som helst du vill öva, eller ord du blandar ihop…",
+    "emptyTitle": "Inga tal-sessioner än",
+    "emptyDescription": "Starta ett videomöte med en AI-tutor för att öva tal.",
+    "mySessions": "Mina tal-sessioner",
+    "sessionHint": "Öppna ett avslutat samtal för feedback och transkript.",
+    "stats": {
+      "aria": "Statistik för tal-sessioner",
+      "total": "Sessioner",
+      "completed": "Avslutade",
+      "ready": "Redo",
+      "topics": "Ämnen"
+    },
+    "guide": {
+      "aria": "Hur talträning fungerar",
+      "pick": {
+        "title": "Sätt fokus",
+        "body": "Välj CEFR och ett ämne så att tutorn styr samtalet mot vad du behöver."
+      },
+      "call": {
+        "title": "Prata live",
+        "body": "Gå med i videomötet, prata naturligt och be om upprepningar när något är oklart."
+      },
+      "review": {
+        "title": "Granska efteråt",
+        "body": "Kom tillbaka för feedback och ett transkript som du kan återanvända i vokabulär eller skrivande."
+      }
+    },
+    "join": "Gå med i samtal",
+    "open": "Öppna",
+    "viewProgress": "Se framsteg",
+    "backToList": "Tillbaka till tal",
+    "sessionDescription": "Gå med i samtalet, kom sedan tillbaka hit för feedback och ett transkript.",
+    "deleted": "Tal-session raderad",
+    "ended": "Samtal avslutat",
+    "endSession": "Avsluta session",
+    "deleteConfirmTitle": "Radera denna session?",
+    "deleteConfirmDescription": "Detta kommer att ta bort “{title}” och dess transkript.",
+    "processingTitle": "Förbereder din feedback",
+    "processingDescription": "Tutorn avslutar. Feedback kommer att visas här om en minut.",
+    "feedbackTitle": "Tutorns feedback",
+    "feedbackDescription": "En kort sammanfattning av hur samtalet gick.",
+    "transcriptTitle": "Transkript",
+    "status": {
+      "upcoming": "Redo",
+      "active": "I samtal",
+      "processing": "Bearbetar",
+      "completed": "Avslutad",
+      "cancelled": "Avbruten"
+    },
+    "meta": {
+      "cefrLabel": "CEFR-nivå",
+      "topicLabel": "Ämne",
+      "cefr": {
+        "a1": "A1",
+        "a2": "A2",
+        "b1": "B1",
+        "b2": "B2",
+        "c1": "C1",
+        "c2": "C2"
+      }
+    },
+    "call": {
+      "lobbyTitle": "Redo att tala?",
+      "lobbyDescription": "Kontrollera din kamera och mikrofon, gå sedan med. AI-tutorn kommer att gå med strax efter dig.",
+      "permissions": "Tillåt mikrofonåtkomst i din webbläsare för att gå med i samtalet. Kamera är valfritt.",
+      "cancel": "Avbryt",
+      "join": "Gå med i samtal",
+      "joining": "Går med…",
+      "tutorFailed": "Du är i samtalet, men AI-tutorn kunde inte gå med. Försök lämna och gå med igen.",
+      "endedTitle": "Samtal avslutat",
+      "endedDescription": "Feedback kommer att visas på sessionssidan om några ögonblick.",
+      "back": "Tillbaka till session",
+      "notConfigured": "Videomöten är inte konfigurerade än. Lägg till Stream Video API-nycklar för att starta ett samtal."
+    },
+    "errors": {
+      "STREAM_NOT_CONFIGURED": "Videomöten är inte konfigurerade.",
+      "OPENAI_NOT_CONFIGURED": "AI-tutorn är inte konfigurerad.",
+      "INVALID_INPUT": "Kontrollera ämnet och nivån, försök sedan igen.",
+      "SESSION_NOT_FOUND": "Tal-session hittades inte.",
+      "SESSION_NOT_JOINABLE": "Detta samtal är inte längre tillgängligt att gå med i.",
+      "STREAM_CALL_FAILED": "Kunde inte starta videomötet. Försök igen.",
+      "UNAUTHORIZED": "Logga in för att gå med i ett tal-samtal."
+    }
+  },
+  "errors": {
+    "generic": "Något gick fel",
+    "noWorkspace": "Ingen aktiv arbetsyta",
+    "notFound": "Hittades inte"
+  },
+  "learningOnboarding": {
+    "step": "Komma igång",
+    "title": "Vad vill du lära dig?",
+    "description": "Välj ditt första språk för att börja lära dig.",
+    "searchPlaceholder": "Sök språk…",
+    "noResults": "Inga språk matchar den sökningen.",
+    "continue": "Fortsätt",
+    "continuing": "Fortsätter…",
+    "error": "Något gick fel. Vänligen försök igen.",
+    "invalidLanguage": "Det språket är inte tillgängligt. Vänligen välj ett annat."
+  },
+  "auth": {
+    "welcomeBack": "Välkommen tillbaka",
+    "signInDescription": "Logga in på ditt Notoria-konto",
+    "signInEyebrow": "Logga in",
+    "signUpEyebrow": "Registrera dig",
+    "createAccountTitle": "Skapa ditt konto",
+    "registerDescription": "Skapa ditt konto, välj sedan vad du vill lära dig.",
+    "email": "E-post",
+    "password": "Lösenord",
+    "name": "Namn",
+    "signIn": "Logga in",
+    "signingIn": "Loggar in…",
+    "signOut": "Logga ut",
+    "createAccount": "Skapa konto",
+    "creatingAccount": "Skapar konto…",
+    "noAccount": "Har du inget konto?",
+    "hasAccount": "Har du redan ett konto?",
+    "invalidCredentials": "Ogiltig e-post eller lösenord",
+    "emailExists": "Ett konto med denna e-post finns redan",
+    "emailInvalid": "Ange en giltig e-postadress",
+    "registerFailed": "Kunde inte skapa konto. Försök igen.",
+    "signInAfterRegisterFailed": "Konto skapat. Vänligen logga in.",
+    "passwordHint": "Minst 8 tecken",
+    "passwordTooShort": "Lösenordet måste vara minst 8 tecken",
+    "showPassword": "Visa lösenord",
+    "hidePassword": "Dölj lösenord",
+    "forgotPassword": "Glömt lösenord?",
+    "forgotPasswordEyebrow": "Återställning av konto",
+    "forgotPasswordTitle": "Glömt ditt lösenord?",
+    "forgotPasswordDescription": "Ange din e-post så skickar vi en återställningslänk om ett konto finns.",
+    "sendResetLink": "Skicka återställningslänk",
+    "sendingResetLink": "Skickar…",
+    "forgotPasswordSentTitle": "Kontrollera din e-post",
+    "forgotPasswordSent": "Om ett konto finns för denna e-post har vi skickat en länk för att återställa lösenordet.",
+    "forgotPasswordFailed": "Kunde inte skicka en återställningslänk. Försök igen.",
+    "backToSignIn": "Tillbaka till inloggning",
+    "resetPasswordEyebrow": "Återställning av konto",
+    "resetPasswordTitle": "Välj ett nytt lösenord",
+    "resetPasswordDescription": "Ange ett nytt lösenord för ditt Notoria-konto.",
+    "resetPassword": "Återställ lösenord",
+    "resettingPassword": "Återställer…",
+    "resetPasswordSuccessTitle": "Lösenordet har uppdaterats",
+    "resetPasswordSuccess": "Ditt lösenord har återställts. Du kan logga in nu.",
+    "resetPasswordFailed": "Kunde inte återställa ditt lösenord. Försök igen.",
+    "resetTokenInvalid": "Denna återställningslänk är ogiltig eller har gått ut. Begär en ny.",
+    "resetTokenMissing": "Denna återställningslänk saknas eller är ofullständig. Begär en ny.",
+    "account": "Konto",
+    "accountSettings": "Kontoinställningar",
+    "accountDescription": "Uppdatera din profilbild och lösenord.",
+    "profile": "Profil",
+    "avatar": "Profilbild",
+    "avatarDescription": "Ladda upp en bild för ditt konto. JPG, PNG, WebP eller GIF upp till 5 MB.",
+    "changeAvatar": "Ladda upp bild",
+    "removeAvatar": "Ta bort bild",
+    "avatarUpdated": "Profilbilden har uppdaterats",
+    "avatarRemoved": "Profilbilden har tagits bort",
+    "avatarUploadFailed": "Kunde inte ladda upp profilbild",
+    "avatarInvalidType": "Vänligen välj en JPG, PNG, WebP eller GIF-bild",
+    "avatarTooLarge": "Bilden måste vara 5 MB eller mindre",
+    "avatarNotConfigured": "Bilduppladdning är inte konfigurerad än",
+    "changePassword": "Ändra lösenord",
+    "currentPassword": "Nuvarande lösenord",
+    "newPassword": "Nytt lösenord",
+    "confirmPassword": "Bekräfta nytt lösenord",
+    "updatePassword": "Uppdatera lösenord",
+    "passwordUpdated": "Lösenordet har uppdaterats",
+    "passwordUpdateFailed": "Kunde inte uppdatera lösenord",
+    "invalidCurrentPassword": "Nuvarande lösenord är felaktigt",
+    "passwordMismatch": "Nya lösenord matchar inte",
+    "saveName": "Spara namn",
+    "nameUpdated": "Namnet har uppdaterats",
+    "nameUpdateFailed": "Kunde inte uppdatera namn",
+    "nameTooShort": "Namnet måste vara minst 2 tecken",
+    "continueWithGoogle": "Fortsätt med Google",
+    "continuingWithGoogle": "Ansluter till Google…",
+    "orContinueWith": "eller fortsätt med e-post",
+    "oauthCancelled": "Google-inloggning avbröts. Du kan försöka igen.",
+    "oauthFailed": "Google-inloggning misslyckades. Försök igen.",
+    "oauthAccountNotLinked": "Denna e-post används redan med en annan inloggningsmetod.",
+    "oauthNotConfigured": "Google-inloggning är inte konfigurerad än."
+  },
+  "account": {
+    "eyebrow": "Konto",
+    "title": "Ditt",
+    "highlight": "konto",
+    "description": "Hantera din profil, Notoria Pro och kontosäkerhet — inklusive att permanent stänga ditt konto.",
+    "pro": {
+      "freeLede": "Gratis täcker vardaglig övning. Pro låser upp AI-verktygen som omvandlar dina anteckningar till hjälp med lyssnande, talande, skrivande och utskrivbara filer.",
+      "activeLede": "Din Pro-plan är aktiv. Dessa AI-lärande verktyg förblir upplåsta medan din prenumeration förnyas.",
+      "unlockLabel": "Lås upp med Pro",
+      "includedLabel": "Ingår i din Pro-plan",
+      "features": {
+        "aiPractice": "Fyll-i-blankt, kontextuella övningar och bilda-en-sats från ditt eget material",
+        "writingAi": "Korrigeringar och förslag på de texter du skriver",
+        "export": "Dela eller skriv ut arbetsblad som PDF eller Word",
+        "listening": "Omvandla ditt eget ljud eller video till övningslektioner",
+        "speaking": "Live AI-tutor samtal med transkript och feedback"
+      }
+    },
+    "profile": {
+      "title": "Profil",
+      "description": "Hur du framstår på Notoria. E-postadress förblir kopplad till inloggning.",
+      "emailHint": "E-post kan inte ändras här. Kontakta support om du behöver flytta till en annan adress."
+    },
+    "security": {
+      "title": "Lösenord",
+      "description": "Välj ett starkt lösenord som du inte återanvänder någon annanstans."
+    },
+    "danger": {
+      "title": "Stäng konto",
+      "description": "Permanently delete your Notoria account and everything inside it.",
+      "deleteTitle": "Ta bort mitt konto",
+      "deleteHint": "Detta tar bort alla arbetsytor, lärandeinnehåll och fakturering för detta konto. Ladda ner en säkerhetskopia först om du vill behålla en kopia.",
+      "deleteAction": "Ta bort konto"
+    },
+    "delete": {
+      "kicker": "Oåterkallelig",
+      "title": "Ta bort ditt konto?",
+      "description": "Du är på väg att permanent stänga {email}. Detta kan inte ångras.",
+      "warningTitle": "Innan du fortsätter",
+      "warnings": {
+        "workspaces": "Varje arbetsyta och all vokabulär, teori, skrivande, lyssnande och talande data kommer att raderas.",
+        "billing": "Eventuell aktiv Notoria Pro-prenumeration kommer att avbrytas omedelbart.",
+        "media": "Uppladdade medier och din profilbild kommer att tas bort.",
+        "permanent": "Det finns ingen återhämtningsperiod efter bekräftelse."
+      },
+      "backupTitle": "Ladda ner en säkerhetskopia först",
+      "backupHint": "Exporterar dina lärandedata som en JSON-fil för säker förvaring. Mediefiler länkas via URL, inte inbäddade.",
+      "backup": "Ladda ner säkerhetskopia",
+      "backupDone": "Säkerhetskopia nedladdad",
+      "backupFailed": "Kunde inte förbereda din säkerhetskopia. Försök igen.",
+      "confirmLabel": "Skriv {phrase} för att bekräfta",
+      "confirm": "Permanently delete account",
+      "deleted": "Ditt konto har tagits bort",
+      "failed": "Kunde inte ta bort ditt konto. Vänligen försök igen."
+    }
+  },
+  "billing": {
+    "title": "Notoria Pro",
+    "description": "Lås upp AI-drivna lärandefunktioner.",
+    "proDescription": "Du har för närvarande Notoria Pro.",
+    "tagline": "Lås upp AI-drivna lärandefunktioner.",
+    "price": "€9.99 / månad",
+    "priceAmount": "€9.99",
+    "pricePeriod": "per månad faktureras månadsvis",
+    "freePrice": "€0",
+    "mostPopular": "Mest populär",
+    "currentPlan": "Aktuell plan",
+    "choosePro": "Välj Pro",
+    "freePlanDescription": "Kärnövningar, vokabulär AI-hjälp, skrivande och CSV.",
+    "proPlanDescription": "AI-övningar, skrivhjälp, lyssnande, talande och PDF/Word.",
+    "upgrade": "Uppgradera till Pro",
+    "manage": "Hantera prenumeration",
+    "proBadge": "Pro",
+    "freeBadge": "Gratis",
+    "renewsOn": "Förnyas den {date}",
+    "activating": "Bekräftar din prenumeration…",
+    "checkoutSuccess": "Betalning mottagen. Pro aktiveras inom kort.",
+    "checkoutCanceled": "Kassan avbröts. Du debiterades inte.",
+    "checkoutFailed": "Kunde inte starta kassan. Försök igen.",
+    "portalFailed": "Kunde inte öppna faktureringshantering. Försök igen.",
+    "alreadyPro": "Du har redan en aktiv Pro-prenumeration.",
+    "notConfigured": "Fakturering är inte konfigurerad ännu.",
+    "noCustomer": "Ingen faktureringskund är kopplad till detta konto ännu.",
+    "modalTitle": "Uppgradera plan",
+    "modalSubtitle": "Gratis täcker vardaglig övning och ditt bibliotek. Pro låser upp AI-övningar, skrivhjälp, lyssnande, talande och utskrivbara filer.",
+    "lockedTitle": "Detta är en Pro-funktion",
+    "lockedDescription": "Uppgradera för AI-övningar, skrivhjälp, lyssnande, talande och PDF/Word-export.",
+    "planName": "Pro",
+    "cancelAnytime": "Avbryt när som helst",
+    "compare": {
+      "capability": "Vad du får",
+      "free": "Gratis",
+      "pro": "Pro",
+      "freeIncludes": "Ingår i Gratis",
+      "proUnlocks": "Pro låser upp",
+      "impact": "Varför det är viktigt",
+      "yes": "Ja",
+      "locked": "Låst",
+      "rows": {
+        "practice": {
+          "capability": "Flashcards, matcha par, quiz & skriv-svar",
+          "impact": "Kärnövningar från dina egna ord"
+        },
+        "vocabAi": {
+          "capability": "AI-stavning & betydelse när du lägger till ord",
+          "impact": "Lägg till ord snabbare med gratis AI-hjälp"
+        },
+        "studio": {
+          "capability": "Skrivredigerare & teorinoteringar",
+          "impact": "Skriv ut texter och håll grammatiknoteringar"
+        },
+        "csv": {
+          "capability": "CSV-export",
+          "impact": "Säkerhetskopiera ord till ett kalkylblad"
+        },
+        "aiPractice": {
+          "capability": "AI-övningar från vokabulär, teori & import",
+          "impact": "Fyll-i-blank, kontextuella övningar, bilda-en-sats"
+        },
+        "writingAi": {
+          "capability": "Skrivande AI (kontrollera & förbättra)",
+          "impact": "Få korrigeringar på din egen text"
+        },
+        "export": {
+          "capability": "PDF & Word-export",
+          "impact": "Skriv ut arbetsblad eller dela filer"
+        },
+        "listening": {
+          "capability": "Lyssningslektioner",
+          "impact": "Gör din ljud- eller videoinnehåll till övning"
+        },
+        "speaking": {
+          "capability": "Talande samtal med AI",
+          "impact": "Live handledarsamtal, sedan en transkription"
+        }
+      }
+    },
+    "benefits": {
+      "vocab": {
+        "title": "AI-drivna vokabulärhjälp",
+        "body": "Generera vokabuläridéer, få förklaringar, exempel och personlig lärandehjälp direkt i Vocabulary."
+      },
+      "writing": {
+        "title": "AI skrivhjälp",
+        "body": "Få AI-drivna korrigeringar, förslag, förklaringar och feedback för att förbättra ditt skrivande."
+      },
+      "exercises": {
+        "title": "AI-drivna övningar",
+        "body": "Skapa och öva personligt anpassade övningar med AI baserat på dina lärandebehov."
+      },
+      "theoryAi": {
+        "title": "AI Teoriövningar",
+        "body": "Gör dina personliga teorinoteringar till interaktiva fyll-i-blank övningar med nya kontexter, ledtrådar och förklaringar."
+      },
+      "importAi": {
+        "title": "AI Importövningar",
+        "body": "Importera arbetsblad, bilder, PDF:er eller URL:er och gör dem till övningskort — tillsammans med vokabulär och teori AI i Exercise Studio."
+      },
+      "listening": {
+        "title": "Förbättrad lyssningsupplevelse",
+        "body": "Få kraftfullare verktyg för att öva och arbeta med lyssningsinnehåll."
+      },
+      "speaking": {
+        "title": "AI talande samtal",
+        "body": "Öva livekonversation med en AI-handledare på ett videosamtal, få sedan feedback och en transkription."
+      },
+      "files": {
+        "title": "PDF & Word (DOCX) stöd",
+        "body": "Exportera vokabulär, skrivande och teorinoteringar till PDF eller DOCX, och håll dina material lätta att dela."
+      },
+      "personal": {
+        "title": "En mer personlig lärandeupplevelse",
+        "body": "Använd AI-drivna verktyg för att göra din vokabulär, skrivande och övningssessioner mer användbara och skräddarsydda för dig."
+      }
+    }
+  },
+  "gettingStarted": {
+    "backToWorkspace": "Tillbaka till arbetsytan",
+    "meta": {
+      "eyebrow": "Guide",
+      "title": "Välkommen till Notoria",
+      "description": "Allt du behöver veta om att bygga din personliga språkinlärningsdagbok och omvandla din kunskap till praktik."
+    },
+    "toc": {
+      "title": "På den här sidan",
+      "welcome": "Vad är Notoria?",
+      "howItWorks": "Hur det fungerar",
+      "vocabulary": "Ordlista",
+      "theory": "Teori",
+      "exercise": "Övning",
+      "writing": "Skrivande",
+      "listening": "Lyssnande",
+      "speaking": "Tala",
+      "connections": "Din kunskap blir praktik",
+      "philosophy": "Din inlärningsdagbok",
+      "startHere": "Börja här"
+    },
+    "welcome": {
+      "title": "Vad är Notoria?",
+      "lead": "Notoria är din privata inlärningsdagbok.",
+      "paragraphs": [
+        "Tänk på det som en anteckningsbok för din språkrese — förutom att allt du skriver ner kan bli en del av din praktik.",
+        "Det finns ingen fördefinierad läroplan du måste följa. Det finns inget \"rätt\" sätt att använda din arbetsyta. Det finns ingen lärare som vakar över dig. Ingen bedömer dina anteckningar."
+      ],
+      "examplesIntro": "Du bestämmer vad som hör hemma i din Notoria. Till exempel kan du:",
+      "examples": [
+        "Skriva ner ett ord du hörde idag",
+        "Spara en grammatikregel du äntligen förstod",
+        "Lägga till en exempelmening som ger mening för dig",
+        "Ladda upp en video du vill studera",
+        "Skriva om något du vill öva på att säga"
+      ],
+      "overTime": "Med tiden blir dessa små delar din egen personliga språkkunskapsbas.",
+      "noWrongWay": {
+        "title": "Det finns inget rätt eller fel sätt att bygga din dagbok.",
+        "paragraphs": [
+          "Din inlärningsdagbok är din. Du behöver inte organisera allt perfekt. Du behöver inte använda varje funktion. Du behöver inte följa en särskild inlärningsmetod.",
+          "Använd Notoria på det sätt som gör inlärningen enklare och mer meningsfull för dig. Målet är inte att skapa en perfekt databas — målet är att skapa ett inlärningsutrymme som faktiskt tillhör dig."
+        ]
+      }
+    },
+    "howItWorks": {
+      "title": "Hur Notoria fungerar",
+      "intro": "Notoria kopplar ihop dina inlärningsområden till en resa:",
+      "flow": {
+        "collect": "Samla",
+        "understand": "Förstå",
+        "practice": "Öva",
+        "create": "Skapa",
+        "listen": "Lyssna",
+        "speak": "Tala",
+        "review": "Granska"
+      },
+      "anywhereNote": "Du kan börja var som helst, men många följer en väg som denna:",
+      "steps": {
+        "collect": {
+          "title": "1. Samla din kunskap",
+          "body": "Lägg till ord och teori från lektioner, samtal, böcker, media eller var som helst du stöter på språket."
+        },
+        "understand": {
+          "title": "2. Förstå det",
+          "body": "Behåll dina egna förklaringar, exempel, grammatikanteckningar och uttalsanteckningar — skrivna på ett sätt som ger mening för dig."
+        },
+        "practice": {
+          "title": "3. Öva på det",
+          "body": "Omvandla det du har samlat till övningar byggda av dina egna ord och kunskaper."
+        },
+        "use": {
+          "title": "4. Använd det",
+          "body": "Öva på att skriva, lyssna och tala med språket du har byggt."
+        },
+        "review": {
+          "title": "5. Granska det",
+          "body": "Se tillbaka på vad du hade svårt med, lägg till vad du har lärt dig och fortsätt växa din dagbok."
+        }
+      },
+      "connectedNote": "Dessa områden fungerar tillsammans — inte som separata appar. Det du lägger till i Ordlista och Teori matar dina övningar, skrivande, lyssnande och talande."
+    },
+    "sections": {
+      "vocabulary": {
+        "title": "Ordlista",
+        "intro": "Ordlista är ditt personliga ordbibliotek — grunden för allt annat i Notoria.",
+        "bullets": [
+          "Lägg till ord och fraser du faktiskt stöter på",
+          "Inkludera betydelser, översättningar och exempelmeningar",
+          "Lägg till uttalsanteckningar när det är hjälpsamt",
+          "Använd taggar för att organisera efter ämne, nivå, situation eller vad som helst som hjälper dig att hitta ord senare",
+          "Återanvänd ord i övningar och granskningssessioner"
+        ],
+        "body": "Istället för att memorera från en generell ordlista bygger du ett bibliotek som speglar din verkliga inlärningsresa.",
+        "exampleIntro": "Till exempel, du hör det finska ordet \"varata\" idag:",
+        "examples": [
+          "Ord: varata",
+          "Betydelse: att boka / reservera",
+          "Exempel: Haluan varata ajan.",
+          "Tagg: Dagligt liv"
+        ],
+        "exampleNote": "Det ordet är nu en del av din personliga Notoria-kunskap — redo för granskning och övning.",
+        "emphasis": "Lägg inte till varje ord du ser. Lägg till ord som är meningsfulla för DIG."
+      },
+      "theory": {
+        "title": "Teori",
+        "intro": "Teori är din personliga språkreferens — en plats att spara kunskap du vill minnas.",
+        "bullets": [
+          "Grammatikregler och mönster",
+          "Uttalsanteckningar",
+          "Användningsförklaringar",
+          "Exempel och personliga anteckningar",
+          "Saker du upprepade gånger glömmer"
+        ],
+        "body": "Skriv förklaringar med dina egna ord. En grammatikanteckning behöver inte låta som en lärobok. Om en enkel förklaring ger mening för dig, är det en bra förklaring för din dagbok.",
+        "emphasis": "Teori är som en referensanteckningsbok du återvänder till när du glömmer något."
+      },
+      "exercise": {
+        "title": "Övning",
+        "intro": "Övningar låter dig aktivt öva den kunskap du har samlat.",
+        "bullets": [
+          "Flashcards",
+          "Frågesporter och flervalsfrågor",
+          "Fyll i luckorna-övningar",
+          "Ordprövning från dina sparade ord",
+          "Grammatikövningar från dina teorianteckningar",
+          "Andra format baserade på ditt eget material"
+        ],
+        "emphasis": "Värdet kommer från att öva DIN kunskap — inte slumpmässig vokabulär från en generell kurs, utan de ord och begrepp du personligen har beslutat är viktiga."
+      },
+      "writing": {
+        "title": "Skrivande",
+        "intro": "Skrivande är där passiv kunskap blir aktiv språkbruk.",
+        "bullets": [
+          "Skriv ut texter om ämnen du bryr dig om",
+          "Skapa frågeset för dig själv",
+          "Öva på att använda ord du har lärt dig",
+          "Experimentera med ny grammatik",
+          "Granska och förbättra ditt skrivande över tid",
+          "Med Pro: använd AI för att kontrollera och förbättra ditt arbete",
+          "Exportera ditt skrivande när du behöver det"
+        ],
+        "emphasis": "Ditt skrivande behöver inte vara perfekt. Poängen är att använda språket, göra misstag, märka vad du ännu inte vet och förbättra dig över tid."
+      },
+      "listening": {
+        "title": "Lyssnande",
+        "intro": "Lyssnande låter dig studera verkligt innehåll du väljer — inte bara fördefinierade lektioner.",
+        "bullets": [
+          "Ladda upp ljud eller video",
+          "Generera en transkription",
+          "Studera transkriptionen rad för rad",
+          "Omvandla materialet till en lektion",
+          "Upptäck ord och uttryck från verkligt innehåll"
+        ],
+        "body": "Ta med något DU faktiskt vill förstå in i Notoria:",
+        "examples": [
+          "En YouTube-video",
+          "En inspelning av ett samtal",
+          "Ett podcastavsnitt",
+          "En föreläsning",
+          "Något annat inlärningsmaterial"
+        ],
+        "emphasis": "Du kontrollerar innehållet. Notoria hjälper dig att förstå och lära dig av det."
+      },
+      "speaking": {
+        "title": "Tala",
+        "intro": "Tala är den aktiva samtalsdelen av din inlärningsresa.",
+        "bullets": [
+          "Prata med en AI-lärare genom video",
+          "Öva på att tala naturligt",
+          "Använd ord och kunskap du har samlat",
+          "Granska samtalets transkription efteråt",
+          "Läs feedback och identifiera områden att förbättra"
+        ],
+        "emphasis": "Tala behöver inte vara perfekt. Syftet är att öva på att använda språket i en realistisk situation — och sedan lära sig av vad som hände."
+      }
+    },
+    "connections": {
+      "title": "Din kunskap blir din praktik",
+      "intro": "Notoria blir mer användbar ju mer du lägger till saker som betyder något för din inlärning:",
+      "flow": {
+        "vocabTheory": "Ordlista + Teori",
+        "exercise": "Övning",
+        "writingListening": "Skrivande + Lyssnande",
+        "speaking": "Tala",
+        "review": "Granska",
+        "addMore": "Lägg till mer kunskap"
+      },
+      "paragraphs": [
+        "Det du samlar i Ordlista och Teori blir källan för dina övningar.",
+        "Skrivande och Lyssnande hjälper dig att använda och förstå språket i nya sammanhang.",
+        "Tala sätter allt i aktiv konversation.",
+        "Granska avslutar cirkeln — och varje granskning leder ofta till nya ord och anteckningar att lägga till."
+      ],
+      "highlight": "Ju mer kunskap du lägger till som betyder något för dig, desto mer användbar och personlig blir din praktik."
+    },
+    "philosophy": {
+      "title": "Detta är din dagbok.",
+      "lead": "Notoria är ett verktyg för din inlärningsprocess — inte ett test på hur bra du lär dig.",
+      "dontNeed": [
+        "Du behöver inte göra dina anteckningar perfekta",
+        "Du behöver inte oroa dig för om dina taggar är \"korrekta\"",
+        "Du behöver inte skriva läroboks-kvalitet förklaringar",
+        "Du behöver inte avsluta varje övning",
+        "Du behöver inte använda varje funktion"
+      ],
+      "canDo": [
+        "Du kan ändra dig.",
+        "Du kan omorganisera saker.",
+        "Du kan göra misstag.",
+        "Du kan lära dig i din egen takt."
+      ],
+      "quote": "Ingen bedömer din dagbok. Du bygger den för dig själv."
+    },
+    "startHere": {
+      "title": "Kom igång för första gången",
+      "intro": "Du behöver inte ställa in allt innan du börjar. Börja bara med något du vill minnas.",
+      "firstTen": {
+        "title": "Dina första 10 minuter",
+        "steps": {
+          "language": "Välj språket du vill lära dig.",
+          "words": "Lägg till 5–10 ord du faktiskt vill minnas.",
+          "theory": "Lägg till en eller två teori- eller grammatikanteckningar.",
+          "exercise": "Skapa en övning från din kunskap.",
+          "writing": "Försök att skriva några meningar.",
+          "listeningSpeaking": "När du är redo, försök att lyssna eller tala.",
+          "return": "Kom tillbaka imorgon och lägg till något nytt."
+        }
+      },
+      "closing": "Börja bara med något du vill minnas. Din dagbok kommer att växa naturligt därifrån."
+    }
+  }
+}

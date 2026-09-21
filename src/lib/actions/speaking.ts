@@ -7,6 +7,7 @@ import { db } from "@/db";
 import { speakingSessions, users } from "@/db/schema";
 import { ProAccessError } from "@/lib/auth/paid-access";
 import { requireProAccess } from "@/lib/auth/pro-access";
+import { requireAiAssistanceEnabled } from "@/lib/ai/preferences-server";
 import { getCurrentUserId, getSession } from "@/lib/auth/session";
 import { SpeakingError } from "@/lib/speaking/errors";
 import { defaultSpeakingTitle } from "@/lib/speaking/instructions";
@@ -242,6 +243,7 @@ export async function generateSpeakingToken() {
 
 export async function connectSpeakingTutor(sessionId: string) {
   await requireProAccess();
+  await requireAiAssistanceEnabled();
   await requireOwnedSession(sessionId);
   await connectSpeakingTutorToCall(sessionId);
 }

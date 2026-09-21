@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { exerciseImports, importedExercises } from "@/db/schema";
 import { requireProAccess } from "@/lib/auth/pro-access";
+import { requireAiAssistanceEnabled } from "@/lib/ai/preferences-server";
 import { getCurrentUserId } from "@/lib/auth/session";
 import {
   configureCloudinary,
@@ -506,6 +507,7 @@ export async function extractExerciseImport(id: string) {
  */
 export async function generateExerciseImportExercises(id: string) {
   await requireProAccess();
+  await requireAiAssistanceEnabled();
   const { row, workspace } = await requireOwnedImport(id);
 
   if (row.status === "COMPLETED" && row.exercises.length > 0) {

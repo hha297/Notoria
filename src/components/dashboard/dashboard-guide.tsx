@@ -3,16 +3,11 @@
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { Badge } from "@/components/ui/badge";
 import { LinkButton } from "@/components/ui/link-button";
 import homeStyles from "@/components/style/dashboard/home.module.css";
 import { mx } from "@/lib/css-module";
 import type { WorkspaceActivitySnapshot } from "@/lib/onboarding/requirements";
-
-type DashboardGuideProps = {
-  snapshot: WorkspaceActivitySnapshot;
-  wordCount: number;
-  practiceReadyCount: number;
-};
 
 type ModuleId =
   | "vocabulary"
@@ -26,57 +21,16 @@ type ModuleDef = {
   id: ModuleId;
   href: string;
   accent: string;
-  count: (ctx: {
-    snapshot: WorkspaceActivitySnapshot;
-    wordCount: number;
-    practiceReadyCount: number;
-  }) => number;
-  countKey: "words" | "notes" | "writings" | "practiceReady";
+  pro?: boolean;
 };
 
 const MODULES: ModuleDef[] = [
-  {
-    id: "vocabulary",
-    href: "/vocabulary",
-    accent: "vocab",
-    count: ({ wordCount }) => wordCount,
-    countKey: "words",
-  },
-  {
-    id: "theory",
-    href: "/theory",
-    accent: "theory",
-    count: ({ snapshot }) => snapshot.theoryCount,
-    countKey: "notes",
-  },
-  {
-    id: "exercises",
-    href: "/exercises",
-    accent: "exercise",
-    count: ({ practiceReadyCount }) => practiceReadyCount,
-    countKey: "practiceReady",
-  },
-  {
-    id: "writing",
-    href: "/writing",
-    accent: "writing",
-    count: ({ snapshot }) => snapshot.writingCount,
-    countKey: "writings",
-  },
-  {
-    id: "listening",
-    href: "/listening",
-    accent: "listen",
-    count: () => 0,
-    countKey: "notes",
-  },
-  {
-    id: "speaking",
-    href: "/speaking",
-    accent: "speak",
-    count: () => 0,
-    countKey: "notes",
-  },
+  { id: "vocabulary", href: "/vocabulary", accent: "vocab" },
+  { id: "theory", href: "/theory", accent: "theory" },
+  { id: "exercises", href: "/exercises", accent: "exercise" },
+  { id: "writing", href: "/writing", accent: "writing" },
+  { id: "listening", href: "/listening", accent: "listen", pro: true },
+  { id: "speaking", href: "/speaking", accent: "speak", pro: true },
 ];
 
 export function suggestedModule(
@@ -90,11 +44,7 @@ export function suggestedModule(
   return MODULES[2];
 }
 
-export function DashboardGuide({
-  snapshot,
-  wordCount,
-  practiceReadyCount,
-}: DashboardGuideProps) {
+export function DashboardGuide() {
   const t = useTranslations("dashboard");
 
   return (
@@ -131,9 +81,6 @@ export function DashboardGuide({
             module={module}
             index={index + 1}
             highlighted={module.id === "vocabulary"}
-            wordCount={wordCount}
-            practiceReadyCount={practiceReadyCount}
-            snapshot={snapshot}
           />
         ))}
       </div>
@@ -145,20 +92,13 @@ function ModuleCard({
   module,
   index,
   highlighted,
-  wordCount,
-  practiceReadyCount,
-  snapshot,
 }: {
   module: ModuleDef;
   index: number;
   highlighted: boolean;
-  wordCount: number;
-  practiceReadyCount: number;
-  snapshot: WorkspaceActivitySnapshot;
 }) {
   const t = useTranslations("dashboard");
-  const count = module.count({ snapshot, wordCount, practiceReadyCount });
-  const showCount = module.id !== "listening" && module.id !== "speaking";
+  const tb = useTranslations("billing");
 
   return (
     <article
@@ -173,10 +113,13 @@ function ModuleCard({
         <span className={mx(homeStyles, "home-guide-index")} aria-hidden>
           {index}
         </span>
-        <div className="min-w-0">
-          <h3 className="font-heading text-base font-bold text-ink">
-            {t(`steps.${module.id}.title`)}
-          </h3>
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-center gap-2">
+            <h3 className="font-heading text-base font-bold text-ink">
+              {t(`steps.${module.id}.title`)}
+            </h3>
+            {module.pro ? <Badge variant="pro">{tb("proBadge")}</Badge> : null}
+          </div>
           {highlighted ? (
             <p className="mt-1 font-heading text-[11px] font-semibold uppercase tracking-[0.12em] text-module-vocab-fg">
               {t("startHere")}
@@ -187,13 +130,6 @@ function ModuleCard({
       <p className="mt-3 text-sm leading-relaxed text-ink/80">
         {t(`steps.${module.id}.body`)}
       </p>
-      {showCount ? (
-        <p className={mx(homeStyles, "home-hub-count mt-3")}>
-          {t(`counts.${module.countKey}`, { count })}
-        </p>
-      ) : (
-        <p className={mx(homeStyles, "home-hub-count mt-3")}>{t("pro")}</p>
-      )}
       <LinkButton href={module.href} variant="outline" size="sm" className="mt-4 w-fit">
         {t("open")}
         <ArrowRight />

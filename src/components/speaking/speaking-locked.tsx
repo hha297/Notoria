@@ -37,10 +37,7 @@ export function SpeakingLockedPage() {
         <header className="writing-hero">
           <div className="writing-hero-copy">
             <p className="writing-kicker">{t("eyebrow")}</p>
-            <h1 className="writing-brand-title">
-              {t("title")}{" "}
-              <span className="text-module-speak-fg">{t("highlight")}</span>
-            </h1>
+            <h1 className="writing-brand-title">{t("title")}</h1>
             <p className="writing-brand-lede">{t("description")}</p>
           </div>
         </header>

@@ -15,7 +15,6 @@ export const VOCABULARY_GROUP_PAGE_SIZE = 20;
 export const UNCATEGORIZED_POS_KEY = "__none__";
 export const VOCABULARY_VIEW_MODE_KEY = "notoria.vocabulary.viewMode";
 
-const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
 const DIFFICULTY_ORDER = ["a1", "a2", "b1", "b2", "c1", "c2"] as const;
 
 export function isVocabularyViewMode(value: unknown): value is VocabularyViewMode {
@@ -75,22 +74,6 @@ export function visibleTags(
     extra: remaining.slice(limit),
     all: remaining,
   };
-}
-
-export function getVocabularyStats(words: VocabularyWordRow[]) {
-  const weekAgo = Date.now() - WEEK_MS;
-  let nouns = 0;
-  let verbs = 0;
-  let recent = 0;
-
-  for (const word of words) {
-    if (word.partOfSpeech === "noun") nouns += 1;
-    if (word.partOfSpeech === "verb") verbs += 1;
-    const created = word.createdAt ?? word.updatedAt;
-    if (new Date(created).getTime() >= weekAgo) recent += 1;
-  }
-
-  return { total: words.length, nouns, verbs, recent };
 }
 
 export function filterVocabularyWords(

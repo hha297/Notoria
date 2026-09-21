@@ -1,6 +1,12 @@
 "use server";
 
 import type { JSONContent } from "@tiptap/react";
+import { aiSuggestionsAllowed } from "@/lib/ai/preferences";
+import {
+  AiAssistanceDisabledError,
+  getResolvedAiPreferences,
+  requireAiAssistanceEnabled,
+} from "@/lib/ai/preferences-server";
 import { getCurrentUserId } from "@/lib/auth/session";
 import {
   analyzeVocabularyMeaning,
@@ -10,6 +16,7 @@ import {
   vocabularyMeaningInputSchema,
   vocabularyNotesFormatInputSchema,
   vocabularySpellingInputSchema,
+  vocabularyMeaningResultSchema,
   type VocabularyMeaningResult,
   type VocabularySpellingResult,
 } from "@/lib/vocabulary/ai-types";
@@ -20,7 +27,7 @@ import {
 
 export type VocabularyAiFailure = {
   ok: false;
-  code: "AI_UNAVAILABLE";
+  code: "AI_UNAVAILABLE" | "AI_DISABLED";
 };
 
 export type VocabularySpellingActionResult =
@@ -35,8 +42,28 @@ export type VocabularyNotesFormatActionResult =
   | { ok: true; doc: JSONContent }
   | VocabularyAiFailure;
 
-function toFailure(): VocabularyAiFailure {
-  return { ok: false, code: "AI_UNAVAILABLE" };
+function toFailure(code: VocabularyAiFailure["code"] = "AI_UNAVAILABLE"): VocabularyAiFailure {
+  return { ok: false, code };
+}
+
+const EMPTY_SPELLING: VocabularySpellingResult = {
+  type: "spelling",
+  original: "",
+  suggestion: null,
+  isLikelyValid: true,
+  confidence: 1,
+  explanation: "",
+};
+
+function emptyMeaning(meaning: string): VocabularyMeaningResult {
+  return vocabularyMeaningResultSchema.parse({
+    type: "meaning",
+    word: "",
+    meaning,
+    originalMeaning: meaning,
+    suggestions: [],
+    explanation: "",
+  });
 }
 
 export async function suggestVocabularySpelling(
@@ -44,14 +71,25 @@ export async function suggestVocabularySpelling(
 ): Promise<VocabularySpellingActionResult> {
   const parsed = vocabularySpellingInputSchema.safeParse(input);
   if (!parsed.success) {
-    return { ok: false, code: "AI_UNAVAILABLE" };
+    return toFailure();
   }
 
   try {
     await getCurrentUserId();
+    const prefs = await getResolvedAiPreferences();
+    if (!prefs.enabled) return toFailure("AI_DISABLED");
+    if (!aiSuggestionsAllowed(prefs)) {
+      return {
+        ok: true,
+        result: { ...EMPTY_SPELLING, original: parsed.data.word },
+      };
+    }
     const result = await analyzeVocabularySpelling(parsed.data);
     return { ok: true, result };
-  } catch {
+  } catch (error) {
+    if (error instanceof AiAssistanceDisabledError) {
+      return toFailure("AI_DISABLED");
+    }
     return toFailure();
   }
 }
@@ -61,14 +99,25 @@ export async function validateVocabularyMeaning(
 ): Promise<VocabularyMeaningActionResult> {
   const parsed = vocabularyMeaningInputSchema.safeParse(input);
   if (!parsed.success) {
-    return { ok: false, code: "AI_UNAVAILABLE" };
+    return toFailure();
   }
 
   try {
     await getCurrentUserId();
+    const prefs = await getResolvedAiPreferences();
+    if (!prefs.enabled) return toFailure("AI_DISABLED");
+    if (!aiSuggestionsAllowed(prefs)) {
+      return {
+        ok: true,
+        result: emptyMeaning(parsed.data.meaning),
+      };
+    }
     const result = await analyzeVocabularyMeaning(parsed.data);
     return { ok: true, result };
-  } catch {
+  } catch (error) {
+    if (error instanceof AiAssistanceDisabledError) {
+      return toFailure("AI_DISABLED");
+    }
     return toFailure();
   }
 }
@@ -78,17 +127,21 @@ export async function formatVocabularyNotesAi(
 ): Promise<VocabularyNotesFormatActionResult> {
   const parsed = vocabularyNotesFormatInputSchema.safeParse(input);
   if (!parsed.success) {
-    return { ok: false, code: "AI_UNAVAILABLE" };
+    return toFailure();
   }
 
   try {
     await getCurrentUserId();
+    await requireAiAssistanceEnabled();
     const result = await formatVocabularyNotesWithAi(parsed.data);
     if (result.blocks.length === 0) {
       return toFailure();
     }
     return { ok: true, doc: notesFormatBlocksToDoc(result.blocks) };
-  } catch {
+  } catch (error) {
+    if (error instanceof AiAssistanceDisabledError) {
+      return toFailure("AI_DISABLED");
+    }
     return toFailure();
   }
 }

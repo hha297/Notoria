@@ -1,4 +1,5 @@
 import OpenAI from "openai";
+import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { speakingFeedbackPrompt } from "@/lib/speaking/instructions";
 import { isSpeakingTutorUserId } from "@/lib/speaking/stream";
 
@@ -55,7 +56,10 @@ export async function summarizeSpeakingSession(input: {
     messages: [
       {
         role: "system",
-        content: speakingFeedbackPrompt(input),
+        content: await aiSystemPrompt(speakingFeedbackPrompt(input), {
+          responseStyle: true,
+          correctionStyle: true,
+        }),
       },
       {
         role: "user",

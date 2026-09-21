@@ -3,6 +3,7 @@ import { and, eq } from "drizzle-orm";
 import type { RealtimeClient } from "@stream-io/openai-realtime-api";
 import { db } from "@/db";
 import { speakingSessions, type SpeakingSession } from "@/db/schema";
+import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { SpeakingError } from "@/lib/speaking/errors";
 import { speakingTutorInstructions } from "@/lib/speaking/instructions";
 import { speakingTutorUserId } from "@/lib/speaking/stream";
@@ -63,12 +64,15 @@ async function joinOpenAiTutor(session: SpeakingSession) {
 
   await realtimeClient.waitForSessionCreated();
   realtimeClient.updateSession({
-    instructions: speakingTutorInstructions({
-      language: session.language,
-      cefrLevel: session.cefrLevel,
-      topic: session.topic,
-      notes: session.notes,
-    }),
+    instructions: await aiSystemPrompt(
+      speakingTutorInstructions({
+        language: session.language,
+        cefrLevel: session.cefrLevel,
+        topic: session.topic,
+        notes: session.notes,
+      }),
+      { responseStyle: true, correctionStyle: true },
+    ),
     voice: "coral",
     turn_detection: { type: "semantic_vad" },
     input_audio_noise_reduction: { type: "near_field" },

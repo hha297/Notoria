@@ -2,6 +2,7 @@
 
 import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { CollapsibleRefine } from "@/components/filters/collapsible-refine";
 import {
   WritingChipPicker,
   WritingFilterChipPicker,
@@ -15,6 +16,7 @@ import {
   LISTENING_FILTER_TOPICS,
   type ListeningListQuery,
 } from "@/lib/listening/filters";
+import { isMultiFilterActive } from "@/lib/filters/multi-select";
 import type { ListeningLessonListItem } from "@/lib/listening/types";
 import type { WritingCefr, WritingFormality } from "@/lib/writing/meta";
 import { resolveTopicLabel } from "@/lib/taxonomy/topics";
@@ -31,6 +33,7 @@ export function ListeningFiltersBar({
   onQueryChange,
 }: ListeningFiltersBarProps) {
   const t = useTranslations("listening");
+  const tCommon = useTranslations("common");
   const tMeta = useTranslations("listening.meta");
   const tTags = useTranslations("tags");
   const customTopics = extraListeningTopics(lessons);
@@ -39,19 +42,31 @@ export function ListeningFiltersBar({
     onQueryChange({ ...query, ...partial });
   }
 
+  const refineActive =
+    isMultiFilterActive(query.cefr) ||
+    isMultiFilterActive(query.topic) ||
+    isMultiFilterActive(query.formality) ||
+    query.sort !== "created:desc";
+
   return (
     <div className="writing-spine-tools" data-tutorial="listening-filters">
-      <div className="writing-spine-search-wrap">
-        <Search className="writing-spine-search-icon" aria-hidden="true" />
-        <Input
-          value={query.search}
-          onChange={(event) => patch({ search: event.target.value })}
-          placeholder={t("searchPlaceholder")}
-          className="writing-spine-search"
-        />
-      </div>
-
-      <div className="writing-refine writing-sheet-meta">
+      <CollapsibleRefine
+        routeAction="listen"
+        label={tCommon("filters")}
+        hideLabel={tCommon("hideFilters")}
+        active={refineActive}
+        search={
+          <div className="writing-spine-search-wrap">
+            <Search className="writing-spine-search-icon" aria-hidden="true" />
+            <Input
+              value={query.search}
+              onChange={(event) => patch({ search: event.target.value })}
+              placeholder={t("searchPlaceholder")}
+              className="writing-spine-search"
+            />
+          </div>
+        }
+      >
         <WritingFilterChipPicker
           labelId="listening-filter-cefr"
           label={tMeta("cefrLabel")}
@@ -119,7 +134,7 @@ export function ListeningFiltersBar({
             },
           ]}
         />
-      </div>
+      </CollapsibleRefine>
     </div>
   );
 }

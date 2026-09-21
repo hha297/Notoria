@@ -115,7 +115,6 @@ export function WorkspaceSelector({
             </div>
 
             <Button
-              variant="outline"
               onClick={() => setCreateOpen(true)}
               className="shrink-0"
               aria-label={t("createWorkspace")}

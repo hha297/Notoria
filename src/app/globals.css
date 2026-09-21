@@ -378,19 +378,24 @@
     background-color: var(--background);
     background-image:
       radial-gradient(
-        ellipse 52% 42% at 0% 0%,
-        color-mix(in oklab, var(--module-theory-bg) 42%, transparent),
-        transparent 72%
+        ellipse 78% 64% at 0% 0%,
+        color-mix(in oklab, var(--module-theory-bg) 68%, transparent),
+        transparent 80%
       ),
       radial-gradient(
-        ellipse 46% 38% at 100% 0%,
-        color-mix(in oklab, var(--module-listen-bg) 34%, transparent),
-        transparent 70%
+        ellipse 70% 58% at 100% 0%,
+        color-mix(in oklab, var(--module-listen-bg) 56%, transparent),
+        transparent 78%
       ),
       radial-gradient(
-        ellipse 40% 32% at 88% 100%,
-        color-mix(in oklab, var(--module-writing-bg) 28%, transparent),
-        transparent 72%
+        ellipse 66% 54% at 92% 100%,
+        color-mix(in oklab, var(--module-writing-bg) 50%, transparent),
+        transparent 80%
+      ),
+      radial-gradient(
+        ellipse 58% 48% at 0% 100%,
+        color-mix(in oklab, var(--module-vocab-bg) 46%, transparent),
+        transparent 78%
       );
   }
 
@@ -1207,6 +1212,10 @@
     --route-wash-alt: var(--module-theory-bg);
   }
 
+  .route-atelier[data-route="exercises"] .writing-kicker {
+    color: var(--module-exercise-fg);
+  }
+
   .route-quiet-action {
     --route-action-fg: var(--module-home-fg);
     --route-action-bg: var(--module-home-bg);
@@ -1364,63 +1373,6 @@
     );
   }
 
-  .vocab-lexicon-rule {
-    position: relative;
-    height: 1px;
-    width: auto;
-    margin-inline: -1rem;
-    border: 0;
-    border-radius: 0;
-    background: linear-gradient(
-      90deg,
-      transparent 0%,
-      color-mix(in oklab, var(--module-vocab-fg) 12%, transparent) 8%,
-      color-mix(in oklab, var(--module-vocab-fg) 55%, transparent) 28%,
-      color-mix(
-          in oklab,
-          var(--module-vocab-fg) 38%,
-          color-mix(in oklab, var(--primary) 40%, transparent)
-        )
-        50%,
-      color-mix(in oklab, var(--module-listen-fg) 42%, transparent) 72%,
-      transparent 100%
-    );
-    box-shadow: none;
-    -webkit-mask-image: linear-gradient(
-      90deg,
-      transparent 0%,
-      #000 16%,
-      #000 84%,
-      transparent 100%
-    );
-    mask-image: linear-gradient(
-      90deg,
-      transparent 0%,
-      #000 16%,
-      #000 84%,
-      transparent 100%
-    );
-    filter: blur(0.45px);
-  }
-
-  .vocab-lexicon-rule::after {
-    content: "";
-    position: absolute;
-    inset: -6px 0;
-    background: inherit;
-    -webkit-mask-image: inherit;
-    mask-image: inherit;
-    filter: blur(7px);
-    opacity: 0.55;
-    pointer-events: none;
-  }
-
-  @media (min-width: 640px) {
-    .vocab-lexicon-rule {
-      margin-inline: -1.5rem;
-    }
-  }
-
   .listening-atelier .writing-spine-search {
     border-bottom-color: color-mix(
       in oklab,
@@ -1462,11 +1414,15 @@
   .vocab-lexicon .writing-chip:hover {
     border-color: color-mix(
       in oklab,
-      var(--module-vocab-fg) 42%,
+      var(--module-vocab-fg) 48%,
       var(--hairline-cloud)
     );
-    background: color-mix(in oklab, var(--module-vocab-bg) 38%, transparent);
+    background: color-mix(in oklab, var(--module-vocab-bg) 52%, transparent);
     color: var(--module-vocab-fg);
+  }
+
+  .vocab-lexicon .writing-chip:hover:not(.is-active) {
+    box-shadow: none;
   }
 
   .vocab-lexicon .writing-chip.is-active {
@@ -1483,6 +1439,138 @@
     color: var(--module-vocab-fg);
     box-shadow: 0 0 0 1px
       color-mix(in oklab, var(--module-vocab-fg) 16%, transparent);
+  }
+
+  .vocab-lexicon .vocab-custom-tag-trigger {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 24%,
+      var(--hairline-cloud)
+    ) !important;
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 22%,
+      transparent
+    ) !important;
+    color: color-mix(
+      in oklab,
+      var(--ink) 72%,
+      var(--muted-foreground)
+    ) !important;
+  }
+
+  .vocab-lexicon .vocab-custom-tag-trigger:hover {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 42%,
+      var(--hairline-cloud)
+    ) !important;
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 38%,
+      transparent
+    ) !important;
+    color: var(--module-vocab-fg) !important;
+  }
+
+  .vocab-lexicon .vocab-custom-tag-trigger[aria-expanded="true"],
+  .vocab-lexicon .vocab-custom-tag-trigger[data-popup-open],
+  .vocab-lexicon .vocab-custom-tag-trigger[data-state="open"] {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 55%,
+      var(--hairline-cloud)
+    ) !important;
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 68%,
+      var(--surface-elevated)
+    ) !important;
+    color: var(--module-vocab-fg) !important;
+    box-shadow: 0 0 0 1px
+      color-mix(in oklab, var(--module-vocab-fg) 16%, transparent);
+  }
+
+  /* Portaled menu — match soft chip wash, not solid module bg */
+  .vocab-custom-tag-menu {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 28%,
+      var(--hairline-cloud)
+    ) !important;
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 42%,
+      var(--popover)
+    ) !important;
+    color: color-mix(
+      in oklab,
+      var(--ink) 78%,
+      var(--module-vocab-fg)
+    ) !important;
+    --tw-ring-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 14%,
+      transparent
+    );
+  }
+
+  .vocab-custom-tag-menu [data-slot="dropdown-menu-checkbox-item"],
+  .vocab-custom-tag-menu [data-slot="dropdown-menu-item"] {
+    color: color-mix(in oklab, var(--ink) 78%, var(--module-vocab-fg));
+  }
+
+  .vocab-custom-tag-menu [data-slot="dropdown-menu-checkbox-item"]:focus,
+  .vocab-custom-tag-menu
+    [data-slot="dropdown-menu-checkbox-item"][data-highlighted],
+  .vocab-custom-tag-menu [data-slot="dropdown-menu-item"]:focus,
+  .vocab-custom-tag-menu [data-slot="dropdown-menu-item"][data-highlighted] {
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 55%,
+      transparent
+    ) !important;
+    color: var(--module-vocab-fg) !important;
+  }
+
+  .vocab-custom-tag-menu [data-slot="dropdown-menu-separator"] {
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 18%,
+      transparent
+    ) !important;
+  }
+
+  .vocab-custom-tag-menu .bg-popover {
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 42%,
+      var(--popover)
+    ) !important;
+  }
+
+  .vocab-custom-tag-menu input {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 24%,
+      var(--hairline-cloud)
+    ) !important;
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 28%,
+      var(--surface-elevated)
+    ) !important;
+    color: var(--ink) !important;
+  }
+
+  .vocab-custom-tag-menu input:focus-visible {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 48%,
+      var(--hairline-cloud)
+    ) !important;
+    box-shadow: 0 0 0 2px
+      color-mix(in oklab, var(--module-vocab-fg) 18%, transparent) !important;
   }
 
   .vocab-lexicon .writing-spine-search {
@@ -1579,6 +1667,7 @@
   .writing-brand-lede {
     max-width: 40rem;
     margin-top: 0.85rem;
+    margin-bottom: 0.85rem;
     font-size: 1.05rem;
     line-height: 1.65;
     color: var(--muted-foreground);
@@ -1796,8 +1885,8 @@
   }
 
   .writing-workspace .writing-spine-search-wrap {
-    flex: none;
-    width: 100%;
+    flex: 1 1 auto;
+    width: auto;
     min-width: 0;
     max-width: none;
   }
@@ -1893,6 +1982,34 @@
 
   .writing-stage-kicker {
     margin-bottom: 1.35rem;
+  }
+
+  .writing-stage-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem 1rem;
+    margin-bottom: 1.35rem;
+  }
+
+  .writing-stage-toolbar .writing-stage-kicker {
+    margin-bottom: 0;
+  }
+
+  .writing-stage-heading {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.55rem 0.85rem;
+    min-width: 0;
+  }
+
+  .writing-stage-count {
+    margin: 0;
+    font-size: 0.8125rem;
+    font-weight: 500;
+    color: var(--muted-foreground);
   }
 
   .writing-chapter {
@@ -2498,11 +2615,15 @@ body {
 .writing-chip:hover {
   border-color: color-mix(
     in oklab,
-    var(--writing-accent-fg) 42%,
+    var(--writing-accent-fg, var(--module-writing-fg)) 42%,
     var(--hairline-cloud)
   );
-  background: color-mix(in oklab, var(--writing-accent-bg) 32%, transparent);
-  color: var(--foreground);
+  background: color-mix(
+    in oklab,
+    var(--writing-accent-bg, var(--module-writing-bg)) 38%,
+    transparent
+  );
+  color: var(--writing-accent-fg, var(--module-writing-fg));
   box-shadow: none;
 }
 

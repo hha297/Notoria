@@ -1,9 +1,11 @@
 import OpenAI from "openai";
+import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import type { AppLocale } from "@/i18n/config";
 
 const UI_LANGUAGE_NAMES: Record<AppLocale, string> = {
   en: "English",
   fi: "Finnish",
+  sv: "Swedish",
   vi: "Vietnamese",
 };
 
@@ -44,8 +46,10 @@ export async function glossSentenceMeaning(input: {
     messages: [
       {
         role: "system",
-        content:
+        content: await aiSystemPrompt(
           'Return JSON only: {"sentenceMeaning": string}. sentenceMeaning is a short natural translation/gloss of the full sentence in the requested UI language. No quotes wrapping the whole string. No explanations.',
+          { responseStyle: true },
+        ),
       },
       {
         role: "user",
@@ -154,8 +158,10 @@ async function glossSentenceMeaningsBatch(input: {
     messages: [
       {
         role: "system",
-        content:
+        content: await aiSystemPrompt(
           'Return JSON only: {"meanings":[{"index":number,"sentenceMeaning":string}]}. For each input index, provide a short natural translation/gloss of that full sentence in the requested UI language. Preserve every index. No markdown.',
+          { responseStyle: true },
+        ),
       },
       {
         role: "user",

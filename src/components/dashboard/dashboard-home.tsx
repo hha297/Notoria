@@ -29,11 +29,6 @@ type HubModule = {
   id: "vocabulary" | "exercises" | "writing" | "theory";
   href: string;
   icon: LucideIcon;
-  countKey:
-    | "wordsSaved"
-    | "wordsReadyToPractice"
-    | "writingPieces"
-    | "theoryNotes";
   accent: string;
 };
 
@@ -42,42 +37,27 @@ const HUB_MODULES: HubModule[] = [
     id: "vocabulary",
     href: "/vocabulary",
     icon: Languages,
-    countKey: "wordsSaved",
     accent: "vocab",
   },
   {
     id: "exercises",
     href: "/exercises",
     icon: Dumbbell,
-    countKey: "wordsReadyToPractice",
     accent: "exercise",
   },
   {
     id: "writing",
     href: "/writing",
     icon: PenLine,
-    countKey: "writingPieces",
     accent: "writing",
   },
   {
     id: "theory",
     href: "/theory",
     icon: BookOpen,
-    countKey: "theoryNotes",
     accent: "theory",
   },
 ];
-
-function moduleCount(
-  module: HubModule,
-  snapshot: WorkspaceActivitySnapshot,
-  practiceReadyCount: number,
-) {
-  if (module.id === "vocabulary") return snapshot.vocabularyCount;
-  if (module.id === "exercises") return practiceReadyCount;
-  if (module.id === "writing") return snapshot.writingCount;
-  return snapshot.theoryCount;
-}
 
 export function DashboardHome({
   userName,
@@ -128,9 +108,7 @@ export function DashboardHome({
           <h1 className="writing-brand-title">
             {t("helloTitle", { name: firstName })}
           </h1>
-          <p className="writing-brand-lede">
-            {t("description")}
-          </p>
+          <p className="writing-brand-lede">{t("description")}</p>
           <ul
             className={mx(homeStyles, "home-canopy mt-6")}
             aria-label={t("snapshotTitle")}
@@ -214,7 +192,6 @@ export function DashboardHome({
         <div className={mx(homeStyles, "home-hub-grid")}>
           {HUB_MODULES.map((module) => {
             const Icon = module.icon;
-            const count = moduleCount(module, snapshot, practiceReadyCount);
 
             return (
               <article
@@ -231,9 +208,6 @@ export function DashboardHome({
                   </h2>
                   <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
                     {t(`modules.${module.id}.description`)}
-                  </p>
-                  <p className={mx(homeStyles, "home-hub-count mt-3")}>
-                    {count} {t(module.countKey)}
                   </p>
                   <Link
                     href={module.href}
@@ -252,11 +226,7 @@ export function DashboardHome({
         </div>
       </section>
 
-      <DashboardGuide
-        snapshot={snapshot}
-        wordCount={snapshot.vocabularyCount}
-        practiceReadyCount={practiceReadyCount}
-      />
+      <DashboardGuide />
     </div>
   );
 }

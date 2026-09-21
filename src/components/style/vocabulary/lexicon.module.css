@@ -147,111 +147,6 @@
   color: var(--muted-foreground);
 }
 
-.vocab-filter-trigger {
-  height: 2.5rem;
-  width: 100%;
-  min-width: 0;
-  justify-content: space-between;
-  padding-inline: 0.85rem;
-  border-radius: 0.65rem;
-  font-weight: 500;
-  box-shadow: none;
-  transition:
-    border-color 160ms ease,
-    background-color 160ms ease,
-    box-shadow 160ms ease;
-}
-
-:global(.vocab-lexicon) .vocab-filter-trigger {
-  border-color: color-mix(
-    in oklab,
-    var(--module-vocab-fg) 22%,
-    var(--hairline-cloud)
-  ) !important;
-  background: color-mix(
-    in oklab,
-    var(--module-vocab-bg) 28%,
-    transparent
-  ) !important;
-  color: var(--ink);
-}
-
-:global(.vocab-lexicon) .vocab-filter-trigger:hover {
-  border-color: color-mix(
-    in oklab,
-    var(--module-vocab-fg) 40%,
-    var(--hairline-cloud)
-  ) !important;
-  background: color-mix(
-    in oklab,
-    var(--module-vocab-bg) 42%,
-    transparent
-  ) !important;
-}
-
-:global(.vocab-lexicon) .vocab-filter-trigger:focus-visible,
-:global(.vocab-lexicon) .vocab-filter-trigger[data-popup-open],
-:global(.vocab-lexicon) .vocab-filter-trigger[aria-expanded="true"],
-:global(.vocab-lexicon) .vocab-filter-trigger[data-state="open"] {
-  border-color: color-mix(
-    in oklab,
-    var(--module-vocab-fg) 50%,
-    var(--hairline-cloud)
-  ) !important;
-  background: color-mix(
-    in oklab,
-    var(--module-vocab-bg) 52%,
-    var(--surface-elevated)
-  ) !important;
-  box-shadow: 0 0 0 3px
-    color-mix(in oklab, var(--module-vocab-bg) 48%, transparent);
-}
-
-.vocab-filter-menu {
-  border-color: color-mix(
-    in oklab,
-    var(--module-vocab-fg) 28%,
-    var(--hairline-cloud)
-  ) !important;
-  background: color-mix(
-    in oklab,
-    var(--module-vocab-bg) 42%,
-    var(--popover)
-  ) !important;
-  color: var(--popover-foreground);
-  --tw-ring-color: color-mix(
-    in oklab,
-    var(--module-vocab-fg) 16%,
-    transparent
-  );
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--module-vocab-fg) 12%, transparent),
-    0 18px 36px color-mix(in oklab, var(--module-vocab-bg) 35%, transparent);
-}
-
-.vocab-filter-menu :global([data-slot="dropdown-menu-label"]),
-.vocab-filter-menu :global([data-slot="select-label"]) {
-  color: var(--module-vocab-fg);
-}
-
-.vocab-filter-menu :global([data-slot="dropdown-menu-separator"]),
-.vocab-filter-menu :global([data-slot="select-separator"]) {
-  background: color-mix(in oklab, var(--module-vocab-fg) 18%, transparent);
-}
-
-.vocab-filter-menu :global([data-slot="dropdown-menu-checkbox-item"]):focus,
-.vocab-filter-menu :global([data-slot="dropdown-menu-checkbox-item"])[data-highlighted],
-.vocab-filter-menu :global([data-slot="select-item"]):focus,
-.vocab-filter-menu :global([data-slot="select-item"])[data-highlighted] {
-  background: color-mix(in oklab, var(--module-vocab-bg) 55%, transparent);
-  color: var(--ink);
-}
-
-.vocab-filter-menu :global([data-slot="dropdown-menu-checkbox-item"])[data-checked],
-.vocab-filter-menu :global([data-slot="select-item"])[data-selected] {
-  color: var(--module-vocab-fg);
-}
-
 @media (min-width: 640px) {
   .vocab-group-head {
     margin-inline: -1.5rem;
@@ -364,62 +259,6 @@
   padding-top: 0.15rem;
 }
 
-.vocab-canopy {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.55rem 1.35rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.vocab-canopy-item {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.4rem;
-  min-width: 0;
-}
-
-.vocab-canopy-value {
-  font-family: var(--font-heading);
-  font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  color: var(--ink);
-}
-
-.vocab-canopy-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
-}
-
-.vocab-spine-tools {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  min-width: 0;
-}
-
-.vocab-spine-filters {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.55rem;
-  min-width: 0;
-}
-
-.vocab-spine-footer {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.65rem;
-}
-
 .vocab-pagination {
   display: flex;
   flex-direction: column;
@@ -431,10 +270,6 @@
 }
 
 @media (min-width: 640px) {
-  .vocab-spine-filters {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-
   .vocab-pagination {
     flex-direction: row;
     align-items: center;

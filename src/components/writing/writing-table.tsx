@@ -13,6 +13,7 @@ import { useTranslations } from "next-intl";
 import { FileText, ListChecks, Plus, Search } from "lucide-react";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
+import { CollapsibleRefine } from "@/components/filters/collapsible-refine";
 import { FolderWorkspace } from "@/components/folders/folder-workspace";
 import { FolderBreadcrumbs } from "@/components/folders/folder-breadcrumbs";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
@@ -88,6 +89,7 @@ export function WritingTable({
 }: WritingTableProps) {
   const router = useRouter();
   const t = useTranslations("writing");
+  const tCommon = useTranslations("common");
   const tFolders = useTranslations("folders");
   const tMeta = useTranslations("writing.meta");
   const tTags = useTranslations("tags");
@@ -292,17 +294,33 @@ export function WritingTable({
               />
             ) : null}
             <div className="writing-spine-tools" data-tutorial="writing-filters">
-              <div className="writing-spine-search-wrap">
-                <Search className="writing-spine-search-icon" aria-hidden="true" />
-                <Input
-                  value={search}
-                  onChange={(event) => setSearch(event.target.value)}
-                  placeholder={t("searchPlaceholder")}
-                  className="writing-spine-search"
-                  data-tutorial="writing-search"
-                />
-              </div>
-              <div className="writing-refine writing-sheet-meta">
+              <CollapsibleRefine
+                routeAction="writing"
+                label={tCommon("filters")}
+                hideLabel={tCommon("hideFilters")}
+                active={
+                  isMultiFilterActive(cefrFilter) ||
+                  isMultiFilterActive(formalityFilter) ||
+                  isMultiFilterActive(topicFilter) ||
+                  groupBy !== "mode" ||
+                  sort !== "updated:desc"
+                }
+                search={
+                  <div className="writing-spine-search-wrap">
+                    <Search
+                      className="writing-spine-search-icon"
+                      aria-hidden="true"
+                    />
+                    <Input
+                      value={search}
+                      onChange={(event) => setSearch(event.target.value)}
+                      placeholder={t("searchPlaceholder")}
+                      className="writing-spine-search"
+                      data-tutorial="writing-search"
+                    />
+                  </div>
+                }
+              >
                 <WritingFilterChipPicker
                   labelId="writing-filter-cefr"
                   label={tMeta("cefrLabel")}
@@ -363,7 +381,7 @@ export function WritingTable({
                     { value: "cefr:desc", label: t("sortCefrDesc") },
                   ]}
                 />
-              </div>
+              </CollapsibleRefine>
             </div>
             <WritingCollections currentFolderId={currentFolderId} />
           </section>
