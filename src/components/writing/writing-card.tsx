@@ -40,13 +40,13 @@ function WritingKindFacts({
       {isQuestionSet ? (
         <>
           <span>{t("sectionCount", { count: listMeta.sectionCount })}</span>
-          <span aria-hidden="true"> · </span>
+          <span aria-hidden="true">·</span>
           <span>{t("questionCount", { count: listMeta.questionCount })}</span>
         </>
       ) : (
         <span>{t("modes.richDocument")}</span>
       )}
-      <span aria-hidden="true"> · </span>
+      <span aria-hidden="true">·</span>
       <span>
         {formatDistanceToNow(new Date(document.updatedAt), {
           addSuffix: true,

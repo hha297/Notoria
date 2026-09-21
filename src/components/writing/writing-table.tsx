@@ -386,11 +386,6 @@ export function WritingTable({
             <WritingCollections currentFolderId={currentFolderId} />
           </section>
 
-          <div
-            className="writing-atelier-rule w-full shrink-0 rounded-full"
-            aria-hidden="true"
-          />
-
           <section className="writing-stage" data-tutorial="writing-list">
             {groups.length > 0 ? (
               <>
