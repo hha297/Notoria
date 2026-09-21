@@ -1,5 +1,4 @@
 import { getTranslations } from "next-intl/server";
-import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { VocabularyView } from "@/components/vocabulary/vocabulary-view";
@@ -11,14 +10,22 @@ export default async function VocabularyPage() {
 
   if (!workspace) {
     return (
-      <PageShell>
-        <PageHeader
-          eyebrow={t("title")}
-          title={t("title")}
-          highlight={t("bank")}
-          description={t("disabledNoWorkspace")}
-        />
-        <NoWorkspaceEmpty />
+      <PageShell className="vocab-lexicon-shell">
+        <div className="vocab-lexicon writing-atelier writing-atelier-empty flex flex-col gap-10">
+          <header className="writing-hero">
+            <div className="writing-hero-copy">
+              <p className="writing-kicker">{t("title")}</p>
+              <h1 className="writing-brand-title">
+                {t("title")}{" "}
+                <span className="text-module-vocab-fg">
+                  {t("bank")}
+                </span>
+              </h1>
+              <p className="writing-brand-lede">{t("disabledNoWorkspace")}</p>
+            </div>
+          </header>
+          <NoWorkspaceEmpty />
+        </div>
       </PageShell>
     );
   }

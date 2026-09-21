@@ -16,17 +16,22 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
+import { ShortcutActionsProvider } from "@/components/preferences/shortcut-actions";
 import type { Workspace } from "@/db/schema";
 import type { AppLocale } from "@/i18n/config";
 import { cn } from "@/lib/utils";
 
 function studioSceneFromPath(pathname: string) {
+  if (pathname === "/") return "home";
   if (pathname.startsWith("/vocabulary")) return "vocabulary";
   if (pathname.startsWith("/exercises")) return "exercises";
   if (pathname.startsWith("/theory")) return "theory";
   if (pathname.startsWith("/writing")) return "writing";
   if (pathname.startsWith("/listening")) return "listen";
   if (pathname.startsWith("/speaking")) return "speak";
+  if (pathname.startsWith("/getting-started")) return "guide";
+  if (pathname.startsWith("/settings")) return "settings";
+  if (pathname.startsWith("/account")) return "account";
   return "home";
 }
 
@@ -57,6 +62,7 @@ export function DashboardStudio({
   const sidebarUser = { userName, userEmail, userImage, isPro };
 
   return (
+    <ShortcutActionsProvider>
     <div className="studio-shell min-h-svh p-3">
       <div className="mx-auto flex max-w-[90rem] items-start gap-3">
         <FloatingSidebar workspaceId={activeWorkspaceId} {...sidebarUser} />
@@ -134,5 +140,6 @@ export function DashboardStudio({
         </SheetContent>
       </Sheet>
     </div>
+    </ShortcutActionsProvider>
   );
 }

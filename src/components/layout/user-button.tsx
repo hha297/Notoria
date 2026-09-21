@@ -24,6 +24,7 @@ type UserButtonProps = {
   image?: string | null;
   isPro?: boolean;
   onNavigate?: () => void;
+  active?: boolean;
 };
 
 export function UserButton({
@@ -32,6 +33,7 @@ export function UserButton({
   image,
   isPro = false,
   onNavigate,
+  active = false,
 }: UserButtonProps) {
   const router = useRouter();
   const t = useTranslations("auth");
@@ -48,8 +50,9 @@ export function UserButton({
     <DropdownMenu>
       <DropdownMenuTrigger
         className={cn(
-          "flex w-full cursor-pointer items-center gap-2 rounded-lg border border-hairline-cloud bg-surface-elevated px-2 py-1.5 text-left text-sm outline-none transition-colors",
-          "hover:bg-surface-hover focus-visible:ring-2 focus-visible:ring-ring",
+          "nav-account-trigger flex w-full cursor-pointer items-center gap-2 rounded-lg border px-2 py-1.5 text-left text-sm outline-none",
+          "focus-visible:ring-2 focus-visible:ring-ring",
+          active && "is-active",
         )}
       >
         <UserAvatar name={name} image={image} size="sm" />

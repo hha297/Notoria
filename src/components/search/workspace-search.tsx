@@ -17,11 +17,16 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
 import { useTranslations } from "next-intl";
 import { HighlightedText } from "@/components/search/highlighted-text";
 import { Input } from "@/components/ui/input";
+import { useAppShortcut } from "@/hooks/use-app-shortcut";
 import { searchWorkspaceContent } from "@/lib/actions/search";
+import {
+  formatChord,
+  getShortcutChord,
+  subscribeShortcutsChanged,
+} from "@/lib/preferences/shortcuts";
 import { queryKeys } from "@/lib/query/keys";
 import type { SearchResult, SearchResultType } from "@/lib/search/types";
 import { cn } from "@/lib/utils";
@@ -53,10 +58,21 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMac, setIsMac] = useState(false);
+  const [searchShortcutLabel, setSearchShortcutLabel] = useState("Ctrl + K");
 
   useEffect(() => {
     setIsMac(/mac/i.test(navigator.platform));
   }, []);
+
+  useEffect(() => {
+    function syncLabel() {
+      setSearchShortcutLabel(
+        formatChord(getShortcutChord("openSearch"), isMac ? "mac" : "other"),
+      );
+    }
+    syncLabel();
+    return subscribeShortcutsChanged(syncLabel);
+  }, [isMac]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -92,24 +108,13 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
     if (selected) router.push(selected.href);
   }, [activeIndex, isFetching, results, router]);
 
-  useHotkeys(
-    "mod+k",
-    (event) => {
-      event.preventDefault();
+  useAppShortcut(
+    "openSearch",
+    () => {
       inputRef.current?.focus();
       setOpen(true);
     },
     { enableOnFormTags: true },
-  );
-
-  useHotkeys(
-    "/",
-    (event) => {
-      event.preventDefault();
-      inputRef.current?.focus();
-      setOpen(true);
-    },
-    { enableOnFormTags: false },
   );
 
   const showPanel = open;
@@ -216,7 +221,7 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
             <LoaderCircle className="size-4 animate-spin text-muted-foreground" />
           ) : (
             <kbd className="hidden rounded-md border border-hairline-cloud bg-muted/60 px-1.5 py-0.5 text-[11px] font-medium text-muted-foreground sm:inline-block">
-              {isMac ? "⌘K" : t("shortcut")}
+              {searchShortcutLabel}
             </kbd>
           )}
         </div>

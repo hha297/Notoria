@@ -29,7 +29,7 @@ export function VocabularyPagination({
   return (
     <div
       className={cn(
-        "flex flex-col gap-2 border-t border-hairline-cloud px-3 py-2.5 sm:flex-row sm:items-center sm:justify-between sm:px-4",
+        "vocab-pagination",
         className,
       )}
     >

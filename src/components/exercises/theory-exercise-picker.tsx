@@ -156,7 +156,13 @@ export function TheoryExercisePicker({ theories }: TheoryExercisePickerProps) {
               <Plus className="size-3.5" />
               {t("emptyCta")}
             </LinkButton>
-            <LinkButton href="/theory" variant="ghost" size="sm">
+            <LinkButton
+              href="/theory"
+              variant="outline"
+              size="sm"
+              className="route-quiet-action"
+              data-route-action="theory"
+            >
               {t("openLibrary")}
             </LinkButton>
           </div>
@@ -485,19 +491,20 @@ function ViewModeToggle({
       variant="outline"
       spacing={0}
       aria-label={t("viewMode")}
-      className="ml-auto h-10 w-auto shrink-0 rounded-md border border-input p-0.5 sm:h-9"
+      data-route="exercise"
+      className="route-view-toggle ml-auto"
     >
       <ToggleGroupItem
         value="list"
         aria-label={t("viewList")}
-        className="size-9 cursor-pointer rounded-[5px] border-0 px-0 data-[state=on]:bg-muted data-[state=on]:text-ink data-[state=on]:shadow-none sm:size-8"
+        className="route-view-toggle-item"
       >
         <LayoutList className="size-4" />
       </ToggleGroupItem>
       <ToggleGroupItem
         value="cards"
         aria-label={t("viewCards")}
-        className="size-9 cursor-pointer rounded-[5px] border-0 px-0 data-[state=on]:bg-muted data-[state=on]:text-ink data-[state=on]:shadow-none sm:size-8"
+        className="route-view-toggle-item"
       >
         <LayoutGrid className="size-4" />
       </ToggleGroupItem>

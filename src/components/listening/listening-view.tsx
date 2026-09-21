@@ -1,15 +1,12 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { AnimatePresence, motion } from "motion/react";
-import { Headphones, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
-import { FolderItemDrag } from "@/components/folders/folder-dnd";
+import { FolderBreadcrumbs } from "@/components/folders/folder-breadcrumbs";
 import {
   FolderEmptyState,
-  FolderGrid,
   FolderWorkspace,
 } from "@/components/folders/folder-workspace";
 import { NewFolderButton } from "@/components/folders/new-folder-button";
@@ -17,6 +14,8 @@ import { ListeningFiltersBar } from "@/components/listening/listening-filters-ba
 import { ListeningLessonCard } from "@/components/listening/listening-lesson-card";
 import { UploadListeningDialog } from "@/components/listening/upload-listening-dialog";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
+import { WritingCollections } from "@/components/writing/writing-collections";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { Button } from "@/components/ui/button";
 import { ListPageLoading } from "@/components/layout/page-loading";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -36,7 +35,6 @@ import { queryKeys } from "@/lib/query/keys";
 import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 import { onTutorialPrepare } from "@/lib/onboarding/tutorial-prepare";
 
-const EASE = [0.25, 0.1, 0.25, 1] as const;
 const EMPTY_LESSONS: ListeningLessonListItem[] = [];
 
 type ListeningViewProps = {
@@ -54,7 +52,14 @@ export function ListeningView({
   const tTags = useTranslations("tags");
   const queryClient = useQueryClient();
   const [uploadOpen, setUploadOpen] = useState(false);
-  const [query, setQuery] = useState<ListeningListQuery>(DEFAULT_LISTENING_LIST_QUERY);
+  const [query, setQuery] = useState<ListeningListQuery>(
+    DEFAULT_LISTENING_LIST_QUERY,
+  );
+
+  useRegisterShortcutAction("createNew", () => {
+    setUploadOpen(true);
+  });
+
   const lessonsQuery = useQuery(listeningListQueryOptions(workspaceId));
   const foldersQuery = useQuery(
     folderListQueryOptions(workspaceId, "listening"),
@@ -86,12 +91,10 @@ export function ListeningView({
       filterAndSortListeningLessons(scopedLessons, query, {
         cefr: (level) => tMeta(`cefr.${level}`),
         topic: (topic) =>
-          topic
-            ? resolveTopicLabel(topic, (key) => tTags(key))
-            : topic,
+          topic ? resolveTopicLabel(topic, (key) => tTags(key)) : topic,
         formality: (formality) => tMeta(`formality.${formality}`),
       }),
-    [scopedLessons, query, tMeta],
+    [scopedLessons, query, tMeta, tTags],
   );
 
   const childFolders = childrenOf(folders, currentFolderId);
@@ -103,11 +106,30 @@ export function ListeningView({
     itemsInFolder(lessons, currentFolderId).length === 0;
 
   if (lessonsQuery.isPending || foldersQuery.isPending) {
-    return <ListPageLoading />;
+    return (
+      <PageShell className="writing-atelier-shell listening-atelier-shell">
+        <ListPageLoading />
+      </PageShell>
+    );
   }
 
+  const actions = (
+    <>
+      <ShowTutorialButton section="listening" />
+      <Button
+        type="button"
+        className="route-primary-cta"
+        onClick={() => setUploadOpen(true)}
+        data-tutorial="listening-upload"
+      >
+        <Plus className="size-4" />
+        {t("upload")}
+      </Button>
+    </>
+  );
+
   return (
-    <PageShell>
+    <PageShell className="writing-atelier-shell listening-atelier-shell">
       <FolderWorkspace
         workspaceId={workspaceId}
         section="listening"
@@ -115,130 +137,127 @@ export function ListeningView({
         currentFolderId={currentFolderId}
         items={lessons}
         search={query.search}
-        header={
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.22, ease: EASE }}
-          >
-            <PageHeader
-              eyebrow={t("eyebrow")}
-              title={t("title")}
-              highlight={t("highlight")}
-              description={t("description")}
-            >
-              <ShowTutorialButton section="listening" />
-              <NewFolderButton />
-              <Button onClick={() => setUploadOpen(true)} data-tutorial="listening-upload">
-                <Plus className="size-4" />
-                {t("upload")}
-              </Button>
-            </PageHeader>
-          </motion.div>
-        }
+        showBreadcrumbs={false}
       >
-        <AnimatePresence mode="wait">
-          {isEmptyRoot || isEmptyFolder ? (
-            <motion.div
-              key="empty"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.18, ease: EASE }}
-            >
-              {currentFolderId ? (
-                <FolderEmptyState
-                  title={tFolders("emptyFolder")}
-                  description={tFolders("emptyFolderDescription")}
-                >
-                  <Button className="mt-5" onClick={() => setUploadOpen(true)} data-tutorial="listening-upload">
-                    <Plus className="size-4" />
-                    {t("upload")}
-                  </Button>
-                </FolderEmptyState>
-              ) : (
-                <div className="empty-state">
-                  <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-hairline-cloud bg-muted/40">
-                    <Headphones className="size-6 text-muted-foreground" />
-                  </div>
-                  <p className="font-medium text-ink">{t("emptyTitle")}</p>
-                  <p className="mt-2 max-w-md text-sm text-muted-foreground">
-                    {t("emptyDescription")}
-                  </p>
-                  <Button className="mt-5" onClick={() => setUploadOpen(true)} data-tutorial="listening-upload">
+        <div className="writing-atelier listening-atelier flex flex-col gap-10 lg:gap-12">
+          <header className="writing-hero">
+            <div className="writing-hero-copy">
+              <p className="writing-kicker">{t("eyebrow")}</p>
+              <h1 className="writing-brand-title">
+                {t("title")}{" "}
+                <span className="text-module-listen-fg">{t("highlight")}</span>
+              </h1>
+              <p className="writing-brand-lede">{t("description")}</p>
+            </div>
+            <div className="writing-hero-actions">
+              {isEmptyRoot ? (
+                <>
+                  <ShowTutorialButton section="listening" />
+                  <NewFolderButton variant="outline" size="sm" />
+                  <Button
+                    type="button"
+                    className="route-primary-cta"
+                    onClick={() => setUploadOpen(true)}
+                    data-tutorial="listening-upload"
+                  >
                     <Plus className="size-4" />
                     {t("uploadFirst")}
                   </Button>
-                </div>
+                </>
+              ) : (
+                actions
               )}
-            </motion.div>
+            </div>
+          </header>
+
+          {isEmptyRoot ? (
+            <div className="writing-empty-desk">
+              <p className="writing-empty-title">{t("emptyTitle")}</p>
+              <p className="writing-brand-lede">{t("emptyDescription")}</p>
+            </div>
           ) : (
-            <motion.div
-              key="list"
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.18, ease: EASE }}
-            className="space-y-4"
-          >
-            {lessons.length > 0 || folders.length > 0 ? (
-              <div data-tutorial="listening-filters">
+            <>
+              <section className="writing-workspace">
+                {currentFolderId ? (
+                  <FolderBreadcrumbs
+                    section="listening"
+                    folders={folders}
+                    currentFolderId={currentFolderId}
+                  />
+                ) : null}
+
+                <WritingCollections currentFolderId={currentFolderId} />
+
                 <ListeningFiltersBar
                   lessons={lessons}
                   query={query}
                   onQueryChange={setQuery}
                 />
-              </div>
-            ) : null}
 
-            <div className="space-y-4" data-tutorial="listening-lessons">
-              <h2 className="heading-md text-ink">{t("myLessons")}</h2>
-              <FolderGrid />
-              {filteredLessons.length === 0 ? (
-                isListeningListQueryFiltered(query) &&
-                childFolders.length === 0 ? (
-                  <div className="empty-state">
-                    <p className="font-medium text-ink">{t("noResults")}</p>
-                    <p className="mt-2 max-w-md text-sm text-muted-foreground">
-                      {t("noResultsDescription")}
-                    </p>
-                  </div>
-                ) : null
-              ) : (
-                <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                  {filteredLessons.map((lesson) => (
-                    <FolderItemDrag
-                      key={lesson.id}
-                      id={lesson.id}
-                      className="transition-transform duration-200 hover:-translate-y-0.5"
+                {isEmptyFolder ? (
+                  <FolderEmptyState
+                    title={tFolders("emptyFolder")}
+                    description={tFolders("emptyFolderDescription")}
+                  >
+                    <Button
+                      className="mt-5 route-primary-cta"
+                      onClick={() => setUploadOpen(true)}
+                      data-tutorial="listening-upload"
                     >
-                      <ListeningLessonCard
-                        lesson={lesson}
-                        onDeleted={(id) =>
-                          queryClient.setQueryData(
-                            queryKeys.listening.list(workspaceId),
-                            (current: ListeningLessonListItem[] | undefined) =>
-                              current?.filter((item) => item.id !== id),
-                          )
-                        }
-                        onRenamed={(id, patch) =>
-                          queryClient.setQueryData(
-                            queryKeys.listening.list(workspaceId),
-                            (current: ListeningLessonListItem[] | undefined) =>
-                              current?.map((item) =>
-                                item.id === id ? { ...item, ...patch } : item,
-                              ),
-                          )
-                        }
-                      />
-                    </FolderItemDrag>
-                  ))}
-                </div>
-              )}
-            </div>
-          </motion.div>
+                      <Plus className="size-4" />
+                      {t("upload")}
+                    </Button>
+                  </FolderEmptyState>
+                ) : (
+                  <div data-tutorial="listening-lessons">
+                    <p className="writing-kicker mb-3">{t("myLessons")}</p>
+                    {filteredLessons.length === 0 ? (
+                      isListeningListQueryFiltered(query) &&
+                      childFolders.length === 0 ? (
+                        <div className="writing-empty-desk">
+                          <p className="writing-empty-title">{t("noResults")}</p>
+                          <p className="writing-brand-lede">
+                            {t("noResultsDescription")}
+                          </p>
+                        </div>
+                      ) : null
+                    ) : (
+                      <div className="writing-entry-list">
+                        {filteredLessons.map((lesson) => (
+                          <ListeningLessonCard
+                            key={lesson.id}
+                            lesson={lesson}
+                            onDeleted={(id) =>
+                              queryClient.setQueryData(
+                                queryKeys.listening.list(workspaceId),
+                                (
+                                  current: ListeningLessonListItem[] | undefined,
+                                ) => current?.filter((item) => item.id !== id),
+                              )
+                            }
+                            onRenamed={(id, patch) =>
+                              queryClient.setQueryData(
+                                queryKeys.listening.list(workspaceId),
+                                (
+                                  current: ListeningLessonListItem[] | undefined,
+                                ) =>
+                                  current?.map((item) =>
+                                    item.id === id
+                                      ? { ...item, ...patch }
+                                      : item,
+                                  ),
+                              )
+                            }
+                          />
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                )}
+              </section>
+            </>
           )}
-        </AnimatePresence>
+        </div>
       </FolderWorkspace>
 
       <UploadListeningDialog

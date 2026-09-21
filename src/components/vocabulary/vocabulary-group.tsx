@@ -40,21 +40,10 @@ export function VocabularyGroup({
   const rangeEnd = Math.min(currentPage * VOCABULARY_GROUP_PAGE_SIZE, words.length);
 
   return (
-    <section
-      data-vocab-pos={posKey || "none"}
-      className="vocab-group rounded-xl border border-hairline-cloud"
-    >
-      <header className="sticky top-0 z-10 flex flex-wrap items-center justify-between gap-2 overflow-hidden rounded-t-xl border-b border-hairline-cloud bg-muted/70 px-3 py-2.5 backdrop-blur-md sm:px-4">
-        <div className="flex min-w-0 items-center gap-2.5">
-          <span
-            className="h-4 w-1 shrink-0 rounded-full bg-(--vocab-pos-accent)"
-            aria-hidden
-          />
-          <h2 className="font-heading text-lg font-medium tracking-tight text-ink sm:text-xl">
-            {title}
-          </h2>
-        </div>
-        <p className="text-xs text-muted-foreground sm:text-sm">
+    <section data-vocab-pos={posKey || "none"} className="vocab-group">
+      <header className="vocab-group-head">
+        <h2 className="vocab-group-title">{title}</h2>
+        <p className="vocab-group-count">
           {showPagination
             ? t("groupPageRange", {
               start: rangeStart,
@@ -65,29 +54,27 @@ export function VocabularyGroup({
         </p>
       </header>
 
-      <div className="overflow-hidden rounded-b-xl">
-        {viewMode === "cards" ? (
-          <VocabularyCardView
-            words={pageWords}
-            workspaceId={workspaceId}
-            onEditWord={onEditWord}
-          />
-        ) : (
-          <VocabularyListView
-            words={pageWords}
-            workspaceId={workspaceId}
-            onEditWord={onEditWord}
-          />
-        )}
+      {viewMode === "cards" ? (
+        <VocabularyCardView
+          words={pageWords}
+          workspaceId={workspaceId}
+          onEditWord={onEditWord}
+        />
+      ) : (
+        <VocabularyListView
+          words={pageWords}
+          workspaceId={workspaceId}
+          onEditWord={onEditWord}
+        />
+      )}
 
-        {showPagination ? (
-          <VocabularyPagination
-            page={currentPage}
-            totalPages={totalPages}
-            onPageChange={setPage}
-          />
-        ) : null}
-      </div>
+      {showPagination ? (
+        <VocabularyPagination
+          page={currentPage}
+          totalPages={totalPages}
+          onPageChange={setPage}
+        />
+      ) : null}
     </section>
   );
 }

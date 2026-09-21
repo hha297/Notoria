@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
 import { Clock, Plus, Search } from "lucide-react";
 import { useMemo, useState } from "react";
@@ -15,6 +16,7 @@ import { WritingCollections } from "@/components/writing/writing-collections";
 import { TheoryListLoading } from "@/components/theory/theory-loading";
 import { TheoryRowActions } from "@/components/theory/theory-row-actions";
 import { DescriptionContent } from "@/components/form/description-content";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
 import { useQuery } from "@tanstack/react-query";
@@ -63,6 +65,7 @@ export function TheoryLibrary({
   currentFolderId,
   workspaceId,
 }: TheoryLibraryProps) {
+  const router = useRouter();
   const t = useTranslations("theory");
   const tFolders = useTranslations("folders");
   const [search, setSearch] = useState("");
@@ -73,6 +76,10 @@ export function TheoryLibrary({
   const notes = notesQuery.data ?? EMPTY_THEORY_NOTES;
   const folders = foldersQuery.data ?? [];
   const isLoading = notesQuery.isPending || foldersQuery.isPending;
+
+  useRegisterShortcutAction("createNew", () => {
+    router.push(createHref);
+  });
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -140,7 +147,7 @@ export function TheoryLibrary({
 
   const actions = (
     <>
-      <ShowTutorialButton section="theory" className="writing-quiet-action" />
+      <ShowTutorialButton section="theory" />
       <LinkButton href={createHref} data-tutorial="theory-add-note">
         <Plus className="size-4" />
         {isEmptyRoot ? t("createFirst") : t("create")}

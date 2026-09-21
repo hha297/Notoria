@@ -14,6 +14,7 @@ import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
 import { TheoryExportDialog } from "@/components/theory/export-dialog";
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { deleteTheoryNote } from "@/lib/actions/theory";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
 import {
@@ -54,6 +55,20 @@ export function TheoryReader({
   const minutes = estimateReadingMinutes(parsed.doc);
   const canExport = theoryDocHasExportableContent(parsed.doc);
 
+  useRegisterShortcutAction("quickEdit", () => {
+    router.push(`/theory/${id}/edit`);
+  });
+  useRegisterShortcutAction(
+    "download",
+    () => {
+      setExportOpen(true);
+    },
+    canExport,
+  );
+  useRegisterShortcutAction("deleteItem", () => {
+    setDeleteOpen(true);
+  });
+
   function handleDelete() {
     if (isLeaving) return;
     startTransition(async () => {
@@ -86,7 +101,8 @@ export function TheoryReader({
             onClick={() => setExportOpen(true)}
             disabled={!canExport}
             title={canExport ? undefined : t("export.empty")}
-            className="h-11 w-full sm:h-9 sm:w-auto"
+            className="route-quiet-action h-11 w-full sm:h-9 sm:w-auto"
+            data-route-action="theory"
           >
             {t("export.button")}
           </LockedFeatureButton>

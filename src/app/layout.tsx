@@ -29,6 +29,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryProvider } from "@/components/providers/query-provider";
 import { AuthSessionProvider } from "@/components/providers/auth-session-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
+import { PreferencesProvider } from "@/components/providers/preferences-provider";
 import "./globals.css";
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -68,14 +69,16 @@ export default async function RootLayout({
       <body className={`${ibmPlexSans.className} min-h-full font-sans`} suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
-            <AuthSessionProvider>
-              <QueryProvider>
-                <TooltipProvider>
-                  {children}
-                  <Toaster richColors position="top-right" />
-                </TooltipProvider>
-              </QueryProvider>
-            </AuthSessionProvider>
+            <PreferencesProvider>
+              <AuthSessionProvider>
+                <QueryProvider>
+                  <TooltipProvider>
+                    {children}
+                    <Toaster richColors position="top-right" />
+                  </TooltipProvider>
+                </QueryProvider>
+              </AuthSessionProvider>
+            </PreferencesProvider>
           </ThemeProvider>
         </NextIntlClientProvider>
       </body>

@@ -35,11 +35,24 @@ type SidebarUser = {
 
 type NavMatch = "exact" | "prefix";
 
+type NavRoute =
+  | "home"
+  | "vocabulary"
+  | "exercises"
+  | "writing"
+  | "theory"
+  | "listening"
+  | "speaking"
+  | "guide"
+  | "settings"
+  | "account";
+
 type NavItem = {
   href: string;
   key: string;
   icon: LucideIcon;
   match: NavMatch;
+  route: NavRoute;
   tint: string;
   pro?: boolean;
 };
@@ -60,13 +73,15 @@ const NAV_GROUPS: NavGroup[] = [
         key: "dashboard",
         icon: LayoutDashboard,
         match: "exact",
-        tint: "text-primary",
+        route: "home",
+        tint: "text-module-home-fg",
       },
       {
         href: "/vocabulary",
         key: "vocabulary",
         icon: Languages,
         match: "prefix",
+        route: "vocabulary",
         tint: "text-module-vocab-fg",
       },
       {
@@ -74,6 +89,7 @@ const NAV_GROUPS: NavGroup[] = [
         key: "exercises",
         icon: Dumbbell,
         match: "prefix",
+        route: "exercises",
         tint: "text-module-exercise-fg",
       },
       {
@@ -81,6 +97,7 @@ const NAV_GROUPS: NavGroup[] = [
         key: "writing",
         icon: PenLine,
         match: "prefix",
+        route: "writing",
         tint: "text-module-writing-fg",
       },
       {
@@ -88,6 +105,7 @@ const NAV_GROUPS: NavGroup[] = [
         key: "theory",
         icon: BookOpen,
         match: "prefix",
+        route: "theory",
         tint: "text-module-theory-fg",
       },
     ],
@@ -101,6 +119,7 @@ const NAV_GROUPS: NavGroup[] = [
         key: "listening",
         icon: Headphones,
         match: "prefix",
+        route: "listening",
         tint: "text-module-listen-fg",
         pro: true,
       },
@@ -109,6 +128,7 @@ const NAV_GROUPS: NavGroup[] = [
         key: "speaking",
         icon: Video,
         match: "prefix",
+        route: "speaking",
         tint: "text-module-speak-fg",
         pro: true,
       },
@@ -123,14 +143,16 @@ const NAV_GROUPS: NavGroup[] = [
         key: "gettingStarted",
         icon: Compass,
         match: "prefix",
-        tint: "text-muted-foreground",
+        route: "guide",
+        tint: "text-module-guide-fg",
       },
       {
-        href: "/account",
+        href: "/settings",
         key: "settings",
         icon: SlidersHorizontal,
         match: "prefix",
-        tint: "text-muted-foreground",
+        route: "settings",
+        tint: "text-module-settings-fg",
       },
     ],
   },
@@ -191,13 +213,12 @@ export function SidebarNav({
             {group.items.map((item) => {
               const Icon = item.icon;
               const locked = Boolean(item.pro && !hasProAccess);
-              const active = !locked && isActivePath(pathname, item.href, item.match);
+              const active =
+                !locked && isActivePath(pathname, item.href, item.match);
               const className = cn(
-                "flex items-center gap-2 rounded-lg px-2.5 py-2 text-[13px] font-medium transition-colors",
+                "nav-link",
                 locked && lockedFeatureClassName,
-                active
-                  ? "bg-primary text-on-primary"
-                  : "text-ink hover:bg-muted",
+                active && "is-active",
               );
 
               if (locked) {
@@ -205,13 +226,17 @@ export function SidebarNav({
                   <button
                     key={item.href}
                     type="button"
+                    data-nav={item.route}
                     className={className}
                     onClick={() => {
                       onNavigate?.();
                       openUpgrade();
                     }}
                   >
-                    <Lock className="size-4 shrink-0 text-muted-foreground" aria-hidden />
+                    <Lock
+                      className="nav-link-icon size-4 shrink-0 text-muted-foreground"
+                      aria-hidden
+                    />
                     {t(item.key)}
                   </button>
                 );
@@ -221,6 +246,7 @@ export function SidebarNav({
                 <Link
                   key={item.href}
                   href={item.href}
+                  data-nav={item.route}
                   onClick={onNavigate}
                   onPointerEnter={() => prefetchItem(item.href)}
                   onFocus={() => prefetchItem(item.href)}
@@ -228,7 +254,10 @@ export function SidebarNav({
                   className={className}
                 >
                   <Icon
-                    className={cn("size-4 shrink-0", active ? "text-on-primary" : item.tint)}
+                    className={cn(
+                      "nav-link-icon size-4 shrink-0",
+                      active ? undefined : item.tint,
+                    )}
                     aria-hidden
                   />
                   <span className="min-w-0 flex-1 truncate">{t(item.key)}</span>
@@ -249,6 +278,7 @@ export function SidebarNav({
             image={userImage}
             isPro={isPro}
             onNavigate={onNavigate}
+            active={pathname.startsWith("/account")}
           />
         </div>
       </div>

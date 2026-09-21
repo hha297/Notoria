@@ -1,8 +1,9 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Loader2, Pencil, RotateCcw, Trash2 } from "lucide-react";
+import { ArrowLeft, Loader2, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { ListeningAudioPlayer } from "@/components/listening/listening-audio-player";
@@ -14,7 +15,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -33,9 +33,13 @@ import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 
 type ListeningLessonViewProps = {
   lesson: ListeningLessonDetail;
+  backHref: string;
 };
 
-export function ListeningLessonView({ lesson: initialLesson }: ListeningLessonViewProps) {
+export function ListeningLessonView({
+  lesson: initialLesson,
+  backHref,
+}: ListeningLessonViewProps) {
   const t = useTranslations("listening");
   const tMeta = useTranslations("listening.meta");
   const tTags = useTranslations("tags");
@@ -94,36 +98,13 @@ export function ListeningLessonView({ lesson: initialLesson }: ListeningLessonVi
   }
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-wrap items-start justify-between gap-3">
-        <div className="flex flex-wrap items-center gap-2">
-          <Badge variant={lesson.status === "FAILED" ? "destructive" : "outline"}>
-            {t(`status.${lesson.status}`)}
-          </Badge>
-          {lesson.cefrLevel ? (
-            <Badge variant="outline">
-              {tMeta(`cefr.${lesson.cefrLevel as WritingCefr}`)}
-            </Badge>
-          ) : null}
-          {lesson.topic ? (
-            <Badge variant="outline">
-              {lesson.topic
-                ? resolveTopicLabel(lesson.topic, (key) => tTags(key))
-                : null}
-            </Badge>
-          ) : null}
-          {lesson.formality ? (
-            <Badge variant="outline">
-              {tMeta(`formality.${lesson.formality as WritingFormality}`)}
-            </Badge>
-          ) : null}
-          {lesson.duration != null ? (
-            <Badge variant="secondary">
-              {formatListeningDuration(lesson.duration)}
-            </Badge>
-          ) : null}
-        </div>
-        <div className="flex flex-wrap gap-2">
+    <div className="writing-paper listening-paper">
+      <div className="writing-paper-chrome">
+        <Link href={backHref} className="writing-back">
+          <ArrowLeft className="size-4" />
+          {t("backToList")}
+        </Link>
+        <div className="writing-paper-actions">
           {canRetry ? (
             <Button onClick={handleRetry} disabled={isPending}>
               {isPending ? (
@@ -136,6 +117,8 @@ export function ListeningLessonView({ lesson: initialLesson }: ListeningLessonVi
           ) : null}
           <Button
             variant="outline"
+            className="route-quiet-action"
+            data-route-action="listen"
             onClick={() => setRenameOpen(true)}
             disabled={isPending}
           >
@@ -153,26 +136,66 @@ export function ListeningLessonView({ lesson: initialLesson }: ListeningLessonVi
         </div>
       </div>
 
-      {lesson.status === "FAILED" && !ready ? (
-        <div className="rounded-xl border border-destructive/20 bg-destructive/5 p-4 text-sm text-destructive">
-          {lesson.errorCode && isListeningErrorCode(lesson.errorCode)
-            ? t(`errors.${lesson.errorCode}`)
-            : t("errors.PROCESSING_FAILED")}
+      <article className="writing-paper-page">
+        <p className="writing-kicker">{t("title")}</p>
+        <h1 className="writing-paper-title wrap-break-word">{lesson.title}</h1>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <Badge
+            variant={lesson.status === "FAILED" ? "destructive" : "outline"}
+          >
+            {t(`status.${lesson.status}`)}
+          </Badge>
+          {lesson.cefrLevel ? (
+            <Badge variant="outline">
+              {tMeta(`cefr.${lesson.cefrLevel as WritingCefr}`)}
+            </Badge>
+          ) : null}
+          {lesson.topic ? (
+            <Badge variant="outline">
+              {resolveTopicLabel(lesson.topic, (key) => tTags(key))}
+            </Badge>
+          ) : null}
+          {lesson.formality ? (
+            <Badge variant="outline">
+              {tMeta(`formality.${lesson.formality as WritingFormality}`)}
+            </Badge>
+          ) : null}
+          {lesson.duration != null ? (
+            <Badge variant="secondary">
+              {formatListeningDuration(lesson.duration)}
+            </Badge>
+          ) : null}
         </div>
-      ) : null}
+        <p className="writing-brand-lede mt-3">{t("lessonDescription")}</p>
 
-      {processing ? (
-        <div className="flex items-center gap-3 rounded-xl border border-hairline-cloud bg-muted/40 p-4 text-sm text-muted-foreground">
-          <Loader2 className="size-4 animate-spin" />
-          {t(`steps.${lesson.status.toLowerCase()}`)}
+        <div className="mt-8 flex flex-col gap-4">
+          {lesson.status === "FAILED" && !ready ? (
+            <div className="listening-status-strip is-error">
+              {lesson.errorCode && isListeningErrorCode(lesson.errorCode)
+                ? t(`errors.${lesson.errorCode}`)
+                : t("errors.PROCESSING_FAILED")}
+            </div>
+          ) : null}
+
+          {processing ? (
+            <div className="listening-status-strip">
+              <Loader2 className="size-4 animate-spin" />
+              {t(`steps.${lesson.status.toLowerCase()}`)}
+            </div>
+          ) : null}
+
+          {ready ? (
+            <div className="listening-practice-stage">
+              <ListeningPracticeSession lesson={lesson} />
+            </div>
+          ) : (
+            <ListeningAudioPlayer
+              src={lesson.cloudinaryUrl}
+              mediaType={lesson.mediaType}
+            />
+          )}
         </div>
-      ) : null}
-
-      {ready ? (
-        <ListeningPracticeSession lesson={lesson} />
-      ) : (
-        <ListeningAudioPlayer src={lesson.cloudinaryUrl} mediaType={lesson.mediaType} />
-      )}
+      </article>
 
       <RenameListeningDialog
         open={renameOpen}
@@ -185,17 +208,25 @@ export function ListeningLessonView({ lesson: initialLesson }: ListeningLessonVi
       />
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent showCloseButton={!isPending && !isLeaving}>
-          <DialogHeader>
-            <DialogTitle>{t("deleteConfirmTitle")}</DialogTitle>
-            <DialogDescription>
+        <DialogContent
+          showCloseButton={!isPending && !isLeaving}
+          className="workspace-sheet sm:max-w-md"
+          data-sheet-route="listen"
+        >
+          <DialogHeader className="workspace-sheet-header gap-2 space-y-0 pr-8 text-left">
+            <p className="workspace-sheet-kicker">{t("title")}</p>
+            <DialogTitle className="workspace-sheet-title">
+              {t("deleteConfirmTitle")}
+            </DialogTitle>
+            <DialogDescription className="workspace-sheet-lede">
               {t("deleteConfirmDescription", { title: lesson.title })}
             </DialogDescription>
           </DialogHeader>
-          <DialogFooter>
+          <div className="workspace-sheet-footer">
             <Button
               type="button"
               variant="outline"
+              className="workspace-sheet-cancel"
               onClick={() => setDeleteOpen(false)}
               disabled={isPending || isLeaving}
             >
@@ -204,6 +235,7 @@ export function ListeningLessonView({ lesson: initialLesson }: ListeningLessonVi
             <Button
               type="button"
               variant="destructive"
+              className="workspace-sheet-cta"
               onClick={handleDelete}
               disabled={isPending || isLeaving}
             >
@@ -214,7 +246,7 @@ export function ListeningLessonView({ lesson: initialLesson }: ListeningLessonVi
               )}
               {tc("delete")}
             </Button>
-          </DialogFooter>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

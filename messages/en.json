@@ -140,6 +140,8 @@
   "vocabulary": {
     "title": "Vocabulary",
     "bank": "bank",
+    "description": "Words you collect live here — search, filter, and reuse them across practice, writing, and review.",
+    "library": "Word bank",
     "addWordHighlight": "bank",
     "newWord": "New word",
     "editWord": "Edit word",
@@ -854,6 +856,7 @@
     "groupByWeek": "Week",
     "groupByMonth": "Month",
     "weekOf": "Week of {date}",
+    "sortBy": "Sort by",
     "sortUpdatedDesc": "Last updated",
     "sortUpdatedAsc": "Oldest updated",
     "sortCreatedDesc": "Newest created",
@@ -1349,6 +1352,7 @@
   "tutorials": {
     "show": "Show tutorial",
     "showShort": "Tutorial",
+    "guideLabel": "Guide",
     "next": "Next",
     "skip": "Skip tutorial",
     "done": "Got it",
@@ -1373,6 +1377,45 @@
         "library": {
           "title": "4. Your word library",
           "body": "Your saved words live here. Open any entry to edit it, or use them in exercises and review later."
+        }
+      }
+    },
+    "vocabularyAdd": {
+      "title": "Add a word",
+      "description": "This form is the heart of Notoria — each field helps you remember and reuse the word later.",
+      "cta": "Got it",
+      "steps": {
+        "word": {
+          "title": "1. Type the word",
+          "body": "Enter the word or phrase you’re learning. This becomes the main entry in your vocabulary bank."
+        },
+        "partOfSpeech": {
+          "title": "2. Part of speech",
+          "body": "Choose noun, verb, adjective, and so on. It helps filters and AI suggestions stay accurate."
+        },
+        "meanings": {
+          "title": "3. Meanings",
+          "body": "Add one or more meanings. Star up to 5 primary meanings for exercises — others stay for reference. Drag to reorder."
+        },
+        "examples": {
+          "title": "4. Example sentences",
+          "body": "Add sentences that show how the word is used. Open Additional details for a translation or note if you need one."
+        },
+        "tags": {
+          "title": "5. Tags",
+          "body": "Tag by level, topic, or situation so you can find and practice related words later."
+        },
+        "synonyms": {
+          "title": "6. Synonyms",
+          "body": "Link related words from your bank to connect entries and deepen recall."
+        },
+        "notes": {
+          "title": "7. Notes",
+          "body": "Optional free-form notes — pronunciation tips, usage quirks, or anything you want to remember."
+        },
+        "save": {
+          "title": "8. Save",
+          "body": "When you’re ready, save the word. You can edit it anytime from your vocabulary library."
         }
       }
     },
@@ -1521,9 +1564,145 @@
     }
   },
   "settings": {
-    "title": "Settings",
-    "workspace": "Workspace",
-    "workspaceDescription": "Manage settings for your active workspace.",
+    "eyebrow": "Preferences",
+    "title": "App",
+    "highlight": "preferences",
+    "description": "How Notoria should look and behave for you — not workspace or account settings.",
+    "appearance": "Appearance",
+    "appearanceDescription": "Visual preferences for the whole app.",
+    "theme": "Theme",
+    "themeDescription": "Choose light, dark, or match your system.",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "accessibility": "Accessibility",
+    "accessibilityDescription": "Options that change how motion and interaction feel across Notoria.",
+    "motion": "Reduce motion",
+    "motionDescription": "Limit animations. System follows your device preference.",
+    "motionSystem": "System",
+    "motionReduce": "Reduce",
+    "motionFull": "Full motion",
+    "learning": "Learning",
+    "learningDescription": "Guidance preferences that apply across sections.",
+    "tutorials": "Section tutorials",
+    "tutorialsDescription": "Reset completed section walkthroughs so “Show tutorial” starts from the beginning again.",
+    "tutorialsReset": "Reset tutorials",
+    "tutorialsResetDone": "Section tutorials reset",
+    "shortcuts": {
+      "title": "Keyboard shortcuts",
+      "description": "Global shortcuts for the Notoria web app. Feature-specific keys stay inside each activity.",
+      "enabled": "Enable shortcuts",
+      "enabledDescription": "Turn all global shortcuts on or off without losing your custom bindings.",
+      "on": "On",
+      "off": "Off",
+      "action": "Action",
+      "keys": "Shortcut",
+      "edit": "Edit",
+      "add": "Add shortcut",
+      "addTitle": "Add shortcut",
+      "addDescription": "Choose an action you want to access quickly, then press the key combination you want to use.",
+      "chooseAction": "Choose action",
+      "customized": "Customized",
+      "defaultBadge": "Default",
+      "defaultWas": "Default was {keys}",
+      "extraBadge": "Additional",
+      "remove": "Remove",
+      "removed": "Shortcut removed",
+      "replace": "Replace",
+      "resetOne": "Reset to default",
+      "resetOneDone": "Shortcut reset to default",
+      "resetAll": "Reset all shortcuts",
+      "resetAllDescription": "Restore every global shortcut to its default key combination.",
+      "resetAllConfirmTitle": "Reset all keyboard shortcuts to their default settings?",
+      "resetAllConfirmDescription": "Custom global shortcuts will be cleared. Feature shortcuts are not affected.",
+      "resetAllDone": "All shortcuts reset",
+      "editTitle": "Edit: {action}",
+      "editDescription": "Press a key combination. Browser-reserved shortcuts cannot be used by Notoria.",
+      "pressKeys": "Press a key combination",
+      "pickActionFirst": "Choose an action, then press a key combination",
+      "saved": "Shortcut saved",
+      "conflict": "This shortcut is already assigned to “{action}”.",
+      "reserved": "Reserved by the browser and can't be used by Notoria.",
+      "statusAvailable": "✓ {keys}",
+      "statusConflict": "⚠ {keys} — already assigned to {action}.",
+      "statusReserved": "⚠ {keys} — reserved by the browser and can't be used by Notoria.",
+      "reservedTitle": "Some shortcuts can't be used",
+      "reservedDescription": "The browser and Windows reserve keys such as Ctrl + N, Ctrl + Shift + T, and Win + E. Notoria cannot override them.",
+      "reservedGroups": {
+        "ctrl": "Ctrl",
+        "ctrlShift": "Ctrl + Shift",
+        "alt": "Alt",
+        "win": "Windows"
+      },
+      "reservedPurposes": {
+        "newWindow": "New window",
+        "newTab": "New tab",
+        "closeTab": "Close tab",
+        "reopenTab": "Reopen closed tab",
+        "closeWindow": "Close window",
+        "newIncognito": "New private window",
+        "addressBar": "Address bar",
+        "reload": "Reload",
+        "hardReload": "Hard reload",
+        "nextTab": "Next tab",
+        "prevTab": "Previous tab",
+        "print": "Print",
+        "openFile": "Open file",
+        "browserSave": "Browser save page",
+        "bookmark": "Bookmark page",
+        "history": "History",
+        "downloads": "Downloads",
+        "viewSource": "View source",
+        "findInPage": "Find in page",
+        "findNext": "Find next",
+        "findPrev": "Find previous",
+        "devtools": "Developer tools",
+        "console": "JavaScript console",
+        "inspect": "Inspect element",
+        "clearData": "Clear browsing data",
+        "taskManager": "Browser task manager",
+        "altClose": "Close window",
+        "altTab": "Switch apps",
+        "winExplorer": "File Explorer",
+        "winDesktop": "Show desktop",
+        "winLock": "Lock PC",
+        "winRun": "Run dialog",
+        "winSettings": "Windows Settings",
+        "winTaskView": "Task view",
+        "winClipboard": "Clipboard history"
+      },
+      "actions": {
+        "openSearch": "Search",
+        "quickSave": "Quick Save",
+        "quickEdit": "Quick Edit",
+        "quickView": "Quick View",
+        "download": "Download",
+        "deleteItem": "Delete",
+        "createNew": "Create New",
+        "goBack": "Go back",
+        "goForward": "Go forward"
+      },
+      "actionDescriptions": {
+        "openSearch": "Search across your workspace",
+        "quickSave": "Save the current item",
+        "quickEdit": "Start editing the current item",
+        "quickView": "Open the current item in view mode",
+        "download": "Download the current item",
+        "deleteItem": "Delete the selected item",
+        "createNew": "Create a new item in this section",
+        "goBack": "Return to the previous page",
+        "goForward": "Move forward in your browsing history"
+      }
+    },
+    "data": {
+      "title": "Data & privacy",
+      "description": "Local preference data stored in this browser. Account and workspace content are managed elsewhere.",
+      "clear": "Clear local preferences",
+      "clearDescription": "Removes theme-independent app preferences stored on this device: motion, shortcuts, tutorials, and similar local settings. Does not delete your account or workspace data.",
+      "clearConfirmTitle": "Clear local preferences?",
+      "clearConfirmDescription": "This only clears preferences in this browser. Your account, billing, and learning content are not deleted.",
+      "clearDone": "Local preferences cleared"
+    },
     "customTags": "Custom tags",
     "customTagsDescription": "Create workspace-specific tags for vocabulary. Built-in tags are always available.",
     "tagName": "Tag name",
@@ -1637,6 +1816,7 @@
     "emptyTitle": "No listening lessons yet",
     "emptyDescription": "Upload an audio or video file to create your first listening lesson.",
     "myLessons": "My Listening Lessons",
+    "collections": "Collections",
     "searchPlaceholder": "Search by title or file name…",
     "filterAll": "All",
     "filterCefr": "CEFR",
@@ -1648,6 +1828,7 @@
     "sortTitleAsc": "Title (A → Z)",
     "sortTitleDesc": "Title (Z → A)",
     "clearFilters": "Clear filters",
+    "sortBy": "Sort by",
     "noResults": "No listening lessons match your search",
     "noResultsDescription": "Try another search or clear the filters.",
     "continue": "Continue",
@@ -1775,6 +1956,7 @@
     "newCallFirst": "Start your first call",
     "newTitle": "New speaking call",
     "newDescription": "Pick a level and topic. An AI tutor will join the call and speak with you.",
+    "modalTip": "Choose how hard the conversation should feel, then leave a short note so the tutor knows what to practice.",
     "create": "Create call",
     "created": "Speaking call created",
     "titleLabel": "Title",
@@ -1784,6 +1966,29 @@
     "emptyTitle": "No speaking sessions yet",
     "emptyDescription": "Start a video call with an AI tutor to practice speaking.",
     "mySessions": "My speaking sessions",
+    "sessionHint": "Open a finished call for feedback and transcript.",
+    "stats": {
+      "aria": "Speaking session stats",
+      "total": "Sessions",
+      "completed": "Completed",
+      "ready": "Ready",
+      "topics": "Topics"
+    },
+    "guide": {
+      "aria": "How speaking practice works",
+      "pick": {
+        "title": "Set the focus",
+        "body": "Pick CEFR and a topic so the tutor steers the conversation toward what you need."
+      },
+      "call": {
+        "title": "Talk live",
+        "body": "Join the video call, speak naturally, and ask for repeats when something is unclear."
+      },
+      "review": {
+        "title": "Review after",
+        "body": "Come back for feedback and a transcript you can reuse in vocabulary or writing."
+      }
+    },
     "join": "Join call",
     "open": "Open",
     "viewProgress": "View progress",

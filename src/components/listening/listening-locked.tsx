@@ -4,7 +4,6 @@ import { Lock } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { Button } from "@/components/ui/button";
-import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 
 export function ListeningLockedPage() {
@@ -13,24 +12,28 @@ export function ListeningLockedPage() {
   const { openUpgrade } = useProAccess();
 
   return (
-    <PageShell>
-      <PageHeader
-        eyebrow={t("eyebrow")}
-        title={t("title")}
-        highlight={t("highlight")}
-        description={t("description")}
-      />
-      <div className="empty-state">
-        <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-hairline-cloud bg-muted/40 text-muted-foreground">
-          <Lock className="size-6" />
+    <PageShell className="writing-atelier-shell listening-atelier-shell">
+      <div className="writing-atelier listening-atelier flex flex-col gap-10">
+        <header className="writing-hero">
+          <div className="writing-hero-copy">
+            <p className="writing-kicker">{t("eyebrow")}</p>
+            <h1 className="writing-brand-title">
+              {t("title")}{" "}
+              <span className="text-module-listen-fg">{t("highlight")}</span>
+            </h1>
+            <p className="writing-brand-lede">{t("description")}</p>
+          </div>
+        </header>
+        <div className="writing-empty-desk">
+          <div className="mb-4 flex size-12 items-center justify-center text-muted-foreground">
+            <Lock className="size-6" />
+          </div>
+          <p className="writing-empty-title">{tBilling("lockedTitle")}</p>
+          <p className="writing-brand-lede">{tBilling("lockedDescription")}</p>
+          <Button className="mt-5" onClick={openUpgrade}>
+            {tBilling("upgrade")}
+          </Button>
         </div>
-        <p className="font-medium text-ink">{tBilling("lockedTitle")}</p>
-        <p className="mt-2 max-w-md text-sm text-muted-foreground">
-          {tBilling("lockedDescription")}
-        </p>
-        <Button className="mt-5" onClick={openUpgrade}>
-          {tBilling("upgrade")}
-        </Button>
       </div>
     </PageShell>
   );

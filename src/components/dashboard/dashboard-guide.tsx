@@ -24,6 +24,7 @@ type ModuleId =
 type ModuleDef = {
   id: ModuleId;
   href: string;
+  accent: string;
   count: (ctx: {
     snapshot: WorkspaceActivitySnapshot;
     wordCount: number;
@@ -36,36 +37,42 @@ const MODULES: ModuleDef[] = [
   {
     id: "vocabulary",
     href: "/vocabulary",
+    accent: "vocab",
     count: ({ wordCount }) => wordCount,
     countKey: "words",
   },
   {
     id: "theory",
     href: "/theory",
+    accent: "theory",
     count: ({ snapshot }) => snapshot.theoryCount,
     countKey: "notes",
   },
   {
     id: "exercises",
     href: "/exercises",
+    accent: "exercise",
     count: ({ practiceReadyCount }) => practiceReadyCount,
     countKey: "practiceReady",
   },
   {
     id: "writing",
     href: "/writing",
+    accent: "writing",
     count: ({ snapshot }) => snapshot.writingCount,
     countKey: "writings",
   },
   {
     id: "listening",
     href: "/listening",
+    accent: "listen",
     count: () => 0,
     countKey: "notes",
   },
   {
     id: "speaking",
     href: "/speaking",
+    accent: "speak",
     count: () => 0,
     countKey: "notes",
   },
@@ -90,33 +97,31 @@ export function DashboardGuide({
   const t = useTranslations("dashboard");
 
   return (
-    <section className="rounded-xl border border-hairline-cloud bg-surface-elevated p-5 sm:p-6">
-      <p className="font-heading text-[11px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-        {t("guideEyebrow")}
-      </p>
-      <h2 className="mt-2 font-heading text-2xl font-bold tracking-tight text-ink">
-        {t("guideTitle")}
-      </h2>
-      <div className="mt-3 flex flex-wrap items-start justify-between gap-x-6 gap-y-2">
-        <p className="max-w-xl text-sm font-semibold text-primary-hover">
+    <section className="home-guide">
+      <header className="home-guide-head">
+        <p className="writing-kicker home-kicker">{t("guideEyebrow")}</p>
+        <h2 className="mt-2 font-heading text-2xl font-bold tracking-tight text-ink sm:text-[1.75rem]">
+          {t("guideTitle")}
+        </h2>
+        <p className="mt-2 max-w-2xl text-sm font-semibold text-module-home-fg">
           {t("guideTagline")}
+        </p>
+        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-ink/80">
+          {t("guideSubtitle")}
+        </p>
+        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-ink/80">
+          {t("guideSubtitleSecondary")}
         </p>
         <Link
           href="/getting-started"
-          className="inline-flex shrink-0 items-center gap-1 text-sm font-semibold text-primary-hover hover:underline"
+          className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-module-guide-fg hover:underline"
         >
           {t("guideFullCta")}
           <ArrowRight className="size-3.5" aria-hidden />
         </Link>
-      </div>
-      <p className="mt-4 max-w-3xl text-sm leading-6 text-ink/80">
-        {t("guideSubtitle")}
-      </p>
-      <p className="mt-3 max-w-3xl text-sm leading-6 text-ink/80">
-        {t("guideSubtitleSecondary")}
-      </p>
+      </header>
 
-      <div className="mt-6 grid gap-3 sm:grid-cols-2">
+      <div className="home-guide-grid">
         {MODULES.map((module, index) => (
           <ModuleCard
             key={module.id}
@@ -154,16 +159,11 @@ function ModuleCard({
 
   return (
     <article
-      className={cn(
-        "relative flex flex-col overflow-hidden rounded-xl border border-hairline-cloud bg-surface p-4 sm:p-5",
-        "transition-[border-color,background-color,box-shadow] duration-150",
-        "hover:border-primary hover:bg-surface-active/30 hover:shadow-[0_0_0_1px_var(--primary)]",
-        "focus-within:border-primary",
-        highlighted && "border-primary bg-surface-active/40",
-      )}
+      data-home-accent={module.accent}
+      className={cn("home-guide-card", highlighted && "is-highlighted")}
     >
       <div className="flex items-start gap-3">
-        <span className="flex size-7 shrink-0 items-center justify-center rounded-md bg-surface-inverse font-heading text-xs font-bold text-on-inverse">
+        <span className="home-guide-index" aria-hidden>
           {index}
         </span>
         <div className="min-w-0">
@@ -171,23 +171,21 @@ function ModuleCard({
             {t(`steps.${module.id}.title`)}
           </h3>
           {highlighted ? (
-            <p className="mt-1 font-heading text-[11px] font-semibold uppercase tracking-[0.12em] text-warning">
+            <p className="mt-1 font-heading text-[11px] font-semibold uppercase tracking-[0.12em] text-module-vocab-fg">
               {t("startHere")}
             </p>
           ) : null}
         </div>
       </div>
-      <p className="mt-3 text-sm leading-6 text-ink/80">
+      <p className="mt-3 text-sm leading-relaxed text-ink/80">
         {t(`steps.${module.id}.body`)}
       </p>
       {showCount ? (
-        <p className="mt-3 font-heading text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
+        <p className="home-hub-count mt-3">
           {t(`counts.${module.countKey}`, { count })}
         </p>
       ) : (
-        <p className="mt-3 font-heading text-[11px] font-medium uppercase tracking-[0.12em] text-muted-foreground">
-          {t("pro")}
-        </p>
+        <p className="home-hub-count mt-3">{t("pro")}</p>
       )}
       <LinkButton href={module.href} variant="outline" size="sm" className="mt-4 w-fit">
         {t("open")}

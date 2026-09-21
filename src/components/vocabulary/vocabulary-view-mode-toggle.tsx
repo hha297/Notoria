@@ -28,25 +28,22 @@ export function VocabularyViewModeToggle({
           onChange(picked);
         }
       }}
-      variant="outline"
+      variant="default"
       spacing={0}
       aria-label={t("viewMode")}
-      className={cn(
-        "h-10 shrink-0 rounded-md border border-input p-0.5",
-        className,
-      )}
+      className={cn("route-view-toggle vocab-view-toggle", className)}
     >
       <ToggleGroupItem
         value="list"
         aria-label={t("viewList")}
-        className="size-9 cursor-pointer rounded-[5px] border-0 px-0 data-[state=on]:bg-muted data-[state=on]:text-ink data-[state=on]:shadow-none"
+        className="route-view-toggle-item vocab-view-toggle-item"
       >
         <LayoutList className="size-4" />
       </ToggleGroupItem>
       <ToggleGroupItem
         value="cards"
         aria-label={t("viewCards")}
-        className="size-9 cursor-pointer rounded-[5px] border-0 px-0 data-[state=on]:bg-muted data-[state=on]:text-ink data-[state=on]:shadow-none"
+        className="route-view-toggle-item vocab-view-toggle-item"
       >
         <LayoutGrid className="size-4" />
       </ToggleGroupItem>

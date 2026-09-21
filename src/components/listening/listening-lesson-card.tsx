@@ -3,21 +3,15 @@
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Headphones, Loader2, Pencil, RotateCcw, Trash2 } from "lucide-react";
+import { Loader2, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/link-button";
 import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
 import { RenameListeningDialog } from "@/components/listening/rename-listening-dialog";
+import { FolderItemDrag } from "@/components/folders/folder-dnd";
 import { MoveItemButton } from "@/components/folders/move-item-button";
 import {
   deleteListeningLesson,
@@ -38,7 +32,10 @@ import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 type ListeningLessonCardProps = {
   lesson: ListeningLessonListItem;
   onDeleted?: (id: string) => void;
-  onRenamed?: (id: string, patch: { title: string; originalFilename: string }) => void;
+  onRenamed?: (
+    id: string,
+    patch: { title: string; originalFilename: string },
+  ) => void;
 };
 
 function statusVariant(status: ListeningLessonListItem["status"]) {
@@ -62,10 +59,12 @@ export function ListeningLessonCard({
   const [isPending, startTransition] = useTransition();
 
   const duration = formatListeningDuration(lesson.duration);
-  const processing = lesson.status !== "COMPLETED" && lesson.status !== "FAILED";
+  const processing =
+    lesson.status !== "COMPLETED" && lesson.status !== "FAILED";
   const filenameStem = lesson.originalFilename
     ? splitListeningFilename(lesson.originalFilename).stem
     : "";
+  const href = `/listening/${lesson.id}`;
 
   function errorMessage(error: unknown) {
     const code = error instanceof Error ? error.message : "PROCESSING_FAILED";
@@ -79,7 +78,6 @@ export function ListeningLessonCard({
       try {
         await processListeningLesson(lesson.id);
         toast.success(t("created"));
-        // Status transition still needs RSC refresh until listening is on TanStack.
         router.refresh();
       } catch (error) {
         toast.error(errorMessage(error));
@@ -100,117 +98,127 @@ export function ListeningLessonCard({
     });
   }
 
+  const metaBits = [
+    lesson.topic
+      ? resolveTopicLabel(lesson.topic, (key) => tTags(key))
+      : null,
+    lesson.cefrLevel
+      ? tMeta(`cefr.${lesson.cefrLevel as WritingCefr}`)
+      : null,
+    lesson.formality
+      ? tMeta(`formality.${lesson.formality as WritingFormality}`)
+      : null,
+    lesson.exerciseType ? t(`types.${lesson.exerciseType}`) : null,
+    duration,
+  ].filter(Boolean);
+
   return (
     <>
-      <Card className="relative h-full cursor-pointer border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
-        <Link
-          href={`/listening/${lesson.id}`}
-          className="absolute inset-0 z-0"
-          aria-label={lesson.title}
-        />
-        <CardHeader className="relative z-10 gap-3 pointer-events-none">
-          <div className="flex items-start justify-between gap-2">
-            <div className="flex size-10 items-center justify-center rounded-xl border border-hairline-cloud bg-muted/40">
-              <Headphones className="size-5 text-ink" />
+      <FolderItemDrag id={lesson.id} className="writing-entry-wrap">
+        <article className="writing-entry">
+          <div className="writing-entry-body">
+            <div className="mb-1.5 flex flex-wrap items-center gap-2">
+              <Badge variant={statusVariant(lesson.status)}>
+                {t(`status.${lesson.status}`)}
+              </Badge>
             </div>
-            <Badge variant={statusVariant(lesson.status)}>
-              {t(`status.${lesson.status}`)}
-            </Badge>
-          </div>
-          <div className="group/title flex min-w-0 items-center gap-1">
-            <CardTitle className="min-w-0 truncate text-lg text-ink">
-              {lesson.title}
-            </CardTitle>
-            <div className="pointer-events-auto flex shrink-0 items-center opacity-0 transition-opacity group-focus-within/title:opacity-100 group-hover/title:opacity-100 max-sm:opacity-100">
-              <MoveItemButton
-                id={lesson.id}
-                title={lesson.title}
-                folderId={lesson.folderId}
-              />
-              <Button
-                type="button"
-                size="icon-sm"
-                variant="ghost"
-                className="size-6 text-muted-foreground hover:text-ink"
-                onClick={() => setRenameOpen(true)}
-                disabled={isPending}
+            <h3 className="writing-entry-title">
+              <Link
+                href={href}
+                onPointerDown={(event) => event.stopPropagation()}
+                onClick={(event) => event.stopPropagation()}
               >
-                <Pencil className="size-3.5" />
-                <span className="sr-only">{t("renameFile")}</span>
-              </Button>
-              <Button
-                type="button"
-                size="icon-sm"
-                variant="ghost"
-                className="size-6 text-muted-foreground hover:text-destructive"
-                onClick={() => setDeleteOpen(true)}
-                disabled={isPending}
-              >
-                <Trash2 className="size-3.5" />
-                <span className="sr-only">{tc("delete")}</span>
-              </Button>
+                {lesson.title}
+              </Link>
+            </h3>
+            {filenameStem ? (
+              <p className="writing-entry-excerpt truncate">{filenameStem}</p>
+            ) : null}
+            {metaBits.length > 0 ? (
+              <p className="writing-kind-facts">
+                {metaBits.map((bit, index) => (
+                  <span key={`${bit}-${index}`}>
+                    {index > 0 ? (
+                      <span aria-hidden="true"> · </span>
+                    ) : null}
+                    <span>{bit}</span>
+                  </span>
+                ))}
+              </p>
+            ) : null}
+            <div className="mt-2 flex flex-wrap items-center gap-2">
+              {lesson.status === "FAILED" ? (
+                <Button
+                  type="button"
+                  size="sm"
+                  className="route-primary-cta"
+                  onClick={handleRetry}
+                  disabled={isPending}
+                  onPointerDown={(event) => event.stopPropagation()}
+                >
+                  {isPending ? (
+                    <Loader2 className="size-4 animate-spin" />
+                  ) : (
+                    <RotateCcw className="size-4" />
+                  )}
+                  {t("retry")}
+                </Button>
+              ) : lesson.status === "COMPLETED" ? (
+                <LinkButton
+                  href={href}
+                  size="sm"
+                  className="route-primary-cta"
+                  onPointerDown={(event) => event.stopPropagation()}
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  {t("continue")}
+                </LinkButton>
+              ) : (
+                <LinkButton
+                  href={href}
+                  size="sm"
+                  variant="outline"
+                  className="route-quiet-action"
+                  data-route-action="listen"
+                  onPointerDown={(event) => event.stopPropagation()}
+                  onClick={(event) => event.stopPropagation()}
+                >
+                  {processing ? t("viewProgress") : t("open")}
+                </LinkButton>
+              )}
             </div>
           </div>
-          {filenameStem ? (
-            <p className="truncate text-xs text-muted-foreground">{filenameStem}</p>
-          ) : null}
-          <CardDescription className="flex flex-wrap items-center gap-1.5 text-sm">
-            {lesson.topic ? (
-              <span>
-                {lesson.topic
-                  ? resolveTopicLabel(lesson.topic, (key) => tTags(key))
-                  : null}
-              </span>
-            ) : null}
-            {lesson.topic && lesson.cefrLevel ? <span aria-hidden="true">·</span> : null}
-            {lesson.cefrLevel ? (
-              <span>{tMeta(`cefr.${lesson.cefrLevel as WritingCefr}`)}</span>
-            ) : null}
-            {lesson.formality ? (
-              <>
-                <span aria-hidden="true">·</span>
-                <span>
-                  {tMeta(`formality.${lesson.formality as WritingFormality}`)}
-                </span>
-              </>
-            ) : null}
-            {lesson.exerciseType ? (
-              <>
-                <span aria-hidden="true">·</span>
-                <span>{t(`types.${lesson.exerciseType}`)}</span>
-              </>
-            ) : null}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="relative z-10 mt-auto flex flex-wrap items-center justify-between gap-3 pb-1 pointer-events-none">
-          <p className="text-sm text-muted-foreground">{duration ?? "—"}</p>
-          <div className="pointer-events-auto flex flex-wrap items-center gap-2">
-            {lesson.status === "FAILED" ? (
-              <Button
-                type="button"
-                size="sm"
-                onClick={handleRetry}
-                disabled={isPending}
-              >
-                {isPending ? (
-                  <Loader2 className="size-4 animate-spin" />
-                ) : (
-                  <RotateCcw className="size-4" />
-                )}
-                {t("retry")}
-              </Button>
-            ) : lesson.status === "COMPLETED" ? (
-              <LinkButton href={`/listening/${lesson.id}`} size="sm">
-                {t("continue")}
-              </LinkButton>
-            ) : (
-              <LinkButton href={`/listening/${lesson.id}`} size="sm" variant="outline">
-                {processing ? t("viewProgress") : t("open")}
-              </LinkButton>
-            )}
+          <div className="writing-entry-actions">
+            <MoveItemButton
+              id={lesson.id}
+              title={lesson.title}
+              folderId={lesson.folderId}
+            />
+            <Button
+              type="button"
+              size="icon-sm"
+              variant="ghost"
+              className="size-7 text-muted-foreground hover:text-ink"
+              onClick={() => setRenameOpen(true)}
+              disabled={isPending}
+            >
+              <Pencil className="size-3.5" />
+              <span className="sr-only">{t("renameFile")}</span>
+            </Button>
+            <Button
+              type="button"
+              size="icon-sm"
+              variant="ghost"
+              className="size-7 text-muted-foreground hover:text-destructive"
+              onClick={() => setDeleteOpen(true)}
+              disabled={isPending}
+            >
+              <Trash2 className="size-3.5" />
+              <span className="sr-only">{tc("delete")}</span>
+            </Button>
           </div>
-        </CardContent>
-      </Card>
+        </article>
+      </FolderItemDrag>
 
       <RenameListeningDialog
         open={renameOpen}

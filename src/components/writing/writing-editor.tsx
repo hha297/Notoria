@@ -4,7 +4,7 @@ import type { Editor, JSONContent } from "@tiptap/react";
 import { ArrowLeft, Download, FileText, ListChecks, Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
@@ -12,12 +12,13 @@ import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { QuestionSetBuilder } from "@/components/writing/question-set-builder";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { WritingAiBar } from "@/components/writing/writing-ai-bar";
+import { WritingChipPicker } from "@/components/writing/writing-chip-picker";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { DescriptionField } from "@/components/form/description-field";
 import { ContentTransition } from "@/components/layout/content-transition";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
-import { cn } from "@/lib/utils";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { useMutationLock } from "@/hooks/use-mutation-lock";
 import { createWritingDocument, updateWritingDocument } from "@/lib/actions/writing";
 import { afterEditorHydration } from "@/lib/editor/hydration";
@@ -475,6 +476,24 @@ export function WritingEditor({
     }
   }
 
+  useRegisterShortcutAction("quickSave", () => {
+    void persistExercise(true);
+  });
+  useRegisterShortcutAction(
+    "quickView",
+    () => {
+      if (previewHref) router.replace(previewHref);
+    },
+    Boolean(previewHref),
+  );
+  useRegisterShortcutAction(
+    "download",
+    () => {
+      setExportOpen(true);
+    },
+    canExport,
+  );
+
   return (
     <div className="writing-sheet" data-writing-kind={editorState.mode}>
       <div className="writing-paper-chrome">
@@ -506,7 +525,8 @@ export function WritingEditor({
             onClick={() => setExportOpen(true)}
             disabled={!canExport}
             title={canExport ? undefined : t("export.empty")}
-            className="h-11 w-full sm:h-9 sm:w-auto"
+            className="route-quiet-action h-11 w-full sm:h-9 sm:w-auto"
+            data-route-action="writing"
           >
             {t("export.button")}
           </LockedFeatureButton>
@@ -547,7 +567,7 @@ export function WritingEditor({
       <p className="writing-brand-lede">{t("formDescription")}</p>
 
       <div className="writing-sheet-meta">
-        <ChipPicker
+        <WritingChipPicker
           labelId="writing-mode-label"
           label={t("mode")}
           value={editorState.mode}
@@ -581,7 +601,7 @@ export function WritingEditor({
             : t("modes.questionSetHint")}
         </p>
 
-        <ChipPicker
+        <WritingChipPicker
           labelId="writing-cefr-label"
           label={tMeta("cefrLabel")}
           value={editorState.meta.cefrLevel ?? "none"}
@@ -599,7 +619,7 @@ export function WritingEditor({
           ]}
         />
 
-        <ChipPicker
+        <WritingChipPicker
           labelId="writing-formality-label"
           label={tMeta("formalityLabel")}
           value={editorState.meta.formality ?? "none"}
@@ -618,7 +638,7 @@ export function WritingEditor({
           ]}
         />
 
-        <ChipPicker
+        <WritingChipPicker
           labelId="writing-topic-label"
           label={tMeta("topicLabel")}
           value={editorState.meta.topic ?? "none"}
@@ -724,52 +744,6 @@ export function WritingEditor({
         description={description}
         editorState={editorState}
       />
-    </div>
-  );
-}
-
-function ChipPicker({
-  labelId,
-  label,
-  value,
-  options,
-  onChange,
-}: {
-  labelId: string;
-  label: string;
-  value: string;
-  options: {
-    value: string;
-    label: ReactNode;
-    kind?: WritingMode;
-  }[];
-  onChange: (value: string) => void;
-}) {
-  return (
-    <div className="space-y-2">
-      <Label id={labelId}>{label}</Label>
-      <div
-        className="writing-chip-picker"
-        role="radiogroup"
-        aria-labelledby={labelId}
-      >
-        {options.map((option) => {
-          const selected = value === option.value;
-          return (
-            <button
-              key={option.value}
-              type="button"
-              role="radio"
-              aria-checked={selected}
-              data-writing-kind={option.kind}
-              className={cn("writing-chip", selected && "is-active")}
-              onClick={() => onChange(option.value)}
-            >
-              {option.label}
-            </button>
-          );
-        })}
-      </div>
     </div>
   );
 }

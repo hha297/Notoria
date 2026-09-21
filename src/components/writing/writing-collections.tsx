@@ -142,7 +142,12 @@ export function WritingCollections({
   currentFolderId: string | null;
 }) {
   const workspace = useFolderWorkspace();
-  const section = workspace?.section === "theory" ? "theory" : "writing";
+  const section =
+    workspace?.section === "theory"
+      ? "theory"
+      : workspace?.section === "listening"
+        ? "listening"
+        : "writing";
   const t = useTranslations(section);
   const tFolders = useTranslations("folders");
   const folders = workspace?.visibleFolders ?? [];
@@ -152,7 +157,7 @@ export function WritingCollections({
       <div className="writing-collections-head">
         <p className="writing-kicker">{t("collections")}</p>
         <NewFolderButton
-          variant="ghost"
+          variant="outline"
           size="sm"
           className="writing-spine-folder"
         />

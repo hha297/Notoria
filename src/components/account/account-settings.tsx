@@ -10,13 +10,6 @@ import { ProSubscriptionCard } from "@/components/account/pro-subscription-card"
 import { UserAvatar } from "@/components/account/user-avatar";
 import { PasswordInput } from "@/components/auth/password-input";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -173,19 +166,19 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
   }
 
   return (
-    <div className="grid max-w-3xl gap-6">
+    <div className="account-stack">
       <ProSubscriptionCard
         billing={user.billing}
         checkoutResult={checkoutResult}
       />
-      <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
-        <CardHeader className="border-b border-hairline-cloud px-6 py-5">
-          <CardTitle className="text-lg text-ink">{t("avatar")}</CardTitle>
-          <CardDescription>{t("avatarDescription")}</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-6 px-6 py-6 sm:flex-row sm:items-center">
-          <UserAvatar name={name} image={image} size="xl" />
 
+      <section className="account-panel">
+        <header className="account-panel-head">
+          <h2 className="account-panel-title">{t("avatar")}</h2>
+          <p className="account-panel-lede">{t("avatarDescription")}</p>
+        </header>
+        <div className="account-panel-body account-avatar-row">
+          <UserAvatar name={name} image={image} size="xl" />
           <div className="flex flex-wrap gap-2">
             <input
               ref={fileInputRef}
@@ -197,6 +190,8 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
             <Button
               type="button"
               variant="outline"
+              className="route-quiet-action"
+              data-route-action="account"
               disabled={isAvatarPending}
               onClick={() => fileInputRef.current?.click()}
             >
@@ -207,7 +202,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
               )}
               {t("changeAvatar")}
             </Button>
-            {image && (
+            {image ? (
               <Button
                 type="button"
                 variant="ghost"
@@ -217,19 +212,21 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                 <Trash2 className="size-4" />
                 {t("removeAvatar")}
               </Button>
-            )}
+            ) : null}
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </section>
 
-      <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
-        <CardHeader className="border-b border-hairline-cloud px-6 py-5">
-          <CardTitle className="text-lg text-ink">{t("profile")}</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4 px-6 py-6">
-          <form onSubmit={handleProfileSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="profile-name">{t("name")}</Label>
+      <section className="account-panel">
+        <header className="account-panel-head">
+          <h2 className="account-panel-title">{t("profile")}</h2>
+        </header>
+        <div className="account-panel-body">
+          <form onSubmit={handleProfileSubmit} className="account-form">
+            <div className="account-field">
+              <Label htmlFor="profile-name" className="account-label">
+                {t("name")}
+              </Label>
               <Input
                 id="profile-name"
                 value={name}
@@ -237,17 +234,15 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                 autoComplete="name"
                 maxLength={80}
                 required
+                className="account-input"
               />
             </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                {t("email")}
-              </p>
-              <p className="mt-1 font-medium text-ink">{user.email}</p>
+            <div className="account-field">
+              <p className="account-label">{t("email")}</p>
+              <p className="account-email">{user.email}</p>
             </div>
             <Button
               type="submit"
-              variant="outline"
               disabled={isProfilePending || name.trim() === savedName}
             >
               {isProfilePending ? (
@@ -256,45 +251,54 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
               {t("saveName")}
             </Button>
           </form>
-        </CardContent>
-      </Card>
+        </div>
+      </section>
 
-      {user.passwordHash && (
-        <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
-          <CardHeader className="border-b border-hairline-cloud px-6 py-5">
-            <CardTitle className="text-lg text-ink">{t("changePassword")}</CardTitle>
-            <CardDescription>{t("passwordHint")}</CardDescription>
-          </CardHeader>
-          <CardContent className="px-6 py-6">
-            <form onSubmit={handlePasswordSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="current-password">{t("currentPassword")}</Label>
+      {user.passwordHash ? (
+        <section className="account-panel">
+          <header className="account-panel-head">
+            <h2 className="account-panel-title">{t("changePassword")}</h2>
+            <p className="account-panel-lede">{t("passwordHint")}</p>
+          </header>
+          <div className="account-panel-body">
+            <form onSubmit={handlePasswordSubmit} className="account-form">
+              <div className="account-field">
+                <Label htmlFor="current-password" className="account-label">
+                  {t("currentPassword")}
+                </Label>
                 <PasswordInput
                   id="current-password"
                   autoComplete="current-password"
                   value={currentPassword}
                   onChange={(event) => setCurrentPassword(event.target.value)}
                   required
+                  className="account-input"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="new-password">{t("newPassword")}</Label>
+              <div className="account-field">
+                <Label htmlFor="new-password" className="account-label">
+                  {t("newPassword")}
+                </Label>
                 <PasswordInput
                   id="new-password"
                   autoComplete="new-password"
                   value={newPassword}
                   onChange={(event) => setNewPassword(event.target.value)}
                   required
+                  className="account-input"
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="confirm-password">{t("confirmPassword")}</Label>
+              <div className="account-field">
+                <Label htmlFor="confirm-password" className="account-label">
+                  {t("confirmPassword")}
+                </Label>
                 <PasswordInput
                   id="confirm-password"
                   autoComplete="new-password"
                   value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}
                   required
+                  className="account-input"
                 />
               </div>
               <Button
@@ -312,9 +316,9 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                 {t("updatePassword")}
               </Button>
             </form>
-          </CardContent>
-        </Card>
-      )}
+          </div>
+        </section>
+      ) : null}
     </div>
   );
 }

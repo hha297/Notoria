@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { ArrowLeft, Download, Pencil } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
@@ -9,6 +10,7 @@ import { RichTextContent } from "@/components/editor/rich-text-content";
 import { DescriptionContent } from "@/components/form/description-content";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { WritingMetaBadges } from "@/components/writing/writing-meta-badges";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { LinkButton } from "@/components/ui/link-button";
 import {
   parseWritingContent,
@@ -31,6 +33,7 @@ export function WritingPreview({
   content,
   backHref,
 }: WritingPreviewProps) {
+  const router = useRouter();
   const t = useTranslations("writing");
   const [exportOpen, setExportOpen] = useState(false);
 
@@ -48,6 +51,17 @@ export function WritingPreview({
   const trimmedDescription = description?.trim() ?? "";
   const isQuestionSet = editorState.mode === "question_set";
   const canExport = writingEditorHasExportableContent(editorState);
+
+  useRegisterShortcutAction("quickEdit", () => {
+    router.push(`/writing/${id}/edit`);
+  });
+  useRegisterShortcutAction(
+    "download",
+    () => {
+      setExportOpen(true);
+    },
+    canExport,
+  );
 
   return (
     <div className="writing-paper">
@@ -68,7 +82,8 @@ export function WritingPreview({
             onClick={() => setExportOpen(true)}
             disabled={!canExport}
             title={canExport ? undefined : t("export.empty")}
-            className="h-11 w-full sm:h-9 sm:w-auto"
+            className="route-quiet-action h-11 w-full sm:h-9 sm:w-auto"
+            data-route-action="writing"
           >
             {t("export.button")}
           </LockedFeatureButton>

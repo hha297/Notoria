@@ -89,10 +89,7 @@ export function ListeningAudioPlayer({
 
   return (
     <div
-      className={cn(
-        "rounded-2xl border border-hairline-cloud bg-card p-4 sm:p-5",
-        className,
-      )}
+      className={cn("listening-media-deck", className)}
     >
       {isVideo ? (
         <video

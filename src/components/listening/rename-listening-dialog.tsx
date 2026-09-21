@@ -9,7 +9,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -96,39 +95,53 @@ export function RenameListeningDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent showCloseButton={!isPending}>
-        <DialogHeader>
-          <DialogTitle>{t("renameFileTitle")}</DialogTitle>
-          <DialogDescription>{t("renameFileDescription")}</DialogDescription>
+      <DialogContent
+        showCloseButton={!isPending}
+        className="workspace-sheet sm:max-w-md"
+        data-sheet-route="listen"
+      >
+        <DialogHeader className="workspace-sheet-header gap-2 space-y-0 pr-8 text-left">
+          <p className="workspace-sheet-kicker">{t("title")}</p>
+          <DialogTitle className="workspace-sheet-title">
+            {t("renameFileTitle")}
+          </DialogTitle>
+          <DialogDescription className="workspace-sheet-lede">
+            {t("renameFileDescription")}
+          </DialogDescription>
         </DialogHeader>
-        <div className="space-y-2">
-          <Label htmlFor="listening-filename">{t("fileNameLabel")}</Label>
-          <Input
-            id="listening-filename"
-            value={value}
-            onChange={(event) => {
-              setValue(event.target.value);
-              setError(null);
-            }}
-            onKeyDown={(event) => {
-              if (event.key === "Enter") {
-                event.preventDefault();
-                handleSave();
-              }
-            }}
-            maxLength={200}
-            disabled={isPending}
-            aria-invalid={error ? true : undefined}
-            className="h-10"
-          />
-          {error ? (
-            <p className="text-sm text-destructive">{error}</p>
-          ) : null}
+        <div className="workspace-sheet-body">
+          <div className="workspace-sheet-field">
+            <Label htmlFor="listening-filename" className="workspace-sheet-label">
+              {t("fileNameLabel")}
+            </Label>
+            <Input
+              id="listening-filename"
+              value={value}
+              onChange={(event) => {
+                setValue(event.target.value);
+                setError(null);
+              }}
+              onKeyDown={(event) => {
+                if (event.key === "Enter") {
+                  event.preventDefault();
+                  handleSave();
+                }
+              }}
+              maxLength={200}
+              disabled={isPending}
+              aria-invalid={error ? true : undefined}
+              className="workspace-sheet-input"
+            />
+            {error ? (
+              <p className="text-sm text-destructive">{error}</p>
+            ) : null}
+          </div>
         </div>
-        <DialogFooter>
+        <div className="workspace-sheet-footer">
           <Button
             type="button"
             variant="outline"
+            className="workspace-sheet-cancel"
             onClick={() => handleOpenChange(false)}
             disabled={isPending}
           >
@@ -136,6 +149,7 @@ export function RenameListeningDialog({
           </Button>
           <Button
             type="button"
+            className="workspace-sheet-cta"
             onClick={handleSave}
             disabled={
               isPending ||
@@ -147,7 +161,7 @@ export function RenameListeningDialog({
             {isPending ? <Loader2 className="size-4 animate-spin" /> : null}
             {tc("save")}
           </Button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );

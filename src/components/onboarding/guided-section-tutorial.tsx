@@ -42,6 +42,7 @@ const EASE = [0.25, 0.1, 0.25, 1] as const;
 
 const SECTION_ICONS: Record<TutorialSectionId, LucideIcon> = {
   vocabulary: Languages,
+  vocabularyAdd: Languages,
   theory: BookOpen,
   exercise: Dumbbell,
   writing: PenLine,
@@ -158,7 +159,11 @@ export function GuidedSectionTutorial({
       <div className="fixed inset-0 z-[189] pointer-events-auto" aria-hidden />
       <AnimatePresence mode="wait">
         {guided && rect ? (
-          <TutorialSpotlight rect={rect} stepKey={`${section}-${step.id}`} />
+          <TutorialSpotlight
+            rect={rect}
+            stepKey={`${section}-${step.id}`}
+            section={section}
+          />
         ) : (
           <TutorialBackdrop key="backdrop" />
         )}
@@ -170,6 +175,7 @@ export function GuidedSectionTutorial({
         aria-modal="true"
         aria-labelledby={`tutorial-${section}-title`}
         aria-describedby={`tutorial-${section}-step`}
+        data-tutorial-section={section}
         initial={{ opacity: 0, scale: 0.98 }}
         animate={{
           opacity: 1,
@@ -179,80 +185,90 @@ export function GuidedSectionTutorial({
         }}
         transition={{ duration: 0.22, ease: EASE }}
         className={cn(
-          "fixed z-[191] w-[min(100vw-2rem,24rem)] rounded-xl bg-popover p-4 text-sm text-popover-foreground ring-1 ring-foreground/10 sm:p-5",
+          "tutorial-sheet fixed z-[191] w-[min(100vw-2rem,24rem)]",
           guided ? "" : "max-w-md",
         )}
         style={{ top: position.top, left: position.left }}
       >
         <TutorialArrow placement={position.placement} />
 
-        <div className="space-y-4">
-          <div className="flex items-start gap-3">
-            <div className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-primary text-on-primary">
-              <Icon className="size-5" aria-hidden />
-            </div>
-            <div className="min-w-0 space-y-1">
-              <p
-                id={`tutorial-${section}-title`}
-                className="font-heading text-lg leading-snug text-ink"
-              >
-                {t(`${section}.title`)}
-              </p>
-              <p className="text-xs text-muted-foreground">
-                {t("stepProgress", {
-                  current: stepIndex + 1,
-                  total: tutorial.steps.length,
-                })}
-              </p>
-            </div>
-          </div>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={step.id}
-              id={`tutorial-${section}-step`}
-              initial={{ opacity: 0, x: 8 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -8 }}
-              transition={{ duration: 0.18, ease: EASE }}
-              className="rounded-lg border border-hairline-cloud bg-muted/40 p-3 sm:p-4"
+        <header className="tutorial-sheet-header">
+          <span className="tutorial-sheet-icon" aria-hidden>
+            <Icon className="size-4" />
+          </span>
+          <div className="tutorial-sheet-heading">
+            <p className="tutorial-sheet-kicker">{t("guideLabel")}</p>
+            <p
+              id={`tutorial-${section}-title`}
+              className="tutorial-sheet-title"
             >
-              <p className="text-sm font-medium text-ink">
-                {t(`${section}.steps.${step.id}.title`)}
-              </p>
-              <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-                {stepBody}
-              </p>
-            </motion.div>
-          </AnimatePresence>
-
-          <div className="flex items-center justify-center gap-1.5" aria-hidden>
-            {tutorial.steps.map((item, index) => (
-              <span
-                key={item.id}
-                className={cn(
-                  "size-1.5 rounded-full transition-colors",
-                  index === stepIndex ? "bg-ink" : "bg-ink/20",
-                )}
-              />
-            ))}
+              {t(`${section}.title`)}
+            </p>
+            <p className="tutorial-sheet-progress">
+              {t("stepProgress", {
+                current: stepIndex + 1,
+                total: tutorial.steps.length,
+              })}
+            </p>
           </div>
+        </header>
 
-          <div className="flex flex-wrap justify-end gap-2 border-t border-hairline-cloud pt-4">
-            <Button type="button" variant="outline" onClick={() => close(true)}>
-              {t("skip")}
-            </Button>
-            {isLast && tutorial.ctaHref ? (
-              <LinkButton href={tutorial.ctaHref} onClick={() => close(true)}>
-                {t(`${section}.cta`)}
-              </LinkButton>
-            ) : (
-              <Button type="button" onClick={handleNext}>
-                {isLast ? t("done") : t("next")}
-              </Button>
-            )}
-          </div>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={step.id}
+            id={`tutorial-${section}-step`}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -6 }}
+            transition={{ duration: 0.18, ease: EASE }}
+            className="tutorial-sheet-step"
+          >
+            <p className="tutorial-sheet-step-title">
+              {t(`${section}.steps.${step.id}.title`)}
+            </p>
+            <p className="tutorial-sheet-step-body">{stepBody}</p>
+          </motion.div>
+        </AnimatePresence>
+
+        <div className="tutorial-sheet-dots" aria-hidden>
+          {tutorial.steps.map((item, index) => (
+            <span
+              key={item.id}
+              className={cn(
+                "tutorial-sheet-dot",
+                index === stepIndex && "is-active",
+              )}
+            />
+          ))}
         </div>
+
+        <footer className="tutorial-sheet-footer">
+          <Button
+            type="button"
+            variant="outline"
+            className="tutorial-sheet-skip"
+            onClick={() => close(true)}
+          >
+            {t("skip")}
+          </Button>
+          {isLast && tutorial.ctaHref ? (
+            <LinkButton
+              href={tutorial.ctaHref}
+              className="tutorial-sheet-cta"
+              onClick={() => close(true)}
+            >
+              {t(`${section}.cta`)}
+            </LinkButton>
+          ) : (
+            <Button
+              type="button"
+              className="tutorial-sheet-cta"
+              onClick={handleNext}
+            >
+              {isLast ? t("done") : t("next")}
+            </Button>
+          )}
+        </footer>
       </motion.div>
     </>
   );

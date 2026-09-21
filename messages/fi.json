@@ -140,6 +140,8 @@
   "vocabulary": {
     "title": "Sanasto",
     "bank": "pankki",
+    "description": "Keräämäsi sanat asuvat täällä — etsi, suodata ja käytä niitä harjoituksissa, kirjoittamisessa ja kertauksessa.",
+    "library": "Sanapankki",
     "addWordHighlight": "pankkiin",
     "newWord": "Uusi sana",
     "editWord": "Muokkaa sanaa",
@@ -1166,6 +1168,7 @@
   "tutorials": {
     "show": "Näytä opas",
     "showShort": "Opas",
+    "guideLabel": "Opas",
     "next": "Seuraava",
     "skip": "Ohita opas",
     "done": "Selvä",
@@ -1190,6 +1193,45 @@
         "library": {
           "title": "4. Sanakirjastosi",
           "body": "Tallennetut sanat ovat täällä. Avaa merkintä muokataksesi tai käytä niitä harjoituksissa ja kertauksessa."
+        }
+      }
+    },
+    "vocabularyAdd": {
+      "title": "Lisää sana",
+      "description": "Tämä lomake on Notorian ydin — jokainen kenttä auttaa muistamaan ja käyttämään sanaa myöhemmin.",
+      "cta": "Selvä",
+      "steps": {
+        "word": {
+          "title": "1. Kirjoita sana",
+          "body": "Syötä sana tai ilmaus, jota opettelet. Tästä tulee sanaston päämerkintä."
+        },
+        "partOfSpeech": {
+          "title": "2. Sanaluokka",
+          "body": "Valitse substantiivi, verbi, adjektiivi jne. Se auttaa suodattimia ja tekoälyehdotuksia."
+        },
+        "meanings": {
+          "title": "3. Merkitykset",
+          "body": "Lisää yksi tai useampi merkitys. Merkitse tähdellä enintään 5 päämerkitystä harjoituksiin — muut jäävät viitteeksi. Vedä järjestääksesi."
+        },
+        "examples": {
+          "title": "4. Esimerkkilauseet",
+          "body": "Lisää lauseita, jotka näyttävät sanan käytön. Avaa Lisätiedot, jos tarvitset käännöksen tai muistiinpanon."
+        },
+        "tags": {
+          "title": "5. Tunnisteet",
+          "body": "Merkitse tason, aiheen tai tilanteen mukaan, jotta löydät ja harjoittelet liittyviä sanoja myöhemmin."
+        },
+        "synonyms": {
+          "title": "6. Synonyymit",
+          "body": "Linkitä liittyviä sanoja sanastostasi, jotta merkinnät yhdistyvät ja muistaminen vahvistuu."
+        },
+        "notes": {
+          "title": "7. Muistiinpanot",
+          "body": "Valinnaiset vapaamuotoiset muistiinpanot — ääntäminen, käyttö tai mitä tahansa haluat muistaa."
+        },
+        "save": {
+          "title": "8. Tallenna",
+          "body": "Kun olet valmis, tallenna sana. Voit muokata sitä milloin tahansa sanastokirjastosta."
         }
       }
     },
@@ -1338,9 +1380,145 @@
     }
   },
   "settings": {
-    "title": "Asetukset",
-    "workspace": "Työtila",
-    "workspaceDescription": "Hallitse aktiivisen työtilan asetuksia.",
+    "eyebrow": "Asetukset",
+    "title": "Sovelluksen",
+    "highlight": "asetukset",
+    "description": "Miten Notorian tulisi näyttää ja toimia sinulle — ei työtilan tai tilin asetuksia.",
+    "appearance": "Ulkoasu",
+    "appearanceDescription": "Visuaaliset asetukset koko sovellukselle.",
+    "theme": "Teema",
+    "themeDescription": "Valitse vaalea, tumma tai järjestelmän teema.",
+    "themeLight": "Vaalea",
+    "themeDark": "Tumma",
+    "themeSystem": "Järjestelmä",
+    "accessibility": "Saavutettavuus",
+    "accessibilityDescription": "Asetukset, jotka vaikuttavat liikkeeseen ja vuorovaikutukseen Notoriassa.",
+    "motion": "Vähennä liikettä",
+    "motionDescription": "Rajoita animaatioita. Järjestelmä seuraa laitteen asetusta.",
+    "motionSystem": "Järjestelmä",
+    "motionReduce": "Vähennä",
+    "motionFull": "Täysi liike",
+    "learning": "Oppiminen",
+    "learningDescription": "Ohjausasetukset, jotka koskevat kaikkia osioita.",
+    "tutorials": "Osioiden oppaat",
+    "tutorialsDescription": "Nollaa suoritetut osio-oppaat, jotta “Show tutorial” alkaa alusta.",
+    "tutorialsReset": "Nollaa oppaat",
+    "tutorialsResetDone": "Osio-oppaat nollattu",
+    "shortcuts": {
+      "title": "Pikanäppäimet",
+      "description": "Notorian globaalit verkkosovelluksen pikanäppäimet. Harjoituskohtaiset näppäimet pysyvät kussakin toiminnossa.",
+      "enabled": "Ota pikanäppäimet käyttöön",
+      "enabledDescription": "Ota kaikki globaalit pikanäppäimet käyttöön tai pois ilman, että mukautukset katoavat.",
+      "on": "Päällä",
+      "off": "Pois",
+      "action": "Toiminto",
+      "keys": "Pikanäppäin",
+      "edit": "Muokkaa",
+      "add": "Lisää pikanäppäin",
+      "addTitle": "Lisää pikanäppäin",
+      "addDescription": "Valitse toiminto, johon haluat päästä nopeasti, ja paina sitten näppäinyhdistelmä.",
+      "chooseAction": "Valitse toiminto",
+      "customized": "Mukautettu",
+      "defaultBadge": "Oletus",
+      "defaultWas": "Oletus oli {keys}",
+      "extraBadge": "Lisä",
+      "remove": "Poista",
+      "removed": "Pikanäppäin poistettu",
+      "replace": "Korvaa",
+      "resetOne": "Palauta oletus",
+      "resetOneDone": "Pikanäppäin palautettu oletukseen",
+      "resetAll": "Palauta kaikki pikanäppäimet",
+      "resetAllDescription": "Palauta kaikki globaalit pikanäppäimet oletusyhdistelmiin.",
+      "resetAllConfirmTitle": "Palautetaanko kaikki pikanäppäimet oletuksiin?",
+      "resetAllConfirmDescription": "Mukautetut globaalit pikanäppäimet tyhjennetään. Harjoituskohtaiset näppäimet eivät muutu.",
+      "resetAllDone": "Kaikki pikanäppäimet palautettu",
+      "editTitle": "Muokkaa: {action}",
+      "editDescription": "Paina näppäinyhdistelmä. Selaimen varaamia pikanäppäimiä Notoria ei voi käyttää.",
+      "pressKeys": "Paina näppäinyhdistelmä",
+      "pickActionFirst": "Valitse toiminto ja paina sitten näppäinyhdistelmä",
+      "saved": "Pikanäppäin tallennettu",
+      "conflict": "Tämä pikanäppäin on jo määritetty toiminnolle ”{action}”.",
+      "reserved": "Selaimen varaama — Notoria ei voi käyttää tätä.",
+      "statusAvailable": "✓ {keys}",
+      "statusConflict": "⚠ {keys} — jo käytössä toiminnolla {action}.",
+      "statusReserved": "⚠ {keys} — selaimen varaama, Notoria ei voi käyttää.",
+      "reservedTitle": "Joitakin pikanäppäimiä ei voi käyttää",
+      "reservedDescription": "Selain ja Windows varaavat näppäimiä kuten Ctrl + N, Ctrl + Shift + T ja Win + E. Notoria ei voi ohittaa niitä.",
+      "reservedGroups": {
+        "ctrl": "Ctrl",
+        "ctrlShift": "Ctrl + Shift",
+        "alt": "Alt",
+        "win": "Windows"
+      },
+      "reservedPurposes": {
+        "newWindow": "Uusi ikkuna",
+        "newTab": "Uusi välilehti",
+        "closeTab": "Sulje välilehti",
+        "reopenTab": "Avaa suljettu välilehti",
+        "closeWindow": "Sulje ikkuna",
+        "newIncognito": "Uusi yksityinen ikkuna",
+        "addressBar": "Osoitepalkki",
+        "reload": "Lataa uudelleen",
+        "hardReload": "Pakota uudelleenlataus",
+        "nextTab": "Seuraava välilehti",
+        "prevTab": "Edellinen välilehti",
+        "print": "Tulosta",
+        "openFile": "Avaa tiedosto",
+        "browserSave": "Tallenna sivu (selain)",
+        "bookmark": "Lisää kirjanmerkki",
+        "history": "Historia",
+        "downloads": "Lataukset",
+        "viewSource": "Näytä lähdekoodi",
+        "findInPage": "Etsi sivulta",
+        "findNext": "Etsi seuraava",
+        "findPrev": "Etsi edellinen",
+        "devtools": "Kehittäjätyökalut",
+        "console": "JavaScript-konsoli",
+        "inspect": "Tarkasta elementti",
+        "clearData": "Tyhjennä selaintiedot",
+        "taskManager": "Selaimen tehtävienhallinta",
+        "altClose": "Sulje ikkuna",
+        "altTab": "Vaihda sovellusta",
+        "winExplorer": "Resurssienhallinta",
+        "winDesktop": "Näytä työpöytä",
+        "winLock": "Lukitse tietokone",
+        "winRun": "Suorita",
+        "winSettings": "Windowsin asetukset",
+        "winTaskView": "Tehtävänäkymä",
+        "winClipboard": "Leikepöydän historia"
+      },
+      "actions": {
+        "openSearch": "Haku",
+        "quickSave": "Pikatallennus",
+        "quickEdit": "Pikamuokkaus",
+        "quickView": "Pikakatselu",
+        "download": "Lataa",
+        "deleteItem": "Poista",
+        "createNew": "Luo uusi",
+        "goBack": "Takaisin",
+        "goForward": "Eteenpäin"
+      },
+      "actionDescriptions": {
+        "openSearch": "Hae työtilastasi",
+        "quickSave": "Tallenna nykyinen kohde",
+        "quickEdit": "Aloita nykyisen kohteen muokkaus",
+        "quickView": "Avaa nykyinen kohde katselutilassa",
+        "download": "Lataa nykyinen kohde",
+        "deleteItem": "Poista valittu kohde",
+        "createNew": "Luo uusi kohde tässä osiossa",
+        "goBack": "Palaa edelliselle sivulle",
+        "goForward": "Siirry eteenpäin selaushistoriassa"
+      }
+    },
+    "data": {
+      "title": "Data ja yksityisyys",
+      "description": "Tähän selaimeen tallennetut paikalliset asetukset. Tili ja työtilan sisältö hallitaan muualla.",
+      "clear": "Tyhjennä paikalliset asetukset",
+      "clearDescription": "Poistaa tältä laitteelta sovellusasetuksia: liike, pikanäppäimet, oppaat ja vastaavat. Ei poista tiliä eikä oppimisdataa.",
+      "clearConfirmTitle": "Tyhjennetäänkö paikalliset asetukset?",
+      "clearConfirmDescription": "Tämä tyhjentää vain tämän selaimen asetukset. Tiliä, laskutusta ja oppimissisältöä ei poisteta.",
+      "clearDone": "Paikalliset asetukset tyhjennetty"
+    },
     "customTags": "Omat tunnisteet",
     "customTagsDescription": "Luo työtilakohtaisia tunnisteita sanastolle. Valmiit tunnisteet ovat aina käytettävissä.",
     "tagName": "Tunnisteen nimi",
@@ -1454,6 +1632,7 @@
     "emptyTitle": "Ei kuuntelutunteja vielä",
     "emptyDescription": "Lataa ääni- tai videotiedosto luodaksesi ensimmäisen kuuntelutuntisi.",
     "myLessons": "Kuuntelutuntini",
+    "collections": "Kokoelmat",
     "searchPlaceholder": "Hae otsikolla tai tiedostonimellä…",
     "filterAll": "Kaikki",
     "filterCefr": "CEFR",
@@ -1465,6 +1644,7 @@
     "sortTitleAsc": "Otsikko (A → Ö)",
     "sortTitleDesc": "Otsikko (Ö → A)",
     "clearFilters": "Tyhjennä suodattimet",
+    "sortBy": "Lajittelu",
     "noResults": "Yksikään kuuntelutunti ei vastaa hakua",
     "noResultsDescription": "Kokeile toista hakua tai tyhjennä suodattimet.",
     "continue": "Jatka",
@@ -1592,6 +1772,7 @@
     "newCallFirst": "Aloita ensimmäinen puhelu",
     "newTitle": "Uusi puhumispuhelu",
     "newDescription": "Valitse taso ja aihe. Tekoälyohjaaja liittyy puheluun ja keskustelee kanssasi.",
+    "modalTip": "Valitse keskustelun vaikeustaso ja jätä lyhyt muistiinpano, jotta ohjaaja tietää mitä harjoitella.",
     "create": "Luo puhelu",
     "created": "Puhumispuhelu luotu",
     "titleLabel": "Otsikko",
@@ -1601,6 +1782,29 @@
     "emptyTitle": "Ei puhumissessioita vielä",
     "emptyDescription": "Aloita videopuhelu tekoälyohjaajan kanssa ja harjoittele puhumista.",
     "mySessions": "Puhumissessioni",
+    "sessionHint": "Avaa valmis sessio nähdäksesi palautteen ja litteroinnin.",
+    "stats": {
+      "aria": "Puhumissessioiden tilastot",
+      "total": "Sessiot",
+      "completed": "Valmiit",
+      "ready": "Valmiina",
+      "topics": "Aiheet"
+    },
+    "guide": {
+      "aria": "Näin puhumisharjoitus toimii",
+      "pick": {
+        "title": "Aseta fokus",
+        "body": "Valitse CEFR ja aihe, jotta ohjaaja ohjaa keskustelua tarvitsemaasi suuntaan."
+      },
+      "call": {
+        "title": "Puhu livenä",
+        "body": "Liity videopuheluun, puhu luonnollisesti ja pyydä toistoa kun jokin on epäselvää."
+      },
+      "review": {
+        "title": "Kertaa jälkeenpäin",
+        "body": "Palaa palautteeseen ja litterointiin — voit käyttää niitä sanastossa tai kirjoittamisessa."
+      }
+    },
     "join": "Liity puheluun",
     "open": "Avaa",
     "viewProgress": "Näytä eteneminen",
@@ -1858,6 +2062,7 @@
     "groupByWeek": "Viikko",
     "groupByMonth": "Kuukausi",
     "weekOf": "Viikko {date}",
+    "sortBy": "Lajittele",
     "sortUpdatedDesc": "Viimeksi päivitetty",
     "sortUpdatedAsc": "Vanhin päivitys",
     "sortCreatedDesc": "Uusin luotu",

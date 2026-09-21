@@ -12,6 +12,7 @@ import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { DescriptionField } from "@/components/form/description-field";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { useMutationLock } from "@/hooks/use-mutation-lock";
 import { cn } from "@/lib/utils";
 import { createTheoryNote, updateTheoryNote } from "@/lib/actions/theory";
@@ -335,6 +336,17 @@ export function TheoryEditor({
   const categoryHeading = isKnownTheoryCategory(category)
     ? t(`categories.${category}`)
     : category;
+
+  useRegisterShortcutAction("quickSave", () => {
+    void persist();
+  });
+  useRegisterShortcutAction(
+    "quickView",
+    () => {
+      if (previewHref) router.replace(previewHref);
+    },
+    Boolean(previewHref),
+  );
 
   return (
     <div className="writing-sheet theory-sheet" data-theory-category={category}>

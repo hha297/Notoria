@@ -129,3 +129,12 @@ export function markSectionTutorialCompleted(section: string) {
   next[section] = true;
   write(localStorage, TUTORIALS_KEY, JSON.stringify(next));
 }
+
+export function hasCompletedSectionTutorials(): boolean {
+  return Object.keys(readCompletedTutorials()).length > 0;
+}
+
+export function clearSectionTutorials() {
+  if (typeof window === "undefined") return;
+  remove(localStorage, TUTORIALS_KEY);
+}

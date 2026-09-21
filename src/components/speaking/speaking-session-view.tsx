@@ -1,26 +1,19 @@
 "use client";
 
 import { useEffect, useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
-import { Loader2, PhoneOff, Trash2, Video } from "lucide-react";
+import { ArrowLeft, Loader2, PhoneOff, Trash2, Video } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { DescriptionContent } from "@/components/form/description-content";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -29,9 +22,7 @@ import { deleteSpeakingSession, endSpeakingSession } from "@/lib/actions/speakin
 import { isSpeakingErrorCode } from "@/lib/speaking/errors";
 import { isSpeakingJoinable } from "@/lib/speaking/types";
 import type { SpeakingSessionDetail } from "@/lib/speaking/types";
-import {
-  type WritingCefr,
-} from "@/lib/writing/meta";
+import { type WritingCefr } from "@/lib/writing/meta";
 import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 
 type SpeakingSessionViewProps = {
@@ -92,123 +83,136 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex flex-wrap items-center gap-2">
-        <Badge
-          variant={
-            session.status === "completed"
-              ? "outline"
-              : session.status === "active"
-                ? "default"
-                : "secondary"
-          }
-        >
-          {t(`status.${session.status}`)}
-        </Badge>
-        {session.topic ? (
-          <span className="text-sm text-muted-foreground">
-            {session.topic
-              ? resolveTopicLabel(session.topic, (key) => tTags(key))
-              : null}
-          </span>
-        ) : null}
-        {session.cefrLevel ? (
-          <span className="text-sm text-muted-foreground">
-            {tMeta(`cefr.${session.cefrLevel as WritingCefr}`)}
-          </span>
-        ) : null}
-        <span className="text-sm text-muted-foreground">
-          {formatDistanceToNow(new Date(session.createdAt), { addSuffix: true })}
-        </span>
-      </div>
-
-      {session.notes ? (
-        <div className="rounded-xl border border-hairline-cloud bg-muted/30 px-4 py-3 text-sm text-muted-foreground">
-          <DescriptionContent value={session.notes} />
-        </div>
-      ) : null}
-
-      <div className="flex flex-wrap gap-2">
-        {joinable ? (
-          <LinkButton href={`/speaking/${session.id}/call`}>
-            <Video className="size-4" />
-            {t("join")}
-          </LinkButton>
-        ) : null}
-        {session.status === "active" ? (
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleEnd}
-            disabled={isPending}
-          >
-            {isPending ? (
-              <Loader2 className="size-4 animate-spin" />
-            ) : (
-              <PhoneOff className="size-4" />
-            )}
-            {t("endSession")}
-          </Button>
-        ) : null}
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => setDeleteOpen(true)}
-          disabled={isPending}
-        >
-          <Trash2 className="size-4" />
-          {tc("delete")}
-        </Button>
-      </div>
-
-      {session.status === "processing" ? (
-        <Card className="border-hairline-cloud">
-          <CardHeader>
-            <CardTitle className="text-lg">{t("processingTitle")}</CardTitle>
-            <CardDescription>{t("processingDescription")}</CardDescription>
-          </CardHeader>
-        </Card>
-      ) : null}
-
-      {session.summary ? (
-        <Card className="border-hairline-cloud">
-          <CardHeader>
-            <CardTitle className="text-lg">{t("feedbackTitle")}</CardTitle>
-            <CardDescription>{t("feedbackDescription")}</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="prose prose-sm max-w-none whitespace-pre-wrap text-ink">
-              {session.summary}
-            </div>
-          </CardContent>
-        </Card>
-      ) : null}
-
-      {session.transcript ? (
-        <Card className="border-hairline-cloud">
-          <CardHeader>
-            <CardTitle className="text-lg">{t("transcriptTitle")}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <pre className="max-h-[28rem] overflow-auto whitespace-pre-wrap rounded-lg bg-muted/40 p-4 text-sm leading-relaxed text-ink">
-              {session.transcript}
-            </pre>
-          </CardContent>
-        </Card>
-      ) : null}
-
-      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
-        <DialogContent showCloseButton={!isPending && !isLeaving}>
-          <DialogHeader>
-            <DialogTitle>{t("deleteConfirmTitle")}</DialogTitle>
-            <DialogDescription>
-              {t("deleteConfirmDescription", { title: session.title })}
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter>
+    <div className="writing-paper speaking-paper">
+      <div className="writing-paper-chrome">
+        <Link href="/speaking" className="writing-back">
+          <ArrowLeft className="size-4" />
+          {t("backToList")}
+        </Link>
+        <div className="writing-paper-actions">
+          {joinable ? (
+            <LinkButton href={`/speaking/${session.id}/call`}>
+              <Video className="size-4" />
+              {t("join")}
+            </LinkButton>
+          ) : null}
+          {session.status === "active" ? (
             <Button
               type="button"
               variant="outline"
+              className="route-quiet-action"
+              data-route-action="speak"
+              onClick={handleEnd}
+              disabled={isPending}
+            >
+              {isPending ? (
+                <Loader2 className="size-4 animate-spin" />
+              ) : (
+                <PhoneOff className="size-4" />
+              )}
+              {t("endSession")}
+            </Button>
+          ) : null}
+          <Button
+            type="button"
+            variant="outline"
+            onClick={() => setDeleteOpen(true)}
+            disabled={isPending}
+          >
+            <Trash2 className="size-4" />
+            {tc("delete")}
+          </Button>
+        </div>
+      </div>
+
+      <article className="writing-paper-page">
+        <p className="writing-kicker">{t("title")}</p>
+        <h1 className="writing-paper-title wrap-break-word">{session.title}</h1>
+        <div className="mt-3 flex flex-wrap items-center gap-2">
+          <Badge
+            variant={
+              session.status === "completed"
+                ? "outline"
+                : session.status === "active"
+                  ? "default"
+                  : "secondary"
+            }
+          >
+            {t(`status.${session.status}`)}
+          </Badge>
+          {session.topic ? (
+            <span className="text-sm text-muted-foreground">
+              {resolveTopicLabel(session.topic, (key) => tTags(key))}
+            </span>
+          ) : null}
+          {session.cefrLevel ? (
+            <span className="text-sm text-muted-foreground">
+              {tMeta(`cefr.${session.cefrLevel as WritingCefr}`)}
+            </span>
+          ) : null}
+          <span className="text-sm text-muted-foreground">
+            {formatDistanceToNow(new Date(session.createdAt), {
+              addSuffix: true,
+            })}
+          </span>
+        </div>
+        <p className="writing-brand-lede mt-3">{t("sessionDescription")}</p>
+
+        {session.notes ? (
+          <div className="speaking-panel mt-6">
+            <DescriptionContent value={session.notes} />
+          </div>
+        ) : null}
+
+        <div className="mt-6">
+          {session.status === "processing" ? (
+            <div className="speaking-panel">
+              <h2 className="speaking-panel-title">{t("processingTitle")}</h2>
+              <p className="speaking-panel-lede">{t("processingDescription")}</p>
+            </div>
+          ) : null}
+
+          {session.summary ? (
+            <div className="speaking-panel">
+              <h2 className="speaking-panel-title">{t("feedbackTitle")}</h2>
+              <p className="speaking-panel-lede">{t("feedbackDescription")}</p>
+              <div className="speaking-panel-body prose prose-sm max-w-none whitespace-pre-wrap text-ink">
+                {session.summary}
+              </div>
+            </div>
+          ) : null}
+
+          {session.transcript ? (
+            <div className="speaking-panel">
+              <h2 className="speaking-panel-title">{t("transcriptTitle")}</h2>
+              <div className="speaking-panel-body">
+                <pre className="speaking-transcript">{session.transcript}</pre>
+              </div>
+            </div>
+          ) : null}
+        </div>
+      </article>
+
+      <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
+        <DialogContent
+          showCloseButton={!isPending && !isLeaving}
+          className="workspace-sheet sm:max-w-md"
+          data-sheet-route="speak"
+        >
+          <DialogHeader className="workspace-sheet-header gap-2 space-y-0 pr-8 text-left">
+            <p className="workspace-sheet-kicker">{t("title")}</p>
+            <DialogTitle className="workspace-sheet-title">
+              {t("deleteConfirmTitle")}
+            </DialogTitle>
+            <DialogDescription className="workspace-sheet-lede">
+              {t("deleteConfirmDescription", { title: session.title })}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="workspace-sheet-footer">
+            <Button
+              type="button"
+              variant="outline"
+              className="workspace-sheet-cancel"
               onClick={() => setDeleteOpen(false)}
               disabled={isPending || isLeaving}
             >
@@ -217,6 +221,7 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
             <Button
               type="button"
               variant="destructive"
+              className="workspace-sheet-cta"
               onClick={handleDelete}
               disabled={isPending || isLeaving}
             >
@@ -227,7 +232,7 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
               )}
               {tc("delete")}
             </Button>
-          </DialogFooter>
+          </div>
         </DialogContent>
       </Dialog>
     </div>

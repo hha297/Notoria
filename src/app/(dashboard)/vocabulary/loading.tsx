@@ -1,5 +1,10 @@
-﻿import { VocabularyPageLoading } from "@/components/vocabulary/vocabulary-page-loading";
+﻿import { PageShell } from "@/components/layout/page-shell";
+import { VocabularyPageLoading } from "@/components/vocabulary/vocabulary-page-loading";
 
 export default function Loading() {
-  return <VocabularyPageLoading />;
+  return (
+    <PageShell className="vocab-lexicon-shell">
+      <VocabularyPageLoading />
+    </PageShell>
+  );
 }

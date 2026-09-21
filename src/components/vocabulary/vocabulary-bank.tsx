@@ -2,12 +2,13 @@
 
 import { format } from "date-fns";
 import { Download, Plus } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import type { MultiFilterOptionGroup } from "@/components/filters/multi-filter-select";
-import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
 import { VocabularyExportDialog } from "@/components/vocabulary/export-dialog";
@@ -56,9 +57,14 @@ export function VocabularyBank({
   workspaceName,
   language,
 }: VocabularyBankProps) {
+  const router = useRouter();
   const t = useTranslations("vocabulary");
   const tTags = useTranslations("tags");
   const tPos = useTranslations("tags.pos");
+
+  useRegisterShortcutAction("createNew", () => {
+    router.push("/vocabulary/new");
+  });
   const [search, setSearch] = useState("");
   const [partOfSpeechFilter, setPartOfSpeechFilter] = useState<MultiFilterValue>(
     [],
@@ -158,116 +164,134 @@ export function VocabularyBank({
 
   const sortValue = `${sortField}:${sortDirection}`;
 
-  return (
-    <PageShell className="space-y-5">
-      <PageHeader
-        eyebrow={workspaceName}
-        title={t("title")}
-        highlight={t("bank")}
-        description={t("groupCount", { count: words.length })}
+  const actions = (
+    <>
+      <ShowTutorialButton section="vocabulary" />
+      <Button
+        type="button"
+        variant="outline"
+        className="route-quiet-action"
+        data-route-action="vocab"
+        onClick={() => setExportOpen(true)}
+        disabled={filteredWords.length === 0}
+        title={filteredWords.length === 0 ? t("export.empty") : undefined}
       >
-        <ShowTutorialButton section="vocabulary" />
-        <Button
-          type="button"
-          variant="outline"
-          onClick={() => setExportOpen(true)}
-          disabled={filteredWords.length === 0}
-          title={
-            filteredWords.length === 0 ? t("export.empty") : undefined
-          }
-        >
-          <Download className="size-4" />
-          {t("export.button")}
-        </Button>
-        <LinkButton href="/vocabulary/new" data-tutorial="vocab-add-word">
-          <Plus className="size-4" />
-          {t("addWord")}
-        </LinkButton>
-      </PageHeader>
+        <Download className="size-4" />
+        {t("export.button")}
+      </Button>
+      <LinkButton href="/vocabulary/new" data-tutorial="vocab-add-word">
+        <Plus className="size-4" />
+        {t("addWord")}
+      </LinkButton>
+    </>
+  );
 
-      <VocabularyStats
-        total={stats.total}
-        nouns={stats.nouns}
-        verbs={stats.verbs}
-        recent={stats.recent}
+  return (
+    <PageShell className="vocab-lexicon-shell">
+      <div className="vocab-lexicon writing-atelier flex flex-col gap-10 lg:gap-12">
+        <header className="writing-hero">
+          <div className="writing-hero-copy">
+            <p className="writing-kicker">{workspaceName}</p>
+            <h1 className="writing-brand-title">
+              {t("title")}{" "}
+              <span className="text-module-vocab-fg">
+                {t("bank")}
+              </span>
+            </h1>
+            <p className="writing-brand-lede">{t("description")}</p>
+            <div className="mt-5">
+              <VocabularyStats
+                total={stats.total}
+                nouns={stats.nouns}
+                verbs={stats.verbs}
+                recent={stats.recent}
+              />
+            </div>
+          </div>
+          <div className="writing-hero-actions">{actions}</div>
+        </header>
+
+        <section className="writing-workspace">
+          <VocabularyToolbar
+            search={search}
+            onSearchChange={setSearch}
+            partOfSpeechFilter={partOfSpeechFilter}
+            onPartOfSpeechFilterChange={setPartOfSpeechFilter}
+            tagFilter={tagFilter}
+            onTagFilterChange={setTagFilter}
+            tagFilterGroups={tagFilterGroups}
+            sortField={sortField}
+            sortDirection={sortDirection}
+            onSortChange={(field, direction) => {
+              setSortField(field);
+              setSortDirection(direction);
+            }}
+            viewMode={viewMode}
+            onViewModeChange={setViewMode}
+          />
+          {filtersActive ? (
+            <p className="text-xs text-muted-foreground">
+              {t("shownOfTotal", {
+                shown: filteredWords.length,
+                total: words.length,
+              })}
+            </p>
+          ) : null}
+        </section>
+
+        <div className="vocab-lexicon-rule shrink-0" aria-hidden="true" />
+
+        <section className="writing-stage" data-tutorial="vocab-word-list">
+          {filteredWords.length === 0 ? (
+            <div className="writing-empty-desk">
+              <p className="writing-empty-title">{t("noResults")}</p>
+              <p className="writing-brand-lede">{t("noResultsDescription")}</p>
+            </div>
+          ) : (
+            <>
+              <p className="writing-kicker writing-stage-kicker">
+                {t("library")}
+              </p>
+              {groupedWords.map((group) => (
+                <VocabularyGroup
+                  key={`${group.key}:${search}:${multiFilterKey(partOfSpeechFilter)}:${multiFilterKey(tagFilter)}:${sortValue}`}
+                  title={
+                    isKnownPartOfSpeech(group.key)
+                      ? tPos(group.key)
+                      : t("uncategorizedPos")
+                  }
+                  posKey={group.key}
+                  words={group.words}
+                  viewMode={viewMode}
+                  workspaceId={workspaceId}
+                  onEditWord={setEditingWord}
+                />
+              ))}
+            </>
+          )}
+        </section>
+      </div>
+
+      <VocabularyQuickEditDialog
+        open={editingWord !== null}
+        onOpenChange={(open) => {
+          if (!open) setEditingWord(null);
+        }}
+        language={language}
+        workspaceId={workspaceId}
+        wordId={editingWord?.id ?? null}
+        onSuccess={() => {
+          setEditingWord(null);
+          invalidateVocabulary();
+        }}
       />
 
-      <div className="space-y-4">
-        <VocabularyToolbar
-          search={search}
-          onSearchChange={setSearch}
-          partOfSpeechFilter={partOfSpeechFilter}
-          onPartOfSpeechFilterChange={setPartOfSpeechFilter}
-          tagFilter={tagFilter}
-          onTagFilterChange={setTagFilter}
-          tagFilterGroups={tagFilterGroups}
-          sortField={sortField}
-          sortDirection={sortDirection}
-          onSortChange={(field, direction) => {
-            setSortField(field);
-            setSortDirection(direction);
-          }}
-          viewMode={viewMode}
-          onViewModeChange={setViewMode}
-        />
-
-        {filtersActive ? (
-          <p className="-mt-2 text-xs text-muted-foreground">
-            {t("shownOfTotal", {
-              shown: filteredWords.length,
-              total: words.length,
-            })}
-          </p>
-        ) : null}
-
-        {filteredWords.length === 0 ? (
-          <div className="empty-state py-12">
-            <p className="font-medium text-ink">{t("noResults")}</p>
-            <p className="mt-2 max-w-md text-sm text-muted-foreground">
-              {t("noResultsDescription")}
-            </p>
-          </div>
-        ) : (
-          <div className="space-y-4" data-tutorial="vocab-word-list">
-            {groupedWords.map((group) => (
-              <VocabularyGroup
-                key={`${group.key}:${search}:${multiFilterKey(partOfSpeechFilter)}:${multiFilterKey(tagFilter)}:${sortValue}`}
-                title={
-                  isKnownPartOfSpeech(group.key)
-                    ? tPos(group.key)
-                    : t("uncategorizedPos")
-                }
-                posKey={group.key}
-                words={group.words}
-                viewMode={viewMode}
-                workspaceId={workspaceId}
-                onEditWord={setEditingWord}
-              />
-            ))}
-          </div>
-        )}
-
-        <VocabularyQuickEditDialog
-          open={editingWord !== null}
-          onOpenChange={(open) => {
-            if (!open) setEditingWord(null);
-          }}
-          language={language}
-          workspaceId={workspaceId}
-          wordId={editingWord?.id ?? null}
-          onSuccess={() => {
-            setEditingWord(null);
-            invalidateVocabulary();
-          }}
-        />
-
-        <VocabularyExportDialog
-          open={exportOpen}
-          onOpenChange={setExportOpen}
-          workspaceName={workspaceName}
-          words={exportWords}
-        />
-      </div>
+      <VocabularyExportDialog
+        open={exportOpen}
+        onOpenChange={setExportOpen}
+        workspaceName={workspaceName}
+        words={exportWords}
+      />
     </PageShell>
   );
 }

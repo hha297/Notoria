@@ -10,20 +10,13 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { DescriptionField } from "@/components/form/description-field";
+import { Textarea } from "@/components/ui/textarea";
+import { WritingChipPicker } from "@/components/writing/writing-chip-picker";
 import { createSpeakingSession } from "@/lib/actions/speaking";
 import { isSpeakingErrorCode } from "@/lib/speaking/errors";
 import {
@@ -82,7 +75,7 @@ export function NewSpeakingDialog({
         formData.set("cefrLevel", cefrLevel);
         formData.set("topic", topic);
         formData.set("notes", notes);
-        const created = await createSpeakingSession(formData);
+        await createSpeakingSession(formData);
         router.push("/speaking");
         toast.success(t("created"));
         onOpenChange(false);
@@ -95,17 +88,30 @@ export function NewSpeakingDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-lg" showCloseButton={!isPending}>
-        <DialogHeader>
-          <DialogTitle>{t("newTitle")}</DialogTitle>
-          <DialogDescription>{t("newDescription")}</DialogDescription>
+      <DialogContent
+        className="workspace-sheet flex max-h-[min(92dvh,calc(100%-2rem))] flex-col gap-0 overflow-hidden p-0 sm:max-w-xl"
+        data-sheet-route="speak"
+        showCloseButton={!isPending}
+      >
+        <DialogHeader className="workspace-sheet-header gap-2 space-y-0 pr-8 text-left">
+          <p className="workspace-sheet-kicker">{t("title")}</p>
+          <DialogTitle className="workspace-sheet-title">
+            {t("newTitle")}
+          </DialogTitle>
+          <DialogDescription className="workspace-sheet-lede">
+            {t("newDescription")}
+          </DialogDescription>
         </DialogHeader>
 
-        <div className="space-y-4">
-          <div className="space-y-2">
-            <Label htmlFor="speaking-title">
+        <div className="workspace-sheet-body">
+          <p className="workspace-sheet-hint max-w-none">
+            {t("modalTip")}
+          </p>
+
+          <div className="workspace-sheet-field">
+            <Label htmlFor="speaking-title" className="workspace-sheet-label">
               {t("titleLabel")}{" "}
-              <span className="font-normal text-muted-foreground">
+              <span className="font-normal normal-case tracking-normal text-muted-foreground">
                 ({tc("optional")})
               </span>
             </Label>
@@ -114,83 +120,73 @@ export function NewSpeakingDialog({
               value={title}
               onChange={(event) => setTitle(event.target.value)}
               placeholder={t("titlePlaceholder")}
-              className="h-10"
+              className="workspace-sheet-input"
               disabled={isPending}
             />
           </div>
 
-          <div className="grid gap-3 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label>{tMeta("cefrLabel")}</Label>
-              <Select
-                value={cefrLevel}
-                onValueChange={(value) => value && setCefrLevel(value)}
-                disabled={isPending}
-              >
-                <SelectTrigger className="h-10! w-full rounded-md bg-background px-3 data-[size=default]:h-10!">
-                  <SelectValue>
-                    {tMeta(`cefr.${cefrLevel as WritingCefr}`)}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  {WRITING_CEFR_LEVELS.map((level) => (
-                    <SelectItem key={level} value={level}>
-                      {tMeta(`cefr.${level}`)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="space-y-2">
-              <Label>{tMeta("topicLabel")}</Label>
-              <Select
-                value={topic}
-                onValueChange={(value) => value && setTopic(value)}
-                disabled={isPending}
-              >
-                <SelectTrigger className="h-10! w-full rounded-md bg-background px-3 data-[size=default]:h-10!">
-                  <SelectValue>
-                    {resolveTopicLabel(topic, (key) => tTags(key))}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  {WRITING_TOPICS.map((item) => (
-                    <SelectItem key={item} value={item}>
-                      {resolveTopicLabel(item, (key) => tTags(key))}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
+          <div className="workspace-sheet-field">
+            <WritingChipPicker
+              labelId="speaking-cefr"
+              label={tMeta("cefrLabel")}
+              value={cefrLevel}
+              onChange={setCefrLevel}
+              options={WRITING_CEFR_LEVELS.map((level) => ({
+                value: level,
+                label: tMeta(`cefr.${level as WritingCefr}`),
+              }))}
+            />
           </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="speaking-notes">
+          <div className="workspace-sheet-field">
+            <WritingChipPicker
+              labelId="speaking-topic"
+              label={tMeta("topicLabel")}
+              value={topic}
+              onChange={setTopic}
+              options={WRITING_TOPICS.map((item) => ({
+                value: item,
+                label: resolveTopicLabel(item, (key) => tTags(key)),
+              }))}
+            />
+          </div>
+
+          <div className="workspace-sheet-field">
+            <Label htmlFor="speaking-notes" className="workspace-sheet-label">
               {t("notesLabel")}{" "}
-              <span className="font-normal text-muted-foreground">
+              <span className="font-normal normal-case tracking-normal text-muted-foreground">
                 ({tc("optional")})
               </span>
             </Label>
-            <DescriptionField
+            <Textarea
               id="speaking-notes"
               value={notes}
-              onChange={setNotes}
+              onChange={(event) => setNotes(event.target.value)}
               placeholder={t("notesPlaceholder")}
               maxLength={2000}
+              rows={3}
+              disabled={isPending}
+              className="workspace-sheet-input speaking-notes-field"
             />
           </div>
         </div>
 
-        <DialogFooter>
+        <div className="workspace-sheet-footer">
           <Button
             type="button"
             variant="outline"
+            className="workspace-sheet-cancel"
             onClick={() => handleOpenChange(false)}
             disabled={isPending}
           >
             {tc("cancel")}
           </Button>
-          <Button type="button" onClick={handleSubmit} disabled={isPending}>
+          <Button
+            type="button"
+            className="workspace-sheet-cta"
+            onClick={handleSubmit}
+            disabled={isPending}
+          >
             {isPending ? (
               <Loader2 className="size-4 animate-spin" />
             ) : (
@@ -198,7 +194,7 @@ export function NewSpeakingDialog({
             )}
             {t("create")}
           </Button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );

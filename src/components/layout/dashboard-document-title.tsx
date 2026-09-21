@@ -21,6 +21,9 @@ export function DashboardDocumentTitle() {
     if (pathname === "/account" || pathname.startsWith("/account/")) {
       return tNav("account");
     }
+    if (pathname === "/settings" || pathname.startsWith("/settings/")) {
+      return tNav("settings");
+    }
 
     if (pathname === "/vocabulary/new") return tVocab("addWord");
     if (/^\/vocabulary\/[^/]+\/edit$/.test(pathname)) return tVocab("editWord");

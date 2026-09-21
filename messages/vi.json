@@ -140,6 +140,8 @@
   "vocabulary": {
     "title": "Từ vựng",
     "bank": "sổ tay",
+    "description": "Từ bạn thu thập nằm ở đây — tìm, lọc và dùng lại khi luyện tập, viết và ôn.",
+    "library": "Sổ từ",
     "addWordHighlight": "vào sổ tay",
     "newWord": "Từ mới",
     "editWord": "Sửa từ",
@@ -1166,6 +1168,7 @@
   "tutorials": {
     "show": "Xem hướng dẫn",
     "showShort": "Hướng dẫn",
+    "guideLabel": "Hướng dẫn",
     "next": "Tiếp",
     "skip": "Bỏ qua hướng dẫn",
     "done": "Đã hiểu",
@@ -1190,6 +1193,45 @@
         "library": {
           "title": "4. Thư viện từ của bạn",
           "body": "Từ đã lưu nằm ở đây. Mở mục để sửa, hoặc dùng trong bài tập và ôn tập sau."
+        }
+      }
+    },
+    "vocabularyAdd": {
+      "title": "Thêm từ",
+      "description": "Form này là trung tâm của Notoria — từng ô giúp bạn nhớ và dùng lại từ sau này.",
+      "cta": "Đã hiểu",
+      "steps": {
+        "word": {
+          "title": "1. Gõ từ",
+          "body": "Nhập từ hoặc cụm bạn đang học. Đây là mục chính trong sổ từ của bạn."
+        },
+        "partOfSpeech": {
+          "title": "2. Loại từ",
+          "body": "Chọn danh từ, động từ, tính từ… để lọc và gợi ý AI chính xác hơn."
+        },
+        "meanings": {
+          "title": "3. Nghĩa",
+          "body": "Thêm một hoặc nhiều nghĩa. Gắn sao tối đa 5 nghĩa chính cho bài tập — các nghĩa khác giữ để tham khảo. Kéo để sắp xếp."
+        },
+        "examples": {
+          "title": "4. Câu ví dụ",
+          "body": "Thêm câu cho thấy cách dùng từ. Mở Chi tiết thêm nếu cần bản dịch hoặc ghi chú."
+        },
+        "tags": {
+          "title": "5. Thẻ",
+          "body": "Gắn thẻ theo trình độ, chủ đề hoặc tình huống để tìm và luyện từ liên quan sau này."
+        },
+        "synonyms": {
+          "title": "6. Đồng nghĩa",
+          "body": "Liên kết từ liên quan trong sổ từ để tạo mạng kết nối và nhớ lâu hơn."
+        },
+        "notes": {
+          "title": "7. Ghi chú",
+          "body": "Ghi chú tùy chọn — phát âm, cách dùng, hoặc bất cứ điều gì bạn muốn nhớ."
+        },
+        "save": {
+          "title": "8. Lưu",
+          "body": "Khi sẵn sàng, lưu từ. Bạn có thể sửa lại bất cứ lúc nào từ thư viện từ vựng."
         }
       }
     },
@@ -1338,9 +1380,145 @@
     }
   },
   "settings": {
-    "title": "Cài đặt",
-    "workspace": "Không gian học",
-    "workspaceDescription": "Chỉnh cài đặt cho không gian học đang dùng.",
+    "eyebrow": "Tuỳ chọn",
+    "title": "Tuỳ chọn",
+    "highlight": "ứng dụng",
+    "description": "Cách Notoria hiển thị và hoạt động với bạn — không phải cài đặt không gian học hay tài khoản.",
+    "appearance": "Giao diện",
+    "appearanceDescription": "Tuỳ chọn hình ảnh cho cả ứng dụng.",
+    "theme": "Chủ đề",
+    "themeDescription": "Chọn sáng, tối, hoặc theo hệ thống.",
+    "themeLight": "Sáng",
+    "themeDark": "Tối",
+    "themeSystem": "Hệ thống",
+    "accessibility": "Trợ năng",
+    "accessibilityDescription": "Tuỳ chọn ảnh hưởng chuyển động và trải nghiệm tương tác trên Notoria.",
+    "motion": "Giảm chuyển động",
+    "motionDescription": "Hạn chế animation. Hệ thống theo cài đặt thiết bị của bạn.",
+    "motionSystem": "Hệ thống",
+    "motionReduce": "Giảm",
+    "motionFull": "Đầy đủ",
+    "learning": "Học tập",
+    "learningDescription": "Tuỳ chọn hướng dẫn áp dụng trên các mục.",
+    "tutorials": "Tutorial từng mục",
+    "tutorialsDescription": "Đặt lại các tutorial đã xem để “Show tutorial” bắt đầu lại từ đầu.",
+    "tutorialsReset": "Đặt lại tutorial",
+    "tutorialsResetDone": "Đã đặt lại tutorial",
+    "shortcuts": {
+      "title": "Phím tắt",
+      "description": "Phím tắt toàn cục của Notoria trên web. Phím trong từng bài luyện vẫn nằm trong mục đó.",
+      "enabled": "Bật phím tắt",
+      "enabledDescription": "Bật/tắt mọi phím tắt toàn cục mà không mất cấu hình tùy chỉnh.",
+      "on": "Bật",
+      "off": "Tắt",
+      "action": "Hành động",
+      "keys": "Phím tắt",
+      "edit": "Sửa",
+      "add": "Thêm phím tắt",
+      "addTitle": "Thêm phím tắt",
+      "addDescription": "Chọn hành động bạn muốn truy cập nhanh, rồi nhấn tổ hợp phím muốn dùng.",
+      "chooseAction": "Chọn hành động",
+      "customized": "Đã tùy chỉnh",
+      "defaultBadge": "Mặc định",
+      "defaultWas": "Mặc định: {keys}",
+      "extraBadge": "Thêm",
+      "remove": "Xóa",
+      "removed": "Đã xóa phím tắt",
+      "replace": "Thay thế",
+      "resetOne": "Đặt lại mặc định",
+      "resetOneDone": "Đã đặt lại phím tắt mặc định",
+      "resetAll": "Đặt lại tất cả phím tắt",
+      "resetAllDescription": "Khôi phục mọi phím tắt toàn cục về tổ hợp mặc định.",
+      "resetAllConfirmTitle": "Đặt lại tất cả phím tắt về mặc định?",
+      "resetAllConfirmDescription": "Các phím tắt toàn cục tùy chỉnh sẽ bị xóa. Phím trong từng bài luyện không bị ảnh hưởng.",
+      "resetAllDone": "Đã đặt lại tất cả phím tắt",
+      "editTitle": "Sửa: {action}",
+      "editDescription": "Nhấn tổ hợp phím. Phím dành riêng của trình duyệt không dùng được trong Notoria.",
+      "pressKeys": "Nhấn tổ hợp phím",
+      "pickActionFirst": "Chọn hành động, rồi nhấn tổ hợp phím",
+      "saved": "Đã lưu phím tắt",
+      "conflict": "Phím tắt này đang được gán cho “{action}”.",
+      "reserved": "Trình duyệt dành riêng tổ hợp này — Notoria không dùng được.",
+      "statusAvailable": "✓ {keys}",
+      "statusConflict": "⚠ {keys} — đang gán cho {action}.",
+      "statusReserved": "⚠ {keys} — trình duyệt dành riêng, Notoria không dùng được.",
+      "reservedTitle": "Một số phím tắt không dùng được",
+      "reservedDescription": "Trình duyệt và Windows giữ các phím như Ctrl + N, Ctrl + Shift + T, Win + E. Notoria không thể ghi đè.",
+      "reservedGroups": {
+        "ctrl": "Ctrl",
+        "ctrlShift": "Ctrl + Shift",
+        "alt": "Alt",
+        "win": "Windows"
+      },
+      "reservedPurposes": {
+        "newWindow": "Cửa sổ mới",
+        "newTab": "Tab mới",
+        "closeTab": "Đóng tab",
+        "reopenTab": "Mở lại tab đã đóng",
+        "closeWindow": "Đóng cửa sổ",
+        "newIncognito": "Cửa sổ ẩn danh mới",
+        "addressBar": "Thanh địa chỉ",
+        "reload": "Tải lại",
+        "hardReload": "Tải lại cứng",
+        "nextTab": "Tab tiếp",
+        "prevTab": "Tab trước",
+        "print": "In",
+        "openFile": "Mở tệp",
+        "browserSave": "Lưu trang (trình duyệt)",
+        "bookmark": "Đánh dấu trang",
+        "history": "Lịch sử",
+        "downloads": "Tải xuống",
+        "viewSource": "Xem mã nguồn",
+        "findInPage": "Tìm trong trang",
+        "findNext": "Tìm tiếp",
+        "findPrev": "Tìm trước",
+        "devtools": "Công cụ nhà phát triển",
+        "console": "Console JavaScript",
+        "inspect": "Kiểm tra phần tử",
+        "clearData": "Xóa dữ liệu duyệt",
+        "taskManager": "Trình quản lý tác vụ trình duyệt",
+        "altClose": "Đóng cửa sổ",
+        "altTab": "Chuyển ứng dụng",
+        "winExplorer": "File Explorer",
+        "winDesktop": "Hiện desktop",
+        "winLock": "Khóa máy",
+        "winRun": "Hộp thoại Run",
+        "winSettings": "Cài đặt Windows",
+        "winTaskView": "Task view",
+        "winClipboard": "Lịch sử clipboard"
+      },
+      "actions": {
+        "openSearch": "Tìm kiếm",
+        "quickSave": "Lưu nhanh",
+        "quickEdit": "Sửa nhanh",
+        "quickView": "Xem nhanh",
+        "download": "Tải xuống",
+        "deleteItem": "Xóa",
+        "createNew": "Tạo mới",
+        "goBack": "Quay lại",
+        "goForward": "Tiến tới"
+      },
+      "actionDescriptions": {
+        "openSearch": "Tìm trong không gian học của bạn",
+        "quickSave": "Lưu mục đang mở",
+        "quickEdit": "Bắt đầu sửa mục đang mở",
+        "quickView": "Mở mục đang mở ở chế độ xem",
+        "download": "Tải xuống mục đang mở",
+        "deleteItem": "Xóa mục đang chọn",
+        "createNew": "Tạo mục mới trong phần này",
+        "goBack": "Về trang trước",
+        "goForward": "Tới trang tiếp theo trong lịch sử"
+      }
+    },
+    "data": {
+      "title": "Dữ liệu & quyền riêng tư",
+      "description": "Tuỳ chọn lưu trên trình duyệt này. Tài khoản và nội dung không gian học quản lý ở chỗ khác.",
+      "clear": "Xóa tuỳ chọn cục bộ",
+      "clearDescription": "Xóa các tuỳ chọn app trên thiết bị này: chuyển động, phím tắt, tutorial, và tương tự. Không xóa tài khoản hay dữ liệu học.",
+      "clearConfirmTitle": "Xóa tuỳ chọn cục bộ?",
+      "clearConfirmDescription": "Chỉ xóa tuỳ chọn trên trình duyệt này. Tài khoản, billing và nội dung học không bị xóa.",
+      "clearDone": "Đã xóa tuỳ chọn cục bộ"
+    },
     "customTags": "Thẻ riêng",
     "customTagsDescription": "Tạo thẻ của bạn cho từ vựng. Thẻ có sẵn vẫn dùng được bình thường.",
     "tagName": "Tên thẻ",
@@ -1454,6 +1632,7 @@
     "emptyTitle": "Chưa có bài nghe",
     "emptyDescription": "Tải lên file âm thanh hoặc video để tạo bài nghe đầu tiên.",
     "myLessons": "Bài nghe của tôi",
+    "collections": "Bộ sưu tập",
     "searchPlaceholder": "Tìm theo tiêu đề hoặc tên file…",
     "filterAll": "Tất cả",
     "filterCefr": "CEFR",
@@ -1465,6 +1644,7 @@
     "sortTitleAsc": "Tiêu đề (A → Z)",
     "sortTitleDesc": "Tiêu đề (Z → A)",
     "clearFilters": "Xóa bộ lọc",
+    "sortBy": "Sắp xếp",
     "noResults": "Không có bài nghe nào khớp",
     "noResultsDescription": "Thử từ khóa khác hoặc xóa bộ lọc.",
     "continue": "Tiếp tục",
@@ -1592,6 +1772,7 @@
     "newCallFirst": "Bắt đầu cuộc gọi đầu tiên",
     "newTitle": "Cuộc gọi nói mới",
     "newDescription": "Chọn trình độ và chủ đề. Gia sư AI sẽ vào cuộc gọi và nói chuyện với bạn.",
+    "modalTip": "Chọn độ khó của cuộc trò chuyện, rồi ghi chú ngắn để gia sư biết bạn muốn luyện gì.",
     "create": "Tạo cuộc gọi",
     "created": "Đã tạo cuộc gọi nói",
     "titleLabel": "Tiêu đề",
@@ -1601,6 +1782,29 @@
     "emptyTitle": "Chưa có buổi nói nào",
     "emptyDescription": "Bắt đầu cuộc gọi video với gia sư AI để luyện nói.",
     "mySessions": "Buổi nói của tôi",
+    "sessionHint": "Mở buổi đã xong để xem feedback và transcript.",
+    "stats": {
+      "aria": "Thống kê speaking",
+      "total": "Buổi",
+      "completed": "Hoàn thành",
+      "ready": "Sẵn sàng",
+      "topics": "Chủ đề"
+    },
+    "guide": {
+      "aria": "Cách luyện speaking",
+      "pick": {
+        "title": "Chọn trọng tâm",
+        "body": "Chọn CEFR và chủ đề để gia sư dẫn cuộc nói đúng hướng bạn cần."
+      },
+      "call": {
+        "title": "Nói trực tiếp",
+        "body": "Vào cuộc gọi video, nói tự nhiên, và nhờ nhắc lại khi chưa rõ."
+      },
+      "review": {
+        "title": "Ôn sau buổi",
+        "body": "Quay lại xem feedback và transcript để dùng cho từ vựng hoặc viết."
+      }
+    },
     "join": "Vào cuộc gọi",
     "open": "Mở",
     "viewProgress": "Xem tiến trình",
@@ -1858,6 +2062,7 @@
     "groupByWeek": "Tuần",
     "groupByMonth": "Tháng",
     "weekOf": "Tuần {date}",
+    "sortBy": "Sắp xếp",
     "sortUpdatedDesc": "Mới cập nhật",
     "sortUpdatedAsc": "Cũ nhất",
     "sortCreatedDesc": "Tạo mới nhất",

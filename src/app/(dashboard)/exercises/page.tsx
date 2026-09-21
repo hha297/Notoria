@@ -25,7 +25,7 @@ export default async function ExercisesPage() {
   }
 
   return (
-    <PageShell>
+    <PageShell className="route-atelier" data-route="exercises">
       <PageHeader
         eyebrow={t("title")}
         title={t("title")}

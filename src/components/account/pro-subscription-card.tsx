@@ -10,13 +10,6 @@ import { ProUpgradeDialog } from "@/components/billing/pro-upgrade-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import {
   billingErrorKey,
   createPortalSession,
 } from "@/lib/stripe/client-billing";
@@ -90,23 +83,21 @@ export function ProSubscriptionCard({
 
   return (
     <>
-      <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
-        <CardHeader className="border-b border-hairline-cloud px-6 py-5">
+      <section className="account-panel account-panel-pro">
+        <header className="account-panel-head">
           <div className="flex flex-wrap items-center gap-2">
-            <CardTitle className="text-lg text-ink">{t("title")}</CardTitle>
+            <h2 className="account-panel-title">{t("title")}</h2>
             <Badge variant={billing.isPro ? "secondary" : "outline"}>
               {billing.isPro ? t("proBadge") : t("freeBadge")}
             </Badge>
           </div>
-          <CardDescription>
+          <p className="account-panel-lede">
             {billing.isPro ? t("proDescription") : t("description")}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-4 px-6 py-6 sm:flex-row sm:items-center sm:justify-between">
+          </p>
+        </header>
+        <div className="account-panel-body account-pro-row">
           <div className="space-y-1">
-            <p className="text-2xl font-semibold tracking-tight text-ink">
-              {t("price")}
-            </p>
+            <p className="account-pro-price">{t("price")}</p>
             {billing.isPro && periodEnd ? (
               <p className="text-sm text-muted-foreground">
                 {t("renewsOn", { date: periodEnd })}
@@ -123,6 +114,7 @@ export function ProSubscriptionCard({
             <Button
               type="button"
               variant="outline"
+              className="route-quiet-action"
               disabled={isPortalPending || !billing.hasStripeCustomer}
               onClick={openPortal}
             >
@@ -139,8 +131,8 @@ export function ProSubscriptionCard({
               {t("upgrade")}
             </Button>
           )}
-        </CardContent>
-      </Card>
+        </div>
+      </section>
       <ProUpgradeDialog open={upgradeOpen} onOpenChange={setUpgradeOpen} />
     </>
   );

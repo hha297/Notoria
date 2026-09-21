@@ -19,10 +19,8 @@ import {
 } from "@/components/vocabulary/sortable-meanings";
 import { TagMultiSelect } from "@/components/vocabulary/tag-multi-select";
 import { SynonymPicker } from "@/components/vocabulary/synonym-picker";
-import {
-  VocabularyAiChecking,
-  VocabularyAiSuggestionCard,
-} from "@/components/vocabulary/ai-suggestion-card";
+import { VocabularyAiChecking, VocabularyAiSuggestionCard } from "@/components/vocabulary/ai-suggestion-card";
+import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { Button } from "@/components/ui/button";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
 import {
@@ -30,6 +28,7 @@ import {
   VocabularyComposerSection,
 } from "@/components/vocabulary/vocabulary-composer";
 import { Label } from "@/components/ui/label";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import {
   Select,
   SelectContent,
@@ -276,6 +275,7 @@ export function VocabularyForm({
   );
   const [notesImageUploading, setNotesImageUploading] = useState(false);
   const notesHydrationCancelRef = useRef<(() => void) | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const watchedWord = form.watch("word");
   const watchedPartOfSpeech = form.watch("partOfSpeech");
@@ -554,8 +554,20 @@ export function VocabularyForm({
 
   const showCancel = Boolean(onCancel || previewHref);
 
+  useRegisterShortcutAction("quickSave", () => {
+    formRef.current?.requestSubmit();
+  });
+  useRegisterShortcutAction(
+    "quickView",
+    () => {
+      if (previewHref) router.replace(previewHref);
+    },
+    Boolean(previewHref),
+  );
+
   return (
     <form
+      ref={formRef}
       onSubmit={form.handleSubmit(onSubmit)}
       className={cn("vocab-composer", isModal ? "space-y-6" : "space-y-8")}
     >
@@ -567,6 +579,12 @@ export function VocabularyForm({
           description={initialData ? t("editDescription") : t("formDescription")}
           addingToLabel={t("addingTo")}
           languageCode={language}
+          actions={
+            <ShowTutorialButton
+              section="vocabularyAdd"
+              autoOpenIfIncomplete={!initialData}
+            />
+          }
         />
       ) : null}
 
@@ -578,7 +596,10 @@ export function VocabularyForm({
           >
             {t("word")}
           </Label>
-          <div className="relative lg:col-start-1 lg:row-start-2">
+          <div
+            className="relative lg:col-start-1 lg:row-start-2"
+            data-tutorial="vocab-composer-word"
+          >
             <CapitalizedInput
               id="word"
               placeholder={t("wordPlaceholder")}
@@ -606,7 +627,10 @@ export function VocabularyForm({
           <Label className="vocab-composer-kicker mt-3 text-[0.68rem] font-semibold tracking-[0.18em] uppercase lg:col-start-2 lg:row-start-1 lg:mt-0">
             {t("partOfSpeech")}
           </Label>
-          <div className="lg:col-start-2 lg:row-start-2">
+          <div
+            className="lg:col-start-2 lg:row-start-2"
+            data-tutorial="vocab-composer-pos"
+          >
             <Select
               value={form.watch("partOfSpeech") ?? ""}
               onValueChange={(value) =>
@@ -703,7 +727,10 @@ export function VocabularyForm({
         </div>
       </VocabularyComposerSection>
 
-      <VocabularyComposerSection slot="meaning">
+      <VocabularyComposerSection
+        slot="meaning"
+        data-tutorial="vocab-composer-meanings"
+      >
         <SortableMeanings
           meanings={meanings}
           onChange={setMeanings}
@@ -720,28 +747,35 @@ export function VocabularyForm({
         />
       </VocabularyComposerSection>
 
-      <VocabularyComposerSection slot="example">
+      <VocabularyComposerSection
+        slot="example"
+        data-tutorial="vocab-composer-examples"
+      >
         <SortableExamples examples={examples} onChange={setExamples} />
       </VocabularyComposerSection>
 
       <VocabularyComposerSection slot="extra" className="space-y-6">
-        <TagMultiSelect
-          value={tags}
-          onChange={setTags}
-          customTags={customTags}
-          onCustomTagsChange={setLocalCustomTags}
-        />
+        <div data-tutorial="vocab-composer-tags">
+          <TagMultiSelect
+            value={tags}
+            onChange={setTags}
+            customTags={customTags}
+            onCustomTagsChange={setLocalCustomTags}
+          />
+        </div>
 
-        <SynonymPicker
-          value={synonyms}
-          onChange={setSynonyms}
-          options={availableSynonyms}
-          onOptionsChange={setLocalSynonyms}
-          currentWordId={initialData?.id}
-          currentWord={watchedWord}
-        />
+        <div data-tutorial="vocab-composer-synonyms">
+          <SynonymPicker
+            value={synonyms}
+            onChange={setSynonyms}
+            options={availableSynonyms}
+            onOptionsChange={setLocalSynonyms}
+            currentWordId={initialData?.id}
+            currentWord={watchedWord}
+          />
+        </div>
 
-        <div className="space-y-2">
+        <div className="space-y-2" data-tutorial="vocab-composer-notes">
           <Label
             htmlFor="notes-editor"
             className="vocab-composer-kicker font-heading text-base font-bold tracking-tight"
@@ -780,6 +814,7 @@ export function VocabularyForm({
           type="submit"
           disabled={saveDisabled}
           size="lg"
+          data-tutorial="vocab-composer-save"
           className="vocab-composer-submit h-12 w-full sm:h-11 sm:min-w-44 sm:w-auto"
         >
           {isSaving ? (

@@ -8,25 +8,22 @@ import {
   startOfWeek,
 } from "date-fns";
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { FileText, ListChecks, Plus, Search, SlidersHorizontal } from "lucide-react";
+import { FileText, ListChecks, Plus, Search } from "lucide-react";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { FolderWorkspace } from "@/components/folders/folder-workspace";
 import { FolderBreadcrumbs } from "@/components/folders/folder-breadcrumbs";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { WritingCard, type WritingListItem } from "@/components/writing/writing-card";
 import { WritingCollections } from "@/components/writing/writing-collections";
-import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
+import {
+  WritingChipPicker,
+  WritingFilterChipPicker,
+} from "@/components/writing/writing-chip-picker";
 import type { WritingMode } from "@/lib/writing/content";
 import { childrenOf, folderMatchesQuery, itemsInFolder } from "@/lib/folders/tree";
 import type { FolderListItem } from "@/lib/folders/types";
@@ -83,33 +80,13 @@ const CEFR_ORDER: Record<WritingCefr, number> = {
   c2: 6,
 };
 
-function sortLabel(sort: SortOption, t: ReturnType<typeof useTranslations>): string {
-  switch (sort) {
-    case "updated:desc":
-      return t("sortUpdatedDesc");
-    case "updated:asc":
-      return t("sortUpdatedAsc");
-    case "created:desc":
-      return t("sortCreatedDesc");
-    case "created:asc":
-      return t("sortCreatedAsc");
-    case "title:asc":
-      return t("sortTitleAsc");
-    case "title:desc":
-      return t("sortTitleDesc");
-    case "cefr:asc":
-      return t("sortCefrAsc");
-    case "cefr:desc":
-      return t("sortCefrDesc");
-  }
-}
-
 export function WritingTable({
   documents,
   folders,
   currentFolderId,
   workspaceId,
 }: WritingTableProps) {
+  const router = useRouter();
   const t = useTranslations("writing");
   const tFolders = useTranslations("folders");
   const tMeta = useTranslations("writing.meta");
@@ -117,11 +94,15 @@ export function WritingTable({
   const [search, setSearch] = useState("");
   const [sort, setSort] = useState<SortOption>("updated:desc");
   const [groupBy, setGroupBy] = useState<GroupByOption>("mode");
-  const [refineOpen, setRefineOpen] = useState(false);
   const [cefrFilter, setCefrFilter] = useState<MultiFilterValue>([]);
   const [topicFilter, setTopicFilter] = useState<MultiFilterValue>([]);
   const [formalityFilter, setFormalityFilter] = useState<MultiFilterValue>([]);
   const createHref = sectionCreateHref("writing", currentFolderId);
+
+  useRegisterShortcutAction("createNew", () => {
+    router.push(createHref);
+  });
+
   const childFolders = childrenOf(folders, currentFolderId);
   const matchingFolders = search.trim()
     ? folders.filter((folder) => folderMatchesQuery(folder, search))
@@ -273,7 +254,7 @@ export function WritingTable({
 
   const actions = (
     <>
-      <ShowTutorialButton section="writing" className="writing-quiet-action" />
+      <ShowTutorialButton section="writing" />
       <LinkButton href={createHref} data-tutorial="writing-create">
         <Plus className="size-4" />
         {t("create")}
@@ -321,99 +302,69 @@ export function WritingTable({
                   data-tutorial="writing-search"
                 />
               </div>
-              <Button
-                type="button"
-                variant={refineOpen ? "secondary" : "ghost"}
-                size="sm"
-                className="writing-refine-toggle"
-                aria-expanded={refineOpen}
-                onClick={() => setRefineOpen((open) => !open)}
-              >
-                <SlidersHorizontal className="size-3.5" />
-                {t("refine")}
-              </Button>
-            </div>
-            {refineOpen ? (
-              <div className="writing-refine">
-                <MultiFilterSelect
-                  emptyLabel={t("filterCefr")}
+              <div className="writing-refine writing-sheet-meta">
+                <WritingFilterChipPicker
+                  labelId="writing-filter-cefr"
+                  label={tMeta("cefrLabel")}
+                  allLabel={t("filterAll")}
                   values={cefrFilter}
                   onChange={setCefrFilter}
-                  triggerClassName="writing-refine-control w-full min-w-0"
                   options={WRITING_CEFR_LEVELS.map((level) => ({
                     value: level,
                     label: tMeta(`cefr.${level}`),
                   }))}
                 />
-                <MultiFilterSelect
-                  emptyLabel={t("filterTopic")}
-                  values={topicFilter}
-                  onChange={setTopicFilter}
-                  triggerClassName="writing-refine-control w-full min-w-0"
-                  options={WRITING_TOPICS.map((topic) => ({
-                    value: topic,
-                    label: resolveTopicLabel(topic, (key) => tTags(key)),
-                  }))}
-                />
-                <MultiFilterSelect
-                  emptyLabel={t("filterFormality")}
+                <WritingFilterChipPicker
+                  labelId="writing-filter-formality"
+                  label={tMeta("formalityLabel")}
+                  allLabel={t("filterAll")}
                   values={formalityFilter}
                   onChange={setFormalityFilter}
-                  triggerClassName="writing-refine-control w-full min-w-0"
                   options={WRITING_FORMALITY.map((item) => ({
                     value: item,
                     label: tMeta(`formality.${item}`),
                   }))}
                 />
-                <Select
+                <WritingFilterChipPicker
+                  labelId="writing-filter-topic"
+                  label={tMeta("topicLabel")}
+                  allLabel={t("filterAll")}
+                  values={topicFilter}
+                  onChange={setTopicFilter}
+                  options={WRITING_TOPICS.map((topic) => ({
+                    value: topic,
+                    label: resolveTopicLabel(topic, (key) => tTags(key)),
+                  }))}
+                />
+                <WritingChipPicker
+                  labelId="writing-filter-groupby"
+                  label={t("groupBy")}
                   value={groupBy}
-                  onValueChange={(value) =>
-                    value && setGroupBy(value as GroupByOption)
-                  }
-                >
-                  <SelectTrigger className="writing-refine-control w-full min-w-0">
-                    <SelectValue>
-                      {groupBy === "mode"
-                        ? t("groupByMode")
-                        : groupBy === "week"
-                          ? t("groupByWeek")
-                          : t("groupByMonth")}
-                    </SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="mode">{t("groupByMode")}</SelectItem>
-                    <SelectItem value="week">{t("groupByWeek")}</SelectItem>
-                    <SelectItem value="month">{t("groupByMonth")}</SelectItem>
-                  </SelectContent>
-                </Select>
-                <Select
+                  onChange={(value) => setGroupBy(value as GroupByOption)}
+                  options={[
+                    { value: "mode", label: t("groupByMode") },
+                    { value: "week", label: t("groupByWeek") },
+                    { value: "month", label: t("groupByMonth") },
+                  ]}
+                />
+                <WritingChipPicker
+                  labelId="writing-filter-sort"
+                  label={t("sortBy")}
                   value={sort}
-                  onValueChange={(value) => value && setSort(value as SortOption)}
-                >
-                  <SelectTrigger className="writing-refine-control w-full min-w-0">
-                    <SelectValue>{sortLabel(sort, t)}</SelectValue>
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="updated:desc">
-                      {t("sortUpdatedDesc")}
-                    </SelectItem>
-                    <SelectItem value="updated:asc">
-                      {t("sortUpdatedAsc")}
-                    </SelectItem>
-                    <SelectItem value="created:desc">
-                      {t("sortCreatedDesc")}
-                    </SelectItem>
-                    <SelectItem value="created:asc">
-                      {t("sortCreatedAsc")}
-                    </SelectItem>
-                    <SelectItem value="title:asc">{t("sortTitleAsc")}</SelectItem>
-                    <SelectItem value="title:desc">{t("sortTitleDesc")}</SelectItem>
-                    <SelectItem value="cefr:asc">{t("sortCefrAsc")}</SelectItem>
-                    <SelectItem value="cefr:desc">{t("sortCefrDesc")}</SelectItem>
-                  </SelectContent>
-                </Select>
+                  onChange={(value) => setSort(value as SortOption)}
+                  options={[
+                    { value: "updated:desc", label: t("sortUpdatedDesc") },
+                    { value: "updated:asc", label: t("sortUpdatedAsc") },
+                    { value: "created:desc", label: t("sortCreatedDesc") },
+                    { value: "created:asc", label: t("sortCreatedAsc") },
+                    { value: "title:asc", label: t("sortTitleAsc") },
+                    { value: "title:desc", label: t("sortTitleDesc") },
+                    { value: "cefr:asc", label: t("sortCefrAsc") },
+                    { value: "cefr:desc", label: t("sortCefrDesc") },
+                  ]}
+                />
               </div>
-            ) : null}
+            </div>
             <WritingCollections currentFolderId={currentFolderId} />
           </section>
 

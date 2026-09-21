@@ -1,7 +1,7 @@
-import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
+import { redirect } from "next/navigation";
 import { AccountSettings } from "@/components/account/account-settings";
-import { PageHeader } from "@/components/layout/page-header";
+import { PageShell } from "@/components/layout/page-shell";
 import { getAccountUser } from "@/lib/actions/account";
 import { requireUser } from "@/lib/auth/session";
 
@@ -21,14 +21,18 @@ export default async function AccountPage({
   const user = await getAccountUser();
 
   return (
-    <div className="space-y-8">
-      <PageHeader
-        eyebrow={t("account")}
-        title={t("accountSettings")}
-        description={t("accountDescription")}
-      />
+    <PageShell className="writing-atelier-shell account-atelier-shell">
+      <div className="writing-atelier account-atelier flex flex-col gap-10 lg:gap-12">
+        <header className="writing-hero">
+          <div className="writing-hero-copy">
+            <p className="writing-kicker">{t("account")}</p>
+            <h1 className="writing-brand-title">{t("accountSettings")}</h1>
+            <p className="writing-brand-lede">{t("accountDescription")}</p>
+          </div>
+        </header>
 
-      <AccountSettings user={user} checkoutResult={billing} />
-    </div>
+        <AccountSettings user={user} checkoutResult={billing} />
+      </div>
+    </PageShell>
   );
 }
