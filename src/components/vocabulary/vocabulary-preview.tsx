@@ -1,9 +1,11 @@
 "use client";
 
 import { Pencil, Star } from "lucide-react";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { LinkButton } from "@/components/ui/link-button";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { SynonymLinks } from "@/components/vocabulary/synonym-links";
 import { VocabularyNotesContent } from "@/components/vocabulary/vocabulary-notes-content";
 import {
@@ -48,9 +50,14 @@ export function VocabularyPreview({
   examples,
   tags,
 }: VocabularyPreviewProps) {
+  const router = useRouter();
   const t = useTranslations("vocabulary");
   const tPos = useTranslations("tags.pos");
   const tTags = useTranslations("tags");
+
+  useRegisterShortcutAction("quickEdit", () => {
+    router.push(`/vocabulary/${id}/edit`);
+  });
 
   const sortedMeanings = [...meanings].sort((a, b) => a.sortOrder - b.sortOrder);
   const primaryMeanings = sortedMeanings.filter(
@@ -63,7 +70,7 @@ export function VocabularyPreview({
 
   const partOfSpeechLabel =
     partOfSpeech &&
-    PARTS_OF_SPEECH.includes(partOfSpeech as (typeof PARTS_OF_SPEECH)[number])
+      PARTS_OF_SPEECH.includes(partOfSpeech as (typeof PARTS_OF_SPEECH)[number])
       ? tPos(partOfSpeech as (typeof PARTS_OF_SPEECH)[number])
       : partOfSpeech;
 

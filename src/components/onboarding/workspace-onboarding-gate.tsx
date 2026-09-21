@@ -29,11 +29,13 @@ export function WorkspaceOnboardingGate({
     }
 
     let cancelled = false;
-    void getWorkspaceActivitySnapshotAction(workspaceId).then((next) => {
-      if (!cancelled) {
-        startTransition(() => setSnapshot(next));
-      }
-    });
+    void getWorkspaceActivitySnapshotAction(workspaceId).then(
+      (next: WorkspaceActivitySnapshot) => {
+        if (!cancelled) {
+          startTransition(() => setSnapshot(next));
+        }
+      },
+    );
 
     return () => {
       cancelled = true;

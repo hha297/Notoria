@@ -1,5 +1,5 @@
-import { DetailPageLoading } from "@/components/layout/page-loading";
+import { WritingDetailLoading } from "@/components/writing/writing-loading";
 
 export default function Loading() {
-  return <DetailPageLoading />;
+  return <WritingDetailLoading />;
 }

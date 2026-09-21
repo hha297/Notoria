@@ -26,19 +26,19 @@ export function WritingAiPanel({
       {suggestions.map((item) => (
         <div
           key={item.id}
-          className="min-w-0 max-w-full rounded-lg border border-accent-lime/40 bg-accent-lime/5 p-3"
+          className="min-w-0 max-w-full rounded-sm border border-primary/35 bg-surface-active p-3"
         >
           <p className="flex items-center gap-1.5 text-xs font-medium text-ink">
-            <Sparkles className="size-3.5 shrink-0 text-accent-lime" />
+            <Sparkles className="size-3.5 shrink-0 text-primary" />
             {t("suggestion")}
           </p>
           <div className="mt-1.5 flex flex-wrap items-center gap-2">
-            <span className="rounded-full bg-background px-2 py-0.5 text-[11px] font-medium text-ink">
+            <span className="rounded-sm bg-surface-elevated px-2 py-0.5 font-heading text-[11px] font-medium text-ink">
               {t(`types.${item.type}`)}
             </span>
             <span
               className={cn(
-                "rounded-full px-2 py-0.5 text-[11px] font-medium",
+                "rounded-sm px-2 py-0.5 font-heading text-[11px] font-medium",
                 item.severity === "error"
                   ? "bg-destructive/10 text-destructive"
                   : "bg-muted text-muted-foreground",

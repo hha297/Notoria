@@ -59,7 +59,13 @@
     "speaking": "Speaking",
     "account": "Account",
     "settings": "Settings",
-    "workspace": "Workspace"
+    "workspace": "Workspace",
+    "gettingStarted": "How to use",
+    "groups": {
+      "main": "Main menu",
+      "listenSpeak": "Listen and speak",
+      "more": "More"
+    }
   },
   "folders": {
     "new": "New folder",
@@ -95,7 +101,13 @@
     "nameRequired": "Enter a folder name",
     "invalidMove": "Can't move a folder into itself",
     "tooDeep": "This folder is nested too deeply",
-    "notFound": "Folder not found"
+    "notFound": "Folder not found",
+    "nameTaken": "A folder or writing already uses this name"
+  },
+  "theme": {
+    "toggle": "Toggle theme",
+    "light": "Light",
+    "dark": "Dark"
   },
   "header": {
     "createWorkspace": "Create workspace",
@@ -117,7 +129,10 @@
     "deleted": "Workspace deleted",
     "editTitle": "Edit workspace",
     "editDescription": "Update the name and language for this workspace.",
+    "editAction": "Edit workspace",
+    "deleteAction": "Delete workspace",
     "manage": "Workspace settings",
+    "manageNamed": "Manage “{name}”",
     "nameRequired": "Enter a workspace name",
     "deleteTitle": "Delete workspace?",
     "deleteDescription": "This will permanently delete “{name}” and all of its vocabulary, writing, theory, listening, and exercises. This cannot be undone.",
@@ -128,6 +143,8 @@
   "vocabulary": {
     "title": "Vocabulary",
     "bank": "bank",
+    "description": "Words you collect live here — search, filter, and reuse them across practice, writing, and review.",
+    "library": "Word bank",
     "addWordHighlight": "bank",
     "newWord": "New word",
     "editWord": "Edit word",
@@ -194,8 +211,9 @@
     "synonymsCannotLinkSelf": "A word can’t be a synonym of itself",
     "synonymsRemove": "Remove {word}",
     "formDescription": "Add a word with meanings, examples, and tags. Drag to reorder.",
-    "emptyTitle": "No words yet",
-    "emptyDescription": "Start building vocabulary in your active workspace.",
+    "addingTo": "Adding to",
+    "emptyTitle": "Your vocabulary bank is empty",
+    "emptyDescription": "Start collecting words and meanings to build your personal language library.",
     "addFirst": "Add your first word",
     "disabledNoWorkspace": "Create a workspace before adding vocabulary.",
     "saved": "Word saved",
@@ -220,11 +238,20 @@
     "sortWord": "Word",
     "sortAsc": "A → Z",
     "sortDesc": "Z → A",
-    "noResults": "No words match your filters",
+    "noResults": "No words found",
+    "noResultsDescription": "Try changing your search or filters.",
+    "loadError": "Couldn’t load vocabulary",
+    "loadErrorDescription": "Check your connection and try again.",
+    "retry": "Try again",
+    "viewList": "List",
+    "viewCards": "Cards",
+    "viewMode": "Display mode",
+    "moreTags": "+{count}",
+    "updatedAgo": "Updated {time}",
     "shownOfTotal": "{shown} of {total}",
     "stats": {
-      "total": "Total",
-      "recent": "This week"
+      "total": "Total vocabulary",
+      "recent": "Added this week"
     },
     "uncategorizedPos": "Uncategorized",
     "groupCount": "{count, plural, one {# word} other {# words}}",
@@ -251,13 +278,17 @@
     "export": {
       "button": "Export",
       "title": "Export Vocabulary",
-      "description": "Export the words currently shown in the table.",
+      "kicker": "Export vocabulary",
+      "description": "Export the words currently shown.",
       "rowCount": "{count, plural, one {# word} other {# words}}",
       "summaryWithNote": "{count, plural, one {# word} other {# words}} · Includes note",
       "format": "Format",
       "formatPdf": "PDF",
       "formatCsv": "CSV",
       "formatDocx": "Word",
+      "formatPdfHint": "Printable page",
+      "formatDocxHint": "Editable file",
+      "formatCsvHint": "Spreadsheet",
       "options": "Include",
       "content": "Content",
       "includePartOfSpeech": "Part of speech",
@@ -350,6 +381,8 @@
     "studio": "studio",
     "description": "Choose a study mode to practice your vocabulary.",
     "studioDescription": "Practice from your vocabulary, theory notes, or imported material — pick a source, then start a focused session.",
+    "startActivity": "Start",
+    "unlockActivity": "Unlock",
     "practice": "practice",
     "editor": "editor",
     "edit": "Edit",
@@ -371,12 +404,19 @@
     },
     "sources": {
       "label": "Exercise source",
+      "heading": "Source",
       "vocabulary": "Vocabulary",
       "theory": "Theory",
       "import": "Import",
+      "imported": "Imported",
+      "lastUsed": "Last used",
+      "selected": "Selected",
       "vocabularyHint": "Modes built from words in your active workspace.",
       "theoryHint": "AI turns a theory note into fill-in-the-blank practice.",
-      "importHint": "Import a worksheet or notes — we keep the source cues and turn them into practice cards."
+      "importHint": "Import a worksheet or notes — we keep the source cues and turn them into practice cards.",
+      "vocabularyCount": "{count, plural, one {# word} other {# words}}",
+      "theoryCount": "{count, plural, one {# note} other {# notes}}",
+      "importCount": "{count, plural, one {# import} other {# imports}}"
     },
     "processing": {
       "workingTitle": "Working on your exercise",
@@ -397,10 +437,13 @@
     },
     "import": {
       "eyebrow": "Imported practice",
+      "hubTitle": "From the page into practice",
       "practiceTitle": "Imported exercises",
       "practiceDescription": "Practice cards built from your imported material — same cues and order, no invented drills.",
       "formTitle": "Import learning material",
       "formDescription": "Provide a source. We extract its structure and build practice from those cues only.",
+      "chooseSource": "What can you import?",
+      "dropActive": "Drop to import",
       "modes": {
         "image": "Image",
         "file": "File",
@@ -480,6 +523,8 @@
     },
     "theory": {
       "eyebrow": "Theory practice",
+      "hubTitle": "Learn the ideas behind the language",
+      "hubDescription": "Explore grammar, patterns, and concepts through interactive lessons.",
       "practiceTitle": "Theory exercise",
       "practiceDescription": "AI turns this note into fill-in-the-blank practice — with hints and explanations.",
       "openLibrary": "Open theory library",
@@ -490,6 +535,13 @@
       "emptyCta": "Create a theory note",
       "searchPlaceholder": "Search by title or content…",
       "filterCategory": "Category",
+      "viewMode": "Display mode",
+      "viewList": "List",
+      "viewCards": "Cards",
+      "pageOf": "Page {page} of {totalPages}",
+      "previousPage": "Previous page",
+      "nextPage": "Next page",
+      "goToPage": "Go to page {page}",
       "noResults": "No theory notes match",
       "noResultsDescription": "Try another search or category.",
       "clearFilters": "Clear filters",
@@ -549,13 +601,44 @@
         "completeExercise": "Complete the exercise.",
         "theoryCheck": "Theory Check"
       },
-      "trueFalseLabel": "True or False"
+      "trueFalseLabel": "True or False",
+      "lesson": {
+        "label": "Lesson",
+        "concept": "Concept",
+        "theIdea": "The idea",
+        "seeIt": "See it",
+        "notice": "Notice",
+        "example": "Example",
+        "revealNote": "Show note",
+        "hideNote": "Hide note",
+        "continue": "Continue",
+        "quickReview": "Quick review",
+        "skipReview": "Skip review",
+        "startPractice": "Start practice",
+        "openTheory": "Open full theory",
+        "tryIt": "Try it",
+        "outline": "In this lesson",
+        "keyIdea": "Key idea",
+        "nowPractice": "Now practice",
+        "learnThis": "Learn this concept",
+        "applyNow": "Now let's use what you just learned.",
+        "preparing": "Preparing practice…",
+        "yourAnswer": "Your answer",
+        "correctForm": "The form",
+        "theRule": "The rule",
+        "why": "Why",
+        "complete": "Understood",
+        "completeHint": "You can move on when you're ready."
+      }
     },
     "types": {
       "flashcard": {
         "label": "Flashcards",
         "description": "Flip cards to study words and meanings with spaced-repetition ratings.",
-        "preview": "Flip · Rate · Review"
+        "preview": "Flip · Rate · Review",
+        "previewHint": "Finnish word",
+        "previewWord": "suomalainen",
+        "previewFlow": "FLIP → RATE → REVIEW"
       },
       "fill-in-blank": {
         "label": "Fill in the Blank",
@@ -565,12 +648,20 @@
       "multiple-choice": {
         "label": "Multiple Choice",
         "description": "Pick the correct meaning or word — distractors come from your vocabulary.",
-        "preview": "Which meaning fits?"
+        "preview": "Which meaning fits?",
+        "previewPrompt": "Which meaning fits?",
+        "previewA": "Finnish person",
+        "previewB": "weather",
+        "previewC": "building"
       },
       "match-pairs": {
         "label": "Match Pairs",
         "description": "Match each word to its meaning in a Quizlet-style grid.",
-        "preview": "Word ↔ Meaning"
+        "preview": "Word ↔ Meaning",
+        "previewLeft": "talo",
+        "previewRight": "house",
+        "previewLeftB": "koti",
+        "previewRightB": "home"
       },
       "type-answer": {
         "label": "Type the Answer",
@@ -580,7 +671,10 @@
       "form-sentence": {
         "label": "Form a Sentence",
         "description": "Write a full sentence with your saved vocabulary and get AI grammar feedback.",
-        "preview": "Write a sentence using…"
+        "preview": "Write a sentence using…",
+        "previewChipA": "Minä",
+        "previewChipB": "asun",
+        "previewChipC": "Helsingissä"
       }
     },
     "timedHint": {
@@ -608,6 +702,7 @@
     },
     "fillInBlank": {
       "prompt": "Fill in the blank",
+      "placeholder": "Type your answer…",
       "instruction": "Fill in the blank with the correct word form.",
       "hint": "Hint",
       "hintExplainWord": "Think about the meaning of the missing word in this sentence.",
@@ -639,10 +734,13 @@
       "noneValid": "AI could not create valid questions for these words. Try again."
     },
     "session": {
-      "complete": "Session complete!",
+      "complete": "Session complete",
       "score": "{correct} / {total} correct",
       "pairsMatched": "Matched {count} pairs",
-      "tryAgain": "Try again"
+      "tryAgain": "Try again",
+      "questionsLabel": "Questions",
+      "correctLabel": "Correct",
+      "reviewLabel": "To review"
     },
     "multipleChoice": {
       "questionWord": "What is the meaning of this word?",
@@ -663,11 +761,13 @@
       "previous": "Previous",
       "next": "Next",
       "shuffle": "Shuffle questions",
-      "finish": "Finish round"
+      "finish": "Finish round",
+      "keyboardHint": "1–4 to choose · Enter for next"
     },
     "matchPairs": {
       "words": "Words",
       "meanings": "Meanings",
+      "roundProgress": "Round {current} / {total}",
       "progress": "{matched} / {total} matched",
       "hint": "Select a word, then tap its meaning",
       "complete": "All pairs matched — great job!",
@@ -703,6 +803,7 @@
       "meaningLabel": "Meaning",
       "prompt": "Write a complete sentence using this vocabulary.",
       "placeholder": "Write a full sentence…",
+      "insertWord": "Add to sentence",
       "yourSentence": "Your sentence",
       "corrected": "Corrected",
       "betterSuggestion": "More natural",
@@ -738,9 +839,15 @@
     "disabledNoWorkspace": "Create a workspace before adding writing documents.",
     "create": "Create writing",
     "createFirst": "Create your first writing",
+    "onTheDesk": "On the desk",
+    "library": "Library",
+    "allWritings": "All writings",
+    "collections": "Collections",
+    "refine": "Refine",
+    "openWriting": "Open",
     "emptyTitle": "You haven't created any writing yet",
     "emptyDescription": "Create your first writing worksheet to start practicing.",
-    "searchPlaceholder": "Search by title, description, CEFR, topic…",
+    "searchPlaceholder": "Search writings…",
     "noResults": "No writing matches your search",
     "groupCount": "{count, plural, one {# document} other {# documents}}",
     "filterAll": "All",
@@ -752,6 +859,7 @@
     "groupByWeek": "Week",
     "groupByMonth": "Month",
     "weekOf": "Week of {date}",
+    "sortBy": "Sort by",
     "sortUpdatedDesc": "Last updated",
     "sortUpdatedAsc": "Oldest updated",
     "sortCreatedDesc": "Newest created",
@@ -803,12 +911,13 @@
     "deleteConfirmDescription": "\"{title}\" will be permanently removed.",
     "newTitle": "New writing",
     "editTitle": "Edit writing",
-    "formDescription": "Add a title, choose CEFR / topic / formality, then build your content.",
+    "formDescription": "Name the piece, pick a type, then write.",
     "documentTitle": "Title",
     "titlePlaceholder": "e.g. My Life Story",
     "documentDescription": "Description",
     "descriptionPlaceholder": "Short summary or prompt for this writing…",
     "titleRequired": "Title is required",
+    "titleTaken": "A writing or folder already uses this title",
     "promptRequired": "Add at least one question prompt",
     "mode": "Mode",
     "modes": {
@@ -880,14 +989,20 @@
     "export": {
       "button": "Export",
       "title": "Export writing",
-      "description": "Choose a format and options for a printable worksheet.",
-      "format": "Export format",
-      "formatPdf": "PDF (.pdf)",
-      "formatDocx": "Word (.docx)",
-      "options": "Options",
-      "includeExamples": "Include example answers",
-      "includeNotes": "Include notes / hints",
-      "leaveBlankSpace": "Leave blank writing space after each question",
+      "kicker": "Export writing",
+      "untitled": "Untitled writing",
+      "description": "Choose a format for a printable worksheet.",
+      "descriptionDocument": "Download this piece as a printable page or an editable file.",
+      "descriptionQuestionSet": "Download a worksheet from these questions.",
+      "format": "Format",
+      "formatPdf": "PDF",
+      "formatDocx": "Word",
+      "formatPdfHint": "Printable page",
+      "formatDocxHint": "Editable file",
+      "options": "Include",
+      "includeExamples": "Example answers",
+      "includeNotes": "Notes / hints",
+      "leaveBlankSpace": "Blank writing space",
       "confirm": "Export",
       "success": "Download started",
       "failed": "Export failed",
@@ -926,7 +1041,7 @@
     "questionWord": "What is the meaning?",
     "questionMeaning": "Which word matches this meaning?",
     "answer": "Answer",
-    "tapToFlip": "Tap or press Space to flip",
+    "tapToFlip": "Tap the card or press Space to reveal",
     "showAnswer": "Show answer",
     "hideAnswer": "Hide answer",
     "flip": "Flip",
@@ -935,7 +1050,7 @@
     "shuffle": "Shuffle",
     "restart": "Restart session",
     "progress": "{current} / {total}",
-    "keyboardHint": "Space flip · ← → navigate",
+    "keyboardHint": "Space reveal · ← → move · 1–4 rate",
     "meanings": "Meanings",
     "examples": "Examples",
     "synonyms": "Synonyms",
@@ -962,7 +1077,7 @@
     "overview": "Overview",
     "your": "Your",
     "workspaceLabel": "workspace",
-    "description": "{language} lives here. Notoria is a private study workspace: collect words, save theory, practice, write, then listen and speak.",
+    "description": "A private study workspace for the language you care about — collect words, keep theory close, practice in your own words, then write, listen, and speak until it feels yours.",
     "wordsSaved": "Words saved",
     "wordsReadyToPractice": "Words ready to practice",
     "theoryNotes": "Theory notes",
@@ -1059,7 +1174,17 @@
     "practiceNowCta": "Start an exercise",
     "practiceNowVocabCta": "Open vocabulary",
     "continueTitle": "Continue",
-    "continueSubtitle": "Pick up the last thing you were working on."
+    "continueSubtitle": "Pick up the last thing you were working on.",
+    "helloTitle": "Hello, {name}",
+    "continueLearning": "Continue learning",
+    "continueLearningSubtitle": "Jump into a workspace section.",
+    "snapshotTitle": "Quick glance",
+    "quickActions": "Quick actions",
+    "quickAddWord": "Add a word",
+    "quickStartExercise": "Start an exercise",
+    "quickOpenWriting": "Open writing",
+    "quickOpenTheory": "Open theory",
+    "nextStepTitle": "Next step"
   },
   "search": {
     "placeholder": "Search anything...",
@@ -1230,6 +1355,7 @@
   "tutorials": {
     "show": "Show tutorial",
     "showShort": "Tutorial",
+    "guideLabel": "Guide",
     "next": "Next",
     "skip": "Skip tutorial",
     "done": "Got it",
@@ -1254,6 +1380,45 @@
         "library": {
           "title": "4. Your word library",
           "body": "Your saved words live here. Open any entry to edit it, or use them in exercises and review later."
+        }
+      }
+    },
+    "vocabularyAdd": {
+      "title": "Add a word",
+      "description": "This form is the heart of Notoria — each field helps you remember and reuse the word later.",
+      "cta": "Got it",
+      "steps": {
+        "word": {
+          "title": "1. Type the word",
+          "body": "Enter the word or phrase you’re learning. This becomes the main entry in your vocabulary bank."
+        },
+        "partOfSpeech": {
+          "title": "2. Part of speech",
+          "body": "Choose noun, verb, adjective, and so on. It helps filters and AI suggestions stay accurate."
+        },
+        "meanings": {
+          "title": "3. Meanings",
+          "body": "Add one or more meanings. Star up to 5 primary meanings for exercises — others stay for reference. Drag to reorder."
+        },
+        "examples": {
+          "title": "4. Example sentences",
+          "body": "Add sentences that show how the word is used. Open Additional details for a translation or note if you need one."
+        },
+        "tags": {
+          "title": "5. Tags",
+          "body": "Tag by level, topic, or situation so you can find and practice related words later."
+        },
+        "synonyms": {
+          "title": "6. Synonyms",
+          "body": "Link related words from your bank to connect entries and deepen recall."
+        },
+        "notes": {
+          "title": "7. Notes",
+          "body": "Optional free-form notes — pronunciation tips, usage quirks, or anything you want to remember."
+        },
+        "save": {
+          "title": "8. Save",
+          "body": "When you’re ready, save the word. You can edit it anytime from your vocabulary library."
         }
       }
     },
@@ -1402,9 +1567,145 @@
     }
   },
   "settings": {
-    "title": "Settings",
-    "workspace": "Workspace",
-    "workspaceDescription": "Manage settings for your active workspace.",
+    "eyebrow": "Preferences",
+    "title": "App",
+    "highlight": "preferences",
+    "description": "How Notoria should look and behave for you — not workspace or account settings.",
+    "appearance": "Appearance",
+    "appearanceDescription": "Visual preferences for the whole app.",
+    "theme": "Theme",
+    "themeDescription": "Choose light, dark, or match your system.",
+    "themeLight": "Light",
+    "themeDark": "Dark",
+    "themeSystem": "System",
+    "accessibility": "Accessibility",
+    "accessibilityDescription": "Options that change how motion and interaction feel across Notoria.",
+    "motion": "Reduce motion",
+    "motionDescription": "Limit animations. System follows your device preference.",
+    "motionSystem": "System",
+    "motionReduce": "Reduce",
+    "motionFull": "Full motion",
+    "learning": "Learning",
+    "learningDescription": "Guidance preferences that apply across sections.",
+    "tutorials": "Section tutorials",
+    "tutorialsDescription": "Reset completed section walkthroughs so “Show tutorial” starts from the beginning again.",
+    "tutorialsReset": "Reset tutorials",
+    "tutorialsResetDone": "Section tutorials reset",
+    "shortcuts": {
+      "title": "Keyboard shortcuts",
+      "description": "Global shortcuts for the Notoria web app. Feature-specific keys stay inside each activity.",
+      "enabled": "Enable shortcuts",
+      "enabledDescription": "Turn all global shortcuts on or off without losing your custom bindings.",
+      "on": "On",
+      "off": "Off",
+      "action": "Action",
+      "keys": "Shortcut",
+      "edit": "Edit",
+      "add": "Add shortcut",
+      "addTitle": "Add shortcut",
+      "addDescription": "Choose an action you want to access quickly, then press the key combination you want to use.",
+      "chooseAction": "Choose action",
+      "customized": "Customized",
+      "defaultBadge": "Default",
+      "defaultWas": "Default was {keys}",
+      "extraBadge": "Additional",
+      "remove": "Remove",
+      "removed": "Shortcut removed",
+      "replace": "Replace",
+      "resetOne": "Reset to default",
+      "resetOneDone": "Shortcut reset to default",
+      "resetAll": "Reset all shortcuts",
+      "resetAllDescription": "Restore every global shortcut to its default key combination.",
+      "resetAllConfirmTitle": "Reset all keyboard shortcuts to their default settings?",
+      "resetAllConfirmDescription": "Custom global shortcuts will be cleared. Feature shortcuts are not affected.",
+      "resetAllDone": "All shortcuts reset",
+      "editTitle": "Edit: {action}",
+      "editDescription": "Press a key combination. Browser-reserved shortcuts cannot be used by Notoria.",
+      "pressKeys": "Press a key combination",
+      "pickActionFirst": "Choose an action, then press a key combination",
+      "saved": "Shortcut saved",
+      "conflict": "This shortcut is already assigned to “{action}”.",
+      "reserved": "Reserved by the browser and can't be used by Notoria.",
+      "statusAvailable": "✓ {keys}",
+      "statusConflict": "⚠ {keys} — already assigned to {action}.",
+      "statusReserved": "⚠ {keys} — reserved by the browser and can't be used by Notoria.",
+      "reservedTitle": "Some shortcuts can't be used",
+      "reservedDescription": "The browser and Windows reserve keys such as Ctrl + N, Ctrl + Shift + T, and Win + E. Notoria cannot override them.",
+      "reservedGroups": {
+        "ctrl": "Ctrl",
+        "ctrlShift": "Ctrl + Shift",
+        "alt": "Alt",
+        "win": "Windows"
+      },
+      "reservedPurposes": {
+        "newWindow": "New window",
+        "newTab": "New tab",
+        "closeTab": "Close tab",
+        "reopenTab": "Reopen closed tab",
+        "closeWindow": "Close window",
+        "newIncognito": "New private window",
+        "addressBar": "Address bar",
+        "reload": "Reload",
+        "hardReload": "Hard reload",
+        "nextTab": "Next tab",
+        "prevTab": "Previous tab",
+        "print": "Print",
+        "openFile": "Open file",
+        "browserSave": "Browser save page",
+        "bookmark": "Bookmark page",
+        "history": "History",
+        "downloads": "Downloads",
+        "viewSource": "View source",
+        "findInPage": "Find in page",
+        "findNext": "Find next",
+        "findPrev": "Find previous",
+        "devtools": "Developer tools",
+        "console": "JavaScript console",
+        "inspect": "Inspect element",
+        "clearData": "Clear browsing data",
+        "taskManager": "Browser task manager",
+        "altClose": "Close window",
+        "altTab": "Switch apps",
+        "winExplorer": "File Explorer",
+        "winDesktop": "Show desktop",
+        "winLock": "Lock PC",
+        "winRun": "Run dialog",
+        "winSettings": "Windows Settings",
+        "winTaskView": "Task view",
+        "winClipboard": "Clipboard history"
+      },
+      "actions": {
+        "openSearch": "Search",
+        "quickSave": "Quick Save",
+        "quickEdit": "Quick Edit",
+        "quickView": "Quick View",
+        "download": "Download",
+        "deleteItem": "Delete",
+        "createNew": "Create New",
+        "goBack": "Go back",
+        "goForward": "Go forward"
+      },
+      "actionDescriptions": {
+        "openSearch": "Search across your workspace",
+        "quickSave": "Save the current item",
+        "quickEdit": "Start editing the current item",
+        "quickView": "Open the current item in view mode",
+        "download": "Download the current item",
+        "deleteItem": "Delete the selected item",
+        "createNew": "Create a new item in this section",
+        "goBack": "Return to the previous page",
+        "goForward": "Move forward in your browsing history"
+      }
+    },
+    "data": {
+      "title": "Data & privacy",
+      "description": "Local preference data stored in this browser. Account and workspace content are managed elsewhere.",
+      "clear": "Clear local preferences",
+      "clearDescription": "Removes theme-independent app preferences stored on this device: motion, shortcuts, tutorials, and similar local settings. Does not delete your account or workspace data.",
+      "clearConfirmTitle": "Clear local preferences?",
+      "clearConfirmDescription": "This only clears preferences in this browser. Your account, billing, and learning content are not deleted.",
+      "clearDone": "Local preferences cleared"
+    },
     "customTags": "Custom tags",
     "customTagsDescription": "Create workspace-specific tags for vocabulary. Built-in tags are always available.",
     "tagName": "Tag name",
@@ -1428,6 +1729,8 @@
     "title": "Theory",
     "highlight": "learn",
     "description": "Notes on grammar, pronunciation, speaking, and how the language works — not writing practice.",
+    "library": "Library",
+    "collections": "Collections",
     "disabledNoWorkspace": "Create a workspace before adding theory notes.",
     "create": "Add theory",
     "createFirst": "Add your first note",
@@ -1447,7 +1750,7 @@
     "editDescription": "Save to keep your changes. Cancel discards unsaved edits.",
     "editSaveHint": "Save to update the note. Cancel discards unsaved edits.",
     "newTitle": "New theory",
-    "formDescription": "Pick a category, add a short summary, then write the explanation.",
+    "formDescription": "Name the rule, pick a category, then explain it in your own words.",
     "documentTitle": "Title",
     "titlePlaceholder": "e.g. How Finnish partitive works",
     "categoryLabel": "Category",
@@ -1480,10 +1783,14 @@
     "export": {
       "button": "Export",
       "title": "Export theory",
-      "description": "Choose a format for a printable document.",
-      "format": "Export format",
-      "formatPdf": "PDF (.pdf)",
-      "formatDocx": "Word (.docx)",
+      "kicker": "Export theory",
+      "untitled": "Untitled note",
+      "description": "Download this note as a printable page or an editable file.",
+      "format": "Format",
+      "formatPdf": "PDF",
+      "formatDocx": "Word",
+      "formatPdfHint": "Printable page",
+      "formatDocxHint": "Editable file",
       "confirm": "Export",
       "success": "Download started",
       "failed": "Export failed",
@@ -1512,6 +1819,7 @@
     "emptyTitle": "No listening lessons yet",
     "emptyDescription": "Upload an audio or video file to create your first listening lesson.",
     "myLessons": "My Listening Lessons",
+    "collections": "Collections",
     "searchPlaceholder": "Search by title or file name…",
     "filterAll": "All",
     "filterCefr": "CEFR",
@@ -1523,6 +1831,7 @@
     "sortTitleAsc": "Title (A → Z)",
     "sortTitleDesc": "Title (Z → A)",
     "clearFilters": "Clear filters",
+    "sortBy": "Sort by",
     "noResults": "No listening lessons match your search",
     "noResultsDescription": "Try another search or clear the filters.",
     "continue": "Continue",
@@ -1650,6 +1959,7 @@
     "newCallFirst": "Start your first call",
     "newTitle": "New speaking call",
     "newDescription": "Pick a level and topic. An AI tutor will join the call and speak with you.",
+    "modalTip": "Choose how hard the conversation should feel, then leave a short note so the tutor knows what to practice.",
     "create": "Create call",
     "created": "Speaking call created",
     "titleLabel": "Title",
@@ -1659,6 +1969,29 @@
     "emptyTitle": "No speaking sessions yet",
     "emptyDescription": "Start a video call with an AI tutor to practice speaking.",
     "mySessions": "My speaking sessions",
+    "sessionHint": "Open a finished call for feedback and transcript.",
+    "stats": {
+      "aria": "Speaking session stats",
+      "total": "Sessions",
+      "completed": "Completed",
+      "ready": "Ready",
+      "topics": "Topics"
+    },
+    "guide": {
+      "aria": "How speaking practice works",
+      "pick": {
+        "title": "Set the focus",
+        "body": "Pick CEFR and a topic so the tutor steers the conversation toward what you need."
+      },
+      "call": {
+        "title": "Talk live",
+        "body": "Join the video call, speak naturally, and ask for repeats when something is unclear."
+      },
+      "review": {
+        "title": "Review after",
+        "body": "Come back for feedback and a transcript you can reuse in vocabulary or writing."
+      }
+    },
     "join": "Join call",
     "open": "Open",
     "viewProgress": "View progress",
@@ -1721,26 +2054,63 @@
     "noWorkspace": "No active workspace",
     "notFound": "Not found"
   },
+  "learningOnboarding": {
+    "step": "Getting started",
+    "title": "What do you want to learn?",
+    "description": "Choose your first language to start learning.",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match that search.",
+    "continue": "Continue",
+    "continuing": "Continuing…",
+    "error": "Something went wrong. Please try again.",
+    "invalidLanguage": "That language isn't available. Please choose another."
+  },
   "auth": {
     "welcomeBack": "Welcome back",
     "signInDescription": "Sign in to your Notoria account",
+    "signInEyebrow": "Sign in",
+    "signUpEyebrow": "Sign up",
     "createAccountTitle": "Create your account",
-    "registerDescription": "Start learning with your own private workspace",
+    "registerDescription": "Create your account, then choose what you want to learn.",
     "email": "Email",
     "password": "Password",
     "name": "Name",
     "signIn": "Sign in",
+    "signingIn": "Signing in…",
     "signOut": "Log out",
     "createAccount": "Create account",
+    "creatingAccount": "Creating account…",
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
     "invalidCredentials": "Invalid email or password",
     "emailExists": "An account with this email already exists",
+    "emailInvalid": "Enter a valid email address",
     "registerFailed": "Could not create account. Please try again.",
     "signInAfterRegisterFailed": "Account created. Please sign in.",
     "passwordHint": "At least 8 characters",
+    "passwordTooShort": "Password must be at least 8 characters",
     "showPassword": "Show password",
     "hidePassword": "Hide password",
+    "forgotPassword": "Forgot password?",
+    "forgotPasswordEyebrow": "Account recovery",
+    "forgotPasswordTitle": "Forgot your password?",
+    "forgotPasswordDescription": "Enter your email and we’ll send a reset link if an account exists.",
+    "sendResetLink": "Send reset link",
+    "sendingResetLink": "Sending…",
+    "forgotPasswordSentTitle": "Check your email",
+    "forgotPasswordSent": "If an account exists for this email, we've sent you a password reset link.",
+    "forgotPasswordFailed": "Could not send a reset link. Please try again.",
+    "backToSignIn": "Back to sign in",
+    "resetPasswordEyebrow": "Account recovery",
+    "resetPasswordTitle": "Choose a new password",
+    "resetPasswordDescription": "Enter a new password for your Notoria account.",
+    "resetPassword": "Reset password",
+    "resettingPassword": "Resetting…",
+    "resetPasswordSuccessTitle": "Password updated",
+    "resetPasswordSuccess": "Your password has been reset. You can sign in now.",
+    "resetPasswordFailed": "Could not reset your password. Please try again.",
+    "resetTokenInvalid": "This reset link is invalid or has expired. Request a new one.",
+    "resetTokenMissing": "This reset link is missing or incomplete. Request a new one.",
     "account": "Account",
     "accountSettings": "Account settings",
     "accountDescription": "Update your profile photo and password.",
@@ -1767,7 +2137,70 @@
     "saveName": "Save name",
     "nameUpdated": "Name updated",
     "nameUpdateFailed": "Could not update name",
-    "nameTooShort": "Name must be at least 2 characters"
+    "nameTooShort": "Name must be at least 2 characters",
+    "continueWithGoogle": "Continue with Google",
+    "continuingWithGoogle": "Connecting to Google…",
+    "orContinueWith": "or continue with email",
+    "oauthCancelled": "Google sign-in was cancelled. You can try again.",
+    "oauthFailed": "Google sign-in failed. Please try again.",
+    "oauthAccountNotLinked": "This email is already used with another sign-in method.",
+    "oauthNotConfigured": "Google sign-in is not configured yet."
+  },
+  "account": {
+    "eyebrow": "Account",
+    "title": "Your",
+    "highlight": "account",
+    "description": "Manage your profile, Notoria Pro, and account security — including permanently closing your account.",
+    "pro": {
+      "freeLede": "Free covers everyday practice. Pro unlocks the AI tools that turn your notes into listening, speaking, writing help, and printable files.",
+      "activeLede": "Your Pro plan is active. These AI learning tools stay unlocked while your subscription renews.",
+      "unlockLabel": "Unlock with Pro",
+      "includedLabel": "Included with your Pro plan",
+      "features": {
+        "aiPractice": "Fill-blank, contextual drills, and form-a-sentence from your own material",
+        "writingAi": "Corrections and suggestions on the texts you write",
+        "export": "Share or print worksheets as PDF or Word",
+        "listening": "Turn your own audio or video into practice lessons",
+        "speaking": "Live AI tutor calls with transcript and feedback"
+      }
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "How you appear across Notoria. Email stays tied to sign-in.",
+      "emailHint": "Email cannot be changed here. Contact support if you need to move to a different address."
+    },
+    "security": {
+      "title": "Password",
+      "description": "Choose a strong password you do not reuse elsewhere."
+    },
+    "danger": {
+      "title": "Close account",
+      "description": "Permanently delete your Notoria account and everything inside it.",
+      "deleteTitle": "Delete my account",
+      "deleteHint": "This removes all workspaces, learning content, and billing for this account. Download a backup first if you want to keep a copy.",
+      "deleteAction": "Delete account"
+    },
+    "delete": {
+      "kicker": "Irreversible",
+      "title": "Delete your account?",
+      "description": "You are about to permanently close {email}. This cannot be undone.",
+      "warningTitle": "Before you continue",
+      "warnings": {
+        "workspaces": "Every workspace and all vocabulary, theory, writing, listening, and speaking data will be deleted.",
+        "billing": "Any active Notoria Pro subscription will be canceled immediately.",
+        "media": "Uploaded media and your profile photo will be removed.",
+        "permanent": "There is no recovery period after confirmation."
+      },
+      "backupTitle": "Download a backup first",
+      "backupHint": "Exports your learning data as a JSON file for safekeeping. Media files are linked by URL, not embedded.",
+      "backup": "Download backup",
+      "backupDone": "Backup downloaded",
+      "backupFailed": "Could not prepare your backup. Try again.",
+      "confirmLabel": "Type {phrase} to confirm",
+      "confirm": "Permanently delete account",
+      "deleted": "Your account has been deleted",
+      "failed": "Could not delete your account. Please try again."
+    }
   },
   "billing": {
     "title": "Notoria Pro",
@@ -1781,8 +2214,8 @@
     "mostPopular": "Most Popular",
     "currentPlan": "Current Plan",
     "choosePro": "Choose Pro",
-    "freePlanDescription": "Your library, practice, and CSV export.",
-    "proPlanDescription": "AI exercises, form-a-sentence, listening, speaking, and PDF/Word export.",
+    "freePlanDescription": "Core practice, vocab AI help, writing, and CSV.",
+    "proPlanDescription": "AI exercises, writing help, listening, speaking, and PDF/Word.",
     "upgrade": "Upgrade to Pro",
     "manage": "Manage subscription",
     "proBadge": "Pro",
@@ -1797,70 +2230,48 @@
     "notConfigured": "Billing is not configured yet.",
     "noCustomer": "No billing customer is linked to this account yet.",
     "modalTitle": "Upgrade Plan",
-    "modalSubtitle": "Free keeps your library and practice. Pro adds AI exercises from vocabulary, theory, and imports — plus writing, listening, speaking, and printable files.",
+    "modalSubtitle": "Free covers everyday practice and your library. Pro unlocks AI exercises, writing help, listening, speaking, and printable files.",
     "lockedTitle": "This is a Pro feature",
-    "lockedDescription": "Upgrade to unlock AI exercises (vocabulary, form-a-sentence, theory, and import) — along with listening, speaking, writing AI, and PDF/Word export.",
+    "lockedDescription": "Upgrade for AI exercises, writing help, listening, speaking, and PDF/Word export.",
     "planName": "Pro",
     "cancelAnytime": "Cancel anytime",
     "compare": {
       "capability": "What you get",
       "free": "Free",
       "pro": "Pro",
+      "freeIncludes": "Included on Free",
+      "proUnlocks": "Pro unlocks",
       "impact": "Why it matters",
       "yes": "Yes",
       "locked": "Locked",
       "rows": {
-        "vocab": {
-          "capability": "Word library, tags, search",
-          "impact": "Keep your words without paying"
+        "practice": {
+          "capability": "Flashcards, match pairs, quizzes & type-answer",
+          "impact": "Core drills from your own words"
         },
         "vocabAi": {
-          "capability": "AI spelling and meaning",
-          "impact": "Add words faster and more accurately"
+          "capability": "AI spelling & meaning when adding words",
+          "impact": "Add words faster with free AI help"
+        },
+        "studio": {
+          "capability": "Writing editor & theory notes",
+          "impact": "Draft texts and keep grammar notes"
         },
         "csv": {
           "capability": "CSV export",
           "impact": "Backup words to a spreadsheet"
         },
-        "export": {
-          "capability": "PDF and Word export",
-          "impact": "Print worksheets or share files"
-        },
-        "writing": {
-          "capability": "Writing editor",
-          "impact": "Draft texts and worksheets yourself"
+        "aiPractice": {
+          "capability": "AI exercises from vocab, theory & import",
+          "impact": "Fill-blank, contextual drills, form-a-sentence"
         },
         "writingAi": {
-          "capability": "Writing AI (check and improve)",
+          "capability": "Writing AI (check & improve)",
           "impact": "Get corrections on your own text"
         },
-        "exercises": {
-          "capability": "Exercises from your examples",
-          "impact": "Practice sentences you already saved"
-        },
-        "fillBlank": {
-          "capability": "AI fill-in-the-blank",
-          "impact": "New sentences, not memorized examples"
-        },
-        "exerciseDifficulty": {
-          "capability": "AI Contextual MC & Type the Answer",
-          "impact": "Fill-in-the-blank practice from your vocabulary at Easy–Intensive"
-        },
-        "formSentence": {
-          "capability": "Form a Sentence (AI feedback)",
-          "impact": "Write with your words and get grammar help"
-        },
-        "theory": {
-          "capability": "Theory notes",
-          "impact": "Save grammar and usage for later"
-        },
-        "theoryAi": {
-          "capability": "AI Theory Exercises",
-          "impact": "Practice your own Theory with AI fill-in-the-blank exercises"
-        },
-        "importAi": {
-          "capability": "AI Import Exercises",
-          "impact": "Turn worksheets, images, PDFs, or URLs into practice cards"
+        "export": {
+          "capability": "PDF & Word export",
+          "impact": "Print worksheets or share files"
         },
         "listening": {
           "capability": "Listening lessons",

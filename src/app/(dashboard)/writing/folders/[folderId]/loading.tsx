@@ -1,5 +1,5 @@
-import { ListPageLoading } from "@/components/layout/page-loading";
+import { WritingListLoading } from "@/components/writing/writing-loading";
 
 export default function Loading() {
-  return <ListPageLoading />;
+  return <WritingListLoading />;
 }

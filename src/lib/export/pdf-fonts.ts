@@ -1,6 +1,7 @@
 import { Font } from "@react-pdf/renderer";
 
-export const PDF_FONT_SANS = "ChakraPetch";
+/** Matches the app body font (`IBM_Plex_Sans` in `layout.tsx`). */
+export const PDF_FONT_SANS = "IBMPlexSans";
 
 let fontReady: Promise<void> | null = null;
 
@@ -19,12 +20,12 @@ export async function ensurePdfFonts() {
       const origin = window.location.origin;
       const [regular, italic, medium, mediumItalic, bold, boldItalic] =
         await Promise.all([
-          fetchFontBlob(origin, "ChakraPetch-Regular.ttf"),
-          fetchFontBlob(origin, "ChakraPetch-Italic.ttf"),
-          fetchFontBlob(origin, "ChakraPetch-Medium.ttf"),
-          fetchFontBlob(origin, "ChakraPetch-MediumItalic.ttf"),
-          fetchFontBlob(origin, "ChakraPetch-Bold.ttf"),
-          fetchFontBlob(origin, "ChakraPetch-BoldItalic.ttf"),
+          fetchFontBlob(origin, "IBMPlexSans-Regular.ttf"),
+          fetchFontBlob(origin, "IBMPlexSans-Italic.ttf"),
+          fetchFontBlob(origin, "IBMPlexSans-Medium.ttf"),
+          fetchFontBlob(origin, "IBMPlexSans-MediumItalic.ttf"),
+          fetchFontBlob(origin, "IBMPlexSans-Bold.ttf"),
+          fetchFontBlob(origin, "IBMPlexSans-BoldItalic.ttf"),
         ]);
 
       Font.register({

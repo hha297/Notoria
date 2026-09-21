@@ -17,11 +17,16 @@ import {
   type LucideIcon,
 } from "lucide-react";
 import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
 import { useTranslations } from "next-intl";
 import { HighlightedText } from "@/components/search/highlighted-text";
 import { Input } from "@/components/ui/input";
+import { useAppShortcut } from "@/hooks/use-app-shortcut";
 import { searchWorkspaceContent } from "@/lib/actions/search";
+import {
+  formatChord,
+  getShortcutChord,
+  subscribeShortcutsChanged,
+} from "@/lib/preferences/shortcuts";
 import { queryKeys } from "@/lib/query/keys";
 import type { SearchResult, SearchResultType } from "@/lib/search/types";
 import { cn } from "@/lib/utils";
@@ -40,9 +45,10 @@ const DEBOUNCE_MS = 200;
 
 type WorkspaceSearchProps = {
   workspaceId: string;
+  compact?: boolean;
 };
 
-export function WorkspaceSearch({ workspaceId }: WorkspaceSearchProps) {
+export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearchProps) {
   const t = useTranslations("search");
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
@@ -52,10 +58,21 @@ export function WorkspaceSearch({ workspaceId }: WorkspaceSearchProps) {
   const [open, setOpen] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMac, setIsMac] = useState(false);
+  const [searchShortcutLabel, setSearchShortcutLabel] = useState("Ctrl + K");
 
   useEffect(() => {
     setIsMac(/mac/i.test(navigator.platform));
   }, []);
+
+  useEffect(() => {
+    function syncLabel() {
+      setSearchShortcutLabel(
+        formatChord(getShortcutChord("openSearch"), isMac ? "mac" : "other"),
+      );
+    }
+    syncLabel();
+    return subscribeShortcutsChanged(syncLabel);
+  }, [isMac]);
 
   useEffect(() => {
     const timer = window.setTimeout(() => {
@@ -91,24 +108,13 @@ export function WorkspaceSearch({ workspaceId }: WorkspaceSearchProps) {
     if (selected) router.push(selected.href);
   }, [activeIndex, isFetching, results, router]);
 
-  useHotkeys(
-    "mod+k",
-    (event) => {
-      event.preventDefault();
+  useAppShortcut(
+    "openSearch",
+    () => {
       inputRef.current?.focus();
       setOpen(true);
     },
     { enableOnFormTags: true },
-  );
-
-  useHotkeys(
-    "/",
-    (event) => {
-      event.preventDefault();
-      inputRef.current?.focus();
-      setOpen(true);
-    },
-    { enableOnFormTags: false },
   );
 
   const showPanel = open;
@@ -168,7 +174,7 @@ export function WorkspaceSearch({ workspaceId }: WorkspaceSearchProps) {
   return (
     <div className="relative w-full">
       <div className="relative">
-        <Search className="pointer-events-none absolute top-1/2 left-4 size-5 -translate-y-1/2 text-muted-foreground" />
+        <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           ref={inputRef}
           value={value}
@@ -190,7 +196,10 @@ export function WorkspaceSearch({ workspaceId }: WorkspaceSearchProps) {
           aria-controls={listId}
           aria-activedescendant={activeId}
           aria-autocomplete="list"
-          className="h-12 rounded-xl border-hairline-cloud bg-card pr-24 pl-12 text-base shadow-none md:text-base"
+          className={cn(
+            "rounded-md border-hairline-cloud bg-surface-elevated pr-20 pl-10 shadow-none",
+            compact && "h-10",
+          )}
         />
         <div className="absolute top-1/2 right-3 flex -translate-y-1/2 items-center gap-1.5">
           {value ? (
@@ -212,7 +221,7 @@ export function WorkspaceSearch({ workspaceId }: WorkspaceSearchProps) {
             <LoaderCircle className="size-4 animate-spin text-muted-foreground" />
           ) : (
             <kbd className="hidden rounded-md border border-hairline-cloud bg-muted/60 px-1.5 py-0.5 text-[11px] font-medium text-muted-foreground sm:inline-block">
-              {isMac ? "⌘K" : t("shortcut")}
+              {searchShortcutLabel}
             </kbd>
           )}
         </div>
@@ -220,7 +229,7 @@ export function WorkspaceSearch({ workspaceId }: WorkspaceSearchProps) {
 
       {showPanel ? (
         <div
-          className="absolute z-30 mt-2 w-full overflow-hidden rounded-xl border border-hairline-cloud bg-card shadow-[0_12px_40px_rgba(15,23,42,0.08)]"
+          className="absolute z-30 mt-2 w-full overflow-hidden rounded-md border border-hairline-cloud bg-popover shadow-[0_1px_2px_rgba(35,37,29,0.06)]"
           onMouseDown={(event) => event.preventDefault()}
         >
           {showEmptyHint ? (
@@ -277,7 +286,7 @@ export function WorkspaceSearch({ workspaceId }: WorkspaceSearchProps) {
                         <span className="block truncate text-sm font-medium text-ink">
                           <HighlightedText text={result.title} query={query} />
                         </span>
-                        <span className="mt-0.5 inline-flex max-w-full truncate rounded-[4px] bg-surface-night px-1.5 py-px text-[11px] font-medium text-on-primary">
+                        <span className="mt-0.5 inline-flex max-w-full truncate rounded-full bg-muted px-2 py-px text-[11px] font-medium text-muted-foreground">
                           {result.collection}
                         </span>
                         {result.subtitle ? (

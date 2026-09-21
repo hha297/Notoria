@@ -25,7 +25,7 @@ export default async function ExercisesPage() {
   }
 
   return (
-    <PageShell>
+    <PageShell className="route-atelier" data-route="exercises">
       <PageHeader
         eyebrow={t("title")}
         title={t("title")}
@@ -35,7 +35,10 @@ export default async function ExercisesPage() {
         <ShowTutorialButton section="exercise" />
       </PageHeader>
 
-      <ExerciseStudioClient workspaceId={workspace.id} />
+      <ExerciseStudioClient
+        workspaceId={workspace.id}
+        workspaceName={workspace.name}
+      />
     </PageShell>
   );
 }

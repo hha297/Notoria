@@ -3,27 +3,18 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
-import { Trash2, Video } from "lucide-react";
+import { Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { LinkButton } from "@/components/ui/link-button";
 import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
 import { deleteSpeakingSession } from "@/lib/actions/speaking";
 import { isSpeakingErrorCode } from "@/lib/speaking/errors";
 import { isSpeakingJoinable } from "@/lib/speaking/types";
 import type { SpeakingSessionListItem } from "@/lib/speaking/types";
-import {
-  type WritingCefr,
-} from "@/lib/writing/meta";
+import { type WritingCefr } from "@/lib/writing/meta";
 import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 
 function statusVariant(status: SpeakingSessionListItem["status"]) {
@@ -70,33 +61,68 @@ export function SpeakingSessionCard({
   }
 
   const joinable = isSpeakingJoinable(session.status);
+  const href = `/speaking/${session.id}`;
+  const actionHref = joinable ? `/speaking/${session.id}/call` : href;
+
+  const metaBits = [
+    session.topic
+      ? resolveTopicLabel(session.topic, (key) => tTags(key))
+      : null,
+    session.cefrLevel
+      ? tMeta(`cefr.${session.cefrLevel as WritingCefr}`)
+      : null,
+    formatDistanceToNow(new Date(session.createdAt), { addSuffix: true }),
+  ].filter(Boolean);
 
   return (
     <>
-      <Card className="relative h-full cursor-pointer border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
-        <Link
-          href={`/speaking/${session.id}`}
-          className="absolute inset-0 z-0"
-          aria-label={session.title}
-        />
-        <CardHeader className="relative z-10 gap-3 pointer-events-none">
-          <div className="flex items-start justify-between gap-2">
-            <div className="flex size-10 items-center justify-center rounded-xl border border-hairline-cloud bg-muted/40">
-              <Video className="size-5 text-ink" />
+      <article className="writing-entry-wrap">
+        <div className="writing-entry">
+          <div className="writing-entry-body">
+            <div className="mb-1.5 flex flex-wrap items-center gap-2">
+              <Badge variant={statusVariant(session.status)}>
+                {t(`status.${session.status}`)}
+              </Badge>
             </div>
-            <Badge variant={statusVariant(session.status)}>
-              {t(`status.${session.status}`)}
-            </Badge>
+            <h3 className="writing-entry-title">
+              <Link href={href}>{session.title}</Link>
+            </h3>
+            {metaBits.length > 0 ? (
+              <p className="writing-kind-facts">
+                {metaBits.map((bit, index) => (
+                  <span key={`${bit}-${index}`}>
+                    {index > 0 ? (
+                      <span aria-hidden="true"> · </span>
+                    ) : null}
+                    <span>{bit}</span>
+                  </span>
+                ))}
+              </p>
+            ) : null}
+            <div className="mt-2">
+              <LinkButton
+                href={actionHref}
+                size="sm"
+                className={
+                  joinable ? "route-primary-cta" : "route-quiet-action"
+                }
+                data-route-action={joinable ? undefined : "speak"}
+                variant={joinable ? "default" : "outline"}
+              >
+                {joinable
+                  ? t("join")
+                  : session.status === "processing"
+                    ? t("viewProgress")
+                    : t("open")}
+              </LinkButton>
+            </div>
           </div>
-          <div className="group/title flex min-w-0 items-center gap-1">
-            <CardTitle className="min-w-0 truncate text-lg text-ink">
-              {session.title}
-            </CardTitle>
+          <div className="writing-entry-actions">
             <Button
               type="button"
               size="icon-sm"
               variant="ghost"
-              className="pointer-events-auto size-6 shrink-0 text-muted-foreground opacity-0 hover:text-destructive group-focus-within/title:opacity-100 group-hover/title:opacity-100 max-sm:opacity-100"
+              className="size-7 text-muted-foreground hover:text-destructive"
               onClick={() => setDeleteOpen(true)}
               disabled={isPending}
             >
@@ -104,42 +130,8 @@ export function SpeakingSessionCard({
               <span className="sr-only">{tc("delete")}</span>
             </Button>
           </div>
-          <CardDescription className="flex flex-wrap items-center gap-1.5 text-sm">
-            {session.topic ? (
-              <span>
-                {session.topic
-                  ? resolveTopicLabel(session.topic, (key) => tTags(key))
-                  : null}
-              </span>
-            ) : null}
-            {session.topic && session.cefrLevel ? (
-              <span aria-hidden="true">·</span>
-            ) : null}
-            {session.cefrLevel ? (
-              <span>{tMeta(`cefr.${session.cefrLevel as WritingCefr}`)}</span>
-            ) : null}
-          </CardDescription>
-        </CardHeader>
-        <CardContent className="relative z-10 mt-auto flex flex-wrap items-center justify-between gap-3 pb-1 pointer-events-none">
-          <p className="text-sm text-muted-foreground">
-            {formatDistanceToNow(new Date(session.createdAt), {
-              addSuffix: true,
-            })}
-          </p>
-          <LinkButton
-            href={joinable ? `/speaking/${session.id}/call` : `/speaking/${session.id}`}
-            size="sm"
-            variant={joinable ? "default" : "outline"}
-            className="pointer-events-auto"
-          >
-            {joinable
-              ? t("join")
-              : session.status === "processing"
-                ? t("viewProgress")
-                : t("open")}
-          </LinkButton>
-        </CardContent>
-      </Card>
+        </div>
+      </article>
 
       <ConfirmDeleteDialog
         open={deleteOpen}

@@ -45,6 +45,7 @@ import {
   coerceHeadingLevel,
   normalizeTipTapHeadingLevels,
 } from "@/lib/editor/heading-level";
+import "@/components/style/editor/tiptap.module.css";
 import { cn } from "@/lib/utils";
 
 const lowlight = createLowlight(common);
@@ -248,10 +249,11 @@ export function RichTextEditor({
       attributes: {
         class: cn(
           "prose prose-neutral dark:prose-invert max-w-none break-words px-4 py-3 [overflow-wrap:anywhere] focus:outline-none",
-          "prose-headings:font-heading",
-          "prose-h1:text-2xl prose-h1:font-medium prose-h1:leading-tight",
-          "prose-h2:text-xl prose-h2:font-medium prose-h2:leading-tight",
-          "prose-h3:text-lg prose-h3:font-medium prose-h3:leading-snug",
+          "prose-headings:font-heading prose-headings:font-bold prose-headings:tracking-tight",
+          "prose-p:font-sans prose-p:leading-[1.7] prose-p:text-[1.05rem]",
+          "prose-h1:text-[1.5rem] prose-h1:leading-[1.25]",
+          "prose-h2:text-[1.2rem] prose-h2:leading-[1.3]",
+          "prose-h3:text-[1.05rem] prose-h3:leading-snug",
           "[&_img]:h-auto [&_img]:max-h-80 [&_img]:max-w-full [&_img]:rounded-lg [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_table]:max-w-full",
           isNotes
             ? editable
@@ -495,7 +497,7 @@ export function RichTextEditor({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-xl border border-hairline-cloud bg-card",
+        "overflow-hidden rounded-md border border-hairline-cloud bg-surface",
         className,
       )}
     >

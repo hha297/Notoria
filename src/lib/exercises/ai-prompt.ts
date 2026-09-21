@@ -1,4 +1,5 @@
 import { FILL_BLANK_PLACEHOLDER } from "@/lib/exercises/ai-types";
+import { LEXICAL_SURFACE_GUIDANCE } from "@/lib/exercises/lexical-surface";
 import {
   getExerciseDifficultyProfile,
   parseExerciseDifficulty,
@@ -11,14 +12,16 @@ Create ONE brand-new Fill in the Blank exercise for EACH provided vocabulary wor
 
 The goal is to test whether the learner can use the target vocabulary in a new context.
 
+${LEXICAL_SURFACE_GUIDANCE}
+
 Requirements:
 1. Invent a completely new, natural, grammatically correct sentence from scratch.
 2. Do NOT use, copy, paraphrase, or lightly rewrite any sentence in avoidSentences.
 3. Do NOT reuse existing example sentences or previous exercise questions.
-4. Replace the target word or its correct grammatical form with exactly one blank.
+4. Generate the full grammatical context first, then decide the required surface form. Replace that surface form — not automatically the saved lemma — with exactly one blank.
 5. Use this exact blank placeholder: ${FILL_BLANK_PLACEHOLDER}
 6. Return the expected answer separately. Do not put the answer in the sentence.
-7. The answer must be a valid form of the target word. Inflected forms are allowed when grammar requires them.
+7. answer MUST be the exact surface form that fills the blank. baseWord MUST stay the saved lemma. Inflected, conjugated, agreeing, or other context-required forms are mandatory when grammar needs them. Never copy the lemma into the answer when the sentence requires another form.
 8. CRITICAL — meaningful context aligned with the taught meaning:
    - The sentence must clearly reflect the specific vocabulary meaning provided (if the word has multiple senses, use THAT meaning).
    - Provide enough context that a learner understands what is happening and why this word fits.
@@ -78,12 +81,11 @@ export function fillBlankUserPayload(input: {
     topic: string | null;
     avoidSentences?: string[];
   }>;
+  regenerateReason?: string;
 }) {
   const difficulty = parseExerciseDifficulty(
     input.difficulty ?? null,
-    input.level
-      ? mapLegacyCefrToDifficulty(input.level)
-      : "medium",
+    input.level ? mapLegacyCefrToDifficulty(input.level) : "medium",
   );
   const profile = getExerciseDifficultyProfile(difficulty);
 
@@ -96,9 +98,11 @@ export function fillBlankUserPayload(input: {
     difficultyGuidance: profile.aiGuidance,
     fillBlankGuidance: profile.fillBlankGuidance,
     reminder:
-      "Practice sentence/answer must be in languageHint. ALWAYS include sentenceMeaning in uiLanguage (website language), not the study language. Obey difficultyGuidance and fillBlankGuidance. Target words must come from the provided list only. Difficulty controls sentence construction only — never swap targets.",
+      "Practice sentence/answer must be in languageHint. ALWAYS include sentenceMeaning in uiLanguage (website language), not the study language. Obey difficultyGuidance and fillBlankGuidance. Target words must come from the provided list only. Difficulty controls sentence construction only — never swap targets. word/baseWord is the lemma; answer is the contextual surface form.",
+    regenerateReason: input.regenerateReason,
     words: input.words.map((word) => ({
       wordId: word.id,
+      lemma: word.word,
       word: word.word,
       meaning: word.meaning,
       partOfSpeech: word.partOfSpeech,
@@ -109,7 +113,10 @@ export function fillBlankUserPayload(input: {
 }
 
 function mapLegacyCefrToDifficulty(level: string): ExerciseDifficulty {
-  const normalized = level.trim().toLowerCase().replace(/^cefr-/, "");
+  const normalized = level
+    .trim()
+    .toLowerCase()
+    .replace(/^cefr-/, "");
   if (normalized === "a1" || normalized === "a2") return "easy";
   if (normalized === "b1") return "medium";
   if (normalized === "b2") return "hard";

@@ -25,7 +25,9 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
+import { composerStyles } from "@/components/vocabulary/vocabulary-composer";
 import { createSynonymWord } from "@/lib/actions/vocabulary";
+import { mx } from "@/lib/css-module";
 import { VOCABULARY_WORD_EXISTS } from "@/lib/vocabulary-errors";
 import {
   normalizeVocabularyWord,
@@ -216,14 +218,25 @@ export function SynonymPicker({
 
   return (
     <div className="space-y-2">
-      <Label htmlFor="synonyms-search">
+      <Label
+        htmlFor="synonyms-search"
+        className={mx(
+          composerStyles,
+          "vocab-composer-kicker font-heading text-base font-bold tracking-tight",
+        )}
+      >
         {t("synonyms")}{" "}
         <span className="font-normal text-muted-foreground">
           ({tCommon("optional")})
         </span>
       </Label>
 
-      <div className="overflow-hidden rounded-lg border border-hairline-cloud bg-card">
+      <div
+        className={mx(
+          composerStyles,
+          "vocab-composer-panel overflow-hidden rounded-md",
+        )}
+      >
         <div className="flex items-start gap-2 px-3 py-2">
           <div
             className="flex min-h-10 min-w-0 flex-1 cursor-text flex-wrap items-center gap-1.5"
@@ -407,12 +420,12 @@ export function SynonymPicker({
                 <SelectTrigger className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!">
                   <SelectValue placeholder={t("partOfSpeechPlaceholder")}>
                     {createPartOfSpeech &&
-                    PARTS_OF_SPEECH.includes(
-                      createPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
-                    )
+                      PARTS_OF_SPEECH.includes(
+                        createPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
+                      )
                       ? tPos(
-                          createPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
-                        )
+                        createPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
+                      )
                       : null}
                   </SelectValue>
                 </SelectTrigger>

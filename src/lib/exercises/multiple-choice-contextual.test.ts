@@ -2,6 +2,8 @@ import { describe, expect, it } from "vitest";
 import {
   contextualExerciseToQuestion,
   contextualPromptWithMeaningHint,
+  contextualSurfaceAnswer,
+  displayContextualOption,
   fillContextualBlank,
 } from "@/lib/exercises/multiple-choice";
 import type { FlashcardWord } from "@/types/flashcards";
@@ -22,8 +24,8 @@ const sampleWord = (overrides: Partial<FlashcardWord> = {}): FlashcardWord =>
   }) as FlashcardWord;
 
 describe("fillContextualBlank", () => {
-  it("inserts the grammatical answer form at the blank", () => {
-    expect(fillContextualBlank("This is a ________ test.", "alphas")).toBe(
+  it("inserts the grammatical answer form even when the blank run is longer", () => {
+    expect(fillContextualBlank("This is a __________ test.", "alphas")).toBe(
       "This is a alphas test.",
     );
   });
@@ -42,13 +44,13 @@ describe("fillContextualBlank", () => {
 });
 
 describe("contextualExerciseToQuestion", () => {
-  it("keeps base option and stores answerForm for reveal", () => {
+  it("uses the surface form as the clickable and displayed answer", () => {
     const question = contextualExerciseToQuestion(
       {
         wordId: "w1",
         prompt: "This is a ________ test.",
-        options: ["alpha", "beta", "gamma", "delta"],
-        correctOption: "alpha",
+        options: ["alphas", "beta", "gamma", "delta"],
+        correctOption: "alphas",
         baseWord: "alpha",
         answerForm: "alphas",
         sentenceMeaning: "Sentence gloss in the UI language.",
@@ -58,11 +60,13 @@ describe("contextualExerciseToQuestion", () => {
     );
 
     expect(question).not.toBeNull();
-    expect(question!.correctOption).toBe("alpha");
+    expect(question!.correctOption).toBe("alphas");
     expect(question!.answerForm).toBe("alphas");
     expect(question!.baseWord).toBe("alpha");
     expect(question!.meaningHint).toBe("abc");
     expect(question!.options).toHaveLength(4);
+    expect(contextualSurfaceAnswer(question!)).toBe("alphas");
+    expect(displayContextualOption(question!, "alphas")).toBe("alphas");
     expect(fillContextualBlank(question!.prompt, question!.answerForm!)).toBe(
       "This is a alphas test.",
     );
@@ -71,14 +75,38 @@ describe("contextualExerciseToQuestion", () => {
     );
   });
 
+  it("remaps a lemma option to the contextual surface form for display", () => {
+    const question = contextualExerciseToQuestion(
+      {
+        wordId: "w1",
+        prompt: "This is a ________ test.",
+        options: ["alpha", "beta", "gamma", "delta"],
+        correctOption: "alpha",
+        baseWord: "alpha",
+        answerForm: "alphas",
+      },
+      sampleWord(),
+      0,
+    );
+
+    expect(question).not.toBeNull();
+    expect(question!.correctOption).toBe("alphas");
+    expect(question!.options).toContain("alphas");
+    expect(question!.options).not.toContain("alpha");
+    expect(displayContextualOption(question!, question!.correctOption)).toBe(
+      "alphas",
+    );
+    expect(contextualSurfaceAnswer(question!)).toBe("alphas");
+  });
+
   it("rejects questions without a vocabulary meaning hint", () => {
     expect(
       contextualExerciseToQuestion(
         {
           wordId: "w1",
           prompt: "This is a ________ test.",
-          options: ["alpha", "beta", "gamma", "delta"],
-          correctOption: "alpha",
+          options: ["alphas", "beta", "gamma", "delta"],
+          correctOption: "alphas",
           answerForm: "alphas",
         },
         sampleWord({ meanings: [] }),
@@ -91,8 +119,8 @@ describe("contextualExerciseToQuestion", () => {
         {
           wordId: "w1",
           prompt: "This is a ________ test.",
-          options: ["alpha", "beta", "gamma", "delta"],
-          correctOption: "alpha",
+          options: ["alphas", "beta", "gamma", "delta"],
+          correctOption: "alphas",
           answerForm: "alphas",
         },
         undefined,

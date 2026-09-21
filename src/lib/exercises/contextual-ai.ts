@@ -7,24 +7,32 @@ import {
 } from "@/lib/exercises/contextual-ai-prompt";
 import {
   contextualAiResultSchema,
-  CONTEXTUAL_BLANK,
+  type ContextualAiDraft,
   type ContextualAiExercise,
   type ContextualAiRequest,
   type ContextualAiWordInput,
+  type ContextualMcDraft,
   type ContextualMcExercise,
+  type ContextualTypeAnswerDraft,
   type ContextualTypeAnswerExercise,
 } from "@/lib/exercises/contextual-ai-types";
 import type { ExerciseDifficulty } from "@/lib/exercises/difficulty";
 import { promptMatchesDifficulty } from "@/lib/exercises/prompt-matches-difficulty";
 import { resolveValidBlankMeaningHint } from "@/lib/exercises/blank-hint";
 import {
-  answersMatchAny,
+  optionLooksLikeLemma,
+  resolveContextualFromCompleteSentence,
+} from "@/lib/exercises/lexical-surface";
+import {
   normalizeMeaningKey,
   pickDistractors,
   shuffleArray,
 } from "@/lib/exercises/utils";
 
 export const CONTEXTUAL_MC_OPTION_COUNT = 4;
+
+const SURFACE_RETRY_REASON =
+  "Previous drafts were rejected or missing. Keep each assigned wordId as the target (do not swap words). Write a COMPLETE grammatical sentence that already contains the correctly inflected target token — no blank and no underscore placeholder. Return that exact in-sentence token as answerForm/answer/correctOption. Do not inflect again after writing the sentence. Use a distinct everyday context per word.";
 
 function getOpenAIClient() {
   const apiKey = process.env.OPENAI_API_KEY?.trim();
@@ -58,37 +66,20 @@ function normalizeOption(value: string) {
   return value.trim().replace(/\s+/g, " ");
 }
 
-function isRelatedTargetForm(answer: string, word: string) {
-  const a = answer.trim().toLowerCase();
-  const w = word.trim().toLowerCase();
-  if (!a || !w) return false;
-  if (a === w) return true;
-  if (a.includes(w) || w.includes(a)) return true;
-  return answersMatchAny(answer, [word]);
-}
-
 function optionEquals(a: string, b: string) {
   return normalizeMeaningKey(a) === normalizeMeaningKey(b);
 }
 
 /**
  * Build exactly 4 unique options using AI output + learner distractorPool.
- * Returns null when the learner pool cannot supply 4 distinct options.
+ * The clickable correct option is the contextual surface form.
  */
 function buildExactMcOptions(
   draftOptions: string[],
   correctOption: string,
-  answerForm: string,
+  lemma: string,
   distractorPool: string[],
 ): string[] | null {
-  const filtered = draftOptions
-    .map(normalizeOption)
-    .filter(Boolean)
-    .filter(
-      (option) =>
-        !optionEquals(option, answerForm) || optionEquals(option, correctOption),
-    );
-
   const unique: string[] = [];
   const pushUnique = (value: string) => {
     const normalized = normalizeOption(value);
@@ -98,7 +89,15 @@ function buildExactMcOptions(
   };
 
   pushUnique(correctOption);
-  for (const option of filtered) pushUnique(option);
+  for (const option of draftOptions.map(normalizeOption).filter(Boolean)) {
+    if (
+      optionLooksLikeLemma(option, lemma) &&
+      !optionEquals(option, correctOption)
+    ) {
+      continue;
+    }
+    pushUnique(option);
+  }
 
   const pool = distractorPool.map(normalizeOption).filter(Boolean);
   const needed = CONTEXTUAL_MC_OPTION_COUNT - unique.length;
@@ -107,7 +106,7 @@ function buildExactMcOptions(
       pool,
       correctOption,
       needed + pool.length,
-      optionEquals,
+      (a, b) => optionEquals(a, b) || optionLooksLikeLemma(a, lemma),
     )) {
       pushUnique(distractor);
       if (unique.length >= CONTEXTUAL_MC_OPTION_COUNT) break;
@@ -116,7 +115,9 @@ function buildExactMcOptions(
 
   if (unique.length < CONTEXTUAL_MC_OPTION_COUNT) return null;
 
-  const withCorrect = unique.some((option) => optionEquals(option, correctOption))
+  const withCorrect = unique.some((option) =>
+    optionEquals(option, correctOption),
+  )
     ? unique.slice(0, CONTEXTUAL_MC_OPTION_COUNT)
     : [correctOption, ...unique].slice(0, CONTEXTUAL_MC_OPTION_COUNT);
 
@@ -128,37 +129,49 @@ function buildExactMcOptions(
   return shuffleArray(withCorrect);
 }
 
+function completeSentenceSource(draft: {
+  completeSentence?: string | null;
+  prompt?: string | null;
+}) {
+  const complete = draft.completeSentence?.trim() ?? "";
+  if (complete) return complete;
+  return draft.prompt?.trim() ?? "";
+}
+
 function validateMc(
-  draft: ContextualMcExercise,
+  draft: ContextualMcDraft,
   word: ContextualAiWordInput,
   difficulty: ExerciseDifficulty,
 ): ContextualMcExercise | null {
-  const baseWord = normalizeOption(draft.baseWord || word.word);
-  // Require an explicit blank surface form from the model (do not fall back to base).
-  const rawAnswerForm = normalizeOption(draft.answerForm ?? "");
-  const prompt = draft.prompt.trim();
+  const lemma = normalizeOption(word.word);
+  const completeSentence = completeSentenceSource(draft);
+  const proposed = normalizeOption(
+    draft.answerForm || draft.correctOption || "",
+  );
 
-  if (!prompt || !baseWord || !rawAnswerForm) return null;
-  if (!prompt.includes(CONTEXTUAL_BLANK) && !prompt.includes("________")) {
-    return null;
-  }
-  if (!isRelatedTargetForm(baseWord, word.word)) return null;
-  if (!isRelatedTargetForm(rawAnswerForm, word.word)) return null;
-  if (!promptMatchesDifficulty(prompt, difficulty)) return null;
+  if (!completeSentence || !lemma) return null;
+  if (!promptMatchesDifficulty(completeSentence, difficulty)) return null;
+
+  const resolved = resolveContextualFromCompleteSentence({
+    completeSentence,
+    lemma,
+    proposed: proposed || undefined,
+  });
+  if (!resolved) return null;
+  const { prompt, answerForm } = resolved;
 
   const meaningHint = resolveValidBlankMeaningHint({
     meaning: word.meaning,
-    answer: rawAnswerForm,
-    baseWord,
+    answer: answerForm,
+    baseWord: lemma,
   });
   if (!meaningHint) return null;
 
-  const correctOption = baseWord;
-  const answerForm = applyAnswerFormCasingForBlank(prompt, rawAnswerForm);
+  const correctOption = answerForm;
   const options = buildExactMcOptions(
     draft.options,
     correctOption,
-    answerForm,
+    lemma,
     word.distractorPool ?? [],
   );
   if (!options) return null;
@@ -169,49 +182,37 @@ function validateMc(
     prompt,
     options,
     correctOption,
-    baseWord,
+    baseWord: lemma,
     answerForm,
     sentenceMeaning: draft.sentenceMeaning,
   };
 }
 
-function applyAnswerFormCasingForBlank(prompt: string, answerForm: string): string {
-  const form = answerForm.trim();
-  if (!form) return form;
-  const blankIndex = prompt.indexOf(CONTEXTUAL_BLANK);
-  const idx = blankIndex >= 0 ? blankIndex : prompt.indexOf("________");
-  if (idx < 0) return form;
-  const prefix = prompt.slice(0, idx);
-  const atSentenceStart =
-    prefix.trim().length === 0 || /[.!?…]\s*$/u.test(prefix) || /\n\s*$/u.test(prefix);
-  if (atSentenceStart) {
-    return form.charAt(0).toLocaleUpperCase() + form.slice(1);
-  }
-  return form.charAt(0).toLocaleLowerCase() + form.slice(1);
-}
-
 function validateTypeAnswer(
-  draft: ContextualTypeAnswerExercise,
+  draft: ContextualTypeAnswerDraft,
   word: ContextualAiWordInput,
   difficulty: ExerciseDifficulty,
 ): ContextualTypeAnswerExercise | null {
-  const rawAnswer = normalizeOption(draft.answer);
-  const prompt = draft.prompt.trim();
-  if (!prompt || !rawAnswer) return null;
-  if (!prompt.includes(CONTEXTUAL_BLANK) && !prompt.includes("________")) {
-    return null;
-  }
-  if (!isRelatedTargetForm(rawAnswer, word.word)) return null;
-  if (!promptMatchesDifficulty(prompt, difficulty)) return null;
+  const completeSentence = completeSentenceSource(draft);
+  const proposed = normalizeOption(draft.answer ?? "");
+  if (!completeSentence) return null;
+  if (!promptMatchesDifficulty(completeSentence, difficulty)) return null;
+
+  const resolved = resolveContextualFromCompleteSentence({
+    completeSentence,
+    lemma: word.word,
+    proposed: proposed || undefined,
+  });
+  if (!resolved) return null;
+  const { prompt, answerForm: answer } = resolved;
 
   const meaningHint = resolveValidBlankMeaningHint({
     meaning: word.meaning,
-    answer: rawAnswer,
+    answer,
     baseWord: word.word,
   });
   if (!meaningHint) return null;
 
-  const answer = applyAnswerFormCasingForBlank(prompt, rawAnswer);
   return {
     wordId: word.id,
     type: "type-answer",
@@ -222,7 +223,7 @@ function validateTypeAnswer(
 }
 
 function selectValid(
-  drafts: ContextualAiExercise[],
+  drafts: ContextualAiDraft[],
   words: ContextualAiWordInput[],
   exerciseType: ContextualAiRequest["exerciseType"],
   difficulty: ExerciseDifficulty,
@@ -232,7 +233,10 @@ function selectValid(
   const valid: ContextualAiExercise[] = [];
 
   for (const draft of drafts) {
-    if (draft.type === "multiple-choice" && exerciseType !== "multiple-choice") {
+    if (
+      draft.type === "multiple-choice" &&
+      exerciseType !== "multiple-choice"
+    ) {
       continue;
     }
     if (draft.type === "type-answer" && exerciseType !== "type-answer") {
@@ -250,6 +254,15 @@ function selectValid(
   }
 
   return valid;
+}
+
+export function selectValidContextualExercises(
+  drafts: ContextualAiDraft[],
+  words: ContextualAiWordInput[],
+  exerciseType: ContextualAiRequest["exerciseType"],
+  difficulty: ExerciseDifficulty,
+): ContextualAiExercise[] {
+  return selectValid(drafts, words, exerciseType, difficulty);
 }
 
 async function requestExercises(
@@ -270,18 +283,13 @@ async function requestExercises(
     difficulty: input.difficulty,
     uiLanguage: uiLanguageName(input.uiLocale),
     words,
+    regenerateReason: options?.simplifyRetry ? SURFACE_RETRY_REASON : undefined,
   });
-
-  if (options?.simplifyRetry) {
-    Object.assign(payload, {
-      regenerateReason:
-        "Previous drafts were rejected or missing. Keep each assigned wordId as the target (do not swap words). Rewrite with simpler sentence structure for the selected difficulty, and use a distinct everyday context per word.",
-    });
-  }
 
   const completion = await client.chat.completions.create({
     model: "gpt-4o-mini",
-    temperature: input.difficulty === "easy" ? 0.4 : options?.simplifyRetry ? 0.35 : 0.7,
+    temperature:
+      input.difficulty === "easy" ? 0.4 : options?.simplifyRetry ? 0.35 : 0.7,
     max_tokens: 2500,
     response_format: { type: "json_object" },
     messages: [
@@ -313,11 +321,10 @@ export async function generateContextualExercises(
 ): Promise<ContextualAiExercise[]> {
   const client = getOpenAIClient();
 
-  let valid = await requestExercises(client, input, input.words);
+  const valid = await requestExercises(client, input, input.words);
   const acceptedIds = new Set(valid.map((exercise) => exercise.wordId));
   const missing = input.words.filter((word) => !acceptedIds.has(word.id));
 
-  // Regenerate missing wordIds once so the batch stays diverse.
   if (missing.length > 0) {
     const retry = await requestExercises(client, input, missing, {
       simplifyRetry: true,

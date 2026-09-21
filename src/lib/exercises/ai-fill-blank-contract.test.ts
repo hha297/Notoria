@@ -1,5 +1,8 @@
 import { describe, expect, it } from "vitest";
-import { FILL_BLANK_GENERATOR_PROMPT, fillBlankUserPayload } from "@/lib/exercises/ai-prompt";
+import {
+  FILL_BLANK_GENERATOR_PROMPT,
+  fillBlankUserPayload,
+} from "@/lib/exercises/ai-prompt";
 import {
   FILL_BLANK_AI_BATCH,
   FILL_BLANK_PLACEHOLDER,
@@ -16,7 +19,10 @@ import {
   splitSentenceAtBlank,
   validateFillBlankExercise,
 } from "@/lib/exercises/ai-validate";
-import { pickFillBlankAiWords, toExerciseAiWord } from "@/lib/exercises/ai-words";
+import {
+  pickFillBlankAiWords,
+  toExerciseAiWord,
+} from "@/lib/exercises/ai-words";
 import { answersMatchAny } from "@/lib/exercises/utils";
 import type { FlashcardWord } from "@/types/flashcards";
 
@@ -135,6 +141,7 @@ describe("fill-in-blank AI prompt contract", () => {
     expect(payload.exerciseDifficulty).toBe("easy");
     expect(payload.words[0]).toEqual({
       wordId: "word-alpha",
+      lemma: "alpha",
       word: "alpha",
       meaning: "abc",
       partOfSpeech: "noun",
@@ -159,11 +166,12 @@ describe("fill-in-blank AI validation", () => {
     );
 
     expect(validated).not.toBeNull();
+    expect(validated!.answer).toBe("alphas");
+    expect(validated!.baseWord).toBe("alpha");
     expect(countFillBlanks(validated!.sentence)).toBe(1);
     expect(isRelatedWordForm("alpha", "alphas")).toBe(true);
-    expect(
-      answersMatchAny("alphas", validated!.answer ? [validated!.answer, "alpha"] : []),
-    ).toBe(true);
+    expect(answersMatchAny("alphas", [validated!.answer])).toBe(true);
+    expect(answersMatchAny("alpha", [validated!.answer])).toBe(false);
   });
 
   it("maps a blanked sentence onto the existing fill-in-blank item shape", () => {
@@ -187,6 +195,7 @@ describe("fill-in-blank AI validation", () => {
     });
     expect(item?.acceptableAnswers).toContain("alphas");
     expect(answersMatchAny("alphas", item?.acceptableAnswers ?? [])).toBe(true);
+    expect(answersMatchAny("alpha", item?.acceptableAnswers ?? [])).toBe(false);
   });
 
   it("maps sentenceMeaning onto the fill-in-blank item", () => {
@@ -321,7 +330,9 @@ describe("fill-in-blank AI validation", () => {
       ],
     });
 
-    expect(selectValidFillBlankExercises(parsed.exercises, [alpha])).toHaveLength(1);
+    expect(
+      selectValidFillBlankExercises(parsed.exercises, [alpha]),
+    ).toHaveLength(1);
   });
 });
 
@@ -352,7 +363,9 @@ describe("fill-in-blank AI word picking", () => {
 
 describe("blank splitting", () => {
   it("splits a sentence on a single placeholder", () => {
-    expect(splitSentenceAtBlank(`I have a new ${FILL_BLANK_PLACEHOLDER}.`)).toEqual({
+    expect(
+      splitSentenceAtBlank(`I have a new ${FILL_BLANK_PLACEHOLDER}.`),
+    ).toEqual({
       before: "I have a new ",
       after: ".",
     });

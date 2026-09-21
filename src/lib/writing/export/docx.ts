@@ -4,6 +4,7 @@ import {
   HeadingLevel,
   Packer,
   Paragraph,
+  ShadingType,
   Table,
   TextRun,
 } from "docx";
@@ -18,9 +19,22 @@ import { BLANK_LINE_COUNT } from "@/lib/writing/export/types";
 import { wrapTextOntoLines } from "@/lib/writing/export/wrap-text";
 import { renderTipTapDocToDocx } from "@/lib/writing/export/tiptap-docx";
 import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
+import {
+  DOCX_FONT_SANS,
+  PRINT_ACCENT,
+  PRINT_INK,
+  PRINT_LEDE_WASH,
+  PRINT_MUTED,
+  PRINT_RULE,
+  hexForDocx,
+  type PrintSurface,
+} from "@/lib/export/print-theme";
 
-/** Match Notoria body font across the exported worksheet. */
-const FONT_SANS = "Chakra Petch";
+const FONT_SANS = DOCX_FONT_SANS;
+const INK = hexForDocx(PRINT_INK);
+const MUTED = hexForDocx(PRINT_MUTED);
+const RULE = hexForDocx(PRINT_RULE);
+const WASH = hexForDocx(PRINT_LEDE_WASH);
 
 function answerLineParagraphs(text?: string): Paragraph[] {
   const lines = wrapTextOntoLines(text ?? "", BLANK_LINE_COUNT, 72);
@@ -33,7 +47,7 @@ function answerLineParagraphs(text?: string): Paragraph[] {
           bottom: {
             style: BorderStyle.SINGLE,
             size: 6,
-            color: "C8C2D6",
+            color: RULE,
             space: 1,
           },
         },
@@ -42,7 +56,7 @@ function answerLineParagraphs(text?: string): Paragraph[] {
             text: line || " ",
             font: FONT_SANS,
             size: 22,
-            color: "2F4A08",
+            color: MUTED,
             italics: true,
           }),
         ],
@@ -55,28 +69,24 @@ function questionParagraphs(
   index: number,
   labels: ExportLabels,
   leaveBlankSpace: boolean,
+  accent: string,
 ): Paragraph[] {
   const blocks: Paragraph[] = [
     new Paragraph({
-      spacing: { before: 200, after: 80 },
+      spacing: { before: 200, after: 60 },
       children: [
         new TextRun({
-          text: `${labels.questionLabel} ${index + 1}`,
+          text: `${index + 1}.  `,
           font: FONT_SANS,
-          size: 18,
-          color: "6B6680",
+          size: 24,
           bold: true,
-          allCaps: true,
+          color: accent,
         }),
-      ],
-    }),
-    new Paragraph({
-      spacing: { after: 160 },
-      children: [
         new TextRun({
           text: question.prompt,
           font: FONT_SANS,
           size: 24,
+          color: INK,
         }),
       ],
     }),
@@ -93,25 +103,30 @@ function questionParagraphs(
   } else if (question.exampleAnswer) {
     blocks.push(
       new Paragraph({
-        spacing: { before: 120, after: 40 },
+        spacing: { before: 80, after: 40 },
+        shading: { type: ShadingType.CLEAR, fill: WASH },
+        border: {
+          left: {
+            style: BorderStyle.SINGLE,
+            size: 12,
+            color: accent,
+            space: 8,
+          },
+        },
         children: [
           new TextRun({
-            text: labels.exampleAnswerLabel,
+            text: `${labels.exampleAnswerLabel}  `,
             font: FONT_SANS,
             bold: true,
-            size: 20,
-            color: "4A6B0A",
+            size: 18,
+            color: accent,
+            allCaps: true,
           }),
-        ],
-      }),
-      new Paragraph({
-        spacing: { after: 120 },
-        children: [
           new TextRun({
             text: question.exampleAnswer,
             font: FONT_SANS,
-            size: 22,
-            color: "2F4A08",
+            size: 20,
+            color: INK,
             italics: true,
           }),
         ],
@@ -122,25 +137,30 @@ function questionParagraphs(
   if (question.notes) {
     blocks.push(
       new Paragraph({
-        spacing: { before: 80, after: 40 },
+        spacing: { before: 60, after: 160 },
+        shading: { type: ShadingType.CLEAR, fill: WASH },
+        border: {
+          left: {
+            style: BorderStyle.SINGLE,
+            size: 12,
+            color: accent,
+            space: 8,
+          },
+        },
         children: [
           new TextRun({
-            text: labels.notesLabel,
+            text: `${labels.notesLabel}  `,
             font: FONT_SANS,
             bold: true,
-            size: 20,
-            color: "4A6B0A",
+            size: 18,
+            color: accent,
+            allCaps: true,
           }),
-        ],
-      }),
-      new Paragraph({
-        spacing: { after: 160 },
-        children: [
           new TextRun({
             text: question.notes,
             font: FONT_SANS,
             size: 20,
-            color: "3D3850",
+            color: MUTED,
             italics: true,
           }),
         ],
@@ -151,101 +171,91 @@ function questionParagraphs(
   return blocks;
 }
 
-export async function generateWritingDocxBlob(
-  model: ExportDocumentModel,
-  labels: ExportLabels,
-  options: ExportOptions,
-  layout: ExportLayout = "worksheet",
-): Promise<Blob> {
-  const isDocument = layout === "document";
-  const title = sanitizeExportText(model.title) || "—";
-  const description = sanitizeExportText(model.description);
-  const headerBorder = isDocument
-    ? undefined
-    : {
-        bottom: {
-          style: BorderStyle.SINGLE,
-          size: 12,
-          color: "D5D0E0",
-          space: 8,
-        },
-      };
-
-  const children: Array<Paragraph | Table> = [
+function mastheadParagraphs(
+  kicker: string,
+  title: string,
+  lede: string,
+  accent: string,
+): Paragraph[] {
+  const blocks: Paragraph[] = [
     new Paragraph({
-      heading: HeadingLevel.HEADING_1,
-      spacing: { after: 120 },
+      spacing: { after: 80 },
       children: [
         new TextRun({
-          text: labels.documentHeading,
-          font: FONT_SANS,
-          bold: true,
-          size: 32,
-        }),
-      ],
-    }),
-    new Paragraph({
-      spacing: { after: 40 },
-      children: [
-        new TextRun({
-          text: labels.titleLabel,
+          text: kicker,
           font: FONT_SANS,
           size: 18,
-          color: "6B6680",
+          bold: true,
+          color: accent,
           allCaps: true,
         }),
       ],
     }),
     new Paragraph({
-      spacing: { after: description ? 80 : 200 },
-      border: description ? undefined : headerBorder,
+      heading: HeadingLevel.HEADING_1,
+      spacing: { after: lede ? 120 : 240 },
       children: [
         new TextRun({
           text: title,
           font: FONT_SANS,
           bold: true,
-          size: 28,
+          size: 40,
+          color: INK,
         }),
       ],
     }),
   ];
 
-  if (description) {
-    children.push(
-      new Paragraph({
-        spacing: { after: 40 },
-        children: [
-          new TextRun({
-            text: labels.descriptionLabel,
-            font: FONT_SANS,
-            size: 18,
-            color: "6B6680",
-            allCaps: true,
-          }),
-        ],
-      }),
-      ...description.split("\n").map(
-        (line, index, lines) =>
-          new Paragraph({
-            spacing: { after: index === lines.length - 1 ? 200 : 40 },
-            border: index === lines.length - 1 ? headerBorder : undefined,
-            children: [
-              new TextRun({
-                text: line.length > 0 ? line : " ",
-                font: FONT_SANS,
-                size: 20,
-                color: "3D3850",
-              }),
-            ],
-          }),
-      ),
-    );
+  if (lede) {
+    const lines = lede.split("\n");
+    lines.forEach((line, index) => {
+      blocks.push(
+        new Paragraph({
+          spacing: { after: index === lines.length - 1 ? 200 : 40 },
+          shading: { type: ShadingType.CLEAR, fill: WASH },
+          border: {
+            left: {
+              style: BorderStyle.SINGLE,
+              size: 16,
+              color: accent,
+              space: 10,
+            },
+          },
+          children: [
+            new TextRun({
+              text: line.length > 0 ? line : " ",
+              font: FONT_SANS,
+              size: 20,
+              color: MUTED,
+              italics: true,
+            }),
+          ],
+        }),
+      );
+    });
   }
+
+  return blocks;
+}
+
+export async function generateWritingDocxBlob(
+  model: ExportDocumentModel,
+  labels: ExportLabels,
+  options: ExportOptions,
+  _layout: ExportLayout = "worksheet",
+  surface: PrintSurface = "writing",
+): Promise<Blob> {
+  const title = sanitizeExportText(model.title) || "—";
+  const description = sanitizeExportText(model.description);
+  const accent = hexForDocx(PRINT_ACCENT[surface]);
+  const children: Array<Paragraph | Table> = [
+    ...mastheadParagraphs(labels.documentHeading, title, description, accent),
+  ];
 
   if (model.mode === "question_set") {
     model.sections.forEach((section, sectionIndex) => {
       const heading = section.title
-        ? `${labels.sectionLabel} ${sectionIndex + 1}: ${section.title}`
+        ? `${labels.sectionLabel} ${sectionIndex + 1}  ·  ${section.title}`
         : `${labels.sectionLabel} ${sectionIndex + 1}`;
 
       children.push(
@@ -257,7 +267,9 @@ export async function generateWritingDocxBlob(
               text: heading,
               font: FONT_SANS,
               bold: true,
-              size: 26,
+              size: 22,
+              color: accent,
+              allCaps: true,
             }),
           ],
         }),
@@ -270,6 +282,7 @@ export async function generateWritingDocxBlob(
             questionIndex,
             labels,
             options.leaveBlankSpace,
+            accent,
           ),
         );
       });

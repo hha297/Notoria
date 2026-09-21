@@ -29,6 +29,7 @@ type WritingRowActionsProps = {
   description?: string | null;
   folderId?: string | null;
   workspaceId: string;
+  canExport?: boolean;
 };
 
 export function WritingRowActions({
@@ -37,6 +38,7 @@ export function WritingRowActions({
   description,
   folderId,
   workspaceId,
+  canExport = false,
 }: WritingRowActionsProps) {
   const t = useTranslations("common");
   const tw = useTranslations("writing");
@@ -51,6 +53,7 @@ export function WritingRowActions({
   const { removeWritingDocument } = useInvalidateWorkspaceQueries(workspaceId);
 
   async function handleExportClick() {
+    if (!canExport) return;
     setIsLoadingExport(true);
     try {
       const document = await getWritingDocument(id);
@@ -102,7 +105,8 @@ export function WritingRowActions({
           onClick={() => {
             void handleExportClick();
           }}
-          disabled={isPending || isLoadingExport}
+          disabled={isPending || isLoadingExport || !canExport}
+          title={canExport ? undefined : tw("export.empty")}
         >
           <span className="sr-only">{tw("export.button")}</span>
         </LockedFeatureButton>

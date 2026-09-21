@@ -1,15 +1,10 @@
-import { AppSidebar } from "@/components/layout/app-sidebar";
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { DashboardDocumentTitle } from "@/components/layout/dashboard-document-title";
-import { LocaleSelector } from "@/components/layout/locale-selector";
-import { WorkspaceSelector } from "@/components/layout/workspace-selector";
+import { DashboardStudio } from "@/components/layout/dashboard-studio";
 import { WorkspaceOnboardingGate } from "@/components/onboarding/workspace-onboarding-gate";
 import { WelcomePromptModal } from "@/components/prompts/welcome-prompt";
 import { ProAccessProvider } from "@/components/billing/pro-access-provider";
-import {
-  SidebarInset,
-  SidebarProvider,
-  SidebarTrigger,
-} from "@/components/ui/sidebar";
 import { locales, type AppLocale } from "@/i18n/config";
 import { LOCALE_COOKIE } from "@/i18n/request";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
@@ -20,7 +15,6 @@ import {
 } from "@/lib/stripe/pro";
 import { createPerfTimer } from "@/lib/perf/dev-timing";
 import { getUserWorkspaces, getActiveWorkspace } from "@/lib/workspace";
-import { cookies } from "next/headers";
 
 export const preferredRegion = ["fra1"];
 
@@ -40,6 +34,10 @@ export default async function DashboardLayout({
     ]);
   timer.finish();
 
+  if (workspaces.length === 0) {
+    redirect("/onboarding");
+  }
+
   const cookieStore = await cookies();
   const localeCookie = cookieStore.get(LOCALE_COOKIE)?.value;
   const locale =
@@ -49,36 +47,23 @@ export default async function DashboardLayout({
 
   return (
     <ProAccessProvider hasProAccess={proAccess.hasProAccess}>
-      <SidebarProvider>
-        <DashboardDocumentTitle />
-        <AppSidebar
-          userName={session?.user?.name ?? "User"}
-          userEmail={session?.user?.email ?? ""}
-          userImage={session?.user?.image}
-          isPro={hasActiveProSubscription(subscription)}
-          workspaceId={activeWorkspace?.id ?? null}
+      <DashboardDocumentTitle />
+      <DashboardStudio
+        locale={locale}
+        workspaces={workspaces}
+        activeWorkspaceId={activeWorkspace?.id}
+        userName={session?.user?.name ?? "User"}
+        userEmail={session?.user?.email ?? ""}
+        userImage={session?.user?.image}
+        isPro={hasActiveProSubscription(subscription)}
+      >
+        <WelcomePromptModal
+          hasWorkspace={Boolean(activeWorkspace)}
+          languageCode={activeWorkspace?.language ?? null}
         />
-        <SidebarInset className="min-w-0 max-w-full bg-background">
-          <header className="flex h-14 shrink-0 items-center gap-2 border-b border-hairline-cloud bg-background px-3 sm:gap-3 sm:px-6">
-            <SidebarTrigger className="-ml-0.5 shrink-0 text-ink sm:-ml-1" />
-            <WorkspaceSelector
-              workspaces={workspaces}
-              activeWorkspaceId={activeWorkspace?.id}
-            />
-            <div className="ml-auto flex min-w-0 shrink items-center gap-1.5 sm:gap-2">
-              <LocaleSelector value={locale} />
-            </div>
-          </header>
-          <WelcomePromptModal
-            hasWorkspace={Boolean(activeWorkspace)}
-            languageCode={activeWorkspace?.language ?? null}
-          />
-          <WorkspaceOnboardingGate workspaceId={activeWorkspace?.id ?? null} />
-          <main className="min-w-0 flex-1 overflow-auto bg-background px-4 py-6 sm:px-6 sm:py-8">
-            <div className="mx-auto w-full min-w-0 max-w-7xl">{children}</div>
-          </main>
-        </SidebarInset>
-      </SidebarProvider>
+        <WorkspaceOnboardingGate workspaceId={activeWorkspace?.id ?? null} />
+        {children}
+      </DashboardStudio>
     </ProAccessProvider>
   );
 }

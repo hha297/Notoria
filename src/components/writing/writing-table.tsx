@@ -8,24 +8,22 @@ import {
   startOfWeek,
 } from "date-fns";
 import { useMemo, useState } from "react";
+import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Plus } from "lucide-react";
-import { PageHeader } from "@/components/layout/page-header";
+import { FileText, ListChecks, Plus, Search } from "lucide-react";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
-import { FolderEmptyState, FolderGrid, FolderWorkspace } from "@/components/folders/folder-workspace";
-import { NewFolderButton } from "@/components/folders/new-folder-button";
+import { FolderWorkspace } from "@/components/folders/folder-workspace";
+import { FolderBreadcrumbs } from "@/components/folders/folder-breadcrumbs";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { WritingCard, type WritingListItem } from "@/components/writing/writing-card";
-import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
+import { WritingCollections } from "@/components/writing/writing-collections";
+import {
+  WritingChipPicker,
+  WritingFilterChipPicker,
+} from "@/components/writing/writing-chip-picker";
 import type { WritingMode } from "@/lib/writing/content";
 import { childrenOf, folderMatchesQuery, itemsInFolder } from "@/lib/folders/tree";
 import type { FolderListItem } from "@/lib/folders/types";
@@ -82,69 +80,13 @@ const CEFR_ORDER: Record<WritingCefr, number> = {
   c2: 6,
 };
 
-function WritingDocumentGroup({
-  title,
-  documents,
-  workspaceId,
-}: {
-  title: string;
-  documents: WritingListItem[];
-  workspaceId: string;
-  mode?: WritingMode;
-}) {
-  const t = useTranslations("writing");
-
-  return (
-    <section className="space-y-3">
-      <div className="flex flex-wrap items-baseline justify-between gap-2">
-        <h2 className="font-heading text-lg font-medium tracking-tight text-ink sm:text-xl">
-          {title}
-        </h2>
-        <p className="text-xs text-muted-foreground sm:text-sm">
-          {t("groupCount", { count: documents.length })}
-        </p>
-      </div>
-
-      <div className="grid gap-4 sm:grid-cols-2 xl:grid-cols-3">
-        {documents.map((document) => (
-          <WritingCard
-            key={document.id}
-            document={document}
-            workspaceId={workspaceId}
-          />
-        ))}
-      </div>
-    </section>
-  );
-}
-
-function sortLabel(sort: SortOption, t: ReturnType<typeof useTranslations>): string {
-  switch (sort) {
-    case "updated:desc":
-      return t("sortUpdatedDesc");
-    case "updated:asc":
-      return t("sortUpdatedAsc");
-    case "created:desc":
-      return t("sortCreatedDesc");
-    case "created:asc":
-      return t("sortCreatedAsc");
-    case "title:asc":
-      return t("sortTitleAsc");
-    case "title:desc":
-      return t("sortTitleDesc");
-    case "cefr:asc":
-      return t("sortCefrAsc");
-    case "cefr:desc":
-      return t("sortCefrDesc");
-  }
-}
-
 export function WritingTable({
   documents,
   folders,
   currentFolderId,
   workspaceId,
 }: WritingTableProps) {
+  const router = useRouter();
   const t = useTranslations("writing");
   const tFolders = useTranslations("folders");
   const tMeta = useTranslations("writing.meta");
@@ -156,6 +98,11 @@ export function WritingTable({
   const [topicFilter, setTopicFilter] = useState<MultiFilterValue>([]);
   const [formalityFilter, setFormalityFilter] = useState<MultiFilterValue>([]);
   const createHref = sectionCreateHref("writing", currentFolderId);
+
+  useRegisterShortcutAction("createNew", () => {
+    router.push(createHref);
+  });
+
   const childFolders = childrenOf(folders, currentFolderId);
   const matchingFolders = search.trim()
     ? folders.filter((folder) => folderMatchesQuery(folder, search))
@@ -242,6 +189,7 @@ export function WritingTable({
     topicFilter,
     formalityFilter,
     tMeta,
+    tTags,
   ]);
 
   const groups = useMemo((): DocumentGroup[] => {
@@ -250,8 +198,7 @@ export function WritingTable({
       const questionSets: WritingListItem[] = [];
 
       for (const document of filtered) {
-        const meta = document.listMeta;
-        if (meta.mode === "question_set") {
+        if (document.listMeta.mode === "question_set") {
           questionSets.push(document);
         } else {
           richDocuments.push(document);
@@ -305,8 +252,18 @@ export function WritingTable({
     return Array.from(buckets.values());
   }, [filtered, groupBy, t]);
 
+  const actions = (
+    <>
+      <ShowTutorialButton section="writing" />
+      <LinkButton href={createHref} data-tutorial="writing-create">
+        <Plus className="size-4" />
+        {t("create")}
+      </LinkButton>
+    </>
+  );
+
   return (
-    <PageShell>
+    <PageShell className="writing-atelier-shell">
       <FolderWorkspace
         workspaceId={workspaceId}
         section="writing"
@@ -314,166 +271,155 @@ export function WritingTable({
         currentFolderId={currentFolderId}
         items={documents}
         search={search}
-        header={
-          <PageHeader
-            eyebrow={t("title")}
-            title={t("title")}
-            highlight={t("studio")}
-            description={t("description")}
-          >
-            <ShowTutorialButton section="writing" />
-            <NewFolderButton />
-            <LinkButton href={createHref} data-tutorial="writing-create">
-              <Plus className="size-4" />
-              {t("create")}
-            </LinkButton>
-          </PageHeader>
-        }
+        showBreadcrumbs={false}
       >
-      <div className="space-y-4">
-        <div className="flex min-w-0 flex-col gap-3 lg:flex-row lg:items-center">
-          <Input
-            value={search}
-            onChange={(event) => setSearch(event.target.value)}
-            placeholder={t("searchPlaceholder")}
-            className="h-10 min-w-0 lg:h-8 lg:max-w-sm"
-            data-tutorial="writing-search"
-          />
+        <div className="writing-atelier flex flex-col gap-10 lg:gap-12">
+          <header className="writing-hero">
+            <div className="writing-hero-copy">
+              <p className="writing-kicker">{t("title")}</p>
+              <h1 className="writing-brand-title">{t("title")}</h1>
+              <p className="writing-brand-lede">{t("description")}</p>
+            </div>
+            <div className="writing-hero-actions">{actions}</div>
+          </header>
+
+          <section className="writing-workspace">
+            {currentFolderId ? (
+              <FolderBreadcrumbs
+                section="writing"
+                folders={folders}
+                currentFolderId={currentFolderId}
+              />
+            ) : null}
+            <div className="writing-spine-tools" data-tutorial="writing-filters">
+              <div className="writing-spine-search-wrap">
+                <Search className="writing-spine-search-icon" aria-hidden="true" />
+                <Input
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  placeholder={t("searchPlaceholder")}
+                  className="writing-spine-search"
+                  data-tutorial="writing-search"
+                />
+              </div>
+              <div className="writing-refine writing-sheet-meta">
+                <WritingFilterChipPicker
+                  labelId="writing-filter-cefr"
+                  label={tMeta("cefrLabel")}
+                  allLabel={t("filterAll")}
+                  values={cefrFilter}
+                  onChange={setCefrFilter}
+                  options={WRITING_CEFR_LEVELS.map((level) => ({
+                    value: level,
+                    label: tMeta(`cefr.${level}`),
+                  }))}
+                />
+                <WritingFilterChipPicker
+                  labelId="writing-filter-formality"
+                  label={tMeta("formalityLabel")}
+                  allLabel={t("filterAll")}
+                  values={formalityFilter}
+                  onChange={setFormalityFilter}
+                  options={WRITING_FORMALITY.map((item) => ({
+                    value: item,
+                    label: tMeta(`formality.${item}`),
+                  }))}
+                />
+                <WritingFilterChipPicker
+                  labelId="writing-filter-topic"
+                  label={tMeta("topicLabel")}
+                  allLabel={t("filterAll")}
+                  values={topicFilter}
+                  onChange={setTopicFilter}
+                  options={WRITING_TOPICS.map((topic) => ({
+                    value: topic,
+                    label: resolveTopicLabel(topic, (key) => tTags(key)),
+                  }))}
+                />
+                <WritingChipPicker
+                  labelId="writing-filter-groupby"
+                  label={t("groupBy")}
+                  value={groupBy}
+                  onChange={(value) => setGroupBy(value as GroupByOption)}
+                  options={[
+                    { value: "mode", label: t("groupByMode") },
+                    { value: "week", label: t("groupByWeek") },
+                    { value: "month", label: t("groupByMonth") },
+                  ]}
+                />
+                <WritingChipPicker
+                  labelId="writing-filter-sort"
+                  label={t("sortBy")}
+                  value={sort}
+                  onChange={(value) => setSort(value as SortOption)}
+                  options={[
+                    { value: "updated:desc", label: t("sortUpdatedDesc") },
+                    { value: "updated:asc", label: t("sortUpdatedAsc") },
+                    { value: "created:desc", label: t("sortCreatedDesc") },
+                    { value: "created:asc", label: t("sortCreatedAsc") },
+                    { value: "title:asc", label: t("sortTitleAsc") },
+                    { value: "title:desc", label: t("sortTitleDesc") },
+                    { value: "cefr:asc", label: t("sortCefrAsc") },
+                    { value: "cefr:desc", label: t("sortCefrDesc") },
+                  ]}
+                />
+              </div>
+            </div>
+            <WritingCollections currentFolderId={currentFolderId} />
+          </section>
 
           <div
-            className="grid min-w-0 grid-cols-1 gap-2 sm:grid-cols-2 lg:flex lg:flex-wrap xl:grid-cols-none"
-            data-tutorial="writing-filters"
-          >
-            <MultiFilterSelect
-              emptyLabel={t("filterCefr")}
-              values={cefrFilter}
-              onChange={setCefrFilter}
-              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
-              options={WRITING_CEFR_LEVELS.map((level) => ({
-                value: level,
-                label: tMeta(`cefr.${level}`),
-              }))}
-            />
+            className="writing-atelier-rule w-full shrink-0 rounded-full"
+            aria-hidden="true"
+          />
 
-            <MultiFilterSelect
-              emptyLabel={t("filterTopic")}
-              values={topicFilter}
-              onChange={setTopicFilter}
-              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
-              options={WRITING_TOPICS.map((topic) => ({
-                value: topic,
-                label: resolveTopicLabel(topic, (key) => tTags(key)),
-              }))}
-            />
-
-            <MultiFilterSelect
-              emptyLabel={t("filterFormality")}
-              values={formalityFilter}
-              onChange={setFormalityFilter}
-              triggerClassName="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-28"
-              options={WRITING_FORMALITY.map((item) => ({
-                value: item,
-                label: tMeta(`formality.${item}`),
-              }))}
-            />
-
-            <Select
-              value={groupBy}
-              onValueChange={(value) =>
-                value && setGroupBy(value as GroupByOption)
-              }
-            >
-              <SelectTrigger
-                size="sm"
-                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-32"
-              >
-                <SelectValue>
-                  {groupBy === "mode"
-                    ? t("groupByMode")
-                    : groupBy === "week"
-                      ? t("groupByWeek")
-                      : t("groupByMonth")}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="mode">{t("groupByMode")}</SelectItem>
-                <SelectItem value="week">{t("groupByWeek")}</SelectItem>
-                <SelectItem value="month">{t("groupByMonth")}</SelectItem>
-              </SelectContent>
-            </Select>
-
-            <Select
-              value={sort}
-              onValueChange={(value) => value && setSort(value as SortOption)}
-            >
-              <SelectTrigger
-                size="sm"
-                className="h-10 w-full min-w-0 sm:h-8 lg:w-auto lg:min-w-36"
-              >
-                <SelectValue>{sortLabel(sort, t)}</SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="updated:desc">
-                  {t("sortUpdatedDesc")}
-                </SelectItem>
-                <SelectItem value="updated:asc">
-                  {t("sortUpdatedAsc")}
-                </SelectItem>
-                <SelectItem value="created:desc">
-                  {t("sortCreatedDesc")}
-                </SelectItem>
-                <SelectItem value="created:asc">
-                  {t("sortCreatedAsc")}
-                </SelectItem>
-                <SelectItem value="title:asc">{t("sortTitleAsc")}</SelectItem>
-                <SelectItem value="title:desc">{t("sortTitleDesc")}</SelectItem>
-                <SelectItem value="cefr:asc">{t("sortCefrAsc")}</SelectItem>
-                <SelectItem value="cefr:desc">{t("sortCefrDesc")}</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        </div>
-
-        <FolderGrid />
-
-        {groups.length === 0 ? (
-          hasFilters ? (
-            matchingFolders.length === 0 ? (
-              <div className="empty-state">
-                <p className="text-muted-foreground">{t("noResults")}</p>
+          <section className="writing-stage" data-tutorial="writing-list">
+            {groups.length > 0 ? (
+              <>
+                <p className="writing-kicker writing-stage-kicker">{t("library")}</p>
+                {groups.map((group) => (
+                  <div
+                    key={group.key}
+                    className="writing-chapter"
+                    data-writing-kind={group.mode}
+                  >
+                    <h2 className="writing-chapter-title">
+                      {group.mode === "question_set" ? (
+                        <ListChecks className="size-3.5" aria-hidden="true" />
+                      ) : group.mode === "rich_document" ? (
+                        <FileText className="size-3.5" aria-hidden="true" />
+                      ) : null}
+                      {group.title}
+                    </h2>
+                    {group.documents.map((document) => (
+                      <WritingCard
+                        key={document.id}
+                        document={document}
+                        workspaceId={workspaceId}
+                        variant="entry"
+                      />
+                    ))}
+                  </div>
+                ))}
+              </>
+            ) : hasFilters ? (
+              matchingFolders.length === 0 ? (
+                <p className="writing-stage-empty">{t("noResults")}</p>
+              ) : null
+            ) : (
+              <div className="writing-empty-desk">
+                <p className="writing-empty-title">
+                  {currentFolderId ? tFolders("emptyFolder") : t("emptyTitle")}
+                </p>
+                <p className="writing-brand-lede">
+                  {currentFolderId
+                    ? tFolders("emptyFolderDescription")
+                    : t("emptyDescription")}
+                </p>
               </div>
-            ) : null
-          ) : childFolders.length === 0 ? (
-            <FolderEmptyState
-              title={
-                currentFolderId ? tFolders("emptyFolder") : t("emptyTitle")
-              }
-              description={
-                currentFolderId
-                  ? tFolders("emptyFolderDescription")
-                  : t("emptyDescription")
-              }
-            >
-              <LinkButton href={createHref} className="mt-5">
-                <Plus className="size-4" />
-                {currentFolderId ? t("create") : t("createFirst")}
-              </LinkButton>
-            </FolderEmptyState>
-          ) : null
-        ) : (
-          <div className="space-y-8" data-tutorial="writing-list">
-            {groups.map((group) => (
-              <WritingDocumentGroup
-                key={group.key}
-                mode={group.mode}
-                title={group.title}
-                documents={group.documents}
-                workspaceId={workspaceId}
-              />
-            ))}
-          </div>
-        )}
-      </div>
+            )}
+          </section>
+        </div>
       </FolderWorkspace>
     </PageShell>
   );

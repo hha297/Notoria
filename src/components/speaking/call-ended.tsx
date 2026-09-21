@@ -22,7 +22,7 @@ export function CallEnded({ sessionId }: CallEndedProps) {
       </div>
       <Link
         href={`/speaking/${sessionId}`}
-        className="inline-flex h-10 items-center rounded-md bg-accent-lime px-4 text-sm font-bold uppercase tracking-[0.2px] text-ink hover:bg-accent-lime/90"
+        className="inline-flex h-10 items-center rounded-md bg-primary px-4 text-sm font-bold uppercase tracking-[0.2px] text-on-primary hover:bg-primary-hover"
       >
         {t("back")}
       </Link>

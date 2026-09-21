@@ -21,11 +21,69 @@ import {
   type FolderMoveItemType,
 } from "@/lib/folders/types";
 import { getActiveWorkspace, requireActiveWorkspace } from "@/lib/workspace";
+import { isUniqueNameTaken } from "@/lib/unique-name";
 import {
   createFolderSchema,
   moveIntoFolderSchema,
   renameFolderSchema,
 } from "@/schemas/folder";
+
+async function occupiedFolderNames(
+  userId: string,
+  workspaceId: string,
+  section: FolderSection,
+  excludeId?: string,
+) {
+  const folders = await db.query.workspaceFolders.findMany({
+    where: and(
+      eq(workspaceFolders.userId, userId),
+      eq(workspaceFolders.workspaceId, workspaceId),
+      eq(workspaceFolders.section, section),
+    ),
+  });
+  return folders
+    .filter((folder) => folder.id !== excludeId)
+    .map((folder) => folder.name);
+}
+
+async function occupiedWritingTitles(userId: string, workspaceId: string) {
+  const documents = await db
+    .select({
+      title: exercises.title,
+    })
+    .from(exercises)
+    .where(
+      and(
+        eq(exercises.userId, userId),
+        eq(exercises.workspaceId, workspaceId),
+        eq(exercises.type, "WRITING"),
+      ),
+    );
+  return documents.map((document) => document.title);
+}
+
+async function assertUniqueFolderName(input: {
+  userId: string;
+  workspaceId: string;
+  section: FolderSection;
+  name: string;
+  excludeId?: string;
+}) {
+  const occupied = await occupiedFolderNames(
+    input.userId,
+    input.workspaceId,
+    input.section,
+    input.excludeId,
+  );
+  if (input.section === "writing") {
+    occupied.push(
+      ...(await occupiedWritingTitles(input.userId, input.workspaceId)),
+    );
+  }
+  if (isUniqueNameTaken(input.name, occupied)) {
+    throw new Error("NAME_TAKEN");
+  }
+}
 
 function toFolderListItem(
   folder: typeof workspaceFolders.$inferSelect,
@@ -153,6 +211,13 @@ export async function createFolder(input: {
     throw new Error("FOLDER_TOO_DEEP");
   }
 
+  await assertUniqueFolderName({
+    userId,
+    workspaceId: workspace.id,
+    section: parsed.section,
+    name: parsed.name,
+  });
+
   const [folder] = await db
     .insert(workspaceFolders)
     .values({
@@ -170,7 +235,15 @@ export async function createFolder(input: {
 
 export async function renameFolder(input: { id: string; name: string }) {
   const parsed = renameFolderSchema.parse(input);
-  const { folder } = await requireOwnedFolder(parsed.id);
+  const { folder, userId, workspace } = await requireOwnedFolder(parsed.id);
+
+  await assertUniqueFolderName({
+    userId,
+    workspaceId: workspace.id,
+    section: folder.section,
+    name: parsed.name,
+    excludeId: parsed.id,
+  });
 
   const [updated] = await db
     .update(workspaceFolders)

@@ -45,8 +45,8 @@ export function FolderCard({
     : null;
   const dropDisabled = Boolean(
     draggingFolderId &&
-      dnd &&
-      wouldCreateCycle(dnd.folders, draggingFolderId, folder.id),
+    dnd &&
+    wouldCreateCycle(dnd.folders, draggingFolderId, folder.id),
   );
 
   const {
@@ -80,7 +80,7 @@ export function FolderCard({
       {...listeners}
       {...attributes}
       className={cn(
-        "group relative flex cursor-pointer items-center gap-3 rounded-xl border border-hairline-cloud bg-card px-3 py-3 ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-1 hover:ring-accent-lime/40",
+        "group relative flex cursor-pointer items-center gap-3 rounded-sm border border-hairline-cloud bg-surface-elevated px-3 py-3 transition-colors hover:border-primary/40 hover:bg-surface-hover",
         isDragging && "opacity-40",
         isOver && !dropDisabled && "ring-2 ring-accent-lime",
       )}
@@ -90,8 +90,8 @@ export function FolderCard({
         className="flex min-w-0 flex-1 cursor-pointer items-center gap-3 text-left"
         onClick={handleOpen}
       >
-        <div className="flex size-10 items-center justify-center rounded-xl border border-hairline-cloud bg-amber-50">
-          <Folder className="size-5 text-amber-600" />
+        <div className="flex size-9 items-center justify-center rounded-sm border border-hairline-cloud bg-surface-active">
+          <Folder className="size-4 text-warning" />
         </div>
         <div className="min-w-0">
           <p className="truncate font-medium text-ink">{folder.name}</p>

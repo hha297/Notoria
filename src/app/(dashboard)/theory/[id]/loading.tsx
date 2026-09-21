@@ -1,5 +1,5 @@
-import { DetailPageLoading } from "@/components/layout/page-loading";
+import { TheoryDetailLoading } from "@/components/theory/theory-loading";
 
 export default function Loading() {
-  return <DetailPageLoading />;
+  return <TheoryDetailLoading />;
 }

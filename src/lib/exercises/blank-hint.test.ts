@@ -3,6 +3,7 @@ import {
   isBlankMeaningHintConsistent,
   resolveBlankMeaningHint,
   resolveValidBlankMeaningHint,
+  splitPromptAtBlank,
   withBlankMeaningHint,
   wordHasBlankMeaningHint,
 } from "@/lib/exercises/blank-hint";
@@ -71,15 +72,29 @@ describe("blank-hint", () => {
     ).toBeNull();
 
     expect(wordHasBlankMeaningHint({ meanings: ["abc"] })).toBe(true);
-    expect(wordHasBlankMeaningHint({ meanings: [], meaning: null })).toBe(false);
+    expect(wordHasBlankMeaningHint({ meanings: [], meaning: null })).toBe(
+      false,
+    );
   });
 
   it("injects the meaning cue next to the blank once", () => {
     expect(withBlankMeaningHint("This is a ________ test.", "abc")).toBe(
       "This is a ________ (abc) test.",
     );
-    expect(
-      withBlankMeaningHint("This is a ________ (abc) test.", "abc"),
-    ).toBe("This is a ________ (abc) test.");
+    expect(withBlankMeaningHint("This is a ________ (abc) test.", "abc")).toBe(
+      "This is a ________ (abc) test.",
+    );
+  });
+
+  it("splits a prompt around the blank without dropping punctuation", () => {
+    expect(splitPromptAtBlank("This is a ________ test.")).toEqual({
+      before: "This is a ",
+      after: " test.",
+    });
+    expect(splitPromptAtBlank("This is a ________, then more.")).toEqual({
+      before: "This is a ",
+      after: ", then more.",
+    });
+    expect(splitPromptAtBlank("No blank here.")).toBeNull();
   });
 });

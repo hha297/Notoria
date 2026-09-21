@@ -50,13 +50,13 @@ export function FeedbackRow({
     <div
       className={cn(
         "mt-5 flex min-w-0 flex-col gap-3 rounded-xl px-4 py-3 sm:flex-row sm:items-center sm:justify-between",
-        correct ? "bg-[#f4fae0]" : "bg-[#fff1f6]",
+        correct ? "bg-success-muted" : "bg-error-muted",
       )}
     >
       <p
         className={cn(
           "inline-flex min-w-0 flex-1 items-start gap-2 text-sm font-medium break-words [overflow-wrap:anywhere]",
-          correct ? "text-[#4a6b0a]" : "text-destructive",
+          correct ? "text-success" : "text-destructive",
         )}
       >
         {correct ? (

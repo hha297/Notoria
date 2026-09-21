@@ -139,6 +139,7 @@ export async function updateWorkspace(
     .returning();
 
   revalidatePath("/", "layout");
+  revalidatePath("/settings");
   return updated;
 }
 
@@ -313,6 +314,7 @@ export async function createWorkspaceTag(
     .returning();
 
   revalidatePath("/vocabulary", "layout");
+  revalidatePath("/settings");
   return tag;
 }
 
@@ -351,6 +353,7 @@ export async function updateWorkspaceTag(
     .returning();
 
   revalidatePath("/", "layout");
+  revalidatePath("/settings");
   return updated;
 }
 
@@ -369,6 +372,7 @@ export async function deleteWorkspaceTag(tagId: string) {
   await removeCustomTagFromWords(tag.workspaceId, tag.name);
   await db.delete(workspaceTags).where(eq(workspaceTags.id, tagId));
   revalidatePath("/", "layout");
+  revalidatePath("/settings");
 }
 
 export async function getActiveWorkspaceCustomTags(): Promise<string[]> {

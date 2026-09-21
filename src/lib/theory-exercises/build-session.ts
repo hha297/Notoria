@@ -6,10 +6,13 @@ export type BuildTheorySessionInput = {
   theoryTitle: string;
   /** Kept for API compatibility; content is sent to AI from the practice client/API. */
   doc?: JSONContent;
+  category?: string;
+  description?: string;
 };
 
 /**
  * AI-only Theory practice: sessions start empty and are filled by AI generation.
+ * Optional note fields are consumed by the lesson presentation only.
  */
 export function buildTheoryExerciseSession(
   input: BuildTheorySessionInput,
@@ -18,5 +21,8 @@ export function buildTheoryExerciseSession(
     theoryId: input.theoryId,
     theoryTitle: input.theoryTitle,
     items: [],
+    category: input.category,
+    description: input.description,
+    doc: input.doc,
   };
 }

@@ -1,21 +1,13 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { Download, Loader2 } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { ExportFormatOptions } from "@/components/export/export-format-options";
+import { ExportSheet, ExportSheetSection } from "@/components/export/export-sheet";
 import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
 import { isPaidDocumentFormat } from "@/lib/auth/paid-access";
 import {
   DOCUMENT_EXPORT_FORMATS,
@@ -24,6 +16,7 @@ import {
 import {
   DEFAULT_EXPORT_OPTIONS,
   exportTheoryNote,
+  theoryDocHasExportableContent,
   type ExportFormat,
 } from "@/lib/writing/export";
 import type { JSONContent } from "@tiptap/react";
@@ -34,6 +27,7 @@ type TheoryExportDialogProps = {
   title: string;
   description?: string | null;
   doc: JSONContent;
+  category?: string;
 };
 
 export function TheoryExportDialog({
@@ -42,12 +36,15 @@ export function TheoryExportDialog({
   title,
   description,
   doc,
+  category,
 }: TheoryExportDialogProps) {
   const t = useTranslations("theory.export");
   const tc = useTranslations("common");
   const { hasProAccess, openUpgrade } = useProAccess();
   const [format, setFormat] = useState<ExportFormat>(DEFAULT_EXPORT_OPTIONS.format);
   const [isExporting, setIsExporting] = useState(false);
+  const canExport = theoryDocHasExportableContent(doc);
+  const pieceTitle = title.trim() || t("untitled");
 
   useEffect(() => {
     if (!open) return;
@@ -65,6 +62,7 @@ export function TheoryExportDialog({
   }
 
   async function handleExport() {
+    if (!canExport) return;
     setIsExporting(true);
     try {
       await exportTheoryNote({
@@ -99,33 +97,17 @@ export function TheoryExportDialog({
   }
 
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
-      <DialogContent className="sm:max-w-md" showCloseButton={!isExporting}>
-        <DialogHeader>
-          <DialogTitle>{t("title")}</DialogTitle>
-          <DialogDescription>{t("description")}</DialogDescription>
-        </DialogHeader>
-
-        <div className="space-y-5 py-1">
-          <div className="space-y-2">
-            <Label>{t("format")}</Label>
-            <ExportFormatOptions
-              idPrefix="theory-export"
-              name="theory-export-format"
-              formats={DOCUMENT_EXPORT_FORMATS}
-              value={format}
-              onChange={(nextFormat) => handleFormatChange(nextFormat as ExportFormat)}
-              hasProAccess={hasProAccess}
-              onLockedSelect={openUpgrade}
-              labels={{
-                pdf: t("formatPdf"),
-                docx: t("formatDocx"),
-              }}
-            />
-          </div>
-        </div>
-
-        <DialogFooter>
+    <ExportSheet
+      open={open}
+      onOpenChange={onOpenChange}
+      surface="theory"
+      theoryCategory={category}
+      preventClose={isExporting}
+      kicker={t("kicker")}
+      title={pieceTitle}
+      description={t("description")}
+      footer={
+        <>
           <Button
             type="button"
             variant="outline"
@@ -134,7 +116,11 @@ export function TheoryExportDialog({
           >
             {tc("cancel")}
           </Button>
-          <Button type="button" onClick={handleExport} disabled={isExporting}>
+          <Button
+            type="button"
+            onClick={() => void handleExport()}
+            disabled={isExporting || !canExport}
+          >
             {isExporting ? (
               <Loader2 className="size-4 animate-spin" />
             ) : (
@@ -142,8 +128,28 @@ export function TheoryExportDialog({
             )}
             {t("confirm")}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </>
+      }
+    >
+      <ExportSheetSection label={t("format")}>
+        <ExportFormatOptions
+          idPrefix="theory-export"
+          name="theory-export-format"
+          formats={DOCUMENT_EXPORT_FORMATS}
+          value={format}
+          onChange={(nextFormat) => handleFormatChange(nextFormat as ExportFormat)}
+          hasProAccess={hasProAccess}
+          onLockedSelect={openUpgrade}
+          labels={{
+            pdf: t("formatPdf"),
+            docx: t("formatDocx"),
+          }}
+          hints={{
+            pdf: t("formatPdfHint"),
+            docx: t("formatDocxHint"),
+          }}
+        />
+      </ExportSheetSection>
+    </ExportSheet>
   );
 }

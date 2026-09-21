@@ -1,5 +1,6 @@
 export const TUTORIAL_SECTIONS = [
   "vocabulary",
+  "vocabularyAdd",
   "theory",
   "exercise",
   "writing",
@@ -54,6 +55,19 @@ export const SECTION_TUTORIALS = {
       { id: "search", target: "vocab-search" },
       { id: "filters", target: "vocab-filters" },
       { id: "library", target: "vocab-word-list" },
+    ],
+  },
+  vocabularyAdd: {
+    id: "vocabularyAdd",
+    steps: [
+      { id: "word", target: "vocab-composer-word" },
+      { id: "partOfSpeech", target: "vocab-composer-pos" },
+      { id: "meanings", target: "vocab-composer-meanings" },
+      { id: "examples", target: "vocab-composer-examples" },
+      { id: "tags", target: "vocab-composer-tags" },
+      { id: "synonyms", target: "vocab-composer-synonyms" },
+      { id: "notes", target: "vocab-composer-notes" },
+      { id: "save", target: "vocab-composer-save" },
     ],
   },
   theory: {

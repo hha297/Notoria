@@ -1,16 +1,15 @@
 "use client";
 
-import { PenLine, Plus } from "lucide-react";
+import { Plus } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { PageHeader } from "@/components/layout/page-header";
-import { ListPageLoading } from "@/components/layout/page-loading";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { FolderWorkspace } from "@/components/folders/folder-workspace";
 import { NewFolderButton } from "@/components/folders/new-folder-button";
 import { LinkButton } from "@/components/ui/link-button";
 import { WritingTable } from "@/components/writing/writing-table";
+import { WritingListLoading } from "@/components/writing/writing-loading";
 import { sectionCreateHref } from "@/lib/folders/paths";
 import {
   folderListQueryOptions,
@@ -34,46 +33,40 @@ export function WritingView({
   const folders = foldersQuery.data ?? [];
 
   if (documentsQuery.isPending || foldersQuery.isPending) {
-    return <ListPageLoading />;
+    return <WritingListLoading />;
   }
 
   if (!currentFolderId && documents.length === 0 && folders.length === 0) {
     return (
-      <PageShell>
+      <PageShell className="writing-atelier-shell">
         <FolderWorkspace
           workspaceId={workspaceId}
           section="writing"
           folders={folders}
           currentFolderId={currentFolderId}
           items={documents}
-          header={
-            <PageHeader
-              eyebrow={t("title")}
-              title={t("title")}
-              highlight={t("studio")}
-              description={t("description")}
-            >
-              <ShowTutorialButton section="writing" />
-              <NewFolderButton />
-              <LinkButton href={createHref}>
-                <Plus className="size-4" />
-                {t("create")}
-              </LinkButton>
-            </PageHeader>
-          }
+          showBreadcrumbs={false}
         >
-          <div className="empty-state">
-            <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-hairline-cloud bg-muted/40">
-              <PenLine className="size-6 text-muted-foreground" />
+          <div className="writing-atelier writing-atelier-empty flex flex-col gap-10">
+            <header className="writing-hero">
+              <div className="writing-hero-copy">
+                <p className="writing-kicker">{t("title")}</p>
+                <h1 className="writing-brand-title">{t("title")}</h1>
+                <p className="writing-brand-lede">{t("description")}</p>
+              </div>
+              <div className="writing-hero-actions">
+                <ShowTutorialButton section="writing" />
+                <NewFolderButton variant="outline" size="sm" />
+                <LinkButton href={createHref}>
+                  <Plus className="size-4" />
+                  {t("createFirst")}
+                </LinkButton>
+              </div>
+            </header>
+            <div className="writing-empty-desk">
+              <p className="writing-empty-title">{t("emptyTitle")}</p>
+              <p className="writing-brand-lede">{t("emptyDescription")}</p>
             </div>
-            <p className="font-medium text-ink">{t("emptyTitle")}</p>
-            <p className="mt-2 max-w-md text-sm text-muted-foreground">
-              {t("emptyDescription")}
-            </p>
-            <LinkButton href={createHref} className="mt-5">
-              <Plus className="size-4" />
-              {t("createFirst")}
-            </LinkButton>
           </div>
         </FolderWorkspace>
       </PageShell>

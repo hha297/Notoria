@@ -116,7 +116,7 @@ export function WorkspaceOnboarding({
         >
           <div className="max-h-[min(36rem,calc(100dvh-2rem))] overflow-y-auto rounded-xl border border-hairline-cloud bg-card text-ink shadow-xl shadow-ink/10">
             <div className="flex items-start justify-between gap-3 px-4 pt-4 sm:px-5 sm:pt-5">
-              <div className="flex size-10 shrink-0 items-center justify-center rounded-lg bg-accent-lime text-ink">
+              <div className="flex size-10 shrink-0 items-center justify-center rounded-sm bg-primary text-on-primary">
                 <Sparkles className="size-5" aria-hidden />
               </div>
               <Button
@@ -214,7 +214,7 @@ export function WorkspaceOnboarding({
                                 index === 0 && "border-ink/15 bg-muted/40",
                               )}
                             >
-                              <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-md bg-accent-lime text-ink">
+                              <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-sm bg-primary text-on-primary">
                                 <Icon className="size-4" aria-hidden />
                               </span>
                               <span className="min-w-0">

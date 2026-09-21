@@ -59,7 +59,13 @@
     "speaking": "Nói",
     "account": "Tài khoản",
     "settings": "Cài đặt",
-    "workspace": "Không gian học"
+    "workspace": "Không gian học",
+    "gettingStarted": "Cách dùng",
+    "groups": {
+      "main": "Menu chính",
+      "listenSpeak": "Nghe và nói",
+      "more": "Thêm"
+    }
   },
   "folders": {
     "new": "Thư mục mới",
@@ -95,7 +101,13 @@
     "nameRequired": "Nhập tên thư mục",
     "invalidMove": "Không thể chuyển thư mục vào chính nó",
     "tooDeep": "Thư mục này đã lồng quá sâu",
-    "notFound": "Không tìm thấy thư mục"
+    "notFound": "Không tìm thấy thư mục",
+    "nameTaken": "Đã có thư mục hoặc bài viết dùng tên này"
+  },
+  "theme": {
+    "toggle": "Đổi giao diện",
+    "light": "Sáng",
+    "dark": "Tối"
   },
   "header": {
     "createWorkspace": "Tạo không gian học",
@@ -117,7 +129,10 @@
     "deleted": "Đã xóa không gian học",
     "editTitle": "Sửa không gian học",
     "editDescription": "Đổi tên và ngôn ngữ của không gian học này.",
+    "editAction": "Sửa không gian học",
+    "deleteAction": "Xóa không gian học",
     "manage": "Cài đặt không gian học",
+    "manageNamed": "Quản lý “{name}”",
     "nameRequired": "Nhập tên không gian học",
     "deleteTitle": "Xóa không gian học?",
     "deleteDescription": "Thao tác này sẽ xóa vĩnh viễn “{name}” cùng toàn bộ từ vựng, bài viết, lý thuyết, bài nghe và bài tập. Không hoàn lại được.",
@@ -128,6 +143,8 @@
   "vocabulary": {
     "title": "Từ vựng",
     "bank": "sổ tay",
+    "description": "Từ bạn thu thập nằm ở đây — tìm, lọc và dùng lại khi luyện tập, viết và ôn.",
+    "library": "Sổ từ",
     "addWordHighlight": "vào sổ tay",
     "newWord": "Từ mới",
     "editWord": "Sửa từ",
@@ -194,8 +211,9 @@
     "synonymsCannotLinkSelf": "Một từ không thể đồng nghĩa với chính nó",
     "synonymsRemove": "Gỡ {word}",
     "formDescription": "Thêm từ kèm nghĩa, câu ví dụ và thẻ. Kéo thả để đổi thứ tự.",
-    "emptyTitle": "Sổ tay còn trống",
-    "emptyDescription": "Thêm vài từ vào sổ tay trong không gian học hiện tại để bắt đầu.",
+    "addingTo": "Thêm vào",
+    "emptyTitle": "Ngân hàng từ vựng còn trống",
+    "emptyDescription": "Hãy thu thập từ và nghĩa để xây thư viện ngôn ngữ của riêng bạn.",
     "addFirst": "Thêm từ đầu tiên",
     "disabledNoWorkspace": "Hãy tạo không gian học trước đã, rồi mới thêm từ nhé.",
     "saved": "Đã lưu từ",
@@ -220,11 +238,20 @@
     "sortWord": "Theo từ",
     "sortAsc": "A → Z",
     "sortDesc": "Z → A",
-    "noResults": "Không tìm thấy từ nào khớp bộ lọc",
+    "noResults": "Không tìm thấy từ nào",
+    "noResultsDescription": "Thử đổi từ khóa hoặc bộ lọc.",
+    "loadError": "Không tải được từ vựng",
+    "loadErrorDescription": "Kiểm tra kết nối rồi thử lại.",
+    "retry": "Thử lại",
+    "viewList": "Danh sách",
+    "viewCards": "Thẻ",
+    "viewMode": "Chế độ hiển thị",
+    "moreTags": "+{count}",
+    "updatedAgo": "Cập nhật {time}",
     "shownOfTotal": "{shown} / {total}",
     "stats": {
-      "total": "Tổng",
-      "recent": "Tuần này"
+      "total": "Tổng từ vựng",
+      "recent": "Thêm tuần này"
     },
     "uncategorizedPos": "Chưa phân loại",
     "groupCount": "{count, plural, other {# từ}}",
@@ -251,6 +278,7 @@
     "export": {
       "button": "Xuất file",
       "title": "Xuất từ vựng",
+      "kicker": "Xuất từ vựng",
       "description": "Xuất những từ đang hiện trên bảng.",
       "rowCount": "{count, plural, other {# từ}}",
       "summaryWithNote": "{count, plural, other {# từ}} · Kèm ghi chú",
@@ -258,6 +286,9 @@
       "formatPdf": "PDF",
       "formatCsv": "CSV",
       "formatDocx": "Word",
+      "formatPdfHint": "Trang in",
+      "formatDocxHint": "File soạn thảo",
+      "formatCsvHint": "Bảng tính",
       "options": "Nội dung kèm theo",
       "content": "Nội dung",
       "includePartOfSpeech": "Loại từ",
@@ -350,6 +381,8 @@
     "studio": "cùng Notoria",
     "description": "Chọn một kiểu bài để ôn từ trong sổ tay của bạn.",
     "studioDescription": "Luyện từ vựng, lý thuyết, hoặc tài liệu đã nhập — chọn nguồn, rồi bắt đầu phiên tập trung.",
+    "startActivity": "Bắt đầu",
+    "unlockActivity": "Mở khóa",
     "practice": "hôm nay",
     "editor": "soạn thảo",
     "edit": "Chỉnh sửa",
@@ -371,12 +404,19 @@
     },
     "sources": {
       "label": "Nguồn bài tập",
+      "heading": "Nguồn",
       "vocabulary": "Từ vựng",
       "theory": "Lý thuyết",
       "import": "Nhập",
+      "imported": "Đã nhập",
+      "lastUsed": "Dùng gần đây",
+      "selected": "Đang chọn",
       "vocabularyHint": "Các kiểu bài xây từ từ trong không gian học đang dùng.",
       "theoryHint": "AI biến ghi chú Theory thành bài điền chỗ trống.",
-      "importHint": "Nhập worksheet hoặc ghi chú — giữ đúng cue từ nguồn và tạo thẻ luyện, không bịa bài mới."
+      "importHint": "Nhập worksheet hoặc ghi chú — giữ đúng cue từ nguồn và tạo thẻ luyện, không bịa bài mới.",
+      "vocabularyCount": "{count, plural, one {# từ} other {# từ}}",
+      "theoryCount": "{count, plural, one {# ghi chú} other {# ghi chú}}",
+      "importCount": "{count, plural, one {# bản nhập} other {# bản nhập}}"
     },
     "processing": {
       "workingTitle": "Đang xử lý bài tập",
@@ -397,10 +437,13 @@
     },
     "import": {
       "eyebrow": "Bài từ tài liệu nhập",
+      "hubTitle": "Từ trang giấy thành bài luyện",
       "practiceTitle": "Bài tập đã nhập",
       "practiceDescription": "Thẻ luyện lấy đúng cue và thứ tự từ tài liệu nhập — không bịa câu mới.",
       "formTitle": "Nhập tài liệu học",
       "formDescription": "Chọn nguồn. Hệ thống trích cấu trúc và chỉ tạo bài từ các cue có trong nguồn.",
+      "chooseSource": "Bạn có thể nhập gì?",
+      "dropActive": "Thả để nhập",
       "modes": {
         "image": "Ảnh",
         "file": "File",
@@ -480,6 +523,8 @@
     },
     "theory": {
       "eyebrow": "Luyện lý thuyết",
+      "hubTitle": "Học các ý tưởng đứng sau ngôn ngữ",
+      "hubDescription": "Khám phá ngữ pháp, mẫu câu và khái niệm qua các bài học tương tác.",
       "practiceTitle": "Bài tập lý thuyết",
       "practiceDescription": "AI biến ghi chú này thành bài điền chỗ trống — kèm gợi ý và giải thích.",
       "openLibrary": "Mở thư viện lý thuyết",
@@ -490,6 +535,13 @@
       "emptyCta": "Tạo ghi chú lý thuyết",
       "searchPlaceholder": "Tìm theo tiêu đề hoặc nội dung…",
       "filterCategory": "Danh mục",
+      "viewMode": "Chế độ hiển thị",
+      "viewList": "Danh sách",
+      "viewCards": "Thẻ",
+      "pageOf": "Trang {page} / {totalPages}",
+      "previousPage": "Trang trước",
+      "nextPage": "Trang sau",
+      "goToPage": "Tới trang {page}",
       "noResults": "Không có ghi chú lý thuyết phù hợp",
       "noResultsDescription": "Thử tìm kiếm hoặc danh mục khác.",
       "clearFilters": "Xóa bộ lọc",
@@ -549,13 +601,44 @@
         "completeExercise": "Hoàn thành bài tập.",
         "theoryCheck": "Kiểm tra lý thuyết"
       },
-      "trueFalseLabel": "Đúng hoặc Sai"
+      "trueFalseLabel": "Đúng hoặc Sai",
+      "lesson": {
+        "label": "Bài học",
+        "concept": "Khái niệm",
+        "theIdea": "Ý chính",
+        "seeIt": "Trong ngữ cảnh",
+        "notice": "Nhận ra",
+        "example": "Ví dụ",
+        "revealNote": "Hiện ghi chú",
+        "hideNote": "Ẩn ghi chú",
+        "continue": "Tiếp tục",
+        "quickReview": "Xem nhanh",
+        "skipReview": "Bỏ qua phần xem",
+        "startPractice": "Bắt đầu luyện",
+        "openTheory": "Mở lý thuyết đầy đủ",
+        "tryIt": "Thử ngay",
+        "outline": "Trong bài này",
+        "keyIdea": "Ý chính",
+        "nowPractice": "Bây giờ luyện tập",
+        "learnThis": "Học khái niệm này",
+        "applyNow": "Bây giờ hãy dùng điều vừa học.",
+        "preparing": "Đang chuẩn bị bài luyện…",
+        "yourAnswer": "Câu trả lời của bạn",
+        "correctForm": "Dạng đúng",
+        "theRule": "Quy tắc",
+        "why": "Vì sao",
+        "complete": "Đã hiểu",
+        "completeHint": "Bạn có thể tiếp tục khi sẵn sàng."
+      }
     },
     "types": {
       "flashcard": {
         "label": "Thẻ flashcard",
         "description": "Lật thẻ để nhớ từ và nghĩa, rồi tự đánh giá mức nhớ.",
-        "preview": "Lật · Đánh giá · Ôn"
+        "preview": "Lật · Đánh giá · Ôn",
+        "previewHint": "Từ tiếng Phần Lan",
+        "previewWord": "suomalainen",
+        "previewFlow": "LẬT → ĐÁNH GIÁ → ÔN"
       },
       "fill-in-blank": {
         "label": "Điền chỗ trống",
@@ -565,12 +648,20 @@
       "multiple-choice": {
         "label": "Trắc nghiệm",
         "description": "Chọn nghĩa hoặc từ đúng. Đáp án nhiễu cũng lấy từ sổ tay của bạn.",
-        "preview": "Nghĩa nào đúng?"
+        "preview": "Nghĩa nào đúng?",
+        "previewPrompt": "Nghĩa nào đúng?",
+        "previewA": "người Phần Lan",
+        "previewB": "thời tiết",
+        "previewC": "tòa nhà"
       },
       "match-pairs": {
         "label": "Ghép cặp",
         "description": "Ghép từng từ với đúng nghĩa — kiểu Quizlet.",
-        "preview": "Từ ↔ Nghĩa"
+        "preview": "Từ ↔ Nghĩa",
+        "previewLeft": "talo",
+        "previewRight": "house",
+        "previewLeftB": "koti",
+        "previewRightB": "home"
       },
       "type-answer": {
         "label": "Gõ đáp án",
@@ -580,7 +671,10 @@
       "form-sentence": {
         "label": "Đặt câu",
         "description": "Viết một câu hoàn chỉnh với từ đã lưu và nhận nhận xét ngữ pháp từ AI.",
-        "preview": "Viết câu dùng từ…"
+        "preview": "Viết câu dùng từ…",
+        "previewChipA": "Minä",
+        "previewChipB": "asun",
+        "previewChipC": "Helsingissä"
       }
     },
     "timedHint": {
@@ -608,6 +702,7 @@
     },
     "fillInBlank": {
       "prompt": "Điền vào chỗ trống",
+      "placeholder": "Gõ đáp án…",
       "instruction": "Điền chỗ trống bằng dạng đúng của từ.",
       "hint": "Gợi ý",
       "hintExplainWord": "Hãy nghĩ về nghĩa của từ còn thiếu trong câu này.",
@@ -639,10 +734,13 @@
       "noneValid": "AI không tạo được câu hỏi hợp lệ cho các từ này. Thử lại."
     },
     "session": {
-      "complete": "Xong một vòng luyện!",
+      "complete": "Hoàn thành phiên học",
       "score": "{correct} / {total} câu đúng",
       "pairsMatched": "Đã ghép {count} cặp",
-      "tryAgain": "Làm lại"
+      "tryAgain": "Làm lại",
+      "questionsLabel": "Câu hỏi",
+      "correctLabel": "Đúng",
+      "reviewLabel": "Cần ôn"
     },
     "multipleChoice": {
       "questionWord": "Từ này nghĩa là gì?",
@@ -663,11 +761,13 @@
       "previous": "Trước",
       "next": "Tiếp",
       "shuffle": "Xáo câu hỏi",
-      "finish": "Kết thúc vòng này"
+      "finish": "Kết thúc vòng này",
+      "keyboardHint": "1–4 để chọn · Enter để tiếp"
     },
     "matchPairs": {
       "words": "Từ",
       "meanings": "Nghĩa",
+      "roundProgress": "Vòng {current} / {total}",
       "progress": "Đã ghép {matched} / {total}",
       "hint": "Chọn một từ, rồi chọn nghĩa tương ứng",
       "complete": "Ghép hết rồi — giỏi quá!",
@@ -703,6 +803,7 @@
       "meaningLabel": "Nghĩa",
       "prompt": "Viết một câu hoàn chỉnh dùng từ này.",
       "placeholder": "Viết một câu đầy đủ…",
+      "insertWord": "Thêm vào câu",
       "yourSentence": "Câu của bạn",
       "corrected": "Câu đã sửa",
       "betterSuggestion": "Tự nhiên hơn",
@@ -756,7 +857,7 @@
     "questionWord": "Nghĩa là gì?",
     "questionMeaning": "Từ nào khớp nghĩa này?",
     "answer": "Đáp án",
-    "tapToFlip": "Chạm hoặc nhấn Space để lật thẻ",
+    "tapToFlip": "Chạm thẻ hoặc nhấn Space để xem đáp án",
     "showAnswer": "Xem đáp án",
     "hideAnswer": "Ẩn đáp án",
     "flip": "Lật thẻ",
@@ -765,7 +866,7 @@
     "shuffle": "Xáo thẻ",
     "restart": "Học lại từ đầu",
     "progress": "{current} / {total}",
-    "keyboardHint": "Space để lật · ← → để chuyển thẻ",
+    "keyboardHint": "Space xem đáp án · ← → chuyển thẻ · 1–4 đánh giá",
     "meanings": "Nghĩa",
     "examples": "Ví dụ",
     "synonyms": "Từ đồng nghĩa",
@@ -792,7 +893,7 @@
     "overview": "Tổng quan",
     "your": "Không gian",
     "workspaceLabel": "của bạn",
-    "description": "{language} nằm trong không gian này. Notoria là góc học riêng: gom từ, lưu lý thuyết, luyện tập, viết, rồi nghe và nói.",
+    "description": "Góc học riêng cho ngôn ngữ bạn quan tâm — gom từ, giữ lý thuyết gần tay, luyện bằng lời của chính mình, rồi viết, nghe và nói cho đến khi nó thật sự thuộc về bạn.",
     "wordsSaved": "Từ đã lưu",
     "wordsReadyToPractice": "Từ sẵn sàng luyện",
     "theoryNotes": "Ghi chú lý thuyết",
@@ -889,7 +990,17 @@
     "practiceNowVocabCta": "Mở từ vựng",
     "continueTitle": "Tiếp tục",
     "continueSubtitle": "Mở lại việc bạn đang làm dở.",
-    "sidebarFooter": "Góc học ngôn ngữ riêng của bạn"
+    "sidebarFooter": "Góc học ngôn ngữ riêng của bạn",
+    "helloTitle": "Xin chào, {name}",
+    "continueLearning": "Tiếp tục học",
+    "continueLearningSubtitle": "Vào một mục trong không gian học.",
+    "snapshotTitle": "Nhìn nhanh",
+    "quickActions": "Thao tác nhanh",
+    "quickAddWord": "Thêm từ",
+    "quickStartExercise": "Bắt đầu luyện",
+    "quickOpenWriting": "Mở viết",
+    "quickOpenTheory": "Mở lý thuyết",
+    "nextStepTitle": "Bước tiếp theo"
   },
   "search": {
     "placeholder": "Tìm bất cứ gì...",
@@ -1060,6 +1171,7 @@
   "tutorials": {
     "show": "Xem hướng dẫn",
     "showShort": "Hướng dẫn",
+    "guideLabel": "Hướng dẫn",
     "next": "Tiếp",
     "skip": "Bỏ qua hướng dẫn",
     "done": "Đã hiểu",
@@ -1084,6 +1196,45 @@
         "library": {
           "title": "4. Thư viện từ của bạn",
           "body": "Từ đã lưu nằm ở đây. Mở mục để sửa, hoặc dùng trong bài tập và ôn tập sau."
+        }
+      }
+    },
+    "vocabularyAdd": {
+      "title": "Thêm từ",
+      "description": "Form này là trung tâm của Notoria — từng ô giúp bạn nhớ và dùng lại từ sau này.",
+      "cta": "Đã hiểu",
+      "steps": {
+        "word": {
+          "title": "1. Gõ từ",
+          "body": "Nhập từ hoặc cụm bạn đang học. Đây là mục chính trong sổ từ của bạn."
+        },
+        "partOfSpeech": {
+          "title": "2. Loại từ",
+          "body": "Chọn danh từ, động từ, tính từ… để lọc và gợi ý AI chính xác hơn."
+        },
+        "meanings": {
+          "title": "3. Nghĩa",
+          "body": "Thêm một hoặc nhiều nghĩa. Gắn sao tối đa 5 nghĩa chính cho bài tập — các nghĩa khác giữ để tham khảo. Kéo để sắp xếp."
+        },
+        "examples": {
+          "title": "4. Câu ví dụ",
+          "body": "Thêm câu cho thấy cách dùng từ. Mở Chi tiết thêm nếu cần bản dịch hoặc ghi chú."
+        },
+        "tags": {
+          "title": "5. Thẻ",
+          "body": "Gắn thẻ theo trình độ, chủ đề hoặc tình huống để tìm và luyện từ liên quan sau này."
+        },
+        "synonyms": {
+          "title": "6. Đồng nghĩa",
+          "body": "Liên kết từ liên quan trong sổ từ để tạo mạng kết nối và nhớ lâu hơn."
+        },
+        "notes": {
+          "title": "7. Ghi chú",
+          "body": "Ghi chú tùy chọn — phát âm, cách dùng, hoặc bất cứ điều gì bạn muốn nhớ."
+        },
+        "save": {
+          "title": "8. Lưu",
+          "body": "Khi sẵn sàng, lưu từ. Bạn có thể sửa lại bất cứ lúc nào từ thư viện từ vựng."
         }
       }
     },
@@ -1232,9 +1383,145 @@
     }
   },
   "settings": {
-    "title": "Cài đặt",
-    "workspace": "Không gian học",
-    "workspaceDescription": "Chỉnh cài đặt cho không gian học đang dùng.",
+    "eyebrow": "Tuỳ chọn",
+    "title": "Tuỳ chọn",
+    "highlight": "ứng dụng",
+    "description": "Cách Notoria hiển thị và hoạt động với bạn — không phải cài đặt không gian học hay tài khoản.",
+    "appearance": "Giao diện",
+    "appearanceDescription": "Tuỳ chọn hình ảnh cho cả ứng dụng.",
+    "theme": "Chủ đề",
+    "themeDescription": "Chọn sáng, tối, hoặc theo hệ thống.",
+    "themeLight": "Sáng",
+    "themeDark": "Tối",
+    "themeSystem": "Hệ thống",
+    "accessibility": "Trợ năng",
+    "accessibilityDescription": "Tuỳ chọn ảnh hưởng chuyển động và trải nghiệm tương tác trên Notoria.",
+    "motion": "Giảm chuyển động",
+    "motionDescription": "Hạn chế animation. Hệ thống theo cài đặt thiết bị của bạn.",
+    "motionSystem": "Hệ thống",
+    "motionReduce": "Giảm",
+    "motionFull": "Đầy đủ",
+    "learning": "Học tập",
+    "learningDescription": "Tuỳ chọn hướng dẫn áp dụng trên các mục.",
+    "tutorials": "Tutorial từng mục",
+    "tutorialsDescription": "Đặt lại các tutorial đã xem để “Show tutorial” bắt đầu lại từ đầu.",
+    "tutorialsReset": "Đặt lại tutorial",
+    "tutorialsResetDone": "Đã đặt lại tutorial",
+    "shortcuts": {
+      "title": "Phím tắt",
+      "description": "Phím tắt toàn cục của Notoria trên web. Phím trong từng bài luyện vẫn nằm trong mục đó.",
+      "enabled": "Bật phím tắt",
+      "enabledDescription": "Bật/tắt mọi phím tắt toàn cục mà không mất cấu hình tùy chỉnh.",
+      "on": "Bật",
+      "off": "Tắt",
+      "action": "Hành động",
+      "keys": "Phím tắt",
+      "edit": "Sửa",
+      "add": "Thêm phím tắt",
+      "addTitle": "Thêm phím tắt",
+      "addDescription": "Chọn hành động bạn muốn truy cập nhanh, rồi nhấn tổ hợp phím muốn dùng.",
+      "chooseAction": "Chọn hành động",
+      "customized": "Đã tùy chỉnh",
+      "defaultBadge": "Mặc định",
+      "defaultWas": "Mặc định: {keys}",
+      "extraBadge": "Thêm",
+      "remove": "Xóa",
+      "removed": "Đã xóa phím tắt",
+      "replace": "Thay thế",
+      "resetOne": "Đặt lại mặc định",
+      "resetOneDone": "Đã đặt lại phím tắt mặc định",
+      "resetAll": "Đặt lại tất cả phím tắt",
+      "resetAllDescription": "Khôi phục mọi phím tắt toàn cục về tổ hợp mặc định.",
+      "resetAllConfirmTitle": "Đặt lại tất cả phím tắt về mặc định?",
+      "resetAllConfirmDescription": "Các phím tắt toàn cục tùy chỉnh sẽ bị xóa. Phím trong từng bài luyện không bị ảnh hưởng.",
+      "resetAllDone": "Đã đặt lại tất cả phím tắt",
+      "editTitle": "Sửa: {action}",
+      "editDescription": "Nhấn tổ hợp phím. Phím dành riêng của trình duyệt không dùng được trong Notoria.",
+      "pressKeys": "Nhấn tổ hợp phím",
+      "pickActionFirst": "Chọn hành động, rồi nhấn tổ hợp phím",
+      "saved": "Đã lưu phím tắt",
+      "conflict": "Phím tắt này đang được gán cho “{action}”.",
+      "reserved": "Trình duyệt dành riêng tổ hợp này — Notoria không dùng được.",
+      "statusAvailable": "✓ {keys}",
+      "statusConflict": "⚠ {keys} — đang gán cho {action}.",
+      "statusReserved": "⚠ {keys} — trình duyệt dành riêng, Notoria không dùng được.",
+      "reservedTitle": "Một số phím tắt không dùng được",
+      "reservedDescription": "Trình duyệt và Windows giữ các phím như Ctrl + N, Ctrl + Shift + T, Win + E. Notoria không thể ghi đè.",
+      "reservedGroups": {
+        "ctrl": "Ctrl",
+        "ctrlShift": "Ctrl + Shift",
+        "alt": "Alt",
+        "win": "Windows"
+      },
+      "reservedPurposes": {
+        "newWindow": "Cửa sổ mới",
+        "newTab": "Tab mới",
+        "closeTab": "Đóng tab",
+        "reopenTab": "Mở lại tab đã đóng",
+        "closeWindow": "Đóng cửa sổ",
+        "newIncognito": "Cửa sổ ẩn danh mới",
+        "addressBar": "Thanh địa chỉ",
+        "reload": "Tải lại",
+        "hardReload": "Tải lại cứng",
+        "nextTab": "Tab tiếp",
+        "prevTab": "Tab trước",
+        "print": "In",
+        "openFile": "Mở tệp",
+        "browserSave": "Lưu trang (trình duyệt)",
+        "bookmark": "Đánh dấu trang",
+        "history": "Lịch sử",
+        "downloads": "Tải xuống",
+        "viewSource": "Xem mã nguồn",
+        "findInPage": "Tìm trong trang",
+        "findNext": "Tìm tiếp",
+        "findPrev": "Tìm trước",
+        "devtools": "Công cụ nhà phát triển",
+        "console": "Console JavaScript",
+        "inspect": "Kiểm tra phần tử",
+        "clearData": "Xóa dữ liệu duyệt",
+        "taskManager": "Trình quản lý tác vụ trình duyệt",
+        "altClose": "Đóng cửa sổ",
+        "altTab": "Chuyển ứng dụng",
+        "winExplorer": "File Explorer",
+        "winDesktop": "Hiện desktop",
+        "winLock": "Khóa máy",
+        "winRun": "Hộp thoại Run",
+        "winSettings": "Cài đặt Windows",
+        "winTaskView": "Task view",
+        "winClipboard": "Lịch sử clipboard"
+      },
+      "actions": {
+        "openSearch": "Tìm kiếm",
+        "quickSave": "Lưu nhanh",
+        "quickEdit": "Sửa nhanh",
+        "quickView": "Xem nhanh",
+        "download": "Tải xuống",
+        "deleteItem": "Xóa",
+        "createNew": "Tạo mới",
+        "goBack": "Quay lại",
+        "goForward": "Tiến tới"
+      },
+      "actionDescriptions": {
+        "openSearch": "Tìm trong không gian học của bạn",
+        "quickSave": "Lưu mục đang mở",
+        "quickEdit": "Bắt đầu sửa mục đang mở",
+        "quickView": "Mở mục đang mở ở chế độ xem",
+        "download": "Tải xuống mục đang mở",
+        "deleteItem": "Xóa mục đang chọn",
+        "createNew": "Tạo mục mới trong phần này",
+        "goBack": "Về trang trước",
+        "goForward": "Tới trang tiếp theo trong lịch sử"
+      }
+    },
+    "data": {
+      "title": "Dữ liệu & quyền riêng tư",
+      "description": "Tuỳ chọn lưu trên trình duyệt này. Tài khoản và nội dung không gian học quản lý ở chỗ khác.",
+      "clear": "Xóa tuỳ chọn cục bộ",
+      "clearDescription": "Xóa các tuỳ chọn app trên thiết bị này: chuyển động, phím tắt, tutorial, và tương tự. Không xóa tài khoản hay dữ liệu học.",
+      "clearConfirmTitle": "Xóa tuỳ chọn cục bộ?",
+      "clearConfirmDescription": "Chỉ xóa tuỳ chọn trên trình duyệt này. Tài khoản, billing và nội dung học không bị xóa.",
+      "clearDone": "Đã xóa tuỳ chọn cục bộ"
+    },
     "customTags": "Thẻ riêng",
     "customTagsDescription": "Tạo thẻ của bạn cho từ vựng. Thẻ có sẵn vẫn dùng được bình thường.",
     "tagName": "Tên thẻ",
@@ -1258,6 +1545,8 @@
     "title": "Lý thuyết",
     "highlight": "học",
     "description": "Ghi chú ngữ pháp, phát âm, nói, và cách ngôn ngữ vận hành — không phải luyện viết.",
+    "library": "Thư viện",
+    "collections": "Bộ sưu tập",
     "disabledNoWorkspace": "Hãy tạo không gian học trước khi thêm ghi chú lý thuyết.",
     "create": "Thêm lý thuyết",
     "createFirst": "Thêm ghi chú đầu tiên",
@@ -1277,7 +1566,7 @@
     "editDescription": "Bấm Lưu để giữ thay đổi. Hủy sẽ bỏ hết phần chưa lưu.",
     "editSaveHint": "Lưu để cập nhật ghi chú. Hủy sẽ bỏ phần chưa lưu.",
     "newTitle": "Lý thuyết mới",
-    "formDescription": "Chọn danh mục, thêm mô tả ngắn, rồi viết phần giải thích.",
+    "formDescription": "Đặt tên quy tắc, chọn danh mục, rồi giải thích bằng lời của bạn.",
     "documentTitle": "Tiêu đề",
     "titlePlaceholder": "vd. Partitive trong tiếng Phần Lan",
     "categoryLabel": "Danh mục",
@@ -1310,10 +1599,14 @@
     "export": {
       "button": "Xuất file",
       "title": "Xuất lý thuyết",
-      "description": "Chọn định dạng để in hoặc lưu tài liệu.",
+      "kicker": "Xuất lý thuyết",
+      "untitled": "Ghi chú chưa đặt tên",
+      "description": "Tải bản in hoặc file Word của ghi chú này.",
       "format": "Định dạng",
-      "formatPdf": "PDF (.pdf)",
-      "formatDocx": "Word (.docx)",
+      "formatPdf": "PDF",
+      "formatDocx": "Word",
+      "formatPdfHint": "Trang in",
+      "formatDocxHint": "File soạn thảo",
       "confirm": "Xuất",
       "success": "Đang tải file xuống…",
       "failed": "Xuất file không thành công",
@@ -1342,6 +1635,7 @@
     "emptyTitle": "Chưa có bài nghe",
     "emptyDescription": "Tải lên file âm thanh hoặc video để tạo bài nghe đầu tiên.",
     "myLessons": "Bài nghe của tôi",
+    "collections": "Bộ sưu tập",
     "searchPlaceholder": "Tìm theo tiêu đề hoặc tên file…",
     "filterAll": "Tất cả",
     "filterCefr": "CEFR",
@@ -1353,6 +1647,7 @@
     "sortTitleAsc": "Tiêu đề (A → Z)",
     "sortTitleDesc": "Tiêu đề (Z → A)",
     "clearFilters": "Xóa bộ lọc",
+    "sortBy": "Sắp xếp",
     "noResults": "Không có bài nghe nào khớp",
     "noResultsDescription": "Thử từ khóa khác hoặc xóa bộ lọc.",
     "continue": "Tiếp tục",
@@ -1480,6 +1775,7 @@
     "newCallFirst": "Bắt đầu cuộc gọi đầu tiên",
     "newTitle": "Cuộc gọi nói mới",
     "newDescription": "Chọn trình độ và chủ đề. Gia sư AI sẽ vào cuộc gọi và nói chuyện với bạn.",
+    "modalTip": "Chọn độ khó của cuộc trò chuyện, rồi ghi chú ngắn để gia sư biết bạn muốn luyện gì.",
     "create": "Tạo cuộc gọi",
     "created": "Đã tạo cuộc gọi nói",
     "titleLabel": "Tiêu đề",
@@ -1489,6 +1785,29 @@
     "emptyTitle": "Chưa có buổi nói nào",
     "emptyDescription": "Bắt đầu cuộc gọi video với gia sư AI để luyện nói.",
     "mySessions": "Buổi nói của tôi",
+    "sessionHint": "Mở buổi đã xong để xem feedback và transcript.",
+    "stats": {
+      "aria": "Thống kê speaking",
+      "total": "Buổi",
+      "completed": "Hoàn thành",
+      "ready": "Sẵn sàng",
+      "topics": "Chủ đề"
+    },
+    "guide": {
+      "aria": "Cách luyện speaking",
+      "pick": {
+        "title": "Chọn trọng tâm",
+        "body": "Chọn CEFR và chủ đề để gia sư dẫn cuộc nói đúng hướng bạn cần."
+      },
+      "call": {
+        "title": "Nói trực tiếp",
+        "body": "Vào cuộc gọi video, nói tự nhiên, và nhờ nhắc lại khi chưa rõ."
+      },
+      "review": {
+        "title": "Ôn sau buổi",
+        "body": "Quay lại xem feedback và transcript để dùng cho từ vựng hoặc viết."
+      }
+    },
     "join": "Vào cuộc gọi",
     "open": "Mở",
     "viewProgress": "Xem tiến trình",
@@ -1551,26 +1870,63 @@
     "noWorkspace": "Chưa có không gian học",
     "notFound": "Không tìm thấy"
   },
+  "learningOnboarding": {
+    "step": "Bắt đầu",
+    "title": "Bạn muốn học gì?",
+    "description": "Chọn ngôn ngữ đầu tiên để bắt đầu học.",
+    "searchPlaceholder": "Tìm ngôn ngữ…",
+    "noResults": "Không có ngôn ngữ nào khớp.",
+    "continue": "Tiếp tục",
+    "continuing": "Đang tiếp tục…",
+    "error": "Có lỗi xảy ra. Thử lại nhé.",
+    "invalidLanguage": "Ngôn ngữ này không khả dụng. Hãy chọn ngôn ngữ khác."
+  },
   "auth": {
     "welcomeBack": "Chào mừng trở lại",
     "signInDescription": "Đăng nhập vào tài khoản Notoria",
+    "signInEyebrow": "Đăng nhập",
+    "signUpEyebrow": "Đăng ký",
     "createAccountTitle": "Tạo tài khoản",
-    "registerDescription": "Bắt đầu học trong không gian riêng của bạn",
+    "registerDescription": "Tạo tài khoản, rồi chọn ngôn ngữ bạn muốn học.",
     "email": "Email",
     "password": "Mật khẩu",
     "name": "Tên",
     "signIn": "Đăng nhập",
+    "signingIn": "Đang đăng nhập…",
     "signOut": "Đăng xuất",
     "createAccount": "Tạo tài khoản",
+    "creatingAccount": "Đang tạo tài khoản…",
     "noAccount": "Chưa có tài khoản?",
     "hasAccount": "Đã có tài khoản?",
     "invalidCredentials": "Email hoặc mật khẩu chưa đúng",
     "emailExists": "Email này đã được dùng",
+    "emailInvalid": "Nhập địa chỉ email hợp lệ",
     "registerFailed": "Không tạo được tài khoản. Thử lại nhé.",
     "signInAfterRegisterFailed": "Tài khoản đã tạo xong. Bạn đăng nhập giúp mình.",
     "passwordHint": "Ít nhất 8 ký tự",
+    "passwordTooShort": "Mật khẩu cần ít nhất 8 ký tự",
     "showPassword": "Hiện mật khẩu",
     "hidePassword": "Ẩn mật khẩu",
+    "forgotPassword": "Quên mật khẩu?",
+    "forgotPasswordEyebrow": "Khôi phục tài khoản",
+    "forgotPasswordTitle": "Quên mật khẩu?",
+    "forgotPasswordDescription": "Nhập email và chúng tôi sẽ gửi liên kết đặt lại nếu tài khoản tồn tại.",
+    "sendResetLink": "Gửi liên kết đặt lại",
+    "sendingResetLink": "Đang gửi…",
+    "forgotPasswordSentTitle": "Kiểm tra email",
+    "forgotPasswordSent": "Nếu có tài khoản với email này, chúng tôi đã gửi liên kết đặt lại mật khẩu.",
+    "forgotPasswordFailed": "Không gửi được liên kết. Thử lại nhé.",
+    "backToSignIn": "Quay lại đăng nhập",
+    "resetPasswordEyebrow": "Khôi phục tài khoản",
+    "resetPasswordTitle": "Chọn mật khẩu mới",
+    "resetPasswordDescription": "Nhập mật khẩu mới cho tài khoản Notoria của bạn.",
+    "resetPassword": "Đặt lại mật khẩu",
+    "resettingPassword": "Đang đặt lại…",
+    "resetPasswordSuccessTitle": "Đã cập nhật mật khẩu",
+    "resetPasswordSuccess": "Mật khẩu đã được đặt lại. Bạn có thể đăng nhập ngay.",
+    "resetPasswordFailed": "Không đặt lại được mật khẩu. Thử lại nhé.",
+    "resetTokenInvalid": "Liên kết đặt lại không hợp lệ hoặc đã hết hạn. Hãy yêu cầu liên kết mới.",
+    "resetTokenMissing": "Liên kết đặt lại bị thiếu hoặc không đầy đủ. Hãy yêu cầu liên kết mới.",
     "account": "Tài khoản",
     "accountSettings": "Cài đặt tài khoản",
     "accountDescription": "Đổi ảnh đại diện và mật khẩu.",
@@ -1597,7 +1953,70 @@
     "saveName": "Lưu tên",
     "nameUpdated": "Đã cập nhật tên",
     "nameUpdateFailed": "Không cập nhật được tên",
-    "nameTooShort": "Tên cần ít nhất 2 ký tự"
+    "nameTooShort": "Tên cần ít nhất 2 ký tự",
+    "continueWithGoogle": "Tiếp tục với Google",
+    "continuingWithGoogle": "Đang kết nối Google…",
+    "orContinueWith": "hoặc dùng email",
+    "oauthCancelled": "Bạn đã hủy đăng nhập Google. Thử lại nhé.",
+    "oauthFailed": "Đăng nhập Google không thành công. Vui lòng thử lại.",
+    "oauthAccountNotLinked": "Email này đã dùng với cách đăng nhập khác.",
+    "oauthNotConfigured": "Đăng nhập Google chưa được cấu hình."
+  },
+  "account": {
+    "eyebrow": "Tài khoản",
+    "title": "Tài khoản",
+    "highlight": "của bạn",
+    "description": "Quản lý hồ sơ, Notoria Pro và bảo mật — kể cả việc đóng tài khoản vĩnh viễn.",
+    "pro": {
+      "freeLede": "Gói miễn phí đủ luyện mỗi ngày. Pro mở các công cụ AI biến ghi chú thành nghe, nói, hỗ trợ viết và file in được.",
+      "activeLede": "Gói Pro đang hoạt động. Các công cụ AI học tập vẫn mở khi gói còn gia hạn.",
+      "unlockLabel": "Mở khóa với Pro",
+      "includedLabel": "Đã có trong gói Pro của bạn",
+      "features": {
+        "aiPractice": "Điền trống, luyện ngữ cảnh và đặt câu từ chính tài liệu của bạn",
+        "writingAi": "Sửa lỗi và gợi ý trên bài viết của bạn",
+        "export": "Chia sẻ hoặc in bài tập dạng PDF hoặc Word",
+        "listening": "Biến audio/video của bạn thành bài luyện nghe",
+        "speaking": "Gọi trực tiếp với AI tutor kèm transcript và phản hồi"
+      }
+    },
+    "profile": {
+      "title": "Hồ sơ",
+      "description": "Cách bạn hiện trên Notoria. Email gắn với đăng nhập.",
+      "emailHint": "Không đổi email tại đây. Liên hệ hỗ trợ nếu cần chuyển sang địa chỉ khác."
+    },
+    "security": {
+      "title": "Mật khẩu",
+      "description": "Chọn mật khẩu mạnh và không dùng lại ở nơi khác."
+    },
+    "danger": {
+      "title": "Đóng tài khoản",
+      "description": "Xóa vĩnh viễn tài khoản Notoria và mọi dữ liệu bên trong.",
+      "deleteTitle": "Xóa tài khoản của tôi",
+      "deleteHint": "Thao tác này xóa mọi workspace, nội dung học và thanh toán. Hãy tải backup trước nếu muốn giữ bản sao.",
+      "deleteAction": "Xóa tài khoản"
+    },
+    "delete": {
+      "kicker": "Không thể hoàn tác",
+      "title": "Xóa tài khoản?",
+      "description": "Bạn sắp đóng vĩnh viễn {email}. Không thể hoàn tác.",
+      "warningTitle": "Trước khi tiếp tục",
+      "warnings": {
+        "workspaces": "Mọi workspace cùng từ vựng, theory, writing, listening và speaking sẽ bị xóa.",
+        "billing": "Gói Notoria Pro đang hoạt động sẽ bị hủy ngay.",
+        "media": "File media đã tải lên và ảnh đại diện sẽ bị gỡ.",
+        "permanent": "Không có thời gian khôi phục sau khi xác nhận."
+      },
+      "backupTitle": "Tải backup trước",
+      "backupHint": "Xuất dữ liệu học tập dạng JSON để lưu. Media chỉ được tham chiếu bằng URL, không nhúng trong file.",
+      "backup": "Tải backup",
+      "backupDone": "Đã tải backup",
+      "backupFailed": "Không chuẩn bị được backup. Thử lại nhé.",
+      "confirmLabel": "Gõ {phrase} để xác nhận",
+      "confirm": "Xóa tài khoản vĩnh viễn",
+      "deleted": "Tài khoản của bạn đã được xóa",
+      "failed": "Không xóa được tài khoản. Thử lại nhé."
+    }
   },
   "billing": {
     "title": "Notoria Pro",
@@ -1611,8 +2030,8 @@
     "mostPopular": "Phổ biến nhất",
     "currentPlan": "Gói hiện tại",
     "choosePro": "Chọn Pro",
-    "freePlanDescription": "Thư viện, luyện tập và xuất CSV.",
-    "proPlanDescription": "Bài AI, đặt câu, nghe, nói và xuất PDF/Word.",
+    "freePlanDescription": "Luyện cơ bản, AI thêm từ, soạn viết và CSV.",
+    "proPlanDescription": "Bài AI, hỗ trợ viết, nghe, nói và PDF/Word.",
     "upgrade": "Nâng cấp lên Pro",
     "manage": "Quản lý gói đăng ký",
     "proBadge": "Pro",
@@ -1627,70 +2046,48 @@
     "notConfigured": "Chưa cấu hình thanh toán.",
     "noCustomer": "Tài khoản này chưa được liên kết với khách hàng thanh toán.",
     "modalTitle": "Nâng cấp gói",
-    "modalSubtitle": "Bản miễn phí đủ để lưu từ và luyện. Pro thêm bài AI từ từ vựng, Theory và Import — kèm AI viết, nghe, nói, và xuất file in được.",
+    "modalSubtitle": "Miễn phí đủ luyện mỗi ngày và thư viện. Pro mở bài AI, hỗ trợ viết, nghe, nói và file in được.",
     "lockedTitle": "Đây là tính năng Pro",
-    "lockedDescription": "Nâng cấp để mở khóa bài AI (từ vựng, đặt câu, Theory, Import) — kèm nghe, nói, AI viết, và xuất PDF/Word.",
+    "lockedDescription": "Nâng cấp để mở bài AI, hỗ trợ viết, nghe, nói và xuất PDF/Word.",
     "planName": "Pro",
     "cancelAnytime": "Hủy bất cứ lúc nào",
     "compare": {
       "capability": "Bạn nhận được gì",
       "free": "Miễn phí",
       "pro": "Pro",
+      "freeIncludes": "Đã có trên Free",
+      "proUnlocks": "Pro mở khóa",
       "impact": "Để làm gì",
       "yes": "Có",
       "locked": "Khóa",
       "rows": {
-        "vocab": {
-          "capability": "Sổ từ, thẻ, tìm kiếm",
-          "impact": "Lưu từ mà không cần trả phí"
+        "practice": {
+          "capability": "Flashcard, ghép cặp, trắc nghiệm & gõ đáp án",
+          "impact": "Luyện cơ bản từ từ của bạn"
         },
         "vocabAi": {
-          "capability": "AI chính tả và nghĩa",
-          "impact": "Thêm từ nhanh và đúng hơn"
+          "capability": "AI chính tả & nghĩa khi thêm từ",
+          "impact": "Thêm từ nhanh với AI miễn phí"
+        },
+        "studio": {
+          "capability": "Trình soạn viết & ghi chú Theory",
+          "impact": "Soạn bài và lưu ngữ pháp"
         },
         "csv": {
           "capability": "Xuất CSV",
           "impact": "Sao lưu từ ra bảng tính"
         },
-        "export": {
-          "capability": "Xuất PDF và Word",
-          "impact": "In phiếu bài hoặc chia sẻ file"
-        },
-        "writing": {
-          "capability": "Trình soạn viết",
-          "impact": "Tự soạn bài và phiếu bài"
+        "aiPractice": {
+          "capability": "Bài AI từ từ vựng, Theory & Import",
+          "impact": "Điền trống, ngữ cảnh, đặt câu"
         },
         "writingAi": {
-          "capability": "AI viết (sửa và cải thiện)",
+          "capability": "AI viết (sửa & cải thiện)",
           "impact": "Sửa lỗi trên bài của bạn"
         },
-        "exercises": {
-          "capability": "Bài tập từ ví dụ đã lưu",
-          "impact": "Luyện đúng câu bạn đã thêm"
-        },
-        "fillBlank": {
-          "capability": "Điền chỗ trống bằng AI",
-          "impact": "Câu mới, không phải thuộc ví dụ cũ"
-        },
-        "exerciseDifficulty": {
-          "capability": "Trắc nghiệm & gõ đáp án ngữ cảnh AI",
-          "impact": "Điền chỗ trống từ từ vựng của bạn (Dễ–Tăng cường)"
-        },
-        "formSentence": {
-          "capability": "Đặt câu (phản hồi AI)",
-          "impact": "Viết câu với từ của bạn và được sửa ngữ pháp"
-        },
-        "theory": {
-          "capability": "Ghi chú lý thuyết",
-          "impact": "Lưu ngữ pháp và cách dùng"
-        },
-        "theoryAi": {
-          "capability": "Bài tập Theory bằng AI",
-          "impact": "Luyện Theory của bạn với bài điền chỗ trống do AI tạo"
-        },
-        "importAi": {
-          "capability": "Bài tập Import bằng AI",
-          "impact": "Biến worksheet, ảnh, PDF hoặc URL thành thẻ luyện"
+        "export": {
+          "capability": "Xuất PDF & Word",
+          "impact": "In phiếu bài hoặc chia sẻ file"
         },
         "listening": {
           "capability": "Bài nghe",
@@ -1748,9 +2145,15 @@
     "disabledNoWorkspace": "Hãy tạo không gian học trước khi thêm bài viết.",
     "create": "Tạo bài viết",
     "createFirst": "Tạo bài viết đầu tiên",
+    "onTheDesk": "Trên bàn",
+    "library": "Thư viện",
+    "allWritings": "Tất cả bài viết",
+    "collections": "Bộ sưu tập",
+    "refine": "Lọc",
+    "openWriting": "Mở",
     "emptyTitle": "Chưa có bài viết nào",
     "emptyDescription": "Tạo phiếu viết đầu tiên để bắt đầu luyện.",
-    "searchPlaceholder": "Tìm theo tiêu đề, mô tả, CEFR, chủ đề…",
+    "searchPlaceholder": "Tìm bài viết…",
     "noResults": "Không tìm thấy bài viết nào",
     "groupCount": "{count, plural, other {# bài}}",
     "filterAll": "Tất cả",
@@ -1762,6 +2165,7 @@
     "groupByWeek": "Tuần",
     "groupByMonth": "Tháng",
     "weekOf": "Tuần {date}",
+    "sortBy": "Sắp xếp",
     "sortUpdatedDesc": "Mới cập nhật",
     "sortUpdatedAsc": "Cũ nhất",
     "sortCreatedDesc": "Tạo mới nhất",
@@ -1813,12 +2217,13 @@
     "deleteConfirmDescription": "\"{title}\" sẽ bị xóa hẳn.",
     "newTitle": "Bài viết mới",
     "editTitle": "Sửa bài viết",
-    "formDescription": "Đặt tiêu đề, chọn CEFR / chủ đề / mức trang trọng, rồi viết nội dung.",
+    "formDescription": "Đặt tên bài, chọn kiểu, rồi viết.",
     "documentTitle": "Tiêu đề",
     "titlePlaceholder": "vd. Câu chuyện về mình",
     "documentDescription": "Mô tả",
     "descriptionPlaceholder": "Vài dòng tóm tắt hoặc gợi ý cho bài viết…",
     "titleRequired": "Cần có tiêu đề",
+    "titleTaken": "Đã có bài viết hoặc thư mục dùng tiêu đề này",
     "promptRequired": "Thêm ít nhất một câu hỏi",
     "mode": "Kiểu bài",
     "modes": {
@@ -1890,14 +2295,20 @@
     "export": {
       "button": "Xuất file",
       "title": "Xuất bài viết",
-      "description": "Chọn định dạng và tùy chọn để in hoặc lưu phiếu bài.",
+      "kicker": "Xuất bài viết",
+      "untitled": "Bài viết chưa đặt tên",
+      "description": "Chọn định dạng để in hoặc lưu phiếu bài.",
+      "descriptionDocument": "Tải bản in hoặc file Word của bài này.",
+      "descriptionQuestionSet": "Tải phiếu bài từ các câu hỏi này.",
       "format": "Định dạng",
-      "formatPdf": "PDF (.pdf)",
-      "formatDocx": "Word (.docx)",
-      "options": "Tùy chọn",
-      "includeExamples": "Kèm câu trả lời mẫu",
-      "includeNotes": "Kèm ghi chú / gợi ý",
-      "leaveBlankSpace": "Để khoảng trống viết sau mỗi câu hỏi",
+      "formatPdf": "PDF",
+      "formatDocx": "Word",
+      "formatPdfHint": "Trang in",
+      "formatDocxHint": "File soạn thảo",
+      "options": "Kèm theo",
+      "includeExamples": "Câu trả lời mẫu",
+      "includeNotes": "Ghi chú / gợi ý",
+      "leaveBlankSpace": "Khoảng trống viết",
       "confirm": "Xuất",
       "success": "Đang tải file xuống…",
       "failed": "Xuất file không thành công",

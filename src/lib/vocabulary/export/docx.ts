@@ -29,14 +29,30 @@ import type {
   VocabularyExportRow,
 } from "@/lib/vocabulary/export/types";
 import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
+import {
+  DOCX_FONT_SANS,
+  PRINT_ACCENT,
+  PRINT_HAIRLINE,
+  PRINT_INK,
+  PRINT_LEDE_WASH,
+  PRINT_MUTED,
+  PRINT_RULE,
+  hexForDocx,
+} from "@/lib/export/print-theme";
 
-const FONT_SANS = "Chakra Petch";
+const FONT_SANS = DOCX_FONT_SANS;
 const YIELD_EVERY = 30;
+const INK = hexForDocx(PRINT_INK);
+const MUTED = hexForDocx(PRINT_MUTED);
+const ACCENT = hexForDocx(PRINT_ACCENT.vocabulary);
+const HAIRLINE = hexForDocx(PRINT_HAIRLINE);
+const RULE = hexForDocx(PRINT_RULE);
+const WASH = hexForDocx(PRINT_LEDE_WASH);
 
 const thinBorder = {
   style: BorderStyle.SINGLE,
   size: 4,
-  color: "D5D0E0",
+  color: HAIRLINE,
 };
 
 const borders = {
@@ -65,7 +81,7 @@ function run(
     bold: opts.bold,
     italics: opts.italics,
     size: opts.size ?? 20,
-    color: opts.color,
+    color: opts.color ?? INK,
   });
 }
 
@@ -130,7 +146,7 @@ function nestedTable(rows: ExportTextRun[][][]): Table {
               width: { size: colWidth, type: WidthType.PERCENTAGE },
               shading:
                 rowIndex === 0
-                  ? { type: ShadingType.CLEAR, fill: "F3F1F7" }
+                  ? { type: ShadingType.CLEAR, fill: WASH }
                   : undefined,
               margins: { top: 40, bottom: 40, left: 60, right: 60 },
               verticalAlign: VerticalAlign.TOP,
@@ -138,7 +154,7 @@ function nestedTable(rows: ExportTextRun[][][]): Table {
                 paragraphFromRuns(cell.length ? cell : [{ text: " " }], {
                   size: 16,
                   bold: rowIndex === 0,
-                  color: rowIndex === 0 ? "4D4860" : undefined,
+                  color: rowIndex === 0 ? MUTED : undefined,
                   after: 0,
                 }),
               ],
@@ -172,7 +188,7 @@ function noteChildren(blocks: NoteBlock[]): (Paragraph | Table)[] {
       children.push(
         paragraphFromRuns([{ text: block.text }], {
           size: 16,
-          color: "3D3850",
+          color: INK,
           after: 80,
         }),
       );
@@ -183,7 +199,7 @@ function noteChildren(blocks: NoteBlock[]): (Paragraph | Table)[] {
         new Paragraph({
           spacing: { after: 120, before: 80 },
           border: {
-            bottom: { style: BorderStyle.SINGLE, size: 6, color: "D5D0E0" },
+            bottom: { style: BorderStyle.SINGLE, size: 6, color: RULE },
           },
           children: [run(" ")],
         }),
@@ -235,21 +251,20 @@ export async function generateVocabularyDocxBlob(
 ): Promise<Blob> {
   const children: (Paragraph | Table)[] = [
     new Paragraph({
-      heading: HeadingLevel.HEADING_1,
       spacing: { after: 80 },
-      children: [run(labels.documentHeading, { bold: true, size: 36 })],
+      children: [
+        run(labels.documentHeading, { bold: true, size: 18, color: ACCENT }),
+      ],
     }),
   ];
 
   if (documentModel.workspaceName.trim()) {
     children.push(
       new Paragraph({
-        spacing: { after: 40 },
+        heading: HeadingLevel.HEADING_1,
+        spacing: { after: 60 },
         children: [
-          run(`${labels.workspaceLabel}: ${documentModel.workspaceName}`, {
-            size: 18,
-            color: "6B6680",
-          }),
+          run(documentModel.workspaceName, { bold: true, size: 40, color: INK }),
         ],
       }),
     );
@@ -258,7 +273,15 @@ export async function generateVocabularyDocxBlob(
   children.push(
     new Paragraph({
       spacing: { after: 280 },
-      children: [run(labels.wordCount, { size: 18, color: "6B6680" })],
+      border: {
+        bottom: {
+          style: BorderStyle.SINGLE,
+          size: 12,
+          color: ACCENT,
+          space: 8,
+        },
+      },
+      children: [run(labels.wordCount, { size: 20, color: MUTED })],
     }),
   );
 
@@ -279,11 +302,11 @@ export async function generateVocabularyDocxBlob(
                 top: {
                   style: BorderStyle.SINGLE,
                   size: 4,
-                  color: "E6E1EE",
+                  color: HAIRLINE,
                   space: 12,
                 },
               },
-        children: [run(row.word || "—", { bold: true, size: 26 })],
+        children: [run(row.word || "—", { bold: true, size: 26, color: INK })],
       }),
     );
 
@@ -291,7 +314,7 @@ export async function generateVocabularyDocxBlob(
       children.push(
         new Paragraph({
           spacing: { after: 40 },
-          children: [run(meta, { size: 16, color: "6B6680" })],
+          children: [run(meta, { size: 16, color: MUTED })],
         }),
       );
     }
@@ -312,7 +335,7 @@ export async function generateVocabularyDocxBlob(
         new Paragraph({
           spacing: { after: 60, before: 40 },
           children: [
-            run(labels.notesHeading, { bold: true, size: 16, color: "6B6680" }),
+            run(labels.notesHeading, { bold: true, size: 16, color: MUTED }),
           ],
         }),
       );

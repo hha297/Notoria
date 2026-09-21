@@ -50,13 +50,13 @@ export function DashboardContinue({
       }
     >
       {showPractice ? (
-        <div className="card-surface-dark flex flex-col justify-between gap-5">
+        <div className="card-surface flex flex-col justify-between gap-5 bg-surface-active">
           <div className="min-w-0">
-            <p className="text-[15px] font-medium uppercase tracking-[0.2px] text-on-dark-muted">
+            <p className="eyebrow">
               {t("practiceNowEyebrow")}
             </p>
             <h2 className="heading-md mt-2 break-words">{t("practiceNowTitle")}</h2>
-            <p className="mt-2 max-w-md text-sm leading-relaxed break-words text-on-dark-muted sm:text-base">
+            <p className="mt-2 max-w-md text-sm leading-relaxed break-words text-muted-foreground sm:text-base">
               {practiceReadyCount > 0
                 ? t("practiceNowReady", { count: practiceReadyCount })
                 : t("practiceNowNeedsMeaning")}
@@ -64,21 +64,13 @@ export function DashboardContinue({
           </div>
           <div className="mt-auto">
             {practiceReadyCount > 0 ? (
-              <LinkButton
-                href="/exercises"
-                variant="secondary"
-                className="max-w-full bg-on-primary text-ink hover:bg-on-primary/90"
-              >
+              <LinkButton href="/exercises" className="max-w-full">
                 <Dumbbell className="size-4" />
                 <span className="truncate">{t("practiceNowCta")}</span>
                 <ArrowRight className="size-4" />
               </LinkButton>
             ) : (
-              <LinkButton
-                href="/vocabulary"
-                variant="secondary"
-                className="max-w-full bg-on-primary text-ink hover:bg-on-primary/90"
-              >
+              <LinkButton href="/vocabulary" className="max-w-full">
                 <span className="truncate">{t("practiceNowVocabCta")}</span>
                 <ArrowRight className="size-4" />
               </LinkButton>
@@ -100,9 +92,9 @@ export function DashboardContinue({
                 <li key={`${item.module}-${item.id}`}>
                   <Link
                     href={item.href}
-                    className="flex items-center gap-3 rounded-lg border border-hairline-cloud p-3 transition-colors hover:bg-muted/50 sm:p-3.5"
+                    className="flex items-center gap-3 rounded-sm border border-hairline-cloud bg-surface p-2.5 transition-colors hover:bg-surface-hover"
                   >
-                    <span className="flex size-9 shrink-0 items-center justify-center rounded-lg bg-accent-lime/20 text-ink">
+                    <span className="flex size-8 shrink-0 items-center justify-center rounded-sm bg-surface-active text-primary">
                       <Icon className="size-4" aria-hidden />
                     </span>
                     <span className="min-w-0 flex-1">

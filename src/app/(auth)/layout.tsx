@@ -1,11 +1,10 @@
+import styles from "@/components/style/auth/auth.module.css";
+import { mx } from "@/lib/css-module";
+
 export default function AuthLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  return (
-    <div className="min-h-svh bg-background md:bg-[url('/background.png')] md:bg-cover md:bg-center md:bg-no-repeat md:bg-sidebar">
-      {children}
-    </div>
-  );
+  return <div className={mx(styles, "auth-layout")}>{children}</div>;
 }

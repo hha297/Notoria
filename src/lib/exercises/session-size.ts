@@ -13,7 +13,7 @@ export const SESSION_SIZE_MAX_BY_MODE: Record<ExerciseSessionMode, number> = {
   flashcards: 30,
   fill_blank: 15,
   multiple_choice: 20,
-  match_pairs: 10,
+  match_pairs: 10, // per-round cap; full session rounds are planned in match-pairs.ts
   type_answer: 15,
   form_sentence: 10,
 };

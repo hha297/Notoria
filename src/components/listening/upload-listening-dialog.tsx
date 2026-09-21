@@ -10,7 +10,6 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
@@ -41,7 +40,8 @@ import {
   type WritingFormality,
 } from "@/lib/writing/meta";
 import { resolveTopicLabel } from "@/lib/taxonomy/topics";
-import { cn } from "@/lib/utils";
+import styles from "@/components/style/workspace/sheet.module.css";
+import { mx } from "@/lib/css-module";
 
 type UploadStep = "form" | "uploading" | "transcribing";
 
@@ -169,20 +169,29 @@ export function UploadListeningDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-lg" showCloseButton={!busy}>
-        <DialogHeader>
-          <DialogTitle>{t("uploadTitle")}</DialogTitle>
-          <DialogDescription>{t("uploadDescription")}</DialogDescription>
+      <DialogContent
+        className={mx(styles, "workspace-sheet sm:max-w-lg")}
+        data-sheet-route="listen"
+        showCloseButton={!busy}
+      >
+        <DialogHeader className={mx(styles, "workspace-sheet-header gap-2 space-y-0 pr-8 text-left")}>
+          <p className={mx(styles, "workspace-sheet-kicker")}>{t("title")}</p>
+          <DialogTitle className={mx(styles, "workspace-sheet-title")}>
+            {t("uploadTitle")}
+          </DialogTitle>
+          <DialogDescription className={mx(styles, "workspace-sheet-lede")}>
+            {t("uploadDescription")}
+          </DialogDescription>
         </DialogHeader>
 
         {stepLabel ? (
-          <div className="flex flex-col items-center gap-3 py-8 text-center">
-            <Loader2 className="size-8 animate-spin text-ink" />
+          <div className={mx(styles, "workspace-sheet-body items-center py-10 text-center")}>
+            <Loader2 className="size-8 animate-spin text-module-listen-fg" />
             <p className="font-medium text-ink">{stepLabel}</p>
             <p className="text-sm text-muted-foreground">{t("steps.wait")}</p>
           </div>
         ) : (
-          <div className="space-y-4">
+          <div className={mx(styles, "workspace-sheet-body")}>
             <button
               type="button"
               data-tutorial="listening-upload-dropzone"
@@ -197,18 +206,17 @@ export function UploadListeningDialog({
                 setDragOver(false);
                 chooseFile(event.dataTransfer.files[0]);
               }}
-              className={cn(
-                "flex w-full cursor-pointer flex-col items-center rounded-xl border border-dashed px-4 py-8 text-center transition-colors",
-                dragOver
-                  ? "border-accent-lime bg-accent-lime/15"
-                  : "border-hairline-cloud bg-muted/30 hover:border-accent-lime/50",
+              className={mx(
+                styles,
+                "workspace-sheet-dropzone",
+                dragOver && "is-active",
               )}
             >
-              <div className="mb-3 flex size-12 items-center justify-center rounded-2xl border border-hairline-cloud bg-card">
+              <div className="mb-3 flex size-12 items-center justify-center text-module-listen-fg">
                 {file ? (
-                  <Headphones className="size-5 text-ink" />
+                  <Headphones className="size-5" />
                 ) : (
-                  <Upload className="size-5 text-ink" />
+                  <Upload className="size-5" />
                 )}
               </div>
               <p className="font-medium text-ink">
@@ -226,10 +234,10 @@ export function UploadListeningDialog({
               onChange={(event) => chooseFile(event.target.files?.[0])}
             />
 
-            <div className="space-y-2">
-              <Label htmlFor="listening-title">
+            <div className={mx(styles, "workspace-sheet-field")}>
+              <Label htmlFor="listening-title" className={mx(styles, "workspace-sheet-label")}>
                 {t("titleLabel")}{" "}
-                <span className="font-normal text-muted-foreground">
+                <span className="font-normal normal-case tracking-normal text-muted-foreground">
                   ({tc("optional")})
                 </span>
               </Label>
@@ -238,15 +246,18 @@ export function UploadListeningDialog({
                 value={title}
                 onChange={(event) => setTitle(event.target.value)}
                 placeholder={t("titlePlaceholder")}
-                className="h-10"
+                className={mx(styles, "workspace-sheet-input")}
               />
             </div>
 
             <div className="grid gap-3 sm:grid-cols-3">
-              <div className="space-y-2">
-                <Label>{tMeta("cefrLabel")}</Label>
-                <Select value={cefrLevel} onValueChange={(value) => value && setCefrLevel(value)}>
-                  <SelectTrigger className="h-10! w-full rounded-md bg-background px-3 data-[size=default]:h-10!">
+              <div className={mx(styles, "workspace-sheet-field")}>
+                <Label className={mx(styles, "workspace-sheet-label")}>{tMeta("cefrLabel")}</Label>
+                <Select
+                  value={cefrLevel}
+                  onValueChange={(value) => value && setCefrLevel(value)}
+                >
+                  <SelectTrigger className={mx(styles, "workspace-sheet-input w-full")}>
                     <SelectValue>
                       {cefrLevel === "none"
                         ? tMeta("none")
@@ -263,10 +274,13 @@ export function UploadListeningDialog({
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-2">
-                <Label>{tMeta("topicLabel")}</Label>
-                <Select value={topic} onValueChange={(value) => value && setTopic(value)}>
-                  <SelectTrigger className="h-10! w-full rounded-md bg-background px-3 data-[size=default]:h-10!">
+              <div className={mx(styles, "workspace-sheet-field")}>
+                <Label className={mx(styles, "workspace-sheet-label")}>{tMeta("topicLabel")}</Label>
+                <Select
+                  value={topic}
+                  onValueChange={(value) => value && setTopic(value)}
+                >
+                  <SelectTrigger className={mx(styles, "workspace-sheet-input w-full")}>
                     <SelectValue>
                       {topic === "none"
                         ? tMeta("none")
@@ -283,13 +297,15 @@ export function UploadListeningDialog({
                   </SelectContent>
                 </Select>
               </div>
-              <div className="space-y-2">
-                <Label>{tMeta("formalityLabel")}</Label>
+              <div className={mx(styles, "workspace-sheet-field")}>
+                <Label className={mx(styles, "workspace-sheet-label")}>
+                  {tMeta("formalityLabel")}
+                </Label>
                 <Select
                   value={formality}
                   onValueChange={(value) => value && setFormality(value)}
                 >
-                  <SelectTrigger className="h-10! w-full rounded-md bg-background px-3 data-[size=default]:h-10!">
+                  <SelectTrigger className={mx(styles, "workspace-sheet-input w-full")}>
                     <SelectValue>
                       {formality === "none"
                         ? tMeta("none")
@@ -310,10 +326,11 @@ export function UploadListeningDialog({
           </div>
         )}
 
-        <DialogFooter>
+        <div className={mx(styles, "workspace-sheet-footer")}>
           <Button
             type="button"
             variant="outline"
+            className={mx(styles, "workspace-sheet-cancel")}
             onClick={() => handleOpenChange(false)}
             disabled={busy}
           >
@@ -321,13 +338,18 @@ export function UploadListeningDialog({
           </Button>
           <Button
             type="button"
+            className={mx(styles, "workspace-sheet-cta")}
             onClick={handleSubmit}
             disabled={!file || busy}
           >
-            {busy ? <Loader2 className="size-4 animate-spin" /> : <Upload className="size-4" />}
+            {busy ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Upload className="size-4" />
+            )}
             {t("uploadAction")}
           </Button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );

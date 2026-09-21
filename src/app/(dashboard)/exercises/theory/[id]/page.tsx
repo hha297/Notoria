@@ -7,8 +7,8 @@ import { TheoryExerciseSessionView } from "@/components/exercises/theory-exercis
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getTheoryNote } from "@/lib/actions/theory";
 import { buildTheoryExerciseSession } from "@/lib/theory-exercises/build-session";
+import { parseTheoryContent } from "@/lib/theory/content";
 import { getActiveWorkspace } from "@/lib/workspace";
-
 
 export default async function TheoryExercisePracticePage({
   params,
@@ -36,8 +36,8 @@ export default async function TheoryExercisePracticePage({
             highlight={t("practice")}
             description={t("noWorkspace")}
           />
+          <NoWorkspaceEmpty />
         </div>
-        <NoWorkspaceEmpty />
       </div>
     );
   }
@@ -45,28 +45,24 @@ export default async function TheoryExercisePracticePage({
   const note = await getTheoryNote(id);
   if (!note) notFound();
 
+  const parsed = parseTheoryContent(note.content);
   const session = buildTheoryExerciseSession({
     theoryId: note.id,
     theoryTitle: note.title,
+    category: parsed.category,
+    description: parsed.description,
+    doc: parsed.doc,
   });
 
   return (
-    <div className="mx-auto max-w-3xl space-y-10 pt-2">
-      <div className="space-y-6">
-        <Link
-          href="/exercises"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-ink"
-        >
-          <ArrowLeft className="size-4" />
-          {t("backToStudio")}
-        </Link>
-        <PageHeader
-          eyebrow={t("theory.eyebrow")}
-          title={note.title}
-          highlight={t("practice")}
-          description={t("theory.practiceDescription")}
-        />
-      </div>
+    <div className="mx-auto max-w-3xl space-y-8 pt-2 sm:space-y-10">
+      <Link
+        href="/exercises"
+        className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-ink"
+      >
+        <ArrowLeft className="size-4" />
+        {t("backToStudio")}
+      </Link>
       <TheoryExerciseSessionView session={session} />
     </div>
   );

@@ -1,6 +1,7 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
+import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Loader2, RotateCcw, Sparkles } from "lucide-react";
@@ -10,13 +11,20 @@ import { AiProcessingProgress } from "@/components/exercises/ai-processing-progr
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { TheoryFillBlankCard } from "@/components/exercises/theory/theory-fill-blank-card";
+import { TheoryLessonStudy, type TheoryLessonView } from "@/components/exercises/theory/theory-lesson-study";
 import { TheoryMultipleChoiceCard } from "@/components/exercises/theory/theory-multiple-choice-card";
 import { TheoryTransformationCard } from "@/components/exercises/theory/theory-transformation-card";
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
 import { shuffleArray } from "@/lib/exercises/utils";
+import {
+  buildTheoryLessonBeats,
+  theoryLessonHasMaterial,
+} from "@/lib/theory-exercises/lesson-content";
 import type { TheoryExercise, TheoryExerciseSession } from "@/lib/theory-exercises/types";
+import featureStyles from "@/components/style/exercises/theory.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 type TheoryExerciseSessionViewProps = {
@@ -41,6 +49,19 @@ export function TheoryExerciseSessionView({
   const [complete, setComplete] = useState(false);
   const [round, setRound] = useState(0);
   const [autoTried, setAutoTried] = useState(false);
+  const beats = useMemo(
+    () => buildTheoryLessonBeats(session.doc),
+    [session.doc],
+  );
+  const hasLesson =
+    !practiceOnly &&
+    theoryLessonHasMaterial({
+      description: session.description,
+      beats,
+    });
+  const [phase, setPhase] = useState<"overview" | "quick" | "practice">(
+    () => (hasLesson ? "overview" : "practice"),
+  );
   const {
     state: processing,
     setStage,
@@ -124,7 +145,8 @@ export function TheoryExerciseSessionView({
     setComplete(false);
     setRound((r) => r + 1);
     setAutoTried(false);
-  }, [session.theoryId, session.items]);
+    setPhase(hasLesson ? "overview" : "practice");
+  }, [hasLesson, session.theoryId, session.items]);
 
   useEffect(() => {
     if (practiceOnly || autoTried || items.length > 0 || generating) return;
@@ -144,6 +166,10 @@ export function TheoryExerciseSessionView({
   const current = items[index];
   const total = items.length;
   const progressValue = total ? ((complete ? total : index) / total) * 100 : 0;
+  const generateError =
+    processing.stage === "error"
+      ? processing.errorMessage || t("aiUnavailable")
+      : null;
 
   const recordAnswer = (correct: boolean) => {
     setScore((s) => ({
@@ -159,6 +185,33 @@ export function TheoryExerciseSessionView({
     }
     setComplete(true);
   };
+
+  const goToPractice = () => setPhase("practice");
+  const lessonView: TheoryLessonView | null =
+    phase === "overview" || phase === "quick" ? phase : null;
+
+  if (hasLesson && lessonView) {
+    return (
+      <div data-exercise="theory" data-theory-category={session.category} className="min-w-0">
+        <TheoryLessonStudy
+          title={session.theoryTitle}
+          category={session.category}
+          description={session.description}
+          beats={beats}
+          theoryHref={`/theory/${session.theoryId}`}
+          view={lessonView}
+          practiceReady={items.length > 0}
+          generating={generating}
+          generateError={generateError}
+          practiceLocked={!hasProAccess}
+          onQuickReview={() => setPhase("quick")}
+          onSkipToPractice={goToPractice}
+          onStartPractice={goToPractice}
+          onRetryGenerate={() => void generateWithAi()}
+        />
+      </div>
+    );
+  }
 
   if (
     items.length === 0 &&
@@ -182,16 +235,16 @@ export function TheoryExerciseSessionView({
 
   if (items.length === 0) {
     return (
-      <div className="rounded-2xl border border-hairline-cloud bg-card p-8 text-center">
+      <div data-exercise="theory" className="mx-auto max-w-xl py-6">
         {practiceOnly ? (
           <>
-            <p className="font-heading text-lg font-medium text-ink">
+            <p className="font-heading text-2xl font-semibold tracking-tight text-ink">
               {t("backToStudio")}
             </p>
-            <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               {t("aiUnavailable")}
             </p>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+            <div className="mt-6">
               <LinkButton href="/exercises" variant="outline">
                 {t("backToStudio")}
               </LinkButton>
@@ -199,11 +252,16 @@ export function TheoryExerciseSessionView({
           </>
         ) : (
           <>
-            <p className="font-heading text-lg font-medium text-ink">{t("needAiTitle")}</p>
-            <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
+            <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
+              {t("lesson.label")}
+            </p>
+            <p className="mt-3 font-heading text-2xl font-semibold tracking-tight text-ink">
+              {t("needAiTitle")}
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               {hasProAccess ? t("needAiDescription") : t("needAiProDescription")}
             </p>
-            <div className="mt-6 flex flex-wrap items-center justify-center gap-2">
+            <div className="mt-6 flex flex-wrap items-center gap-2">
               <Button
                 type="button"
                 onClick={generateWithAi}
@@ -244,64 +302,97 @@ export function TheoryExerciseSessionView({
 
   if (complete) {
     return (
-      <SessionCompleteCard
-        title={tSession("complete")}
-        scoreLabel={tSession("score", {
-          correct: score.correct,
-          total: score.answered,
-        })}
-        tryAgainLabel={tSession("tryAgain")}
-        onTryAgain={() => restart(items)}
-        extraAction={
-          practiceOnly
-            ? undefined
-            : {
+      <div data-exercise="theory">
+        <p className="text-center text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
+          {t("lesson.complete")}
+        </p>
+        <p className="mx-auto mt-2 max-w-md text-center text-sm leading-relaxed text-muted-foreground">
+          {t("lesson.completeHint")}
+        </p>
+        <SessionCompleteCard
+          title={tSession("complete")}
+          scoreLabel={tSession("score", {
+            correct: score.correct,
+            total: score.answered,
+          })}
+          tryAgainLabel={tSession("tryAgain")}
+          onTryAgain={() => restart(items)}
+          extraAction={
+            practiceOnly
+              ? undefined
+              : {
                 label: t("generateMore"),
                 onClick: () => void generateWithAi(),
                 loading: generating,
                 locked: !hasProAccess,
               }
-        }
-      />
+          }
+        />
+      </div>
     );
   }
 
   return (
-    <div className="space-y-4" key={`${round}-${current?.id ?? index}`}>
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="min-w-0 flex-1">
-          <ExerciseProgressHeader
-            progressLabel={t("progress", { current: index + 1, total })}
-            scoreLabel={t("score", {
-              correct: score.correct,
-              answered: score.answered,
-            })}
-            progressValue={progressValue}
-          />
-        </div>
-        <div className="flex items-center gap-2">
-          {!practiceOnly ? (
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={() => void generateWithAi()}
-              disabled={generating}
-              aria-disabled={!hasProAccess || undefined}
-              className={cn(!hasProAccess && lockedFeatureClassName)}
+    <div
+      data-exercise="theory"
+      data-theory-category={session.category}
+      className={mx(featureStyles, "theory-practice-stage -mx-4 space-y-8 px-4 py-7 sm:-mx-6 sm:space-y-10 sm:px-6 sm:py-9")}
+      key={`${round}-${current?.id ?? index}`}
+    >
+      <div className="space-y-4">
+        <div className="min-w-0">
+          <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
+            {t("lesson.nowPractice")}
+          </p>
+          <p className="mt-1.5 font-heading text-xl font-semibold tracking-tight text-pretty wrap-anywhere text-ink sm:text-2xl">
+            {session.theoryTitle}
+          </p>
+          {hasLesson ? (
+            <Link
+              href={`/theory/${session.theoryId}`}
+              className="mt-2 inline-block text-sm font-medium text-(--exercise-accent) underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-(--exercise-accent)/40 focus-visible:outline-none"
             >
-              {generating ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <Sparkles className="size-4" />
-              )}
-              {t("regenerate")}
-            </Button>
+              {t("lesson.openTheory")}
+            </Link>
           ) : null}
-          <Button type="button" variant="ghost" size="sm" onClick={() => restart(items)}>
-            <RotateCcw className="size-4" />
-            {t("reshuffle")}
-          </Button>
+        </div>
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <div className="min-w-0 flex-1">
+            <ExerciseProgressHeader
+              progressLabel={t("progress", { current: index + 1, total })}
+              current={index + 1}
+              total={total}
+              scoreLabel={t("score", {
+                correct: score.correct,
+                answered: score.answered,
+              })}
+              progressValue={progressValue}
+            />
+          </div>
+          <div className="flex items-center gap-2">
+            {!practiceOnly ? (
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => void generateWithAi()}
+                disabled={generating}
+                aria-disabled={!hasProAccess || undefined}
+                className={cn(!hasProAccess && lockedFeatureClassName)}
+              >
+                {generating ? (
+                  <Loader2 className="size-4 animate-spin" />
+                ) : (
+                  <Sparkles className="size-4" />
+                )}
+                {t("regenerate")}
+              </Button>
+            ) : null}
+            <Button type="button" variant="ghost" size="sm" onClick={() => restart(items)}>
+              <RotateCcw className="size-4" />
+              {t("reshuffle")}
+            </Button>
+          </div>
         </div>
       </div>
 

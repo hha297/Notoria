@@ -16,7 +16,7 @@ export function Progress({ value, className }: ProgressProps) {
       )}
     >
       <div
-        className="h-full rounded-full bg-accent-lime transition-all duration-300 ease-out"
+        className="h-full rounded-full bg-primary transition-all duration-300 ease-out"
         style={{ width: `${clamped}%` }}
       />
     </div>

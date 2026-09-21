@@ -1,12 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { CheckCircle2, ChevronRight, Sparkles, XCircle } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { HintText } from "@/components/exercises/theory/theory-card-shared";
+import { TheoryPracticeFeedback } from "@/components/exercises/theory/theory-practice-feedback";
 import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
   answersMatchAny,
   extractSourceWordCueFromHint,
@@ -14,7 +15,12 @@ import {
   scrubFillBlankPresentation,
 } from "@/lib/theory-exercises/generate-ai";
 import type { TheoryFillBlankExercise } from "@/lib/theory-exercises/types";
+import theoryStyles from "@/components/style/exercises/theory.module.css";
+import sessionStyles from "@/components/style/exercises/session.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function TheoryFillBlankCard({
   item,
@@ -27,6 +33,7 @@ export function TheoryFillBlankCard({
 }) {
   const t = useTranslations("exercises.theory");
   const tAi = useTranslations("exercises.ai");
+  const reduceMotion = useReducedMotion();
   const [value, setValue] = useState("");
   const [checked, setChecked] = useState(false);
   const [peeked, setPeeked] = useState(false);
@@ -51,15 +58,15 @@ export function TheoryFillBlankCard({
     "";
   const displayHint = displaySourceWord
     ? fromHint.hint
-        .replace(
-          new RegExp(
-            `\\(\\s*${displaySourceWord.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*\\)`,
-            "giu",
-          ),
-          " ",
-        )
-        .replace(/\s{2,}/g, " ")
-        .trim()
+      .replace(
+        new RegExp(
+          `\\(\\s*${displaySourceWord.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*\\)`,
+          "giu",
+        ),
+        " ",
+      )
+      .replace(/\s{2,}/g, " ")
+      .trim()
     : fromHint.hint.trim();
   const revealDisplay = revealTextForExercise({
     ...item,
@@ -75,6 +82,7 @@ export function TheoryFillBlankCard({
     ? suffixText.trim()
     : "";
   const bodySuffix = trailingPunctuation ? "" : suffixText;
+  const filledText = checked ? (isCorrect ? value.trim() : item.answer) : "";
 
   const check = () => {
     if (checked || !value.trim()) return;
@@ -91,102 +99,109 @@ export function TheoryFillBlankCard({
   };
 
   return (
-    <div className="w-full min-w-0 space-y-4">
-      <div className="mx-auto w-full min-w-0 max-w-3xl rounded-3xl border border-hairline-cloud bg-card p-6 shadow-xl shadow-ink/5 sm:p-10 md:p-12">
-        <div className="space-y-2">
-          <div className="flex min-w-0 items-center justify-between gap-3">
-            <p className="min-w-0 text-xs font-semibold uppercase tracking-[0.2em] text-accent-violet-mid">
-              {item.skillLabel || t("types.fill_blank")}
-            </p>
-            <p className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-              <Sparkles className="size-3" />
-              {tAi("generated")}
-            </p>
-          </div>
-          <p className="text-sm leading-relaxed text-ink">
+    <motion.div
+      key={item.id}
+      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: reduceMotion ? 0 : 0.22, ease: EASE }}
+      className="relative mx-auto w-full min-w-0 max-w-2xl"
+    >
+      <header className="flex items-start justify-between gap-3">
+        <div className="min-w-0">
+          <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
+            {t("lesson.tryIt")}
+          </p>
+          <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
             {item.instruction?.trim() || t("instructions.fillBlank")}
           </p>
         </div>
+        <p className="inline-flex shrink-0 items-center gap-1 pt-0.5 text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
+          <Sparkles className="size-3" />
+          {tAi("generated")}
+        </p>
+      </header>
 
-        <form
-          onSubmit={(e) => {
-            e.preventDefault();
-            if (checked) onNext();
-            else check();
-          }}
-          className="mt-8 space-y-8"
-        >
-          <div className="rounded-2xl border border-hairline-cloud bg-muted/20 px-4 py-10 sm:px-8 sm:py-12 md:py-14">
-            <div className="flex min-w-0 flex-wrap items-center justify-center gap-x-3 gap-y-4 text-center leading-snug">
-              {prefixText ? (
-                <span className="max-w-full break-words text-xl font-medium text-ink [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
-                  {prefixText}
-                </span>
-              ) : null}
-
+      <form
+        onSubmit={(event) => {
+          event.preventDefault();
+          if (checked) onNext();
+          else check();
+        }}
+        className="relative mt-8 sm:mt-10"
+      >
+        <span
+          aria-hidden
+          className="pointer-events-none absolute top-1 bottom-1 left-0 w-px bg-linear-to-b from-(--exercise-accent)/55 via-(--exercise-accent)/18 to-transparent"
+        />
+        <div className="min-w-0 pl-4 sm:pl-5">
+          <p className="font-heading text-[1.5rem] leading-[1.55] font-semibold tracking-tight text-pretty wrap-anywhere text-ink sm:text-[1.85rem] md:text-[2.05rem]">
+            {prefixText ? (
+              <>
+                {prefixText}
+                {/\s$/u.test(prefixText) ? null : " "}
+              </>
+            ) : null}
+            <span
+              className={cn(
+                "inline-flex max-w-full min-w-0 flex-col items-center align-baseline",
+                checked && !isCorrect && !reduceMotion && mx(sessionStyles, "exercise-shake"),
+              )}
+            >
               <span
-                className="inline-flex max-w-full min-w-0 shrink items-center justify-center gap-0"
-                style={{ width: `min(100%, ${blankMinWidth}ch)` }}
+                className={cn(
+                  "relative inline-flex max-w-full min-w-26 items-end justify-center border-b-2 px-1.5 transition-colors duration-200",
+                  !checked &&
+                    "border-(--exercise-accent) has-focus-visible:border-b-[3px]",
+                  checked && isCorrect && "border-success",
+                  checked && !isCorrect && "border-error",
+                )}
+                style={{ minWidth: `${blankMinWidth}ch` }}
               >
                 {checked ? (
                   <span
                     className={cn(
-                      "max-w-full break-words rounded-xl px-3 py-1.5 text-xl font-semibold [overflow-wrap:anywhere] sm:text-2xl md:text-3xl",
-                      isCorrect
-                        ? "bg-[#f4fae0] text-[#4a6b0a] ring-2 ring-[#b8d96a]/60"
-                        : "bg-[#fff1f6] text-destructive ring-2 ring-[#f3b8cc]/60",
+                      "px-0.5 text-center font-medium wrap-anywhere",
+                      isCorrect ? "text-success" : "text-error",
                     )}
                   >
-                    {isCorrect ? value.trim() : item.answer}
+                    {filledText || "\u00a0"}
                   </span>
                 ) : (
-                  <Input
+                  <input
                     value={value}
-                    onChange={(e) => setValue(e.target.value)}
+                    onChange={(event) => setValue(event.target.value)}
                     autoFocus
                     autoComplete="off"
                     autoCorrect="off"
                     autoCapitalize="off"
                     spellCheck={false}
                     name="theory-exercise-blank"
+                    aria-label={t("fillPlaceholder")}
                     placeholder="?"
                     data-1p-ignore
                     data-lpignore="true"
                     data-form-type="other"
-                    className={cn(
-                      "h-12 w-full min-w-0 max-w-full rounded-xl border-2 border-dashed border-accent-lime/50 bg-background/90 px-4",
-                      "text-center text-xl font-semibold text-ink shadow-sm sm:h-14 sm:text-2xl md:text-3xl",
-                      "placeholder:text-muted-foreground/40",
-                      "focus-visible:border-accent-lime focus-visible:bg-background focus-visible:ring-4 focus-visible:ring-accent-lime/20",
-                    )}
+                    className="h-[1.15em] w-full max-w-full bg-transparent p-0 text-center text-[1em] leading-none font-heading font-semibold tracking-tight text-(--exercise-accent) caret-(--exercise-accent) outline-none placeholder:text-(--exercise-accent)/30"
                   />
                 )}
-                {trailingPunctuation ? (
-                  <span className="pl-0.5 text-xl font-medium text-ink sm:text-2xl md:text-3xl">
-                    {trailingPunctuation}
-                  </span>
-                ) : null}
               </span>
-
-              {displaySourceWord ? (
-                <span className="max-w-full break-words text-xl font-medium text-accent-violet-mid [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
+            </span>
+            {trailingPunctuation}
+            {displaySourceWord ? (
+              <>
+                {" "}
+                <span className={mx(theoryStyles, "theory-lesson-term text-[0.72em] font-medium")}>
                   ({displaySourceWord})
                 </span>
-              ) : null}
-
-              {bodySuffix ? (
-                <span className="max-w-full break-words text-xl font-medium text-ink [overflow-wrap:anywhere] sm:text-2xl md:text-3xl">
-                  {bodySuffix}
-                </span>
-              ) : null}
-            </div>
-
-            {checked && sentenceMeaning ? (
-              <p className="mt-6 break-words text-center text-base leading-relaxed text-ink/75 [overflow-wrap:anywhere] sm:text-lg">
-                ({sentenceMeaning})
-              </p>
+              </>
             ) : null}
-          </div>
+            {bodySuffix ? (
+              <>
+                {/^\s/u.test(bodySuffix) ? null : " "}
+                {bodySuffix}
+              </>
+            ) : null}
+          </p>
 
           <ExerciseHint
             resetKey={item.id}
@@ -197,53 +212,31 @@ export function TheoryFillBlankCard({
             {displayHint ? <HintText text={displayHint} /> : null}
           </ExerciseHint>
 
-          {checked ? (
-            <div
-              className={cn(
-                "flex min-w-0 items-start gap-3 rounded-xl px-5 py-4 text-sm font-medium sm:text-base",
-                isCorrect ? "bg-[#f4fae0] text-[#4a6b0a]" : "bg-[#fff1f6] text-[#c7366a]",
-              )}
-            >
-              {isCorrect ? (
-                <CheckCircle2 className="mt-0.5 size-5 shrink-0" />
-              ) : (
-                <XCircle className="mt-0.5 size-5 shrink-0" />
-              )}
-              <span className="min-w-0 break-words [overflow-wrap:anywhere]">
-                {isCorrect
-                  ? t("feedback.correct")
-                  : t("feedback.incorrectWithAnswer", { answer: revealDisplay })}
-              </span>
+          {!checked ? (
+            <div className="mt-8">
+              <Button
+                type="submit"
+                disabled={!value.trim()}
+                className="h-11 w-full sm:h-9 sm:w-auto"
+              >
+                {t("check")}
+              </Button>
             </div>
           ) : null}
 
-          {checked && item.explanation ? (
-            <p className="break-words text-sm text-muted-foreground [overflow-wrap:anywhere]">
-              {item.explanation}
-            </p>
-          ) : null}
-        </form>
-      </div>
-
-      <div className="flex flex-col items-center gap-4 pt-2 sm:gap-5">
-        <div className="flex w-full max-w-sm flex-col gap-2 sm:w-auto sm:max-w-none sm:flex-row sm:justify-center sm:gap-3">
-          {checked ? (
-            <Button type="button" onClick={onNext} className="h-11 w-full sm:h-9 sm:w-auto">
-              {t("next")}
-              <ChevronRight className="size-4" />
-            </Button>
-          ) : (
-            <Button
-              type="button"
-              onClick={check}
-              disabled={!value.trim()}
-              className="h-11 w-full sm:h-9 sm:w-auto"
-            >
-              {t("check")}
-            </Button>
-          )}
+          <TheoryPracticeFeedback
+            checked={checked}
+            correct={isCorrect}
+            peeked={peeked}
+            userValue={value}
+            revealDisplay={revealDisplay}
+            explanation={item.explanation}
+            learningObjective={item.learningObjective}
+            sentenceMeaning={sentenceMeaning}
+            onNext={onNext}
+          />
         </div>
-      </div>
-    </div>
+      </form>
+    </motion.div>
   );
 }

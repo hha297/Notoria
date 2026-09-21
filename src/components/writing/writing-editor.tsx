@@ -1,8 +1,9 @@
 "use client";
 
 import type { Editor, JSONContent } from "@tiptap/react";
-import { Download, Loader2, Save } from "lucide-react";
+import { ArrowLeft, Download, FileText, ListChecks, Loader2, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -11,26 +12,13 @@ import { RichTextEditor } from "@/components/editor/rich-text-editor";
 import { QuestionSetBuilder } from "@/components/writing/question-set-builder";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { WritingAiBar } from "@/components/writing/writing-ai-bar";
+import { WritingChipPicker } from "@/components/writing/writing-chip-picker";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { DescriptionField } from "@/components/form/description-field";
 import { ContentTransition } from "@/components/layout/content-transition";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { useMutationLock } from "@/hooks/use-mutation-lock";
 import { createWritingDocument, updateWritingDocument } from "@/lib/actions/writing";
 import { afterEditorHydration } from "@/lib/editor/hydration";
@@ -59,6 +47,7 @@ import {
   writingEditorSnapshotsEqual,
   type WritingEditorSnapshot,
 } from "@/lib/writing/editor-snapshot";
+import { writingEditorHasExportableContent } from "@/lib/writing/export";
 import {
   WRITING_CEFR_LEVELS,
   WRITING_FORMALITY,
@@ -193,6 +182,7 @@ export function WritingEditor({
     isBaselineReady &&
     !writingEditorSnapshotsEqual(baseline, currentSnapshot);
   const canSave = hasRequiredContent && (initialData?.id ? isDirty : true);
+  const canExport = writingEditorHasExportableContent(editorState);
 
   function adoptDescriptionBaseline(nextDescription: string) {
     const normalized = normalizeDescription(nextDescription);
@@ -324,10 +314,12 @@ export function WritingEditor({
       }
     } catch (error) {
       release();
-      if (showToast) {
-        toast.error(
-          error instanceof Error ? error.message : t("saveFailed"),
-        );
+      const taken =
+        error instanceof Error && error.message === "NAME_TAKEN";
+      if (showToast || taken) {
+        toast.error(taken ? t("titleTaken") : t("saveFailed"), {
+          id: taken ? "writing-title-taken" : undefined,
+        });
       }
     }
   }
@@ -366,8 +358,10 @@ export function WritingEditor({
         title: nextTitle,
         description: nextDescription,
       };
-    } catch {
-      // Autosave failures are silent
+    } catch (error) {
+      if (error instanceof Error && error.message === "NAME_TAKEN") {
+        toast.error(t("titleTaken"), { id: "writing-title-taken" });
+      }
     } finally {
       setIsAutosaving(false);
     }
@@ -473,193 +467,213 @@ export function WritingEditor({
         title,
         description,
       };
-    } catch {
-      // Autosave failures are silent
+    } catch (error) {
+      if (error instanceof Error && error.message === "NAME_TAKEN") {
+        toast.error(t("titleTaken"), { id: "writing-title-taken" });
+      }
     } finally {
       setIsAutosaving(false);
     }
   }
 
+  useRegisterShortcutAction("quickSave", () => {
+    void persistExercise(true);
+  });
+  useRegisterShortcutAction(
+    "quickView",
+    () => {
+      if (previewHref) router.replace(previewHref);
+    },
+    Boolean(previewHref),
+  );
+  useRegisterShortcutAction(
+    "download",
+    () => {
+      setExportOpen(true);
+    },
+    canExport,
+  );
+
   return (
-    <div className="space-y-8">
-      <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
-        <CardHeader className="space-y-2 border-b border-hairline-cloud px-4 pt-5 pb-4 sm:px-6 sm:pt-6 sm:pb-5 md:px-8 md:pt-8 md:pb-6">
-          <CardTitle className="heading-md text-ink">
-            {initialData ? t("editTitle") : t("newTitle")}
-          </CardTitle>
-          <CardDescription className="text-sm leading-relaxed sm:text-base">
-            {t("formDescription")}
-          </CardDescription>
-        </CardHeader>
-
-        <CardContent className="space-y-6 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-6 md:px-8 md:py-8">
-          <div className="space-y-2">
-            <Label htmlFor="title">{t("documentTitle")}</Label>
-            <CapitalizedInput
-              id="title"
-              value={title}
-              onChange={(event) => {
-                setTitle(event.target.value);
-                scheduleAutosave();
-              }}
-              placeholder={t("titlePlaceholder")}
-              className="h-10"
-            />
-          </div>
-
-          <div className="space-y-2">
-            <Label htmlFor="description">
-              {t("documentDescription")}{" "}
-              <span className="font-normal text-muted-foreground">
-                ({t("optional")})
-              </span>
-            </Label>
-            <DescriptionField
-              id="description"
-              value={description}
-              onChange={(next) => {
-                setDescription(next);
-                scheduleAutosave();
-              }}
-              onReady={adoptDescriptionBaseline}
-              placeholder={t("descriptionPlaceholder")}
-              maxLength={2000}
-            />
-          </div>
-
-          <div className="grid gap-4 sm:grid-cols-3">
-            <div className="space-y-2">
-              <Label htmlFor="writing-cefr">{tMeta("cefrLabel")}</Label>
-              <Select
-                value={editorState.meta.cefrLevel ?? "none"}
-                onValueChange={(value) =>
-                  value &&
-                  setMeta({
-                    cefrLevel:
-                      value === "none" ? null : (value as WritingCefr),
-                  })
-                }
-              >
-                <SelectTrigger
-                  id="writing-cefr"
-                  className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!"
-                >
-                  <SelectValue placeholder={tMeta("cefrPlaceholder")}>
-                    {editorState.meta.cefrLevel
-                      ? tMeta(`cefr.${editorState.meta.cefrLevel}`)
-                      : tMeta("none")}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">{tMeta("none")}</SelectItem>
-                  {WRITING_CEFR_LEVELS.map((level) => (
-                    <SelectItem key={level} value={level}>
-                      {tMeta(`cefr.${level}`)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="writing-topic">{tMeta("topicLabel")}</Label>
-              <Select
-                value={editorState.meta.topic ?? "none"}
-                onValueChange={(value) =>
-                  value &&
-                  setMeta({ topic: value === "none" ? null : value })
-                }
-              >
-                <SelectTrigger
-                  id="writing-topic"
-                  className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!"
-                >
-                  <SelectValue placeholder={tMeta("topicPlaceholder")}>
-                    {editorState.meta.topic
-                      ? resolveTopicLabel(editorState.meta.topic, (key) =>
-                          tTags(key),
-                        )
-                      : tMeta("none")}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">{tMeta("none")}</SelectItem>
-                  {WRITING_TOPICS.map((topic) => (
-                    <SelectItem key={topic} value={topic}>
-                      {resolveTopicLabel(topic, (key) => tTags(key))}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-
-            <div className="space-y-2">
-              <Label htmlFor="writing-formality">
-                {tMeta("formalityLabel")}
-              </Label>
-              <Select
-                value={editorState.meta.formality ?? "none"}
-                onValueChange={(value) =>
-                  value &&
-                  setMeta({
-                    formality:
-                      value === "none"
-                        ? null
-                        : (value as WritingFormality),
-                  })
-                }
-              >
-                <SelectTrigger
-                  id="writing-formality"
-                  className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!"
-                >
-                  <SelectValue placeholder={tMeta("formalityPlaceholder")}>
-                    {editorState.meta.formality
-                      ? tMeta(`formality.${editorState.meta.formality}`)
-                      : tMeta("none")}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="none">{tMeta("none")}</SelectItem>
-                  {WRITING_FORMALITY.map((item) => (
-                    <SelectItem key={item} value={item}>
-                      {tMeta(`formality.${item}`)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
-
-          <div className="space-y-2">
-            <Label>{t("mode")}</Label>
-            <ToggleGroup
-              value={[editorState.mode]}
-              onValueChange={(value) => {
-                const next = value[0] as WritingMode | undefined;
-                if (next) setMode(next);
-              }}
-              className="flex w-full max-w-md flex-wrap gap-2"
+    <div className="writing-sheet" data-writing-kind={editorState.mode}>
+      <div className="writing-paper-chrome">
+        <Link
+          href={previewHref ?? listHref}
+          className="writing-back"
+        >
+          <ArrowLeft className="size-4" />
+          {previewHref ? t("backToPreview") : t("backToList")}
+        </Link>
+        <div className="writing-paper-actions">
+          {previewHref ? (
+            <Button
+              type="button"
+              variant="outline"
+              size="lg"
+              onClick={() => router.replace(previewHref)}
+              disabled={isSaving}
+              className="h-11 w-full sm:h-9 sm:w-auto"
             >
-              <ToggleGroupItem
-                value="rich_document"
-                className="flex-1 cursor-pointer"
-              >
-                {t("modes.richDocument")}
-              </ToggleGroupItem>
-              <ToggleGroupItem
-                value="question_set"
-                className="flex-1 cursor-pointer"
-              >
-                {t("modes.questionSet")}
-              </ToggleGroupItem>
-            </ToggleGroup>
-            <p className="text-xs text-muted-foreground">
-              {editorState.mode === "rich_document"
-                ? t("modes.richDocumentHint")
-                : t("modes.questionSetHint")}
-            </p>
-          </div>
+              {tCommon("cancel")}
+            </Button>
+          ) : null}
+          <LockedFeatureButton
+            type="button"
+            variant="outline"
+            size="lg"
+            icon={<Download className="size-4" />}
+            onClick={() => setExportOpen(true)}
+            disabled={!canExport}
+            title={canExport ? undefined : t("export.empty")}
+            className="route-quiet-action h-11 w-full sm:h-9 sm:w-auto"
+            data-route-action="writing"
+          >
+            {t("export.button")}
+          </LockedFeatureButton>
+          <Button
+            onClick={() => void persistExercise(true)}
+            disabled={isSaving || imageUploading || !canSave}
+            size="lg"
+            className="h-11 w-full sm:h-9 sm:w-auto"
+          >
+            {isSaving ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Save className="size-4" />
+            )}
+            {t("save")}
+          </Button>
+        </div>
+      </div>
+
+      <p className="writing-kicker">
+        {editorState.mode === "question_set"
+          ? t("modes.questionSet")
+          : t("modes.richDocument")}
+      </p>
+      <label className="sr-only" htmlFor="title">
+        {t("documentTitle")}
+      </label>
+      <CapitalizedInput
+        id="title"
+        value={title}
+        onChange={(event) => {
+          setTitle(event.target.value);
+          scheduleAutosave();
+        }}
+        placeholder={t("titlePlaceholder")}
+        className="writing-sheet-title"
+      />
+      <p className="writing-brand-lede">{t("formDescription")}</p>
+
+      <div className="writing-sheet-meta">
+        <WritingChipPicker
+          labelId="writing-mode-label"
+          label={t("mode")}
+          value={editorState.mode}
+          onChange={(value) => setMode(value as WritingMode)}
+          options={[
+            {
+              value: "rich_document",
+              kind: "rich_document",
+              label: (
+                <>
+                  <FileText className="size-3.5" />
+                  {t("modes.richDocument")}
+                </>
+              ),
+            },
+            {
+              value: "question_set",
+              kind: "question_set",
+              label: (
+                <>
+                  <ListChecks className="size-3.5" />
+                  {t("modes.questionSet")}
+                </>
+              ),
+            },
+          ]}
+        />
+        <p className="text-xs text-muted-foreground">
+          {editorState.mode === "rich_document"
+            ? t("modes.richDocumentHint")
+            : t("modes.questionSetHint")}
+        </p>
+
+        <WritingChipPicker
+          labelId="writing-cefr-label"
+          label={tMeta("cefrLabel")}
+          value={editorState.meta.cefrLevel ?? "none"}
+          onChange={(value) =>
+            setMeta({
+              cefrLevel: value === "none" ? null : (value as WritingCefr),
+            })
+          }
+          options={[
+            { value: "none", label: tMeta("none") },
+            ...WRITING_CEFR_LEVELS.map((level) => ({
+              value: level,
+              label: tMeta(`cefr.${level}`),
+            })),
+          ]}
+        />
+
+        <WritingChipPicker
+          labelId="writing-formality-label"
+          label={tMeta("formalityLabel")}
+          value={editorState.meta.formality ?? "none"}
+          onChange={(value) =>
+            setMeta({
+              formality:
+                value === "none" ? null : (value as WritingFormality),
+            })
+          }
+          options={[
+            { value: "none", label: tMeta("none") },
+            ...WRITING_FORMALITY.map((item) => ({
+              value: item,
+              label: tMeta(`formality.${item}`),
+            })),
+          ]}
+        />
+
+        <WritingChipPicker
+          labelId="writing-topic-label"
+          label={tMeta("topicLabel")}
+          value={editorState.meta.topic ?? "none"}
+          onChange={(value) =>
+            setMeta({ topic: value === "none" ? null : value })
+          }
+          options={[
+            { value: "none", label: tMeta("none") },
+            ...WRITING_TOPICS.map((topic) => ({
+              value: topic,
+              label: resolveTopicLabel(topic, (key) => tTags(key)),
+            })),
+          ]}
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="description">
+          {t("documentDescription")}{" "}
+          <span className="font-normal text-muted-foreground">
+            ({t("optional")})
+          </span>
+        </Label>
+        <DescriptionField
+          id="description"
+          value={description}
+          onChange={(next) => {
+            setDescription(next);
+            scheduleAutosave();
+          }}
+          onReady={adoptDescriptionBaseline}
+          placeholder={t("descriptionPlaceholder")}
+          maxLength={2000}
+        />
+      </div>
 
           <WritingAiBar
             language={language}
@@ -669,6 +683,7 @@ export function WritingEditor({
             onQuestionFeedbackChange={setQuestionFeedback}
           />
 
+          <div className="writing-sheet-surface">
           <ContentTransition transitionKey={editorState.mode}>
             {editorState.mode === "rich_document" ? (
               <div className="space-y-2">
@@ -710,57 +725,17 @@ export function WritingEditor({
               />
             )}
           </ContentTransition>
-        </CardContent>
-      </Card>
+          </div>
 
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <p className="text-sm text-muted-foreground">
-          {previewHref
-            ? t("editSaveHint")
-            : isAutosaving
-              ? t("autosaving")
-              : initialData
-                ? t("autosaveReady")
-                : t("autosavePending")}
-        </p>
-        <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center">
-          {previewHref ? (
-            <Button
-              type="button"
-              variant="outline"
-              size="lg"
-              onClick={() => router.replace(previewHref)}
-              disabled={isSaving}
-              className="h-11 w-full sm:h-9 sm:w-auto"
-            >
-              {tCommon("cancel")}
-            </Button>
-          ) : null}
-          <LockedFeatureButton
-            type="button"
-            variant="outline"
-            size="lg"
-            icon={<Download className="size-4" />}
-            onClick={() => setExportOpen(true)}
-            className="h-11 w-full sm:h-9 sm:w-auto"
-          >
-            {t("export.button")}
-          </LockedFeatureButton>
-          <Button
-            onClick={() => void persistExercise(true)}
-            disabled={isSaving || imageUploading || !canSave}
-            size="lg"
-            className="h-11 w-full sm:h-9 sm:w-auto"
-          >
-            {isSaving ? (
-              <Loader2 className="size-4 animate-spin" />
-            ) : (
-              <Save className="size-4" />
-            )}
-            {t("save")}
-          </Button>
-        </div>
-      </div>
+      <p className="text-sm text-muted-foreground">
+        {previewHref
+          ? t("editSaveHint")
+          : isAutosaving
+            ? t("autosaving")
+            : initialData
+              ? t("autosaveReady")
+              : t("autosavePending")}
+      </p>
 
       <WritingExportDialog
         open={exportOpen}

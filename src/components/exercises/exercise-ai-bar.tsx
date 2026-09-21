@@ -38,7 +38,7 @@ export function ExerciseAiBar({
   }
 
   return (
-    <div className="flex flex-col gap-3 rounded-2xl border border-hairline-cloud bg-card p-3 sm:p-4">
+    <div className="flex flex-col gap-3 rounded-sm border border-hairline-cloud bg-surface-elevated p-3 sm:p-4">
       <ExerciseDifficultySelect
         value={difficulty}
         onChange={onDifficultyChange}

@@ -1,15 +1,8 @@
 "use client";
 
-import {
-  ChevronLeft,
-  ChevronRight,
-  RotateCcw,
-  RotateCw,
-  Shuffle,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Eye, EyeOff } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
 
 type FlashcardControlsProps = {
   canGoPrevious: boolean;
@@ -18,8 +11,6 @@ type FlashcardControlsProps = {
   onPrevious: () => void;
   onNext: () => void;
   onFlip: () => void;
-  onShuffle: () => void;
-  onRestart: () => void;
 };
 
 export function FlashcardControls({
@@ -29,70 +20,77 @@ export function FlashcardControls({
   onPrevious,
   onNext,
   onFlip,
-  onShuffle,
-  onRestart,
 }: FlashcardControlsProps) {
   const t = useTranslations("flashcards");
 
-  return (
-    <div className="mx-auto flex w-full max-w-lg flex-col items-center gap-5">
-      <div className="flex w-full flex-col gap-2 sm:w-auto sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-3">
+  if (isFlipped) {
+    return (
+      <div className="mx-auto flex w-full max-w-2xl items-center justify-between gap-2">
         <Button
           type="button"
-          variant="outline"
+          variant="ghost"
           onClick={onPrevious}
           disabled={!canGoPrevious}
-          className="h-11 w-full sm:h-9 sm:w-auto sm:min-w-30"
+          className="min-h-11 text-muted-foreground sm:min-h-10"
         >
           <ChevronLeft className="size-4" />
-          {t("previous")}
+          <span className="hidden sm:inline">{t("previous")}</span>
         </Button>
-
         <Button
           type="button"
-          variant="secondary"
+          variant="ghost"
+          size="sm"
           onClick={onFlip}
-          className="h-11 w-full font-semibold sm:h-9 sm:w-auto sm:min-w-30"
+          className="text-muted-foreground"
         >
-          <RotateCw className="size-4" />
-          {isFlipped ? t("hideAnswer") : t("flip")}
+          <EyeOff className="size-4" />
+          {t("hideAnswer")}
         </Button>
-
         <Button
           type="button"
-          variant="outline"
+          variant="ghost"
           onClick={onNext}
           disabled={!canGoNext}
-          className="h-11 w-full sm:h-9 sm:w-auto sm:min-w-30"
+          className="min-h-11 text-muted-foreground sm:min-h-10"
         >
-          {t("next")}
+          <span className="hidden sm:inline">{t("next")}</span>
           <ChevronRight className="size-4" />
         </Button>
       </div>
+    );
+  }
 
-      <div
-        className={cn(
-          "grid w-full grid-cols-1 gap-2.5 rounded-xl border border-hairline-cloud bg-muted/40 p-3 sm:grid-cols-2",
-        )}
+  return (
+    <div className="mx-auto grid w-full max-w-2xl grid-cols-2 gap-2 sm:flex sm:items-center sm:justify-between">
+      <Button
+        type="button"
+        size="lg"
+        onClick={onFlip}
+        className="col-span-2 h-12 min-w-0 sm:order-2 sm:col-span-1 sm:h-11 sm:w-auto sm:min-w-48 sm:flex-none"
       >
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onShuffle}
-          className="h-10 gap-2 px-4 text-sm"
-        >
-          <Shuffle className="size-4" />
-          {t("shuffle")}
-        </Button>
-        <Button
-          type="button"
-          onClick={onRestart}
-          className="h-10 gap-2 border-transparent bg-accent-lime px-4 text-sm font-bold text-ink hover:bg-accent-lime/90"
-        >
-          <RotateCcw className="size-4" />
-          {t("restart")}
-        </Button>
-      </div>
+        <Eye className="size-4" />
+        {t("showAnswer")}
+      </Button>
+      <Button
+        type="button"
+        variant="ghost"
+        onClick={onPrevious}
+        disabled={!canGoPrevious}
+        className="h-11 text-muted-foreground sm:order-1 sm:h-10 sm:flex-none"
+      >
+        <ChevronLeft className="size-4" />
+        {t("previous")}
+      </Button>
+      <Button
+        type="button"
+        variant="ghost"
+        onClick={onNext}
+        disabled={!canGoNext}
+        className="h-11 text-muted-foreground sm:order-3 sm:h-10 sm:flex-none"
+      >
+        {t("next")}
+        <ChevronRight className="size-4" />
+      </Button>
     </div>
   );
 }

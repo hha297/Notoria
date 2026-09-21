@@ -1,7 +1,5 @@
 /**
- * Rich Document PDF export — independent of Question Set export logic.
- * Visual chrome (margins, typography, title hierarchy, dividers) matches
- * the Question Set worksheet look; body is continuous TipTap content.
+ * Rich Document PDF — printed page, not a worksheet form.
  */
 import { Document, Page, StyleSheet, Text, View, pdf } from "@react-pdf/renderer";
 import type {
@@ -11,81 +9,35 @@ import type {
 } from "@/lib/writing/export/types";
 import { renderTipTapDocToPdf } from "@/lib/writing/export/tiptap-pdf";
 import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
+import { PdfMasthead } from "@/lib/export/pdf-masthead";
+import { PDF_FONT_SANS } from "@/lib/export/pdf-fonts";
+import {
+  PRINT_FOOTER,
+  PRINT_INK,
+  PRINT_PAPER,
+  printAccent,
+  type PrintSurface,
+} from "@/lib/export/print-theme";
 
-const FONT_SANS = "ChakraPetch";
-
-/** Same page chrome values as the Question Set PDF (copied, not shared). */
 const styles = StyleSheet.create({
   page: {
-    paddingTop: 48,
-    paddingBottom: 56,
-    // Slightly tighter than QS so lined body fills the page more evenly
-    paddingHorizontal: 36,
-    fontFamily: FONT_SANS,
+    paddingTop: 44,
+    paddingBottom: 52,
+    paddingHorizontal: 48,
+    fontFamily: PDF_FONT_SANS,
     fontSize: 11,
-    // Do not set unitless lineHeight on Page: react-pdf re-resolves it on
-    // every pagination pass with fixed footers and blows up on long docs
-    // (unsupported number: …e+21). Keep lineHeight on Text styles only.
-    color: "#1a1528",
-  },
-  heading: {
-    fontSize: 20,
-    fontFamily: FONT_SANS,
-    fontWeight: 700,
-    marginBottom: 8,
-    lineHeight: 1.3,
-  },
-  titleRow: {
-    marginBottom: 16,
-  },
-  titleLabel: {
-    fontSize: 10,
-    fontFamily: FONT_SANS,
-    fontWeight: 500,
-    color: "#6b6680",
-    marginBottom: 2,
-    textTransform: "uppercase",
-    letterSpacing: 0.6,
-  },
-  titleValue: {
-    fontSize: 16,
-    fontFamily: FONT_SANS,
-    fontWeight: 700,
-    lineHeight: 1.3,
-  },
-  descriptionRow: {
-    marginBottom: 16,
-  },
-  descriptionBody: {
-    fontSize: 11,
-    fontFamily: FONT_SANS,
-    fontWeight: 400,
-    color: "#3d3850",
-    lineHeight: 1.45,
-    marginBottom: 2,
-  },
-  divider: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#d5d0e0",
-    marginBottom: 18,
-  },
-  closingDivider: {
-    borderBottomWidth: 1,
-    borderBottomColor: "#d5d0e0",
-    marginTop: 18,
-  },
-  titleGap: {
-    marginBottom: 18,
+    color: PRINT_INK,
+    backgroundColor: PRINT_PAPER,
   },
   footer: {
     position: "absolute",
-    bottom: 28,
-    left: 36,
-    right: 36,
-    fontSize: 9,
-    fontFamily: FONT_SANS,
-    color: "#8a849c",
-    textAlign: "center",
+    bottom: 26,
+    left: 48,
+    right: 48,
+    fontSize: 8,
+    fontFamily: PDF_FONT_SANS,
+    color: PRINT_FOOTER,
+    letterSpacing: 0.4,
   },
 });
 
@@ -93,40 +45,31 @@ function RichDocumentPdf({
   model,
   labels,
   layout,
+  surface,
 }: {
   model: ExportDocumentModel;
   labels: ExportLabels;
   layout: ExportLayout;
+  surface: PrintSurface;
 }) {
-  const isDocument = layout === "document";
   const title = sanitizeExportText(model.title) || "—";
   const description = sanitizeExportText(model.description);
+  const accent = printAccent(surface);
 
   return (
     <Document>
       <Page size="A4" style={styles.page} wrap>
-        <Text style={styles.heading}>{labels.documentHeading}</Text>
-        <View style={styles.titleRow}>
-          <Text style={styles.titleLabel}>{labels.titleLabel}</Text>
-          <Text style={styles.titleValue}>{title}</Text>
-        </View>
-        {description ? (
-          <View style={styles.descriptionRow}>
-            <Text style={styles.titleLabel}>{labels.descriptionLabel}</Text>
-            {description.split("\n").map((line, index) => (
-              <Text key={index} style={styles.descriptionBody}>
-                {line.length > 0 ? line : " "}
-              </Text>
-            ))}
-          </View>
-        ) : null}
-        {isDocument ? <View style={styles.titleGap} /> : <View style={styles.divider} />}
-        {renderTipTapDocToPdf(model.doc, layout)}
-        {isDocument ? null : <View style={styles.closingDivider} />}
+        <PdfMasthead
+          kicker={labels.documentHeading}
+          title={title}
+          lede={description || undefined}
+          accent={accent}
+        />
+        {renderTipTapDocToPdf(model.doc, layout, accent)}
         <Text
           style={styles.footer}
           render={({ pageNumber, totalPages }) =>
-            `${pageNumber} / ${totalPages}`
+            `Notoria  ·  ${pageNumber} / ${totalPages}`
           }
           fixed
         />
@@ -135,13 +78,18 @@ function RichDocumentPdf({
   );
 }
 
-/** Generate Rich Document PDF. Caller must register export fonts first. */
 export async function generateRichDocumentPdfBlob(
   model: ExportDocumentModel,
   labels: ExportLabels,
-  layout: ExportLayout = "worksheet",
+  layout: ExportLayout = "document",
+  surface: PrintSurface = "writing",
 ): Promise<Blob> {
   return pdf(
-    <RichDocumentPdf model={model} labels={labels} layout={layout} />,
+    <RichDocumentPdf
+      model={model}
+      labels={labels}
+      layout={layout}
+      surface={surface}
+    />,
   ).toBlob();
 }

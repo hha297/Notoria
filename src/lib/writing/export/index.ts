@@ -12,6 +12,7 @@ import type {
 } from "@/lib/writing/export/types";
 import type { WritingEditorState } from "@/lib/writing/content";
 import type { JSONContent } from "@tiptap/react";
+import type { PrintSurface } from "@/lib/export/print-theme";
 
 export type { ExportFormat, ExportOptions, ExportLabels } from "@/lib/writing/export/types";
 export { DEFAULT_EXPORT_OPTIONS } from "@/lib/writing/export/types";
@@ -19,6 +20,8 @@ export {
   buildExportDocument,
   buildRichDocumentExport,
   exportDocumentIsEmpty,
+  theoryDocHasExportableContent,
+  writingEditorHasExportableContent,
 } from "@/lib/writing/export/build-document";
 export { buildExportFilename } from "@/lib/writing/export/filename";
 
@@ -40,6 +43,8 @@ export async function exportWritingExercise(params: {
     model,
     options: params.options,
     labels: params.labels,
+    layout: model.mode === "rich_document" ? "document" : "worksheet",
+    surface: "writing",
   });
 }
 
@@ -67,6 +72,7 @@ export async function exportTheoryNote(params: {
     labels: params.labels,
     filenamePrefix: "theory",
     layout: "document",
+    surface: "theory",
   });
 }
 
@@ -76,6 +82,7 @@ export async function exportDocumentModel(params: {
   labels: ExportLabels;
   filenamePrefix?: string;
   layout?: ExportLayout;
+  surface?: PrintSurface;
 }): Promise<{ filename: string }> {
   const access = await assertPaidDocumentExport(params.options.format);
   if (!access.ok) {
@@ -96,7 +103,9 @@ export async function exportDocumentModel(params: {
     params.model,
     params.labels,
     params.options,
-    params.layout ?? "worksheet",
+    params.layout ??
+      (params.model.mode === "rich_document" ? "document" : "worksheet"),
+    params.surface ?? "writing",
   );
   downloadBlob(blob, filename);
 
@@ -108,10 +117,11 @@ async function generateExportBlob(
   labels: ExportLabels,
   options: ExportOptions,
   layout: ExportLayout,
+  surface: PrintSurface,
 ): Promise<Blob> {
   if (options.format === "docx") {
-    return generateWritingDocxBlob(model, labels, options, layout);
+    return generateWritingDocxBlob(model, labels, options, layout, surface);
   }
 
-  return generateWritingPdfBlob(model, labels, options, layout);
+  return generateWritingPdfBlob(model, labels, options, layout, surface);
 }

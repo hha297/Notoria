@@ -87,10 +87,10 @@ export function WelcomePromptModal({
   const message = prompt
     ? prompt.usesLanguage
       ? t.rich(prompt.message, {
-          lang: () => (
-            <span className="font-semibold text-ink">{language}</span>
-          ),
-        })
+        lang: () => (
+          <span className="font-semibold text-ink">{language}</span>
+        ),
+      })
       : t(prompt.message)
     : null;
 
@@ -101,7 +101,7 @@ export function WelcomePromptModal({
         className="gap-5 sm:max-w-md sm:p-6"
       >
         <DialogHeader className="gap-3">
-          <div className="flex size-10 items-center justify-center rounded-lg bg-accent-lime text-ink">
+          <div className="flex size-10 items-center justify-center rounded-sm bg-primary text-on-primary">
             <Sparkles className="size-5" aria-hidden />
           </div>
           <DialogTitle className="font-heading text-xl leading-snug sm:text-2xl">

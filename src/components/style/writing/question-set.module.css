@@ -1,0 +1,32 @@
+/* Writing question-set cards — owned by writing-section/question cards. */
+
+.writing-qs-section {
+  border-color: color-mix(
+    in oklab,
+    var(--module-theory-fg) 22%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(in oklab, var(--module-theory-bg) 42%, var(--card));
+}
+
+.writing-qs-section-head {
+  background: color-mix(in oklab, var(--module-theory-bg) 58%, transparent);
+  border-bottom-color: color-mix(
+    in oklab,
+    var(--module-theory-fg) 16%,
+    transparent
+  );
+}
+
+.writing-qs-question {
+  border-color: color-mix(
+    in oklab,
+    var(--module-theory-fg) 16%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(
+    in oklab,
+    var(--surface) 86%,
+    var(--module-theory-bg)
+  );
+}

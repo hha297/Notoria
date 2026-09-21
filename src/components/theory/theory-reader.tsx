@@ -1,8 +1,8 @@
 "use client";
 
-import { motion } from "motion/react";
 import { formatDistanceToNow } from "date-fns";
-import { Clock, Download, Pencil, Trash2 } from "lucide-react";
+import { ArrowLeft, Clock, Download, Pencil, Trash2 } from "lucide-react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
@@ -12,9 +12,9 @@ import { RichTextContent } from "@/components/editor/rich-text-content";
 import { DescriptionContent } from "@/components/form/description-content";
 import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
 import { TheoryExportDialog } from "@/components/theory/export-dialog";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { deleteTheoryNote } from "@/lib/actions/theory";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
 import {
@@ -22,14 +22,14 @@ import {
   isKnownTheoryCategory,
   parseTheoryContent,
 } from "@/lib/theory/content";
-
-const EASE = [0.25, 0.1, 0.25, 1] as const;
+import { theoryDocHasExportableContent } from "@/lib/writing/export";
 
 type TheoryReaderProps = {
   id: string;
   title: string;
   content: unknown;
   updatedAt: string;
+  backHref: string;
 };
 
 export function TheoryReader({
@@ -37,6 +37,7 @@ export function TheoryReader({
   title,
   content,
   updatedAt,
+  backHref,
 }: TheoryReaderProps) {
   const router = useRouter();
   const t = useTranslations("theory");
@@ -52,6 +53,21 @@ export function TheoryReader({
     ? t(`categories.${parsed.category}`)
     : parsed.category;
   const minutes = estimateReadingMinutes(parsed.doc);
+  const canExport = theoryDocHasExportableContent(parsed.doc);
+
+  useRegisterShortcutAction("quickEdit", () => {
+    router.push(`/theory/${id}/edit`);
+  });
+  useRegisterShortcutAction(
+    "download",
+    () => {
+      setExportOpen(true);
+    },
+    canExport,
+  );
+  useRegisterShortcutAction("deleteItem", () => {
+    setDeleteOpen(true);
+  });
 
   function handleDelete() {
     if (isLeaving) return;
@@ -70,68 +86,77 @@ export function TheoryReader({
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, y: 8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.22, ease: EASE }}
-      className="space-y-6 sm:space-y-8"
-    >
-      <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
-        <LinkButton
-          href={`/theory/${id}/edit`}
-          size="lg"
-          className="h-11 w-full sm:h-9 sm:w-auto"
-        >
-          <Pencil className="size-4" />
-          {t("edit")}
-        </LinkButton>
-        <LockedFeatureButton
-          type="button"
-          variant="outline"
-          size="lg"
-          icon={<Download className="size-4" />}
-          onClick={() => setExportOpen(true)}
-          className="h-11 w-full sm:h-9 sm:w-auto"
-        >
-          {t("export.button")}
-        </LockedFeatureButton>
-        <Button
-          type="button"
-          variant="outline"
-          size="lg"
-          onClick={() => setDeleteOpen(true)}
-          className="h-11 w-full sm:h-9 sm:w-auto"
-        >
-          <Trash2 className="size-4" />
-          {tCommon("delete")}
-        </Button>
+    <div className="writing-paper theory-paper" data-theory-category={parsed.category || undefined}>
+      <div className="writing-paper-chrome">
+        <Link href={backHref} className="writing-back">
+          <ArrowLeft className="size-4" />
+          {t("backToList")}
+        </Link>
+        <div className="writing-paper-actions">
+          <LockedFeatureButton
+            type="button"
+            variant="outline"
+            size="lg"
+            icon={<Download className="size-4" />}
+            onClick={() => setExportOpen(true)}
+            disabled={!canExport}
+            title={canExport ? undefined : t("export.empty")}
+            className="route-quiet-action h-11 w-full sm:h-9 sm:w-auto"
+            data-route-action="theory"
+          >
+            {t("export.button")}
+          </LockedFeatureButton>
+          <LinkButton
+            href={`/theory/${id}/edit`}
+            size="lg"
+            className="h-11 w-full sm:h-9 sm:w-auto"
+          >
+            <Pencil className="size-4" />
+            {t("edit")}
+          </LinkButton>
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            onClick={() => setDeleteOpen(true)}
+            className="h-11 w-full sm:h-9 sm:w-auto"
+          >
+            <Trash2 className="size-4" />
+            {tCommon("delete")}
+          </Button>
+        </div>
       </div>
 
-      <article className="card-surface space-y-6 p-4 sm:space-y-8 sm:p-6 md:p-8">
-        <header className="space-y-3 border-b border-hairline-cloud pb-5">
-          <div className="flex flex-wrap items-center gap-2">
-            <Badge variant="secondary">{categoryLabel}</Badge>
-            <span className="inline-flex items-center gap-1 text-xs text-muted-foreground">
-              <Clock className="size-3.5" />
-              {t("readingTime", { minutes })}
-            </span>
-            <span className="text-xs text-muted-foreground">
-              {formatDistanceToNow(new Date(updatedAt), { addSuffix: true })}
-            </span>
-          </div>
-          <h2 className="heading-md text-ink">{title}</h2>
-          {parsed.description ? (
-            <DescriptionContent
-              value={parsed.description}
-              className="text-sm text-muted-foreground sm:text-base"
-            />
-          ) : null}
-        </header>
-        <RichTextContent
-          content={parsed.doc}
-          className="border-0 bg-transparent shadow-none"
-          collapseStorageKey={`heading-collapse:theory:${id}`}
-        />
+      <article
+        className="writing-paper-page"
+        data-theory="note"
+        data-theory-category={parsed.category || undefined}
+      >
+        <p className="writing-kicker">{categoryLabel}</p>
+        <h1 className="writing-paper-title wrap-break-word">{title}</h1>
+        <p className="writing-kind-facts">
+          <span className="inline-flex items-center gap-1">
+            <Clock className="size-3.5" />
+            {t("readingTime", { minutes })}
+          </span>
+          <span aria-hidden="true"> · </span>
+          <span>
+            {formatDistanceToNow(new Date(updatedAt), { addSuffix: true })}
+          </span>
+        </p>
+        {parsed.description ? (
+          <DescriptionContent
+            value={parsed.description}
+            className="writing-feature-excerpt mt-3"
+          />
+        ) : null}
+        <div className="writing-paper-body">
+          <RichTextContent
+            content={parsed.doc}
+            className="border-0 bg-transparent p-0 shadow-none"
+            collapseStorageKey={`heading-collapse:theory:${id}`}
+          />
+        </div>
       </article>
 
       <TheoryExportDialog
@@ -140,6 +165,7 @@ export function TheoryReader({
         title={title}
         description={parsed.description}
         doc={parsed.doc}
+        category={parsed.category}
       />
 
       <ConfirmDeleteDialog
@@ -152,6 +178,6 @@ export function TheoryReader({
         pending={isPending || isLeaving}
         onConfirm={handleDelete}
       />
-    </motion.div>
+    </div>
   );
 }

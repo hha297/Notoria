@@ -1,13 +1,15 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useHotkeys } from "react-hotkeys-hook";
 import { useLocale, useTranslations } from "next-intl";
-import { ChevronLeft, ChevronRight, RotateCcw, Sparkles } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
-import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import { ExerciseDifficultySelect } from "@/components/exercises/exercise-difficulty-select";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
+import { MultipleChoiceActions } from "@/components/exercises/multiple-choice-actions";
+import { MultipleChoiceStage } from "@/components/exercises/multiple-choice-stage";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
@@ -26,17 +28,15 @@ import { wordHasBlankMeaningHint } from "@/lib/exercises/blank-hint";
 import {
   buildMultipleChoiceQuestions,
   contextualExerciseToQuestion,
-  contextualPromptWithMeaningHint,
-  fillContextualBlank,
+  contextualSurfaceAnswer,
+  displayContextualOption,
   type MultipleChoiceQuestion,
   type MultipleChoiceStudyMode,
 } from "@/lib/exercises/multiple-choice";
-import { hintInitialLetter } from "@/lib/exercises/hint";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
 import { DEFAULT_FLASHCARD_FILTERS } from "@/types/flashcards";
-import { cn } from "@/lib/utils";
 
 type MultipleChoiceSessionProps = {
   workspaceId: string;
@@ -50,7 +50,6 @@ export function MultipleChoiceSession({
   language,
 }: MultipleChoiceSessionProps) {
   const t = useTranslations("exercises.multipleChoice");
-  const tHint = useTranslations("exercises.timedHint");
   const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
   const uiLocale = useLocale();
@@ -270,13 +269,19 @@ export function MultipleChoiceSession({
   const total = questions.length;
   const revealed = answered || peeked;
   const isCorrect = Boolean(
-    current && !peeked && selected === current.correctOption,
+    current &&
+      !peeked &&
+      selected !== null &&
+      displayContextualOption(current, selected) ===
+        contextualSurfaceAnswer(current),
   );
 
   const pick = (option: string) => {
     if (!current || revealed) return;
     setSelected(option);
-    const correct = option === current.correctOption;
+    const correct =
+      displayContextualOption(current, option) ===
+      contextualSurfaceAnswer(current);
     recordAnswer(correct);
     recordOutcome({ wordId: current.wordId, correct });
   };
@@ -286,6 +291,32 @@ export function MultipleChoiceSession({
     peek();
     recordOutcome({ wordId: current.wordId, correct: false });
   };
+
+  useHotkeys(
+    "1,2,3,4",
+    (event) => {
+      if (!current || revealed) return;
+      const optionIndex = Number(event.key) - 1;
+      const option = current.options[optionIndex];
+      if (!option) return;
+      event.preventDefault();
+      pick(option);
+    },
+    [current, revealed, pick],
+  );
+
+  useHotkeys(
+    "enter",
+    (event) => {
+      if (!current || !revealed) return;
+      const target = event.target as HTMLElement | null;
+      if (target?.closest("button, a, [role='button']")) return;
+      event.preventDefault();
+      setSelected(null);
+      next(total);
+    },
+    [current, revealed, total, next],
+  );
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
 
@@ -359,21 +390,6 @@ export function MultipleChoiceSession({
         ? t("questionWord")
         : t("questionMeaning");
 
-  const displayPrompt =
-    current && current.direction === "CONTEXTUAL"
-      ? revealed
-        ? fillContextualBlank(
-            current.prompt,
-            current.answerForm ?? current.correctOption,
-          )
-        : contextualPromptWithMeaningHint(current)
-      : current?.prompt;
-
-  const feedbackAnswer =
-    current?.direction === "CONTEXTUAL"
-      ? (current.answerForm ?? current.correctOption)
-      : current?.correctOption;
-
   return (
     <div className="space-y-6">
       {filtersBar}
@@ -392,158 +408,79 @@ export function MultipleChoiceSession({
       {sessionComplete ? (
         <SessionCompleteCard
           title={tSession("complete")}
-          scoreLabel={tSession("score", { correct: score.correct, total })}
+          questions={total}
+          correct={score.correct}
           tryAgainLabel={tSession("tryAgain")}
           onTryAgain={startSession}
         />
       ) : current ? (
         <>
           <ExerciseProgressHeader
+            current={currentIndex + 1}
+            total={total}
             progressLabel={t("progress", { current: currentIndex + 1, total })}
             scoreLabel={t("score", {
               correct: score.correct,
               answered: score.answered,
             })}
+            hint={t("keyboardHint")}
             progressValue={total ? ((currentIndex + 1) / total) * 100 : 0}
           />
-          <div className="mx-auto w-full min-w-0 max-w-2xl rounded-2xl border border-hairline-cloud bg-card p-5 shadow-xl shadow-ink/5 sm:rounded-3xl sm:p-8">
-            <div className="flex min-w-0 items-center justify-between gap-3">
-              <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
-                {promptLabel}
-              </p>
-              {current.aiGenerated ? (
-                <p className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                  <Sparkles className="size-3" />
-                  {tAi("generated")}
-                </p>
-              ) : null}
-            </div>
-            <p className="mt-4 break-words font-heading text-2xl font-medium text-ink [overflow-wrap:anywhere] sm:mt-6 sm:text-3xl md:text-4xl">
-              {displayPrompt}
-            </p>
-            {revealed && current.sentenceMeaning ? (
-              <p className="mt-3 text-sm text-muted-foreground">
-                ({current.sentenceMeaning})
-              </p>
-            ) : null}
-            <div className="mt-6">
-              <ExerciseHint
-                resetKey={current.id}
-                answered={revealed}
-                correctAnswer={
-                  current.direction === "CONTEXTUAL"
-                    ? (current.answerForm ?? current.correctOption)
-                    : current.correctOption
-                }
-                onRevealAnswer={revealAnswer}
-              >
-                {tHint("startsWith", {
-                  letter: hintInitialLetter(
-                    current.direction === "CONTEXTUAL"
-                      ? (current.answerForm ?? current.correctOption)
-                      : current.correctOption,
-                  ),
-                })}
-              </ExerciseHint>
-            </div>
-            <div className="mt-8 grid min-w-0 gap-2 sm:grid-cols-2">
-              {current.options.map((option) => {
-                const isSelected = selected === option;
-                const isAnswer = option === current.correctOption;
-                return (
-                  <button
-                    key={option}
-                    type="button"
-                    disabled={revealed && !isSelected && !isAnswer}
-                    onClick={() => pick(option)}
-                    className={cn(
-                      "min-h-11 min-w-0 cursor-pointer rounded-xl border px-4 py-3 text-left text-sm font-medium break-words [overflow-wrap:anywhere] transition-all",
-                      !revealed &&
-                        "border-hairline-cloud bg-background hover:border-accent-lime/50 hover:bg-accent-lime/10",
-                      revealed &&
-                        isAnswer &&
-                        "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a]",
-                      revealed &&
-                        isSelected &&
-                        !isAnswer &&
-                        "border-[#f3b8cc] bg-[#fff1f6] text-[#c7366a]",
-                      revealed && !isSelected && !isAnswer && "opacity-40",
-                    )}
-                  >
-                    {option}
-                  </button>
-                );
-              })}
-            </div>
-            {revealed && (
-              <p
-                className={cn(
-                  "mt-6 text-sm font-medium",
-                  isCorrect ? "text-[#4a6b0a]" : "text-[#c7366a]",
-                )}
-              >
-                {isCorrect
-                  ? t("correct")
-                  : t("incorrect", { answer: feedbackAnswer })}
-              </p>
-            )}
-          </div>
-          <div className="flex flex-col items-center gap-3 sm:gap-4">
-            <div className="flex w-full max-w-sm flex-col gap-2 sm:w-auto sm:max-w-none sm:flex-row">
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                disabled={currentIndex === 0}
-                onClick={() => {
-                  setSelected(null);
-                  goPrev();
-                }}
-                className="h-11 w-full sm:h-8 sm:w-auto"
-              >
-                <ChevronLeft className="size-4" />
-                {t("previous")}
-              </Button>
-              {revealed && (
-                <Button
-                  type="button"
-                  size="sm"
-                  onClick={() => {
-                    setSelected(null);
-                    next(total);
-                  }}
-                  className="h-11 w-full sm:h-8 sm:w-auto"
-                >
-                  {currentIndex >= total - 1 ? t("finish") : t("next")}
-                  <ChevronRight className="size-4" />
-                </Button>
-              )}
-            </div>
-            <Button type="button" variant="ghost" size="sm" onClick={startSession}>
-              <RotateCcw className="size-4" />
-              {tSession("tryAgain")}
-            </Button>
-          </div>
+          <MultipleChoiceStage
+            question={current}
+            promptLabel={promptLabel}
+            selected={selected}
+            revealed={revealed}
+            peeked={peeked}
+            isCorrect={isCorrect}
+            onPick={pick}
+            onRevealAnswer={revealAnswer}
+          />
+          <MultipleChoiceActions
+            canPrev={currentIndex > 0}
+            revealed={revealed}
+            isLast={currentIndex >= total - 1}
+            tryAgainLabel={tSession("tryAgain")}
+            onPrev={() => {
+              setSelected(null);
+              goPrev();
+            }}
+            onNext={() => {
+              setSelected(null);
+              next(total);
+            }}
+            onTryAgain={startSession}
+          />
         </>
       ) : isContextual ? (
-        <div className="rounded-2xl border border-hairline-cloud bg-card p-8 text-center">
-          <p className="font-heading text-lg font-medium text-ink">
-            {t("contextualEmptyTitle")}
-          </p>
-          <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
-            {hasProAccess
-              ? t("contextualEmptyDescription")
-              : t("contextualProDescription")}
-          </p>
-          <Button
-            type="button"
-            className="mt-6"
-            onClick={() => void startContextualSession()}
-            disabled={generating}
-          >
-            <Sparkles className="size-4" />
-            {hasProAccess ? tAi("generate") : t("unlockContextual")}
-          </Button>
+        <div className="relative mx-auto max-w-lg overflow-hidden px-4 py-10 text-center sm:px-8 sm:py-14">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-[radial-gradient(ellipse_at_top,var(--exercise-accent-soft),transparent_70%)]"
+          />
+          <div className="relative">
+            <div className="mx-auto mb-5 flex size-12 items-center justify-center border border-(--exercise-accent)/25 bg-(--exercise-accent-soft) text-(--exercise-accent)">
+              <Sparkles className="size-5" />
+            </div>
+            <p className="font-heading text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+              {t("contextualEmptyTitle")}
+            </p>
+            <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
+              {hasProAccess
+                ? t("contextualEmptyDescription")
+                : t("contextualProDescription")}
+            </p>
+            <Button
+              type="button"
+              size="lg"
+              className="mt-7 h-12 sm:h-11"
+              onClick={() => void startContextualSession()}
+              disabled={generating}
+            >
+              <Sparkles className="size-4" />
+              {hasProAccess ? tAi("generate") : t("unlockContextual")}
+            </Button>
+          </div>
         </div>
       ) : null}
     </div>

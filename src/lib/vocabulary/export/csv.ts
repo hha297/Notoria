@@ -30,7 +30,16 @@ export function generateVocabularyCsvBlob(
   if (columns.notes) headers.push(labels.columns.notes);
   if (columns.updated) headers.push(labels.columns.updated);
 
-  const lines = [headers.map(escapeCsvCell).join(",")];
+  const meta = [
+    labels.documentHeading,
+    document.workspaceName,
+    labels.wordCount,
+  ]
+    .filter((value) => value.trim())
+    .map(escapeCsvCell)
+    .join(",");
+
+  const lines = [meta, headers.map(escapeCsvCell).join(",")];
 
   for (const row of document.rows) {
     const cells: string[] = [row.word];
@@ -44,7 +53,6 @@ export function generateVocabularyCsvBlob(
     lines.push(cells.map(escapeCsvCell).join(","));
   }
 
-  // BOM helps Excel detect UTF-8
   const csv = `\uFEFF${lines.join("\r\n")}`;
   return new Blob([csv], { type: "text/csv;charset=utf-8" });
 }

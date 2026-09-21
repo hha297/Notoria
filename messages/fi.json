@@ -59,7 +59,13 @@
     "speaking": "Puhuminen",
     "account": "Tili",
     "settings": "Asetukset",
-    "workspace": "Työtila"
+    "workspace": "Työtila",
+    "gettingStarted": "Näin käytät",
+    "groups": {
+      "main": "Päävalikko",
+      "listenSpeak": "Kuuntelu ja puhe",
+      "more": "Lisää"
+    }
   },
   "folders": {
     "new": "Uusi kansio",
@@ -95,7 +101,13 @@
     "nameRequired": "Anna kansion nimi",
     "invalidMove": "Kansiota ei voi siirtää itseensä",
     "tooDeep": "Kansio on liian syvällä",
-    "notFound": "Kansiota ei löytynyt"
+    "notFound": "Kansiota ei löytynyt",
+    "nameTaken": "Kansio tai kirjoitus käyttää jo tätä nimeä"
+  },
+  "theme": {
+    "toggle": "Vaihda teema",
+    "light": "Vaalea",
+    "dark": "Tumma"
   },
   "header": {
     "createWorkspace": "Luo työtila",
@@ -117,7 +129,10 @@
     "deleted": "Työtila poistettu",
     "editTitle": "Muokkaa työtilaa",
     "editDescription": "Päivitä tämän työtilan nimi ja kieli.",
+    "editAction": "Muokkaa työtilaa",
+    "deleteAction": "Poista työtila",
     "manage": "Työtilan asetukset",
+    "manageNamed": "Hallitse: “{name}”",
     "nameRequired": "Anna työtilan nimi",
     "deleteTitle": "Poistetaanko työtila?",
     "deleteDescription": "Tämä poistaa pysyvästi työtilan “{name}” ja kaiken sen sanaston, kirjoitukset, teorian, kuuntelun ja harjoitukset. Toimintoa ei voi perua.",
@@ -128,6 +143,8 @@
   "vocabulary": {
     "title": "Sanasto",
     "bank": "pankki",
+    "description": "Keräämäsi sanat asuvat täällä — etsi, suodata ja käytä niitä harjoituksissa, kirjoittamisessa ja kertauksessa.",
+    "library": "Sanapankki",
     "addWordHighlight": "pankkiin",
     "newWord": "Uusi sana",
     "editWord": "Muokkaa sanaa",
@@ -194,8 +211,9 @@
     "synonymsCannotLinkSelf": "Sana ei voi olla itsensä synonyymi",
     "synonymsRemove": "Poista {word}",
     "formDescription": "Lisää sana merkityksillä, esimerkeillä ja tunnisteilla. Järjestä vetämällä.",
-    "emptyTitle": "Ei sanoja vielä",
-    "emptyDescription": "Aloita sanaston rakentaminen aktiivisessa työtilassa.",
+    "addingTo": "Lisätään kieleen",
+    "emptyTitle": "Sanapankkisi on tyhjä",
+    "emptyDescription": "Kerää sanoja ja merkityksiä omaan kielikirjastoosi.",
     "addFirst": "Lisää ensimmäinen sana",
     "disabledNoWorkspace": "Luo työtila ennen sanojen lisäämistä.",
     "saved": "Sana tallennettu",
@@ -220,11 +238,20 @@
     "sortWord": "Sana",
     "sortAsc": "A → Ö",
     "sortDesc": "Ö → A",
-    "noResults": "Yksikään sana ei vastaa suodattimia",
+    "noResults": "Sanoja ei löytynyt",
+    "noResultsDescription": "Kokeile muuttaa hakua tai suodattimia.",
+    "loadError": "Sanastoa ei voitu ladata",
+    "loadErrorDescription": "Tarkista yhteys ja yritä uudelleen.",
+    "retry": "Yritä uudelleen",
+    "viewList": "Lista",
+    "viewCards": "Kortit",
+    "viewMode": "Näkymä",
+    "moreTags": "+{count}",
+    "updatedAgo": "Päivitetty {time}",
     "shownOfTotal": "{shown} / {total}",
     "stats": {
-      "total": "Yhteensä",
-      "recent": "Tällä viikolla"
+      "total": "Sanastoa yhteensä",
+      "recent": "Lisätty tällä viikolla"
     },
     "uncategorizedPos": "Luokittelematon",
     "groupCount": "{count, plural, one {# sana} other {# sanaa}}",
@@ -251,6 +278,7 @@
     "export": {
       "button": "Vie",
       "title": "Vie sanasto",
+      "kicker": "Vie sanasto",
       "description": "Vie taulukossa näytettävät sanat.",
       "rowCount": "{count, plural, one {# sana} other {# sanaa}}",
       "summaryWithNote": "{count, plural, one {# sana} other {# sanaa}} · Sisältää muistiinpanot",
@@ -258,6 +286,9 @@
       "formatPdf": "PDF",
       "formatCsv": "CSV",
       "formatDocx": "Word",
+      "formatPdfHint": "Tulostettava sivu",
+      "formatDocxHint": "Muokattava tiedosto",
+      "formatCsvHint": "Taulukko",
       "options": "Sisällytä",
       "content": "Sisältö",
       "includePartOfSpeech": "Sanaluokka",
@@ -350,6 +381,8 @@
     "studio": "studio",
     "description": "Valitse harjoittelutila sanastollesi.",
     "studioDescription": "Harjoittele sanastosta, teoriasta tai tuodusta materiaalista — valitse lähde ja aloita keskittynyt sessio.",
+    "startActivity": "Aloita",
+    "unlockActivity": "Avaa",
     "practice": "harjoittelu",
     "editor": "editori",
     "edit": "Muokkaa",
@@ -371,12 +404,19 @@
     },
     "sources": {
       "label": "Harjoituslähde",
+      "heading": "Lähde",
       "vocabulary": "Sanasto",
       "theory": "Teoria",
       "import": "Tuo",
+      "imported": "Tuodut",
+      "lastUsed": "Viimeksi käytetty",
+      "selected": "Valittu",
       "vocabularyHint": "Tavat rakentuvat aktiivisen työtilan sanoista.",
       "theoryHint": "Tekoäly muuttaa teoriamerkinnän aukkoharjoitukseksi.",
-      "importHint": "Tuo harjoituspaperi tai muistiinpanot — säilytämme lähteen vihjeet ja teemme niistä harjoituskortteja."
+      "importHint": "Tuo harjoituspaperi tai muistiinpanot — säilytämme lähteen vihjeet ja teemme niistä harjoituskortteja.",
+      "vocabularyCount": "{count, plural, one {# sana} other {# sanaa}}",
+      "theoryCount": "{count, plural, one {# merkintä} other {# merkintää}}",
+      "importCount": "{count, plural, one {# tuonti} other {# tuontia}}"
     },
     "processing": {
       "workingTitle": "Harjoitusta valmistellaan",
@@ -397,10 +437,13 @@
     },
     "import": {
       "eyebrow": "Tuotu harjoitus",
+      "hubTitle": "Sivulta harjoitukseksi",
       "practiceTitle": "Tuodut harjoitukset",
       "practiceDescription": "Harjoituskortit rakennetaan tuodun materiaalin vihjeistä ja järjestyksestä — ei keksittyjä lauseita.",
       "formTitle": "Tuo oppimateriaalia",
       "formDescription": "Anna lähde. Poimimme rakenteen ja rakennamme harjoitukset vain lähteen vihjeistä.",
+      "chooseSource": "Mitä voit tuoda?",
+      "dropActive": "Pudota tuodaksesi",
       "modes": {
         "image": "Kuva",
         "file": "Tiedosto",
@@ -480,6 +523,8 @@
     },
     "theory": {
       "eyebrow": "Teoriaharjoitus",
+      "hubTitle": "Opi kielen taustalla olevat ajatukset",
+      "hubDescription": "Tutki kielioppia, rakenteita ja käsitteitä interaktiivisissa opeissa.",
       "practiceTitle": "Teoriaharjoitus",
       "practiceDescription": "Tekoäly muuttaa tämän merkinnän aukkotehtäviksi — vihjeillä ja selityksillä.",
       "openLibrary": "Avaa teoriakirjasto",
@@ -490,6 +535,13 @@
       "emptyCta": "Luo teoriamerkintä",
       "searchPlaceholder": "Hae otsikon tai sisällön perusteella…",
       "filterCategory": "Kategoria",
+      "viewMode": "Näkymä",
+      "viewList": "Lista",
+      "viewCards": "Kortit",
+      "pageOf": "Sivu {page} / {totalPages}",
+      "previousPage": "Edellinen sivu",
+      "nextPage": "Seuraava sivu",
+      "goToPage": "Siirry sivulle {page}",
       "noResults": "Ei vastaavia teoriamerkintöjä",
       "noResultsDescription": "Kokeile toista hakua tai kategoriaa.",
       "clearFilters": "Tyhjennä suodattimet",
@@ -549,13 +601,44 @@
         "completeExercise": "Suorita harjoitus.",
         "theoryCheck": "Teoriantarkistus"
       },
-      "trueFalseLabel": "Tosi tai epätosi"
+      "trueFalseLabel": "Tosi tai epätosi",
+      "lesson": {
+        "label": "Oppitunti",
+        "concept": "Käsite",
+        "theIdea": "Ajatus",
+        "seeIt": "Kontekstissa",
+        "notice": "Huomaa",
+        "example": "Esimerkki",
+        "revealNote": "Näytä huomio",
+        "hideNote": "Piilota huomio",
+        "continue": "Jatka",
+        "quickReview": "Pikakertaus",
+        "skipReview": "Ohita kertaus",
+        "startPractice": "Aloita harjoitus",
+        "openTheory": "Avaa koko teoria",
+        "tryIt": "Kokeile",
+        "outline": "Tässä osiossa",
+        "keyIdea": "Ydinajatus",
+        "nowPractice": "Nyt harjoitellaan",
+        "learnThis": "Opettele tämä käsite",
+        "applyNow": "Käytetään nyt sitä, mitä juuri opit.",
+        "preparing": "Valmistellaan harjoitusta…",
+        "yourAnswer": "Vastauksesi",
+        "correctForm": "Muoto",
+        "theRule": "Sääntö",
+        "why": "Miksi",
+        "complete": "Selvä",
+        "completeHint": "Voit jatkaa, kun olet valmis."
+      }
     },
     "types": {
       "flashcard": {
         "label": "Muistikortit",
         "description": "Käännä kortteja opiskellaksesi sanoja ja merkityksiä toistoväleillä.",
-        "preview": "Käännä · Arvioi · Kertaa"
+        "preview": "Käännä · Arvioi · Kertaa",
+        "previewHint": "Suomen kielen sana",
+        "previewWord": "suomalainen",
+        "previewFlow": "KÄÄNNÄ → ARVIOI → KERTAA"
       },
       "fill-in-blank": {
         "label": "Täytä aukko",
@@ -565,12 +648,20 @@
       "multiple-choice": {
         "label": "Monivalinta",
         "description": "Valitse oikea merkitys tai sana — häiriövastaukset tulevat sanastostasi.",
-        "preview": "Mikä merkitys sopii?"
+        "preview": "Mikä merkitys sopii?",
+        "previewPrompt": "Mikä merkitys sopii?",
+        "previewA": "suomalainen henkilö",
+        "previewB": "sää",
+        "previewC": "rakennus"
       },
       "match-pairs": {
         "label": "Yhdistä parit",
         "description": "Yhdistä jokainen sana oikeaan merkitykseen Quizlet-tyylisessä ruudukossa.",
-        "preview": "Sana ↔ Merkitys"
+        "preview": "Sana ↔ Merkitys",
+        "previewLeft": "talo",
+        "previewRight": "house",
+        "previewLeftB": "koti",
+        "previewRightB": "home"
       },
       "type-answer": {
         "label": "Kirjoita vastaus",
@@ -580,7 +671,10 @@
       "form-sentence": {
         "label": "Muodosta lause",
         "description": "Kirjoita kokonainen lause tallentamallasi sanastolla ja saa tekoälyltä kielioppipalaute.",
-        "preview": "Kirjoita lause käyttäen…"
+        "preview": "Kirjoita lause käyttäen…",
+        "previewChipA": "Minä",
+        "previewChipB": "asun",
+        "previewChipC": "Helsingissä"
       }
     },
     "timedHint": {
@@ -608,6 +702,7 @@
     },
     "fillInBlank": {
       "prompt": "Täytä aukko",
+      "placeholder": "Kirjoita vastaus…",
       "instruction": "Täytä aukko sanan oikealla muodolla.",
       "hint": "Vihje",
       "hintExplainWord": "Mieti puuttuvan sanan merkitystä tässä lauseessa.",
@@ -639,10 +734,13 @@
       "noneValid": "Tekoäly ei saanut luotua kelvollisia kysymyksiä näille sanoille. Yritä uudelleen."
     },
     "session": {
-      "complete": "Harjoitus valmis!",
+      "complete": "Harjoitus valmis",
       "score": "{correct} / {total} oikein",
       "pairsMatched": "{count} paria yhdistetty",
-      "tryAgain": "Yritä uudelleen"
+      "tryAgain": "Yritä uudelleen",
+      "questionsLabel": "Kysymykset",
+      "correctLabel": "Oikein",
+      "reviewLabel": "Kertaa"
     },
     "multipleChoice": {
       "questionWord": "Mikä on tämän sanan merkitys?",
@@ -663,11 +761,13 @@
       "previous": "Edellinen",
       "next": "Seuraava",
       "shuffle": "Sekoita kysymykset",
-      "finish": "Lopeta kierros"
+      "finish": "Lopeta kierros",
+      "keyboardHint": "1–4 valitsee · Enter seuraavaan"
     },
     "matchPairs": {
       "words": "Sanat",
       "meanings": "Merkitykset",
+      "roundProgress": "Kierros {current} / {total}",
       "progress": "{matched} / {total} yhdistetty",
       "hint": "Valitse sana, sitten napauta sen merkitystä",
       "complete": "Kaikki parit yhdistetty — hienoa!",
@@ -703,6 +803,7 @@
       "meaningLabel": "Merkitys",
       "prompt": "Kirjoita kokonainen lause käyttäen tätä sanaa.",
       "placeholder": "Kirjoita kokonainen lause…",
+      "insertWord": "Lisää lauseeseen",
       "yourSentence": "Lauseesi",
       "corrected": "Korjattu",
       "betterSuggestion": "Luonnollisempi",
@@ -756,7 +857,7 @@
     "questionWord": "Mikä on merkitys?",
     "questionMeaning": "Mikä sana vastaa tätä merkitystä?",
     "answer": "Vastaus",
-    "tapToFlip": "Napauta tai paina välilyöntiä kääntääksesi",
+    "tapToFlip": "Napauta korttia tai paina välilyöntiä paljastaaksesi",
     "showAnswer": "Näytä vastaus",
     "hideAnswer": "Piilota vastaus",
     "flip": "Käännä",
@@ -765,7 +866,7 @@
     "shuffle": "Sekoita",
     "restart": "Aloita alusta",
     "progress": "{current} / {total}",
-    "keyboardHint": "Välilyönti kääntää · ← → navigoi",
+    "keyboardHint": "Välilyönti paljastaa · ← → siirry · 1–4 arvioi",
     "meanings": "Merkitykset",
     "examples": "Esimerkit",
     "synonyms": "Synonyymit",
@@ -792,7 +893,7 @@
     "overview": "Yleiskatsaus",
     "your": "Sinun",
     "workspaceLabel": "työtilasi",
-    "description": "{language} asuu tässä. Notoria on yksityinen opiskelutyötila: kerää sanoja, tallenna teoriaa, harjoittele, kirjoita, kuuntele ja puhu.",
+    "description": "Yksityinen opiskelutyötila kielelle, josta välität — kerää sanoja, pidä teoria lähellä, harjoittele omilla sanoillasi, sitten kirjoita, kuuntele ja puhu, kunnes kieli tuntuu omalta.",
     "wordsSaved": "Tallennetut sanat",
     "wordsReadyToPractice": "Harjoiteltavat sanat",
     "theoryNotes": "Teoriamuistiinpanot",
@@ -889,7 +990,17 @@
     "practiceNowVocabCta": "Avaa sanasto",
     "continueTitle": "Jatka",
     "continueSubtitle": "Palaa siihen, mitä olit tekemässä.",
-    "sidebarFooter": "Yksityinen kielenopiskelun työtila"
+    "sidebarFooter": "Yksityinen kielenopiskelun työtila",
+    "helloTitle": "Hei, {name}",
+    "continueLearning": "Jatka oppimista",
+    "continueLearningSubtitle": "Siirry työtilan osioon.",
+    "snapshotTitle": "Pikakatsaus",
+    "quickActions": "Pikatoiminnot",
+    "quickAddWord": "Lisää sana",
+    "quickStartExercise": "Aloita harjoitus",
+    "quickOpenWriting": "Avaa kirjoittaminen",
+    "quickOpenTheory": "Avaa teoria",
+    "nextStepTitle": "Seuraava askel"
   },
   "search": {
     "placeholder": "Hae mitä tahansa...",
@@ -1060,6 +1171,7 @@
   "tutorials": {
     "show": "Näytä opas",
     "showShort": "Opas",
+    "guideLabel": "Opas",
     "next": "Seuraava",
     "skip": "Ohita opas",
     "done": "Selvä",
@@ -1084,6 +1196,45 @@
         "library": {
           "title": "4. Sanakirjastosi",
           "body": "Tallennetut sanat ovat täällä. Avaa merkintä muokataksesi tai käytä niitä harjoituksissa ja kertauksessa."
+        }
+      }
+    },
+    "vocabularyAdd": {
+      "title": "Lisää sana",
+      "description": "Tämä lomake on Notorian ydin — jokainen kenttä auttaa muistamaan ja käyttämään sanaa myöhemmin.",
+      "cta": "Selvä",
+      "steps": {
+        "word": {
+          "title": "1. Kirjoita sana",
+          "body": "Syötä sana tai ilmaus, jota opettelet. Tästä tulee sanaston päämerkintä."
+        },
+        "partOfSpeech": {
+          "title": "2. Sanaluokka",
+          "body": "Valitse substantiivi, verbi, adjektiivi jne. Se auttaa suodattimia ja tekoälyehdotuksia."
+        },
+        "meanings": {
+          "title": "3. Merkitykset",
+          "body": "Lisää yksi tai useampi merkitys. Merkitse tähdellä enintään 5 päämerkitystä harjoituksiin — muut jäävät viitteeksi. Vedä järjestääksesi."
+        },
+        "examples": {
+          "title": "4. Esimerkkilauseet",
+          "body": "Lisää lauseita, jotka näyttävät sanan käytön. Avaa Lisätiedot, jos tarvitset käännöksen tai muistiinpanon."
+        },
+        "tags": {
+          "title": "5. Tunnisteet",
+          "body": "Merkitse tason, aiheen tai tilanteen mukaan, jotta löydät ja harjoittelet liittyviä sanoja myöhemmin."
+        },
+        "synonyms": {
+          "title": "6. Synonyymit",
+          "body": "Linkitä liittyviä sanoja sanastostasi, jotta merkinnät yhdistyvät ja muistaminen vahvistuu."
+        },
+        "notes": {
+          "title": "7. Muistiinpanot",
+          "body": "Valinnaiset vapaamuotoiset muistiinpanot — ääntäminen, käyttö tai mitä tahansa haluat muistaa."
+        },
+        "save": {
+          "title": "8. Tallenna",
+          "body": "Kun olet valmis, tallenna sana. Voit muokata sitä milloin tahansa sanastokirjastosta."
         }
       }
     },
@@ -1232,9 +1383,145 @@
     }
   },
   "settings": {
-    "title": "Asetukset",
-    "workspace": "Työtila",
-    "workspaceDescription": "Hallitse aktiivisen työtilan asetuksia.",
+    "eyebrow": "Asetukset",
+    "title": "Sovelluksen",
+    "highlight": "asetukset",
+    "description": "Miten Notorian tulisi näyttää ja toimia sinulle — ei työtilan tai tilin asetuksia.",
+    "appearance": "Ulkoasu",
+    "appearanceDescription": "Visuaaliset asetukset koko sovellukselle.",
+    "theme": "Teema",
+    "themeDescription": "Valitse vaalea, tumma tai järjestelmän teema.",
+    "themeLight": "Vaalea",
+    "themeDark": "Tumma",
+    "themeSystem": "Järjestelmä",
+    "accessibility": "Saavutettavuus",
+    "accessibilityDescription": "Asetukset, jotka vaikuttavat liikkeeseen ja vuorovaikutukseen Notoriassa.",
+    "motion": "Vähennä liikettä",
+    "motionDescription": "Rajoita animaatioita. Järjestelmä seuraa laitteen asetusta.",
+    "motionSystem": "Järjestelmä",
+    "motionReduce": "Vähennä",
+    "motionFull": "Täysi liike",
+    "learning": "Oppiminen",
+    "learningDescription": "Ohjausasetukset, jotka koskevat kaikkia osioita.",
+    "tutorials": "Osioiden oppaat",
+    "tutorialsDescription": "Nollaa suoritetut osio-oppaat, jotta “Show tutorial” alkaa alusta.",
+    "tutorialsReset": "Nollaa oppaat",
+    "tutorialsResetDone": "Osio-oppaat nollattu",
+    "shortcuts": {
+      "title": "Pikanäppäimet",
+      "description": "Notorian globaalit verkkosovelluksen pikanäppäimet. Harjoituskohtaiset näppäimet pysyvät kussakin toiminnossa.",
+      "enabled": "Ota pikanäppäimet käyttöön",
+      "enabledDescription": "Ota kaikki globaalit pikanäppäimet käyttöön tai pois ilman, että mukautukset katoavat.",
+      "on": "Päällä",
+      "off": "Pois",
+      "action": "Toiminto",
+      "keys": "Pikanäppäin",
+      "edit": "Muokkaa",
+      "add": "Lisää pikanäppäin",
+      "addTitle": "Lisää pikanäppäin",
+      "addDescription": "Valitse toiminto, johon haluat päästä nopeasti, ja paina sitten näppäinyhdistelmä.",
+      "chooseAction": "Valitse toiminto",
+      "customized": "Mukautettu",
+      "defaultBadge": "Oletus",
+      "defaultWas": "Oletus oli {keys}",
+      "extraBadge": "Lisä",
+      "remove": "Poista",
+      "removed": "Pikanäppäin poistettu",
+      "replace": "Korvaa",
+      "resetOne": "Palauta oletus",
+      "resetOneDone": "Pikanäppäin palautettu oletukseen",
+      "resetAll": "Palauta kaikki pikanäppäimet",
+      "resetAllDescription": "Palauta kaikki globaalit pikanäppäimet oletusyhdistelmiin.",
+      "resetAllConfirmTitle": "Palautetaanko kaikki pikanäppäimet oletuksiin?",
+      "resetAllConfirmDescription": "Mukautetut globaalit pikanäppäimet tyhjennetään. Harjoituskohtaiset näppäimet eivät muutu.",
+      "resetAllDone": "Kaikki pikanäppäimet palautettu",
+      "editTitle": "Muokkaa: {action}",
+      "editDescription": "Paina näppäinyhdistelmä. Selaimen varaamia pikanäppäimiä Notoria ei voi käyttää.",
+      "pressKeys": "Paina näppäinyhdistelmä",
+      "pickActionFirst": "Valitse toiminto ja paina sitten näppäinyhdistelmä",
+      "saved": "Pikanäppäin tallennettu",
+      "conflict": "Tämä pikanäppäin on jo määritetty toiminnolle ”{action}”.",
+      "reserved": "Selaimen varaama — Notoria ei voi käyttää tätä.",
+      "statusAvailable": "✓ {keys}",
+      "statusConflict": "⚠ {keys} — jo käytössä toiminnolla {action}.",
+      "statusReserved": "⚠ {keys} — selaimen varaama, Notoria ei voi käyttää.",
+      "reservedTitle": "Joitakin pikanäppäimiä ei voi käyttää",
+      "reservedDescription": "Selain ja Windows varaavat näppäimiä kuten Ctrl + N, Ctrl + Shift + T ja Win + E. Notoria ei voi ohittaa niitä.",
+      "reservedGroups": {
+        "ctrl": "Ctrl",
+        "ctrlShift": "Ctrl + Shift",
+        "alt": "Alt",
+        "win": "Windows"
+      },
+      "reservedPurposes": {
+        "newWindow": "Uusi ikkuna",
+        "newTab": "Uusi välilehti",
+        "closeTab": "Sulje välilehti",
+        "reopenTab": "Avaa suljettu välilehti",
+        "closeWindow": "Sulje ikkuna",
+        "newIncognito": "Uusi yksityinen ikkuna",
+        "addressBar": "Osoitepalkki",
+        "reload": "Lataa uudelleen",
+        "hardReload": "Pakota uudelleenlataus",
+        "nextTab": "Seuraava välilehti",
+        "prevTab": "Edellinen välilehti",
+        "print": "Tulosta",
+        "openFile": "Avaa tiedosto",
+        "browserSave": "Tallenna sivu (selain)",
+        "bookmark": "Lisää kirjanmerkki",
+        "history": "Historia",
+        "downloads": "Lataukset",
+        "viewSource": "Näytä lähdekoodi",
+        "findInPage": "Etsi sivulta",
+        "findNext": "Etsi seuraava",
+        "findPrev": "Etsi edellinen",
+        "devtools": "Kehittäjätyökalut",
+        "console": "JavaScript-konsoli",
+        "inspect": "Tarkasta elementti",
+        "clearData": "Tyhjennä selaintiedot",
+        "taskManager": "Selaimen tehtävienhallinta",
+        "altClose": "Sulje ikkuna",
+        "altTab": "Vaihda sovellusta",
+        "winExplorer": "Resurssienhallinta",
+        "winDesktop": "Näytä työpöytä",
+        "winLock": "Lukitse tietokone",
+        "winRun": "Suorita",
+        "winSettings": "Windowsin asetukset",
+        "winTaskView": "Tehtävänäkymä",
+        "winClipboard": "Leikepöydän historia"
+      },
+      "actions": {
+        "openSearch": "Haku",
+        "quickSave": "Pikatallennus",
+        "quickEdit": "Pikamuokkaus",
+        "quickView": "Pikakatselu",
+        "download": "Lataa",
+        "deleteItem": "Poista",
+        "createNew": "Luo uusi",
+        "goBack": "Takaisin",
+        "goForward": "Eteenpäin"
+      },
+      "actionDescriptions": {
+        "openSearch": "Hae työtilastasi",
+        "quickSave": "Tallenna nykyinen kohde",
+        "quickEdit": "Aloita nykyisen kohteen muokkaus",
+        "quickView": "Avaa nykyinen kohde katselutilassa",
+        "download": "Lataa nykyinen kohde",
+        "deleteItem": "Poista valittu kohde",
+        "createNew": "Luo uusi kohde tässä osiossa",
+        "goBack": "Palaa edelliselle sivulle",
+        "goForward": "Siirry eteenpäin selaushistoriassa"
+      }
+    },
+    "data": {
+      "title": "Data ja yksityisyys",
+      "description": "Tähän selaimeen tallennetut paikalliset asetukset. Tili ja työtilan sisältö hallitaan muualla.",
+      "clear": "Tyhjennä paikalliset asetukset",
+      "clearDescription": "Poistaa tältä laitteelta sovellusasetuksia: liike, pikanäppäimet, oppaat ja vastaavat. Ei poista tiliä eikä oppimisdataa.",
+      "clearConfirmTitle": "Tyhjennetäänkö paikalliset asetukset?",
+      "clearConfirmDescription": "Tämä tyhjentää vain tämän selaimen asetukset. Tiliä, laskutusta ja oppimissisältöä ei poisteta.",
+      "clearDone": "Paikalliset asetukset tyhjennetty"
+    },
     "customTags": "Omat tunnisteet",
     "customTagsDescription": "Luo työtilakohtaisia tunnisteita sanastolle. Valmiit tunnisteet ovat aina käytettävissä.",
     "tagName": "Tunnisteen nimi",
@@ -1258,6 +1545,8 @@
     "title": "Teoria",
     "highlight": "opiskele",
     "description": "Muistiinpanoja kieliopista, ääntämisestä, puhumisesta ja kielen toiminnasta — ei kirjoitusharjoittelua.",
+    "library": "Kirjasto",
+    "collections": "Kokoelmat",
     "disabledNoWorkspace": "Luo työtila ennen teoriamuistiinpanojen lisäämistä.",
     "create": "Lisää teoria",
     "createFirst": "Lisää ensimmäinen muistiinpano",
@@ -1277,7 +1566,7 @@
     "editDescription": "Tallenna säilyttääksesi muutokset. Peruuta hylkää tallentamattomat muutokset.",
     "editSaveHint": "Tallenna päivittääksesi muistiinpanon. Peruuta hylkää tallentamattomat muutokset.",
     "newTitle": "Uusi teoria",
-    "formDescription": "Valitse kategoria, lisää lyhyt kuvaus ja kirjoita selitys.",
+    "formDescription": "Nimeä sääntö, valitse kategoria ja selitä se omin sanoin.",
     "documentTitle": "Otsikko",
     "titlePlaceholder": "esim. Miten partitiivi toimii",
     "categoryLabel": "Kategoria",
@@ -1310,10 +1599,14 @@
     "export": {
       "button": "Vie",
       "title": "Vie teoria",
-      "description": "Valitse muoto tulostettavalle asiakirjalle.",
-      "format": "Vientimuoto",
-      "formatPdf": "PDF (.pdf)",
-      "formatDocx": "Word (.docx)",
+      "kicker": "Vie teoria",
+      "untitled": "Nimetön muistiinpano",
+      "description": "Lataa tämä muistiinpano tulostettavana sivuna tai muokattavana tiedostona.",
+      "format": "Muoto",
+      "formatPdf": "PDF",
+      "formatDocx": "Word",
+      "formatPdfHint": "Tulostettava sivu",
+      "formatDocxHint": "Muokattava tiedosto",
       "confirm": "Vie",
       "success": "Lataus aloitettu",
       "failed": "Vienti epäonnistui",
@@ -1342,6 +1635,7 @@
     "emptyTitle": "Ei kuuntelutunteja vielä",
     "emptyDescription": "Lataa ääni- tai videotiedosto luodaksesi ensimmäisen kuuntelutuntisi.",
     "myLessons": "Kuuntelutuntini",
+    "collections": "Kokoelmat",
     "searchPlaceholder": "Hae otsikolla tai tiedostonimellä…",
     "filterAll": "Kaikki",
     "filterCefr": "CEFR",
@@ -1353,6 +1647,7 @@
     "sortTitleAsc": "Otsikko (A → Ö)",
     "sortTitleDesc": "Otsikko (Ö → A)",
     "clearFilters": "Tyhjennä suodattimet",
+    "sortBy": "Lajittelu",
     "noResults": "Yksikään kuuntelutunti ei vastaa hakua",
     "noResultsDescription": "Kokeile toista hakua tai tyhjennä suodattimet.",
     "continue": "Jatka",
@@ -1480,6 +1775,7 @@
     "newCallFirst": "Aloita ensimmäinen puhelu",
     "newTitle": "Uusi puhumispuhelu",
     "newDescription": "Valitse taso ja aihe. Tekoälyohjaaja liittyy puheluun ja keskustelee kanssasi.",
+    "modalTip": "Valitse keskustelun vaikeustaso ja jätä lyhyt muistiinpano, jotta ohjaaja tietää mitä harjoitella.",
     "create": "Luo puhelu",
     "created": "Puhumispuhelu luotu",
     "titleLabel": "Otsikko",
@@ -1489,6 +1785,29 @@
     "emptyTitle": "Ei puhumissessioita vielä",
     "emptyDescription": "Aloita videopuhelu tekoälyohjaajan kanssa ja harjoittele puhumista.",
     "mySessions": "Puhumissessioni",
+    "sessionHint": "Avaa valmis sessio nähdäksesi palautteen ja litteroinnin.",
+    "stats": {
+      "aria": "Puhumissessioiden tilastot",
+      "total": "Sessiot",
+      "completed": "Valmiit",
+      "ready": "Valmiina",
+      "topics": "Aiheet"
+    },
+    "guide": {
+      "aria": "Näin puhumisharjoitus toimii",
+      "pick": {
+        "title": "Aseta fokus",
+        "body": "Valitse CEFR ja aihe, jotta ohjaaja ohjaa keskustelua tarvitsemaasi suuntaan."
+      },
+      "call": {
+        "title": "Puhu livenä",
+        "body": "Liity videopuheluun, puhu luonnollisesti ja pyydä toistoa kun jokin on epäselvää."
+      },
+      "review": {
+        "title": "Kertaa jälkeenpäin",
+        "body": "Palaa palautteeseen ja litterointiin — voit käyttää niitä sanastossa tai kirjoittamisessa."
+      }
+    },
     "join": "Liity puheluun",
     "open": "Avaa",
     "viewProgress": "Näytä eteneminen",
@@ -1551,26 +1870,63 @@
     "noWorkspace": "Ei aktiivista työtilaa",
     "notFound": "Ei löytynyt"
   },
+  "learningOnboarding": {
+    "step": "Aloitus",
+    "title": "Mitä haluat oppia?",
+    "description": "Valitse ensimmäinen kielesi aloittaaksesi oppimisen.",
+    "searchPlaceholder": "Hae kieliä…",
+    "noResults": "Ei hakua vastaavia kieliä.",
+    "continue": "Jatka",
+    "continuing": "Jatketaan…",
+    "error": "Jokin meni pieleen. Yritä uudelleen.",
+    "invalidLanguage": "Tätä kieltä ei ole saatavilla. Valitse toinen."
+  },
   "auth": {
     "welcomeBack": "Tervetuloa takaisin",
     "signInDescription": "Kirjaudu Notoria-tilillesi",
+    "signInEyebrow": "Kirjaudu",
+    "signUpEyebrow": "Rekisteröidy",
     "createAccountTitle": "Luo tili",
-    "registerDescription": "Aloita oppiminen omassa yksityisessä työtilassasi",
+    "registerDescription": "Luo tili ja valitse sitten, mitä haluat oppia.",
     "email": "Sähköposti",
     "password": "Salasana",
     "name": "Nimi",
     "signIn": "Kirjaudu",
+    "signingIn": "Kirjaudutaan…",
     "signOut": "Kirjaudu ulos",
     "createAccount": "Luo tili",
+    "creatingAccount": "Luodaan tiliä…",
     "noAccount": "Eikö sinulla ole tiliä?",
     "hasAccount": "Onko sinulla jo tili?",
     "invalidCredentials": "Virheellinen sähköposti tai salasana",
     "emailExists": "Tämä sähköposti on jo käytössä",
+    "emailInvalid": "Anna kelvollinen sähköpostiosoite",
     "registerFailed": "Tilin luonti epäonnistui. Yritä uudelleen.",
     "signInAfterRegisterFailed": "Tili luotu. Kirjaudu sisään.",
     "passwordHint": "Vähintään 8 merkkiä",
+    "passwordTooShort": "Salasanan on oltava vähintään 8 merkkiä",
     "showPassword": "Näytä salasana",
     "hidePassword": "Piilota salasana",
+    "forgotPassword": "Unohtuiko salasana?",
+    "forgotPasswordEyebrow": "Tilin palautus",
+    "forgotPasswordTitle": "Unohtuiko salasana?",
+    "forgotPasswordDescription": "Anna sähköpostisi, niin lähetämme palautuslinkin, jos tili on olemassa.",
+    "sendResetLink": "Lähetä palautuslinkki",
+    "sendingResetLink": "Lähetetään…",
+    "forgotPasswordSentTitle": "Tarkista sähköpostisi",
+    "forgotPasswordSent": "Jos tälle sähköpostille on tili, olemme lähettäneet salasanan palautuslinkin.",
+    "forgotPasswordFailed": "Palautuslinkkiä ei voitu lähettää. Yritä uudelleen.",
+    "backToSignIn": "Takaisin kirjautumiseen",
+    "resetPasswordEyebrow": "Tilin palautus",
+    "resetPasswordTitle": "Valitse uusi salasana",
+    "resetPasswordDescription": "Anna uusi salasana Notoria-tilillesi.",
+    "resetPassword": "Palauta salasana",
+    "resettingPassword": "Palautetaan…",
+    "resetPasswordSuccessTitle": "Salasana päivitetty",
+    "resetPasswordSuccess": "Salasanasi on palautettu. Voit kirjautua sisään nyt.",
+    "resetPasswordFailed": "Salasanaa ei voitu palauttaa. Yritä uudelleen.",
+    "resetTokenInvalid": "Tämä palautuslinkki on virheellinen tai vanhentunut. Pyydä uusi.",
+    "resetTokenMissing": "Tämä palautuslinkki puuttuu tai on puutteellinen. Pyydä uusi.",
     "account": "Tili",
     "accountSettings": "Tilin asetukset",
     "accountDescription": "Päivitä profiilikuva ja salasana.",
@@ -1597,7 +1953,70 @@
     "saveName": "Tallenna nimi",
     "nameUpdated": "Nimi päivitetty",
     "nameUpdateFailed": "Nimen päivitys epäonnistui",
-    "nameTooShort": "Nimen on oltava vähintään 2 merkkiä"
+    "nameTooShort": "Nimen on oltava vähintään 2 merkkiä",
+    "continueWithGoogle": "Jatka Googlella",
+    "continuingWithGoogle": "Yhdistetään Googleen…",
+    "orContinueWith": "tai jatka sähköpostilla",
+    "oauthCancelled": "Googlen kirjautuminen peruutettiin. Voit yrittää uudelleen.",
+    "oauthFailed": "Googlen kirjautuminen epäonnistui. Yritä uudelleen.",
+    "oauthAccountNotLinked": "Tätä sähköpostia käytetään jo toisella kirjautumistavalla.",
+    "oauthNotConfigured": "Googlen kirjautumista ei ole vielä määritetty."
+  },
+  "account": {
+    "eyebrow": "Tili",
+    "title": "Sinun",
+    "highlight": "tilisi",
+    "description": "Hallitse profiilia, Notoria Prota ja tilin turvaa — myös tilin lopullista sulkemista.",
+    "pro": {
+      "freeLede": "Ilmainen kattaa arjen harjoittelun. Pro avaa tekoälytyökalut, joilla muistiinpanoistasi tulee kuuntelua, puhumista, kirjoitusapua ja tulostettavia tiedostoja.",
+      "activeLede": "Pro-tilauksesi on aktiivinen. Nämä tekoälytyökalut pysyvät auki tilauksen uusiutuessa.",
+      "unlockLabel": "Avaa Prolla",
+      "includedLabel": "Sisältyy Pro-tilaukseesi",
+      "features": {
+        "aiPractice": "Aukkotehtävät, kontekstiharjoitukset ja lauseenmuodostus omasta materiaalista",
+        "writingAi": "Korjauksia ja ehdotuksia teksteihisi",
+        "export": "Jaa tai tulosta tehtäviä PDF- tai Word-muodossa",
+        "listening": "Muuta oma ääni tai video kuunteluharjoituksiksi",
+        "speaking": "Live-tekoälytutorpuhelut litteraatilla ja palautteella"
+      }
+    },
+    "profile": {
+      "title": "Profiili",
+      "description": "Miten näyt Notoriassa. Sähköposti on sidottu kirjautumiseen.",
+      "emailHint": "Sähköpostia ei voi vaihtaa täällä. Ota yhteyttä tukeen, jos tarvitset uuden osoitteen."
+    },
+    "security": {
+      "title": "Salasana",
+      "description": "Valitse vahva salasana, jota et käytä muualla."
+    },
+    "danger": {
+      "title": "Sulje tili",
+      "description": "Poista Notoria-tilisi ja kaikki sen sisältö pysyvästi.",
+      "deleteTitle": "Poista tilini",
+      "deleteHint": "Tämä poistaa kaikki työtilat, oppimissisällön ja laskutuksen. Lataa varmuuskopio ensin, jos haluat säilyttää kopion.",
+      "deleteAction": "Poista tili"
+    },
+    "delete": {
+      "kicker": "Pysyvä",
+      "title": "Poistetaanko tilisi?",
+      "description": "Olet sulkemassa pysyvästi tilin {email}. Tätä ei voi perua.",
+      "warningTitle": "Ennen kuin jatkat",
+      "warnings": {
+        "workspaces": "Kaikki työtilat sekä sanasto, teoria, kirjoitus, kuuntelu ja puhuminen poistetaan.",
+        "billing": "Aktiivinen Notoria Pro -tilaus peruutetaan heti.",
+        "media": "Ladatut mediatiedostot ja profiilikuvasi poistetaan.",
+        "permanent": "Vahvistuksen jälkeen ei ole palautusaikaa."
+      },
+      "backupTitle": "Lataa varmuuskopio ensin",
+      "backupHint": "Vie oppimisdatasi JSON-tiedostona. Mediatiedostot viitataan URL-osoitteella, niitä ei upoteta tiedostoon.",
+      "backup": "Lataa varmuuskopio",
+      "backupDone": "Varmuuskopio ladattu",
+      "backupFailed": "Varmuuskopiota ei voitu valmistella. Yritä uudelleen.",
+      "confirmLabel": "Kirjoita {phrase} vahvistaaksesi",
+      "confirm": "Poista tili pysyvästi",
+      "deleted": "Tilisi on poistettu",
+      "failed": "Tiliä ei voitu poistaa. Yritä uudelleen."
+    }
   },
   "billing": {
     "title": "Notoria Pro",
@@ -1611,8 +2030,8 @@
     "mostPopular": "Suosituin",
     "currentPlan": "Nykyinen tilaus",
     "choosePro": "Valitse Pro",
-    "freePlanDescription": "Kirjasto, harjoittelu ja CSV-vienti.",
-    "proPlanDescription": "Tekoälyharjoitukset, muodosta lause, kuuntelu, puhuminen ja PDF/Word-vienti.",
+    "freePlanDescription": "Perusharjoitukset, sanasto-tekoäly, kirjoitus ja CSV.",
+    "proPlanDescription": "Tekoälyharjoitukset, kirjoitusapu, kuuntelu, puhuminen ja PDF/Word.",
     "upgrade": "Päivitä Pro-tilaukseen",
     "manage": "Hallinnoi tilausta",
     "proBadge": "Pro",
@@ -1627,70 +2046,48 @@
     "notConfigured": "Laskutusta ei ole vielä määritetty.",
     "noCustomer": "Tähän tiliin ei ole vielä liitetty laskutusasiakasta.",
     "modalTitle": "Päivitä tilaus",
-    "modalSubtitle": "Ilmaisessa säilyvät kirjasto ja harjoittelu. Pro tuo tekoälyharjoitukset sanastosta, teoriasta ja tuonneista — sekä kirjoittamisen tekoälyn, kuuntelun, puhumisen ja tulostettavat tiedostot.",
+    "modalSubtitle": "Ilmainen kattaa arjen harjoittelun ja kirjaston. Pro avaa tekoälyharjoitukset, kirjoitusavun, kuuntelun, puhumisen ja tulostettavat tiedostot.",
     "lockedTitle": "Tämä on Pro-ominaisuus",
-    "lockedDescription": "Päivitä Prohon avataksesi tekoälyharjoitukset (sanasto, muodosta lause, teoria, tuonti) — sekä kuuntelun, puhumisen, kirjoittamisen tekoälyn ja PDF/Word-viennin.",
+    "lockedDescription": "Päivitä Prohon saadaksesi tekoälyharjoitukset, kirjoitusavun, kuuntelun, puhumisen ja PDF/Word-viennin.",
     "planName": "Pro",
     "cancelAnytime": "Peru milloin tahansa",
     "compare": {
       "capability": "Mitä saat",
       "free": "Ilmainen",
       "pro": "Pro",
+      "freeIncludes": "Sisältyy ilmaiseen",
+      "proUnlocks": "Pro avaa",
       "impact": "Miksi se auttaa",
       "yes": "Kyllä",
       "locked": "Lukittu",
       "rows": {
-        "vocab": {
-          "capability": "Sanakirjasto, tunnisteet, haku",
-          "impact": "Säilytä sanat ilman maksua"
+        "practice": {
+          "capability": "Muistikortit, paritus, visailu & kirjoitusvastaus",
+          "impact": "Perusharjoituksia omista sanoistasi"
         },
         "vocabAi": {
-          "capability": "Tekoäly: oikeinkirjoitus ja merkitys",
-          "impact": "Lisää sanoja nopeammin ja tarkemmin"
+          "capability": "Tekoäly: oikeinkirjoitus & merkitys sanoja lisättäessä",
+          "impact": "Lisää sanoja nopeammin ilmaisen tekoälyn avulla"
+        },
+        "studio": {
+          "capability": "Kirjoituseditori & teoriamuistiinpanot",
+          "impact": "Luo tekstejä ja tallenna kielioppi"
         },
         "csv": {
           "capability": "CSV-vienti",
           "impact": "Varmuuskopioi sanat taulukkoon"
         },
-        "export": {
-          "capability": "PDF- ja Word-vienti",
-          "impact": "Tulosta tehtävät tai jaa tiedostot"
-        },
-        "writing": {
-          "capability": "Kirjoituseditori",
-          "impact": "Luo luonnoksia ja tehtäväarkkeja itse"
+        "aiPractice": {
+          "capability": "Tekoälyharjoitukset sanastosta, teoriasta & tuonnista",
+          "impact": "Aukkotehtävät, konteksti, muodosta lause"
         },
         "writingAi": {
-          "capability": "Kirjoittamisen tekoäly",
+          "capability": "Kirjoittamisen tekoäly (tarkista & paranna)",
           "impact": "Korjauksia omaan tekstiisi"
         },
-        "exercises": {
-          "capability": "Harjoitukset omista esimerkeistä",
-          "impact": "Harjoittele tallennetuilla lauseilla"
-        },
-        "fillBlank": {
-          "capability": "Tekoälyn täydennystehtävät",
-          "impact": "Uudet lauseet, ei muistettuja esimerkkejä"
-        },
-        "exerciseDifficulty": {
-          "capability": "Konteksti-MC ja kirjoitus tekoälyllä",
-          "impact": "Aukkotehtäviä omasta sanastosta tasoilla Helppo–Intensiivinen"
-        },
-        "formSentence": {
-          "capability": "Muodosta lause (tekoälypalaute)",
-          "impact": "Kirjoita omilla sanoilla ja saa kielioppiapua"
-        },
-        "theory": {
-          "capability": "Teoriamuistiinpanot",
-          "impact": "Tallenna kielioppi ja käyttö"
-        },
-        "theoryAi": {
-          "capability": "Theory-tekoälyharjoitukset",
-          "impact": "Harjoittele omaa Teoriaasi tekoälyn aukkotehtävillä"
-        },
-        "importAi": {
-          "capability": "Tuontiharjoitukset tekoälyllä",
-          "impact": "Muuta harjoituspaperit, kuvat, PDF:t tai URL:it harjoituskorteiksi"
+        "export": {
+          "capability": "PDF- & Word-vienti",
+          "impact": "Tulosta tehtävät tai jaa tiedostot"
         },
         "listening": {
           "capability": "Kuuntelutunnit",
@@ -1748,9 +2145,15 @@
     "disabledNoWorkspace": "Luo työtila ennen kirjoitusten lisäämistä.",
     "create": "Luo kirjoitus",
     "createFirst": "Luo ensimmäinen kirjoitus",
+    "onTheDesk": "Pöydällä",
+    "library": "Kirjasto",
+    "allWritings": "Kaikki kirjoitukset",
+    "collections": "Kokoelmat",
+    "refine": "Rajaa",
+    "openWriting": "Avaa",
     "emptyTitle": "Et ole vielä luonut kirjoituksia",
     "emptyDescription": "Luo ensimmäinen kirjoitustehtävä aloittaaksesi harjoittelun.",
-    "searchPlaceholder": "Hae otsikolla, kuvauksella, CEFR-tasolla…",
+    "searchPlaceholder": "Hae kirjoituksia…",
     "noResults": "Yksikään kirjoitus ei vastaa hakua",
     "groupCount": "{count, plural, one {# asiakirja} other {# asiakirjaa}}",
     "filterAll": "Kaikki",
@@ -1762,6 +2165,7 @@
     "groupByWeek": "Viikko",
     "groupByMonth": "Kuukausi",
     "weekOf": "Viikko {date}",
+    "sortBy": "Lajittele",
     "sortUpdatedDesc": "Viimeksi päivitetty",
     "sortUpdatedAsc": "Vanhin päivitys",
     "sortCreatedDesc": "Uusin luotu",
@@ -1813,12 +2217,13 @@
     "deleteConfirmDescription": "\"{title}\" poistetaan pysyvästi.",
     "newTitle": "Uusi kirjoitus",
     "editTitle": "Muokkaa kirjoitusta",
-    "formDescription": "Lisää otsikko, valitse CEFR / aihe / muodollisuus ja rakenna sisältö.",
+    "formDescription": "Nimeä teksti, valitse tyyppi ja kirjoita.",
     "documentTitle": "Otsikko",
     "titlePlaceholder": "esim. Elämäntarinani",
     "documentDescription": "Kuvaus",
     "descriptionPlaceholder": "Lyhyt yhteenveto tai ohje tälle kirjoitukselle…",
     "titleRequired": "Otsikko on pakollinen",
+    "titleTaken": "Kirjoitus tai kansio käyttää jo tätä otsikkoa",
     "promptRequired": "Lisää vähintään yksi kysymys",
     "mode": "Tila",
     "modes": {
@@ -1890,14 +2295,20 @@
     "export": {
       "button": "Vie",
       "title": "Vie kirjoitus",
-      "description": "Valitse muoto ja asetukset tulostettavalle tehtävälle.",
-      "format": "Vientimuoto",
-      "formatPdf": "PDF (.pdf)",
-      "formatDocx": "Word (.docx)",
-      "options": "Asetukset",
-      "includeExamples": "Sisällytä esimerkkivastaukset",
-      "includeNotes": "Sisällytä muistiinpanot / vinkit",
-      "leaveBlankSpace": "Jätä tyhjää kirjoitustilaa jokaisen kysymyksen jälkeen",
+      "kicker": "Vie kirjoitus",
+      "untitled": "Nimetön kirjoitus",
+      "description": "Valitse muoto tulostettavalle tehtävälle.",
+      "descriptionDocument": "Lataa tämä teksti tulostettavana sivuna tai muokattavana tiedostona.",
+      "descriptionQuestionSet": "Lataa tehtäväpaperi näistä kysymyksistä.",
+      "format": "Muoto",
+      "formatPdf": "PDF",
+      "formatDocx": "Word",
+      "formatPdfHint": "Tulostettava sivu",
+      "formatDocxHint": "Muokattava tiedosto",
+      "options": "Sisällytä",
+      "includeExamples": "Esimerkkivastaukset",
+      "includeNotes": "Muistiinpanot / vinkit",
+      "leaveBlankSpace": "Tyhjä kirjoitustila",
       "confirm": "Vie",
       "success": "Lataus aloitettu",
       "failed": "Vienti epäonnistui",

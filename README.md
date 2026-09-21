@@ -285,6 +285,10 @@ DATABASE_URL=postgresql://notoria:notoria@localhost:5434/notoria
 AUTH_SECRET=your-secret-here
 AUTH_URL=http://localhost:3000
 
+# Google OAuth (Auth.js provider — never commit real secrets)
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
 # Cloudinary (avatars + listening uploads)
 CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=
@@ -356,6 +360,8 @@ Keep `.env.local` on **test** keys. Production env lives in **Vercel → Setting
 | `DATABASE_URL` | Neon (pooled, `sslmode=require`) |
 | `AUTH_SECRET` | Strong secret; do not rotate unless you intend to sign everyone out |
 | `AUTH_URL` | Canonical site URL, no trailing slash (Stripe success/cancel/portal return here) |
+| `GOOGLE_CLIENT_ID` | Google OAuth client ID |
+| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
 | `CLOUDINARY_*` | Same account as media |
 | `OPENAI_API_KEY` | Live key |
 | `ASSEMBLYAI_API_KEY` | Live key |

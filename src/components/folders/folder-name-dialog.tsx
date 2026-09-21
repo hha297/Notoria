@@ -14,12 +14,17 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { MAX_FOLDER_NAME_LENGTH } from "@/lib/folders/types";
+import {
+  isUniqueNameTaken,
+  nextAvailableName,
+} from "@/lib/unique-name";
 
 type FolderNameDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   mode: "create" | "rename";
   initialName?: string;
+  occupiedNames?: string[];
   pending?: boolean;
   onSubmit: (name: string) => void;
 };
@@ -29,6 +34,7 @@ export function FolderNameDialog({
   onOpenChange,
   mode,
   initialName = "",
+  occupiedNames = [],
   pending = false,
   onSubmit,
 }: FolderNameDialogProps) {
@@ -38,8 +44,20 @@ export function FolderNameDialog({
 
   useEffect(() => {
     if (!open) return;
-    setName(mode === "create" ? t("untitled") : initialName);
+    setName(
+      mode === "create"
+        ? nextAvailableName(t("untitled"), occupiedNames)
+        : initialName,
+    );
+    // Seed once when the dialog opens so occupied-list identity changes
+    // do not wipe the name while the user is typing.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [open, mode, initialName, t]);
+
+  const taken =
+    Boolean(name.trim()) &&
+    isUniqueNameTaken(name, occupiedNames) &&
+    !(mode === "rename" && name.trim() === initialName.trim());
 
   function handleOpenChange(next: boolean) {
     if (pending && !next) return;
@@ -49,7 +67,7 @@ export function FolderNameDialog({
   function handleSubmit(event?: FormEvent) {
     event?.preventDefault();
     const trimmed = name.trim();
-    if (!trimmed) return;
+    if (!trimmed || taken) return;
     onSubmit(trimmed);
   }
 
@@ -75,8 +93,12 @@ export function FolderNameDialog({
               placeholder={t("namePlaceholder")}
               autoFocus
               disabled={pending}
+              aria-invalid={taken || undefined}
               data-tutorial="folder-name-input"
             />
+            {taken ? (
+              <p className="text-sm text-destructive">{t("nameTaken")}</p>
+            ) : null}
           </div>
           <DialogFooter>
             <Button
@@ -92,6 +114,7 @@ export function FolderNameDialog({
               disabled={
                 pending ||
                 !name.trim() ||
+                taken ||
                 (mode === "rename" &&
                   name.trim() === initialName.trim())
               }

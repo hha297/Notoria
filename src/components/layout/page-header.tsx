@@ -21,24 +21,23 @@ export function PageHeader({
   return (
     <div
       className={cn(
-        "flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between",
+        "flex flex-col gap-3 sm:flex-row sm:items-start sm:justify-between",
         className,
       )}
     >
-      <div className="min-w-0 flex-1 space-y-2">
+      <div className="min-w-0 flex-1 space-y-1.5">
         {eyebrow && <p className="eyebrow">{eyebrow}</p>}
         <h1 className="heading-xl break-words text-ink">
+          {title}
           {highlight ? (
             <>
-              {title}{" "}
-              <span className="chip-lime">{highlight}</span>
+              {" "}
+              <span className="text-primary">{highlight}</span>
             </>
-          ) : (
-            title
-          )}
+          ) : null}
         </h1>
         {description && (
-          <p className="max-w-2xl text-sm leading-relaxed break-words text-muted-foreground sm:text-base">
+          <p className="max-w-2xl text-sm leading-relaxed break-words text-muted-foreground sm:text-[15px]">
             {description}
           </p>
         )}

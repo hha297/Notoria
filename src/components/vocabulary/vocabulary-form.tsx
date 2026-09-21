@@ -19,20 +19,17 @@ import {
 } from "@/components/vocabulary/sortable-meanings";
 import { TagMultiSelect } from "@/components/vocabulary/tag-multi-select";
 import { SynonymPicker } from "@/components/vocabulary/synonym-picker";
-import {
-  VocabularyAiChecking,
-  VocabularyAiSuggestionCard,
-} from "@/components/vocabulary/ai-suggestion-card";
+import { VocabularyAiChecking, VocabularyAiSuggestionCard } from "@/components/vocabulary/ai-suggestion-card";
+import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
+import {
+  VocabularyComposerHero,
+  VocabularyComposerSection,
+  composerStyles,
+} from "@/components/vocabulary/vocabulary-composer";
 import { Label } from "@/components/ui/label";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import {
   Select,
   SelectContent,
@@ -46,6 +43,7 @@ import {
   updateVocabularyWord,
 } from "@/lib/actions/vocabulary";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { mx } from "@/lib/css-module";
 import { afterEditorHydration } from "@/lib/editor/hydration";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
 import {
@@ -64,7 +62,6 @@ import {
 } from "@/lib/vocabulary/primary-meanings";
 import { VOCABULARY_WORD_EXISTS } from "@/lib/vocabulary-errors";
 import { isSameVocabularyIdentity, normalizeVocabularyWord } from "@/lib/vocabulary/word-identity";
-import { cn } from "@/lib/utils";
 import { useMutationLock } from "@/hooks/use-mutation-lock";
 import { useVocabularyFormDirtyState } from "@/hooks/use-vocabulary-form-dirty-state";
 import { useVocabularySpellingAi } from "@/hooks/use-vocabulary-spelling-ai";
@@ -279,6 +276,7 @@ export function VocabularyForm({
   );
   const [notesImageUploading, setNotesImageUploading] = useState(false);
   const notesHydrationCancelRef = useRef<(() => void) | null>(null);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const watchedWord = form.watch("word");
   const watchedPartOfSpeech = form.watch("partOfSpeech");
@@ -557,178 +555,235 @@ export function VocabularyForm({
 
   const showCancel = Boolean(onCancel || previewHref);
 
+  useRegisterShortcutAction("quickSave", () => {
+    formRef.current?.requestSubmit();
+  });
+  useRegisterShortcutAction(
+    "quickView",
+    () => {
+      if (previewHref) router.replace(previewHref);
+    },
+    Boolean(previewHref),
+  );
+
   return (
     <form
+      ref={formRef}
       onSubmit={form.handleSubmit(onSubmit)}
-      className={isModal ? "space-y-4" : "space-y-8"}
+      className={mx(
+        composerStyles,
+        "vocab-composer",
+        isModal ? "space-y-6" : "space-y-8",
+      )}
     >
-      <Card
-        className={cn(
-          "gap-0 overflow-hidden p-0 ring-0",
-          isModal ? "border-0 bg-transparent shadow-none" : "card-surface",
-        )}
-      >
-        {!isModal ? (
-          <CardHeader className="space-y-2 border-b border-hairline-cloud px-4 pt-5 pb-4 sm:px-6 sm:pt-6 sm:pb-5 md:px-8 md:pt-8 md:pb-6">
-            <CardTitle className="heading-md text-ink">
-              {initialData ? t("editWord") : t("newWord")}
-            </CardTitle>
-            <CardDescription className="text-sm leading-relaxed sm:text-base">
-              {t("formDescription")}
-            </CardDescription>
-          </CardHeader>
-        ) : null}
-
-        <CardContent
-          className={
-            isModal
-              ? "space-y-5 p-0"
-              : "space-y-6 px-4 py-5 sm:space-y-8 sm:px-6 sm:py-6 md:px-8 md:py-8"
+      {!isModal ? (
+        <VocabularyComposerHero
+          eyebrow={t("title")}
+          title={initialData ? t("editWord") : t("addWord")}
+          highlight={initialData ? initialData.word : t("addWordHighlight")}
+          description={initialData ? t("editDescription") : t("formDescription")}
+          addingToLabel={t("addingTo")}
+          languageCode={language}
+          actions={
+            <ShowTutorialButton
+              section="vocabularyAdd"
+              autoOpenIfIncomplete={!initialData}
+            />
           }
-        >
-          <div className="grid gap-6 sm:grid-cols-2">
-            <div className="space-y-2">
-              <Label htmlFor="word">{t("word")}</Label>
-              <div className="relative">
-                <CapitalizedInput
-                  id="word"
-                  placeholder={t("wordPlaceholder")}
-                  className="h-10 pr-10"
-                  aria-invalid={isDuplicate || undefined}
-                  aria-describedby={
-                    isDuplicate ||
-                      wordCheckStatus === "error" ||
-                      isWordBusy
-                      ? "word-duplicate-status"
-                      : undefined
-                  }
-                  {...form.register("word")}
-                />
-                {isWordBusy ? (
-                  <Loader2
-                    className="pointer-events-none absolute top-1/2 right-3 size-4 -translate-y-1/2 animate-spin text-muted-foreground"
-                    aria-hidden
-                  />
-                ) : null}
-              </div>
-              {form.formState.errors.word ? (
-                <p className="text-sm text-destructive">
-                  {form.formState.errors.word.message}
-                </p>
-              ) : null}
-              {isCheckingWord ? (
-                <p
-                  id="word-duplicate-status"
-                  className="flex items-center gap-1.5 text-xs text-muted-foreground"
-                  role="status"
-                >
-                  {t("wordExistsChecking")}
-                </p>
-              ) : null}
-              {isDuplicate ? (
-                <p
-                  id="word-duplicate-status"
-                  className="text-sm text-destructive"
-                  role="alert"
-                >
-                  {t("wordExists")}
-                </p>
-              ) : null}
-              {wordCheckStatus === "error" ? (
-                <p
-                  id="word-duplicate-status"
-                  className="text-sm text-muted-foreground"
-                  role="status"
-                >
-                  {t("wordExistsCheckFailed")}
-                </p>
-              ) : null}
-              {!isCheckingWord && spellingAi.isChecking ? (
-                <VocabularyAiChecking id="word-duplicate-status" />
-              ) : null}
-              {spellingAi.suggestion?.suggestion ? (
-                <VocabularyAiSuggestionCard
-                  body={
-                    spellingAi.suggestion.explanation?.trim() ||
-                    t("aiDidYouMean", {
-                      word: spellingAi.suggestion.suggestion,
-                    })
-                  }
-                  acceptLabel={t("aiUseWord", {
-                    word: spellingAi.suggestion.suggestion,
-                  })}
-                  onAccept={() => {
-                    const nextWord = spellingAi.suggestion?.suggestion;
-                    if (!nextWord) return;
-                    spellingAi.accept(nextWord);
-                    form.setValue("word", nextWord, {
-                      shouldDirty: true,
-                      shouldTouch: true,
-                    });
-                  }}
-                  onSkip={spellingAi.skip}
-                />
-              ) : null}
-            </div>
-            <div className="space-y-2">
-              <Label>{t("partOfSpeech")}</Label>
-              <Select
-                value={form.watch("partOfSpeech") ?? ""}
-                onValueChange={(value) =>
-                  form.setValue(
-                    "partOfSpeech",
-                    value
-                      ? (value as VocabularyFormClientValues["partOfSpeech"])
-                      : undefined,
-                    { shouldDirty: true, shouldTouch: true },
-                  )
-                }
-              >
-                <SelectTrigger className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!">
-                  <SelectValue placeholder={t("partOfSpeechPlaceholder")}>
-                    {selectedPartOfSpeech &&
-                      PARTS_OF_SPEECH.includes(
-                        selectedPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
-                      )
-                      ? tPos(
-                        selectedPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
-                      )
-                      : null}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  {PARTS_OF_SPEECH.map((pos) => (
-                    <SelectItem key={pos} value={pos}>
-                      {tPos(pos)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-          </div>
+        />
+      ) : null}
 
-          <SortableMeanings
-            meanings={meanings}
-            onChange={setMeanings}
-            ai={{
-              enabled: true,
-              word: watchedWord ?? "",
-              language,
-              partOfSpeech: selectedPartOfSpeech,
-              examples: examples
-                .map((example) => example.sentence.trim())
-                .filter(Boolean)
-                .slice(0, 6),
-            }}
-          />
-          <SortableExamples examples={examples} onChange={setExamples} />
+      <VocabularyComposerSection slot="word" className="space-y-4">
+        <div className="grid grid-cols-1 gap-x-5 gap-y-2 lg:grid-cols-[minmax(0,1.45fr)_minmax(14rem,0.55fr)]">
+          <Label
+            htmlFor="word"
+            className={mx(
+              composerStyles,
+              "vocab-composer-kicker text-[0.68rem] font-semibold tracking-[0.18em] uppercase lg:col-start-1 lg:row-start-1",
+            )}
+          >
+            {t("word")}
+          </Label>
+          <div
+            className="relative lg:col-start-1 lg:row-start-2"
+            data-tutorial="vocab-composer-word"
+          >
+            <CapitalizedInput
+              id="word"
+              placeholder={t("wordPlaceholder")}
+              className={mx(
+                composerStyles,
+                "vocab-composer-word-field vocab-composer-control pr-12 font-heading text-[1.3rem] sm:text-[1.5rem]",
+                wordCheckStatus === "unique" && "vocab-composer-word-ok",
+              )}
+              aria-invalid={isDuplicate || undefined}
+              aria-describedby={
+                isDuplicate ||
+                  wordCheckStatus === "error" ||
+                  isWordBusy
+                  ? "word-duplicate-status"
+                  : undefined
+              }
+              {...form.register("word")}
+            />
+            {isWordBusy ? (
+              <Loader2
+                className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 animate-spin text-(--composer-word)"
+                aria-hidden
+              />
+            ) : null}
+          </div>
+          <Label
+            className={mx(
+              composerStyles,
+              "vocab-composer-kicker mt-3 text-[0.68rem] font-semibold tracking-[0.18em] uppercase lg:col-start-2 lg:row-start-1 lg:mt-0",
+            )}
+          >
+            {t("partOfSpeech")}
+          </Label>
+          <div
+            className="lg:col-start-2 lg:row-start-2"
+            data-tutorial="vocab-composer-pos"
+          >
+            <Select
+              value={form.watch("partOfSpeech") ?? ""}
+              onValueChange={(value) =>
+                form.setValue(
+                  "partOfSpeech",
+                  value
+                    ? (value as VocabularyFormClientValues["partOfSpeech"])
+                    : undefined,
+                  { shouldDirty: true, shouldTouch: true },
+                )
+              }
+            >
+              <SelectTrigger
+                className={mx(
+                  composerStyles,
+                  "vocab-composer-word-field vocab-composer-control h-16! w-full rounded-md px-3 py-0! data-[size=default]:h-16!",
+                )}
+              >
+                <SelectValue placeholder={t("partOfSpeechPlaceholder")}>
+                  {selectedPartOfSpeech &&
+                    PARTS_OF_SPEECH.includes(
+                      selectedPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
+                    )
+                    ? tPos(
+                      selectedPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
+                    )
+                    : null}
+                </SelectValue>
+              </SelectTrigger>
+              <SelectContent>
+                {PARTS_OF_SPEECH.map((pos) => (
+                  <SelectItem key={pos} value={pos}>
+                    {tPos(pos)}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <div className="space-y-2 empty:hidden lg:col-span-2">
+            {form.formState.errors.word ? (
+              <p className="text-sm text-destructive">
+                {form.formState.errors.word.message}
+              </p>
+            ) : null}
+            {isCheckingWord ? (
+              <p
+                id="word-duplicate-status"
+                className="flex items-center gap-1.5 text-xs text-muted-foreground"
+                role="status"
+              >
+                {t("wordExistsChecking")}
+              </p>
+            ) : null}
+            {isDuplicate ? (
+              <p
+                id="word-duplicate-status"
+                className="text-sm text-destructive"
+                role="alert"
+              >
+                {t("wordExists")}
+              </p>
+            ) : null}
+            {wordCheckStatus === "error" ? (
+              <p
+                id="word-duplicate-status"
+                className="text-sm text-muted-foreground"
+                role="status"
+              >
+                {t("wordExistsCheckFailed")}
+              </p>
+            ) : null}
+            {!isCheckingWord && spellingAi.isChecking ? (
+              <VocabularyAiChecking id="word-duplicate-status" />
+            ) : null}
+            {spellingAi.suggestion?.suggestion ? (
+              <VocabularyAiSuggestionCard
+                body={
+                  spellingAi.suggestion.explanation?.trim() ||
+                  t("aiDidYouMean", {
+                    word: spellingAi.suggestion.suggestion,
+                  })
+                }
+                acceptLabel={t("aiUseWord", {
+                  word: spellingAi.suggestion.suggestion,
+                })}
+                onAccept={() => {
+                  const nextWord = spellingAi.suggestion?.suggestion;
+                  if (!nextWord) return;
+                  spellingAi.accept(nextWord);
+                  form.setValue("word", nextWord, {
+                    shouldDirty: true,
+                    shouldTouch: true,
+                  });
+                }}
+                onSkip={spellingAi.skip}
+              />
+            ) : null}
+          </div>
+        </div>
+      </VocabularyComposerSection>
+
+      <VocabularyComposerSection
+        slot="meaning"
+        data-tutorial="vocab-composer-meanings"
+      >
+        <SortableMeanings
+          meanings={meanings}
+          onChange={setMeanings}
+          ai={{
+            enabled: true,
+            word: watchedWord ?? "",
+            language,
+            partOfSpeech: selectedPartOfSpeech,
+            examples: examples
+              .map((example) => example.sentence.trim())
+              .filter(Boolean)
+              .slice(0, 6),
+          }}
+        />
+      </VocabularyComposerSection>
+
+      <VocabularyComposerSection
+        slot="example"
+        data-tutorial="vocab-composer-examples"
+      >
+        <SortableExamples examples={examples} onChange={setExamples} />
+      </VocabularyComposerSection>
+
+      <VocabularyComposerSection slot="extra" className="space-y-6">
+        <div data-tutorial="vocab-composer-tags">
           <TagMultiSelect
             value={tags}
             onChange={setTags}
             customTags={customTags}
             onCustomTagsChange={setLocalCustomTags}
           />
+        </div>
 
+        <div data-tutorial="vocab-composer-synonyms">
           <SynonymPicker
             value={synonyms}
             onChange={setSynonyms}
@@ -737,26 +792,39 @@ export function VocabularyForm({
             currentWordId={initialData?.id}
             currentWord={watchedWord}
           />
+        </div>
 
-          <div className="space-y-2">
-            <Label htmlFor="notes-editor">{t("notes")}</Label>
-            <div id="notes-editor">
-              <RichTextEditor
-                content={notesDoc}
-                placeholder={t("notesPlaceholder")}
-                variant="notes"
-                language={language}
-                formatWord={watchedWord}
-                onChange={handleNotesChange}
-                onImageUploadPendingChange={setNotesImageUploading}
-                onEditorReady={handleNotesEditorReady}
-              />
-            </div>
+        <div className="space-y-2" data-tutorial="vocab-composer-notes">
+          <Label
+            htmlFor="notes-editor"
+            className={mx(
+              composerStyles,
+              "vocab-composer-kicker font-heading text-base font-bold tracking-tight",
+            )}
+          >
+            {t("notes")}
+          </Label>
+          <div id="notes-editor">
+            <RichTextEditor
+              content={notesDoc}
+              placeholder={t("notesPlaceholder")}
+              variant="notes"
+              language={language}
+              formatWord={watchedWord}
+              onChange={handleNotesChange}
+              onImageUploadPendingChange={setNotesImageUploading}
+              onEditorReady={handleNotesEditorReady}
+            />
           </div>
-        </CardContent>
-      </Card>
+        </div>
+      </VocabularyComposerSection>
 
-      <div className="flex flex-col gap-2 sm:flex-row sm:justify-end">
+      <div
+        className={mx(
+          composerStyles,
+          "vocab-composer-actions sticky bottom-0 z-10 -mx-1 flex flex-col gap-2 px-1 py-3 sm:static sm:flex-row sm:justify-end sm:py-0",
+        )}
+      >
         {showCancel ? (
           <Button
             type="button"
@@ -764,7 +832,7 @@ export function VocabularyForm({
             size="lg"
             onClick={handleCancel}
             disabled={isSaving}
-            className="h-11 w-full sm:h-9 sm:w-auto"
+            className="h-12 w-full sm:h-11 sm:w-auto"
           >
             {tCommon("cancel")}
           </Button>
@@ -773,7 +841,11 @@ export function VocabularyForm({
           type="submit"
           disabled={saveDisabled}
           size="lg"
-          className="h-11 w-full sm:h-9 sm:w-auto"
+          data-tutorial="vocab-composer-save"
+          className={mx(
+            composerStyles,
+            "vocab-composer-submit h-12 w-full sm:h-11 sm:min-w-44 sm:w-auto",
+          )}
         >
           {isSaving ? (
             <>

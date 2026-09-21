@@ -1,121 +1,102 @@
 "use client";
 
-import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 import { useTranslations } from "next-intl";
-import { BookOpen, Layers, Upload } from "lucide-react";
 import { ExerciseTypePicker } from "@/components/exercises/exercise-type-picker";
+import {
+  ExerciseSourceSelector,
+  type StudioSource,
+} from "@/components/exercises/exercise-source-selector";
 import { ImportExercisePanel } from "@/components/exercises/import-exercise-panel";
 import { TheoryExercisePicker } from "@/components/exercises/theory-exercise-picker";
 import type { TheoryExerciseCardItem } from "@/components/exercises/theory-exercise-picker";
 import { ContentTransition } from "@/components/layout/content-transition";
 import type { ExerciseImportListItem } from "@/lib/exercise-import/types";
-import { cn } from "@/lib/utils";
 
-type StudioSource = "vocabulary" | "theory" | "import";
+const STUDIO_SOURCE_KEY = "notoria.exercise.studioSource";
+const STUDIO_SOURCE_EVENT = "notoria-exercise-studio-source";
+
+function isStudioSource(value: unknown): value is StudioSource {
+  return value === "vocabulary" || value === "theory" || value === "import";
+}
+
+function readStudioSource(): StudioSource {
+  try {
+    const stored = window.localStorage.getItem(STUDIO_SOURCE_KEY);
+    if (isStudioSource(stored)) return stored;
+  } catch {
+    // Ignore storage access errors.
+  }
+  return "vocabulary";
+}
+
+function subscribeStudioSource(onStoreChange: () => void) {
+  const handler = () => onStoreChange();
+  window.addEventListener("storage", handler);
+  window.addEventListener(STUDIO_SOURCE_EVENT, handler);
+  return () => {
+    window.removeEventListener("storage", handler);
+    window.removeEventListener(STUDIO_SOURCE_EVENT, handler);
+  };
+}
 
 type ExerciseStudioProps = {
   theories: TheoryExerciseCardItem[];
   imports?: ExerciseImportListItem[];
-  defaultSource?: StudioSource;
+  workspaceName: string;
+  vocabularyCount: number;
 };
 
 export function ExerciseStudio({
   theories,
   imports = [],
-  defaultSource = "vocabulary",
+  workspaceName,
+  vocabularyCount,
 }: ExerciseStudioProps) {
   const t = useTranslations("exercises");
-  const [source, setSource] = useState<StudioSource>(defaultSource);
-
-  const tabs = useMemo(
-    () =>
-      [
-        {
-          id: "vocabulary" as const,
-          label: t("sources.vocabulary"),
-          icon: Layers,
-        },
-        {
-          id: "theory" as const,
-          label: t("sources.theory"),
-          icon: BookOpen,
-        },
-        {
-          id: "import" as const,
-          label: t("sources.import"),
-          icon: Upload,
-        },
-      ] as const,
-    [t],
+  const source = useSyncExternalStore(
+    subscribeStudioSource,
+    readStudioSource,
+    () => "vocabulary" as const,
   );
+
+  const setSource = useCallback((next: StudioSource) => {
+    try {
+      window.localStorage.setItem(STUDIO_SOURCE_KEY, next);
+    } catch {
+      // Preference persistence is optional.
+    }
+    window.dispatchEvent(new Event(STUDIO_SOURCE_EVENT));
+  }, []);
 
   return (
     <div className="space-y-8">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div
-          role="tablist"
-          aria-label={t("sources.label")}
-          className="inline-flex max-w-full flex-wrap rounded-xl border border-hairline-cloud bg-muted/30 p-1"
-          data-tutorial="exercise-sources"
-        >
-          {tabs.map((tab) => {
-            const active = source === tab.id;
-            const Icon = tab.icon;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                role="tab"
-                aria-selected={active}
-                onClick={() => setSource(tab.id)}
-                className={cn(
-                  "inline-flex min-w-0 flex-1 cursor-pointer items-center justify-center gap-2 rounded-lg px-2.5 py-2 text-sm font-medium transition-colors sm:flex-none sm:px-3.5",
-                  active
-                    ? "bg-card text-ink shadow-sm ring-1 ring-hairline-cloud"
-                    : "text-muted-foreground hover:text-ink",
-                )}
-              >
-                <Icon className="size-4 shrink-0 opacity-80" />
-                <span className="truncate">{tab.label}</span>
-              </button>
-            );
-          })}
-        </div>
+      <ExerciseSourceSelector
+        value={source}
+        onChange={setSource}
+        workspaceName={workspaceName}
+        vocabularyCount={vocabularyCount}
+        theoryCount={theories.length}
+        importCount={imports.length}
+      />
 
-        {source === "theory" ? (
-          <Link
-            href="/theory"
-            className="text-sm font-medium text-muted-foreground transition-colors hover:text-ink"
-          >
-            {t("theory.openLibrary")}
-          </Link>
-        ) : null}
-      </div>
-
-      <div role="tabpanel">
+      <div
+        role="tabpanel"
+        id={`studio-panel-${source}`}
+        aria-labelledby={`studio-tab-${source}`}
+      >
         <ContentTransition transitionKey={source}>
           {source === "vocabulary" ? (
-            <div className="space-y-3">
+            <div className="space-y-2">
               <p className="text-sm text-muted-foreground">
                 {t("sources.vocabularyHint")}
               </p>
               <ExerciseTypePicker />
             </div>
           ) : source === "theory" ? (
-            <div className="space-y-3">
-              <p className="text-sm text-muted-foreground">
-                {t("sources.theoryHint")}
-              </p>
-              <TheoryExercisePicker theories={theories} />
-            </div>
+            <TheoryExercisePicker theories={theories} />
           ) : (
-            <div className="space-y-3">
-              <p className="text-sm text-muted-foreground">
-                {t("sources.importHint")}
-              </p>
-              <ImportExercisePanel imports={imports} />
-            </div>
+            <ImportExercisePanel imports={imports} />
           )}
         </ContentTransition>
       </div>

@@ -1,0 +1,443 @@
+:global([data-vocab-pos]) {
+  --vocab-pos-accent: color-mix(
+    in oklab,
+    var(--muted-foreground) 72%,
+    var(--module-vocab-fg)
+  );
+}
+
+:global([data-vocab-pos="noun"]) {
+  --vocab-pos-accent: var(--module-vocab-fg);
+}
+
+:global([data-vocab-pos="verb"]) {
+  --vocab-pos-accent: var(--module-exercise-fg);
+}
+
+:global([data-vocab-pos="adjective"]) {
+  --vocab-pos-accent: var(--module-listen-fg);
+}
+
+:global([data-vocab-pos="adverb"]) {
+  --vocab-pos-accent: var(--module-home-fg);
+}
+
+:global([data-vocab-pos="pronoun"]) {
+  --vocab-pos-accent: var(--module-theory-fg);
+}
+
+:global([data-vocab-pos="preposition"]) {
+  --vocab-pos-accent: var(--module-speak-fg);
+}
+
+:global([data-vocab-pos="conjunction"]) {
+  --vocab-pos-accent: color-mix(
+    in oklab,
+    var(--module-exercise-fg) 70%,
+    var(--module-vocab-fg)
+  );
+}
+
+:global([data-vocab-pos="interjection"]) {
+  --vocab-pos-accent: color-mix(
+    in oklab,
+    var(--module-speak-fg) 55%,
+    var(--module-exercise-fg)
+  );
+}
+
+:global([data-vocab-pos="article"]) {
+  --vocab-pos-accent: color-mix(
+    in oklab,
+    var(--module-listen-fg) 60%,
+    var(--module-home-fg)
+  );
+}
+
+:global([data-vocab-pos="determiner"]) {
+  --vocab-pos-accent: color-mix(
+    in oklab,
+    var(--module-theory-fg) 55%,
+    var(--module-listen-fg)
+  );
+}
+
+.vocab-pos-rail {
+  width: 3px;
+  flex-shrink: 0;
+  align-self: stretch;
+  border-radius: 999px;
+  background: var(--vocab-pos-accent);
+}
+
+.vocab-group {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+  box-shadow: none;
+}
+
+.vocab-group + .vocab-group {
+  margin-top: 2.75rem;
+}
+
+.vocab-group-head {
+  position: sticky;
+  top: 0;
+  z-index: 12;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem 1.25rem;
+  margin: 0 -1rem;
+  padding: 0.85rem 1rem 0.8rem;
+  border: 0;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--vocab-pos-accent) 28%, var(--border));
+  border-radius: 0;
+  background:
+    linear-gradient(
+      105deg,
+      color-mix(in oklab, var(--vocab-pos-accent) 18%, transparent) 0%,
+      color-mix(in oklab, var(--vocab-pos-accent) 7%, transparent) 42%,
+      transparent 78%
+    ),
+    color-mix(in oklab, var(--background) 86%, transparent);
+  backdrop-filter: blur(16px);
+  box-shadow: inset 3px 0 0 0 var(--vocab-pos-accent);
+}
+
+.vocab-group-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 0;
+  padding: 0.28rem 0.7rem 0.28rem 0.55rem;
+  border: 1px solid
+    color-mix(in oklab, var(--vocab-pos-accent) 34%, transparent);
+  border-radius: 0.45rem;
+  background: color-mix(in oklab, var(--vocab-pos-accent) 16%, transparent);
+  font-family: var(--font-heading);
+  font-size: clamp(0.98rem, 1.8vw, 1.12rem);
+  font-weight: 700;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+  text-transform: none;
+  color: var(--vocab-pos-accent);
+}
+
+.vocab-group-title::before {
+  content: "";
+  width: 0.42rem;
+  height: 0.42rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--vocab-pos-accent);
+}
+
+.vocab-group-count {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--muted-foreground);
+}
+
+.vocab-filter-trigger {
+  height: 2.5rem;
+  width: 100%;
+  min-width: 0;
+  justify-content: space-between;
+  padding-inline: 0.85rem;
+  border-radius: 0.65rem;
+  font-weight: 500;
+  box-shadow: none;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+:global(.vocab-lexicon) .vocab-filter-trigger {
+  border-color: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 22%,
+    var(--hairline-cloud)
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--module-vocab-bg) 28%,
+    transparent
+  ) !important;
+  color: var(--ink);
+}
+
+:global(.vocab-lexicon) .vocab-filter-trigger:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 40%,
+    var(--hairline-cloud)
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--module-vocab-bg) 42%,
+    transparent
+  ) !important;
+}
+
+:global(.vocab-lexicon) .vocab-filter-trigger:focus-visible,
+:global(.vocab-lexicon) .vocab-filter-trigger[data-popup-open],
+:global(.vocab-lexicon) .vocab-filter-trigger[aria-expanded="true"],
+:global(.vocab-lexicon) .vocab-filter-trigger[data-state="open"] {
+  border-color: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 50%,
+    var(--hairline-cloud)
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--module-vocab-bg) 52%,
+    var(--surface-elevated)
+  ) !important;
+  box-shadow: 0 0 0 3px
+    color-mix(in oklab, var(--module-vocab-bg) 48%, transparent);
+}
+
+.vocab-filter-menu {
+  border-color: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 28%,
+    var(--hairline-cloud)
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--module-vocab-bg) 42%,
+    var(--popover)
+  ) !important;
+  color: var(--popover-foreground);
+  --tw-ring-color: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 16%,
+    transparent
+  );
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--module-vocab-fg) 12%, transparent),
+    0 18px 36px color-mix(in oklab, var(--module-vocab-bg) 35%, transparent);
+}
+
+.vocab-filter-menu :global([data-slot="dropdown-menu-label"]),
+.vocab-filter-menu :global([data-slot="select-label"]) {
+  color: var(--module-vocab-fg);
+}
+
+.vocab-filter-menu :global([data-slot="dropdown-menu-separator"]),
+.vocab-filter-menu :global([data-slot="select-separator"]) {
+  background: color-mix(in oklab, var(--module-vocab-fg) 18%, transparent);
+}
+
+.vocab-filter-menu :global([data-slot="dropdown-menu-checkbox-item"]):focus,
+.vocab-filter-menu :global([data-slot="dropdown-menu-checkbox-item"])[data-highlighted],
+.vocab-filter-menu :global([data-slot="select-item"]):focus,
+.vocab-filter-menu :global([data-slot="select-item"])[data-highlighted] {
+  background: color-mix(in oklab, var(--module-vocab-bg) 55%, transparent);
+  color: var(--ink);
+}
+
+.vocab-filter-menu :global([data-slot="dropdown-menu-checkbox-item"])[data-checked],
+.vocab-filter-menu :global([data-slot="select-item"])[data-selected] {
+  color: var(--module-vocab-fg);
+}
+
+@media (min-width: 640px) {
+  .vocab-group-head {
+    margin-inline: -1.5rem;
+    padding-inline: 1.5rem;
+  }
+}
+
+.vocab-entry {
+  position: relative;
+  display: grid;
+  grid-template-columns: 3px minmax(0, 1fr);
+  gap: 0.35rem 1.1rem;
+  padding: 1.15rem 0 1.15rem 0.15rem;
+  border: 0;
+  background: transparent;
+  transition: background-color 160ms ease;
+}
+
+.vocab-entry + .vocab-entry {
+  border-top: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 18%, transparent);
+}
+
+.vocab-entry:hover,
+.vocab-entry:focus-within {
+  background: radial-gradient(
+    ellipse 88% 120% at 4% 50%,
+    color-mix(in oklab, var(--vocab-pos-accent) 14%, transparent),
+    transparent 72%
+  );
+}
+
+.vocab-entry-body {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.vocab-entry-top {
+  display: flex;
+  min-width: 0;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem 1.25rem;
+}
+
+.vocab-entry-copy {
+  min-width: 0;
+  flex: 1;
+}
+
+.vocab-entry-meta {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.5rem 0.75rem;
+}
+
+.vocab-card-grid {
+  margin-top: 0.9rem;
+}
+
+.vocab-slip {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.15rem 1.15rem 1.15rem 1.15rem;
+  border-radius: 0.45rem;
+  border: 1px solid
+    color-mix(in oklab, var(--vocab-pos-accent) 36%, transparent);
+  border-left-width: 3px;
+  border-left-color: var(--vocab-pos-accent);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--vocab-pos-accent) 10%, transparent),
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 38%, transparent);
+  box-shadow: none;
+  transition:
+    background-color 160ms ease,
+    border-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.vocab-slip:hover,
+.vocab-slip:focus-within {
+  border-color: color-mix(in oklab, var(--vocab-pos-accent) 55%, transparent);
+  border-left-color: var(--vocab-pos-accent);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--vocab-pos-accent) 14%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 52%, transparent);
+  box-shadow: 0 10px 24px
+    color-mix(in oklab, var(--vocab-pos-accent) 12%, transparent);
+}
+
+.vocab-slip-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  padding-top: 0.15rem;
+}
+
+.vocab-canopy {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.55rem 1.35rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.vocab-canopy-item {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.vocab-canopy-value {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.vocab-canopy-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.vocab-spine-tools {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 0;
+}
+
+.vocab-spine-filters {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.vocab-spine-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+}
+
+.vocab-pagination {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 16%, transparent);
+}
+
+@media (min-width: 640px) {
+  .vocab-spine-filters {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .vocab-pagination {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}

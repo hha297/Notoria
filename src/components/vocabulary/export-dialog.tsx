@@ -5,21 +5,17 @@ import { Download, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
-import { CheckboxOption } from "@/components/export/checkbox-option";
-import { ExportFormatOptions } from "@/components/export/export-format-options";
-import { Button } from "@/components/ui/button";
 import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from "@/components/ui/dialog";
-import { Label } from "@/components/ui/label";
+  ExportFormatOptions,
+  ExportOptionChip,
+} from "@/components/export/export-format-options";
+import { ExportSheet, ExportSheetSection } from "@/components/export/export-sheet";
+import { Button } from "@/components/ui/button";
 import { Progress } from "@/components/ui/progress";
-import { cn } from "@/lib/utils";
+import formatStyles from "@/components/style/export/export-format.module.css";
 import { isPaidDocumentFormat } from "@/lib/auth/paid-access";
+import { mx } from "@/lib/css-module";
+import { cn } from "@/lib/utils";
 import {
   getDefaultExportFormat,
   VOCABULARY_EXPORT_FORMATS,
@@ -68,6 +64,7 @@ export function VocabularyExportDialog({
   const [progress, setProgress] = useState<VocabularyExportProgress | null>(
     null,
   );
+  const canExport = words.length > 0;
 
   useEffect(() => {
     if (!open) return;
@@ -104,6 +101,7 @@ export function VocabularyExportDialog({
   }
 
   async function handleExport() {
+    if (!canExport) return;
     setIsExporting(true);
     setProgress({ phase: "preparing", current: 0, total: words.length });
     await new Promise<void>((resolve) => requestAnimationFrame(() => resolve()));
@@ -156,123 +154,16 @@ export function VocabularyExportDialog({
         : t("generating");
 
   return (
-    <Dialog
+    <ExportSheet
       open={open}
-      onOpenChange={(next) => {
-        if (isExporting && !next) return;
-        onOpenChange(next);
-      }}
-    >
-      <DialogContent className="sm:max-w-md" showCloseButton={!isExporting}>
-        <DialogHeader className="gap-1.5">
-          <DialogTitle className="font-heading text-lg">
-            {t("title")}
-          </DialogTitle>
-          <DialogDescription className="text-[13px]">
-            {summary}
-          </DialogDescription>
-        </DialogHeader>
-
-        <div className="space-y-4">
-          <div
-            className={cn(
-              "space-y-4",
-              isExporting && "pointer-events-none opacity-60",
-            )}
-          >
-            <div className="space-y-2">
-              <Label className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                {t("format")}
-              </Label>
-              <ExportFormatOptions
-                compact
-                idPrefix="vocab-export"
-                name="vocab-export-format"
-                formats={VOCABULARY_EXPORT_FORMATS}
-                value={options.format}
-                onChange={(format) => setFormat(format as VocabularyExportFormat)}
-                hasProAccess={hasProAccess}
-                onLockedSelect={openUpgrade}
-                labels={{
-                  pdf: t("formatPdf"),
-                  docx: t("formatDocx"),
-                  csv: t("formatCsv"),
-                }}
-              />
-            </div>
-
-            <div className="space-y-2">
-              <Label className="text-xs font-medium tracking-wide text-muted-foreground uppercase">
-                {t("content")}
-              </Label>
-              <div className="rounded-lg border border-hairline-cloud bg-muted/20 px-2 py-1">
-                <CheckboxOption
-                  id="vocab-export-pos"
-                  checked={options.includePartOfSpeech}
-                  label={t("includePartOfSpeech")}
-                  onChange={(checked) =>
-                    setOptions((current) => ({
-                      ...current,
-                      includePartOfSpeech: checked,
-                    }))
-                  }
-                />
-                <CheckboxOption
-                  id="vocab-export-tags"
-                  checked={options.includeTags}
-                  label={t("includeTags")}
-                  onChange={(checked) =>
-                    setOptions((current) => ({
-                      ...current,
-                      includeTags: checked,
-                    }))
-                  }
-                />
-                <CheckboxOption
-                  id="vocab-export-notes"
-                  checked={options.includeNotes}
-                  label={t("includeNotes")}
-                  onChange={(checked) =>
-                    setOptions((current) => ({
-                      ...current,
-                      includeNotes: checked,
-                    }))
-                  }
-                />
-                <CheckboxOption
-                  id="vocab-export-updated"
-                  checked={options.includeLastUpdated}
-                  label={t("includeLastUpdated")}
-                  onChange={(checked) =>
-                    setOptions((current) => ({
-                      ...current,
-                      includeLastUpdated: checked,
-                    }))
-                  }
-                />
-              </div>
-            </div>
-          </div>
-
-          {isExporting ? (
-            <div className="space-y-2 rounded-lg border border-hairline-cloud bg-muted/20 px-3 py-2.5">
-              <div className="flex items-center justify-between gap-3 text-xs text-muted-foreground">
-                <span>{progressLabel}</span>
-                {progress ? (
-                  <span>
-                    {t("progressCount", {
-                      current: progress.current,
-                      total: progress.total,
-                    })}
-                  </span>
-                ) : null}
-              </div>
-              <Progress value={progressPercent(progress)} />
-            </div>
-          ) : null}
-        </div>
-
-        <DialogFooter>
+      onOpenChange={onOpenChange}
+      surface="vocabulary"
+      preventClose={isExporting}
+      kicker={t("kicker")}
+      title={workspaceName.trim() || t("title")}
+      description={summary}
+      footer={
+        <>
           <Button
             type="button"
             variant="outline"
@@ -281,7 +172,11 @@ export function VocabularyExportDialog({
           >
             {tc("cancel")}
           </Button>
-          <Button type="button" onClick={handleExport} disabled={isExporting}>
+          <Button
+            type="button"
+            onClick={() => void handleExport()}
+            disabled={isExporting || !canExport}
+          >
             {isExporting ? (
               <Loader2 className="size-4 animate-spin" />
             ) : (
@@ -289,8 +184,99 @@ export function VocabularyExportDialog({
             )}
             {t("confirm")}
           </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </>
+      }
+    >
+      <div
+        className={cn(
+          "space-y-5",
+          isExporting && "pointer-events-none opacity-55",
+        )}
+      >
+        <ExportSheetSection label={t("format")}>
+          <ExportFormatOptions
+            idPrefix="vocab-export"
+            name="vocab-export-format"
+            formats={VOCABULARY_EXPORT_FORMATS}
+            value={options.format}
+            onChange={(format) => setFormat(format as VocabularyExportFormat)}
+            hasProAccess={hasProAccess}
+            onLockedSelect={openUpgrade}
+            labels={{
+              pdf: t("formatPdf"),
+              docx: t("formatDocx"),
+              csv: t("formatCsv"),
+            }}
+            hints={{
+              pdf: t("formatPdfHint"),
+              docx: t("formatDocxHint"),
+              csv: t("formatCsvHint"),
+            }}
+          />
+        </ExportSheetSection>
+
+        <ExportSheetSection label={t("content")}>
+          <div className={mx(formatStyles, "export-option-list")}>
+            <ExportOptionChip
+              checked={options.includePartOfSpeech}
+              label={t("includePartOfSpeech")}
+              onChange={(checked) =>
+                setOptions((current) => ({
+                  ...current,
+                  includePartOfSpeech: checked,
+                }))
+              }
+            />
+            <ExportOptionChip
+              checked={options.includeTags}
+              label={t("includeTags")}
+              onChange={(checked) =>
+                setOptions((current) => ({
+                  ...current,
+                  includeTags: checked,
+                }))
+              }
+            />
+            <ExportOptionChip
+              checked={options.includeNotes}
+              label={t("includeNotes")}
+              onChange={(checked) =>
+                setOptions((current) => ({
+                  ...current,
+                  includeNotes: checked,
+                }))
+              }
+            />
+            <ExportOptionChip
+              checked={options.includeLastUpdated}
+              label={t("includeLastUpdated")}
+              onChange={(checked) =>
+                setOptions((current) => ({
+                  ...current,
+                  includeLastUpdated: checked,
+                }))
+              }
+            />
+          </div>
+        </ExportSheetSection>
+      </div>
+
+      {isExporting ? (
+        <div className={mx(formatStyles, "export-progress")}>
+          <div className={mx(formatStyles, "export-progress-meta")}>
+            <span>{progressLabel}</span>
+            {progress ? (
+              <span>
+                {t("progressCount", {
+                  current: progress.current,
+                  total: progress.total,
+                })}
+              </span>
+            ) : null}
+          </div>
+          <Progress value={progressPercent(progress)} />
+        </div>
+      ) : null}
+    </ExportSheet>
   );
 }

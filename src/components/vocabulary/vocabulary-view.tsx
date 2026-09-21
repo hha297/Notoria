@@ -1,14 +1,16 @@
 "use client";
 
+import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
+import { mx } from "@/lib/css-module";
 import { Plus } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
-import { PageHeader } from "@/components/layout/page-header";
-import { ListPageLoading } from "@/components/layout/page-loading";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
+import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
-import { VocabularyTable } from "@/components/vocabulary/vocabulary-table";
+import { VocabularyBank } from "@/components/vocabulary/vocabulary-bank";
+import { VocabularyPageLoading } from "@/components/vocabulary/vocabulary-page-loading";
 import { vocabularyListQueryOptions } from "@/lib/query/options";
 
 type VocabularyViewProps = {
@@ -23,42 +25,96 @@ export function VocabularyView({
   language,
 }: VocabularyViewProps) {
   const t = useTranslations("vocabulary");
-  const { data: words, isPending } = useQuery(
+  const { data: words, isPending, isError, refetch, isFetching } = useQuery(
     vocabularyListQueryOptions(workspaceId),
   );
 
-  if (isPending || !words) {
-    return <ListPageLoading />;
+  if (isPending || (!words && isFetching)) {
+    return (
+      <PageShell className="vocab-lexicon-shell">
+        <VocabularyPageLoading />
+      </PageShell>
+    );
   }
 
-  if (words.length === 0) {
+  if (isError && !words) {
     return (
-      <PageShell>
-        <PageHeader
-          eyebrow={workspaceName}
-          title={t("title")}
-          highlight={t("bank")}
-          description={t("formDescription")}
-        >
-          <ShowTutorialButton section="vocabulary" />
-          <LinkButton href="/vocabulary/new" data-tutorial="vocab-add-word">
-            <Plus className="size-4" />
-            {t("addWord")}
-          </LinkButton>
-        </PageHeader>
+      <PageShell className="vocab-lexicon-shell">
+        <div className={mx(featureStyles, "vocab-lexicon writing-atelier flex flex-col gap-10")}>
+          <header className="writing-hero">
+            <div className="writing-hero-copy">
+              <p className="writing-kicker">{workspaceName}</p>
+              <h1 className="writing-brand-title">
+                {t("title")}{" "}
+                <span className="text-module-vocab-fg">
+                  {t("bank")}
+                </span>
+              </h1>
+            </div>
+            <div className="writing-hero-actions">
+              <ShowTutorialButton section="vocabulary" />
+            </div>
+          </header>
+          <div className="writing-empty-desk">
+            <p className="writing-empty-title">{t("loadError")}</p>
+            <p className="writing-brand-lede">{t("loadErrorDescription")}</p>
+            <Button
+              type="button"
+              className="mt-4"
+              onClick={() => {
+                void refetch();
+              }}
+            >
+              {t("retry")}
+            </Button>
+          </div>
+        </div>
+      </PageShell>
+    );
+  }
 
-        <div className="empty-state">
-          <p className="text-muted-foreground">{t("emptyTitle")}</p>
-          <LinkButton href="/vocabulary/new" className="mt-4" data-tutorial="vocab-add-word">
-            {t("addFirst")}
-          </LinkButton>
+  if (!words || words.length === 0) {
+    return (
+      <PageShell className="vocab-lexicon-shell">
+        <div className={mx(featureStyles, "vocab-lexicon writing-atelier writing-atelier-empty flex flex-col gap-10")}>
+          <header className="writing-hero">
+            <div className="writing-hero-copy">
+              <p className="writing-kicker">{workspaceName}</p>
+              <h1 className="writing-brand-title">
+                {t("title")}{" "}
+                <span className="text-module-vocab-fg">
+                  {t("bank")}
+                </span>
+              </h1>
+              <p className="writing-brand-lede">{t("description")}</p>
+            </div>
+            <div className="writing-hero-actions">
+              <ShowTutorialButton section="vocabulary" />
+              <LinkButton href="/vocabulary/new" data-tutorial="vocab-add-word">
+                <Plus className="size-4" />
+                {t("addWord")}
+              </LinkButton>
+            </div>
+          </header>
+
+          <div className="writing-empty-desk">
+            <p className="writing-empty-title">{t("emptyTitle")}</p>
+            <p className="writing-brand-lede">{t("emptyDescription")}</p>
+            <LinkButton
+              href="/vocabulary/new"
+              className="mt-4"
+              data-tutorial="vocab-add-word"
+            >
+              {t("addFirst")}
+            </LinkButton>
+          </div>
         </div>
       </PageShell>
     );
   }
 
   return (
-    <VocabularyTable
+    <VocabularyBank
       words={words}
       workspaceId={workspaceId}
       workspaceName={workspaceName}

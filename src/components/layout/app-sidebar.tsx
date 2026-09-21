@@ -34,6 +34,8 @@ import {
 import { UserButton } from "@/components/layout/user-button";
 import { SidebarProCta } from "@/components/layout/sidebar-pro-cta";
 import { LinkPendingIndicator } from "@/components/layout/link-pending-indicator";
+import navStyles from "@/components/style/layout/nav.module.css";
+import { mx } from "@/lib/css-module";
 import { prefetchDashboardDestination } from "@/lib/query/prefetch";
 import { cn } from "@/lib/utils";
 
@@ -89,7 +91,10 @@ export function AppSidebar({
   return (
     <Sidebar
       collapsible="icon"
-      className="sidebar-starfield border-r border-sidebar-border"
+      className={mx(
+        navStyles,
+        "sidebar-starfield border-r border-sidebar-border",
+      )}
     >
       <SidebarHeader className="border-b border-sidebar-border px-3 py-3 pb-2">
         <Link

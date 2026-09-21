@@ -1,9 +1,13 @@
 import type { FlashcardWord } from "@/types/flashcards";
 import {
   blankMeaningHintFromItem,
+  CONTEXTUAL_PROMPT_BLANK,
+  applyAnswerFormCasing,
+  normalizePromptBlank,
   resolveValidBlankMeaningHint,
   withBlankMeaningHint,
 } from "@/lib/exercises/blank-hint";
+import { optionLooksLikeLemma } from "@/lib/exercises/lexical-surface";
 import {
   assignWordMeanings,
   isMeaningOwnedByWord,
@@ -54,8 +58,7 @@ function buildQuestion(
     return null;
   }
 
-  const correct =
-    direction === "WORD_TO_MEANING" ? assignedMeaning : word.word;
+  const correct = direction === "WORD_TO_MEANING" ? assignedMeaning : word.word;
 
   const pool =
     direction === "WORD_TO_MEANING"
@@ -63,13 +66,12 @@ function buildQuestion(
           .filter((item) => item.id !== word.id)
           .map((item) => assignments.get(item.id) ?? "")
           .filter(Boolean)
-      : allWords
-          .filter((item) => item.id !== word.id)
-          .map((item) => item.word);
+      : allWords.filter((item) => item.id !== word.id).map((item) => item.word);
 
   const equals =
     direction === "WORD_TO_MEANING"
-      ? (a: string, b: string) => normalizeMeaningKey(a) === normalizeMeaningKey(b)
+      ? (a: string, b: string) =>
+          normalizeMeaningKey(a) === normalizeMeaningKey(b)
       : undefined;
 
   const distractors = pickDistractors(pool, correct, OPTION_COUNT - 1, equals);
@@ -81,8 +83,7 @@ function buildQuestion(
     id: `${word.id}-${direction}-${normalizeMeaningKey(assignedMeaning)}`,
     wordId: word.id,
     direction,
-    prompt:
-      direction === "WORD_TO_MEANING" ? word.word : assignedMeaning,
+    prompt: direction === "WORD_TO_MEANING" ? word.word : assignedMeaning,
     options,
     correctOption: correct,
   };
@@ -121,23 +122,25 @@ export function contextualExerciseToQuestion(
   index: number,
 ): MultipleChoiceQuestion | null {
   if (exercise.options.length !== OPTION_COUNT) return null;
+  if (!word) return null;
+
+  const surface = (
+    exercise.answerForm?.trim() || exercise.correctOption
+  ).trim();
+  const baseWord = exercise.baseWord?.trim() || word.word;
+  const options = remapOptionsToSurface(exercise.options, surface, baseWord);
+  if (options.length !== OPTION_COUNT) return null;
   if (
-    !exercise.options.some(
-      (option) =>
-        normalizeMeaningKey(option) === normalizeMeaningKey(exercise.correctOption),
+    !options.some(
+      (option) => normalizeMeaningKey(option) === normalizeMeaningKey(surface),
     )
   ) {
     return null;
   }
-  if (!word) return null;
 
-  const answerForm = exercise.answerForm?.trim()
-    ? exercise.answerForm.trim()
-    : exercise.correctOption;
-  const baseWord = exercise.baseWord?.trim() || exercise.correctOption;
   const meaningHint = resolveValidBlankMeaningHint({
     meanings: word.meanings,
-    answer: answerForm,
+    answer: surface,
     baseWord,
   });
   if (!meaningHint) return null;
@@ -146,16 +149,48 @@ export function contextualExerciseToQuestion(
     id: `${exercise.wordId}-contextual-${index}`,
     wordId: exercise.wordId,
     direction: "CONTEXTUAL",
-    prompt: exercise.prompt,
-    options: exercise.options,
-    correctOption: exercise.correctOption,
+    prompt: normalizePromptBlank(exercise.prompt),
+    options,
+    correctOption: surface,
     baseWord,
-    answerForm,
+    answerForm: surface,
     meaningHint,
     meanings: word.meanings,
     aiGenerated: true,
     sentenceMeaning: exercise.sentenceMeaning,
   };
+}
+
+function remapOptionsToSurface(
+  options: string[],
+  surface: string,
+  lemma: string,
+) {
+  const mapped = options.map((option) =>
+    optionLooksLikeLemma(option, lemma) &&
+    normalizeMeaningKey(option) !== normalizeMeaningKey(surface)
+      ? surface
+      : option,
+  );
+  if (
+    !mapped.some(
+      (option) => normalizeMeaningKey(option) === normalizeMeaningKey(surface),
+    )
+  ) {
+    mapped[0] = surface;
+  }
+  const unique: string[] = [];
+  for (const option of mapped) {
+    if (
+      unique.some(
+        (item) => normalizeMeaningKey(item) === normalizeMeaningKey(option),
+      )
+    ) {
+      continue;
+    }
+    unique.push(option);
+  }
+  return unique;
 }
 
 /** Show vocabulary meaning next to the Contextual blank (same cue as Fill Blank). */
@@ -169,28 +204,38 @@ export function contextualPromptWithMeaningHint(
 }
 
 /** Replace the contextual blank with the grammatical answer form. */
-export function fillContextualBlank(prompt: string, answerForm: string): string {
-  const form = applyAnswerFormCasing(prompt, answerForm);
-  if (prompt.includes("________")) {
-    return prompt.replace("________", form);
-  }
-  return prompt;
+export function fillContextualBlank(
+  prompt: string,
+  answerForm: string,
+): string {
+  const normalized = normalizePromptBlank(prompt);
+  const form = applyAnswerFormCasing(normalized, answerForm);
+  if (!normalized.includes(CONTEXTUAL_PROMPT_BLANK)) return prompt;
+  return normalized.replace(CONTEXTUAL_PROMPT_BLANK, form);
 }
 
-/** Capitalize only when the blank starts a sentence; otherwise lowercase the lead letter. */
-export function applyAnswerFormCasing(prompt: string, answerForm: string): string {
-  const form = answerForm.trim();
-  if (!form) return form;
+export { applyAnswerFormCasing };
 
-  const blankIndex = prompt.indexOf("________");
-  if (blankIndex < 0) return form;
-
-  const prefix = prompt.slice(0, blankIndex);
-  const atSentenceStart =
-    prefix.trim().length === 0 || /[.!?…]\s*$/u.test(prefix) || /\n\s*$/u.test(prefix);
-
-  if (atSentenceStart) {
-    return form.charAt(0).toLocaleUpperCase() + form.slice(1);
+/** User-facing option/review text: never revert the correct item to the lemma. */
+export function displayContextualOption(
+  question: MultipleChoiceQuestion,
+  option: string,
+): string {
+  if (question.direction !== "CONTEXTUAL") return option;
+  const surface = question.answerForm?.trim();
+  if (!surface) return option;
+  const lemma = question.baseWord ?? question.correctOption;
+  if (
+    normalizeMeaningKey(option) ===
+      normalizeMeaningKey(question.correctOption) ||
+    optionLooksLikeLemma(option, lemma)
+  ) {
+    return surface;
   }
-  return form.charAt(0).toLocaleLowerCase() + form.slice(1);
+  return option;
+}
+
+export function contextualSurfaceAnswer(question: MultipleChoiceQuestion) {
+  if (question.direction !== "CONTEXTUAL") return question.correctOption;
+  return question.answerForm?.trim() || question.correctOption;
 }

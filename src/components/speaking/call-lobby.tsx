@@ -90,7 +90,7 @@ export function CallLobby({
           type="button"
           onClick={onJoin}
           disabled={!canJoin}
-          className="inline-flex h-10 items-center gap-1.5 rounded-md bg-accent-lime px-4 text-sm font-bold uppercase tracking-[0.2px] text-ink hover:bg-accent-lime/90 disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex h-10 items-center gap-1.5 rounded-md bg-primary px-4 text-sm font-bold uppercase tracking-[0.2px] text-on-primary hover:bg-primary-hover disabled:cursor-not-allowed disabled:opacity-50"
         >
           {joining ? (
             <Loader2 className="size-4 animate-spin" />

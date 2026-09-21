@@ -9,7 +9,9 @@ import { buttonVariants } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
+  DropdownMenuGroup,
   DropdownMenuItem,
+  DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
@@ -19,14 +21,15 @@ import type { Workspace } from "@/db/schema";
 type WorkspaceActionsMenuProps = {
   workspace: Workspace;
   workspaces: Workspace[];
+  className?: string;
 };
 
 export function WorkspaceActionsMenu({
   workspace,
   workspaces,
+  className,
 }: WorkspaceActionsMenuProps) {
   const t = useTranslations("workspace");
-  const tc = useTranslations("common");
   const [editOpen, setEditOpen] = useState(false);
   const [deleteOpen, setDeleteOpen] = useState(false);
 
@@ -39,25 +42,31 @@ export function WorkspaceActionsMenu({
       <DropdownMenu>
         <DropdownMenuTrigger
           className={cn(
-            buttonVariants({ size: "sm", variant: "outline" }),
-            "shrink-0",
+            buttonVariants({ variant: "ghost" }),
+            "size-10 shrink-0 rounded-none px-0 text-muted-foreground hover:bg-transparent hover:text-ink",
+            className,
           )}
-          aria-label={t("manage")}
+          aria-label={t("manageNamed", { name: workspace.name })}
         >
           <MoreHorizontal className="size-4" />
         </DropdownMenuTrigger>
-        <DropdownMenuContent align="end" className="w-44">
+        <DropdownMenuContent align="end" className="w-56">
+          <DropdownMenuGroup>
+            <DropdownMenuLabel className="truncate font-normal text-muted-foreground">
+              {t("manageNamed", { name: workspace.name })}
+            </DropdownMenuLabel>
+          </DropdownMenuGroup>
+          <DropdownMenuSeparator />
           <DropdownMenuItem onClick={() => setEditOpen(true)}>
             <Pencil className="size-4" />
-            {tc("edit")}
+            {t("editAction")}
           </DropdownMenuItem>
-          <DropdownMenuSeparator />
           <DropdownMenuItem
             variant="destructive"
             onClick={() => setDeleteOpen(true)}
           >
             <Trash2 className="size-4" />
-            {tc("delete")}
+            {t("deleteAction")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>

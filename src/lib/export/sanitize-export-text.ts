@@ -1,5 +1,5 @@
 /**
- * Strip characters that Chakra Petch typically cannot render,
+ * Strip characters that IBM Plex Sans typically cannot render,
  * so PDF/DOCX exports do not show missing-glyph boxes.
  * Letters, numbers, punctuation, Vietnamese/Finnish Latin, and Thai are kept.
  */

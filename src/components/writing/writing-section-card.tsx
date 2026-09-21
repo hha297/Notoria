@@ -32,7 +32,9 @@ import {
 } from "@/components/writing/writing-question-card";
 import { Button } from "@/components/ui/button";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
+import qsStyles from "@/components/style/writing/question-set.module.css";
 import { useMounted } from "@/hooks/use-mounted";
+import { mx } from "@/lib/css-module";
 import type { WritingAiSuggestion } from "@/lib/writing/ai-types";
 import type { QuestionAiFeedbackMap } from "@/lib/writing/ai-question-feedback";
 import {
@@ -205,11 +207,11 @@ export function WritingSectionCard({
           aiSuggestions,
           onApplyAiSuggestion: onApplyAiSuggestion
             ? (suggestion: WritingAiSuggestion) =>
-                onApplyAiSuggestion(question.id, suggestion)
+              onApplyAiSuggestion(question.id, suggestion)
             : undefined,
           onSkipAiSuggestion: onSkipAiSuggestion
             ? (suggestionId: string) =>
-                onSkipAiSuggestion(question.id, suggestionId)
+              onSkipAiSuggestion(question.id, suggestionId)
             : undefined,
         };
 
@@ -246,8 +248,18 @@ export function WritingSectionCard({
   );
 
   return (
-    <div className="overflow-hidden rounded-2xl border border-hairline-cloud bg-card">
-      <div className="flex items-start gap-2.5 border-b border-hairline-cloud bg-muted/30 px-3 py-3.5 sm:gap-3 sm:px-4 sm:py-4">
+    <div
+      className={mx(
+        qsStyles,
+        "writing-qs-section overflow-hidden rounded-2xl border",
+      )}
+    >
+      <div
+        className={mx(
+          qsStyles,
+          "writing-qs-section-head flex items-start gap-2.5 border-b border-hairline-cloud px-4 py-4 sm:gap-3 sm:px-5 sm:py-5",
+        )}
+      >
         <div className="flex items-center gap-0.5 pt-2.5">
           {dragHandle}
           <button
@@ -298,7 +310,7 @@ export function WritingSectionCard({
       </div>
 
       {!collapsed && (
-        <div className="space-y-4 p-3 sm:p-4">
+        <div className="space-y-4 p-4 sm:p-5">
           {mounted ? (
             <DndContext
               id={`writing-section-questions-${section.id}`}

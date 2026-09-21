@@ -44,12 +44,12 @@ export function VocabularyRowActions({
 
   return (
     <>
-      <div className="flex justify-end gap-0.5">
+      <div className="flex justify-end gap-1">
         <Button
           type="button"
           variant="ghost"
           size="icon-sm"
-          className="text-muted-foreground hover:text-ink"
+          className="size-9 text-muted-foreground hover:text-ink"
           onClick={(event) => {
             event.preventDefault();
             event.stopPropagation();
@@ -57,14 +57,14 @@ export function VocabularyRowActions({
           }}
           disabled={isPending}
         >
-          <Pencil className="size-3.5" />
+          <Pencil className="size-4" />
           <span className="sr-only">{t("edit")}</span>
         </Button>
         <Button
           type="button"
           variant="ghost"
           size="icon-sm"
-          className="text-muted-foreground hover:text-ink"
+          className="size-9 text-muted-foreground hover:text-ink"
           onClick={(event) => {
             event.preventDefault();
             event.stopPropagation();
@@ -72,7 +72,7 @@ export function VocabularyRowActions({
           }}
           disabled={isPending}
         >
-          <Trash2 className="size-3.5" />
+          <Trash2 className="size-4" />
           <span className="sr-only">{t("delete")}</span>
         </Button>
       </div>

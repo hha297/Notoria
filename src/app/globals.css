@@ -6,12 +6,32 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+  /* Previous Notoria font
+     Kept for reference / rollback.
+     Do not delete unless explicitly requested.
+  */
+  /*
   --font-sans:
     var(--font-chakra-petch), -apple-system, system-ui, "Segoe UI", Helvetica,
     Arial, sans-serif;
   --font-heading: var(--font-vt323), var(--font-chakra-petch), sans-serif;
   --font-mono: Monaco, Menlo, "Ubuntu Mono", monospace;
+  */
 
+  --font-sans:
+    var(--font-ibm-plex-sans), "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  --font-heading:
+    var(--font-ibm-plex-sans), "IBM Plex Sans", Helvetica, Arial, sans-serif;
+  /* Previous OpenCode heading font:
+  --font-heading:
+    var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular,
+    Menlo, Monaco, monospace;
+  */
+  --font-mono:
+    var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular,
+    Menlo, Monaco, monospace;
+
+  /* Point at semantic CSS variables so .dark can retarget every utility. */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-card: var(--card);
@@ -20,6 +40,8 @@
   --color-popover-foreground: var(--popover-foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-active: var(--primary-active);
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
   --color-muted: var(--muted);
@@ -30,17 +52,36 @@
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
+  --color-link: var(--link);
 
   --color-ink: var(--ink);
   --color-ink-deep: var(--ink-deep);
+  --color-surface: var(--surface);
+  --color-surface-muted: var(--surface-muted);
+  --color-surface-elevated: var(--surface-elevated);
+  --color-surface-hover: var(--surface-hover);
+  --color-surface-active: var(--surface-active);
   --color-surface-night: var(--surface-night);
   --color-surface-canvas-dark: var(--surface-canvas-dark);
+  --color-surface-inverse: var(--surface-inverse);
+  --color-border-subtle: var(--border-subtle);
+  --color-foreground-muted: var(--foreground-muted);
   --color-accent-lime: var(--accent-lime);
+  --color-accent-soft: var(--accent-soft);
   --color-accent-violet-mid: var(--accent-violet-mid);
   --color-hairline-cloud: var(--hairline-cloud);
   --color-hairline-violet: var(--hairline-violet);
   --color-on-primary: var(--on-primary);
+  --color-on-inverse: var(--on-inverse);
+  --color-on-inverse-muted: var(--on-inverse-muted);
   --color-on-dark-muted: var(--on-dark-muted);
+  --color-success: var(--success);
+  --color-success-muted: var(--success-muted);
+  --color-success-border: var(--success-border);
+  --color-warning: var(--warning);
+  --color-error: var(--error);
+  --color-error-muted: var(--error-muted);
+  --color-error-border: var(--error-border);
 
   --color-sidebar: var(--sidebar);
   --color-sidebar-foreground: var(--sidebar-foreground);
@@ -51,13 +92,40 @@
   --color-sidebar-border: var(--sidebar-border);
   --color-sidebar-ring: var(--sidebar-ring);
 
-  --radius-sm: 6px;
-  --radius-md: 8px;
-  --radius-lg: 10px;
+  --color-module-vocab-bg: var(--module-vocab-bg);
+  --color-module-vocab-fg: var(--module-vocab-fg);
+  --color-module-exercise-bg: var(--module-exercise-bg);
+  --color-module-exercise-fg: var(--module-exercise-fg);
+  --color-module-writing-bg: var(--module-writing-bg);
+  --color-module-writing-fg: var(--module-writing-fg);
+  --color-module-theory-bg: var(--module-theory-bg);
+  --color-module-theory-fg: var(--module-theory-fg);
+  --color-module-listen-bg: var(--module-listen-bg);
+  --color-module-listen-fg: var(--module-listen-fg);
+  --color-module-speak-bg: var(--module-speak-bg);
+  --color-module-speak-fg: var(--module-speak-fg);
+  --color-module-home-bg: var(--module-home-bg);
+  --color-module-home-fg: var(--module-home-fg);
+  --color-module-guide-bg: var(--module-guide-bg);
+  --color-module-guide-fg: var(--module-guide-fg);
+  --color-module-account-bg: var(--module-account-bg);
+  --color-module-account-fg: var(--module-account-fg);
+  --color-module-settings-bg: var(--module-settings-bg);
+  --color-module-settings-fg: var(--module-settings-fg);
+
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 8px;
   --radius-xl: 12px;
-  --radius-2xl: 18px;
+  --radius-2xl: 16px;
+  --radius-pill: 9999px;
 }
 
+/* Previous Notoria font utilities.
+   Kept for reference / rollback.
+   Do not delete unless explicitly requested.
+*/
+/*
 @utility font-sans {
   font-family:
     var(--font-chakra-petch),
@@ -72,57 +140,195 @@
 @utility font-heading {
   font-family: var(--font-vt323), var(--font-chakra-petch), sans-serif;
 }
+*/
+
+/* Font families are defined in @theme --font-sans / --font-heading / --font-mono. */
 
 :root {
-  /* Brand */
-  --primary: #150f23;
-  --primary-foreground: #ffffff;
-  --ink: #1f1633;
-  --ink-deep: #1f1633;
-  --accent-lime: #8ebd18;
-  --accent-pink: #fa7faa;
-  --accent-violet-mid: #79628c;
-  --accent-violet-deep: #422082;
+  color-scheme: light;
 
-  /* Surfaces — light canvas for app content */
-  --background: #ffffff;
-  --foreground: #1f1633;
+  --primary: #f7a501;
+  --primary-foreground: #23251d;
+  --primary-hover: #dd9001;
+  --primary-active: #b17816;
+  --ink: #23251d;
+  --ink-deep: #23251d;
+  --accent-lime: #f7a501;
+  --accent-pink: #cd4239;
+  --accent-violet-mid: #6c6e63;
+  --accent-violet-deep: #b17816;
+  --accent-soft: #fde9b8;
+
+  --background: #eeefe9;
+  --foreground: #23251d;
+  --surface: #fcfcfa;
+  --surface-muted: #e5e7e0;
+  --surface-elevated: #ffffff;
+  --surface-hover: #e5e7e0;
+  --surface-active: #fde9b8;
   --card: #ffffff;
-  --card-foreground: #1f1633;
+  --card-foreground: #23251d;
   --popover: #ffffff;
-  --popover-foreground: #1f1633;
-  --surface-canvas-dark: #1f1633;
-  --surface-night: #150f23;
-  --on-primary: #ffffff;
-  --on-dark-muted: rgba(255, 255, 255, 0.72);
-  --on-dark-faint: rgba(255, 255, 255, 0.18);
+  --popover-foreground: #23251d;
+  --surface-canvas-dark: #23251d;
+  --surface-night: #23251d;
+  --surface-inverse: #23251d;
+  --on-primary: #23251d;
+  --on-inverse: #eeefe9;
+  --on-inverse-muted: #c5c6bd;
+  --on-dark-muted: #c5c6bd;
+  --on-dark-faint: rgba(35, 37, 29, 0.08);
+  --foreground-muted: #6c6e63;
+  --link: #1078a3;
 
-  /* UI */
-  --secondary: #f0f0f0;
-  --secondary-foreground: #1f1633;
-  --muted: #f0f0f0;
-  --muted-foreground: #79628c;
-  --accent: #f0f0f0;
-  --accent-foreground: #1f1633;
-  --destructive: #fa7faa;
-  --border: #e5e7eb;
-  --input: #cfcfdb;
-  --ring: rgba(59, 130, 246, 0.5);
-  --hairline-cloud: #e5e7eb;
-  --hairline-violet: #362d59;
-  --hairline-cool: #cfcfdb;
+  --secondary: #e5e7e0;
+  --secondary-foreground: #23251d;
+  --muted: #e5e7e0;
+  --muted-foreground: #6c6e63;
+  --accent: #e5e7e0;
+  --accent-foreground: #23251d;
+  --destructive: #cd4239;
+  --border: #bfc1b7;
+  --border-subtle: #dcdfd2;
+  --input: #bfc1b7;
+  --ring: #2c84e0;
+  --hairline-cloud: #bfc1b7;
+  --hairline-violet: #33342d;
+  --hairline-cool: #dcdfd2;
 
-  /* Dark sidebar shell */
-  --sidebar: #150f23;
-  --sidebar-foreground: #ffffff;
-  --sidebar-primary: #ffffff;
-  --sidebar-primary-foreground: #1f1633;
-  --sidebar-accent: rgba(255, 255, 255, 0.1);
-  --sidebar-accent-foreground: #ffffff;
-  --sidebar-border: #362d59;
-  --sidebar-ring: rgba(59, 130, 246, 0.5);
+  --success: #2c8c66;
+  --success-muted: #d9eddf;
+  --success-border: #2c8c66;
+  --warning: #b17816;
+  --error: #cd4239;
+  --error-muted: #f7d6d3;
+  --error-border: #cd4239;
 
-  --radius: 8px;
+  --sidebar: #ffffff;
+  --sidebar-foreground: #23251d;
+  --sidebar-primary: #f7a501;
+  --sidebar-primary-foreground: #23251d;
+  --sidebar-accent: #fde9b8;
+  --sidebar-accent-foreground: #23251d;
+  --sidebar-border: #bfc1b7;
+  --sidebar-ring: rgba(44, 132, 224, 0.5);
+
+  --module-vocab-bg: #e3f2e9;
+  --module-vocab-fg: #2c8c66;
+  --module-exercise-bg: #fde9b8;
+  --module-exercise-fg: #b17816;
+  --module-writing-bg: #fce8ef;
+  --module-writing-fg: #c73e66;
+  --module-theory-bg: #ebe6f8;
+  --module-theory-fg: #5c4aa8;
+  --module-listen-bg: #e4eef8;
+  --module-listen-fg: #2c84e0;
+  --module-speak-bg: #f8e6f2;
+  --module-speak-fg: #b44d86;
+  --module-home-bg: #dcefeb;
+  --module-home-fg: #2f7a72;
+  --module-guide-bg: #f3ebe3;
+  --module-guide-fg: #a86b45;
+  --module-account-bg: #e6eaed;
+  --module-account-fg: #5e6a72;
+  --module-settings-bg: #e8ebe4;
+  --module-settings-fg: #55615a;
+
+  --radius: 6px;
+  --control-h-sm: 2rem;
+  --control-h-md: 2.5rem;
+  --control-h-lg: 2.75rem;
+}
+
+.dark {
+  color-scheme: dark;
+
+  --primary: #f7a501;
+  --primary-foreground: #23251d;
+  --primary-hover: #dd9001;
+  --primary-active: #b17816;
+  --ink: #eeefe9;
+  --ink-deep: #151611;
+  --accent-lime: #f7a501;
+  --accent-pink: #e07a73;
+  --accent-violet-mid: #9b9c92;
+  --accent-violet-deep: #f7a501;
+  --accent-soft: #3d3420;
+
+  --background: #151611;
+  --foreground: #eeefe9;
+  --surface: #1c1d18;
+  --surface-muted: #2c2e26;
+  --surface-elevated: #23251d;
+  --surface-hover: #2c2e26;
+  --surface-active: #3d3420;
+  --card: #23251d;
+  --card-foreground: #eeefe9;
+  --popover: #2c2e26;
+  --popover-foreground: #eeefe9;
+  --surface-canvas-dark: #151611;
+  --surface-night: #151611;
+  --surface-inverse: #11120e;
+  --on-primary: #23251d;
+  --on-inverse: #eeefe9;
+  --on-inverse-muted: #c5c6bd;
+  --on-dark-muted: #9b9c92;
+  --on-dark-faint: rgba(238, 239, 233, 0.08);
+  --foreground-muted: #9b9c92;
+  --link: #7eb8d4;
+
+  --secondary: #2c2e26;
+  --secondary-foreground: #eeefe9;
+  --muted: #2c2e26;
+  --muted-foreground: #9b9c92;
+  --accent: #2c2e26;
+  --accent-foreground: #eeefe9;
+  --destructive: #e07a73;
+  --border: #4d4f46;
+  --border-subtle: #33342d;
+  --input: #4d4f46;
+  --ring: #2c84e0;
+  --hairline-cloud: #4d4f46;
+  --hairline-violet: #6c6e63;
+  --hairline-cool: #33342d;
+
+  --success: #5fb992;
+  --success-muted: #1e3328;
+  --success-border: #5fb992;
+  --warning: #f7a501;
+  --error: #e07a73;
+  --error-muted: #3a2422;
+  --error-border: #e07a73;
+
+  --sidebar: #23251d;
+  --sidebar-foreground: #eeefe9;
+  --sidebar-primary: #f7a501;
+  --sidebar-primary-foreground: #23251d;
+  --sidebar-accent: #3d3420;
+  --sidebar-accent-foreground: #eeefe9;
+  --sidebar-border: #4d4f46;
+  --sidebar-ring: rgba(44, 132, 224, 0.65);
+
+  --module-vocab-bg: #1e3328;
+  --module-vocab-fg: #7dcca8;
+  --module-exercise-bg: #3d3420;
+  --module-exercise-fg: #f7a501;
+  --module-writing-bg: #3a2430;
+  --module-writing-fg: #e87a9a;
+  --module-theory-bg: #2c2740;
+  --module-theory-fg: #b8a3e6;
+  --module-listen-bg: #243040;
+  --module-listen-fg: #7eb3ee;
+  --module-speak-bg: #3a2433;
+  --module-speak-fg: #e090bc;
+  --module-home-bg: #1e3331;
+  --module-home-fg: #7dccc4;
+  --module-guide-bg: #3a2c24;
+  --module-guide-fg: #d4a57a;
+  --module-account-bg: #2a3036;
+  --module-account-fg: #9aa8b4;
+  --module-settings-bg: #2c322e;
+  --module-settings-fg: #a8b4ac;
 }
 
 @layer base {
@@ -138,7 +344,6 @@
     @apply font-sans;
   }
 
-  /* All interactive controls should advertise clickability. */
   a[href],
   button:not(:disabled),
   [role="button"]:not([aria-disabled="true"]),
@@ -154,206 +359,2027 @@
 
 @layer components {
   .eyebrow {
-    @apply text-[15px] font-medium uppercase tracking-[0.2px] text-muted-foreground;
+    @apply text-xs font-bold uppercase tracking-[0.04em] text-muted-foreground;
   }
 
   .heading-xl {
-    @apply font-heading text-2xl font-medium leading-tight tracking-tight sm:text-[30px];
+    @apply font-heading text-[1.5rem] font-bold leading-[1.33] tracking-tight sm:text-2xl;
   }
 
   .heading-md {
-    @apply font-heading text-xl font-medium leading-tight sm:text-2xl;
-  }
-
-  .chip-lime {
-    @apply inline-block rounded-[4px] bg-accent-lime px-2 text-ink sm:px-3;
+    @apply font-heading text-lg font-semibold leading-snug sm:text-xl;
   }
 
   .card-surface {
-    @apply min-w-0 max-w-full rounded-xl border border-hairline-cloud bg-card p-4 text-ink shadow-none sm:p-6 md:p-8;
+    @apply min-w-0 max-w-full rounded-md border border-hairline-cloud bg-surface-elevated p-5 text-ink;
   }
 
-  .card-surface-dark {
-    @apply min-w-0 max-w-full rounded-[18px] border border-hairline-violet bg-ink-deep p-4 text-on-primary shadow-none sm:p-6 md:p-8;
+  .studio-shell {
+    background-color: var(--background);
+    background-image:
+      radial-gradient(
+        ellipse 52% 42% at 0% 0%,
+        color-mix(in oklab, var(--module-theory-bg) 42%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 46% 38% at 100% 0%,
+        color-mix(in oklab, var(--module-listen-bg) 34%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 40% 32% at 88% 100%,
+        color-mix(in oklab, var(--module-writing-bg) 28%, transparent),
+        transparent 72%
+      );
   }
 
-  .data-table {
-    @apply w-full min-w-0 max-w-full overflow-x-auto rounded-xl border border-hairline-cloud bg-card;
+  .studio-paper {
+    @apply min-w-0 rounded-2xl border border-hairline-cloud bg-surface-elevated text-ink shadow-[0_1px_2px_rgba(35,37,29,0.04)];
+    position: relative;
+    isolation: isolate;
   }
 
-  .data-table table {
-    @apply w-full border-collapse;
+  .studio-paper::before,
+  .studio-paper::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    -webkit-mask-image:
+      linear-gradient(
+        to right,
+        transparent 0%,
+        #000 2%,
+        #000 98%,
+        transparent 100%
+      ),
+      linear-gradient(
+        to bottom,
+        transparent 0%,
+        #000 3%,
+        #000 94%,
+        transparent 100%
+      );
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(
+        to right,
+        transparent 0%,
+        #000 2%,
+        #000 98%,
+        transparent 100%
+      ),
+      linear-gradient(
+        to bottom,
+        transparent 0%,
+        #000 3%,
+        #000 94%,
+        transparent 100%
+      );
+    mask-composite: intersect;
   }
 
-  .data-table thead {
-    @apply border-b border-hairline-cloud text-left;
+  .studio-paper::before {
+    background:
+      radial-gradient(
+        ellipse 58% 42% at 6% 0%,
+        color-mix(in oklab, var(--module-theory-bg) 58%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 48% 38% at 94% 4%,
+        color-mix(in oklab, var(--module-listen-bg) 48%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 42% 34% at 78% 100%,
+        color-mix(in oklab, var(--module-writing-bg) 40%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 38% 32% at 8% 88%,
+        color-mix(in oklab, var(--module-vocab-bg) 44%, transparent),
+        transparent 70%
+      );
   }
 
-  .data-table th {
-    @apply bg-muted/60 px-3 py-3 text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground sm:px-4 sm:text-sm;
+  .studio-paper[data-studio-scene="vocabulary"]::after {
+    background:
+      radial-gradient(
+        ellipse 62% 48% at 10% 12%,
+        color-mix(in oklab, var(--module-vocab-bg) 62%, transparent),
+        transparent 74%
+      ),
+      radial-gradient(
+        ellipse 44% 36% at 92% 8%,
+        color-mix(in oklab, var(--module-listen-bg) 36%, transparent),
+        transparent 70%
+      );
   }
 
-  .data-table td {
-    @apply border-t border-hairline-cloud px-3 py-3 text-sm sm:px-4;
+  .studio-paper[data-studio-scene="home"]::after {
+    background:
+      radial-gradient(
+        ellipse 64% 50% at 8% 10%,
+        color-mix(in oklab, var(--module-home-bg) 68%, transparent),
+        transparent 74%
+      ),
+      radial-gradient(
+        ellipse 42% 36% at 94% 6%,
+        color-mix(in oklab, var(--module-vocab-bg) 34%, transparent),
+        transparent 70%
+      );
   }
 
-  .data-table tbody tr {
-    @apply transition-colors hover:bg-muted/40;
+  .studio-paper[data-studio-scene="guide"]::after {
+    background:
+      radial-gradient(
+        ellipse 60% 48% at 10% 10%,
+        color-mix(in oklab, var(--module-guide-bg) 66%, transparent),
+        transparent 74%
+      ),
+      radial-gradient(
+        ellipse 40% 34% at 92% 8%,
+        color-mix(in oklab, var(--module-writing-bg) 30%, transparent),
+        transparent 70%
+      );
+  }
+
+  .studio-paper[data-studio-scene="account"]::after {
+    background:
+      radial-gradient(
+        ellipse 58% 46% at 10% 10%,
+        color-mix(in oklab, var(--module-account-bg) 64%, transparent),
+        transparent 74%
+      ),
+      radial-gradient(
+        ellipse 40% 34% at 92% 8%,
+        color-mix(in oklab, var(--module-listen-bg) 28%, transparent),
+        transparent 70%
+      );
+  }
+
+  .studio-paper[data-studio-scene="settings"]::after {
+    background:
+      radial-gradient(
+        ellipse 58% 46% at 10% 10%,
+        color-mix(in oklab, var(--module-settings-bg) 66%, transparent),
+        transparent 74%
+      ),
+      radial-gradient(
+        ellipse 40% 34% at 92% 8%,
+        color-mix(in oklab, var(--module-home-bg) 28%, transparent),
+        transparent 70%
+      );
+  }
+
+  .studio-paper[data-studio-scene="exercises"]::after {
+    background:
+      radial-gradient(
+        ellipse 56% 44% at 8% 8%,
+        color-mix(in oklab, var(--module-exercise-bg) 58%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 46% 38% at 92% 6%,
+        color-mix(in oklab, var(--module-theory-bg) 42%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 40% 32% at 70% 100%,
+        color-mix(in oklab, var(--module-writing-bg) 36%, transparent),
+        transparent 72%
+      );
+  }
+
+  .studio-paper[data-studio-scene="theory"]::after {
+    background:
+      radial-gradient(
+        ellipse 62% 48% at 8% 6%,
+        color-mix(in oklab, var(--module-theory-bg) 64%, transparent),
+        transparent 74%
+      ),
+      radial-gradient(
+        ellipse 44% 36% at 94% 10%,
+        color-mix(in oklab, var(--module-listen-bg) 38%, transparent),
+        transparent 70%
+      );
+  }
+
+  .studio-paper[data-studio-scene="writing"]::after {
+    background:
+      radial-gradient(
+        ellipse 60% 46% at 10% 8%,
+        color-mix(in oklab, var(--module-writing-bg) 60%, transparent),
+        transparent 74%
+      ),
+      radial-gradient(
+        ellipse 42% 34% at 90% 12%,
+        color-mix(in oklab, var(--module-exercise-bg) 34%, transparent),
+        transparent 70%
+      );
+  }
+
+  .studio-paper[data-studio-scene="listen"]::after {
+    background:
+      radial-gradient(
+        ellipse 60% 46% at 8% 8%,
+        color-mix(in oklab, var(--module-listen-bg) 60%, transparent),
+        transparent 74%
+      ),
+      radial-gradient(
+        ellipse 42% 34% at 92% 10%,
+        color-mix(in oklab, var(--module-vocab-bg) 32%, transparent),
+        transparent 70%
+      );
+  }
+
+  .studio-paper[data-studio-scene="speak"]::after {
+    background:
+      radial-gradient(
+        ellipse 60% 46% at 10% 8%,
+        color-mix(in oklab, var(--module-speak-bg) 60%, transparent),
+        transparent 74%
+      ),
+      radial-gradient(
+        ellipse 42% 34% at 90% 12%,
+        color-mix(in oklab, var(--module-theory-bg) 32%, transparent),
+        transparent 70%
+      );
+  }
+
+  .studio-paper > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .studio-chrome {
+    @apply border-b border-hairline-cloud text-ink;
+    background: color-mix(in oklab, var(--surface-elevated) 70%, transparent);
+    backdrop-filter: blur(18px);
   }
 
   .empty-state {
-    @apply flex flex-col items-center justify-center rounded-xl border border-dashed border-hairline-cloud bg-card px-4 py-10 text-center sm:px-10 sm:py-16;
+    @apply flex flex-col items-center justify-center rounded-md border border-dashed border-hairline-cloud bg-muted/60 px-4 py-10 text-center sm:px-8 sm:py-12;
   }
 
-  .sidebar-starfield {
-    background-color: var(--sidebar);
-    background-image:
+  .route-view-toggle,
+  .vocab-view-toggle {
+    --route-view-fg: var(--module-vocab-fg);
+    --route-view-bg: var(--module-vocab-bg);
+    height: 2.5rem;
+    flex-shrink: 0;
+    gap: 0.15rem;
+    padding: 0.2rem;
+    border-radius: 0.65rem;
+    border: 1px solid var(--hairline-cloud);
+    background: transparent;
+    box-shadow: none;
+  }
+
+  .route-view-toggle[data-variant="outline"],
+  .vocab-view-toggle[data-variant="outline"],
+  .route-view-toggle,
+  .vocab-view-toggle {
+    border-color: var(--hairline-cloud);
+  }
+
+  .route-view-toggle[data-route="exercise"] {
+    --route-view-fg: var(--module-exercise-fg);
+    --route-view-bg: var(--module-exercise-bg);
+  }
+
+  .route-view-toggle[data-route="theory"] {
+    --route-view-fg: var(--module-theory-fg);
+    --route-view-bg: var(--module-theory-bg);
+  }
+
+  .route-view-toggle[data-route="writing"] {
+    --route-view-fg: var(--module-writing-fg);
+    --route-view-bg: var(--module-writing-bg);
+  }
+
+  .route-view-toggle[data-route="listen"] {
+    --route-view-fg: var(--module-listen-fg);
+    --route-view-bg: var(--module-listen-bg);
+  }
+
+  .route-view-toggle-item,
+  .vocab-view-toggle-item {
+    width: 2.15rem;
+    height: 2.15rem;
+    padding: 0;
+    border: 0 !important;
+    border-radius: 0.5rem !important;
+    cursor: pointer;
+    color: var(--muted-foreground);
+    background: transparent;
+    box-shadow: none !important;
+  }
+
+  .route-view-toggle-item:hover,
+  .vocab-view-toggle-item:hover {
+    color: var(--route-view-fg);
+    background: var(--route-view-bg) !important;
+  }
+
+  .route-view-toggle-item[data-state="on"],
+  .route-view-toggle-item[data-pressed],
+  .vocab-view-toggle-item[data-state="on"],
+  .vocab-view-toggle-item[data-pressed] {
+    background: var(--route-view-bg) !important;
+    color: var(--route-view-fg) !important;
+    box-shadow: none !important;
+  }
+
+  .route-view-toggle-item[data-state="on"]:hover,
+  .route-view-toggle-item[data-pressed]:hover,
+  .vocab-view-toggle-item[data-state="on"]:hover,
+  .vocab-view-toggle-item[data-pressed]:hover {
+    background: var(--route-view-bg) !important;
+    color: var(--route-view-fg) !important;
+  }
+
+  [data-exercise] {
+    --exercise-accent: var(--module-exercise-fg);
+    --exercise-accent-soft: var(--module-exercise-bg);
+  }
+
+  [data-exercise="flashcard"] {
+    --exercise-accent: var(--module-exercise-fg);
+    --exercise-accent-soft: var(--module-exercise-bg);
+  }
+
+  [data-exercise="fill-in-blank"] {
+    --exercise-accent: var(--module-listen-fg);
+    --exercise-accent-soft: var(--module-listen-bg);
+  }
+
+  [data-exercise="multiple-choice"] {
+    --exercise-accent: var(--module-theory-fg);
+    --exercise-accent-soft: var(--module-theory-bg);
+  }
+
+  [data-exercise="match-pairs"] {
+    --exercise-accent: var(--module-vocab-fg);
+    --exercise-accent-soft: var(--module-vocab-bg);
+  }
+
+  [data-exercise="type-answer"] {
+    --exercise-accent: var(--module-writing-fg);
+    --exercise-accent-soft: var(--module-writing-bg);
+  }
+
+  [data-exercise="form-sentence"] {
+    --exercise-accent: var(--module-speak-fg);
+    --exercise-accent-soft: var(--module-speak-bg);
+  }
+
+  [data-exercise="import"] {
+    --exercise-accent: var(--module-exercise-fg);
+    --exercise-accent-soft: var(--module-exercise-bg);
+    --import-mode-fg: var(--module-exercise-fg);
+    --import-mode-bg: var(--module-exercise-bg);
+  }
+
+  [data-import-mode="image"],
+  [data-import-source="image"] {
+    --import-mode-fg: var(--module-writing-fg);
+    --import-mode-bg: var(--module-writing-bg);
+  }
+
+  [data-import-mode="file"],
+  [data-import-source="file"] {
+    --import-mode-fg: var(--module-theory-fg);
+    --import-mode-bg: var(--module-theory-bg);
+  }
+
+  [data-import-mode="url"],
+  [data-import-source="url"] {
+    --import-mode-fg: var(--module-listen-fg);
+    --import-mode-bg: var(--module-listen-bg);
+  }
+
+  [data-import-mode="text"],
+  [data-import-source="text"] {
+    --import-mode-fg: var(--module-vocab-fg);
+    --import-mode-bg: var(--module-vocab-bg);
+  }
+
+  .prose {
+    --tw-prose-body: #4d4f46;
+    --tw-prose-headings: var(--ink);
+    --tw-prose-lead: var(--muted-foreground);
+    --tw-prose-links: #1078a3;
+    --tw-prose-bold: var(--ink);
+    --tw-prose-counters: var(--muted-foreground);
+    --tw-prose-bullets: var(--muted-foreground);
+    --tw-prose-hr: var(--border);
+    --tw-prose-quotes: var(--ink);
+    --tw-prose-quote-borders: var(--primary);
+    --tw-prose-captions: var(--muted-foreground);
+    --tw-prose-code: var(--ink);
+    --tw-prose-pre-code: #eeefe9;
+    --tw-prose-pre-bg: #23251d;
+    --tw-prose-th-borders: var(--border);
+    --tw-prose-td-borders: var(--border);
+    --tw-prose-invert-body: #eeefe9;
+    --tw-prose-invert-headings: #eeefe9;
+    --tw-prose-invert-links: #f7a501;
+  }
+
+  .dark .prose {
+    --tw-prose-body: #c5c6bd;
+    --tw-prose-headings: #eeefe9;
+    --tw-prose-lead: #9b9c92;
+    --tw-prose-links: #7eb8d4;
+    --tw-prose-bold: #eeefe9;
+    --tw-prose-counters: #9b9c92;
+    --tw-prose-bullets: #9b9c92;
+    --tw-prose-hr: #4d4f46;
+    --tw-prose-quotes: #eeefe9;
+    --tw-prose-quote-borders: #f7a501;
+    --tw-prose-captions: #9b9c92;
+    --tw-prose-code: #eeefe9;
+    --tw-prose-pre-code: #eeefe9;
+    --tw-prose-pre-bg: #11120e;
+    --tw-prose-th-borders: #4d4f46;
+    --tw-prose-td-borders: #4d4f46;
+  }
+
+  .writing-atelier-shell,
+  .theory-atelier-shell,
+  .listening-atelier-shell,
+  .speaking-atelier-shell,
+  .vocab-lexicon-shell,
+  .writing-paper,
+  .theory-paper,
+  .listening-paper,
+  .speaking-paper,
+  .writing-sheet {
+    --writing-ink: var(--module-writing-fg);
+    --writing-wash: var(--module-writing-bg);
+    --writing-accent-fg: var(--module-writing-fg);
+    --writing-accent-bg: var(--module-writing-bg);
+  }
+
+  .theory-atelier-shell,
+  .theory-paper {
+    --writing-ink: var(--module-theory-fg);
+    --writing-wash: var(--module-theory-bg);
+    --writing-accent-fg: var(--module-theory-fg);
+    --writing-accent-bg: var(--module-theory-bg);
+  }
+
+  .listening-atelier-shell,
+  .listening-paper {
+    --writing-ink: var(--module-listen-fg);
+    --writing-wash: var(--module-listen-bg);
+    --writing-accent-fg: var(--module-listen-fg);
+    --writing-accent-bg: var(--module-listen-bg);
+  }
+
+  .speaking-atelier-shell,
+  .speaking-paper {
+    --writing-ink: var(--module-speak-fg);
+    --writing-wash: var(--module-speak-bg);
+    --writing-accent-fg: var(--module-speak-fg);
+    --writing-accent-bg: var(--module-speak-bg);
+  }
+
+  .guide-atelier-shell {
+    --writing-ink: var(--module-guide-fg);
+    --writing-wash: var(--module-guide-bg);
+    --writing-accent-fg: var(--module-guide-fg);
+    --writing-accent-bg: var(--module-guide-bg);
+  }
+
+  .account-atelier-shell {
+    --writing-ink: var(--module-account-fg);
+    --writing-wash: var(--module-account-bg);
+    --writing-accent-fg: var(--module-account-fg);
+    --writing-accent-bg: var(--module-account-bg);
+  }
+
+  .settings-atelier-shell {
+    --writing-ink: var(--module-settings-fg);
+    --writing-wash: var(--module-settings-bg);
+    --writing-accent-fg: var(--module-settings-fg);
+    --writing-accent-bg: var(--module-settings-bg);
+  }
+
+  .vocab-lexicon-shell {
+    --writing-ink: var(--module-vocab-fg);
+    --writing-wash: var(--module-vocab-bg);
+    --writing-accent-fg: var(--module-vocab-fg);
+    --writing-accent-bg: var(--module-vocab-bg);
+  }
+
+  .writing-atelier,
+  .theory-atelier,
+  .listening-atelier,
+  .speaking-atelier,
+  .guide-atelier,
+  .account-atelier,
+  .settings-atelier,
+  .vocab-lexicon,
+  .writing-paper-page,
+  .writing-sheet,
+  .writing-feature,
+  .writing-empty-desk {
+    position: relative;
+    isolation: isolate;
+    overflow: visible;
+  }
+
+  .writing-atelier::before,
+  .theory-atelier::before,
+  .listening-atelier::before,
+  .speaking-atelier::before,
+  .guide-atelier::before,
+  .account-atelier::before,
+  .settings-atelier::before,
+  .vocab-lexicon::before,
+  .writing-paper-page::before,
+  .writing-sheet::before,
+  .writing-feature::before,
+  .writing-empty-desk::before {
+    content: "";
+    position: absolute;
+    inset: -18% -32% 0;
+    z-index: 0;
+    pointer-events: none;
+    -webkit-mask-image:
+      linear-gradient(
+        to right,
+        transparent 0%,
+        #000 6%,
+        #000 94%,
+        transparent 100%
+      ),
+      linear-gradient(
+        to bottom,
+        transparent 0%,
+        #000 10%,
+        #000 88%,
+        transparent 100%
+      );
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(
+        to right,
+        transparent 0%,
+        #000 6%,
+        #000 94%,
+        transparent 100%
+      ),
+      linear-gradient(
+        to bottom,
+        transparent 0%,
+        #000 10%,
+        #000 88%,
+        transparent 100%
+      );
+    mask-composite: intersect;
+  }
+
+  .writing-atelier::before,
+  .writing-sheet::before {
+    background:
       radial-gradient(
-        circle at 20% 30%,
-        rgba(255, 255, 255, 0.06) 0 1px,
-        transparent 1px
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--module-writing-bg) 62%, transparent),
+        transparent 72%
       ),
       radial-gradient(
-        circle at 70% 60%,
-        rgba(255, 255, 255, 0.04) 0 1px,
-        transparent 1px
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-theory-bg) 28%, transparent),
+        transparent 70%
       );
-    background-size:
-      120px 120px,
-      180px 180px;
   }
-}
 
-/* TipTap editor */
-.tiptap p.is-editor-empty:first-child::before {
-  color: var(--muted-foreground);
-  content: attr(data-placeholder);
-  float: left;
-  height: 0;
-  pointer-events: none;
-}
+  .writing-sheet[data-writing-kind="question_set"]::before {
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--module-theory-bg) 68%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-writing-bg) 26%, transparent),
+        transparent 70%
+      );
+  }
 
-.tiptap .heading-collapse-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.1em;
-  height: 1.1em;
-  margin-right: 0.2rem;
-  padding: 0;
-  border: 0;
-  border-radius: 0.25rem;
-  background: transparent;
-  color: var(--muted-foreground);
-  font-size: 0.75em;
-  line-height: 1;
-  vertical-align: middle;
-  cursor: pointer;
-  user-select: none;
-}
+  .theory-sheet::before {
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--theory-cat-bg) 68%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-theory-bg) 28%, transparent),
+        transparent 70%
+      );
+  }
 
-.tiptap .heading-collapse-btn:hover {
-  color: var(--foreground);
-  background: color-mix(in oklab, var(--foreground) 8%, transparent);
-}
+  .theory-atelier::before {
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--module-theory-bg) 68%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-writing-bg) 26%, transparent),
+        transparent 70%
+      );
+  }
 
-.tiptap .heading-collapse-hidden {
-  display: none !important;
-}
+  .listening-atelier::before {
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--module-listen-bg) 72%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-vocab-bg) 24%, transparent),
+        transparent 70%
+      );
+  }
 
-.prose .heading-collapse-btn {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 1.1em;
-  height: 1.1em;
-  margin-right: 0.35rem;
-  padding: 0;
-  border: 0;
-  border-radius: 0.25rem;
-  background: transparent;
-  color: var(--muted-foreground);
-  font-size: 0.75em;
-  line-height: 1;
-  vertical-align: middle;
-  cursor: pointer;
-  user-select: none;
-}
+  .speaking-atelier::before {
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--module-speak-bg) 72%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-theory-bg) 24%, transparent),
+        transparent 70%
+      );
+  }
 
-.prose .heading-collapse-btn:hover {
-  color: var(--foreground);
-  background: color-mix(in oklab, var(--foreground) 8%, transparent);
-}
+  .vocab-lexicon::before {
+    background:
+      radial-gradient(
+        ellipse 72% 58% at 6% 6%,
+        color-mix(in oklab, var(--module-vocab-bg) 72%, transparent),
+        transparent 74%
+      ),
+      radial-gradient(
+        ellipse 42% 38% at 94% 8%,
+        color-mix(in oklab, var(--module-listen-bg) 22%, transparent),
+        transparent 70%
+      );
+  }
 
-.tiptap table {
-  border-collapse: collapse;
-  margin: 1rem 0;
-  width: 100%;
-}
+  .guide-atelier::before {
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--module-guide-bg) 72%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-writing-bg) 22%, transparent),
+        transparent 70%
+      );
+  }
 
-.tiptap th,
-.tiptap td {
-  border: 1px solid var(--hairline-cloud);
-  min-width: 80px;
-  padding: 0.5rem 0.75rem;
-}
+  .account-atelier::before {
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--module-account-bg) 72%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-guide-bg) 20%, transparent),
+        transparent 70%
+      );
+  }
 
-.tiptap th {
-  background: #f0f0f0;
-  font-weight: 600;
-}
+  .settings-atelier::before {
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--module-settings-bg) 72%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-home-bg) 22%, transparent),
+        transparent 70%
+      );
+  }
 
-.tiptap ul[data-type="taskList"] {
-  list-style: none;
-  padding-left: 0;
-}
+  .writing-feature::before,
+  .writing-empty-desk::before,
+  .writing-paper-page::before {
+    background: radial-gradient(
+      ellipse 80% 70% at 12% 18%,
+      color-mix(in oklab, var(--module-writing-bg) 70%, transparent),
+      transparent 74%
+    );
+  }
 
-.tiptap ul[data-type="taskList"] li {
-  align-items: flex-start;
-  display: flex;
-  gap: 0.5rem;
-}
+  .theory-paper .writing-paper-page::before {
+    background: radial-gradient(
+      ellipse 80% 70% at 12% 18%,
+      color-mix(in oklab, var(--module-theory-bg) 74%, transparent),
+      transparent 74%
+    );
+  }
 
-.tiptap ul[data-type="taskList"] li > label {
-  margin-top: 0.2rem;
-}
+  .listening-paper .writing-paper-page::before {
+    background: radial-gradient(
+      ellipse 80% 70% at 12% 18%,
+      color-mix(in oklab, var(--module-listen-bg) 74%, transparent),
+      transparent 74%
+    );
+  }
 
-.tiptap code {
-  font-family: var(--font-mono);
-}
+  .speaking-paper .writing-paper-page::before {
+    background: radial-gradient(
+      ellipse 80% 70% at 12% 18%,
+      color-mix(in oklab, var(--module-speak-bg) 74%, transparent),
+      transparent 74%
+    );
+  }
 
-.tiptap pre {
-  background: var(--surface-night);
-  border-radius: 8px;
-  color: var(--on-primary);
-  font-family: var(--font-mono);
-  padding: 1rem;
-}
+  .writing-atelier > *,
+  .theory-atelier > *,
+  .listening-atelier > *,
+  .speaking-atelier > *,
+  .guide-atelier > *,
+  .account-atelier > *,
+  .settings-atelier > *,
+  .vocab-lexicon > *,
+  .writing-paper-page > *,
+  .writing-sheet > *,
+  .writing-feature > *,
+  .writing-empty-desk > * {
+    position: relative;
+    z-index: 1;
+  }
 
-@keyframes tutorial-pulse {
-  0%,
-  100% {
+  .writing-atelier {
+    min-width: 0;
+    overflow: visible;
+  }
+
+  .theory-atelier {
+    min-width: 0;
+    overflow: visible;
+    --theory-cat-fg: var(--module-theory-fg);
+    --theory-cat-bg: var(--module-theory-bg);
+  }
+
+  .listening-atelier,
+  .speaking-atelier {
+    min-width: 0;
+    overflow: visible;
+  }
+
+  .vocab-lexicon {
+    min-width: 0;
+    overflow: visible;
+  }
+
+  .vocab-lexicon.writing-atelier {
+    overflow: visible;
+  }
+
+  .route-atelier {
+    position: relative;
+    isolation: isolate;
+    min-width: 0;
+    overflow: visible;
+  }
+
+  .route-atelier::before {
+    content: "";
+    position: absolute;
+    inset: -18% -32% 0;
+    z-index: 0;
+    pointer-events: none;
+    background:
+      radial-gradient(
+        ellipse 72% 56% at 6% 6%,
+        color-mix(in oklab, var(--route-wash-bg) 72%, transparent),
+        transparent 74%
+      ),
+      radial-gradient(
+        ellipse 42% 36% at 94% 8%,
+        color-mix(in oklab, var(--route-wash-alt) 30%, transparent),
+        transparent 70%
+      );
+    -webkit-mask-image:
+      linear-gradient(to right, transparent, #000 6%, #000 94%, transparent),
+      linear-gradient(to bottom, transparent, #000 10%, #000 88%, transparent);
+    -webkit-mask-composite: source-in;
+    mask-image:
+      linear-gradient(to right, transparent, #000 6%, #000 94%, transparent),
+      linear-gradient(to bottom, transparent, #000 10%, #000 88%, transparent);
+    mask-composite: intersect;
+  }
+
+  .route-atelier > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .route-atelier[data-route="exercises"] {
+    --route-wash-bg: var(--module-exercise-bg);
+    --route-wash-alt: var(--module-theory-bg);
+  }
+
+  .route-quiet-action {
+    --route-action-fg: var(--module-home-fg);
+    --route-action-bg: var(--module-home-bg);
+    border: 1px solid var(--hairline-cloud) !important;
+    background: transparent !important;
+    color: var(--ink) !important;
+    box-shadow: none !important;
+  }
+
+  .route-quiet-action:hover:not(:disabled) {
+    border-color: color-mix(
+      in oklab,
+      var(--route-action-fg) 48%,
+      var(--hairline-cloud)
+    ) !important;
+    background: var(--route-action-bg) !important;
+    color: var(--route-action-fg) !important;
+  }
+
+  .route-quiet-action[data-route-action="theory"] {
+    --route-action-fg: var(--module-theory-fg);
+    --route-action-bg: var(--module-theory-bg);
+  }
+
+  .route-quiet-action[data-route-action="writing"] {
+    --route-action-fg: var(--module-writing-fg);
+    --route-action-bg: var(--module-writing-bg);
+  }
+
+  .route-quiet-action[data-route-action="vocab"] {
+    --route-action-fg: var(--module-vocab-fg);
+    --route-action-bg: var(--module-vocab-bg);
+  }
+
+  .route-quiet-action[data-route-action="exercise"] {
+    --route-action-fg: var(--module-exercise-fg);
+    --route-action-bg: var(--module-exercise-bg);
+  }
+
+  .route-quiet-action[data-route-action="listen"] {
+    --route-action-fg: var(--module-listen-fg);
+    --route-action-bg: var(--module-listen-bg);
+  }
+
+  .route-quiet-action[data-route-action="speak"] {
+    --route-action-fg: var(--module-speak-fg);
+    --route-action-bg: var(--module-speak-bg);
+  }
+
+  .route-quiet-action[data-route-action="account"] {
+    --route-action-fg: var(--module-account-fg);
+    --route-action-bg: var(--module-account-bg);
+  }
+
+  .route-quiet-action[data-route-action="settings"] {
+    --route-action-fg: var(--module-settings-fg);
+    --route-action-bg: var(--module-settings-bg);
+  }
+
+  .theory-sheet,
+  .theory-paper {
+    --theory-cat-fg: var(--module-theory-fg);
+    --theory-cat-bg: var(--module-theory-bg);
+  }
+
+  [data-theory-category="grammar"] {
+    --theory-cat-fg: var(--module-theory-fg);
+    --theory-cat-bg: var(--module-theory-bg);
+  }
+
+  [data-theory-category="vocabulary"] {
+    --theory-cat-fg: var(--module-vocab-fg);
+    --theory-cat-bg: var(--module-vocab-bg);
+  }
+
+  [data-theory-category="pronunciation"] {
+    --theory-cat-fg: var(--module-listen-fg);
+    --theory-cat-bg: var(--module-listen-bg);
+  }
+
+  [data-theory-category="writing"] {
+    --theory-cat-fg: var(--module-writing-fg);
+    --theory-cat-bg: var(--module-writing-bg);
+  }
+
+  [data-theory-category="communication"] {
+    --theory-cat-fg: var(--module-speak-fg);
+    --theory-cat-bg: var(--module-speak-bg);
+  }
+
+  [data-theory-category="usage"] {
+    --theory-cat-fg: var(--module-exercise-fg);
+    --theory-cat-bg: var(--module-exercise-bg);
+  }
+
+  [data-theory-category="culture"] {
+    --theory-cat-fg: color-mix(
+      in oklab,
+      var(--module-listen-fg) 42%,
+      var(--module-vocab-fg)
+    );
+    --theory-cat-bg: color-mix(
+      in oklab,
+      var(--module-listen-bg) 50%,
+      var(--module-vocab-bg)
+    );
+  }
+
+  .writing-atelier-empty {
+    min-width: 0;
+  }
+
+  .writing-atelier-rule {
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--module-writing-fg) 18%,
+      var(--module-theory-fg) 48%,
+      var(--warning) 82%,
+      transparent 100%
+    );
+    box-shadow: none;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 14%,
+      #000 86%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 14%,
+      #000 86%,
+      transparent 100%
+    );
+    filter: drop-shadow(
+      0 0 6px color-mix(in oklab, var(--module-writing-fg) 42%, transparent)
+    );
+  }
+
+  .theory-atelier-rule {
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      var(--module-theory-fg) 18%,
+      var(--module-writing-fg) 52%,
+      var(--warning) 82%,
+      transparent 100%
+    );
+    filter: drop-shadow(
+      0 0 6px color-mix(in oklab, var(--module-theory-fg) 42%, transparent)
+    );
+  }
+
+  .vocab-lexicon-rule {
+    position: relative;
+    height: 1px;
+    width: auto;
+    margin-inline: -1rem;
+    border: 0;
+    border-radius: 0;
+    background: linear-gradient(
+      90deg,
+      transparent 0%,
+      color-mix(in oklab, var(--module-vocab-fg) 12%, transparent) 8%,
+      color-mix(in oklab, var(--module-vocab-fg) 55%, transparent) 28%,
+      color-mix(
+          in oklab,
+          var(--module-vocab-fg) 38%,
+          color-mix(in oklab, var(--primary) 40%, transparent)
+        )
+        50%,
+      color-mix(in oklab, var(--module-listen-fg) 42%, transparent) 72%,
+      transparent 100%
+    );
+    box-shadow: none;
+    -webkit-mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 16%,
+      #000 84%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      90deg,
+      transparent 0%,
+      #000 16%,
+      #000 84%,
+      transparent 100%
+    );
+    filter: blur(0.45px);
+  }
+
+  .vocab-lexicon-rule::after {
+    content: "";
+    position: absolute;
+    inset: -6px 0;
+    background: inherit;
+    -webkit-mask-image: inherit;
+    mask-image: inherit;
+    filter: blur(7px);
+    opacity: 0.55;
+    pointer-events: none;
+  }
+
+  @media (min-width: 640px) {
+    .vocab-lexicon-rule {
+      margin-inline: -1.5rem;
+    }
+  }
+
+  .listening-atelier .writing-spine-search {
+    border-bottom-color: color-mix(
+      in oklab,
+      var(--module-listen-fg) 38%,
+      transparent
+    ) !important;
+  }
+
+  .listening-atelier .writing-spine-search:focus-visible {
+    border-bottom-color: var(--module-listen-fg) !important;
+  }
+
+  .speaking-atelier .writing-spine-search {
+    border-bottom-color: color-mix(
+      in oklab,
+      var(--module-speak-fg) 38%,
+      transparent
+    ) !important;
+  }
+
+  .speaking-atelier .writing-spine-search:focus-visible {
+    border-bottom-color: var(--module-speak-fg) !important;
+  }
+
+  .vocab-lexicon .writing-kicker {
+    color: var(--module-vocab-fg);
+  }
+
+  .vocab-lexicon .writing-chip {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 24%,
+      var(--hairline-cloud)
+    );
+    background: color-mix(in oklab, var(--module-vocab-bg) 22%, transparent);
+    color: color-mix(in oklab, var(--ink) 72%, var(--muted-foreground));
+  }
+
+  .vocab-lexicon .writing-chip:hover {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 42%,
+      var(--hairline-cloud)
+    );
+    background: color-mix(in oklab, var(--module-vocab-bg) 38%, transparent);
+    color: var(--module-vocab-fg);
+  }
+
+  .vocab-lexicon .writing-chip.is-active {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 55%,
+      var(--hairline-cloud)
+    );
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 68%,
+      var(--surface-elevated)
+    );
+    color: var(--module-vocab-fg);
+    box-shadow: 0 0 0 1px
+      color-mix(in oklab, var(--module-vocab-fg) 16%, transparent);
+  }
+
+  .vocab-lexicon .writing-spine-search {
+    border-bottom-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 38%,
+      transparent
+    ) !important;
+  }
+
+  .vocab-lexicon .writing-spine-search:focus-visible {
+    border-bottom-color: var(--module-vocab-fg) !important;
+    box-shadow: none !important;
+  }
+
+  .theory-atelier .writing-kicker,
+  .theory-paper .writing-kicker,
+  .theory-sheet .writing-kicker {
+    color: var(--theory-cat-fg);
+  }
+
+  .theory-atelier .writing-chapter-title {
+    color: var(--theory-cat-fg);
+  }
+
+  .theory-atelier .writing-spine-search {
+    border-bottom-color: color-mix(
+      in oklab,
+      var(--module-theory-fg) 38%,
+      transparent
+    ) !important;
+  }
+
+  .theory-atelier .writing-spine-search:focus-visible {
+    border-bottom-color: var(--module-theory-fg) !important;
+  }
+
+  .theory-atelier .writing-entry:hover .writing-entry-title,
+  .theory-atelier .writing-entry:focus-within .writing-entry-title {
+    color: var(--theory-cat-fg);
+  }
+
+  .theory-paper .writing-paper-body {
+    border-top-color: color-mix(
+      in oklab,
+      var(--theory-cat-fg) 22%,
+      transparent
+    );
+  }
+
+  .theory-paper .writing-back:hover,
+  .theory-sheet .writing-back:hover {
+    color: var(--theory-cat-fg);
+  }
+
+  .writing-kicker {
+    margin: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--writing-ink, var(--module-writing-fg));
+  }
+
+  .writing-hero {
+    display: grid;
+    width: 100%;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 1.35rem 2rem;
+    align-items: start;
+  }
+
+  .writing-hero-copy {
+    min-width: 0;
+  }
+
+  .writing-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin: 0;
+  }
+
+  .writing-brand-title {
+    margin: 0.55rem 0 0;
+    font-family: var(--font-heading);
+    font-size: clamp(2.35rem, 5.2vw, 3.45rem);
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.05;
+    color: var(--ink);
+  }
+
+  .writing-brand-lede {
+    max-width: 40rem;
+    margin-top: 0.85rem;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    color: var(--muted-foreground);
+  }
+
+  .writing-workspace {
+    display: flex;
+    flex-direction: column;
+    gap: 1.15rem;
+    min-width: 0;
+  }
+
+  .writing-spine {
+    display: flex;
+    flex-direction: column;
+    gap: 0.85rem;
+    min-width: 0;
+  }
+
+  .writing-spine-label {
+    font-size: 0.68rem;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+  }
+
+  .writing-collections {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+    min-width: 0;
+    padding-top: 0;
+  }
+
+  .writing-collections-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.75rem min(1.5rem, 4vw);
+  }
+
+  .writing-collections-head .writing-spine-folder {
+    align-self: center;
+    height: 2rem;
+    padding-inline: 0.75rem;
+  }
+
+  .writing-collection-list {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: stretch;
+    gap: 0.45rem;
+    min-width: 0;
+  }
+
+  .writing-collection-root,
+  .writing-collection-open {
+    display: flex;
+    width: 100%;
+    min-width: 0;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem;
+    padding: 0.4rem 0;
+    border: 0;
+    background: transparent;
+    text-align: left;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .writing-collection-root {
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+    padding-inline: 0.15rem;
+  }
+
+  .writing-collection-item {
+    display: flex;
+    width: auto;
+    min-width: 14.5rem;
+    max-width: 100%;
+    align-items: center;
+    gap: 0.45rem;
+    padding: 0.55rem 0.6rem 0.55rem 0.65rem;
+    border: 1px solid color-mix(in oklab, var(--writing-ink) 28%, transparent);
+    border-radius: 0.35rem;
+    background: transparent;
+  }
+
+  .writing-collection-item:hover,
+  .writing-collection-item:focus-within {
+    border-color: color-mix(in oklab, var(--writing-ink) 52%, transparent);
+    background: color-mix(in oklab, var(--writing-wash) 52%, transparent);
+  }
+
+  .writing-collection-item:hover .writing-collection-name,
+  .writing-collection-item:focus-within .writing-collection-name {
+    color: var(--writing-ink);
+  }
+
+  .writing-collection-open {
+    padding: 0;
+    flex: 1;
+    justify-content: flex-start;
+    border-radius: 0.3rem;
+  }
+
+  .writing-collection-open:hover,
+  .writing-collection-open:focus-visible {
+    background: color-mix(in oklab, var(--writing-wash) 42%, transparent);
+  }
+
+  .writing-collection-icon {
+    display: flex;
+    width: 2.5rem;
+    height: 2.5rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid color-mix(in oklab, var(--writing-ink) 28%, transparent);
+    border-radius: 0.3rem;
+    background: transparent;
+    color: var(--writing-ink);
+  }
+
+  .writing-collection-icon svg {
+    fill: var(--writing-wash);
+    stroke: var(--writing-ink);
+  }
+
+  .writing-collection-copy {
+    display: flex;
+    min-width: 0;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.05rem;
+  }
+
+  .writing-collection-name {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .writing-collection-count {
+    flex-shrink: 0;
+    font-size: 0.75rem;
+    color: var(--muted-foreground);
+  }
+
+  .writing-collection-root.is-current,
+  .writing-collection-item.is-current .writing-collection-name {
+    color: var(--writing-ink);
+  }
+
+  .writing-collection-item.is-current {
+    border-color: color-mix(in oklab, var(--writing-ink) 48%, transparent);
+    background: color-mix(in oklab, var(--writing-wash) 42%, transparent);
+  }
+
+  .writing-collection-item.is-over {
+    box-shadow: 0 0 0 2px var(--accent-lime);
+  }
+
+  .writing-spine-folder {
+    align-self: flex-start;
+    padding-inline: 0;
+  }
+
+  .writing-spine-search-wrap {
+    position: relative;
+    min-width: 0;
+    width: 100%;
+  }
+
+  .writing-spine-search-icon {
+    pointer-events: none;
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 1rem;
+    height: 1rem;
+    transform: translateY(-50%);
+    color: var(--muted-foreground);
+  }
+
+  .writing-spine-search {
+    border: 0 !important;
+    border-bottom: 1px solid
+      color-mix(in oklab, var(--module-writing-fg) 22%, transparent) !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    padding-left: 1.6rem !important;
+  }
+
+  .writing-spine-search:focus-visible {
+    border-bottom-color: var(--module-writing-fg) !important;
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  .writing-spine-tools {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.85rem;
+  }
+
+  .writing-workspace .writing-spine-search-wrap {
+    flex: none;
+    width: 100%;
+    min-width: 0;
+    max-width: none;
+  }
+
+  .writing-refine.writing-sheet-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+    width: 100%;
+  }
+
+  .writing-feature {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.75rem 1rem;
+    padding: 0.25rem 0 0.5rem;
+  }
+
+  .writing-feature-title {
+    margin: 0.15rem 0 0;
+    font-family: var(--font-heading);
+    font-size: clamp(2rem, 4.6vw, 3.35rem);
+    font-weight: 700;
+    line-height: 1.08;
+    letter-spacing: -0.04em;
+    color: var(--ink);
+  }
+
+  .writing-feature-title a,
+  .writing-entry-title a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  .writing-feature-excerpt,
+  .writing-entry-excerpt {
+    margin-top: 0.45rem;
+    max-width: 38rem;
+    font-size: 1.05rem;
+    line-height: 1.7;
+    color: var(--muted-foreground);
+  }
+
+  .writing-kind-facts {
+    margin-top: 0.45rem;
+    font-size: 0.8rem;
+    color: var(--muted-foreground);
+  }
+
+  .writing-open-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    margin-top: 1.15rem;
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: var(--module-writing-fg);
+    text-decoration: none;
+  }
+
+  .writing-open-link:hover,
+  .writing-open-link:focus-visible {
+    text-decoration: underline;
+    text-underline-offset: 0.18em;
+  }
+
+  .writing-empty-desk {
+    max-width: 36rem;
+    padding: 0.25rem 0 1rem;
+  }
+
+  .writing-empty-title {
+    margin: 0.15rem 0 0;
+    font-family: var(--font-heading);
+    font-size: clamp(1.8rem, 3.6vw, 2.6rem);
+    font-weight: 700;
+    letter-spacing: -0.03em;
+    line-height: 1.15;
+    color: var(--ink);
+  }
+
+  .writing-empty-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 1.25rem;
+  }
+
+  .writing-stage-empty {
+    padding: 0.75rem 0 1rem;
+    color: var(--muted-foreground);
+  }
+
+  .writing-stage-kicker {
+    margin-bottom: 1.35rem;
+  }
+
+  .writing-chapter {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-radius: 0;
+    background: none;
+    box-shadow: none;
+  }
+
+  .writing-chapter + .writing-chapter {
+    margin-top: 2.75rem;
+  }
+
+  .writing-chapter-title {
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    gap: 0.4rem;
+    margin: 0 0 0.35rem;
+    padding: 0;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted-foreground);
+    border: 0;
+    border-radius: 0;
+    background: none;
+  }
+
+  .writing-chapter[data-writing-kind="rich_document"] .writing-chapter-title {
+    color: var(--module-writing-fg);
+  }
+
+  .writing-chapter[data-writing-kind="question_set"] .writing-chapter-title {
+    color: var(--module-theory-fg);
+  }
+
+  .writing-entry-wrap + .writing-entry-wrap {
+    border-top: 1px solid
+      color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+  }
+
+  .writing-entry {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.35rem 1.25rem;
+    padding: 1.25rem 0 1.25rem 1.2rem;
+    border: 0;
+    background: transparent;
+  }
+
+  .writing-entry::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    top: 1.4rem;
+    bottom: 1.4rem;
+    width: 3px;
+    border-radius: 999px;
+    background: var(--module-writing-fg);
+    box-shadow: 0 0 12px
+      color-mix(in oklab, var(--module-writing-fg) 42%, transparent);
+  }
+
+  .writing-entry[data-writing-kind="question_set"]::before {
+    background: var(--module-theory-fg);
+    box-shadow: 0 0 12px
+      color-mix(in oklab, var(--module-theory-fg) 42%, transparent);
+  }
+
+  .writing-entry:not([data-writing-kind])::before {
+    background: color-mix(in oklab, var(--muted-foreground) 48%, transparent);
+    box-shadow: none;
+  }
+
+  .writing-atelier .writing-entry-wrap + .writing-entry-wrap {
+    border-top-color: color-mix(
+      in oklab,
+      var(--module-writing-fg) 26%,
+      transparent
+    );
+  }
+
+  .theory-atelier .writing-entry::before,
+  .theory-atelier .writing-entry:not([data-writing-kind])::before {
+    width: 3px;
+    background: var(--theory-cat-fg);
+    box-shadow: 0 0 12px
+      color-mix(in oklab, var(--theory-cat-fg) 42%, transparent);
+  }
+
+  .theory-atelier .writing-entry-wrap + .writing-entry-wrap {
+    border-top-color: color-mix(
+      in oklab,
+      var(--theory-cat-fg) 26%,
+      transparent
+    );
+  }
+
+  .listening-atelier .writing-entry::before,
+  .listening-atelier .writing-entry:not([data-writing-kind])::before {
+    background: var(--module-listen-fg);
+    box-shadow: 0 0 12px
+      color-mix(in oklab, var(--module-listen-fg) 42%, transparent);
+  }
+
+  .listening-atelier .writing-entry-wrap + .writing-entry-wrap {
+    border-top-color: color-mix(
+      in oklab,
+      var(--module-listen-fg) 26%,
+      transparent
+    );
+  }
+
+  .listening-atelier .writing-entry:hover .writing-entry-title,
+  .listening-atelier .writing-entry:focus-within .writing-entry-title {
+    color: var(--module-listen-fg);
+  }
+
+  .speaking-atelier .writing-entry::before,
+  .speaking-atelier .writing-entry:not([data-writing-kind])::before {
+    background: var(--module-speak-fg);
+    box-shadow: 0 0 12px
+      color-mix(in oklab, var(--module-speak-fg) 42%, transparent);
+  }
+
+  .speaking-atelier .writing-entry-wrap + .writing-entry-wrap {
+    border-top-color: color-mix(
+      in oklab,
+      var(--module-speak-fg) 26%,
+      transparent
+    );
+  }
+
+  .speaking-atelier .writing-entry:hover .writing-entry-title,
+  .speaking-atelier .writing-entry:focus-within .writing-entry-title {
+    color: var(--module-speak-fg);
+  }
+
+  .writing-entry-title {
+    font-family: var(--font-heading);
+    font-size: 1.35rem;
+    font-weight: 650;
+    line-height: 1.25;
+    letter-spacing: -0.02em;
+    color: var(--ink);
+  }
+
+  .writing-entry:hover .writing-entry-title,
+  .writing-entry:focus-within .writing-entry-title,
+  .writing-feature:hover .writing-feature-title,
+  .writing-feature:focus-within .writing-feature-title {
+    color: var(--module-writing-fg);
+  }
+
+  .writing-entry[data-writing-kind="question_set"]:hover .writing-entry-title,
+  .writing-entry[data-writing-kind="question_set"]:focus-within
+    .writing-entry-title {
+    color: var(--module-theory-fg);
+  }
+
+  .writing-entry-actions,
+  .writing-feature-tools {
+    pointer-events: auto;
+    opacity: 1;
+  }
+
+  .writing-paper {
+    display: flex;
+    flex-direction: column;
+    gap: 1.75rem;
+  }
+
+  .writing-paper-chrome {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    margin-bottom: 0.35rem;
+  }
+
+  .writing-back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: var(--muted-foreground);
+    text-decoration: none;
+  }
+
+  .writing-back:hover {
+    color: var(--ink);
+  }
+
+  .writing-paper-actions {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .writing-paper-page {
+    max-width: 70rem;
+    margin-inline: auto;
+    width: 100%;
+    padding: 0.5rem 0 3rem;
+  }
+
+  .writing-paper-title {
+    margin: 0.55rem 0 1rem;
+    font-family: var(--font-heading);
+    font-size: clamp(1.85rem, 3.4vw, 2.75rem);
+    font-weight: 700;
+    line-height: 1.12;
+    letter-spacing: -0.035em;
+    color: var(--ink);
+  }
+
+  .writing-paper-body {
+    margin-top: 2rem;
+    padding-top: 1.75rem;
+    border-top: 1px solid
+      color-mix(in oklab, var(--module-writing-fg) 18%, transparent);
+  }
+
+  .writing-paper-body .prose p {
+    font-size: 1.125rem;
+    line-height: 1.85;
+  }
+
+  .writing-paper-num {
+    color: var(--module-writing-fg);
+    font-variant-numeric: tabular-nums;
+  }
+
+  .writing-sheet {
+    display: flex;
+    max-width: 80rem;
+    margin-inline: auto;
+    width: 100%;
+    flex-direction: column;
+    gap: 1.55rem;
+    padding-top: 0.35rem;
+    padding-bottom: 2rem;
+    --writing-accent-fg: var(--module-writing-fg);
+    --writing-accent-bg: var(--module-writing-bg);
+  }
+
+  .writing-sheet[data-writing-kind="question_set"] {
+    --writing-accent-fg: var(--module-theory-fg);
+    --writing-accent-bg: var(--module-theory-bg);
+  }
+
+  .writing-sheet-title {
+    height: auto !important;
+    min-height: 0 !important;
+    padding: 0 !important;
+    border: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+    font-family: var(--font-heading);
+    font-size: clamp(1.85rem, 3.2vw, 2.6rem) !important;
+    font-weight: 700;
+    line-height: 1.15 !important;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+
+  .writing-sheet-title:focus-visible {
+    box-shadow: none !important;
+    outline: none !important;
+  }
+
+  .writing-paper-page[data-writing-kind="rich_document"] .writing-kicker,
+  .writing-sheet[data-writing-kind="rich_document"] .writing-kicker {
+    color: var(--module-writing-fg);
+  }
+
+  .writing-paper-page[data-writing-kind="question_set"] .writing-kicker,
+  .writing-sheet[data-writing-kind="question_set"] .writing-kicker {
+    color: var(--module-theory-fg);
+  }
+
+  .writing-sheet[data-writing-kind="rich_document"] .writing-back:hover {
+    color: var(--module-writing-fg);
+  }
+
+  .writing-sheet[data-writing-kind="question_set"] .writing-back:hover {
+    color: var(--module-theory-fg);
+  }
+
+  .writing-paper-page[data-writing-kind="question_set"] .writing-paper-body {
+    border-top-color: color-mix(
+      in oklab,
+      var(--module-theory-fg) 22%,
+      transparent
+    );
+  }
+
+  .writing-paper-page[data-writing-kind="question_set"] .writing-paper-num {
+    color: var(--module-theory-fg);
+  }
+
+  .writing-sheet[data-writing-kind="rich_document"] .writing-sheet-surface {
+    padding: 1.15rem 1.2rem 0.55rem;
+    border-radius: 1rem;
+    background: linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-writing-bg) 72%, transparent),
+      color-mix(in oklab, var(--module-writing-bg) 22%, transparent) 70%,
+      transparent
+    );
     box-shadow:
-      0 0 0 9999px rgba(15, 10, 30, 0.68),
-      0 0 0 0 rgba(212, 255, 91, 0.35);
+      inset 4px 0 0 var(--module-writing-fg),
+      0 0 0 1px color-mix(in oklab, var(--module-writing-fg) 12%, transparent);
   }
 
-  50% {
+  .writing-sheet[data-writing-kind="question_set"] .writing-sheet-surface {
+    padding: 1.15rem 1.2rem 0.55rem;
+    border-radius: 1rem;
+    background: linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-theory-bg) 72%, transparent),
+      color-mix(in oklab, var(--module-theory-bg) 22%, transparent) 70%,
+      transparent
+    );
     box-shadow:
-      0 0 0 9999px rgba(15, 10, 30, 0.68),
-      0 0 0 4px rgba(212, 255, 91, 0.2);
+      inset 4px 0 0 var(--module-theory-fg),
+      0 0 0 1px color-mix(in oklab, var(--module-theory-fg) 12%, transparent);
+  }
+
+  .theory-sheet-surface {
+    padding: 1.15rem 1.2rem 0.55rem;
+    border-radius: 1rem;
+    background: linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--theory-cat-bg) 72%, transparent),
+      color-mix(in oklab, var(--theory-cat-bg) 22%, transparent) 70%,
+      transparent
+    );
+    box-shadow:
+      inset 4px 0 0 var(--theory-cat-fg),
+      0 0 0 1px color-mix(in oklab, var(--theory-cat-fg) 12%, transparent);
+  }
+
+  .writing-sheet-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 1.1rem;
+  }
+
+  .writing-chip-picker {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+
+  .writing-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    height: 2.25rem;
+    padding: 0 0.9rem;
+    border: 1px solid var(--hairline-cloud);
+    border-radius: 999px;
+    background: transparent;
+    color: var(--muted-foreground);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      box-shadow 160ms ease,
+      color 160ms ease;
+  }
+
+  .writing-chip[data-writing-kind="rich_document"] {
+    color: var(--module-writing-fg);
+    border-color: color-mix(
+      in oklab,
+      var(--module-writing-fg) 32%,
+      var(--hairline-cloud)
+    );
+    background: color-mix(in oklab, var(--module-writing-bg) 28%, transparent);
+  }
+
+  .writing-chip[data-writing-kind="question_set"] {
+    color: var(--module-theory-fg);
+    border-color: color-mix(
+      in oklab,
+      var(--module-theory-fg) 32%,
+      var(--hairline-cloud)
+    );
+    background: color-mix(in oklab, var(--module-theory-bg) 28%, transparent);
+  }
+
+  @media (min-width: 640px) {
+    .writing-hero {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .writing-hero-actions {
+      justify-content: flex-end;
+      padding-top: 0.2rem;
+    }
+
+    .writing-collection-list {
+      flex-direction: row;
+      flex-wrap: wrap;
+      align-items: stretch;
+      gap: 0.45rem;
+    }
+
+    .writing-collection-item,
+    .writing-collection-root {
+      width: auto;
+      min-width: 15.5rem;
+      max-width: 100%;
+    }
+
+    .writing-spine-tools {
+      flex-direction: column;
+      align-items: stretch;
+    }
+
+    .writing-spine-search-wrap {
+      width: 100%;
+    }
+
+    .writing-feature {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+
+    .writing-paper-chrome {
+      flex-direction: row;
+      align-items: flex-end;
+      justify-content: space-between;
+    }
+
+    .writing-paper-actions {
+      width: auto;
+      flex-direction: row;
+    }
+
+    .writing-entry-actions,
+    .writing-feature-tools {
+      opacity: 0;
+    }
+
+    .writing-entry:hover .writing-entry-actions,
+    .writing-entry:focus-within .writing-entry-actions,
+    .writing-feature:hover .writing-feature-tools,
+    .writing-feature:focus-within .writing-feature-tools {
+      opacity: 1;
+    }
+  }
+
+  @media (min-width: 1024px) {
+    .writing-atelier-empty {
+      min-width: 0;
+    }
+
+    .writing-entry-title {
+      font-size: 1.5rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .writing-entry-title,
+    .writing-feature-title {
+      transition: none;
+    }
   }
 }
 
-.tutorial-spotlight-cutout {
-  animation: tutorial-pulse 2.4s ease-in-out infinite;
-}
-
-/* Route / panel enter — short, non-blocking perceived responsiveness */
 @keyframes notoria-fade-up {
   from {
     opacity: 0;
-    transform: translateY(6px);
+    transform: translateY(4px);
   }
   to {
     opacity: 1;
@@ -364,7 +2390,7 @@
 .notoria-page-enter,
 .notoria-content-enter,
 .notoria-route-loading {
-  animation: notoria-fade-up 160ms ease-out both;
+  animation: notoria-fade-up 140ms ease-out both;
 }
 
 @keyframes notoria-link-pending {
@@ -389,7 +2415,6 @@
 }
 
 .notoria-link-pending[data-pending="true"] {
-  /* Delay avoids flash on instant/prefetched navigations */
   animation: notoria-link-pending 120ms ease-out 100ms forwards;
 }
 
@@ -408,3 +2433,127 @@
   }
 }
 
+/* Unlayered so these beat shadcn @layer base defaults. */
+html {
+  background-color: var(--background);
+  color-scheme: light;
+}
+
+html.dark {
+  color-scheme: dark;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+}
+
+.writing-refine [data-slot="select-trigger"],
+.writing-refine [data-slot="dropdown-menu-trigger"] {
+  height: 2.5rem;
+  min-height: 2.5rem;
+  border-radius: 0.55rem;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.writing-refine [data-slot="select-trigger"]:hover,
+.writing-refine [data-slot="dropdown-menu-trigger"]:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--module-writing-fg) 42%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(
+    in oklab,
+    var(--module-writing-bg) 58%,
+    var(--surface-elevated)
+  );
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--module-writing-fg) 16%, transparent),
+    0 10px 22px color-mix(in oklab, var(--module-writing-fg) 12%, transparent);
+}
+
+.writing-refine [data-slot="select-trigger"]:focus-visible,
+.writing-refine [data-slot="dropdown-menu-trigger"]:focus-visible,
+.writing-refine [data-slot="dropdown-menu-trigger"][aria-expanded="true"],
+.writing-refine [data-slot="select-trigger"][data-popup-open] {
+  border-color: color-mix(
+    in oklab,
+    var(--module-writing-fg) 48%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(
+    in oklab,
+    var(--module-writing-bg) 62%,
+    var(--surface-elevated)
+  );
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--module-writing-fg) 20%, transparent),
+    0 10px 22px color-mix(in oklab, var(--module-writing-fg) 12%, transparent);
+}
+
+.writing-chip:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--writing-accent-fg) 42%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(in oklab, var(--writing-accent-bg) 32%, transparent);
+  color: var(--foreground);
+  box-shadow: none;
+}
+
+.writing-chip[data-writing-kind="rich_document"]:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--module-writing-fg) 42%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(in oklab, var(--module-writing-bg) 36%, transparent);
+  color: var(--module-writing-fg);
+}
+
+.writing-chip[data-writing-kind="question_set"]:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--module-theory-fg) 42%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(in oklab, var(--module-theory-bg) 36%, transparent);
+  color: var(--module-theory-fg);
+}
+
+.writing-chip.is-active {
+  border-color: color-mix(
+    in oklab,
+    var(--writing-accent-fg) 55%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(in oklab, var(--writing-accent-bg) 42%, transparent);
+  color: var(--writing-accent-fg);
+  box-shadow: 0 0 0 1px
+    color-mix(in oklab, var(--writing-accent-fg) 18%, transparent);
+}
+
+.writing-chip[data-writing-kind="rich_document"].is-active {
+  border-color: color-mix(
+    in oklab,
+    var(--module-writing-fg) 55%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(in oklab, var(--module-writing-bg) 42%, transparent);
+  color: var(--module-writing-fg);
+}
+
+.writing-chip[data-writing-kind="question_set"].is-active {
+  border-color: color-mix(
+    in oklab,
+    var(--module-theory-fg) 55%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(in oklab, var(--module-theory-bg) 42%, transparent);
+  color: var(--module-theory-fg);
+}

@@ -1,4 +1,5 @@
 import type { FlashcardWord } from "@/types/flashcards";
+import { surfaceAnswersForBlank } from "@/lib/exercises/lexical-surface";
 
 function escapeRegExp(value: string) {
   return value.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
@@ -21,16 +22,11 @@ export type FillBlankItem = {
   sentenceMeaning?: string;
 };
 
-export function buildFillBlankAcceptableAnswers(word: string, matchedWord: string) {
-  const answers = new Set<string>();
-  for (const candidate of [matchedWord, word]) {
-    const trimmed = candidate.trim();
-    if (trimmed) {
-      answers.add(trimmed);
-      answers.add(trimmed.toLowerCase());
-    }
-  }
-  return [...answers];
+export function buildFillBlankAcceptableAnswers(
+  word: string,
+  matchedWord: string,
+) {
+  return surfaceAnswersForBlank(word, matchedWord);
 }
 
 export function expectedFillBlankAnswer(item: FillBlankItem) {

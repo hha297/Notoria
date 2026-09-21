@@ -1,0 +1,181 @@
+.listening-media-deck,
+.speaking-panel {
+  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+  border-radius: 0.85rem;
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--writing-wash) 28%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 42%, transparent);
+  padding: 1.1rem 1.15rem;
+}
+
+.listening-status-strip {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+  background: color-mix(in oklab, var(--writing-wash) 32%, transparent);
+  padding: 0.85rem 1rem;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.listening-status-strip.is-error {
+  border-color: color-mix(in oklab, var(--destructive) 28%, transparent);
+  background: color-mix(in oklab, var(--destructive) 8%, transparent);
+  color: var(--destructive);
+}
+
+.listening-practice-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.speaking-panel + .speaking-panel {
+  margin-top: 1rem;
+}
+
+.speaking-panel-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.speaking-panel-lede {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.speaking-panel-body {
+  margin-top: 0.85rem;
+}
+
+.speaking-transcript {
+  max-height: 28rem;
+  overflow: auto;
+  white-space: pre-wrap;
+  border-radius: 0.65rem;
+  background: color-mix(in oklab, var(--surface-muted) 55%, transparent);
+  padding: 1rem;
+  font-size: 0.875rem;
+  line-height: 1.65;
+  color: var(--ink);
+}
+
+.speaking-canopy {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.65rem 1rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .speaking-canopy {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.speaking-canopy-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+  padding: 0.7rem 0.85rem;
+  border-radius: 0.65rem;
+  border: 1px solid color-mix(in oklab, var(--module-speak-fg) 22%, transparent);
+  background: color-mix(in oklab, var(--module-speak-bg) 34%, transparent);
+}
+
+.speaking-canopy-value {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  color: var(--module-speak-fg);
+}
+
+.speaking-canopy-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.speaking-guide {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+@media (min-width: 768px) {
+  .speaking-guide {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.speaking-guide-card {
+  position: relative;
+  min-width: 0;
+  padding: 1rem 1.05rem 1.05rem;
+  border-radius: 0.85rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-speak-fg) 18%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--module-speak-bg) 42%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 35%, transparent);
+}
+
+.speaking-guide-index {
+  position: absolute;
+  top: 0.85rem;
+  right: 0.95rem;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  color: color-mix(in oklab, var(--module-speak-fg) 70%, transparent);
+}
+
+.speaking-guide-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  margin-bottom: 0.65rem;
+  border-radius: 0.5rem;
+  color: var(--module-speak-fg);
+  background: color-mix(in oklab, var(--module-speak-bg) 55%, transparent);
+}
+
+.speaking-guide-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.speaking-guide-body {
+  margin: 0.35rem 0 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}

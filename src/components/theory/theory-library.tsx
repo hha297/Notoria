@@ -1,33 +1,24 @@
 "use client";
 
 import Link from "next/link";
-import { AnimatePresence, motion } from "motion/react";
+import { useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
-import { BookOpen, Clock, Plus, Search } from "lucide-react";
+import { Clock, Plus, Search } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
-import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { FolderItemDrag } from "@/components/folders/folder-dnd";
-import {
-  FolderEmptyState,
-  FolderGrid,
-  FolderWorkspace,
-} from "@/components/folders/folder-workspace";
+import { FolderBreadcrumbs } from "@/components/folders/folder-breadcrumbs";
+import { FolderWorkspace } from "@/components/folders/folder-workspace";
 import { NewFolderButton } from "@/components/folders/new-folder-button";
+import { WritingCollections } from "@/components/writing/writing-collections";
+import { TheoryListLoading } from "@/components/theory/theory-loading";
 import { TheoryRowActions } from "@/components/theory/theory-row-actions";
-import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { DescriptionContent } from "@/components/form/description-content";
+import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
-import { ListPageLoading } from "@/components/layout/page-loading";
 import { useQuery } from "@tanstack/react-query";
 import { sectionCreateHref } from "@/lib/folders/paths";
 import { childrenOf, folderMatchesQuery, itemsInFolder } from "@/lib/folders/tree";
@@ -43,18 +34,23 @@ import {
 import {
   isMultiFilterActive,
   matchesMultiFilter,
-  multiFilterKey,
   toggleMultiFilterValue,
   type MultiFilterValue,
 } from "@/lib/filters/multi-select";
-import { cn } from "@/lib/utils";
+import libraryStyles from "@/components/style/theory/library.module.css";
+import { mx } from "@/lib/css-module";
 
-const EASE = [0.25, 0.1, 0.25, 1] as const;
 const EMPTY_THEORY_NOTES: TheoryListItem[] = [];
 
 type TheoryLibraryProps = {
   currentFolderId: string | null;
   workspaceId: string;
+};
+
+type NoteGroup = {
+  key: string;
+  title: string;
+  notes: TheoryListItem[];
 };
 
 function categoryLabel(
@@ -70,6 +66,7 @@ export function TheoryLibrary({
   currentFolderId,
   workspaceId,
 }: TheoryLibraryProps) {
+  const router = useRouter();
   const t = useTranslations("theory");
   const tFolders = useTranslations("folders");
   const [search, setSearch] = useState("");
@@ -80,6 +77,10 @@ export function TheoryLibrary({
   const notes = notesQuery.data ?? EMPTY_THEORY_NOTES;
   const folders = foldersQuery.data ?? [];
   const isLoading = notesQuery.isPending || foldersQuery.isPending;
+
+  useRegisterShortcutAction("createNew", () => {
+    router.push(createHref);
+  });
 
   const filtered = useMemo(() => {
     const query = search.trim().toLowerCase();
@@ -94,11 +95,42 @@ export function TheoryLibrary({
     });
   }, [notes, currentFolderId, search, categories, t]);
 
+  const groups = useMemo((): NoteGroup[] => {
+    const buckets = new Map<string, TheoryListItem[]>();
+    for (const note of filtered) {
+      const key = note.category || "other";
+      const existing = buckets.get(key);
+      if (existing) existing.push(note);
+      else buckets.set(key, [note]);
+    }
+
+    const ordered: NoteGroup[] = [];
+    for (const category of THEORY_CATEGORIES) {
+      const grouped = buckets.get(category);
+      if (!grouped?.length) continue;
+      ordered.push({
+        key: category,
+        title: t(`categories.${category}`),
+        notes: grouped,
+      });
+      buckets.delete(category);
+    }
+    for (const [key, grouped] of buckets) {
+      ordered.push({
+        key,
+        title: categoryLabel(key, t),
+        notes: grouped,
+      });
+    }
+    return ordered;
+  }, [filtered, t]);
+
   const childFolders = childrenOf(folders, currentFolderId);
   const matchingFolders = search.trim()
     ? folders.filter((folder) => folderMatchesQuery(folder, search))
     : childFolders;
-  const isEmptyRoot = !currentFolderId && notes.length === 0 && folders.length === 0;
+  const isEmptyRoot =
+    !currentFolderId && notes.length === 0 && folders.length === 0;
   const isEmptyFolder =
     !search.trim() &&
     !isMultiFilterActive(categories) &&
@@ -107,11 +139,25 @@ export function TheoryLibrary({
   const hasFilters = search.trim() !== "" || isMultiFilterActive(categories);
 
   if (isLoading) {
-    return <ListPageLoading />;
+    return (
+      <PageShell className="writing-atelier-shell theory-atelier-shell">
+        <TheoryListLoading />
+      </PageShell>
+    );
   }
 
+  const actions = (
+    <>
+      <ShowTutorialButton section="theory" />
+      <LinkButton href={createHref} data-tutorial="theory-add-note">
+        <Plus className="size-4" />
+        {isEmptyRoot ? t("createFirst") : t("create")}
+      </LinkButton>
+    </>
+  );
+
   return (
-    <PageShell>
+    <PageShell className="writing-atelier-shell theory-atelier-shell">
       <FolderWorkspace
         workspaceId={workspaceId}
         section="theory"
@@ -119,149 +165,137 @@ export function TheoryLibrary({
         currentFolderId={currentFolderId}
         items={notes}
         search={search}
-        header={
-          <motion.div
-            initial={{ opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.22, ease: EASE }}
-          >
-            <PageHeader
-              eyebrow={t("eyebrow")}
-              title={t("title")}
-              highlight={t("highlight")}
-              description={t("description")}
-            >
-              <ShowTutorialButton section="theory" />
-              <NewFolderButton />
-              <LinkButton href={createHref} data-tutorial="theory-add-note">
-                <Plus className="size-4" />
-                {t("create")}
-              </LinkButton>
-            </PageHeader>
-          </motion.div>
-        }
+        showBreadcrumbs={false}
       >
-        {isEmptyRoot || (isEmptyFolder && !hasFilters) ? (
-          currentFolderId ? (
-            <FolderEmptyState
-              title={tFolders("emptyFolder")}
-              description={tFolders("emptyFolderDescription")}
-            >
-              <LinkButton href={createHref} className="mt-5" data-tutorial="theory-add-note">
-                <Plus className="size-4" />
-                {t("create")}
-              </LinkButton>
-            </FolderEmptyState>
-          ) : (
-            <div className="empty-state">
-              <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-hairline-cloud bg-muted/40">
-                <BookOpen className="size-6 text-muted-foreground" />
-              </div>
-              <p className="font-medium text-ink">{t("emptyTitle")}</p>
-              <p className="mt-2 max-w-md text-sm text-muted-foreground">
-                {t("emptyDescription")}
-              </p>
-              <LinkButton href={createHref} className="mt-5" data-tutorial="theory-add-note">
-                <Plus className="size-4" />
-                {t("createFirst")}
-              </LinkButton>
+        <div className="writing-atelier theory-atelier flex flex-col gap-10 lg:gap-12">
+          <header className="writing-hero">
+            <div className="writing-hero-copy">
+              <p className="writing-kicker">{t("eyebrow")}</p>
+              <h1 className="writing-brand-title">{t("title")}</h1>
+              <p className="writing-brand-lede">{t("description")}</p>
             </div>
-          )
-        ) : (
-          <>
-            <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.22, delay: 0.05, ease: EASE }}
-              className="space-y-5"
-            >
-              <div className="relative max-w-md">
-                <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
-                <Input
-                  value={search}
-                  onChange={(event) => setSearch(event.target.value)}
-                  placeholder={t("searchPlaceholder")}
-                  className="h-10 pl-9 lg:h-9"
+            <div className="writing-hero-actions">
+              {isEmptyRoot ? (
+                <>
+                  <ShowTutorialButton section="theory" />
+                  <NewFolderButton variant="outline" size="sm" />
+                  <LinkButton href={createHref} data-tutorial="theory-add-note">
+                    <Plus className="size-4" />
+                    {t("createFirst")}
+                  </LinkButton>
+                </>
+              ) : (
+                actions
+              )}
+            </div>
+          </header>
+
+          {isEmptyRoot ? (
+            <div className="writing-empty-desk">
+              <p className="writing-empty-title">{t("emptyTitle")}</p>
+              <p className="writing-brand-lede">{t("emptyDescription")}</p>
+            </div>
+          ) : (
+            <>
+              <section className="writing-workspace">
+                {currentFolderId ? (
+                  <FolderBreadcrumbs
+                    section="theory"
+                    folders={folders}
+                    currentFolderId={currentFolderId}
+                  />
+                ) : null}
+                <div
+                  className="writing-spine-tools"
                   data-tutorial="theory-search"
-                />
-              </div>
+                >
+                  <div className="writing-spine-search-wrap">
+                    <Search
+                      className="writing-spine-search-icon"
+                      aria-hidden="true"
+                    />
+                    <Input
+                      value={search}
+                      onChange={(event) => setSearch(event.target.value)}
+                      placeholder={t("searchPlaceholder")}
+                      className="writing-spine-search"
+                    />
+                  </div>
+                </div>
+                <div
+                  className={mx(libraryStyles, "theory-filter-row")}
+                  data-tutorial="theory-category-filter"
+                >
+                  <FilterPill
+                    active={!isMultiFilterActive(categories)}
+                    onClick={() => setCategories([])}
+                  >
+                    {t("filterAll")}
+                  </FilterPill>
+                  {THEORY_CATEGORIES.map((item) => (
+                    <FilterPill
+                      key={item}
+                      category={item}
+                      active={categories.includes(item)}
+                      onClick={() =>
+                        setCategories(toggleMultiFilterValue(categories, item))
+                      }
+                    >
+                      {t(`categories.${item}`)}
+                    </FilterPill>
+                  ))}
+                </div>
+                <WritingCollections currentFolderId={currentFolderId} />
+              </section>
 
               <div
-                className="flex flex-wrap gap-x-3 gap-y-3"
-                data-tutorial="theory-category-filter"
-              >
-                <FilterPill
-                  active={!isMultiFilterActive(categories)}
-                  onClick={() => setCategories([])}
-                >
-                  {t("filterAll")}
-                </FilterPill>
-                {THEORY_CATEGORIES.map((item) => (
-                  <FilterPill
-                    key={item}
-                    active={categories.includes(item)}
-                    onClick={() =>
-                      setCategories(toggleMultiFilterValue(categories, item))
-                    }
-                  >
-                    {t(`categories.${item}`)}
-                  </FilterPill>
-                ))}
-              </div>
-            </motion.div>
+                className="writing-atelier-rule theory-atelier-rule w-full shrink-0 rounded-full"
+                aria-hidden="true"
+              />
 
-            <div className="mt-8 space-y-8">
-              <FolderGrid />
-
-              <AnimatePresence mode="wait">
-              {filtered.length === 0 ? (
-                hasFilters && matchingFolders.length === 0 ? (
-                  <motion.div
-                    key="empty"
-                    initial={{ opacity: 0, y: 8 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: -6 }}
-                    transition={{ duration: 0.18, ease: EASE }}
-                    className="empty-state"
-                  >
-                    <div className="mb-4 flex size-14 items-center justify-center rounded-2xl border border-hairline-cloud bg-muted/40">
-                      <BookOpen className="size-6 text-muted-foreground" />
-                    </div>
-                    <p className="font-medium text-ink">{t("noResults")}</p>
-                    <p className="mt-2 max-w-md text-sm text-muted-foreground">
-                      {t("noResultsDescription")}
+              <section className="writing-stage" data-tutorial="theory-note-list">
+                {groups.length > 0 ? (
+                  <>
+                    <p className="writing-kicker writing-stage-kicker">
+                      {t("library")}
                     </p>
-                  </motion.div>
-                ) : null
-              ) : (
-                <motion.div
-                  key={`${multiFilterKey(categories)}:${search}`}
-                  initial="hidden"
-                  animate="show"
-                  exit={{ opacity: 0 }}
-                  variants={{
-                    hidden: { opacity: 0 },
-                    show: {
-                      opacity: 1,
-                      transition: { staggerChildren: 0.045, delayChildren: 0.04 },
-                    },
-                  }}
-                  className="grid gap-5 sm:grid-cols-2 xl:grid-cols-3"
-                  data-tutorial="theory-note-list"
-                >
-                  {filtered.map((note) => (
-                    <TheoryCard
-                      key={note.id}
-                      note={note}
-                      workspaceId={workspaceId}
-                    />
-                  ))}
-                </motion.div>
-              )}
-            </AnimatePresence>
-            </div>
-          </>
-        )}
+                    {groups.map((group) => (
+                      <div
+                        key={group.key}
+                        className="writing-chapter"
+                        data-theory-category={group.key}
+                      >
+                        <h2 className="writing-chapter-title">{group.title}</h2>
+                        {group.notes.map((note) => (
+                          <TheoryCard
+                            key={note.id}
+                            note={note}
+                            workspaceId={workspaceId}
+                          />
+                        ))}
+                      </div>
+                    ))}
+                  </>
+                ) : hasFilters ? (
+                  matchingFolders.length === 0 ? (
+                    <p className="writing-stage-empty">{t("noResults")}</p>
+                  ) : null
+                ) : (
+                  <div className="writing-empty-desk">
+                    <p className="writing-empty-title">
+                      {currentFolderId ? tFolders("emptyFolder") : t("emptyTitle")}
+                    </p>
+                    <p className="writing-brand-lede">
+                      {currentFolderId
+                        ? tFolders("emptyFolderDescription")
+                        : t("emptyDescription")}
+                    </p>
+                  </div>
+                )}
+              </section>
+            </>
+          )}
+        </div>
       </FolderWorkspace>
     </PageShell>
   );
@@ -271,21 +305,19 @@ function FilterPill({
   active,
   onClick,
   children,
+  category,
 }: {
   active: boolean;
   onClick: () => void;
   children: React.ReactNode;
+  category?: string;
 }) {
   return (
     <button
       type="button"
       onClick={onClick}
-      className={cn(
-        "h-8 cursor-pointer rounded-full border px-3 text-sm transition-colors duration-200",
-        active
-          ? "border-accent-lime/50 bg-accent-lime/20 font-medium text-ink"
-          : "border-hairline-cloud bg-card text-muted-foreground hover:border-accent-lime/40 hover:text-ink",
-      )}
+      data-theory-category={category}
+      className={mx(libraryStyles, "theory-filter-pill", active && "is-active")}
     >
       {children}
     </button>
@@ -300,68 +332,58 @@ function TheoryCard({
   workspaceId: string;
 }) {
   const t = useTranslations("theory");
+  const href = `/theory/${note.id}`;
 
   return (
-    <FolderItemDrag id={note.id} className="h-full">
-      <motion.div
-        className="h-full"
-        variants={{
-          hidden: { opacity: 0, y: 10 },
-          show: { opacity: 1, y: 0, transition: { duration: 0.2, ease: EASE } },
-        }}
-        whileHover={{ y: -3 }}
-        transition={{ duration: 0.18, ease: EASE }}
+    <FolderItemDrag id={note.id} className="writing-entry-wrap">
+      <article
+        className="writing-entry"
+        data-theory-category={note.category || undefined}
       >
-        <Card className="relative h-full cursor-pointer border-hairline-cloud bg-card ring-hairline-cloud transition-shadow duration-200 hover:shadow-[0_8px_24px_-12px_rgba(31,22,51,0.18)] hover:ring-accent-lime/40">
-          <Link
-            href={`/theory/${note.id}`}
-            className="absolute inset-0 z-0"
-            aria-label={note.title}
-          />
-          <CardHeader className="relative z-10 gap-3 pointer-events-none">
-            <div className="flex items-start justify-between gap-2">
-              <Badge variant="outline" className="w-fit">
-                {categoryLabel(note.category, t)}
-              </Badge>
-              <div className="pointer-events-auto">
-                <TheoryRowActions
-                  id={note.id}
-                  title={note.title}
-                  description={note.description}
-                  folderId={note.folderId}
-                  workspaceId={workspaceId}
-                />
-              </div>
-            </div>
-            <div className="block space-y-2">
-              <CardTitle className="line-clamp-2 min-h-[3.25rem] text-lg leading-snug text-ink">
-                {note.title}
-              </CardTitle>
-              <div className="min-h-[3.75rem]">
-                {note.description ? (
-                  <DescriptionContent
-                    value={note.description}
-                    clampLines={3}
-                    className="text-sm text-muted-foreground"
-                  />
-                ) : null}
-              </div>
-            </div>
-          </CardHeader>
-          <CardContent className="relative z-10 mt-auto flex items-center gap-3 pb-1 text-xs text-muted-foreground pointer-events-none">
+        <div className="writing-entry-body">
+          <h3 className="writing-entry-title">
+            <Link
+              href={href}
+              onPointerDown={(event) => event.stopPropagation()}
+              onClick={(event) => event.stopPropagation()}
+            >
+              {note.title}
+            </Link>
+          </h3>
+          {note.description?.trim() ? (
+            <DescriptionContent
+              value={note.description}
+              clampLines={2}
+              className="writing-entry-excerpt"
+            />
+          ) : null}
+          <p className="writing-kind-facts">
+            <span>{categoryLabel(note.category, t)}</span>
+            <span aria-hidden="true"> · </span>
             <span className="inline-flex items-center gap-1">
               <Clock className="size-3.5" />
               {t("readingTime", { minutes: note.readingMinutes })}
             </span>
-            <span aria-hidden="true">·</span>
+            <span aria-hidden="true"> · </span>
             <span>
               {formatDistanceToNow(new Date(note.updatedAt), {
                 addSuffix: true,
               })}
             </span>
-          </CardContent>
-        </Card>
-      </motion.div>
+          </p>
+        </div>
+        <div className="writing-entry-actions">
+          <TheoryRowActions
+            id={note.id}
+            title={note.title}
+            description={note.description}
+            folderId={note.folderId}
+            workspaceId={workspaceId}
+            category={note.category}
+            canExport={note.hasExportableContent}
+          />
+        </div>
+      </article>
     </FolderItemDrag>
   );
 }

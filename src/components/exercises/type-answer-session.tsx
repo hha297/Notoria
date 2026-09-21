@@ -3,24 +3,17 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useLocale, useTranslations } from "next-intl";
-import {
-  ChevronLeft,
-  ChevronRight,
-  RotateCcw,
-  CheckCircle2,
-  XCircle,
-  Sparkles,
-} from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
-import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import { ExerciseDifficultySelect } from "@/components/exercises/exercise-difficulty-select";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
+import { TypeAnswerActions } from "@/components/exercises/type-answer-actions";
+import { TypeAnswerStage } from "@/components/exercises/type-answer-stage";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
 import { useExerciseDifficulty } from "@/hooks/use-exercise-difficulty";
 import { useExerciseSessionController } from "@/hooks/use-exercise-session-controller";
@@ -32,18 +25,14 @@ import { wordHasBlankMeaningHint } from "@/lib/exercises/blank-hint";
 import {
   buildTypeAnswerItems,
   contextualExerciseToTypeAnswerItem,
-  typeAnswerPromptWithMeaningHint,
-  typeAnswerRevealPrompt,
   type TypeAnswerItem,
   type TypeAnswerStudyMode,
 } from "@/lib/exercises/type-answer";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
-import { hintInitialLetter } from "@/lib/exercises/hint";
 import { answersMatchAny } from "@/lib/exercises/utils";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
 import { DEFAULT_FLASHCARD_FILTERS } from "@/types/flashcards";
-import { cn } from "@/lib/utils";
 
 type TypeAnswerSessionProps = {
   workspaceId: string;
@@ -57,7 +46,6 @@ export function TypeAnswerSession({
   language,
 }: TypeAnswerSessionProps) {
   const t = useTranslations("exercises.typeAnswer");
-  const tHint = useTranslations("exercises.timedHint");
   const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
   const uiLocale = useLocale();
@@ -267,14 +255,6 @@ export function TypeAnswerSession({
   const isCorrect = current
     ? !peeked && answersMatchAny(input, current.acceptableAnswers)
     : false;
-  const correctDisplay = current?.answerDisplay ?? "";
-  const displayPrompt = !current
-    ? undefined
-    : current.direction === "CONTEXTUAL"
-      ? revealed
-        ? typeAnswerRevealPrompt(current)
-        : typeAnswerPromptWithMeaningHint(current)
-      : current.prompt;
 
   const check = () => {
     if (!current || revealed || !input.trim()) return;
@@ -295,7 +275,10 @@ export function TypeAnswerSession({
       e.preventDefault();
       if (sessionComplete) return;
       if (!revealed) check();
-      else next(total);
+      else {
+        setInput("");
+        next(total);
+      }
     },
     { enableOnFormTags: true },
     [revealed, sessionComplete, input, current, total, next],
@@ -389,13 +372,16 @@ export function TypeAnswerSession({
       {sessionComplete ? (
         <SessionCompleteCard
           title={tSession("complete")}
-          scoreLabel={tSession("score", { correct: score.correct, total })}
+          questions={total}
+          correct={score.correct}
           tryAgainLabel={tSession("tryAgain")}
           onTryAgain={startSession}
         />
       ) : current ? (
         <>
           <ExerciseProgressHeader
+            current={currentIndex + 1}
+            total={total}
             progressLabel={t("progress", { current: currentIndex + 1, total })}
             scoreLabel={t("score", {
               correct: score.correct,
@@ -404,131 +390,38 @@ export function TypeAnswerSession({
             hint={t("keyboardHint")}
             progressValue={total ? ((currentIndex + 1) / total) * 100 : 0}
           />
-          <div className="mx-auto max-w-2xl rounded-2xl border border-hairline-cloud bg-card p-5 shadow-xl shadow-ink/5 sm:rounded-3xl sm:p-8 md:p-10">
-            <div className="flex min-w-0 items-center justify-between gap-3">
-              <p className="text-sm font-medium uppercase tracking-wide text-muted-foreground">
-                {promptLabel}
-              </p>
-              {current.aiGenerated ? (
-                <p className="inline-flex items-center gap-1 text-[11px] font-medium uppercase tracking-wide text-muted-foreground">
-                  <Sparkles className="size-3" />
-                  {tAi("generated")}
-                </p>
-              ) : null}
-            </div>
-            <p className="mt-4 break-words font-heading text-2xl font-medium text-ink sm:mt-6 sm:text-3xl md:text-4xl">
-              {displayPrompt}
-            </p>
-            {revealed && current.sentenceMeaning ? (
-              <p className="mt-3 text-sm text-muted-foreground">
-                ({current.sentenceMeaning})
-              </p>
-            ) : null}
-            <form
-              className="mt-8 space-y-4"
-              onSubmit={(e) => {
-                e.preventDefault();
-                if (!revealed) check();
-              }}
-            >
-              <Input
-                value={revealed ? (isCorrect ? input : correctDisplay) : input}
-                onChange={(e) => setInput(e.target.value)}
-                disabled={revealed}
-                autoFocus
-                autoComplete="off"
-                spellCheck={false}
-                placeholder={t("placeholder")}
-                className={cn(
-                  "h-12 text-center text-lg font-medium sm:h-14 sm:text-xl",
-                  revealed &&
-                    (isCorrect
-                      ? "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a]"
-                      : "border-[#f3b8cc] bg-[#fff1f6] text-[#c7366a]"),
-                )}
-              />
-              <ExerciseHint
-                resetKey={current.id}
-                answered={revealed}
-                correctAnswer={correctDisplay}
-                onRevealAnswer={revealAnswer}
-              >
-                {tHint("startsWith", {
-                  letter: hintInitialLetter(correctDisplay),
-                })}
-              </ExerciseHint>
-              {revealed && (
-                <div
-                  className={cn(
-                    "flex items-start gap-3 rounded-xl px-4 py-3 text-sm font-medium",
-                    isCorrect
-                      ? "bg-[#f4fae0] text-[#4a6b0a]"
-                      : "bg-[#fff1f6] text-[#c7366a]",
-                  )}
-                >
-                  {isCorrect ? (
-                    <CheckCircle2 className="mt-0.5 size-5 shrink-0" />
-                  ) : (
-                    <XCircle className="mt-0.5 size-5 shrink-0" />
-                  )}
-                  <span>
-                    {isCorrect
-                      ? t("correct")
-                      : t("incorrect", { answer: correctDisplay })}
-                  </span>
-                </div>
-              )}
-            </form>
-          </div>
-          <div className="flex flex-col items-center gap-3 sm:gap-4">
-            <div className="flex w-full max-w-sm flex-col gap-2 sm:w-auto sm:max-w-none sm:flex-row">
-              <Button
-                type="button"
-                variant="outline"
-                size="sm"
-                disabled={currentIndex === 0}
-                onClick={() => {
-                  setInput("");
-                  goPrev();
-                }}
-                className="h-11 w-full sm:h-8 sm:w-auto"
-              >
-                <ChevronLeft className="size-4" />
-                {t("previous")}
-              </Button>
-              {revealed ? (
-                <Button
-                  type="button"
-                  size="sm"
-                  onClick={() => {
-                    setInput("");
-                    next(total);
-                  }}
-                  className="h-11 w-full sm:h-8 sm:w-auto"
-                >
-                  {currentIndex >= total - 1 ? t("finish") : t("next")}
-                  <ChevronRight className="size-4" />
-                </Button>
-              ) : (
-                <Button
-                  type="button"
-                  size="sm"
-                  onClick={check}
-                  disabled={!input.trim()}
-                  className="h-11 w-full sm:h-8 sm:w-auto"
-                >
-                  {t("check")}
-                </Button>
-              )}
-            </div>
-            <Button type="button" variant="ghost" size="sm" onClick={startSession}>
-              <RotateCcw className="size-4" />
-              {tSession("tryAgain")}
-            </Button>
-          </div>
+          <TypeAnswerStage
+            key={current.id}
+            item={current}
+            promptLabel={promptLabel}
+            input={input}
+            revealed={revealed}
+            peeked={peeked}
+            isCorrect={isCorrect}
+            onInputChange={setInput}
+            onCheck={check}
+            onRevealAnswer={revealAnswer}
+          />
+          <TypeAnswerActions
+            canPrev={currentIndex > 0}
+            revealed={revealed}
+            canCheck={Boolean(input.trim())}
+            isLast={currentIndex >= total - 1}
+            tryAgainLabel={tSession("tryAgain")}
+            onPrev={() => {
+              setInput("");
+              goPrev();
+            }}
+            onNext={() => {
+              setInput("");
+              next(total);
+            }}
+            onCheck={check}
+            onTryAgain={startSession}
+          />
         </>
       ) : isContextual ? (
-        <div className="rounded-2xl border border-hairline-cloud bg-card p-8 text-center">
+        <div className="border border-hairline-cloud bg-background p-8 text-center">
           <p className="font-heading text-lg font-medium text-ink">
             {t("contextualEmptyTitle")}
           </p>

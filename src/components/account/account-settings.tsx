@@ -1,22 +1,18 @@
 "use client";
 
+import styles from "@/components/style/account/account.module.css";
+import { mx } from "@/lib/css-module";
 import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Loader2, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
+import { DeleteAccountDialog } from "@/components/account/delete-account-dialog";
 import { ProSubscriptionCard } from "@/components/account/pro-subscription-card";
 import { UserAvatar } from "@/components/account/user-avatar";
 import { PasswordInput } from "@/components/auth/password-input";
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
@@ -42,7 +38,8 @@ type AccountSettingsProps = {
 export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) {
   const router = useRouter();
   const { update } = useSession();
-  const t = useTranslations("auth");
+  const t = useTranslations("account");
+  const tAuth = useTranslations("auth");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState(user.image);
   const [name, setName] = useState(user.name);
@@ -50,6 +47,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
   const [isAvatarPending, startAvatarTransition] = useTransition();
   const [isProfilePending, startProfileTransition] = useTransition();
   const [isPasswordPending, startPasswordTransition] = useTransition();
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -58,21 +56,21 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
     const code = error instanceof Error ? error.message : "GENERIC";
 
     if (code === "INVALID_FILE_TYPE") {
-      toast.error(t("avatarInvalidType"));
+      toast.error(tAuth("avatarInvalidType"));
       return;
     }
 
     if (code === "FILE_TOO_LARGE") {
-      toast.error(t("avatarTooLarge"));
+      toast.error(tAuth("avatarTooLarge"));
       return;
     }
 
     if (code === "CLOUDINARY_NOT_CONFIGURED") {
-      toast.error(t("avatarNotConfigured"));
+      toast.error(tAuth("avatarNotConfigured"));
       return;
     }
 
-    toast.error(t("avatarUploadFailed"));
+    toast.error(tAuth("avatarUploadFailed"));
   }
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -90,7 +88,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
         setImage(result.image);
         await update({ image: result.image });
         router.refresh();
-        toast.success(t("avatarUpdated"));
+        toast.success(tAuth("avatarUpdated"));
       } catch (error) {
         handleAvatarError(error);
       } finally {
@@ -106,9 +104,9 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
         setImage(null);
         await update({ image: null });
         router.refresh();
-        toast.success(t("avatarRemoved"));
+        toast.success(tAuth("avatarRemoved"));
       } catch {
-        toast.error(t("avatarUploadFailed"));
+        toast.error(tAuth("avatarUploadFailed"));
       }
     });
   }
@@ -118,7 +116,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
 
     const trimmedName = name.trim();
     if (trimmedName.length < 2) {
-      toast.error(t("nameTooShort"));
+      toast.error(tAuth("nameTooShort"));
       return;
     }
 
@@ -133,9 +131,9 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
         setSavedName(result.name);
         await update({ name: result.name });
         router.refresh();
-        toast.success(t("nameUpdated"));
+        toast.success(tAuth("nameUpdated"));
       } catch {
-        toast.error(t("nameUpdateFailed"));
+        toast.error(tAuth("nameUpdateFailed"));
       }
     });
   }
@@ -144,7 +142,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
     event.preventDefault();
 
     if (newPassword !== confirmPassword) {
-      toast.error(t("passwordMismatch"));
+      toast.error(tAuth("passwordMismatch"));
       return;
     }
 
@@ -158,78 +156,78 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
         setCurrentPassword("");
         setNewPassword("");
         setConfirmPassword("");
-        toast.success(t("passwordUpdated"));
+        toast.success(tAuth("passwordUpdated"));
       } catch (error) {
         const code = error instanceof Error ? error.message : "GENERIC";
 
         if (code === "INVALID_CURRENT_PASSWORD") {
-          toast.error(t("invalidCurrentPassword"));
+          toast.error(tAuth("invalidCurrentPassword"));
           return;
         }
 
-        toast.error(t("passwordUpdateFailed"));
+        toast.error(tAuth("passwordUpdateFailed"));
       }
     });
   }
 
   return (
-    <div className="grid max-w-3xl gap-6">
+    <div className={mx(styles, "account-stack")}>
       <ProSubscriptionCard
         billing={user.billing}
         checkoutResult={checkoutResult}
       />
-      <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
-        <CardHeader className="border-b border-hairline-cloud px-6 py-5">
-          <CardTitle className="text-lg text-ink">{t("avatar")}</CardTitle>
-          <CardDescription>{t("avatarDescription")}</CardDescription>
-        </CardHeader>
-        <CardContent className="flex flex-col gap-6 px-6 py-6 sm:flex-row sm:items-center">
-          <UserAvatar name={name} image={image} size="xl" />
 
-          <div className="flex flex-wrap gap-2">
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/jpeg,image/png,image/webp,image/gif"
-              className="hidden"
-              onChange={handleFileChange}
-            />
-            <Button
-              type="button"
-              variant="outline"
-              disabled={isAvatarPending}
-              onClick={() => fileInputRef.current?.click()}
-            >
-              {isAvatarPending ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <Upload className="size-4" />
-              )}
-              {t("changeAvatar")}
-            </Button>
-            {image && (
+      <section className={mx(styles, "account-panel")}>
+        <header className={mx(styles, "account-panel-head")}>
+          <h2 className={mx(styles, "account-panel-title")}>{t("profile.title")}</h2>
+          <p className={mx(styles, "account-panel-lede")}>{t("profile.description")}</p>
+        </header>
+        <div className={mx(styles, "account-panel-body account-profile-grid")}>
+          <div className={mx(styles, "account-avatar-block")}>
+            <UserAvatar name={name} image={image} size="xl" />
+            <div className="flex flex-wrap gap-2">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                className="hidden"
+                onChange={handleFileChange}
+              />
               <Button
                 type="button"
-                variant="ghost"
+                variant="outline"
+                className="route-quiet-action"
+                data-route-action="account"
                 disabled={isAvatarPending}
-                onClick={handleRemoveAvatar}
+                onClick={() => fileInputRef.current?.click()}
               >
-                <Trash2 className="size-4" />
-                {t("removeAvatar")}
+                {isAvatarPending ? (
+                  <Loader2 className="size-4 animate-spin" />
+                ) : (
+                  <Upload className="size-4" />
+                )}
+                {tAuth("changeAvatar")}
               </Button>
-            )}
+              {image ? (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  disabled={isAvatarPending}
+                  onClick={handleRemoveAvatar}
+                >
+                  <Trash2 className="size-4" />
+                  {tAuth("removeAvatar")}
+                </Button>
+              ) : null}
+            </div>
+            <p className={mx(styles, "account-avatar-hint")}>{tAuth("avatarDescription")}</p>
           </div>
-        </CardContent>
-      </Card>
 
-      <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
-        <CardHeader className="border-b border-hairline-cloud px-6 py-5">
-          <CardTitle className="text-lg text-ink">{t("profile")}</CardTitle>
-        </CardHeader>
-        <CardContent className="space-y-4 px-6 py-6">
-          <form onSubmit={handleProfileSubmit} className="space-y-4">
-            <div className="space-y-2">
-              <Label htmlFor="profile-name">{t("name")}</Label>
+          <form onSubmit={handleProfileSubmit} className={mx(styles, "account-form")}>
+            <div className={mx(styles, "account-field")}>
+              <Label htmlFor="profile-name" className={mx(styles, "account-label")}>
+                {tAuth("name")}
+              </Label>
               <Input
                 id="profile-name"
                 value={name}
@@ -237,66 +235,75 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                 autoComplete="name"
                 maxLength={80}
                 required
+                className={mx(styles, "account-input")}
               />
             </div>
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
-                {t("email")}
-              </p>
-              <p className="mt-1 font-medium text-ink">{user.email}</p>
+            <div className={mx(styles, "account-field")}>
+              <p className={mx(styles, "account-label")}>{tAuth("email")}</p>
+              <p className={mx(styles, "account-email")}>{user.email}</p>
+              <p className={mx(styles, "account-field-hint")}>{t("profile.emailHint")}</p>
             </div>
             <Button
               type="submit"
-              variant="outline"
               disabled={isProfilePending || name.trim() === savedName}
             >
               {isProfilePending ? (
                 <Loader2 className="size-4 animate-spin" />
               ) : null}
-              {t("saveName")}
+              {tAuth("saveName")}
             </Button>
           </form>
-        </CardContent>
-      </Card>
+        </div>
+      </section>
 
-      {user.passwordHash && (
-        <Card className="card-surface gap-0 overflow-hidden p-0 ring-0">
-          <CardHeader className="border-b border-hairline-cloud px-6 py-5">
-            <CardTitle className="text-lg text-ink">{t("changePassword")}</CardTitle>
-            <CardDescription>{t("passwordHint")}</CardDescription>
-          </CardHeader>
-          <CardContent className="px-6 py-6">
-            <form onSubmit={handlePasswordSubmit} className="space-y-4">
-              <div className="space-y-2">
-                <Label htmlFor="current-password">{t("currentPassword")}</Label>
+      {user.passwordHash ? (
+        <section className={mx(styles, "account-panel")}>
+          <header className={mx(styles, "account-panel-head")}>
+            <h2 className={mx(styles, "account-panel-title")}>{t("security.title")}</h2>
+            <p className={mx(styles, "account-panel-lede")}>{t("security.description")}</p>
+          </header>
+          <div className={mx(styles, "account-panel-body")}>
+            <form onSubmit={handlePasswordSubmit} className={mx(styles, "account-form")}>
+              <div className={mx(styles, "account-field")}>
+                <Label htmlFor="current-password" className={mx(styles, "account-label")}>
+                  {tAuth("currentPassword")}
+                </Label>
                 <PasswordInput
                   id="current-password"
                   autoComplete="current-password"
                   value={currentPassword}
                   onChange={(event) => setCurrentPassword(event.target.value)}
                   required
+                  className={mx(styles, "account-input")}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="new-password">{t("newPassword")}</Label>
+              <div className={mx(styles, "account-field")}>
+                <Label htmlFor="new-password" className={mx(styles, "account-label")}>
+                  {tAuth("newPassword")}
+                </Label>
                 <PasswordInput
                   id="new-password"
                   autoComplete="new-password"
                   value={newPassword}
                   onChange={(event) => setNewPassword(event.target.value)}
                   required
+                  className={mx(styles, "account-input")}
                 />
               </div>
-              <div className="space-y-2">
-                <Label htmlFor="confirm-password">{t("confirmPassword")}</Label>
+              <div className={mx(styles, "account-field")}>
+                <Label htmlFor="confirm-password" className={mx(styles, "account-label")}>
+                  {tAuth("confirmPassword")}
+                </Label>
                 <PasswordInput
                   id="confirm-password"
                   autoComplete="new-password"
                   value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}
                   required
+                  className={mx(styles, "account-input")}
                 />
               </div>
+              <p className={mx(styles, "account-field-hint")}>{tAuth("passwordHint")}</p>
               <Button
                 type="submit"
                 disabled={
@@ -309,12 +316,40 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                 {isPasswordPending ? (
                   <Loader2 className="size-4 animate-spin" />
                 ) : null}
-                {t("updatePassword")}
+                {tAuth("updatePassword")}
               </Button>
             </form>
-          </CardContent>
-        </Card>
-      )}
+          </div>
+        </section>
+      ) : null}
+
+      <section className={mx(styles, "account-panel account-panel-danger")}>
+        <header className={mx(styles, "account-panel-head")}>
+          <h2 className={mx(styles, "account-panel-title")}>{t("danger.title")}</h2>
+          <p className={mx(styles, "account-panel-lede")}>{t("danger.description")}</p>
+        </header>
+        <div className={mx(styles, "account-panel-body account-danger-row")}>
+          <div className={mx(styles, "account-danger-copy")}>
+            <p className={mx(styles, "account-danger-title")}>{t("danger.deleteTitle")}</p>
+            <p className={mx(styles, "account-danger-hint")}>{t("danger.deleteHint")}</p>
+          </div>
+          <Button
+            type="button"
+            variant="destructive"
+            className="shrink-0"
+            onClick={() => setDeleteOpen(true)}
+          >
+            <Trash2 className="size-4" />
+            {t("danger.deleteAction")}
+          </Button>
+        </div>
+      </section>
+
+      <DeleteAccountDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        email={user.email}
+      />
     </div>
   );
 }

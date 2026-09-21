@@ -25,6 +25,8 @@ type TheoryRowActionsProps = {
   description?: string | null;
   folderId?: string | null;
   workspaceId: string;
+  category?: string;
+  canExport?: boolean;
 };
 
 export function TheoryRowActions({
@@ -33,6 +35,8 @@ export function TheoryRowActions({
   description,
   folderId,
   workspaceId,
+  category,
+  canExport = false,
 }: TheoryRowActionsProps) {
   const t = useTranslations("common");
   const tt = useTranslations("theory");
@@ -46,6 +50,7 @@ export function TheoryRowActions({
   const { removeTheoryNote } = useInvalidateWorkspaceQueries(workspaceId);
 
   async function handleExportClick() {
+    if (!canExport) return;
     setIsLoadingExport(true);
     try {
       const note = await getTheoryNote(id);
@@ -97,7 +102,8 @@ export function TheoryRowActions({
           onClick={() => {
             void handleExportClick();
           }}
-          disabled={isPending || isLoadingExport}
+          disabled={isPending || isLoadingExport || !canExport}
+          title={canExport ? undefined : tt("export.empty")}
         >
           <span className="sr-only">{tt("export.button")}</span>
         </LockedFeatureButton>
@@ -136,6 +142,7 @@ export function TheoryRowActions({
         title={title}
         description={exportDescription}
         doc={exportDoc}
+        category={category}
       />
     </>
   );

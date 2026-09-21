@@ -22,6 +22,8 @@ export {
   markOnboardingCompleted,
   markOnboardingSessionPriority,
   markSectionTutorialCompleted,
+  hasCompletedSectionTutorials,
+  clearSectionTutorials,
   requestFirstEntryOnboarding,
   requestWorkspaceOnboarding,
   shouldShowWorkspaceOnboarding,
