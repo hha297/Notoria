@@ -248,11 +248,6 @@ export function TheoryLibrary({
                 <WritingCollections currentFolderId={currentFolderId} />
               </section>
 
-              <div
-                className="writing-atelier-rule theory-atelier-rule w-full shrink-0 rounded-full"
-                aria-hidden="true"
-              />
-
               <section className="writing-stage" data-tutorial="theory-note-list">
                 {groups.length > 0 ? (
                   <>
@@ -359,12 +354,12 @@ function TheoryCard({
           ) : null}
           <p className="writing-kind-facts">
             <span>{categoryLabel(note.category, t)}</span>
-            <span aria-hidden="true"> · </span>
+            <span aria-hidden="true">·</span>
             <span className="inline-flex items-center gap-1">
-              <Clock className="size-3.5" />
+              <Clock className="size-3.5" aria-hidden="true" />
               {t("readingTime", { minutes: note.readingMinutes })}
             </span>
-            <span aria-hidden="true"> · </span>
+            <span aria-hidden="true">·</span>
             <span>
               {formatDistanceToNow(new Date(note.updatedAt), {
                 addSuffix: true,

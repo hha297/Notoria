@@ -22,10 +22,6 @@ export function TheoryListLoading() {
         <Skeleton className="h-8 w-72" />
         <Skeleton className="h-12 w-64" />
       </div>
-      <div
-        className="writing-atelier-rule theory-atelier-rule w-full shrink-0 rounded-full"
-        aria-hidden="true"
-      />
       <div className="writing-stage space-y-4">
         <Skeleton className="h-3 w-16" />
         <Skeleton className="h-24 w-full" />

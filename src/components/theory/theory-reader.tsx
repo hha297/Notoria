@@ -136,10 +136,10 @@ export function TheoryReader({
         <h1 className="writing-paper-title wrap-break-word">{title}</h1>
         <p className="writing-kind-facts">
           <span className="inline-flex items-center gap-1">
-            <Clock className="size-3.5" />
+            <Clock className="size-3.5" aria-hidden="true" />
             {t("readingTime", { minutes })}
           </span>
-          <span aria-hidden="true"> · </span>
+          <span aria-hidden="true">·</span>
           <span>
             {formatDistanceToNow(new Date(updatedAt), { addSuffix: true })}
           </span>
