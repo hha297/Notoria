@@ -1915,6 +1915,62 @@
     "nameUpdateFailed": "Không cập nhật được tên",
     "nameTooShort": "Tên cần ít nhất 2 ký tự"
   },
+  "account": {
+    "eyebrow": "Tài khoản",
+    "title": "Tài khoản",
+    "highlight": "của bạn",
+    "description": "Quản lý hồ sơ, Notoria Pro và bảo mật — kể cả việc đóng tài khoản vĩnh viễn.",
+    "pro": {
+      "freeLede": "Gói miễn phí đủ luyện mỗi ngày. Pro mở các công cụ AI biến ghi chú thành nghe, nói, hỗ trợ viết và file in được.",
+      "activeLede": "Gói Pro đang hoạt động. Các công cụ AI học tập vẫn mở khi gói còn gia hạn.",
+      "unlockLabel": "Mở khóa với Pro",
+      "includedLabel": "Đã có trong gói Pro của bạn",
+      "features": {
+        "aiPractice": "Điền trống, luyện ngữ cảnh và đặt câu từ chính tài liệu của bạn",
+        "writingAi": "Sửa lỗi và gợi ý trên bài viết của bạn",
+        "export": "Chia sẻ hoặc in bài tập dạng PDF hoặc Word",
+        "listening": "Biến audio/video của bạn thành bài luyện nghe",
+        "speaking": "Gọi trực tiếp với AI tutor kèm transcript và phản hồi"
+      }
+    },
+    "profile": {
+      "title": "Hồ sơ",
+      "description": "Cách bạn hiện trên Notoria. Email gắn với đăng nhập.",
+      "emailHint": "Không đổi email tại đây. Liên hệ hỗ trợ nếu cần chuyển sang địa chỉ khác."
+    },
+    "security": {
+      "title": "Mật khẩu",
+      "description": "Chọn mật khẩu mạnh và không dùng lại ở nơi khác."
+    },
+    "danger": {
+      "title": "Đóng tài khoản",
+      "description": "Xóa vĩnh viễn tài khoản Notoria và mọi dữ liệu bên trong.",
+      "deleteTitle": "Xóa tài khoản của tôi",
+      "deleteHint": "Thao tác này xóa mọi workspace, nội dung học và thanh toán. Hãy tải backup trước nếu muốn giữ bản sao.",
+      "deleteAction": "Xóa tài khoản"
+    },
+    "delete": {
+      "kicker": "Không thể hoàn tác",
+      "title": "Xóa tài khoản?",
+      "description": "Bạn sắp đóng vĩnh viễn {email}. Không thể hoàn tác.",
+      "warningTitle": "Trước khi tiếp tục",
+      "warnings": {
+        "workspaces": "Mọi workspace cùng từ vựng, theory, writing, listening và speaking sẽ bị xóa.",
+        "billing": "Gói Notoria Pro đang hoạt động sẽ bị hủy ngay.",
+        "media": "File media đã tải lên và ảnh đại diện sẽ bị gỡ.",
+        "permanent": "Không có thời gian khôi phục sau khi xác nhận."
+      },
+      "backupTitle": "Tải backup trước",
+      "backupHint": "Xuất dữ liệu học tập dạng JSON để lưu. Media chỉ được tham chiếu bằng URL, không nhúng trong file.",
+      "backup": "Tải backup",
+      "backupDone": "Đã tải backup",
+      "backupFailed": "Không chuẩn bị được backup. Thử lại nhé.",
+      "confirmLabel": "Gõ {phrase} để xác nhận",
+      "confirm": "Xóa tài khoản vĩnh viễn",
+      "deleted": "Tài khoản của bạn đã được xóa",
+      "failed": "Không xóa được tài khoản. Thử lại nhé."
+    }
+  },
   "billing": {
     "title": "Notoria Pro",
     "description": "Mở khóa các tính năng học tập dùng AI.",

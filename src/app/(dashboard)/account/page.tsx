@@ -10,7 +10,7 @@ export default async function AccountPage({
 }: {
   searchParams: Promise<{ billing?: string }>;
 }) {
-  const t = await getTranslations("auth");
+  const t = await getTranslations("account");
   const sessionUser = await requireUser();
   const { billing } = await searchParams;
 
@@ -25,9 +25,12 @@ export default async function AccountPage({
       <div className="writing-atelier account-atelier flex flex-col gap-10 lg:gap-12">
         <header className="writing-hero">
           <div className="writing-hero-copy">
-            <p className="writing-kicker">{t("account")}</p>
-            <h1 className="writing-brand-title">{t("accountSettings")}</h1>
-            <p className="writing-brand-lede">{t("accountDescription")}</p>
+            <p className="writing-kicker">{t("eyebrow")}</p>
+            <h1 className="writing-brand-title">
+              {t("title")}{" "}
+              <span className="text-module-account-fg">{t("highlight")}</span>
+            </h1>
+            <p className="writing-brand-lede">{t("description")}</p>
           </div>
         </header>
 

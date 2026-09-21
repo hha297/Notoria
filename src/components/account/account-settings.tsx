@@ -6,6 +6,7 @@ import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Loader2, Trash2, Upload } from "lucide-react";
 import { toast } from "sonner";
+import { DeleteAccountDialog } from "@/components/account/delete-account-dialog";
 import { ProSubscriptionCard } from "@/components/account/pro-subscription-card";
 import { UserAvatar } from "@/components/account/user-avatar";
 import { PasswordInput } from "@/components/auth/password-input";
@@ -35,7 +36,8 @@ type AccountSettingsProps = {
 export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) {
   const router = useRouter();
   const { update } = useSession();
-  const t = useTranslations("auth");
+  const t = useTranslations("account");
+  const tAuth = useTranslations("auth");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState(user.image);
   const [name, setName] = useState(user.name);
@@ -43,6 +45,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
   const [isAvatarPending, startAvatarTransition] = useTransition();
   const [isProfilePending, startProfileTransition] = useTransition();
   const [isPasswordPending, startPasswordTransition] = useTransition();
+  const [deleteOpen, setDeleteOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -51,21 +54,21 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
     const code = error instanceof Error ? error.message : "GENERIC";
 
     if (code === "INVALID_FILE_TYPE") {
-      toast.error(t("avatarInvalidType"));
+      toast.error(tAuth("avatarInvalidType"));
       return;
     }
 
     if (code === "FILE_TOO_LARGE") {
-      toast.error(t("avatarTooLarge"));
+      toast.error(tAuth("avatarTooLarge"));
       return;
     }
 
     if (code === "CLOUDINARY_NOT_CONFIGURED") {
-      toast.error(t("avatarNotConfigured"));
+      toast.error(tAuth("avatarNotConfigured"));
       return;
     }
 
-    toast.error(t("avatarUploadFailed"));
+    toast.error(tAuth("avatarUploadFailed"));
   }
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
@@ -83,7 +86,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
         setImage(result.image);
         await update({ image: result.image });
         router.refresh();
-        toast.success(t("avatarUpdated"));
+        toast.success(tAuth("avatarUpdated"));
       } catch (error) {
         handleAvatarError(error);
       } finally {
@@ -99,9 +102,9 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
         setImage(null);
         await update({ image: null });
         router.refresh();
-        toast.success(t("avatarRemoved"));
+        toast.success(tAuth("avatarRemoved"));
       } catch {
-        toast.error(t("avatarUploadFailed"));
+        toast.error(tAuth("avatarUploadFailed"));
       }
     });
   }
@@ -111,7 +114,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
 
     const trimmedName = name.trim();
     if (trimmedName.length < 2) {
-      toast.error(t("nameTooShort"));
+      toast.error(tAuth("nameTooShort"));
       return;
     }
 
@@ -126,9 +129,9 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
         setSavedName(result.name);
         await update({ name: result.name });
         router.refresh();
-        toast.success(t("nameUpdated"));
+        toast.success(tAuth("nameUpdated"));
       } catch {
-        toast.error(t("nameUpdateFailed"));
+        toast.error(tAuth("nameUpdateFailed"));
       }
     });
   }
@@ -137,7 +140,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
     event.preventDefault();
 
     if (newPassword !== confirmPassword) {
-      toast.error(t("passwordMismatch"));
+      toast.error(tAuth("passwordMismatch"));
       return;
     }
 
@@ -151,16 +154,16 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
         setCurrentPassword("");
         setNewPassword("");
         setConfirmPassword("");
-        toast.success(t("passwordUpdated"));
+        toast.success(tAuth("passwordUpdated"));
       } catch (error) {
         const code = error instanceof Error ? error.message : "GENERIC";
 
         if (code === "INVALID_CURRENT_PASSWORD") {
-          toast.error(t("invalidCurrentPassword"));
+          toast.error(tAuth("invalidCurrentPassword"));
           return;
         }
 
-        toast.error(t("passwordUpdateFailed"));
+        toast.error(tAuth("passwordUpdateFailed"));
       }
     });
   }
@@ -174,58 +177,54 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
 
       <section className="account-panel">
         <header className="account-panel-head">
-          <h2 className="account-panel-title">{t("avatar")}</h2>
-          <p className="account-panel-lede">{t("avatarDescription")}</p>
+          <h2 className="account-panel-title">{t("profile.title")}</h2>
+          <p className="account-panel-lede">{t("profile.description")}</p>
         </header>
-        <div className="account-panel-body account-avatar-row">
-          <UserAvatar name={name} image={image} size="xl" />
-          <div className="flex flex-wrap gap-2">
-            <input
-              ref={fileInputRef}
-              type="file"
-              accept="image/jpeg,image/png,image/webp,image/gif"
-              className="hidden"
-              onChange={handleFileChange}
-            />
-            <Button
-              type="button"
-              variant="outline"
-              className="route-quiet-action"
-              data-route-action="account"
-              disabled={isAvatarPending}
-              onClick={() => fileInputRef.current?.click()}
-            >
-              {isAvatarPending ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <Upload className="size-4" />
-              )}
-              {t("changeAvatar")}
-            </Button>
-            {image ? (
+        <div className="account-panel-body account-profile-grid">
+          <div className="account-avatar-block">
+            <UserAvatar name={name} image={image} size="xl" />
+            <div className="flex flex-wrap gap-2">
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept="image/jpeg,image/png,image/webp,image/gif"
+                className="hidden"
+                onChange={handleFileChange}
+              />
               <Button
                 type="button"
-                variant="ghost"
+                variant="outline"
+                className="route-quiet-action"
+                data-route-action="account"
                 disabled={isAvatarPending}
-                onClick={handleRemoveAvatar}
+                onClick={() => fileInputRef.current?.click()}
               >
-                <Trash2 className="size-4" />
-                {t("removeAvatar")}
+                {isAvatarPending ? (
+                  <Loader2 className="size-4 animate-spin" />
+                ) : (
+                  <Upload className="size-4" />
+                )}
+                {tAuth("changeAvatar")}
               </Button>
-            ) : null}
+              {image ? (
+                <Button
+                  type="button"
+                  variant="ghost"
+                  disabled={isAvatarPending}
+                  onClick={handleRemoveAvatar}
+                >
+                  <Trash2 className="size-4" />
+                  {tAuth("removeAvatar")}
+                </Button>
+              ) : null}
+            </div>
+            <p className="account-avatar-hint">{tAuth("avatarDescription")}</p>
           </div>
-        </div>
-      </section>
 
-      <section className="account-panel">
-        <header className="account-panel-head">
-          <h2 className="account-panel-title">{t("profile")}</h2>
-        </header>
-        <div className="account-panel-body">
           <form onSubmit={handleProfileSubmit} className="account-form">
             <div className="account-field">
               <Label htmlFor="profile-name" className="account-label">
-                {t("name")}
+                {tAuth("name")}
               </Label>
               <Input
                 id="profile-name"
@@ -238,8 +237,9 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
               />
             </div>
             <div className="account-field">
-              <p className="account-label">{t("email")}</p>
+              <p className="account-label">{tAuth("email")}</p>
               <p className="account-email">{user.email}</p>
+              <p className="account-field-hint">{t("profile.emailHint")}</p>
             </div>
             <Button
               type="submit"
@@ -248,7 +248,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
               {isProfilePending ? (
                 <Loader2 className="size-4 animate-spin" />
               ) : null}
-              {t("saveName")}
+              {tAuth("saveName")}
             </Button>
           </form>
         </div>
@@ -257,14 +257,14 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
       {user.passwordHash ? (
         <section className="account-panel">
           <header className="account-panel-head">
-            <h2 className="account-panel-title">{t("changePassword")}</h2>
-            <p className="account-panel-lede">{t("passwordHint")}</p>
+            <h2 className="account-panel-title">{t("security.title")}</h2>
+            <p className="account-panel-lede">{t("security.description")}</p>
           </header>
           <div className="account-panel-body">
             <form onSubmit={handlePasswordSubmit} className="account-form">
               <div className="account-field">
                 <Label htmlFor="current-password" className="account-label">
-                  {t("currentPassword")}
+                  {tAuth("currentPassword")}
                 </Label>
                 <PasswordInput
                   id="current-password"
@@ -277,7 +277,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
               </div>
               <div className="account-field">
                 <Label htmlFor="new-password" className="account-label">
-                  {t("newPassword")}
+                  {tAuth("newPassword")}
                 </Label>
                 <PasswordInput
                   id="new-password"
@@ -290,7 +290,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
               </div>
               <div className="account-field">
                 <Label htmlFor="confirm-password" className="account-label">
-                  {t("confirmPassword")}
+                  {tAuth("confirmPassword")}
                 </Label>
                 <PasswordInput
                   id="confirm-password"
@@ -301,6 +301,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                   className="account-input"
                 />
               </div>
+              <p className="account-field-hint">{tAuth("passwordHint")}</p>
               <Button
                 type="submit"
                 disabled={
@@ -313,12 +314,40 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                 {isPasswordPending ? (
                   <Loader2 className="size-4 animate-spin" />
                 ) : null}
-                {t("updatePassword")}
+                {tAuth("updatePassword")}
               </Button>
             </form>
           </div>
         </section>
       ) : null}
+
+      <section className="account-panel account-panel-danger">
+        <header className="account-panel-head">
+          <h2 className="account-panel-title">{t("danger.title")}</h2>
+          <p className="account-panel-lede">{t("danger.description")}</p>
+        </header>
+        <div className="account-panel-body account-danger-row">
+          <div className="account-danger-copy">
+            <p className="account-danger-title">{t("danger.deleteTitle")}</p>
+            <p className="account-danger-hint">{t("danger.deleteHint")}</p>
+          </div>
+          <Button
+            type="button"
+            variant="destructive"
+            className="shrink-0"
+            onClick={() => setDeleteOpen(true)}
+          >
+            <Trash2 className="size-4" />
+            {t("danger.deleteAction")}
+          </Button>
+        </div>
+      </section>
+
+      <DeleteAccountDialog
+        open={deleteOpen}
+        onOpenChange={setDeleteOpen}
+        email={user.email}
+      />
     </div>
   );
 }

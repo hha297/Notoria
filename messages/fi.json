@@ -1915,6 +1915,62 @@
     "nameUpdateFailed": "Nimen päivitys epäonnistui",
     "nameTooShort": "Nimen on oltava vähintään 2 merkkiä"
   },
+  "account": {
+    "eyebrow": "Tili",
+    "title": "Sinun",
+    "highlight": "tilisi",
+    "description": "Hallitse profiilia, Notoria Prota ja tilin turvaa — myös tilin lopullista sulkemista.",
+    "pro": {
+      "freeLede": "Ilmainen kattaa arjen harjoittelun. Pro avaa tekoälytyökalut, joilla muistiinpanoistasi tulee kuuntelua, puhumista, kirjoitusapua ja tulostettavia tiedostoja.",
+      "activeLede": "Pro-tilauksesi on aktiivinen. Nämä tekoälytyökalut pysyvät auki tilauksen uusiutuessa.",
+      "unlockLabel": "Avaa Prolla",
+      "includedLabel": "Sisältyy Pro-tilaukseesi",
+      "features": {
+        "aiPractice": "Aukkotehtävät, kontekstiharjoitukset ja lauseenmuodostus omasta materiaalista",
+        "writingAi": "Korjauksia ja ehdotuksia teksteihisi",
+        "export": "Jaa tai tulosta tehtäviä PDF- tai Word-muodossa",
+        "listening": "Muuta oma ääni tai video kuunteluharjoituksiksi",
+        "speaking": "Live-tekoälytutorpuhelut litteraatilla ja palautteella"
+      }
+    },
+    "profile": {
+      "title": "Profiili",
+      "description": "Miten näyt Notoriassa. Sähköposti on sidottu kirjautumiseen.",
+      "emailHint": "Sähköpostia ei voi vaihtaa täällä. Ota yhteyttä tukeen, jos tarvitset uuden osoitteen."
+    },
+    "security": {
+      "title": "Salasana",
+      "description": "Valitse vahva salasana, jota et käytä muualla."
+    },
+    "danger": {
+      "title": "Sulje tili",
+      "description": "Poista Notoria-tilisi ja kaikki sen sisältö pysyvästi.",
+      "deleteTitle": "Poista tilini",
+      "deleteHint": "Tämä poistaa kaikki työtilat, oppimissisällön ja laskutuksen. Lataa varmuuskopio ensin, jos haluat säilyttää kopion.",
+      "deleteAction": "Poista tili"
+    },
+    "delete": {
+      "kicker": "Pysyvä",
+      "title": "Poistetaanko tilisi?",
+      "description": "Olet sulkemassa pysyvästi tilin {email}. Tätä ei voi perua.",
+      "warningTitle": "Ennen kuin jatkat",
+      "warnings": {
+        "workspaces": "Kaikki työtilat sekä sanasto, teoria, kirjoitus, kuuntelu ja puhuminen poistetaan.",
+        "billing": "Aktiivinen Notoria Pro -tilaus peruutetaan heti.",
+        "media": "Ladatut mediatiedostot ja profiilikuvasi poistetaan.",
+        "permanent": "Vahvistuksen jälkeen ei ole palautusaikaa."
+      },
+      "backupTitle": "Lataa varmuuskopio ensin",
+      "backupHint": "Vie oppimisdatasi JSON-tiedostona. Mediatiedostot viitataan URL-osoitteella, niitä ei upoteta tiedostoon.",
+      "backup": "Lataa varmuuskopio",
+      "backupDone": "Varmuuskopio ladattu",
+      "backupFailed": "Varmuuskopiota ei voitu valmistella. Yritä uudelleen.",
+      "confirmLabel": "Kirjoita {phrase} vahvistaaksesi",
+      "confirm": "Poista tili pysyvästi",
+      "deleted": "Tilisi on poistettu",
+      "failed": "Tiliä ei voitu poistaa. Yritä uudelleen."
+    }
+  },
   "billing": {
     "title": "Notoria Pro",
     "description": "Avaa tekoälyyn perustuvat oppimisominaisuudet.",

@@ -6622,6 +6622,15 @@ body {
 }
 
 /* --- Account atelier --- */
+.account-atelier .writing-hero {
+  width: min(100%, 52rem);
+  margin-inline: auto;
+}
+
+.account-atelier .writing-brand-lede {
+  max-width: 38rem;
+}
+
 .account-atelier .writing-kicker {
   color: var(--module-account-fg);
 }
@@ -6629,7 +6638,9 @@ body {
 .account-stack {
   display: grid;
   gap: 1rem;
-  max-width: 42rem;
+  width: min(100%, 52rem);
+  max-width: 52rem;
+  margin-inline: auto;
 }
 
 .account-panel {
@@ -6658,6 +6669,17 @@ body {
     color-mix(in oklab, var(--surface-elevated) 45%, transparent);
 }
 
+.account-panel-danger {
+  border-color: color-mix(in oklab, var(--destructive) 34%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--destructive) 10%, transparent),
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 42%, transparent);
+}
+
 .account-panel-head {
   padding: 1.1rem 1.2rem 0.95rem;
   border-bottom: 1px solid
@@ -6684,17 +6706,36 @@ body {
   padding: 1.15rem 1.2rem 1.25rem;
 }
 
-.account-avatar-row {
-  display: flex;
-  flex-direction: column;
-  gap: 1.15rem;
+.account-profile-grid {
+  display: grid;
+  gap: 1.5rem;
 }
 
-@media (min-width: 640px) {
-  .account-avatar-row {
-    flex-direction: row;
-    align-items: center;
+@media (min-width: 768px) {
+  .account-profile-grid {
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    align-items: start;
   }
+}
+
+.account-avatar-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.account-avatar-hint,
+.account-field-hint {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+.account-pro-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
 }
 
 .account-pro-row {
@@ -6718,6 +6759,116 @@ body {
   font-weight: 700;
   letter-spacing: -0.03em;
   color: var(--ink);
+}
+
+.account-pro-features {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding-top: 0.15rem;
+  border-top: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+}
+
+.account-pro-features-label {
+  margin: 0.35rem 0 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.account-pro-feature-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.65rem;
+}
+
+@media (min-width: 720px) {
+  .account-pro-feature-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.account-pro-feature {
+  display: flex;
+  gap: 0.65rem;
+  align-items: flex-start;
+  padding: 0.55rem 0.65rem;
+  border-radius: 0.7rem;
+  background: color-mix(in oklab, var(--surface-muted) 42%, transparent);
+}
+
+.account-pro-feature-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.35rem;
+  height: 1.35rem;
+  margin-top: 0.1rem;
+  border-radius: 999px;
+  color: var(--primary);
+  background: color-mix(in oklab, var(--primary) 14%, transparent);
+  flex-shrink: 0;
+}
+
+.account-pro-feature-title {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.35;
+  color: var(--ink);
+}
+
+.account-pro-feature-impact {
+  margin: 0.15rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+
+.account-pro-fineprint {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+}
+
+.account-danger-row {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .account-danger-row {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.account-danger-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  min-width: 0;
+}
+
+.account-danger-title {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.account-danger-hint {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
 }
 
 .account-form {
@@ -6750,6 +6901,117 @@ body {
   font-size: 0.98rem;
   font-weight: 600;
   color: var(--ink);
+}
+
+.account-delete-sheet {
+  gap: 0;
+}
+
+.account-delete-hero {
+  padding: 1.25rem 1.3rem 1rem;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--destructive) 22%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--destructive) 12%, transparent),
+      transparent 78%
+    );
+}
+
+.account-delete-kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--destructive) 78%, var(--muted-foreground));
+}
+
+.account-delete-title {
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+}
+
+.account-delete-lede {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.45;
+}
+
+.account-delete-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  padding: 1.15rem 1.3rem;
+}
+
+.account-delete-warning {
+  display: flex;
+  gap: 0.7rem;
+  align-items: flex-start;
+  padding: 0.85rem 0.95rem;
+  border-radius: 0.75rem;
+  border: 1px solid
+    color-mix(in oklab, var(--destructive) 28%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--destructive) 8%, transparent);
+  color: color-mix(in oklab, var(--destructive) 82%, var(--ink));
+}
+
+.account-delete-warning-title {
+  margin: 0;
+  font-size: 0.9rem;
+  font-weight: 650;
+}
+
+.account-delete-warning-list {
+  margin: 0.45rem 0 0;
+  padding-left: 1.1rem;
+  display: grid;
+  gap: 0.28rem;
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+
+.account-delete-backup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 0.9rem 0.95rem;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 90%, transparent);
+  background: color-mix(in oklab, var(--surface-muted) 36%, transparent);
+}
+
+@media (min-width: 560px) {
+  .account-delete-backup {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+}
+
+.account-delete-backup-title {
+  margin: 0;
+  font-size: 0.92rem;
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.account-delete-backup-hint {
+  margin: 0.25rem 0 0;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+
+.account-delete-footer {
+  padding: 0.95rem 1.3rem 1.15rem;
+  border-top: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
 }
 
 

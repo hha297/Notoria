@@ -3,7 +3,7 @@
 import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
-import { Loader2, Sparkles } from "lucide-react";
+import { Check, Loader2, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { ProUpgradeDialog } from "@/components/billing/pro-upgrade-dialog";
@@ -15,6 +15,16 @@ import {
 } from "@/lib/stripe/client-billing";
 import type { BillingState } from "@/lib/stripe/types";
 
+const PRO_FEATURES = [
+  "aiPractice",
+  "writingAi",
+  "export",
+  "listening",
+  "speaking",
+] as const;
+
+type ProFeatureId = (typeof PRO_FEATURES)[number];
+
 type ProSubscriptionCardProps = {
   billing: BillingState;
   checkoutResult?: string;
@@ -25,6 +35,7 @@ export function ProSubscriptionCard({
   checkoutResult,
 }: ProSubscriptionCardProps) {
   const t = useTranslations("billing");
+  const tAccount = useTranslations("account.pro");
   const router = useRouter();
   const [upgradeOpen, setUpgradeOpen] = useState(false);
   const [isPortalPending, startPortalTransition] = useTransition();
@@ -92,48 +103,86 @@ export function ProSubscriptionCard({
             </Badge>
           </div>
           <p className="account-panel-lede">
-            {billing.isPro ? t("proDescription") : t("description")}
+            {billing.isPro ? tAccount("activeLede") : tAccount("freeLede")}
           </p>
         </header>
-        <div className="account-panel-body account-pro-row">
-          <div className="space-y-1">
-            <p className="account-pro-price">{t("price")}</p>
-            {billing.isPro && periodEnd ? (
-              <p className="text-sm text-muted-foreground">
-                {t("renewsOn", { date: periodEnd })}
-              </p>
+
+        <div className="account-panel-body account-pro-body">
+          <div className="account-pro-row">
+            <div className="space-y-1">
+              <p className="account-pro-price">{t("price")}</p>
+              {billing.isPro && periodEnd ? (
+                <p className="text-sm text-muted-foreground">
+                  {t("renewsOn", { date: periodEnd })}
+                </p>
+              ) : (
+                <p className="text-sm text-muted-foreground">{t("tagline")}</p>
+              )}
+              {isRefreshing && !billing.isPro ? (
+                <p className="text-sm text-muted-foreground">{t("activating")}</p>
+              ) : null}
+            </div>
+
+            {billing.isPro ? (
+              <Button
+                type="button"
+                variant="outline"
+                className="route-quiet-action"
+                disabled={isPortalPending || !billing.hasStripeCustomer}
+                onClick={openPortal}
+              >
+                {isPortalPending ? (
+                  <Loader2 className="size-4 animate-spin" />
+                ) : (
+                  <Sparkles className="size-4" />
+                )}
+                {t("manage")}
+              </Button>
             ) : (
-              <p className="text-sm text-muted-foreground">{t("tagline")}</p>
+              <Button type="button" onClick={() => setUpgradeOpen(true)}>
+                <Sparkles className="size-4" />
+                {t("upgrade")}
+              </Button>
             )}
-            {isRefreshing && !billing.isPro ? (
-              <p className="text-sm text-muted-foreground">{t("activating")}</p>
-            ) : null}
           </div>
 
-          {billing.isPro ? (
-            <Button
-              type="button"
-              variant="outline"
-              className="route-quiet-action"
-              disabled={isPortalPending || !billing.hasStripeCustomer}
-              onClick={openPortal}
-            >
-              {isPortalPending ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <Sparkles className="size-4" />
-              )}
-              {t("manage")}
-            </Button>
-          ) : (
-            <Button type="button" onClick={() => setUpgradeOpen(true)}>
-              <Sparkles className="size-4" />
-              {t("upgrade")}
-            </Button>
-          )}
+          <div className="account-pro-features">
+            <p className="account-pro-features-label">
+              {billing.isPro
+                ? tAccount("includedLabel")
+                : tAccount("unlockLabel")}
+            </p>
+            <ul className="account-pro-feature-list">
+              {PRO_FEATURES.map((id) => (
+                <ProFeatureRow key={id} id={id} />
+              ))}
+            </ul>
+            {!billing.isPro ? (
+              <p className="account-pro-fineprint">{t("cancelAnytime")}</p>
+            ) : null}
+          </div>
         </div>
       </section>
       <ProUpgradeDialog open={upgradeOpen} onOpenChange={setUpgradeOpen} />
     </>
+  );
+}
+
+function ProFeatureRow({ id }: { id: ProFeatureId }) {
+  const tBilling = useTranslations("billing.compare.rows");
+  const tAccount = useTranslations("account.pro.features");
+
+  return (
+    <li className="account-pro-feature">
+      <span className="account-pro-feature-mark" aria-hidden>
+        <Check className="size-3.5" strokeWidth={2.5} />
+      </span>
+      <div>
+        <p className="account-pro-feature-title">
+          {tBilling(`${id}.capability`)}
+        </p>
+        <p className="account-pro-feature-impact">{tAccount(id)}</p>
+      </div>
+    </li>
   );
 }

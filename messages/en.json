@@ -2099,6 +2099,62 @@
     "nameUpdateFailed": "Could not update name",
     "nameTooShort": "Name must be at least 2 characters"
   },
+  "account": {
+    "eyebrow": "Account",
+    "title": "Your",
+    "highlight": "account",
+    "description": "Manage your profile, Notoria Pro, and account security — including permanently closing your account.",
+    "pro": {
+      "freeLede": "Free covers everyday practice. Pro unlocks the AI tools that turn your notes into listening, speaking, writing help, and printable files.",
+      "activeLede": "Your Pro plan is active. These AI learning tools stay unlocked while your subscription renews.",
+      "unlockLabel": "Unlock with Pro",
+      "includedLabel": "Included with your Pro plan",
+      "features": {
+        "aiPractice": "Fill-blank, contextual drills, and form-a-sentence from your own material",
+        "writingAi": "Corrections and suggestions on the texts you write",
+        "export": "Share or print worksheets as PDF or Word",
+        "listening": "Turn your own audio or video into practice lessons",
+        "speaking": "Live AI tutor calls with transcript and feedback"
+      }
+    },
+    "profile": {
+      "title": "Profile",
+      "description": "How you appear across Notoria. Email stays tied to sign-in.",
+      "emailHint": "Email cannot be changed here. Contact support if you need to move to a different address."
+    },
+    "security": {
+      "title": "Password",
+      "description": "Choose a strong password you do not reuse elsewhere."
+    },
+    "danger": {
+      "title": "Close account",
+      "description": "Permanently delete your Notoria account and everything inside it.",
+      "deleteTitle": "Delete my account",
+      "deleteHint": "This removes all workspaces, learning content, and billing for this account. Download a backup first if you want to keep a copy.",
+      "deleteAction": "Delete account"
+    },
+    "delete": {
+      "kicker": "Irreversible",
+      "title": "Delete your account?",
+      "description": "You are about to permanently close {email}. This cannot be undone.",
+      "warningTitle": "Before you continue",
+      "warnings": {
+        "workspaces": "Every workspace and all vocabulary, theory, writing, listening, and speaking data will be deleted.",
+        "billing": "Any active Notoria Pro subscription will be canceled immediately.",
+        "media": "Uploaded media and your profile photo will be removed.",
+        "permanent": "There is no recovery period after confirmation."
+      },
+      "backupTitle": "Download a backup first",
+      "backupHint": "Exports your learning data as a JSON file for safekeeping. Media files are linked by URL, not embedded.",
+      "backup": "Download backup",
+      "backupDone": "Backup downloaded",
+      "backupFailed": "Could not prepare your backup. Try again.",
+      "confirmLabel": "Type {phrase} to confirm",
+      "confirm": "Permanently delete account",
+      "deleted": "Your account has been deleted",
+      "failed": "Could not delete your account. Please try again."
+    }
+  },
   "billing": {
     "title": "Notoria Pro",
     "description": "Unlock AI-powered learning features.",
