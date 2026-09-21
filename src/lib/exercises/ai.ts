@@ -43,6 +43,7 @@ function languageHint(code: string | null | undefined) {
 const UI_LANGUAGE_NAMES = {
   en: "English",
   fi: "Finnish",
+  sv: "Swedish",
   vi: "Vietnamese",
 } as const;
 

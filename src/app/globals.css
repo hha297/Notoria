@@ -1207,6 +1207,10 @@
     --route-wash-alt: var(--module-theory-bg);
   }
 
+  .route-atelier[data-route="exercises"] .writing-kicker {
+    color: var(--module-exercise-fg);
+  }
+
   .route-quiet-action {
     --route-action-fg: var(--module-home-fg);
     --route-action-bg: var(--module-home-bg);
@@ -1485,6 +1489,137 @@
       color-mix(in oklab, var(--module-vocab-fg) 16%, transparent);
   }
 
+  .vocab-lexicon .vocab-custom-tag-trigger {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 24%,
+      var(--hairline-cloud)
+    ) !important;
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 22%,
+      transparent
+    ) !important;
+    color: color-mix(
+      in oklab,
+      var(--ink) 72%,
+      var(--muted-foreground)
+    ) !important;
+  }
+
+  .vocab-lexicon .vocab-custom-tag-trigger:hover {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 42%,
+      var(--hairline-cloud)
+    ) !important;
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 38%,
+      transparent
+    ) !important;
+    color: var(--module-vocab-fg) !important;
+  }
+
+  .vocab-lexicon .vocab-custom-tag-trigger[aria-expanded="true"],
+  .vocab-lexicon .vocab-custom-tag-trigger[data-popup-open],
+  .vocab-lexicon .vocab-custom-tag-trigger[data-state="open"] {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 55%,
+      var(--hairline-cloud)
+    ) !important;
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 68%,
+      var(--surface-elevated)
+    ) !important;
+    color: var(--module-vocab-fg) !important;
+    box-shadow: 0 0 0 1px
+      color-mix(in oklab, var(--module-vocab-fg) 16%, transparent);
+  }
+
+  /* Portaled menu — match soft chip wash, not solid module bg */
+  .vocab-custom-tag-menu {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 28%,
+      var(--hairline-cloud)
+    ) !important;
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 42%,
+      var(--popover)
+    ) !important;
+    color: color-mix(
+      in oklab,
+      var(--ink) 78%,
+      var(--module-vocab-fg)
+    ) !important;
+    --tw-ring-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 14%,
+      transparent
+    );
+  }
+
+  .vocab-custom-tag-menu [data-slot="dropdown-menu-checkbox-item"],
+  .vocab-custom-tag-menu [data-slot="dropdown-menu-item"] {
+    color: color-mix(in oklab, var(--ink) 78%, var(--module-vocab-fg));
+  }
+
+  .vocab-custom-tag-menu [data-slot="dropdown-menu-checkbox-item"]:focus,
+  .vocab-custom-tag-menu [data-slot="dropdown-menu-checkbox-item"][data-highlighted],
+  .vocab-custom-tag-menu [data-slot="dropdown-menu-item"]:focus,
+  .vocab-custom-tag-menu [data-slot="dropdown-menu-item"][data-highlighted] {
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 55%,
+      transparent
+    ) !important;
+    color: var(--module-vocab-fg) !important;
+  }
+
+  .vocab-custom-tag-menu [data-slot="dropdown-menu-separator"] {
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 18%,
+      transparent
+    ) !important;
+  }
+
+  .vocab-custom-tag-menu .bg-popover {
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 42%,
+      var(--popover)
+    ) !important;
+  }
+
+  .vocab-custom-tag-menu input {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 24%,
+      var(--hairline-cloud)
+    ) !important;
+    background: color-mix(
+      in oklab,
+      var(--module-vocab-bg) 28%,
+      var(--surface-elevated)
+    ) !important;
+    color: var(--ink) !important;
+  }
+
+  .vocab-custom-tag-menu input:focus-visible {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 48%,
+      var(--hairline-cloud)
+    ) !important;
+    box-shadow: 0 0 0 2px
+      color-mix(in oklab, var(--module-vocab-fg) 18%, transparent) !important;
+  }
+
   .vocab-lexicon .writing-spine-search {
     border-bottom-color: color-mix(
       in oklab,
@@ -1579,6 +1714,7 @@
   .writing-brand-lede {
     max-width: 40rem;
     margin-top: 0.85rem;
+    margin-bottom: 0.85rem;
     font-size: 1.05rem;
     line-height: 1.65;
     color: var(--muted-foreground);

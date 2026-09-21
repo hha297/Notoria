@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
 import { toast } from "sonner";
+import { CountryFlag } from "@/components/layout/country-flag";
 import {
   Select,
   SelectContent,
@@ -14,11 +15,17 @@ import {
 import { locales, type AppLocale } from "@/i18n/config";
 import { setAppLocale } from "@/lib/actions/locale";
 
-const LOCALE_LABELS: Record<AppLocale, string> = {
-  en: "English",
-  vi: "Tiếng Việt",
-  fi: "Suomi",
+/** Display labels; options are sorted alphabetically by label. */
+const LOCALE_META: Record<AppLocale, { label: string; flag: string }> = {
+  en: { label: "English", flag: "GB" },
+  fi: { label: "Suomi", flag: "FI" },
+  sv: { label: "Svenska", flag: "SE" },
+  vi: { label: "Tiếng Việt", flag: "VN" },
 };
+
+const SORTED_LOCALES = [...locales].sort((a, b) =>
+  LOCALE_META[a].label.localeCompare(LOCALE_META[b].label, "en"),
+);
 
 type LocaleSelectorProps = {
   value: AppLocale;
@@ -47,20 +54,32 @@ export function LocaleSelector({ value }: LocaleSelectorProps) {
     <div className="flex min-w-0 items-center gap-2">
       <Select value={value} onValueChange={handleChange} disabled={isPending}>
         <SelectTrigger
-          className="h-10 w-[7.5rem] min-w-0 bg-surface-elevated sm:w-auto sm:min-w-[140px]"
+          className="h-10 w-[8.5rem] min-w-0 bg-surface-elevated sm:w-auto sm:min-w-[148px]"
         >
-          <SelectValue>{LOCALE_LABELS[value]}</SelectValue>
+          <SelectValue>
+            <LocaleOption locale={value} />
+          </SelectValue>
         </SelectTrigger>
         <SelectContent>
           <SelectGroup>
-            {locales.map((locale) => (
+            {SORTED_LOCALES.map((locale) => (
               <SelectItem key={locale} value={locale}>
-                {LOCALE_LABELS[locale]}
+                <LocaleOption locale={locale} />
               </SelectItem>
             ))}
           </SelectGroup>
         </SelectContent>
       </Select>
     </div>
+  );
+}
+
+function LocaleOption({ locale }: { locale: AppLocale }) {
+  const meta = LOCALE_META[locale];
+  return (
+    <span className="flex min-w-0 items-center gap-2">
+      <CountryFlag code={meta.flag} className="h-3.5 w-5 shrink-0" />
+      <span className="truncate">{meta.label}</span>
+    </span>
   );
 }

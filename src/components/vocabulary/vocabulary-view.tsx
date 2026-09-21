@@ -44,12 +44,7 @@ export function VocabularyView({
           <header className="writing-hero">
             <div className="writing-hero-copy">
               <p className="writing-kicker">{workspaceName}</p>
-              <h1 className="writing-brand-title">
-                {t("title")}{" "}
-                <span className="text-module-vocab-fg">
-                  {t("bank")}
-                </span>
-              </h1>
+              <h1 className="writing-brand-title">{t("title")}</h1>
             </div>
             <div className="writing-hero-actions">
               <ShowTutorialButton section="vocabulary" />
@@ -80,12 +75,7 @@ export function VocabularyView({
           <header className="writing-hero">
             <div className="writing-hero-copy">
               <p className="writing-kicker">{workspaceName}</p>
-              <h1 className="writing-brand-title">
-                {t("title")}{" "}
-                <span className="text-module-vocab-fg">
-                  {t("bank")}
-                </span>
-              </h1>
+              <h1 className="writing-brand-title">{t("title")}</h1>
               <p className="writing-brand-lede">{t("description")}</p>
             </div>
             <div className="writing-hero-actions">

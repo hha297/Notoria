@@ -96,27 +96,23 @@ export function VocabularyBank({
   }, [words]);
 
   const tagFilterGroups = useMemo((): MultiFilterOptionGroup[] => {
-    return [
-      ...TAG_PICKER_GROUPS.map((group) => ({
-        label: tTags(`groups.${group}`),
-        options: BUILTIN_TAG_GROUPS[group].map((tag) => ({
-          value: tag.id,
-          label: tTags(`${group}.${tag.id}`),
-        })),
+    return TAG_PICKER_GROUPS.map((group) => ({
+      label: tTags(`groups.${group}`),
+      options: BUILTIN_TAG_GROUPS[group].map((tag) => ({
+        value: tag.id,
+        label: tTags(`${group}.${tag.id}`),
       })),
-      ...(customTagOptions.length > 0
-        ? [
-          {
-            label: tTags("groups.custom"),
-            options: customTagOptions.map((tag) => ({
-              value: tag,
-              label: getCustomTagName(tag),
-            })),
-          },
-        ]
-        : []),
-    ];
-  }, [customTagOptions, tTags]);
+    }));
+  }, [tTags]);
+
+  const customTagFilterOptions = useMemo(
+    () =>
+      customTagOptions.map((tag) => ({
+        value: tag,
+        label: getCustomTagName(tag),
+      })),
+    [customTagOptions],
+  );
 
   const stats = useMemo(() => getVocabularyStats(words), [words]);
 
@@ -194,12 +190,7 @@ export function VocabularyBank({
         <header className="writing-hero">
           <div className="writing-hero-copy">
             <p className="writing-kicker">{workspaceName}</p>
-            <h1 className="writing-brand-title">
-              {t("title")}{" "}
-              <span className="text-module-vocab-fg">
-                {t("bank")}
-              </span>
-            </h1>
+            <h1 className="writing-brand-title">{t("title")}</h1>
             <p className="writing-brand-lede">{t("description")}</p>
             <div className="mt-5">
               <VocabularyStats
@@ -222,6 +213,7 @@ export function VocabularyBank({
             tagFilter={tagFilter}
             onTagFilterChange={setTagFilter}
             tagFilterGroups={tagFilterGroups}
+            customTagOptions={customTagFilterOptions}
             sortField={sortField}
             sortDirection={sortDirection}
             onSortChange={(field, direction) => {

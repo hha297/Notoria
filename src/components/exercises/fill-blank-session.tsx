@@ -16,6 +16,7 @@ import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { Button } from "@/components/ui/button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
+import { isValidLocale } from "@/i18n/config";
 import { requestExerciseAi } from "@/lib/exercises/ai-client";
 import {
   fillBlankExerciseToItem,
@@ -176,7 +177,7 @@ export function FillBlankSession({
         exerciseType: "fill-in-blank",
         language: language ?? null,
         difficulty,
-        uiLocale: uiLocale === "en" || uiLocale === "fi" || uiLocale === "vi" ? uiLocale : "en",
+        uiLocale: isValidLocale(uiLocale) ? uiLocale : "en",
         words: payloadWords,
       });
 

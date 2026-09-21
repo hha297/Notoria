@@ -288,6 +288,7 @@ export async function generateAiTheoryExercises(input: {
 function resolveUiLocaleFromLanguageName(languageName: string): AppLocale {
   const normalized = languageName.trim().toLowerCase();
   if (normalized.startsWith("fi")) return "fi";
+  if (normalized.startsWith("sv") || normalized.includes("swedish")) return "sv";
   if (normalized.startsWith("vi") || normalized.includes("vietnam")) return "vi";
   return "en";
 }

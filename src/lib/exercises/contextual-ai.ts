@@ -58,6 +58,7 @@ function languageHint(code: string | null | undefined) {
 
 function uiLanguageName(locale: string | undefined) {
   if (locale === "fi") return "Finnish";
+  if (locale === "sv") return "Swedish";
   if (locale === "vi") return "Vietnamese";
   return "English";
 }

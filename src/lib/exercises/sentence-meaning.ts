@@ -4,6 +4,7 @@ import type { AppLocale } from "@/i18n/config";
 const UI_LANGUAGE_NAMES: Record<AppLocale, string> = {
   en: "English",
   fi: "Finnish",
+  sv: "Swedish",
   vi: "Vietnamese",
 };
 

@@ -13,13 +13,14 @@ export const runtime = "nodejs";
 const UI_LANGUAGE_NAMES: Record<AppLocale, string> = {
   en: "English",
   fi: "Finnish",
+  sv: "Swedish",
   vi: "Vietnamese",
 };
 
 const bodySchema = z.object({
   theoryId: z.string().min(1),
   count: z.number().int().min(1).max(30).optional(),
-  /** Website UI locale (en | fi | vi) for sentenceMeaning. */
+  /** Website UI locale for sentenceMeaning. */
   uiLocale: z.enum(locales).optional(),
 });
 

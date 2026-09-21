@@ -35,7 +35,10 @@ Subscribe from `/account` or any locked control. Price in the UI: **€9.99 / mo
 ### Authentication & Account
 
 - Register and sign in with email and password (NextAuth credentials, JWT sessions)
+- **Google OAuth** sign-in (Auth.js Google provider + Drizzle adapter `accounts` table)
+- **Forgot / reset password** via email link ([Resend](https://resend.com)); tokens stored hashed in `password_reset_tokens`
 - Protected dashboard routes via middleware
+- Learning-language onboarding when the user has no workspace yet
 - **Account settings** (`/account`): display name, password, Cloudinary avatar
 - **Billing card**: upgrade to Pro (Stripe Checkout), manage subscription (Customer Portal), plan/status badges
 - **Upgrade modal**: compact Free vs Pro comparison table (what you get, lock state, why it matters) from `/account` or any locked control
@@ -163,7 +166,8 @@ Home is a workspace hub, not a word dump.
 
 ### Internationalization
 
-- UI in **English**, **Vietnamese**, and **Finnish** (`next-intl`, cookie-persisted)
+- UI in **English**, **Finnish**, **Swedish**, and **Vietnamese** (`next-intl`, cookie-persisted via `notoria-locale`)
+- Message catalogs live in `messages/{en,fi,sv,vi}.json`
 - Separate from workspace learning languages (Finnish, Vietnamese, Japanese, …)
 
 ### Responsive design
@@ -179,12 +183,14 @@ Home is a workspace hub, not a word dump.
 | ----- | ---------- |
 | Framework | Next.js 16 (App Router), React 19 |
 | Language | TypeScript |
-| Styling | Tailwind CSS v4, shadcn/ui (Base UI) |
+| Styling | Tailwind CSS v4, CSS Modules (`src/components/style/`), shadcn/ui (Base UI) |
 | Database | PostgreSQL 16 (local Docker; production Neon) |
 | ORM | Drizzle |
-| Auth | NextAuth v5 (credentials) |
+| Auth | NextAuth v5 (credentials + Google OAuth) |
+| Email | Resend (password-reset emails) |
 | Billing | Stripe Checkout + Customer Portal + webhooks |
-| i18n | next-intl |
+| i18n | next-intl (EN / FI / SV / VI UI locales) |
+| Server state | TanStack Query |
 | Forms | React Hook Form + Zod |
 | Editor | TipTap |
 | Drag & drop | dnd-kit |
@@ -193,8 +199,8 @@ Home is a workspace hub, not a word dump.
 | Speech | AssemblyAI (listening transcription); Stream Video transcription (speaking) |
 | Realtime video | Stream Video + `@stream-io/openai-realtime-api` (AI tutor on the call) |
 | Media | Cloudinary (avatars + listening files) |
-| Tests | Vitest (access rules, AI contracts) |
-| Icons | Lucide |
+| Tests | Vitest (unit/integration: access rules, AI contracts, export, taxonomy, …) |
+| Icons | Lucide; country flags via `country-flag-icons` |
 | Motion | Motion (flashcards) |
 | Deployment | Vercel (app) + Docker Compose (local Postgres) |
 
@@ -203,13 +209,13 @@ Home is a workspace hub, not a word dump.
 ## Project Structure
 
 ```
-messages/                 # UI locales: en.json, vi.json, fi.json
+messages/                 # UI locales: en.json, fi.json, sv.json, vi.json
 public/
 ├── fonts/                # Export fonts (PDF)
 └── background.png        # Auth hero
 src/
 ├── app/
-│   ├── (auth)/           # Sign in, sign up
+│   ├── (auth)/           # Sign in, sign up, forgot / reset password
 │   ├── (call)/           # Full-screen speaking call (no sidebar)
 │   ├── (dashboard)/      # Sidebar layout
 │   │   ├── account/      # Profile, password, avatar, billing
@@ -226,15 +232,19 @@ src/
 │       └── stripe/       # Checkout, portal, webhook
 ├── components/
 │   ├── account/          # Settings + Pro subscription card
+│   ├── auth/             # Sign-in / sign-up / forgot / reset forms
 │   ├── billing/          # Upgrade modal (Free vs Pro table), locked buttons, Pro provider
 │   ├── dashboard/        # How-to guide + continue / practice now
 │   ├── editor/           # TipTap
 │   ├── exercises/
 │   ├── flashcards/
+│   ├── getting-started/  # Long-form product guide
 │   ├── layout/           # Sidebar (Listening + Speaking locked for free), header
 │   ├── listening/
 │   ├── onboarding/       # Workspace onboarding + section tutorials
+│   ├── settings/         # Appearance, shortcuts, local prefs
 │   ├── speaking/
+│   ├── style/            # Feature CSS Modules (auth, vocabulary, exercises, …)
 │   ├── theory/
 │   ├── vocabulary/
 │   ├── workspace/
@@ -242,7 +252,8 @@ src/
 ├── db/                   # Drizzle schema and client
 ├── lib/
 │   ├── actions/          # Server Actions
-│   ├── auth/             # Session + paid/Pro/AI access
+│   ├── auth/             # Session + paid/Pro/AI access + password-reset tokens
+│   ├── email/            # Resend password-reset mail
 │   ├── exercises/        # Quiz generation + AI fill-in-blank / form-sentence
 │   ├── flashcards/       # SRS
 │   ├── listening/        # Transcribe, speakers, generate practice
@@ -262,7 +273,7 @@ src/
 - **Node.js** 20+
 - **Docker Desktop** (local PostgreSQL)
 - **npm**
-- Optional for full local features: Cloudinary, OpenAI, AssemblyAI, Stream Video, Stripe (test mode)
+- Optional for full local features: Cloudinary, OpenAI, AssemblyAI, Stream Video, Stripe (test mode), Resend (password reset)
 
 ---
 
@@ -281,13 +292,24 @@ Create `.env.local` in the project root:
 ```env
 DATABASE_URL=postgresql://notoria:notoria@localhost:5434/notoria
 
+# Used by `npm run db:push` (prod first, then local)
+DATABASE_URL_PROD=
+
 # Auth.js / NextAuth — openssl rand -base64 32
 AUTH_SECRET=your-secret-here
+# Canonical app URL (no trailing slash). Used for Auth.js, Stripe return URLs, and password-reset links.
 AUTH_URL=http://localhost:3000
+# Optional fallback if AUTH_URL is unset (see getAppBaseUrl)
+# NEXT_PUBLIC_APP_URL=http://localhost:3000
 
 # Google OAuth (Auth.js provider — never commit real secrets)
 GOOGLE_CLIENT_ID=
 GOOGLE_CLIENT_SECRET=
+
+# Password reset email (Resend) — required for /forgot-password to send mail
+RESEND_API_KEY=
+# Verified sender, e.g. Notoria <onboarding@resend.dev> (dev) or Notoria <noreply@yourdomain.com>
+RESEND_FROM_EMAIL=
 
 # Cloudinary (avatars + listening uploads)
 CLOUDINARY_CLOUD_NAME=
@@ -308,12 +330,11 @@ STREAM_VIDEO_SECRET_KEY=
 STRIPE_SECRET_KEY=
 STRIPE_PRICE_ID=
 STRIPE_WEBHOOK_SECRET=
-
-# Used by `npm run db:push` (prod first, then local)
-DATABASE_URL_PROD=
 ```
 
-`STRIPE_PUBLISHABLE_KEY` is unused (Checkout is server-side).
+Copy from `.env.example` if you prefer a blank template. `STRIPE_PUBLISHABLE_KEY` is unused (Checkout is server-side).
+
+Without `RESEND_API_KEY` + `RESEND_FROM_EMAIL`, forgot-password still works for UX (always shows a generic success message) but no email is sent.
 
 PostgreSQL runs on port **5434** (not 5432) to avoid clashing with other local databases.
 
@@ -359,9 +380,12 @@ Keep `.env.local` on **test** keys. Production env lives in **Vercel → Setting
 | -------- | ---------- |
 | `DATABASE_URL` | Neon (pooled, `sslmode=require`) |
 | `AUTH_SECRET` | Strong secret; do not rotate unless you intend to sign everyone out |
-| `AUTH_URL` | Canonical site URL, no trailing slash (Stripe success/cancel/portal return here) |
+| `AUTH_URL` | Canonical site URL, no trailing slash (Auth.js, Stripe return URLs, password-reset links) |
+| `NEXT_PUBLIC_APP_URL` | Optional fallback base URL if `AUTH_URL` is unset |
 | `GOOGLE_CLIENT_ID` | Google OAuth client ID |
 | `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
+| `RESEND_API_KEY` | Resend API key (password-reset email) |
+| `RESEND_FROM_EMAIL` | Verified From address, e.g. `Notoria <noreply@yourdomain.com>` |
 | `CLOUDINARY_*` | Same account as media |
 | `OPENAI_API_KEY` | Live key |
 | `ASSEMBLYAI_API_KEY` | Live key |
@@ -401,7 +425,7 @@ Schema changes: point Drizzle at the prod `DATABASE_URL`, run `npm run db:push`,
 | `npm run build` | Production build |
 | `npm run start` | Run the production build |
 | `npm run lint` | ESLint |
-| `npm test` | Vitest |
+| `npm test` / `npm run test` | Vitest — unit & contract tests (`vitest run`) |
 | `npm run db:push` | Push schema to production, then local (`DATABASE_URL_PROD` then `DATABASE_URL`) |
 | `npm run db:studio` | Drizzle Studio |
 
@@ -413,6 +437,8 @@ Schema changes: point Drizzle at the prod `DATABASE_URL`, run `npm run db:push`,
 | ---- | ----------- |
 | `/sign-in` | Sign in |
 | `/sign-up` | Create an account |
+| `/forgot-password` | Request a password-reset email (Resend) |
+| `/reset-password` | Set a new password from the email link (`?token=...`) |
 | `/` | Dashboard |
 | `/vocabulary` | Word list (POS groups, search, filters, export) |
 | `/vocabulary/new` | Add a word |
@@ -438,6 +464,8 @@ Schema changes: point Drizzle at the prod `DATABASE_URL`, run `npm run db:push`,
 | `/speaking` | Speaking sessions (Pro) |
 | `/speaking/[id]` | Session detail / transcript (Pro) |
 | `/speaking/[id]/call` | Full-screen AI video call (Pro) |
+| `/getting-started` | Full product guide |
+| `/settings` | Theme, reduce-motion, keyboard shortcuts |
 | `/account` | Profile, password, avatar, billing |
 
 API: `POST /api/ai/writing`, `POST /api/ai/exercise`, `POST /api/ai/form-sentence` (Pro), `POST /api/stream/webhook`, `POST /api/stripe/create-checkout-session`, `POST /api/stripe/create-portal-session`, `POST /api/stripe/webhook`.
@@ -451,8 +479,11 @@ API: `POST /api/ai/writing`, `POST /api/ai/exercise`, `POST /api/ai/form-sentenc
 | Table | Purpose |
 | ----- | ------- |
 | `users` | Account, role, avatar, **subscription + Stripe ids** |
+| `accounts` | OAuth accounts (Google / Auth.js adapter) |
+| `password_reset_tokens` | Hashed one-time password-reset tokens + expiry |
 | `workspaces` | One workspace per user per language |
 | `workspace_tags` | Custom tag catalog |
+| `workspace_folders` | Folders for vocabulary / writing / theory organization |
 | `vocabulary_words` | Words (POS, notes, learning status) |
 | `word_meanings` | Ordered meanings (primary flag) |
 | `word_examples` | Ordered example sentences |
@@ -489,8 +520,6 @@ Then restart `npm run dev`.
 
 ## Roadmap
 
-- OAuth providers (Google, GitHub)
 - Listening dictation and word-ordering practice (schema already has the types)
-- Global search
 - Statistics and charts
 - Vocabulary import (CSV / JSON)
