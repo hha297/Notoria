@@ -11,7 +11,9 @@
     "optional": "Optional",
     "required": "Required",
     "selectedCount": "{count} selected",
-    "clearFilter": "Clear"
+    "clearFilter": "Clear",
+    "filters": "Filters",
+    "hideFilters": "Hide filters"
   },
   "editor": {
     "linkTitle": "Insert link",
@@ -1676,6 +1678,7 @@
       },
       "actions": {
         "openSearch": "Search",
+        "toggleTheme": "Toggle theme",
         "quickSave": "Quick Save",
         "quickEdit": "Quick Edit",
         "quickView": "Quick View",
@@ -1687,6 +1690,7 @@
       },
       "actionDescriptions": {
         "openSearch": "Search across your workspace",
+        "toggleTheme": "Switch between light and dark mode",
         "quickSave": "Save the current item",
         "quickEdit": "Start editing the current item",
         "quickView": "Open the current item in view mode",

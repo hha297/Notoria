@@ -8,6 +8,7 @@ import {
   useRef,
   type ReactNode,
 } from "react";
+import { useTheme } from "next-themes";
 import { useAppShortcut } from "@/hooks/use-app-shortcut";
 import type { ShortcutId } from "@/lib/preferences/shortcuts";
 
@@ -73,8 +74,21 @@ export function ShortcutActionsProvider({ children }: { children: ReactNode }) {
     <ShortcutActionsContext.Provider value={{ register, run }}>
       {children}
       <ShortcutActionsBinder />
+      <ThemeShortcutBinder />
     </ShortcutActionsContext.Provider>
   );
+}
+
+function ThemeShortcutBinder() {
+  const { resolvedTheme, setTheme } = useTheme();
+  const themeRef = useRef(resolvedTheme);
+  themeRef.current = resolvedTheme;
+
+  useRegisterShortcutAction("toggleTheme", () => {
+    setTheme(themeRef.current === "dark" ? "light" : "dark");
+  });
+
+  return null;
 }
 
 /** Register a context-aware handler for a built-in app action. */
@@ -104,6 +118,7 @@ function ShortcutActionsBinder() {
     runRef.current?.(id);
   }
 
+  useAppShortcut("toggleTheme", () => dispatch("toggleTheme"));
   useAppShortcut("quickSave", () => dispatch("quickSave"));
   useAppShortcut("quickEdit", () => dispatch("quickEdit"));
   useAppShortcut("quickView", () => dispatch("quickView"));

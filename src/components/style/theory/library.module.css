@@ -51,13 +51,11 @@
   );
   background: color-mix(
     in oklab,
-    var(--theory-cat-bg) 58%,
-    var(--surface-elevated)
+    var(--theory-cat-bg) 48%,
+    transparent
   );
-  color: var(--foreground);
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--theory-cat-fg) 16%, transparent),
-    0 10px 22px color-mix(in oklab, var(--theory-cat-fg) 12%, transparent);
+  color: var(--theory-cat-fg);
+  box-shadow: none;
 }
 
 .theory-filter-pill.is-active {

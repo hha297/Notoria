@@ -228,6 +228,35 @@
   justify-content: flex-end;
 }
 
+.settings-shortcut-remove {
+  border-color: color-mix(
+    in oklab,
+    var(--destructive) 42%,
+    var(--hairline-cloud)
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--destructive) 12%,
+    transparent
+  ) !important;
+  color: var(--ink) !important;
+  box-shadow: none !important;
+}
+
+.settings-shortcut-remove:hover:not(:disabled) {
+  border-color: color-mix(
+    in oklab,
+    var(--destructive) 58%,
+    var(--hairline-cloud)
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--destructive) 18%,
+    transparent
+  ) !important;
+  color: var(--destructive) !important;
+}
+
 .settings-shortcut-toolbar {
   display: flex;
   margin: 0 0.75rem 0.85rem;

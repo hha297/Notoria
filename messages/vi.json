@@ -11,7 +11,9 @@
     "optional": "Không bắt buộc",
     "required": "Bắt buộc",
     "selectedCount": "{count} đã chọn",
-    "clearFilter": "Xóa"
+    "clearFilter": "Xóa",
+    "filters": "Bộ lọc",
+    "hideFilters": "Ẩn bộ lọc"
   },
   "editor": {
     "linkTitle": "Chèn liên kết",
@@ -1492,6 +1494,7 @@
       },
       "actions": {
         "openSearch": "Tìm kiếm",
+        "toggleTheme": "Đổi giao diện",
         "quickSave": "Lưu nhanh",
         "quickEdit": "Sửa nhanh",
         "quickView": "Xem nhanh",
@@ -1503,6 +1506,7 @@
       },
       "actionDescriptions": {
         "openSearch": "Tìm trong không gian học của bạn",
+        "toggleTheme": "Chuyển giữa chế độ sáng và tối",
         "quickSave": "Lưu mục đang mở",
         "quickEdit": "Bắt đầu sửa mục đang mở",
         "quickView": "Mở mục đang mở ở chế độ xem",

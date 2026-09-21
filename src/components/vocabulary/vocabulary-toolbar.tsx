@@ -2,6 +2,7 @@
 
 import { Search } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { CollapsibleRefine } from "@/components/filters/collapsible-refine";
 import {
   MultiFilterSelect,
   type MultiFilterOption,
@@ -13,13 +14,12 @@ import {
 } from "@/components/writing/writing-chip-picker";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { VocabularyViewModeToggle } from "@/components/vocabulary/vocabulary-view-mode-toggle";
+import { isMultiFilterActive } from "@/lib/filters/multi-select";
 import { PARTS_OF_SPEECH } from "@/lib/vocabulary-tags";
 import type { MultiFilterValue } from "@/lib/filters/multi-select";
 import type {
   VocabularySortDirection,
   VocabularySortField,
-  VocabularyViewMode,
 } from "@/lib/vocabulary/types";
 
 type VocabularyToolbarProps = {
@@ -34,8 +34,6 @@ type VocabularyToolbarProps = {
   sortField: VocabularySortField;
   sortDirection: VocabularySortDirection;
   onSortChange: (field: VocabularySortField, direction: VocabularySortDirection) => void;
-  viewMode: VocabularyViewMode;
-  onViewModeChange: (value: VocabularyViewMode) => void;
 };
 
 function scopedGroupValues(
@@ -68,30 +66,39 @@ export function VocabularyToolbar({
   sortField,
   sortDirection,
   onSortChange,
-  viewMode,
-  onViewModeChange,
 }: VocabularyToolbarProps) {
   const t = useTranslations("vocabulary");
+  const tCommon = useTranslations("common");
   const tTags = useTranslations("tags");
   const tPos = useTranslations("tags.pos");
   const sortValue = `${sortField}:${sortDirection}`;
   const customOptionValues = customTagOptions.map((option) => option.value);
   const customFilterValues = scopedGroupValues(tagFilter, customOptionValues);
+  const filtersActive =
+    isMultiFilterActive(partOfSpeechFilter) ||
+    isMultiFilterActive(tagFilter) ||
+    sortValue !== "updated:desc";
 
   return (
     <div className="writing-spine-tools" data-tutorial="vocab-filters">
-      <div className="writing-spine-search-wrap">
-        <Search className="writing-spine-search-icon" aria-hidden="true" />
-        <Input
-          value={search}
-          onChange={(event) => onSearchChange(event.target.value)}
-          placeholder={t("searchPlaceholder")}
-          className="writing-spine-search"
-          data-tutorial="vocab-search"
-        />
-      </div>
-
-      <div className="writing-refine writing-sheet-meta">
+      <CollapsibleRefine
+        routeAction="vocab"
+        label={tCommon("filters")}
+        hideLabel={tCommon("hideFilters")}
+        active={filtersActive}
+        search={
+          <div className="writing-spine-search-wrap">
+            <Search className="writing-spine-search-icon" aria-hidden="true" />
+            <Input
+              value={search}
+              onChange={(event) => onSearchChange(event.target.value)}
+              placeholder={t("searchPlaceholder")}
+              className="writing-spine-search"
+              data-tutorial="vocab-search"
+            />
+          </div>
+        }
+      >
         <WritingFilterChipPicker
           labelId="vocab-filter-pos"
           label={t("filterPartOfSpeech")}
@@ -171,17 +178,7 @@ export function VocabularyToolbar({
             },
           ]}
         />
-
-        <div className="space-y-2">
-          <Label id="vocab-filter-view">{t("viewMode")}</Label>
-          <div aria-labelledby="vocab-filter-view">
-            <VocabularyViewModeToggle
-              value={viewMode}
-              onChange={onViewModeChange}
-            />
-          </div>
-        </div>
-      </div>
+      </CollapsibleRefine>
     </div>
   );
 }

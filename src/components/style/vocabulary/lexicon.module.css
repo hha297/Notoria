@@ -259,40 +259,6 @@
   padding-top: 0.15rem;
 }
 
-.vocab-canopy {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: baseline;
-  gap: 0.55rem 1.35rem;
-  margin: 0;
-  padding: 0;
-  list-style: none;
-}
-
-.vocab-canopy-item {
-  display: inline-flex;
-  align-items: baseline;
-  gap: 0.4rem;
-  min-width: 0;
-}
-
-.vocab-canopy-value {
-  font-family: var(--font-heading);
-  font-size: 1.35rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  color: var(--ink);
-}
-
-.vocab-canopy-label {
-  font-size: 0.72rem;
-  font-weight: 600;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--muted-foreground);
-}
-
 .vocab-pagination {
   display: flex;
   flex-direction: column;

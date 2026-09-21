@@ -1,5 +1,6 @@
 export type ShortcutId =
   | "openSearch"
+  | "toggleTheme"
   | "quickSave"
   | "quickEdit"
   | "quickView"
@@ -25,6 +26,11 @@ export type ShortcutDefinition = {
    * Empty = unbound until the user adds a shortcut in Settings.
    */
   defaultChords: ShortcutChord[];
+  /**
+   * When false, hidden from the Add shortcut picker.
+   * Still shown in the bindings list when it has chords (built-in defaults).
+   */
+  addable?: boolean;
 };
 
 /**
@@ -37,6 +43,13 @@ export const APP_SHORTCUTS: ShortcutDefinition[] = [
     id: "openSearch",
     actionKey: "openSearch",
     defaultChords: [{ key: "k", mod: true, shift: false, alt: false }],
+    // Already bound by default — no need to pick it when adding a shortcut.
+    addable: false,
+  },
+  {
+    id: "toggleTheme",
+    actionKey: "toggleTheme",
+    defaultChords: [],
   },
   {
     id: "quickSave",
@@ -79,6 +92,15 @@ export const APP_SHORTCUTS: ShortcutDefinition[] = [
     defaultChords: [],
   },
 ];
+
+export function isShortcutAddable(def: ShortcutDefinition): boolean {
+  return def.addable !== false;
+}
+
+/** Actions offered in the Add shortcut picker. */
+export function addableAppShortcuts(): ShortcutDefinition[] {
+  return APP_SHORTCUTS.filter(isShortcutAddable);
+}
 
 const SHORTCUTS_KEY = "notoria.preferences.shortcuts";
 const SHORTCUTS_ENABLED_KEY = "notoria.preferences.shortcutsEnabled";

@@ -22,7 +22,6 @@ export async function ListeningLibrary({ folderId }: { folderId?: string }) {
         <PageHeader
           eyebrow={t("eyebrow")}
           title={t("title")}
-          highlight={t("highlight")}
           description={t("disabledNoWorkspace")}
         />
         <NoWorkspaceEmpty />

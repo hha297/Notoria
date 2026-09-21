@@ -11,7 +11,9 @@
     "optional": "Valfritt",
     "required": "Obligatoriskt",
     "selectedCount": "{count} valda",
-    "clearFilter": "Rensa"
+    "clearFilter": "Rensa",
+    "filters": "Filter",
+    "hideFilters": "Dölj filter"
   },
   "editor": {
     "linkTitle": "Infoga länk",
@@ -1676,6 +1678,7 @@
       },
       "actions": {
         "openSearch": "Sök",
+        "toggleTheme": "Växla tema",
         "quickSave": "Snabb spara",
         "quickEdit": "Snabb redigera",
         "quickView": "Snabb vy",
@@ -1687,6 +1690,7 @@
       },
       "actionDescriptions": {
         "openSearch": "Sök över din arbetsyta",
+        "toggleTheme": "Växla mellan ljust och mörkt läge",
         "quickSave": "Spara det aktuella objektet",
         "quickEdit": "Börja redigera det aktuella objektet",
         "quickView": "Öppna det aktuella objektet i visningsläge",

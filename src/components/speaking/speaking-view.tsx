@@ -84,10 +84,7 @@ export function SpeakingView({ workspaceId }: SpeakingViewProps) {
         <header className="writing-hero">
           <div className="writing-hero-copy">
             <p className="writing-kicker">{t("eyebrow")}</p>
-            <h1 className="writing-brand-title">
-              {t("title")}{" "}
-              <span className="text-module-speak-fg">{t("highlight")}</span>
-            </h1>
+            <h1 className="writing-brand-title">{t("title")}</h1>
             <p className="writing-brand-lede">{t("description")}</p>
             <ul className={mx(styles, "speaking-canopy mt-5")} aria-label={t("stats.aria")}>
               <li className={mx(styles, "speaking-canopy-item")}>
