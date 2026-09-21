@@ -2051,13 +2051,24 @@
     "noWorkspace": "No active workspace",
     "notFound": "Not found"
   },
+  "learningOnboarding": {
+    "step": "Getting started",
+    "title": "What do you want to learn?",
+    "description": "Choose your first language to start learning.",
+    "searchPlaceholder": "Search languages…",
+    "noResults": "No languages match that search.",
+    "continue": "Continue",
+    "continuing": "Continuing…",
+    "error": "Something went wrong. Please try again.",
+    "invalidLanguage": "That language isn't available. Please choose another."
+  },
   "auth": {
     "welcomeBack": "Welcome back",
     "signInDescription": "Sign in to your Notoria account",
     "signInEyebrow": "Sign in",
     "signUpEyebrow": "Sign up",
     "createAccountTitle": "Create your account",
-    "registerDescription": "Start learning with your own private workspace",
+    "registerDescription": "Create your account, then choose what you want to learn.",
     "email": "Email",
     "password": "Password",
     "name": "Name",

@@ -11,10 +11,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { PasswordInput } from "@/components/auth/password-input";
 import { registerUser } from "@/lib/actions/auth";
-import {
-  requestFirstEntryOnboarding,
-  requestWorkspaceOnboarding,
-} from "@/lib/onboarding/storage";
 
 type FieldErrors = {
   name?: string;
@@ -73,7 +69,7 @@ export function RegisterForm() {
     setIsLoading(true);
 
     try {
-      const registration = await registerUser({
+      await registerUser({
         name: name.trim(),
         email: email.trim(),
         password,
@@ -91,11 +87,7 @@ export function RegisterForm() {
         return;
       }
 
-      requestFirstEntryOnboarding();
-      if (registration.workspaceId) {
-        requestWorkspaceOnboarding(registration.workspaceId);
-      }
-      router.push("/");
+      router.push("/onboarding");
       router.refresh();
     } catch (err) {
       if (err instanceof Error && err.message === "EMAIL_EXISTS") {

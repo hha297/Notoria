@@ -1,3 +1,5 @@
+import { cookies } from "next/headers";
+import { redirect } from "next/navigation";
 import { DashboardDocumentTitle } from "@/components/layout/dashboard-document-title";
 import { DashboardStudio } from "@/components/layout/dashboard-studio";
 import { WorkspaceOnboardingGate } from "@/components/onboarding/workspace-onboarding-gate";
@@ -13,7 +15,6 @@ import {
 } from "@/lib/stripe/pro";
 import { createPerfTimer } from "@/lib/perf/dev-timing";
 import { getUserWorkspaces, getActiveWorkspace } from "@/lib/workspace";
-import { cookies } from "next/headers";
 
 export const preferredRegion = ["fra1"];
 
@@ -32,6 +33,10 @@ export default async function DashboardLayout({
       getCurrentProAccess(),
     ]);
   timer.finish();
+
+  if (workspaces.length === 0) {
+    redirect("/onboarding");
+  }
 
   const cookieStore = await cookies();
   const localeCookie = cookieStore.get(LOCALE_COOKIE)?.value;

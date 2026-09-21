@@ -2,13 +2,9 @@
 
 import { hash } from "bcryptjs";
 import { eq } from "drizzle-orm";
-import { cookies } from "next/headers";
 import { z } from "zod";
 import { db } from "@/db";
-import { users, workspaces } from "@/db/schema";
-import { DEFAULT_WORKPLACE_LANGUAGE } from "@/lib/languages";
-import { resolveWorkspaceName } from "@/lib/workspace-names";
-import { WORKSPACE_COOKIE } from "@/lib/workspace";
+import { users } from "@/db/schema";
 
 const registerSchema = z.object({
   name: z.string().min(2).max(80),
@@ -16,6 +12,10 @@ const registerSchema = z.object({
   password: z.string().min(8).max(128),
 });
 
+/**
+ * Creates the user account only. The first learning-language workspace is
+ * created later via post-auth onboarding (`completeFirstLanguageOnboarding`).
+ */
 export async function registerUser(data: z.infer<typeof registerSchema>) {
   const parsed = registerSchema.parse(data);
   const email = parsed.email.toLowerCase().trim();
@@ -40,21 +40,5 @@ export async function registerUser(data: z.infer<typeof registerSchema>) {
     })
     .returning();
 
-  const [workspace] = await db
-    .insert(workspaces)
-    .values({
-      userId: user.id,
-      language: DEFAULT_WORKPLACE_LANGUAGE,
-      name: resolveWorkspaceName(undefined, DEFAULT_WORKPLACE_LANGUAGE),
-    })
-    .returning();
-
-  const cookieStore = await cookies();
-  cookieStore.set(WORKSPACE_COOKIE, workspace.id, {
-    path: "/",
-    maxAge: 60 * 60 * 24 * 365,
-    sameSite: "lax",
-  });
-
-  return { userId: user.id, workspaceId: workspace.id };
+  return { userId: user.id };
 }

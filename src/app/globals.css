@@ -7929,6 +7929,302 @@ body {
   color: color-mix(in oklab, var(--module-settings-fg) 85%, #b45309);
 }
 
+/* --- Learning language onboarding --- */
+.onboarding-layout {
+  min-height: 100svh;
+  background: var(--background);
+}
+
+.learning-onboarding-shell {
+  --onboarding-wash: var(--module-home-bg);
+  --onboarding-ink: var(--module-home-fg);
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 100svh;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem 1rem 2rem;
+}
+
+.learning-onboarding-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 10% 6%,
+      color-mix(in oklab, var(--module-home-bg) 72%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 94% 10%,
+      color-mix(in oklab, var(--module-vocab-bg) 48%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 45% 35% at 50% 100%,
+      color-mix(in oklab, var(--module-listen-bg) 30%, transparent),
+      transparent 70%
+    );
+}
+
+.learning-onboarding {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  width: min(100%, 34rem);
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.learning-onboarding-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.learning-onboarding-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.7rem;
+  margin-bottom: 1.1rem;
+}
+
+.learning-onboarding-wordmark {
+  font-size: clamp(1.45rem, 3.8vw, 1.75rem);
+  letter-spacing: -0.03em;
+}
+
+.learning-onboarding-step {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--onboarding-ink);
+}
+
+.learning-onboarding-title {
+  margin: 0.4rem 0 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.7rem, 4.5vw, 2.2rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.learning-onboarding-lede {
+  margin: 0.55rem 0 0;
+  max-width: 28rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+.learning-onboarding-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+  padding: 1.15rem 1.1rem 1.25rem;
+  border-radius: 0.95rem;
+  border: 1px solid
+    color-mix(in oklab, var(--onboarding-ink) 16%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--onboarding-wash) 48%, transparent),
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 58%, transparent);
+}
+
+@media (min-width: 480px) {
+  .learning-onboarding-panel {
+    padding: 1.3rem 1.35rem 1.4rem;
+  }
+}
+
+.learning-onboarding-search {
+  position: relative;
+}
+
+.learning-onboarding-search-icon {
+  position: absolute;
+  top: 50%;
+  left: 0.85rem;
+  z-index: 1;
+  width: 1rem;
+  height: 1rem;
+  transform: translateY(-50%);
+  color: var(--muted-foreground);
+  pointer-events: none;
+}
+
+.learning-onboarding-search-input {
+  min-height: 2.75rem;
+  height: 2.75rem;
+  padding-left: 2.45rem;
+  border-radius: 0.75rem;
+}
+
+.learning-onboarding-list {
+  display: grid;
+  gap: 0.45rem;
+  max-height: min(42svh, 22rem);
+  overflow-y: auto;
+  padding: 0.15rem;
+  margin: 0 -0.15rem;
+  scrollbar-gutter: stable;
+}
+
+@media (min-width: 640px) {
+  .learning-onboarding-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-height: min(48svh, 26rem);
+  }
+}
+
+.learning-onboarding-option {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  min-height: 2.85rem;
+  padding: 0.65rem 0.8rem;
+  border-radius: 0.75rem;
+  border: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 90%, transparent);
+  background: color-mix(in oklab, var(--surface-elevated) 70%, transparent);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.learning-onboarding-option:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--onboarding-ink) 28%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--onboarding-wash) 35%, var(--surface-elevated));
+}
+
+.learning-onboarding-option:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--ring) 55%, transparent);
+}
+
+.learning-onboarding-option.is-selected {
+  border-color: color-mix(in oklab, var(--primary) 55%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--primary) 16%, var(--surface-elevated));
+  box-shadow: inset 0 0 0 1px color-mix(in oklab, var(--primary) 35%, transparent);
+}
+
+.learning-onboarding-option:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.learning-onboarding-flag {
+  flex-shrink: 0;
+}
+
+.learning-onboarding-option-name {
+  flex: 1;
+  min-width: 0;
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.learning-onboarding-option-check {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 999px;
+  color: transparent;
+  background: transparent;
+  flex-shrink: 0;
+}
+
+.learning-onboarding-option-check.is-visible {
+  color: var(--primary-foreground);
+  background: var(--primary);
+}
+
+.learning-onboarding-empty {
+  margin: 0;
+  padding: 1.5rem 0.75rem;
+  text-align: center;
+  font-size: 0.9rem;
+  color: var(--muted-foreground);
+  grid-column: 1 / -1;
+}
+
+.learning-onboarding-preview {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0.7rem 0.8rem;
+  border-radius: 0.7rem;
+  background: color-mix(in oklab, var(--surface-muted) 42%, transparent);
+  font-size: 0.84rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+.learning-onboarding-error {
+  margin: 0;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.65rem;
+  border: 1px solid
+    color-mix(in oklab, var(--destructive) 28%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--destructive) 8%, transparent);
+  font-size: 0.86rem;
+  line-height: 1.4;
+  color: var(--destructive);
+}
+
+.learning-onboarding-cta {
+  width: 100%;
+  min-height: 2.85rem;
+  margin-top: 0.1rem;
+}
+
+.dark .learning-onboarding-shell::before {
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 10% 6%,
+      color-mix(in oklab, var(--module-home-bg) 40%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 94% 10%,
+      color-mix(in oklab, var(--module-vocab-bg) 26%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 45% 35% at 50% 100%,
+      color-mix(in oklab, var(--module-listen-bg) 16%, transparent),
+      transparent 70%
+    );
+}
+
+.dark .learning-onboarding-panel {
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--onboarding-wash) 28%, transparent),
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 62%, transparent);
+}
+
 html[data-reduce-motion="reduce"] *,
 html[data-reduce-motion="reduce"] *::before,
 html[data-reduce-motion="reduce"] *::after {

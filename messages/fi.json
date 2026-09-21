@@ -1867,13 +1867,24 @@
     "noWorkspace": "Ei aktiivista työtilaa",
     "notFound": "Ei löytynyt"
   },
+  "learningOnboarding": {
+    "step": "Aloitus",
+    "title": "Mitä haluat oppia?",
+    "description": "Valitse ensimmäinen kielesi aloittaaksesi oppimisen.",
+    "searchPlaceholder": "Hae kieliä…",
+    "noResults": "Ei hakua vastaavia kieliä.",
+    "continue": "Jatka",
+    "continuing": "Jatketaan…",
+    "error": "Jokin meni pieleen. Yritä uudelleen.",
+    "invalidLanguage": "Tätä kieltä ei ole saatavilla. Valitse toinen."
+  },
   "auth": {
     "welcomeBack": "Tervetuloa takaisin",
     "signInDescription": "Kirjaudu Notoria-tilillesi",
     "signInEyebrow": "Kirjaudu",
     "signUpEyebrow": "Rekisteröidy",
     "createAccountTitle": "Luo tili",
-    "registerDescription": "Aloita oppiminen omassa yksityisessä työtilassasi",
+    "registerDescription": "Luo tili ja valitse sitten, mitä haluat oppia.",
     "email": "Sähköposti",
     "password": "Salasana",
     "name": "Nimi",

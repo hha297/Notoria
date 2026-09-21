@@ -1867,13 +1867,24 @@
     "noWorkspace": "Chưa có không gian học",
     "notFound": "Không tìm thấy"
   },
+  "learningOnboarding": {
+    "step": "Bắt đầu",
+    "title": "Bạn muốn học gì?",
+    "description": "Chọn ngôn ngữ đầu tiên để bắt đầu học.",
+    "searchPlaceholder": "Tìm ngôn ngữ…",
+    "noResults": "Không có ngôn ngữ nào khớp.",
+    "continue": "Tiếp tục",
+    "continuing": "Đang tiếp tục…",
+    "error": "Có lỗi xảy ra. Thử lại nhé.",
+    "invalidLanguage": "Ngôn ngữ này không khả dụng. Hãy chọn ngôn ngữ khác."
+  },
   "auth": {
     "welcomeBack": "Chào mừng trở lại",
     "signInDescription": "Đăng nhập vào tài khoản Notoria",
     "signInEyebrow": "Đăng nhập",
     "signUpEyebrow": "Đăng ký",
     "createAccountTitle": "Tạo tài khoản",
-    "registerDescription": "Bắt đầu học trong không gian riêng của bạn",
+    "registerDescription": "Tạo tài khoản, rồi chọn ngôn ngữ bạn muốn học.",
     "email": "Email",
     "password": "Mật khẩu",
     "name": "Tên",
