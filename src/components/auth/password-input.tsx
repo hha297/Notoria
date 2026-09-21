@@ -13,23 +13,33 @@ type PasswordInputProps = Omit<
   id: string;
 };
 
-export function PasswordInput({ className, id, ...props }: PasswordInputProps) {
+export function PasswordInput({
+  className,
+  id,
+  disabled,
+  ...props
+}: PasswordInputProps) {
   const t = useTranslations("auth");
   const [visible, setVisible] = useState(false);
 
   return (
-    <div className="relative">
+    <div className="auth-password-wrap">
       <Input
         id={id}
         type={visible ? "text" : "password"}
-        className={cn("pr-10", className)}
+        disabled={disabled}
+        className={cn("pr-11", className)}
         {...props}
       />
       <button
         type="button"
+        tabIndex={0}
+        disabled={disabled}
         onClick={() => setVisible((current) => !current)}
-        className="absolute inset-y-0 right-0 flex w-10 cursor-pointer items-center justify-center rounded-r-md text-muted-foreground transition-colors hover:text-foreground"
+        className="auth-password-toggle"
         aria-label={visible ? t("hidePassword") : t("showPassword")}
+        aria-controls={id}
+        aria-pressed={visible}
       >
         {visible ? (
           <EyeOff className="size-4" aria-hidden />

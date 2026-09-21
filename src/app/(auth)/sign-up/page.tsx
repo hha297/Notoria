@@ -7,6 +7,7 @@ export default async function SignUpPage() {
 
   return (
     <AuthPageShell
+      eyebrow={t("signUpEyebrow")}
       title={t("createAccountTitle")}
       description={t("registerDescription")}
     >

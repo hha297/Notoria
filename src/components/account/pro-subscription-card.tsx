@@ -98,7 +98,7 @@ export function ProSubscriptionCard({
         <header className="account-panel-head">
           <div className="flex flex-wrap items-center gap-2">
             <h2 className="account-panel-title">{t("title")}</h2>
-            <Badge variant={billing.isPro ? "secondary" : "outline"}>
+            <Badge variant={billing.isPro ? "pro" : "outline"}>
               {billing.isPro ? t("proBadge") : t("freeBadge")}
             </Badge>
           </div>

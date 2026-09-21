@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
@@ -16,6 +16,7 @@ export function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const t = useTranslations("auth");
+  const formErrorId = useId();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -28,7 +29,7 @@ export function LoginForm() {
 
     try {
       const result = await signIn("credentials", {
-        email,
+        email: email.trim(),
         password,
         redirect: false,
       });
@@ -50,42 +51,80 @@ export function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="space-y-2">
-        <Label htmlFor="email">{t("email")}</Label>
+    <form
+      onSubmit={handleSubmit}
+      className="auth-form"
+      aria-describedby={error ? formErrorId : undefined}
+    >
+      <div className="auth-field">
+        <Label htmlFor="email" className="auth-label">
+          {t("email")}
+        </Label>
         <Input
           id="email"
           type="email"
+          name="email"
+          inputMode="email"
           autoComplete="email"
+          autoCapitalize="none"
+          autoCorrect="off"
+          spellCheck={false}
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          className="h-11 bg-background md:h-8 md:bg-transparent"
+          onChange={(event) => {
+            setEmail(event.target.value);
+            if (error) setError(null);
+          }}
+          className="auth-input"
           required
+          disabled={isLoading}
+          aria-invalid={error ? true : undefined}
         />
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="password">{t("password")}</Label>
+      <div className="auth-field">
+        <Label htmlFor="password" className="auth-label">
+          {t("password")}
+        </Label>
         <PasswordInput
           id="password"
+          name="password"
           autoComplete="current-password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          className="h-11 bg-background md:h-8 md:bg-transparent"
+          onChange={(event) => {
+            setPassword(event.target.value);
+            if (error) setError(null);
+          }}
+          className="auth-input"
           required
+          disabled={isLoading}
+          aria-invalid={error ? true : undefined}
         />
       </div>
 
-      {error && <p className="text-sm text-destructive">{error}</p>}
+      {error ? (
+        <p
+          id={formErrorId}
+          className="auth-form-error"
+          role="alert"
+          aria-live="assertive"
+        >
+          {error}
+        </p>
+      ) : null}
 
-      <Button type="submit" className="h-11 w-full md:h-9" disabled={isLoading}>
-        {isLoading && <Loader2 className="size-4 animate-spin" />}
-        {t("signIn")}
+      <Button
+        type="submit"
+        size="lg"
+        className="auth-submit"
+        disabled={isLoading || !email.trim() || !password}
+      >
+        {isLoading ? <Loader2 className="size-4 animate-spin" aria-hidden /> : null}
+        {isLoading ? t("signingIn") : t("signIn")}
       </Button>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="auth-switch">
         {t("noAccount")}{" "}
-        <Link href="/sign-up" className="font-medium text-ink underline-offset-4 hover:underline">
+        <Link href="/sign-up" className="auth-switch-link">
           {t("createAccount")}
         </Link>
       </p>

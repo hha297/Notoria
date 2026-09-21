@@ -60,7 +60,7 @@ export function UserButton({
           <span className="flex min-w-0 items-center gap-1.5">
             <span className="block truncate font-medium text-ink">{name}</span>
             {isPro ? (
-              <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">
+              <Badge variant="pro" className="h-4 px-1.5 text-[10px]">
                 {tb("proBadge")}
               </Badge>
             ) : null}
@@ -78,7 +78,7 @@ export function UserButton({
               <span className="flex items-center gap-1.5">
                 <span className="font-medium text-ink">{name}</span>
                 {isPro ? (
-                  <Badge variant="secondary" className="h-4 px-1.5 text-[10px]">
+                  <Badge variant="pro" className="h-4 px-1.5 text-[10px]">
                     {tb("proBadge")}
                   </Badge>
                 ) : null}

@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useId, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
@@ -16,31 +16,77 @@ import {
   requestWorkspaceOnboarding,
 } from "@/lib/onboarding/storage";
 
+type FieldErrors = {
+  name?: string;
+  email?: string;
+  password?: string;
+};
+
 export function RegisterForm() {
   const router = useRouter();
   const t = useTranslations("auth");
+  const formErrorId = useId();
+  const nameHintId = useId();
+  const emailHintId = useId();
+  const passwordHintId = useId();
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState<string | null>(null);
+  const [fieldErrors, setFieldErrors] = useState<FieldErrors>({});
+  const [formError, setFormError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+
+  function clearErrors() {
+    setFieldErrors({});
+    setFormError(null);
+  }
+
+  function validate(): boolean {
+    const next: FieldErrors = {};
+    const trimmedName = name.trim();
+    const trimmedEmail = email.trim();
+
+    if (trimmedName.length < 2) {
+      next.name = t("nameTooShort");
+    }
+
+    if (!trimmedEmail || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(trimmedEmail)) {
+      next.email = t("emailInvalid");
+    }
+
+    if (password.length < 8) {
+      next.password = t("passwordTooShort");
+    }
+
+    setFieldErrors(next);
+    return Object.keys(next).length === 0;
+  }
 
   async function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    setError(null);
+    setFormError(null);
+
+    if (!validate()) {
+      return;
+    }
+
     setIsLoading(true);
 
     try {
-      const registration = await registerUser({ name, email, password });
+      const registration = await registerUser({
+        name: name.trim(),
+        email: email.trim(),
+        password,
+      });
 
       const result = await signIn("credentials", {
-        email,
+        email: email.trim(),
         password,
         redirect: false,
       });
 
       if (result?.error) {
-        setError(t("signInAfterRegisterFailed"));
+        setFormError(t("signInAfterRegisterFailed"));
         router.push("/sign-in");
         return;
       }
@@ -53,67 +99,141 @@ export function RegisterForm() {
       router.refresh();
     } catch (err) {
       if (err instanceof Error && err.message === "EMAIL_EXISTS") {
-        setError(t("emailExists"));
+        setFieldErrors({ email: t("emailExists") });
         return;
       }
 
-      setError(t("registerFailed"));
+      setFormError(t("registerFailed"));
     } finally {
       setIsLoading(false);
     }
   }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-5">
-      <div className="space-y-2">
-        <Label htmlFor="name">{t("name")}</Label>
+    <form
+      onSubmit={handleSubmit}
+      className="auth-form"
+      aria-describedby={formError ? formErrorId : undefined}
+    >
+      <div className="auth-field">
+        <Label htmlFor="name" className="auth-label">
+          {t("name")}
+        </Label>
         <Input
           id="name"
+          name="name"
           autoComplete="name"
           value={name}
-          onChange={(event) => setName(event.target.value)}
-          className="h-11 bg-background md:h-8 md:bg-transparent"
+          onChange={(event) => {
+            setName(event.target.value);
+            clearErrors();
+          }}
+          className="auth-input"
           required
+          minLength={2}
+          maxLength={80}
+          disabled={isLoading}
+          aria-invalid={fieldErrors.name ? true : undefined}
+          aria-describedby={fieldErrors.name ? nameHintId : undefined}
         />
+        {fieldErrors.name ? (
+          <p id={nameHintId} className="auth-field-error" role="alert">
+            {fieldErrors.name}
+          </p>
+        ) : null}
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="email">{t("email")}</Label>
+      <div className="auth-field">
+        <Label htmlFor="email" className="auth-label">
+          {t("email")}
+        </Label>
         <Input
           id="email"
           type="email"
+          name="email"
+          inputMode="email"
           autoComplete="email"
+          autoCapitalize="none"
+          autoCorrect="off"
+          spellCheck={false}
           value={email}
-          onChange={(event) => setEmail(event.target.value)}
-          className="h-11 bg-background md:h-8 md:bg-transparent"
+          onChange={(event) => {
+            setEmail(event.target.value);
+            clearErrors();
+          }}
+          className="auth-input"
           required
+          disabled={isLoading}
+          aria-invalid={fieldErrors.email ? true : undefined}
+          aria-describedby={fieldErrors.email ? emailHintId : undefined}
         />
+        {fieldErrors.email ? (
+          <p id={emailHintId} className="auth-field-error" role="alert">
+            {fieldErrors.email}
+          </p>
+        ) : null}
       </div>
 
-      <div className="space-y-2">
-        <Label htmlFor="password">{t("password")}</Label>
+      <div className="auth-field">
+        <Label htmlFor="password" className="auth-label">
+          {t("password")}
+        </Label>
         <PasswordInput
           id="password"
+          name="password"
           autoComplete="new-password"
           value={password}
-          onChange={(event) => setPassword(event.target.value)}
-          className="h-11 bg-background md:h-8 md:bg-transparent"
+          onChange={(event) => {
+            setPassword(event.target.value);
+            clearErrors();
+          }}
+          className="auth-input"
           minLength={8}
+          maxLength={128}
           required
+          disabled={isLoading}
+          aria-invalid={fieldErrors.password ? true : undefined}
+          aria-describedby={
+            fieldErrors.password ? passwordHintId : `${passwordHintId}-hint`
+          }
         />
-        <p className="text-xs text-muted-foreground">{t("passwordHint")}</p>
+        {fieldErrors.password ? (
+          <p id={passwordHintId} className="auth-field-error" role="alert">
+            {fieldErrors.password}
+          </p>
+        ) : (
+          <p id={`${passwordHintId}-hint`} className="auth-field-hint">
+            {t("passwordHint")}
+          </p>
+        )}
       </div>
 
-      {error && <p className="text-sm text-destructive">{error}</p>}
+      {formError ? (
+        <p
+          id={formErrorId}
+          className="auth-form-error"
+          role="alert"
+          aria-live="assertive"
+        >
+          {formError}
+        </p>
+      ) : null}
 
-      <Button type="submit" className="h-11 w-full md:h-9" disabled={isLoading}>
-        {isLoading && <Loader2 className="size-4 animate-spin" />}
-        {t("createAccount")}
+      <Button
+        type="submit"
+        size="lg"
+        className="auth-submit"
+        disabled={
+          isLoading || !name.trim() || !email.trim() || password.length < 8
+        }
+      >
+        {isLoading ? <Loader2 className="size-4 animate-spin" aria-hidden /> : null}
+        {isLoading ? t("creatingAccount") : t("createAccount")}
       </Button>
 
-      <p className="text-center text-sm text-muted-foreground">
+      <p className="auth-switch">
         {t("hasAccount")}{" "}
-        <Link href="/sign-in" className="font-medium text-ink underline-offset-4 hover:underline">
+        <Link href="/sign-in" className="auth-switch-link">
           {t("signIn")}
         </Link>
       </p>

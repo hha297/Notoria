@@ -118,8 +118,8 @@ export function VocabularyFiltersBar({
                 {tMc("modes.contextual")}
                 {contextualPro ? (
                   <Badge
-                    variant="secondary"
-                    className="bg-accent-lime/25 px-1.5 py-0 text-[10px] font-semibold uppercase tracking-wide text-ink"
+                    variant="pro"
+                    className="px-1.5 py-0 text-[10px] font-semibold uppercase tracking-wide"
                   >
                     {tBilling("proBadge")}
                   </Badge>
