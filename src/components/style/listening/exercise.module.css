@@ -1,0 +1,555 @@
+/* Listening exercise session — focused practice shell */
+
+.shell {
+  --listen-fg: var(--module-listen-fg);
+  --listen-bg: var(--module-listen-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+}
+
+.shellWide {
+  max-width: none;
+}
+
+/* —— Header —— */
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+}
+
+.headerMeta {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--listen-fg);
+}
+
+.headerTitle {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space:nowrap;
+  max-width: min(100%, 22rem);
+}
+
+.headerActions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.exit {
+  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 90%, transparent) !important;
+  background: transparent !important;
+  color: var(--ink) !important;
+  box-shadow: none !important;
+}
+
+.exit:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--listen-fg) 40%, transparent) !important;
+  background: var(--listen-bg) !important;
+  color: var(--listen-fg) !important;
+}
+
+/* —— Progress —— */
+.progressBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.progressRow {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+}
+
+.progressLabel {
+  margin: 0;
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.progressCount {
+  margin: 0;
+  font-size: 0.75rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--muted-foreground);
+}
+
+.progressTrack {
+  height: 0.28rem;
+  overflow: hidden;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--listen-bg) 55%, var(--muted));
+}
+
+.progressFill {
+  height: 100%;
+  border-radius: inherit;
+  background: var(--listen-fg);
+  transition: width 220ms ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .progressFill {
+    transition: none;
+  }
+}
+
+/* —— Lobby —— */
+.lobby {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.lobbyLead {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: color-mix(in oklab, var(--ink) 74%, var(--muted-foreground));
+}
+
+.typeGrid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.65rem;
+}
+
+@media (min-width: 640px) {
+  .typeGrid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.typeCard {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  width: 100%;
+  padding: 1rem 1.05rem 1.1rem;
+  border-radius: 0.9rem;
+  border: 1px solid
+    color-mix(in oklab, var(--listen-fg) 22%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--listen-bg) 48%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 40%, transparent);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.typeCard:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--listen-fg) 48%, transparent);
+  box-shadow: 0 10px 22px color-mix(in oklab, var(--listen-fg) 10%, transparent);
+}
+
+.typeCard:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.typeCardTitle {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.typeCardBody {
+  margin: 0;
+  font-size: 0.8125rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.8rem;
+  border: 1px solid
+    color-mix(in oklab, var(--listen-fg) 20%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--listen-bg) 38%, transparent);
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.status[data-tone="error"] {
+  border-color: color-mix(in oklab, var(--destructive) 30%, transparent);
+  background: color-mix(in oklab, var(--destructive) 8%, transparent);
+  color: var(--destructive);
+}
+
+/* —— Active stage —— */
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 0.95rem;
+}
+
+.mediaDock {
+  position: sticky;
+  top: 0.5rem;
+  z-index: 12;
+}
+
+.instruction {
+  margin: 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+.questionPanel {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.15rem 1.2rem 1.25rem;
+  border-radius: 1rem;
+  border: 2px solid
+    color-mix(in oklab, var(--listen-fg) 26%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--surface-elevated) 62%, transparent);
+}
+
+.questionLabel {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.prompt {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.05rem, 2.2vw, 1.3rem);
+  font-weight: 600;
+  line-height: 1.35;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.passage {
+  margin: 0;
+  font-size: 1.05rem;
+  line-height: 2.55;
+  color: var(--ink);
+  white-space: pre-wrap;
+}
+
+@media (min-width: 640px) {
+  .passage {
+    font-size: 1.125rem;
+  }
+}
+
+.blank {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem;
+  margin-inline: 0.15rem;
+  vertical-align: baseline;
+}
+
+.blankInput {
+  display: inline-flex !important;
+  height: 2.15rem !important;
+  max-width: min(100%, 16rem);
+  margin: 0 0.1rem;
+  vertical-align: baseline;
+}
+
+.blankInput[data-state="correct"] {
+  border-color: color-mix(in oklab, var(--success) 45%, transparent) !important;
+  background: color-mix(in oklab, var(--success) 10%, transparent) !important;
+  color: var(--success) !important;
+}
+
+.blankInput[data-state="wrong"] {
+  border-color: color-mix(in oklab, var(--destructive) 42%, transparent) !important;
+  background: color-mix(in oklab, var(--destructive) 9%, transparent) !important;
+  color: var(--destructive) !important;
+}
+
+.blankHint {
+  font-size: 0.8125rem;
+  color: var(--destructive);
+}
+
+.options {
+  display: grid;
+  gap: 0.5rem;
+}
+
+.option {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid
+    color-mix(in oklab, var(--listen-fg) 18%, var(--hairline-cloud));
+  background: transparent;
+  text-align: left;
+  font-size: 0.9375rem;
+  line-height: 1.4;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease;
+}
+
+.option:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--listen-fg) 42%, transparent);
+  background: color-mix(in oklab, var(--listen-bg) 42%, transparent);
+}
+
+.option[data-selected="true"]:not([data-checked="true"]) {
+  border-color: color-mix(in oklab, var(--primary) 50%, transparent);
+  background: color-mix(in oklab, var(--primary) 14%, transparent);
+}
+
+.option[data-state="correct"] {
+  border-color: color-mix(in oklab, var(--success) 42%, transparent);
+  background: color-mix(in oklab, var(--success) 11%, transparent);
+  color: var(--success);
+}
+
+.option[data-state="wrong"] {
+  border-color: color-mix(in oklab, var(--destructive) 42%, transparent);
+  background: color-mix(in oklab, var(--destructive) 10%, transparent);
+  color: var(--destructive);
+}
+
+.option:disabled {
+  cursor: default;
+}
+
+.option:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+
+/* —— Feedback —— */
+.feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.9rem 1rem;
+  border-radius: 0.85rem;
+  border: 1px solid transparent;
+}
+
+.feedback[data-state="correct"] {
+  border-color: color-mix(in oklab, var(--success) 32%, transparent);
+  background: color-mix(in oklab, var(--success) 10%, transparent);
+}
+
+.feedback[data-state="incorrect"] {
+  border-color: color-mix(in oklab, var(--destructive) 28%, transparent);
+  background: color-mix(in oklab, var(--destructive) 8%, transparent);
+}
+
+.feedbackStatus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 700;
+}
+
+.feedback[data-state="correct"] .feedbackStatus {
+  color: var(--success);
+}
+
+.feedback[data-state="incorrect"] .feedbackStatus {
+  color: var(--destructive);
+}
+
+.feedbackDl {
+  margin: 0;
+  display: grid;
+  gap: 0.55rem;
+}
+
+.feedbackDt {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.feedbackDd {
+  margin: 0.2rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.45;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.feedbackDdStrike {
+  color: var(--muted-foreground);
+  text-decoration: line-through;
+  text-decoration-color: color-mix(in oklab, var(--destructive) 55%, transparent);
+}
+
+/* —— Actions —— */
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.55rem;
+  padding-top: 0.15rem;
+}
+
+/* —— Completion —— */
+.complete {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 1.15rem;
+  padding: 1.35rem 1.2rem 1.4rem;
+  border-radius: 1rem;
+  border: 1px solid
+    color-mix(in oklab, var(--listen-fg) 20%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--listen-bg) 52%, transparent),
+      transparent 65%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 50%, transparent);
+  text-align: center;
+}
+
+.completeKicker {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--listen-fg);
+}
+
+.completeTitle {
+  margin: 0.15rem 0 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 3vw, 1.75rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.completeScore {
+  margin: 0.35rem 0 0;
+  font-size: 1.25rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+}
+
+.completePercent {
+  margin: 0.15rem 0 0;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.completeActions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-top: 0.35rem;
+}
+
+.reviewList {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  text-align: left;
+}
+
+.reviewItem {
+  padding: 0.85rem 0.95rem;
+  border-radius: 0.75rem;
+  border: 1px solid
+    color-mix(in oklab, var(--destructive) 22%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--destructive) 6%, transparent);
+}
+
+.reviewPrompt {
+  margin: 0;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--ink);
+}
+
+.reviewMeta {
+  margin: 0.35rem 0 0;
+  font-size: 0.8125rem;
+  color: var(--muted-foreground);
+}
+
+.transcriptPanel {
+  margin-top: 0.15rem;
+}
+
+.transcriptToggle {
+  border: 1px solid
+    color-mix(in oklab, var(--listen-fg) 28%, var(--hairline-cloud)) !important;
+  background: color-mix(in oklab, var(--listen-bg) 32%, transparent) !important;
+  color: var(--ink) !important;
+  box-shadow: none !important;
+}
+
+.transcriptToggle:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--listen-fg) 48%, transparent) !important;
+  background: var(--listen-bg) !important;
+  color: var(--listen-fg) !important;
+}

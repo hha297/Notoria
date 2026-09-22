@@ -1957,7 +1957,11 @@
       "pause": "Pausa",
       "replay": "Spela om",
       "seek": "Sök",
-      "playSegment": "Spela denna del"
+      "playSegment": "Spela denna del",
+      "mute": "Ljud av",
+      "unmute": "Ljud på",
+      "volume": "Volym",
+      "loadError": "Ljudet kunde inte laddas. Kontrollera anslutningen och försök igen."
     },
     "meta": {
       "none": "Inte angivet",
@@ -1999,7 +2003,12 @@
       "review": "Granska svar",
       "tryAgain": "Försök igen",
       "back": "Tillbaka till Lyssnande",
-      "backToResults": "Tillbaka till resultat"
+      "backToResults": "Tillbaka till resultat",
+      "yourAnswer": "Ditt svar",
+      "blanksProgress": "{filled} / {total} luckor",
+      "changeType": "Byt typ",
+      "hideReview": "Dölj granskning",
+      "typeHintMc": "Lyssna och välj bästa svaret på varje fråga."
     },
     "errors": {
       "CLOUDINARY_NOT_CONFIGURED": "Medielagring är inte konfigurerad.",

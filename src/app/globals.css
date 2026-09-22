@@ -2526,6 +2526,95 @@ html.dark {
   color-scheme: dark;
 }
 
+/* Detail chrome back links — outside @layer so muted defaults cannot wash them out. */
+.listening-paper .writing-back,
+.speaking-paper .writing-back,
+.theory-paper .writing-back,
+.theory-sheet .writing-back,
+.writing-paper .writing-back,
+.writing-sheet .writing-back {
+  width: fit-content;
+  margin-inline: -0.45rem;
+  padding: 0.3rem 0.45rem;
+  border-radius: 0.5rem;
+  font-weight: 700;
+  color: #ffffff !important;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+}
+
+html:not(.dark) .listening-paper .writing-back,
+html:not(.dark) .speaking-paper .writing-back,
+html:not(.dark) .theory-paper .writing-back,
+html:not(.dark) .theory-sheet .writing-back,
+html:not(.dark) .writing-paper .writing-back,
+html:not(.dark) .writing-sheet .writing-back {
+  color: var(--ink) !important;
+}
+
+.listening-paper .writing-back:hover {
+  color: var(--module-listen-fg) !important;
+  background: var(--module-listen-bg);
+}
+
+.speaking-paper .writing-back:hover {
+  color: var(--module-speak-fg) !important;
+  background: var(--module-speak-bg);
+}
+
+.theory-paper .writing-back:hover,
+.theory-sheet .writing-back:hover {
+  color: var(--theory-cat-fg, var(--module-theory-fg)) !important;
+  background: var(--theory-cat-bg, var(--module-theory-bg));
+}
+
+.writing-paper:not(.listening-paper):not(.speaking-paper):not(.theory-paper)
+  .writing-back:hover,
+.writing-sheet .writing-back:hover {
+  color: var(--writing-accent-fg, var(--module-writing-fg)) !important;
+  background: var(--writing-accent-bg, var(--module-writing-bg));
+}
+
+.writing-sheet[data-writing-kind="question_set"] .writing-back:hover {
+  color: var(--module-theory-fg) !important;
+  background: var(--module-theory-bg);
+}
+
+.listening-paper .paper-meta-tag,
+.speaking-paper .paper-meta-tag {
+  border-style: solid !important;
+  border-width: 1px !important;
+  border-color: var(--writing-wash) !important;
+  background: var(--writing-wash) !important;
+  color: var(--ink) !important;
+}
+
+.dark .listening-paper .paper-meta-tag {
+  border-color: color-mix(
+    in oklab,
+    var(--module-listen-fg) 42%,
+    var(--module-listen-bg)
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--module-listen-bg) 82%,
+    var(--module-listen-fg)
+  ) !important;
+}
+
+.dark .speaking-paper .paper-meta-tag {
+  border-color: color-mix(
+    in oklab,
+    var(--module-speak-fg) 42%,
+    var(--module-speak-bg)
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--module-speak-bg) 82%,
+    var(--module-speak-fg)
+  ) !important;
+}
+
 body {
   background-color: var(--background);
   color: var(--foreground);

@@ -1772,7 +1772,11 @@
       "pause": "Tạm dừng",
       "replay": "Phát lại",
       "seek": "Tua",
-      "playSegment": "Phát phần này"
+      "playSegment": "Phát phần này",
+      "mute": "Tắt tiếng",
+      "unmute": "Bật tiếng",
+      "volume": "Âm lượng",
+      "loadError": "Không tải được audio. Kiểm tra kết nối và thử lại."
     },
     "meta": {
       "none": "Chưa chọn",
@@ -1814,7 +1818,12 @@
       "review": "Xem lại đáp án",
       "tryAgain": "Làm lại",
       "back": "Quay lại Nghe",
-      "backToResults": "Quay lại kết quả"
+      "backToResults": "Quay lại kết quả",
+      "yourAnswer": "Câu trả lời của bạn",
+      "blanksProgress": "{filled} / {total} chỗ trống",
+      "changeType": "Đổi dạng bài",
+      "hideReview": "Ẩn phần xem lại",
+      "typeHintMc": "Nghe rồi chọn đáp án phù hợp nhất cho từng câu."
     },
     "errors": {
       "CLOUDINARY_NOT_CONFIGURED": "Chưa cấu hình lưu trữ media.",

@@ -2,18 +2,14 @@
 
 import type { KeyboardEvent } from "react";
 import { useTranslations } from "next-intl";
+import exerciseStyles from "@/components/style/listening/exercise.module.css";
 import {
   getTranscriptTurns,
   speakerDisplayName,
 } from "@/lib/listening/speakers";
 import type { ListeningTranscriptionData } from "@/lib/listening/types";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
-
-const SPEAKER_TONES = [
-  "border-l-accent-lime bg-accent-lime/10",
-  "border-l-ink/30 bg-muted/50",
-  "border-l-hairline-cloud bg-card",
-] as const;
 
 type ListeningTranscriptProps = {
   transcript: string;
@@ -43,19 +39,22 @@ export function ListeningTranscript({
   }
 
   return (
-    <section className="card-surface space-y-4">
-      <h2 className="heading-md">{t("transcript")}</h2>
-      <div className="space-y-3">
+    <section
+      className="rounded-xl border border-hairline-cloud bg-surface-elevated/50 p-4 sm:p-5"
+      aria-label={t("transcript")}
+    >
+      <h2 className={mx(exerciseStyles, "eyebrow")}>{t("transcript")}</h2>
+      <div className="mt-3 space-y-2.5">
         {turns.map((turn) => {
           const interactive = Boolean(onSeekMs) && turn.start != null;
-          const tone = turn.speaker
-            ? SPEAKER_TONES[(speakerIndex.get(turn.speaker) ?? 0) % SPEAKER_TONES.length]
-            : "border-l-hairline-cloud bg-muted/30";
+          const toneIndex = turn.speaker
+            ? (speakerIndex.get(turn.speaker) ?? 0) % 3
+            : -1;
           const name = turn.speaker
             ? speakerDisplayName(
-              { speaker: turn.speaker, displayName: turn.displayName },
-              (id) => t("speakerLabel", { id }),
-            )
+                { speaker: turn.speaker, displayName: turn.displayName },
+                (id) => t("speakerLabel", { id }),
+              )
             : null;
 
           return (
@@ -65,33 +64,37 @@ export function ListeningTranscript({
               data-start={turn.start ?? undefined}
               data-end={turn.end ?? undefined}
               className={cn(
-                "rounded-xl border border-hairline-cloud border-l-[3px] px-4 py-3",
-                tone,
-                interactive && "cursor-pointer transition-colors hover:border-accent-lime/60",
+                "rounded-lg border border-hairline-cloud border-l-[3px] px-3.5 py-2.5",
+                toneIndex === 0 && "border-l-[var(--module-listen-fg)] bg-[color-mix(in_oklab,var(--module-listen-bg)_42%,transparent)]",
+                toneIndex === 1 && "border-l-ink/35 bg-muted/40",
+                toneIndex === 2 && "border-l-hairline-cloud bg-card/60",
+                toneIndex < 0 && "border-l-hairline-cloud bg-muted/25",
+                interactive &&
+                  "cursor-pointer transition-colors hover:border-[color-mix(in_oklab,var(--module-listen-fg)_45%,var(--hairline-cloud))]",
               )}
               {...(interactive
                 ? {
-                  role: "button" as const,
-                  tabIndex: 0,
-                  "aria-label": tPlayer("playSegment"),
-                  onClick: () => onSeekMs?.(turn.start ?? 0),
-                  onKeyDown: (event: KeyboardEvent<HTMLDivElement>) => {
-                    if (event.key === "Enter" || event.key === " ") {
-                      event.preventDefault();
-                      onSeekMs?.(turn.start ?? 0);
-                    }
-                  },
-                }
+                    role: "button" as const,
+                    tabIndex: 0,
+                    "aria-label": tPlayer("playSegment"),
+                    onClick: () => onSeekMs?.(turn.start ?? 0),
+                    onKeyDown: (event: KeyboardEvent<HTMLDivElement>) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        onSeekMs?.(turn.start ?? 0);
+                      }
+                    },
+                  }
                 : {})}
             >
               {showSpeakers && name ? (
-                <p className="text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground">
+                <p className="text-[0.68rem] font-semibold tracking-[0.08em] text-muted-foreground uppercase">
                   {name}
                 </p>
               ) : null}
               <p
                 className={cn(
-                  "text-sm leading-relaxed text-ink sm:text-base",
+                  "text-sm leading-relaxed text-ink sm:text-[0.95rem]",
                   showSpeakers && name && "mt-1",
                 )}
               >

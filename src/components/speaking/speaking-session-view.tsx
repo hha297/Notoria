@@ -7,7 +7,6 @@ import { formatDistanceToNow } from "date-fns";
 import { ArrowLeft, Loader2, PhoneOff, Trash2, Video } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { DescriptionContent } from "@/components/form/description-content";
 import {
@@ -18,7 +17,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { LinkButton } from "@/components/ui/link-button";
-import featureStyles from "@/components/style/speaking/session.module.css";
+import detailStyles from "@/components/style/workspace/detail.module.css";
 import sheetStyles from "@/components/style/workspace/sheet.module.css";
 import { deleteSpeakingSession, endSpeakingSession } from "@/lib/actions/speaking";
 import { mx } from "@/lib/css-module";
@@ -85,116 +84,137 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
     });
   }
 
+  const metaTags: string[] = [
+    t(`status.${session.status}`),
+  ];
+  if (session.topic) {
+    metaTags.push(resolveTopicLabel(session.topic, (key) => tTags(key)));
+  }
+  if (session.cefrLevel) {
+    metaTags.push(tMeta(`cefr.${session.cefrLevel as WritingCefr}`));
+  }
+  metaTags.push(
+    formatDistanceToNow(new Date(session.createdAt), {
+      addSuffix: true,
+    }),
+  );
+
   return (
-    <div className="writing-paper speaking-paper">
-      <div className="writing-paper-chrome">
-        <Link href="/speaking" className="writing-back">
-          <ArrowLeft className="size-4" />
-          {t("backToList")}
-        </Link>
-        <div className="writing-paper-actions">
-          {joinable ? (
-            <LinkButton href={`/speaking/${session.id}/call`}>
-              <Video className="size-4" />
-              {t("join")}
-            </LinkButton>
-          ) : null}
-          {session.status === "active" ? (
+    <div className="writing-paper speaking-paper speaking-atelier">
+      <div className={mx(detailStyles, "shell")} data-detail="speak">
+        <header className={mx(detailStyles, "header")}>
+          <Link
+            href="/speaking"
+            className={mx(detailStyles, "back writing-back")}
+          >
+            <ArrowLeft className="size-4 shrink-0" />
+            {t("backToList")}
+          </Link>
+          <div className={mx(detailStyles, "actions")}>
+            {joinable ? (
+              <LinkButton href={`/speaking/${session.id}/call`}>
+                <Video className="size-4" />
+                {t("join")}
+              </LinkButton>
+            ) : null}
+            {session.status === "active" ? (
+              <Button
+                type="button"
+                variant="outline"
+                className="route-quiet-action"
+                data-route-action="speak"
+                onClick={handleEnd}
+                disabled={isPending}
+              >
+                {isPending ? (
+                  <Loader2 className="size-4 animate-spin" />
+                ) : (
+                  <PhoneOff className="size-4" />
+                )}
+                {t("endSession")}
+              </Button>
+            ) : null}
             <Button
               type="button"
-              variant="outline"
-              className="route-quiet-action"
-              data-route-action="speak"
-              onClick={handleEnd}
+              variant="destructive"
+              onClick={() => setDeleteOpen(true)}
               disabled={isPending}
             >
-              {isPending ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <PhoneOff className="size-4" />
-              )}
-              {t("endSession")}
+              <Trash2 className="size-4" />
+              {tc("delete")}
             </Button>
-          ) : null}
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setDeleteOpen(true)}
-            disabled={isPending}
-          >
-            <Trash2 className="size-4" />
-            {tc("delete")}
-          </Button>
-        </div>
-      </div>
+          </div>
+        </header>
 
-      <article className="writing-paper-page">
-        <p className="writing-kicker">{t("title")}</p>
-        <h1 className="writing-paper-title wrap-break-word">{session.title}</h1>
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          <Badge
-            variant={
-              session.status === "completed"
-                ? "outline"
-                : session.status === "active"
-                  ? "default"
-                  : "secondary"
-            }
-          >
-            {t(`status.${session.status}`)}
-          </Badge>
-          {session.topic ? (
-            <span className="text-sm text-muted-foreground">
-              {resolveTopicLabel(session.topic, (key) => tTags(key))}
-            </span>
-          ) : null}
-          {session.cefrLevel ? (
-            <span className="text-sm text-muted-foreground">
-              {tMeta(`cefr.${session.cefrLevel as WritingCefr}`)}
-            </span>
-          ) : null}
-          <span className="text-sm text-muted-foreground">
-            {formatDistanceToNow(new Date(session.createdAt), {
-              addSuffix: true,
-            })}
-          </span>
-        </div>
-        <p className="writing-brand-lede mt-3">{t("sessionDescription")}</p>
+        <section className={mx(detailStyles, "hero")}>
+          <p className={mx(detailStyles, "kicker")}>{t("title")}</p>
+          <div className={mx(detailStyles, "titleRow")}>
+            <h1 className={mx(detailStyles, "title wrap-break-word")}>
+              {session.title}
+            </h1>
+          </div>
+          <div className={mx(detailStyles, "meta")}>
+            {metaTags.map((label) => (
+              <span key={label} className={mx(detailStyles, "tag")}>
+                {label}
+              </span>
+            ))}
+          </div>
+          <p className={mx(detailStyles, "lede")}>{t("sessionDescription")}</p>
+        </section>
 
         {session.notes ? (
-          <div className={mx(featureStyles, "speaking-panel mt-6")}>
+          <div className={mx(detailStyles, "panel")}>
             <DescriptionContent value={session.notes} />
           </div>
         ) : null}
 
-        <div className="mt-6">
-          {session.status === "processing" ? (
-            <div className={mx(featureStyles, "speaking-panel")}>
-              <h2 className={mx(featureStyles, "speaking-panel-title")}>{t("processingTitle")}</h2>
-              <p className={mx(featureStyles, "speaking-panel-lede")}>{t("processingDescription")}</p>
+        {session.status === "processing" ? (
+          <div className={mx(detailStyles, "status")} role="status">
+            <Loader2 className="size-4 animate-spin" />
+            <div>
+              <p className={mx(detailStyles, "panelTitle")}>
+                {t("processingTitle")}
+              </p>
+              <p className={mx(detailStyles, "panelLede")}>
+                {t("processingDescription")}
+              </p>
             </div>
-          ) : null}
+          </div>
+        ) : null}
 
-          {session.summary ? (
-            <div className={mx(featureStyles, "speaking-panel")}>
-              <h2 className={mx(featureStyles, "speaking-panel-title")}>{t("feedbackTitle")}</h2>
-              <p className={mx(featureStyles, "speaking-panel-lede")}>{t("feedbackDescription")}</p>
-              <div className={mx(featureStyles, "speaking-panel-body prose prose-sm max-w-none whitespace-pre-wrap text-ink")}>
-                {session.summary}
-              </div>
+        {session.summary ? (
+          <div className={mx(detailStyles, "panel")}>
+            <h2 className={mx(detailStyles, "panelTitle")}>
+              {t("feedbackTitle")}
+            </h2>
+            <p className={mx(detailStyles, "panelLede")}>
+              {t("feedbackDescription")}
+            </p>
+            <div
+              className={mx(
+                detailStyles,
+                "panelBody prose prose-sm max-w-none whitespace-pre-wrap text-ink",
+              )}
+            >
+              {session.summary}
             </div>
-          ) : null}
+          </div>
+        ) : null}
 
-          {session.transcript ? (
-            <div className={mx(featureStyles, "speaking-panel")}>
-              <h2 className={mx(featureStyles, "speaking-panel-title")}>{t("transcriptTitle")}</h2>
-              <div className={mx(featureStyles, "speaking-panel-body")}>
-                <pre className={mx(featureStyles, "speaking-transcript")}>{session.transcript}</pre>
-              </div>
+        {session.transcript ? (
+          <div className={mx(detailStyles, "panel")}>
+            <h2 className={mx(detailStyles, "panelTitle")}>
+              {t("transcriptTitle")}
+            </h2>
+            <div className={mx(detailStyles, "panelBody")}>
+              <pre className="max-h-112 overflow-auto whitespace-pre-wrap rounded-lg bg-[color-mix(in_oklab,var(--surface-muted)_55%,transparent)] p-4 text-sm leading-relaxed text-ink">
+                {session.transcript}
+              </pre>
             </div>
-          ) : null}
-        </div>
-      </article>
+          </div>
+        ) : null}
+      </div>
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
         <DialogContent
@@ -202,12 +222,21 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
           className={mx(sheetStyles, "workspace-sheet sm:max-w-md")}
           data-sheet-route="speak"
         >
-          <DialogHeader className={mx(sheetStyles, "workspace-sheet-header gap-2 space-y-0 pr-8 text-left")}>
-            <p className={mx(sheetStyles, "workspace-sheet-kicker")}>{t("title")}</p>
+          <DialogHeader
+            className={mx(
+              sheetStyles,
+              "workspace-sheet-header gap-2 space-y-0 pr-8 text-left",
+            )}
+          >
+            <p className={mx(sheetStyles, "workspace-sheet-kicker")}>
+              {t("title")}
+            </p>
             <DialogTitle className={mx(sheetStyles, "workspace-sheet-title")}>
               {t("deleteConfirmTitle")}
             </DialogTitle>
-            <DialogDescription className={mx(sheetStyles, "workspace-sheet-lede")}>
+            <DialogDescription
+              className={mx(sheetStyles, "workspace-sheet-lede")}
+            >
               {t("deleteConfirmDescription", { title: session.title })}
             </DialogDescription>
           </DialogHeader>

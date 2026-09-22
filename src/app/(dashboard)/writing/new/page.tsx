@@ -21,8 +21,8 @@ export default async function NewWritingPage({
   if (!workspace) {
     return (
       <div className="writing-sheet">
-        <Link href={listHref} className="writing-back">
-          <ArrowLeft className="size-4" />
+        <Link href={listHref} className="writing-back text-ink dark:!text-white">
+          <ArrowLeft className="size-4 shrink-0 text-current" />
           {t("backToList")}
         </Link>
         <NoWorkspaceEmpty />

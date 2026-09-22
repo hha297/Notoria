@@ -352,8 +352,11 @@ export function TheoryEditor({
   return (
     <div className="writing-sheet theory-sheet" data-theory-category={category}>
       <div className="writing-paper-chrome">
-        <Link href={previewHref ?? listHref} className="writing-back">
-          <ArrowLeft className="size-4" />
+        <Link
+          href={previewHref ?? listHref}
+          className="writing-back text-ink dark:!text-white"
+        >
+          <ArrowLeft className="size-4 shrink-0 text-current" />
           {previewHref ? t("backToPreview") : t("backToList")}
         </Link>
         <div className="writing-paper-actions">

@@ -1772,7 +1772,11 @@
       "pause": "Tauko",
       "replay": "Toista uudelleen",
       "seek": "Siirry",
-      "playSegment": "Toista tämä kohta"
+      "playSegment": "Toista tämä kohta",
+      "mute": "Mykistä",
+      "unmute": "Poista mykistys",
+      "volume": "Äänenvoimakkuus",
+      "loadError": "Ääntä ei voitu ladata. Tarkista yhteys ja yritä uudelleen."
     },
     "meta": {
       "none": "Ei asetettu",
@@ -1814,7 +1818,12 @@
       "review": "Tarkista vastaukset",
       "tryAgain": "Yritä uudelleen",
       "back": "Takaisin kuunteluun",
-      "backToResults": "Takaisin tuloksiin"
+      "backToResults": "Takaisin tuloksiin",
+      "yourAnswer": "Vastauksesi",
+      "blanksProgress": "{filled} / {total} aukkoa",
+      "changeType": "Vaihda tyyppiä",
+      "hideReview": "Piilota tarkistus",
+      "typeHintMc": "Kuuntele ja valitse paras vastaus jokaiseen kysymykseen."
     },
     "errors": {
       "CLOUDINARY_NOT_CONFIGURED": "Mediatallennusta ei ole määritetty.",

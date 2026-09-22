@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, useTransition } from "react";
+import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Loader2, Pencil, RotateCcw, Trash2 } from "lucide-react";
@@ -9,7 +9,6 @@ import { toast } from "sonner";
 import { ListeningAudioPlayer } from "@/components/listening/listening-audio-player";
 import { ListeningPracticeSession } from "@/components/listening/listening-practice-session";
 import { RenameListeningDialog } from "@/components/listening/rename-listening-dialog";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,7 +17,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import featureStyles from "@/components/style/speaking/session.module.css";
+import exerciseStyles from "@/components/style/listening/exercise.module.css";
 import sheetStyles from "@/components/style/workspace/sheet.module.css";
 import {
   deleteListeningLesson,
@@ -52,11 +51,10 @@ export function ListeningLessonView({
   const [renameOpen, setRenameOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [isLeaving, setIsLeaving] = useState(false);
-  const [lesson, setLesson] = useState(initialLesson);
-
-  useEffect(() => {
-    setLesson(initialLesson);
-  }, [initialLesson]);
+  const [renamePatch, setRenamePatch] = useState<Partial<ListeningLessonDetail>>(
+    {},
+  );
+  const lesson = { ...initialLesson, ...renamePatch };
 
   const processing =
     lesson.status === "TRANSCRIBING" ||
@@ -100,80 +98,107 @@ export function ListeningLessonView({
     });
   }
 
+  const metaTags: { label: string; tone?: "danger" }[] = [];
+  metaTags.push({
+    label: t(`status.${lesson.status}`),
+    tone: lesson.status === "FAILED" ? "danger" : undefined,
+  });
+  if (lesson.cefrLevel) {
+    metaTags.push({
+      label: tMeta(`cefr.${lesson.cefrLevel as WritingCefr}`),
+    });
+  }
+  if (lesson.topic) {
+    metaTags.push({
+      label: resolveTopicLabel(lesson.topic, (key) => tTags(key)),
+    });
+  }
+  if (lesson.formality) {
+    metaTags.push({
+      label: tMeta(`formality.${lesson.formality as WritingFormality}`),
+    });
+  }
+  if (lesson.duration != null) {
+    const duration = formatListeningDuration(lesson.duration);
+    if (duration) metaTags.push({ label: duration });
+  }
+
   return (
-    <div className="writing-paper listening-paper">
-      <div className="writing-paper-chrome">
-        <Link href={backHref} className="writing-back">
-          <ArrowLeft className="size-4" />
-          {t("backToList")}
-        </Link>
-        <div className="writing-paper-actions">
-          {canRetry ? (
-            <Button onClick={handleRetry} disabled={isPending}>
-              {isPending ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
-                <RotateCcw className="size-4" />
-              )}
-              {t("retry")}
+    <div className="writing-paper listening-paper listening-atelier">
+      <div className={mx(exerciseStyles, "shell shellWide")}>
+        <header className={mx(exerciseStyles, "header")}>
+          <Link
+            href={backHref}
+            className="inline-flex items-center gap-1.5 rounded-lg px-2 py-1.5 text-sm font-bold text-ink no-underline [-webkit-font-smoothing:auto] hover:bg-[var(--module-listen-bg)] hover:text-[var(--module-listen-fg)] dark:text-white"
+          >
+            <ArrowLeft className="size-4 shrink-0" />
+            {t("backToList")}
+          </Link>
+          <div className={mx(exerciseStyles, "headerActions")}>
+            {canRetry ? (
+              <Button onClick={handleRetry} disabled={isPending}>
+                {isPending ? (
+                  <Loader2 className="size-4 animate-spin" />
+                ) : (
+                  <RotateCcw className="size-4" />
+                )}
+                {t("retry")}
+              </Button>
+            ) : null}
+            <Button
+              variant="destructive"
+              onClick={() => setDeleteOpen(true)}
+              disabled={isPending}
+            >
+              <Trash2 className="size-4" />
+              {tc("delete")}
             </Button>
-          ) : null}
-          <Button
-            variant="outline"
-            className="route-quiet-action"
-            data-route-action="listen"
-            onClick={() => setRenameOpen(true)}
-            disabled={isPending}
-          >
-            <Pencil className="size-4" />
-            {t("renameFile")}
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() => setDeleteOpen(true)}
-            disabled={isPending}
-          >
-            <Trash2 className="size-4" />
-            {tc("delete")}
-          </Button>
-        </div>
-      </div>
+          </div>
+        </header>
 
-      <article className="writing-paper-page">
-        <p className="writing-kicker">{t("title")}</p>
-        <h1 className="writing-paper-title wrap-break-word">{lesson.title}</h1>
-        <div className="mt-3 flex flex-wrap items-center gap-2">
-          <Badge
-            variant={lesson.status === "FAILED" ? "destructive" : "outline"}
-          >
-            {t(`status.${lesson.status}`)}
-          </Badge>
-          {lesson.cefrLevel ? (
-            <Badge variant="outline">
-              {tMeta(`cefr.${lesson.cefrLevel as WritingCefr}`)}
-            </Badge>
+        <section>
+          <p className={mx(exerciseStyles, "eyebrow")}>{t("title")}</p>
+          <div className="mt-2 flex flex-wrap items-center gap-1.5">
+            <h1 className="font-heading text-[clamp(1.65rem,3vw,2.4rem)] font-bold leading-[1.12] tracking-[-0.035em] text-ink wrap-break-word">
+              {lesson.title}
+            </h1>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              className="shrink-0 text-muted-foreground pl-2 hover:bg-[var(--module-listen-bg)] hover:text-[var(--module-listen-fg)]"
+              onClick={() => setRenameOpen(true)}
+              disabled={isPending}
+              aria-label={t("renameFile")}
+              title={t("renameFile")}
+            >
+              <Pencil className="size-5" />
+            </Button>
+          </div>
+          <div className="mt-3 flex flex-wrap gap-2">
+            {metaTags.map((tag) => (
+              <span
+                key={tag.label}
+                className={
+                  tag.tone === "danger"
+                    ? "inline-flex min-h-6 items-center rounded-md border border-destructive/40 bg-destructive/10 px-2 py-0.5 font-heading text-[0.7rem] font-semibold text-destructive"
+                    : "inline-flex min-h-6 items-center rounded-md border border-[color-mix(in_oklab,var(--module-listen-fg)_38%,var(--module-listen-bg))] bg-[color-mix(in_oklab,var(--module-listen-bg)_88%,transparent)] px-2 py-0.5 font-heading text-[0.7rem] font-semibold text-ink"
+                }
+              >
+                {tag.label}
+              </span>
+            ))}
+          </div>
+          {!ready ? (
+            <p className="mt-3 max-w-xl text-[0.95rem] leading-relaxed text-muted-foreground">
+              {t("lessonDescription")}
+            </p>
           ) : null}
-          {lesson.topic ? (
-            <Badge variant="outline">
-              {resolveTopicLabel(lesson.topic, (key) => tTags(key))}
-            </Badge>
-          ) : null}
-          {lesson.formality ? (
-            <Badge variant="outline">
-              {tMeta(`formality.${lesson.formality as WritingFormality}`)}
-            </Badge>
-          ) : null}
-          {lesson.duration != null ? (
-            <Badge variant="secondary">
-              {formatListeningDuration(lesson.duration)}
-            </Badge>
-          ) : null}
-        </div>
-        <p className="writing-brand-lede mt-3">{t("lessonDescription")}</p>
+        </section>
 
-        <div className="mt-8 flex flex-col gap-4">
+        <div className="flex flex-col gap-4">
           {lesson.status === "FAILED" && !ready ? (
-            <div className={mx(featureStyles, "listening-status-strip is-error")}>
+            <div className={mx(exerciseStyles, "status")} data-tone="error">
               {lesson.errorCode && isListeningErrorCode(lesson.errorCode)
                 ? t(`errors.${lesson.errorCode}`)
                 : t("errors.PROCESSING_FAILED")}
@@ -181,24 +206,24 @@ export function ListeningLessonView({
           ) : null}
 
           {processing ? (
-            <div className={mx(featureStyles, "listening-status-strip")}>
+            <div className={mx(exerciseStyles, "status")} role="status">
               <Loader2 className="size-4 animate-spin" />
               {t(`steps.${lesson.status.toLowerCase()}`)}
             </div>
           ) : null}
 
           {ready ? (
-            <div className={mx(featureStyles, "listening-practice-stage")}>
-              <ListeningPracticeSession lesson={lesson} />
-            </div>
+            <ListeningPracticeSession lesson={lesson} />
           ) : (
             <ListeningAudioPlayer
+              key={lesson.cloudinaryUrl}
               src={lesson.cloudinaryUrl}
               mediaType={lesson.mediaType}
+              label={t("title")}
             />
           )}
         </div>
-      </article>
+      </div>
 
       <RenameListeningDialog
         open={renameOpen}
@@ -207,7 +232,9 @@ export function ListeningLessonView({
         title={lesson.title}
         originalFilename={lesson.originalFilename}
         format={lesson.format}
-        onRenamed={(patch) => setLesson((current) => ({ ...current, ...patch }))}
+        onRenamed={(patch) =>
+          setRenamePatch((current) => ({ ...current, ...patch }))
+        }
       />
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>
@@ -216,12 +243,21 @@ export function ListeningLessonView({
           className={mx(sheetStyles, "workspace-sheet sm:max-w-md")}
           data-sheet-route="listen"
         >
-          <DialogHeader className={mx(sheetStyles, "workspace-sheet-header gap-2 space-y-0 pr-8 text-left")}>
-            <p className={mx(sheetStyles, "workspace-sheet-kicker")}>{t("title")}</p>
+          <DialogHeader
+            className={mx(
+              sheetStyles,
+              "workspace-sheet-header gap-2 space-y-0 pr-8 text-left",
+            )}
+          >
+            <p className={mx(sheetStyles, "workspace-sheet-kicker")}>
+              {t("title")}
+            </p>
             <DialogTitle className={mx(sheetStyles, "workspace-sheet-title")}>
               {t("deleteConfirmTitle")}
             </DialogTitle>
-            <DialogDescription className={mx(sheetStyles, "workspace-sheet-lede")}>
+            <DialogDescription
+              className={mx(sheetStyles, "workspace-sheet-lede")}
+            >
               {t("deleteConfirmDescription", { title: lesson.title })}
             </DialogDescription>
           </DialogHeader>

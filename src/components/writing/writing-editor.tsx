@@ -499,9 +499,9 @@ export function WritingEditor({
       <div className="writing-paper-chrome">
         <Link
           href={previewHref ?? listHref}
-          className="writing-back"
+          className="writing-back text-ink dark:!text-white"
         >
-          <ArrowLeft className="size-4" />
+          <ArrowLeft className="size-4 shrink-0 text-current" />
           {previewHref ? t("backToPreview") : t("backToList")}
         </Link>
         <div className="writing-paper-actions">

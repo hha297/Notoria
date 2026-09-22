@@ -1957,7 +1957,11 @@
       "pause": "Pause",
       "replay": "Replay",
       "seek": "Seek",
-      "playSegment": "Play this part"
+      "playSegment": "Play this part",
+      "mute": "Mute",
+      "unmute": "Unmute",
+      "volume": "Volume",
+      "loadError": "Audio could not be loaded. Check your connection and try again."
     },
     "meta": {
       "none": "Not set",
@@ -1999,7 +2003,12 @@
       "review": "Review Answers",
       "tryAgain": "Try Again",
       "back": "Back to Listening",
-      "backToResults": "Back to results"
+      "backToResults": "Back to results",
+      "yourAnswer": "Your answer",
+      "blanksProgress": "{filled} / {total} blanks",
+      "changeType": "Change type",
+      "hideReview": "Hide review",
+      "typeHintMc": "Listen, then choose the best answer for each question."
     },
     "errors": {
       "CLOUDINARY_NOT_CONFIGURED": "Media storage is not configured.",

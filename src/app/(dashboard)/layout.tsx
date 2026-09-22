@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { DashboardDocumentTitle } from "@/components/layout/dashboard-document-title";
@@ -19,6 +20,13 @@ import { createPerfTimer } from "@/lib/perf/dev-timing";
 import { getUserWorkspaces, getActiveWorkspace } from "@/lib/workspace";
 
 export const preferredRegion = ["fra1"];
+
+/** Escape root SEO title; DashboardDocumentTitle owns tab labels. */
+export const metadata: Metadata = {
+  title: {
+    absolute: "Notoria",
+  },
+};
 
 export default async function DashboardLayout({
   children,
