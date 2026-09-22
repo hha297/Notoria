@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { ArrowLeft } from "lucide-react";
 import { auth } from "@/auth";
 import { SiteFooter } from "@/components/layout/site-footer";
 import { Logo, LogoWordmark } from "@/components/ui/logo";
@@ -51,7 +52,8 @@ export async function PublicPageShell({
         </section>
 
         <p className={mx(styles, "legal-footer")}>
-          <Link href={homeHref}>
+          <Link href={homeHref} className={mx(styles, "legal-back-link")}>
+            <ArrowLeft className="size-4 shrink-0" aria-hidden />
             {session?.user ? t("backHome") : t("backToSignIn")}
           </Link>
         </p>

@@ -17,6 +17,8 @@ export default auth((request) => {
     pathname.startsWith("/about") ||
     pathname.startsWith("/our-story") ||
     pathname.startsWith("/how-to-use") ||
+    pathname.startsWith("/support") ||
+    pathname.startsWith("/contact") ||
     pathname.startsWith("/help");
   const isPublicRoute =
     isAuthRoute ||

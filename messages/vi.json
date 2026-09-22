@@ -62,7 +62,7 @@
     "account": "Tài khoản",
     "settings": "Cài đặt",
     "workspace": "Không gian học",
-    "gettingStarted": "Cách dùng",
+    "gettingStarted": "Bắt đầu",
     "groups": {
       "main": "Menu chính",
       "listenSpeak": "Nghe và nói",
@@ -1607,7 +1607,7 @@
       "policiesDescription": "Chính sách quyền riêng tư và Điều khoản sử dụng của Notoria.",
       "privacyLink": "Chính sách quyền riêng tư",
       "termsLink": "Điều khoản sử dụng",
-      "helpLink": "Trợ giúp & hỗ trợ"
+      "helpLink": "Hỗ trợ"
     },
     "tagManager": {
       "sectionTitle": "Từ vựng",
@@ -2074,7 +2074,7 @@
     "eyebrow": "Tài khoản",
     "title": "Tài khoản",
     "highlight": "của bạn",
-    "description": "Quản lý hồ sơ, Notoria Pro và bảo mật — kể cả việc đóng tài khoản vĩnh viễn.",
+    "description": "Quản lý hồ sơ, Notoria Pro, xuất dữ liệu và bảo mật — kể cả việc đóng tài khoản vĩnh viễn.",
     "pro": {
       "freeLede": "Gói miễn phí đủ luyện mỗi ngày. Pro mở các công cụ AI biến ghi chú thành nghe, nói, hỗ trợ viết và file in được.",
       "activeLede": "Gói Pro đang hoạt động. Các công cụ AI học tập vẫn mở khi gói còn gia hạn.",
@@ -2097,11 +2097,20 @@
       "title": "Mật khẩu",
       "description": "Chọn mật khẩu mạnh và không dùng lại ở nơi khác."
     },
+    "data": {
+      "title": "Dữ liệu của bạn",
+      "description": "Tải bản sao dữ liệu học bất cứ lúc nào bạn cần.",
+      "exportTitle": "Xuất bản sao lưu tài khoản",
+      "exportHint": "Tải file JSON gồm workspace và nội dung học. Media chỉ tham chiếu bằng URL, không nhúng trong file.",
+      "exportAction": "Tải backup",
+      "exportDone": "Đã tải backup",
+      "exportFailed": "Không chuẩn bị được backup. Thử lại nhé."
+    },
     "danger": {
       "title": "Đóng tài khoản",
       "description": "Xóa vĩnh viễn tài khoản Notoria và mọi dữ liệu bên trong.",
       "deleteTitle": "Xóa tài khoản của tôi",
-      "deleteHint": "Thao tác này xóa mọi workspace, nội dung học và thanh toán. Hãy tải backup trước nếu muốn giữ bản sao.",
+      "deleteHint": "Thao tác này xóa mọi workspace, nội dung học và thanh toán. Hãy dùng Xuất bản sao lưu ở trên trước nếu muốn giữ bản sao.",
       "deleteAction": "Xóa tài khoản"
     },
     "delete": {
@@ -2684,140 +2693,352 @@
   "footer": {
     "navLabel": "Liên kết trang",
     "explore": "Khám phá",
-    "help": "Trợ giúp",
+    "support": "Hỗ trợ",
     "legal": "Pháp lý",
-    "contact": "Liên hệ",
     "howToUse": "Cách dùng",
     "about": "Về chúng tôi",
     "ourStory": "Câu chuyện",
-    "helpSupport": "Trợ giúp & hỗ trợ",
+    "supportLink": "Hỗ trợ",
+    "contactUs": "Liên hệ với chúng tôi",
     "privacy": "Chính sách quyền riêng tư",
     "terms": "Điều khoản sử dụng",
-    "emailLabel": "Email",
-    "phoneLabel": "Điện thoại",
     "copyright": "© 2026 Notoria",
-    "tagline": "Không gian yên tĩnh để học ngôn ngữ."
+    "tagline": "Dành cho người học ngôn ngữ."
   },
   "sitePages": {
     "about": {
       "eyebrow": "Giới thiệu",
       "title": "Về Notoria",
-      "lede": "Không gian học ngôn ngữ riêng tư cho tài liệu bạn thực sự dùng.",
+      "lede": "Không gian làm việc riêng tư để tự học bất kỳ ngôn ngữ nào — xây quanh tài liệu bạn mang vào, không phải danh mục khoá học để cuộn.",
       "what": {
         "title": "Notoria là gì",
-        "body": "Notoria là ứng dụng web nơi từ vựng, ghi chú, viết, bài tập, nghe và nói nằm cùng một chỗ — theo ngôn ngữ bạn đang học. Nó xoay quanh nội dung của bạn, không phải thư viện khóa học bên thứ ba."
+        "p1": "Notoria là không gian làm việc riêng tư để tự học một ngôn ngữ. Bạn giữ từ vựng, ghi chú, lý thuyết, bài tập, viết, nghe và nói ở một chỗ, sắp xếp theo ngôn ngữ đang học.",
+        "p2": "Không phải nền tảng trường học, cũng không phải thư viện khoá học sẵn. Đó là ngôi nhà cho tài liệu bạn tự thu thập và tạo — những từ đáng giữ, những giải thích cuối cùng bám được, phần luyện thuộc về tiến bộ thật của bạn.",
+        "beat": "Tài liệu của bạn. Ngôn ngữ của bạn. Một chỗ."
+      },
+      "why": {
+        "title": "Vì sao có Notoria",
+        "p1": "Học ngôn ngữ hữu ích hơn khi các mảnh gắn với nhau.",
+        "p2": "Một từ bạn lưu tuần trước phải dễ luyện lại. Một ghi chú viết bằng lời của bạn phải còn đó khi cùng một mẫu làm bạn rối. Viết, nghe và nói phải lấy được từ cùng tài liệu đó — thay vì sống ở các góc riêng của điện thoại và máy tính.",
+        "p3": "Notoria giữ các sợi đó lại với nhau, để luyện tập cảm giác liền mạch thay vì rời rạc."
       },
       "who": {
         "title": "Dành cho ai",
-        "body": "Người học muốn một nơi bình tĩnh để gom từ, giải thích ngữ pháp bằng lời của mình, luyện với đúng tài liệu đó, và quay lại ngày mai mà không phải bắt đầu lại."
+        "p1": "Những người học độc lập — và muốn tài liệu của chính mình nằm ở trung tâm quá trình.",
+        "p2": "Nếu bạn thích gom những gì quan trọng với mình hơn là theo giáo trình cố định của người khác, Notoria dành cho nhịp đó. Đủ yên cho việc học nghiêm túc. Đủ thực tế để quay lại mỗi ngày."
+      },
+      "yourWay": {
+        "title": "Tài liệu của bạn, theo cách của bạn",
+        "p1": "Sách, giáo viên, khoá học, podcast, hội thoại và mọi nguồn bạn đã dùng vẫn quan trọng. Notoria không cố thay chúng.",
+        "p2": "Thay vào đó, nó cho một chỗ để gom những tài liệu đó lại: lưu điều bạn để ý, sắp theo ngôn ngữ, giải thích bằng lời của mình, và tiếp tục luyện từ đó.",
+        "beat": "Notoria ngồi cạnh đời sống học của bạn. Nó không cố trở thành đời sống đó."
       },
       "provides": {
         "title": "Bạn có thể làm gì",
+        "intro": "Trong một workspace, các phần chính gắn với nhau:",
         "items": {
           "vocab": "Xây ngân hàng từ cá nhân với nghĩa, ví dụ và thẻ",
-          "practice": "Luyện bài tập từ chính từ của bạn",
-          "create": "Viết worksheet và ghi chú lý thuyết để xem lại",
-          "listenSpeak": "Biến media thành luyện nghe và nói với AI tutor trên Pro"
+          "practice": "Luyện với bài tập lấy từ từ và ghi chú của chính bạn",
+          "create": "Viết ghi chú lý thuyết và bài viết để quay lại sau",
+          "listenSpeak": "Biến media thành luyện nghe, và nói với gia sư AI trên Pro"
         },
-        "note": "Một số công cụ AI, nghe, nói và xuất file thuộc Notoria Pro. Gói miễn phí vẫn đủ để luyện từ vựng hàng ngày và các công cụ liên quan."
+        "note": "Một số công cụ AI, nghe, nói và xuất thuộc Notoria Pro. Gói miễn phí vẫn đủ luyện từ vựng hàng ngày và vòng học cốt lõi."
+      },
+      "ai": {
+        "title": "AI, ở nơi nó giúp ích",
+        "p1": "Khi có AI, đó là công cụ hỗ trợ — không phải trung tâm của sản phẩm.",
+        "p2": "Nó có thể giúp định hình luyện tập, kiểm tra viết, hoặc hỗ trợ nghe và nói. Nó không quyết định bạn nên học gì, và không thay công việc để ý, nhớ và quay lại.",
+        "p3": "Bạn quyết định những gì vào workspace và những gì bạn quay lại."
       }
     },
     "ourStory": {
       "eyebrow": "Câu chuyện",
       "title": "Câu chuyện của chúng tôi",
-      "lede": "Notoria bắt đầu từ một nỗi bực đơn giản: ghi chú ngôn ngữ bị phân tán, và công cụ luyện tập hiếm khi dùng đúng thứ bạn đã gom.",
-      "problem": {
-        "title": "Vấn đề",
-        "body": "Danh sách từ ở một app, ngữ pháp ở app khác, viết ở chỗ khác, còn nghe/nói gần như không gắn với những gì bạn đang học. Tiến bộ mỏng vì các công cụ không chia một không gian riêng."
+      "lede": "Công cụ học ngôn ngữ thì có ở khắp nơi. Nhưng tài liệu thật sự quan trọng lại chẳng có mặt đúng lúc bạn cần luyện tập.",
+      "frustration": {
+        "title": "Sự rời rạc quen thuộc",
+        "p1": "Nếu bạn từng học một ngôn ngữ nghiêm túc bằng chính mình, bạn sẽ nhận ra hình dạng của nó.",
+        "p2": "Từ vựng nằm ở một app. Ghi chú ngữ pháp trong một tài liệu. Ví dụ thì screenshot vào một thư mục chẳng còn mở nữa. Nghe trên điện thoại. Viết ở chỗ khác. Nói gần như không bao giờ nối với bất kỳ thứ nào trong số đó.",
+        "p3": "Thu thập thì dễ. Bạn có thể gom rất nhiều.",
+        "p4": "Phần khó đến sau — khi bạn ngồi xuống luyện và nhận ra chẳng có gì chung một chỗ. Mỗi công cụ nhớ một mảnh. Không công cụ nào nhớ ngôn ngữ bạn đang thật sự xây.",
+        "beat": "Tài liệu hữu ích, rải rác. Luyện tập, lại bắt đầu từ đầu."
       },
-      "why": {
-        "title": "Vì sao làm",
-        "body": "Chúng tôi muốn sản phẩm lấy ghi chú làm trung tâm — gom, hiểu, luyện, tạo, nghe, nói, ôn — mà không giả làm trường học hay chợ nội dung."
+      "realisation": {
+        "title": "Điều lẽ ra phải rõ từ đầu",
+        "p1": "Đến một lúc, sự bực bội không còn là chuyện thêm tính năng. Nó là chuyện trọng tâm.",
+        "p2": "Tài liệu của chính người học — những từ đáng giữ, ghi chú viết bằng lời của mình, ví dụ cuối cùng làm mọi thứ lọt vào chỗ — không nên nằm ngoài các công cụ dùng để luyện. Nó phải là vòng lặp.",
+        "p3": "Luyện tập bỏ qua những gì bạn đã gom chỉ là bận rộn với branding đẹp hơn.",
+        "beat": "Tài liệu của bạn thuộc về trung tâm."
       },
-      "direction": {
-        "title": "Hướng đi",
-        "body": "Giữ Notoria riêng tư, thiết thực và thẳng thắn. Cải thiện vòng học quanh tài liệu của bạn. Thêm AI nơi tiết kiệm thời gian, không biến sản phẩm thành ồn ào."
+      "exists": {
+        "title": "Vì sao Notoria tồn tại",
+        "p1": "Notoria tồn tại để cho tài liệu đó một ngôi nhà riêng tư — và giữ từ vựng, ghi chú, lý thuyết, bài tập, viết, nghe và nói trong một không gian làm việc xây quanh nó.",
+        "p2": "Không phải một đống module rời với cùng một đăng nhập. Mà là nơi những gì bạn lưu có thể trở thành những gì bạn luyện, và những gì bạn luyện có thể làm sâu hơn những gì bạn giữ.",
+        "p3": "Bạn mang ngôn ngữ vào. Notoria giúp bạn ở lại với nó — quay lại, luyện, viết, nghe, nói — mà không mất mạch mỗi lần đổi công cụ.",
+        "p4": "Đó là toàn bộ ý tưởng, nói thẳng."
+      },
+      "believes": {
+        "title": "Những gì chúng tôi tin",
+        "p1": "Tự học nên mang cảm giác cá nhân, thực tế và liền mạch. Không phô trương. Không liên tục bị cắt ngang bởi danh mục nội dung bạn chẳng hỏi tới.",
+        "p2": "Notoria không phải trường học. Không phải chợ khoá học. Không cố thay giáo viên, sách giáo khoa, hay công việc lặng lẽ của việc chú ý.",
+        "p3": "Nó là không gian làm việc cho ngôn ngữ bạn đang học — đủ riêng tư để là của bạn, đủ cấu trúc để hữu ích, đủ nhẹ để sản phẩm không đứng chắn đường việc học.",
+        "beat": "Ít ồn ào hơn. Nhiều liên tục hơn."
+      },
+      "going": {
+        "title": "Hướng đi phía trước",
+        "p1": "Hướng đi không kịch tính. Giữ riêng tư. Giữ thực tế. Giữ trung thực về những gì phần mềm làm được và không làm được.",
+        "p2": "Tiếp tục cải thiện vòng học quanh tài liệu của chính bạn — các mối nối giữa nhớ, hiểu, sản xuất, nghe và nói.",
+        "p3": "Dùng AI ở nơi nó thật sự giúp: định hình luyện tập, hỗ trợ viết, nghe hoặc nói. Không phải chiêu trò. Không thay thế công việc của người học. Không lấy cớ để nhồi sản phẩm đầy ồn ào.",
+        "closing": "Notoria được xây vì có người mệt mỏi với sự rời rạc — và muốn một nơi tốt hơn cho tài liệu học của chính mình. Lý do đó vẫn còn đúng."
       }
     },
     "howToUse": {
       "eyebrow": "Hướng dẫn",
       "title": "Cách dùng Notoria",
-      "lede": "Không cần mọi tính năng ngay ngày đầu. Bắt đầu với một workspace và vài từ bạn quan tâm.",
-      "idea": {
-        "title": "Ý tưởng cơ bản",
-        "body": "Mỗi workspace là một ngôn ngữ. Trong đó từ vựng, lý thuyết, bài tập, viết, nghe và nói gắn với nhau để luyện từ những gì bạn đã lưu."
+      "lede": "Bản đồ thực tế về vòng học — bắt đầu với vài từ, rồi mở rộng luyện tập, viết, nghe và nói khi bạn sẵn sàng.",
+      "intro": {
+        "title": "Một workspace, không phải khoá học",
+        "p1": "Notoria là chỗ riêng tư cho ngôn ngữ bạn đang học. Bạn mang tài liệu vào, giữ cho có trật tự, và luyện từ đó — thay vì bắt đầu từ danh mục bài bạn không chọn.",
+        "p2": "Mỗi workspace là một ngôn ngữ. Từ vựng, lý thuyết, bài tập, viết, nghe và nói sống chung ở đó, để những gì bạn lưu có thể trở thành những gì bạn luyện.",
+        "beat": "Bạn không cần học hết Notoria một lần. Bạn lớn cùng ngôn ngữ."
       },
-      "start": {
-        "title": "Bắt đầu đơn giản",
+      "loop": {
+        "title": "Vòng học",
+        "p1": "Phần lớn sản phẩm dựa trên một vòng đơn giản:",
+        "stages": {
+          "bring": {
+            "label": "Mang vào",
+            "body": "Lưu từ, cụm từ và ghi chú từ bài học, sách, media, hội thoại — bất cứ nơi nào bạn gặp ngôn ngữ."
+          },
+          "organise": {
+            "label": "Sắp xếp",
+            "body": "Giữ mọi thứ của ngôn ngữ đó trong một workspace, với nghĩa, ví dụ và thẻ giúp bạn tìm lại sau."
+          },
+          "understand": {
+            "label": "Hiểu",
+            "body": "Viết ghi chú lý thuyết bằng lời của mình khi một mẫu cần giải thích — ngữ pháp, cách dùng, hoặc điều bạn hay quên."
+          },
+          "practise": {
+            "label": "Luyện",
+            "body": "Biến những gì đã lưu thành bài tập và ôn, để việc nhớ đến từ tài liệu của chính bạn."
+          },
+          "use": {
+            "label": "Dùng",
+            "body": "Viết với nó, nghe nó, và nói nó — để ngôn ngữ đi từ nhận diện sang dùng chủ động."
+          },
+          "review": {
+            "label": "Quay lại",
+            "body": "Quay lại sau, thêm cái mới, ôn phần khó, và giữ vòng chạy thay vì bắt đầu lại."
+          }
+        },
+        "beat": "Mang vào → sắp xếp → hiểu → luyện → dùng → quay lại."
+      },
+      "startSmall": {
+        "title": "Bắt đầu nhỏ",
+        "p1": "Notoria không phải thứ bạn hoàn thành. Không có checklist nào nghĩa là bạn đã xong với sản phẩm.",
+        "p2": "Một ngày đầu tốt có thể là một workspace và năm từ bạn thật sự quan tâm. Ghi chú, luyện dài hơn, viết, nghe và nói có thể chờ tới khi chúng đáng có chỗ trong vòng của bạn."
+      },
+      "firstSession": {
+        "title": "Buổi đầu tiên",
+        "intro": "Nếu muốn một lối bắt đầu cụ thể, thử một lần:",
         "steps": {
-          "workspace": "Tạo workspace cho ngôn ngữ bạn đang học.",
-          "words": "Thêm vài từ bạn thực sự muốn nhớ.",
-          "notes": "Viết ghi chú lý thuyết ngắn khi cần giải thích.",
-          "practice": "Mở Exercise và luyện với tài liệu của bạn.",
-          "return": "Quay lại sau, thêm nữa, và giữ vòng lặp."
+          "workspace": {
+            "title": "Tạo workspace",
+            "body": "Tạo một cho ngôn ngữ đang học, và đặt tên bạn sẽ nhận ra sau."
+          },
+          "words": {
+            "title": "Thêm một nắm từ",
+            "body": "Mở Vocabulary và lưu từ hoặc cụm bạn muốn nhớ, kèm nghĩa hoặc ví dụ nếu hữu ích."
+          },
+          "notes": {
+            "title": "Viết ghi chú ngắn nếu cần",
+            "body": "Trong Theory, ghi một điểm ngữ pháp hoặc cách dùng bằng lời của bạn — chỉ khi có gì cần giải thích."
+          },
+          "practice": {
+            "title": "Luyện ngắn",
+            "body": "Mở Exercise và luyện từ tài liệu vừa thêm — flashcard hoặc bài tập từ từ của chính bạn."
+          },
+          "return": {
+            "title": "Quay lại ngày mai",
+            "body": "Thêm một chút, xem lại ghi chú, hoặc luyện lại. Liên tục quan trọng hơn việc phủ hết mọi khu vực ngày đầu."
+          }
         }
       },
-      "modules": {
-        "title": "Các phần chính",
+      "connect": {
+        "title": "Các khu vực nối nhau thế nào",
+        "p1": "Vocabulary và Theory là nơi tài liệu đáp xuống. Exercise biến nó thành luyện tập. Writing, Listening và Speaking giúp bạn dùng ngôn ngữ chủ động hơn.",
+        "p2": "Bạn không phải đi qua mọi khu vực theo thứ tự. Nhiều người ở với từ và luyện ngắn khá lâu.",
+        "p3": "Bước tiếp tự nhiên là viết khi bạn muốn tạo ngôn ngữ theo cách của mình, rồi nghe và nói khi cùng tài liệu đó cần vào tai và miệng — Listening và Speaking thuộc Notoria Pro.",
+        "beat": "Thu thập và hiểu trước. Dùng và nói khi tài liệu sẵn sàng rời trang giấy."
+      },
+      "areas": {
+        "title": "Các khu vực chính",
+        "intro": "Bản đồ ngắn về việc mỗi khu vực dùng để làm gì:",
         "vocab": {
-          "label": "Từ vựng",
-          "body": "ngân hàng từ và tiến độ flashcard"
+          "label": "Vocabulary",
+          "body": "Ngân hàng từ cá nhân — nghĩa, ví dụ, thẻ và tiến độ flashcard. Thường là nền tảng mọi thứ khác lấy từ đó."
         },
         "theory": {
-          "label": "Lý thuyết",
-          "body": "ghi chú ngữ pháp và cách dùng bằng lời của bạn"
+          "label": "Theory",
+          "body": "Ghi chú ngữ pháp và cách dùng bằng lời của bạn, sẵn để quay lại khi cùng mẫu xuất hiện lần nữa."
         },
         "exercises": {
           "label": "Exercise",
-          "body": "bài tập từ từ vựng của bạn"
+          "body": "Buổi luyện từ từ vựng, ghi chú lý thuyết hoặc tài liệu nhập — để bài tập gắn với những gì bạn thật sự đã lưu."
         },
         "writing": {
           "label": "Writing",
-          "body": "tài liệu và bộ câu hỏi để dùng chủ động"
+          "body": "Tài liệu và bộ câu hỏi để dùng ngôn ngữ chủ động, không chỉ nhận ra."
         },
-        "listenSpeak": {
-          "label": "Nghe & Nói",
-          "body": "luyện media và AI tutor trực tiếp trên Pro"
+        "listening": {
+          "label": "Listening",
+          "body": "Biến media thành luyện nghe trong workspace. Có trên Notoria Pro."
+        },
+        "speaking": {
+          "label": "Speaking",
+          "body": "Luyện trực tiếp với gia sư AI, xoay quanh ngôn ngữ bạn đang học. Có trên Notoria Pro."
         }
       },
-      "fullGuide": "Đã đăng nhập? Mở hướng dẫn đầy đủ trong app: <link>Cách dùng</link>.",
-      "signInHint": "Đã có tài khoản? <link>Đăng nhập</link> để mở workspace và hướng dẫn đầy đủ."
+      "notEverything": {
+        "title": "Bạn không cần dùng hết",
+        "p1": "Bỏ qua khu vực chưa giúp ngay. Một ngân hàng từ yên tĩnh và vài ghi chú đã có thể là một hệ thống vững.",
+        "p2": "Thêm Exercise khi muốn ôn có cấu trúc. Thêm Writing khi muốn sản xuất. Thêm Listening và Speaking khi nghe và nói là bước hữu ích tiếp theo."
+      },
+      "cta": {
+        "title": "Sẵn sàng bắt đầu?",
+        "body": "Tạo workspace, thêm vài từ, và để vòng lớn dần từ đó.",
+        "createAccount": "Tạo tài khoản",
+        "signIn": "Đăng nhập",
+        "openWorkspace": "Mở workspace",
+        "inAppGuide": "Mở Getting started",
+        "signedInNote": "Để xem hướng dẫn từng nút trong app, mở <link>Getting started</link>.",
+        "signedOutNote": "Đã có tài khoản? <link>Đăng nhập</link> để mở workspace. Hướng dẫn Getting started trong app dành cho walkthrough UI chi tiết sau khi đăng nhập."
+      }
     },
-    "help": {
+    "support": {
       "eyebrow": "Hỗ trợ",
-      "title": "Trợ giúp & hỗ trợ",
-      "lede": "Câu trả lời nhanh, và đường liên hệ trực tiếp khi cần báo lỗi, đề xuất tính năng hoặc gửi góp ý.",
+      "title": "Hỗ trợ",
+      "lede": "Câu trả lời nhanh cho câu hỏi thường gặp, và cách gửi góp ý đơn giản khi bạn cần.",
       "faq": {
         "title": "Câu hỏi thường gặp",
+        "lede": "Bắt đầu ở đây — hầu hết câu trả lời đọc dưới một phút.",
+        "groups": {
+          "gettingStarted": "Bắt đầu",
+          "accountBilling": "Tài khoản & thanh toán",
+          "learningAi": "Học & AI",
+          "dataPrivacy": "Dữ liệu & quyền riêng tư"
+        },
+        "workspace": {
+          "q": "Workspace là gì, và làm sao đổi ngôn ngữ?",
+          "a": "Mỗi workspace là một ngôn ngữ bạn đang học. Từ vựng, lý thuyết, viết, bài tập, nghe và nói nằm trong workspace đó. Tạo hoặc chuyển workspace từ menu workspace trong app."
+        },
+        "start": {
+          "q": "Nên bắt đầu thế nào?",
+          "a": "Tạo workspace cho ngôn ngữ đang học, thêm vài từ trong <vocabulary>Vocabulary</vocabulary>, rồi thử một bài luyện ngắn. Về cách học, xem <howToUse>Cách dùng</howToUse>. Đã đăng nhập? Mở <gettingStarted>Getting started</gettingStarted> trong app để xem hướng dẫn giao diện."
+        },
         "account": {
-          "q": "Đổi mật khẩu hoặc đóng tài khoản thế nào?",
-          "a": "Mở Account. Bạn có thể đổi mật khẩu (nếu đăng nhập bằng email), quản lý Notoria Pro, xuất bản sao lưu, hoặc xóa tài khoản vĩnh viễn."
+          "q": "Làm sao đổi mật khẩu hoặc đóng tài khoản?",
+          "a": "Mở <account>Account</account>. Bạn có thể cập nhật mật khẩu nếu đăng nhập bằng email, quản lý Notoria Pro, xuất bản sao lưu, hoặc xoá tài khoản vĩnh viễn."
         },
         "pro": {
-          "q": "Thanh toán và hủy hoạt động ra sao?",
-          "a": "Notoria Pro qua Stripe. Từ Account bạn có thể nâng cấp, mở cổng khách hàng Stripe để quản lý thanh toán/hóa đơn, hoặc hủy gia hạn."
+          "q": "Thanh toán và huỷ gia hạn hoạt động thế nào?",
+          "a": "Notoria Pro thanh toán qua Stripe. Từ <account>Account</account> bạn có thể nâng cấp, mở cổng khách hàng Stripe để quản lý phương thức thanh toán và hoá đơn, hoặc huỷ gia hạn."
         },
-        "data": {
-          "q": "Nội dung học lưu ở đâu?",
-          "a": "Tài khoản và workspace nằm trong cơ sở dữ liệu Notoria. Media avatar/nghe ở máy chủ media. Xem Chính sách quyền riêng tư về bên xử lý và xóa dữ liệu."
+        "proFeatures": {
+          "q": "Cái gì miễn phí, cái gì cần Notoria Pro?",
+          "a": "Luyện từ vựng hàng ngày và các công cụ học liên quan có trên gói miễn phí. Một số công cụ AI, nghe, nói và xuất tài liệu thuộc Notoria Pro. So sánh và nâng cấp từ <account>Account</account>."
+        },
+        "learning": {
+          "q": "Các tính năng học của Notoria hoạt động thế nào?",
+          "a": "Notoria giữ từ vựng, lý thuyết, bài tập, viết, nghe và nói trong một workspace để luyện tập dùng được tài liệu bạn đã lưu. Bắt đầu với từ và ghi chú, rồi thêm luyện và dùng chủ động khi sẵn sàng. <about>Giới thiệu</about> giải thích sản phẩm; <howToUse>Cách dùng</howToUse> mô tả vòng học."
         },
         "ai": {
-          "q": "Tắt trợ giúp AI được không?",
-          "a": "Được. Tùy chọn AI nằm trong Settings. Khi tắt, các công cụ cần AI sẽ bị chặn."
+          "q": "Tôi có thể tắt trợ giúp AI không?",
+          "a": "Có. Tuỳ chọn trợ giúp AI nằm trong <settings>Settings</settings>. Khi tắt, các công cụ AI cần trợ giúp sẽ bị chặn."
+        },
+        "data": {
+          "q": "Nội dung học của tôi được lưu ở đâu?",
+          "a": "Tài khoản và dữ liệu học nằm trong cơ sở dữ liệu của Notoria. Media như avatar và file nghe được lưu ở nhà cung cấp media của chúng tôi. Xem <privacy>Chính sách quyền riêng tư</privacy> về bộ xử lý và xoá dữ liệu."
+        },
+        "backup": {
+          "q": "Tôi có thể xuất hoặc sao lưu dữ liệu không?",
+          "a": "Có. Từ <account>Account</account> bạn có thể tải bản sao lưu JSON của workspace và nội dung học. File media được gắn bằng URL, không nhúng sẵn. Chi tiết quyền riêng tư và xoá: <privacy>Chính sách quyền riêng tư</privacy>."
         }
       },
-      "reach": {
-        "title": "Lỗi, ý tưởng và góp ý",
-        "body": "Các liên kết dưới mở email đã điền sẵn tới Notoria. Tất cả về cùng một địa chỉ.",
-        "bug": "Báo lỗi",
-        "feature": "Đề xuất tính năng",
-        "feedback": "Gửi góp ý chung",
-        "note": "Mọi thư vào cùng hộp thư. Ghi email tài khoản nếu liên quan thanh toán hoặc truy cập."
+      "feedback": {
+        "title": "Gửi góp ý",
+        "lede": "Báo lỗi, đề xuất tính năng, hoặc chia sẻ ý kiến. Ngắn và rõ là hữu ích nhất.",
+        "typeLabel": "Loại góp ý",
+        "types": {
+          "bug": "Lỗi",
+          "feature": "Đề xuất tính năng",
+          "general": "Góp ý chung"
+        },
+        "emailLabel": "Email của bạn",
+        "emailHint": "Chúng tôi dùng khi cần trả lời.",
+        "accountEmailNote": "Nếu cần thêm chi tiết, chúng tôi sẽ trả lời tới <email></email>.",
+        "messageLabel": "Nội dung",
+        "placeholders": {
+          "bug": "Chuyện gì sai, xảy ra ở đâu, và bạn mong đợi điều gì…",
+          "feature": "Bạn muốn Notoria làm gì, và vì sao điều đó hữu ích…",
+          "general": "Chia sẻ ý kiến, góp ý, hoặc bất cứ điều gì bạn muốn nói…"
+        },
+        "messageHint": "Ít nhất 10 ký tự. Đừng dán mật khẩu hoặc nội dung học riêng tư.",
+        "imagesLabel": "Ảnh chụp màn hình (tuỳ chọn)",
+        "addImages": "Thêm ảnh",
+        "removeImage": "Gỡ {name}",
+        "imagesHint": "Tối đa 3 ảnh, JPG/PNG/WebP/GIF, mỗi ảnh tối đa 3 MB.",
+        "submit": "Gửi góp ý",
+        "sending": "Đang gửi…",
+        "successTitle": "Cảm ơn — góp ý đã được gửi.",
+        "successBody": "Đội Notoria sẽ đọc. Nếu cần thêm chi tiết, chúng tôi sẽ trả lời qua email.",
+        "successToast": "Đã gửi góp ý",
+        "sendAnother": "Gửi thêm tin khác",
+        "errors": {
+          "tooShort": "Viết thêm một chút để chúng tôi hiểu vấn đề.",
+          "tooLong": "Giữ nội dung dưới 5.000 ký tự.",
+          "emailRequired": "Nhập email để chúng tôi có thể trả lời.",
+          "invalid": "Kiểm tra form và thử lại.",
+          "invalidImage": "Chỉ dùng ảnh JPG, PNG, WebP hoặc GIF.",
+          "imageTooLarge": "Mỗi ảnh tối đa 3 MB.",
+          "tooManyImages": "Bạn chỉ có thể đính kèm tối đa 3 ảnh.",
+          "rateLimited": "Bạn đã gửi vài tin gần đây. Đợi một lúc rồi thử lại.",
+          "notConfigured": "Gửi góp ý tạm thời không khả dụng. Hãy email trực tiếp contact@notoria.fi.",
+          "sendFailed": "Không gửi được góp ý. Thử lại, hoặc email contact@notoria.fi."
+        }
       },
-      "contact": {
-        "title": "Liên hệ",
-        "emailLabel": "Email",
-        "phoneLabel": "Điện thoại"
+      "contactCta": {
+        "prompt": "Cần liên hệ trực tiếp?",
+        "link": "Liên hệ với chúng tôi"
+      }
+    },
+    "contact": {
+      "eyebrow": "Liên hệ",
+      "title": "Liên hệ với chúng tôi",
+      "lede": "Gửi email hoặc gọi — chọn cách liên hệ phù hợp với việc bạn cần.",
+      "routing": "Vấn đề kỹ thuật gửi tới liên hệ phát triển. Tài khoản, thanh toán, quyền riêng tư và câu hỏi chung gửi tới email hỗ trợ chính.",
+      "general": {
+        "title": "Hỗ trợ chung & tài khoản",
+        "body": "Cho câu hỏi thường ngày về Notoria, tài khoản, thanh toán, quyền riêng tư, hoặc bất cứ việc gì không phải bug kỹ thuật.",
+        "topics": {
+          "questions": "Câu hỏi chung",
+          "account": "Tài khoản",
+          "billing": "Thanh toán",
+          "privacy": "Quyền riêng tư",
+          "other": "Khác"
+        }
+      },
+      "technical": {
+        "title": "Vấn đề kỹ thuật",
+        "body": "Khi có gì trong app trông như bị hỏng — bug, lỗi bất thường, hoặc vấn đề liên quan phát triển — hãy viết vào đây."
+      },
+      "phone": {
+        "title": "Điện thoại",
+        "body": "Muốn nói chuyện trực tiếp? Bạn có thể gọi điện trong giờ hợp lý."
+      },
+      "supportCta": {
+        "prompt": "Đang tìm câu trả lời hoặc muốn gửi góp ý?",
+        "link": "Hỗ trợ"
       }
     }
   }

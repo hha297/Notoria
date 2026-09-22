@@ -294,7 +294,7 @@ function DataPrivacySection() {
               {t("data.termsLink")}
             </Link>
             {" · "}
-            <Link href="/help" className={mx(styles, "settings-inline-link")}>
+            <Link href="/support" className={mx(styles, "settings-inline-link")}>
               {t("data.helpLink")}
             </Link>
           </p>

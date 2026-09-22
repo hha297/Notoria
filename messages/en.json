@@ -62,7 +62,7 @@
     "account": "Account",
     "settings": "Settings",
     "workspace": "Workspace",
-    "gettingStarted": "How to use",
+    "gettingStarted": "Getting started",
     "groups": {
       "main": "Main menu",
       "listenSpeak": "Listen and speak",
@@ -1792,7 +1792,7 @@
       "policiesDescription": "Privacy Policy and Terms of Use for Notoria.",
       "privacyLink": "Privacy Policy",
       "termsLink": "Terms of Use",
-      "helpLink": "Help & Support"
+      "helpLink": "Support"
     },
     "tagManager": {
       "sectionTitle": "Vocabulary",
@@ -2259,7 +2259,7 @@
     "eyebrow": "Account",
     "title": "Your",
     "highlight": "account",
-    "description": "Manage your profile, Notoria Pro, and account security — including permanently closing your account.",
+    "description": "Manage your profile, Notoria Pro, data export, and account security — including permanently closing your account.",
     "pro": {
       "freeLede": "Free covers everyday practice. Pro unlocks the AI tools that turn your notes into listening, speaking, writing help, and printable files.",
       "activeLede": "Your Pro plan is active. These AI learning tools stay unlocked while your subscription renews.",
@@ -2282,11 +2282,20 @@
       "title": "Password",
       "description": "Choose a strong password you do not reuse elsewhere."
     },
+    "data": {
+      "title": "Your data",
+      "description": "Download a copy of your learning data whenever you need it.",
+      "exportTitle": "Export account backup",
+      "exportHint": "Downloads a JSON file with your workspaces and learning content. Media files are linked by URL, not embedded.",
+      "exportAction": "Download backup",
+      "exportDone": "Backup downloaded",
+      "exportFailed": "Could not prepare your backup. Try again."
+    },
     "danger": {
       "title": "Close account",
       "description": "Permanently delete your Notoria account and everything inside it.",
       "deleteTitle": "Delete my account",
-      "deleteHint": "This removes all workspaces, learning content, and billing for this account. Download a backup first if you want to keep a copy.",
+      "deleteHint": "This removes all workspaces, learning content, and billing for this account. Use Export account backup above first if you want to keep a copy.",
       "deleteAction": "Delete account"
     },
     "delete": {
@@ -2684,140 +2693,352 @@
   "footer": {
     "navLabel": "Site links",
     "explore": "Explore",
-    "help": "Help & Support",
+    "support": "Support",
     "legal": "Legal",
-    "contact": "Contact",
     "howToUse": "How to Use",
     "about": "About Us",
     "ourStory": "Our Story",
-    "helpSupport": "Help & Support",
+    "supportLink": "Support",
+    "contactUs": "Contact Us",
     "privacy": "Privacy Policy",
     "terms": "Terms of Use",
-    "emailLabel": "Email",
-    "phoneLabel": "Phone",
     "copyright": "© 2026 Notoria",
-    "tagline": "A quiet workspace for learning a language."
+    "tagline": "Made for language learners."
   },
   "sitePages": {
     "about": {
       "eyebrow": "About",
       "title": "About Notoria",
-      "lede": "A private language-learning workspace for the material you actually use.",
+      "lede": "A private workspace for self-studying any language — built around the material you bring in, not a catalogue you scroll through.",
       "what": {
         "title": "What it is",
-        "body": "Notoria is a web app where you keep vocabulary, notes, writing, exercises, listening, and speaking in one place — organised by the language you are learning. It is built around your own content, not a third-party course catalogue."
+        "p1": "Notoria is a private workspace for self-studying a language. You keep vocabulary, notes, theory, exercises, writing, listening, and speaking in one place, organised by the language you are learning.",
+        "p2": "It is not a school platform and not a library of ready-made courses. It is a home for the material you collect and create yourself — the words worth keeping, the explanations that finally stick, the practice that belongs to your actual progress.",
+        "beat": "Your material. Your language. One place."
+      },
+      "why": {
+        "title": "Why Notoria",
+        "p1": "Language learning gets more useful when the pieces stay connected.",
+        "p2": "A word you saved last week should be easy to practise again. A note you wrote in your own words should still be there when the same pattern confuses you. Writing, listening, and speaking should be able to draw on that same material — instead of living in separate corners of your phone and desktop.",
+        "p3": "Notoria keeps those threads together, so practice feels continuous rather than scattered."
       },
       "who": {
         "title": "Who it is for",
-        "body": "Learners who want a calm place to collect words, explain grammar in their own words, practise with that material, and come back tomorrow without starting from scratch."
+        "p1": "People who learn independently — and want their own material to stay at the centre of the process.",
+        "p2": "If you prefer collecting what matters to you over following someone else’s fixed syllabus, Notoria is meant for that rhythm. Calm enough for serious study. Practical enough for everyday return visits."
+      },
+      "yourWay": {
+        "title": "Your material, your way",
+        "p1": "Books, teachers, courses, podcasts, conversations, and everything else you already use still matter. Notoria does not try to replace them.",
+        "p2": "What it offers instead is a place to bring those materials together: save what you notice, organise it by language, explain it in your own words, and keep practising from it.",
+        "beat": "Notoria sits beside your learning life. It does not try to become it."
       },
       "provides": {
         "title": "What you can do",
+        "intro": "Inside a workspace, the main pieces fit together:",
         "items": {
           "vocab": "Build a personal vocabulary bank with meanings, examples, and tags",
-          "practice": "Drill with exercises drawn from your own words",
-          "create": "Write worksheets and theory notes you can revisit",
-          "listenSpeak": "Turn media into listening practice and speak with an AI tutor on Pro"
+          "practice": "Practise with exercises drawn from your own words and notes",
+          "create": "Write theory notes and writing work you can revisit later",
+          "listenSpeak": "Turn media into listening practice, and speak with an AI tutor on Pro"
         },
-        "note": "Some AI, listening, speaking, and export tools are part of Notoria Pro. The free plan still covers everyday vocabulary practice and related study tools."
+        "note": "Some AI, listening, speaking, and export tools are part of Notoria Pro. The free plan still covers everyday vocabulary practice and the core study loop."
+      },
+      "ai": {
+        "title": "AI, where it helps",
+        "p1": "When AI is available, it is a supporting tool — not the centre of the product.",
+        "p2": "It can help shape practice, check writing, or support listening and speaking. It does not decide what you should learn, and it does not replace the work of noticing, remembering, and returning.",
+        "p3": "You stay in charge of what enters the workspace and what you come back to."
       }
     },
     "ourStory": {
       "eyebrow": "Story",
       "title": "Our story",
-      "lede": "Notoria started from a simple frustration: language notes were scattered, and practice tools rarely used the material you had already collected.",
-      "problem": {
-        "title": "The problem",
-        "body": "Word lists lived in one app, grammar notes in another, writing somewhere else, and listening or speaking almost never connected back to what you were studying. Progress felt thin because the tools did not share a single private workspace."
+      "lede": "Language-learning tools were everywhere. The material that actually mattered was still nowhere when it was time to practise.",
+      "frustration": {
+        "title": "The familiar scatter",
+        "p1": "If you have ever tried to learn a language seriously on your own, you know the shape of it.",
+        "p2": "Words live in one app. Grammar notes in a document. Examples screenshotted into a folder you stop opening. Listening on a phone. Writing somewhere else. Speaking almost never connected to any of it.",
+        "p3": "You can collect a lot. That part is easy.",
+        "p4": "The hard part arrives later — when you sit down to practise and realise nothing shares a place. Each tool remembers a fragment. None of them remember the language you are actually building.",
+        "beat": "Useful material, scattered. Practice, starting over."
       },
-      "why": {
-        "title": "Why we built it",
-        "body": "We wanted a product that treats your notes as the centre of the loop — collect, understand, practise, create, listen, speak, and review — without pretending to be a school or a content marketplace."
+      "realisation": {
+        "title": "The thing that should have been obvious",
+        "p1": "At some point the frustration stops being about more features and becomes about the centre of gravity.",
+        "p2": "The learner’s own material — the words worth keeping, the notes written in their own words, the examples that finally made something click — should not sit outside the tools used to practise. It should be the loop.",
+        "p3": "Practice that ignores what you have already gathered is just busywork with better branding.",
+        "beat": "Your material belongs at the centre."
       },
-      "direction": {
-        "title": "Where it is heading",
-        "body": "Keep Notoria private, practical, and honest. Improve the learning loop around your own material. Add AI help where it saves time, without turning the product into noise."
+      "exists": {
+        "title": "Why Notoria exists",
+        "p1": "Notoria exists to give that material a private home — and to keep vocabulary, notes, theory, exercises, writing, listening, and speaking inside one workspace built around it.",
+        "p2": "Not as a pile of disconnected modules with a shared login. As a place where what you save can become what you practise, and what you practise can deepen what you keep.",
+        "p3": "You bring the language in. Notoria helps you stay with it — revisit it, drill it, write with it, hear it, speak it — without losing the thread every time you switch tools.",
+        "p4": "That is the whole idea, stated plainly."
+      },
+      "believes": {
+        "title": "What we believe",
+        "p1": "Self-study should feel personal, practical, and connected. Not performative. Not endlessly interrupted by catalogues of content you did not ask for.",
+        "p2": "Notoria is not a school. It is not a course marketplace. It is not trying to replace teachers, textbooks, or the quiet work of paying attention.",
+        "p3": "It is a workspace for the language you are learning — private enough to be yours, structured enough to be useful, light enough that the product stays out of the way of the learning.",
+        "beat": "Less noise. More continuity."
+      },
+      "going": {
+        "title": "Where it is going",
+        "p1": "The direction is not dramatic. Stay private. Stay practical. Stay honest about what software can and cannot do.",
+        "p2": "Keep improving the learning loop around your own material — the connections between remembering, understanding, producing, listening, and speaking.",
+        "p3": "Use AI where it genuinely helps: shaping practice, supporting writing, listening, or speaking. Not as a gimmick. Not as a substitute for the learner’s own work. Not as an excuse to fill the product with noise.",
+        "closing": "Notoria was built because someone got tired of the disconnect — and wanted a better place for their own learning material. That reason still holds."
       }
     },
     "howToUse": {
       "eyebrow": "Guide",
       "title": "How to use Notoria",
-      "lede": "You do not need every feature on day one. Start with a workspace and a few words you care about.",
-      "idea": {
-        "title": "The basic idea",
-        "body": "Each workspace is one language. Inside it, vocabulary, theory, exercises, writing, listening, and speaking stay connected so practice comes from what you have saved."
+      "lede": "A practical map of the learning loop — start with a few words, then grow practice, writing, listening, and speaking when you are ready.",
+      "intro": {
+        "title": "A workspace, not a course",
+        "p1": "Notoria is a private place for the language you are already learning. You bring material in, keep it organised, and practise from it — instead of starting from a catalogue of lessons you did not choose.",
+        "p2": "Each workspace is one language. Vocabulary, theory, exercises, writing, listening, and speaking live together there, so what you save can become what you practise.",
+        "beat": "You do not need to learn Notoria all at once. You grow it with the language."
       },
-      "start": {
-        "title": "A simple start",
+      "loop": {
+        "title": "The learning loop",
+        "p1": "Most of the product sits on one simple loop:",
+        "stages": {
+          "bring": {
+            "label": "Bring in",
+            "body": "Save words, phrases, and notes from lessons, books, media, conversations — wherever you meet the language."
+          },
+          "organise": {
+            "label": "Organise",
+            "body": "Keep everything for that language in one workspace, with meanings, examples, and tags that help you find things again."
+          },
+          "understand": {
+            "label": "Understand",
+            "body": "Write theory notes in your own words when a pattern needs explaining — grammar, usage, or something you keep forgetting."
+          },
+          "practise": {
+            "label": "Practise",
+            "body": "Turn what you have saved into exercises and review, so memory work comes from your own material."
+          },
+          "use": {
+            "label": "Use",
+            "body": "Write with it, listen to it, and speak it — so the language moves beyond recognition into active use."
+          },
+          "review": {
+            "label": "Come back",
+            "body": "Return later, add what is new, revisit what was hard, and keep the loop going instead of starting over."
+          }
+        },
+        "beat": "Bring in → organise → understand → practise → use → come back."
+      },
+      "startSmall": {
+        "title": "Start small",
+        "p1": "Notoria is not something you complete. There is no checklist that means you are done with the product.",
+        "p2": "A good first day can be a workspace and five words you actually care about. Notes, longer practice, writing, listening, and speaking can wait until they earn a place in your loop."
+      },
+      "firstSession": {
+        "title": "A first session",
+        "intro": "If you want a concrete starting path, try this once:",
         "steps": {
-          "workspace": "Create a workspace for the language you are learning.",
-          "words": "Add a handful of words you actually want to remember.",
-          "notes": "Write a short theory note when something needs explaining.",
-          "practice": "Open Exercise and practise with your own material.",
-          "return": "Come back later, add more, and keep the loop going."
+          "workspace": {
+            "title": "Create a workspace",
+            "body": "Make one for the language you are learning, and give it a name you will recognise later."
+          },
+          "words": {
+            "title": "Add a handful of words",
+            "body": "Open Vocabulary and save words or phrases you want to remember, with meanings or examples if they help."
+          },
+          "notes": {
+            "title": "Write a short note if you need one",
+            "body": "In Theory, capture a grammar or usage point in your own words — only when something needs explaining."
+          },
+          "practice": {
+            "title": "Do a short practice",
+            "body": "Open Exercise and practise from the material you just added — flashcards or drills built from your own words."
+          },
+          "return": {
+            "title": "Come back tomorrow",
+            "body": "Add a little more, revisit a note, or practise again. Continuity matters more than covering every area on day one."
+          }
         }
       },
-      "modules": {
+      "connect": {
+        "title": "How the areas connect",
+        "p1": "Vocabulary and Theory are where material lands. Exercise turns that material into practice. Writing, Listening, and Speaking help you use the language more actively.",
+        "p2": "You do not have to move through every area in order. Many people stay with words and short practice for a while.",
+        "p3": "A natural next step is writing when you want to produce language on your own terms, then listening and speaking when you want the same material to work in your ear and voice — Listening and Speaking are part of Notoria Pro.",
+        "beat": "Collect and understand first. Use and speak when the material is ready to leave the page."
+      },
+      "areas": {
         "title": "The main areas",
+        "intro": "A short map of what each area is for:",
         "vocab": {
           "label": "Vocabulary",
-          "body": "your word bank and flashcard progress"
+          "body": "Your personal word bank — meanings, examples, tags, and flashcard progress. This is usually the foundation everything else draws from."
         },
         "theory": {
           "label": "Theory",
-          "body": "grammar and usage notes in your own words"
+          "body": "Grammar and usage notes written in your own words, ready to revisit when the same pattern shows up again."
         },
         "exercises": {
           "label": "Exercise",
-          "body": "drills built from your vocabulary"
+          "body": "Practice sessions from your vocabulary, theory notes, or imported material — so drills stay tied to what you have actually saved."
         },
         "writing": {
           "label": "Writing",
-          "body": "documents and question sets for active use"
+          "body": "Documents and question sets for using the language actively, not only recognising it."
         },
-        "listenSpeak": {
-          "label": "Listening & Speaking",
-          "body": "media practice and live AI tutor calls on Pro"
+        "listening": {
+          "label": "Listening",
+          "body": "Turn media into listening practice in your workspace. Available on Notoria Pro."
+        },
+        "speaking": {
+          "label": "Speaking",
+          "body": "Live practice with an AI tutor, grounded in the language you are studying. Available on Notoria Pro."
         }
       },
-      "fullGuide": "Signed in? Open the full in-app guide: <link>How to use</link>.",
-      "signInHint": "Have an account? <link>Sign in</link> to open your workspace and the full guide."
+      "notEverything": {
+        "title": "You do not need to use everything",
+        "p1": "Skip areas that do not help right now. A quiet vocabulary bank and a few notes can already be a strong system.",
+        "p2": "Add Exercise when you want structured review. Add Writing when you want to produce. Add Listening and Speaking when hearing and saying the language is the next useful step."
+      },
+      "cta": {
+        "title": "Ready to start?",
+        "body": "Create a workspace, add a few words, and let the loop grow from there.",
+        "createAccount": "Create an account",
+        "signIn": "Sign in",
+        "openWorkspace": "Open your workspace",
+        "inAppGuide": "Open Getting started",
+        "signedInNote": "For button-by-button walkthroughs inside the app, open <link>Getting started</link>.",
+        "signedOutNote": "Already have an account? <link>Sign in</link> to open your workspace. The in-app Getting started guide covers detailed UI walkthroughs after you sign in."
+      }
     },
-    "help": {
+    "support": {
       "eyebrow": "Support",
-      "title": "Help & Support",
-      "lede": "Quick answers, and a direct line when you need to report a bug, request a feature, or send feedback.",
+      "title": "Support",
+      "lede": "Quick answers to common questions, and a simple way to send feedback when you need to.",
       "faq": {
         "title": "Common questions",
+        "lede": "Start here — most answers take less than a minute to read.",
+        "groups": {
+          "gettingStarted": "Getting started",
+          "accountBilling": "Account & billing",
+          "learningAi": "Learning & AI",
+          "dataPrivacy": "Data & privacy"
+        },
+        "workspace": {
+          "q": "What is a workspace, and how do I switch languages?",
+          "a": "Each workspace is one language you are learning. Vocabulary, theory, writing, exercises, listening, and speaking stay inside that workspace. Create or switch workspaces from the workspace menu in the app."
+        },
+        "start": {
+          "q": "How should I get started?",
+          "a": "Create a workspace for the language you are learning, add a few words in <vocabulary>Vocabulary</vocabulary>, then try a short exercise. For the learning approach, see <howToUse>How to Use</howToUse>. Signed in? Open the in-app <gettingStarted>Getting started</gettingStarted> guide for a UI walkthrough."
+        },
         "account": {
           "q": "How do I change my password or close my account?",
-          "a": "Open Account. You can update your password there (if you use email sign-in), manage Notoria Pro, export a backup, or permanently delete your account."
+          "a": "Open <account>Account</account>. You can update your password there if you use email sign-in, manage Notoria Pro, export a backup, or permanently delete your account."
         },
         "pro": {
           "q": "How do billing and cancellation work?",
-          "a": "Notoria Pro is billed through Stripe. From Account you can upgrade, open the Stripe customer portal to manage payment methods and invoices, or cancel renewal."
+          "a": "Notoria Pro is billed through Stripe. From <account>Account</account> you can upgrade, open the Stripe customer portal to manage payment methods and invoices, or cancel renewal."
         },
-        "data": {
-          "q": "Where is my learning content stored?",
-          "a": "Your account and workspace content live in Notoria’s database. Media for avatars and listening is stored with our media host. See the Privacy Policy for processors and deletion."
+        "proFeatures": {
+          "q": "What is free, and what needs Notoria Pro?",
+          "a": "Everyday vocabulary practice and related study tools are available on the free plan. Some AI tools, listening, speaking, and document export features are part of Notoria Pro. Compare and upgrade from <account>Account</account>."
+        },
+        "learning": {
+          "q": "How do Notoria’s learning features work?",
+          "a": "Notoria keeps vocabulary, theory, exercises, writing, listening, and speaking in one workspace so practice can use material you saved. Start with words and notes, then add practice and active use when you are ready. <about>About</about> explains the product; <howToUse>How to Use</howToUse> maps the learning loop."
         },
         "ai": {
           "q": "Can I turn AI help off?",
-          "a": "Yes. AI assistance preferences are in Settings. When assistance is off, AI tools that require it stay blocked."
+          "a": "Yes. AI assistance preferences are in <settings>Settings</settings>. When assistance is off, AI tools that require it stay blocked."
+        },
+        "data": {
+          "q": "Where is my learning content stored?",
+          "a": "Your account and learning data live in Notoria’s database. Media such as avatars and listening files is stored with our media host. See the <privacy>Privacy Policy</privacy> for processors and deletion details."
+        },
+        "backup": {
+          "q": "Can I export or back up my data?",
+          "a": "Yes. From <account>Account</account> you can download a JSON backup of your workspaces and learning content. Media files are linked by URL, not embedded. For privacy and deletion details, see the <privacy>Privacy Policy</privacy>."
         }
       },
-      "reach": {
-        "title": "Bugs, ideas, and feedback",
-        "body": "Use the links below to open a pre-filled email to Notoria. There is one contact address for all of this.",
-        "bug": "Report a bug",
-        "feature": "Suggest a feature",
-        "feedback": "Send general feedback",
-        "note": "All of these go to the same inbox. Include your account email if the message is about billing or account access."
+      "feedback": {
+        "title": "Send feedback",
+        "lede": "Report a bug, suggest a feature, or share a thought. Keep it short and clear — that helps most.",
+        "typeLabel": "Feedback type",
+        "types": {
+          "bug": "Bug",
+          "feature": "Feature request",
+          "general": "General feedback"
+        },
+        "emailLabel": "Your email",
+        "emailHint": "We'll use this if we need to reply.",
+        "accountEmailNote": "We'll reply to <email></email> if we need more detail.",
+        "messageLabel": "Message",
+        "placeholders": {
+          "bug": "What went wrong, where it happened, and what you expected instead…",
+          "feature": "What would you like Notoria to do, and why it would help…",
+          "general": "Share a thought, suggestion, or anything else on your mind…"
+        },
+        "messageHint": "At least 10 characters. Do not paste passwords or private learning content.",
+        "imagesLabel": "Screenshots (optional)",
+        "addImages": "Add images",
+        "removeImage": "Remove {name}",
+        "imagesHint": "Up to 3 images, JPG/PNG/WebP/GIF, max 3 MB each.",
+        "submit": "Send feedback",
+        "sending": "Sending…",
+        "successTitle": "Thanks — your feedback was sent.",
+        "successBody": "The Notoria team will read it. If we need more detail, we will reply by email.",
+        "successToast": "Feedback sent",
+        "sendAnother": "Send another message",
+        "errors": {
+          "tooShort": "Write a little more so we can understand the issue.",
+          "tooLong": "Please keep the message under 5,000 characters.",
+          "emailRequired": "Enter an email address so we can reply.",
+          "invalid": "Check the form and try again.",
+          "invalidImage": "Use JPG, PNG, WebP, or GIF images only.",
+          "imageTooLarge": "Each image must be 3 MB or smaller.",
+          "tooManyImages": "You can attach up to 3 images.",
+          "rateLimited": "You have sent several messages recently. Please wait a bit and try again.",
+          "notConfigured": "Feedback email is not available right now. Please email contact@notoria.fi directly.",
+          "sendFailed": "Could not send your feedback. Please try again, or email contact@notoria.fi."
+        }
       },
-      "contact": {
-        "title": "Contact",
-        "emailLabel": "Email",
-        "phoneLabel": "Phone"
+      "contactCta": {
+        "prompt": "Need to contact us directly?",
+        "link": "Contact Us"
+      }
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "Contact Us",
+      "lede": "Email or call — use the contact that matches what you need.",
+      "routing": "Technical issues go to the development contact. Account, billing, privacy, and general questions go to the main support email.",
+      "general": {
+        "title": "General & account support",
+        "body": "For everyday questions about Notoria, your account, billing, privacy, or anything else that is not a technical bug.",
+        "topics": {
+          "questions": "General questions",
+          "account": "Account",
+          "billing": "Billing",
+          "privacy": "Privacy",
+          "other": "Other"
+        }
+      },
+      "technical": {
+        "title": "Technical issues",
+        "body": "When something in the app looks broken — a bug, an unexpected error, or a development-related issue — write here."
+      },
+      "phone": {
+        "title": "Phone",
+        "body": "Prefer to talk things through? You can reach us by phone during reasonable hours."
+      },
+      "supportCta": {
+        "prompt": "Looking for answers or want to send feedback?",
+        "link": "Support"
       }
     }
   }

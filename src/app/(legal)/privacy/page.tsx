@@ -4,7 +4,7 @@ import { LegalPageShell } from "@/components/legal/legal-page-shell";
 import { PrivacyPolicyContent } from "@/components/legal/privacy-policy-content";
 
 export const metadata: Metadata = {
-  title: "Privacy Policy · Notoria",
+  title: "Privacy Policy",
   description:
     "How Notoria collects, uses, and deletes personal data and learning content for its private language-learning workspace.",
   alternates: {
@@ -18,7 +18,7 @@ export default async function PrivacyPage() {
   return (
     <LegalPageShell
       title={t("privacyTitle")}
-      updatedLabel={t("updated", { date: "22 September 2026" })}
+      updatedLabel={t("updated", { date: "23 September 2026" })}
       active="privacy"
     >
       <PrivacyPolicyContent />

@@ -4,7 +4,7 @@ import { LegalPageShell } from "@/components/legal/legal-page-shell";
 import { TermsOfUseContent } from "@/components/legal/terms-of-use-content";
 
 export const metadata: Metadata = {
-  title: "Terms of Use · Notoria",
+  title: "Terms of Use",
   description:
     "Terms for using Notoria’s private language-learning workspace, accounts, AI features, and Notoria Pro billing.",
   alternates: {
@@ -18,7 +18,7 @@ export default async function TermsPage() {
   return (
     <LegalPageShell
       title={t("termsTitle")}
-      updatedLabel={t("updated", { date: "22 September 2026" })}
+      updatedLabel={t("updated", { date: "23 September 2026" })}
       active="terms"
     >
       <TermsOfUseContent />

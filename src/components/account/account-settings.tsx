@@ -7,7 +7,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { Loader2, Trash2, Upload } from "lucide-react";
+import { Loader2, Trash2, Upload, Download } from "lucide-react";
 import { toast } from "sonner";
 import { DeleteAccountDialog } from "@/components/account/delete-account-dialog";
 import { ProSubscriptionCard } from "@/components/account/pro-subscription-card";
@@ -23,6 +23,7 @@ import {
   uploadAvatar,
   verifyCurrentPassword,
 } from "@/lib/actions/account";
+import { downloadAccountBackupJson } from "@/lib/account/download-backup";
 import type { BillingState } from "@/lib/stripe/types";
 
 const CURRENT_PASSWORD_DEBOUNCE_MS = 450;
@@ -52,6 +53,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
   const [isAvatarPending, startAvatarTransition] = useTransition();
   const [isProfilePending, startProfileTransition] = useTransition();
   const [isPasswordPending, startPasswordTransition] = useTransition();
+  const [isBackupPending, startBackupTransition] = useTransition();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -257,6 +259,19 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
     });
   }
 
+  function handleExportBackup() {
+    startBackupTransition(async () => {
+      try {
+        await downloadAccountBackupJson({
+          success: t("data.exportDone"),
+          failed: t("data.exportFailed"),
+        });
+      } catch {
+        // Toast already handled in downloadAccountBackupJson.
+      }
+    });
+  }
+
   return (
     <div className={mx(styles, "account-stack")}>
       <ProSubscriptionCard
@@ -433,6 +448,34 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
           </div>
         </section>
       ) : null}
+
+      <section className={mx(styles, "account-panel")}>
+        <header className={mx(styles, "account-panel-head")}>
+          <h2 className={mx(styles, "account-panel-title")}>{t("data.title")}</h2>
+          <p className={mx(styles, "account-panel-lede")}>{t("data.description")}</p>
+        </header>
+        <div className={mx(styles, "account-panel-body account-danger-row")}>
+          <div className={mx(styles, "account-danger-copy")}>
+            <p className={mx(styles, "account-danger-title")}>{t("data.exportTitle")}</p>
+            <p className={mx(styles, "account-danger-hint")}>{t("data.exportHint")}</p>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="route-quiet-action shrink-0"
+            data-route-action="account"
+            disabled={isBackupPending}
+            onClick={handleExportBackup}
+          >
+            {isBackupPending ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Download className="size-4" />
+            )}
+            {t("data.exportAction")}
+          </Button>
+        </div>
+      </section>
 
       <section className={mx(styles, "account-panel account-panel-danger")}>
         <header className={mx(styles, "account-panel-head")}>

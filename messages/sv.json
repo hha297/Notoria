@@ -62,7 +62,7 @@
     "account": "Konto",
     "settings": "Inställningar",
     "workspace": "Arbetsyta",
-    "gettingStarted": "Hur man använder",
+    "gettingStarted": "Kom igång",
     "groups": {
       "main": "Huvudmeny",
       "listenSpeak": "Lyssna och tala",
@@ -1792,7 +1792,7 @@
       "policiesDescription": "Integritetspolicy och användarvillkor för Notoria.",
       "privacyLink": "Integritetspolicy",
       "termsLink": "Användarvillkor",
-      "helpLink": "Hjälp & support"
+      "helpLink": "Support"
     },
     "tagManager": {
       "sectionTitle": "Ordförråd",
@@ -2259,7 +2259,7 @@
     "eyebrow": "Konto",
     "title": "Ditt",
     "highlight": "konto",
-    "description": "Hantera din profil, Notoria Pro och kontosäkerhet — inklusive att permanent stänga ditt konto.",
+    "description": "Hantera din profil, Notoria Pro, dataexport och kontosäkerhet — inklusive att permanent stänga ditt konto.",
     "pro": {
       "freeLede": "Gratis täcker vardaglig övning. Pro låser upp AI-verktygen som omvandlar dina anteckningar till hjälp med lyssnande, talande, skrivande och utskrivbara filer.",
       "activeLede": "Din Pro-plan är aktiv. Dessa AI-lärande verktyg förblir upplåsta medan din prenumeration förnyas.",
@@ -2282,11 +2282,20 @@
       "title": "Lösenord",
       "description": "Välj ett starkt lösenord som du inte återanvänder någon annanstans."
     },
+    "data": {
+      "title": "Dina data",
+      "description": "Ladda ner en kopia av dina inlärningsdata när du behöver det.",
+      "exportTitle": "Exportera kontosäkerhetskopia",
+      "exportHint": "Laddar ner en JSON-fil med dina arbetsytor och lärandeinnehåll. Mediefiler länkas via URL, inte inbäddade.",
+      "exportAction": "Ladda ner säkerhetskopia",
+      "exportDone": "Säkerhetskopia nedladdad",
+      "exportFailed": "Kunde inte förbereda din säkerhetskopia. Försök igen."
+    },
     "danger": {
       "title": "Stäng konto",
       "description": "Permanently delete your Notoria account and everything inside it.",
       "deleteTitle": "Ta bort mitt konto",
-      "deleteHint": "Detta tar bort alla arbetsytor, lärandeinnehåll och fakturering för detta konto. Ladda ner en säkerhetskopia först om du vill behålla en kopia.",
+      "deleteHint": "Detta tar bort alla arbetsytor, lärandeinnehåll och fakturering för detta konto. Använd exporten ovan först om du vill behålla en kopia.",
       "deleteAction": "Ta bort konto"
     },
     "delete": {
@@ -2684,140 +2693,352 @@
   "footer": {
     "navLabel": "Webbplatslänkar",
     "explore": "Utforska",
-    "help": "Hjälp & support",
+    "support": "Support",
     "legal": "Juridiskt",
-    "contact": "Kontakt",
     "howToUse": "Så här använder du",
     "about": "Om oss",
     "ourStory": "Vår historia",
-    "helpSupport": "Hjälp & support",
+    "supportLink": "Support",
+    "contactUs": "Kontakta oss",
     "privacy": "Integritetspolicy",
     "terms": "Användarvillkor",
-    "emailLabel": "E-post",
-    "phoneLabel": "Telefon",
     "copyright": "© 2026 Notoria",
-    "tagline": "En stilla arbetsyta för språkinlärning."
+    "tagline": "Gjort för språkinlärare."
   },
   "sitePages": {
     "about": {
       "eyebrow": "Om",
       "title": "Om Notoria",
-      "lede": "En privat arbetsyta för språkinlärning kring materialet du faktiskt använder.",
+      "lede": "En privat arbetsyta för att studera vilket språk som helst på egen hand — byggd kring materialet du tar med dig, inte en katalog du bläddrar i.",
       "what": {
         "title": "Vad det är",
-        "body": "Notoria är en webbapp där ordförråd, anteckningar, skrivande, övningar, lyssning och tal finns på ett ställe — ordnat efter språket du lär dig. Den bygger på ditt eget innehåll, inte en kurskatalog från tredje part."
+        "p1": "Notoria är en privat arbetsyta för självstudier i ett språk. Du håller ordförråd, anteckningar, teori, övningar, skrivande, lyssning och tal på ett ställe, ordnat efter språket du lär dig.",
+        "p2": "Det är inte en skolplattform och inte ett bibliotek av färdiga kurser. Det är ett hem för materialet du samlar och skapar själv — orden värda att behålla, förklaringarna som till slut fäster, övningen som hör till din faktiska utveckling.",
+        "beat": "Ditt material. Ditt språk. En plats."
+      },
+      "why": {
+        "title": "Varför Notoria",
+        "p1": "Språkinlärning blir mer användbar när bitarna hänger ihop.",
+        "p2": "Ett ord du sparade förra veckan ska vara lätt att öva igen. En anteckning du skrev med egna ord ska fortfarande finnas där när samma mönster förvirrar dig. Skrivande, lyssning och tal ska kunna dra nytta av samma material — i stället för att leva i separata hörn av telefonen och datorn.",
+        "p3": "Notoria håller de trådarna tillsammans, så att övning känns sammanhängande snarare än utspridd."
       },
       "who": {
         "title": "Vem den är till för",
-        "body": "Elever som vill ha en lugn plats att samla ord, förklara grammatik med egna ord, öva med det materialet och komma tillbaka i morgon utan att börja om."
+        "p1": "Människor som lär sig självständigt — och vill att deras eget material ska stanna i centrum av processen.",
+        "p2": "Om du hellre samlar det som betyder något för dig än följer någon annans fasta kursplan, är Notoria tänkt för den rytmen. Lugnt nog för seriösa studier. Praktiskt nog för vardagliga återbesök."
+      },
+      "yourWay": {
+        "title": "Ditt material, på ditt sätt",
+        "p1": "Böcker, lärare, kurser, poddar, samtal och allt annat du redan använder spelar fortfarande roll. Notoria försöker inte ersätta dem.",
+        "p2": "Vad den erbjuder i stället är en plats att föra samman det materialet: spara det du lägger märke till, organisera efter språk, förklara med egna ord och fortsätt öva utifrån det.",
+        "beat": "Notoria sitter bredvid ditt lärandeliv. Den försöker inte bli det."
       },
       "provides": {
         "title": "Vad du kan göra",
+        "intro": "Inne i en arbetsyta hänger huvuddelarna ihop:",
         "items": {
           "vocab": "Bygg en personlig ordbank med betydelser, exempel och taggar",
-          "practice": "Öva med uppgifter som använder dina egna ord",
-          "create": "Skriv arbetsblad och teorianteckningar du kan återvända till",
-          "listenSpeak": "Gör media till lyssningsövningar och tala med en AI-tutor på Pro"
+          "practice": "Öva med uppgifter hämtade från dina egna ord och anteckningar",
+          "create": "Skriv teorianteckningar och skrivarbete du kan återvända till",
+          "listenSpeak": "Gör om media till lyssningsövning, och tala med en AI-tutor på Pro"
         },
-        "note": "Vissa AI-, lyssnings-, tal- och exportverktyg ingår i Notoria Pro. Gratisplanen täcker fortfarande vardaglig ordförrådsträning och relaterade verktyg."
+        "note": "Vissa AI-, lyssnings-, tal- och exportverktyg ingår i Notoria Pro. Gratisplanen täcker fortfarande vardaglig ordförrådsövning och den centrala studieloopen."
+      },
+      "ai": {
+        "title": "AI, där den hjälper",
+        "p1": "När AI finns tillgänglig är den ett stödverktyg — inte produktens mittpunkt.",
+        "p2": "Den kan hjälpa till att forma övning, granska skrivande eller stödja lyssning och tal. Den bestämmer inte vad du ska lära dig, och den ersätter inte arbetet med att lägga märke till, minnas och återvända.",
+        "p3": "Du bestämmer vad som kommer in i arbetsytan och vad du kommer tillbaka till."
       }
     },
     "ourStory": {
       "eyebrow": "Historia",
       "title": "Vår historia",
-      "lede": "Notoria växte fram ur en enkel frustration: språkinteckningar var utspridda, och övningsverktyg använde sällan det du redan samlat.",
-      "problem": {
-        "title": "Problemet",
-        "body": "Ordlistor fanns i en app, grammatik i en annan, skrivande någon annanstans, och lyssning eller tal kopplades knappt till det du studerade. Framstegen kändes tunna eftersom verktygen inte delade en privat arbetsyta."
+      "lede": "Språkinlärningsverktyg fanns överallt. Materialet som faktiskt betydde något saknades fortfarande just när det var dags att öva.",
+      "frustration": {
+        "title": "Den välbekanta splittringen",
+        "p1": "Om du någonsin har försökt lära dig ett språk på allvar på egen hand känner du igen formen.",
+        "p2": "Ord lever i en app. Grammatikanteckningar i ett dokument. Exempel som skärmdumpar i en mapp du slutar öppna. Lyssning i telefonen. Skrivande någon annanstans. Tal hör nästan aldrig ihop med något av det.",
+        "p3": "Att samla mycket är lätt. Den delen är enkel.",
+        "p4": "Det svåra kommer senare — när du sätter dig ner för att öva och inser att ingenting delar samma plats. Varje verktyg minns ett fragment. Inget av dem minns språket du faktiskt bygger.",
+        "beat": "Användbart material, utspritt. Övning, om och om igen från början."
       },
-      "why": {
-        "title": "Varför vi byggde det",
-        "body": "Vi ville ha en produkt där dina anteckningar är navet — samla, förstå, öva, skapa, lyssna, tala och repetera — utan att låtsas vara en skola eller en innehållsmarknadsplats."
+      "realisation": {
+        "title": "Det som borde ha varit självklart",
+        "p1": "Någon gång handlar frustrationen inte längre om fler funktioner. Den handlar om tyngdpunkten.",
+        "p2": "Inlärarens eget material — orden värda att behålla, anteckningarna skrivna med egna ord, exemplen som till slut fick något att klicka — ska inte ligga utanför verktygen man övar med. Det ska vara loopen.",
+        "p3": "Övning som ignorerar det du redan har samlat är bara sysselsättning med finare branding.",
+        "beat": "Ditt material hör hemma i centrum."
       },
-      "direction": {
-        "title": "Vart vi är på väg",
-        "body": "Håll Notoria privat, praktiskt och ärligt. Förbättra lärandeloopen runt ditt eget material. Lägg till AI-hjälp där den sparar tid, utan att produkten blir brus."
+      "exists": {
+        "title": "Varför Notoria finns",
+        "p1": "Notoria finns för att ge det materialet ett privat hem — och för att hålla ordförråd, anteckningar, teori, övningar, skrivande, lyssning och tal i en arbetsyta byggd kring det.",
+        "p2": "Inte som en hög av frikopplade moduler med gemensam inloggning. Som en plats där det du sparar kan bli det du övar, och det du övar kan fördjupa det du behåller.",
+        "p3": "Du tar in språket. Notoria hjälper dig stanna hos det — återvända, öva, skriva, höra, tala — utan att tappa tråden varje gång du byter verktyg.",
+        "p4": "Det är hela idén, uttryckt rakt."
+      },
+      "believes": {
+        "title": "Vad vi tror på",
+        "p1": "Självstudier ska kännas personliga, praktiska och sammanhängande. Inte uppvisning. Inte ständigt avbrutna av innehållskataloger du inte bad om.",
+        "p2": "Notoria är inte en skola. Det är inte en kursmarknadsplats. Det försöker inte ersätta lärare, läroböcker eller det tysta arbetet att faktiskt uppmärksamma.",
+        "p3": "Det är en arbetsyta för språket du lär dig — privat nog att vara ditt, strukturerad nog att vara användbar, lätt nog att produkten inte står i vägen för lärandet.",
+        "beat": "Mindre brus. Mer kontinuitet."
+      },
+      "going": {
+        "title": "Vart det är på väg",
+        "p1": "Riktningen är inte dramatisk. Förbli privat. Förbli praktisk. Förbli ärlig om vad mjukvara kan och inte kan göra.",
+        "p2": "Fortsätt förbättra inlärningsloopen kring ditt eget material — kopplingarna mellan att minnas, förstå, producera, lyssna och tala.",
+        "p3": "Använd AI där den verkligen hjälper: forma övning, stödja skrivande, lyssning eller tal. Inte som ett trick. Inte som ersättning för inlärarens eget arbete. Inte som en ursäkt att fylla produkten med brus.",
+        "closing": "Notoria byggdes för att någon tröttnade på splittringen — och ville ha en bättre plats för sitt eget läromaterial. Den anledningen gäller fortfarande."
       }
     },
     "howToUse": {
       "eyebrow": "Guide",
       "title": "Så använder du Notoria",
-      "lede": "Du behöver inte alla funktioner dag ett. Börja med en arbetsyta och några ord du bryr dig om.",
-      "idea": {
-        "title": "Grundidé",
-        "body": "Varje arbetsyta är ett språk. Där hänger ordförråd, teori, övningar, skrivande, lyssning och tal ihop så att träningen utgår från det du sparat."
+      "lede": "En praktisk karta över inlärningsloopen — börja med några ord, bygg sedan ut övning, skrivande, lyssning och tal när du är redo.",
+      "intro": {
+        "title": "En arbetsyta, inte en kurs",
+        "p1": "Notoria är en privat plats för språket du redan lär dig. Du tar in material, håller det organiserat och övar utifrån det — i stället för att börja i en katalog med lektioner du inte valt.",
+        "p2": "Varje arbetsyta är ett språk. Ordförråd, teori, övningar, skrivande, lyssning och tal lever där tillsammans, så att det du sparar kan bli det du övar.",
+        "beat": "Du behöver inte lära dig Notoria på en gång. Du växer det tillsammans med språket."
       },
-      "start": {
-        "title": "En enkel start",
+      "loop": {
+        "title": "Inlärningsloopen",
+        "p1": "Det mesta av produkten vilar på en enkel loop:",
+        "stages": {
+          "bring": {
+            "label": "Ta in",
+            "body": "Spara ord, fraser och anteckningar från lektioner, böcker, media, samtal — där du möter språket."
+          },
+          "organise": {
+            "label": "Organisera",
+            "body": "Håll allt för det språket i en arbetsyta, med betydelser, exempel och taggar som hjälper dig hitta igen."
+          },
+          "understand": {
+            "label": "Förstå",
+            "body": "Skriv teorianteckningar med egna ord när ett mönster behöver förklaras — grammatik, användning eller något du glömmer."
+          },
+          "practise": {
+            "label": "Öva",
+            "body": "Gör om det du sparat till övningar och repetition, så att minnesarbetet kommer från ditt eget material."
+          },
+          "use": {
+            "label": "Använd",
+            "body": "Skriv med det, lyssna på det och tala det — så språket går från igenkänning till aktiv användning."
+          },
+          "review": {
+            "label": "Kom tillbaka",
+            "body": "Återvänd senare, lägg till det nya, återbesök det svåra och håll loopen igång i stället för att börja om."
+          }
+        },
+        "beat": "Ta in → organisera → förstå → öva → använd → kom tillbaka."
+      },
+      "startSmall": {
+        "title": "Börja smått",
+        "p1": "Notoria är inte något du klarar av. Det finns ingen checklista som betyder att produkten är färdig.",
+        "p2": "En bra första dag kan vara en arbetsyta och fem ord du bryr dig om. Anteckningar, längre övning, skrivande, lyssning och tal kan vänta tills de förtjänar en plats i din loop."
+      },
+      "firstSession": {
+        "title": "En första session",
+        "intro": "Om du vill ha en konkret startväg, prova detta en gång:",
         "steps": {
-          "workspace": "Skapa en arbetsyta för språket du lär dig.",
-          "words": "Lägg till en handfull ord du verkligen vill minnas.",
-          "notes": "Skriv en kort teorianteckning när något behöver förklaras.",
-          "practice": "Öppna Exercise och öva med ditt eget material.",
-          "return": "Kom tillbaka senare, lägg till mer och håll loopen igång."
+          "workspace": {
+            "title": "Skapa en arbetsyta",
+            "body": "Gör en för språket du lär dig, och ge den ett namn du känner igen senare."
+          },
+          "words": {
+            "title": "Lägg till en handfull ord",
+            "body": "Öppna Vocabulary och spara ord eller fraser du vill minnas, med betydelser eller exempel om det hjälper."
+          },
+          "notes": {
+            "title": "Skriv en kort anteckning om du behöver",
+            "body": "I Theory, fånga en grammatik- eller användningspunkt med egna ord — bara när något behöver förklaras."
+          },
+          "practice": {
+            "title": "Gör en kort övning",
+            "body": "Öppna Exercise och öva från materialet du just lade till — flashcards eller drills från dina egna ord."
+          },
+          "return": {
+            "title": "Kom tillbaka i morgon",
+            "body": "Lägg till lite mer, återbesök en anteckning eller öva igen. Kontinuitet betyder mer än att täcka varje område dag ett."
+          }
         }
       },
-      "modules": {
-        "title": "Huvuddelarna",
+      "connect": {
+        "title": "Hur områdena hänger ihop",
+        "p1": "Vocabulary och Theory är där material landar. Exercise gör om det till övning. Writing, Listening och Speaking hjälper dig använda språket mer aktivt.",
+        "p2": "Du behöver inte gå igenom varje område i ordning. Många stannar länge vid ord och korta övningar.",
+        "p3": "Ett naturligt nästa steg är skrivande när du vill producera språk på egna villkor, sedan lyssning och tal när samma material ska fungera i örat och rösten — Listening och Speaking ingår i Notoria Pro.",
+        "beat": "Samla och förstå först. Använd och tala när materialet är redo att lämna sidan."
+      },
+      "areas": {
+        "title": "Huvudområdena",
+        "intro": "En kort karta över vad varje område är till för:",
         "vocab": {
-          "label": "Ordförråd",
-          "body": "din ordbank och flashcard-progress"
+          "label": "Vocabulary",
+          "body": "Din personliga ordbank — betydelser, exempel, taggar och flashcard-framsteg. Det är oftast grunden allt annat hämtar från."
         },
         "theory": {
-          "label": "Teori",
-          "body": "grammatik- och användningsanteckningar med egna ord"
+          "label": "Theory",
+          "body": "Grammatik- och användningsanteckningar med egna ord, redo att återvända till när samma mönster dyker upp igen."
         },
         "exercises": {
           "label": "Exercise",
-          "body": "övningar från ditt ordförråd"
+          "body": "Övningssessioner från ditt ordförråd, teorianteckningar eller importerat material — så drills förblir kopplade till det du faktiskt sparat."
         },
         "writing": {
           "label": "Writing",
-          "body": "dokument och frågeset för aktiv användning"
+          "body": "Dokument och frågeset för att använda språket aktivt, inte bara känna igen det."
         },
-        "listenSpeak": {
-          "label": "Lyssning & tal",
-          "body": "mediaträning och live-AI-tutor på Pro"
+        "listening": {
+          "label": "Listening",
+          "body": "Gör om media till lyssningsövning i din arbetsyta. Finns i Notoria Pro."
+        },
+        "speaking": {
+          "label": "Speaking",
+          "body": "Liveövning med en AI-tutor, kopplad till språket du studerar. Finns i Notoria Pro."
         }
       },
-      "fullGuide": "Inloggad? Öppna den fulla guiden i appen: <link>Så här använder du</link>.",
-      "signInHint": "Har du ett konto? <link>Logga in</link> för att öppna arbetsytan och den fulla guiden."
+      "notEverything": {
+        "title": "Du behöver inte använda allt",
+        "p1": "Hoppa över områden som inte hjälper just nu. En lugn ordbank och några anteckningar kan redan vara ett starkt system.",
+        "p2": "Lägg till Exercise när du vill ha strukturerad repetition. Lägg till Writing när du vill producera. Lägg till Listening och Speaking när höra och säga språket är nästa användbara steg."
+      },
+      "cta": {
+        "title": "Redo att börja?",
+        "body": "Skapa en arbetsyta, lägg till några ord och låt loopen växa därifrån.",
+        "createAccount": "Skapa konto",
+        "signIn": "Logga in",
+        "openWorkspace": "Öppna din arbetsyta",
+        "inAppGuide": "Öppna Getting started",
+        "signedInNote": "För knappar-och-skärmar-genomgångar i appen, öppna <link>Getting started</link>.",
+        "signedOutNote": "Har du redan ett konto? <link>Logga in</link> för att öppna din arbetsyta. Den inbyggda Getting started-guiden täcker detaljerade UI-genomgångar efter inloggning."
+      }
     },
-    "help": {
+    "support": {
       "eyebrow": "Support",
-      "title": "Hjälp & support",
-      "lede": "Snabba svar, och en rak väg när du vill rapportera en bugg, föreslå en funktion eller skicka feedback.",
+      "title": "Support",
+      "lede": "Snabba svar på vanliga frågor, och ett enkelt sätt att skicka feedback när du behöver det.",
       "faq": {
         "title": "Vanliga frågor",
+        "lede": "Börja här — de flesta svar tar mindre än en minut att läsa.",
+        "groups": {
+          "gettingStarted": "Kom igång",
+          "accountBilling": "Konto & fakturering",
+          "learningAi": "Inlärning & AI",
+          "dataPrivacy": "Data & integritet"
+        },
+        "workspace": {
+          "q": "Vad är en arbetsyta, och hur byter jag språk?",
+          "a": "Varje arbetsyta är ett språk du lär dig. Ordförråd, teori, skrivande, övningar, lyssning och tal ligger i den arbetsytan. Skapa eller byt arbetsytor från arbetsytemenyn i appen."
+        },
+        "start": {
+          "q": "Hur ska jag komma igång?",
+          "a": "Skapa en arbetsyta för språket du lär dig, lägg till några ord i <vocabulary>Vocabulary</vocabulary> och prova en kort övning. För inlärningssättet, se <howToUse>Så använder du</howToUse>. Inloggad? Öppna den inbyggda <gettingStarted>Getting started</gettingStarted>-guiden för en UI-genomgång."
+        },
         "account": {
-          "q": "Hur byter jag lösenord eller stänger kontot?",
-          "a": "Öppna Account. Där kan du byta lösenord (om du använder e-postinloggning), hantera Notoria Pro, exportera en backup eller radera kontot permanent."
+          "q": "Hur byter jag lösenord eller stänger mitt konto?",
+          "a": "Öppna <account>Account</account>. Där kan du uppdatera lösenordet om du använder e-postinloggning, hantera Notoria Pro, exportera en säkerhetskopia eller permanent ta bort kontot."
         },
         "pro": {
-          "q": "Hur fungerar fakturering och avslut?",
-          "a": "Notoria Pro faktureras via Stripe. Från Account kan du uppgradera, öppna Stripe-kundportalen för betalningsmetoder och fakturor, eller avsluta förnyelse."
+          "q": "Hur fungerar fakturering och avbokning?",
+          "a": "Notoria Pro faktureras via Stripe. Från <account>Account</account> kan du uppgradera, öppna Stripe-kundportalen för betalningsmetoder och fakturor, eller avbryta förnyelse."
         },
-        "data": {
-          "q": "Var lagras mitt innehåll?",
-          "a": "Konto och arbetsyteinnehåll finns i Notorias databas. Avatar- och lyssningsmedia hos vår mediehost. Se integritetspolicyn för behandlare och radering."
+        "proFeatures": {
+          "q": "Vad är gratis, och vad kräver Notoria Pro?",
+          "a": "Vardaglig ordförrådsövning och relaterade studieverktyg finns i gratisplanen. Vissa AI-verktyg, lyssning, tal och dokumentexport ingår i Notoria Pro. Jämför och uppgradera från <account>Account</account>."
+        },
+        "learning": {
+          "q": "Hur fungerar Notorias inlärningsfunktioner?",
+          "a": "Notoria håller ordförråd, teori, övningar, skrivande, lyssning och tal i en arbetsyta så att övning kan använda material du sparat. Börja med ord och anteckningar, lägg sedan till övning och aktiv användning när du är redo. <about>Om</about> förklarar produkten; <howToUse>Så använder du</howToUse> kartlägger inlärningsloopen."
         },
         "ai": {
           "q": "Kan jag stänga av AI-hjälp?",
-          "a": "Ja. AI-inställningar finns under Settings. När hjälpen är av stannar verktyg som kräver den."
+          "a": "Ja. AI-assistentens preferenser finns i <settings>Settings</settings>. När assistansen är av stängs AI-verktyg som kräver den."
+        },
+        "data": {
+          "q": "Var lagras mitt inlärningsinnehåll?",
+          "a": "Ditt konto och dina inlärningsdata finns i Notorias databas. Media som avatarer och lyssningsfiler lagras hos vår mediahost. Se <privacy>Integritetspolicyn</privacy> för processorer och radering."
+        },
+        "backup": {
+          "q": "Kan jag exportera eller säkerhetskopiera mina data?",
+          "a": "Ja. Från <account>Account</account> kan du ladda ner en JSON-säkerhetskopia av dina arbetsytor och ditt inlärningsinnehåll. Mediefiler länkas via URL, inte inbäddade. För integritet och radering, se <privacy>Integritetspolicyn</privacy>."
         }
       },
-      "reach": {
-        "title": "Buggar, idéer och feedback",
-        "body": "Länkarna nedan öppnar ett förifyllt mejl till Notoria. Allt går till samma adress.",
-        "bug": "Rapportera en bugg",
-        "feature": "Föreslå en funktion",
-        "feedback": "Skicka allmän feedback",
-        "note": "Allt går till samma inkorg. Ange ditt konto-e-post om det gäller fakturering eller kontoåtkomst."
+      "feedback": {
+        "title": "Skicka feedback",
+        "lede": "Rapportera en bugg, föreslå en funktion eller dela en tanke. Kort och tydligt hjälper mest.",
+        "typeLabel": "Typ av feedback",
+        "types": {
+          "bug": "Bugg",
+          "feature": "Funktionsönskemål",
+          "general": "Allmän feedback"
+        },
+        "emailLabel": "Din e-post",
+        "emailHint": "Vi använder den om vi behöver svara.",
+        "accountEmailNote": "Vi svarar till <email></email> om vi behöver mer detaljer.",
+        "messageLabel": "Meddelande",
+        "placeholders": {
+          "bug": "Vad gick fel, var det hände och vad du förväntade dig i stället…",
+          "feature": "Vad vill du att Notoria ska göra, och varför det skulle hjälpa…",
+          "general": "Dela en tanke, ett förslag eller något annat du vill säga…"
+        },
+        "messageHint": "Minst 10 tecken. Klistra inte in lösenord eller privat lärandeinnehåll.",
+        "imagesLabel": "Skärmbilder (valfritt)",
+        "addImages": "Lägg till bilder",
+        "removeImage": "Ta bort {name}",
+        "imagesHint": "Upp till 3 bilder, JPG/PNG/WebP/GIF, max 3 MB vardera.",
+        "submit": "Skicka feedback",
+        "sending": "Skickar…",
+        "successTitle": "Tack — din feedback har skickats.",
+        "successBody": "Notoria-teamet läser den. Om vi behöver mer detaljer svarar vi via e-post.",
+        "successToast": "Feedback skickad",
+        "sendAnother": "Skicka ett till meddelande",
+        "errors": {
+          "tooShort": "Skriv lite mer så att vi förstår ärendet.",
+          "tooLong": "Håll meddelandet under 5 000 tecken.",
+          "emailRequired": "Ange en e-postadress så vi kan svara.",
+          "invalid": "Kontrollera formuläret och försök igen.",
+          "invalidImage": "Använd endast JPG-, PNG-, WebP- eller GIF-bilder.",
+          "imageTooLarge": "Varje bild får vara högst 3 MB.",
+          "tooManyImages": "Du kan bifoga upp till 3 bilder.",
+          "rateLimited": "Du har skickat flera meddelanden nyligen. Vänta en stund och försök igen.",
+          "notConfigured": "Feedbackmejlet är inte tillgängligt just nu. Mejla contact@notoria.fi direkt.",
+          "sendFailed": "Kunde inte skicka feedback. Försök igen, eller mejla contact@notoria.fi."
+        }
       },
-      "contact": {
-        "title": "Kontakt",
-        "emailLabel": "E-post",
-        "phoneLabel": "Telefon"
+      "contactCta": {
+        "prompt": "Behöver du kontakta oss direkt?",
+        "link": "Kontakta oss"
+      }
+    },
+    "contact": {
+      "eyebrow": "Kontakt",
+      "title": "Kontakta oss",
+      "lede": "Mejla eller ring — välj den kontakt som passar ditt ärende.",
+      "routing": "Tekniska problem går till utvecklingskontakten. Konto, fakturering, integritet och allmänna frågor går till den huvudsakliga supportadressen.",
+      "general": {
+        "title": "Allmän & kontosupport",
+        "body": "För vardagsfrågor om Notoria, ditt konto, fakturering, integritet eller annat som inte är en teknisk bugg.",
+        "topics": {
+          "questions": "Allmänna frågor",
+          "account": "Konto",
+          "billing": "Fakturering",
+          "privacy": "Integritet",
+          "other": "Övrigt"
+        }
+      },
+      "technical": {
+        "title": "Tekniska problem",
+        "body": "När något i appen verkar trasigt — en bugg, ett oväntat fel eller ett utvecklingsrelaterat problem — skriv hit."
+      },
+      "phone": {
+        "title": "Telefon",
+        "body": "Vill du hellre prata igenom saken? Du når oss per telefon under rimliga tider."
+      },
+      "supportCta": {
+        "prompt": "Letar du efter svar eller vill skicka feedback?",
+        "link": "Support"
       }
     }
   }

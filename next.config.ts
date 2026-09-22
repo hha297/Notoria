@@ -6,6 +6,9 @@ const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
 const nextConfig: NextConfig = {
   // Neon is eu-central-1; keep serverless compute in Frankfurt.
   // Vercel dashboard region must also be fra1 — see vercel.json.
+  async redirects() {
+    return [{ source: "/help", destination: "/support", permanent: true }];
+  },
   experimental: {
     serverActions: {
       // Listening allows up to 25 MB; keep headroom above Import's 10 MB limit.

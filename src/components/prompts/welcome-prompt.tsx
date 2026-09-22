@@ -131,9 +131,9 @@ export function WelcomePromptModal({
     : null;
 
   const type = prompt?.type ?? "greeting";
-  const category = prompt?.category ?? type;
-  const accent = CATEGORY_ACCENT[category] ?? "home";
-  const Icon = CATEGORY_ICONS[category] ?? TYPE_ICONS[type];
+  const category = prompt?.category;
+  const accent = (category && CATEGORY_ACCENT[category]) || "home";
+  const Icon = (category && CATEGORY_ICONS[category]) || TYPE_ICONS[type];
   const kicker = t(`titles.${type}`);
 
   return (
