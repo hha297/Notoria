@@ -8,10 +8,7 @@ export function formatFillBlankSegment(input: {
 }
 
 function joinFillBlankSegments(segments: string[]) {
-  if (segments.some((segment) => segment.includes("\n"))) {
-    return segments.join("\n\n");
-  }
-  return segments.join(" ");
+  return segments.join("\n");
 }
 
 export function mergeFillBlankQuestions(

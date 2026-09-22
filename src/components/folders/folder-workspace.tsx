@@ -369,6 +369,7 @@ export function FolderWorkspace({
               if (!open) setMoveTarget(null);
             }}
             folders={folders}
+            section={section}
             itemType={moveTarget.type}
             itemId={moveTarget.id}
             currentFolderId={moveTarget.folderId}

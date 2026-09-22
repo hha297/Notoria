@@ -45,11 +45,41 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://www.notoria.fi"),
   title: {
-    default: "Notoria",
+    default: "Notoria — Private language learning workspace",
     template: "%s",
   },
-  description: "Private language-learning workspace for vocabulary and exercises",
+  description:
+    "Build vocabulary, practice exercises, write worksheets, and train listening & speaking in one private language-learning workspace.",
+  keywords: [
+    "language learning",
+    "vocabulary",
+    "flashcards",
+    "language exercises",
+    "writing practice",
+    "listening practice",
+    "speaking practice",
+    "Notoria",
+  ],
+  openGraph: {
+    title: "Notoria — Private language learning workspace",
+    description:
+      "Build vocabulary, practice exercises, write worksheets, and train listening & speaking in one private language-learning workspace.",
+    url: "https://www.notoria.fi",
+    siteName: "Notoria",
+    locale: "en_US",
+    type: "website",
+  },
+  twitter: {
+    card: "summary",
+    title: "Notoria — Private language learning workspace",
+    description:
+      "Build vocabulary, practice exercises, write worksheets, and train listening & speaking in one private language-learning workspace.",
+  },
+  alternates: {
+    canonical: "https://www.notoria.fi",
+  },
 };
 
 export default async function RootLayout({

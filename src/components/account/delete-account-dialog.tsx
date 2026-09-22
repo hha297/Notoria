@@ -20,9 +20,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
   deleteAccount,
-  exportAccountBackup,
 } from "@/lib/actions/account";
 import { DELETE_ACCOUNT_CONFIRMATION } from "@/lib/account/constants";
+import { downloadAccountBackupJson } from "@/lib/account/download-backup";
 
 type DeleteAccountDialogProps = {
   open: boolean;
@@ -54,20 +54,12 @@ export function DeleteAccountDialog({
   function handleBackup() {
     startBackupTransition(async () => {
       try {
-        const backup = await exportAccountBackup();
-        const blob = new Blob([JSON.stringify(backup, null, 2)], {
-          type: "application/json",
+        await downloadAccountBackupJson({
+          success: t("backupDone"),
+          failed: t("backupFailed"),
         });
-        const url = URL.createObjectURL(blob);
-        const stamp = new Date().toISOString().slice(0, 10);
-        const anchor = document.createElement("a");
-        anchor.href = url;
-        anchor.download = `notoria-backup-${stamp}.json`;
-        anchor.click();
-        URL.revokeObjectURL(url);
-        toast.success(t("backupDone"));
       } catch {
-        toast.error(t("backupFailed"));
+        // Toast already handled in downloadAccountBackupJson.
       }
     });
   }

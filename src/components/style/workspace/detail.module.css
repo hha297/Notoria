@@ -1,0 +1,241 @@
+/* Shared detail chrome for Writing / Theory / Speaking / Listening hubs */
+
+.shell {
+  --detail-fg: var(--module-writing-fg);
+  --detail-bg: var(--module-writing-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  width: 100%;
+  max-width: none;
+  margin-inline: 0;
+  padding-bottom: 2.5rem;
+}
+
+.shell[data-detail="theory"] {
+  --detail-fg: var(--theory-cat-fg, var(--module-theory-fg));
+  --detail-bg: var(--theory-cat-bg, var(--module-theory-bg));
+}
+
+.shell[data-detail="speak"] {
+  --detail-fg: var(--module-speak-fg);
+  --detail-bg: var(--module-speak-bg);
+}
+
+.shell[data-detail="listen"] {
+  --detail-fg: var(--module-listen-fg);
+  --detail-bg: var(--module-listen-bg);
+}
+
+.shell[data-detail="writing"][data-writing-kind="question_set"] {
+  --detail-fg: var(--module-theory-fg);
+  --detail-bg: var(--module-theory-bg);
+}
+
+.header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 1rem;
+}
+
+.back {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.4rem;
+  margin-inline: -0.4rem;
+  padding: 0.35rem 0.5rem;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+  color: #fff !important;
+  text-decoration: none;
+  -webkit-font-smoothing: auto;
+  -moz-osx-font-smoothing: auto;
+  transition:
+    color 140ms ease,
+    background-color 140ms ease;
+}
+
+:global(html:not(.dark)) .back {
+  color: var(--ink) !important;
+}
+
+.back:hover {
+  color: var(--detail-fg) !important;
+  background: var(--detail-bg);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.hero {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--detail-fg);
+}
+
+.titleRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.45rem;
+  margin-top: 0.35rem;
+}
+
+.titleRow[data-detail="listen"] {
+  --detail-fg: var(--module-listen-fg);
+  --detail-bg: var(--module-listen-bg);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.7rem, 3.2vw, 2.55rem);
+  font-weight: 700;
+  line-height: 1.12;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+}
+
+.titleEdit {
+  flex-shrink: 0;
+  opacity: 0;
+  pointer-events: none;
+  color: var(--muted-foreground) !important;
+  transition:
+    opacity 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease;
+}
+
+.titleRow:hover .titleEdit,
+.titleRow:focus-within .titleEdit {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.titleEdit:hover {
+  background: var(--detail-bg) !important;
+  color: var(--detail-fg) !important;
+}
+
+@media (hover: none) {
+  .titleEdit {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.85rem;
+}
+
+.tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 1.55rem;
+  padding: 0.15rem 0.55rem;
+  border-radius: 0.4rem;
+  border: 1px solid
+    color-mix(in oklab, var(--detail-fg) 38%, var(--detail-bg));
+  background: color-mix(in oklab, var(--detail-bg) 88%, transparent);
+  font-family: var(--font-heading);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--ink);
+}
+
+.tag[data-tone="danger"] {
+  border-color: color-mix(in oklab, var(--destructive) 40%, transparent);
+  background: color-mix(in oklab, var(--destructive) 12%, transparent);
+  color: var(--destructive);
+}
+
+.lede {
+  margin: 0.85rem 0 0;
+  max-width: 44rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: color-mix(in oklab, var(--ink) 72%, var(--muted-foreground));
+}
+
+.body {
+  margin-top: 0.35rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid
+    color-mix(in oklab, var(--detail-fg) 18%, transparent);
+}
+
+.panel {
+  border: 2px solid
+    color-mix(in oklab, var(--detail-fg) 24%, var(--hairline-cloud));
+  border-radius: 1rem;
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--detail-bg) 48%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 50%, transparent);
+  padding: 1.1rem 1.15rem 1.2rem;
+}
+
+.panel + .panel {
+  margin-top: 1rem;
+}
+
+.panelTitle {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.panelLede {
+  margin: 0.35rem 0 0;
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}
+
+.panelBody {
+  margin-top: 0.85rem;
+}
+
+.status {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-top: 0.5rem;
+  padding: 0.9rem 1.05rem;
+  border-radius: 0.85rem;
+  border: 1px solid
+    color-mix(in oklab, var(--detail-fg) 22%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--detail-bg) 42%, transparent);
+  font-size: 0.875rem;
+  color: var(--muted-foreground);
+}

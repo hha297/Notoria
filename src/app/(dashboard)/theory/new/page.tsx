@@ -21,8 +21,8 @@ export default async function NewTheoryPage({
   if (!workspace) {
     return (
       <div className="writing-sheet theory-sheet">
-        <Link href={listHref} className="writing-back">
-          <ArrowLeft className="size-4" />
+        <Link href={listHref} className="writing-back text-ink dark:!text-white">
+          <ArrowLeft className="size-4 shrink-0 text-current" />
           {t("backToList")}
         </Link>
         <NoWorkspaceEmpty />

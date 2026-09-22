@@ -2,146 +2,84 @@
 
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { CheckCircle2, Loader2, Lock, RotateCcw, XCircle } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import {
+  ArrowLeft,
+  Loader2,
+  Lock,
+  RotateCcw,
+} from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import { ListeningAudioPlayer } from "@/components/listening/listening-audio-player";
+import { ListeningExerciseFeedback } from "@/components/listening/listening-exercise-feedback";
+import {
+  ListeningFillBlankQuestion,
+  ListeningMultipleChoiceQuestion,
+} from "@/components/listening/listening-exercise-questions";
 import { ListeningTranscript } from "@/components/listening/listening-transcript";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { generateListeningExercises, ensureListeningSpeakers } from "@/lib/actions/listening";
+import exerciseStyles from "@/components/style/listening/exercise.module.css";
+import {
+  generateListeningExercises,
+  ensureListeningSpeakers,
+} from "@/lib/actions/listening";
+import { mx } from "@/lib/css-module";
 import { isListeningErrorCode } from "@/lib/listening/errors";
-import { isMultiSpeakerTranscript, SPEAKER_ASSIGNMENT_VERSION } from "@/lib/listening/speakers";
+import {
+  isMultiSpeakerTranscript,
+  SPEAKER_ASSIGNMENT_VERSION,
+} from "@/lib/listening/speakers";
+import {
+  asStringArray,
+  checkExercise,
+  formatExpected,
+  hasAnswer,
+  isSparseExerciseSet,
+  scoreResults,
+  toFillBlankPassage,
+} from "@/lib/listening/practice-session";
 import { LISTENING_PRACTICE_TYPES } from "@/lib/listening/types";
 import type {
-  ListeningExerciseClient,
   ListeningLessonDetail,
   ListeningPracticeType,
 } from "@/lib/listening/types";
-import { listeningAnswersMatch } from "@/lib/listening/practice";
-import { mergeFillBlankQuestions } from "@/lib/listening/fill-blank-passage";
-import { targetQuestionCount } from "@/lib/listening/select-type";
-import { fillBlankDataSchema, multipleChoiceDataSchema } from "@/schemas/listening";
 import { cn } from "@/lib/utils";
+
+const EASE = [0.22, 1, 0.36, 1] as const;
+
+type Phase = "lobby" | "active" | "complete";
 
 type ListeningPracticeSessionProps = {
   lesson: ListeningLessonDetail;
 };
 
-function asStringArray(value: unknown): string[] {
-  return Array.isArray(value) ? value.map((item) => String(item)) : [];
-}
-
-function fillBlankDisplayText(exercise: ListeningExerciseClient) {
-  const data = fillBlankDataSchema.safeParse(exercise.data);
-  if (!data.success) return exercise.question;
-  return data.data.sentenceWithBlanks ?? data.data.displayText ?? exercise.question;
-}
-
-function checkExercise(exercise: ListeningExerciseClient, answer: unknown): boolean[] {
-  if (exercise.type === "FILL_BLANK") {
-    const expected = asStringArray(exercise.correctAnswer);
-    const given = asStringArray(answer);
-    return expected.map((item, index) =>
-      listeningAnswersMatch(given[index] ?? "", item),
-    );
-  }
-
-  return [
-    listeningAnswersMatch(String(answer ?? ""), String(exercise.correctAnswer ?? "")),
-  ];
-}
-
-function hasAnswer(exercise: ListeningExerciseClient, answer: unknown) {
-  if (exercise.type === "FILL_BLANK") {
-    const expected = asStringArray(exercise.correctAnswer);
-    const given = asStringArray(answer);
-    return expected.every((_, index) => (given[index] ?? "").trim().length > 0);
-  }
-  return typeof answer === "string" && answer.length > 0;
-}
-
-function toFillBlankPassage(
-  exercises: ListeningExerciseClient[],
-): ListeningExerciseClient | null {
-  const items = exercises.filter((exercise) => exercise.type === "FILL_BLANK");
-  if (items.length === 0) return null;
-
-  const merged = mergeFillBlankQuestions(
-    items.map((exercise) => {
-      const data = fillBlankDataSchema.safeParse(exercise.data);
-      return {
-        speaker: data.success ? data.data.speaker : undefined,
-        sentenceWithBlanks: fillBlankDisplayText(exercise),
-        blanks: asStringArray(exercise.correctAnswer),
-      };
-    }),
-  );
-  if (!merged) return null;
-
-  return {
-    id: items.length === 1 ? items[0]!.id : "fill-blank-passage",
-    type: "FILL_BLANK",
-    question: merged.sentenceWithBlanks,
-    data: {
-      sentenceWithBlanks: merged.sentenceWithBlanks,
-      speaker: merged.speaker,
-    },
-    correctAnswer: merged.blanks,
-    sortOrder: 0,
-  };
-}
-
-function formatExpected(exercise: ListeningExerciseClient) {
-  if (exercise.type === "FILL_BLANK") {
-    return asStringArray(exercise.correctAnswer).join(" / ");
-  }
-  return String(exercise.correctAnswer ?? "");
-}
-
-function isSparseExerciseSet(
-  lesson: ListeningLessonDetail,
-  type: ListeningPracticeType,
-  count: number,
-) {
-  if (count === 0) return true;
-  if (type === "FILL_BLANK") return false;
-  const { min } = targetQuestionCount({
-    transcript: lesson.transcript ?? "",
-    durationSeconds: lesson.duration,
-  });
-  return count < min;
-}
-
-function initialPracticeType(lesson: ListeningLessonDetail): ListeningPracticeType | null {
-  const type =
-    lesson.exerciseType === "FILL_BLANK" || lesson.exerciseType === "MULTIPLE_CHOICE"
-      ? lesson.exerciseType
-      : null;
-  if (!type) return null;
-  const count = lesson.exercises.filter((exercise) => exercise.type === type).length;
-  if (isSparseExerciseSet(lesson, type, count)) return null;
-  return type;
-}
-
-export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionProps) {
+export function ListeningPracticeSession({
+  lesson,
+}: ListeningPracticeSessionProps) {
   const t = useTranslations("listening");
   const tPractice = useTranslations("listening.practice");
   const tTypes = useTranslations("listening.types");
   const { hasProAccess, openUpgrade } = useProAccess();
   const router = useRouter();
+  const reduceMotion = useReducedMotion();
   const [isPending, startTransition] = useTransition();
   const [speakersPending, startSpeakersTransition] = useTransition();
   const speakersRequested = useRef(false);
+
+  const [phase, setPhase] = useState<Phase>("lobby");
   const [showTranscript, setShowTranscript] = useState(false);
-  const [seekRequest, setSeekRequest] = useState<{ ms: number; nonce: number } | null>(
+  const [showReview, setShowReview] = useState(false);
+  const [seekRequest, setSeekRequest] = useState<{
+    ms: number;
+    nonce: number;
+  } | null>(null);
+  const [selectedType, setSelectedType] = useState<ListeningPracticeType | null>(
     null,
   );
-  const [selectedType, setSelectedType] = useState<ListeningPracticeType | null>(
-    () => initialPracticeType(lesson),
-  );
+  const [questionIndex, setQuestionIndex] = useState(0);
   const [checked, setChecked] = useState(false);
   const [answers, setAnswers] = useState<Record<string, unknown>>({});
   const [round, setRound] = useState(0);
@@ -152,7 +90,7 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
       Boolean(lesson.transcript?.trim()) &&
       !isMultiSpeakerTranscript(utterances) &&
       (lesson.transcriptionData?.speakerAssignmentVersion ?? 0) <
-      SPEAKER_ASSIGNMENT_VERSION;
+        SPEAKER_ASSIGNMENT_VERSION;
     if (!needsSpeakers || speakersRequested.current) return;
 
     speakersRequested.current = true;
@@ -180,34 +118,79 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
     return passage ? [passage] : [];
   }, [exercises, selectedType]);
 
+  const isFillBlank = selectedType === "FILL_BLANK";
+  const current = practiceExercises[questionIndex] ?? null;
+
   const results = useMemo(() => {
-    if (!checked) return {};
+    if (!checked && phase !== "complete") return {};
     return Object.fromEntries(
       practiceExercises.map((exercise) => [
         exercise.id,
         checkExercise(exercise, answers[exercise.id]),
       ]),
     ) as Record<string, boolean[]>;
-  }, [answers, checked, practiceExercises]);
+  }, [answers, checked, phase, practiceExercises]);
 
-  const isFillBlank = selectedType === "FILL_BLANK";
-  const blankResults = useMemo(
-    () => Object.values(results).flat(),
-    [results],
+  const score = useMemo(
+    () => scoreResults(practiceExercises, results, isFillBlank),
+    [practiceExercises, results, isFillBlank],
   );
-  const total = isFillBlank
-    ? practiceExercises.reduce(
-      (count, exercise) => count + asStringArray(exercise.correctAnswer).length,
-      0,
-    )
-    : practiceExercises.length;
-  const correctCount = isFillBlank
-    ? blankResults.filter(Boolean).length
-    : Object.values(results).filter((item) => item.every(Boolean)).length;
-  const percent = total ? Math.round((correctCount / total) * 100) : 0;
-  const canCheck =
-    practiceExercises.length > 0 &&
-    practiceExercises.every((exercise) => hasAnswer(exercise, answers[exercise.id]));
+
+  const currentResult = current ? results[current.id] : undefined;
+  const currentCorrect =
+    Boolean(currentResult?.length) && Boolean(currentResult?.every(Boolean));
+
+  const canCheck = current
+    ? hasAnswer(current, answers[current.id])
+    : false;
+
+  const progressCurrent = isFillBlank
+    ? 1
+    : Math.min(questionIndex + 1, practiceExercises.length || 1);
+  const progressLabel = isFillBlank
+    ? tPractice("blanksProgress", {
+        filled: asStringArray(answers[current?.id ?? ""]).filter((v) =>
+          v.trim(),
+        ).length,
+        total: asStringArray(current?.correctAnswer).length,
+      })
+    : tPractice("progress", {
+        current: progressCurrent,
+        total: practiceExercises.length || 1,
+      });
+  const progressRatio = isFillBlank
+    ? checked
+      ? 1
+      : asStringArray(current?.correctAnswer).length
+        ? asStringArray(answers[current?.id ?? ""]).filter((v) => v.trim())
+            .length / asStringArray(current?.correctAnswer).length
+        : 0
+    : practiceExercises.length
+      ? (checked ? questionIndex + 1 : questionIndex) /
+        practiceExercises.length
+      : 0;
+
+  const mistakes = useMemo(() => {
+    return practiceExercises
+      .map((exercise, index) => {
+        const result = results[exercise.id];
+        if (!result || result.every(Boolean)) return null;
+        return {
+          index,
+          exercise,
+          expected: formatExpected(exercise),
+          given: isFillBlank
+            ? asStringArray(answers[exercise.id]).join(" / ")
+            : String(answers[exercise.id] ?? ""),
+        };
+      })
+      .filter(Boolean) as Array<{
+      index: number;
+      exercise: (typeof practiceExercises)[number];
+      expected: string;
+      given: string;
+    }>;
+  }, [answers, isFillBlank, practiceExercises, results]);
 
   function errorMessage(error: unknown) {
     const code = error instanceof Error ? error.message : "PROCESSING_FAILED";
@@ -221,9 +204,11 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
     setAnswers((prev) => ({ ...prev, [id]: value }));
   }
 
-  function resetSession() {
+  function resetRound() {
     setChecked(false);
     setAnswers({});
+    setQuestionIndex(0);
+    setShowReview(false);
     setRound((value) => value + 1);
   }
 
@@ -234,20 +219,25 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
       return;
     }
 
-    const existing = lesson.exercises.filter((exercise) => exercise.type === type);
+    const existing = lesson.exercises.filter(
+      (exercise) => exercise.type === type,
+    );
     const sparse = isSparseExerciseSet(lesson, type, existing.length);
-    const alreadyLoaded = selectedType === type && existing.length > 0 && !sparse;
-    if (alreadyLoaded) return;
+    const ready = existing.length > 0 && !sparse;
 
     setSelectedType(type);
-    resetSession();
+    resetRound();
 
-    if (existing.length > 0 && !sparse) return;
+    if (ready) {
+      setPhase("active");
+      return;
+    }
 
     startTransition(async () => {
       try {
         await generateListeningExercises(lesson.id, type);
         toast.success(t("exercisesGenerated"));
+        setPhase("active");
         router.refresh();
       } catch (error) {
         if (error instanceof Error && error.message === "PRO_REQUIRED") {
@@ -255,307 +245,342 @@ export function ListeningPracticeSession({ lesson }: ListeningPracticeSessionPro
           return;
         }
         toast.error(errorMessage(error));
+        setSelectedType(null);
+        setPhase("lobby");
       }
     });
   }
 
-  function tryAgain() {
-    resetSession();
+  function exitToLobby() {
+    setPhase("lobby");
+    setChecked(false);
+    setQuestionIndex(0);
+    setShowReview(false);
   }
 
-  return (
-    <div className="space-y-6">
-      <div className="sticky top-3 z-10">
-        <ListeningAudioPlayer
-          src={lesson.cloudinaryUrl}
-          mediaType={lesson.mediaType}
-          compact
-          seekRequest={seekRequest}
-        />
+  function handleCheck() {
+    if (!current || !canCheck) return;
+    setChecked(true);
+  }
+
+  function handleNext() {
+    if (!checked) return;
+    if (isFillBlank || questionIndex >= practiceExercises.length - 1) {
+      // compute all results for fill blank / last MC
+      if (isFillBlank) {
+        setPhase("complete");
+        return;
+      }
+      // ensure remaining unanswered aren't counted — for sequential MC all prior are checked
+      setPhase("complete");
+      return;
+    }
+    setQuestionIndex((value) => value + 1);
+    setChecked(false);
+  }
+
+  function tryAgain() {
+    resetRound();
+    setPhase("active");
+  }
+
+  const media = (
+    <div className={mx(exerciseStyles, "mediaDock")}>
+      <ListeningAudioPlayer
+        key={lesson.cloudinaryUrl}
+        src={lesson.cloudinaryUrl}
+        mediaType={lesson.mediaType}
+        compact
+        label={tPractice("listenPrompt")}
+        seekRequest={seekRequest}
+      />
+    </div>
+  );
+
+  const transcriptBlock =
+    lesson.transcript ? (
+      <div className={mx(exerciseStyles, "transcriptPanel")}>
+        <Button
+          type="button"
+          variant="outline"
+          className={mx(exerciseStyles, "transcriptToggle")}
+          onClick={() => setShowTranscript((open) => !open)}
+        >
+          {showTranscript ? t("hideTranscript") : t("showTranscript")}
+        </Button>
+        {showTranscript ? (
+          <div className="mt-3">
+            {speakersPending ? (
+              <p className={mx(exerciseStyles, "instruction")}>
+                {t("identifyingSpeakers")}
+              </p>
+            ) : null}
+            <ListeningTranscript
+              transcript={lesson.transcript}
+              transcriptionData={lesson.transcriptionData}
+              onSeekMs={(ms) => setSeekRequest({ ms, nonce: Date.now() })}
+            />
+          </div>
+        ) : null}
       </div>
+    ) : null;
 
-      {lesson.transcript ? (
-        <div className="space-y-3">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setShowTranscript((open) => !open)}
-          >
-            {showTranscript ? t("hideTranscript") : t("showTranscript")}
-          </Button>
-          {showTranscript ? (
-            <>
-              {speakersPending ? (
-                <p className="text-sm text-muted-foreground">{t("identifyingSpeakers")}</p>
-              ) : null}
-              <ListeningTranscript
-                transcript={lesson.transcript}
-                transcriptionData={lesson.transcriptionData}
-                onSeekMs={(ms) => setSeekRequest({ ms, nonce: Date.now() })}
-              />
-            </>
-          ) : null}
-        </div>
-      ) : null}
+  if (phase === "lobby") {
+    return (
+      <div className={mx(exerciseStyles, "shell shellWide")}>
+        {media}
+        {transcriptBlock}
 
-      <section className="space-y-3">
-        <div>
-          <h2 className="heading-md">{t("exerciseTitle")}</h2>
-          <p className="mt-1 text-sm text-muted-foreground">{t("chooseExerciseType")}</p>
-        </div>
-        <div className="flex flex-wrap gap-2">
-          {LISTENING_PRACTICE_TYPES.map((type) => {
-            const locked = !hasProAccess;
+        <section className={mx(exerciseStyles, "lobby")} aria-label={t("exerciseTitle")}>
+          <div>
+            <p className={mx(exerciseStyles, "eyebrow")}>{t("exerciseTitle")}</p>
+            <p className={mx(exerciseStyles, "lobbyLead")}>
+              {t("chooseTypeHint")}
+            </p>
+          </div>
 
-            return (
-              <Button
-                key={type}
-                type="button"
-                variant={selectedType === type ? "default" : "outline"}
-                aria-disabled={locked || undefined}
-                onClick={() => chooseType(type)}
-                disabled={hasProAccess && isPending}
-                className={cn(locked && lockedFeatureClassName)}
-              >
-                {locked ? <Lock className="size-3.5" /> : null}
-                {tTypes(type)}
-              </Button>
-            );
-          })}
-        </div>
-      </section>
-
-      {isPending ? (
-        <div className="flex items-center gap-3 rounded-xl border border-hairline-cloud bg-muted/40 p-4 text-sm text-muted-foreground">
-          <Loader2 className="size-4 animate-spin" />
-          {t("steps.generating")}
-        </div>
-      ) : null}
-
-      {!selectedType && !isPending ? (
-        <p className="text-sm text-muted-foreground">{t("chooseTypeHint")}</p>
-      ) : null}
-
-      {selectedType && !isPending && practiceExercises.length === 0 ? (
-        <p className="text-sm text-muted-foreground">{t("chooseTypeHint")}</p>
-      ) : null}
-
-      {selectedType && !isPending && practiceExercises.length > 0 ? (
-        <>
-          {checked ? (
-            <div className="rounded-2xl border border-[#b8d96a] bg-[#f4fae0] p-5 text-center sm:p-6">
-              <p className="font-heading text-xl font-medium text-[#4a6b0a]">
-                {tPractice("completeTitle")}
-              </p>
-              <p className="mt-2 text-lg font-semibold text-[#4a6b0a]">
-                {tPractice("completeScore", { correct: correctCount, total })}
-              </p>
-              <p className="text-sm font-medium text-[#4a6b0a]/80">
-                {tPractice("completePercent", { percent })}
-              </p>
-            </div>
-          ) : null}
-
-          {isFillBlank ? (
-            <p className="text-sm text-muted-foreground">{t("fillBlankOverview")}</p>
-          ) : null}
-
-          <div className="space-y-4">
-            {practiceExercises.map((exercise, index) => {
-              const blankChecks = results[exercise.id] ?? [];
-              const isCorrect =
-                blankChecks.length > 0 && blankChecks.every(Boolean);
+          <div className={mx(exerciseStyles, "typeGrid")}>
+            {LISTENING_PRACTICE_TYPES.map((type) => {
+              const locked = !hasProAccess;
               return (
-                <section
-                  key={`${exercise.id}:${round}`}
-                  className="rounded-2xl border border-hairline-cloud bg-card p-5 sm:p-6"
-                >
-                  {exercise.type === "FILL_BLANK" ? (
-                    <FillBlankQuestion
-                      exercise={exercise}
-                      answer={asStringArray(answers[exercise.id])}
-                      checked={checked}
-                      onChange={(value) => setAnswer(exercise.id, value)}
-                    />
-                  ) : (
-                    <>
-                      <div className="mb-3 flex items-start justify-between gap-3">
-                        <p className="text-sm font-semibold uppercase tracking-[0.2px] text-muted-foreground">
-                          {tPractice("questionLabel", { number: index + 1 })}
-                        </p>
-                        {checked ? (
-                          isCorrect ? (
-                            <CheckCircle2 className="size-5 text-[#4a6b0a]" />
-                          ) : (
-                            <XCircle className="size-5 text-destructive" />
-                          )
-                        ) : null}
-                      </div>
-                      <p className="font-heading text-lg font-medium text-ink sm:text-xl">
-                        {exercise.question}
-                      </p>
-                      <div className="mt-4">
-                        <MultipleChoicePrompt
-                          exercise={exercise}
-                          answer={
-                            typeof answers[exercise.id] === "string"
-                              ? String(answers[exercise.id])
-                              : null
-                          }
-                          checked={checked}
-                          onChange={(value) => setAnswer(exercise.id, value)}
-                        />
-                      </div>
-                      {checked && !isCorrect ? (
-                        <p className="mt-4 text-sm text-destructive">
-                          {tPractice("expected")}: {formatExpected(exercise)}
-                        </p>
-                      ) : null}
-                    </>
+                <button
+                  key={type}
+                  type="button"
+                  disabled={hasProAccess && isPending}
+                  aria-disabled={locked || undefined}
+                  onClick={() => chooseType(type)}
+                  className={cn(
+                    mx(exerciseStyles, "typeCard"),
+                    locked && lockedFeatureClassName,
                   )}
-                </section>
+                >
+                  <p className={mx(exerciseStyles, "typeCardTitle")}>
+                    {locked ? <Lock className="size-3.5" /> : null}
+                    {tTypes(type)}
+                  </p>
+                  <p className={mx(exerciseStyles, "typeCardBody")}>
+                    {type === "FILL_BLANK"
+                      ? t("fillBlankOverview")
+                      : tPractice("typeHintMc")}
+                  </p>
+                </button>
               );
             })}
           </div>
 
-          <div className="flex flex-wrap items-center justify-between gap-3 border-t border-hairline-cloud pt-4">
-            {checked ? (
-              <Button type="button" onClick={tryAgain}>
-                <RotateCcw className="size-4" />
-                {tPractice("tryAgain")}
-              </Button>
-            ) : (
+          {isPending ? (
+            <div className={mx(exerciseStyles, "status")} role="status">
+              <Loader2 className="size-4 animate-spin" />
+              {t("steps.generating")}
+            </div>
+          ) : null}
+        </section>
+      </div>
+    );
+  }
+
+  if (phase === "complete") {
+    return (
+      <div className={mx(exerciseStyles, "shell")}>
+        <div className={mx(exerciseStyles, "complete")}>
+          <p className={mx(exerciseStyles, "completeKicker")}>{t("title")}</p>
+          <h2 className={mx(exerciseStyles, "completeTitle")}>
+            {tPractice("completeTitle")}
+          </h2>
+          <p className={mx(exerciseStyles, "completeScore")}>
+            {tPractice("completeScore", {
+              correct: score.correctCount,
+              total: score.total,
+            })}
+          </p>
+          <p className={mx(exerciseStyles, "completePercent")}>
+            {tPractice("completePercent", { percent: score.percent })}
+          </p>
+
+          <div className={mx(exerciseStyles, "completeActions")}>
+            {mistakes.length > 0 ? (
               <Button
                 type="button"
-                className="ml-auto"
-                onClick={() => setChecked(true)}
-                disabled={!canCheck}
+                variant="outline"
+                onClick={() => setShowReview((value) => !value)}
               >
-                {tPractice("checkAnswers")}
+                {showReview ? tPractice("hideReview") : tPractice("review")}
               </Button>
-            )}
+            ) : null}
+            <Button type="button" onClick={tryAgain}>
+              <RotateCcw className="size-4" />
+              {tPractice("tryAgain")}
+            </Button>
+            <Button type="button" variant="outline" onClick={exitToLobby}>
+              {tPractice("changeType")}
+            </Button>
           </div>
-        </>
-      ) : null}
-    </div>
-  );
-}
+        </div>
 
-function FillBlankQuestion({
-  exercise,
-  answer,
-  checked,
-  onChange,
-}: {
-  exercise: ListeningExerciseClient;
-  answer: string[];
-  checked: boolean;
-  onChange: (value: string[]) => void;
-}) {
-  const t = useTranslations("listening.practice");
-  const data = fillBlankDataSchema.safeParse(exercise.data);
-  const speaker = data.success ? data.data.speaker : undefined;
-  const displayText = fillBlankDisplayText(exercise);
-  const blanks = asStringArray(exercise.correctAnswer);
-  const parts = displayText.split(/_{3,}/);
-  const blankResults = blanks.map((item, index) =>
-    listeningAnswersMatch(answer[index] ?? "", item),
-  );
+        {showReview && mistakes.length > 0 ? (
+          <div className={mx(exerciseStyles, "reviewList")} aria-live="polite">
+            {mistakes.map((item) => (
+              <article
+                key={item.exercise.id}
+                className={mx(exerciseStyles, "reviewItem")}
+              >
+                <p className={mx(exerciseStyles, "reviewPrompt")}>
+                  {isFillBlank
+                    ? t("fillBlankOverview")
+                    : item.exercise.question}
+                </p>
+                <p className={mx(exerciseStyles, "reviewMeta")}>
+                  {tPractice("yourAnswer")}: {item.given || "—"}
+                </p>
+                <p className={mx(exerciseStyles, "reviewMeta")}>
+                  {tPractice("expected")}: {item.expected}
+                </p>
+              </article>
+            ))}
+          </div>
+        ) : null}
 
-  function update(index: number, value: string) {
-    const next = blanks.map((_, blankIndex) => answer[blankIndex] ?? "");
-    next[index] = value;
-    onChange(next);
+        {media}
+      </div>
+    );
+  }
+
+  // active
+  if (!current || practiceExercises.length === 0) {
+    return (
+      <div className={mx(exerciseStyles, "shell")}>
+        <div className={mx(exerciseStyles, "status")} role="status">
+          {isPending ? (
+            <>
+              <Loader2 className="size-4 animate-spin" />
+              {t("steps.generating")}
+            </>
+          ) : (
+            t("chooseTypeHint")
+          )}
+        </div>
+        <Button type="button" variant="outline" onClick={exitToLobby}>
+          <ArrowLeft className="size-4" />
+          {tPractice("changeType")}
+        </Button>
+      </div>
+    );
   }
 
   return (
-    <div>
-      {speaker ? (
-        <p className="mb-2 text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground">
-          {speaker}
-        </p>
-      ) : null}
-      <div className="whitespace-pre-wrap text-base leading-[2.35] text-ink sm:text-lg">
-        {parts.map((part, index) => (
-          <span key={`${part}-${index}`}>
-            {part}
-            {index < blanks.length ? (
-              <span className="inline-flex flex-wrap items-baseline gap-1 align-baseline">
-                <Input
-                  value={answer[index] ?? ""}
-                  onChange={(event) => update(index, event.target.value)}
-                  disabled={checked}
-                  aria-label={t("blankLabel", { number: index + 1 })}
-                  style={{
-                    width: `${Math.min(22, Math.max(8, (blanks[index]?.length ?? 6) + 2))}ch`,
-                  }}
-                  className={cn(
-                    "mx-1 inline-flex h-9 max-w-[min(100%,18rem)] align-baseline",
-                    checked &&
-                    blankResults[index] &&
-                    "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a]",
-                    checked &&
-                    !blankResults[index] &&
-                    "border-destructive/40 bg-destructive/10 text-destructive",
-                  )}
-                />
-                {checked && !blankResults[index] ? (
-                  <span className="text-sm text-destructive">
-                    ({blanks[index]})
-                  </span>
-                ) : null}
-              </span>
-            ) : null}
-          </span>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function MultipleChoicePrompt({
-  exercise,
-  answer,
-  checked,
-  onChange,
-}: {
-  exercise: ListeningExerciseClient;
-  answer: string | null;
-  checked: boolean;
-  onChange: (value: string) => void;
-}) {
-  const data = multipleChoiceDataSchema.safeParse(exercise.data);
-  const options = data.success ? data.data.options : [];
-  const correct = String(exercise.correctAnswer ?? "");
-
-  return (
-    <div className="grid gap-2">
-      {options.map((option) => {
-        const selected = answer === option;
-        const isCorrect = option === correct;
-        return (
-          <button
-            key={option}
+    <div className={mx(exerciseStyles, "shell")}>
+      <header className={mx(exerciseStyles, "header")}>
+        <div className={mx(exerciseStyles, "headerMeta")}>
+          <p className={mx(exerciseStyles, "eyebrow")}>{t("title")}</p>
+          <p className={mx(exerciseStyles, "headerTitle")}>
+            {selectedType ? tTypes(selectedType) : t("exerciseTitle")}
+          </p>
+        </div>
+        <div className={mx(exerciseStyles, "headerActions")}>
+          <Button
             type="button"
-            disabled={checked}
-            onClick={() => onChange(option)}
-            className={cn(
-              "rounded-xl border px-4 py-3 text-left text-sm transition-colors sm:text-base",
-              selected && !checked && "border-accent-lime bg-accent-lime/20",
-              checked && isCorrect && "border-[#b8d96a] bg-[#f4fae0] text-[#4a6b0a]",
-              checked &&
-              selected &&
-              !isCorrect &&
-              "border-destructive/40 bg-destructive/10 text-destructive",
-              !selected &&
-              !checked &&
-              "border-hairline-cloud hover:border-accent-lime/50 hover:bg-muted/40",
-            )}
+            variant="outline"
+            size="sm"
+            className={mx(exerciseStyles, "exit")}
+            onClick={exitToLobby}
           >
-            {option}
-          </button>
-        );
-      })}
+            <ArrowLeft className="size-4" />
+            {tPractice("changeType")}
+          </Button>
+        </div>
+      </header>
+
+      <div className={mx(exerciseStyles, "progressBlock")}>
+        <div className={mx(exerciseStyles, "progressRow")}>
+          <p className={mx(exerciseStyles, "progressLabel")}>
+            {isFillBlank
+              ? t("fillBlankOverview")
+              : tPractice("questionLabel", { number: questionIndex + 1 })}
+          </p>
+          <p className={mx(exerciseStyles, "progressCount")}>{progressLabel}</p>
+        </div>
+        <div
+          className={mx(exerciseStyles, "progressTrack")}
+          role="progressbar"
+          aria-valuemin={0}
+          aria-valuemax={100}
+          aria-valuenow={Math.round(Math.min(1, progressRatio) * 100)}
+          aria-label={progressLabel}
+        >
+          <div
+            className={mx(exerciseStyles, "progressFill")}
+            style={{ width: `${Math.min(100, progressRatio * 100)}%` }}
+          />
+        </div>
+      </div>
+
+      {media}
+
+      <div className={mx(exerciseStyles, "stage")}>
+        <p className={mx(exerciseStyles, "instruction")}>
+          {tPractice("listenPrompt")}
+        </p>
+
+        <AnimatePresence mode="wait">
+          <motion.section
+            key={`${current.id}:${round}:${questionIndex}`}
+            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
+            transition={{ duration: reduceMotion ? 0 : 0.2, ease: EASE }}
+            className={mx(exerciseStyles, "questionPanel")}
+          >
+            {isFillBlank ? (
+              <ListeningFillBlankQuestion
+                exercise={current}
+                answer={asStringArray(answers[current.id])}
+                checked={checked}
+                onChange={(value) => setAnswer(current.id, value)}
+              />
+            ) : (
+              <ListeningMultipleChoiceQuestion
+                exercise={current}
+                index={questionIndex}
+                answer={
+                  typeof answers[current.id] === "string"
+                    ? String(answers[current.id])
+                    : null
+                }
+                checked={checked}
+                onChange={(value) => setAnswer(current.id, value)}
+              />
+            )}
+
+            {checked ? (
+              <ListeningExerciseFeedback
+                correct={currentCorrect}
+                userAnswer={
+                  isFillBlank
+                    ? asStringArray(answers[current.id]).join(" / ")
+                    : String(answers[current.id] ?? "")
+                }
+                expected={formatExpected(current)}
+              />
+            ) : null}
+          </motion.section>
+        </AnimatePresence>
+
+        <div className={mx(exerciseStyles, "actions")}>
+          {!checked ? (
+            <Button type="button" onClick={handleCheck} disabled={!canCheck}>
+              {tPractice("checkAnswers")}
+            </Button>
+          ) : (
+            <Button type="button" onClick={handleNext}>
+              {isFillBlank || questionIndex >= practiceExercises.length - 1
+                ? tPractice("finish")
+                : tPractice("next")}
+            </Button>
+          )}
+        </div>
+
+        {transcriptBlock}
+      </div>
     </div>
   );
 }

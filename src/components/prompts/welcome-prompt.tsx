@@ -1,6 +1,14 @@
 "use client";
 
-import { Sparkles } from "lucide-react";
+import {
+  BookOpen,
+  Dumbbell,
+  Languages,
+  MessageCircle,
+  PenLine,
+  Sparkles,
+  type LucideIcon,
+} from "lucide-react";
 import { useLocale, useTranslations } from "next-intl";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
@@ -8,10 +16,10 @@ import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
-  DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import promptStyles from "@/components/style/prompts/prompt.module.css";
+import { mx } from "@/lib/css-module";
 import { getPromptLanguageName } from "@/lib/prompts/language-name";
 import { resolveWelcomePrompt } from "@/lib/prompts/resolve";
 import {
@@ -20,9 +28,37 @@ import {
   shouldShowWelcomeModal,
 } from "@/lib/prompts/storage";
 import { getTimeOfDay } from "@/lib/prompts/time-of-day";
-import type { PromptDefinition } from "@/lib/prompts/types";
+import type {
+  PromptCategory,
+  PromptDefinition,
+  PromptType,
+} from "@/lib/prompts/types";
 
 const SHOW_DELAY_MS = 450;
+
+const TYPE_ICONS: Record<PromptType, LucideIcon> = {
+  greeting: Sparkles,
+  motivation: MessageCircle,
+  language: Languages,
+  activity: Dumbbell,
+};
+
+const CATEGORY_ACCENT: Record<PromptCategory, string> = {
+  greeting: "home",
+  motivation: "home",
+  language: "vocab",
+  vocabulary: "vocab",
+  writing: "writing",
+  theory: "theory",
+  exercise: "exercise",
+};
+
+const CATEGORY_ICONS: Partial<Record<PromptCategory, LucideIcon>> = {
+  vocabulary: Languages,
+  writing: PenLine,
+  theory: BookOpen,
+  exercise: Dumbbell,
+};
 
 type WelcomePromptModalProps = {
   hasWorkspace: boolean;
@@ -87,38 +123,53 @@ export function WelcomePromptModal({
   const message = prompt
     ? prompt.usesLanguage
       ? t.rich(prompt.message, {
-        lang: () => (
-          <span className="font-semibold text-ink">{language}</span>
-        ),
-      })
+          lang: () => (
+            <span className="font-semibold text-ink">{language}</span>
+          ),
+        })
       : t(prompt.message)
     : null;
+
+  const type = prompt?.type ?? "greeting";
+  const category = prompt?.category;
+  const accent = (category && CATEGORY_ACCENT[category]) || "home";
+  const Icon = (category && CATEGORY_ICONS[category]) || TYPE_ICONS[type];
+  const kicker = t(`titles.${type}`);
 
   return (
     <Dialog open={open} onOpenChange={(next) => !next && close()}>
       <DialogContent
         showCloseButton={false}
-        className="gap-5 sm:max-w-md sm:p-6"
+        data-prompt-accent={accent === "home" ? undefined : accent}
+        className={mx(promptStyles, "sheet sm:max-w-md")}
       >
-        <DialogHeader className="gap-3">
-          <div className="flex size-10 items-center justify-center rounded-sm bg-primary text-on-primary">
-            <Sparkles className="size-5" aria-hidden />
+        <div className={mx(promptStyles, "body")}>
+          <div className={mx(promptStyles, "mark")} aria-hidden>
+            <Icon className="size-3.5" />
+            <p className={mx(promptStyles, "kicker")}>{kicker}</p>
           </div>
-          <DialogTitle className="font-heading text-xl leading-snug sm:text-2xl">
-            {title}
-          </DialogTitle>
-          <DialogDescription className="text-sm leading-relaxed sm:text-base">
+          <DialogTitle className={mx(promptStyles, "title")}>{title}</DialogTitle>
+          <DialogDescription className={mx(promptStyles, "lede")}>
             {message}
           </DialogDescription>
-        </DialogHeader>
-        <DialogFooter className="-mx-4 -mb-4 flex-row justify-end gap-2 sm:-mx-6 sm:-mb-6">
-          <Button type="button" variant="outline" onClick={close}>
+        </div>
+        <div className={mx(promptStyles, "footer")}>
+          <Button
+            type="button"
+            variant="outline"
+            className={mx(promptStyles, "cancel")}
+            onClick={close}
+          >
             {t("skip")}
           </Button>
-          <Button type="button" onClick={close}>
+          <Button
+            type="button"
+            className={mx(promptStyles, "cta")}
+            onClick={close}
+          >
             {t("gotIt")}
           </Button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );

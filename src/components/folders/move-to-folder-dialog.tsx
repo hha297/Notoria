@@ -1,25 +1,29 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Folder, FolderOpen } from "lucide-react";
+import { Folder, FolderOpen, Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
   DialogContent,
   DialogDescription,
-  DialogFooter,
-  DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import moveStyles from "@/components/style/folders/move.module.css";
+import { mx } from "@/lib/css-module";
 import { childrenOf, wouldCreateCycle } from "@/lib/folders/tree";
-import type { FolderListItem, FolderMoveItemType } from "@/lib/folders/types";
-import { cn } from "@/lib/utils";
+import type {
+  FolderListItem,
+  FolderMoveItemType,
+  FolderSection,
+} from "@/lib/folders/types";
 
 type MoveToFolderDialogProps = {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   folders: FolderListItem[];
+  section: FolderSection;
   itemType: FolderMoveItemType;
   itemId: string;
   currentFolderId: string | null;
@@ -45,6 +49,7 @@ function FolderOption({
   const disabled = disabledIds.has(folder.id);
   const selected = selectedId === folder.id;
   const children = childrenOf(folders, folder.id);
+  const Icon = selected ? FolderOpen : Folder;
 
   return (
     <>
@@ -52,21 +57,12 @@ function FolderOption({
         type="button"
         disabled={disabled}
         onClick={() => onSelect(folder.id)}
-        className={cn(
-          "flex w-full items-center gap-2 rounded-md px-2 py-1.5 text-left text-sm",
-          disabled
-            ? "cursor-not-allowed text-muted-foreground/50"
-            : "cursor-pointer hover:bg-muted",
-          selected && !disabled && "bg-accent-lime/20 font-medium text-ink",
-        )}
-        style={{ paddingLeft: `${8 + depth * 16}px` }}
+        data-selected={selected && !disabled ? "true" : undefined}
+        className={mx(moveStyles, "option")}
+        style={{ paddingLeft: `${0.65 + depth * 0.85}rem` }}
       >
-        {selected ? (
-          <FolderOpen className="size-4 text-amber-500" />
-        ) : (
-          <Folder className="size-4 text-amber-500" />
-        )}
-        <span className="truncate">{folder.name}</span>
+        <Icon className={mx(moveStyles, "optionIcon size-4")} aria-hidden />
+        <span className={mx(moveStyles, "optionLabel")}>{folder.name}</span>
       </button>
       {children.map((child) => (
         <FolderOption
@@ -87,6 +83,7 @@ export function MoveToFolderDialog({
   open,
   onOpenChange,
   folders,
+  section,
   itemType,
   itemId,
   currentFolderId,
@@ -111,6 +108,7 @@ export function MoveToFolderDialog({
   }, [folders, itemId, itemType]);
 
   const roots = childrenOf(folders, null);
+  const unchanged = selectedId === currentFolderId;
 
   function handleOpenChange(next: boolean) {
     if (pending && !next) return;
@@ -120,39 +118,54 @@ export function MoveToFolderDialog({
 
   return (
     <Dialog open={open} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-md" showCloseButton={!pending}>
-        <DialogHeader>
-          <DialogTitle>{t("moveTitle")}</DialogTitle>
-          <DialogDescription>{t("moveDescription")}</DialogDescription>
-        </DialogHeader>
-        <div className="max-h-72 overflow-y-auto rounded-lg border border-hairline-cloud py-1">
-          <button
-            type="button"
-            onClick={() => setSelectedId(null)}
-            className={cn(
-              "flex w-full cursor-pointer items-center gap-2 px-2 py-1.5 text-left text-sm hover:bg-muted",
-              selectedId === null && "bg-accent-lime/20 font-medium text-ink",
-            )}
-          >
-            <FolderOpen className="size-4 text-amber-500" />
-            {t("root")}
-          </button>
-          {roots.map((folder) => (
-            <FolderOption
-              key={folder.id}
-              folders={folders}
-              folder={folder}
-              depth={1}
-              selectedId={selectedId}
-              disabledIds={disabledIds}
-              onSelect={setSelectedId}
-            />
-          ))}
+      <DialogContent
+        showCloseButton={!pending}
+        data-move-section={section}
+        className={mx(moveStyles, "sheet sm:max-w-md")}
+      >
+        <header className={mx(moveStyles, "header")}>
+          <p className={mx(moveStyles, "kicker")}>{t("move")}</p>
+          <DialogTitle className={mx(moveStyles, "title")}>
+            {t("moveTitle")}
+          </DialogTitle>
+          <DialogDescription className={mx(moveStyles, "lede")}>
+            {t("moveDescription")}
+          </DialogDescription>
+        </header>
+
+        <div className={mx(moveStyles, "body")}>
+          <div className={mx(moveStyles, "tree")} role="listbox">
+            <button
+              type="button"
+              onClick={() => setSelectedId(null)}
+              data-selected={selectedId === null ? "true" : undefined}
+              className={mx(moveStyles, "option")}
+            >
+              <FolderOpen
+                className={mx(moveStyles, "optionIcon size-4")}
+                aria-hidden
+              />
+              <span className={mx(moveStyles, "optionLabel")}>{t("root")}</span>
+            </button>
+            {roots.map((folder) => (
+              <FolderOption
+                key={folder.id}
+                folders={folders}
+                folder={folder}
+                depth={1}
+                selectedId={selectedId}
+                disabledIds={disabledIds}
+                onSelect={setSelectedId}
+              />
+            ))}
+          </div>
         </div>
-        <DialogFooter>
+
+        <div className={mx(moveStyles, "footer")}>
           <Button
             type="button"
             variant="outline"
+            className={mx(moveStyles, "cancel")}
             onClick={() => onOpenChange(false)}
             disabled={pending}
           >
@@ -160,12 +173,16 @@ export function MoveToFolderDialog({
           </Button>
           <Button
             type="button"
+            className={mx(moveStyles, "cta")}
             onClick={() => onMove(selectedId)}
-            disabled={pending || selectedId === currentFolderId}
+            disabled={pending || unchanged}
           >
+            {pending ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : null}
             {t("moveHere")}
           </Button>
-        </DialogFooter>
+        </div>
       </DialogContent>
     </Dialog>
   );

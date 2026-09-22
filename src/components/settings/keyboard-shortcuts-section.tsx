@@ -139,11 +139,11 @@ export function KeyboardShortcutsSection() {
     setPreview(
       nextDraft
         ? {
-            mod: nextDraft.mod,
-            shift: nextDraft.shift,
-            alt: nextDraft.alt,
-            key: nextDraft.key,
-          }
+          mod: nextDraft.mod,
+          shift: nextDraft.shift,
+          alt: nextDraft.alt,
+          key: nextDraft.key,
+        }
         : null,
     );
     setBlocked(nextDraft ? isBlockedChord(nextDraft) : false);
@@ -431,8 +431,8 @@ export function KeyboardShortcutsSection() {
                 ? t("shortcuts.addTitle")
                 : editorActionId
                   ? t("shortcuts.editTitle", {
-                      action: t(`shortcuts.actions.${editorActionId}`),
-                    })
+                    action: t(`shortcuts.actions.${editorActionId}`),
+                  })
                   : t("shortcuts.edit")}
             </DialogTitle>
             <DialogDescription>

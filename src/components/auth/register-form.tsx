@@ -260,6 +260,13 @@ export function RegisterForm({
           </Link>
         </p>
       </form>
+
+      <p className={mx(styles, "auth-agreement")}>
+        {t.rich("registerAgreement", {
+          terms: (chunks) => <Link href="/terms">{chunks}</Link>,
+          privacy: (chunks) => <Link href="/privacy">{chunks}</Link>,
+        })}
+      </p>
     </div>
   );
 }

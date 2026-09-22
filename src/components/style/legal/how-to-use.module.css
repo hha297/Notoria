@@ -1,0 +1,231 @@
+.guide {
+  gap: 2.35rem;
+}
+
+.guide section {
+  gap: 0.85rem;
+}
+
+.guide h2 {
+  margin-bottom: 0.1rem;
+  font-size: clamp(1.2rem, 2.5vw, 1.36rem);
+  letter-spacing: -0.025em;
+}
+
+.guide p {
+  max-width: 40rem;
+  font-size: 1.02rem;
+  line-height: 1.72;
+  color: color-mix(in oklab, var(--ink) 92%, var(--muted-foreground));
+}
+
+.guide .guide-beat {
+  margin-top: 0.4rem;
+  max-width: 34rem;
+  padding: 0.8rem 0 0.8rem 1rem;
+  border-left: 2px solid
+    color-mix(in oklab, var(--module-home-fg) 42%, var(--hairline-cloud));
+  font-family: var(--font-heading);
+  font-size: clamp(1.04rem, 2.1vw, 1.16rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.guide-loop,
+.guide-steps {
+  list-style: none;
+  margin: 0.35rem 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  max-width: 42rem;
+}
+
+.guide-loop-item,
+.guide-step {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 0.85rem;
+  align-items: start;
+  margin: 0;
+  padding: 0.85rem 0.95rem;
+  border-radius: 0.8rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 14%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--surface-elevated) 48%, transparent);
+}
+
+.guide-loop-index,
+.guide-step-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.85rem;
+  height: 1.85rem;
+  margin-top: 0.1rem;
+  border-radius: 0.5rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 20%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-home-bg) 30%, transparent);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: color-mix(in oklab, var(--module-home-fg) 78%, var(--muted-foreground));
+}
+
+.guide-loop-label,
+.guide-step-title {
+  margin: 0;
+  font-size: 0.98rem;
+  font-weight: 650;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+}
+
+.guide .guide-loop-body,
+.guide .guide-step-body {
+  margin: 0.25rem 0 0;
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+  max-width: none;
+}
+
+.guide-areas {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.7rem;
+  margin-top: 0.25rem;
+}
+
+.guide-area {
+  padding: 0.95rem 1rem;
+  border-radius: 0.8rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 14%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--area-tint, var(--module-home-bg)) 28%, transparent),
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 45%, transparent);
+}
+
+.guide-area[data-area="vocab"] {
+  --area-tint: var(--module-vocab-bg);
+}
+
+.guide-area[data-area="theory"] {
+  --area-tint: var(--module-theory-bg);
+}
+
+.guide-area[data-area="exercises"] {
+  --area-tint: var(--module-exercise-bg);
+}
+
+.guide-area[data-area="writing"] {
+  --area-tint: var(--module-writing-bg);
+}
+
+.guide-area[data-area="listening"] {
+  --area-tint: var(--module-listen-bg);
+}
+
+.guide-area[data-area="speaking"] {
+  --area-tint: var(--module-speak-bg);
+}
+
+.guide-area-title {
+  margin: 0 0 0.35rem;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.guide .guide-area-body {
+  margin: 0;
+  font-size: 0.94rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+  max-width: none;
+}
+
+.guide-cta {
+  margin-top: 0.35rem;
+  padding: 1.15rem 1.1rem 1.25rem;
+  border-radius: 0.9rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 18%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-home-bg) 34%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 55%, transparent);
+}
+
+.guide-cta-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.35rem;
+}
+
+.guide-cta-link {
+  text-decoration: none;
+}
+
+.guide a.guide-cta-primary {
+  color: var(--primary-foreground);
+}
+
+.guide a.guide-cta-primary:hover {
+  color: var(--primary-foreground);
+  text-decoration: none;
+}
+
+.guide a.guide-cta-secondary {
+  color: var(--ink);
+}
+
+.guide a.guide-cta-secondary:hover {
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.guide .guide-cta-note {
+  margin-top: 0.55rem;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+.guide-cta-note a {
+  color: var(--link);
+  font-weight: 600;
+}
+
+@media (min-width: 640px) {
+  .guide {
+    gap: 2.7rem;
+  }
+
+  .guide .guide-beat {
+    padding-left: 1.15rem;
+  }
+
+  .guide-areas {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .guide-cta {
+    padding: 1.35rem 1.35rem 1.45rem;
+  }
+}

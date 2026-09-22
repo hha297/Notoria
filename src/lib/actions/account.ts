@@ -43,6 +43,10 @@ const updatePasswordSchema = z
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: "PASSWORD_MISMATCH",
     path: ["confirmPassword"],
+  })
+  .refine((data) => data.newPassword !== data.currentPassword, {
+    message: "SAME_AS_CURRENT",
+    path: ["newPassword"],
   });
 
 const updateNameSchema = z.object({
@@ -81,10 +85,41 @@ export async function getAccountUser() {
   };
 }
 
+export async function verifyCurrentPassword(currentPassword: string) {
+  const password = currentPassword.trim();
+  if (!password) {
+    return { valid: false as const };
+  }
+
+  const userId = await getCurrentUserId();
+  const user = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+    columns: { passwordHash: true },
+  });
+
+  if (!user?.passwordHash) {
+    throw new Error("PASSWORD_NOT_SET");
+  }
+
+  const valid = await compare(password, user.passwordHash);
+  return { valid };
+}
+
 export async function updatePassword(
   data: z.infer<typeof updatePasswordSchema>,
 ) {
-  const parsed = updatePasswordSchema.parse(data);
+  const parsed = updatePasswordSchema.safeParse(data);
+  if (!parsed.success) {
+    const messages = parsed.error.issues.map((issue) => issue.message);
+    if (messages.includes("PASSWORD_MISMATCH")) {
+      throw new Error("PASSWORD_MISMATCH");
+    }
+    if (messages.includes("SAME_AS_CURRENT")) {
+      throw new Error("SAME_AS_CURRENT");
+    }
+    throw new Error("INVALID_PASSWORD");
+  }
+
   const userId = await getCurrentUserId();
 
   const user = await db.query.users.findFirst({
@@ -99,13 +134,18 @@ export async function updatePassword(
     throw new Error("PASSWORD_NOT_SET");
   }
 
-  const valid = await compare(parsed.currentPassword, user.passwordHash);
+  const valid = await compare(parsed.data.currentPassword, user.passwordHash);
 
   if (!valid) {
     throw new Error("INVALID_CURRENT_PASSWORD");
   }
 
-  const passwordHash = await hash(parsed.newPassword, 12);
+  const sameAsCurrent = await compare(parsed.data.newPassword, user.passwordHash);
+  if (sameAsCurrent) {
+    throw new Error("SAME_AS_CURRENT");
+  }
+
+  const passwordHash = await hash(parsed.data.newPassword, 12);
 
   await db
     .update(users)

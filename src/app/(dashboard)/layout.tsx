@@ -1,7 +1,9 @@
+import type { Metadata } from "next";
 import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { DashboardDocumentTitle } from "@/components/layout/dashboard-document-title";
 import { DashboardStudio } from "@/components/layout/dashboard-studio";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { WorkspaceOnboardingGate } from "@/components/onboarding/workspace-onboarding-gate";
 import { WelcomePromptModal } from "@/components/prompts/welcome-prompt";
 import { ProAccessProvider } from "@/components/billing/pro-access-provider";
@@ -19,6 +21,13 @@ import { createPerfTimer } from "@/lib/perf/dev-timing";
 import { getUserWorkspaces, getActiveWorkspace } from "@/lib/workspace";
 
 export const preferredRegion = ["fra1"];
+
+/** Escape root SEO title; DashboardDocumentTitle owns tab labels. */
+export const metadata: Metadata = {
+  title: {
+    absolute: "Notoria",
+  },
+};
 
 export default async function DashboardLayout({
   children,
@@ -60,6 +69,7 @@ export default async function DashboardLayout({
         userEmail={session?.user?.email ?? ""}
         userImage={session?.user?.image}
         isPro={hasActiveProSubscription(subscription)}
+        footer={<SiteFooter variant="app" />}
       >
         <WelcomePromptModal
           hasWorkspace={Boolean(activeWorkspace)}

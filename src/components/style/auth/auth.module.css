@@ -16,6 +16,27 @@
   padding: 1.5rem 1rem 2rem;
 }
 
+.auth-atelier-shell-footer {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 2rem 0 0;
+}
+
+.auth-atelier-shell-footer .auth-atelier {
+  width: min(100%, 26.5rem);
+  margin-inline: auto;
+  padding-inline: 1rem;
+  flex: 1 1 auto;
+}
+
+.auth-site-footer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin-top: 2.75rem;
+}
+
 .auth-atelier-shell::before {
   content: "";
   position: absolute;
@@ -303,6 +324,49 @@
   outline: none;
   border-radius: 0.25rem;
   box-shadow: 0 0 0 2px color-mix(in oklab, var(--ring) 55%, transparent);
+}
+
+.auth-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem 0.45rem;
+  padding-top: 0.15rem;
+  font-size: 0.84rem;
+  color: var(--muted-foreground);
+}
+
+.auth-legal-sep {
+  opacity: 0.55;
+}
+
+.auth-legal-link {
+  font-weight: 600;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 140ms ease;
+}
+
+.auth-legal-link:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.auth-agreement {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+  text-align: center;
+}
+
+.auth-agreement a {
+  font-weight: 650;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 .auth-forgot-link {

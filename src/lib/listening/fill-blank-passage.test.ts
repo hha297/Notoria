@@ -38,7 +38,7 @@ describe("mergeFillBlankQuestions", () => {
         },
       ]),
     ).toEqual({
-      sentenceWithBlanks: "Matti: Minun mielestäni ______. Anna: On ______.",
+      sentenceWithBlanks: "Matti: Minun mielestäni ______.\nAnna: On ______.",
       blanks: ["kaikilla", "tärkeää"],
       speaker: undefined,
     });

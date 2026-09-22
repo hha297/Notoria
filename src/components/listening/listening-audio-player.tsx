@@ -1,10 +1,9 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { Pause, Play, RotateCcw } from "lucide-react";
+import { Pause, Play, RotateCcw, Volume2, VolumeX } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { Button } from "@/components/ui/button";
-import featureStyles from "@/components/style/speaking/session.module.css";
+import playerStyles from "@/components/style/listening/audio-player.module.css";
 import { mx } from "@/lib/css-module";
 import { formatListeningDuration } from "@/lib/listening/utils";
 import { cn } from "@/lib/utils";
@@ -14,6 +13,7 @@ type ListeningAudioPlayerProps = {
   mediaType?: string | null;
   className?: string;
   compact?: boolean;
+  label?: string;
   seekRequest?: { ms: number; nonce: number } | null;
 };
 
@@ -22,6 +22,7 @@ export function ListeningAudioPlayer({
   mediaType,
   className,
   compact = false,
+  label,
   seekRequest = null,
 }: ListeningAudioPlayerProps) {
   const t = useTranslations("listening.player");
@@ -29,6 +30,9 @@ export function ListeningAudioPlayer({
   const [playing, setPlaying] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
+  const [volume, setVolume] = useState(1);
+  const [muted, setMuted] = useState(false);
+  const [failed, setFailed] = useState(false);
   const isVideo = mediaType === "video";
 
   useEffect(() => {
@@ -40,12 +44,14 @@ export function ListeningAudioPlayer({
     const onEnded = () => setPlaying(false);
     const onPlay = () => setPlaying(true);
     const onPause = () => setPlaying(false);
+    const onError = () => setFailed(true);
 
     media.addEventListener("timeupdate", onTime);
     media.addEventListener("loadedmetadata", onDuration);
     media.addEventListener("ended", onEnded);
     media.addEventListener("play", onPlay);
     media.addEventListener("pause", onPause);
+    media.addEventListener("error", onError);
 
     return () => {
       media.removeEventListener("timeupdate", onTime);
@@ -53,6 +59,7 @@ export function ListeningAudioPlayer({
       media.removeEventListener("ended", onEnded);
       media.removeEventListener("play", onPlay);
       media.removeEventListener("pause", onPause);
+      media.removeEventListener("error", onError);
     };
   }, [src]);
 
@@ -60,14 +67,21 @@ export function ListeningAudioPlayer({
     const media = mediaRef.current;
     if (!media || !seekRequest) return;
     media.currentTime = Math.max(0, seekRequest.ms / 1000);
-    void media.play();
+    void media.play().catch(() => setFailed(true));
   }, [seekRequest]);
+
+  useEffect(() => {
+    const media = mediaRef.current;
+    if (!media) return;
+    media.volume = muted ? 0 : volume;
+    media.muted = muted;
+  }, [muted, volume]);
 
   function togglePlay() {
     const media = mediaRef.current;
     if (!media) return;
     if (media.paused) {
-      void media.play();
+      void media.play().catch(() => setFailed(true));
     } else {
       media.pause();
     }
@@ -77,7 +91,7 @@ export function ListeningAudioPlayer({
     const media = mediaRef.current;
     if (!media) return;
     media.currentTime = 0;
-    void media.play();
+    void media.play().catch(() => setFailed(true));
   }
 
   function seek(value: number) {
@@ -88,18 +102,22 @@ export function ListeningAudioPlayer({
   }
 
   const progress = duration > 0 ? (currentTime / duration) * 100 : 0;
+  const remaining = Math.max(0, duration - currentTime);
 
   return (
     <div
-      className={mx(featureStyles, "listening-media-deck", className)}
+      className={cn(mx(playerStyles, "player"), className)}
+      data-compact={compact ? "true" : "false"}
     >
+      {label ? <p className={mx(playerStyles, "label")}>{label}</p> : null}
+
       {isVideo ? (
         <video
           ref={(node) => {
             mediaRef.current = node;
           }}
           src={src}
-          className="mb-4 max-h-64 w-full rounded-xl bg-ink object-contain"
+          className="max-h-56 w-full rounded-xl bg-ink object-contain"
           playsInline
         />
       ) : (
@@ -112,25 +130,25 @@ export function ListeningAudioPlayer({
         />
       )}
 
-      <div className={cn("flex items-center gap-3", compact && "gap-2")}>
-        <Button
+      <div className={mx(playerStyles, "row")}>
+        <button
           type="button"
-          size="icon"
+          className={mx(playerStyles, "play")}
+          data-compact={compact ? "true" : "false"}
           onClick={togglePlay}
           aria-label={playing ? t("pause") : t("play")}
         >
           {playing ? <Pause className="size-4" /> : <Play className="size-4" />}
-        </Button>
-        <Button
+        </button>
+        <button
           type="button"
-          size="icon"
-          variant="outline"
+          className={mx(playerStyles, "ghost")}
           onClick={replay}
           aria-label={t("replay")}
         >
           <RotateCcw className="size-4" />
-        </Button>
-        <div className="min-w-0 flex-1">
+        </button>
+        <div className={mx(playerStyles, "seekBlock")}>
           <input
             type="range"
             min={0}
@@ -138,18 +156,61 @@ export function ListeningAudioPlayer({
             step={0.1}
             value={currentTime}
             onChange={(event) => seek(Number(event.target.value))}
-            className="h-2 w-full cursor-pointer appearance-none rounded-full bg-muted accent-[var(--accent-lime,#c6e35b)]"
+            className={mx(playerStyles, "seek")}
             style={{
-              background: `linear-gradient(to right, var(--accent-lime, #c6e35b) ${progress}%, var(--muted) ${progress}%)`,
+              background: `linear-gradient(to right, var(--primary) ${progress}%, var(--muted) ${progress}%)`,
             }}
             aria-label={t("seek")}
+            aria-valuemin={0}
+            aria-valuemax={Math.round(duration)}
+            aria-valuenow={Math.round(currentTime)}
           />
-          <div className="mt-1 flex justify-between text-xs text-muted-foreground">
+          <div className={mx(playerStyles, "times")}>
             <span>{formatListeningDuration(currentTime) ?? "00:00"}</span>
-            <span>{formatListeningDuration(duration) ?? "00:00"}</span>
+            <span>
+              -{formatListeningDuration(remaining) ?? "00:00"}
+            </span>
           </div>
         </div>
       </div>
+
+      <div className={mx(playerStyles, "tools")}>
+        <div className={mx(playerStyles, "volume")}>
+          <button
+            type="button"
+            className={mx(playerStyles, "ghost")}
+            style={{ width: "2rem", height: "2rem" }}
+            onClick={() => setMuted((value) => !value)}
+            aria-label={muted || volume === 0 ? t("unmute") : t("mute")}
+          >
+            {muted || volume === 0 ? (
+              <VolumeX className="size-3.5 text-muted-foreground" />
+            ) : (
+              <Volume2 className="size-3.5 text-muted-foreground" />
+            )}
+          </button>
+          <input
+            type="range"
+            min={0}
+            max={1}
+            step={0.05}
+            value={muted ? 0 : volume}
+            onChange={(event) => {
+              const next = Number(event.target.value);
+              setVolume(next);
+              setMuted(next === 0);
+            }}
+            className={mx(playerStyles, "volumeSeek")}
+            aria-label={t("volume")}
+          />
+        </div>
+      </div>
+
+      {failed ? (
+        <p className={mx(playerStyles, "error")} role="alert">
+          {t("loadError")}
+        </p>
+      ) : null}
     </div>
   );
 }

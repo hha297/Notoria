@@ -204,8 +204,8 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
               const detail = ready
                 ? t("exerciseCount", { count: item.exerciseCount })
                 : failed &&
-                    item.errorCode &&
-                    isExerciseImportErrorCode(item.errorCode)
+                  item.errorCode &&
+                  isExerciseImportErrorCode(item.errorCode)
                   ? t(`errors.${item.errorCode}`)
                   : incomplete
                     ? t("errors.GENERATION_FAILED")

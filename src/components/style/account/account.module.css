@@ -109,6 +109,13 @@
   color: var(--muted-foreground);
 }
 
+.account-field-error {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--destructive);
+}
+
 .account-pro-body {
   display: flex;
   flex-direction: column;

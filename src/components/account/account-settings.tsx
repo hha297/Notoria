@@ -2,11 +2,12 @@
 
 import styles from "@/components/style/account/account.module.css";
 import { mx } from "@/lib/css-module";
-import { useRef, useState, useTransition } from "react";
+import { useEffect, useMemo, useRef, useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { Loader2, Trash2, Upload } from "lucide-react";
+import { Loader2, Trash2, Upload, Download } from "lucide-react";
 import { toast } from "sonner";
 import { DeleteAccountDialog } from "@/components/account/delete-account-dialog";
 import { ProSubscriptionCard } from "@/components/account/pro-subscription-card";
@@ -20,8 +21,12 @@ import {
   updateName,
   updatePassword,
   uploadAvatar,
+  verifyCurrentPassword,
 } from "@/lib/actions/account";
+import { downloadAccountBackupJson } from "@/lib/account/download-backup";
 import type { BillingState } from "@/lib/stripe/types";
+
+const CURRENT_PASSWORD_DEBOUNCE_MS = 450;
 
 type AccountSettingsProps = {
   user: {
@@ -40,6 +45,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
   const { update } = useSession();
   const t = useTranslations("account");
   const tAuth = useTranslations("auth");
+  const tLegal = useTranslations("legal");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState(user.image);
   const [name, setName] = useState(user.name);
@@ -47,10 +53,84 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
   const [isAvatarPending, startAvatarTransition] = useTransition();
   const [isProfilePending, startProfileTransition] = useTransition();
   const [isPasswordPending, startPasswordTransition] = useTransition();
+  const [isBackupPending, startBackupTransition] = useTransition();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [currentPasswordError, setCurrentPasswordError] = useState<string | null>(
+    null,
+  );
+  const [currentPasswordOk, setCurrentPasswordOk] = useState(false);
+  const [isVerifyingCurrent, setIsVerifyingCurrent] = useState(false);
+  const verifyRequestId = useRef(0);
+
+  const newPasswordError = useMemo(() => {
+    if (!newPassword) return null;
+    if (newPassword.length < 8) return tAuth("passwordTooShort");
+    if (currentPassword && newPassword === currentPassword) {
+      return tAuth("passwordSameAsCurrent");
+    }
+    return null;
+  }, [currentPassword, newPassword, tAuth]);
+
+  const confirmPasswordError = useMemo(() => {
+    if (!confirmPassword) return null;
+    if (confirmPassword !== newPassword) return tAuth("passwordMismatch");
+    return null;
+  }, [confirmPassword, newPassword, tAuth]);
+
+  useEffect(() => {
+    if (!currentPassword) {
+      setCurrentPasswordError(null);
+      setCurrentPasswordOk(false);
+      setIsVerifyingCurrent(false);
+      return;
+    }
+
+    setCurrentPasswordOk(false);
+    setCurrentPasswordError(null);
+    setIsVerifyingCurrent(true);
+    const requestId = ++verifyRequestId.current;
+
+    const timer = window.setTimeout(() => {
+      void (async () => {
+        try {
+          const result = await verifyCurrentPassword(currentPassword);
+          if (requestId !== verifyRequestId.current) return;
+          if (result.valid) {
+            setCurrentPasswordOk(true);
+            setCurrentPasswordError(null);
+          } else {
+            setCurrentPasswordOk(false);
+            setCurrentPasswordError(tAuth("invalidCurrentPassword"));
+          }
+        } catch {
+          if (requestId !== verifyRequestId.current) return;
+          setCurrentPasswordOk(false);
+          setCurrentPasswordError(tAuth("invalidCurrentPassword"));
+        } finally {
+          if (requestId === verifyRequestId.current) {
+            setIsVerifyingCurrent(false);
+          }
+        }
+      })();
+    }, CURRENT_PASSWORD_DEBOUNCE_MS);
+
+    return () => {
+      window.clearTimeout(timer);
+    };
+  }, [currentPassword, tAuth]);
+
+  const passwordFormInvalid =
+    !currentPassword ||
+    !newPassword ||
+    !confirmPassword ||
+    Boolean(newPasswordError) ||
+    Boolean(confirmPasswordError) ||
+    Boolean(currentPasswordError) ||
+    !currentPasswordOk ||
+    isVerifyingCurrent;
 
   function handleAvatarError(error: unknown) {
     const code = error instanceof Error ? error.message : "GENERIC";
@@ -140,11 +220,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
 
   function handlePasswordSubmit(event: React.FormEvent<HTMLFormElement>) {
     event.preventDefault();
-
-    if (newPassword !== confirmPassword) {
-      toast.error(tAuth("passwordMismatch"));
-      return;
-    }
+    if (passwordFormInvalid) return;
 
     startPasswordTransition(async () => {
       try {
@@ -156,16 +232,42 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
         setCurrentPassword("");
         setNewPassword("");
         setConfirmPassword("");
+        setCurrentPasswordError(null);
+        setCurrentPasswordOk(false);
         toast.success(tAuth("passwordUpdated"));
       } catch (error) {
         const code = error instanceof Error ? error.message : "GENERIC";
 
         if (code === "INVALID_CURRENT_PASSWORD") {
-          toast.error(tAuth("invalidCurrentPassword"));
+          setCurrentPasswordOk(false);
+          setCurrentPasswordError(tAuth("invalidCurrentPassword"));
+          return;
+        }
+
+        if (code === "SAME_AS_CURRENT") {
+          toast.error(tAuth("passwordSameAsCurrent"));
+          return;
+        }
+
+        if (code === "PASSWORD_MISMATCH") {
+          toast.error(tAuth("passwordMismatch"));
           return;
         }
 
         toast.error(tAuth("passwordUpdateFailed"));
+      }
+    });
+  }
+
+  function handleExportBackup() {
+    startBackupTransition(async () => {
+      try {
+        await downloadAccountBackupJson({
+          success: t("data.exportDone"),
+          failed: t("data.exportFailed"),
+        });
+      } catch {
+        // Toast already handled in downloadAccountBackupJson.
       }
     });
   }
@@ -211,7 +313,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
               {image ? (
                 <Button
                   type="button"
-                  variant="ghost"
+                  variant="destructive"
                   disabled={isAvatarPending}
                   onClick={handleRemoveAvatar}
                 >
@@ -275,7 +377,17 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                   onChange={(event) => setCurrentPassword(event.target.value)}
                   required
                   className={mx(styles, "account-input")}
+                  aria-invalid={currentPasswordError ? true : undefined}
                 />
+                {currentPasswordError ? (
+                  <p className={mx(styles, "account-field-error")} role="alert">
+                    {currentPasswordError}
+                  </p>
+                ) : isVerifyingCurrent && currentPassword ? (
+                  <p className={mx(styles, "account-field-hint")}>
+                    {tAuth("verifyingPassword")}
+                  </p>
+                ) : null}
               </div>
               <div className={mx(styles, "account-field")}>
                 <Label htmlFor="new-password" className={mx(styles, "account-label")}>
@@ -287,8 +399,16 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                   value={newPassword}
                   onChange={(event) => setNewPassword(event.target.value)}
                   required
+                  minLength={8}
+                  maxLength={128}
                   className={mx(styles, "account-input")}
+                  aria-invalid={newPasswordError ? true : undefined}
                 />
+                {newPasswordError ? (
+                  <p className={mx(styles, "account-field-error")} role="alert">
+                    {newPasswordError}
+                  </p>
+                ) : null}
               </div>
               <div className={mx(styles, "account-field")}>
                 <Label htmlFor="confirm-password" className={mx(styles, "account-label")}>
@@ -300,18 +420,24 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
                   value={confirmPassword}
                   onChange={(event) => setConfirmPassword(event.target.value)}
                   required
+                  minLength={8}
+                  maxLength={128}
                   className={mx(styles, "account-input")}
+                  aria-invalid={confirmPasswordError ? true : undefined}
                 />
+                {confirmPasswordError ? (
+                  <p className={mx(styles, "account-field-error")} role="alert">
+                    {confirmPasswordError}
+                  </p>
+                ) : (
+                  <p className={mx(styles, "account-field-hint")}>
+                    {tAuth("passwordHint")}
+                  </p>
+                )}
               </div>
-              <p className={mx(styles, "account-field-hint")}>{tAuth("passwordHint")}</p>
               <Button
                 type="submit"
-                disabled={
-                  isPasswordPending ||
-                  !currentPassword ||
-                  !newPassword ||
-                  !confirmPassword
-                }
+                disabled={isPasswordPending || passwordFormInvalid}
               >
                 {isPasswordPending ? (
                   <Loader2 className="size-4 animate-spin" />
@@ -323,6 +449,34 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
         </section>
       ) : null}
 
+      <section className={mx(styles, "account-panel")}>
+        <header className={mx(styles, "account-panel-head")}>
+          <h2 className={mx(styles, "account-panel-title")}>{t("data.title")}</h2>
+          <p className={mx(styles, "account-panel-lede")}>{t("data.description")}</p>
+        </header>
+        <div className={mx(styles, "account-panel-body account-danger-row")}>
+          <div className={mx(styles, "account-danger-copy")}>
+            <p className={mx(styles, "account-danger-title")}>{t("data.exportTitle")}</p>
+            <p className={mx(styles, "account-danger-hint")}>{t("data.exportHint")}</p>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="route-quiet-action shrink-0"
+            data-route-action="account"
+            disabled={isBackupPending}
+            onClick={handleExportBackup}
+          >
+            {isBackupPending ? (
+              <Loader2 className="size-4 animate-spin" />
+            ) : (
+              <Download className="size-4" />
+            )}
+            {t("data.exportAction")}
+          </Button>
+        </div>
+      </section>
+
       <section className={mx(styles, "account-panel account-panel-danger")}>
         <header className={mx(styles, "account-panel-head")}>
           <h2 className={mx(styles, "account-panel-title")}>{t("danger.title")}</h2>
@@ -331,7 +485,16 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
         <div className={mx(styles, "account-panel-body account-danger-row")}>
           <div className={mx(styles, "account-danger-copy")}>
             <p className={mx(styles, "account-danger-title")}>{t("danger.deleteTitle")}</p>
-            <p className={mx(styles, "account-danger-hint")}>{t("danger.deleteHint")}</p>
+            <p className={mx(styles, "account-danger-hint")}>
+              {t("danger.deleteHint")}{" "}
+              <Link href="/privacy" className="font-semibold underline underline-offset-2">
+                {tLegal("privacyShort")}
+              </Link>
+              {" · "}
+              <Link href="/terms" className="font-semibold underline underline-offset-2">
+                {tLegal("termsShort")}
+              </Link>
+            </p>
           </div>
           <Button
             type="button"

@@ -13,9 +13,10 @@ import { DescriptionContent } from "@/components/form/description-content";
 import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
 import { TheoryExportDialog } from "@/components/theory/export-dialog";
 import { Button } from "@/components/ui/button";
-import { LinkButton } from "@/components/ui/link-button";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
+import detailStyles from "@/components/style/workspace/detail.module.css";
 import { deleteTheoryNote } from "@/lib/actions/theory";
+import { mx } from "@/lib/css-module";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
 import {
   estimateReadingMinutes,
@@ -86,78 +87,87 @@ export function TheoryReader({
   }
 
   return (
-    <div className="writing-paper theory-paper" data-theory-category={parsed.category || undefined}>
-      <div className="writing-paper-chrome">
-        <Link href={backHref} className="writing-back">
-          <ArrowLeft className="size-4" />
-          {t("backToList")}
-        </Link>
-        <div className="writing-paper-actions">
-          <LockedFeatureButton
-            type="button"
-            variant="outline"
-            size="lg"
-            icon={<Download className="size-4" />}
-            onClick={() => setExportOpen(true)}
-            disabled={!canExport}
-            title={canExport ? undefined : t("export.empty")}
-            className="route-quiet-action h-11 w-full sm:h-9 sm:w-auto"
-            data-route-action="theory"
+    <div
+      className="writing-paper theory-paper theory-atelier"
+      data-theory-category={parsed.category || undefined}
+    >
+      <div className={mx(detailStyles, "shell")} data-detail="theory">
+        <header className={mx(detailStyles, "header")}>
+          <Link
+            href={backHref}
+            className={mx(detailStyles, "back writing-back")}
           >
-            {t("export.button")}
-          </LockedFeatureButton>
-          <LinkButton
-            href={`/theory/${id}/edit`}
-            size="lg"
-            className="h-11 w-full sm:h-9 sm:w-auto"
-          >
-            <Pencil className="size-4" />
-            {t("edit")}
-          </LinkButton>
-          <Button
-            type="button"
-            variant="outline"
-            size="lg"
-            onClick={() => setDeleteOpen(true)}
-            className="h-11 w-full sm:h-9 sm:w-auto"
-          >
-            <Trash2 className="size-4" />
-            {tCommon("delete")}
-          </Button>
-        </div>
-      </div>
+            <ArrowLeft className="size-4 shrink-0" />
+            {t("backToList")}
+          </Link>
+          <div className={mx(detailStyles, "actions")}>
+            <LockedFeatureButton
+              type="button"
+              variant="outline"
+              icon={<Download className="size-4" />}
+              onClick={() => setExportOpen(true)}
+              disabled={!canExport}
+              title={canExport ? undefined : t("export.empty")}
+              className="route-quiet-action"
+              data-route-action="theory"
+            >
+              {t("export.button")}
+            </LockedFeatureButton>
+            <Button
+              type="button"
+              variant="destructive"
+              onClick={() => setDeleteOpen(true)}
+              disabled={isPending}
+            >
+              <Trash2 className="size-4" />
+              {tCommon("delete")}
+            </Button>
+          </div>
+        </header>
 
-      <article
-        className="writing-paper-page"
-        data-theory="note"
-        data-theory-category={parsed.category || undefined}
-      >
-        <p className="writing-kicker">{categoryLabel}</p>
-        <h1 className="writing-paper-title wrap-break-word">{title}</h1>
-        <p className="writing-kind-facts">
-          <span className="inline-flex items-center gap-1">
-            <Clock className="size-3.5" aria-hidden="true" />
-            {t("readingTime", { minutes })}
-          </span>
-          <span aria-hidden="true">·</span>
-          <span>
-            {formatDistanceToNow(new Date(updatedAt), { addSuffix: true })}
-          </span>
-        </p>
-        {parsed.description ? (
-          <DescriptionContent
-            value={parsed.description}
-            className="writing-feature-excerpt mt-3"
-          />
-        ) : null}
-        <div className="writing-paper-body">
+        <section className={mx(detailStyles, "hero")}>
+          <p className={mx(detailStyles, "kicker")}>{categoryLabel}</p>
+          <div className={mx(detailStyles, "titleRow")}>
+            <h1 className={mx(detailStyles, "title wrap-break-word")}>
+              {title}
+            </h1>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              className={mx(detailStyles, "titleEdit")}
+              onClick={() => router.push(`/theory/${id}/edit`)}
+              aria-label={t("edit")}
+              title={t("edit")}
+            >
+              <Pencil className="size-4" />
+            </Button>
+          </div>
+          <div className={mx(detailStyles, "meta")}>
+            <span className={mx(detailStyles, "tag")}>
+              <Clock className="size-3.5" aria-hidden="true" />
+              {t("readingTime", { minutes })}
+            </span>
+            <span className={mx(detailStyles, "tag")}>
+              {formatDistanceToNow(new Date(updatedAt), { addSuffix: true })}
+            </span>
+          </div>
+          {parsed.description ? (
+            <DescriptionContent
+              value={parsed.description}
+              className={mx(detailStyles, "lede")}
+            />
+          ) : null}
+        </section>
+
+        <div className={mx(detailStyles, "body")}>
           <RichTextContent
             content={parsed.doc}
             className="border-0 bg-transparent p-0 shadow-none"
             collapseStorageKey={`heading-collapse:theory:${id}`}
           />
         </div>
-      </article>
+      </div>
 
       <TheoryExportDialog
         open={exportOpen}

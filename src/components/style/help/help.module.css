@@ -1,0 +1,503 @@
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  margin-top: 0.5rem;
+  margin-bottom: 0.35rem;
+}
+
+.feedback-type-label,
+.feedback-field-label {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.feedback-type-group {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+@media (min-width: 520px) {
+  .feedback-type-group {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+.feedback-type-chip {
+  appearance: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2.55rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.55rem 0.85rem;
+  border-radius: 0.65rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 16%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--surface-elevated) 42%, transparent);
+  color: var(--muted-foreground);
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease,
+    box-shadow 140ms ease;
+}
+
+.feedback-type-chip:hover:not(:disabled) {
+  color: var(--ink);
+  border-color: color-mix(in oklab, var(--module-home-fg) 28%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--surface-elevated) 68%, transparent);
+}
+
+.feedback-type-chip:focus-visible {
+  outline: none;
+  color: var(--ink);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--ring) 55%, transparent);
+}
+
+.feedback-type-chip.is-active {
+  color: var(--ink);
+  border-color: color-mix(in oklab, var(--module-home-fg) 42%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-home-bg) 36%, var(--surface-elevated));
+  box-shadow: inset 0 0 0 1px
+    color-mix(in oklab, var(--module-home-fg) 18%, transparent);
+}
+
+.feedback-type-chip:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.feedback-field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.feedback-message {
+  min-height: 13.5rem;
+  resize: vertical;
+}
+
+.feedback-hint {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+.feedback-images {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: stretch;
+}
+
+.feedback-image-preview {
+  position: relative;
+  width: 5.25rem;
+  height: 5.25rem;
+  border-radius: 0.65rem;
+  overflow: hidden;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 16%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--surface-elevated) 55%, transparent);
+}
+
+.feedback-image-thumb {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.feedback-image-remove {
+  appearance: none;
+  position: absolute;
+  top: 0.3rem;
+  right: 0.3rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.45rem;
+  height: 1.45rem;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--background) 82%, transparent);
+  color: var(--ink);
+  cursor: pointer;
+  box-shadow: 0 0 0 1px
+    color-mix(in oklab, var(--module-home-fg) 14%, var(--hairline-cloud));
+}
+
+.feedback-image-remove:hover:not(:disabled) {
+  background: var(--background);
+}
+
+.feedback-image-remove:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--ring) 55%, transparent);
+}
+
+.feedback-image-remove:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.feedback-image-add {
+  appearance: none;
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  min-width: 5.25rem;
+  min-height: 5.25rem;
+  padding: 0.55rem 0.7rem;
+  margin: 0;
+  border-radius: 0.65rem;
+  border: 1px dashed
+    color-mix(in oklab, var(--module-home-fg) 24%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--surface-elevated) 36%, transparent);
+  color: var(--muted-foreground);
+  font: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  line-height: 1.25;
+  text-align: center;
+  cursor: pointer;
+  transition:
+    background 140ms ease,
+    border-color 140ms ease,
+    color 140ms ease;
+}
+
+.feedback-image-add:hover:not(:disabled) {
+  color: var(--ink);
+  border-color: color-mix(in oklab, var(--module-home-fg) 36%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--surface-elevated) 62%, transparent);
+}
+
+.feedback-image-add:focus-visible {
+  outline: none;
+  color: var(--ink);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--ring) 55%, transparent);
+}
+
+.feedback-image-add:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.feedback-error {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--destructive);
+}
+
+.feedback-success {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
+  border-radius: 0.75rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 18%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-home-bg) 22%, transparent);
+}
+
+.feedback-success-title {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.feedback-success-body {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+.feedback-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  align-items: center;
+}
+
+.faq {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+}
+
+.faq-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.faq-item {
+  border-radius: 0.85rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 14%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-home-bg) 22%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 48%, transparent);
+  overflow: hidden;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease;
+}
+
+.faq-item.is-open {
+  border-color: color-mix(in oklab, var(--module-home-fg) 28%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-home-bg) 34%, transparent),
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 62%, transparent);
+}
+
+.faq-item-heading {
+  margin: 0;
+  font-size: inherit;
+  font-weight: inherit;
+}
+
+.faq-trigger {
+  appearance: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: start;
+  width: 100%;
+  margin: 0;
+  padding: 0.95rem 1rem;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.faq-trigger:focus-visible {
+  outline: none;
+  box-shadow: inset 0 0 0 2px color-mix(in oklab, var(--ring) 55%, transparent);
+}
+
+.faq-number {
+  display: none;
+}
+
+.faq-question {
+  padding-top: 0.05rem;
+  font-size: 0.98rem;
+  font-weight: 650;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.faq-chevron {
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.15rem;
+  color: var(--muted-foreground);
+  transition: transform 180ms ease;
+}
+
+.faq-item.is-open .faq-chevron {
+  transform: rotate(180deg);
+  color: var(--ink);
+}
+
+.faq-panel[hidden] {
+  display: none;
+}
+
+.faq-answer {
+  padding: 0 1rem 1.05rem 1rem;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+.faq-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.faq-lede {
+  margin: 0;
+  max-width: 40rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+.faq-groups {
+  display: flex;
+  flex-direction: column;
+  gap: 1.35rem;
+}
+
+.faq-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.faq-group-title {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.support-layout {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.feedback-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.2rem 1.1rem 1.3rem;
+  border-radius: 0.95rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 16%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-home-bg) 28%, transparent),
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 52%, transparent);
+}
+
+.feedback-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.feedback-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.feedback-lede {
+  margin: 0;
+  max-width: 40rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+.feedback-account-note {
+  margin: 0;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+.feedback-account-note strong {
+  color: var(--ink);
+  font-weight: 650;
+}
+
+.support-contact-cta {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+.support-contact-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  color: var(--link);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.support-contact-link:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.support-contact-link:focus-visible {
+  outline: none;
+  border-radius: 0.25rem;
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--ring) 55%, transparent);
+}
+
+@media (min-width: 640px) {
+  .support-layout {
+    gap: 2.35rem;
+  }
+
+  .feedback-section {
+    padding: 1.4rem 1.35rem 1.5rem;
+  }
+}
+
+.faq-inline-link {
+  color: var(--link);
+  font-weight: 600;
+  text-underline-offset: 0.15em;
+  word-break: break-word;
+}
+
+.faq-inline-link:hover {
+  text-decoration: underline;
+}
+
+.faq-inline-link:focus-visible {
+  outline: none;
+  border-radius: 0.2rem;
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--ring) 55%, transparent);
+}
+

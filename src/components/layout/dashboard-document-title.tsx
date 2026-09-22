@@ -17,12 +17,18 @@ export function DashboardDocumentTitle() {
   const tSpeaking = useTranslations("speaking");
 
   const title = useMemo(() => {
-    if (pathname === "/") return tNav("dashboard");
+    if (pathname === "/") return "Notoria";
     if (pathname === "/account" || pathname.startsWith("/account/")) {
       return tNav("account");
     }
     if (pathname === "/settings" || pathname.startsWith("/settings/")) {
       return tNav("settings");
+    }
+    if (
+      pathname === "/getting-started" ||
+      pathname.startsWith("/getting-started/")
+    ) {
+      return tNav("gettingStarted");
     }
 
     if (pathname === "/vocabulary/new") return tVocab("addWord");
@@ -79,10 +85,40 @@ export function DashboardDocumentTitle() {
     }
 
     return "Notoria";
-  }, [pathname, tExercises, tFlashcards, tListening, tNav, tSpeaking, tTheory, tVocab, tWriting]);
+  }, [
+    pathname,
+    tExercises,
+    tFlashcards,
+    tListening,
+    tNav,
+    tSpeaking,
+    tTheory,
+    tVocab,
+    tWriting,
+  ]);
 
   useEffect(() => {
-    document.title = title;
+    const apply = () => {
+      if (document.title !== title) {
+        document.title = title;
+      }
+    };
+
+    apply();
+
+    // Next.js rewrites <title> from metadata after soft nav — keep the route label.
+    const titleEl = document.querySelector("title");
+    const observer = new MutationObserver(apply);
+    if (titleEl) {
+      observer.observe(titleEl, {
+        childList: true,
+        characterData: true,
+        subtree: true,
+      });
+    }
+    observer.observe(document.head, { childList: true });
+
+    return () => observer.disconnect();
   }, [title]);
 
   return null;

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { Logo, LogoWordmark } from "@/components/ui/logo";
 import styles from "@/components/style/auth/auth.module.css";
 import { mx } from "@/lib/css-module";
@@ -10,14 +11,14 @@ type AuthPageShellProps = {
   children: React.ReactNode;
 };
 
-export function AuthPageShell({
+export async function AuthPageShell({
   eyebrow,
   title,
   description,
   children,
 }: AuthPageShellProps) {
   return (
-    <div className={mx(styles, "auth-atelier-shell")}>
+    <div className={mx(styles, "auth-atelier-shell auth-atelier-shell-footer")}>
       <div className={mx(styles, "auth-atelier")}>
         <header className={mx(styles, "auth-hero")}>
           <Link
@@ -42,6 +43,10 @@ export function AuthPageShell({
         <section className={mx(styles, "auth-panel")} aria-label={title}>
           <div className={mx(styles, "auth-panel-body")}>{children}</div>
         </section>
+      </div>
+
+      <div className={mx(styles, "auth-site-footer")}>
+        <SiteFooter variant="public" />
       </div>
     </div>
   );

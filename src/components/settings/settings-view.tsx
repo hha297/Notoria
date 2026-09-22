@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState, type ReactNode } from "react";
+import Link from "next/link";
 import { useTheme } from "next-themes";
 import { RotateCcw, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -278,6 +279,29 @@ function DataPrivacySection() {
           <Trash2 className="size-4" />
           {t("data.clear")}
         </Button>
+      </div>
+
+      <div className={mx(styles, "settings-row")}>
+        <div className={mx(styles, "settings-row-copy")}>
+          <p className={mx(styles, "settings-row-title")}>{t("data.policiesTitle")}</p>
+          <p className={mx(styles, "settings-row-hint")}>
+            {t("data.policiesDescription")}{" "}
+            <Link href="/privacy" className={mx(styles, "settings-inline-link")}>
+              {t("data.privacyLink")}
+            </Link>
+            {" · "}
+            <Link href="/terms" className={mx(styles, "settings-inline-link")}>
+              {t("data.termsLink")}
+            </Link>
+            {" · "}
+            <Link href="/support" className={mx(styles, "settings-inline-link")}>
+              {t("data.helpLink")}
+            </Link>
+          </p>
+          <p className={mx(styles, "settings-row-hint")}>
+            <a href="mailto:contact@notoria.fi">contact@notoria.fi</a>
+          </p>
+        </div>
       </div>
 
       <Dialog open={confirmOpen} onOpenChange={setConfirmOpen}>

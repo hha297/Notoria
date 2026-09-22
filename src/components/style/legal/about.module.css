@@ -1,0 +1,82 @@
+.about {
+  gap: 2.25rem;
+}
+
+.about section {
+  gap: 0.85rem;
+}
+
+.about h2 {
+  margin-bottom: 0.1rem;
+  font-size: clamp(1.2rem, 2.5vw, 1.36rem);
+  letter-spacing: -0.025em;
+}
+
+.about p {
+  max-width: 40rem;
+  font-size: 1.02rem;
+  line-height: 1.72;
+  color: color-mix(in oklab, var(--ink) 92%, var(--muted-foreground));
+}
+
+.about .about-beat {
+  margin-top: 0.45rem;
+  max-width: 34rem;
+  padding: 0.8rem 0 0.8rem 1rem;
+  border-left: 2px solid
+    color-mix(in oklab, var(--module-home-fg) 42%, var(--hairline-cloud));
+  font-family: var(--font-heading);
+  font-size: clamp(1.04rem, 2.1vw, 1.16rem);
+  font-weight: 650;
+  letter-spacing: -0.02em;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.about .about-list {
+  margin: 0.2rem 0 0;
+  padding: 0;
+  list-style: none;
+  max-width: 40rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.about .about-list li {
+  margin: 0;
+  padding: 0.7rem 0.85rem 0.7rem 0.95rem;
+  border-radius: 0.7rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 14%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--surface-elevated) 42%, transparent);
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: color-mix(in oklab, var(--ink) 94%, var(--muted-foreground));
+}
+
+.about .about-list li::marker {
+  content: none;
+}
+
+.about .about-note {
+  margin-top: 0.15rem;
+  max-width: 40rem;
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+@media (min-width: 640px) {
+  .about {
+    gap: 2.6rem;
+  }
+
+  .about .about-beat {
+    padding-left: 1.15rem;
+  }
+
+  .about .about-list li {
+    padding: 0.8rem 1rem;
+  }
+}

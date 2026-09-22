@@ -11,9 +11,20 @@ export default auth((request) => {
   const isPasswordResetRoute =
     pathname.startsWith("/forgot-password") ||
     pathname.startsWith("/reset-password");
+  const isLegalRoute =
+    pathname.startsWith("/privacy") || pathname.startsWith("/terms");
+  const isSiteInfoRoute =
+    pathname.startsWith("/about") ||
+    pathname.startsWith("/our-story") ||
+    pathname.startsWith("/how-to-use") ||
+    pathname.startsWith("/support") ||
+    pathname.startsWith("/contact") ||
+    pathname.startsWith("/help");
   const isPublicRoute =
     isAuthRoute ||
     isPasswordResetRoute ||
+    isLegalRoute ||
+    isSiteInfoRoute ||
     pathname.startsWith("/api/auth") ||
     pathname.startsWith("/api/stripe/webhook") ||
     pathname.startsWith("/api/stream/webhook");

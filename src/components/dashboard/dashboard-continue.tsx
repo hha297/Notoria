@@ -3,7 +3,6 @@
 import {
   ArrowRight,
   BookOpen,
-  Dumbbell,
   Headphones,
   PenLine,
   Video,
@@ -11,7 +10,8 @@ import {
 } from "lucide-react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { LinkButton } from "@/components/ui/link-button";
+import homeStyles from "@/components/style/dashboard/home.module.css";
+import { mx } from "@/lib/css-module";
 import type {
   DashboardContinueItem,
   DashboardContinueModule,
@@ -24,95 +24,68 @@ const MODULE_ICONS: Record<DashboardContinueModule, LucideIcon> = {
   speaking: Video,
 };
 
-type DashboardContinueProps = {
-  items: DashboardContinueItem[];
-  wordCount: number;
-  practiceReadyCount: number;
+const MODULE_ACCENT: Record<DashboardContinueModule, string> = {
+  theory: "theory",
+  writing: "writing",
+  listening: "listen",
+  speaking: "speak",
 };
 
-export function DashboardContinue({
-  items,
-  wordCount,
-  practiceReadyCount,
-}: DashboardContinueProps) {
-  const t = useTranslations("dashboard");
-  const showPractice = wordCount > 0;
-  const showItems = items.length > 0;
+type DashboardContinueProps = {
+  items: DashboardContinueItem[];
+};
 
-  if (!showPractice && !showItems) return null;
+export function DashboardContinue({ items }: DashboardContinueProps) {
+  const t = useTranslations("dashboard");
 
   return (
-    <div
-      className={
-        showPractice && showItems
-          ? "grid gap-3 sm:gap-4 lg:grid-cols-2"
-          : "grid gap-3 sm:gap-4"
-      }
-    >
-      {showPractice ? (
-        <div className="card-surface flex flex-col justify-between gap-5 bg-surface-active">
-          <div className="min-w-0">
-            <p className="eyebrow">
-              {t("practiceNowEyebrow")}
-            </p>
-            <h2 className="heading-md mt-2 break-words">{t("practiceNowTitle")}</h2>
-            <p className="mt-2 max-w-md text-sm leading-relaxed break-words text-muted-foreground sm:text-base">
-              {practiceReadyCount > 0
-                ? t("practiceNowReady", { count: practiceReadyCount })
-                : t("practiceNowNeedsMeaning")}
-            </p>
-          </div>
-          <div className="mt-auto">
-            {practiceReadyCount > 0 ? (
-              <LinkButton href="/exercises" className="max-w-full">
-                <Dumbbell className="size-4" />
-                <span className="truncate">{t("practiceNowCta")}</span>
-                <ArrowRight className="size-4" />
-              </LinkButton>
-            ) : (
-              <LinkButton href="/vocabulary" className="max-w-full">
-                <span className="truncate">{t("practiceNowVocabCta")}</span>
-                <ArrowRight className="size-4" />
-              </LinkButton>
-            )}
-          </div>
-        </div>
-      ) : null}
+    <section className="writing-stage">
+      <p className={mx(homeStyles, "writing-kicker home-kicker writing-stage-kicker")}>
+        {t("continueTitle")}
+      </p>
+      <p className="mb-5 max-w-xl text-sm text-muted-foreground">
+        {t("continueSubtitle")}
+      </p>
 
-      {showItems ? (
-        <div className="card-surface min-w-0">
-          <h2 className="heading-md break-words">{t("continueTitle")}</h2>
-          <p className="mt-1 break-words text-sm text-muted-foreground">
-            {t("continueSubtitle")}
-          </p>
-          <ul className="mt-4 space-y-2">
-            {items.map((item) => {
-              const Icon = MODULE_ICONS[item.module];
-              return (
-                <li key={`${item.module}-${item.id}`}>
-                  <Link
-                    href={item.href}
-                    className="flex items-center gap-3 rounded-sm border border-hairline-cloud bg-surface p-2.5 transition-colors hover:bg-surface-hover"
+      {items.length > 0 ? (
+        <ul className={mx(homeStyles, "home-continue-list")}>
+          {items.map((item) => {
+            const Icon = MODULE_ICONS[item.module];
+            return (
+              <li key={`${item.module}-${item.id}`}>
+                <Link
+                  href={item.href}
+                  data-home-accent={MODULE_ACCENT[item.module]}
+                  className={mx(homeStyles, "home-continue-row")}
+                >
+                  <span
+                    className={mx(homeStyles, "home-hub-icon")}
+                    aria-hidden
                   >
-                    <span className="flex size-8 shrink-0 items-center justify-center rounded-sm bg-surface-active text-primary">
-                      <Icon className="size-4" aria-hidden />
+                    <Icon className="size-4" />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className={mx(homeStyles, "home-continue-module")}>
+                      {t(`modules.${item.module}.title`)}
                     </span>
-                    <span className="min-w-0 flex-1">
-                      <span className="block text-xs font-medium uppercase tracking-[0.2px] text-muted-foreground">
-                        {t(`modules.${item.module}.title`)}
-                      </span>
-                      <span className="mt-0.5 block truncate font-medium text-ink">
-                        {item.title}
-                      </span>
+                    <span className={mx(homeStyles, "home-continue-title")}>
+                      {item.title}
                     </span>
-                    <ArrowRight className="size-4 shrink-0 text-muted-foreground" />
-                  </Link>
-                </li>
-              );
-            })}
-          </ul>
-        </div>
-      ) : null}
-    </div>
+                  </span>
+                  <ArrowRight
+                    className="size-4 shrink-0 text-muted-foreground"
+                    aria-hidden
+                  />
+                </Link>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <p className={mx(homeStyles, "home-continue-empty")}>
+          {t("continueEmpty")}
+        </p>
+      )}
+    </section>
   );
 }
