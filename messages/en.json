@@ -2233,6 +2233,8 @@
     "passwordUpdateFailed": "Could not update password",
     "invalidCurrentPassword": "Current password is incorrect",
     "passwordMismatch": "New passwords do not match",
+    "passwordSameAsCurrent": "New password must be different from your current password",
+    "verifyingPassword": "Checking current password…",
     "saveName": "Save name",
     "nameUpdated": "Name updated",
     "nameUpdateFailed": "Could not update name",

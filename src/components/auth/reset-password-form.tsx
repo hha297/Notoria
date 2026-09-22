@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useId, useState, useTransition } from "react";
+import { useId, useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { Loader2 } from "lucide-react";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -21,31 +21,40 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   const t = useTranslations("auth");
   const formErrorId = useId();
   const passwordHintId = useId();
+  const confirmErrorId = useId();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [fieldError, setFieldError] = useState<string | null>(null);
+  const [serverPasswordError, setServerPasswordError] = useState<string | null>(
+    null,
+  );
   const [formError, setFormError] = useState<string | null>(null);
   const [done, setDone] = useState(false);
   const [isPending, startTransition] = useTransition();
 
-  function clearErrors() {
-    setFieldError(null);
-    setFormError(null);
-  }
+  const passwordError = useMemo(() => {
+    if (serverPasswordError) return serverPasswordError;
+    if (!password) return null;
+    if (password.length < 8) return t("passwordTooShort");
+    return null;
+  }, [password, serverPasswordError, t]);
+
+  const confirmError = useMemo(() => {
+    if (!confirmPassword) return null;
+    if (confirmPassword !== password) return t("passwordMismatch");
+    return null;
+  }, [confirmPassword, password, t]);
+
+  const formInvalid =
+    !password ||
+    !confirmPassword ||
+    Boolean(passwordError) ||
+    Boolean(confirmError);
 
   function handleSubmit(event: React.FormEvent) {
     event.preventDefault();
-    clearErrors();
-
-    if (password.length < 8) {
-      setFieldError(t("passwordTooShort"));
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      setFormError(t("passwordMismatch"));
-      return;
-    }
+    setFormError(null);
+    setServerPasswordError(null);
+    if (formInvalid) return;
 
     startTransition(async () => {
       try {
@@ -65,8 +74,12 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
           setFormError(t("passwordMismatch"));
           return;
         }
+        if (code === "SAME_AS_OLD_PASSWORD") {
+          setServerPasswordError(t("passwordSameAsCurrent"));
+          return;
+        }
         if (code === "INVALID_PASSWORD") {
-          setFieldError(t("passwordTooShort"));
+          setServerPasswordError(t("passwordTooShort"));
           return;
         }
         if (code === "INVALID_TOKEN") {
@@ -120,25 +133,26 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
           value={password}
           onChange={(event) => {
             setPassword(event.target.value);
-            clearErrors();
+            setFormError(null);
+            setServerPasswordError(null);
           }}
           className={mx(styles, "auth-input")}
           minLength={8}
           maxLength={128}
           required
           disabled={isPending}
-          aria-invalid={fieldError ? true : undefined}
+          aria-invalid={passwordError ? true : undefined}
           aria-describedby={
-            fieldError ? passwordHintId : `${passwordHintId}-hint`
+            passwordError ? passwordHintId : `${passwordHintId}-hint`
           }
         />
-        {fieldError ? (
+        {passwordError ? (
           <p
             id={passwordHintId}
             className={mx(styles, "auth-field-error")}
             role="alert"
           >
-            {fieldError}
+            {passwordError}
           </p>
         ) : (
           <p
@@ -161,15 +175,25 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
           value={confirmPassword}
           onChange={(event) => {
             setConfirmPassword(event.target.value);
-            clearErrors();
+            setFormError(null);
           }}
           className={mx(styles, "auth-input")}
           minLength={8}
           maxLength={128}
           required
           disabled={isPending}
-          aria-invalid={formError === t("passwordMismatch") ? true : undefined}
+          aria-invalid={confirmError ? true : undefined}
+          aria-describedby={confirmError ? confirmErrorId : undefined}
         />
+        {confirmError ? (
+          <p
+            id={confirmErrorId}
+            className={mx(styles, "auth-field-error")}
+            role="alert"
+          >
+            {confirmError}
+          </p>
+        ) : null}
       </div>
 
       {formError ? (
@@ -187,9 +211,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
         type="submit"
         size="lg"
         className={mx(styles, "auth-submit")}
-        disabled={
-          isPending || password.length < 8 || confirmPassword.length < 8
-        }
+        disabled={isPending || formInvalid}
       >
         {isPending ? (
           <Loader2 className="size-4 animate-spin" aria-hidden />

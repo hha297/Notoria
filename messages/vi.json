@@ -2048,6 +2048,8 @@
     "passwordUpdateFailed": "Không đổi được mật khẩu",
     "invalidCurrentPassword": "Mật khẩu hiện tại chưa đúng",
     "passwordMismatch": "Hai mật khẩu mới chưa khớp nhau",
+    "passwordSameAsCurrent": "Mật khẩu mới phải khác mật khẩu hiện tại",
+    "verifyingPassword": "Đang kiểm tra mật khẩu hiện tại…",
     "saveName": "Lưu tên",
     "nameUpdated": "Đã cập nhật tên",
     "nameUpdateFailed": "Không cập nhật được tên",

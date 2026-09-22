@@ -1,7 +1,7 @@
 "use server";
 
 import { and, eq, gt, isNull } from "drizzle-orm";
-import { hash } from "bcryptjs";
+import { compare, hash } from "bcryptjs";
 import { z } from "zod";
 import { db } from "@/db";
 import { passwordResetTokens, users } from "@/db/schema";
@@ -154,6 +154,14 @@ export async function resetPassword(data: z.infer<typeof resetSchema>) {
 
   if (!tokenRow.user.passwordHash) {
     throw new Error("INVALID_TOKEN");
+  }
+
+  const sameAsOld = await compare(
+    parsed.data.password,
+    tokenRow.user.passwordHash,
+  );
+  if (sameAsOld) {
+    throw new Error("SAME_AS_OLD_PASSWORD");
   }
 
   const passwordHash = await hash(parsed.data.password, 12);

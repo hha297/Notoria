@@ -2048,6 +2048,8 @@
     "passwordUpdateFailed": "Salasanan päivitys epäonnistui",
     "invalidCurrentPassword": "Nykyinen salasana on väärä",
     "passwordMismatch": "Uudet salasanat eivät täsmää",
+    "passwordSameAsCurrent": "Uuden salasanan on oltava eri kuin nykyinen salasana",
+    "verifyingPassword": "Tarkistetaan nykyistä salasanaa…",
     "saveName": "Tallenna nimi",
     "nameUpdated": "Nimi päivitetty",
     "nameUpdateFailed": "Nimen päivitys epäonnistui",

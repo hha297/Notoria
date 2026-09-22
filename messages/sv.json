@@ -2233,6 +2233,8 @@
     "passwordUpdateFailed": "Kunde inte uppdatera lösenord",
     "invalidCurrentPassword": "Nuvarande lösenord är felaktigt",
     "passwordMismatch": "Nya lösenord matchar inte",
+    "passwordSameAsCurrent": "Det nya lösenordet måste skilja sig från ditt nuvarande lösenord",
+    "verifyingPassword": "Kontrollerar nuvarande lösenord…",
     "saveName": "Spara namn",
     "nameUpdated": "Namnet har uppdaterats",
     "nameUpdateFailed": "Kunde inte uppdatera namn",
