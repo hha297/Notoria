@@ -1217,7 +1217,27 @@
     "quickStartExercise": "Start an exercise",
     "quickOpenWriting": "Open writing",
     "quickOpenTheory": "Open theory",
-    "nextStepTitle": "Next step"
+    "quickOpenListening": "Open listening",
+    "quickOpenSpeaking": "Open speaking",
+    "nextStepTitle": "Next step",
+    "continueEmpty": "Nothing to resume yet — add a theory note, writing piece, listening lesson, or speaking session and it will show up here.",
+    "loopEyebrow": "The loop",
+    "loopTitle": "Collect, practice, then use it",
+    "loopSubtitle": "Notoria works best as a cycle: save what you meet, drill it briefly, then put it back into real writing, listening, and speaking.",
+    "loop": {
+      "collect": {
+        "title": "Collect",
+        "body": "Save words and theory in your own words — examples, tags, and notes you will actually reopen."
+      },
+      "practice": {
+        "title": "Practice",
+        "body": "Run short exercises from your library. A few minutes still moves the needle."
+      },
+      "use": {
+        "title": "Use",
+        "body": "Write, listen, and speak with the material you saved so it sticks beyond flashcards."
+      }
+    }
   },
   "search": {
     "placeholder": "Search anything...",

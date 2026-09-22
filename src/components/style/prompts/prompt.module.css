@@ -1,0 +1,174 @@
+/* Welcome / nudge prompt sheet — atelier tone, not primary-orange chrome */
+
+.sheet,
+:global([data-slot="dialog-content"]).sheet {
+  --prompt-fg: var(--module-home-fg);
+  --prompt-bg: var(--module-home-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  overflow: hidden;
+  padding: 0;
+  border-radius: 1.15rem;
+  border-color: color-mix(in oklab, var(--prompt-fg) 28%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--prompt-bg) 55%, transparent) 0%,
+      transparent 58%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 72%, var(--popover));
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--prompt-fg) 10%, transparent),
+    0 22px 44px color-mix(in oklab, var(--ink) 14%, transparent);
+}
+
+.sheet[data-prompt-accent="vocab"] {
+  --prompt-fg: var(--module-vocab-fg);
+  --prompt-bg: var(--module-vocab-bg);
+}
+
+.sheet[data-prompt-accent="writing"] {
+  --prompt-fg: var(--module-writing-fg);
+  --prompt-bg: var(--module-writing-bg);
+}
+
+.sheet[data-prompt-accent="theory"] {
+  --prompt-fg: var(--module-theory-fg);
+  --prompt-bg: var(--module-theory-bg);
+}
+
+.sheet[data-prompt-accent="exercise"] {
+  --prompt-fg: var(--module-exercise-fg);
+  --prompt-bg: var(--module-exercise-bg);
+}
+
+.sheet[data-prompt-accent="listen"] {
+  --prompt-fg: var(--module-listen-fg);
+  --prompt-bg: var(--module-listen-bg);
+}
+
+.sheet[data-prompt-accent="speak"] {
+  --prompt-fg: var(--module-speak-fg);
+  --prompt-bg: var(--module-speak-bg);
+}
+
+.body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.35rem 1.35rem 1.1rem;
+}
+
+.mark {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 1.7rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 0.45rem;
+  border: 1px solid
+    color-mix(in oklab, var(--prompt-fg) 32%, var(--prompt-bg));
+  background: color-mix(in oklab, var(--prompt-bg) 78%, transparent);
+  color: var(--prompt-fg);
+}
+
+.mark svg {
+  flex-shrink: 0;
+}
+
+.kicker {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--prompt-fg);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 2.6vw, 1.65rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.18;
+  color: var(--ink);
+  text-wrap: balance;
+}
+
+.lede {
+  margin: 0;
+  max-width: 28rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: color-mix(in oklab, var(--ink) 72%, var(--muted-foreground));
+}
+
+.footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  padding: 0.95rem 1.2rem 1.15rem;
+  border-top: 1px solid
+    color-mix(in oklab, var(--prompt-fg) 14%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--prompt-bg) 22%, var(--popover));
+}
+
+.cancel {
+  width: 100%;
+  border-color: color-mix(
+    in oklab,
+    var(--prompt-fg) 24%,
+    var(--hairline-cloud)
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--surface-elevated) 70%,
+    transparent
+  ) !important;
+  color: var(--ink) !important;
+}
+
+.cancel:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--prompt-fg) 40%,
+    var(--hairline-cloud)
+  ) !important;
+  background: color-mix(in oklab, var(--prompt-bg) 42%, transparent) !important;
+  color: var(--prompt-fg) !important;
+}
+
+.cta {
+  width: 100%;
+  border-color: transparent !important;
+  background: var(--prompt-fg) !important;
+  color: var(--surface-elevated) !important;
+}
+
+.cta:hover {
+  filter: brightness(1.06);
+}
+
+:global(.dark) .sheet,
+:global(.dark) [data-slot="dialog-content"].sheet {
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--prompt-bg) 48%, transparent) 0%,
+      transparent 58%
+    ),
+    color-mix(in oklab, var(--popover) 88%, var(--surface-muted));
+}
+
+:global(.dark) .cta {
+  color: #0f1210 !important;
+}
+
+@media (max-width: 420px) {
+  .footer {
+    grid-template-columns: 1fr;
+  }
+}

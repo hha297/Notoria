@@ -1217,7 +1217,27 @@
     "quickStartExercise": "Börja en övning",
     "quickOpenWriting": "Öppna skrivande",
     "quickOpenTheory": "Öppna teori",
-    "nextStepTitle": "Nästa steg"
+    "quickOpenListening": "Öppna lyssning",
+    "quickOpenSpeaking": "Öppna tal",
+    "nextStepTitle": "Nästa steg",
+    "continueEmpty": "Inget att återuppta ännu — lägg till en teorinot, en text, en lyssningslektion eller en talsession så syns den här.",
+    "loopEyebrow": "Loopen",
+    "loopTitle": "Samla, öva, använd",
+    "loopSubtitle": "Notoria fungerar bäst som en cykel: spara det du möter, öva kort, och använd det i skrivande, lyssning och tal.",
+    "loop": {
+      "collect": {
+        "title": "Samla",
+        "body": "Spara ord och teori med egna exempel, taggar och anteckningar du faktiskt återvänder till."
+      },
+      "practice": {
+        "title": "Öva",
+        "body": "Kör korta övningar från ditt bibliotek. Några minuter räcker för att komma framåt."
+      },
+      "use": {
+        "title": "Använd",
+        "body": "Skriv, lyssna och tala med materialet du sparat så att det fäster bortom flashcards."
+      }
+    }
   },
   "search": {
     "placeholder": "Sök efter vad som helst...",

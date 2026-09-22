@@ -4,7 +4,10 @@ import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getSession } from "@/lib/auth/session";
-import { countPracticeReadyWords } from "@/lib/dashboard/activity";
+import {
+  countPracticeReadyWords,
+  getDashboardContinueItems,
+} from "@/lib/dashboard/activity";
 import { getWorkspaceActivitySnapshot } from "@/lib/onboarding/snapshot";
 import { getActiveWorkspace } from "@/lib/workspace";
 
@@ -29,9 +32,10 @@ export default async function DashboardPage() {
     );
   }
 
-  const [snapshot, practiceReadyWords] = await Promise.all([
+  const [snapshot, practiceReadyWords, continueItems] = await Promise.all([
     getWorkspaceActivitySnapshot(workspace.id),
     countPracticeReadyWords(workspace.id),
+    getDashboardContinueItems(workspace.id),
   ]);
 
   return (
@@ -40,6 +44,7 @@ export default async function DashboardPage() {
         userName={session?.user?.name ?? "there"}
         snapshot={snapshot}
         practiceReadyCount={practiceReadyWords}
+        continueItems={continueItems}
       />
     </PageShell>
   );

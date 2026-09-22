@@ -1032,7 +1032,27 @@
     "quickStartExercise": "Aloita harjoitus",
     "quickOpenWriting": "Avaa kirjoittaminen",
     "quickOpenTheory": "Avaa teoria",
-    "nextStepTitle": "Seuraava askel"
+    "quickOpenListening": "Avaa kuuntelu",
+    "quickOpenSpeaking": "Avaa puhuminen",
+    "nextStepTitle": "Seuraava askel",
+    "continueEmpty": "Ei vielä mitään jatkettavaa — lisää teoria, kirjoitus, kuuntelutunti tai puhesessio, niin se näkyy täällä.",
+    "loopEyebrow": "Kierto",
+    "loopTitle": "Kerää, harjoittele, käytä",
+    "loopSubtitle": "Notoria toimii parhaiten kehänä: tallenna kohtaamasi, harjoittele lyhyesti, ja palauta se kirjoittamiseen, kuunteluun ja puhumiseen.",
+    "loop": {
+      "collect": {
+        "title": "Kerää",
+        "body": "Tallenna sanoja ja teoriaa omin sanoin — esimerkit, tagit ja muistiinpanot, joihin palaat."
+      },
+      "practice": {
+        "title": "Harjoittele",
+        "body": "Tee lyhyitä harjoituksia kirjastostasi. Muutama minuutti riittää eteenpäin."
+      },
+      "use": {
+        "title": "Käytä",
+        "body": "Kirjoita, kuuntele ja puhu tallentamallasi materiaalilla, jotta se jää mieleen."
+      }
+    }
   },
   "search": {
     "placeholder": "Hae mitä tahansa...",

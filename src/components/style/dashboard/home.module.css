@@ -247,6 +247,129 @@
     color-mix(in oklab, var(--home-accent-fg) 16%, transparent);
 }
 
+.home-continue-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-continue-row {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  min-width: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 0.55rem;
+  border: 1px solid
+    color-mix(in oklab, var(--home-accent-fg) 24%, transparent);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--home-accent-bg) 28%, transparent),
+      transparent 80%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 36%, transparent);
+  text-decoration: none;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease;
+}
+
+.home-continue-row:hover {
+  border-color: color-mix(in oklab, var(--home-accent-fg) 40%, transparent);
+  background:
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--home-accent-bg) 42%, transparent),
+      transparent 80%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 48%, transparent);
+}
+
+.home-continue-module {
+  display: block;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--home-accent-fg);
+}
+
+.home-continue-title {
+  display: block;
+  margin-top: 0.15rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-family: var(--font-heading);
+  font-size: 0.98rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.home-continue-empty {
+  margin: 0;
+  max-width: 36rem;
+  padding: 1rem 1.1rem;
+  border-radius: 0.55rem;
+  border: 1px dashed
+    color-mix(in oklab, var(--module-home-fg) 28%, transparent);
+  background: color-mix(in oklab, var(--module-home-bg) 28%, transparent);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+.home-loop {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.home-loop-steps {
+  display: grid;
+  gap: 0.85rem;
+  margin: 1.35rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.home-loop-step {
+  display: flex;
+  gap: 0.9rem;
+  min-width: 0;
+  padding: 1rem 1.05rem;
+  border-radius: 0.55rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 20%, transparent);
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-home-bg) 36%, transparent),
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 34%, transparent);
+}
+
+.home-loop-index {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--module-home-bg) 70%, transparent);
+  color: var(--module-home-fg);
+  font-family: var(--font-heading);
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
 :global([data-home-accent="vocab"]) {
   --home-accent-fg: var(--module-vocab-fg);
   --home-accent-bg: var(--module-vocab-bg);
@@ -285,5 +408,9 @@
   .home-hub-grid,
   .home-guide-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .home-loop-steps {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 }

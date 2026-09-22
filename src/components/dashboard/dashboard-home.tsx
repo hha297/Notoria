@@ -5,11 +5,14 @@ import {
   ArrowRight,
   BookOpen,
   Dumbbell,
+  Headphones,
   Languages,
   PenLine,
+  Video,
   type LucideIcon,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { DashboardContinue } from "@/components/dashboard/dashboard-continue";
 import {
   DashboardGuide,
   suggestedModule,
@@ -17,16 +20,18 @@ import {
 import { LinkButton } from "@/components/ui/link-button";
 import homeStyles from "@/components/style/dashboard/home.module.css";
 import { mx } from "@/lib/css-module";
+import type { DashboardContinueItem } from "@/lib/dashboard/activity";
 import type { WorkspaceActivitySnapshot } from "@/lib/onboarding/requirements";
 
 type DashboardHomeProps = {
   userName: string;
   snapshot: WorkspaceActivitySnapshot;
   practiceReadyCount: number;
+  continueItems: DashboardContinueItem[];
 };
 
 type HubModule = {
-  id: "vocabulary" | "exercises" | "writing" | "theory";
+  id: "vocabulary" | "exercises" | "writing" | "theory" | "listening" | "speaking";
   href: string;
   icon: LucideIcon;
   accent: string;
@@ -57,12 +62,27 @@ const HUB_MODULES: HubModule[] = [
     icon: BookOpen,
     accent: "theory",
   },
+  {
+    id: "listening",
+    href: "/listening",
+    icon: Headphones,
+    accent: "listen",
+  },
+  {
+    id: "speaking",
+    href: "/speaking",
+    icon: Video,
+    accent: "speak",
+  },
 ];
+
+const LOOP_STEPS = ["collect", "practice", "use"] as const;
 
 export function DashboardHome({
   userName,
   snapshot,
   practiceReadyCount,
+  continueItems,
 }: DashboardHomeProps) {
   const t = useTranslations("dashboard");
   const firstName = userName.trim().split(/\s+/)[0] || userName;
@@ -182,6 +202,8 @@ export function DashboardHome({
         aria-hidden="true"
       />
 
+      <DashboardContinue items={continueItems} />
+
       <section className="writing-stage">
         <p className={mx(homeStyles, "writing-kicker home-kicker writing-stage-kicker")}>
           {t("continueLearning")}
@@ -224,6 +246,35 @@ export function DashboardHome({
             );
           })}
         </div>
+      </section>
+
+      <section className={mx(homeStyles, "home-loop")}>
+        <p className={mx(homeStyles, "writing-kicker home-kicker")}>
+          {t("loopEyebrow")}
+        </p>
+        <h2 className="mt-2 font-heading text-2xl font-bold tracking-tight text-ink sm:text-[1.75rem]">
+          {t("loopTitle")}
+        </h2>
+        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink/80">
+          {t("loopSubtitle")}
+        </p>
+        <ol className={mx(homeStyles, "home-loop-steps")}>
+          {LOOP_STEPS.map((step, index) => (
+            <li key={step} className={mx(homeStyles, "home-loop-step")}>
+              <span className={mx(homeStyles, "home-loop-index")} aria-hidden>
+                {index + 1}
+              </span>
+              <div className="min-w-0">
+                <h3 className="font-heading text-base font-bold text-ink">
+                  {t(`loop.${step}.title`)}
+                </h3>
+                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                  {t(`loop.${step}.body`)}
+                </p>
+              </div>
+            </li>
+          ))}
+        </ol>
       </section>
 
       <DashboardGuide />

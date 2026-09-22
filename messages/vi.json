@@ -1032,7 +1032,27 @@
     "quickStartExercise": "Bắt đầu luyện",
     "quickOpenWriting": "Mở viết",
     "quickOpenTheory": "Mở lý thuyết",
-    "nextStepTitle": "Bước tiếp theo"
+    "quickOpenListening": "Mở nghe",
+    "quickOpenSpeaking": "Mở nói",
+    "nextStepTitle": "Bước tiếp theo",
+    "continueEmpty": "Chưa có gì để tiếp tục — thêm ghi chú lý thuyết, bài viết, bài nghe hoặc phiên nói để hiện ở đây.",
+    "loopEyebrow": "Vòng học",
+    "loopTitle": "Thu thập, luyện, rồi dùng",
+    "loopSubtitle": "Notoria chạy tốt nhất theo vòng: lưu những gì gặp, luyện ngắn, rồi đưa lại vào viết, nghe và nói.",
+    "loop": {
+      "collect": {
+        "title": "Thu thập",
+        "body": "Lưu từ và lý thuyết bằng lời của bạn — ví dụ, thẻ và ghi chú mà bạn sẽ mở lại."
+      },
+      "practice": {
+        "title": "Luyện",
+        "body": "Chạy bài tập ngắn từ thư viện của bạn. Vài phút cũng đủ tiến lên."
+      },
+      "use": {
+        "title": "Dùng",
+        "body": "Viết, nghe và nói với tài liệu đã lưu để kiến thức bám hơn flashcard."
+      }
+    }
   },
   "search": {
     "placeholder": "Tìm bất cứ gì...",

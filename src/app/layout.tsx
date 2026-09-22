@@ -48,6 +48,7 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://www.notoria.fi"),
   title: {
     default: "Notoria — Private language learning workspace",
+    template: "%s",
   },
   description:
     "Build vocabulary, practice exercises, write worksheets, and train listening & speaking in one private language-learning workspace.",

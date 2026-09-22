@@ -18,6 +18,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import exerciseStyles from "@/components/style/listening/exercise.module.css";
+import detailStyles from "@/components/style/workspace/detail.module.css";
 import sheetStyles from "@/components/style/workspace/sheet.module.css";
 import {
   deleteListeningLesson,
@@ -158,21 +159,21 @@ export function ListeningLessonView({
 
         <section>
           <p className={mx(exerciseStyles, "eyebrow")}>{t("title")}</p>
-          <div className="mt-2 flex flex-wrap items-center gap-1.5">
-            <h1 className="font-heading text-[clamp(1.65rem,3vw,2.4rem)] font-bold leading-[1.12] tracking-[-0.035em] text-ink wrap-break-word">
+          <div className={mx(detailStyles, "titleRow")} data-detail="listen">
+            <h1 className={mx(detailStyles, "title wrap-break-word")}>
               {lesson.title}
             </h1>
             <Button
               type="button"
               variant="ghost"
               size="icon-sm"
-              className="shrink-0 text-muted-foreground pl-2 hover:bg-[var(--module-listen-bg)] hover:text-[var(--module-listen-fg)]"
+              className={mx(detailStyles, "titleEdit")}
               onClick={() => setRenameOpen(true)}
               disabled={isPending}
               aria-label={t("renameFile")}
               title={t("renameFile")}
             >
-              <Pencil className="size-5" />
+              <Pencil className="size-4" />
             </Button>
           </div>
           <div className="mt-3 flex flex-wrap gap-2">

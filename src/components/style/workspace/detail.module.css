@@ -99,6 +99,11 @@
   margin-top: 0.35rem;
 }
 
+.titleRow[data-detail="listen"] {
+  --detail-fg: var(--module-listen-fg);
+  --detail-bg: var(--module-listen-bg);
+}
+
 .title {
   margin: 0;
   font-family: var(--font-heading);
@@ -111,12 +116,31 @@
 
 .titleEdit {
   flex-shrink: 0;
+  opacity: 0;
+  pointer-events: none;
   color: var(--muted-foreground) !important;
+  transition:
+    opacity 140ms ease,
+    background-color 140ms ease,
+    color 140ms ease;
+}
+
+.titleRow:hover .titleEdit,
+.titleRow:focus-within .titleEdit {
+  opacity: 1;
+  pointer-events: auto;
 }
 
 .titleEdit:hover {
   background: var(--detail-bg) !important;
   color: var(--detail-fg) !important;
+}
+
+@media (hover: none) {
+  .titleEdit {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }
 
 .meta {

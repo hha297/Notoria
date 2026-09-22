@@ -181,6 +181,31 @@
   );
 }
 
+.nav-account-menu :global([data-slot="dropdown-menu-item"]) {
+  transition:
+    background-color 140ms ease,
+    color 140ms ease;
+}
+
+.nav-account-menu :global([data-slot="dropdown-menu-item"]:hover),
+.nav-account-menu :global([data-slot="dropdown-menu-item"]:focus),
+.nav-account-menu :global([data-slot="dropdown-menu-item"][data-highlighted]) {
+  background: color-mix(
+    in oklab,
+    var(--module-account-fg) 22%,
+    var(--module-account-bg)
+  ) !important;
+  color: var(--ink) !important;
+}
+
+.nav-account-menu :global([data-slot="dropdown-menu-item"]:hover) svg,
+.nav-account-menu :global([data-slot="dropdown-menu-item"]:focus) svg,
+.nav-account-menu
+  :global([data-slot="dropdown-menu-item"][data-highlighted])
+  svg {
+  color: var(--module-account-fg);
+}
+
 .sidebar-starfield {
   background-color: var(--sidebar);
 }
