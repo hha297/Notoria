@@ -109,6 +109,18 @@
   color: var(--muted-foreground);
 }
 
+.settings-inline-link {
+  font-weight: 650;
+  color: var(--ink);
+  text-decoration: underline;
+  text-decoration-color: color-mix(in oklab, var(--ink) 28%, transparent);
+  text-underline-offset: 0.15em;
+}
+
+.settings-inline-link:hover {
+  text-decoration-color: var(--ink);
+}
+
 .settings-choice-row {
   display: flex;
   flex-wrap: wrap;

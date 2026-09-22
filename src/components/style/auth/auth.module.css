@@ -305,6 +305,49 @@
   box-shadow: 0 0 0 2px color-mix(in oklab, var(--ring) 55%, transparent);
 }
 
+.auth-legal {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem 0.45rem;
+  padding-top: 0.15rem;
+  font-size: 0.84rem;
+  color: var(--muted-foreground);
+}
+
+.auth-legal-sep {
+  opacity: 0.55;
+}
+
+.auth-legal-link {
+  font-weight: 600;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 140ms ease;
+}
+
+.auth-legal-link:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+.auth-agreement {
+  margin: 0;
+  font-size: 0.84rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+  text-align: center;
+}
+
+.auth-agreement a {
+  font-weight: 650;
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
 .auth-forgot-link {
   font-size: 0.82rem;
   font-weight: 600;

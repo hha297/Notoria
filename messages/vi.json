@@ -1602,7 +1602,11 @@
       "clearDescription": "Xóa các tuỳ chọn app trên thiết bị này: chuyển động, phím tắt, tutorial, và tương tự. Không xóa tài khoản hay dữ liệu học.",
       "clearConfirmTitle": "Xóa tuỳ chọn cục bộ?",
       "clearConfirmDescription": "Chỉ xóa tuỳ chọn trên trình duyệt này. Tài khoản, billing và nội dung học không bị xóa.",
-      "clearDone": "Đã xóa tuỳ chọn cục bộ"
+      "clearDone": "Đã xóa tuỳ chọn cục bộ",
+      "policiesTitle": "Chính sách",
+      "policiesDescription": "Chính sách quyền riêng tư và Điều khoản sử dụng của Notoria.",
+      "privacyLink": "Chính sách quyền riêng tư",
+      "termsLink": "Điều khoản sử dụng"
     },
     "tagManager": {
       "sectionTitle": "Từ vựng",
@@ -2060,7 +2064,10 @@
     "oauthCancelled": "Bạn đã hủy đăng nhập Google. Thử lại nhé.",
     "oauthFailed": "Đăng nhập Google không thành công. Vui lòng thử lại.",
     "oauthAccountNotLinked": "Email này đã dùng với cách đăng nhập khác.",
-    "oauthNotConfigured": "Đăng nhập Google chưa được cấu hình."
+    "oauthNotConfigured": "Đăng nhập Google chưa được cấu hình.",
+    "legalPrivacy": "Quyền riêng tư",
+    "legalTerms": "Điều khoản",
+    "registerAgreement": "Khi tạo tài khoản, bạn đồng ý với <terms>Điều khoản sử dụng</terms> và <privacy>Chính sách quyền riêng tư</privacy>."
   },
   "account": {
     "eyebrow": "Tài khoản",
@@ -2083,7 +2090,7 @@
     "profile": {
       "title": "Hồ sơ",
       "description": "Cách bạn hiện trên Notoria. Email gắn với đăng nhập.",
-      "emailHint": "Không đổi email tại đây. Liên hệ hỗ trợ nếu cần chuyển sang địa chỉ khác."
+      "emailHint": "Không đổi email tại đây. Liên hệ contact@notoria.fi nếu cần chuyển sang địa chỉ khác."
     },
     "security": {
       "title": "Mật khẩu",
@@ -2654,5 +2661,23 @@
       },
       "closing": "Chỉ cần bắt đầu với điều bạn muốn nhớ. Nhật ký sẽ phát triển tự nhiên từ đó."
     }
+  },
+  "legal": {
+    "eyebrow": "Pháp lý",
+    "navLabel": "Trang pháp lý",
+    "privacy": "Chính sách quyền riêng tư",
+    "terms": "Điều khoản sử dụng",
+    "privacyTitle": "Chính sách quyền riêng tư",
+    "termsTitle": "Điều khoản sử dụng",
+    "updated": "Cập nhật lần cuối {date}",
+    "backToSignIn": "Quay lại đăng nhập",
+    "backHome": "Quay lại Notoria",
+    "authFooter": "Quyền riêng tư · Điều khoản",
+    "privacyShort": "Quyền riêng tư",
+    "termsShort": "Điều khoản",
+    "registerAgreement": "Khi tạo tài khoản, bạn đồng ý với <terms>Điều khoản sử dụng</terms> và <privacy>Chính sách quyền riêng tư</privacy>.",
+    "settingsLinksTitle": "Chính sách",
+    "settingsLinksDescription": "Đọc cách Notoria xử lý dữ liệu và quy tắc sử dụng dịch vụ.",
+    "contactEmail": "contact@notoria.fi"
   }
 }

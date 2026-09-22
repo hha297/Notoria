@@ -1787,7 +1787,11 @@
       "clearDescription": "Tar bort temaoberoende appinställningar som lagras på denna enhet: rörelse, genvägar, tutorials och liknande lokala inställningar. Tar inte bort ditt konto eller arbetsytadata.",
       "clearConfirmTitle": "Rensa lokala inställningar?",
       "clearConfirmDescription": "Detta rensar endast inställningar i denna webbläsare. Ditt konto, fakturering och lärandeinnehåll raderas inte.",
-      "clearDone": "Lokala inställningar rensade"
+      "clearDone": "Lokala inställningar rensade",
+      "policiesTitle": "Policyer",
+      "policiesDescription": "Integritetspolicy och användarvillkor för Notoria.",
+      "privacyLink": "Integritetspolicy",
+      "termsLink": "Användarvillkor"
     },
     "tagManager": {
       "sectionTitle": "Ordförråd",
@@ -2245,7 +2249,10 @@
     "oauthCancelled": "Google-inloggning avbröts. Du kan försöka igen.",
     "oauthFailed": "Google-inloggning misslyckades. Försök igen.",
     "oauthAccountNotLinked": "Denna e-post används redan med en annan inloggningsmetod.",
-    "oauthNotConfigured": "Google-inloggning är inte konfigurerad än."
+    "oauthNotConfigured": "Google-inloggning är inte konfigurerad än.",
+    "legalPrivacy": "Integritet",
+    "legalTerms": "Villkor",
+    "registerAgreement": "Genom att skapa ett konto godkänner du <terms>användarvillkoren</terms> och <privacy>integritetspolicyn</privacy>."
   },
   "account": {
     "eyebrow": "Konto",
@@ -2268,7 +2275,7 @@
     "profile": {
       "title": "Profil",
       "description": "Hur du framstår på Notoria. E-postadress förblir kopplad till inloggning.",
-      "emailHint": "E-post kan inte ändras här. Kontakta support om du behöver flytta till en annan adress."
+      "emailHint": "E-post kan inte ändras här. Kontakta contact@notoria.fi om du behöver flytta till en annan adress."
     },
     "security": {
       "title": "Lösenord",
@@ -2654,5 +2661,23 @@
       },
       "closing": "Börja bara med något du vill minnas. Din dagbok kommer att växa naturligt därifrån."
     }
+  },
+  "legal": {
+    "eyebrow": "Juridiskt",
+    "navLabel": "Juridiska sidor",
+    "privacy": "Integritetspolicy",
+    "terms": "Användarvillkor",
+    "privacyTitle": "Integritetspolicy",
+    "termsTitle": "Användarvillkor",
+    "updated": "Senast uppdaterad {date}",
+    "backToSignIn": "Tillbaka till inloggning",
+    "backHome": "Tillbaka till Notoria",
+    "authFooter": "Integritet · Villkor",
+    "privacyShort": "Integritet",
+    "termsShort": "Villkor",
+    "registerAgreement": "Genom att skapa ett konto godkänner du <terms>användarvillkoren</terms> och <privacy>integritetspolicyn</privacy>.",
+    "settingsLinksTitle": "Policyer",
+    "settingsLinksDescription": "Läs hur Notoria hanterar dina uppgifter och reglerna för tjänsten.",
+    "contactEmail": "contact@notoria.fi"
   }
 }

@@ -1,0 +1,315 @@
+.legal-layout {
+  min-height: 100svh;
+  background: var(--background);
+}
+
+.legal-shell {
+  --legal-wash: var(--module-home-bg);
+  --legal-ink: var(--module-home-fg);
+  position: relative;
+  isolation: isolate;
+  min-height: 100svh;
+  padding: 1.5rem 1.15rem 3rem;
+}
+
+@media (min-width: 768px) {
+  .legal-shell {
+    padding: 2rem 1.5rem 3.5rem;
+  }
+}
+
+.legal-shell::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 12% 8%,
+      color-mix(in oklab, var(--module-home-bg) 72%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 92% 12%,
+      color-mix(in oklab, var(--module-listen-bg) 48%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 50% 100%,
+      color-mix(in oklab, var(--module-exercise-bg) 28%, transparent),
+      transparent 70%
+    );
+}
+
+.legal-inner {
+  position: relative;
+  z-index: 1;
+  width: min(100%, 54rem);
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.legal-brand-link {
+  display: inline-flex;
+  width: fit-content;
+  align-items: center;
+  gap: 0.7rem;
+  border-radius: 0.55rem;
+  outline: none;
+  transition: opacity 160ms ease;
+}
+
+.legal-brand-link:hover {
+  opacity: 0.92;
+}
+
+.legal-brand-link:focus-visible {
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--ring) 55%, transparent);
+}
+
+.legal-brand-wordmark {
+  font-size: clamp(1.35rem, 3.5vw, 1.65rem);
+  letter-spacing: -0.03em;
+}
+
+.legal-hero {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.legal-kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--legal-ink);
+}
+
+.legal-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.65rem, 4.2vw, 2.15rem);
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.legal-meta {
+  margin: 0.35rem 0 0;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  color: var(--muted-foreground);
+}
+
+.legal-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1.1rem;
+  padding: 0.85rem 0 0;
+  border-top: 1px solid
+    color-mix(in oklab, var(--legal-ink) 14%, var(--hairline-cloud));
+}
+
+.legal-nav-link {
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--muted-foreground);
+  text-decoration: none;
+  transition: color 140ms ease;
+}
+
+.legal-nav-link:hover {
+  color: var(--ink);
+}
+
+.legal-nav-link[data-active="true"] {
+  color: var(--legal-ink);
+}
+
+.legal-panel {
+  border-radius: 0.95rem;
+  border: 1px solid
+    color-mix(in oklab, var(--legal-ink) 16%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--legal-wash) 42%, transparent),
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 55%, transparent);
+  overflow: hidden;
+}
+
+.legal-panel-body {
+  padding: 1.45rem 1.25rem 1.75rem;
+}
+
+@media (min-width: 640px) {
+  .legal-panel-body {
+    padding: 1.85rem 2rem 2.15rem;
+  }
+}
+
+@media (min-width: 900px) {
+  .legal-panel-body {
+    padding: 2rem 2.35rem 2.4rem;
+  }
+}
+
+.legal-prose {
+  display: flex;
+  flex-direction: column;
+  gap: 1.75rem;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+.legal-prose section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.legal-prose h2 {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: var(--ink);
+}
+
+.legal-prose h3 {
+  margin: 0.35rem 0 0;
+  font-size: 1.02rem;
+  font-weight: 650;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.legal-prose p {
+  margin: 0;
+  max-width: 48rem;
+}
+
+.legal-prose ul,
+.legal-prose ol {
+  margin: 0.15rem 0 0;
+  padding-left: 1.45rem;
+  max-width: 48rem;
+}
+
+.legal-prose ul {
+  list-style: disc outside;
+}
+
+.legal-prose ol {
+  list-style: decimal outside;
+}
+
+.legal-prose li {
+  margin: 0 0 0.7rem;
+  padding-left: 0.35rem;
+  line-height: 1.6;
+}
+
+.legal-prose li:last-child {
+  margin-bottom: 0;
+}
+
+.legal-prose li::marker {
+  color: color-mix(in oklab, var(--legal-ink) 72%, var(--muted-foreground));
+}
+
+.legal-prose a {
+  color: var(--link);
+  text-underline-offset: 0.15em;
+}
+
+.legal-prose a:hover {
+  text-decoration: underline;
+}
+
+.legal-prose code {
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.88em;
+  padding: 0.05em 0.3em;
+  border-radius: 0.3rem;
+  background: color-mix(in oklab, var(--muted) 55%, transparent);
+}
+
+.legal-prose strong {
+  font-weight: 650;
+}
+
+.legal-note {
+  margin: 0;
+  padding: 0.85rem 1rem;
+  border-radius: 0.7rem;
+  border: 1px solid
+    color-mix(in oklab, var(--legal-ink) 18%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--legal-wash) 22%, transparent);
+  font-size: 0.9rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+.legal-footer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.86rem;
+  color: var(--muted-foreground);
+}
+
+.legal-footer a {
+  color: var(--muted-foreground);
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.legal-footer a:hover {
+  color: var(--ink);
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+:global(.dark) .legal-shell::before {
+  background:
+    radial-gradient(
+      ellipse 70% 50% at 12% 8%,
+      color-mix(in oklab, var(--module-home-bg) 42%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 55% 45% at 92% 12%,
+      color-mix(in oklab, var(--module-listen-bg) 28%, transparent),
+      transparent 68%
+    ),
+    radial-gradient(
+      ellipse 50% 40% at 50% 100%,
+      color-mix(in oklab, var(--module-exercise-bg) 16%, transparent),
+      transparent 70%
+    );
+}
+
+:global(.dark) .legal-panel {
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--legal-wash) 28%, transparent),
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 42%, transparent);
+}
+

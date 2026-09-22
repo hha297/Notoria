@@ -1787,7 +1787,11 @@
       "clearDescription": "Removes theme-independent app preferences stored on this device: motion, shortcuts, tutorials, and similar local settings. Does not delete your account or workspace data.",
       "clearConfirmTitle": "Clear local preferences?",
       "clearConfirmDescription": "This only clears preferences in this browser. Your account, billing, and learning content are not deleted.",
-      "clearDone": "Local preferences cleared"
+      "clearDone": "Local preferences cleared",
+      "policiesTitle": "Legal policies",
+      "policiesDescription": "Privacy Policy and Terms of Use for Notoria.",
+      "privacyLink": "Privacy Policy",
+      "termsLink": "Terms of Use"
     },
     "tagManager": {
       "sectionTitle": "Vocabulary",
@@ -2245,7 +2249,10 @@
     "oauthCancelled": "Google sign-in was cancelled. You can try again.",
     "oauthFailed": "Google sign-in failed. Please try again.",
     "oauthAccountNotLinked": "This email is already used with another sign-in method.",
-    "oauthNotConfigured": "Google sign-in is not configured yet."
+    "oauthNotConfigured": "Google sign-in is not configured yet.",
+    "legalPrivacy": "Privacy",
+    "legalTerms": "Terms",
+    "registerAgreement": "By creating an account, you agree to the <terms>Terms of Use</terms> and <privacy>Privacy Policy</privacy>."
   },
   "account": {
     "eyebrow": "Account",
@@ -2268,7 +2275,7 @@
     "profile": {
       "title": "Profile",
       "description": "How you appear across Notoria. Email stays tied to sign-in.",
-      "emailHint": "Email cannot be changed here. Contact support if you need to move to a different address."
+      "emailHint": "Email cannot be changed here. Contact contact@notoria.fi if you need to move to a different address."
     },
     "security": {
       "title": "Password",
@@ -2654,5 +2661,23 @@
       },
       "closing": "Just start with something you want to remember. Your diary will grow naturally from there."
     }
+  },
+  "legal": {
+    "eyebrow": "Legal",
+    "navLabel": "Legal pages",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "privacyTitle": "Privacy Policy",
+    "termsTitle": "Terms of Use",
+    "updated": "Last updated {date}",
+    "backToSignIn": "Back to sign in",
+    "backHome": "Back to Notoria",
+    "authFooter": "Privacy · Terms",
+    "privacyShort": "Privacy",
+    "termsShort": "Terms",
+    "registerAgreement": "By creating an account, you agree to the <terms>Terms of Use</terms> and <privacy>Privacy Policy</privacy>.",
+    "settingsLinksTitle": "Policies",
+    "settingsLinksDescription": "Read how Notoria handles your data and the rules for using the service.",
+    "contactEmail": "contact@notoria.fi"
   }
 }

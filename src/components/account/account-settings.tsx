@@ -3,6 +3,7 @@
 import styles from "@/components/style/account/account.module.css";
 import { mx } from "@/lib/css-module";
 import { useEffect, useMemo, useRef, useState, useTransition } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
@@ -43,6 +44,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
   const { update } = useSession();
   const t = useTranslations("account");
   const tAuth = useTranslations("auth");
+  const tLegal = useTranslations("legal");
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [image, setImage] = useState(user.image);
   const [name, setName] = useState(user.name);
@@ -440,7 +442,16 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
         <div className={mx(styles, "account-panel-body account-danger-row")}>
           <div className={mx(styles, "account-danger-copy")}>
             <p className={mx(styles, "account-danger-title")}>{t("danger.deleteTitle")}</p>
-            <p className={mx(styles, "account-danger-hint")}>{t("danger.deleteHint")}</p>
+            <p className={mx(styles, "account-danger-hint")}>
+              {t("danger.deleteHint")}{" "}
+              <Link href="/privacy" className="font-semibold underline underline-offset-2">
+                {tLegal("privacyShort")}
+              </Link>
+              {" · "}
+              <Link href="/terms" className="font-semibold underline underline-offset-2">
+                {tLegal("termsShort")}
+              </Link>
+            </p>
           </div>
           <Button
             type="button"

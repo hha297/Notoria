@@ -11,9 +11,12 @@ export default auth((request) => {
   const isPasswordResetRoute =
     pathname.startsWith("/forgot-password") ||
     pathname.startsWith("/reset-password");
+  const isLegalRoute =
+    pathname.startsWith("/privacy") || pathname.startsWith("/terms");
   const isPublicRoute =
     isAuthRoute ||
     isPasswordResetRoute ||
+    isLegalRoute ||
     pathname.startsWith("/api/auth") ||
     pathname.startsWith("/api/stripe/webhook") ||
     pathname.startsWith("/api/stream/webhook");

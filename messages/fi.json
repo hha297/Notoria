@@ -1602,7 +1602,11 @@
       "clearDescription": "Poistaa tältä laitteelta sovellusasetuksia: liike, pikanäppäimet, oppaat ja vastaavat. Ei poista tiliä eikä oppimisdataa.",
       "clearConfirmTitle": "Tyhjennetäänkö paikalliset asetukset?",
       "clearConfirmDescription": "Tämä tyhjentää vain tämän selaimen asetukset. Tiliä, laskutusta ja oppimissisältöä ei poisteta.",
-      "clearDone": "Paikalliset asetukset tyhjennetty"
+      "clearDone": "Paikalliset asetukset tyhjennetty",
+      "policiesTitle": "Käytännöt",
+      "policiesDescription": "Notorian tietosuojaseloste ja käyttöehdot.",
+      "privacyLink": "Tietosuojaseloste",
+      "termsLink": "Käyttöehdot"
     },
     "tagManager": {
       "sectionTitle": "Sanasto",
@@ -2060,7 +2064,10 @@
     "oauthCancelled": "Googlen kirjautuminen peruutettiin. Voit yrittää uudelleen.",
     "oauthFailed": "Googlen kirjautuminen epäonnistui. Yritä uudelleen.",
     "oauthAccountNotLinked": "Tätä sähköpostia käytetään jo toisella kirjautumistavalla.",
-    "oauthNotConfigured": "Googlen kirjautumista ei ole vielä määritetty."
+    "oauthNotConfigured": "Googlen kirjautumista ei ole vielä määritetty.",
+    "legalPrivacy": "Tietosuoja",
+    "legalTerms": "Ehdot",
+    "registerAgreement": "Luomalla tilin hyväksyt <terms>käyttöehdot</terms> ja <privacy>tietosuojaselosteen</privacy>."
   },
   "account": {
     "eyebrow": "Tili",
@@ -2083,7 +2090,7 @@
     "profile": {
       "title": "Profiili",
       "description": "Miten näyt Notoriassa. Sähköposti on sidottu kirjautumiseen.",
-      "emailHint": "Sähköpostia ei voi vaihtaa täällä. Ota yhteyttä tukeen, jos tarvitset uuden osoitteen."
+      "emailHint": "Sähköpostia ei voi vaihtaa täällä. Ota yhteyttä osoitteeseen contact@notoria.fi, jos tarvitset uuden osoitteen."
     },
     "security": {
       "title": "Salasana",
@@ -2654,5 +2661,23 @@
       },
       "closing": "Aloita vain jostain, jonka haluat muistaa. Päiväkirjasi kasvaa luonnollisesti siitä eteenpäin."
     }
+  },
+  "legal": {
+    "eyebrow": "Juridinen",
+    "navLabel": "Juridiset sivut",
+    "privacy": "Tietosuojaseloste",
+    "terms": "Käyttöehdot",
+    "privacyTitle": "Tietosuojaseloste",
+    "termsTitle": "Käyttöehdot",
+    "updated": "Päivitetty {date}",
+    "backToSignIn": "Takaisin kirjautumiseen",
+    "backHome": "Takaisin Notoriaan",
+    "authFooter": "Tietosuoja · Ehdot",
+    "privacyShort": "Tietosuoja",
+    "termsShort": "Ehdot",
+    "registerAgreement": "Luomalla tilin hyväksyt <terms>käyttöehdot</terms> ja <privacy>tietosuojaselosteen</privacy>.",
+    "settingsLinksTitle": "Käytännöt",
+    "settingsLinksDescription": "Lue, miten Notoria käsittelee tietojasi ja mitä palvelun käyttöön kuuluu.",
+    "contactEmail": "contact@notoria.fi"
   }
 }
