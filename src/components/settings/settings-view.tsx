@@ -293,6 +293,10 @@ function DataPrivacySection() {
             <Link href="/terms" className={mx(styles, "settings-inline-link")}>
               {t("data.termsLink")}
             </Link>
+            {" · "}
+            <Link href="/help" className={mx(styles, "settings-inline-link")}>
+              {t("data.helpLink")}
+            </Link>
           </p>
           <p className={mx(styles, "settings-row-hint")}>
             <a href="mailto:contact@notoria.fi">contact@notoria.fi</a>

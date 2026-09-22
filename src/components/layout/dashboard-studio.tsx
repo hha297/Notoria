@@ -37,6 +37,7 @@ function studioSceneFromPath(pathname: string) {
 
 type DashboardStudioProps = {
   children: ReactNode;
+  footer?: ReactNode;
   locale: AppLocale;
   workspaces: Workspace[];
   activeWorkspaceId?: string;
@@ -48,6 +49,7 @@ type DashboardStudioProps = {
 
 export function DashboardStudio({
   children,
+  footer,
   locale,
   workspaces,
   activeWorkspaceId,
@@ -100,18 +102,18 @@ export function DashboardStudio({
             </header>
             <main
               className={cn(
-                "min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden px-4 pt-6 sm:px-6 sm:pt-8",
+                "flex min-h-0 min-w-0 flex-1 flex-col overflow-y-auto overflow-x-hidden",
                 pathname === "/writing" ||
                   pathname.startsWith("/writing/folders") ||
                   pathname === "/theory" ||
                   pathname.startsWith("/theory/folders")
                   ? "pb-3 sm:pb-4"
-                  : "pb-6 sm:pb-8",
+                  : "pb-4 sm:pb-5",
               )}
             >
               <div
                 className={cn(
-                  "mx-auto w-full min-w-0",
+                  "mx-auto w-full min-w-0 flex-1 px-4 pt-6 sm:px-6 sm:pt-8",
                   pathname.startsWith("/writing/") ||
                     pathname.startsWith("/theory/") ||
                     pathname.startsWith("/listening/") ||
@@ -122,6 +124,11 @@ export function DashboardStudio({
               >
                 {children}
               </div>
+              {footer ? (
+                <div className="mt-auto w-full shrink-0 border-t border-hairline-cloud/80 px-4 pt-1 sm:px-6">
+                  {footer}
+                </div>
+              ) : null}
             </main>
           </div>
         </div>

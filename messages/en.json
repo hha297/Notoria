@@ -1791,7 +1791,8 @@
       "policiesTitle": "Legal policies",
       "policiesDescription": "Privacy Policy and Terms of Use for Notoria.",
       "privacyLink": "Privacy Policy",
-      "termsLink": "Terms of Use"
+      "termsLink": "Terms of Use",
+      "helpLink": "Help & Support"
     },
     "tagManager": {
       "sectionTitle": "Vocabulary",
@@ -2679,5 +2680,145 @@
     "settingsLinksTitle": "Policies",
     "settingsLinksDescription": "Read how Notoria handles your data and the rules for using the service.",
     "contactEmail": "contact@notoria.fi"
+  },
+  "footer": {
+    "navLabel": "Site links",
+    "explore": "Explore",
+    "help": "Help & Support",
+    "legal": "Legal",
+    "contact": "Contact",
+    "howToUse": "How to Use",
+    "about": "About Us",
+    "ourStory": "Our Story",
+    "helpSupport": "Help & Support",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Use",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "copyright": "© 2026 Notoria",
+    "tagline": "A quiet workspace for learning a language."
+  },
+  "sitePages": {
+    "about": {
+      "eyebrow": "About",
+      "title": "About Notoria",
+      "lede": "A private language-learning workspace for the material you actually use.",
+      "what": {
+        "title": "What it is",
+        "body": "Notoria is a web app where you keep vocabulary, notes, writing, exercises, listening, and speaking in one place — organised by the language you are learning. It is built around your own content, not a third-party course catalogue."
+      },
+      "who": {
+        "title": "Who it is for",
+        "body": "Learners who want a calm place to collect words, explain grammar in their own words, practise with that material, and come back tomorrow without starting from scratch."
+      },
+      "provides": {
+        "title": "What you can do",
+        "items": {
+          "vocab": "Build a personal vocabulary bank with meanings, examples, and tags",
+          "practice": "Drill with exercises drawn from your own words",
+          "create": "Write worksheets and theory notes you can revisit",
+          "listenSpeak": "Turn media into listening practice and speak with an AI tutor on Pro"
+        },
+        "note": "Some AI, listening, speaking, and export tools are part of Notoria Pro. The free plan still covers everyday vocabulary practice and related study tools."
+      }
+    },
+    "ourStory": {
+      "eyebrow": "Story",
+      "title": "Our story",
+      "lede": "Notoria started from a simple frustration: language notes were scattered, and practice tools rarely used the material you had already collected.",
+      "problem": {
+        "title": "The problem",
+        "body": "Word lists lived in one app, grammar notes in another, writing somewhere else, and listening or speaking almost never connected back to what you were studying. Progress felt thin because the tools did not share a single private workspace."
+      },
+      "why": {
+        "title": "Why we built it",
+        "body": "We wanted a product that treats your notes as the centre of the loop — collect, understand, practise, create, listen, speak, and review — without pretending to be a school or a content marketplace."
+      },
+      "direction": {
+        "title": "Where it is heading",
+        "body": "Keep Notoria private, practical, and honest. Improve the learning loop around your own material. Add AI help where it saves time, without turning the product into noise."
+      }
+    },
+    "howToUse": {
+      "eyebrow": "Guide",
+      "title": "How to use Notoria",
+      "lede": "You do not need every feature on day one. Start with a workspace and a few words you care about.",
+      "idea": {
+        "title": "The basic idea",
+        "body": "Each workspace is one language. Inside it, vocabulary, theory, exercises, writing, listening, and speaking stay connected so practice comes from what you have saved."
+      },
+      "start": {
+        "title": "A simple start",
+        "steps": {
+          "workspace": "Create a workspace for the language you are learning.",
+          "words": "Add a handful of words you actually want to remember.",
+          "notes": "Write a short theory note when something needs explaining.",
+          "practice": "Open Exercise and practise with your own material.",
+          "return": "Come back later, add more, and keep the loop going."
+        }
+      },
+      "modules": {
+        "title": "The main areas",
+        "vocab": {
+          "label": "Vocabulary",
+          "body": "your word bank and flashcard progress"
+        },
+        "theory": {
+          "label": "Theory",
+          "body": "grammar and usage notes in your own words"
+        },
+        "exercises": {
+          "label": "Exercise",
+          "body": "drills built from your vocabulary"
+        },
+        "writing": {
+          "label": "Writing",
+          "body": "documents and question sets for active use"
+        },
+        "listenSpeak": {
+          "label": "Listening & Speaking",
+          "body": "media practice and live AI tutor calls on Pro"
+        }
+      },
+      "fullGuide": "Signed in? Open the full in-app guide: <link>How to use</link>.",
+      "signInHint": "Have an account? <link>Sign in</link> to open your workspace and the full guide."
+    },
+    "help": {
+      "eyebrow": "Support",
+      "title": "Help & Support",
+      "lede": "Quick answers, and a direct line when you need to report a bug, request a feature, or send feedback.",
+      "faq": {
+        "title": "Common questions",
+        "account": {
+          "q": "How do I change my password or close my account?",
+          "a": "Open Account. You can update your password there (if you use email sign-in), manage Notoria Pro, export a backup, or permanently delete your account."
+        },
+        "pro": {
+          "q": "How do billing and cancellation work?",
+          "a": "Notoria Pro is billed through Stripe. From Account you can upgrade, open the Stripe customer portal to manage payment methods and invoices, or cancel renewal."
+        },
+        "data": {
+          "q": "Where is my learning content stored?",
+          "a": "Your account and workspace content live in Notoria’s database. Media for avatars and listening is stored with our media host. See the Privacy Policy for processors and deletion."
+        },
+        "ai": {
+          "q": "Can I turn AI help off?",
+          "a": "Yes. AI assistance preferences are in Settings. When assistance is off, AI tools that require it stay blocked."
+        }
+      },
+      "reach": {
+        "title": "Bugs, ideas, and feedback",
+        "body": "Use the links below to open a pre-filled email to Notoria. There is one contact address for all of this.",
+        "bug": "Report a bug",
+        "feature": "Suggest a feature",
+        "feedback": "Send general feedback",
+        "note": "All of these go to the same inbox. Include your account email if the message is about billing or account access."
+      },
+      "contact": {
+        "title": "Contact",
+        "emailLabel": "Email",
+        "phoneLabel": "Phone"
+      }
+    }
   }
 }

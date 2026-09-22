@@ -3,6 +3,7 @@ import { cookies } from "next/headers";
 import { redirect } from "next/navigation";
 import { DashboardDocumentTitle } from "@/components/layout/dashboard-document-title";
 import { DashboardStudio } from "@/components/layout/dashboard-studio";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { WorkspaceOnboardingGate } from "@/components/onboarding/workspace-onboarding-gate";
 import { WelcomePromptModal } from "@/components/prompts/welcome-prompt";
 import { ProAccessProvider } from "@/components/billing/pro-access-provider";
@@ -68,6 +69,7 @@ export default async function DashboardLayout({
         userEmail={session?.user?.email ?? ""}
         userImage={session?.user?.image}
         isPro={hasActiveProSubscription(subscription)}
+        footer={<SiteFooter variant="app" />}
       >
         <WelcomePromptModal
           hasWorkspace={Boolean(activeWorkspace)}

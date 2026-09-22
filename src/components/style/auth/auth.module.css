@@ -16,6 +16,27 @@
   padding: 1.5rem 1rem 2rem;
 }
 
+.auth-atelier-shell-footer {
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  padding: 2rem 0 0;
+}
+
+.auth-atelier-shell-footer .auth-atelier {
+  width: min(100%, 26.5rem);
+  margin-inline: auto;
+  padding-inline: 1rem;
+  flex: 1 1 auto;
+}
+
+.auth-site-footer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin-top: 2.5rem;
+}
+
 .auth-atelier-shell::before {
   content: "";
   position: absolute;

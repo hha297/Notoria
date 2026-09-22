@@ -8,13 +8,15 @@
   --legal-ink: var(--module-home-fg);
   position: relative;
   isolation: isolate;
+  display: flex;
+  flex-direction: column;
   min-height: 100svh;
-  padding: 1.5rem 1.15rem 3rem;
+  padding: 1.5rem 0 0;
 }
 
 @media (min-width: 768px) {
   .legal-shell {
-    padding: 2rem 1.5rem 3.5rem;
+    padding: 2rem 0 0;
   }
 }
 
@@ -50,6 +52,16 @@
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  flex: 1 1 auto;
+  padding-inline: 1.15rem;
+  padding-bottom: 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .legal-inner {
+    padding-inline: 1.5rem;
+    padding-bottom: 2rem;
+  }
 }
 
 .legal-brand-link {
@@ -282,6 +294,13 @@
   color: var(--ink);
   text-decoration: underline;
   text-underline-offset: 0.15em;
+}
+
+.legal-site-footer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  margin-top: auto;
 }
 
 :global(.dark) .legal-shell::before {

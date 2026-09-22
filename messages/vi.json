@@ -1606,7 +1606,8 @@
       "policiesTitle": "Chính sách",
       "policiesDescription": "Chính sách quyền riêng tư và Điều khoản sử dụng của Notoria.",
       "privacyLink": "Chính sách quyền riêng tư",
-      "termsLink": "Điều khoản sử dụng"
+      "termsLink": "Điều khoản sử dụng",
+      "helpLink": "Trợ giúp & hỗ trợ"
     },
     "tagManager": {
       "sectionTitle": "Từ vựng",
@@ -2679,5 +2680,145 @@
     "settingsLinksTitle": "Chính sách",
     "settingsLinksDescription": "Đọc cách Notoria xử lý dữ liệu và quy tắc sử dụng dịch vụ.",
     "contactEmail": "contact@notoria.fi"
+  },
+  "footer": {
+    "navLabel": "Liên kết trang",
+    "explore": "Khám phá",
+    "help": "Trợ giúp",
+    "legal": "Pháp lý",
+    "contact": "Liên hệ",
+    "howToUse": "Cách dùng",
+    "about": "Về chúng tôi",
+    "ourStory": "Câu chuyện",
+    "helpSupport": "Trợ giúp & hỗ trợ",
+    "privacy": "Chính sách quyền riêng tư",
+    "terms": "Điều khoản sử dụng",
+    "emailLabel": "Email",
+    "phoneLabel": "Điện thoại",
+    "copyright": "© 2026 Notoria",
+    "tagline": "Không gian yên tĩnh để học ngôn ngữ."
+  },
+  "sitePages": {
+    "about": {
+      "eyebrow": "Giới thiệu",
+      "title": "Về Notoria",
+      "lede": "Không gian học ngôn ngữ riêng tư cho tài liệu bạn thực sự dùng.",
+      "what": {
+        "title": "Notoria là gì",
+        "body": "Notoria là ứng dụng web nơi từ vựng, ghi chú, viết, bài tập, nghe và nói nằm cùng một chỗ — theo ngôn ngữ bạn đang học. Nó xoay quanh nội dung của bạn, không phải thư viện khóa học bên thứ ba."
+      },
+      "who": {
+        "title": "Dành cho ai",
+        "body": "Người học muốn một nơi bình tĩnh để gom từ, giải thích ngữ pháp bằng lời của mình, luyện với đúng tài liệu đó, và quay lại ngày mai mà không phải bắt đầu lại."
+      },
+      "provides": {
+        "title": "Bạn có thể làm gì",
+        "items": {
+          "vocab": "Xây ngân hàng từ cá nhân với nghĩa, ví dụ và thẻ",
+          "practice": "Luyện bài tập từ chính từ của bạn",
+          "create": "Viết worksheet và ghi chú lý thuyết để xem lại",
+          "listenSpeak": "Biến media thành luyện nghe và nói với AI tutor trên Pro"
+        },
+        "note": "Một số công cụ AI, nghe, nói và xuất file thuộc Notoria Pro. Gói miễn phí vẫn đủ để luyện từ vựng hàng ngày và các công cụ liên quan."
+      }
+    },
+    "ourStory": {
+      "eyebrow": "Câu chuyện",
+      "title": "Câu chuyện của chúng tôi",
+      "lede": "Notoria bắt đầu từ một nỗi bực đơn giản: ghi chú ngôn ngữ bị phân tán, và công cụ luyện tập hiếm khi dùng đúng thứ bạn đã gom.",
+      "problem": {
+        "title": "Vấn đề",
+        "body": "Danh sách từ ở một app, ngữ pháp ở app khác, viết ở chỗ khác, còn nghe/nói gần như không gắn với những gì bạn đang học. Tiến bộ mỏng vì các công cụ không chia một không gian riêng."
+      },
+      "why": {
+        "title": "Vì sao làm",
+        "body": "Chúng tôi muốn sản phẩm lấy ghi chú làm trung tâm — gom, hiểu, luyện, tạo, nghe, nói, ôn — mà không giả làm trường học hay chợ nội dung."
+      },
+      "direction": {
+        "title": "Hướng đi",
+        "body": "Giữ Notoria riêng tư, thiết thực và thẳng thắn. Cải thiện vòng học quanh tài liệu của bạn. Thêm AI nơi tiết kiệm thời gian, không biến sản phẩm thành ồn ào."
+      }
+    },
+    "howToUse": {
+      "eyebrow": "Hướng dẫn",
+      "title": "Cách dùng Notoria",
+      "lede": "Không cần mọi tính năng ngay ngày đầu. Bắt đầu với một workspace và vài từ bạn quan tâm.",
+      "idea": {
+        "title": "Ý tưởng cơ bản",
+        "body": "Mỗi workspace là một ngôn ngữ. Trong đó từ vựng, lý thuyết, bài tập, viết, nghe và nói gắn với nhau để luyện từ những gì bạn đã lưu."
+      },
+      "start": {
+        "title": "Bắt đầu đơn giản",
+        "steps": {
+          "workspace": "Tạo workspace cho ngôn ngữ bạn đang học.",
+          "words": "Thêm vài từ bạn thực sự muốn nhớ.",
+          "notes": "Viết ghi chú lý thuyết ngắn khi cần giải thích.",
+          "practice": "Mở Exercise và luyện với tài liệu của bạn.",
+          "return": "Quay lại sau, thêm nữa, và giữ vòng lặp."
+        }
+      },
+      "modules": {
+        "title": "Các phần chính",
+        "vocab": {
+          "label": "Từ vựng",
+          "body": "ngân hàng từ và tiến độ flashcard"
+        },
+        "theory": {
+          "label": "Lý thuyết",
+          "body": "ghi chú ngữ pháp và cách dùng bằng lời của bạn"
+        },
+        "exercises": {
+          "label": "Exercise",
+          "body": "bài tập từ từ vựng của bạn"
+        },
+        "writing": {
+          "label": "Writing",
+          "body": "tài liệu và bộ câu hỏi để dùng chủ động"
+        },
+        "listenSpeak": {
+          "label": "Nghe & Nói",
+          "body": "luyện media và AI tutor trực tiếp trên Pro"
+        }
+      },
+      "fullGuide": "Đã đăng nhập? Mở hướng dẫn đầy đủ trong app: <link>Cách dùng</link>.",
+      "signInHint": "Đã có tài khoản? <link>Đăng nhập</link> để mở workspace và hướng dẫn đầy đủ."
+    },
+    "help": {
+      "eyebrow": "Hỗ trợ",
+      "title": "Trợ giúp & hỗ trợ",
+      "lede": "Câu trả lời nhanh, và đường liên hệ trực tiếp khi cần báo lỗi, đề xuất tính năng hoặc gửi góp ý.",
+      "faq": {
+        "title": "Câu hỏi thường gặp",
+        "account": {
+          "q": "Đổi mật khẩu hoặc đóng tài khoản thế nào?",
+          "a": "Mở Account. Bạn có thể đổi mật khẩu (nếu đăng nhập bằng email), quản lý Notoria Pro, xuất bản sao lưu, hoặc xóa tài khoản vĩnh viễn."
+        },
+        "pro": {
+          "q": "Thanh toán và hủy hoạt động ra sao?",
+          "a": "Notoria Pro qua Stripe. Từ Account bạn có thể nâng cấp, mở cổng khách hàng Stripe để quản lý thanh toán/hóa đơn, hoặc hủy gia hạn."
+        },
+        "data": {
+          "q": "Nội dung học lưu ở đâu?",
+          "a": "Tài khoản và workspace nằm trong cơ sở dữ liệu Notoria. Media avatar/nghe ở máy chủ media. Xem Chính sách quyền riêng tư về bên xử lý và xóa dữ liệu."
+        },
+        "ai": {
+          "q": "Tắt trợ giúp AI được không?",
+          "a": "Được. Tùy chọn AI nằm trong Settings. Khi tắt, các công cụ cần AI sẽ bị chặn."
+        }
+      },
+      "reach": {
+        "title": "Lỗi, ý tưởng và góp ý",
+        "body": "Các liên kết dưới mở email đã điền sẵn tới Notoria. Tất cả về cùng một địa chỉ.",
+        "bug": "Báo lỗi",
+        "feature": "Đề xuất tính năng",
+        "feedback": "Gửi góp ý chung",
+        "note": "Mọi thư vào cùng hộp thư. Ghi email tài khoản nếu liên quan thanh toán hoặc truy cập."
+      },
+      "contact": {
+        "title": "Liên hệ",
+        "emailLabel": "Email",
+        "phoneLabel": "Điện thoại"
+      }
+    }
   }
 }

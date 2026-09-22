@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { getTranslations } from "next-intl/server";
+import { SiteFooter } from "@/components/layout/site-footer";
 import { Logo, LogoWordmark } from "@/components/ui/logo";
 import styles from "@/components/style/auth/auth.module.css";
 import { mx } from "@/lib/css-module";
@@ -17,10 +17,8 @@ export async function AuthPageShell({
   description,
   children,
 }: AuthPageShellProps) {
-  const t = await getTranslations("auth");
-
   return (
-    <div className={mx(styles, "auth-atelier-shell")}>
+    <div className={mx(styles, "auth-atelier-shell auth-atelier-shell-footer")}>
       <div className={mx(styles, "auth-atelier")}>
         <header className={mx(styles, "auth-hero")}>
           <Link
@@ -45,18 +43,10 @@ export async function AuthPageShell({
         <section className={mx(styles, "auth-panel")} aria-label={title}>
           <div className={mx(styles, "auth-panel-body")}>{children}</div>
         </section>
+      </div>
 
-        <nav className={mx(styles, "auth-legal")} aria-label={t("legalPrivacy")}>
-          <Link href="/privacy" className={mx(styles, "auth-legal-link")}>
-            {t("legalPrivacy")}
-          </Link>
-          <span className={mx(styles, "auth-legal-sep")} aria-hidden>
-            ·
-          </span>
-          <Link href="/terms" className={mx(styles, "auth-legal-link")}>
-            {t("legalTerms")}
-          </Link>
-        </nav>
+      <div className={mx(styles, "auth-site-footer")}>
+        <SiteFooter variant="public" />
       </div>
     </div>
   );

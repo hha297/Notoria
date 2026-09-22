@@ -1791,7 +1791,8 @@
       "policiesTitle": "Policyer",
       "policiesDescription": "Integritetspolicy och användarvillkor för Notoria.",
       "privacyLink": "Integritetspolicy",
-      "termsLink": "Användarvillkor"
+      "termsLink": "Användarvillkor",
+      "helpLink": "Hjälp & support"
     },
     "tagManager": {
       "sectionTitle": "Ordförråd",
@@ -2679,5 +2680,145 @@
     "settingsLinksTitle": "Policyer",
     "settingsLinksDescription": "Läs hur Notoria hanterar dina uppgifter och reglerna för tjänsten.",
     "contactEmail": "contact@notoria.fi"
+  },
+  "footer": {
+    "navLabel": "Webbplatslänkar",
+    "explore": "Utforska",
+    "help": "Hjälp & support",
+    "legal": "Juridiskt",
+    "contact": "Kontakt",
+    "howToUse": "Så här använder du",
+    "about": "Om oss",
+    "ourStory": "Vår historia",
+    "helpSupport": "Hjälp & support",
+    "privacy": "Integritetspolicy",
+    "terms": "Användarvillkor",
+    "emailLabel": "E-post",
+    "phoneLabel": "Telefon",
+    "copyright": "© 2026 Notoria",
+    "tagline": "En stilla arbetsyta för språkinlärning."
+  },
+  "sitePages": {
+    "about": {
+      "eyebrow": "Om",
+      "title": "Om Notoria",
+      "lede": "En privat arbetsyta för språkinlärning kring materialet du faktiskt använder.",
+      "what": {
+        "title": "Vad det är",
+        "body": "Notoria är en webbapp där ordförråd, anteckningar, skrivande, övningar, lyssning och tal finns på ett ställe — ordnat efter språket du lär dig. Den bygger på ditt eget innehåll, inte en kurskatalog från tredje part."
+      },
+      "who": {
+        "title": "Vem den är till för",
+        "body": "Elever som vill ha en lugn plats att samla ord, förklara grammatik med egna ord, öva med det materialet och komma tillbaka i morgon utan att börja om."
+      },
+      "provides": {
+        "title": "Vad du kan göra",
+        "items": {
+          "vocab": "Bygg en personlig ordbank med betydelser, exempel och taggar",
+          "practice": "Öva med uppgifter som använder dina egna ord",
+          "create": "Skriv arbetsblad och teorianteckningar du kan återvända till",
+          "listenSpeak": "Gör media till lyssningsövningar och tala med en AI-tutor på Pro"
+        },
+        "note": "Vissa AI-, lyssnings-, tal- och exportverktyg ingår i Notoria Pro. Gratisplanen täcker fortfarande vardaglig ordförrådsträning och relaterade verktyg."
+      }
+    },
+    "ourStory": {
+      "eyebrow": "Historia",
+      "title": "Vår historia",
+      "lede": "Notoria växte fram ur en enkel frustration: språkinteckningar var utspridda, och övningsverktyg använde sällan det du redan samlat.",
+      "problem": {
+        "title": "Problemet",
+        "body": "Ordlistor fanns i en app, grammatik i en annan, skrivande någon annanstans, och lyssning eller tal kopplades knappt till det du studerade. Framstegen kändes tunna eftersom verktygen inte delade en privat arbetsyta."
+      },
+      "why": {
+        "title": "Varför vi byggde det",
+        "body": "Vi ville ha en produkt där dina anteckningar är navet — samla, förstå, öva, skapa, lyssna, tala och repetera — utan att låtsas vara en skola eller en innehållsmarknadsplats."
+      },
+      "direction": {
+        "title": "Vart vi är på väg",
+        "body": "Håll Notoria privat, praktiskt och ärligt. Förbättra lärandeloopen runt ditt eget material. Lägg till AI-hjälp där den sparar tid, utan att produkten blir brus."
+      }
+    },
+    "howToUse": {
+      "eyebrow": "Guide",
+      "title": "Så använder du Notoria",
+      "lede": "Du behöver inte alla funktioner dag ett. Börja med en arbetsyta och några ord du bryr dig om.",
+      "idea": {
+        "title": "Grundidé",
+        "body": "Varje arbetsyta är ett språk. Där hänger ordförråd, teori, övningar, skrivande, lyssning och tal ihop så att träningen utgår från det du sparat."
+      },
+      "start": {
+        "title": "En enkel start",
+        "steps": {
+          "workspace": "Skapa en arbetsyta för språket du lär dig.",
+          "words": "Lägg till en handfull ord du verkligen vill minnas.",
+          "notes": "Skriv en kort teorianteckning när något behöver förklaras.",
+          "practice": "Öppna Exercise och öva med ditt eget material.",
+          "return": "Kom tillbaka senare, lägg till mer och håll loopen igång."
+        }
+      },
+      "modules": {
+        "title": "Huvuddelarna",
+        "vocab": {
+          "label": "Ordförråd",
+          "body": "din ordbank och flashcard-progress"
+        },
+        "theory": {
+          "label": "Teori",
+          "body": "grammatik- och användningsanteckningar med egna ord"
+        },
+        "exercises": {
+          "label": "Exercise",
+          "body": "övningar från ditt ordförråd"
+        },
+        "writing": {
+          "label": "Writing",
+          "body": "dokument och frågeset för aktiv användning"
+        },
+        "listenSpeak": {
+          "label": "Lyssning & tal",
+          "body": "mediaträning och live-AI-tutor på Pro"
+        }
+      },
+      "fullGuide": "Inloggad? Öppna den fulla guiden i appen: <link>Så här använder du</link>.",
+      "signInHint": "Har du ett konto? <link>Logga in</link> för att öppna arbetsytan och den fulla guiden."
+    },
+    "help": {
+      "eyebrow": "Support",
+      "title": "Hjälp & support",
+      "lede": "Snabba svar, och en rak väg när du vill rapportera en bugg, föreslå en funktion eller skicka feedback.",
+      "faq": {
+        "title": "Vanliga frågor",
+        "account": {
+          "q": "Hur byter jag lösenord eller stänger kontot?",
+          "a": "Öppna Account. Där kan du byta lösenord (om du använder e-postinloggning), hantera Notoria Pro, exportera en backup eller radera kontot permanent."
+        },
+        "pro": {
+          "q": "Hur fungerar fakturering och avslut?",
+          "a": "Notoria Pro faktureras via Stripe. Från Account kan du uppgradera, öppna Stripe-kundportalen för betalningsmetoder och fakturor, eller avsluta förnyelse."
+        },
+        "data": {
+          "q": "Var lagras mitt innehåll?",
+          "a": "Konto och arbetsyteinnehåll finns i Notorias databas. Avatar- och lyssningsmedia hos vår mediehost. Se integritetspolicyn för behandlare och radering."
+        },
+        "ai": {
+          "q": "Kan jag stänga av AI-hjälp?",
+          "a": "Ja. AI-inställningar finns under Settings. När hjälpen är av stannar verktyg som kräver den."
+        }
+      },
+      "reach": {
+        "title": "Buggar, idéer och feedback",
+        "body": "Länkarna nedan öppnar ett förifyllt mejl till Notoria. Allt går till samma adress.",
+        "bug": "Rapportera en bugg",
+        "feature": "Föreslå en funktion",
+        "feedback": "Skicka allmän feedback",
+        "note": "Allt går till samma inkorg. Ange ditt konto-e-post om det gäller fakturering eller kontoåtkomst."
+      },
+      "contact": {
+        "title": "Kontakt",
+        "emailLabel": "E-post",
+        "phoneLabel": "Telefon"
+      }
+    }
   }
 }

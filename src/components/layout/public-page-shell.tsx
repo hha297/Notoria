@@ -6,19 +6,19 @@ import { Logo, LogoWordmark } from "@/components/ui/logo";
 import styles from "@/components/style/legal/legal.module.css";
 import { mx } from "@/lib/css-module";
 
-type LegalPageShellProps = {
+type PublicPageShellProps = {
+  eyebrow: string;
   title: string;
-  updatedLabel: string;
-  active: "privacy" | "terms";
+  description?: string;
   children: React.ReactNode;
 };
 
-export async function LegalPageShell({
+export async function PublicPageShell({
+  eyebrow,
   title,
-  updatedLabel,
-  active,
+  description,
   children,
-}: LegalPageShellProps) {
+}: PublicPageShellProps) {
   const t = await getTranslations("legal");
   const session = await auth();
   const homeHref = session?.user ? "/" : "/sign-in";
@@ -39,26 +39,11 @@ export async function LegalPageShell({
             />
           </Link>
 
-          <p className={mx(styles, "legal-kicker")}>{t("eyebrow")}</p>
+          <p className={mx(styles, "legal-kicker")}>{eyebrow}</p>
           <h1 className={mx(styles, "legal-title")}>{title}</h1>
-          <p className={mx(styles, "legal-meta")}>{updatedLabel}</p>
-
-          <nav className={mx(styles, "legal-nav")} aria-label={t("navLabel")}>
-            <Link
-              href="/privacy"
-              className={mx(styles, "legal-nav-link")}
-              data-active={active === "privacy" ? "true" : undefined}
-            >
-              {t("privacy")}
-            </Link>
-            <Link
-              href="/terms"
-              className={mx(styles, "legal-nav-link")}
-              data-active={active === "terms" ? "true" : undefined}
-            >
-              {t("terms")}
-            </Link>
-          </nav>
+          {description ? (
+            <p className={mx(styles, "legal-meta")}>{description}</p>
+          ) : null}
         </header>
 
         <section className={mx(styles, "legal-panel")} aria-label={title}>
