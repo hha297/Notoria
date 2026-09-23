@@ -1,15 +1,19 @@
 import { PAID_ACCESS_STATUSES, planForStripePrice, planRank, type PlanId, type StripePriceEnv } from "@/lib/billing/plans";
 
 /**
- * Paid plan changes are immediate Stripe subscription updates.
- * Prorations are invoiced immediately (`always_invoice`).
- * The subscription item price changes when that invoice succeeds.
- * A failed payment leaves the existing price in place.
- * Moving to Free is not a price: it schedules cancel_at_period_end.
+ * Upgrades (Pro → Premium) are immediate Stripe subscription updates with
+ * proration. Downgrades (Premium → Pro) are scheduled at period end via a
+ * Subscription Schedule so Premium entitlements stay until then.
+ * Moving to Free schedules cancel_at_period_end (access until period end).
  */
 export const PLAN_SWITCH_PRORATION = "always_invoice" as const;
 
-export type BillingExpect = "pro" | "premium" | "cancel" | "resume";
+export type BillingExpect =
+  | "pro"
+  | "premium"
+  | "cancel"
+  | "resume"
+  | "schedule_pro";
 
 export type BillingCommand =
   | { intent: "change"; plan: PlanId }
@@ -18,6 +22,11 @@ export type BillingCommand =
 export type ResolvedBillingCommand =
   | { action: "checkout"; plan: "pro" | "premium"; expect: "pro" | "premium" }
   | { action: "switch"; plan: "pro" | "premium"; expect: "pro" | "premium" }
+  | {
+      action: "scheduleDowngrade";
+      plan: "pro";
+      expect: "schedule_pro";
+    }
   | { action: "cancel"; expect: "cancel" }
   | { action: "resume"; expect: "resume" }
   | { action: "reject"; code: "ALREADY_SUBSCRIBED" | "NO_SUBSCRIPTION" | "INVALID_PLAN" };
@@ -37,10 +46,19 @@ export type SubscriptionSyncInput = {
   currentPeriodEnd: Date | null;
   customerId: string | null;
   subscriptionId: string;
+  /** Future paid plan after period end, when a schedule is active. */
+  scheduledPlan: PlanId | null;
+  scheduleId: string | null;
   env: StripePriceEnv;
 };
 
-const EXPECTS = new Set<BillingExpect>(["pro", "premium", "cancel", "resume"]);
+const EXPECTS = new Set<BillingExpect>([
+  "pro",
+  "premium",
+  "cancel",
+  "resume",
+  "schedule_pro",
+]);
 
 export function isBillingExpect(value: string | null | undefined): value is BillingExpect {
   return Boolean(value && EXPECTS.has(value as BillingExpect));
@@ -70,8 +88,8 @@ export function parseBillingCommand(body: unknown):
 }
 
 /**
- * The client names an internal plan. The server decides Checkout vs update vs cancel.
- * A requested price id on the body is ignored; callers must use configured price ids.
+ * The client names an internal plan. The server decides Checkout vs update vs
+ * schedule vs cancel. A requested price id on the body is ignored.
  */
 export function resolveBillingCommand(input: {
   currentPlan: PlanId;
@@ -101,7 +119,16 @@ export function resolveBillingCommand(input: {
     return { action: "checkout", plan: target, expect: target };
   }
 
-  return { action: "switch", plan: target, expect: target };
+  // Paid → paid: upgrade now, downgrade at period end.
+  if (planRank(target) > planRank(input.currentPlan)) {
+    return { action: "switch", plan: target, expect: target };
+  }
+
+  if (target === "pro" && input.currentPlan === "premium") {
+    return { action: "scheduleDowngrade", plan: "pro", expect: "schedule_pro" };
+  }
+
+  return { action: "reject", code: "INVALID_PLAN" };
 }
 
 export function validateConfiguredPrice(
@@ -147,6 +174,7 @@ export function switchUpdateParams(input: {
     metadata: {
       userId: input.userId,
       plan: input.plan,
+      scheduledPlan: "",
     },
   };
 }
@@ -182,13 +210,22 @@ export function checkoutSessionParams(input: {
 export function subscriptionRecordFromStripe(input: SubscriptionSyncInput) {
   const plan = planForStripePrice(input.status, input.priceId, input.env);
   const entitled = plan !== "free";
+  const scheduled =
+    entitled &&
+    input.scheduledPlan &&
+    input.scheduledPlan !== "free" &&
+    input.scheduledPlan !== plan
+      ? input.scheduledPlan
+      : null;
   return {
     subscriptionPlan: plan,
     subscriptionStatus: input.status,
     stripeCustomerId: input.customerId,
     stripeSubscriptionId: input.subscriptionId,
     stripeCurrentPeriodEnd: input.currentPeriodEnd,
-    stripeCancelAtPeriodEnd: entitled && input.cancelAtPeriodEnd,
+    stripeCancelAtPeriodEnd: entitled && input.cancelAtPeriodEnd && !scheduled,
+    scheduledSubscriptionPlan: scheduled,
+    stripeScheduleId: scheduled ? input.scheduleId : null,
   };
 }
 
@@ -216,15 +253,30 @@ export function shouldApplyIncomingSubscription(input: {
 
 export function subscriptionChangeConfirmed(
   expect: BillingExpect,
-  state: { plan: PlanId; cancelAtPeriodEnd: boolean },
+  state: {
+    plan: PlanId;
+    cancelAtPeriodEnd: boolean;
+    scheduledPlan?: PlanId | null;
+  },
 ) {
   if (expect === "cancel") {
     return state.cancelAtPeriodEnd && state.plan !== "free";
   }
   if (expect === "resume") {
-    return !state.cancelAtPeriodEnd && state.plan !== "free";
+    return (
+      !state.cancelAtPeriodEnd &&
+      state.plan !== "free" &&
+      !state.scheduledPlan
+    );
   }
-  return state.plan === expect && !state.cancelAtPeriodEnd;
+  if (expect === "schedule_pro") {
+    return state.plan === "premium" && state.scheduledPlan === "pro";
+  }
+  return (
+    state.plan === expect &&
+    !state.cancelAtPeriodEnd &&
+    !state.scheduledPlan
+  );
 }
 
 export type AccountBillingAction = "upgrade" | "changePlan" | "keep" | "manageBilling" | "openCoach";
@@ -233,11 +285,12 @@ export function accountBillingActions(input: {
   plan: PlanId;
   cancelAtPeriodEnd: boolean;
   hasStripeCustomer: boolean;
+  scheduledPlan?: PlanId | null;
 }): AccountBillingAction[] {
   if (input.plan === "free") {
     return input.hasStripeCustomer ? ["upgrade", "manageBilling"] : ["upgrade"];
   }
-  if (input.cancelAtPeriodEnd) {
+  if (input.cancelAtPeriodEnd || input.scheduledPlan) {
     return input.plan === "premium"
       ? ["keep", "manageBilling", "openCoach"]
       : ["keep", "manageBilling"];
@@ -259,14 +312,25 @@ export function planDialogCta(input: {
   current: PlanId;
   selected: PlanId;
   cancelAtPeriodEnd: boolean;
+  scheduledPlan?: PlanId | null;
 }): PlanDialogCta {
+  const pendingChange = Boolean(input.cancelAtPeriodEnd || input.scheduledPlan);
   if (input.selected === input.current) {
-    if (!input.cancelAtPeriodEnd || input.current === "free") return { kind: "none" };
+    if (!pendingChange || input.current === "free") return { kind: "none" };
     return {
       kind: "keep",
       label: input.current === "premium" ? "keepPremium" : "keepPro",
     };
   }
+
+  // Destination already scheduled — no second Switch/Cancel.
+  if (input.cancelAtPeriodEnd && input.selected === "free") {
+    return { kind: "none" };
+  }
+  if (input.scheduledPlan && input.selected === input.scheduledPlan) {
+    return { kind: "none" };
+  }
+
   if (input.current === "free") {
     return {
       kind: "checkout",

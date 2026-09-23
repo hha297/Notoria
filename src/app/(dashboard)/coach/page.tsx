@@ -12,6 +12,7 @@ import {
   type CoachRecommendation,
   type CoachRecommendationType,
   type CoachSnapshot,
+  type CoachWeekActivity,
 } from "@/lib/billing/coach-model";
 import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
@@ -36,6 +37,17 @@ const WEEK_ROWS = [
   ["theory", "theoryNotes"],
 ] as const;
 
+const TREND_LABEL: Record<keyof CoachWeekActivity, string> = {
+  flashcardReviews: "reviews",
+  againOrHard: "misses",
+  listeningLessons: "listening",
+  speakingSessions: "speaking",
+  writingDocuments: "writing",
+  theoryNotes: "theory",
+};
+
+const PATH_LABELS = ["pathCurrent", "pathNext", "pathThen", "pathLater"] as const;
+
 function actionHint(
   item: CoachRecommendation,
   snapshot: CoachSnapshot,
@@ -45,7 +57,7 @@ function actionHint(
     return t("due", { count: snapshot.dueCards });
   }
   if (item.type === "weak_words" && snapshot.weakWords.length > 0) {
-    return t("weakShort", { words: snapshot.weakWords.slice(0, 3).join(", ") });
+    return t("weakShort", { words: snapshot.weakWords.slice(0, 3).join(" · ") });
   }
   if (item.type === "speaking") return t("hintSpeaking");
   if (item.type === "listening") return t("hintListening");
@@ -110,6 +122,7 @@ export default async function CoachPage() {
           <hr className={mx(styles, "coach-rule")} />
           <div className={mx(styles, "coach-locked")}>
             <p className={mx(styles, "coach-locked-copy")}>{t("lockedBody")}</p>
+            <p className={mx(styles, "coach-distinction")}>{t("distinction")}</p>
             <PremiumCheckoutButton />
           </div>
         </div>
@@ -118,6 +131,11 @@ export default async function CoachPage() {
   }
 
   const { snapshot, note } = result;
+  const primary = snapshot.recommendations[0];
+  const planMinutes = snapshot.practicePlan.reduce(
+    (sum, step) => sum + step.estimatedMinutes,
+    0,
+  );
 
   return (
     <PageShell className="writing-atelier-shell coach-atelier-shell">
@@ -145,10 +163,21 @@ export default async function CoachPage() {
 
         <section className={mx(styles, "coach-section")} aria-labelledby="coach-note-heading">
           <p className={mx(styles, "coach-section-label")} id="coach-note-heading">
-            {t("noteLabel")}
+            {t("focusLabel")}
           </p>
           <div className={mx(styles, "coach-note")}>
             <p className={mx(styles, "coach-note-text")}>{note}</p>
+            {primary && !snapshot.empty ? (
+              <div className={mx(styles, "coach-note-cta")}>
+                <p className={mx(styles, "coach-note-focus")}>
+                  {t(FOCUS_I18N[primary.type] as "focus.keep-going")}
+                </p>
+                <Link href={primary.href} className={mx(styles, "coach-inline-link")}>
+                  {t("focusCta")}
+                  <ArrowUpRight className="size-3.5" aria-hidden />
+                </Link>
+              </div>
+            ) : null}
           </div>
         </section>
 
@@ -245,19 +274,128 @@ export default async function CoachPage() {
                   );
                 })}
               </ul>
-              <ul className={mx(styles, "coach-facts")}>
-                {snapshot.dueCards > 0 ? (
-                  <li className={mx(styles, "coach-fact")}>
-                    {t("due", { count: snapshot.dueCards })}
-                  </li>
-                ) : null}
-                <li className={mx(styles, "coach-fact")}>
-                  {snapshot.weakWords.length > 0
-                    ? t("weak", { words: snapshot.weakWords.join(", ") })
-                    : t("noWeak")}
-                </li>
-              </ul>
             </section>
+
+            {snapshot.practicePlan.length > 0 ? (
+              <section className={mx(styles, "coach-section")} aria-labelledby="coach-plan-heading">
+                <div>
+                  <p className={mx(styles, "coach-section-label")}>{t("plan")}</p>
+                  <h2 className={mx(styles, "coach-section-title")} id="coach-plan-heading">
+                    {t("planTitle", { minutes: planMinutes })}
+                  </h2>
+                </div>
+                <ol className={mx(styles, "coach-plan")}>
+                  {snapshot.practicePlan.map((step, index) => (
+                    <li key={step.type} className={mx(styles, "coach-plan-item")}>
+                      <span className={mx(styles, "coach-plan-index")} aria-hidden>
+                        {String(index + 1).padStart(2, "0")}
+                      </span>
+                      <div className={mx(styles, "coach-plan-copy")}>
+                        <p className={mx(styles, "coach-plan-title")}>
+                          {t(FOCUS_I18N[step.type] as "focus.keep-going")}
+                        </p>
+                        <p className={mx(styles, "coach-plan-detail")}>
+                          {step.detail} · {t("planMinutes", { count: step.estimatedMinutes })}
+                        </p>
+                      </div>
+                      <Link href={step.href} className={mx(styles, "coach-inline-link")}>
+                        {t("startStep")}
+                        <ArrowUpRight className="size-3.5" aria-hidden />
+                      </Link>
+                    </li>
+                  ))}
+                </ol>
+                {snapshot.practicePlan[0] ? (
+                  <Link
+                    href={snapshot.practicePlan[0].href}
+                    className={mx(styles, "coach-plan-start")}
+                  >
+                    {t("startPlan")}
+                    <ArrowUpRight className="size-4" aria-hidden />
+                  </Link>
+                ) : null}
+              </section>
+            ) : null}
+
+            {snapshot.weakItems.length > 0 ? (
+              <section className={mx(styles, "coach-section")} aria-labelledby="coach-mistakes-heading">
+                <div>
+                  <p className={mx(styles, "coach-section-label")}>{t("mistakes")}</p>
+                  <h2 className={mx(styles, "coach-section-title")} id="coach-mistakes-heading">
+                    {t("mistakesTitle")}
+                  </h2>
+                </div>
+                <ul className={mx(styles, "coach-mistakes")}>
+                  {snapshot.weakItems.map((item) => (
+                    <li key={item.word} className={mx(styles, "coach-mistake")}>
+                      <span className={mx(styles, "coach-mistake-word")}>{item.word}</span>
+                      <span className={mx(styles, "coach-mistake-rating")}>
+                        {t(`rating.${item.rating}`)}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+                <Link
+                  href="/exercises/flashcard?focus=weak"
+                  className={mx(styles, "coach-plan-start")}
+                >
+                  {t("practiceMistakes")}
+                  <ArrowUpRight className="size-4" aria-hidden />
+                </Link>
+              </section>
+            ) : null}
+
+            {snapshot.path.length > 0 ? (
+              <section className={mx(styles, "coach-section")} aria-labelledby="coach-path-heading">
+                <div>
+                  <p className={mx(styles, "coach-section-label")}>{t("path")}</p>
+                  <h2 className={mx(styles, "coach-section-title")} id="coach-path-heading">
+                    {t("pathTitle")}
+                  </h2>
+                </div>
+                <ol className={mx(styles, "coach-path")}>
+                  {snapshot.path.map((item, index) => (
+                    <li key={item.type} className={mx(styles, "coach-path-item")}>
+                      <p className={mx(styles, "coach-path-phase")}>
+                        {t(PATH_LABELS[Math.min(index, PATH_LABELS.length - 1)])}
+                      </p>
+                      <p className={mx(styles, "coach-path-title")}>
+                        {t(FOCUS_I18N[item.type] as "focus.keep-going")}
+                      </p>
+                      <p className={mx(styles, "coach-path-reason")}>{item.reason}</p>
+                    </li>
+                  ))}
+                </ol>
+              </section>
+            ) : null}
+
+            {snapshot.crossModule.length > 0 ? (
+              <section className={mx(styles, "coach-section")} aria-labelledby="coach-cross-heading">
+                <div>
+                  <p className={mx(styles, "coach-section-label")}>{t("cross")}</p>
+                  <h2 className={mx(styles, "coach-section-title")} id="coach-cross-heading">
+                    {t("crossTitle")}
+                  </h2>
+                </div>
+                <ul className={mx(styles, "coach-actions")}>
+                  {snapshot.crossModule.map((hint) => (
+                    <li key={hint.type}>
+                      <Link href={hint.href} className={mx(styles, "coach-action")}>
+                        <span className={mx(styles, "coach-action-copy")}>
+                          <span className={mx(styles, "coach-action-title")}>
+                            {t(`crossHints.${hint.type}`)}
+                          </span>
+                          <span className={mx(styles, "coach-action-hint")}>{hint.reason}</span>
+                        </span>
+                        <span className={mx(styles, "coach-action-mark")} aria-hidden>
+                          <ArrowUpRight className="size-4" />
+                        </span>
+                      </Link>
+                    </li>
+                  ))}
+                </ul>
+              </section>
+            ) : null}
 
             <section className={mx(styles, "coach-section")} aria-labelledby="coach-week-heading">
               <div>
@@ -266,16 +404,43 @@ export default async function CoachPage() {
                   {t("weekTitle")}
                 </h2>
               </div>
-              <ul className={mx(styles, "coach-week")}>
+              <ul className={mx(styles, "coach-week-cards")}>
                 {WEEK_ROWS.map(([labelKey, valueKey]) => (
-                  <li key={valueKey} className={mx(styles, "coach-week-item")}>
-                    <span className={mx(styles, "coach-week-label")}>{t(labelKey)}</span>
+                  <li key={valueKey} className={mx(styles, "coach-week-card")}>
                     <span className={mx(styles, "coach-week-value")}>
                       {snapshot.last7Days[valueKey]}
                     </span>
+                    <span className={mx(styles, "coach-week-label")}>{t(labelKey)}</span>
                   </li>
                 ))}
               </ul>
+            </section>
+
+            <section className={mx(styles, "coach-section")} aria-labelledby="coach-trends-heading">
+              <div>
+                <p className={mx(styles, "coach-section-label")}>{t("trends")}</p>
+                <h2 className={mx(styles, "coach-section-title")} id="coach-trends-heading">
+                  {t("trendsTitle")}
+                </h2>
+              </div>
+              {snapshot.trendsAvailable ? (
+                <ul className={mx(styles, "coach-trends")}>
+                  {snapshot.trends.map((trend) => (
+                    <li key={trend.key} className={mx(styles, "coach-trend")}>
+                      <span className={mx(styles, "coach-trend-label")}>
+                        {t(TREND_LABEL[trend.key])}
+                      </span>
+                      <span className={mx(styles, "coach-trend-values")}>
+                        {trend.previous}
+                        <span aria-hidden> → </span>
+                        {trend.current}
+                      </span>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className={mx(styles, "coach-empty")}>{t("trendsEmpty")}</p>
+              )}
             </section>
           </>
         )}

@@ -58,7 +58,11 @@ describe("entitlements", () => {
     expect(getFeatureAccess("free", "ai_listening_transcript")).toMatchObject({
       limit: 1,
     });
-    expect(featureEnabled("free", "ai_writing")).toBe(false);
+    expect(getFeatureAccess("free", "ai_writing")).toEqual({
+      kind: "quota",
+      limit: FREE_DAILY_QUOTAS.ai_writing,
+    });
+    expect(featureEnabled("free", "ai_writing")).toBe(true);
     expect(featureEnabled("free", "pdf_export")).toBe(false);
     expect(featureEnabled("free", "listening")).toBe(false);
     expect(featureEnabled("free", "ai_learning_coach")).toBe(false);
@@ -70,6 +74,7 @@ describe("entitlements", () => {
       "ai_listening_transcript",
       "ai_exercise",
       "ai_vocabulary",
+      "ai_writing",
     ] as const) {
       expect(getFeatureAccess("pro", feature)).toEqual({ kind: "quota", limit: null });
       expect(getFeatureAccess("premium", feature)).toEqual({
@@ -77,7 +82,6 @@ describe("entitlements", () => {
         limit: null,
       });
     }
-    expect(featureEnabled("pro", "ai_writing")).toBe(true);
     expect(featureEnabled("pro", "listening")).toBe(true);
     expect(featureEnabled("pro", "ai_learning_coach")).toBe(false);
     expect(featureEnabled("premium", "ai_learning_coach")).toBe(true);

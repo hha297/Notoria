@@ -1,4 +1,4 @@
-import { and, count, desc, eq, gt, gte, inArray } from "drizzle-orm";
+import { and, count, desc, eq, gt, gte, inArray, isNotNull, lt, sql } from "drizzle-orm";
 import { db } from "@/db";
 import {
   exercises,
@@ -13,10 +13,14 @@ import {
 } from "@/db/schema";
 import {
   buildCoachRecommendations,
+  buildCoachTrends,
+  buildCrossModuleHints,
+  buildPracticePlan,
   countDueCards,
   emptyVocabularySummary,
+  emptyWeekActivity,
   isCoachEmpty,
-  pickWeakWords,
+  pickWeakItems,
   summarizeVocabulary,
   utcDaysAgoStart,
   vocabularyTotal,
@@ -24,6 +28,8 @@ import {
   type CoachResult,
   type CoachSnapshot,
   type CoachWeekActivity,
+  type WeakWordItem,
+  type WeakWordRating,
 } from "@/lib/billing/coach-model";
 import { resolveCoachNote } from "@/lib/billing/coach-note";
 import { displayPlan, entitlementPlan, featureEnabled } from "@/lib/billing/plans";
@@ -34,21 +40,27 @@ type EntitlementUser = Pick<
   "id" | "role" | "subscriptionPlan" | "subscriptionStatus"
 >;
 
+function asWeakRating(value: string | null | undefined): WeakWordRating | null {
+  if (value === "AGAIN" || value === "HARD") return value;
+  return null;
+}
+
 /**
  * Weak words from recent Again/Hard reviews, then current lastRating.
- * Reusable later for practice-from-mistakes.
+ * Powers practice-from-mistakes on the coach.
  */
 export async function getWeakLearningItems(input: {
   userId: string;
   workspaceId: string;
   limit?: number;
-}) {
+}): Promise<WeakWordItem[]> {
   const limit = input.limit ?? 8;
   const since = utcDaysAgoStart(7);
 
   const recent = await db
     .select({
       word: vocabularyWords.word,
+      rating: flashcardReviews.rating,
       createdAt: flashcardReviews.createdAt,
     })
     .from(flashcardReviews)
@@ -64,15 +76,19 @@ export async function getWeakLearningItems(input: {
     .orderBy(desc(flashcardReviews.createdAt))
     .limit(40);
 
-  const fromRecent = pickWeakWords(
-    recent.map((row) => row.word),
-    limit,
-  );
-  if (fromRecent.length >= limit) return fromRecent;
+  const fromRecent: WeakWordItem[] = [];
+  for (const row of recent) {
+    const rating = asWeakRating(row.rating);
+    if (!rating) continue;
+    fromRecent.push({ word: row.word, rating });
+  }
+  const picked = pickWeakItems(fromRecent, limit);
+  if (picked.length >= limit) return picked;
 
   const current = await db
     .select({
       word: vocabularyWords.word,
+      rating: flashcardProgress.lastRating,
       updatedAt: flashcardProgress.updatedAt,
     })
     .from(flashcardProgress)
@@ -87,10 +103,14 @@ export async function getWeakLearningItems(input: {
     .orderBy(desc(flashcardProgress.updatedAt))
     .limit(40);
 
-  return pickWeakWords(
-    [...fromRecent, ...current.map((row) => row.word)],
-    limit,
-  );
+  const fromCurrent: WeakWordItem[] = [];
+  for (const row of current) {
+    const rating = asWeakRating(row.rating);
+    if (!rating) continue;
+    fromCurrent.push({ word: row.word, rating });
+  }
+
+  return pickWeakItems([...picked, ...fromCurrent], limit);
 }
 
 export async function getVocabularyInsights(input: {
@@ -135,49 +155,81 @@ export async function getFlashcardInsights(input: {
     vocabularyTotal: input.vocabularyTotal,
     notDueCount: Number(notDueRows[0]?.total ?? 0),
   });
-  const weakWords = await getWeakLearningItems({
+  const weakItems = await getWeakLearningItems({
     userId: input.userId,
     workspaceId: input.workspaceId,
   });
-  return { dueCards, weakWords };
+  return {
+    dueCards,
+    weakItems,
+    weakWords: weakItems.map((item) => item.word),
+  };
 }
 
 export async function getSpeakingInsights(input: {
   userId: string;
   workspaceId: string;
   since: Date;
+  until?: Date;
 }) {
+  const conditions = [
+    eq(speakingSessions.userId, input.userId),
+    eq(speakingSessions.workspaceId, input.workspaceId),
+    gte(speakingSessions.createdAt, input.since),
+  ];
+  if (input.until) {
+    conditions.push(lt(speakingSessions.createdAt, input.until));
+  }
   const sessions = await db
     .select({ total: count() })
     .from(speakingSessions)
-    .where(
-      and(
-        eq(speakingSessions.userId, input.userId),
-        eq(speakingSessions.workspaceId, input.workspaceId),
-        gte(speakingSessions.createdAt, input.since),
-      ),
-    );
+    .where(and(...conditions));
 
   return {
     sessionsLast7Days: Number(sessions[0]?.total ?? 0),
   };
 }
 
+export async function getLatestSpeakingLevel(input: {
+  userId: string;
+  workspaceId: string;
+}) {
+  const row = await db
+    .select({ cefrLevel: speakingSessions.cefrLevel })
+    .from(speakingSessions)
+    .where(
+      and(
+        eq(speakingSessions.userId, input.userId),
+        eq(speakingSessions.workspaceId, input.workspaceId),
+        isNotNull(speakingSessions.cefrLevel),
+        sql`trim(${speakingSessions.cefrLevel}) <> ''`,
+      ),
+    )
+    .orderBy(desc(speakingSessions.updatedAt))
+    .limit(1);
+
+  const level = row[0]?.cefrLevel?.trim();
+  return level || null;
+}
+
 export async function getListeningInsights(input: {
   userId: string;
   workspaceId: string;
   since: Date;
+  until?: Date;
 }) {
+  const conditions = [
+    eq(listeningLessons.userId, input.userId),
+    eq(listeningLessons.workspaceId, input.workspaceId),
+    gte(listeningLessons.updatedAt, input.since),
+  ];
+  if (input.until) {
+    conditions.push(lt(listeningLessons.updatedAt, input.until));
+  }
   const rows = await db
     .select({ total: count() })
     .from(listeningLessons)
-    .where(
-      and(
-        eq(listeningLessons.userId, input.userId),
-        eq(listeningLessons.workspaceId, input.workspaceId),
-        gte(listeningLessons.updatedAt, input.since),
-      ),
-    );
+    .where(and(...conditions));
   return { lessonsUpdatedLast7Days: Number(rows[0]?.total ?? 0) };
 }
 
@@ -185,18 +237,21 @@ export async function getWritingInsights(input: {
   userId: string;
   workspaceId: string;
   since: Date;
+  until?: Date;
 }) {
+  const conditions = [
+    eq(exercises.userId, input.userId),
+    eq(exercises.workspaceId, input.workspaceId),
+    eq(exercises.type, "WRITING"),
+    gte(exercises.updatedAt, input.since),
+  ];
+  if (input.until) {
+    conditions.push(lt(exercises.updatedAt, input.until));
+  }
   const rows = await db
     .select({ total: count() })
     .from(exercises)
-    .where(
-      and(
-        eq(exercises.userId, input.userId),
-        eq(exercises.workspaceId, input.workspaceId),
-        eq(exercises.type, "WRITING"),
-        gte(exercises.updatedAt, input.since),
-      ),
-    );
+    .where(and(...conditions));
   return { documentsUpdatedLast7Days: Number(rows[0]?.total ?? 0) };
 }
 
@@ -204,35 +259,45 @@ export async function getTheoryInsights(input: {
   userId: string;
   workspaceId: string;
   since: Date;
+  until?: Date;
 }) {
+  const conditions = [
+    eq(grammarNotes.userId, input.userId),
+    eq(grammarNotes.workspaceId, input.workspaceId),
+    gte(grammarNotes.updatedAt, input.since),
+  ];
+  if (input.until) {
+    conditions.push(lt(grammarNotes.updatedAt, input.until));
+  }
   const rows = await db
     .select({ total: count() })
     .from(grammarNotes)
-    .where(
-      and(
-        eq(grammarNotes.userId, input.userId),
-        eq(grammarNotes.workspaceId, input.workspaceId),
-        gte(grammarNotes.updatedAt, input.since),
-      ),
-    );
+    .where(and(...conditions));
   return { notesUpdatedLast7Days: Number(rows[0]?.total ?? 0) };
 }
 
-async function getReviewActivity(input: {
+export async function getReviewActivity(input: {
   userId: string;
   workspaceId: string;
   since: Date;
+  until?: Date;
 }) {
+  const conditions = [
+    eq(flashcardReviews.userId, input.userId),
+    eq(flashcardReviews.workspaceId, input.workspaceId),
+    gte(flashcardReviews.createdAt, input.since),
+  ];
+  if (input.until) {
+    conditions.push(lt(flashcardReviews.createdAt, input.until));
+  }
+
   const rows = await db
-    .select({ rating: flashcardReviews.rating, total: count() })
+    .select({
+      rating: flashcardReviews.rating,
+      total: count(),
+    })
     .from(flashcardReviews)
-    .where(
-      and(
-        eq(flashcardReviews.userId, input.userId),
-        eq(flashcardReviews.workspaceId, input.workspaceId),
-        gte(flashcardReviews.createdAt, input.since),
-      ),
-    )
+    .where(and(...conditions))
     .groupBy(flashcardReviews.rating);
 
   const flashcardReviewsTotal = rows.reduce(
@@ -246,89 +311,120 @@ async function getReviewActivity(input: {
   return { flashcardReviews: flashcardReviewsTotal, againOrHard };
 }
 
+async function weekActivityForRange(input: {
+  userId: string;
+  workspaceId: string;
+  since: Date;
+  until?: Date;
+}): Promise<CoachWeekActivity> {
+  const [speaking, listening, writing, theory, review] = await Promise.all([
+    getSpeakingInsights(input),
+    getListeningInsights(input),
+    getWritingInsights(input),
+    getTheoryInsights(input),
+    getReviewActivity(input),
+  ]);
+  return {
+    flashcardReviews: review.flashcardReviews,
+    againOrHard: review.againOrHard,
+    listeningLessons: listening.lessonsUpdatedLast7Days,
+    speakingSessions: speaking.sessionsLast7Days,
+    writingDocuments: writing.documentsUpdatedLast7Days,
+    theoryNotes: theory.notesUpdatedLast7Days,
+  };
+}
+
 export async function getLearningCoachData(input: {
   userId: string;
   workspaceId: string;
   language: string;
   now?: Date;
-}): Promise<CoachFacts & { recommendations: CoachSnapshot["recommendations"]; empty: boolean }> {
+}): Promise<
+  CoachFacts & {
+    recommendations: CoachSnapshot["recommendations"];
+    practicePlan: CoachSnapshot["practicePlan"];
+    trends: CoachSnapshot["trends"];
+    trendsAvailable: boolean;
+    path: CoachSnapshot["path"];
+    crossModule: CoachSnapshot["crossModule"];
+    empty: boolean;
+  }
+> {
   const now = input.now ?? new Date();
   const since = utcDaysAgoStart(7, now);
+  const previousSince = utcDaysAgoStart(14, now);
 
-  const [
-    vocabularyInsights,
-    speakingInsights,
-    listeningInsights,
-    writingInsights,
-    theoryInsights,
-    reviewActivity,
-  ] = await Promise.all([
-    getVocabularyInsights({
-      userId: input.userId,
-      workspaceId: input.workspaceId,
-    }),
-    getSpeakingInsights({
-      userId: input.userId,
-      workspaceId: input.workspaceId,
-      since,
-    }),
-    getListeningInsights({
-      userId: input.userId,
-      workspaceId: input.workspaceId,
-      since,
-    }),
-    getWritingInsights({
-      userId: input.userId,
-      workspaceId: input.workspaceId,
-      since,
-    }),
-    getTheoryInsights({
-      userId: input.userId,
-      workspaceId: input.workspaceId,
-      since,
-    }),
-    getReviewActivity({
-      userId: input.userId,
-      workspaceId: input.workspaceId,
-      since,
-    }),
-  ]);
+  const [vocabularyInsights, speakingLevel, last7Days, previous7Days] =
+    await Promise.all([
+      getVocabularyInsights({
+        userId: input.userId,
+        workspaceId: input.workspaceId,
+      }),
+      getLatestSpeakingLevel({
+        userId: input.userId,
+        workspaceId: input.workspaceId,
+      }),
+      weekActivityForRange({
+        userId: input.userId,
+        workspaceId: input.workspaceId,
+        since,
+      }),
+      weekActivityForRange({
+        userId: input.userId,
+        workspaceId: input.workspaceId,
+        since: previousSince,
+        until: since,
+      }),
+    ]);
 
-  const flashcardInsights = await getFlashcardInsights({
+  const flashcards = await getFlashcardInsights({
     userId: input.userId,
     workspaceId: input.workspaceId,
     vocabularyTotal: vocabularyInsights.total,
     now,
   });
 
-  const last7Days: CoachWeekActivity = {
-    flashcardReviews: reviewActivity.flashcardReviews,
-    againOrHard: reviewActivity.againOrHard,
-    listeningLessons: listeningInsights.lessonsUpdatedLast7Days,
-    speakingSessions: speakingInsights.sessionsLast7Days,
-    writingDocuments: writingInsights.documentsUpdatedLast7Days,
-    theoryNotes: theoryInsights.notesUpdatedLast7Days,
-  };
-
   const facts: CoachFacts = {
     language: getLanguageName(input.language),
     vocabulary: vocabularyInsights.vocabulary,
     vocabularyTotal: vocabularyInsights.total,
-    dueCards: flashcardInsights.dueCards,
-    weakWords: flashcardInsights.weakWords,
-    last7Days,
+    dueCards: flashcards.dueCards,
+    weakWords: flashcards.weakWords,
+    weakItems: flashcards.weakItems,
+    speakingLevel,
+    last7Days: last7Days ?? emptyWeekActivity(),
+    previous7Days: previous7Days ?? emptyWeekActivity(),
     rangeStartUtc: since.toISOString(),
     rangeEndUtc: now.toISOString(),
   };
 
+  const recommendations = buildCoachRecommendations({
+    dueCards: facts.dueCards,
+    weakWords: facts.weakWords,
+    last7Days: facts.last7Days,
+    vocabularyTotal: facts.vocabularyTotal,
+  });
+  const practicePlan = buildPracticePlan(recommendations, {
+    dueCards: facts.dueCards,
+    weakWords: facts.weakWords,
+  });
+  const { trends, available: trendsAvailable } = buildCoachTrends(
+    facts.previous7Days,
+    facts.last7Days,
+  );
+  const crossModule = buildCrossModuleHints({
+    last7Days: facts.last7Days,
+    weakWords: facts.weakWords,
+  });
+
   return {
     ...facts,
-    recommendations: buildCoachRecommendations({
-      dueCards: facts.dueCards,
-      weakWords: facts.weakWords,
-      last7Days: facts.last7Days,
-      vocabularyTotal: facts.vocabularyTotal,
-    }),
+    recommendations,
+    practicePlan,
+    trends,
+    trendsAvailable,
+    path: recommendations,
+    crossModule,
     empty: isCoachEmpty(facts),
   };
 }
@@ -380,10 +476,18 @@ export async function getLearningCoach(input: {
     vocabularyTotal: data.vocabularyTotal,
     dueCards: data.dueCards,
     weakWords: data.weakWords,
+    weakItems: data.weakItems,
+    speakingLevel: data.speakingLevel,
     last7Days: data.last7Days,
+    previous7Days: data.previous7Days,
     rangeStartUtc: data.rangeStartUtc,
     rangeEndUtc: data.rangeEndUtc,
     recommendations: data.recommendations,
+    practicePlan: data.practicePlan,
+    trends: data.trends,
+    trendsAvailable: data.trendsAvailable,
+    path: data.path,
+    crossModule: data.crossModule,
     empty: data.empty,
   };
 

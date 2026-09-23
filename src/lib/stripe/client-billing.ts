@@ -1,5 +1,5 @@
 export type CheckoutPlan = "pro" | "premium";
-export type BillingExpect = "pro" | "premium" | "cancel" | "resume";
+export type BillingExpect = "pro" | "premium" | "cancel" | "resume" | "schedule_pro";
 
 export type StripeSessionResult = {
   ok: boolean;
@@ -11,6 +11,7 @@ export type SyncedSubscription = {
   ok: boolean;
   plan?: "free" | "pro" | "premium";
   cancelAtPeriodEnd?: boolean;
+  scheduledPlan?: "free" | "pro" | "premium" | null;
   code?: string;
 };
 
@@ -61,12 +62,14 @@ export async function syncSubscription(): Promise<SyncedSubscription> {
   const data = (await response.json()) as {
     plan?: "free" | "pro" | "premium";
     cancelAtPeriodEnd?: boolean;
+    scheduledPlan?: "free" | "pro" | "premium" | null;
     code?: string;
   };
   return {
     ok: response.ok && Boolean(data.plan),
     plan: data.plan,
     cancelAtPeriodEnd: data.cancelAtPeriodEnd,
+    scheduledPlan: data.scheduledPlan ?? null,
     code: data.code,
   };
 }

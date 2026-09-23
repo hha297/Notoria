@@ -1,0 +1,109 @@
+/* Plan comparison table — scannable ✓ / — / quota cells */
+
+.plan-compare {
+  min-width: 0;
+  width: 100%;
+}
+
+.plan-compare-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 90%, transparent);
+  background: color-mix(in oklab, var(--surface) 92%, transparent);
+}
+
+.plan-compare-table {
+  width: 100%;
+  min-width: 28rem;
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.84rem;
+}
+
+.plan-compare-table thead th {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background: color-mix(in oklab, var(--popover) 94%, var(--accent-soft));
+  box-shadow: 0 1px 0 color-mix(in oklab, var(--hairline-cloud) 85%, transparent);
+}
+
+.plan-compare-feature-head,
+.plan-compare-plan-head {
+  padding: 0.7rem 0.75rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  text-align: left;
+  white-space: nowrap;
+}
+
+.plan-compare-plan-head {
+  text-align: center;
+  min-width: 5.5rem;
+}
+
+.plan-compare-plan-head.is-current {
+  color: color-mix(in oklab, var(--accent-lime) 55%, var(--ink));
+}
+
+.plan-compare-current {
+  display: block;
+  margin-top: 0.2rem;
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--accent-lime);
+}
+
+.plan-compare-category th {
+  padding: 0.65rem 0.75rem 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: left;
+  color: color-mix(in oklab, var(--accent-lime) 48%, var(--ink));
+  background: color-mix(in oklab, var(--accent-lime) 6%, transparent);
+  border-top: 1px solid color-mix(in oklab, var(--hairline-cloud) 80%, transparent);
+}
+
+.plan-compare-feature {
+  padding: 0.55rem 0.75rem;
+  font-weight: 550;
+  text-align: left;
+  color: var(--ink);
+  border-top: 1px solid color-mix(in oklab, var(--hairline-cloud) 55%, transparent);
+  max-width: 14rem;
+}
+
+.plan-compare-cell {
+  padding: 0.55rem 0.5rem;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+  color: var(--ink);
+  border-top: 1px solid color-mix(in oklab, var(--hairline-cloud) 55%, transparent);
+  white-space: nowrap;
+}
+
+.plan-compare-cell.is-yes {
+  font-weight: 700;
+  color: color-mix(in oklab, var(--accent-lime) 35%, var(--ink));
+}
+
+.plan-compare-cell.is-no {
+  color: color-mix(in oklab, var(--muted-foreground) 80%, transparent);
+}
+
+.plan-compare-cell.is-current {
+  background: color-mix(in oklab, var(--accent-lime) 5%, transparent);
+}
+
+@media (min-width: 640px) {
+  .plan-compare-table {
+    min-width: 0;
+  }
+}

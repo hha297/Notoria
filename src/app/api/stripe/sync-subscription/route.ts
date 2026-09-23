@@ -28,6 +28,7 @@ export async function POST() {
         subscriptionStatus: true,
         stripeCurrentPeriodEnd: true,
         stripeCancelAtPeriodEnd: true,
+        scheduledSubscriptionPlan: true,
       },
     });
 
@@ -38,10 +39,20 @@ export async function POST() {
       );
     }
 
+    const plan = displayPlan(user);
+    const scheduled =
+      plan !== "free" &&
+      user.scheduledSubscriptionPlan &&
+      user.scheduledSubscriptionPlan !== "free" &&
+      user.scheduledSubscriptionPlan !== plan
+        ? user.scheduledSubscriptionPlan
+        : null;
+
     return NextResponse.json({
-      plan: displayPlan(user),
+      plan,
       status: user.subscriptionStatus,
-      cancelAtPeriodEnd: user.stripeCancelAtPeriodEnd,
+      cancelAtPeriodEnd: user.stripeCancelAtPeriodEnd && !scheduled,
+      scheduledPlan: scheduled,
       currentPeriodEnd: user.stripeCurrentPeriodEnd?.toISOString() ?? null,
     });
   } catch (error) {

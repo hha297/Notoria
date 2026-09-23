@@ -2314,45 +2314,154 @@
   }
 
   .writing-sheet[data-writing-kind="rich_document"] .writing-sheet-surface {
-    padding: 1.15rem 1.2rem 0.55rem;
+    padding: 1.45rem 1.4rem 1.45rem;
     border-radius: 1rem;
+    border: 1px solid
+      color-mix(in oklab, var(--module-writing-fg) 28%, var(--hairline-cloud));
+    border-left: 4px solid var(--module-writing-fg);
     background: linear-gradient(
       165deg,
       color-mix(in oklab, var(--module-writing-bg) 72%, transparent),
       color-mix(in oklab, var(--module-writing-bg) 22%, transparent) 70%,
       transparent
     );
-    box-shadow:
-      inset 4px 0 0 var(--module-writing-fg),
-      0 0 0 1px color-mix(in oklab, var(--module-writing-fg) 12%, transparent);
+    box-shadow: none;
   }
 
   .writing-sheet[data-writing-kind="question_set"] .writing-sheet-surface {
-    padding: 1.15rem 1.2rem 0.55rem;
+    padding: 1.45rem 1.4rem 1.45rem;
     border-radius: 1rem;
+    border: 1px solid
+      color-mix(in oklab, var(--module-theory-fg) 28%, var(--hairline-cloud));
+    border-left: 4px solid var(--module-theory-fg);
     background: linear-gradient(
       165deg,
       color-mix(in oklab, var(--module-theory-bg) 72%, transparent),
       color-mix(in oklab, var(--module-theory-bg) 22%, transparent) 70%,
       transparent
     );
-    box-shadow:
-      inset 4px 0 0 var(--module-theory-fg),
-      0 0 0 1px color-mix(in oklab, var(--module-theory-fg) 12%, transparent);
+    box-shadow: none;
   }
 
   .theory-sheet-surface {
-    padding: 1.15rem 1.2rem 0.55rem;
+    padding: 1.45rem 1.4rem 1.45rem;
     border-radius: 1rem;
+    border: 1px solid
+      color-mix(in oklab, var(--theory-cat-fg) 28%, var(--hairline-cloud));
+    border-left: 4px solid var(--theory-cat-fg);
     background: linear-gradient(
       165deg,
       color-mix(in oklab, var(--theory-cat-bg) 72%, transparent),
       color-mix(in oklab, var(--theory-cat-bg) 22%, transparent) 70%,
       transparent
     );
-    box-shadow:
-      inset 4px 0 0 var(--theory-cat-fg),
-      0 0 0 1px color-mix(in oklab, var(--theory-cat-fg) 12%, transparent);
+    box-shadow: none;
+  }
+
+  /* Short description TipTap — tinted like content surface (writing + theory). */
+  .sheet-description-editor {
+    overflow: hidden;
+    border-radius: 0.95rem;
+    border: 1px solid
+      color-mix(in oklab, var(--hairline-cloud) 88%, var(--ink));
+    background:
+      linear-gradient(
+        165deg,
+        color-mix(in oklab, var(--surface-elevated) 28%, transparent),
+        transparent 70%
+      ),
+      color-mix(in oklab, var(--surface-elevated) 42%, transparent);
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .sheet-description-editor:focus-within {
+    border-color: color-mix(in oklab, var(--ring) 55%, var(--hairline-cloud));
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 22%, transparent);
+  }
+
+  .sheet-description-editor[aria-invalid="true"] {
+    border-color: var(--destructive);
+  }
+
+  .sheet-description-editor[aria-invalid="true"]:focus-within {
+    border-color: var(--destructive);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--destructive) 20%, transparent);
+  }
+
+  .writing-sheet[data-writing-kind="rich_document"] .sheet-description-editor {
+    border-color: color-mix(
+      in oklab,
+      var(--module-writing-fg) 26%,
+      var(--hairline-cloud)
+    );
+    background: linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-writing-bg) 72%, transparent),
+      color-mix(in oklab, var(--module-writing-bg) 22%, transparent) 70%,
+      transparent
+    );
+  }
+
+  .writing-sheet[data-writing-kind="rich_document"]
+    .sheet-description-editor:focus-within {
+    border-color: color-mix(
+      in oklab,
+      var(--module-writing-fg) 48%,
+      var(--hairline-cloud)
+    );
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--module-writing-fg) 18%, transparent);
+  }
+
+  .writing-sheet[data-writing-kind="question_set"] .sheet-description-editor {
+    border-color: color-mix(
+      in oklab,
+      var(--module-theory-fg) 26%,
+      var(--hairline-cloud)
+    );
+    background: linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-theory-bg) 72%, transparent),
+      color-mix(in oklab, var(--module-theory-bg) 22%, transparent) 70%,
+      transparent
+    );
+  }
+
+  .writing-sheet[data-writing-kind="question_set"]
+    .sheet-description-editor:focus-within {
+    border-color: color-mix(
+      in oklab,
+      var(--module-theory-fg) 48%,
+      var(--hairline-cloud)
+    );
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--module-theory-fg) 18%, transparent);
+  }
+
+  .theory-sheet .sheet-description-editor {
+    border-color: color-mix(
+      in oklab,
+      var(--theory-cat-fg) 26%,
+      var(--hairline-cloud)
+    );
+    background: linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--theory-cat-bg) 72%, transparent),
+      color-mix(in oklab, var(--theory-cat-bg) 22%, transparent) 70%,
+      transparent
+    );
+  }
+
+  .theory-sheet .sheet-description-editor:focus-within {
+    border-color: color-mix(
+      in oklab,
+      var(--theory-cat-fg) 48%,
+      var(--hairline-cloud)
+    );
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--theory-cat-fg) 18%, transparent);
   }
 
   .writing-sheet-meta {

@@ -69,6 +69,7 @@ export function ProSubscriptionCard({
           subscriptionChangeConfirmed(expect, {
             plan: synced.plan,
             cancelAtPeriodEnd: Boolean(synced.cancelAtPeriodEnd),
+            scheduledPlan: synced.scheduledPlan ?? null,
           })
         ) {
           const syncedLabel = synced.plan === "premium" ? t("premiumBadge") : t("proBadge");
@@ -79,7 +80,9 @@ export function ProSubscriptionCard({
                 ? t("nowOnPro")
                 : expect === "cancel"
                   ? t("switchScheduled")
-                  : t("keptPlan", { plan: syncedLabel }),
+                  : expect === "schedule_pro"
+                    ? t("downgradeScheduled")
+                    : t("keptPlan", { plan: syncedLabel }),
           );
           router.replace("/account");
           router.refresh();
@@ -133,14 +136,17 @@ export function ProSubscriptionCard({
         : t("freeBadge");
   const lede = billing.cancelAtPeriodEnd
     ? t("accessUntil", { plan: planLabel, date: periodLabel })
-    : billing.plan === "premium"
-      ? tAccount("premiumLede")
-      : billing.plan === "pro"
-        ? tAccount("activeLede")
-        : tAccount("freeLede");
+    : billing.scheduledPlan === "pro"
+      ? t("switchingToProOn", { date: periodLabel })
+      : billing.plan === "premium"
+        ? tAccount("premiumLede")
+        : billing.plan === "pro"
+          ? tAccount("activeLede")
+          : tAccount("freeLede");
   const actions = accountBillingActions({
     plan: billing.plan,
     cancelAtPeriodEnd: billing.cancelAtPeriodEnd,
+    scheduledPlan: billing.scheduledPlan,
     hasStripeCustomer: billing.hasStripeCustomer,
   });
 
@@ -169,6 +175,13 @@ export function ProSubscriptionCard({
                 <>
                   <p className="text-sm font-medium">{t("cancellationScheduled")}</p>
                   <p className="text-sm text-muted-foreground">{t("thenFree")}</p>
+                </>
+              ) : billing.scheduledPlan === "pro" ? (
+                <>
+                  <p className="text-sm font-medium">{t("downgradeScheduled")}</p>
+                  <p className="text-sm text-muted-foreground">
+                    {t("switchingToProOn", { date: periodLabel })}
+                  </p>
                 </>
               ) : billing.plan !== "free" && periodEnd ? (
                 <p className="text-sm text-muted-foreground">

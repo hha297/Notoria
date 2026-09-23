@@ -288,10 +288,9 @@ export function WritingSectionCard({
             }
             placeholder={t("sectionTitlePlaceholder")}
             className={cn(
-              "h-10 rounded-lg border-hairline-cloud bg-background px-3 text-sm font-medium text-ink shadow-none",
-              "placeholder:font-normal placeholder:text-muted-foreground/80",
-              "hover:border-accent-lime/40",
-              "focus-visible:border-accent-lime focus-visible:bg-accent-lime/10 focus-visible:shadow-none focus-visible:ring-3 focus-visible:ring-accent-lime/25",
+              mx(qsStyles, "writing-qs-field"),
+              "h-10 rounded-lg px-3 text-sm font-medium",
+              "placeholder:font-normal",
             )}
           />
         </div>

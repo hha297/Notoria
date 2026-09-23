@@ -133,6 +133,12 @@ export const users = pgTable(
     stripeCancelAtPeriodEnd: boolean("stripe_cancel_at_period_end")
       .notNull()
       .default(false),
+    /**
+     * Paid plan scheduled to take effect at period end (e.g. Premium → Pro).
+     * Effective entitlements stay on subscriptionPlan until then.
+     */
+    scheduledSubscriptionPlan: subscriptionPlanEnum("scheduled_subscription_plan"),
+    stripeScheduleId: text("stripe_schedule_id"),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),

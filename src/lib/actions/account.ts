@@ -59,8 +59,15 @@ export async function getAccountUser() {
 
   try {
     await reconcileUserSubscription(userId);
-  } catch {
-    console.error("Stripe subscription reconcile failed");
+  } catch (error) {
+    console.error("Stripe subscription reconcile failed", {
+      userId,
+      message: error instanceof Error ? error.message : String(error),
+      code:
+        error && typeof error === "object" && "code" in error
+          ? (error as { code?: string }).code
+          : undefined,
+    });
   }
 
   const user = await db.query.users.findFirst({
@@ -77,6 +84,7 @@ export async function getAccountUser() {
       stripeCustomerId: true,
       stripeCurrentPeriodEnd: true,
       stripeCancelAtPeriodEnd: true,
+      scheduledSubscriptionPlan: true,
     },
   });
 

@@ -77,7 +77,7 @@ export async function guardAiEnabled(): Promise<
   return { ok: true, preferences: access.preferences };
 }
 
-/** Pro capability such as writing AI. Keeps AI_FORBIDDEN for existing clients. */
+/** Capability gates such as PDF export. Keeps AI_FORBIDDEN for existing clients. */
 export async function guardProFeature(feature: FeatureId): Promise<
   | { ok: true; preferences: AiPreferences }
   | { ok: false; response: NextResponse }

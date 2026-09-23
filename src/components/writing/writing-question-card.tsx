@@ -50,7 +50,7 @@ export const WritingQuestionCard = memo(function WritingQuestionCard({
       className={cn(
         mx(
           qsStyles,
-          "writing-qs-question min-w-0 max-w-full rounded-sm border p-4 sm:p-5",
+          "writing-qs-question min-w-0 max-w-full rounded-xl border p-4 sm:p-5",
         ),
         className,
       )}
@@ -91,7 +91,7 @@ export const WritingQuestionCard = memo(function WritingQuestionCard({
               onChange({ ...question, prompt: event.target.value })
             }
             placeholder={t("promptPlaceholder")}
-            className="min-h-24"
+            className={cn(mx(qsStyles, "writing-qs-field"), "min-h-24")}
           />
         </div>
 
@@ -110,7 +110,7 @@ export const WritingQuestionCard = memo(function WritingQuestionCard({
                 onChange({ ...question, exampleAnswer: event.target.value })
               }
               placeholder={t("exampleAnswerPlaceholder")}
-              className="min-h-20"
+              className={cn(mx(qsStyles, "writing-qs-field"), "min-h-20")}
             />
           </div>
 
@@ -128,7 +128,7 @@ export const WritingQuestionCard = memo(function WritingQuestionCard({
                 onChange({ ...question, notes: event.target.value })
               }
               placeholder={t("notesPlaceholder")}
-              className="min-h-20"
+              className={cn(mx(qsStyles, "writing-qs-field"), "min-h-20")}
             />
           </div>
         </div>

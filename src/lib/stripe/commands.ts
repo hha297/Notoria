@@ -20,7 +20,11 @@ import {
   type BillingCommand,
   type PriceCheck,
 } from "@/lib/stripe/lifecycle";
-import { planFromStripeStatus, subscriptionPriceId } from "@/lib/stripe/subscription";
+import {
+  planFromStripeStatus,
+  subscriptionPeriodEnd,
+  subscriptionPriceId,
+} from "@/lib/stripe/subscription";
 
 export class BillingCommandError extends Error {
   code: string;
@@ -146,6 +150,102 @@ function pickEntitledSubscription(
   return entitled[0] ?? null;
 }
 
+function scheduleIdOf(subscription: Stripe.Subscription) {
+  const schedule = subscription.schedule;
+  if (!schedule) return null;
+  return typeof schedule === "string" ? schedule : schedule.id;
+}
+
+async function releaseSubscriptionSchedule(
+  stripe: Stripe,
+  subscription: Stripe.Subscription,
+) {
+  const scheduleId = scheduleIdOf(subscription);
+  if (!scheduleId) return;
+  try {
+    await stripe.subscriptionSchedules.release(scheduleId);
+  } catch (error) {
+    if (!isMissingResource(error)) throw error;
+  }
+}
+
+/**
+ * Keep the current price through current_period_end, then switch to the
+ * target price. Premium entitlements stay until Stripe applies the new phase.
+ */
+async function scheduleDowngradeAtPeriodEnd(input: {
+  stripe: Stripe;
+  subscription: Stripe.Subscription;
+  targetPriceId: string;
+  userId: string;
+  plan: "pro";
+}) {
+  const currentPriceId = subscriptionPriceId(input.subscription);
+  const periodEnd = subscriptionPeriodEnd(input.subscription);
+  if (!currentPriceId || !periodEnd) {
+    throw new BillingCommandError("CHECKOUT_FAILED", 500);
+  }
+  if (currentPriceId === input.targetPriceId) {
+    throw new BillingCommandError("ALREADY_SUBSCRIBED", 409);
+  }
+
+  if (input.subscription.cancel_at_period_end) {
+    await input.stripe.subscriptions.update(input.subscription.id, {
+      cancel_at_period_end: false,
+    });
+  }
+
+  let scheduleId = scheduleIdOf(input.subscription);
+  if (!scheduleId) {
+    const created = await input.stripe.subscriptionSchedules.create({
+      from_subscription: input.subscription.id,
+    });
+    scheduleId = created.id;
+  }
+
+  const schedule = await input.stripe.subscriptionSchedules.retrieve(scheduleId);
+  const phaseStart = schedule.phases[0]?.start_date;
+  if (!phaseStart) {
+    throw new BillingCommandError("CHECKOUT_FAILED", 500);
+  }
+
+  const endUnix = Math.floor(periodEnd.getTime() / 1000);
+
+  await input.stripe.subscriptionSchedules.update(scheduleId, {
+    end_behavior: "release",
+    phases: [
+      {
+        items: [{ price: currentPriceId, quantity: 1 }],
+        start_date: phaseStart,
+        end_date: endUnix,
+      },
+      {
+        items: [{ price: input.targetPriceId, quantity: 1 }],
+      },
+    ],
+    metadata: {
+      userId: input.userId,
+      scheduledPlan: input.plan,
+    },
+  });
+
+  await input.stripe.subscriptions.update(input.subscription.id, {
+    metadata: {
+      ...input.subscription.metadata,
+      userId: input.userId,
+      scheduledPlan: input.plan,
+    },
+  });
+
+  console.info("Stripe downgrade scheduled at period end", {
+    userId: input.userId,
+    subscriptionId: input.subscription.id,
+    scheduleId,
+    targetPlan: input.plan,
+    effectiveAt: periodEnd.toISOString(),
+  });
+}
+
 /**
  * Asks Stripe to change billing. Does not write plan, status, or entitlements.
  * Those land through the webhook or a later retrieve-and-sync.
@@ -195,6 +295,13 @@ export async function requestBillingChange(input: {
 
   const appUrl = getAppBaseUrl();
 
+  console.info("Billing command resolved", {
+    userId: input.userId,
+    currentPlan,
+    action: resolved.action,
+    expect: "expect" in resolved ? resolved.expect : null,
+  });
+
   if (resolved.action === "checkout") {
     const priceId = await assertPrice(stripe, resolved.plan);
     const session = await stripe.checkout.sessions.create(
@@ -218,10 +325,36 @@ export async function requestBillingChange(input: {
   }
 
   if (resolved.action === "cancel") {
-    await stripe.subscriptions.update(entitled.id, { cancel_at_period_end: true });
+    await releaseSubscriptionSchedule(stripe, entitled);
+    await stripe.subscriptions.update(entitled.id, {
+      cancel_at_period_end: true,
+      metadata: {
+        ...entitled.metadata,
+        userId: input.userId,
+        scheduledPlan: "",
+      },
+    });
   } else if (resolved.action === "resume") {
-    await stripe.subscriptions.update(entitled.id, { cancel_at_period_end: false });
+    await releaseSubscriptionSchedule(stripe, entitled);
+    await stripe.subscriptions.update(entitled.id, {
+      cancel_at_period_end: false,
+      metadata: {
+        ...entitled.metadata,
+        userId: input.userId,
+        scheduledPlan: "",
+      },
+    });
+  } else if (resolved.action === "scheduleDowngrade") {
+    const priceId = await assertPrice(stripe, resolved.plan);
+    await scheduleDowngradeAtPeriodEnd({
+      stripe,
+      subscription: entitled,
+      targetPriceId: priceId,
+      userId: input.userId,
+      plan: resolved.plan,
+    });
   } else {
+    await releaseSubscriptionSchedule(stripe, entitled);
     const priceId = await assertPrice(stripe, resolved.plan);
     const item = entitled.items.data[0];
     if (!item) {

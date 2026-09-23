@@ -31,6 +31,7 @@ function push(url, label) {
   console.log(`✓ Schema pushed to ${label}`);
 }
 
-push(prodUrl, "production");
+// Local first so a prod failure does not leave the local schema behind.
 push(localUrl, "local");
+push(prodUrl, "production");
 console.log("\n✓ Done. DATABASE_URL is still local.");

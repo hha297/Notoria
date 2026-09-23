@@ -1,13 +1,12 @@
 "use client";
 
 import type { Editor } from "@tiptap/react";
-import { Loader2, Lock, Sparkles } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { useAiPreferences } from "@/components/providers/ai-preferences-provider";
-import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import { WritingAiPanel } from "@/components/writing/writing-ai-panel";
 import { Button } from "@/components/ui/button";
 import { requestWritingAi } from "@/lib/writing/ai-client";
@@ -22,7 +21,6 @@ import {
   lastSentence,
   writingEditorPlainText,
 } from "@/lib/writing/plain-text";
-import { cn } from "@/lib/utils";
 
 type WritingAiBarProps = {
   language: string;
@@ -58,7 +56,8 @@ export function WritingAiBar({
   onQuestionFeedbackChange,
 }: WritingAiBarProps) {
   const t = useTranslations("writing.ai");
-  const { hasProAccess, openUpgrade } = useProAccess();
+  const tBilling = useTranslations("billing");
+  const { openUpgrade } = useProAccess();
   const {
     preferences,
     shouldAutoApplyContentChange,
@@ -73,15 +72,8 @@ export function WritingAiBar({
   const isChecking = pendingAction !== null;
   const isQuestionSet = editorState.mode === "question_set";
 
-  function requireAccess() {
-    if (hasProAccess) return true;
-    openUpgrade();
-    return false;
-  }
-
   async function runAction(action: WritingAiAction) {
     setSelectedAction(action);
-    if (!requireAccess()) return;
     if (!preferences.enabled) {
       toast.message(t("disabled"));
       return;
@@ -111,6 +103,11 @@ export function WritingAiBar({
       });
 
       if (!result.ok) {
+        if (result.code === "AI_QUOTA_EXCEEDED") {
+          toast.error(tBilling("quotaExceeded"));
+          openUpgrade();
+          return;
+        }
         if (result.code === "AI_FORBIDDEN") {
           openUpgrade();
           return;
@@ -186,15 +183,13 @@ export function WritingAiBar({
             size="sm"
             variant={item.action === selectedAction ? "default" : "outline"}
             aria-pressed={item.action === selectedAction}
-            aria-disabled={!hasProAccess || undefined}
-            disabled={hasProAccess && isChecking}
-            className={cn(!hasProAccess && lockedFeatureClassName)}
+            disabled={isChecking}
             onClick={() => void runAction(item.action)}
           >
-            {hasProAccess ? (
-              <Sparkles className="size-3.5" />
+            {isChecking && pendingAction === item.action ? (
+              <Loader2 className="size-3.5 animate-spin" />
             ) : (
-              <Lock className="size-3.5" />
+              <Sparkles className="size-3.5" />
             )}
             {item.label}
           </Button>

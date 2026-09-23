@@ -1,7 +1,9 @@
 import { describe, expect, it } from "vitest";
 import {
   buildCoachRecommendations,
+  buildCoachTrends,
   buildDeterministicCoachNote,
+  buildPracticePlan,
   countDueCards,
   hashCoachFacts,
   isCoachEmpty,
@@ -20,6 +22,12 @@ function facts(overrides: Partial<CoachFacts> = {}): CoachFacts {
     vocabularyTotal: 11,
     dueCards: 8,
     weakWords: ["Ahdas", "Puhelias", "Elämä"],
+    weakItems: [
+      { word: "Ahdas", rating: "AGAIN" },
+      { word: "Puhelias", rating: "HARD" },
+      { word: "Elämä", rating: "HARD" },
+    ],
+    speakingLevel: null,
     last7Days: {
       flashcardReviews: 6,
       againOrHard: 2,
@@ -27,6 +35,14 @@ function facts(overrides: Partial<CoachFacts> = {}): CoachFacts {
       speakingSessions: 0,
       writingDocuments: 1,
       theoryNotes: 4,
+    },
+    previous7Days: {
+      flashcardReviews: 4,
+      againOrHard: 3,
+      listeningLessons: 0,
+      speakingSessions: 1,
+      writingDocuments: 0,
+      theoryNotes: 2,
     },
     rangeStartUtc: "2026-09-17T00:00:00.000Z",
     rangeEndUtc: "2026-09-23T12:00:00.000Z",
@@ -75,6 +91,7 @@ describe("coach recommendations", () => {
       "speaking",
     ]);
     expect(list[0]?.href).toBe("/exercises/flashcard");
+    expect(list[1]?.href).toBe("/exercises/flashcard?focus=weak");
   });
 
   it("recommends speaking when history exists and speaking is idle", () => {
@@ -107,6 +124,41 @@ describe("coach recommendations", () => {
         vocabularyTotal: 0,
       })[0]?.type,
     ).toBe("keep_going");
+  });
+
+  it("builds a timed practice plan from recommendations", () => {
+    const recommendations = buildCoachRecommendations({
+      dueCards: 8,
+      weakWords: ["Ahdas"],
+      last7Days: facts().last7Days,
+      vocabularyTotal: 11,
+    });
+    const plan = buildPracticePlan(recommendations, {
+      dueCards: 8,
+      weakWords: ["Ahdas"],
+    });
+    expect(plan.length).toBeGreaterThan(0);
+    expect(plan[0]?.type).toBe("flashcard_review");
+    expect(plan[0]?.estimatedMinutes).toBeGreaterThan(0);
+  });
+
+  it("builds trends only when the prior week has signal", () => {
+    const withPrior = buildCoachTrends(facts().previous7Days, facts().last7Days);
+    expect(withPrior.available).toBe(true);
+    expect(withPrior.trends.length).toBeGreaterThan(0);
+
+    const emptyPrior = buildCoachTrends(
+      {
+        flashcardReviews: 0,
+        againOrHard: 0,
+        listeningLessons: 0,
+        speakingSessions: 0,
+        writingDocuments: 0,
+        theoryNotes: 0,
+      },
+      facts().last7Days,
+    );
+    expect(emptyPrior.available).toBe(false);
   });
 });
 

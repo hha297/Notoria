@@ -2,7 +2,12 @@ import { eq } from "drizzle-orm";
 import type Stripe from "stripe";
 import { db } from "@/db";
 import { users, type SubscriptionPlan } from "@/db/schema";
-import { PAID_ACCESS_STATUSES, planForStripePrice } from "@/lib/billing/plans";
+import {
+  PAID_ACCESS_STATUSES,
+  isPlanId,
+  planForStripePrice,
+  type PlanId,
+} from "@/lib/billing/plans";
 import { getStripeClient } from "@/lib/stripe/client";
 import { isStripeConfigured, stripePriceEnv } from "@/lib/stripe/config";
 import {
@@ -50,6 +55,69 @@ export function subscriptionPeriodEnd(subscription: Stripe.Subscription) {
   const unix = fromSubscription ?? itemPeriodEnd;
   if (!unix) return null;
   return new Date(unix * 1000);
+}
+
+
+function scheduleIdOf(subscription: Stripe.Subscription) {
+  const schedule = subscription.schedule;
+  if (!schedule) return null;
+  return typeof schedule === "string" ? schedule : schedule.id;
+}
+
+function priceIdFromPhaseItem(
+  item: Stripe.SubscriptionSchedule.Phase.Item | undefined,
+) {
+  if (!item?.price) return null;
+  return typeof item.price === "string" ? item.price : item.price.id;
+}
+
+/**
+ * Resolve a future paid plan from the subscription schedule or metadata.
+ * Never invents a schedule — only reports what Stripe already has.
+ */
+export async function resolveScheduledPlan(input: {
+  stripe: Stripe;
+  subscription: Stripe.Subscription;
+}): Promise<{ scheduledPlan: PlanId | null; scheduleId: string | null }> {
+  const env = stripePriceEnv();
+  const currentPriceId = subscriptionPriceId(input.subscription);
+  const scheduleId = scheduleIdOf(input.subscription);
+  const nowUnix = Math.floor(Date.now() / 1000);
+
+  if (scheduleId) {
+    try {
+      const schedule = await input.stripe.subscriptionSchedules.retrieve(scheduleId);
+      for (const phase of schedule.phases) {
+        if (phase.start_date <= nowUnix) continue;
+        const phasePriceId = priceIdFromPhaseItem(phase.items[0]);
+        if (!phasePriceId || phasePriceId === currentPriceId) continue;
+        const plan = planForStripePrice("active", phasePriceId, env);
+        if (plan === "pro" || plan === "premium") {
+          return { scheduledPlan: plan, scheduleId };
+        }
+      }
+    } catch (error) {
+      const missing =
+        error instanceof Error &&
+        "code" in error &&
+        (error as { code?: string }).code === "resource_missing";
+      if (!missing) throw error;
+    }
+  }
+
+  const meta = input.subscription.metadata?.scheduledPlan;
+  if (isPlanId(meta) && meta !== "free") {
+    const currentPlan = planForStripePrice(
+      input.subscription.status,
+      currentPriceId,
+      env,
+    );
+    if (meta !== currentPlan) {
+      return { scheduledPlan: meta, scheduleId };
+    }
+  }
+
+  return { scheduledPlan: null, scheduleId: null };
 }
 
 export async function findUserForStripeEvent(input: {
@@ -124,6 +192,12 @@ export async function syncUserSubscription(input: {
     return user.id;
   }
 
+  const stripe = getStripeClient();
+  const scheduled = await resolveScheduledPlan({
+    stripe,
+    subscription: input.subscription,
+  });
+
   const record = subscriptionRecordFromStripe({
     status: input.subscription.status,
     priceId: subscriptionPriceId(input.subscription),
@@ -131,6 +205,8 @@ export async function syncUserSubscription(input: {
     currentPeriodEnd: subscriptionPeriodEnd(input.subscription),
     customerId: customerId ?? user.stripeCustomerId,
     subscriptionId: input.subscription.id,
+    scheduledPlan: scheduled.scheduledPlan,
+    scheduleId: scheduled.scheduleId,
     env: stripePriceEnv(),
   });
 
@@ -143,6 +219,8 @@ export async function syncUserSubscription(input: {
       stripeSubscriptionId: record.stripeSubscriptionId,
       stripeCurrentPeriodEnd: record.stripeCurrentPeriodEnd,
       stripeCancelAtPeriodEnd: record.stripeCancelAtPeriodEnd,
+      scheduledSubscriptionPlan: record.scheduledSubscriptionPlan,
+      stripeScheduleId: record.stripeScheduleId,
       updatedAt: new Date(),
     })
     .where(eq(users.id, user.id));

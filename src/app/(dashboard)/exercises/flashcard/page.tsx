@@ -5,7 +5,14 @@ import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getFlashcardWords } from "@/lib/actions/flashcards";
 import { getActiveWorkspace } from "@/lib/workspace";
 
-export default async function ExerciseFlashcardPage() {
+type FlashcardPageProps = {
+  searchParams: Promise<{ focus?: string }>;
+};
+
+export default async function ExerciseFlashcardPage({ searchParams }: FlashcardPageProps) {
+  const params = await searchParams;
+  const focus = params.focus === "weak" ? "weak" : undefined;
+
   const [t, tExercises, workspace] = await Promise.all([
     getTranslations("flashcards"),
     getTranslations("exercises"),
@@ -24,12 +31,12 @@ export default async function ExerciseFlashcardPage() {
     );
   }
 
-  const words = await getFlashcardWords();
+  const words = await getFlashcardWords(focus ? { focus } : undefined);
 
   return (
     <ExerciseSessionPageFrame
       slug="flashcard"
-      title={t("title")}
+      title={focus === "weak" ? t("weakTitle") : t("title")}
       sourceLabel={workspace.name}
       backLabel={tExercises("backToStudio")}
     >

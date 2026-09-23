@@ -165,7 +165,7 @@ export async function requireFeature(
   const access = getFeatureAccess(plan, feature);
   if (access.kind === "flag" && !access.enabled) {
     const current = displayPlan(user);
-    if (feature === "ai_writing" || feature === "pdf_export" || feature === "listening") {
+    if (feature === "pdf_export" || feature === "listening") {
       throw new ProRequiredError(feature, current);
     }
     throw new PremiumRequiredError(feature, current);

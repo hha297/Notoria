@@ -2,10 +2,11 @@
 
 import { useRef, useState, useTransition } from "react";
 import { format } from "date-fns";
-import { Check, Loader2, Sparkles } from "lucide-react";
+import { ArrowLeft, ArrowLeftRight, CreditCard, Loader2, ShieldCheck, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
+import { PlanComparisonTable } from "@/components/billing/plan-comparison-table";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -33,22 +34,6 @@ type ProUpgradeDialogProps = {
 
 type ConfirmKind = "upgrade" | "switch" | "cancel" | "keep";
 
-const FREE_POINTS = ["core", "meeting", "transcript", "exercises", "vocabulary"] as const;
-const PRO_POINTS = [
-  "unlimited",
-  "listening",
-  "speaking",
-  "writing",
-  "export",
-] as const;
-const PREMIUM_POINTS = [
-  "coach",
-  "profile",
-  "daily",
-  "weekly",
-  "mistakes",
-] as const;
-
 export function ProUpgradeDialog({
   open,
   onOpenChange,
@@ -56,23 +41,29 @@ export function ProUpgradeDialog({
   openOnResume = false,
 }: ProUpgradeDialogProps) {
   const t = useTranslations("billing");
-  const { plan, cancelAtPeriodEnd, currentPeriodEnd } = useProAccess();
+  const { plan, cancelAtPeriodEnd, currentPeriodEnd, scheduledPlan } = useProAccess();
   const [pending, setPending] = useState(false);
   const [selected, setSelected] = useState<PlanId>(plan);
   const [confirm, setConfirm] = useState<ConfirmKind | null>(null);
   const wasOpen = useRef(false);
   const isLocked = variant === "locked";
   const [, startTransition] = useTransition();
-  const cta = planDialogCta({ current: plan, selected, cancelAtPeriodEnd });
+  const cta = planDialogCta({
+    current: plan,
+    selected,
+    cancelAtPeriodEnd,
+    scheduledPlan,
+  });
   const periodLabel = currentPeriodEnd
     ? format(new Date(currentPeriodEnd), "d MMM yyyy")
     : t("periodEndFallback");
   const currentPlanLabel = plan === "premium" ? t("premiumBadge") : t("proBadge");
+  const pendingChange = Boolean(cancelAtPeriodEnd || scheduledPlan);
 
   if (open && !wasOpen.current) {
     wasOpen.current = true;
     if (selected !== plan) setSelected(plan);
-    const nextConfirm = openOnResume && plan !== "free" ? "keep" : null;
+    const nextConfirm = openOnResume && plan !== "free" && pendingChange ? "keep" : null;
     if (confirm !== nextConfirm) setConfirm(nextConfirm);
   } else if (!open && wasOpen.current) {
     wasOpen.current = false;
@@ -81,7 +72,13 @@ export function ProUpgradeDialog({
 
   function handleOpenChange(next: boolean) {
     if (pending && !next) return;
+    if (!next) setConfirm(null);
     onOpenChange(next);
+  }
+
+  function handleConfirmOpenChange(next: boolean) {
+    if (pending && !next) return;
+    if (!next) setConfirm(null);
   }
 
   function submit(target: PlanId | "resume") {
@@ -125,24 +122,49 @@ export function ProUpgradeDialog({
     submit(selected);
   }
 
+  const title =
+    plan === "premium"
+      ? t("modalTitlePremium")
+      : plan === "pro"
+        ? t("modalTitlePro")
+        : isLocked
+          ? t("lockedTitle")
+          : t("modalTitle");
+
+  const subtitle =
+    plan === "premium"
+      ? t("modalSubtitlePremium")
+      : plan === "pro"
+        ? t("modalSubtitlePro")
+        : isLocked
+          ? t("lockedDescription")
+          : t("modalSubtitle");
+
   return (
+    <>
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         showCloseButton={!pending}
         className={mx(
           styles,
-          "pro-upgrade-sheet flex max-h-[min(92dvh,880px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-4xl",
+          "pro-upgrade-sheet flex max-h-[min(92dvh,880px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-4xl sm:p-0",
         )}
       >
         <div className={mx(styles, "pro-upgrade-hero shrink-0")}>
           <DialogHeader className="gap-2 space-y-0 pr-8 text-left">
             <p className={mx(styles, "pro-upgrade-kicker")}>{t("planName")}</p>
-            <DialogTitle className={mx(styles, "pro-upgrade-title")}>
-              {isLocked ? t("lockedTitle") : t("modalTitle")}
-            </DialogTitle>
+            <DialogTitle className={mx(styles, "pro-upgrade-title")}>{title}</DialogTitle>
             <DialogDescription className={mx(styles, "pro-upgrade-lede")}>
-              {isLocked ? t("lockedDescription") : t("modalSubtitle")}
+              {subtitle}
             </DialogDescription>
+            {plan === "pro" || plan === "premium" ? (
+              <p className={mx(styles, "pro-upgrade-distinction")}>{t("distinction")}</p>
+            ) : null}
+            {scheduledPlan === "pro" && plan === "premium" ? (
+              <p className={mx(styles, "pro-upgrade-distinction")}>
+                {t("switchingToProOn", { date: periodLabel })}
+              </p>
+            ) : null}
           </DialogHeader>
 
           <div className={mx(styles, "pro-upgrade-plans")} role="radiogroup">
@@ -152,6 +174,11 @@ export function ProUpgradeDialog({
               description={t("freePlanDescription")}
               selected={selected === "free"}
               current={plan === "free"}
+              ends={
+                cancelAtPeriodEnd && plan !== "free"
+                  ? t("startsOn", { date: periodLabel })
+                  : null
+              }
               disabled={pending}
               onSelect={() => {
                 setConfirm(null);
@@ -159,13 +186,19 @@ export function ProUpgradeDialog({
               }}
             />
             <PlanSummary
-              name={t("planName")}
+              name={t("proBadge")}
               price={planMonthlyPrice("pro")}
               period={t("pricePeriod")}
               description={t("proPlanDescription")}
               selected={selected === "pro"}
               current={plan === "pro"}
-              ends={plan === "pro" && cancelAtPeriodEnd ? t("endsOn", { date: periodLabel }) : null}
+              ends={
+                plan === "pro" && cancelAtPeriodEnd
+                  ? t("endsOn", { date: periodLabel })
+                  : scheduledPlan === "pro"
+                    ? t("startsOn", { date: periodLabel })
+                    : null
+              }
               popular={plan === "free"}
               disabled={pending}
               onSelect={() => {
@@ -183,8 +216,11 @@ export function ProUpgradeDialog({
               ends={
                 plan === "premium" && cancelAtPeriodEnd
                   ? t("endsOn", { date: periodLabel })
-                  : null
+                  : plan === "premium" && scheduledPlan === "pro"
+                    ? t("endsOn", { date: periodLabel })
+                    : null
               }
+              popular={plan === "pro"}
               disabled={pending}
               onSelect={() => {
                 setConfirm(null);
@@ -195,21 +231,127 @@ export function ProUpgradeDialog({
         </div>
 
         <div className={mx(styles, "pro-upgrade-body min-h-0 flex-1 overflow-y-auto")}>
-          {selected === "free" ? (
-            <PointList title={t("compare.freeIncludes")} points={FREE_POINTS} />
-          ) : null}
-          {selected === "pro" ? (
-            <PointList title={t("compare.proUnlocks")} points={PRO_POINTS} />
-          ) : null}
-          {selected === "premium" ? (
-            <PointList title={t("compare.premiumAdds")} points={PREMIUM_POINTS} />
-          ) : null}
+          <section className={mx(styles, "pro-upgrade-section")}>
+            <div className={mx(styles, "pro-upgrade-section-head")}>
+              <p className={mx(styles, "pro-upgrade-section-label")}>
+                {t("compare.heading")}
+              </p>
+            </div>
+            <PlanComparisonTable currentPlan={plan} />
+          </section>
         </div>
 
         <div className={mx(styles, "pro-upgrade-footer shrink-0")}>
-          {confirm ? (
-            <div className={mx(styles, "pro-upgrade-confirm")}>
-              <p className={mx(styles, "pro-upgrade-confirm-title")}>
+          <div className={mx(styles, "pro-upgrade-actions")}>
+            {selected === plan ? (
+              <>
+                {cta.kind === "keep" ? (
+                  <Button
+                    type="button"
+                    variant="default"
+                    className={mx(styles, "pro-upgrade-cta is-primary")}
+                    disabled={pending}
+                    onClick={requestSelected}
+                  >
+                    {pending ? (
+                      <Loader2 className="size-4 animate-spin" aria-hidden />
+                    ) : (
+                      <ShieldCheck className="size-4" aria-hidden />
+                    )}
+                    {t(cta.label)}
+                  </Button>
+                ) : null}
+                {plan === "pro" || plan === "premium" ? (
+                  <Button
+                    type="button"
+                    variant="default"
+                    className={mx(styles, "pro-upgrade-cta is-primary")}
+                    disabled={pending}
+                    onClick={() => {
+                      setPending(true);
+                      startTransition(async () => {
+                        try {
+                          const { createPortalSession } = await import(
+                            "@/lib/stripe/client-billing"
+                          );
+                          const result = await createPortalSession();
+                          if (!result.ok || !result.url) {
+                            toast.error(t(billingErrorKey(result.code)));
+                            setPending(false);
+                            return;
+                          }
+                          window.location.assign(result.url);
+                        } catch {
+                          toast.error(t("portalFailed"));
+                          setPending(false);
+                        }
+                      });
+                    }}
+                  >
+                    {pending ? (
+                      <Loader2 className="size-4 animate-spin" aria-hidden />
+                    ) : (
+                      <CreditCard className="size-4" aria-hidden />
+                    )}
+                    {t("manage")}
+                  </Button>
+                ) : null}
+              </>
+            ) : cta.kind !== "none" ? (
+              <Button
+                type="button"
+                variant="default"
+                className={mx(styles, "pro-upgrade-cta is-primary")}
+                disabled={pending}
+                onClick={requestSelected}
+              >
+                {pending ? (
+                  <Loader2 className="size-4 animate-spin" aria-hidden />
+                ) : cta.kind === "checkout" || cta.kind === "upgrade" ? (
+                  <Sparkles className="size-4" aria-hidden />
+                ) : (
+                  <ArrowLeftRight className="size-4" aria-hidden />
+                )}
+                {t(cta.label)}
+              </Button>
+            ) : null}
+            <p className={mx(styles, "pro-upgrade-fineprint")}>
+              {selected === plan
+                ? cancelAtPeriodEnd
+                  ? t("accessUntil", { plan: currentPlanLabel, date: periodLabel })
+                  : scheduledPlan === "pro"
+                    ? t("switchingToProOn", { date: periodLabel })
+                    : plan === "premium" || plan === "pro"
+                      ? t("premiumActiveFineprint")
+                      : t("cancelAnytime")
+                : cta.kind === "none" && cancelAtPeriodEnd && selected === "free"
+                  ? t("switchScheduled")
+                  : cta.kind === "none" && scheduledPlan === selected
+                    ? t("downgradeScheduleHint", { date: periodLabel })
+                    : cta.kind === "cancel"
+                      ? t("switchToFreeHint")
+                      : cta.kind === "switch"
+                        ? t("downgradeScheduleHint", { date: periodLabel })
+                        : cta.kind === "upgrade" || cta.kind === "checkout"
+                          ? t("prorationHint")
+                          : t("cancelAnytime")}
+            </p>
+          </div>
+        </div>
+      </DialogContent>
+    </Dialog>
+
+      <Dialog open={confirm !== null} onOpenChange={handleConfirmOpenChange}>
+        <DialogContent
+          showCloseButton={!pending}
+          className={mx(
+            styles,
+            "pro-upgrade-confirm-sheet gap-0 overflow-hidden p-0 sm:max-w-md sm:p-0",
+          )}
+        >
+          <div className={mx(styles, "pro-upgrade-confirm")}>
+            <DialogHeader className="gap-2 space-y-0 text-left">
+              <DialogTitle className={mx(styles, "pro-upgrade-confirm-title")}>
                 {confirm === "upgrade"
                   ? t("confirmUpgradeTitle")
                   : confirm === "switch"
@@ -217,75 +359,57 @@ export function ProUpgradeDialog({
                     : confirm === "cancel"
                       ? t("confirmCancelTitle", { plan: currentPlanLabel })
                       : t("confirmKeepTitle", { plan: currentPlanLabel })}
-              </p>
-              <p className={mx(styles, "pro-upgrade-fineprint")}>
+              </DialogTitle>
+              <DialogDescription className={mx(styles, "pro-upgrade-fineprint")}>
                 {confirm === "upgrade"
                   ? t("confirmUpgradeBody")
                   : confirm === "switch"
-                    ? t("confirmDowngradeBody")
+                    ? t("confirmDowngradeBody", { date: periodLabel })
                     : confirm === "cancel"
                       ? t("confirmCancelBody", { plan: currentPlanLabel, date: periodLabel })
                       : t("confirmKeepBody", { plan: currentPlanLabel, date: periodLabel })}
-              </p>
-              <Button
-                type="button"
-                variant={confirm === "cancel" ? "outline" : "default"}
-                className={mx(styles, "pro-upgrade-cta")}
-                disabled={pending}
-                onClick={confirmChange}
-              >
-                {pending ? <Loader2 className="size-4 animate-spin" /> : null}
-                {confirm === "upgrade"
-                  ? t("upgradeToPremium")
-                  : confirm === "switch"
-                    ? t("switchToPro")
-                    : confirm === "cancel"
-                      ? t("switchToFree")
-                      : plan === "premium"
-                        ? t("keepPremium")
-                        : t("keepPro")}
-              </Button>
-              <Button
-                type="button"
-                variant="ghost"
-                className={mx(styles, "pro-upgrade-cancel")}
-                disabled={pending}
-                onClick={() => setConfirm(null)}
-              >
-                {t("back")}
-              </Button>
-            </div>
-          ) : (
-            <>
-              {cta.kind !== "none" ? (
-                <Button
-                  type="button"
-                  variant={cta.kind === "cancel" || cta.kind === "switch" ? "outline" : "default"}
-                  className={mx(styles, "pro-upgrade-cta")}
-                  disabled={pending}
-                  onClick={requestSelected}
-                >
-                  {pending ? <Loader2 className="size-4 animate-spin" /> : null}
-                  {cta.kind === "checkout" || cta.kind === "upgrade" ? (
-                    <Sparkles className="size-4" />
-                  ) : null}
-                  {t(cta.label)}
-                </Button>
-              ) : null}
-              <p className={mx(styles, "pro-upgrade-fineprint")}>
-                {cta.kind === "cancel"
-                  ? t("switchToFreeHint")
-                  : cta.kind === "keep"
-                    ? t("accessUntil", { plan: currentPlanLabel, date: periodLabel })
-                    : cta.kind === "upgrade" || cta.kind === "switch"
-                      ? t("prorationHint")
-                      : t("cancelAnytime")}
-              </p>
-            </>
-          )}
-        </div>
-      </DialogContent>
-    </Dialog>
+              </DialogDescription>
+            </DialogHeader>
+            <Button
+              type="button"
+              variant="default"
+              className={mx(styles, "pro-upgrade-cta is-primary")}
+              disabled={pending}
+              onClick={confirmChange}
+            >
+              {pending ? (
+                <Loader2 className="size-4 animate-spin" aria-hidden />
+              ) : confirm === "upgrade" ? (
+                <Sparkles className="size-4" aria-hidden />
+              ) : confirm === "keep" ? (
+                <ShieldCheck className="size-4" aria-hidden />
+              ) : (
+                <ArrowLeftRight className="size-4" aria-hidden />
+              )}
+              {confirm === "upgrade"
+                ? t("upgradeToPremium")
+                : confirm === "switch"
+                  ? t("switchToPro")
+                  : confirm === "cancel"
+                    ? t("switchToFree")
+                    : plan === "premium"
+                      ? t("keepPremium")
+                      : t("keepPro")}
+            </Button>
+            <Button
+              type="button"
+              variant="ghost"
+              className={mx(styles, "pro-upgrade-cancel")}
+              disabled={pending}
+              onClick={() => setConfirm(null)}
+            >
+              <ArrowLeft className="size-4" aria-hidden />
+              {t("back")}
+            </Button>
+          </div>
+        </DialogContent>
+      </Dialog>
+    </>
   );
 }
 
@@ -323,9 +447,11 @@ function PlanSummary({
       onClick={onSelect}
       className={mx(
         styles,
-        "pro-upgrade-plan",
-        selected && "is-featured",
-        current && "is-current",
+        selected
+          ? "pro-upgrade-plan is-featured"
+          : popular
+            ? "pro-upgrade-plan is-popular"
+            : "pro-upgrade-plan",
       )}
     >
       <div className={mx(styles, "pro-upgrade-plan-top")}>
@@ -348,33 +474,5 @@ function PlanSummary({
       <p className={mx(styles, "pro-upgrade-plan-copy")}>{description}</p>
       {ends ? <p className={mx(styles, "pro-upgrade-plan-copy")}>{ends}</p> : null}
     </button>
-  );
-}
-
-function PointList({
-  title,
-  points,
-}: {
-  title: string;
-  points: readonly string[];
-}) {
-  const t = useTranslations("billing.points");
-
-  return (
-    <section className={mx(styles, "pro-upgrade-section")}>
-      <div className={mx(styles, "pro-upgrade-section-head")}>
-        <p className={mx(styles, "pro-upgrade-section-label")}>{title}</p>
-      </div>
-      <ul className={mx(styles, "pro-upgrade-list")}>
-        {points.map((id) => (
-          <li key={id} className={mx(styles, "pro-upgrade-row")}>
-            <span className={mx(styles, "pro-upgrade-mark is-yes")} aria-hidden>
-              <Check className="size-3.5" strokeWidth={2.5} />
-            </span>
-            <p className={mx(styles, "pro-upgrade-row-label")}>{t(id)}</p>
-          </li>
-        ))}
-      </ul>
-    </section>
   );
 }

@@ -16,6 +16,7 @@ export const QUOTA_FEATURES = [
   "ai_listening_transcript",
   "ai_exercise",
   "ai_vocabulary",
+  "ai_writing",
 ] as const;
 export type QuotaFeatureId = (typeof QUOTA_FEATURES)[number];
 
@@ -24,7 +25,6 @@ export type QuotaFeatureId = (typeof QUOTA_FEATURES)[number];
  * at each call site.
  */
 export const CAPABILITY_FEATURES = [
-  "ai_writing",
   "pdf_export",
   "listening",
   "ai_speaking_tutor",
@@ -46,6 +46,7 @@ export const FREE_DAILY_QUOTAS: Record<QuotaFeatureId, number> = {
   ai_listening_transcript: 1,
   ai_exercise: 3,
   ai_vocabulary: 5,
+  ai_writing: 1,
 };
 
 export const PLAN_PRICES = {
@@ -58,12 +59,18 @@ export const PLAN_PRICES = {
  * Premium capabilities that have a working surface today.
  * Scaffolded entitlements stay in the plan config but are not advertised.
  */
+/**
+ * Premium capabilities with a working Coach surface.
+ * Scaffolded-only entitlements stay in CAPABILITY_FEATURES but stay out of marketing.
+ */
 export const VISIBLE_PREMIUM_FEATURES = [
   "ai_learning_coach",
   "personal_learning_profile",
   "adaptive_daily_practice",
   "weekly_learning_review",
   "practice_from_mistakes",
+  "personal_learning_path",
+  "cross_module_ai",
 ] as const satisfies readonly CapabilityFeatureId[];
 
 export type FeatureAccess =
@@ -160,7 +167,6 @@ export function getFeatureAccess(plan: PlanId, feature: FeatureId): FeatureAcces
   const premium = plan === "premium";
 
   switch (feature) {
-    case "ai_writing":
     case "pdf_export":
     case "listening":
       return { kind: "flag", enabled: pro };

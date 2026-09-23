@@ -63,9 +63,18 @@ export default async function DashboardLayout({
       hasProAccess={proAccess.hasProAccess}
       plan={displayPlan(subscription)}
       cancelAtPeriodEnd={Boolean(
-        subscription?.stripeCancelAtPeriodEnd && displayPlan(subscription) !== "free",
+        subscription?.stripeCancelAtPeriodEnd &&
+          !subscription?.scheduledSubscriptionPlan &&
+          displayPlan(subscription) !== "free",
       )}
       currentPeriodEnd={subscription?.stripeCurrentPeriodEnd?.toISOString() ?? null}
+      scheduledPlan={
+        subscription?.scheduledSubscriptionPlan &&
+        subscription.scheduledSubscriptionPlan !== "free" &&
+        subscription.scheduledSubscriptionPlan !== displayPlan(subscription)
+          ? subscription.scheduledSubscriptionPlan
+          : null
+      }
     >
       <AiPreferencesProvider initial={aiPreferences}>
       <DashboardDocumentTitle />

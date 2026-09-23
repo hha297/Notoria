@@ -17,6 +17,8 @@ export type SubscriptionSnapshot = Pick<
   | "stripeSubscriptionId"
   | "stripeCurrentPeriodEnd"
   | "stripeCancelAtPeriodEnd"
+  | "scheduledSubscriptionPlan"
+  | "stripeScheduleId"
 >;
 
 export class ProRequiredError extends Error {
@@ -102,17 +104,26 @@ export async function toBillingState(
     | "stripeCustomerId"
     | "stripeCurrentPeriodEnd"
     | "stripeCancelAtPeriodEnd"
+    | "scheduledSubscriptionPlan"
   >,
 ): Promise<BillingState> {
   const plan = displayPlan(user);
   const quotas = await getQuotaStatuses(user.id, entitlementPlan(user));
+  const scheduled =
+    plan !== "free" &&
+    user.scheduledSubscriptionPlan &&
+    user.scheduledSubscriptionPlan !== "free" &&
+    user.scheduledSubscriptionPlan !== plan
+      ? user.scheduledSubscriptionPlan
+      : null;
   return {
     isPro: plan === "pro" || plan === "premium",
     isPremium: plan === "premium",
     plan,
     status: user.subscriptionStatus,
     currentPeriodEnd: user.stripeCurrentPeriodEnd?.toISOString() ?? null,
-    cancelAtPeriodEnd: plan !== "free" && user.stripeCancelAtPeriodEnd,
+    cancelAtPeriodEnd: plan !== "free" && user.stripeCancelAtPeriodEnd && !scheduled,
+    scheduledPlan: scheduled,
     hasStripeCustomer: Boolean(user.stripeCustomerId),
     quotas,
   };

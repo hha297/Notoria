@@ -31,6 +31,33 @@ export type CoachWeekActivity = {
   theoryNotes: number;
 };
 
+export type WeakWordRating = "AGAIN" | "HARD";
+
+export type WeakWordItem = {
+  word: string;
+  rating: WeakWordRating;
+};
+
+export type CoachPracticeStep = {
+  type: CoachRecommendationType;
+  href: string;
+  estimatedMinutes: number;
+  /** Short machine detail for UI (counts, word lists). */
+  detail: string;
+};
+
+export type CoachTrend = {
+  key: keyof CoachWeekActivity;
+  previous: number;
+  current: number;
+};
+
+export type CoachCrossModuleHint = {
+  type: "theory_to_practice" | "vocab_to_speaking";
+  href: string;
+  reason: string;
+};
+
 export type CoachFacts = {
   /** Display name of the workspace study language (e.g. Finnish), not the ISO code. */
   language: string;
@@ -38,13 +65,22 @@ export type CoachFacts = {
   vocabularyTotal: number;
   dueCards: number;
   weakWords: string[];
+  weakItems: WeakWordItem[];
+  /** Latest speaking session CEFR when the system stored one. */
+  speakingLevel: string | null;
   last7Days: CoachWeekActivity;
+  previous7Days: CoachWeekActivity;
   rangeStartUtc: string;
   rangeEndUtc: string;
 };
 
 export type CoachSnapshot = CoachFacts & {
   recommendations: CoachRecommendation[];
+  practicePlan: CoachPracticeStep[];
+  trends: CoachTrend[];
+  trendsAvailable: boolean;
+  path: CoachRecommendation[];
+  crossModule: CoachCrossModuleHint[];
   empty: boolean;
 };
 
@@ -63,13 +99,24 @@ export type CoachResult =
 
 export const COACH_RECOMMENDATION_HREFS: Record<CoachRecommendationType, string> = {
   flashcard_review: "/exercises/flashcard",
-  weak_words: "/exercises/flashcard",
+  weak_words: "/exercises/flashcard?focus=weak",
   speaking: "/speaking",
   listening: "/listening",
   writing: "/writing",
   theory: "/theory",
   keep_going: "/vocabulary",
 };
+
+export function emptyWeekActivity(): CoachWeekActivity {
+  return {
+    flashcardReviews: 0,
+    againOrHard: 0,
+    listeningLessons: 0,
+    speakingSessions: 0,
+    writingDocuments: 0,
+    theoryNotes: 0,
+  };
+}
 
 /** Start of the UTC day that is `days` before `now` (inclusive window for last N days). */
 export function utcDaysAgoStart(days: number, now = new Date()) {
@@ -121,6 +168,106 @@ export function pickWeakWords(words: string[], limit = 8) {
     if (picked.length >= limit) break;
   }
   return picked;
+}
+
+export function pickWeakItems(items: WeakWordItem[], limit = 8): WeakWordItem[] {
+  const seen = new Set<string>();
+  const picked: WeakWordItem[] = [];
+  for (const item of items) {
+    const trimmed = item.word.trim();
+    if (!trimmed || seen.has(trimmed.toLowerCase())) continue;
+    seen.add(trimmed.toLowerCase());
+    picked.push({ word: trimmed, rating: item.rating });
+    if (picked.length >= limit) break;
+  }
+  return picked;
+}
+
+const PRACTICE_MINUTES: Record<CoachRecommendationType, number> = {
+  flashcard_review: 7,
+  weak_words: 5,
+  speaking: 8,
+  listening: 8,
+  writing: 10,
+  theory: 8,
+  keep_going: 10,
+};
+
+export function buildPracticePlan(
+  recommendations: CoachRecommendation[],
+  input: { dueCards: number; weakWords: string[] },
+): CoachPracticeStep[] {
+  return recommendations.slice(0, 3).map((item) => {
+    let detail = item.reason;
+    let minutes = PRACTICE_MINUTES[item.type];
+    if (item.type === "flashcard_review" && input.dueCards > 0) {
+      detail = `${input.dueCards} cards`;
+      minutes = Math.min(12, Math.max(4, Math.round(input.dueCards * 0.6)));
+    } else if (item.type === "weak_words" && input.weakWords.length > 0) {
+      detail = `${input.weakWords.length} words`;
+      minutes = Math.min(10, Math.max(4, input.weakWords.length * 2));
+    } else if (item.type === "speaking") {
+      detail = "Short speaking session";
+    }
+    return {
+      type: item.type,
+      href: item.href,
+      estimatedMinutes: minutes,
+      detail,
+    };
+  });
+}
+
+export function buildCoachTrends(
+  previous: CoachWeekActivity,
+  current: CoachWeekActivity,
+): { trends: CoachTrend[]; available: boolean } {
+  const keys: (keyof CoachWeekActivity)[] = [
+    "flashcardReviews",
+    "speakingSessions",
+    "againOrHard",
+    "listeningLessons",
+    "writingDocuments",
+    "theoryNotes",
+  ];
+  const hasAny = keys.some((key) => previous[key] > 0 || current[key] > 0);
+  if (!hasAny) return { trends: [], available: false };
+
+  const priorSignal = keys.some((key) => previous[key] > 0);
+  if (!priorSignal) return { trends: [], available: false };
+
+  return {
+    available: true,
+    trends: keys
+      .filter((key) => previous[key] > 0 || current[key] > 0)
+      .map((key) => ({
+        key,
+        previous: previous[key],
+        current: current[key],
+      })),
+  };
+}
+
+export function buildCrossModuleHints(input: {
+  last7Days: CoachWeekActivity;
+  weakWords: string[];
+}): CoachCrossModuleHint[] {
+  const hints: CoachCrossModuleHint[] = [];
+  if (input.last7Days.theoryNotes > 0) {
+    hints.push({
+      type: "theory_to_practice",
+      href: "/exercises",
+      reason: "Theory notes were updated recently — practice what you studied",
+    });
+  }
+  if (input.weakWords.length > 0) {
+    hints.push({
+      type: "vocab_to_speaking",
+      href: "/speaking",
+      reason: `Use weak words in speaking: ${input.weakWords.slice(0, 3).join(", ")}`,
+    });
+  }
+  return hints.slice(0, 2);
 }
 
 export function buildCoachRecommendations(input: {

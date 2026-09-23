@@ -56,7 +56,7 @@ describe("billing commands", () => {
     ).toEqual({ action: "checkout", plan: "premium", expect: "premium" });
   });
 
-  it("switches an existing subscription instead of starting a second one", () => {
+  it("upgrades immediately and schedules Premium → Pro at period end", () => {
     expect(
       resolveBillingCommand({
         currentPlan: "pro",
@@ -70,7 +70,7 @@ describe("billing commands", () => {
         hasEntitledSubscription: true,
         command: { intent: "change", plan: "pro" },
       }),
-    ).toEqual({ action: "switch", plan: "pro", expect: "pro" });
+    ).toEqual({ action: "scheduleDowngrade", plan: "pro", expect: "schedule_pro" });
   });
 
   it("schedules cancellation for a move to Free and can undo it", () => {
@@ -175,12 +175,36 @@ describe("subscription sync", () => {
       currentPeriodEnd: new Date("2026-10-23T00:00:00.000Z"),
       customerId: "cus_1",
       subscriptionId: "sub_1",
+      scheduledPlan: null,
+      scheduleId: null,
       env,
     });
     expect(row.subscriptionPlan).toBe("pro");
     expect(row.stripeCancelAtPeriodEnd).toBe(true);
     expect(displayPlan(row)).toBe("pro");
     expect(getFeatureAccess("pro", "ai_meeting")).toEqual({ kind: "quota", limit: null });
+  });
+
+  it("keeps Premium when a Pro downgrade is scheduled", () => {
+    const row = subscriptionRecordFromStripe({
+      status: "active",
+      priceId: "price_premium",
+      cancelAtPeriodEnd: false,
+      currentPeriodEnd: new Date("2026-10-23T00:00:00.000Z"),
+      customerId: "cus_1",
+      subscriptionId: "sub_1",
+      scheduledPlan: "pro",
+      scheduleId: "sub_sched_1",
+      env,
+    });
+    expect(row.subscriptionPlan).toBe("premium");
+    expect(row.scheduledSubscriptionPlan).toBe("pro");
+    expect(row.stripeCancelAtPeriodEnd).toBe(false);
+    expect(displayPlan(row)).toBe("premium");
+    expect(getFeatureAccess("premium", "ai_learning_coach")).toEqual({
+      kind: "flag",
+      enabled: true,
+    });
   });
 
   it("maps a premium price and clears cancellation after the subscription ends", () => {
@@ -192,6 +216,8 @@ describe("subscription sync", () => {
         currentPeriodEnd: new Date("2026-10-23T00:00:00.000Z"),
         customerId: "cus_1",
         subscriptionId: "sub_1",
+        scheduledPlan: null,
+        scheduleId: null,
         env,
       }).subscriptionPlan,
     ).toBe("premium");
@@ -203,6 +229,8 @@ describe("subscription sync", () => {
       currentPeriodEnd: new Date("2026-10-23T00:00:00.000Z"),
       customerId: "cus_1",
       subscriptionId: "sub_1",
+      scheduledPlan: null,
+      scheduleId: null,
       env,
     });
     expect(ended.subscriptionPlan).toBe("free");
@@ -254,6 +282,20 @@ describe("subscription sync", () => {
     expect(
       subscriptionChangeConfirmed("resume", { plan: "premium", cancelAtPeriodEnd: false }),
     ).toBe(true);
+    expect(
+      subscriptionChangeConfirmed("schedule_pro", {
+        plan: "premium",
+        cancelAtPeriodEnd: false,
+        scheduledPlan: "pro",
+      }),
+    ).toBe(true);
+    expect(
+      subscriptionChangeConfirmed("schedule_pro", {
+        plan: "pro",
+        cancelAtPeriodEnd: false,
+        scheduledPlan: null,
+      }),
+    ).toBe(false);
   });
 });
 
@@ -271,6 +313,14 @@ describe("billing UI state", () => {
     expect(
       accountBillingActions({ plan: "premium", cancelAtPeriodEnd: false, hasStripeCustomer: true }),
     ).toEqual(["changePlan", "manageBilling", "openCoach"]);
+    expect(
+      accountBillingActions({
+        plan: "premium",
+        cancelAtPeriodEnd: false,
+        scheduledPlan: "pro",
+        hasStripeCustomer: true,
+      }),
+    ).toEqual(["keep", "manageBilling", "openCoach"]);
     expect(
       accountBillingActions({ plan: "premium", cancelAtPeriodEnd: true, hasStripeCustomer: true }),
     ).toEqual(["keep", "manageBilling", "openCoach"]);
@@ -305,8 +355,27 @@ describe("billing UI state", () => {
     expect(
       planDialogCta({ current: "premium", selected: "premium", cancelAtPeriodEnd: true }),
     ).toEqual({ kind: "keep", label: "keepPremium" });
+    expect(
+      planDialogCta({
+        current: "premium",
+        selected: "premium",
+        cancelAtPeriodEnd: false,
+        scheduledPlan: "pro",
+      }),
+    ).toEqual({ kind: "keep", label: "keepPremium" });
     expect(planDialogCta({ current: "pro", selected: "pro", cancelAtPeriodEnd: false })).toEqual({
       kind: "none",
     });
+    expect(planDialogCta({ current: "pro", selected: "free", cancelAtPeriodEnd: true })).toEqual({
+      kind: "none",
+    });
+    expect(
+      planDialogCta({
+        current: "premium",
+        selected: "pro",
+        cancelAtPeriodEnd: false,
+        scheduledPlan: "pro",
+      }),
+    ).toEqual({ kind: "none" });
   });
 });

@@ -20,8 +20,9 @@ Core language-learning functionality plus limited daily AI:
 - 1 Listening Transcript/day
 - 3 AI Exercise generations/day
 - 5 AI Vocabulary AI actions/day
+- 1 AI Writing action/day (Check / Improve / Grammar each count as one)
 
-Writing AI, PDF/DOCX export, and generated listening practice stay on Pro. A meeting includes the tutor for that session. One user action counts as one use, including an exercise import (extract + generate share one charge).
+PDF/DOCX export and generated listening practice stay on Pro. A meeting includes the tutor for that session. One user action counts as one use, including an exercise import (extract + generate share one charge).
 
 ## Pro
 
@@ -29,10 +30,9 @@ Writing AI, PDF/DOCX export, and generated listening practice stay on Pro. A mee
 
 Everything in Free plus:
 
-- Unlimited AI meetings, transcripts, exercise generation, and vocabulary AI
+- Unlimited AI meetings, transcripts, exercise generation, vocabulary AI, and writing AI
 - Full listening practice
 - Speaking sessions with the AI tutor
-- AI writing tools
 - PDF/DOCX export
 - Exercise import without a daily cap
 
