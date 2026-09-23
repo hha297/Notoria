@@ -43,7 +43,7 @@ export function VocabularyAiSuggestionCard({
     <div
       className={mx(
         composerStyles,
-        "vocab-composer-ai min-w-0 max-w-full rounded-md p-3",
+        "vocab-composer-ai min-w-0 max-w-full p-3.5",
       )}
     >
       <p className="flex items-center gap-1.5 text-xs font-medium text-ink">

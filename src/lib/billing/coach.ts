@@ -1,5 +1,4 @@
-import { and, count, desc, eq, gte, inArray, lte } from "drizzle-orm";
-import OpenAI from "openai";
+import { and, count, desc, eq, gt, gte, inArray } from "drizzle-orm";
 import { db } from "@/db";
 import {
   exercises,
@@ -9,52 +8,340 @@ import {
   listeningLessons,
   speakingSessions,
   vocabularyWords,
+  workspaces,
+  type User,
 } from "@/db/schema";
-import { displayPlan, entitlementPlan, type PlanId } from "@/lib/billing/plans";
-import type { User } from "@/db/schema";
-
-const WEEK_MS = 7 * 24 * 60 * 60 * 1000;
-
-export type CoachSnapshot = {
-  language: string;
-  vocabulary: Record<string, number>;
-  dueReviews: number;
-  weakWords: string[];
-  last7Days: {
-    flashcardReviews: number;
-    againOrHard: number;
-    listeningLessons: number;
-    speakingSessions: number;
-    writingDocuments: number;
-    theoryNotes: number;
-  };
-  recentSpeakingLevel: string | null;
-  focus: string[];
-};
-
-export type CoachResult =
-  | {
-      ok: true;
-      snapshot: CoachSnapshot;
-      note: string | null;
-    }
-  | {
-      ok: false;
-      code: "PREMIUM_REQUIRED";
-      currentPlan: PlanId;
-    };
+import {
+  buildCoachRecommendations,
+  countDueCards,
+  emptyVocabularySummary,
+  isCoachEmpty,
+  pickWeakWords,
+  summarizeVocabulary,
+  utcDaysAgoStart,
+  vocabularyTotal,
+  type CoachFacts,
+  type CoachResult,
+  type CoachSnapshot,
+  type CoachWeekActivity,
+} from "@/lib/billing/coach-model";
+import { resolveCoachNote } from "@/lib/billing/coach-note";
+import { displayPlan, entitlementPlan, featureEnabled } from "@/lib/billing/plans";
+import { getLanguageName } from "@/lib/languages";
 
 type EntitlementUser = Pick<
   User,
   "id" | "role" | "subscriptionPlan" | "subscriptionStatus"
 >;
 
+/**
+ * Weak words from recent Again/Hard reviews, then current lastRating.
+ * Reusable later for practice-from-mistakes.
+ */
+export async function getWeakLearningItems(input: {
+  userId: string;
+  workspaceId: string;
+  limit?: number;
+}) {
+  const limit = input.limit ?? 8;
+  const since = utcDaysAgoStart(7);
+
+  const recent = await db
+    .select({
+      word: vocabularyWords.word,
+      createdAt: flashcardReviews.createdAt,
+    })
+    .from(flashcardReviews)
+    .innerJoin(vocabularyWords, eq(vocabularyWords.id, flashcardReviews.wordId))
+    .where(
+      and(
+        eq(flashcardReviews.userId, input.userId),
+        eq(flashcardReviews.workspaceId, input.workspaceId),
+        gte(flashcardReviews.createdAt, since),
+        inArray(flashcardReviews.rating, ["AGAIN", "HARD"]),
+      ),
+    )
+    .orderBy(desc(flashcardReviews.createdAt))
+    .limit(40);
+
+  const fromRecent = pickWeakWords(
+    recent.map((row) => row.word),
+    limit,
+  );
+  if (fromRecent.length >= limit) return fromRecent;
+
+  const current = await db
+    .select({
+      word: vocabularyWords.word,
+      updatedAt: flashcardProgress.updatedAt,
+    })
+    .from(flashcardProgress)
+    .innerJoin(vocabularyWords, eq(vocabularyWords.id, flashcardProgress.wordId))
+    .where(
+      and(
+        eq(flashcardProgress.userId, input.userId),
+        eq(flashcardProgress.workspaceId, input.workspaceId),
+        inArray(flashcardProgress.lastRating, ["AGAIN", "HARD"]),
+      ),
+    )
+    .orderBy(desc(flashcardProgress.updatedAt))
+    .limit(40);
+
+  return pickWeakWords(
+    [...fromRecent, ...current.map((row) => row.word)],
+    limit,
+  );
+}
+
+export async function getVocabularyInsights(input: {
+  userId: string;
+  workspaceId: string;
+}) {
+  const rows = await db
+    .select({ status: vocabularyWords.status, total: count() })
+    .from(vocabularyWords)
+    .where(
+      and(
+        eq(vocabularyWords.userId, input.userId),
+        eq(vocabularyWords.workspaceId, input.workspaceId),
+      ),
+    )
+    .groupBy(vocabularyWords.status);
+
+  const vocabulary = summarizeVocabulary(
+    rows.map((row) => ({ status: row.status, total: Number(row.total) })),
+  );
+  return { vocabulary, total: vocabularyTotal(vocabulary) };
+}
+
+export async function getFlashcardInsights(input: {
+  userId: string;
+  workspaceId: string;
+  vocabularyTotal: number;
+  now?: Date;
+}) {
+  const now = input.now ?? new Date();
+  const notDueRows = await db
+    .select({ total: count() })
+    .from(flashcardProgress)
+    .where(
+      and(
+        eq(flashcardProgress.userId, input.userId),
+        eq(flashcardProgress.workspaceId, input.workspaceId),
+        gt(flashcardProgress.nextReviewAt, now),
+      ),
+    );
+  const dueCards = countDueCards({
+    vocabularyTotal: input.vocabularyTotal,
+    notDueCount: Number(notDueRows[0]?.total ?? 0),
+  });
+  const weakWords = await getWeakLearningItems({
+    userId: input.userId,
+    workspaceId: input.workspaceId,
+  });
+  return { dueCards, weakWords };
+}
+
+export async function getSpeakingInsights(input: {
+  userId: string;
+  workspaceId: string;
+  since: Date;
+}) {
+  const sessions = await db
+    .select({ total: count() })
+    .from(speakingSessions)
+    .where(
+      and(
+        eq(speakingSessions.userId, input.userId),
+        eq(speakingSessions.workspaceId, input.workspaceId),
+        gte(speakingSessions.createdAt, input.since),
+      ),
+    );
+
+  return {
+    sessionsLast7Days: Number(sessions[0]?.total ?? 0),
+  };
+}
+
+export async function getListeningInsights(input: {
+  userId: string;
+  workspaceId: string;
+  since: Date;
+}) {
+  const rows = await db
+    .select({ total: count() })
+    .from(listeningLessons)
+    .where(
+      and(
+        eq(listeningLessons.userId, input.userId),
+        eq(listeningLessons.workspaceId, input.workspaceId),
+        gte(listeningLessons.updatedAt, input.since),
+      ),
+    );
+  return { lessonsUpdatedLast7Days: Number(rows[0]?.total ?? 0) };
+}
+
+export async function getWritingInsights(input: {
+  userId: string;
+  workspaceId: string;
+  since: Date;
+}) {
+  const rows = await db
+    .select({ total: count() })
+    .from(exercises)
+    .where(
+      and(
+        eq(exercises.userId, input.userId),
+        eq(exercises.workspaceId, input.workspaceId),
+        eq(exercises.type, "WRITING"),
+        gte(exercises.updatedAt, input.since),
+      ),
+    );
+  return { documentsUpdatedLast7Days: Number(rows[0]?.total ?? 0) };
+}
+
+export async function getTheoryInsights(input: {
+  userId: string;
+  workspaceId: string;
+  since: Date;
+}) {
+  const rows = await db
+    .select({ total: count() })
+    .from(grammarNotes)
+    .where(
+      and(
+        eq(grammarNotes.userId, input.userId),
+        eq(grammarNotes.workspaceId, input.workspaceId),
+        gte(grammarNotes.updatedAt, input.since),
+      ),
+    );
+  return { notesUpdatedLast7Days: Number(rows[0]?.total ?? 0) };
+}
+
+async function getReviewActivity(input: {
+  userId: string;
+  workspaceId: string;
+  since: Date;
+}) {
+  const rows = await db
+    .select({ rating: flashcardReviews.rating, total: count() })
+    .from(flashcardReviews)
+    .where(
+      and(
+        eq(flashcardReviews.userId, input.userId),
+        eq(flashcardReviews.workspaceId, input.workspaceId),
+        gte(flashcardReviews.createdAt, input.since),
+      ),
+    )
+    .groupBy(flashcardReviews.rating);
+
+  const flashcardReviewsTotal = rows.reduce(
+    (sum, row) => sum + Number(row.total),
+    0,
+  );
+  const againOrHard = rows
+    .filter((row) => row.rating === "AGAIN" || row.rating === "HARD")
+    .reduce((sum, row) => sum + Number(row.total), 0);
+
+  return { flashcardReviews: flashcardReviewsTotal, againOrHard };
+}
+
+export async function getLearningCoachData(input: {
+  userId: string;
+  workspaceId: string;
+  language: string;
+  now?: Date;
+}): Promise<CoachFacts & { recommendations: CoachSnapshot["recommendations"]; empty: boolean }> {
+  const now = input.now ?? new Date();
+  const since = utcDaysAgoStart(7, now);
+
+  const [
+    vocabularyInsights,
+    speakingInsights,
+    listeningInsights,
+    writingInsights,
+    theoryInsights,
+    reviewActivity,
+  ] = await Promise.all([
+    getVocabularyInsights({
+      userId: input.userId,
+      workspaceId: input.workspaceId,
+    }),
+    getSpeakingInsights({
+      userId: input.userId,
+      workspaceId: input.workspaceId,
+      since,
+    }),
+    getListeningInsights({
+      userId: input.userId,
+      workspaceId: input.workspaceId,
+      since,
+    }),
+    getWritingInsights({
+      userId: input.userId,
+      workspaceId: input.workspaceId,
+      since,
+    }),
+    getTheoryInsights({
+      userId: input.userId,
+      workspaceId: input.workspaceId,
+      since,
+    }),
+    getReviewActivity({
+      userId: input.userId,
+      workspaceId: input.workspaceId,
+      since,
+    }),
+  ]);
+
+  const flashcardInsights = await getFlashcardInsights({
+    userId: input.userId,
+    workspaceId: input.workspaceId,
+    vocabularyTotal: vocabularyInsights.total,
+    now,
+  });
+
+  const last7Days: CoachWeekActivity = {
+    flashcardReviews: reviewActivity.flashcardReviews,
+    againOrHard: reviewActivity.againOrHard,
+    listeningLessons: listeningInsights.lessonsUpdatedLast7Days,
+    speakingSessions: speakingInsights.sessionsLast7Days,
+    writingDocuments: writingInsights.documentsUpdatedLast7Days,
+    theoryNotes: theoryInsights.notesUpdatedLast7Days,
+  };
+
+  const facts: CoachFacts = {
+    language: getLanguageName(input.language),
+    vocabulary: vocabularyInsights.vocabulary,
+    vocabularyTotal: vocabularyInsights.total,
+    dueCards: flashcardInsights.dueCards,
+    weakWords: flashcardInsights.weakWords,
+    last7Days,
+    rangeStartUtc: since.toISOString(),
+    rangeEndUtc: now.toISOString(),
+  };
+
+  return {
+    ...facts,
+    recommendations: buildCoachRecommendations({
+      dueCards: facts.dueCards,
+      weakWords: facts.weakWords,
+      last7Days: facts.last7Days,
+      vocabularyTotal: facts.vocabularyTotal,
+    }),
+    empty: isCoachEmpty(facts),
+  };
+}
+
 export async function getLearningCoach(input: {
   user: EntitlementUser;
   workspaceId: string;
-  language: string;
+  language?: string;
+  forceRefresh?: boolean;
+  now?: Date;
 }): Promise<CoachResult> {
-  if (entitlementPlan(input.user) !== "premium") {
+  const plan = entitlementPlan(input.user);
+  if (!featureEnabled(plan, "ai_learning_coach")) {
     return {
       ok: false,
       code: "PREMIUM_REQUIRED",
@@ -62,218 +349,48 @@ export async function getLearningCoach(input: {
     };
   }
 
-  const since = new Date(Date.now() - WEEK_MS);
-  const userId = input.user.id;
-  const workspaceId = input.workspaceId;
-
-  const [
-    vocabRows,
-    weakRows,
-    reviewRows,
-    listeningRows,
-    speakingRows,
-    writingRows,
-    theoryRows,
-    latestSpeaking,
-  ] = await Promise.all([
-    db
-      .select({ status: vocabularyWords.status, total: count() })
-      .from(vocabularyWords)
-      .where(
-        and(
-          eq(vocabularyWords.userId, userId),
-          eq(vocabularyWords.workspaceId, workspaceId),
-        ),
-      )
-      .groupBy(vocabularyWords.status),
-    db
-      .select({ word: vocabularyWords.word })
-      .from(flashcardProgress)
-      .innerJoin(vocabularyWords, eq(vocabularyWords.id, flashcardProgress.wordId))
-      .where(
-        and(
-          eq(flashcardProgress.userId, userId),
-          eq(flashcardProgress.workspaceId, workspaceId),
-          inArray(flashcardProgress.lastRating, ["AGAIN", "HARD"]),
-        ),
-      )
-      .limit(8),
-    db
-      .select({ rating: flashcardReviews.rating, total: count() })
-      .from(flashcardReviews)
-      .where(
-        and(
-          eq(flashcardReviews.userId, userId),
-          eq(flashcardReviews.workspaceId, workspaceId),
-          gte(flashcardReviews.createdAt, since),
-        ),
-      )
-      .groupBy(flashcardReviews.rating),
-    db
-      .select({ total: count() })
-      .from(listeningLessons)
-      .where(
-        and(
-          eq(listeningLessons.userId, userId),
-          eq(listeningLessons.workspaceId, workspaceId),
-          gte(listeningLessons.updatedAt, since),
-        ),
-      ),
-    db
-      .select({ total: count() })
-      .from(speakingSessions)
-      .where(
-        and(
-          eq(speakingSessions.userId, userId),
-          eq(speakingSessions.workspaceId, workspaceId),
-          gte(speakingSessions.createdAt, since),
-        ),
-      ),
-    db
-      .select({ total: count() })
-      .from(exercises)
-      .where(
-        and(
-          eq(exercises.userId, userId),
-          eq(exercises.workspaceId, workspaceId),
-          gte(exercises.updatedAt, since),
-        ),
-      ),
-    db
-      .select({ total: count() })
-      .from(grammarNotes)
-      .where(
-        and(
-          eq(grammarNotes.userId, userId),
-          eq(grammarNotes.workspaceId, workspaceId),
-          gte(grammarNotes.updatedAt, since),
-        ),
-      ),
-    db.query.speakingSessions.findFirst({
-      where: and(
-        eq(speakingSessions.userId, userId),
-        eq(speakingSessions.workspaceId, workspaceId),
-      ),
-      columns: { cefrLevel: true },
-      orderBy: [desc(speakingSessions.createdAt)],
-    }),
-  ]);
-
-  const vocabulary: Record<string, number> = {};
-  for (const row of vocabRows) {
-    vocabulary[row.status] = Number(row.total);
+  const workspace = await db.query.workspaces.findFirst({
+    where: and(
+      eq(workspaces.id, input.workspaceId),
+      eq(workspaces.userId, input.user.id),
+    ),
+    columns: { id: true, language: true },
+  });
+  if (!workspace) {
+    throw new Error("UNAUTHORIZED");
   }
 
-  const reviewTotal = reviewRows.reduce((sum, row) => sum + Number(row.total), 0);
-  const againOrHard = reviewRows
-    .filter((row) => row.rating === "AGAIN" || row.rating === "HARD")
-    .reduce((sum, row) => sum + Number(row.total), 0);
+  const data = await getLearningCoachData({
+    userId: input.user.id,
+    workspaceId: workspace.id,
+    language: input.language ?? workspace.language,
+    now: input.now,
+  });
 
-  const dueReviews = await countDue(userId, workspaceId);
-
-  const weakWords = weakRows.map((row) => row.word).filter(Boolean);
-  const focus = buildFocus({
-    dueReviews,
-    weakWords,
-    listening: Number(listeningRows[0]?.total ?? 0),
-    speaking: Number(speakingRows[0]?.total ?? 0),
+  const { note, source } = await resolveCoachNote({
+    userId: input.user.id,
+    workspaceId: workspace.id,
+    facts: data,
+    forceRefresh: input.forceRefresh,
   });
 
   const snapshot: CoachSnapshot = {
-    language: input.language,
-    vocabulary,
-    dueReviews,
-    weakWords,
-    last7Days: {
-      flashcardReviews: reviewTotal,
-      againOrHard,
-      listeningLessons: Number(listeningRows[0]?.total ?? 0),
-      speakingSessions: Number(speakingRows[0]?.total ?? 0),
-      writingDocuments: Number(writingRows[0]?.total ?? 0),
-      theoryNotes: Number(theoryRows[0]?.total ?? 0),
-    },
-    recentSpeakingLevel: latestSpeaking?.cefrLevel ?? null,
-    focus,
+    language: data.language,
+    vocabulary: data.vocabulary || emptyVocabularySummary(),
+    vocabularyTotal: data.vocabularyTotal,
+    dueCards: data.dueCards,
+    weakWords: data.weakWords,
+    last7Days: data.last7Days,
+    rangeStartUtc: data.rangeStartUtc,
+    rangeEndUtc: data.rangeEndUtc,
+    recommendations: data.recommendations,
+    empty: data.empty,
   };
 
   return {
     ok: true,
     snapshot,
-    note: await narrateSnapshot(snapshot),
+    note,
+    noteSource: source,
   };
-}
-
-async function countDue(userId: string, workspaceId: string) {
-  const now = new Date();
-  const rows = await db
-    .select({ total: count() })
-    .from(flashcardProgress)
-    .where(
-      and(
-        eq(flashcardProgress.userId, userId),
-        eq(flashcardProgress.workspaceId, workspaceId),
-      ),
-    );
-  const all = Number(rows[0]?.total ?? 0);
-  if (all === 0) return 0;
-  const due = await db
-    .select({ total: count() })
-    .from(flashcardProgress)
-    .where(
-      and(
-        eq(flashcardProgress.userId, userId),
-        eq(flashcardProgress.workspaceId, workspaceId),
-        lte(flashcardProgress.nextReviewAt, now),
-      ),
-    );
-  return Number(due[0]?.total ?? 0);
-}
-
-function buildFocus(input: {
-  dueReviews: number;
-  weakWords: string[];
-  listening: number;
-  speaking: number;
-}) {
-  const focus: string[] = [];
-  if (input.dueReviews > 0) {
-    focus.push("review-due");
-  }
-  if (input.weakWords.length > 0) {
-    focus.push("weak-words");
-  }
-  if (input.listening === 0) {
-    focus.push("listening");
-  }
-  if (input.speaking === 0) {
-    focus.push("speaking");
-  }
-  if (focus.length === 0) {
-    focus.push("keep-going");
-  }
-  return focus.slice(0, 3);
-}
-
-async function narrateSnapshot(snapshot: CoachSnapshot) {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) return null;
-  try {
-    const client = new OpenAI({ apiKey, timeout: 20_000 });
-    const response = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      temperature: 0.2,
-      messages: [
-        {
-          role: "system",
-          content:
-            "Write 2 or 3 short sentences for a language learner. Use only the facts in the JSON. Do not invent scores, mistakes, or activities that are not listed.",
-        },
-        { role: "user", content: JSON.stringify(snapshot) },
-      ],
-    });
-    const text = response.choices[0]?.message?.content?.trim();
-    return text || null;
-  } catch {
-    return null;
-  }
 }

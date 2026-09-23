@@ -6,14 +6,18 @@ import { Pencil, Trash2 } from "lucide-react";
 import { toast } from "sonner";
 import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
 import { Button } from "@/components/ui/button";
+import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
 import { useInvalidateWorkspaceQueries } from "@/hooks/use-invalidate-workspace-queries";
 import { deleteVocabularyWord } from "@/lib/actions/vocabulary";
+import { mx } from "@/lib/css-module";
+import { cn } from "@/lib/utils";
 
 type VocabularyRowActionsProps = {
   wordId: string;
   word: string;
   workspaceId: string;
   onEdit: () => void;
+  className?: string;
 };
 
 export function VocabularyRowActions({
@@ -21,6 +25,7 @@ export function VocabularyRowActions({
   word,
   workspaceId,
   onEdit,
+  className,
 }: VocabularyRowActionsProps) {
   const t = useTranslations("common");
   const tv = useTranslations("vocabulary");
@@ -44,12 +49,12 @@ export function VocabularyRowActions({
 
   return (
     <>
-      <div className="flex justify-end gap-1">
+      <div className={cn(mx(featureStyles, "vocab-module-actions"), className)}>
         <Button
           type="button"
           variant="ghost"
           size="icon-sm"
-          className="size-9 text-muted-foreground hover:text-ink"
+          className={mx(featureStyles, "vocab-module-action")}
           onClick={(event) => {
             event.preventDefault();
             event.stopPropagation();
@@ -64,7 +69,10 @@ export function VocabularyRowActions({
           type="button"
           variant="ghost"
           size="icon-sm"
-          className="size-9 text-muted-foreground hover:text-ink"
+          className={mx(
+            featureStyles,
+            "vocab-module-action vocab-module-action-danger",
+          )}
           onClick={(event) => {
             event.preventDefault();
             event.stopPropagation();

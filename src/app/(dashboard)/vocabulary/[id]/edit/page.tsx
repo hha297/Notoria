@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { getTranslations } from "next-intl/server";
+import { PageShell } from "@/components/layout/page-shell";
 import { VocabularyForm } from "@/components/vocabulary/vocabulary-form";
 import { getVocabularyWord } from "@/lib/actions/vocabulary";
 import { getActiveWorkspace } from "@/lib/workspace";
@@ -28,29 +29,28 @@ export default async function EditVocabularyPage({
   const previewHref = `/vocabulary/${word.id}`;
 
   return (
-    <div className="mx-auto max-w-5xl space-y-5 pt-1 sm:space-y-6 sm:pt-2">
-      <Link
-        href={previewHref}
-        className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-ink"
-      >
-        <ArrowLeft className="size-4" />
-        {t("backToPreview")}
-      </Link>
-      <VocabularyForm
-        previewHref={previewHref}
-        workspaceId={workspace.id}
-        language={workspace.language}
-        initialData={{
-          id: word.id,
-          word: word.word,
-          partOfSpeech: word.partOfSpeech,
-          notes: word.notes,
-          synonymRefs: word.synonymRefs,
-          meanings: word.meanings,
-          examples: word.examples,
-          tags: word.tags,
-        }}
-      />
-    </div>
+    <PageShell className="vocab-lexicon-shell">
+      <div className="vocab-lexicon writing-atelier flex flex-col gap-6 lg:gap-8">
+        <Link href={previewHref} className="writing-back">
+          <ArrowLeft className="size-4 shrink-0" />
+          {t("backToPreview")}
+        </Link>
+        <VocabularyForm
+          previewHref={previewHref}
+          workspaceId={workspace.id}
+          language={workspace.language}
+          initialData={{
+            id: word.id,
+            word: word.word,
+            partOfSpeech: word.partOfSpeech,
+            notes: word.notes,
+            synonymRefs: word.synonymRefs,
+            meanings: word.meanings,
+            examples: word.examples,
+            tags: word.tags,
+          }}
+        />
+      </div>
+    </PageShell>
   );
 }

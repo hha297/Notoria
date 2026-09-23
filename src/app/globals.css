@@ -819,6 +819,7 @@
   .listening-atelier-shell,
   .speaking-atelier-shell,
   .vocab-lexicon-shell,
+  .coach-atelier-shell,
   .writing-paper,
   .theory-paper,
   .listening-paper,
@@ -882,6 +883,13 @@
     --writing-accent-bg: var(--module-vocab-bg);
   }
 
+  .coach-atelier-shell {
+    --writing-ink: var(--accent-lime);
+    --writing-wash: color-mix(in oklab, var(--accent-lime) 22%, var(--surface));
+    --writing-accent-fg: var(--accent-lime);
+    --writing-accent-bg: color-mix(in oklab, var(--accent-lime) 22%, var(--surface));
+  }
+
   .writing-atelier,
   .theory-atelier,
   .listening-atelier,
@@ -890,6 +898,7 @@
   .account-atelier,
   .settings-atelier,
   .vocab-lexicon,
+  .coach-atelier,
   .writing-paper-page,
   .writing-sheet,
   .writing-feature,
@@ -907,6 +916,7 @@
   .account-atelier::before,
   .settings-atelier::before,
   .vocab-lexicon::before,
+  .coach-atelier::before,
   .writing-paper-page::before,
   .writing-sheet::before,
   .writing-feature::before,
@@ -1091,6 +1101,20 @@
       );
   }
 
+  .coach-atelier::before {
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--accent-lime) 28%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-vocab-bg) 28%, transparent),
+        transparent 70%
+      );
+  }
+
   .writing-feature::before,
   .writing-empty-desk::before,
   .writing-paper-page::before {
@@ -1133,6 +1157,7 @@
   .account-atelier > *,
   .settings-atelier > *,
   .vocab-lexicon > *,
+  .coach-atelier > *,
   .writing-paper-page > *,
   .writing-sheet > *,
   .writing-feature > *,
@@ -1154,7 +1179,8 @@
   }
 
   .listening-atelier,
-  .speaking-atelier {
+  .speaking-atelier,
+  .coach-atelier {
     min-width: 0;
     overflow: visible;
   }
@@ -2531,6 +2557,7 @@ html.dark {
 .speaking-paper .writing-back,
 .theory-paper .writing-back,
 .theory-sheet .writing-back,
+.vocab-lexicon .writing-back,
 .writing-paper .writing-back,
 .writing-sheet .writing-back {
   width: fit-content;
@@ -2547,6 +2574,7 @@ html:not(.dark) .listening-paper .writing-back,
 html:not(.dark) .speaking-paper .writing-back,
 html:not(.dark) .theory-paper .writing-back,
 html:not(.dark) .theory-sheet .writing-back,
+html:not(.dark) .vocab-lexicon .writing-back,
 html:not(.dark) .writing-paper .writing-back,
 html:not(.dark) .writing-sheet .writing-back {
   color: var(--ink) !important;
@@ -2566,6 +2594,11 @@ html:not(.dark) .writing-sheet .writing-back {
 .theory-sheet .writing-back:hover {
   color: var(--theory-cat-fg, var(--module-theory-fg)) !important;
   background: var(--theory-cat-bg, var(--module-theory-bg));
+}
+
+.vocab-lexicon .writing-back:hover {
+  color: var(--module-vocab-fg) !important;
+  background: var(--module-vocab-bg);
 }
 
 .writing-paper:not(.listening-paper):not(.speaking-paper):not(.theory-paper)

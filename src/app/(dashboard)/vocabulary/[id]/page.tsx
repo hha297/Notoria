@@ -1,12 +1,8 @@
-import Link from "next/link";
 import { notFound } from "next/navigation";
-import { ArrowLeft } from "lucide-react";
-import { getTranslations } from "next-intl/server";
-import { PageHeader } from "@/components/layout/page-header";
+import { PageShell } from "@/components/layout/page-shell";
 import { VocabularyPreview } from "@/components/vocabulary/vocabulary-preview";
 import { getVocabularyWord } from "@/lib/actions/vocabulary";
 import { getActiveWorkspace } from "@/lib/workspace";
-
 
 export default async function VocabularyWordPage({
   params,
@@ -14,7 +10,6 @@ export default async function VocabularyWordPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const t = await getTranslations("vocabulary");
   const workspace = await getActiveWorkspace();
 
   if (!workspace) {
@@ -28,32 +23,20 @@ export default async function VocabularyWordPage({
   }
 
   return (
-    <div className="mx-auto max-w-4xl space-y-8 pt-1 sm:space-y-10 sm:pt-2">
-      <div className="space-y-6">
-        <Link
-          href="/vocabulary"
-          className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-ink"
-        >
-          <ArrowLeft className="size-4" />
-          {t("backToList")}
-        </Link>
-        <PageHeader
-          eyebrow={t("title")}
-          title={word.word}
-          description={t("previewDescription")}
+    <PageShell className="vocab-lexicon-shell">
+      <div className="vocab-lexicon writing-atelier">
+        <VocabularyPreview
+          id={word.id}
+          word={word.word}
+          partOfSpeech={word.partOfSpeech}
+          synonyms={word.synonymRefs}
+          unmatchedSynonyms={word.unmatchedSynonyms}
+          notes={word.notes}
+          meanings={word.meanings}
+          examples={word.examples}
+          tags={word.tags}
         />
       </div>
-      <VocabularyPreview
-        id={word.id}
-        word={word.word}
-        partOfSpeech={word.partOfSpeech}
-        synonyms={word.synonymRefs}
-        unmatchedSynonyms={word.unmatchedSynonyms}
-        notes={word.notes}
-        meanings={word.meanings}
-        examples={word.examples}
-        tags={word.tags}
-      />
-    </div>
+    </PageShell>
   );
 }

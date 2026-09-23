@@ -31,56 +31,40 @@ export function VocabularyComposerHero({
   const language = languageCode ? getLanguageByCode(languageCode) : undefined;
 
   return (
-    <header
-      className={mx(
-        styles,
-        "vocab-composer-hero relative -mx-1 px-1 py-6 sm:py-7",
-      )}
-    >
-      <div className="relative flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
-        <div className="min-w-0 space-y-3">
-          <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-primary uppercase">
-            {eyebrow}
-          </p>
-          <h1 className="font-heading text-[1.7rem] font-bold tracking-tight text-pretty text-ink sm:text-[2rem]">
-            {title}
-            {highlight ? (
-              <>
-                {" "}
-                <span className="text-primary">{highlight}</span>
-              </>
-            ) : null}
-          </h1>
-          <p className="max-w-xl text-sm leading-relaxed text-ink/75 sm:text-[15px]">
-            {description}
-          </p>
-          {language ? (
-            <p
-              className={mx(
-                styles,
-                "vocab-composer-lang mt-1 inline-flex flex-wrap items-center gap-x-2 gap-y-1 rounded-md px-2.5 py-1.5 text-sm",
-              )}
-            >
-              <span className="text-muted-foreground">{addingToLabel}</span>
-              <span className="inline-flex items-center gap-2 font-medium text-ink">
-                <CountryFlag code={language.flagCode} className="h-3.5 w-5" />
-                {language.name}
-              </span>
-            </p>
+    <header className={cn("writing-hero", mx(styles, "vocab-composer-hero"))}>
+      <div className="writing-hero-copy">
+        <p className="writing-kicker">{eyebrow}</p>
+        <h1 className="writing-brand-title">
+          {title}
+          {highlight ? (
+            <>
+              {" "}
+              <span className="text-module-vocab-fg">{highlight}</span>
+            </>
           ) : null}
-        </div>
-        {actions ? (
-          <div className="flex shrink-0 flex-wrap items-center gap-2 sm:pt-1">
-            {actions}
-          </div>
+        </h1>
+        <p className="writing-brand-lede">{description}</p>
+        {language ? (
+          <p className={mx(styles, "vocab-composer-lang")}>
+            <span className="text-muted-foreground">{addingToLabel}</span>
+            <span className="inline-flex items-center gap-2 font-medium text-ink">
+              <CountryFlag code={language.flagCode} className="h-3.5 w-5" />
+              {language.name}
+            </span>
+          </p>
         ) : null}
       </div>
+      {actions ? <div className="writing-hero-actions">{actions}</div> : null}
     </header>
   );
 }
 
 type VocabularyComposerSectionProps = {
   slot: "word" | "meaning" | "example" | "extra";
+  index: number;
+  title?: string;
+  hint?: string;
+  action?: ReactNode;
   children: ReactNode;
   className?: string;
   "data-tutorial"?: string;
@@ -88,6 +72,10 @@ type VocabularyComposerSectionProps = {
 
 export function VocabularyComposerSection({
   slot,
+  index,
+  title,
+  hint,
+  action,
   children,
   className,
   "data-tutorial": dataTutorial,
@@ -98,7 +86,37 @@ export function VocabularyComposerSection({
       data-tutorial={dataTutorial}
       className={cn(mx(styles, "vocab-composer-section"), className)}
     >
-      {children}
+      <div className={mx(styles, "vocab-composer-section-grid")}>
+        <p className={mx(styles, "vocab-composer-section-index")} aria-hidden>
+          {String(index).padStart(2, "0")}
+        </p>
+        <div className={mx(styles, "vocab-composer-section-main")}>
+          {title || action ? (
+            <div className={mx(styles, "vocab-composer-section-head")}>
+              <div className={mx(styles, "vocab-composer-section-copy")}>
+                {title ? (
+                  <h2 className={mx(styles, "vocab-composer-section-title")}>
+                    {title}
+                  </h2>
+                ) : null}
+                {hint ? (
+                  <p className={mx(styles, "vocab-composer-section-hint")}>
+                    {hint}
+                  </p>
+                ) : null}
+              </div>
+              {action ? (
+                <div className={mx(styles, "vocab-composer-section-action")}>
+                  {action}
+                </div>
+              ) : null}
+            </div>
+          ) : null}
+          <div className={mx(styles, "vocab-composer-section-body")}>
+            {children}
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

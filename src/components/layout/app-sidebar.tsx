@@ -10,6 +10,7 @@ import {
   Languages,
   Lock,
   PenLine,
+  Sparkles,
   Video,
 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -48,6 +49,7 @@ const navItems = [
   { titleKey: "writing", href: "/writing", icon: PenLine },
   { titleKey: "listening", href: "/listening", icon: Headphones },
   { titleKey: "speaking", href: "/speaking", icon: Video },
+  { titleKey: "coach", href: "/coach", icon: Sparkles },
 ] as const;
 
 type AppSidebarProps = {

@@ -1,0 +1,401 @@
+/* Learning coach atelier — calm, editorial, not a metrics dashboard */
+
+.coach-atelier {
+  --coach-fg: var(--accent-lime);
+  --coach-bg: color-mix(in oklab, var(--accent-lime) 14%, var(--surface));
+  min-width: 0;
+  width: 100%;
+}
+
+.coach-atelier :global(.writing-kicker) {
+  color: var(--coach-fg);
+}
+
+.coach-atelier :global(.writing-hero) {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem 1.5rem;
+  width: 100%;
+}
+
+.coach-atelier :global(.writing-hero-copy) {
+  flex: 1 1 16rem;
+  min-width: 0;
+}
+
+.coach-atelier :global(.writing-brand-lede) {
+  max-width: 40rem;
+}
+
+.coach-hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+  padding-bottom: 0.15rem;
+}
+
+.coach-rule {
+  height: 1px;
+  margin: 0;
+  border: 0;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    color-mix(in oklab, var(--coach-fg) 50%, transparent) 18%,
+    color-mix(in oklab, var(--hairline-cloud) 80%, transparent) 55%,
+    transparent 100%
+  );
+}
+
+.coach-section {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  animation: coach-rise 0.55s ease both;
+}
+
+.coach-section:nth-of-type(1) {
+  animation-delay: 0.04s;
+}
+.coach-section:nth-of-type(2) {
+  animation-delay: 0.1s;
+}
+.coach-section:nth-of-type(3) {
+  animation-delay: 0.16s;
+}
+.coach-section:nth-of-type(4) {
+  animation-delay: 0.22s;
+}
+
+.coach-section-label {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--coach-fg) 72%, var(--muted-foreground));
+}
+
+.coach-section-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.15rem, 2vw, 1.35rem);
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+.coach-note {
+  position: relative;
+  padding: 1.15rem 0 0.25rem 1.15rem;
+}
+
+.coach-note::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.35rem;
+  bottom: 0.35rem;
+  width: 3px;
+  border-radius: 999px;
+  background: linear-gradient(
+    180deg,
+    var(--coach-fg),
+    color-mix(in oklab, var(--coach-fg) 20%, transparent)
+  );
+}
+
+.coach-note-text {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.15rem, 2.6vw, 1.45rem);
+  font-weight: 600;
+  letter-spacing: -0.03em;
+  line-height: 1.45;
+  color: var(--ink);
+  text-wrap: pretty;
+}
+
+.coach-profile {
+  display: grid;
+  gap: 0.85rem;
+}
+
+.coach-profile-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem 1.35rem;
+}
+
+.coach-meta-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  min-width: 0;
+}
+
+.coach-meta-label {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.coach-meta-value {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.coach-vocab {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+}
+
+@media (min-width: 520px) {
+  .coach-vocab {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+}
+
+.coach-vocab-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  padding: 0.7rem 0.75rem;
+  border-radius: 0.85rem;
+  background: color-mix(in oklab, var(--coach-bg) 55%, transparent);
+  border: 1px solid
+    color-mix(in oklab, var(--coach-fg) 14%, var(--hairline-cloud));
+}
+
+.coach-vocab-count {
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
+  color: var(--ink);
+}
+
+.coach-vocab-label {
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.coach-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.coach-action {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.85rem;
+  width: 100%;
+  padding: 0.95rem 1rem;
+  border-radius: 0.95rem;
+  border: 1px solid
+    color-mix(in oklab, var(--coach-fg) 16%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      120deg,
+      color-mix(in oklab, var(--coach-bg) 70%, transparent),
+      transparent 68%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 55%, transparent);
+  color: var(--ink);
+  text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    transform 160ms ease;
+}
+
+.coach-action:hover {
+  border-color: color-mix(in oklab, var(--coach-fg) 42%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      120deg,
+      color-mix(in oklab, var(--coach-bg) 88%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 70%, transparent);
+}
+
+.coach-action:focus-visible {
+  outline: 2px solid var(--coach-fg);
+  outline-offset: 2px;
+}
+
+.coach-action-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-width: 0;
+}
+
+.coach-action-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.coach-action-hint {
+  margin: 0;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--muted-foreground);
+}
+
+.coach-action-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.85rem;
+  height: 1.85rem;
+  border-radius: 999px;
+  flex-shrink: 0;
+  background: color-mix(in oklab, var(--coach-fg) 18%, transparent);
+  color: var(--coach-fg);
+}
+
+.coach-facts {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  margin: 0.15rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.coach-fact {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+.coach-fact strong {
+  color: var(--ink);
+  font-weight: 600;
+}
+
+.coach-week {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.55rem 1.25rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 520px) {
+  .coach-week {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.coach-week-item {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.45rem 0;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 80%, transparent);
+}
+
+.coach-week-label {
+  font-size: 0.86rem;
+  color: var(--muted-foreground);
+}
+
+.coach-week-value {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+}
+
+.coach-empty {
+  margin: 0;
+  max-width: 36rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+
+.coach-locked {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1.1rem;
+  padding: 1.35rem 0 0.5rem;
+}
+
+.coach-locked-copy {
+  margin: 0;
+  max-width: 34rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+  text-wrap: pretty;
+}
+
+@keyframes coach-rise {
+  from {
+    opacity: 0;
+    transform: translateY(0.55rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .coach-section {
+    animation: none;
+  }
+
+  .coach-action {
+    transition: none;
+  }
+}
+
+:global(.dark) .coach-atelier {
+  --coach-bg: color-mix(in oklab, var(--accent-lime) 10%, var(--surface));
+}
+
+:global(.dark) .coach-action {
+  background:
+    linear-gradient(
+      120deg,
+      color-mix(in oklab, var(--accent-lime) 8%, transparent),
+      transparent 68%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 70%, transparent);
+}

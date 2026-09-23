@@ -12,6 +12,7 @@ import {
   Lock,
   PenLine,
   SlidersHorizontal,
+  Sparkles,
   Video,
   type LucideIcon,
 } from "lucide-react";
@@ -48,6 +49,7 @@ type NavRoute =
   | "listening"
   | "speaking"
   | "guide"
+  | "coach"
   | "settings"
   | "account";
 
@@ -140,6 +142,14 @@ const NAV_GROUPS: NavGroup[] = [
     id: "more",
     labelKey: "groups.more",
     items: [
+      {
+        href: "/coach",
+        key: "coach",
+        icon: Sparkles,
+        match: "prefix",
+        route: "coach",
+        tint: "text-accent-lime",
+      },
       {
         href: "/getting-started",
         key: "gettingStarted",

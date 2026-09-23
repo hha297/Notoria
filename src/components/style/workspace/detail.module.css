@@ -27,6 +27,11 @@
   --detail-bg: var(--module-listen-bg);
 }
 
+.shell[data-detail="vocab"] {
+  --detail-fg: var(--module-vocab-fg);
+  --detail-bg: var(--module-vocab-bg);
+}
+
 .shell[data-detail="writing"][data-writing-kind="question_set"] {
   --detail-fg: var(--module-theory-fg);
   --detail-bg: var(--module-theory-bg);

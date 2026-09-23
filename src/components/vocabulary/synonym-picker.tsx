@@ -5,7 +5,6 @@ import Link from "next/link";
 import { Loader2, Plus, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,15 +15,8 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Label } from "@/components/ui/label";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
+import { PartOfSpeechSelect, type PartOfSpeechValue } from "@/components/vocabulary/part-of-speech-select";
 import { composerStyles } from "@/components/vocabulary/vocabulary-composer";
 import { createSynonymWord } from "@/lib/actions/vocabulary";
 import { mx } from "@/lib/css-module";
@@ -33,8 +25,6 @@ import {
   normalizeVocabularyWord,
   type VocabularySynonymRef,
 } from "@/lib/vocabulary/synonyms";
-import { PARTS_OF_SPEECH } from "@/lib/vocabulary-tags";
-import { cn } from "@/lib/utils";
 
 type SynonymPickerProps = {
   value: VocabularySynonymRef[];
@@ -55,7 +45,6 @@ export function SynonymPicker({
 }: SynonymPickerProps) {
   const t = useTranslations("vocabulary");
   const tCommon = useTranslations("common");
-  const tPos = useTranslations("tags.pos");
   const tErrors = useTranslations("errors");
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
@@ -152,7 +141,7 @@ export function SynonymPicker({
         word,
         meaning,
         partOfSpeech: createPartOfSpeech
-          ? (createPartOfSpeech as (typeof PARTS_OF_SPEECH)[number])
+          ? (createPartOfSpeech as PartOfSpeechValue)
           : undefined,
       });
 
@@ -217,157 +206,136 @@ export function SynonymPicker({
   }
 
   return (
-    <div className="space-y-2">
+    <div className="space-y-4">
       <Label
         htmlFor="synonyms-search"
         className={mx(
           composerStyles,
-          "vocab-composer-kicker font-heading text-base font-bold tracking-tight",
+          "vocab-composer-kicker text-[0.68rem] font-semibold tracking-[0.18em] uppercase",
         )}
       >
         {t("synonyms")}{" "}
-        <span className="font-normal text-muted-foreground">
+        <span className="font-normal tracking-normal text-muted-foreground normal-case">
           ({tCommon("optional")})
         </span>
       </Label>
 
-      <div
-        className={mx(
-          composerStyles,
-          "vocab-composer-panel overflow-hidden rounded-md",
-        )}
-      >
-        <div className="flex items-start gap-2 px-3 py-2">
-          <div
-            className="flex min-h-10 min-w-0 flex-1 cursor-text flex-wrap items-center gap-1.5"
-            onClick={() => inputRef.current?.focus()}
-          >
-            {value.map((synonym) => (
-              <Badge
-                key={synonym.id}
-                variant="secondary"
-                className="h-6 gap-0.5 pr-1"
+      {value.length > 0 ? (
+        <div className={mx(composerStyles, "vocab-chip-row")}>
+          {value.map((synonym) => (
+            <span
+              key={synonym.id}
+              data-active="true"
+              className={mx(composerStyles, "vocab-chip")}
+            >
+              <Link
+                href={`/vocabulary/${synonym.id}`}
+                target="_blank"
+                rel="noreferrer"
+                className="hover:underline"
               >
-                <Link
-                  href={`/vocabulary/${synonym.id}`}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="hover:underline"
-                  onClick={(event) => event.stopPropagation()}
-                >
-                  {synonym.word}
-                </Link>
-                <button
-                  type="button"
-                  className="rounded-sm p-0.5 text-on-primary/70 transition-colors hover:text-on-primary"
-                  aria-label={t("synonymsRemove", { word: synonym.word })}
-                  onClick={(event) => {
-                    event.stopPropagation();
-                    removeSynonym(synonym.id);
-                  }}
-                >
-                  <X className="size-3" />
-                </button>
-              </Badge>
-            ))}
-            <CapitalizedInput
-              id="synonyms-search"
-              ref={inputRef}
-              value={query}
-              onChange={(event) => setQuery(event.target.value)}
-              onKeyDown={handleInputKeyDown}
-              placeholder={
-                value.length === 0
-                  ? t("synonymsSearch")
-                  : t("synonymsSelect")
-              }
-              className="h-7 min-w-32 flex-1 border-0 bg-transparent px-0 shadow-none focus-visible:border-0 focus-visible:ring-0 focus-visible:shadow-none"
-              disabled={isCreating}
-            />
-          </div>
-          <Button
+                {synonym.word}
+              </Link>
+              <button
+                type="button"
+                className={mx(composerStyles, "vocab-chip-remove")}
+                aria-label={t("synonymsRemove", { word: synonym.word })}
+                onClick={() => removeSynonym(synonym.id)}
+              >
+                <X className="size-3" />
+              </button>
+            </span>
+          ))}
+        </div>
+      ) : null}
+
+      <div className={mx(composerStyles, "vocab-search-shell")}>
+        <CapitalizedInput
+          id="synonyms-search"
+          ref={inputRef}
+          value={query}
+          onChange={(event) => setQuery(event.target.value)}
+          onKeyDown={handleInputKeyDown}
+          placeholder={
+            value.length === 0 ? t("synonymsSearch") : t("synonymsSelect")
+          }
+          className={mx(
+            composerStyles,
+            "vocab-composer-field vocab-search-field h-11!",
+          )}
+          disabled={isCreating}
+        />
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          className={mx(composerStyles, "vocab-composer-add h-11 shrink-0")}
+          onClick={() => {
+            if (exactMatch && !queryIsCurrentWord) {
+              selectSynonym(exactMatch);
+              return;
+            }
+            if (canCreate) openCreate();
+          }}
+          disabled={!normalizedQuery || queryIsCurrentWord || isCreating}
+        >
+          {isCreating ? (
+            <Loader2 className="size-3.5 animate-spin" />
+          ) : (
+            <Plus className="size-3.5" />
+          )}
+          {t("addCustomTag")}
+        </Button>
+      </div>
+
+      <div className={mx(composerStyles, "vocab-suggest")}>
+        {queryIsCurrentWord ? (
+          <p className={mx(composerStyles, "vocab-suggest-empty")}>
+            {t("synonymsCannotLinkSelf")}
+          </p>
+        ) : null}
+
+        {canCreate ? (
+          <button
             type="button"
-            variant="outline"
-            size="sm"
-            className="mt-1.5 shrink-0"
-            onClick={() => {
-              if (exactMatch && !queryIsCurrentWord) {
-                selectSynonym(exactMatch);
-                return;
-              }
-              if (canCreate) openCreate();
-            }}
-            disabled={!normalizedQuery || queryIsCurrentWord || isCreating}
+            className={mx(composerStyles, "vocab-suggest-item")}
+            onClick={() => openCreate()}
+            disabled={isCreating}
           >
-            {isCreating ? (
-              <Loader2 className="size-3.5 animate-spin" />
-            ) : (
-              <Plus className="size-3.5" />
-            )}
-            {t("addCustomTag")}
-          </Button>
-        </div>
+            <Plus className="size-4 shrink-0 text-(--composer-accent)" />
+            <span className={mx(composerStyles, "vocab-suggest-title")}>
+              {t("synonymsAddNew", { word: query.trim() })}
+            </span>
+          </button>
+        ) : null}
 
-        <div className="border-t border-hairline-cloud">
-          <ScrollArea className="h-48">
-            <div className="space-y-1 px-3 py-3">
-              {queryIsCurrentWord ? (
-                <p className="px-1 py-2 text-sm text-muted-foreground">
-                  {t("synonymsCannotLinkSelf")}
-                </p>
-              ) : null}
-
-              {canCreate ? (
-                <Button
-                  type="button"
-                  variant="ghost"
-                  size="sm"
-                  className="h-8 w-full justify-start gap-2 text-ink"
-                  onClick={() => openCreate()}
-                  disabled={isCreating}
-                >
-                  <Plus className="size-4" />
-                  {t("synonymsAddNew", { word: query.trim() })}
-                </Button>
-              ) : null}
-
-              {filtered.length === 0 && !canCreate && !queryIsCurrentWord ? (
-                <p className="px-1 py-2 text-sm text-muted-foreground">
-                  {t("synonymsNoResults")}
-                </p>
-              ) : (
-                filtered.map((option) => {
-                  const checked = selectedIds.has(option.id);
-                  return (
-                    <button
-                      key={option.id}
-                      type="button"
-                      className={cn(
-                        "flex w-full items-start gap-2 rounded-md px-2 py-1.5 text-left text-sm transition-colors hover:bg-muted/60",
-                        checked && "bg-accent-lime/10",
-                      )}
-                      onClick={() => selectSynonym(option)}
-                    >
-                      <span
-                        className={cn(
-                          "min-w-0 flex-1 truncate font-medium",
-                          checked ? "text-ink" : "text-ink/90",
-                        )}
-                      >
-                        {option.word}
-                      </span>
-                      {option.meaning ? (
-                        <span className="max-w-[55%] shrink-0 truncate text-xs text-muted-foreground">
-                          {option.meaning}
-                        </span>
-                      ) : null}
-                    </button>
-                  );
-                })
-              )}
-            </div>
-          </ScrollArea>
-        </div>
+        {filtered.length === 0 && !canCreate && !queryIsCurrentWord ? (
+          <p className={mx(composerStyles, "vocab-suggest-empty")}>
+            {t("synonymsNoResults")}
+          </p>
+        ) : (
+          filtered.map((option) => {
+            const checked = selectedIds.has(option.id);
+            return (
+              <button
+                key={option.id}
+                type="button"
+                data-active={checked}
+                className={mx(composerStyles, "vocab-suggest-item")}
+                onClick={() => selectSynonym(option)}
+              >
+                <span className={mx(composerStyles, "vocab-suggest-title")}>
+                  {option.word}
+                </span>
+                {option.meaning ? (
+                  <span className={mx(composerStyles, "vocab-suggest-meta")}>
+                    {option.meaning}
+                  </span>
+                ) : null}
+              </button>
+            );
+          })
+        )}
       </div>
 
       <Dialog
@@ -392,6 +360,7 @@ export function SynonymPicker({
                 value={createWord}
                 onChange={(event) => setCreateWord(event.target.value)}
                 placeholder={t("wordPlaceholder")}
+                className={mx(composerStyles, "vocab-composer-field")}
                 disabled={isCreating}
               />
             </div>
@@ -402,6 +371,7 @@ export function SynonymPicker({
                 value={createMeaning}
                 onChange={(event) => setCreateMeaning(event.target.value)}
                 placeholder={t("synonymsMeaningPlaceholder")}
+                className={mx(composerStyles, "vocab-composer-field")}
                 disabled={isCreating}
               />
             </div>
@@ -412,31 +382,12 @@ export function SynonymPicker({
                   ({tCommon("optional")})
                 </span>
               </Label>
-              <Select
+              <PartOfSpeechSelect
+                size="compact"
                 value={createPartOfSpeech}
-                onValueChange={(value) => setCreatePartOfSpeech(value ?? "")}
                 disabled={isCreating}
-              >
-                <SelectTrigger className="h-10! w-full rounded-md bg-background px-3 py-0 data-[size=default]:h-10!">
-                  <SelectValue placeholder={t("partOfSpeechPlaceholder")}>
-                    {createPartOfSpeech &&
-                      PARTS_OF_SPEECH.includes(
-                        createPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
-                      )
-                      ? tPos(
-                        createPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
-                      )
-                      : null}
-                  </SelectValue>
-                </SelectTrigger>
-                <SelectContent>
-                  {PARTS_OF_SPEECH.map((pos) => (
-                    <SelectItem key={pos} value={pos}>
-                      {tPos(pos)}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
+                onChange={(value) => setCreatePartOfSpeech(value ?? "")}
+              />
             </div>
           </div>
           <DialogFooter>

@@ -40,18 +40,24 @@ export function VocabularyGroup({
   const showPagination = words.length > VOCABULARY_GROUP_PAGE_SIZE;
   const rangeStart = (currentPage - 1) * VOCABULARY_GROUP_PAGE_SIZE + 1;
   const rangeEnd = Math.min(currentPage * VOCABULARY_GROUP_PAGE_SIZE, words.length);
+  const indexOffset = (currentPage - 1) * VOCABULARY_GROUP_PAGE_SIZE;
 
   return (
-    <section data-vocab-pos={posKey || "none"} className={mx(featureStyles, "vocab-group")}>
+    <section
+      data-vocab-pos={posKey || "none"}
+      className={mx(featureStyles, "vocab-group")}
+    >
       <header className={mx(featureStyles, "vocab-group-head")}>
-        <h2 className={mx(featureStyles, "vocab-group-title")}>{title}</h2>
+        <div className={mx(featureStyles, "vocab-group-copy")}>
+          <h2 className={mx(featureStyles, "vocab-group-title")}>{title}</h2>
+        </div>
         <p className={mx(featureStyles, "vocab-group-count")}>
           {showPagination
             ? t("groupPageRange", {
-              start: rangeStart,
-              end: rangeEnd,
-              count: words.length,
-            })
+                start: rangeStart,
+                end: rangeEnd,
+                count: words.length,
+              })
             : t("groupCount", { count: words.length })}
         </p>
       </header>
@@ -61,12 +67,14 @@ export function VocabularyGroup({
           words={pageWords}
           workspaceId={workspaceId}
           onEditWord={onEditWord}
+          indexOffset={indexOffset}
         />
       ) : (
         <VocabularyListView
           words={pageWords}
           workspaceId={workspaceId}
           onEditWord={onEditWord}
+          indexOffset={indexOffset}
         />
       )}
 

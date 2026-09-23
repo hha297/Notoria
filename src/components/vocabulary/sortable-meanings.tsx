@@ -95,17 +95,17 @@ function MeaningRowShell({
   aiFooter?: ReactNode;
 }) {
   return (
-    <div className="space-y-2">
+    <div className="space-y-3">
       <div
         className={mx(
           composerStyles,
-          "vocab-composer-item flex min-w-0 items-center gap-2 rounded-md p-2",
-          item.isPrimary ? "vocab-composer-item-primary" : "opacity-95",
+          "vocab-composer-item flex min-w-0 items-center gap-2.5 p-3.5 sm:gap-3 sm:p-4",
+          item.isPrimary ? "vocab-composer-item-primary" : null,
         )}
       >
         {dragHandle}
-        <span className="w-6 shrink-0 text-sm font-medium text-muted-foreground">
-          {index + 1}.
+        <span className={mx(composerStyles, "vocab-composer-index")} aria-hidden>
+          {index + 1}
         </span>
         <Button
           type="button"
@@ -117,10 +117,9 @@ function MeaningRowShell({
           aria-label={item.isPrimary ? primaryLabel : secondaryLabel}
           title={item.isPrimary ? primaryLabel : secondaryLabel}
           className={cn(
+            mx(composerStyles, "vocab-composer-icon-btn"),
             "shrink-0",
-            item.isPrimary
-              ? "text-accent-lime hover:text-accent-lime"
-              : "text-muted-foreground",
+            item.isPrimary && mx(composerStyles, "vocab-composer-star-primary"),
           )}
         >
           <Star
@@ -133,7 +132,7 @@ function MeaningRowShell({
           onChange={(event) => onUpdate(item.id, event.target.value)}
           onBlur={() => onBlur?.(item.id)}
           placeholder={placeholder}
-          className="min-w-0 flex-1"
+          className={mx(composerStyles, "vocab-composer-field min-w-0 flex-1")}
         />
         <Button
           type="button"
@@ -142,7 +141,10 @@ function MeaningRowShell({
           onClick={() => onRemove(item.id)}
           disabled={!canRemove}
           aria-label="Remove meaning"
-          className="shrink-0"
+          className={mx(
+            composerStyles,
+            "vocab-composer-icon-btn vocab-composer-icon-btn-danger shrink-0",
+          )}
         >
           <Trash2 className="size-4" />
         </Button>
@@ -216,7 +218,10 @@ function SortableMeaningRow({
         dragHandle={
           <button
             type="button"
-            className="cursor-grab touch-none rounded-md p-1 text-muted-foreground hover:bg-muted active:cursor-grabbing"
+            className={mx(
+              composerStyles,
+              "vocab-composer-drag cursor-grab touch-none p-1.5 active:cursor-grabbing",
+            )}
             {...attributes}
             {...listeners}
             aria-label="Drag to reorder"
@@ -593,7 +598,7 @@ export function SortableMeanings({
   }
 
   const list = (
-    <div className="space-y-2">
+    <div className="space-y-3">
       {meanings.map((item, index) =>
         mounted ? (
           <SortableMeaningRow
@@ -629,7 +634,9 @@ export function SortableMeanings({
             inputRef={bindRef(item.id)}
             aiFooter={meaningAiFooter(item)}
             dragHandle={
-              <span className="rounded-md p-1 text-muted-foreground">
+              <span
+                className={mx(composerStyles, "vocab-composer-drag p-1.5")}
+              >
                 <GripVertical className="size-4" />
               </span>
             }
@@ -640,22 +647,23 @@ export function SortableMeanings({
   );
 
   return (
-    <div className="space-y-3">
-      <div className="flex flex-wrap items-center justify-between gap-2">
-        <div className="space-y-0.5">
-          <label
-            className={mx(
-              composerStyles,
-              "vocab-composer-kicker font-heading text-base font-bold tracking-tight",
-            )}
-          >
+    <div className={mx(composerStyles, "vocab-composer-block")}>
+      <div className={mx(composerStyles, "vocab-composer-section-head")}>
+        <div className={mx(composerStyles, "vocab-composer-section-copy")}>
+          <h3 className={mx(composerStyles, "vocab-composer-section-title")}>
             {t("meanings")}
-          </label>
-          <p className="text-xs text-muted-foreground">
+          </h3>
+          <p className={mx(composerStyles, "vocab-composer-section-hint")}>
             {t("primaryMeaningHint", { max: MAX_PRIMARY_MEANINGS })}
           </p>
         </div>
-        <Button type="button" variant="outline" size="sm" onClick={addMeaning}>
+        <Button
+          type="button"
+          variant="outline"
+          size="sm"
+          onClick={addMeaning}
+          className={mx(composerStyles, "vocab-composer-add")}
+        >
           <Plus className="size-4" />
           {t("addMeaning")}
         </Button>

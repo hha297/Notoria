@@ -110,6 +110,11 @@
   --nav-route-fg: var(--module-speak-fg);
 }
 
+.nav-link[data-nav="coach"] {
+  --nav-route-bg: color-mix(in oklab, var(--accent-lime) 26%, var(--surface));
+  --nav-route-fg: color-mix(in oklab, var(--accent-lime) 78%, var(--ink));
+}
+
 .nav-link[data-nav="guide"] {
   --nav-route-bg: var(--module-guide-bg);
   --nav-route-fg: var(--module-guide-fg);
