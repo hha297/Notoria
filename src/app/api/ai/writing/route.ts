@@ -1,12 +1,12 @@
 import { NextResponse } from "next/server";
-import { guardAiRoute } from "@/lib/ai/guard-route";
+import { guardProFeature } from "@/lib/ai/guard-route";
 import { analyzeWriting } from "@/lib/writing/ai";
 import { writingAiRequestSchema } from "@/lib/writing/ai-types";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  const access = await guardAiRoute();
+  const access = await guardProFeature("ai_writing");
   if (!access.ok) return access.response;
 
   let body: unknown;

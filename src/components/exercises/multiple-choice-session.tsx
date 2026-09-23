@@ -53,8 +53,9 @@ export function MultipleChoiceSession({
   const t = useTranslations("exercises.multipleChoice");
   const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
+  const tBilling = useTranslations("billing");
   const uiLocale = useLocale();
-  const { hasProAccess, openUpgrade } = useProAccess();
+  const { openUpgrade } = useProAccess();
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [studyMode, setStudyMode] =
     useState<MultipleChoiceStudyMode>("word-to-meaning");
@@ -122,10 +123,6 @@ export function MultipleChoiceSession({
   ]);
 
   const startContextualSession = useCallback(async () => {
-    if (!hasProAccess) {
-      openUpgrade();
-      return;
-    }
     if (filteredWords.length < 2) return;
 
     const prefs = commitAndBeginNext();
@@ -182,6 +179,10 @@ export function MultipleChoiceSession({
       });
 
       if (!result.ok) {
+        if (result.code === "AI_QUOTA_EXCEEDED") {
+          fail(tBilling("quotaExceeded"));
+          return;
+        }
         if (result.code === "AI_FORBIDDEN") {
           fail(tAi("forbidden"));
           openUpgrade();
@@ -225,13 +226,13 @@ export function MultipleChoiceSession({
     difficulty,
     fail,
     filteredWords,
-    hasProAccess,
     language,
     openUpgrade,
     resetProcessing,
     restart,
     setStage,
     tAi,
+    tBilling,
     uiLocale,
   ]);
 
@@ -254,10 +255,6 @@ export function MultipleChoiceSession({
   }, [startSession, workspaceId]);
 
   const handleStudyModeChange = (mode: string) => {
-    if (mode === "contextual" && !hasProAccess) {
-      openUpgrade();
-      return;
-    }
     if (
       mode === "word-to-meaning" ||
       mode === "meaning-to-word" ||
@@ -331,7 +328,7 @@ export function MultipleChoiceSession({
       onStudyModeChange={handleStudyModeChange}
       showStudyMode
       studyModeVariant="with-contextual"
-      contextualPro={!hasProAccess}
+      contextualPro={false}
     />
   );
 
@@ -468,9 +465,7 @@ export function MultipleChoiceSession({
               {t("contextualEmptyTitle")}
             </p>
             <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
-              {hasProAccess
-                ? t("contextualEmptyDescription")
-                : t("contextualProDescription")}
+            {t("contextualEmptyDescription")}
             </p>
             <Button
               type="button"
@@ -480,7 +475,7 @@ export function MultipleChoiceSession({
               disabled={generating}
             >
               <Sparkles className="size-4" />
-              {hasProAccess ? tAi("generate") : t("unlockContextual")}
+              {tAi("generate")}
             </Button>
           </div>
         </div>

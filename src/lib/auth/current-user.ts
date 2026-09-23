@@ -15,6 +15,7 @@ const USER_COLUMNS = {
   stripeCustomerId: true,
   stripeSubscriptionId: true,
   stripeCurrentPeriodEnd: true,
+  stripeCancelAtPeriodEnd: true,
 } as const;
 
 /**

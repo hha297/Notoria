@@ -206,6 +206,29 @@
   color: var(--module-account-fg);
 }
 
+.nav-plan-cta {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: 0.45rem;
+  border-radius: 0.65rem;
+  padding: 0.4rem 0.55rem;
+  background: transparent;
+  font-family: var(--font-heading);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  line-height: 1.2;
+  color: color-mix(in oklab, var(--accent-lime) 78%, var(--ink));
+  cursor: pointer;
+  transition: background-color 160ms ease;
+}
+
+.nav-plan-cta:hover,
+.nav-plan-cta:focus-visible {
+  background: color-mix(in oklab, var(--accent-lime) 14%, transparent);
+  outline: none;
+}
+
 .sidebar-starfield {
   background-color: var(--sidebar);
 }

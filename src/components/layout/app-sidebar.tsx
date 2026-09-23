@@ -36,6 +36,7 @@ import { SidebarProCta } from "@/components/layout/sidebar-pro-cta";
 import { LinkPendingIndicator } from "@/components/layout/link-pending-indicator";
 import navStyles from "@/components/style/layout/nav.module.css";
 import { mx } from "@/lib/css-module";
+import type { PlanId } from "@/lib/billing/plans";
 import { prefetchDashboardDestination } from "@/lib/query/prefetch";
 import { cn } from "@/lib/utils";
 
@@ -45,8 +46,8 @@ const navItems = [
   { titleKey: "theory", href: "/theory", icon: BookOpen },
   { titleKey: "exercises", href: "/exercises", icon: Dumbbell },
   { titleKey: "writing", href: "/writing", icon: PenLine },
-  { titleKey: "listening", href: "/listening", icon: Headphones, pro: true },
-  { titleKey: "speaking", href: "/speaking", icon: Video, pro: true },
+  { titleKey: "listening", href: "/listening", icon: Headphones },
+  { titleKey: "speaking", href: "/speaking", icon: Video },
 ] as const;
 
 type AppSidebarProps = {
@@ -54,6 +55,7 @@ type AppSidebarProps = {
   userEmail: string;
   userImage?: string | null;
   isPro?: boolean;
+  plan?: PlanId;
   workspaceId?: string | null;
 };
 
@@ -62,6 +64,7 @@ export function AppSidebar({
   userEmail,
   userImage,
   isPro = false,
+  plan = "free",
   workspaceId = null,
 }: AppSidebarProps) {
   const pathname = usePathname();
@@ -123,7 +126,11 @@ export function AppSidebar({
           <SidebarGroupContent>
             <SidebarMenu>
               {navItems.map((item) => {
-                const locked = "pro" in item && item.pro && !hasProAccess;
+                const locked = Boolean(
+                  "pro" in item &&
+                    (item as { pro?: boolean }).pro &&
+                    !hasProAccess,
+                );
                 const isActive =
                   !locked &&
                   (item.href === "/"
@@ -173,12 +180,13 @@ export function AppSidebar({
 
       <SidebarFooter className="border-t border-sidebar-border p-3">
         <div className="flex flex-col gap-2">
-          <SidebarProCta isPro={isPro} />
+          <SidebarProCta plan={plan} />
           <UserButton
             name={userName}
             email={userEmail}
             image={userImage}
             isPro={isPro}
+            plan={plan}
           />
         </div>
       </SidebarFooter>

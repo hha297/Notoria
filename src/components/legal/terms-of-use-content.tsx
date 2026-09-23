@@ -9,13 +9,12 @@ import {
  * Terms of Use grounded in current Notoria product behaviour.
  *
  * Implementation notes for maintainers:
- * - Do not hard-code a euro price here. Checkout uses STRIPE_PRICE_ID; the Stripe
- *   Price object is the source of truth at purchase time.
- * - Pro access = ADMIN role OR plan pro with status active|trialing|past_due
- *   (see src/lib/auth/paid-access.ts). past_due still keeps Pro features.
- * - Some AI (e.g. vocabulary helpers, editor Format) is not Pro-gated; Listening,
- *   Speaking, exercise import, form-a-sentence, many AI study tools, and PDF/DOCX
- *   export are Pro-gated.
+ * - Do not hard-code a euro price here. Checkout uses the server plan config
+ *   (STRIPE_PRO_PRICE_ID / STRIPE_PREMIUM_PRICE_ID).
+ * - Paid access = ADMIN, or plan pro/premium with status active|trialing|past_due
+ *   (see src/lib/billing/plans.ts). past_due still keeps paid features.
+ * - Free includes core practice and a daily AI allowance. Writing AI, PDF/DOCX,
+ *   and generated listening practice stay on Pro. Premium adds the learning coach.
  * - Stripe portal enables invoice history, payment-method update, and cancel only;
  *   cancel mode (period-end vs immediate) is not configured in app code.
  * - Account deletion cancels the Stripe subscription immediately (best effort).
@@ -219,7 +218,7 @@ export function TermsOfUseContent() {
           have Pro-level access without a personal Stripe subscription.
         </p>
         <p>
-          {/* Price comes from Stripe Price (STRIPE_PRICE_ID), not app constants. */}
+          {/* Price comes from the Stripe Price chosen by the server plan config. */}
           The price that applies to your purchase is the price shown at Stripe
           Checkout for the current Pro plan. Any price shown elsewhere in the
           product (for example on Account) is indicative only and must match the

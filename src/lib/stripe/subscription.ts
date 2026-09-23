@@ -2,20 +2,34 @@ import { eq } from "drizzle-orm";
 import type Stripe from "stripe";
 import { db } from "@/db";
 import { users, type SubscriptionPlan } from "@/db/schema";
+import { PAID_ACCESS_STATUSES, planForStripePrice } from "@/lib/billing/plans";
 import { getStripeClient } from "@/lib/stripe/client";
-
-const PRO_ACCESS_STATUSES = new Set(["active", "trialing", "past_due"]);
+import { isStripeConfigured, stripePriceEnv } from "@/lib/stripe/config";
+import {
+  shouldApplyIncomingSubscription,
+  subscriptionRecordFromStripe,
+} from "@/lib/stripe/lifecycle";
 
 function asId(value: string | { id: string } | null | undefined) {
   if (!value) return null;
   return typeof value === "string" ? value : value.id;
 }
 
-export function planFromStripeStatus(status: string | null | undefined): SubscriptionPlan {
-  if (status && PRO_ACCESS_STATUSES.has(status)) {
-    return "pro";
+export function planFromStripeStatus(
+  status: string | null | undefined,
+  priceId?: string | null,
+): SubscriptionPlan {
+  return planForStripePrice(status, priceId, stripePriceEnv());
+}
+
+export function subscriptionPriceId(subscription: Stripe.Subscription) {
+  for (const item of subscription.items.data) {
+    const price = item.price;
+    if (price && typeof price === "object" && "id" in price && price.id) {
+      return price.id;
+    }
   }
-  return "free";
+  return null;
 }
 
 export function subscriptionPeriodEnd(subscription: Stripe.Subscription) {
@@ -94,22 +108,108 @@ export async function syncUserSubscription(input: {
     return null;
   }
 
-  const status = input.subscription.status;
-  const plan = planFromStripeStatus(status);
+  if (
+    !shouldApplyIncomingSubscription({
+      storedSubscriptionId: user.stripeSubscriptionId,
+      storedStatus: user.subscriptionStatus,
+      incomingId: input.subscription.id,
+      incomingStatus: input.subscription.status,
+    })
+  ) {
+    console.warn("Ignoring Stripe subscription that is not the current one", {
+      storedSubscriptionId: user.stripeSubscriptionId,
+      incomingSubscriptionId: input.subscription.id,
+      incomingStatus: input.subscription.status,
+    });
+    return user.id;
+  }
+
+  const record = subscriptionRecordFromStripe({
+    status: input.subscription.status,
+    priceId: subscriptionPriceId(input.subscription),
+    cancelAtPeriodEnd: input.subscription.cancel_at_period_end,
+    currentPeriodEnd: subscriptionPeriodEnd(input.subscription),
+    customerId: customerId ?? user.stripeCustomerId,
+    subscriptionId: input.subscription.id,
+    env: stripePriceEnv(),
+  });
 
   await db
     .update(users)
     .set({
-      subscriptionPlan: plan,
-      subscriptionStatus: status,
-      stripeCustomerId: customerId ?? user.stripeCustomerId,
-      stripeSubscriptionId: input.subscription.id,
-      stripeCurrentPeriodEnd: subscriptionPeriodEnd(input.subscription),
+      subscriptionPlan: record.subscriptionPlan,
+      subscriptionStatus: record.subscriptionStatus,
+      stripeCustomerId: record.stripeCustomerId ?? user.stripeCustomerId,
+      stripeSubscriptionId: record.stripeSubscriptionId,
+      stripeCurrentPeriodEnd: record.stripeCurrentPeriodEnd,
+      stripeCancelAtPeriodEnd: record.stripeCancelAtPeriodEnd,
       updatedAt: new Date(),
     })
     .where(eq(users.id, user.id));
 
   return user.id;
+}
+
+export async function reconcileUserSubscription(userId: string) {
+  if (!isStripeConfigured()) return null;
+
+  const user = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+    columns: {
+      id: true,
+      stripeCustomerId: true,
+      stripeSubscriptionId: true,
+    },
+  });
+  if (!user) return null;
+
+  const stripe = getStripeClient();
+  let stored: Stripe.Subscription | null = null;
+
+  if (user.stripeSubscriptionId) {
+    try {
+      stored = await stripe.subscriptions.retrieve(user.stripeSubscriptionId);
+      if (PAID_ACCESS_STATUSES.has(stored.status)) {
+        return syncUserSubscription({
+          userId: user.id,
+          customerId: asId(stored.customer) ?? user.stripeCustomerId,
+          subscription: stored,
+        });
+      }
+    } catch (error) {
+      const missing =
+        error instanceof Error &&
+        "code" in error &&
+        (error as { code?: string }).code === "resource_missing";
+      if (!missing) throw error;
+    }
+  }
+
+  if (!user.stripeCustomerId) {
+    return stored
+      ? syncUserSubscription({
+          userId: user.id,
+          subscription: stored,
+        })
+      : null;
+  }
+
+  const listed = await stripe.subscriptions.list({
+    customer: user.stripeCustomerId,
+    status: "all",
+    limit: 20,
+  });
+  const entitled = listed.data.filter((subscription) =>
+    PAID_ACCESS_STATUSES.has(subscription.status),
+  );
+  const chosen = entitled[0] ?? stored ?? listed.data[0];
+  if (!chosen) return null;
+
+  return syncUserSubscription({
+    userId: user.id,
+    customerId: user.stripeCustomerId,
+    subscription: chosen,
+  });
 }
 
 export async function retrieveSubscription(subscriptionId: string) {
@@ -142,10 +242,17 @@ export async function syncCheckoutSession(session: Stripe.Checkout.Session) {
 export async function syncStripeSubscriptionObject(
   subscription: Stripe.Subscription,
 ) {
+  let current = subscription;
+  try {
+    current = await retrieveSubscription(subscription.id);
+  } catch {
+    current = subscription;
+  }
+
   return syncUserSubscription({
-    userId: subscription.metadata?.userId,
-    customerId: asId(subscription.customer),
-    subscription,
+    userId: current.metadata?.userId ?? subscription.metadata?.userId,
+    customerId: asId(current.customer) ?? asId(subscription.customer),
+    subscription: current,
   });
 }
 

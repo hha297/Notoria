@@ -10,7 +10,8 @@ export type FormSentenceAiClientFailure = {
     | "AI_DISABLED"
     | "AI_UNAVAILABLE"
     | "AI_INVALID_REQUEST"
-    | "AI_EMPTY";
+    | "AI_EMPTY"
+    | "AI_QUOTA_EXCEEDED";
 };
 
 export type FormSentenceAiClientResult =

@@ -1,22 +1,13 @@
 import { getTranslations } from "next-intl/server";
 import { ExerciseSessionPageFrame } from "@/components/exercises/exercise-session-page-frame";
-import { FormSentenceLocked } from "@/components/exercises/form-sentence-locked";
 import { FormSentenceSession } from "@/components/exercises/form-sentence-session";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getFlashcardWords } from "@/lib/actions/flashcards";
-import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export default async function FormSentencePage() {
   const t = await getTranslations("exercises");
-  const [workspace, proAccess] = await Promise.all([
-    getActiveWorkspace(),
-    getCurrentProAccess(),
-  ]);
-
-  if (!proAccess.hasProAccess) {
-    return <FormSentenceLocked />;
-  }
+  const workspace = await getActiveWorkspace();
 
   if (!workspace) {
     return (

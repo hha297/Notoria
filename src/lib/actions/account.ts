@@ -24,6 +24,7 @@ import {
 import { getStripeClient } from "@/lib/stripe/client";
 import { isStripeConfigured } from "@/lib/stripe/config";
 import { toBillingState } from "@/lib/stripe/pro";
+import { reconcileUserSubscription } from "@/lib/stripe/subscription";
 import { DELETE_ACCOUNT_CONFIRMATION } from "@/lib/account/constants";
 
 const MAX_AVATAR_SIZE = 5 * 1024 * 1024;
@@ -56,6 +57,12 @@ const updateNameSchema = z.object({
 export async function getAccountUser() {
   const userId = await getCurrentUserId();
 
+  try {
+    await reconcileUserSubscription(userId);
+  } catch {
+    console.error("Stripe subscription reconcile failed");
+  }
+
   const user = await db.query.users.findFirst({
     where: eq(users.id, userId),
     columns: {
@@ -64,10 +71,12 @@ export async function getAccountUser() {
       email: true,
       image: true,
       passwordHash: true,
+      role: true,
       subscriptionPlan: true,
       subscriptionStatus: true,
       stripeCustomerId: true,
       stripeCurrentPeriodEnd: true,
+      stripeCancelAtPeriodEnd: true,
     },
   });
 
@@ -81,7 +90,7 @@ export async function getAccountUser() {
     email: user.email,
     image: user.image,
     passwordHash: user.passwordHash,
-    billing: toBillingState(user),
+    billing: await toBillingState(user),
   };
 }
 

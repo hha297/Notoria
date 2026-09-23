@@ -6,9 +6,14 @@ import type { TranscriptionSettingsRequest } from "@stream-io/node-sdk";
 import { db } from "@/db";
 import { speakingSessions, users } from "@/db/schema";
 import { ProAccessError } from "@/lib/auth/paid-access";
-import { requireProAccess } from "@/lib/auth/pro-access";
 import { requireAiAssistanceEnabled } from "@/lib/ai/preferences-server";
+import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { getCurrentUserId, getSession } from "@/lib/auth/session";
+import { consumeUsage } from "@/lib/billing/entitlements";
+import {
+  finalizeUsageReservation,
+  refundUsageReservation,
+} from "@/lib/billing/usage";
 import { SpeakingError } from "@/lib/speaking/errors";
 import { defaultSpeakingTitle } from "@/lib/speaking/instructions";
 import {
@@ -57,7 +62,6 @@ async function requireOwnedSession(id: string) {
 }
 
 export async function getSpeakingSessions(): Promise<SpeakingSessionListItem[]> {
-  await requireProAccess();
   const userId = await getCurrentUserId();
   const workspace = await getActiveWorkspace();
   if (!workspace) return [];
@@ -88,7 +92,6 @@ export async function getSpeakingSession(
   id: string,
 ): Promise<SpeakingSessionDetail | null> {
   try {
-    await requireProAccess();
     const { session } = await requireOwnedSession(id);
     return session;
   } catch (error) {
@@ -104,8 +107,11 @@ export async function getSpeakingSession(
 }
 
 export async function createSpeakingSession(formData: FormData) {
-  await requireProAccess();
-  const userId = await getCurrentUserId();
+  const user = await getCurrentUserRecord();
+  if (!user) {
+    throw new SpeakingError("UNAUTHORIZED");
+  }
+  const userId = user.id;
   const workspace = await requireActiveWorkspace();
 
   const topicValue = String(formData.get("topic") ?? "");
@@ -121,76 +127,83 @@ export async function createSpeakingSession(formData: FormData) {
     throw new SpeakingError("INVALID_INPUT");
   }
 
-  const title =
-    parsed.data.title ||
-    defaultSpeakingTitle({
-      topic: parsed.data.topic,
-      cefrLevel: parsed.data.cefrLevel,
-    });
-
-  const [created] = await db
-    .insert(speakingSessions)
-    .values({
-      userId,
-      workspaceId: workspace.id,
-      title,
-      language: workspace.language,
-      topic: parsed.data.topic ?? null,
-      cefrLevel: parsed.data.cefrLevel ?? null,
-      notes: parsed.data.notes ?? null,
-      status: "upcoming",
-    })
-    .returning();
-
-  if (!created) {
-    throw new SpeakingError("STREAM_CALL_FAILED");
-  }
+  const reservation = await consumeUsage(user, "ai_meeting");
 
   try {
-    const streamVideo = getStreamVideo();
-    const call = streamVideo.video.call("default", created.id);
-    await call.create({
-      data: {
-        created_by_id: userId,
-        custom: {
-          speakingSessionId: created.id,
-          title: created.title,
-        },
-        settings_override: {
-          transcription: {
-            language: streamTranscriptionLanguage(
-              workspace.language,
-            ) as NonNullable<TranscriptionSettingsRequest["language"]>,
-            mode: "auto-on",
-            closed_caption_mode: "auto-on",
-          },
-          recording: {
-            mode: "disabled",
-          },
-        },
-      },
-    });
+    const title =
+      parsed.data.title ||
+      defaultSpeakingTitle({
+        topic: parsed.data.topic,
+        cefrLevel: parsed.data.cefrLevel,
+      });
 
-    await streamVideo.upsertUsers([
-      {
-        id: speakingTutorUserId(created.id),
-        name: SPEAKING_TUTOR_NAME,
-        role: "user",
-        image: speakingAvatarUri(SPEAKING_TUTOR_NAME, "bottts"),
-      },
-    ]);
+    const [created] = await db
+      .insert(speakingSessions)
+      .values({
+        userId,
+        workspaceId: workspace.id,
+        title,
+        language: workspace.language,
+        topic: parsed.data.topic ?? null,
+        cefrLevel: parsed.data.cefrLevel ?? null,
+        notes: parsed.data.notes ?? null,
+        status: "upcoming",
+      })
+      .returning();
+
+    if (!created) {
+      throw new SpeakingError("STREAM_CALL_FAILED");
+    }
+
+    try {
+      const streamVideo = getStreamVideo();
+      const call = streamVideo.video.call("default", created.id);
+      await call.create({
+        data: {
+          created_by_id: userId,
+          custom: {
+            speakingSessionId: created.id,
+            title: created.title,
+          },
+          settings_override: {
+            transcription: {
+              language: streamTranscriptionLanguage(
+                workspace.language,
+              ) as NonNullable<TranscriptionSettingsRequest["language"]>,
+              mode: "auto-on",
+              closed_caption_mode: "auto-on",
+            },
+            recording: {
+              mode: "disabled",
+            },
+          },
+        },
+      });
+
+      await streamVideo.upsertUsers([
+        {
+          id: speakingTutorUserId(created.id),
+          name: SPEAKING_TUTOR_NAME,
+          role: "user",
+          image: speakingAvatarUri(SPEAKING_TUTOR_NAME, "bottts"),
+        },
+      ]);
+    } catch (error) {
+      await db.delete(speakingSessions).where(eq(speakingSessions.id, created.id));
+      if (error instanceof SpeakingError) throw error;
+      throw new SpeakingError("STREAM_CALL_FAILED");
+    }
+
+    await finalizeUsageReservation(reservation.reservationId);
+    revalidateSpeaking(created.id);
+    return { id: created.id };
   } catch (error) {
-    await db.delete(speakingSessions).where(eq(speakingSessions.id, created.id));
-    if (error instanceof SpeakingError) throw error;
-    throw new SpeakingError("STREAM_CALL_FAILED");
+    await refundUsageReservation(reservation.reservationId);
+    throw error;
   }
-
-  revalidateSpeaking(created.id);
-  return { id: created.id };
 }
 
 export async function deleteSpeakingSession(id: string) {
-  await requireProAccess();
   const { session } = await requireOwnedSession(id);
 
   await db.delete(speakingSessions).where(eq(speakingSessions.id, session.id));
@@ -207,7 +220,6 @@ export async function deleteSpeakingSession(id: string) {
 }
 
 export async function generateSpeakingToken() {
-  await requireProAccess();
   const session = await getSession();
   const userId = session?.user?.id;
   if (!userId) {
@@ -242,14 +254,12 @@ export async function generateSpeakingToken() {
 }
 
 export async function connectSpeakingTutor(sessionId: string) {
-  await requireProAccess();
   await requireAiAssistanceEnabled();
   await requireOwnedSession(sessionId);
   await connectSpeakingTutorToCall(sessionId);
 }
 
 export async function endSpeakingSession(sessionId: string, captions?: string) {
-  await requireProAccess();
   await requireOwnedSession(sessionId);
   await finalizeSpeakingSession(sessionId, captions);
 }

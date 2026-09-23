@@ -4,9 +4,10 @@ import { and, desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { exerciseImports, importedExercises } from "@/db/schema";
-import { requireProAccess } from "@/lib/auth/pro-access";
 import { requireAiAssistanceEnabled } from "@/lib/ai/preferences-server";
+import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { getCurrentUserId } from "@/lib/auth/session";
+import { runSharedUsage } from "@/lib/billing/entitlements";
 import {
   configureCloudinary,
   getCloudinaryPublicConfig,
@@ -229,7 +230,6 @@ function toSourceInput(row: {
 }
 
 export async function getExerciseImports(): Promise<ExerciseImportListItem[]> {
-  await requireProAccess();
   const userId = await getCurrentUserId();
   const workspace = await getActiveWorkspace();
   if (!workspace) return [];
@@ -253,7 +253,6 @@ export async function getExerciseImports(): Promise<ExerciseImportListItem[]> {
 export async function getExerciseImport(
   id: string,
 ): Promise<ExerciseImportDetail | null> {
-  await requireProAccess();
   const userId = await getCurrentUserId();
   const workspace = await getActiveWorkspace();
   if (!workspace) return null;
@@ -278,7 +277,6 @@ export async function getImportUploadSignature(input: {
   mimeType: string;
   filename?: string;
 }) {
-  await requireProAccess();
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
 
@@ -323,7 +321,6 @@ export async function createExerciseImportFromUploadedAsset(input: {
   title?: string;
   byteSize?: number;
 }) {
-  await requireProAccess();
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
 
@@ -373,7 +370,6 @@ export async function createExerciseImportFromUploadedAsset(input: {
 }
 
 export async function createExerciseImportFromFile(formData: FormData) {
-  await requireProAccess();
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
 
@@ -425,7 +421,6 @@ export async function createExerciseImportFromFile(formData: FormData) {
 }
 
 export async function createExerciseImportFromUrl(formData: FormData) {
-  await requireProAccess();
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
 
@@ -461,7 +456,6 @@ export async function createExerciseImportFromUrl(formData: FormData) {
  * Extract content from the imported source (internal). No exercise generation.
  */
 export async function extractExerciseImport(id: string) {
-  await requireProAccess();
   const { row } = await requireOwnedImport(id);
 
   if (row.status === "COMPLETED" && row.exercises.length > 0) {
@@ -472,41 +466,51 @@ export async function extractExerciseImport(id: string) {
     throw new ExerciseImportError("ALREADY_PROCESSING");
   }
 
-  try {
-    await db
-      .update(exerciseImports)
-      .set({
-        status: "EXTRACTING",
-        errorCode: null,
-        updatedAt: new Date(),
-      })
-      .where(eq(exerciseImports.id, id));
-    revalidateImports(id);
+  const user = await getCurrentUserRecord();
+  if (!user) throw new Error("Unauthorized");
 
-    const extracted = await extractImportContent(toSourceInput(row));
+  return runSharedUsage(
+    user,
+    "ai_exercise",
+    id,
+    async () => {
+      try {
+        await db
+          .update(exerciseImports)
+          .set({
+            status: "EXTRACTING",
+            errorCode: null,
+            updatedAt: new Date(),
+          })
+          .where(eq(exerciseImports.id, id));
+        revalidateImports(id);
 
-    await db
-      .update(exerciseImports)
-      .set({
-        status: "ANALYZING",
-        extractedText: extracted.text.slice(0, 100_000),
-        updatedAt: new Date(),
-      })
-      .where(eq(exerciseImports.id, id));
-    revalidateImports(id);
+        const extracted = await extractImportContent(toSourceInput(row));
 
-    return { id, status: "ANALYZING" as const };
-  } catch (error) {
-    const failed = await markImportFailed(id, error);
-    throw failed;
-  }
+        await db
+          .update(exerciseImports)
+          .set({
+            status: "ANALYZING",
+            extractedText: extracted.text.slice(0, 100_000),
+            updatedAt: new Date(),
+          })
+          .where(eq(exerciseImports.id, id));
+        revalidateImports(id);
+
+        return { id, status: "ANALYZING" as const };
+      } catch (error) {
+        const failed = await markImportFailed(id, error);
+        throw failed;
+      }
+    },
+    { finalize: false },
+  );
 }
 
 /**
  * Generate and persist exercises from already-extracted import text.
  */
 export async function generateExerciseImportExercises(id: string) {
-  await requireProAccess();
   await requireAiAssistanceEnabled();
   const { row, workspace } = await requireOwnedImport(id);
 
@@ -519,57 +523,62 @@ export async function generateExerciseImportExercises(id: string) {
     throw new ExerciseImportError("EMPTY_CONTENT");
   }
 
-  try {
-    await db
-      .update(exerciseImports)
-      .set({
-        status: "GENERATING",
-        errorCode: null,
-        updatedAt: new Date(),
-      })
-      .where(eq(exerciseImports.id, id));
-    revalidateImports(id);
+  const user = await getCurrentUserRecord();
+  if (!user) throw new Error("Unauthorized");
 
-    const exercises = await generateExercisesFromImport({
-      importId: id,
-      title: row.title,
-      extractedText: text,
-      studyLanguage: workspace.language,
-    });
-
-    if (exercises.length === 0) {
-      throw new ExerciseImportError("GENERATION_FAILED");
-    }
-
-    await db.transaction(async (tx) => {
-      await tx
-        .delete(importedExercises)
-        .where(eq(importedExercises.importId, id));
-      await tx.insert(importedExercises).values(
-        exercises.map((exercise, index) => ({
-          importId: id,
-          type: exercise.type,
-          data: exercise,
-          sortOrder: index,
-        })),
-      );
-
-      await tx
+  return runSharedUsage(user, "ai_exercise", id, async () => {
+    try {
+      await db
         .update(exerciseImports)
         .set({
-          status: "COMPLETED",
+          status: "GENERATING",
           errorCode: null,
           updatedAt: new Date(),
         })
         .where(eq(exerciseImports.id, id));
-    });
+      revalidateImports(id);
 
-    revalidateImports(id);
-    return { id, status: "COMPLETED" as const };
-  } catch (error) {
-    const failed = await markImportFailed(id, error);
-    throw failed;
-  }
+      const exercises = await generateExercisesFromImport({
+        importId: id,
+        title: row.title,
+        extractedText: text,
+        studyLanguage: workspace.language,
+      });
+
+      if (exercises.length === 0) {
+        throw new ExerciseImportError("GENERATION_FAILED");
+      }
+
+      await db.transaction(async (tx) => {
+        await tx
+          .delete(importedExercises)
+          .where(eq(importedExercises.importId, id));
+        await tx.insert(importedExercises).values(
+          exercises.map((exercise, index) => ({
+            importId: id,
+            type: exercise.type,
+            data: exercise,
+            sortOrder: index,
+          })),
+        );
+
+        await tx
+          .update(exerciseImports)
+          .set({
+            status: "COMPLETED",
+            errorCode: null,
+            updatedAt: new Date(),
+          })
+          .where(eq(exerciseImports.id, id));
+      });
+
+      revalidateImports(id);
+      return { id, status: "COMPLETED" as const };
+    } catch (error) {
+      const failed = await markImportFailed(id, error);
+      throw failed;
+    }
+  });
 }
 
 /**
@@ -582,7 +591,6 @@ export async function processExerciseImport(id: string) {
 }
 
 export async function deleteExerciseImport(id: string) {
-  await requireProAccess();
   const { row } = await requireOwnedImport(id);
 
   await db.delete(exerciseImports).where(eq(exerciseImports.id, id));
@@ -592,7 +600,6 @@ export async function deleteExerciseImport(id: string) {
 }
 
 export async function retryExerciseImport(id: string) {
-  await requireProAccess();
   const { row } = await requireOwnedImport(id);
 
   const canRetry =

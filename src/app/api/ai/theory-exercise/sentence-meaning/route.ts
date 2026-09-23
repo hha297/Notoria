@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { guardAiRoute } from "@/lib/ai/guard-route";
+import { guardAiEnabled } from "@/lib/ai/guard-route";
 import { glossSentenceMeaning } from "@/lib/exercises/sentence-meaning";
 import { locales } from "@/i18n/config";
 
@@ -12,7 +12,7 @@ const bodySchema = z.object({
 });
 
 export async function POST(request: Request) {
-  const access = await guardAiRoute();
+  const access = await guardAiEnabled();
   if (!access.ok) return access.response;
 
   let body: unknown;

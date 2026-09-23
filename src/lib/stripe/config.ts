@@ -13,12 +13,29 @@ export function getStripeSecretKey() {
   return secretKey;
 }
 
-export function getStripePriceId() {
-  const priceId = process.env.STRIPE_PRICE_ID?.trim();
+export function getStripeProPriceId() {
+  const priceId = process.env.STRIPE_PRO_PRICE_ID?.trim();
   if (!priceId) {
     throw new StripeConfigError();
   }
   return priceId;
+}
+
+export function getStripePremiumPriceId() {
+  const priceId = process.env.STRIPE_PREMIUM_PRICE_ID?.trim();
+  if (!priceId) {
+    throw new StripeConfigError();
+  }
+  return priceId;
+}
+
+export function stripePriceEnv() {
+  const pro = process.env.STRIPE_PRO_PRICE_ID?.trim();
+  const premium = process.env.STRIPE_PREMIUM_PRICE_ID?.trim() || null;
+  return {
+    proPriceIds: pro ? [pro] : [],
+    premiumPriceId: premium,
+  };
 }
 
 export function getStripeWebhookSecret() {
@@ -32,7 +49,7 @@ export function getStripeWebhookSecret() {
 export function isStripeConfigured() {
   return Boolean(
     process.env.STRIPE_SECRET_KEY?.trim() &&
-      process.env.STRIPE_PRICE_ID?.trim(),
+      process.env.STRIPE_PRO_PRICE_ID?.trim(),
   );
 }
 

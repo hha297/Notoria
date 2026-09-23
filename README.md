@@ -2,31 +2,81 @@
 
 **Notoria** is a private web app for language learning. Each account owns its own data: vocabulary, writing, theory notes, exercises, listening lessons, and speaking sessions live in **language-specific workspaces**. The app is not social — no public profiles, no sharing feed, no multiplayer.
 
-Free users can collect words and practice with quizzes built from those words. **Notoria Pro** (€9.99 / month) unlocks the rest of the learning loop: AI writing help, AI fill-in-the-blank generation, **AI exercise difficulty** (contextual Multiple Choice and Type the Answer), **Form a Sentence** (AI grammar feedback), PDF/DOCX export, the full **Listening** module, and **Speaking** (live video call with an AI tutor).
+Free includes core learning plus a small daily AI allowance. **Pro** (€9.99 / month) removes those limits and keeps the current Pro tools. **Premium** (€19.99 / month) adds a coach that reads activity already stored in the workspace.
+
+---
+
+# Plans
+
+Daily AI limits use the UTC calendar day. They reset at 00:00 UTC. The browser clock is not used.
+
+## Free
+
+€0
+
+Core language-learning functionality plus limited daily AI:
+
+- 1 AI Meeting/day
+- 1 Listening Transcript/day
+- 3 AI Exercise generations/day
+- 5 AI Vocabulary AI actions/day
+
+Writing AI, PDF/DOCX export, and generated listening practice stay on Pro. A meeting includes the tutor for that session. One user action counts as one use, including an exercise import (extract + generate share one charge).
+
+## Pro
+
+€9.99/month
+
+Everything in Free plus:
+
+- Unlimited AI meetings, transcripts, exercise generation, and vocabulary AI
+- Full listening practice
+- Speaking sessions with the AI tutor
+- AI writing tools
+- PDF/DOCX export
+- Exercise import without a daily cap
+
+## Premium
+
+€19.99/month
+
+Everything in Pro plus, on `/coach`:
+
+- AI learning coach (optional short note from the activity snapshot when OpenAI is configured)
+- Personal learning profile from the workspace language, vocabulary statuses, and the latest speaking level
+- Adaptive practice for today from due cards, weak flashcard ratings, and recent module use
+- Weekly review of counts from the last 7 days
+- Practice from flashcard ratings marked again or hard
+
+Not shipped as their own screens: a sequenced learning path, and priority support. Those entitlements exist in the plan catalog for later work. The coach already reads vocabulary, flashcards, listening, speaking, writing, and theory together. It does not invent metrics.
+
+## How access is decided
+
+Stripe is the source of truth for paid status. Webhooks store `subscription_plan` and `subscription_status` on the user. The entitlement layer maps that plan to capabilities and quotas. The server reserves usage before an AI call and refunds the reservation if the provider call fails. The client cannot set the plan, the price, or the usage count.
+
+Paid access statuses: `active`, `trialing`, `past_due`. Other statuses, including `canceled`, `unpaid`, `incomplete`, and `incomplete_expired`, are Free. An active subscription whose price is not the Premium price stays Pro, so existing Pro customers are not dropped when Premium is added. Admins receive Premium capabilities without a Stripe subscription.
+
+Checkout accepts `pro` or `premium` and looks up the price id on the server. A user who already has a paid subscription changes price on that subscription instead of starting a second one.
 
 ---
 
 ## Free vs Pro
 
-Access is **Admin or an active Pro subscription** (`active`, `trialing`, or `past_due`). Locked controls stay clickable: they look faded (opacity + grayscale) and open the upgrade modal instead of failing silently.
+Some Pro-only controls stay faded and open the upgrade dialog. Quota features stay usable until the server returns `AI_QUOTA_EXCEEDED`.
 
-| Capability | Free | Pro / Admin | Impact |
-| ---------- | ---- | ----------- | ------ |
-| Vocabulary CRUD, tags, search, filters | Yes | Yes | Core library stays usable without paying |
-| Background spelling + meaning AI while adding/editing words | Yes | Yes | Faster, more accurate word entry without a paywall |
-| Vocabulary **CSV** export | Yes | Yes | Spreadsheet backup for everyone |
-| Vocabulary / writing / theory **PDF & DOCX** export | Locked | Yes | Printable worksheets and shareable files |
-| Writing editor (rich document + question set) | Yes | Yes | Drafts and worksheets without AI |
-| Writing AI: Check / Improve / Grammar | Locked | Yes | Corrections on the learner’s own text |
-| Exercise modes from your examples | Yes | Yes | Practice still works from saved example sentences |
-| Fill in the Blank **Generate with AI** (10 new sentences) | Locked | Yes | Practice the word in *new* contexts, not memorized examples |
-| AI Contextual Multiple Choice & Type the Answer | Locked | Yes | Fill-in-the-blank practice from *your* vocabulary in the workspace language |
-| **Form a Sentence** (AI evaluation + save as example) | Locked (whole mode) | Yes | Produce full sentences with your words and get grammar / translation feedback |
-| Theory notes | Yes | Yes | Grammar/usage notebook for every user |
-| **Listening** (upload, transcript, practice) | Locked (whole module) | Yes | Turns real audio/video into a lesson |
-| **Speaking** (live video call with AI tutor) | Locked (whole module) | Yes | Spoken practice with feedback and a transcript |
+| Capability | Free | Pro | Premium |
+| ---------- | ---- | --- | ------- |
+| Vocabulary, writing editor, theory notes, CSV | Yes | Yes | Yes |
+| AI meeting | 1/day | Unlimited | Unlimited |
+| Listening transcript | 1/day | Unlimited | Unlimited |
+| AI exercise generation, including import | 3/day | Unlimited | Unlimited |
+| Vocabulary AI actions | 5/day | Unlimited | Unlimited |
+| Listening practice generation | No | Yes | Yes |
+| AI writing | No | Yes | Yes |
+| PDF / DOCX | No | Yes | Yes |
+| Learning coach | No | No | Yes |
 
-Subscribe from `/account` or any locked control. Price in the UI: **€9.99 / month**, cancel anytime via Stripe Customer Portal.
+Subscribe from `/account`. Prices come from `src/lib/billing/plans.ts`.
 
 ---
 
@@ -40,9 +90,9 @@ Subscribe from `/account` or any locked control. Price in the UI: **€9.99 / mo
 - Protected dashboard routes via middleware
 - Learning-language onboarding when the user has no workspace yet
 - **Account settings** (`/account`): display name, password, Cloudinary avatar
-- **Billing card**: upgrade to Pro (Stripe Checkout), manage subscription (Customer Portal), plan/status badges
-- **Upgrade modal**: compact Free vs Pro comparison table (what you get, lock state, why it matters) from `/account` or any locked control
-- User roles: `USER` (default) and `ADMIN` (full Pro access without a Stripe subscription)
+- **Billing card**: Free quotas, Pro, or Premium. Checkout and the Stripe Customer Portal live on `/account`. Premium opens `/coach`.
+- **Upgrade dialog**: Free, Pro, and Premium. The server chooses the Stripe price.
+- User roles: `USER` (default) and `ADMIN` (Premium capabilities without a Stripe subscription)
 
 ### Workspaces
 
@@ -326,10 +376,11 @@ ASSEMBLYAI_API_KEY=
 NEXT_PUBLIC_STREAM_VIDEO_API_KEY=
 STREAM_VIDEO_SECRET_KEY=
 
-# Stripe test keys (local billing)
+# Stripe (local and production — names only, never commit values)
 STRIPE_SECRET_KEY=
-STRIPE_PRICE_ID=
 STRIPE_WEBHOOK_SECRET=
+STRIPE_PRO_PRICE_ID=
+STRIPE_PREMIUM_PRICE_ID=
 ```
 
 Copy from `.env.example` if you prefer a blank template. `STRIPE_PUBLISHABLE_KEY` is unused (Checkout is server-side).
@@ -392,8 +443,9 @@ Keep `.env.local` on **test** keys. Production env lives in **Vercel → Setting
 | `NEXT_PUBLIC_STREAM_VIDEO_API_KEY` | Stream Video API key |
 | `STREAM_VIDEO_SECRET_KEY` | Stream Video API secret |
 | `STRIPE_SECRET_KEY` | `sk_live_...` |
-| `STRIPE_PRICE_ID` | Live Price ID (`price_...`) |
-| `STRIPE_WEBHOOK_SECRET` | Signing secret of the **live** webhook |
+| `STRIPE_PRO_PRICE_ID` | Pro price (`price_...`, €9.99/month) |
+| `STRIPE_PREMIUM_PRICE_ID` | Premium price (`price_...`, €19.99/month) |
+| `STRIPE_WEBHOOK_SECRET` | Signing secret of the live webhook |
 
 After changing env vars, **Redeploy**.
 
@@ -408,12 +460,18 @@ The AI tutor stays connected through the Next.js server for the length of the ca
 
 **Stripe (Live mode)**
 
-1. Product + recurring price → `STRIPE_PRICE_ID`
-2. Webhook endpoint: `https://YOUR-DOMAIN/api/stripe/webhook`
-3. Events: `checkout.session.completed`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed`
-4. Customer portal: enable invoices, payment method update, and cancellation. Do **not** require “Activate link” — the app opens the portal via API from `/account`.
+Paid entitlements are written only after Stripe confirms the subscription. Checkout and in-app plan changes do not set the plan themselves. The webhook, and a short confirm step that reads the subscription back from Stripe, update the database.
 
-Schema changes: point Drizzle at the prod `DATABASE_URL`, run `npm run db:push`, then switch back to local. Additive billing columns (`subscription_plan`, Stripe ids, listening `original_filename`) are already on production.
+Switching Pro and Premium updates the existing subscription item and invoices the prorated difference immediately. A failed payment leaves the current price in place. Moving to Free schedules cancellation and keeps the current plan until the period ends.
+
+1. Create **Notoria Pro** (€9.99/month) and **Notoria Premium** (€19.99/month). Put the price ids in `STRIPE_PRO_PRICE_ID` and `STRIPE_PREMIUM_PRICE_ID`.
+2. Webhook endpoint: `https://YOUR-DOMAIN/api/stripe/webhook`
+3. Events: `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed`
+4. Customer portal: invoices, payment method, and cancellation. Plan changes stay in Notoria on the existing subscription.
+
+The app does not enable Stripe Tax. Receipts and billing emails are Stripe Dashboard settings, not sent by Notoria.
+
+Schema changes go through `npm run db:push` (production, then local).
 
 ---
 
@@ -496,7 +554,9 @@ API: `POST /api/ai/writing`, `POST /api/ai/exercise`, `POST /api/ai/form-sentenc
 | `flashcard_reviews` | Per-review rating log |
 | `flashcard_progress` | Spaced-repetition state |
 
-Subscription columns on `users`: `subscription_plan` (`free` / `pro`), `subscription_status`, `stripe_customer_id`, `stripe_subscription_id`, `stripe_current_period_end`.
+Subscription columns on `users`: `subscription_plan` (`free` / `pro` / `premium`), `subscription_status`, `stripe_customer_id`, `stripe_subscription_id`, `stripe_current_period_end`, `stripe_cancel_at_period_end`.
+
+Daily AI counters live in `ai_usage` (unique on user, feature, and UTC date) and `ai_usage_reservations` (one refundable reservation per action). `stripe_webhook_events` records processed event ids. SQL for these tables is in `drizzle/0001_subscription_entitlements.sql`. `npm run db:push` applies the Drizzle schema, which is the source the app runs against.
 
 ### Reset the local database
 

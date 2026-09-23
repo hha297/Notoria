@@ -42,12 +42,17 @@ export async function POST() {
       configurations.data[0] ??
       (await stripe.billingPortal.configurations.create({
         business_profile: {
-          headline: "Notoria Pro",
+          headline: "Notoria",
         },
         features: {
           invoice_history: { enabled: true },
           payment_method_update: { enabled: true },
           subscription_cancel: { enabled: true },
+          // Plan changes stay in Notoria so the portal does not offer a second switcher.
+          customer_update: {
+            enabled: true,
+            allowed_updates: ["email", "address", "name"],
+          },
         },
       }));
 

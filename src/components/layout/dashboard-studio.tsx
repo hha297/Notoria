@@ -19,6 +19,7 @@ import {
 import { ShortcutActionsProvider } from "@/components/preferences/shortcut-actions";
 import type { Workspace } from "@/db/schema";
 import type { AppLocale } from "@/i18n/config";
+import type { PlanId } from "@/lib/billing/plans";
 import { cn } from "@/lib/utils";
 
 function studioSceneFromPath(pathname: string) {
@@ -45,6 +46,7 @@ type DashboardStudioProps = {
   userEmail: string;
   userImage?: string | null;
   isPro: boolean;
+  plan: PlanId;
 };
 
 export function DashboardStudio({
@@ -57,11 +59,12 @@ export function DashboardStudio({
   userEmail,
   userImage,
   isPro,
+  plan,
 }: DashboardStudioProps) {
   const [navOpen, setNavOpen] = useState(false);
   const pathname = usePathname();
   const t = useTranslations("nav");
-  const sidebarUser = { userName, userEmail, userImage, isPro };
+  const sidebarUser = { userName, userEmail, userImage, isPro, plan };
 
   return (
     <ShortcutActionsProvider>

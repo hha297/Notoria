@@ -3,6 +3,7 @@ import {
   type AnyPgColumn,
   boolean,
   check,
+  date,
   index,
   integer,
   jsonb,
@@ -17,7 +18,11 @@ import {
 
 export const userRoleEnum = pgEnum("user_role", ["USER", "ADMIN"]);
 
-export const subscriptionPlanEnum = pgEnum("subscription_plan", ["free", "pro"]);
+export const subscriptionPlanEnum = pgEnum("subscription_plan", [
+  "free",
+  "pro",
+  "premium",
+]);
 
 export const vocabularyStatusEnum = pgEnum("vocabulary_status", [
   "NEW",
@@ -125,6 +130,9 @@ export const users = pgTable(
     stripeCurrentPeriodEnd: timestamp("stripe_current_period_end", {
       withTimezone: true,
     }),
+    stripeCancelAtPeriodEnd: boolean("stripe_cancel_at_period_end")
+      .notNull()
+      .default(false),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -998,6 +1006,81 @@ export const importedExercisesRelations = relations(
     }),
   }),
 );
+
+/**
+ * Daily AI usage counters. One row per user, feature, and UTC usage date.
+ * The unique key makes quota increments a single conditional upsert.
+ */
+export const aiUsage = pgTable(
+  "ai_usage",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    feature: text("feature").notNull(),
+    usageDate: date("usage_date").notNull(),
+    count: integer("count").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("ai_usage_user_feature_date_unique").on(
+      table.userId,
+      table.feature,
+      table.usageDate,
+    ),
+    check("ai_usage_count_nonnegative", sql`${table.count} >= 0`),
+  ],
+);
+
+/**
+ * One reservation per metered AI action. Refunds flip status once so a
+ * failure cannot decrement usage twice.
+ */
+export const aiUsageReservations = pgTable(
+  "ai_usage_reservations",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    feature: text("feature").notNull(),
+    usageDate: date("usage_date").notNull(),
+    /** Groups multi-step actions (for example an exercise import) into one charge. */
+    subjectId: text("subject_id"),
+    status: text("status").notNull().default("reserved"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("ai_usage_reservations_user_feature_date_idx").on(
+      table.userId,
+      table.feature,
+      table.usageDate,
+    ),
+    uniqueIndex("ai_usage_reservations_subject_unique")
+      .on(table.userId, table.feature, table.usageDate, table.subjectId)
+      .where(sql`${table.subjectId} is not null`),
+  ],
+);
+
+/** Processed Stripe event ids. Failed handlers delete the row so Stripe can retry. */
+export const stripeWebhookEvents = pgTable("stripe_webhook_events", {
+  id: text("id").primaryKey(),
+  type: text("type").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
 
 export type User = typeof users.$inferSelect;
 export type Account = typeof accounts.$inferSelect;

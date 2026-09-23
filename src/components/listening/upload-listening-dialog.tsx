@@ -59,6 +59,7 @@ export function UploadListeningDialog({
   existingFilenames = [],
 }: UploadListeningDialogProps) {
   const t = useTranslations("listening");
+  const tBilling = useTranslations("billing");
   const tMeta = useTranslations("listening.meta");
   const tTags = useTranslations("tags");
   const tc = useTranslations("common");
@@ -87,6 +88,7 @@ export function UploadListeningDialog({
 
   function errorMessage(error: unknown) {
     const code = error instanceof Error ? error.message : "PROCESSING_FAILED";
+    if (code === "AI_QUOTA_EXCEEDED") return tBilling("quotaExceeded");
     return isListeningErrorCode(code)
       ? t(`errors.${code}`)
       : t("errors.PROCESSING_FAILED");

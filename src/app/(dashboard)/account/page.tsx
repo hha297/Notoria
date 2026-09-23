@@ -11,11 +11,11 @@ import { cn } from "@/lib/utils";
 export default async function AccountPage({
   searchParams,
 }: {
-  searchParams: Promise<{ billing?: string }>;
+  searchParams: Promise<{ billing?: string; expect?: string }>;
 }) {
   const t = await getTranslations("account");
   const sessionUser = await requireUser();
-  const { billing } = await searchParams;
+  const { billing, expect } = await searchParams;
 
   if (!sessionUser?.email) {
     redirect("/sign-in");
@@ -45,7 +45,7 @@ export default async function AccountPage({
           </div>
         </header>
 
-        <AccountSettings user={user} checkoutResult={billing} />
+        <AccountSettings user={user} checkoutResult={billing} expectPlan={expect} />
       </div>
     </PageShell>
   );

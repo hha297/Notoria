@@ -1,17 +1,14 @@
 import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
 import { PageShell } from "@/components/layout/page-shell";
-import { SpeakingLockedPage } from "@/components/speaking/speaking-locked";
 import { SpeakingView } from "@/components/speaking/speaking-view";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
-import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export async function SpeakingLibrary() {
-  const [t, workspace, proAccess] = await Promise.all([
+  const [t, workspace] = await Promise.all([
     getTranslations("speaking"),
     getActiveWorkspace(),
-    getCurrentProAccess(),
   ]);
 
   if (!workspace) {
@@ -25,10 +22,6 @@ export async function SpeakingLibrary() {
         <NoWorkspaceEmpty />
       </PageShell>
     );
-  }
-
-  if (!proAccess.hasProAccess) {
-    return <SpeakingLockedPage />;
   }
 
   return <SpeakingView workspaceId={workspace.id} />;

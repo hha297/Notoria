@@ -38,9 +38,10 @@ type AccountSettingsProps = {
     billing: BillingState;
   };
   checkoutResult?: string;
+  expectPlan?: string;
 };
 
-export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) {
+export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSettingsProps) {
   const router = useRouter();
   const { update } = useSession();
   const t = useTranslations("account");
@@ -277,6 +278,7 @@ export function AccountSettings({ user, checkoutResult }: AccountSettingsProps) 
       <ProSubscriptionCard
         billing={user.billing}
         checkoutResult={checkoutResult}
+        expectPlan={expectPlan}
       />
 
       <section className={mx(styles, "account-panel")}>

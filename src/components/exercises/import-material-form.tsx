@@ -5,8 +5,6 @@ import { useRouter } from "next/navigation";
 import { FileText, ImageIcon, Link2, Type, Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { useProAccess } from "@/components/billing/pro-access-provider";
-import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -56,7 +54,7 @@ function isPasteableImage(file: File) {
 
 export function ImportMaterialForm() {
   const t = useTranslations("exercises.import");
-  const { hasProAccess, openUpgrade } = useProAccess();
+  const tBilling = useTranslations("billing");
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -87,17 +85,10 @@ export function ImportMaterialForm() {
 
   function errorMessage(error: unknown) {
     const code = error instanceof Error ? error.message : "PROCESSING_FAILED";
+    if (code === "AI_QUOTA_EXCEEDED") return tBilling("quotaExceeded");
     return isExerciseImportErrorCode(code)
       ? t(`errors.${code}`)
       : t("errors.PROCESSING_FAILED");
-  }
-
-  function ensurePro() {
-    if (!hasProAccess) {
-      openUpgrade();
-      return false;
-    }
-    return true;
   }
 
   const finishReady = useCallback(
@@ -131,7 +122,7 @@ export function ImportMaterialForm() {
 
   const processFile = useCallback(
     async (file: File, options?: { requireImage?: boolean }) => {
-      if (!ensurePro() || isBusy) return;
+      if (isBusy) return;
 
       if (options?.requireImage && !isPasteableImage(file)) {
         toast.error(t("errors.INVALID_FILE_TYPE"));
@@ -217,8 +208,6 @@ export function ImportMaterialForm() {
     [
       fail,
       isBusy,
-      hasProAccess,
-      openUpgrade,
       resetProcessing,
       router,
       runPostUploadPipeline,
@@ -262,7 +251,7 @@ export function ImportMaterialForm() {
   }
 
   async function handleUrlImport() {
-    if (!ensurePro() || isBusy) return;
+    if (isBusy) return;
     const trimmed = url.trim();
     if (!trimmed || !isValidHttpUrl(trimmed)) {
       toast.error(t("errors.INVALID_URL"));
@@ -283,7 +272,7 @@ export function ImportMaterialForm() {
   }
 
   async function handleTextImport() {
-    if (!ensurePro() || isBusy) return;
+    if (isBusy) return;
     const trimmed = text.trim();
     if (trimmed.length < 20) {
       toast.error(t("errors.EMPTY_CONTENT"));
@@ -430,13 +419,9 @@ export function ImportMaterialForm() {
             type="button"
             onClick={() => void handleUrlImport()}
             disabled={!url.trim()}
-            aria-disabled={!hasProAccess || undefined}
-            className={cn(
-              "relative border-transparent bg-(--import-mode-fg) text-background hover:opacity-90",
-              !hasProAccess && lockedFeatureClassName,
-            )}
+            className="relative border-transparent bg-(--import-mode-fg) text-background hover:opacity-90"
           >
-            {hasProAccess ? t("importAction") : t("unlockPro")}
+            {t("importAction")}
           </Button>
         </div>
       ) : mode === "text" ? (
@@ -459,13 +444,9 @@ export function ImportMaterialForm() {
             type="button"
             onClick={() => void handleTextImport()}
             disabled={text.trim().length < 20}
-            aria-disabled={!hasProAccess || undefined}
-            className={cn(
-              "relative border-transparent bg-(--import-mode-fg) text-background hover:opacity-90",
-              !hasProAccess && lockedFeatureClassName,
-            )}
+            className="relative border-transparent bg-(--import-mode-fg) text-background hover:opacity-90"
           >
-            {hasProAccess ? t("importAction") : t("unlockPro")}
+            {t("importAction")}
           </Button>
         </div>
       ) : (
@@ -475,12 +456,10 @@ export function ImportMaterialForm() {
           onKeyDown={(e) => {
             if (e.key === "Enter" || e.key === " ") {
               e.preventDefault();
-              if (!ensurePro()) return;
               inputRef.current?.click();
             }
           }}
           onClick={() => {
-            if (!ensurePro()) return;
             inputRef.current?.click();
           }}
           onDragOver={(e) => {
@@ -499,7 +478,6 @@ export function ImportMaterialForm() {
             mx(importStyles, "import-stage import-dropzone flex min-h-60 cursor-pointer flex-col items-center justify-center gap-5 rounded-md px-6 py-12 text-center sm:min-h-72 sm:py-14"),
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--import-mode-fg)/40",
             dragOver && mx(importStyles, "import-dropzone-active"),
-            !hasProAccess && lockedFeatureClassName,
           )}
         >
           <StageDecor />

@@ -50,6 +50,7 @@ export function FillBlankSession({
   const t = useTranslations("exercises.fillInBlank");
   const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
+  const tBilling = useTranslations("billing");
   const uiLocale = useLocale();
   const { hasProAccess, openUpgrade } = useProAccess();
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
@@ -145,10 +146,6 @@ export function FillBlankSession({
   }, [index, itemIds]);
 
   const generateQuestions = useCallback(async () => {
-    if (!hasProAccess) {
-      openUpgrade();
-      return;
-    }
     if (filteredWords.length === 0) {
       toast.error(tAi("emptyWords"));
       return;
@@ -182,6 +179,10 @@ export function FillBlankSession({
       });
 
       if (!result.ok) {
+        if (result.code === "AI_QUOTA_EXCEEDED") {
+          fail(tBilling("quotaExceeded"));
+          return;
+        }
         if (result.code === "AI_FORBIDDEN") {
           fail(tAi("forbidden"));
           openUpgrade();
@@ -246,14 +247,14 @@ export function FillBlankSession({
     completeProcessing,
     difficulty,
     fail,
-    hasProAccess,
-    openUpgrade,
     filteredWords,
     language,
+    openUpgrade,
     resetProcessing,
     setStage,
     startFromAiItems,
     tAi,
+    tBilling,
     uiLocale,
     usedWordIds,
   ]);
@@ -383,7 +384,6 @@ export function FillBlankSession({
             label: tAi("generateMore"),
             onClick: () => void generateQuestions(),
             loading: generating,
-            locked: !hasProAccess,
           }}
         />
       ) : current ? (

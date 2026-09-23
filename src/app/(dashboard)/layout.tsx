@@ -17,6 +17,7 @@ import {
   getCurrentSubscription,
   hasActiveProSubscription,
 } from "@/lib/stripe/pro";
+import { displayPlan } from "@/lib/billing/plans";
 import { createPerfTimer } from "@/lib/perf/dev-timing";
 import { getUserWorkspaces, getActiveWorkspace } from "@/lib/workspace";
 
@@ -58,7 +59,14 @@ export default async function DashboardLayout({
       : "en";
 
   return (
-    <ProAccessProvider hasProAccess={proAccess.hasProAccess}>
+    <ProAccessProvider
+      hasProAccess={proAccess.hasProAccess}
+      plan={displayPlan(subscription)}
+      cancelAtPeriodEnd={Boolean(
+        subscription?.stripeCancelAtPeriodEnd && displayPlan(subscription) !== "free",
+      )}
+      currentPeriodEnd={subscription?.stripeCurrentPeriodEnd?.toISOString() ?? null}
+    >
       <AiPreferencesProvider initial={aiPreferences}>
       <DashboardDocumentTitle />
       <DashboardStudio
@@ -69,6 +77,7 @@ export default async function DashboardLayout({
         userEmail={session?.user?.email ?? ""}
         userImage={session?.user?.image}
         isPro={hasActiveProSubscription(subscription)}
+        plan={displayPlan(subscription)}
         footer={<SiteFooter variant="app" />}
       >
         <WelcomePromptModal

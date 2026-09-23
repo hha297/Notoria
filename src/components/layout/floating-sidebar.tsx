@@ -25,6 +25,7 @@ import { UserButton } from "@/components/layout/user-button";
 import { Logo, LogoWordmark } from "@/components/ui/logo";
 import navStyles from "@/components/style/layout/nav.module.css";
 import { mx } from "@/lib/css-module";
+import type { PlanId } from "@/lib/billing/plans";
 import { prefetchDashboardDestination } from "@/lib/query/prefetch";
 import { cn } from "@/lib/utils";
 
@@ -33,6 +34,7 @@ type SidebarUser = {
   userEmail: string;
   userImage?: string | null;
   isPro: boolean;
+  plan: PlanId;
 };
 
 type NavMatch = "exact" | "prefix";
@@ -123,7 +125,6 @@ const NAV_GROUPS: NavGroup[] = [
         match: "prefix",
         route: "listening",
         tint: "text-module-listen-fg",
-        pro: true,
       },
       {
         href: "/speaking",
@@ -132,7 +133,6 @@ const NAV_GROUPS: NavGroup[] = [
         match: "prefix",
         route: "speaking",
         tint: "text-module-speak-fg",
-        pro: true,
       },
     ],
   },
@@ -177,6 +177,7 @@ export function SidebarNav({
   userEmail,
   userImage,
   isPro,
+  plan,
 }: SidebarNavProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -271,13 +272,14 @@ export function SidebarNav({
       ))}
 
       <div className="mt-4 border-t border-hairline-cloud pt-3">
-        <SidebarProCta isPro={isPro} onNavigate={onNavigate} />
-        <div className={cn(!isPro && "mt-2")}>
+        <SidebarProCta plan={plan} onNavigate={onNavigate} />
+        <div className="mt-1">
           <UserButton
             name={userName}
             email={userEmail}
             image={userImage}
             isPro={isPro}
+            plan={plan}
             onNavigate={onNavigate}
             active={pathname.startsWith("/account")}
           />

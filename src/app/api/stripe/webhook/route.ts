@@ -1,7 +1,11 @@
+import { eq } from "drizzle-orm";
 import { NextResponse } from "next/server";
 import type Stripe from "stripe";
+import { db } from "@/db";
+import { stripeWebhookEvents } from "@/db/schema";
 import { getStripeClient } from "@/lib/stripe/client";
 import { getStripeWebhookSecret, StripeConfigError } from "@/lib/stripe/config";
+import { isDuplicateWebhookClaim } from "@/lib/stripe/lifecycle";
 import {
   syncCheckoutSession,
   syncStripeInvoice,
@@ -9,6 +13,21 @@ import {
 } from "@/lib/stripe/subscription";
 
 export const runtime = "nodejs";
+
+async function claimEvent(event: Stripe.Event) {
+  const inserted = await db
+    .insert(stripeWebhookEvents)
+    .values({ id: event.id, type: event.type })
+    .onConflictDoNothing()
+    .returning({ id: stripeWebhookEvents.id });
+  return !isDuplicateWebhookClaim(inserted.map((row) => row.id));
+}
+
+async function releaseEvent(eventId: string) {
+  await db
+    .delete(stripeWebhookEvents)
+    .where(eq(stripeWebhookEvents.id, eventId));
+}
 
 export async function POST(request: Request) {
   const signature = request.headers.get("stripe-signature");
@@ -43,11 +62,17 @@ export async function POST(request: Request) {
     );
   }
 
+  const claimed = await claimEvent(event);
+  if (!claimed) {
+    return NextResponse.json({ received: true, duplicate: true });
+  }
+
   try {
     switch (event.type) {
       case "checkout.session.completed":
         await syncCheckoutSession(event.data.object);
         break;
+      case "customer.subscription.created":
       case "customer.subscription.updated":
       case "customer.subscription.deleted":
         await syncStripeSubscriptionObject(event.data.object);
@@ -60,6 +85,9 @@ export async function POST(request: Request) {
         break;
     }
   } catch {
+    await releaseEvent(event.id).catch(() => {
+      console.error("Stripe webhook event release failed", { id: event.id });
+    });
     console.error("Stripe webhook handler failed", { type: event.type, id: event.id });
     return NextResponse.json(
       { error: "Webhook handler failed", code: "WEBHOOK_FAILED" },

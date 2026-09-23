@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { guardAiRoute } from "@/lib/ai/guard-route";
+import { guardMeteredAi, settleMeteredAi } from "@/lib/ai/guard-route";
 import { getFlashcardWords } from "@/lib/actions/flashcards";
 import { getTheoryNote } from "@/lib/actions/theory";
 import { generateAiTheoryExercises } from "@/lib/theory-exercises/ai";
@@ -25,9 +25,6 @@ const bodySchema = z.object({
 });
 
 export async function POST(request: Request) {
-  const access = await guardAiRoute();
-  if (!access.ok) return access.response;
-
   let body: unknown;
   try {
     body = await request.json();
@@ -44,6 +41,9 @@ export async function POST(request: Request) {
   if (!note) {
     return NextResponse.json({ ok: false, code: "NOT_FOUND" }, { status: 404 });
   }
+
+  const access = await guardMeteredAi("ai_exercise");
+  if (!access.ok) return access.response;
 
   try {
     const content = parseTheoryContent(note.content);
@@ -64,8 +64,10 @@ export async function POST(request: Request) {
       studyLanguage: workspace?.language,
       uiLanguage: UI_LANGUAGE_NAMES[uiLocale],
     });
+    await settleMeteredAi(access, true);
     return NextResponse.json({ ok: true, exercises });
   } catch (error) {
+    await settleMeteredAi(access, false);
     const message = error instanceof Error ? error.message : "";
     if (message === "OPENAI_NOT_CONFIGURED" || message === "AI_INVALID_RESPONSE") {
       console.error("theory exercise AI failed", message);
