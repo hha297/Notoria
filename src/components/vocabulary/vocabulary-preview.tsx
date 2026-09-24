@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowLeft, Pencil, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
+import { ReviewLaterButton } from "@/components/review-later/review-later-button";
 import { Button } from "@/components/ui/button";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { SynonymLinks } from "@/components/vocabulary/synonym-links";
@@ -40,6 +41,7 @@ type VocabularyPreviewProps = {
     sortOrder: number;
   }>;
   tags: Array<{ tag: string }>;
+  reviewLaterMarked?: boolean;
 };
 
 export function VocabularyPreview({
@@ -52,6 +54,7 @@ export function VocabularyPreview({
   meanings,
   examples,
   tags,
+  reviewLaterMarked = false,
 }: VocabularyPreviewProps) {
   const router = useRouter();
   const t = useTranslations("vocabulary");
@@ -125,6 +128,12 @@ export function VocabularyPreview({
           {t("backToList")}
         </Link>
         <div className={mx(detailStyles, "actions")}>
+          <ReviewLaterButton
+            entityType="vocabulary"
+            entityId={id}
+            titleSnapshot={word}
+            marked={reviewLaterMarked}
+          />
           <Button
             type="button"
             onClick={() => router.push(`/vocabulary/${id}/edit`)}

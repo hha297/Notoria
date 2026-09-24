@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { exercises, workspaceFolders } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
+import { recordActivity } from "@/lib/activity/record";
 import { resolveFolderId } from "@/lib/actions/folders";
 import { requireActiveWorkspace, getActiveWorkspace } from "@/lib/workspace";
 import { withTiming } from "@/lib/perf/dev-timing";
@@ -212,6 +213,15 @@ export async function createWritingDocument(
       content: parsed.content,
     })
     .returning();
+
+  await recordActivity({
+    userId,
+    workspaceId: workspace.id,
+    verb: "created",
+    entityType: "writing",
+    entityId: document.id,
+    titleSnapshot: document.title,
+  });
 
   revalidateWriting(document.id);
   return document;

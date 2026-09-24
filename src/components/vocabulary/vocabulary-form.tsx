@@ -37,6 +37,7 @@ import {
   createVocabularyWord,
   updateVocabularyWord,
 } from "@/lib/actions/vocabulary";
+import { completeStudyInboxItem } from "@/lib/actions/study-inbox";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { mx } from "@/lib/css-module";
 import { afterEditorHydration } from "@/lib/editor/hydration";
@@ -109,6 +110,12 @@ type VocabularyFormProps = {
   synonymOptions?: VocabularySynonymRef[];
   language?: string;
   initialData?: VocabularyFormInitialData;
+  /** Prefill word when creating from Study Inbox. */
+  prefillWord?: string;
+  /** Prefill notes when creating from Study Inbox. */
+  prefillNotes?: string;
+  /** When set, mark this inbox item processed after a successful create. */
+  fromInboxId?: string;
   /** `modal` hides the page card chrome and reports success via `onSuccess`. */
   mode?: "page" | "modal";
   onSuccess?: () => void;
@@ -187,6 +194,9 @@ export function VocabularyForm({
   existingCustomTags,
   synonymOptions = [],
   language = "en",
+  prefillWord,
+  prefillNotes,
+  fromInboxId,
   mode = "page",
   onSuccess,
   onCancel,
@@ -250,14 +260,15 @@ export function VocabularyForm({
   }, [synonymQuery.data, localSynonyms]);
 
   const initialNotesDoc = useMemo(
-    () => parseVocabularyNotes(initialData?.notes ?? ""),
-    [initialData?.notes],
+    () =>
+      parseVocabularyNotes(initialData?.notes ?? prefillNotes ?? ""),
+    [initialData?.notes, prefillNotes],
   );
 
   const form = useForm<VocabularyFormClientValues>({
     resolver: zodResolver(vocabularyFormClientSchema),
     defaultValues: {
-      word: initialData?.word ?? "",
+      word: initialData?.word ?? prefillWord ?? "",
       partOfSpeech:
         (initialData?.partOfSpeech as VocabularyFormClientValues["partOfSpeech"]) ??
         undefined,
@@ -286,7 +297,7 @@ export function VocabularyForm({
     markNotesBaselineReady,
   } = useVocabularyFormDirtyState({
     initial: {
-      word: initialData?.word ?? "",
+      word: initialData?.word ?? prefillWord ?? "",
       partOfSpeech: initialData?.partOfSpeech,
       notesDoc: initialNotesDoc,
       meanings:
@@ -475,7 +486,18 @@ export function VocabularyForm({
           toast: () => toast.success(t("updated")),
         });
       } else {
-        await createVocabularyWord(payload);
+        const created = await createVocabularyWord(payload);
+        if (fromInboxId) {
+          try {
+            await completeStudyInboxItem({
+              id: fromInboxId,
+              linkedEntityType: "vocabulary",
+              linkedEntityId: created.id,
+            });
+          } catch {
+            // Create already succeeded; leave inbox item for a later retry.
+          }
+        }
         if (workspaceId) {
           void queryClient.invalidateQueries({
             queryKey: queryKeys.vocabulary.all(workspaceId),

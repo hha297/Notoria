@@ -35,6 +35,7 @@ const FIRST_STEPS = [
 
 const AREAS = [
   "vocab",
+  "capture",
   "theory",
   "exercises",
   "writing",

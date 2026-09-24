@@ -54,6 +54,7 @@
   },
   "nav": {
     "dashboard": "Dashboard",
+    "inbox": "Capture",
     "vocabulary": "Vocabulary",
     "writing": "Writing",
     "theory": "Theory",
@@ -70,6 +71,55 @@
       "listenSpeak": "Listen and speak",
       "more": "More"
     }
+  },
+  "inbox": {
+    "eyebrow": "Collect",
+    "title": "Capture",
+    "description": "Drop quick notes, phrases, and ideas here — then turn them into vocabulary, theory, writing, or exercises when you have a moment.",
+    "disabledNoWorkspace": "Create a workspace before capturing.",
+    "capture": "Capture",
+    "captureTitle": "Capture something",
+    "captureDescription": "Save something to process later. You do not need to decide where it belongs yet.",
+    "captureSubmit": "Save to Capture",
+    "captured": "Saved to Capture",
+    "contentLabel": "Content",
+    "contentPlaceholder": "A word, phrase, idea, or anything you want to come back to…",
+    "contentRequired": "Add some content first",
+    "noteLabel": "Note (optional)",
+    "notePlaceholder": "Context or why it matters…",
+    "sourceLabel": "Source (optional)",
+    "sourcePlaceholder": "Book, podcast, class…",
+    "sourcePrefix": "From {source}",
+    "filterUnprocessed": "To process",
+    "filterProcessed": "Processed",
+    "emptyTitle": "Nothing captured yet",
+    "emptyDescription": "Capture something quickly — a word from a conversation, a grammar doubt, a writing idea — and sort it later.",
+    "emptyProcessedTitle": "No processed items yet",
+    "emptyProcessedDescription": "When you finish adding something from Capture into vocabulary, theory, writing, or exercises, it shows up here.",
+    "statusProcessed": "Processed",
+    "processMenu": "Process item",
+    "processed": "Marked as processed",
+    "deleted": "Deleted from Capture",
+    "process": {
+      "vocabulary": "Vocabulary",
+      "theory": "Theory",
+      "writing": "Writing",
+      "exercise": "Exercise",
+      "keep": "Keep for later",
+      "delete": "Delete"
+    },
+    "searchPlaceholder": "Search captures…",
+    "sortBy": "Sort by",
+    "sortNewest": "Newest first",
+    "sortOldest": "Oldest first",
+    "sortNameAsc": "Name (A → Z)",
+    "sortNameDesc": "Name (Z → A)",
+    "noResultsTitle": "No matches",
+    "noResultsDescription": "Try another search, or clear it to see everything in this tab."
+  },
+  "reviewLater": {
+    "add": "Review later",
+    "remove": "Remove from review later"
   },
   "folders": {
     "new": "New folder",
@@ -873,6 +923,12 @@
     "disabledNoWorkspace": "Create a workspace before adding writing documents.",
     "create": "Create writing",
     "createFirst": "Create your first writing",
+    "learningNote": {
+      "create": "Learning note",
+      "filter": "Learning notes",
+      "filterLabel": "Kind",
+      "badge": "Learning note"
+    },
     "onTheDesk": "On the desk",
     "library": "Library",
     "allWritings": "All writings",
@@ -1123,7 +1179,7 @@
     "guideTitle": "How to use Notoria",
     "guideTagline": "Your language. Your knowledge. Your learning diary.",
     "guideSubtitle": "Notoria is a private, personal workspace — not a traditional course that tells you what to learn. You choose your language, your words, your grammar notes, your examples, and the materials you want to practice with.",
-    "guideSubtitleSecondary": "Your workspace grows with your learning journey. Start with Vocabulary and Theory, then turn what you collect into exercises, writing, listening, and speaking.",
+    "guideSubtitleSecondary": "Your workspace grows with your learning journey. Start with Capture for quick scraps, then Vocabulary and Theory — and turn what you collect into exercises, writing, listening, and speaking.",
     "guideFullCtaPrompt": "Want to learn more about how Notoria works?",
     "guideFullCta": "Read the full guide",
     "modulesTitle": "Explore the workspace",
@@ -1133,6 +1189,10 @@
     "unlock": "Unlock Pro",
     "open": "Open",
     "steps": {
+      "inbox": {
+        "title": "Capture",
+        "body": "Drop a word, phrase, grammar doubt, or writing idea in seconds — no need to decide where it belongs yet. Add an optional note or source, keep items in To process, then turn a capture into Vocabulary, Theory, Writing, or Exercise when you have time. An item is marked Processed only after you finish creating that linked entry."
+      },
       "vocabulary": {
         "title": "Vocabulary",
         "body": "Add your own words and phrases with meanings, example sentences, pronunciation, and tags. Organize by topic, level, or situation — then reuse them in exercises and review. Start with words from daily life, lessons, books, or media; your library becomes the foundation for practice."
@@ -1224,6 +1284,42 @@
     "quickOpenSpeaking": "Open speaking",
     "nextStepTitle": "Next step",
     "continueEmpty": "Nothing to resume yet — add a theory note, writing piece, listening lesson, or speaking session and it will show up here.",
+    "inbox": {
+      "title": "Capture",
+      "subtitle": "Quick notes waiting to be sorted into your library.",
+      "count": "{count, plural, =0 {Nothing waiting} one {# item to process} other {# items to process}}",
+      "cta": "Open Capture"
+    },
+    "reviewLater": {
+      "title": "Review later",
+      "subtitle": "Items you bookmarked for a second look.",
+      "empty": "Bookmark something from vocabulary, theory, or writing and it will show up here."
+    },
+    "recentActivity": {
+      "title": "Recent activity",
+      "subtitle": "What you created or processed lately.",
+      "empty": "Activity will appear here as you add and process study material.",
+      "untitled": "Untitled",
+      "verbs": {
+        "created": "Created {entity}: {title}",
+        "updated": "Updated {entity}: {title}",
+        "completed": "Completed {entity}: {title}",
+        "processed": "Processed inbox: {title}",
+        "review_later_added": "Marked for review: {title}",
+        "review_later_removed": "Removed from review: {title}"
+      },
+      "verbLabels": {
+        "created": "Created",
+        "updated": "Updated",
+        "completed": "Completed",
+        "processed": "Processed",
+        "review_later_added": "Review later",
+        "review_later_removed": "Unmarked"
+      }
+    },
+    "learningNote": {
+      "label": "Latest learning note"
+    },
     "loopEyebrow": "The loop",
     "loopTitle": "Collect, practice, then use it",
     "loopSubtitle": "Notoria works best as a cycle: save what you meet, drill it briefly, then put it back into real writing, listening, and speaking.",
@@ -1618,6 +1714,37 @@
         "sessions": {
           "title": "2. Review afterward",
           "body": "Open a session to read the transcript and feedback. Use it to spot mistakes, reuse useful phrases, and decide what to add to your diary next."
+        }
+      }
+    },
+    "inbox": {
+      "title": "Capture",
+      "description": "Save scraps fast — words, doubts, ideas — then turn them into real study items when you have a moment.",
+      "cta": "Got it",
+      "steps": {
+        "capture": {
+          "title": "1. Capture something",
+          "body": "Use Capture to save a word, phrase, grammar doubt, or writing idea without deciding where it belongs yet. Speed matters more than perfect structure here."
+        },
+        "filters": {
+          "title": "2. To process vs processed",
+          "body": "To process holds items still waiting. Processed shows captures you already turned into vocabulary, theory, writing, or exercises."
+        },
+        "search": {
+          "title": "3. Search",
+          "body": "Filter the current tab by content, note, or source so you can find a capture quickly."
+        },
+        "sort": {
+          "title": "4. Sort",
+          "body": "Sort by newest, oldest, or name so the list matches how you want to work through it."
+        },
+        "list": {
+          "title": "5. Your capture list",
+          "body": "Each card shows the content, optional note/source, and when you saved it. Open the ··· menu on a card to process it."
+        },
+        "process": {
+          "title": "6. Process into Notoria",
+          "body": "Send a capture to Vocabulary, Theory, Writing, or Exercise. It only becomes Processed after you finish saving there — canceling the create form leaves it waiting."
         }
       }
     }
@@ -2828,7 +2955,8 @@
       "speaking": "Speaking",
       "connections": "Your knowledge becomes practice",
       "philosophy": "Your learning diary",
-      "startHere": "Start here"
+      "startHere": "Start here",
+      "inbox": "Capture"
     },
     "welcome": {
       "title": "What is Notoria?",
@@ -2870,7 +2998,7 @@
       "steps": {
         "collect": {
           "title": "1. Collect your knowledge",
-          "body": "Add vocabulary and theory from lessons, conversations, books, media, or anywhere you encounter the language."
+          "body": "Use Capture for quick scraps, then add vocabulary and theory from lessons, conversations, books, media, or anywhere you meet the language."
         },
         "understand": {
           "title": "2. Understand it",
@@ -2984,6 +3112,27 @@
           "Read feedback and identify areas to improve"
         ],
         "emphasis": "Speaking doesn't need to be perfect. The purpose is to practice using the language in a realistic situation — then learn from what happened."
+      },
+      "inbox": {
+        "title": "Capture",
+        "intro": "Capture is your quick drop zone — save something the moment you meet it, then decide later where it belongs.",
+        "bullets": [
+          "Save a word, phrase, grammar doubt, or writing idea in seconds",
+          "Add an optional note or source for context",
+          "Keep items in To process until you are ready",
+          "Turn a capture into Vocabulary, Theory, Writing, or Exercise when you have time",
+          "An item is marked Processed only after you finish creating that linked entry"
+        ],
+        "body": "Capture sits at the start of the loop: collect first, organize second. You do not need a perfect category in the moment — you need the thought saved.",
+        "emphasis": "If you only have ten seconds, capture is enough. Sorting can wait.",
+        "exampleIntro": "For example, you overhear a phrase on the bus and only have a moment:",
+        "examples": [
+          "Content: varata aika",
+          "Note: heard on the bus — booking an appointment",
+          "Source: daily life",
+          "Later: process into Vocabulary with meaning and an example"
+        ],
+        "exampleNote": "The scrap is safe in Capture. When you have five quiet minutes, send it to Vocabulary (or Theory / Writing) and finish the entry — only then is it Processed."
       }
     },
     "connections": {
@@ -2998,6 +3147,7 @@
         "addMore": "Add more knowledge"
       },
       "paragraphs": [
+        "Capture holds the scraps until you are ready to place them.",
         "What you collect in Vocabulary and Theory becomes the source for your exercises.",
         "Writing and Listening help you use and understand the language in new contexts.",
         "Speaking puts it all into active conversation.",
@@ -3035,7 +3185,8 @@
           "exercise": "Create an exercise from your knowledge.",
           "writing": "Try writing a few sentences.",
           "listeningSpeaking": "When you're ready, try listening or speaking.",
-          "return": "Come back tomorrow and add something new."
+          "return": "Come back tomorrow and add something new.",
+          "capture": "Open Capture and save one quick note or phrase you want to come back to."
         }
       },
       "closing": "Just start with something you want to remember. Your diary will grow naturally from there."
@@ -3588,7 +3739,7 @@
       "intro": {
         "title": "A workspace, not a course",
         "p1": "Notoria is a private place for the language you are already learning. You bring material in, keep it organised, and practise from it — instead of starting from a catalogue of lessons you did not choose.",
-        "p2": "Each workspace is one language. Vocabulary, theory, exercises, writing, listening, and speaking live together there, so what you save can become what you practise.",
+        "p2": "Each workspace is one language. Capture, Vocabulary, Theory, exercises, writing, listening, and speaking live together there, so what you save can become what you practise.",
         "beat": "You do not need to learn Notoria all at once. You grow it with the language."
       },
       "loop": {
@@ -3597,7 +3748,7 @@
         "stages": {
           "bring": {
             "label": "Bring in",
-            "body": "Save words, phrases, and notes from lessons, books, media, conversations — wherever you meet the language."
+            "body": "Save words, phrases, and notes — use Capture for fast scraps, or add straight into Vocabulary and Theory from lessons, books, media, and conversations."
           },
           "organise": {
             "label": "Organise",
@@ -3625,7 +3776,7 @@
       "startSmall": {
         "title": "Start small",
         "p1": "Notoria is not something you complete. There is no checklist that means you are done with the product.",
-        "p2": "A good first day can be a workspace and five words you actually care about. Notes, longer practice, writing, listening, and speaking can wait until they earn a place in your loop."
+        "p2": "A good first day can be a workspace, a couple of Capture notes, and five words you actually care about. Notes, longer practice, writing, listening, and speaking can wait until they earn a place in your loop."
       },
       "firstSession": {
         "title": "A first session",
@@ -3637,7 +3788,7 @@
           },
           "words": {
             "title": "Add a handful of words",
-            "body": "Open Vocabulary and save words or phrases you want to remember, with meanings or examples if they help."
+            "body": "Open Vocabulary and save words or phrases you want to remember, with meanings or examples if they help. Or drop a quick scrap in Capture first and process it later."
           },
           "notes": {
             "title": "Write a short note if you need one",
@@ -3655,7 +3806,7 @@
       },
       "connect": {
         "title": "How the areas connect",
-        "p1": "Vocabulary and Theory are where material lands. Exercise turns that material into practice. Writing, Listening, and Speaking help you use the language more actively.",
+        "p1": "Capture is the quick entry point. Vocabulary and Theory are where material settles. Exercise turns that material into practice. Writing, Listening, and Speaking help you use the language more actively.",
         "p2": "You do not have to move through every area in order. Many people stay with words and short practice for a while.",
         "p3": "A natural next step is writing when you want to produce language on your own terms, then listening and speaking when you want the same material to work in your ear and voice — Listening and Speaking are part of Notoria Pro.",
         "beat": "Collect and understand first. Use and speak when the material is ready to leave the page."
@@ -3686,6 +3837,10 @@
         "speaking": {
           "label": "Speaking",
           "body": "Live practice with an AI tutor, grounded in the language you are studying. Available on Notoria Pro."
+        },
+        "capture": {
+          "label": "Capture",
+          "body": "A fast drop zone for scraps — words, doubts, and ideas — that you process into Vocabulary, Theory, Writing, or Exercise later. Capture first when you only have a moment; items stay unprocessed until you finish creating the linked entry."
         }
       },
       "notEverything": {

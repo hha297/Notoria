@@ -21,6 +21,7 @@ import { Label } from "@/components/ui/label";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { useMutationLock } from "@/hooks/use-mutation-lock";
 import { createWritingDocument, updateWritingDocument } from "@/lib/actions/writing";
+import { completeStudyInboxItem } from "@/lib/actions/study-inbox";
 import { afterEditorHydration } from "@/lib/editor/hydration";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
 import { useQueryClient } from "@tanstack/react-query";
@@ -54,6 +55,7 @@ import {
   WRITING_TOPICS,
   type WritingCefr,
   type WritingFormality,
+  type WritingKind,
   type WritingMeta,
 } from "@/lib/writing/meta";
 import { resolveTopicLabel } from "@/lib/taxonomy/topics";
@@ -66,6 +68,14 @@ type WritingEditorProps = {
   listHref?: string;
   folderId?: string | null;
   language?: string;
+  /** Seed meta.kind when creating a new document (e.g. learning_note). */
+  initialKind?: WritingKind | null;
+  /** Prefill title when creating from Study Inbox. */
+  initialTitle?: string | null;
+  /** Prefill description when creating from Study Inbox. */
+  initialDescription?: string | null;
+  /** When set, mark this inbox item processed after a successful create. */
+  fromInboxId?: string;
   initialData?: {
     id: string;
     title: string;
@@ -83,6 +93,10 @@ export function WritingEditor({
   listHref = "/writing",
   folderId = null,
   language = "en",
+  initialKind = null,
+  initialTitle = null,
+  initialDescription = null,
+  fromInboxId,
   initialData,
 }: WritingEditorProps) {
   const router = useRouter();
@@ -93,15 +107,24 @@ export function WritingEditor({
   const tCommon = useTranslations("common");
   const type = initialData?.type ?? exerciseType;
 
-  const [title, setTitle] = useState(initialData?.title ?? "");
+  const [title, setTitle] = useState(
+    initialData?.title ?? initialTitle?.trim() ?? "",
+  );
   const [description, setDescription] = useState(
-    initialData?.description ?? "",
+    initialData?.description ?? initialDescription?.trim() ?? "",
   );
-  const [editorState, setEditorState] = useState<WritingEditorState>(() =>
-    writingContentToEditorState(
+  const [editorState, setEditorState] = useState<WritingEditorState>(() => {
+    const state = writingContentToEditorState(
       parseWritingContent(initialData?.content ?? undefined),
-    ),
-  );
+    );
+    if (!initialData && initialKind) {
+      return {
+        ...state,
+        meta: { ...state.meta, kind: initialKind },
+      };
+    }
+    return state;
+  });
   const { isPending: isSaving, tryBegin, release } = useMutationLock();
   const [imageUploading, setImageUploading] = useState(false);
   const [isAutosaving, setIsAutosaving] = useState(false);
@@ -114,10 +137,14 @@ export function WritingEditor({
     const state = writingContentToEditorState(
       parseWritingContent(initialData?.content ?? undefined),
     );
+    const seeded =
+      !initialData && initialKind
+        ? { ...state, meta: { ...state.meta, kind: initialKind } }
+        : state;
     return buildWritingEditorSnapshot({
       title: initialData?.title ?? "",
       description: initialData?.description ?? "",
-      editorState: state,
+      editorState: seeded,
     });
   });
   const baselineRef = useRef(baseline);
@@ -301,7 +328,18 @@ export function WritingEditor({
           toast: showToast ? () => toast.success(t("saved")) : undefined,
         });
       } else {
-        await createWritingDocument(payload, { folderId });
+        const created = await createWritingDocument(payload, { folderId });
+        if (fromInboxId) {
+          try {
+            await completeStudyInboxItem({
+              id: fromInboxId,
+              linkedEntityType: "writing",
+              linkedEntityId: created.id,
+            });
+          } catch {
+            // Create already succeeded; leave inbox item for a later retry.
+          }
+        }
         void queryClient.invalidateQueries({ queryKey: ["writing"] });
         try {
           router.prefetch(listHref);

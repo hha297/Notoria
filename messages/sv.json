@@ -54,6 +54,7 @@
   },
   "nav": {
     "dashboard": "Instrumentpanel",
+    "inbox": "Fångst",
     "vocabulary": "Ordlista",
     "writing": "Skrivande",
     "theory": "Teori",
@@ -70,6 +71,55 @@
       "listenSpeak": "Lyssna och tala",
       "more": "Mer"
     }
+  },
+  "inbox": {
+    "eyebrow": "Samla",
+    "title": "Fångst",
+    "description": "Släpp snabba anteckningar, fraser och idéer här — och gör om dem till ordförråd, teori, skrivande eller övningar när du har tid.",
+    "disabledNoWorkspace": "Skapa en arbetsyta innan du sparar till Fångst.",
+    "capture": "Spara",
+    "captureTitle": "Spara till Fångst",
+    "captureDescription": "Spara något att bearbeta senare. Du behöver inte bestämma var det hör hemma ännu.",
+    "captureSubmit": "Spara till Fångst",
+    "captured": "Sparad i Fångst",
+    "contentLabel": "Innehåll",
+    "contentPlaceholder": "Ett ord, en fras, en idé eller något du vill återkomma till…",
+    "contentRequired": "Lägg till innehåll först",
+    "noteLabel": "Anteckning (valfritt)",
+    "notePlaceholder": "Kontext eller varför det spelar roll…",
+    "sourceLabel": "Källa (valfritt)",
+    "sourcePlaceholder": "Bok, podcast, lektion…",
+    "sourcePrefix": "Från {source}",
+    "filterUnprocessed": "Att bearbeta",
+    "filterProcessed": "Bearbetade",
+    "emptyTitle": "Fångst är tom",
+    "emptyDescription": "Spara något snabbt — ett ord från ett samtal, ett grammatiktvivel, en skrividé — och sortera det senare.",
+    "emptyProcessedTitle": "Inga bearbetade objekt ännu",
+    "emptyProcessedDescription": "När du har sparat något från Fångst till ordförråd, teori, skrivande eller övningar visas det här.",
+    "statusProcessed": "Bearbetad",
+    "processMenu": "Bearbeta",
+    "processed": "Markerad som bearbetad",
+    "deleted": "Borttagen från Fångst",
+    "process": {
+      "vocabulary": "Ordlista",
+      "theory": "Teori",
+      "writing": "Skrivande",
+      "exercise": "Övning",
+      "keep": "Behåll till senare",
+      "delete": "Ta bort"
+    },
+    "searchPlaceholder": "Sök fångster…",
+    "sortBy": "Sortera efter",
+    "sortNewest": "Nyast först",
+    "sortOldest": "Äldst först",
+    "sortNameAsc": "Namn (A → Ö)",
+    "sortNameDesc": "Namn (Ö → A)",
+    "noResultsTitle": "Inga träffar",
+    "noResultsDescription": "Prova en annan sökning, eller rensa den för att se allt på den här fliken."
+  },
+  "reviewLater": {
+    "add": "Granska senare",
+    "remove": "Ta bort från granska senare"
   },
   "folders": {
     "new": "Ny mapp",
@@ -873,6 +923,12 @@
     "disabledNoWorkspace": "Skapa ett arbetsutrymme innan du lägger till skrivdokument.",
     "create": "Skapa skrivande",
     "createFirst": "Skapa ditt första skrivande",
+    "learningNote": {
+      "create": "Inlärningsanteckning",
+      "filter": "Inlärningsanteckningar",
+      "filterLabel": "Typ",
+      "badge": "Inlärningsanteckning"
+    },
     "onTheDesk": "På skrivbordet",
     "library": "Bibliotek",
     "allWritings": "Alla skrifter",
@@ -1123,7 +1179,7 @@
     "guideTitle": "Hur du använder Notoria",
     "guideTagline": "Ditt språk. Din kunskap. Din lärdagbok.",
     "guideSubtitle": "Notoria är en privat, personlig arbetsyta – inte en traditionell kurs som säger vad du ska lära dig. Du väljer ditt språk, dina ord, dina grammatiknoteringar, dina exempel och de material du vill öva med.",
-    "guideSubtitleSecondary": "Din arbetsyta växer med din lärande resa. Börja med vokabulär och teori, och omvandla sedan det du samlar till övningar, skrivande, lyssnande och talande.",
+    "guideSubtitleSecondary": "Din arbetsyta växer med din läranderesa. Börja med Fångst för snabba lappar, sedan Ordförråd och Teori — och gör om det du samlar till övningar, skrivande, lyssning och tal.",
     "guideFullCtaPrompt": "Vill du lära dig mer om hur Notoria fungerar?",
     "guideFullCta": "Läs hela guiden",
     "modulesTitle": "Utforska arbetsytan",
@@ -1133,6 +1189,10 @@
     "unlock": "Lås upp Pro",
     "open": "Öppna",
     "steps": {
+      "inbox": {
+        "title": "Fångst",
+        "body": "Släpp ett ord, en fras, ett grammatikfrågetecken eller en skrividé på sekunder — du behöver inte bestämma var det hör hemma ännu. Lägg till en valfri anteckning eller källa, håll poster i Att bearbeta, och gör om en fångst till Ordförråd, Teori, Skrivande eller Övning när du har tid. En post markeras Bearbetad först när du sparat den länkade posten."
+      },
       "vocabulary": {
         "title": "Vokabulär",
         "body": "Lägg till dina egna ord och fraser med betydelser, exempelmeningar, uttal och taggar. Organisera efter ämne, nivå eller situation – och återanvänd dem i övningar och repetition. Börja med ord från vardagen, lektioner, böcker eller media; ditt bibliotek blir grunden för övning."
@@ -1224,6 +1284,42 @@
     "quickOpenSpeaking": "Öppna tal",
     "nextStepTitle": "Nästa steg",
     "continueEmpty": "Inget att återuppta ännu — lägg till en teorinot, en text, en lyssningslektion eller en talsession så syns den här.",
+    "inbox": {
+      "title": "Fångst",
+      "subtitle": "Snabba anteckningar som väntar på att sorteras in i ditt bibliotek.",
+      "count": "{count, plural, =0 {Inget väntar} one {# att bearbeta} other {# att bearbeta}}",
+      "cta": "Öppna Fångst"
+    },
+    "reviewLater": {
+      "title": "Granska senare",
+      "subtitle": "Saker du bokmärkt för en andra titt.",
+      "empty": "Bokmärk något från ordlista, teori eller skrivande så syns det här."
+    },
+    "recentActivity": {
+      "title": "Senaste aktivitet",
+      "subtitle": "Vad du skapat eller bearbetat nyligen.",
+      "empty": "Aktivitet visas här när du lägger till och bearbetar studiematerial.",
+      "untitled": "Namnlös",
+      "verbs": {
+        "created": "Skapade {entity}: {title}",
+        "updated": "Uppdaterade {entity}: {title}",
+        "completed": "Avslutade {entity}: {title}",
+        "processed": "Bearbetade inkorg: {title}",
+        "review_later_added": "Markerad för granskning: {title}",
+        "review_later_removed": "Borttagen från granskning: {title}"
+      },
+      "verbLabels": {
+        "created": "Skapad",
+        "updated": "Uppdaterad",
+        "completed": "Klar",
+        "processed": "Bearbetad",
+        "review_later_added": "Granska senare",
+        "review_later_removed": "Borttagen"
+      }
+    },
+    "learningNote": {
+      "label": "Senaste inlärningsanteckning"
+    },
     "loopEyebrow": "Loopen",
     "loopTitle": "Samla, öva, använd",
     "loopSubtitle": "Notoria fungerar bäst som en cykel: spara det du möter, öva kort, och använd det i skrivande, lyssning och tal.",
@@ -1618,6 +1714,37 @@
         "sessions": {
           "title": "2. Granska efteråt",
           "body": "Öppna en session för att läsa transkriptionen och feedbacken. Använd den för att upptäcka misstag, återanvända användbara fraser och bestämma vad du ska lägga till i din dagbok nästa gång."
+        }
+      }
+    },
+    "inbox": {
+      "title": "Fångst",
+      "description": "Spara snabbt ord, frågetecken och idéer — och gör om dem till riktiga studieposter när du har en stund.",
+      "cta": "Jag förstår",
+      "steps": {
+        "capture": {
+          "title": "1. Fånga något",
+          "body": "Använd Fångst för att spara ett ord, en fras, ett grammatikfrågetecken eller en skrividé utan att bestämma var det hör hemma ännu. Hastighet är viktigare än perfekt struktur här."
+        },
+        "filters": {
+          "title": "2. Att bearbeta vs bearbetat",
+          "body": "Att bearbeta håller poster som fortfarande väntar. Bearbetat visar fångster du redan gjort om till ordförråd, teori, skrivande eller övningar."
+        },
+        "search": {
+          "title": "3. Sök",
+          "body": "Filtrera den aktuella fliken efter innehåll, anteckning eller källa så du hittar en fångst snabbt."
+        },
+        "sort": {
+          "title": "4. Sortera",
+          "body": "Sortera efter nyast, äldst eller namn så listan passar hur du vill arbeta igenom den."
+        },
+        "list": {
+          "title": "5. Din fångstlista",
+          "body": "Varje kort visar innehållet, valfri anteckning/källa och när du sparade det. Öppna ···-menyn på ett kort för att bearbeta det."
+        },
+        "process": {
+          "title": "6. Bearbeta till Notoria",
+          "body": "Skicka en fångst till Ordförråd, Teori, Skrivande eller Övning. Den blir Bearbetad först när du sparat klart där — avbryter du skapandet lämnas den kvar."
         }
       }
     }
@@ -2828,7 +2955,8 @@
       "speaking": "Tala",
       "connections": "Din kunskap blir praktik",
       "philosophy": "Din inlärningsdagbok",
-      "startHere": "Börja här"
+      "startHere": "Börja här",
+      "inbox": "Fångst"
     },
     "welcome": {
       "title": "Vad är Notoria?",
@@ -2870,7 +2998,7 @@
       "steps": {
         "collect": {
           "title": "1. Samla din kunskap",
-          "body": "Lägg till ord och teori från lektioner, samtal, böcker, media eller var som helst du stöter på språket."
+          "body": "Använd Fångst för snabba lappar, och lägg sedan till ordförråd och teori från lektioner, samtal, böcker, media eller var du än möter språket."
         },
         "understand": {
           "title": "2. Förstå det",
@@ -2984,6 +3112,27 @@
           "Läs feedback och identifiera områden att förbättra"
         ],
         "emphasis": "Tala behöver inte vara perfekt. Syftet är att öva på att använda språket i en realistisk situation — och sedan lära sig av vad som hände."
+      },
+      "inbox": {
+        "title": "Fångst",
+        "intro": "Fångst är din snabba droppzon — spara något i samma ögonblick du möter det, och bestäm senare var det hör hemma.",
+        "bullets": [
+          "Spara ett ord, en fras, ett grammatikfrågetecken eller en skrividé på sekunder",
+          "Lägg till en valfri anteckning eller källa för sammanhang",
+          "Håll poster i Att bearbeta tills du är redo",
+          "Gör om en fångst till Ordförråd, Teori, Skrivande eller Övning när du har tid",
+          "En post markeras Bearbetad först när du sparat den länkade posten"
+        ],
+        "body": "Fångst sitter i början av loopen: samla först, organisera sedan. Du behöver ingen perfekt kategori i stunden — du behöver tanken sparad.",
+        "emphasis": "Om du bara har tio sekunder räcker fångst. Sorteringen kan vänta.",
+        "exampleIntro": "Till exempel hör du en fras på bussen och har bara en stund:",
+        "examples": [
+          "Innehåll: varata aika",
+          "Anteckning: hört på bussen — boka tid",
+          "Källa: vardag",
+          "Senare: bearbeta till Ordförråd med betydelse och exempel"
+        ],
+        "exampleNote": "Lappen är trygg i Fångst. När du har fem lugna minuter skickar du den till Ordförråd (eller Teori / Skrivande) och slutför posten — först då blir den Bearbetad."
       }
     },
     "connections": {
@@ -2998,6 +3147,7 @@
         "addMore": "Lägg till mer kunskap"
       },
       "paragraphs": [
+        "Fångst håller lapparna tills du är redo att placera dem.",
         "Det du samlar i Ordlista och Teori blir källan för dina övningar.",
         "Skrivande och Lyssnande hjälper dig att använda och förstå språket i nya sammanhang.",
         "Tala sätter allt i aktiv konversation.",
@@ -3035,7 +3185,8 @@
           "exercise": "Skapa en övning från din kunskap.",
           "writing": "Försök att skriva några meningar.",
           "listeningSpeaking": "När du är redo, försök att lyssna eller tala.",
-          "return": "Kom tillbaka imorgon och lägg till något nytt."
+          "return": "Kom tillbaka imorgon och lägg till något nytt.",
+          "capture": "Öppna Fångst och spara en snabb anteckning eller fras du vill återkomma till."
         }
       },
       "closing": "Börja bara med något du vill minnas. Din dagbok kommer att växa naturligt därifrån."
@@ -3062,11 +3213,11 @@
     "settingsLinksDescription": "Läs hur Notoria hanterar dina uppgifter och reglerna för tjänsten.",
     "contactEmail": "contact@notoria.fi",
     "privacyPolicy": {
-      "intro": "Denna integritetspolicy förklarar hur Notoria (<site>www.notoria.fi</site>) hanterar personuppgifter i sin privata webbapp för språkinlärning. Den är skriven för att matcha hur produkten fungerar idag. Om en praxis inte beskrivs här hävdar vi inte att vi gör det.",
+      "intro": "Denna integritetspolicy förklarar hur Notoria (<site>www.notoria.fi</site>) hanterar personuppgifter i sin privata webbapp för språkinlärning. Den är skriven för att motsvara hur produkten fungerar i dag. Om en praxis inte beskrivs här gör vi inte anspråk på att tillämpa den.",
       "tocTitle": "På den här sidan",
       "tocAria": "På den här sidan",
       "toc": {
-        "controller": "Vem som är ansvarig",
+        "controller": "Vem är ansvarig",
         "scope": "Vad policyn omfattar",
         "data": "Uppgifter vi behandlar",
         "purposes": "Varför vi behandlar uppgifter",
@@ -3074,7 +3225,7 @@
         "ai": "AI-funktioner",
         "payments": "Betalningar (Notoria Pro)",
         "processors": "Tjänsteleverantörer",
-        "cookies": "Cookies och enhetslagring",
+        "cookies": "Cookies och lagring på enheten",
         "transfers": "Internationella överföringar",
         "retention": "Hur länge vi sparar uppgifter",
         "deletion": "Export och radering av konto",
@@ -3085,10 +3236,10 @@
       },
       "sections": {
         "controller": {
-          "title": "1. Vem som är ansvarig",
-          "p1": "Notoria är språkinlärningstjänsten på <site>www.notoria.fi</site>, som erbjuds användare i Finland och i det övriga EU/EES.",
-          "p2": "För integritetsfrågor, registrerades begäranden och annan användarkontakt, mejla <contact>contact@notoria.fi</contact>.",
-          "p3": "Ett registrerat företagsnamn och postadress för personuppgiftsansvarig publiceras inte i den aktuella produkten. Om du behöver formell identifiering av personuppgiftsansvarig för en GDPR-begäran, mejla <contact>contact@notoria.fi</contact> så tillhandahåller vi den."
+          "title": "1. Vem är ansvarig",
+          "p1": "Notoria är tjänsten för språkinlärning på <site>www.notoria.fi</site>, som erbjuds användare i Finland och i övriga EU/EES.",
+          "p2": "För frågor om integritet, begäranden från registrerade och annan användarkontakt, mejla <contact></contact>.",
+          "p3": "Ett registrerat företagsnamn och en postadress för den personuppgiftsansvarige publiceras inte i den nuvarande produkten. Om du behöver en formell identifiering av den personuppgiftsansvarige för en GDPR-begäran, mejla <contact></contact> så tillhandahåller vi den."
         },
         "scope": {
           "title": "2. Vad policyn omfattar",
@@ -3096,105 +3247,105 @@
           "list": [
             "skapar eller använder ett konto",
             "sparar material i privata arbetsytor",
-            "prenumererar på Notoria Pro",
-            "använder valfria AI-verktyg",
-            "laddar upp media för lyssnande eller profil",
+            "abonnerar på Notoria Pro",
+            "använder valfria AI-assisterade verktyg",
+            "laddar upp media för lyssning eller profilbruk",
             "använder talövning",
             "skickar feedback eller kontaktar oss"
           ],
-          "p2": "Den aktuella applikationskoden innehåller ingen tredjeparts marknadsföringsanalys- eller annons-SDK. Vi hävdar inte att vi använder spårare som inte finns i produkten."
+          "p2": "Den nuvarande applikationskoden innehåller inte någon tredjeparts-SDK för marknadsföringsanalys eller annonsering. Vi gör inte anspråk på att använda spårare som inte finns i produkten."
         },
         "data": {
           "title": "3. Uppgifter vi behandlar",
-          "p1": "Notoria behandlar olika typer av uppgifter av olika skäl. Huvudkategorierna är:",
+          "p1": "Notoria behandlar olika typer av uppgifter av olika skäl. De huvudsakliga kategorierna är:",
           "accountAuth": {
             "title": "Konto och autentisering",
             "list": [
               "Namn och e-postadress",
-              "Lösenordshash för e-post-/lösenordskonton (lösenord lagras aldrig i klartext)",
-              "Google-kontoidentifierare och OAuth-token om du loggar in med Google",
-              "Valfri profilbild (avatar)",
-              "Kontoroll samt skapad/uppdaterad-tidsstämplar"
+              "Lösenordshash för konton med e-post och lösenord (lösenord lagras aldrig i klartext)",
+              "Google-kontoidentifierare och OAuth-tokens om du loggar in med Google",
+              "Valfritt profilfoto (avatar)",
+              "Kontoroll samt tidsstämplar för skapande och uppdatering"
             ]
           },
           "learningContent": {
-            "title": "Lärinnehåll du skapar",
-            "p1": "Innehåll du lägger till i privata arbetsytor, såsom ordförråd, teoranteckningar, skrivdokument, övningar och importerat övningsmaterial, lyssningslektioner (inklusive mediareferenser och transkript), talsessioners transkript och relaterade sessionsfält, mappar, taggar och studieframsteg såsom flashcard-repetitioner.",
-            "p2": "Detta är ditt lärandematerial. Notoria lagrar det så att du kan återvända till det och öva utifrån det."
+            "title": "Lärinnehåll som du skapar",
+            "p1": "Innehåll du lägger till i privata arbetsytor, till exempel ordförråd, teorianteckningar, skrivdokument, övningar och importerat övningsmaterial, lyssningslektioner (inklusive mediereferenser och transkriptioner), transkriptioner från talsessioner och relaterade sessionsfält, mappar, taggar och studieframsteg såsom flashcard-repetitioner.",
+            "p2": "Detta är ditt läromaterial. Notoria lagrar det så att du kan återvända till det och öva med det."
           },
           "subscription": {
-            "title": "Prenumerations- och betalningsmetadata",
+            "title": "Metadata för abonnemang och betalning",
             "list": [
-              "Plan (gratis eller Pro) och prenumerationsstatus",
-              "Stripe kund- och prenumerationsidentifierare, samt aktuell periods slut när tillämpligt"
+              "Plan (gratis eller Pro) och abonnemangsstatus",
+              "Stripe-identifierare för kund och abonnemang samt slutet på den aktuella perioden när det är tillämpligt"
             ],
-            "p1": "Kortnummer och betalningsmetodshemligheter stannar hos Stripe. Notoria behåller endast den faktureringsmetadata som behövs för att spegla din Pro-status."
+            "p1": "Kortnummer och hemligheter för betalningsmetoder stannar hos Stripe. Notoria sparar bara den faktureringsmetadata som behövs för att spegla din Pro-status."
           },
           "device": {
-            "title": "Enhets- och preferensdata",
-            "p1": "Cookies och webblagring som används för inloggning, språk, aktiv arbetsyta, AI-assistanspreferenser, tema och liknande produktinställningar. Se <cookies>Cookies och enhetslagring</cookies>."
+            "title": "Enhets- och inställningsdata",
+            "p1": "Cookies och webbläsarlagring som används för inloggning, språk, aktiv arbetsyta, inställningar för AI-assistans, tema och liknande produktinställningar. Se <cookies>Cookies och lagring på enheten</cookies>."
           },
           "support": {
             "title": "Support och feedback",
-            "list0": "E-postmeddelanden du skickar till <contact>contact@notoria.fi</contact>",
-            "list1": "Feedback i appen från Support (meddelande, feedbacktyp, din e-post, om du är inloggad, valfritt konto-id, sidsökväg, user-agent och upp till tre valfria bildbilagor)",
-            "p1": "Feedback levereras via e-post till Notorias tekniska inkorg (<technical></technical>). Den lagras inte som en separat ärendedatabas i Notoria."
+            "list0": "E-post du skickar till <contact></contact>",
+            "list1": "Feedback i appen från Support (meddelande, typ av feedback, din e-postadress, om du är inloggad, valfritt konto-id, sidväg, user-agent och upp till tre valfria bildbilagor)",
+            "p1": "Feedback levereras via e-post till Notorias tekniska inkorg (<technical></technical>). Den lagras inte som en separat ärendedatabas inuti Notoria."
           }
         },
         "purposes": {
           "title": "4. Varför vi behandlar uppgifter",
           "headers": {
-            "purpose": "Ändamål",
-            "basis": "Typisk GDPR-rättslig grund"
+            "purpose": "Syfte",
+            "basis": "Typisk rättslig grund enligt GDPR"
           },
           "rows": [
             {
-              "purpose": "Tillhandahålla konton, arbetsytor och ditt sparade lärandematerial",
-              "basis": "Avtal (art. 6.1 b)"
+              "purpose": "Tillhandahålla konton, arbetsytor och ditt sparade läromaterial",
+              "basis": "Avtal (Art. 6(1)(b))"
             },
             {
               "purpose": "Autentisera dig (e-post/lösenord eller Google) och återställa lösenord",
-              "basis": "Avtal (art. 6.1 b)"
+              "basis": "Avtal (Art. 6(1)(b))"
             },
             {
-              "purpose": "Köra Notoria Pro-fakturering och prenumerationsstatus via Stripe",
-              "basis": "Avtal (art. 6.1 b)"
+              "purpose": "Sköta fakturering och abonnemangsstatus för Notoria Pro via Stripe",
+              "basis": "Avtal (Art. 6(1)(b))"
             },
             {
-              "purpose": "Valfri AI-hjälp, lyssningstranskription och talövning när du använder dessa funktioner",
-              "basis": "Avtal (art. 6.1 b); preferenskontroller där de finns"
+              "purpose": "Valfri AI-hjälp, transkribering av lyssning och talövning när du använder dessa funktioner",
+              "basis": "Avtal (Art. 6(1)(b)); inställningskontroller där de finns"
             },
             {
-              "purpose": "Hålla tjänsten säker och tillförlitlig (förebygga missbruk, felsökning)",
-              "basis": "Berättigat intresse (art. 6.1 f)"
+              "purpose": "Hålla tjänsten säker och tillförlitlig (förhindrande av missbruk, felsökning)",
+              "basis": "Berättigat intresse (Art. 6(1)(f))"
             },
             {
               "purpose": "Svara på support- och feedbackmeddelanden",
-              "basis": "Berättigat intresse / avtal, beroende på begäran"
+              "basis": "Berättigat intresse / avtal, beroende på förfrågan"
             },
             {
-              "purpose": "Uppfylla rättsliga skyldigheter",
-              "basis": "Rättslig förpliktelse (art. 6.1 c)"
+              "purpose": "Uppfylla rättsliga förpliktelser",
+              "basis": "Rättslig förpliktelse (Art. 6(1)(c))"
             }
           ],
-          "p1": "Om du behöver en formell rättslig grund för en specifik aktivitet, mejla <contact>contact@notoria.fi</contact>."
+          "p1": "Om du behöver en formell anteckning om rättslig grund för en specifik aktivitet, mejla <contact></contact>."
         },
         "auth": {
           "title": "5. Konton och inloggning",
           "p1": "Notoria använder Auth.js (NextAuth) med en JWT-session. Du kan logga in med e-post och lösenord, eller med Google OAuth när Google-inloggning är konfigurerad.",
-          "p2": "E-post för lösenordsåterställning skickas endast för konton som har ett lösenord. Återställningstoken lagras hashat, går ut efter 30 minuter och används endast för att ange ett nytt lösenord."
+          "p2": "E-post för lösenordsåterställning skickas endast för konton som har ett lösenord. Återställningstokens lagras hashade, upphör att gälla efter 30 minuter och används endast för att ange ett nytt lösenord."
         },
         "ai": {
           "title": "6. AI-funktioner",
-          "p1": "Valfria AI-funktioner i den aktuella produkten använder <strong>OpenAI</strong>. Beroende på verktyget du använder kan Notoria skicka relevant lärinnehåll — till exempel ordförrådsposter, skrivtext eller markeringar, övnings- eller teorikontext, lyssningstranskript, taltranskript eller live-ljud till taltutor.",
-          "p2": "Preferenser för AI-assistans (inklusive om assistans är aktiverad) lagras i en cookie så att produkten kan respektera dina inställningar. Många serveråtgärder som anropar modellen kontrollerar först att assistans är aktiverad. Om du stänger av assistans i <settings>Inställningar</settings> blockeras AI-verktyg som kräver det.",
-          "p3": "Lyssningstranskription via AssemblyAI kan fortfarande köras när du använder Lyssna-funktioner som behöver ett transkript, eftersom transkription är en del av det medieflödet snarare än enbart den valfria preferensen ”AI-assistans”.",
-          "p4": "Den aktuella kodbasen använder inga andra stora språkmodellsleverantörer än OpenAI. OpenAI behandlar uppgifter under sina egna villkor och integritetspolicy som personuppgiftsbiträde för dessa funktioner."
+          "p1": "Valfria AI-funktioner i den nuvarande produkten använder <strong>OpenAI</strong>. Beroende på vilket verktyg du använder kan Notoria skicka relevant lärinnehåll — till exempel ord ur ordförrådet, skriven text eller markeringar, sammanhang från övningar eller teori, transkriptioner av lyssning, transkriptioner av tal, eller direktljud till taltutorn.",
+          "p2": "Inställningar för AI-assistans (inklusive om assistansen är aktiverad) lagras i en webbläsarcookie så att produkten kan respektera dina inställningar. Många serveråtgärder som anropar modellen kontrollerar först att assistansen är aktiverad. Att stänga av assistansen i <settings>Inställningar</settings> blockerar AI-verktyg som kräver den.",
+          "p3": "Transkribering av lyssning via AssemblyAI kan fortfarande köras när du använder lyssningsfunktioner som behöver en transkription, eftersom transkriberingen är en del av det mediearbetsflödet snarare än enbart den valfria inställningen för ”AI-assistans”.",
+          "p4": "Den nuvarande kodbasen använder inga andra leverantörer av stora språkmodeller än OpenAI. OpenAI behandlar uppgifter enligt sina egna villkor och sin integritetspolicy som personuppgiftsbiträde för dessa funktioner."
         },
         "payments": {
           "title": "7. Betalningar (Notoria Pro)",
-          "p1": "Betalda prenumerationer hanteras av <strong>Stripe</strong>. Checkout, fakturor, betalningsmetoder och uppsägning går via Stripe Checkout och Stripe Customer Portal. Stripe-webhooks uppdaterar din plan och status i Notoria.",
-          "p2": "Stripe behandlar betalningsuppgifter som betalningsleverantör. Se Stripes egen integritetsdokumentation för korthantering."
+          "p1": "Betalda abonnemang hanteras av <strong>Stripe</strong>. Kassa, fakturor, betalningsmetoder och uppsägning sköts via Stripe Checkout och Stripe Customer Portal. Stripe-webhooks uppdaterar din plan och status i Notoria.",
+          "p2": "Stripe behandlar betalningsuppgifter som betaltjänstleverantör. Se Stripes egen integritetsdokumentation för korthantering."
         },
         "processors": {
           "title": "8. Tjänsteleverantörer",
@@ -3206,7 +3357,7 @@
           "rows": [
             {
               "provider": "PostgreSQL-databas (produktion dokumenterad som Neon)",
-              "role": "Konto- och lärdata"
+              "role": "Konto- och läruppgifter"
             },
             {
               "provider": "Vercel",
@@ -3214,56 +3365,56 @@
             },
             {
               "provider": "Cloudinary",
-              "role": "Avatarer, lyssningsmedia, redaktörsbilder och filer för övningsimport"
+              "role": "Avatarer, lyssningsmedia, redigerarbilder och filer för övningsimport"
             },
             {
               "provider": "AssemblyAI",
-              "role": "Transkription av lyssningsljud"
+              "role": "Transkribering av lyssningsljud"
             },
             {
               "provider": "Stream Video",
-              "role": "Live-talsamtal; automatisk transkription; sessionsfält såsom transkript-URL:er (och inspelnings-URL:er endast om en inspelningshändelse tas emot senare)"
+              "role": "Direktsamtal för tal; automatisk transkribering; sessionsfält såsom transkriptions-URL:er (och inspelnings-URL:er endast om en inspelningshändelse senare tas emot)"
             },
             {
               "provider": "OpenAI",
-              "role": "Valfri AI-assistans och taltutorns realtidsljud"
+              "role": "Valfri AI-assistans och realtidsljud för taltutorn"
             },
             {
               "provider": "Resend",
-              "role": "E-post för lösenordsåterställning och leverans av Support-feedback"
+              "role": "Leverans av e-post för lösenordsåterställning och av supportfeedback"
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro-checkout, portal och prenumerationsstatus"
+              "role": "Kassa, portal och abonnemangsstatus för Notoria Pro"
             },
             {
               "provider": "Google",
-              "role": "OAuth-inloggning när du väljer Google; webbtypsnitt för UI"
+              "role": "OAuth-inloggning när du väljer Google; webbtypsnitt för gränssnittet"
             },
             {
               "provider": "Dicebear",
               "role": "Genererade avatarbilder som används i talsessioner (från ett namnfrö; inget kontolösenord skickas)"
             }
           ],
-          "p2": "Talsamtal skapas med transkription aktiverad. Inspelning är inaktiverad vid skapande av samtal i den aktuella implementationen; en inspelnings-URL lagras endast om produkten senare tar emot en recording-ready-händelse från Stream."
+          "p2": "Talsamtal skapas med transkribering aktiverad. Inspelning är avaktiverad när samtalet skapas i den nuvarande implementationen; en inspelnings-URL lagras endast om produkten senare tar emot en händelse om färdig inspelning från Stream."
         },
         "cookies": {
-          "title": "9. Cookies och enhetslagring",
-          "p1": "Notoria använder cookies och liknande lagring för nödvändiga produktfunktioner. Det finns ingen separat cookiepolicy eftersom den aktuella implementationen inte inkluderar reklam- eller analyscookieprogram som skulle kräva en.",
+          "title": "9. Cookies och lagring på enheten",
+          "p1": "Notoria använder cookies och liknande lagring för nödvändiga produktfunktioner. Det finns ingen separat cookiepolicy eftersom den nuvarande implementationen inte innehåller några annons- eller analyscookieprogram som skulle kräva en sådan.",
           "cookiesTitle": "Cookies som appen använder",
           "headers": {
             "cookie": "Cookie",
-            "purpose": "Ändamål"
+            "purpose": "Syfte"
           },
           "rows": [
             {
-              "cookie": "Auth.js-sessionscookie",
-              "purpose": "Håller dig inloggad (JWT-session; bibliotekets standardnamngivning)",
+              "cookie": "Auth.js sessionscookie",
+              "purpose": "Håller dig inloggad (JWT-session; bibliotekets standardnamn)",
               "code": false
             },
             {
               "cookie": "notoria-locale",
-              "purpose": "UI-språk",
+              "purpose": "Språk i gränssnittet",
               "code": true
             },
             {
@@ -3273,82 +3424,82 @@
             },
             {
               "cookie": "notoria-ai-preferences",
-              "purpose": "Preferenser för AI-assistans",
+              "purpose": "Inställningar för AI-assistans",
               "code": true
             },
             {
               "cookie": "sidebar_state",
-              "purpose": "Preferens för öppnad/stängd sidopanel",
+              "purpose": "Inställning för öppet/stängt sidofält",
               "code": true
             }
           ],
-          "storageTitle": "Lokal och sessionslagring",
-          "p2": "Din webbläsare kan också lagra temapreferens (via next-themes), onboarding-/tutorialflaggor, tangentbords- och rörelsepreferenser, vyval, tillfälligt övnings- eller flashcard-sessionstillstånd och liknande endast klientinställningar.",
-          "p3": "Rensa lokal preferenser i Inställningar tar bort dessa enhetspreferenser. Det raderar inte ditt konto eller arbetsytans innehåll på servern."
+          "storageTitle": "Local storage och session storage",
+          "p2": "Din webbläsare kan också lagra temainställning (via next-themes), flaggor för introduktion och handledning, inställningar för tangentbord och rörelse, val av visningsläge, tillfälligt sessionstillstånd för övningar eller flashcards, och liknande inställningar som bara finns i klienten.",
+          "p3": "Att rensa lokala inställningar i Inställningar tar bort dessa enhetsinställningar. Det raderar inte ditt konto eller innehållet i din arbetsyta på servern."
         },
         "transfers": {
           "title": "10. Internationella överföringar",
-          "p1": "Vissa leverantörer ovan är baserade utanför EES (till exempel i USA) eller kan behandla uppgifter i mer än en region. När personuppgifter lämnar EES/Storbritannien bygger överföringar på de skyddsåtgärder som dessa leverantörer erbjuder enligt tillämplig lag — såsom standardavtalsklausuler där de gäller — och på deras publicerade integritetsvillkor.",
-          "p2": "Applikationshosting för Notoria är konfigurerad mot Frankfurtregionen (fra1). Fråga <contact>contact@notoria.fi</contact> om du behöver hjälp att hitta relevant leverantörsdokumentation för en specifik funktion."
+          "p1": "Vissa av leverantörerna ovan är baserade utanför EES (till exempel i USA) eller kan behandla uppgifter i mer än en region. När personuppgifter lämnar EES/Storbritannien bygger överföringarna på de skyddsåtgärder som dessa leverantörer erbjuder enligt tillämplig lag — såsom standardavtalsklausuler där de är tillämpliga — och på deras publicerade integritetsvillkor.",
+          "p2": "Applikationshostingen för Notoria är konfigurerad mot Frankfurt-regionen (fra1). Fråga <contact></contact> om du behöver hjälp att hitta relevant leverantörsdokumentation för en specifik funktion."
         },
         "retention": {
           "title": "11. Hur länge vi sparar uppgifter",
           "list": [
-            "Konto- och lärdata sparas medan ditt konto är öppet så att du kan använda tjänsten",
-            "Token för lösenordsåterställning går ut efter 30 minuter",
-            "Prenumerationsmetadata sparas efter behov för att spegla din aktuella Pro-status och Stripe-faktureringsrelation",
-            "Support- och feedbackmejls sparas så länge det behövs för att hantera din begäran och uppföljning"
+            "Konto- och läruppgifter sparas så länge ditt konto är öppet så att du kan använda tjänsten",
+            "Tokens för lösenordsåterställning upphör att gälla efter 30 minuter",
+            "Abonnemangsmetadata sparas så länge det behövs för att spegla din nuvarande Pro-status och faktureringsrelationen med Stripe",
+            "Support- och feedbackmejl sparas så länge det behövs för att hantera din förfrågan och relaterad uppföljning"
           ],
-          "p1": "Exakta backup-retentionstider för infrastrukturleverantörer är inte hårdkodade i applikationen och kan följa dessa leverantörers operativa praxis. Kontakta oss om du behöver förtydligande för en raderingsbegäran."
+          "p1": "Exakta bevarandetider för säkerhetskopior hos infrastrukturleverantörer är inte hårdkodade i applikationen och kan följa dessa leverantörers operativa praxis. Kontakta oss om du behöver ett förtydligande för en raderingsbegäran."
         },
         "deletion": {
           "title": "12. Export och radering av konto",
           "exportTitle": "Export",
-          "exportP1": "Från <account>Konto</account> kan du ladda ner en JSON-backup av arbetsytor och lärinnehåll (inklusive ordförråd, teoranteckningar, övningar/skrivande, lyssningslektioner och talsessioner). Mediefiler refereras via URL snarare än att bäddas in som binärfiler.",
-          "exportP2": "Den aktuella exporten inkluderar inte varje kontorelaterad post. Till exempel ingår inte flashcard-framsteg/repetitioner och källposter för övningsimport i JSON-backupen. OAuth-token, lösenordshashar och Stripe-identifierare exporteras inte.",
+          "exportP1": "Från <account>Konto</account> kan du ladda ner en JSON-säkerhetskopia av arbetsytor och lärinnehåll (inklusive ordförråd, teorianteckningar, övningar/skrivande, lyssningslektioner och talsessioner). Mediefiler refereras via URL i stället för att bäddas in som binära filer.",
+          "exportP2": "Den nuvarande exporten innehåller inte alla kontorelaterade poster. Till exempel ingår inte flashcard-framsteg/repetitioner och källposter för övningsimport i JSON-säkerhetskopian. OAuth-tokens, lösenordshashar och Stripe-identifierare exporteras inte.",
           "deleteTitle": "Radera konto",
           "deleteP1": "Du kan permanent radera ditt konto från <account>Konto</account>. När raderingen lyckas gör Notoria följande:",
           "deleteList": [
-            "raderar din användarpost och kaskaderad lärdata från Notorias databas",
-            "säger upp och tar bort relaterad Stripe-kunddata där Stripe är konfigurerat (best effort)",
-            "förstör avatarmedia och lyssningslektionsmedia som raderingsflödet är implementerat att ta bort från Cloudinary"
+            "raderar din användarpost och kaskaderade läruppgifter från Notorias databas",
+            "avbryter och tar bort relaterade Stripe-kunduppgifter där Stripe är konfigurerat (efter bästa förmåga)",
+            "förstör avatarmedia och media för lyssningslektioner som raderingsflödet är implementerat att ta bort från Cloudinary"
           ],
-          "deleteP2": "Det aktuella raderingsflödet hävdar inte att det automatiskt rensar varje tredjepartsartefakt. I synnerhet kan vissa Cloudinary-tillgångar (t.ex. redaktörsbilder eller filer för övningsimport) och Stream-talsamtalsartefakter kvarstå hos dessa leverantörer tills de rensas separat eller raderas enligt deras egna scheman.",
-          "deleteP3": "Efter radering kan begränsade restkopior också finnas kort i krypterade backups eller loggar tills dessa system roteras. Om något specifikt finns kvar efter att du raderat ditt konto, mejla <contact>contact@notoria.fi</contact>."
+          "deleteP2": "Det nuvarande raderingsflödet gör inte anspråk på att automatiskt rensa varje artefakt hos tredje part. Särskilt kan vissa Cloudinary-tillgångar (såsom redigerarbilder eller filer för övningsimport) och Stream-artefakter från talsamtal kvarstå hos dessa leverantörer till dess att de rensas separat eller raderas enligt deras egna scheman.",
+          "deleteP3": "Efter radering kan begränsade kvarvarande kopior också finnas kvar en kort tid i krypterade säkerhetskopior eller loggar till dess att dessa system roteras. Om något specifikt kvarstår efter att du har raderat ditt konto, mejla <contact></contact>."
         },
         "rights": {
           "title": "13. Dina rättigheter (GDPR)",
           "p1": "Om du befinner dig i EU/EES eller på annat sätt skyddas av GDPR kan du ha rätt att:",
           "list": [
             "få tillgång till dina personuppgifter",
-            "korrigera felaktiga uppgifter",
-            "radera uppgifter (inklusive genom att radera ditt konto)",
+            "rätta felaktiga uppgifter",
+            "radera uppgifter (bland annat genom att radera ditt konto)",
             "begränsa eller invända mot viss behandling",
-            "få en portabel kopia av uppgifter du tillhandahållit (se Export ovan)",
-            "återkalla samtycke där behandling baseras på samtycke"
+            "få en portabel kopia av de uppgifter du har lämnat (se Export ovan)",
+            "återkalla samtycke där behandlingen bygger på samtycke"
           ],
-          "listComplaint": "lämna in ett klagomål till en tillsynsmyndighet — i Finland Dataombudsmannens byrå (<ombudsman>tietosuoja.fi</ombudsman>)",
-          "p2": "För att utöva dessa rättigheter, mejla <contact>contact@notoria.fi</contact>. Vi kan behöva verifiera att begäran kommer från kontoinnehavaren."
+          "listComplaint": "lämna in ett klagomål till en tillsynsmyndighet — i Finland till dataombudsmannens byrå (<ombudsman>tietosuoja.fi</ombudsman>)",
+          "p2": "För att utöva dessa rättigheter, mejla <contact></contact>. Vi kan behöva verifiera att begäran kommer från kontoinnehavaren."
         },
         "children": {
           "title": "14. Barn",
-          "p1": "Notoria kräver ett konto och är byggt som en personlig lärarbetsyta. Produkten implementerar ingen särskild åldersspärr. Den riktas inte till barn. Om du tror att ett barns uppgifter har lämnats in utan lämplig behörighet, kontakta <contact>contact@notoria.fi</contact>."
+          "p1": "Notoria kräver ett konto och är byggt som en personlig arbetsyta för inlärning. Produkten implementerar ingen särskild ålderskontroll. Den riktar sig inte till barn. Om du tror att ett barns uppgifter har lämnats utan behörighet, kontakta <contact></contact>."
         },
         "changes": {
           "title": "15. Ändringar",
-          "p1": "Vi kan uppdatera denna integritetspolicy när produkten eller rättsliga krav ändras. Datumet ”Senast uppdaterad” högst upp på sidan ändras när en revision publiceras.",
-          "p2": "När en ändring är väsentlig kommunicerar vi den på ett rimligt sätt som finns tillgängligt vid tillfället — till exempel genom att uppdatera denna sida och, där det är lämpligt, ett meddelande i produkten eller via e-post."
+          "p1": "Vi kan uppdatera denna integritetspolicy när produkten eller lagkraven ändras. Datumet ”Senast uppdaterad” högst upp på sidan ändras när en revidering publiceras.",
+          "p2": "När en ändring är väsentlig kommunicerar vi den på ett rimligt sätt som är tillgängligt vid tidpunkten — till exempel genom att uppdatera den här sidan och, där det är lämpligt, genom ett meddelande i produkten eller ett e-postmeddelande."
         },
         "contact": {
           "title": "16. Kontakt",
-          "p1": "Integritet och allmän kontakt: <contact>contact@notoria.fi</contact>",
-          "p2": "Teknisk inkorg för produktfeedback (även listad på <contactPage>Kontakta oss</contactPage>): <technical></technical>",
+          "p1": "Integritet och allmän kontakt: <contact></contact>",
+          "p2": "Teknisk inkorg för produktfeedback (finns även på <contactPage>Kontakta oss</contactPage>): <technical></technical>",
           "p3": "Webbplats: <site>www.notoria.fi</site>"
         }
       }
     },
     "termsOfUse": {
-      "intro": "Dessa användarvillkor förklarar reglerna för att använda Notoria på <site>www.notoria.fi</site>. De beskriver hur produkten fungerar idag: privata lärarbetsytor, valfri Notoria Pro-fakturering via Stripe och AI-assisterade funktioner. De ersätter inte råd från en jurist om din specifika situation.",
+      "intro": "Dessa användarvillkor förklarar reglerna för att använda Notoria på <site>www.notoria.fi</site>. De beskriver hur produkten fungerar i dag: privata arbetsytor för inlärning, valfri Notoria Pro-fakturering via Stripe och AI-assisterade funktioner. De ersätter inte råd från en jurist om din specifika situation.",
       "tocTitle": "På den här sidan",
       "tocAria": "På den här sidan",
       "toc": {
@@ -3356,11 +3507,11 @@
         "service": "Tjänsten",
         "accounts": "Konton",
         "content": "Ditt innehåll",
-        "acceptable-use": "Acceptabel användning",
+        "acceptable-use": "Godtagbar användning",
         "ip": "Immateriella rättigheter",
-        "ai": "AI-genererad output",
+        "ai": "AI-genererat innehåll",
         "plans": "Gratisplan och Notoria Pro",
-        "billing": "Prenumeration och fakturering",
+        "billing": "Abonnemang och fakturering",
         "refunds": "Återbetalningar och konsumenträttigheter",
         "availability": "Tillgänglighet",
         "termination": "Avstängning och uppsägning",
@@ -3372,42 +3523,42 @@
       "sections": {
         "agreement": {
           "title": "1. Avtal",
-          "p1": "Genom att skapa ett konto eller använda Notoria godkänner du dessa villkor och <privacy>integritetspolicyn</privacy>. Om du inte godkänner, använd inte tjänsten.",
-          "p2": "Frågor om dessa villkor: <contact>contact@notoria.fi</contact>."
+          "p1": "Genom att skapa ett konto eller använda Notoria godkänner du dessa villkor och <privacy>integritetspolicyn</privacy>. Om du inte godkänner dem ska du inte använda tjänsten.",
+          "p2": "Frågor om dessa villkor: <contact></contact>."
         },
         "service": {
           "title": "2. Tjänsten",
-          "p1": "Notoria är en privat webbapp för språkinlärning. Du kan skapa arbetsytor och behålla lärandematerial såsom ordförråd, teoranteckningar, skrivande, övningar, lyssningslektioner och talsessioner.",
-          "p2": "Vissa funktioner finns på gratisplanen. Notoria Pro låser upp ytterligare funktioner enligt vad som visas i produkten och på din <account>Konto</account>-sida — inklusive Lyssna, Tala, vissa AI-studieverktyg, övningsimport och betalda dokumentexportformat. Funktionstillgänglighet kan ändras när produkten utvecklas.",
-          "p3": "Notoria är för personlig språkinlärning. Det är inte en skola, examensmyndighet eller professionell rådgivningstjänst."
+          "p1": "Notoria är en privat webbapp för språkinlärning. Du kan skapa arbetsytor och spara läromaterial såsom ordförråd, teorianteckningar, skrivande, övningar, lyssningslektioner och talsessioner.",
+          "p2": "Vissa funktioner är tillgängliga i gratisplanen. Notoria Pro låser upp ytterligare möjligheter enligt vad som visas i produkten och på din <account>Konto</account>-sida — inklusive Lyssning, Tal, vissa AI-studieverktyg, övningsimport och betalda exportformat för dokument. Vilka funktioner som är tillgängliga kan ändras när produkten utvecklas.",
+          "p3": "Notoria är avsett för personlig språkinlärning. Det är inte en skola, en examensmyndighet eller en tjänst för professionell rådgivning."
         },
         "accounts": {
           "title": "3. Konton",
           "list": [
-            "Ange korrekta kontouppgifter",
-            "Håll ditt lösenord och kontoåtkomst säkra",
-            "Logga in med e-post och lösenord, eller med Google när Google-inloggning finns",
+            "Lämna korrekta kontouppgifter",
+            "Håll ditt lösenord och din kontoåtkomst säkra",
+            "Logga in med e-post och lösenord, eller med Google när Google-inloggning är tillgänglig",
             "Använd Notoria endast om du kan ingå ett bindande avtal enligt tillämplig lag"
           ],
-          "p1": "Produkten implementerar ingen separat åldersspärr. Om du tror att ett konto skapades utan lämplig behörighet, kontakta <contact>contact@notoria.fi</contact>.",
-          "p2": "Meddela oss på <contact>contact@notoria.fi</contact> om du tror att ditt konto har komprometterats."
+          "p1": "Produkten implementerar ingen separat ålderskontroll. Om du tror att ett konto har skapats utan behörighet, kontakta <contact></contact>.",
+          "p2": "Meddela oss på <contact></contact> om du tror att ditt konto har komprometterats."
         },
         "content": {
           "title": "4. Ditt innehåll",
-          "p1": "Du behåller äganderätten till lärinnehåll du skapar eller laddar upp i Notoria.",
-          "p2": "Du ger Notoria en begränsad licens att hosta, behandla, visa och säkerhetskopiera det innehållet så att tjänsten kan fungera — inklusive att skicka relevant material till AI-, transkriptions-, media- eller betalningsleverantörer när du använder dessa funktioner. Licensen finns endast för att driva Notoria åt dig. Den överför inte äganderätten till ditt innehåll till oss.",
-          "p3": "Du ansvarar för vad du lagrar. Ladda inte upp material som du inte har rätt att använda, och använd inte Notoria för att lagra olagligt innehåll."
+          "p1": "Du behåller äganderätten till det lärinnehåll du skapar eller laddar upp i Notoria.",
+          "p2": "Du ger Notoria en begränsad licens att lagra, behandla, visa och säkerhetskopiera det innehållet så att tjänsten kan fungera — inklusive att skicka relevant material till leverantörer av AI, transkribering, media eller betalningar när du använder dessa funktioner. Licensen finns endast för att driva Notoria för dig. Den överför inte äganderätten till ditt innehåll till oss.",
+          "p3": "Du ansvarar för vad du lagrar. Ladda inte upp material du inte har rätt att använda, och använd inte Notoria för att lagra olagligt innehåll."
         },
         "acceptableUse": {
-          "title": "5. Acceptabel användning",
-          "p1": "Du åtar dig att inte:",
+          "title": "5. Godtagbar användning",
+          "p1": "Du samtycker till att inte:",
           "list": [
             "bryta mot lagen eller kränka andras rättigheter",
             "försöka få åtkomst till andra användares privata arbetsytor eller konton",
-            "sonda, överbelasta eller störa tjänsten, API:er eller relaterad infrastruktur",
-            "missbruka AI-, transkriptions-, lyssnings- eller talfunktioner på sätt som skadar andra eller kringgår plangränser genom bedrägeri",
-            "reverse-engineera tjänsten utom där tvingande lokal lag tillåter",
-            "felaktigt ange din identitet till Stripe, Google eller Notoria-support"
+            "sondera, överbelasta eller störa tjänsten, API:er eller relaterad infrastruktur",
+            "missbruka funktioner för AI, transkribering, lyssning eller tal på sätt som skadar andra eller kringgå planbegränsningar genom bedrägeri",
+            "baklängeskonstruera tjänsten utom där tvingande lokal lag tillåter det",
+            "ge en felaktig bild av din identitet för Stripe, Google eller Notorias support"
           ]
         },
         "ip": {
@@ -3416,65 +3567,65 @@
           "p2": "Ditt lärinnehåll förblir ditt, med förbehåll för den begränsade licensen i avsnitt 4."
         },
         "ai": {
-          "title": "7. AI-genererad output",
-          "p1": "Vissa funktioner kan kontrollera, föreslå, generera, transkribera, sammanfatta eller handleda baserat på ditt material. Output kan vara ofullständig, felaktig eller olämplig för ditt mål. Du ansvarar för att granska AI-resultat innan du förlitar dig på dem för studier, tentor, professionellt bruk eller publicering.",
-          "p2": "AI-funktioner kan vara otillgängliga om assistans är avstängd i <settings>Inställningar</settings>, om din plan inte inkluderar ett visst verktyg, eller om en leverantör tillfälligt inte går att nå.",
-          "p3": "Inte alla AI-hjälpare kräver Notoria Pro. Produkten visar vilka verktyg som är gratis och vilka som behöver Pro."
+          "title": "7. AI-genererat innehåll",
+          "p1": "Vissa funktioner kan kontrollera, föreslå, generera, transkribera, sammanfatta eller undervisa utifrån ditt material. Resultatet kan vara ofullständigt, felaktigt eller olämpligt för ditt syfte. Du ansvarar själv för att granska AI-resultat innan du förlitar dig på dem för studier, examina, professionellt bruk eller publicering.",
+          "p2": "AI-funktioner kan vara otillgängliga om assistansen är avstängd i <settings>Inställningar</settings>, om din plan inte inkluderar ett visst verktyg, eller om en leverantör tillfälligt inte går att nå.",
+          "p3": "Alla AI-hjälpmedel kräver inte Notoria Pro. Produkten visar vilka verktyg som är gratis och vilka som kräver Pro."
         },
         "plans": {
           "title": "8. Gratisplan och Notoria Pro",
-          "p1": "Gratisplanen täcker kärnöving med ditt eget ordförråd och relaterade studieverktyg enligt vad som visas i produkten.",
-          "p2": "Notoria Pro är en betald prenumeration som låser upp ytterligare funktioner. I den aktuella produkten inkluderar det typiskt Lyssna, Tala, övningsimport, form-a-sentence-övning, många AI-assisterade studieverktyg och PDF/DOCX-dokumentexport. Vissa lättare AI-hjälpare (t.ex. vissa ordförråds- eller redaktörsformateringshjälpmedel) kan förbli tillgängliga på gratisplanen när AI-assistans är aktiverad.",
-          "p3": "Pro-åtkomst är kopplad till ditt användarkonto, så den gäller över arbetsytorna under det kontot. Konton med administratörsroll kan ha Pro-nivååtkomst utan en personlig Stripe-prenumeration.",
-          "p4": "Priset som gäller för ditt köp är priset som visas i Stripe Checkout för den aktuella Pro-planen. Eventuellt pris som visas någon annanstans i produkten (till exempel på Konto) är endast indikativt och måste stämma med den aktiva Stripe-priskonfigurationen."
+          "p1": "Gratisplanen täcker grundläggande övning med ditt eget ordförråd och relaterade studieverktyg enligt vad som visas i produkten.",
+          "p2": "Notoria Pro är ett betalt abonnemang som låser upp ytterligare funktioner. I den nuvarande produkten omfattar det vanligtvis Lyssning, Tal, övningsimport, meningsbyggnadsövning, många AI-assisterade studieverktyg och dokumentexport till PDF/DOCX. Vissa enklare AI-hjälpmedel (såsom vissa hjälpmedel för ordförråd eller formatering i redigeraren) kan fortsätta att vara tillgängliga i gratisplanen när AI-assistans är aktiverad.",
+          "p3": "Pro-åtkomst är kopplad till ditt användarkonto och gäller därför alla arbetsytor under det kontot. Konton med administratörsroll kan ha åtkomst på Pro-nivå utan ett personligt Stripe-abonnemang.",
+          "p4": "Det pris som gäller för ditt köp är det pris som visas i Stripe Checkout för den aktuella Pro-planen. Priser som visas någon annanstans i produkten (till exempel på Konto) är endast vägledande och måste överensstämma med den aktiva priskonfigurationen i Stripe."
         },
         "billing": {
-          "title": "9. Prenumeration, fakturering och uppsägning",
-          "list0": "Pro-prenumerationer faktureras via <strong>Stripe</strong>",
-          "list1": "Du kan starta checkout från <account>Konto</account> eller från låsta Pro-kontroller i appen",
-          "list2": "Från Konto kan du öppna Stripe Customer Portal för att se fakturor, uppdatera betalningsmetoder och säga upp prenumerationen",
-          "list3": "Uppsägning följer Stripes Customer Portal-beteende för din prenumeration",
-          "p1": "Efter att du sagt upp fortsätter Pro-åtkomst endast så länge din Stripe-prenumerationsstatus fortfarande ger Pro i produkten. I den aktuella implementationen behandlas statusarna <code>active</code>, <code>trialing</code> och <code>past_due</code> som Pro. När statusen inte längre kvalificerar återgår kontot till gratisplanen.",
-          "p2": "Om en betalning misslyckas kan Stripe flytta prenumerationen till <code>past_due</code> eller en annan status. Notoria synkar den statusen från Stripe-webhooks. Medan statusen förblir <code>past_due</code> förblir Pro-funktioner tillgängliga enligt aktuella åtkomstregler; om prenumerationen senare blir uppsagd eller på annat sätt icke kvalificerad upphör Pro-åtkomsten.",
-          "p3": "Om du raderar ditt Notoria-konto sägs Stripe-prenumerationen upp omedelbart (best effort) som en del av kontoraderingen. Det skiljer sig från att säga upp förnyelse via Customer Portal medan kontot behålls."
+          "title": "9. Abonnemang, fakturering och uppsägning",
+          "list0": "Pro-abonnemang faktureras via <strong>Stripe</strong>",
+          "list1": "Du kan starta kassan från <account>Konto</account> eller från låsta Pro-kontroller i appen",
+          "list2": "Från Konto kan du öppna Stripe Customer Portal för att se fakturor, uppdatera betalningsmetoder och avsluta abonnemanget",
+          "list3": "Uppsägning följer beteendet i Stripes Customer Portal för ditt abonnemang",
+          "p1": "Efter att du har sagt upp abonnemanget fortsätter Pro-åtkomsten endast så länge din Stripe-abonnemangsstatus fortfarande ger Pro i produkten. I den nuvarande implementationen räknas statusarna <code>active</code>, <code>trialing</code> och <code>past_due</code> som Pro. När statusen inte längre kvalificerar återgår kontot till gratisplanen.",
+          "p2": "Om en betalning misslyckas kan Stripe flytta abonnemanget till <code>past_due</code> eller en annan status. Notoria synkroniserar den statusen från Stripe-webhooks. Så länge statusen förblir <code>past_due</code> är Pro-funktionerna tillgängliga enligt de nuvarande åtkomstreglerna; om abonnemanget senare avslutas eller på annat sätt blir icke-berättigat upphör Pro-åtkomsten.",
+          "p3": "Att radera ditt Notoria-konto avslutar Stripe-abonnemanget omedelbart (efter bästa förmåga) som en del av kontoraderingen. Det skiljer sig från att säga upp förnyelsen via Customer Portal och samtidigt behålla kontot."
         },
         "refunds": {
           "title": "10. Återbetalningar och konsumenträttigheter",
-          "p1": "Notoria implementerar ingen automatisk återbetalningsknapp i appen. Uppsägning finns via Stripe Customer Portal.",
-          "p2": "Om du vill ha en återbetalningsgranskning, eller om EU/EES-konsumentregler för digitalt innehåll eller distansavtal ger dig rättigheter som gäller ditt köp, mejla <contact>contact@notoria.fi</contact> med din konto-e-post och Stripe-kvitto. Vi hanterar begäran i enlighet med tillämplig lag och Stripes verktyg.",
-          "p3": "Inget i dessa villkor är avsett att begränsa tvingande konsumenträttigheter som inte kan avstås enligt finsk eller EU-lag."
+          "p1": "Notoria implementerar ingen automatisk återbetalningsknapp i appen. Uppsägning är tillgänglig via Stripe Customer Portal.",
+          "p2": "Om du vill få en återbetalning prövad, eller om EU/EES-konsumentregler för digitalt innehåll eller distansavtal ger dig rättigheter som gäller för ditt köp, mejla <contact></contact> med din kontomejladress och uppgifterna på ditt Stripe-kvitto. Vi hanterar begäran i enlighet med tillämplig lag och Stripes verktyg.",
+          "p3": "Inget i dessa villkor är avsett att begränsa tvingande konsumenträttigheter som inte kan avstås enligt finsk eller EU-rättslig lagstiftning."
         },
         "availability": {
           "title": "11. Tillgänglighet",
-          "p1": "Vi strävar efter att hålla Notoria tillgängligt, men vi lovar inte oavbruten eller felfri tjänst. Underhåll, leverantörsavbrott eller ändringar i tredjeparts-AI-, media-, e-post- eller betalningstjänster kan påverka funktioner."
+          "p1": "Vi strävar efter att hålla Notoria tillgängligt, men vi utlovar inte oavbruten eller felfri drift. Underhåll, driftstörningar hos leverantörer eller ändringar i tredjepartstjänster för AI, media, e-post eller betalningar kan påverka funktioner."
         },
         "termination": {
           "title": "12. Avstängning och uppsägning",
-          "p1": "Du kan radera ditt konto när som helst från <account>Konto</account>. Radering tar permanent bort ditt konto och tillhörande lärdata från Notorias databas, med förbehåll för detaljer och restprocessoranteckningar i <privacy>integritetspolicyn</privacy>. Du kan exportera en JSON-backup från Konto innan du raderar.",
-          "p2": "Vi kan stänga av eller avsluta åtkomst om du allvarligt eller upprepat bryter mot dessa villkor, missbrukar tjänsten eller skapar säkerhets- eller rättslig risk. Där det är rimligt och lagligt försöker vi meddela dig på e-postadressen på ditt konto."
+          "p1": "Du kan radera ditt konto när som helst från <account>Konto</account>. Raderingen tar permanent bort ditt konto och tillhörande läruppgifter från Notorias databas, med förbehåll för detaljerna och noteringarna om kvarvarande behandling hos leverantörer i <privacy>integritetspolicyn</privacy>. Du kan exportera en JSON-säkerhetskopia från Konto innan du raderar.",
+          "p2": "Vi kan stänga av eller avsluta åtkomsten om du allvarligt eller upprepat bryter mot dessa villkor, missbrukar tjänsten eller skapar säkerhetsmässig eller rättslig risk. Där det är rimligt och lagligt försöker vi meddela dig på e-postadressen på ditt konto."
         },
         "liability": {
           "title": "13. Ansvarsfriskrivning och ansvar",
-          "p1": "Notoria tillhandahålls ”som tillgänglig” för personlig språkinlärning. I den utsträckning tillämplig lag tillåter friskriver vi oss från garantier som inte krävs enligt lag.",
-          "p2": "I den utsträckning tillämplig lag tillåter är Notoria inte ansvarigt för indirekta, tillfälliga, särskilda, följdskador eller skador på grund av förlorade data som uppstår från din användning av tjänsten eller tillit till AI-output. Där ansvar inte kan uteslutas begränsas det till beloppet du betalat för Notoria Pro under de tre månaderna före anspråket, eller till vilket större belopp som krävs enligt tvingande lag.",
-          "p3": "Dessa begränsningar utesluter inte ansvar som finsk eller EU-lag inte tillåter att begränsa — inklusive ansvar som inte kan avstås för konsumenter, och ansvar för död eller personskada orsakad av vårdslöshet där sådana regler gäller."
+          "p1": "Notoria tillhandahålls ”i mån av tillgänglighet” för personlig språkinlärning. I den utsträckning tillämplig lag tillåter frånsäger vi oss garantier som inte krävs enligt lag.",
+          "p2": "I den utsträckning tillämplig lag tillåter ansvarar Notoria inte för indirekta skador, oförutsedda skador, särskilda skador, följdskador eller skador till följd av förlorade data som uppstår genom din användning av tjänsten eller ditt förlitande på AI-resultat. Där ansvar inte kan uteslutas är det begränsat till det belopp du betalat för Notoria Pro under de tre månaderna före anspråket, eller ett högre belopp om tvingande lag kräver det.",
+          "p3": "Dessa begränsningar utesluter inte ansvar som finsk eller EU-rättslig lagstiftning inte tillåter att begränsas — inklusive ansvar som inte kan avstås gentemot konsumenter, och ansvar för dödsfall eller personskada orsakad av vårdslöshet där sådana regler gäller."
         },
         "changes": {
           "title": "14. Ändringar av tjänsten och villkoren",
           "p1": "Vi kan uppdatera funktioner, planer och dessa villkor. Datumet ”Senast uppdaterad” på den här sidan ändras när en ny version publiceras.",
-          "p2": "Om en ändring är väsentlig ger vi rimligt meddelande när det är praktiskt — till exempel genom att uppdatera denna sida och, där det är lämpligt, ett meddelande i produkten eller via e-post. Fortsatt användning efter ikraftträdandedatumet innebär att du godkänner de uppdaterade villkoren, utom där tvingande lag kräver en annan process."
+          "p2": "Om en ändring är väsentlig ger vi rimligt varsel när det är praktiskt möjligt — till exempel genom att uppdatera den här sidan och, där det är lämpligt, genom ett meddelande i produkten eller ett e-postmeddelande. Fortsatt användning efter ikraftträdandedatumet innebär att du godkänner de uppdaterade villkoren, utom där tvingande lag kräver ett annat förfarande."
         },
         "law": {
           "title": "15. Tillämplig lag",
-          "p1": "Dessa villkor styrs av Finlands lag, utan hänsyn till lagvalsregler som skulle kräva en annan jurisdiktions lag.",
-          "p2": "Domstolar i Finland har jurisdiktion, utan hinder för tvingande konsumentskydd som tillåter dig att väcka talan i ditt bosättningsland inom EU/EES.",
-          "p3": "Formell operatörsidentitet utöver Notoria-tjänsten och kontaktmejlen publiceras inte i den aktuella produkten. För avtals- eller myndighetskorrespondens, använd <contact>contact@notoria.fi</contact>."
+          "p1": "Dessa villkor regleras av finsk lag, utan hänsyn till lagvalsregler som skulle kräva att en annan jurisdiktions lag tillämpas.",
+          "p2": "Domstolar i Finland har jurisdiktion, utan att det påverkar tvingande konsumentskydd som tillåter dig att väcka talan i ditt bosättningsland inom EU/EES.",
+          "p3": "Formell operatörsidentitet utöver tjänsten Notoria och kontaktmejladressen publiceras inte i den nuvarande produkten. För avtalsmässig eller regulatorisk korrespondens, använd <contact></contact>."
         },
         "contact": {
           "title": "16. Kontakt",
-          "p1": "Faktureringsfrågor, frågor om villkoren och relaterade juridiska meddelanden: <contact>contact@notoria.fi</contact>",
+          "p1": "Frågor om fakturering, frågor om villkoren och relaterade rättsliga meddelanden: <contact></contact>",
           "p2": "Webbplats: <site>www.notoria.fi</site>",
-          "p3": "För allmänna supportalternativ och den tekniska feedback-inkorgen, se <contactPage>Kontakta oss</contactPage> och <support>Support</support>."
+          "p3": "För allmänna supportalternativ och den tekniska inkorgen för feedback, se <contactPage>Kontakta oss</contactPage> och <support>Support</support>."
         }
       }
     }
@@ -3588,7 +3739,7 @@
       "intro": {
         "title": "En arbetsyta, inte en kurs",
         "p1": "Notoria är en privat plats för språket du redan lär dig. Du tar in material, håller det organiserat och övar utifrån det — i stället för att börja i en katalog med lektioner du inte valt.",
-        "p2": "Varje arbetsyta är ett språk. Ordförråd, teori, övningar, skrivande, lyssning och tal lever där tillsammans, så att det du sparar kan bli det du övar.",
+        "p2": "Varje arbetsyta är ett språk. Fångst, ordförråd, teori, övningar, skrivande, lyssning och tal lever där tillsammans, så det du sparar kan bli det du övar.",
         "beat": "Du behöver inte lära dig Notoria på en gång. Du växer det tillsammans med språket."
       },
       "loop": {
@@ -3597,7 +3748,7 @@
         "stages": {
           "bring": {
             "label": "Ta in",
-            "body": "Spara ord, fraser och anteckningar från lektioner, böcker, media, samtal — där du möter språket."
+            "body": "Spara ord, fraser och anteckningar — använd Fångst för snabba lappar, eller lägg in direkt i Ordförråd och Teori från lektioner, böcker, media och samtal."
           },
           "organise": {
             "label": "Organisera",
@@ -3625,7 +3776,7 @@
       "startSmall": {
         "title": "Börja smått",
         "p1": "Notoria är inte något du klarar av. Det finns ingen checklista som betyder att produkten är färdig.",
-        "p2": "En bra första dag kan vara en arbetsyta och fem ord du bryr dig om. Anteckningar, längre övning, skrivande, lyssning och tal kan vänta tills de förtjänar en plats i din loop."
+        "p2": "En bra första dag kan vara en arbetsyta, ett par Fångst-anteckningar och fem ord du bryr dig om. Anteckningar, längre övning, skrivande, lyssning och tal kan vänta tills de förtjänar en plats i din loop."
       },
       "firstSession": {
         "title": "En första session",
@@ -3637,7 +3788,7 @@
           },
           "words": {
             "title": "Lägg till en handfull ord",
-            "body": "Öppna Vocabulary och spara ord eller fraser du vill minnas, med betydelser eller exempel om det hjälper."
+            "body": "Öppna Ordförråd och spara ord eller fraser du vill minnas, med betydelser eller exempel om det hjälper. Eller släpp en snabb lapp i Fångst först och bearbeta den senare."
           },
           "notes": {
             "title": "Skriv en kort anteckning om du behöver",
@@ -3655,7 +3806,7 @@
       },
       "connect": {
         "title": "Hur områdena hänger ihop",
-        "p1": "Vocabulary och Theory är där material landar. Exercise gör om det till övning. Writing, Listening och Speaking hjälper dig använda språket mer aktivt.",
+        "p1": "Fångst är den snabba ingången. Ordförråd och Teori är där materialet landar. Övning gör om materialet till träning. Skrivande, Lyssning och Tal hjälper dig använda språket mer aktivt.",
         "p2": "Du behöver inte gå igenom varje område i ordning. Många stannar länge vid ord och korta övningar.",
         "p3": "Ett naturligt nästa steg är skrivande när du vill producera språk på egna villkor, sedan lyssning och tal när samma material ska fungera i örat och rösten — Listening och Speaking ingår i Notoria Pro.",
         "beat": "Samla och förstå först. Använd och tala när materialet är redo att lämna sidan."
@@ -3686,6 +3837,10 @@
         "speaking": {
           "label": "Tala",
           "body": "Liveövning med en AI-tutor, kopplad till språket du studerar. Finns i Notoria Pro."
+        },
+        "capture": {
+          "label": "Fångst",
+          "body": "En snabb droppzon för lappar — ord, frågetecken och idéer — som du bearbetar till Ordförråd, Teori, Skrivande eller Övning senare. Använd Fångst först när du bara har en stund; poster förblir obearbetade tills du sparat den länkade posten."
         }
       },
       "notEverything": {
@@ -3727,15 +3882,15 @@
         },
         "account": {
           "q": "Hur byter jag lösenord eller stänger mitt konto?",
-          "a": "Öppna <account>Account</account>. Där kan du uppdatera lösenordet om du använder e-postinloggning, hantera Notoria Pro, exportera en säkerhetskopia eller permanent ta bort kontot."
+          "a": "Öppna <account>Konto</account>. Där kan du uppdatera lösenordet om du använder e-postinloggning, hantera Notoria Pro, exportera en säkerhetskopia eller permanent ta bort kontot."
         },
         "pro": {
           "q": "Hur fungerar fakturering och avbokning?",
-          "a": "Notoria Pro faktureras via Stripe. Från <account>Account</account> kan du uppgradera, öppna Stripe-kundportalen för betalningsmetoder och fakturor, eller avbryta förnyelse."
+          "a": "Notoria Pro faktureras via Stripe. Från <account>Konto</account> kan du uppgradera, öppna Stripe-kundportalen för betalningsmetoder och fakturor, eller avbryta förnyelse."
         },
         "proFeatures": {
           "q": "Vad är gratis, och vad kräver Notoria Pro?",
-          "a": "Vardaglig ordförrådsövning och relaterade studieverktyg finns i gratisplanen. Vissa AI-verktyg, lyssning, tal och dokumentexport ingår i Notoria Pro. Jämför och uppgradera från <account>Account</account>."
+          "a": "Vardaglig ordförrådsövning och relaterade studieverktyg finns i gratisplanen. Vissa AI-verktyg, lyssning, tal och dokumentexport ingår i Notoria Pro. Jämför och uppgradera från <account>Konto</account>."
         },
         "learning": {
           "q": "Hur fungerar Notorias inlärningsfunktioner?",
@@ -3743,7 +3898,7 @@
         },
         "ai": {
           "q": "Kan jag stänga av AI-hjälp?",
-          "a": "Ja. AI-assistentens preferenser finns i <settings>Settings</settings>. När assistansen är av stängs AI-verktyg som kräver den."
+          "a": "Ja. AI-assistentens preferenser finns i <settings>Inställningar</settings>. När assistansen är av stängs AI-verktyg som kräver den."
         },
         "data": {
           "q": "Var lagras mitt inlärningsinnehåll?",
@@ -3751,7 +3906,7 @@
         },
         "backup": {
           "q": "Kan jag exportera eller säkerhetskopiera mina data?",
-          "a": "Ja. Från <account>Account</account> kan du ladda ner en JSON-säkerhetskopia av dina arbetsytor och ditt inlärningsinnehåll. Mediefiler länkas via URL, inte inbäddade. För integritet och radering, se <privacy>Integritetspolicyn</privacy>."
+          "a": "Ja. Från <account>Konto</account> kan du ladda ner en JSON-säkerhetskopia av dina arbetsytor och ditt inlärningsinnehåll. Mediefiler länkas via URL, inte inbäddade. För integritet och radering, se <privacy>Integritetspolicyn</privacy>."
         }
       },
       "feedback": {

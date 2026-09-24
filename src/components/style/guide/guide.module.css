@@ -12,17 +12,40 @@
   }
 }
 
+.guide-toc-slot {
+  min-width: 0;
+}
+
 .guide-toc {
   position: relative;
 }
 
 @media (min-width: 1024px) {
+  .guide-toc-slot {
+    align-self: start;
+    /* Reserve the grid column while the nav is position:fixed */
+    min-height: 1px;
+  }
+
   .guide-toc {
     position: sticky;
-    top: 0.5rem;
+    /* Fixed gap below sticky studio chrome (h-14) — same idea as sidebar top-3 */
+    top: 4.75rem;
     z-index: 2;
+    align-self: start;
+    display: flex;
+    flex-direction: column;
+    max-height: calc(100dvh - 4.75rem - 0.75rem);
     padding: 0.85rem 1rem 0.85rem 0;
     margin-right: 0.5rem;
+    overflow: hidden;
+  }
+
+  /* Pin to the viewport so scrolling into the footer cannot clip the title */
+  .guide-toc[data-guide-toc-pinned] {
+    position: fixed;
+    top: 4.75rem;
+    bottom: auto;
   }
 }
 
@@ -39,6 +62,7 @@
 @media (min-width: 1024px) {
   .guide-toc-title {
     display: block;
+    flex-shrink: 0;
   }
 }
 
@@ -53,9 +77,31 @@
 
 @media (min-width: 1024px) {
   .guide-toc-list {
+    flex: 1 1 auto;
     flex-direction: column;
     flex-wrap: nowrap;
     gap: 0.15rem;
+    min-height: 0;
+    /* Scroll the list only — page height stays content-driven */
+    overflow-x: hidden;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    scrollbar-width: thin;
+    scrollbar-color: color-mix(in oklab, var(--muted-foreground) 35%, transparent)
+      transparent;
+  }
+
+  .guide-toc-list::-webkit-scrollbar {
+    width: 0.35rem;
+  }
+
+  .guide-toc-list::-webkit-scrollbar-thumb {
+    border-radius: 999px;
+    background: color-mix(in oklab, var(--muted-foreground) 35%, transparent);
+  }
+
+  .guide-toc-list::-webkit-scrollbar-track {
+    background: transparent;
   }
 }
 
@@ -132,6 +178,10 @@
   );
 }
 
+.guide-section[data-guide-module="home"] {
+  --guide-module-fg: var(--module-home-fg);
+  --guide-module-bg: var(--module-home-bg);
+}
 .guide-section[data-guide-module="vocab"] {
   --guide-module-fg: var(--module-vocab-fg);
   --guide-module-bg: var(--module-vocab-bg);

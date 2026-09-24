@@ -1,11 +1,15 @@
 "use client";
 
 import Link from "next/link";
+import { formatDistanceToNow } from "date-fns";
 import {
   ArrowRight,
+  Bookmark,
   BookOpen,
   Dumbbell,
   Headphones,
+  History,
+  Inbox,
   Languages,
   PenLine,
   Video,
@@ -25,12 +29,38 @@ import type { CoachLearningStreak } from "@/lib/billing/coach-progress";
 import type { DashboardContinueItem } from "@/lib/dashboard/activity";
 import type { WorkspaceActivitySnapshot } from "@/lib/onboarding/requirements";
 
+type ReviewLaterHomeItem = {
+  id: string;
+  title: string;
+  href: string;
+  entityType: string;
+};
+
+type ActivityHomeItem = {
+  id: string;
+  verb: string;
+  entityType: string;
+  title: string | null;
+  href: string | null;
+  createdAt: string;
+};
+
+type LearningNoteHomeItem = {
+  id: string;
+  title: string;
+  href: string;
+};
+
 type DashboardHomeProps = {
   userName: string;
   snapshot: WorkspaceActivitySnapshot;
   practiceReadyCount: number;
   continueItems: DashboardContinueItem[];
   streak: CoachLearningStreak | null;
+  inboxUnprocessedCount: number;
+  reviewLaterItems: ReviewLaterHomeItem[];
+  recentActivity: ActivityHomeItem[];
+  latestLearningNote: LearningNoteHomeItem | null;
 };
 
 type HubModule = {
@@ -81,14 +111,29 @@ const HUB_MODULES: HubModule[] = [
 
 const LOOP_STEPS = ["collect", "practice", "use"] as const;
 
+const ENTITY_ACCENT: Record<string, string> = {
+  vocabulary: "vocab",
+  theory: "theory",
+  writing: "writing",
+  exercise: "exercise",
+  listening: "listen",
+  speaking: "speak",
+  inbox: "home",
+};
+
 export function DashboardHome({
   userName,
   snapshot,
   practiceReadyCount,
   continueItems,
   streak,
+  inboxUnprocessedCount,
+  reviewLaterItems,
+  recentActivity,
+  latestLearningNote,
 }: DashboardHomeProps) {
   const t = useTranslations("dashboard");
+  const tNav = useTranslations("nav");
   const firstName = userName.trim().split(/\s+/)[0] || userName;
   const next = suggestedModule(snapshot, practiceReadyCount);
 
@@ -121,6 +166,39 @@ export function DashboardHome({
     { href: "/writing", label: t("quickOpenWriting"), accent: "writing" },
     { href: "/theory", label: t("quickOpenTheory"), accent: "theory" },
   ];
+
+  function entityLabel(entityType: string) {
+    if (
+      entityType === "vocabulary" ||
+      entityType === "theory" ||
+      entityType === "writing" ||
+      entityType === "listening" ||
+      entityType === "speaking" ||
+      entityType === "inbox"
+    ) {
+      return tNav(entityType);
+    }
+    if (entityType === "exercise") return tNav("exercises");
+    return entityType;
+  }
+
+  function activityVerbLabel(verb: string) {
+    const verbKey = [
+      "created",
+      "updated",
+      "completed",
+      "processed",
+      "review_later_added",
+      "review_later_removed",
+    ].includes(verb)
+      ? verb
+      : "created";
+    return t(`recentActivity.verbLabels.${verbKey}`);
+  }
+
+  function activityTitle(item: ActivityHomeItem) {
+    return item.title?.trim() || t("recentActivity.untitled");
+  }
 
   return (
     <div className={mx(homeStyles, "home-atelier flex flex-col gap-10 lg:gap-12")}>
@@ -214,6 +292,163 @@ export function DashboardHome({
       />
 
       <DashboardContinue items={continueItems} />
+
+      <section className={mx(homeStyles, "home-capture-grid")}>
+        <div className={mx(homeStyles, "home-capture-card")} data-home-accent="home">
+          <div className={mx(homeStyles, "home-capture-head")}>
+            <span className={mx(homeStyles, "home-hub-icon")} aria-hidden>
+              <Inbox className="size-4" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className={mx(homeStyles, "writing-kicker home-kicker")}>
+                {t("inbox.title")}
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {t("inbox.subtitle")}
+              </p>
+            </div>
+          </div>
+          <p className={mx(homeStyles, "home-capture-count")}>
+            {t("inbox.count", { count: inboxUnprocessedCount })}
+          </p>
+          <Link
+            href="/inbox"
+            className={mx(
+              homeStyles,
+              "home-hub-cta mt-3 inline-flex items-center gap-1 text-sm font-semibold",
+            )}
+          >
+            {t("inbox.cta")}
+            <ArrowRight className="size-3.5" aria-hidden />
+          </Link>
+        </div>
+
+        <div className={mx(homeStyles, "home-capture-card")} data-home-accent="theory">
+          <div className={mx(homeStyles, "home-capture-head")}>
+            <span className={mx(homeStyles, "home-hub-icon")} aria-hidden>
+              <Bookmark className="size-4" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className={mx(homeStyles, "writing-kicker home-kicker")}>
+                {t("reviewLater.title")}
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {t("reviewLater.subtitle")}
+              </p>
+            </div>
+          </div>
+          {reviewLaterItems.length > 0 ? (
+            <ul className={mx(homeStyles, "home-capture-list")}>
+              {reviewLaterItems.map((item) => (
+                <li key={item.id}>
+                  <Link
+                    href={item.href}
+                    data-home-accent={ENTITY_ACCENT[item.entityType] ?? "home"}
+                    className={mx(homeStyles, "home-capture-row")}
+                  >
+                    <span className={mx(homeStyles, "home-continue-module")}>
+                      {entityLabel(item.entityType)}
+                    </span>
+                    <span className={mx(homeStyles, "home-continue-title")}>
+                      {item.title}
+                    </span>
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className={mx(homeStyles, "home-continue-empty")}>
+              {t("reviewLater.empty")}
+            </p>
+          )}
+        </div>
+
+        <div
+          className={mx(homeStyles, "home-capture-card home-activity-card")}
+          data-home-accent="home"
+        >
+          <div className={mx(homeStyles, "home-capture-head")}>
+            <span className={mx(homeStyles, "home-hub-icon")} aria-hidden>
+              <History className="size-4" />
+            </span>
+            <div className="min-w-0 flex-1">
+              <p className={mx(homeStyles, "writing-kicker home-kicker")}>
+                {t("recentActivity.title")}
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground">
+                {t("recentActivity.subtitle")}
+              </p>
+            </div>
+          </div>
+          {recentActivity.length > 0 ? (
+            <ul className={mx(homeStyles, "home-activity-list")}>
+              {recentActivity.map((item) => {
+                const accent = ENTITY_ACCENT[item.entityType] ?? "home";
+                const body = (
+                  <>
+                    <div className={mx(homeStyles, "home-activity-top")}>
+                      <span className={mx(homeStyles, "home-activity-verb")}>
+                        {activityVerbLabel(item.verb)}
+                      </span>
+                      <time
+                        className={mx(homeStyles, "home-activity-time")}
+                        dateTime={item.createdAt}
+                      >
+                        {formatDistanceToNow(new Date(item.createdAt), {
+                          addSuffix: true,
+                        })}
+                      </time>
+                    </div>
+                    <p className={mx(homeStyles, "home-activity-title")}>
+                      {activityTitle(item)}
+                    </p>
+                    <span className={mx(homeStyles, "home-activity-entity")}>
+                      {entityLabel(item.entityType)}
+                    </span>
+                  </>
+                );
+                return (
+                  <li key={item.id}>
+                    {item.href ? (
+                      <Link
+                        href={item.href}
+                        data-home-accent={accent}
+                        className={mx(homeStyles, "home-activity-row")}
+                      >
+                        {body}
+                      </Link>
+                    ) : (
+                      <div
+                        data-home-accent={accent}
+                        className={mx(homeStyles, "home-activity-row is-static")}
+                      >
+                        {body}
+                      </div>
+                    )}
+                  </li>
+                );
+              })}
+            </ul>
+          ) : (
+            <p className={mx(homeStyles, "home-continue-empty")}>
+              {t("recentActivity.empty")}
+            </p>
+          )}
+          {latestLearningNote ? (
+            <Link
+              href={latestLearningNote.href}
+              className={mx(homeStyles, "home-learning-note")}
+            >
+              <span className={mx(homeStyles, "home-continue-module")}>
+                {t("learningNote.label")}
+              </span>
+              <span className={mx(homeStyles, "home-continue-title")}>
+                {latestLearningNote.title}
+              </span>
+            </Link>
+          ) : null}
+        </div>
+      </section>
 
       <section className="writing-stage">
         <p className={mx(homeStyles, "writing-kicker home-kicker writing-stage-kicker")}>

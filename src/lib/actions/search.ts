@@ -14,6 +14,7 @@ const NAV_TYPES = new Set([
   "writing",
   "listening",
   "speaking",
+  "inbox",
 ]);
 
 function titleCase(value: string) {

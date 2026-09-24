@@ -2,6 +2,10 @@
 
 .floating-panel {
   height: fit-content;
+  max-height: calc(100dvh - 1.5rem);
+  overflow-x: hidden;
+  overflow-y: auto;
+  overscroll-behavior: contain;
   border-radius: 1rem;
   border: 1px solid var(--hairline-cloud);
   background: var(--surface-elevated);
@@ -9,6 +13,22 @@
   box-shadow: 0 1px 2px rgba(35, 37, 29, 0.04);
   position: relative;
   isolation: isolate;
+  scrollbar-width: thin;
+  scrollbar-color: color-mix(in oklab, var(--muted-foreground) 35%, transparent)
+    transparent;
+}
+
+.floating-panel::-webkit-scrollbar {
+  width: 0.35rem;
+}
+
+.floating-panel::-webkit-scrollbar-thumb {
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--muted-foreground) 35%, transparent);
+}
+
+.floating-panel::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .floating-panel::before {
@@ -76,6 +96,11 @@
 }
 
 .nav-link[data-nav="home"] {
+  --nav-route-bg: var(--module-home-bg);
+  --nav-route-fg: var(--module-home-fg);
+}
+
+.nav-link[data-nav="inbox"] {
   --nav-route-bg: var(--module-home-bg);
   --nav-route-fg: var(--module-home-fg);
 }

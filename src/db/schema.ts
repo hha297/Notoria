@@ -108,6 +108,32 @@ export const importedExerciseTypeEnum = pgEnum("imported_exercise_type", [
   "multiple_choice",
 ]);
 
+export const studyInboxStatusEnum = pgEnum("study_inbox_status", [
+  "unprocessed",
+  "processed",
+]);
+
+export const bookmarkPurposeEnum = pgEnum("bookmark_purpose", ["review_later"]);
+
+export const learningEntityTypeEnum = pgEnum("learning_entity_type", [
+  "vocabulary",
+  "theory",
+  "writing",
+  "exercise",
+  "listening",
+  "speaking",
+  "inbox",
+]);
+
+export const activityVerbEnum = pgEnum("activity_verb", [
+  "created",
+  "updated",
+  "completed",
+  "processed",
+  "review_later_added",
+  "review_later_removed",
+]);
+
 export const users = pgTable(
   "users",
   {
@@ -1095,6 +1121,119 @@ export const stripeWebhookEvents = pgTable("stripe_webhook_events", {
     .defaultNow(),
 });
 
+/**
+ * Temporary capture queue. Items stay until the user processes or deletes them.
+ * Converting to Vocab/Theory/Writing/Exercise marks processed — does not auto-delete.
+ */
+export const studyInboxItems = pgTable(
+  "study_inbox_items",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    content: text("content").notNull(),
+    note: text("note"),
+    source: text("source"),
+    status: studyInboxStatusEnum("status").notNull().default("unprocessed"),
+    processedAt: timestamp("processed_at", { withTimezone: true }),
+    linkedEntityType: learningEntityTypeEnum("linked_entity_type"),
+    linkedEntityId: uuid("linked_entity_id"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("study_inbox_items_workspace_status_created_idx").on(
+      table.workspaceId,
+      table.userId,
+      table.status,
+      table.createdAt,
+    ),
+    index("study_inbox_items_fts_idx").using(
+      "gin",
+      sql`to_tsvector('simple', coalesce(${table.content}, '') || ' ' || coalesce(${table.note}, '') || ' ' || coalesce(${table.source}, ''))`,
+    ),
+  ],
+);
+
+/**
+ * Cross-module Review Later marks. One row per entity; toggle by insert/delete.
+ * Never duplicates the underlying learning item.
+ */
+export const workspaceBookmarks = pgTable(
+  "workspace_bookmarks",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    entityType: learningEntityTypeEnum("entity_type").notNull(),
+    entityId: uuid("entity_id").notNull(),
+    purpose: bookmarkPurposeEnum("purpose").notNull().default("review_later"),
+    titleSnapshot: text("title_snapshot"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("workspace_bookmarks_unique").on(
+      table.workspaceId,
+      table.userId,
+      table.entityType,
+      table.entityId,
+      table.purpose,
+    ),
+    index("workspace_bookmarks_list_idx").on(
+      table.workspaceId,
+      table.userId,
+      table.purpose,
+      table.createdAt,
+    ),
+  ],
+);
+
+/**
+ * Meaningful learning/workspace events for the Dashboard diary feed.
+ * Prefer entity references + titleSnapshot over copying full content.
+ */
+export const workspaceActivityEvents = pgTable(
+  "workspace_activity_events",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    verb: activityVerbEnum("verb").notNull(),
+    entityType: learningEntityTypeEnum("entity_type").notNull(),
+    entityId: uuid("entity_id"),
+    titleSnapshot: text("title_snapshot"),
+    meta: jsonb("meta"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("workspace_activity_events_list_idx").on(
+      table.workspaceId,
+      table.userId,
+      table.createdAt,
+    ),
+  ],
+);
+
 export type User = typeof users.$inferSelect;
 export type Account = typeof accounts.$inferSelect;
 export type SubscriptionPlan = (typeof subscriptionPlanEnum.enumValues)[number];
@@ -1122,3 +1261,11 @@ export type ExerciseImportSource =
   (typeof exerciseImportSourceEnum.enumValues)[number];
 export type ImportedExerciseType =
   (typeof importedExerciseTypeEnum.enumValues)[number];
+export type StudyInboxItem = typeof studyInboxItems.$inferSelect;
+export type StudyInboxStatus = (typeof studyInboxStatusEnum.enumValues)[number];
+export type WorkspaceBookmark = typeof workspaceBookmarks.$inferSelect;
+export type LearningEntityType =
+  (typeof learningEntityTypeEnum.enumValues)[number];
+export type WorkspaceActivityEvent =
+  typeof workspaceActivityEvents.$inferSelect;
+export type ActivityVerb = (typeof activityVerbEnum.enumValues)[number];

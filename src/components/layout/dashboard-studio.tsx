@@ -69,73 +69,98 @@ export function DashboardStudio({
   return (
     <ShortcutActionsProvider>
       <div className="studio-shell flex min-h-svh flex-col">
-        <div className="flex min-h-0 flex-1 flex-col p-3 pb-3">
-          <div className="mx-auto flex w-full max-w-[90rem] min-h-0 flex-1 items-stretch gap-3">
-            <FloatingSidebar workspaceId={activeWorkspaceId} {...sidebarUser} />
-
-            <div
-              className="studio-paper flex min-h-0 min-w-0 flex-1 flex-col self-stretch overflow-hidden"
-              data-studio-scene={studioSceneFromPath(pathname)}
-            >
-              <header className="studio-chrome sticky top-0 z-20">
-                <div className="flex h-14 min-w-0 items-center gap-2 px-3 sm:px-4">
-                  <Button
-                    type="button"
-                    variant="outline"
-                    size="icon"
-                    className="shrink-0 lg:hidden"
-                    onClick={() => setNavOpen(true)}
-                    aria-label="Open navigation"
-                  >
-                    <Menu className="size-4" />
-                  </Button>
-                  {activeWorkspaceId ? (
-                    <div className="min-w-0 flex-1">
-                      <WorkspaceSearch workspaceId={activeWorkspaceId} compact />
-                    </div>
-                  ) : (
-                    <div className="min-w-0 flex-1" />
-                  )}
-                  <WorkspaceSelector
-                    workspaces={workspaces}
-                    activeWorkspaceId={activeWorkspaceId}
-                  />
-                  <LocaleSelector value={locale} />
-                  <ThemeToggle />
-                </div>
-              </header>
-              <main
-                className={cn(
-                  "min-h-0 min-w-0 flex-1 overflow-y-auto overflow-x-hidden px-4 pt-6 sm:px-6 sm:pt-8",
-                  pathname === "/writing" ||
-                    pathname.startsWith("/writing/folders") ||
-                    pathname === "/theory" ||
-                    pathname.startsWith("/theory/folders")
-                    ? "pb-3 sm:pb-4"
-                    : "pb-6 sm:pb-8",
-                )}
-              >
-                <div
-                  className={cn(
-                    "mx-auto w-full min-w-0",
-                    pathname.startsWith("/writing/") ||
-                      pathname.startsWith("/theory/") ||
-                      pathname.startsWith("/listening/") ||
-                      pathname.startsWith("/speaking/")
-                      ? "max-w-[90rem]"
-                      : "max-w-6xl",
-                  )}
-                >
-                  {children}
-                </div>
-              </main>
+        {/*
+          Sticky rail parent spans content + full-width footer so the sidebar
+          is not pushed (top-clipped) when the footer enters the viewport.
+          Footer itself stays a full-bleed sibling below the padded content.
+        */}
+        <div className="relative flex min-h-0 flex-1 flex-col">
+          <div className="pointer-events-none absolute inset-0 z-30 mx-auto hidden max-w-[90rem] px-3 lg:block">
+            <div className="pointer-events-auto sticky top-3 w-[15.5rem] self-start">
+              <FloatingSidebar
+                workspaceId={activeWorkspaceId}
+                {...sidebarUser}
+              />
             </div>
           </div>
-        </div>
 
-        {footer ? (
-          <div className="studio-site-footer w-full shrink-0">{footer}</div>
-        ) : null}
+          <div className="flex min-h-0 flex-1 flex-col p-3 pb-3">
+            <div className="mx-auto flex w-full max-w-[90rem] min-h-0 flex-1 items-stretch gap-6">
+              {/* Spacer matches sticky-rail sidebar width */}
+              <div
+                className="hidden w-[15.5rem] shrink-0 lg:block"
+                aria-hidden
+              />
+
+              <div
+                className="studio-paper flex min-h-0 min-w-0 flex-1 flex-col self-stretch overflow-clip"
+                data-studio-scene={studioSceneFromPath(pathname)}
+              >
+                <header className="studio-chrome sticky top-0 z-20">
+                  <div className="flex h-14 min-w-0 items-center gap-2 px-3 sm:px-4">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="icon"
+                      className="shrink-0 lg:hidden"
+                      onClick={() => setNavOpen(true)}
+                      aria-label="Open navigation"
+                    >
+                      <Menu className="size-4" />
+                    </Button>
+                    {activeWorkspaceId ? (
+                      <div className="min-w-0 flex-1">
+                        <WorkspaceSearch
+                          workspaceId={activeWorkspaceId}
+                          compact
+                        />
+                      </div>
+                    ) : (
+                      <div className="min-w-0 flex-1" />
+                    )}
+                    <WorkspaceSelector
+                      workspaces={workspaces}
+                      activeWorkspaceId={activeWorkspaceId}
+                    />
+                    <LocaleSelector value={locale} />
+                    <ThemeToggle />
+                  </div>
+                </header>
+                <main
+                  className={cn(
+                    /* overflow-x-clip (not hidden/auto): keep horizontal clip without
+                       creating a vertical scrollport that breaks position:sticky TOC. */
+                    "min-h-0 min-w-0 flex-1 overflow-x-clip px-4 pt-6 sm:px-6 sm:pt-8",
+                    pathname === "/writing" ||
+                      pathname.startsWith("/writing/folders") ||
+                      pathname === "/theory" ||
+                      pathname.startsWith("/theory/folders")
+                      ? "pb-3 sm:pb-4"
+                      : "pb-6 sm:pb-8",
+                  )}
+                >
+                  <div
+                    className={cn(
+                      "mx-auto w-full min-w-0",
+                      pathname.startsWith("/writing/") ||
+                        pathname.startsWith("/theory/") ||
+                        pathname.startsWith("/listening/") ||
+                        pathname.startsWith("/speaking/")
+                        ? "max-w-[90rem]"
+                        : "max-w-6xl",
+                    )}
+                  >
+                    {children}
+                  </div>
+                </main>
+              </div>
+            </div>
+          </div>
+
+          {footer ? (
+            <div className="studio-site-footer w-full shrink-0">{footer}</div>
+          ) : null}
+        </div>
 
         <Sheet open={navOpen} onOpenChange={setNavOpen}>
           <SheetContent

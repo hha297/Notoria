@@ -6,9 +6,17 @@ import { VocabularyForm } from "@/components/vocabulary/vocabulary-form";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getActiveWorkspace } from "@/lib/workspace";
 
-export default async function NewVocabularyPage() {
+export default async function NewVocabularyPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ prefill?: string; note?: string; fromInbox?: string }>;
+}) {
   const t = await getTranslations("vocabulary");
   const workspace = await getActiveWorkspace();
+  const { prefill, note, fromInbox } = await searchParams;
+  const word = prefill?.trim() || "";
+  const notes = note?.trim() || "";
+  const fromInboxId = fromInbox?.trim() || undefined;
 
   if (!workspace) {
     return (
@@ -44,6 +52,9 @@ export default async function NewVocabularyPage() {
         <VocabularyForm
           workspaceId={workspace.id}
           language={workspace.language}
+          prefillWord={word || undefined}
+          prefillNotes={notes || undefined}
+          fromInboxId={fromInboxId}
         />
       </div>
     </PageShell>

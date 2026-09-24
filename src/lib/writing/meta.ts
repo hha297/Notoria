@@ -31,10 +31,14 @@ export type WritingFormality = (typeof WRITING_FORMALITY)[number];
  *
  * Dates (`createdAt` / `updatedAt`) live on the writing row in the DB.
  */
+export type WritingKind = "learning_note" | "free";
+
 export type WritingMeta = {
   cefrLevel?: WritingCefr | null;
   topic?: string | null;
   formality?: WritingFormality | null;
+  /** Optional document purpose — learning notes vs free writing practice. */
+  kind?: WritingKind | null;
   [key: string]: unknown;
 };
 
@@ -42,6 +46,7 @@ export const EMPTY_WRITING_META: WritingMeta = {
   cefrLevel: null,
   topic: null,
   formality: null,
+  kind: null,
 };
 
 function isRecord(value: unknown): value is Record<string, unknown> {
@@ -62,6 +67,10 @@ function asFormality(value: unknown): WritingFormality | null {
     : null;
 }
 
+function asKind(value: unknown): WritingKind | null {
+  return value === "learning_note" || value === "free" ? value : null;
+}
+
 function asTopic(value: unknown): string | null {
   if (typeof value !== "string") return null;
   const trimmed = value.trim();
@@ -74,7 +83,7 @@ export function parseWritingMeta(raw: unknown): WritingMeta {
     return { ...EMPTY_WRITING_META };
   }
 
-  const { cefrLevel, cefr, topic, formality, ...rest } = raw;
+  const { cefrLevel, cefr, topic, formality, kind, ...rest } = raw;
 
   return {
     ...rest,
@@ -82,21 +91,30 @@ export function parseWritingMeta(raw: unknown): WritingMeta {
     cefrLevel: asCefr(cefrLevel ?? cefr),
     topic: asTopic(topic),
     formality: asFormality(formality),
+    kind: asKind(kind),
   };
 }
 
 export function serializeWritingMeta(meta: WritingMeta): WritingMeta {
-  const { cefrLevel, cefr: _legacyCefr, topic, formality, ...rest } = meta;
+  const {
+    cefrLevel,
+    cefr: _legacyCefr,
+    topic,
+    formality,
+    kind,
+    ...rest
+  } = meta;
   return {
     ...rest,
     cefrLevel: asCefr(cefrLevel),
     topic: asTopic(topic),
     formality: asFormality(formality),
+    kind: asKind(kind),
   };
 }
 
 export function writingMetaSearchText(meta: WritingMeta): string {
-  return [meta.cefrLevel, meta.topic, meta.formality]
+  return [meta.cefrLevel, meta.topic, meta.formality, meta.kind]
     .filter(
       (value): value is string =>
         typeof value === "string" && value.length > 0,

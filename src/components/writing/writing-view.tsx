@@ -57,6 +57,10 @@ export function WritingView({
               <div className="writing-hero-actions">
                 <ShowTutorialButton section="writing" />
                 <NewFolderButton variant="outline" size="sm" />
+                <LinkButton href={createHref.includes("?") ? `${createHref}&kind=learning_note` : `${createHref}?kind=learning_note`} variant="outline">
+                  <Plus className="size-4" />
+                  {t("learningNote.create")}
+                </LinkButton>
                 <LinkButton href={createHref}>
                   <Plus className="size-4" />
                   {t("createFirst")}

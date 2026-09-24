@@ -5,6 +5,7 @@ import {
   BookOpen,
   Dumbbell,
   Headphones,
+  Inbox,
   Languages,
   PenLine,
   Video,
@@ -42,6 +43,7 @@ import {
 const EASE = [0.25, 0.1, 0.25, 1] as const;
 
 const SECTION_ICONS: Record<TutorialSectionId, LucideIcon> = {
+  inbox: Inbox,
   vocabulary: Languages,
   vocabularyAdd: Languages,
   theory: BookOpen,

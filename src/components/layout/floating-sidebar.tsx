@@ -7,6 +7,7 @@ import {
   Compass,
   Dumbbell,
   Headphones,
+  Inbox,
   Languages,
   LayoutDashboard,
   Lock,
@@ -42,6 +43,7 @@ type NavMatch = "exact" | "prefix";
 
 type NavRoute =
   | "home"
+  | "inbox"
   | "vocabulary"
   | "exercises"
   | "writing"
@@ -80,6 +82,14 @@ const NAV_GROUPS: NavGroup[] = [
         icon: LayoutDashboard,
         match: "exact",
         route: "home",
+        tint: "text-module-home-fg",
+      },
+      {
+        href: "/inbox",
+        key: "inbox",
+        icon: Inbox,
+        match: "prefix",
+        route: "inbox",
         tint: "text-module-home-fg",
       },
       {
@@ -308,7 +318,7 @@ export function FloatingSidebar({
   ...user
 }: FloatingSidebarProps) {
   return (
-    <aside className="sticky top-3 hidden h-fit w-[15.5rem] shrink-0 self-start lg:block">
+    <aside className="w-[15.5rem] shrink-0">
       <div className={mx(navStyles, "floating-panel p-2.5")}>
         <SidebarNav workspaceId={workspaceId} {...user} />
       </div>

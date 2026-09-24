@@ -8,6 +8,7 @@ import {
   Dumbbell,
   Folder,
   Headphones,
+  Inbox,
   Languages,
   LoaderCircle,
   PenLine,
@@ -39,6 +40,7 @@ const TYPE_ICONS: Record<SearchResultType, LucideIcon> = {
   speaking: Video,
   folder: Folder,
   exercise: Dumbbell,
+  inbox: Inbox,
 };
 
 const DEBOUNCE_MS = 200;

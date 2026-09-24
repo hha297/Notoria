@@ -887,7 +887,11 @@
     --writing-ink: var(--accent-lime);
     --writing-wash: color-mix(in oklab, var(--accent-lime) 22%, var(--surface));
     --writing-accent-fg: var(--accent-lime);
-    --writing-accent-bg: color-mix(in oklab, var(--accent-lime) 22%, var(--surface));
+    --writing-accent-bg: color-mix(
+      in oklab,
+      var(--accent-lime) 22%,
+      var(--surface)
+    );
   }
 
   .writing-atelier,
@@ -1566,6 +1570,23 @@
   .vocab-lexicon .writing-spine-search:focus-visible {
     border-bottom-color: var(--module-vocab-fg) !important;
     box-shadow: none !important;
+  }
+
+  .inbox-atelier .writing-spine-search {
+    border-bottom-color: color-mix(
+      in oklab,
+      var(--module-home-fg) 42%,
+      transparent
+    ) !important;
+  }
+
+  .inbox-atelier .writing-spine-search:focus-visible {
+    border-bottom-color: var(--module-home-fg) !important;
+    box-shadow: none !important;
+  }
+
+  .inbox-atelier .writing-spine-search-icon {
+    color: var(--module-home-fg);
   }
 
   .theory-atelier .writing-kicker,
@@ -2362,8 +2383,7 @@
   .sheet-description-editor {
     overflow: hidden;
     border-radius: 0.95rem;
-    border: 1px solid
-      color-mix(in oklab, var(--hairline-cloud) 88%, var(--ink));
+    border: 1px solid color-mix(in oklab, var(--hairline-cloud) 88%, var(--ink));
     background:
       linear-gradient(
         165deg,
@@ -2387,7 +2407,8 @@
 
   .sheet-description-editor[aria-invalid="true"]:focus-within {
     border-color: var(--destructive);
-    box-shadow: 0 0 0 3px color-mix(in oklab, var(--destructive) 20%, transparent);
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--destructive) 20%, transparent);
   }
 
   .writing-sheet[data-writing-kind="rich_document"] .sheet-description-editor {
@@ -2594,14 +2615,13 @@
   }
 }
 
+/* Opacity-only: a lasting/transforming ancestor breaks position:sticky. */
 @keyframes notoria-fade-up {
   from {
     opacity: 0;
-    transform: translateY(4px);
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
 
@@ -2648,6 +2668,59 @@
 
   .notoria-link-pending[data-pending="true"] {
     opacity: 0.55;
+  }
+}
+
+/* Arrow affordance: ← / → nudge outward on hover across the app. */
+a .lucide-arrow-right,
+button .lucide-arrow-right,
+[role="button"] .lucide-arrow-right,
+a .lucide-arrow-left,
+button .lucide-arrow-left,
+[role="button"] .lucide-arrow-left {
+  transition: transform 180ms ease;
+  will-change: transform;
+}
+
+a:hover .lucide-arrow-right,
+button:hover .lucide-arrow-right,
+[role="button"]:hover .lucide-arrow-right,
+a:focus-visible .lucide-arrow-right,
+button:focus-visible .lucide-arrow-right,
+[role="button"]:focus-visible .lucide-arrow-right {
+  transform: translateX(0.28rem);
+}
+
+a:hover .lucide-arrow-left,
+button:hover .lucide-arrow-left,
+[role="button"]:hover .lucide-arrow-left,
+a:focus-visible .lucide-arrow-left,
+button:focus-visible .lucide-arrow-left,
+[role="button"]:focus-visible .lucide-arrow-left {
+  transform: translateX(-0.28rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a .lucide-arrow-right,
+  button .lucide-arrow-right,
+  [role="button"] .lucide-arrow-right,
+  a .lucide-arrow-left,
+  button .lucide-arrow-left,
+  [role="button"] .lucide-arrow-left,
+  a:hover .lucide-arrow-right,
+  button:hover .lucide-arrow-right,
+  [role="button"]:hover .lucide-arrow-right,
+  a:hover .lucide-arrow-left,
+  button:hover .lucide-arrow-left,
+  [role="button"]:hover .lucide-arrow-left,
+  a:focus-visible .lucide-arrow-right,
+  button:focus-visible .lucide-arrow-right,
+  [role="button"]:focus-visible .lucide-arrow-right,
+  a:focus-visible .lucide-arrow-left,
+  button:focus-visible .lucide-arrow-left,
+  [role="button"]:focus-visible .lucide-arrow-left {
+    transition: none;
+    transform: none;
   }
 }
 

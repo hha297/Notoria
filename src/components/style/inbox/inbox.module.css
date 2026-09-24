@@ -1,0 +1,529 @@
+/* Capture — atelier hero + list, toolbar, sort/process menus */
+
+.inbox-shell {
+  --writing-ink: var(--module-home-fg);
+  --writing-wash: var(--module-home-bg);
+}
+
+.inbox-atelier :global(.writing-kicker) {
+  color: var(--module-home-fg);
+}
+
+.inbox-search-input {
+  border: 0 !important;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 42%, transparent) !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+  font-size: 1rem !important;
+  color: var(--ink) !important;
+}
+
+.inbox-search-input:focus-visible,
+.inbox-search-input:focus {
+  border-bottom-color: var(--module-home-fg) !important;
+  box-shadow: none !important;
+  outline: none !important;
+}
+
+.inbox-atelier :global(.writing-spine-search-icon) {
+  color: var(--module-home-fg) !important;
+}
+
+.inbox-toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  margin-top: 0.25rem;
+}
+
+.inbox-tabs {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  padding: 0.35rem;
+  border-radius: 0.95rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 20%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-home-bg) 40%, transparent);
+  width: fit-content;
+  max-width: 100%;
+}
+
+.inbox-tab {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.35rem;
+  padding: 0.4rem 0.9rem;
+  border-radius: 0.7rem;
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.9375rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.inbox-tab:hover {
+  color: var(--ink);
+  background: color-mix(in oklab, var(--module-home-bg) 55%, transparent);
+}
+
+.inbox-tab[data-active] {
+  border-color: color-mix(in oklab, var(--module-home-fg) 34%, transparent);
+  background: color-mix(in oklab, var(--module-home-bg) 78%, transparent);
+  color: var(--module-home-fg);
+}
+
+.inbox-tab-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.45rem;
+  height: 1.3rem;
+  padding: 0 0.4rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  background: color-mix(in oklab, var(--module-home-fg) 14%, transparent);
+  color: inherit;
+}
+
+.inbox-tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.inbox-search {
+  flex: 1 1 16rem;
+  min-width: min(100%, 14rem);
+}
+
+.inbox-sort {
+  flex: 0 0 auto;
+}
+
+.inbox-sort-trigger {
+  --inbox-accent: var(--module-home-fg);
+  display: inline-flex !important;
+  height: 2.65rem !important;
+  min-width: 13.5rem !important;
+  width: auto !important;
+  gap: 0.55rem !important;
+  border-radius: 0.75rem !important;
+  border: 1px solid
+    color-mix(in oklab, var(--inbox-accent) 28%, var(--hairline-cloud)) !important;
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--module-home-bg) 55%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 88%, transparent) !important;
+  padding: 0.55rem 0.8rem !important;
+  color: var(--ink) !important;
+  font-size: 0.9375rem !important;
+  font-weight: 600 !important;
+  box-shadow: 0 1px 0 color-mix(in oklab, var(--inbox-accent) 8%, transparent);
+}
+
+.inbox-sort-trigger:hover,
+.inbox-sort-trigger[data-popup-open],
+.inbox-sort-trigger[data-state="open"] {
+  border-color: color-mix(in oklab, var(--inbox-accent) 52%, transparent) !important;
+  background: color-mix(in oklab, var(--module-home-bg) 62%, transparent) !important;
+}
+
+.inbox-sort-menu {
+  width: auto !important;
+  min-width: 14.5rem !important;
+  padding: 0.5rem !important;
+  border-radius: 0.95rem !important;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 20%, var(--hairline-cloud)) !important;
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 8% 0%,
+      color-mix(in oklab, var(--module-home-bg) 48%, transparent),
+      transparent 72%
+    ),
+    var(--popover) !important;
+  box-shadow:
+    0 18px 40px color-mix(in oklab, var(--ink) 14%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--module-home-fg) 8%, transparent) !important;
+}
+
+.inbox-sort-option {
+  --option-accent: var(--module-home-fg);
+  display: flex !important;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  min-height: 2.55rem;
+  margin: 0 0 0.3rem !important;
+  border-radius: 0.7rem !important;
+  border: 1px solid
+    color-mix(in oklab, var(--option-accent) 16%, transparent);
+  background: color-mix(in oklab, var(--option-accent) 8%, transparent);
+  padding: 0.55rem 0.7rem !important;
+  color: var(--ink) !important;
+  font-size: 0.9375rem !important;
+  font-weight: 550 !important;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.inbox-sort-option:last-child {
+  margin-bottom: 0 !important;
+}
+
+.inbox-sort-option:hover,
+.inbox-sort-option:focus,
+.inbox-sort-option:focus-visible,
+.inbox-sort-option[data-highlighted] {
+  border-color: color-mix(in oklab, var(--option-accent) 42%, transparent) !important;
+  background: color-mix(in oklab, var(--option-accent) 18%, transparent) !important;
+  color: var(--ink) !important;
+}
+
+.inbox-sort-option[data-selected] {
+  border-color: color-mix(in oklab, var(--option-accent) 52%, transparent) !important;
+  background: color-mix(in oklab, var(--option-accent) 20%, transparent) !important;
+}
+
+.inbox-sort-option :global([data-slot="select-item"] span.absolute),
+.inbox-sort-option:global(span.absolute) {
+  display: none !important;
+}
+
+.inbox-sort-option-label {
+  flex: 1;
+  min-width: 0;
+  text-align: left;
+}
+
+.inbox-sort-option-check {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: var(--option-accent);
+}
+
+.inbox-sort-option-spacer {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+}
+.inbox-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.inbox-card {
+  --inbox-accent: var(--module-home-fg);
+  --inbox-wash: var(--module-home-bg);
+  border-radius: 1rem;
+  border: 1px solid
+    color-mix(in oklab, var(--inbox-accent) 26%, var(--hairline-cloud));
+  background:
+    radial-gradient(
+      ellipse 72% 62% at 0% 0%,
+      color-mix(in oklab, var(--inbox-wash) 58%, transparent),
+      transparent 74%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 94%, transparent);
+  padding: 1.15rem 1.2rem;
+  box-shadow:
+    0 1px 0 color-mix(in oklab, var(--inbox-accent) 10%, transparent),
+    0 10px 24px color-mix(in oklab, var(--ink) 4%, transparent);
+  transition:
+    border-color 160ms ease,
+    background 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.inbox-card:hover {
+  border-color: color-mix(in oklab, var(--inbox-accent) 40%, var(--hairline-cloud));
+  box-shadow:
+    0 1px 0 color-mix(in oklab, var(--inbox-accent) 12%, transparent),
+    0 14px 28px color-mix(in oklab, var(--ink) 6%, transparent);
+}
+
+.inbox-card[data-status="processed"] {
+  --inbox-accent: color-mix(in oklab, var(--muted-foreground) 70%, var(--module-home-fg));
+  opacity: 0.92;
+}
+
+.inbox-card-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.9rem;
+}
+
+.inbox-card-body {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.inbox-card-title {
+  margin: 0;
+  font-size: 1.0625rem;
+  font-weight: 650;
+  line-height: 1.45;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  white-space: pre-wrap;
+}
+
+.inbox-card-note {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.55;
+  color: color-mix(in oklab, var(--muted-foreground) 88%, var(--ink));
+}
+
+.inbox-card-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem 0.5rem;
+  margin-top: 0.2rem;
+  font-size: 0.8125rem;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+
+.inbox-card-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 22%, transparent);
+  background: color-mix(in oklab, var(--module-home-bg) 55%, transparent);
+  color: var(--module-home-fg);
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.inbox-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.75rem;
+  padding: 1.5rem 1.35rem;
+  border-radius: 1rem;
+  border: 1px dashed
+    color-mix(in oklab, var(--module-home-fg) 28%, var(--hairline-cloud));
+  background:
+    radial-gradient(
+      ellipse 70% 60% at 0% 0%,
+      color-mix(in oklab, var(--module-home-bg) 42%, transparent),
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 50%, transparent);
+}
+
+.inbox-empty-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.8rem;
+  background: color-mix(in oklab, var(--module-home-bg) 70%, transparent);
+  color: var(--module-home-fg);
+}
+
+.inbox-empty-title {
+  margin: 0;
+  font-family: var(--font-heading, inherit);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.inbox-empty-body {
+  margin: 0;
+  max-width: 32rem;
+  font-size: 1.02rem;
+  line-height: 1.6;
+  color: var(--muted-foreground);
+}
+
+.inbox-process-trigger {
+  --inbox-accent: var(--module-home-fg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.7rem;
+  border: 1px solid
+    color-mix(in oklab, var(--inbox-accent) 30%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-home-bg) 48%, transparent);
+  color: var(--inbox-accent);
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.inbox-process-trigger:hover:not(:disabled),
+.inbox-process-trigger[data-popup-open],
+.inbox-process-trigger[data-state="open"] {
+  border-color: color-mix(in oklab, var(--inbox-accent) 55%, transparent);
+  background: color-mix(in oklab, var(--module-home-bg) 78%, transparent);
+  color: var(--inbox-accent);
+}
+
+.inbox-process-trigger:focus-visible {
+  border-color: color-mix(in oklab, var(--inbox-accent) 60%, transparent);
+  box-shadow: 0 0 0 2px color-mix(in oklab, var(--inbox-accent) 22%, transparent);
+}
+
+.inbox-process-trigger:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.inbox-process-menu {
+  width: auto !important;
+  min-width: 15.5rem !important;
+  padding: 0.55rem !important;
+  border-radius: 1rem !important;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 20%, var(--hairline-cloud)) !important;
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 8% 0%,
+      color-mix(in oklab, var(--module-home-bg) 48%, transparent),
+      transparent 72%
+    ),
+    var(--popover) !important;
+  box-shadow:
+    0 18px 40px color-mix(in oklab, var(--ink) 14%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--module-home-fg) 8%, transparent) !important;
+}
+
+.inbox-process-option {
+  --option-accent: var(--module-home-fg);
+  display: flex !important;
+  align-items: center;
+  gap: 0.65rem;
+  min-height: 2.65rem;
+  margin: 0 0 0.35rem !important;
+  border-radius: 0.75rem !important;
+  border: 1px solid
+    color-mix(in oklab, var(--option-accent) 18%, transparent);
+  background: color-mix(in oklab, var(--option-accent) 10%, transparent);
+  padding: 0.65rem 0.8rem !important;
+  color: var(--ink) !important;
+  font-size: 0.9375rem !important;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.inbox-process-option:last-of-type {
+  margin-bottom: 0 !important;
+}
+
+.inbox-process-option[data-target="vocabulary"] {
+  --option-accent: var(--module-vocab-fg);
+}
+
+.inbox-process-option[data-target="theory"] {
+  --option-accent: var(--module-theory-fg);
+}
+
+.inbox-process-option[data-target="writing"] {
+  --option-accent: var(--module-writing-fg);
+}
+
+.inbox-process-option[data-target="exercise"] {
+  --option-accent: var(--module-exercise-fg);
+}
+
+.inbox-process-option[data-target="keep"] {
+  --option-accent: var(--module-home-fg);
+}
+
+.inbox-process-option:hover,
+.inbox-process-option:focus,
+.inbox-process-option:focus-visible,
+.inbox-process-option[data-highlighted] {
+  border-color: color-mix(in oklab, var(--option-accent) 42%, transparent) !important;
+  background: color-mix(in oklab, var(--option-accent) 18%, transparent) !important;
+  color: var(--ink) !important;
+}
+
+.inbox-process-option :global(svg) {
+  color: var(--option-accent);
+}
+
+.inbox-process-separator {
+  margin: 0.55rem 0.15rem 0.45rem !important;
+  background: color-mix(in oklab, var(--module-home-fg) 16%, var(--hairline-cloud)) !important;
+}
+
+.inbox-process-delete {
+  margin-top: 0 !important;
+  border-color: color-mix(in oklab, var(--destructive) 28%, transparent) !important;
+  background: color-mix(in oklab, var(--destructive) 10%, transparent) !important;
+  color: var(--destructive) !important;
+}
+
+.inbox-process-delete:hover,
+.inbox-process-delete:focus,
+.inbox-process-delete:focus-visible,
+.inbox-process-delete[data-highlighted] {
+  border-color: color-mix(in oklab, var(--destructive) 48%, transparent) !important;
+  background: color-mix(in oklab, var(--destructive) 18%, transparent) !important;
+  color: var(--destructive) !important;
+}
+
+.inbox-process-delete :global(svg) {
+  color: inherit;
+}
+
+@media (min-width: 720px) {
+  .inbox-toolbar {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.15rem;
+  }
+
+  .inbox-tools {
+    flex: 1 1 auto;
+    justify-content: flex-end;
+  }
+
+  .inbox-search {
+    max-width: 20rem;
+  }
+
+  .inbox-atelier :global(.writing-hero) {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+}

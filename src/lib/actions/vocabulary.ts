@@ -13,6 +13,7 @@ import {
   workspaceTags,
 } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
+import { recordActivity } from "@/lib/activity/record";
 import { requireActiveWorkspace, getActiveWorkspace } from "@/lib/workspace";
 import {
   createSynonymWordSchema,
@@ -550,6 +551,15 @@ export async function createVocabularyWord(data: VocabularyFormValues) {
   });
 
   await ensureWorkspaceCustomTags(workspace.id, tags);
+
+  await recordActivity({
+    userId,
+    workspaceId: workspace.id,
+    verb: "created",
+    entityType: "vocabulary",
+    entityId: word.id,
+    titleSnapshot: word.word,
+  });
 
   revalidatePath("/vocabulary");
   revalidatePath(`/vocabulary/${word.id}`);

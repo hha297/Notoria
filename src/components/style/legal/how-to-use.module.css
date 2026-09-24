@@ -115,6 +115,10 @@
     color-mix(in oklab, var(--surface-elevated) 45%, transparent);
 }
 
+.guide-area[data-area="capture"] {
+  --area-tint: var(--module-home-bg);
+}
+
 .guide-area[data-area="vocab"] {
   --area-tint: var(--module-vocab-bg);
 }

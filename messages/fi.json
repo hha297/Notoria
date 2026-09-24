@@ -54,6 +54,7 @@
   },
   "nav": {
     "dashboard": "Etusivu",
+    "inbox": "Keräys",
     "vocabulary": "Sanasto",
     "writing": "Kirjoittaminen",
     "theory": "Teoria",
@@ -70,6 +71,55 @@
       "listenSpeak": "Kuuntelu ja puhe",
       "more": "Lisää"
     }
+  },
+  "inbox": {
+    "eyebrow": "Kerää",
+    "title": "Keräys",
+    "description": "Pudota tänne nopeita muistiinpanoja, fraaseja ja ideoita — ja muuta ne myöhemmin sanastoksi, teoriaksi, kirjoitukseksi tai harjoituksiksi.",
+    "disabledNoWorkspace": "Luo työtila ennen kuin voit tallentaa Keräykseen.",
+    "capture": "Tallenna",
+    "captureTitle": "Tallenna Keräykseen",
+    "captureDescription": "Säilytä jotain käsiteltäväksi myöhemmin. Sinun ei tarvitse vielä päättää, mihin se kuuluu.",
+    "captureSubmit": "Tallenna Keräykseen",
+    "captured": "Tallennettu Keräykseen",
+    "contentLabel": "Sisältö",
+    "contentPlaceholder": "Sana, fraasi, idea tai mitä tahansa, johon haluat palata…",
+    "contentRequired": "Lisää ensin sisältöä",
+    "noteLabel": "Muistiinpano (valinnainen)",
+    "notePlaceholder": "Konteksti tai miksi tämä on tärkeä…",
+    "sourceLabel": "Lähde (valinnainen)",
+    "sourcePlaceholder": "Kirja, podcast, tunti…",
+    "sourcePrefix": "Lähde: {source}",
+    "filterUnprocessed": "Käsittelemättä",
+    "filterProcessed": "Käsitelty",
+    "emptyTitle": "Keräys on tyhjä",
+    "emptyDescription": "Tallenna jotain nopeasti — sana keskustelusta, kielioppi-epäilys, kirjoitusidea — ja järjestä se myöhemmin.",
+    "emptyProcessedTitle": "Ei vielä käsiteltyjä kohteita",
+    "emptyProcessedDescription": "Kun olet tallentanut Keräyksestä sanaston, teorian, kirjoituksen tai harjoituksen, kohde näkyy täällä.",
+    "statusProcessed": "Käsitelty",
+    "processMenu": "Käsittele",
+    "processed": "Merkitty käsitellyksi",
+    "deleted": "Poistettu Keräyksestä",
+    "process": {
+      "vocabulary": "Sanasto",
+      "theory": "Teoria",
+      "writing": "Kirjoittaminen",
+      "exercise": "Harjoitus",
+      "keep": "Pidä myöhemmäksi",
+      "delete": "Poista"
+    },
+    "searchPlaceholder": "Hae keräyksiä…",
+    "sortBy": "Järjestä",
+    "sortNewest": "Uusimmat ensin",
+    "sortOldest": "Vanhimmat ensin",
+    "sortNameAsc": "Nimi (A → Ö)",
+    "sortNameDesc": "Nimi (Ö → A)",
+    "noResultsTitle": "Ei osumia",
+    "noResultsDescription": "Kokeile toista hakua tai tyhjennä haku nähdäksesi kaiken tällä välilehdellä."
+  },
+  "reviewLater": {
+    "add": "Tarkista myöhemmin",
+    "remove": "Poista myöhemmästä tarkistuksesta"
   },
   "folders": {
     "new": "Uusi kansio",
@@ -938,7 +988,7 @@
     "guideTitle": "Näin käytät Notoriaa",
     "guideTagline": "Sinun kielesi. Sinun tietosi. Sinun oppimispäiväkirjasi.",
     "guideSubtitle": "Notoria on yksityinen, henkilökohtainen työtila — ei perinteinen kurssi, joka kertoo mitä opit. Sinä valitset kielen, sanat, kielioppimuistiinpanot, esimerkit ja harjoittelumateriaalit.",
-    "guideSubtitleSecondary": "Työtilasi kasvaa oppimismatkasi mukana. Aloita Sanastosta ja Teoriasta, ja muuta keräämäsi tieto harjoituksiksi, kirjoittamiseksi, kuunteluksi ja puhumiseksi.",
+    "guideSubtitleSecondary": "Työtilasi kasvaa oppimismatkasi mukana. Aloita Keräyksellä nopeisiin muistiinpanoihin, sitten Sanastoon ja Teoriaan — ja muuta keräämäsi harjoituksiksi, kirjoitukseksi, kuunteluksi ja puhumiseksi.",
     "guideFullCtaPrompt": "Haluatko tietää lisää siitä, miten Notoria toimii?",
     "guideFullCta": "Lue koko opas",
     "modulesTitle": "Tutustu työtilaan",
@@ -948,6 +998,10 @@
     "unlock": "Avaa Pro",
     "open": "Avaa",
     "steps": {
+      "inbox": {
+        "title": "Keräys",
+        "body": "Pudota sana, fraasi, kielioppiepäys tai kirjoitusidea sekunneissa — sinun ei tarvitse vielä päättää, mihin se kuuluu. Lisää valinnainen muistiinpano tai lähde, pidä kohteet Käsittelemättä-listalla, ja muuta keräys Sanastoksi, Teoriaksi, Kirjoitukseksi tai Harjoitukseksi kun ehdit. Kohde merkitään käsitellyksi vasta, kun tallennus on valmis."
+      },
       "vocabulary": {
         "title": "Sanasto",
         "body": "Lisää omia sanoja ja ilmauksia merkityksineen, esimerkkilauseineen, ääntämisineen ja tunnisteineen. Järjestä aiheen, tason tai tilanteen mukaan — ja käytä uudelleen harjoituksissa. Aloita arjesta, oppitunneista, kirjoista tai mediasta; kirjastosi on harjoittelun perusta."
@@ -1039,6 +1093,42 @@
     "quickOpenSpeaking": "Avaa puhuminen",
     "nextStepTitle": "Seuraava askel",
     "continueEmpty": "Ei vielä mitään jatkettavaa — lisää teoria, kirjoitus, kuuntelutunti tai puhesessio, niin se näkyy täällä.",
+    "inbox": {
+      "title": "Keräys",
+      "subtitle": "Nopeat muistiinpanot odottavat järjestämistä kirjastoosi.",
+      "count": "{count, plural, =0 {Ei odottavia} one {# käsiteltävä} other {# käsiteltävää}}",
+      "cta": "Avaa Keräys"
+    },
+    "reviewLater": {
+      "title": "Tarkista myöhemmin",
+      "subtitle": "Kirjanmerkityt kohteet toista katselua varten.",
+      "empty": "Lisää kirjanmerkki sanastosta, teoriasta tai kirjoituksesta, niin se näkyy täällä."
+    },
+    "recentActivity": {
+      "title": "Viimeisin toiminta",
+      "subtitle": "Mitä olet luonut tai käsitellyt viime aikoina.",
+      "empty": "Toiminta näkyy täällä, kun lisäät ja käsittelet oppimateriaalia.",
+      "untitled": "Nimetön",
+      "verbs": {
+        "created": "Luotu {entity}: {title}",
+        "updated": "Päivitetty {entity}: {title}",
+        "completed": "Valmis {entity}: {title}",
+        "processed": "Käsitelty inbox: {title}",
+        "review_later_added": "Merkitty tarkistettavaksi: {title}",
+        "review_later_removed": "Poistettu tarkistuksesta: {title}"
+      },
+      "verbLabels": {
+        "created": "Luotu",
+        "updated": "Päivitetty",
+        "completed": "Valmis",
+        "processed": "Käsitelty",
+        "review_later_added": "Tarkista myöhemmin",
+        "review_later_removed": "Poistettu"
+      }
+    },
+    "learningNote": {
+      "label": "Viimeisin oppismuistiinpano"
+    },
     "loopEyebrow": "Kierto",
     "loopTitle": "Kerää, harjoittele, käytä",
     "loopSubtitle": "Notoria toimii parhaiten kehänä: tallenna kohtaamasi, harjoittele lyhyesti, ja palauta se kirjoittamiseen, kuunteluun ja puhumiseen.",
@@ -1433,6 +1523,37 @@
         "sessions": {
           "title": "2. Kertaa jälkeenpäin",
           "body": "Avaa sessio lukeaksesi litteroinnin ja palautteen. Huomaa virheet, käytä hyviä ilmauksia uudelleen ja päätä, mitä lisätä päiväkirjaan."
+        }
+      }
+    },
+    "inbox": {
+      "title": "Keräys",
+      "description": "Tallenna nopeasti sanoja, epäilyksiä ja ideoita — ja muuta ne oikeiksi oppimiskohteiksi, kun ehdit.",
+      "cta": "Selvä",
+      "steps": {
+        "capture": {
+          "title": "1. Kerää jotain",
+          "body": "Käytä Keräystä tallentaaksesi sanan, fraasin, kielioppiepäyksen tai kirjoitusidean ilman että päätät vielä, mihin se kuuluu. Nopeus on tärkeämpää kuin täydellinen rakenne."
+        },
+        "filters": {
+          "title": "2. Käsittelemättä vs käsitelty",
+          "body": "Käsittelemättä sisältää odottavat kohteet. Käsitelty näyttää keräykset, jotka olet jo muuttanut sanastoksi, teoriaksi, kirjoitukseksi tai harjoitukseksi."
+        },
+        "search": {
+          "title": "3. Haku",
+          "body": "Suodata nykyistä välilehteä sisällön, muistiinpanon tai lähteen mukaan."
+        },
+        "sort": {
+          "title": "4. Järjestys",
+          "body": "Järjestä uusimman, vanhimman tai nimen mukaan, jotta lista sopii tapaasi työskennellä."
+        },
+        "list": {
+          "title": "5. Keräyslista",
+          "body": "Jokainen kortti näyttää sisällön, valinnaisen muistiinpanon/lähteen ja milloin tallensit sen. Avaa ···-valikko käsitelläksesi kohteen."
+        },
+        "process": {
+          "title": "6. Muuta Notoriaan",
+          "body": "Lähetä keräys Sanastoon, Teoriaan, Kirjoitukseen tai Harjoitukseen. Se merkitään käsitellyksi vasta, kun tallennus on valmis — jos peruutat luonnin, kohde jää odottamaan."
         }
       }
     }
@@ -2415,6 +2536,12 @@
     "disabledNoWorkspace": "Luo työtila ennen kirjoitusten lisäämistä.",
     "create": "Luo kirjoitus",
     "createFirst": "Luo ensimmäinen kirjoitus",
+    "learningNote": {
+      "create": "Oppismuistiinpano",
+      "filter": "Oppismuistiinpanot",
+      "filterLabel": "Tyyppi",
+      "badge": "Oppismuistiinpano"
+    },
     "onTheDesk": "Pöydällä",
     "library": "Kirjasto",
     "allWritings": "Kaikki kirjoitukset",
@@ -2828,7 +2955,8 @@
       "speaking": "Puhuminen",
       "connections": "Tietosi muuttuu harjoitukseksi",
       "philosophy": "Oppimispäiväkirjasi",
-      "startHere": "Aloita tästä"
+      "startHere": "Aloita tästä",
+      "inbox": "Keräys"
     },
     "welcome": {
       "title": "Mikä on Notoria?",
@@ -2870,7 +2998,7 @@
       "steps": {
         "collect": {
           "title": "1. Kerää tietosi",
-          "body": "Lisää sanastoa ja teoriaa tunneista, keskusteluista, kirjoista, mediasta tai mistä tahansa kohtaat kielen."
+          "body": "Käytä Keräystä nopeisiin muistiinpanoihin, ja lisää sitten sanastoa ja teoriaa tunneista, keskusteluista, kirjoista, mediasta tai mistä tahansa, missä kohtaat kielen."
         },
         "understand": {
           "title": "2. Ymmärrä se",
@@ -2984,6 +3112,27 @@
           "Lue palaute ja tunnista parannettavat kohdat"
         ],
         "emphasis": "Puhumisen ei tarvitse olla täydellistä. Tarkoitus on harjoitella kielen käyttöä realistisessa tilanteessa — ja oppia siitä, mitä tapahtui."
+      },
+      "inbox": {
+        "title": "Keräys",
+        "intro": "Keräys on nopea pudotuspaikka — tallenna asia heti kun kohtaat sen, ja päätä myöhemmin mihin se kuuluu.",
+        "bullets": [
+          "Tallenna sana, fraasi, kielioppiepäys tai kirjoitusidea sekunneissa",
+          "Lisää valinnainen muistiinpano tai lähde kontekstiksi",
+          "Pidä kohteet käsittelemättä-listalla kunnes olet valmis",
+          "Muuta keräys sanastoksi, teoriaksi, kirjoitukseksi tai harjoitukseksi, kun ehdit",
+          "Kohde merkitään käsitellyksi vasta, kun siihen liittyvä tallennus on valmis"
+        ],
+        "body": "Keräys on silmukan alku: kerää ensin, järjestä sitten. Et tarvitse täydellistä kategoriaa juuri nyt — tarvitset ajatuksen talteen.",
+        "emphasis": "Jos sinulla on vain kymmenen sekuntia, keräys riittää. Järjestäminen voi odottaa.",
+        "exampleIntro": "Esimerkiksi kuulet bussissa fraasin ja sinulla on vain hetki:",
+        "examples": [
+          "Sisältö: varata aika",
+          "Muistiinpano: kuultu bussissa — ajan varaaminen",
+          "Lähde: arki",
+          "Myöhemmin: käsittele Sanastoon merkityksen ja esimerkin kanssa"
+        ],
+        "exampleNote": "Sirpale on turvassa Keräyksessä. Kun sinulla on viisi hiljaista minuuttia, lähetä se Sanastoon (tai Teoriaan / Kirjoitukseen) ja viimeistele merkkaus — vasta sitten se on Käsitelty."
       }
     },
     "connections": {
@@ -3035,7 +3184,8 @@
           "exercise": "Luo harjoitus tiedoistasi.",
           "writing": "Kokeile kirjoittaa muutama lause.",
           "listeningSpeaking": "Kun olet valmis, kokeile kuuntelua tai puhumista.",
-          "return": "Palaa huomenna ja lisää jotain uutta."
+          "return": "Palaa huomenna ja lisää jotain uutta.",
+          "capture": "Avaa Keräys ja tallenna yksi nopea muistiinpano tai fraasi, johon haluat palata."
         }
       },
       "closing": "Aloita vain jostain, jonka haluat muistaa. Päiväkirjasi kasvaa luonnollisesti siitä eteenpäin."
@@ -3588,7 +3738,7 @@
       "intro": {
         "title": "Työtila, ei kurssi",
         "p1": "Notoria on yksityinen paikka kielelle, jota jo opiskelet. Tuo materiaalia sisään, pidä se järjestyksessä ja harjoittele siitä — sen sijaan että aloittaisit katalogista, jota et valinnut.",
-        "p2": "Jokainen työtila on yksi kieli. Sanasto, teoria, harjoitukset, kirjoittaminen, kuuntelu ja puhuminen elävät siellä yhdessä, jotta tallentamastasi voi tulla harjoittelemaasi.",
+        "p2": "Kukin työtila on yksi kieli. Keräys, sanasto, teoria, harjoitukset, kirjoittaminen, kuuntelu ja puhuminen elävät siellä yhdessä, jotta tallentamasi voi muuttua harjoitteluksi.",
         "beat": "Sinun ei tarvitse oppia Notoriaa kerralla. Kasvatat sitä kielen kanssa."
       },
       "loop": {
@@ -3597,7 +3747,7 @@
         "stages": {
           "bring": {
             "label": "Tuo sisään",
-            "body": "Tallenna sanoja, fraaseja ja muistiinpanoja tunneista, kirjoista, mediasta, keskusteluista — sieltä missä tapaat kielen."
+            "body": "Tallenna sanoja, fraaseja ja muistiinpanoja — käytä Keräystä nopeisiin sirpaleisiin, tai lisää suoraan Sanastoon ja Teoriaan tunneista, kirjoista, mediasta ja keskusteluista."
           },
           "organise": {
             "label": "Järjestä",
@@ -3625,7 +3775,7 @@
       "startSmall": {
         "title": "Aloita pienesti",
         "p1": "Notoriaa ei suoriteta. Ei ole checklistiä, joka tarkoittaisi että tuote on valmis.",
-        "p2": "Hyvä ensimmäinen päivä voi olla työtila ja viisi sanaa joista välität. Muistiinpanot, pidempi harjoittelu, kirjoittaminen, kuuntelu ja puhuminen voivat odottaa, kunnes niillä on paikka loopissasi."
+        "p2": "Hyvä ensimmäinen päivä voi olla työtila, pari Keräys-muistiinpanoa ja viisi sanaa, joista välität. Muistiinpanot, pidempi harjoittelu, kirjoittaminen, kuuntelu ja puhuminen voivat odottaa, kunnes ne ansaitsevat paikan silmukassasi."
       },
       "firstSession": {
         "title": "Ensimmäinen hetki",
@@ -3637,7 +3787,7 @@
           },
           "words": {
             "title": "Lisää kourallinen sanoja",
-            "body": "Avaa Sanasto ja tallenna sanoja tai fraaseja jotka haluat muistaa, sekä merkityksiä tai esimerkkejä jos ne auttavat."
+            "body": "Avaa Sanasto ja tallenna sanoja tai fraaseja, jotka haluat muistaa, merkityksineen tai esimerkkeineen jos ne auttavat. Tai pudota nopea sirpale Keräykseen ensin ja käsittele se myöhemmin."
           },
           "notes": {
             "title": "Kirjoita lyhyt muistiinpano tarvittaessa",
@@ -3655,7 +3805,7 @@
       },
       "connect": {
         "title": "Miten alueet liittyvät",
-        "p1": "Sanasto ja Teoria ovat paikkoja, joihin materiaali laskeutuu. Harjoitus muuttaa sen harjoitteluksi. Kirjoittaminen, Kuuntelu ja Puhuminen auttavat käyttämään kieltä aktiivisemmin.",
+        "p1": "Keräys on nopea sisäänkäynti. Sanasto ja Teoria ovat paikkoja, joihin ainesto asettuu. Harjoitus muuttaa sen harjoitteluksi. Kirjoittaminen, kuuntelu ja puhuminen auttavat käyttämään kieltä aktiivisemmin.",
         "p2": "Sinun ei tarvitse kulkea joka aluetta järjestyksessä. Monet pysyvät sanoissa ja lyhyessä harjoittelussa pitkään.",
         "p3": "Luonteva seuraava askel on kirjoittaminen, kun haluat tuottaa kieltä omin ehdoin, sitten kuuntelu ja puhuminen, kun sama materiaali tarvitaan korvaan ja ääneen — Kuuntelu ja Puhuminen kuuluvat Notoria Prohon.",
         "beat": "Kerää ja ymmärrä ensin. Käytä ja puhu, kun materiaali on valmis jättämään sivun."
@@ -3686,6 +3836,10 @@
         "speaking": {
           "label": "Puhuminen",
           "body": "Live-harjoittelua AI-tutorin kanssa, oppimasi kielen ympärillä. Saatavilla Notoria Prolla."
+        },
+        "capture": {
+          "label": "Keräys",
+          "body": "Nopea pudotuspaikka sirpaleille — sanoille, epäilyksille ja ideoille — jotka käsittelet myöhemmin Sanastoksi, Teoriaksi, Kirjoitukseksi tai Harjoitukseksi. Käytä Keräystä ensin, kun sinulla on vain hetki; kohteet pysyvät käsittelemättä, kunnes linkitetty tallennus on valmis."
         }
       },
       "notEverything": {
@@ -3743,7 +3897,7 @@
         },
         "ai": {
           "q": "Voinko kytkeä tekoälyavun pois?",
-          "a": "Kyllä. Tekoälyasetukset ovat <settings>Settings</settings>-sivulla. Kun apu on pois päältä, sitä vaativat tekoälytyökalut pysyvät estettyinä."
+          "a": "Kyllä. Tekoälyasetukset ovat <settings>Asetukset</settings>-sivulla. Kun apu on pois päältä, sitä vaativat tekoälytyökalut pysyvät estettyinä."
         },
         "data": {
           "q": "Missä oppimissisältöni säilytetään?",

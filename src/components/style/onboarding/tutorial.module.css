@@ -76,6 +76,12 @@
     0 24px 48px color-mix(in oklab, var(--ink) 16%, transparent);
 }
 
+.tutorial-sheet[data-tutorial-section="inbox"],
+.tutorial-spotlight-cutout[data-tutorial-section="inbox"] {
+  --tutorial-accent-fg: var(--module-home-fg);
+  --tutorial-accent-bg: var(--module-home-bg);
+}
+
 .tutorial-sheet[data-tutorial-section="vocabulary"],
 .tutorial-sheet[data-tutorial-section="vocabularyAdd"],
 .tutorial-spotlight-cutout[data-tutorial-section="vocabulary"],
@@ -264,6 +270,11 @@
   ) !important;
   background: var(--route-tutorial-bg) !important;
   color: var(--route-tutorial-fg) !important;
+}
+
+.route-tutorial-btn[data-tutorial-section="inbox"] {
+  --route-tutorial-fg: var(--module-home-fg);
+  --route-tutorial-bg: var(--module-home-bg);
 }
 
 .route-tutorial-btn[data-tutorial-section="vocabulary"],

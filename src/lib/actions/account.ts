@@ -85,6 +85,7 @@ export async function getAccountUser() {
       stripeCurrentPeriodEnd: true,
       stripeCancelAtPeriodEnd: true,
       scheduledSubscriptionPlan: true,
+      introOfferUsedAt: true,
     },
   });
 

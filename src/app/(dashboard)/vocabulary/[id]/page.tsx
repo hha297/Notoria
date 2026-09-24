@@ -1,6 +1,7 @@
 import { notFound } from "next/navigation";
 import { PageShell } from "@/components/layout/page-shell";
 import { VocabularyPreview } from "@/components/vocabulary/vocabulary-preview";
+import { getReviewLaterMarked } from "@/lib/actions/review-later";
 import { getVocabularyWord } from "@/lib/actions/vocabulary";
 import { getActiveWorkspace } from "@/lib/workspace";
 
@@ -16,7 +17,10 @@ export default async function VocabularyWordPage({
     notFound();
   }
 
-  const word = await getVocabularyWord(id);
+  const [word, reviewLaterMarked] = await Promise.all([
+    getVocabularyWord(id),
+    getReviewLaterMarked({ entityType: "vocabulary", entityId: id }),
+  ]);
 
   if (!word) {
     notFound();
@@ -35,6 +39,7 @@ export default async function VocabularyWordPage({
           meanings={word.meanings}
           examples={word.examples}
           tags={word.tags}
+          reviewLaterMarked={reviewLaterMarked}
         />
       </div>
     </PageShell>
