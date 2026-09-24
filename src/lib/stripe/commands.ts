@@ -2,13 +2,14 @@ import { eq } from "drizzle-orm";
 import Stripe from "stripe";
 import { db } from "@/db";
 import { users } from "@/db/schema";
-import { displayPlan, PAID_ACCESS_STATUSES } from "@/lib/billing/plans";
+import { displayPlan, isIntroOfferEligible, PAID_ACCESS_STATUSES } from "@/lib/billing/plans";
 import { getStripeClient } from "@/lib/stripe/client";
 import {
   getAppBaseUrl,
   getStripePremiumPriceId,
   getStripeProPriceId,
   getStripeSecretKey,
+  stripeIntroCouponId,
   StripeConfigError,
 } from "@/lib/stripe/config";
 import {
@@ -257,6 +258,8 @@ export async function requestBillingChange(input: {
   subscriptionStatus: string | null;
   stripeCustomerId: string | null;
   stripeSubscriptionId: string | null;
+  /** Lifetime intro flag — server-only eligibility. */
+  introOfferUsedAt?: Date | string | null;
   command: BillingCommand;
 }) {
   const stripe = getStripeClient();
@@ -304,6 +307,21 @@ export async function requestBillingChange(input: {
 
   if (resolved.action === "checkout") {
     const priceId = await assertPrice(stripe, resolved.plan);
+    // Re-read eligibility at checkout time — never trust the client.
+    const latest = await db.query.users.findFirst({
+      where: eq(users.id, input.userId),
+      columns: { introOfferUsedAt: true },
+    });
+    const eligible = isIntroOfferEligible(
+      latest ?? { introOfferUsedAt: input.introOfferUsedAt },
+    );
+    const introCouponId = eligible
+      ? stripeIntroCouponId(resolved.plan)
+      : null;
+    if (eligible && !introCouponId) {
+      throw new StripeConfigError();
+    }
+
     const session = await stripe.checkout.sessions.create(
       checkoutSessionParams({
         priceId,
@@ -312,6 +330,7 @@ export async function requestBillingChange(input: {
         customerId,
         successUrl: `${appUrl}/account?billing=confirming&expect=${resolved.expect}`,
         cancelUrl: `${appUrl}/account?billing=canceled`,
+        introCouponId,
       }),
     );
     if (!session.url) {

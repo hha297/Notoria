@@ -10,6 +10,7 @@ type ProAccessContextValue = {
   cancelAtPeriodEnd: boolean;
   currentPeriodEnd: string | null;
   scheduledPlan: PlanId | null;
+  introOfferEligible: boolean;
   openUpgrade: () => void;
   openPremium: () => void;
 };
@@ -22,6 +23,7 @@ export function ProAccessProvider({
   cancelAtPeriodEnd = false,
   currentPeriodEnd = null,
   scheduledPlan = null,
+  introOfferEligible = false,
   children,
 }: {
   hasProAccess: boolean;
@@ -29,6 +31,7 @@ export function ProAccessProvider({
   cancelAtPeriodEnd?: boolean;
   currentPeriodEnd?: string | null;
   scheduledPlan?: PlanId | null;
+  introOfferEligible?: boolean;
   children: ReactNode;
 }) {
   const [upgradeOpen, setUpgradeOpen] = useState(false);
@@ -39,10 +42,18 @@ export function ProAccessProvider({
       cancelAtPeriodEnd,
       currentPeriodEnd,
       scheduledPlan,
+      introOfferEligible,
       openUpgrade: () => setUpgradeOpen(true),
       openPremium: () => setUpgradeOpen(true),
     }),
-    [hasProAccess, plan, cancelAtPeriodEnd, currentPeriodEnd, scheduledPlan],
+    [
+      hasProAccess,
+      plan,
+      cancelAtPeriodEnd,
+      currentPeriodEnd,
+      scheduledPlan,
+      introOfferEligible,
+    ],
   );
 
   return (
@@ -66,6 +77,7 @@ export function useProAccess() {
       cancelAtPeriodEnd: false,
       currentPeriodEnd: null,
       scheduledPlan: null,
+      introOfferEligible: false,
       openUpgrade: () => {},
       openPremium: () => {},
     };

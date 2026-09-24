@@ -13,7 +13,8 @@
     "selectedCount": "{count} đã chọn",
     "clearFilter": "Xóa",
     "filters": "Bộ lọc",
-    "hideFilters": "Ẩn bộ lọc"
+    "hideFilters": "Ẩn bộ lọc",
+    "open": "Mở"
   },
   "editor": {
     "linkTitle": "Chèn liên kết",
@@ -920,7 +921,8 @@
     },
     "sessionComplete": "Xong một phiên học!",
     "tryAgain": "Học tiếp",
-    "ratingFailed": "Không lưu được đánh giá"
+    "ratingFailed": "Không lưu được đánh giá",
+    "weakTitle": "Luyện các từ khó"
   },
   "dashboard": {
     "overview": "Tổng quan",
@@ -1866,7 +1868,8 @@
       "PROCESSING_FAILED": "Có lỗi khi tạo bài nghe. Hãy thử lại.",
       "EMPTY_TRANSCRIPT": "Không tìm thấy lời nói trong file này.",
       "DUPLICATE_FILENAME": "Đã có file với tên này.",
-      "FILENAME_REQUIRED": "Hãy nhập tên file."
+      "FILENAME_REQUIRED": "Hãy nhập tên file.",
+      "AUDIO_TOO_LONG": "Âm thanh dài hơn 45 phút. Hãy tách nhỏ hoặc dùng đoạn ngắn hơn cho một bản ghi."
     }
   },
   "speaking": {
@@ -1957,7 +1960,8 @@
       "endedTitle": "Đã kết thúc cuộc gọi",
       "endedDescription": "Nhận xét sẽ xuất hiện trên trang buổi nói trong giây lát.",
       "back": "Quay lại buổi nói",
-      "notConfigured": "Cuộc gọi video chưa được cấu hình. Thêm khóa Stream Video để bắt đầu."
+      "notConfigured": "Cuộc gọi video chưa được cấu hình. Thêm khóa Stream Video để bắt đầu.",
+      "sessionLimitReached": "Buổi nói này đã đạt giới hạn sử dụng hợp lý 30 phút và đã kết thúc."
     },
     "errors": {
       "STREAM_NOT_CONFIGURED": "Cuộc gọi video chưa được cấu hình.",
@@ -2146,6 +2150,8 @@
     "price": "€9,99 / tháng",
     "priceAmount": "€9,99",
     "pricePeriod": "/tháng",
+    "introFirstMonthOnly": "Chỉ tháng đầu · Sau đó {price}/tháng",
+    "introCheckoutHint": "Tháng đầu {intro}, sau đó {price}/tháng. Hủy bất cứ lúc nào.",
     "freePrice": "€0",
     "mostPopular": "Phổ biến nhất",
     "currentPlan": "Gói hiện tại",
@@ -2239,13 +2245,16 @@
       "profile": "Hồ sơ học cá nhân",
       "daily": "Bài luyện hôm nay",
       "weekly": "Ôn tập tuần",
-      "mistakes": "Luyện từ thẻ bạn trả lời sai"
+      "mistakes": "Luyện từ thẻ bạn trả lời sai",
+      "askCoach": "Hỏi huấn luyện viên AI — tiến độ, từ vựng, ngữ pháp, lý thuyết, bản dịch và nên luyện gì tiếp"
     },
     "quotaLabels": {
       "ai_meeting": "Họp AI",
       "ai_listening_transcript": "Bản ghi nghe",
       "ai_exercise": "Bài tập AI",
-      "ai_vocabulary": "Từ vựng AI"
+      "ai_vocabulary": "Từ vựng AI",
+      "ai_writing": "Hỗ trợ viết AI",
+      "ai_learning_coach_chat": "Huấn luyện viên AI"
     },
     "compare": {
       "capability": "Bạn nhận được gì",
@@ -2294,6 +2303,18 @@
           "capability": "Gọi nói với AI",
           "impact": "Gọi trực tiếp với gia sư, có bản ghi"
         }
+      },
+      "heading": "So sánh gói",
+      "premiumDelta": "Premium thêm trí tuệ học tập cá nhân hóa",
+      "tableCaption": "So sánh tính năng giữa Free, Pro và Premium",
+      "feature": "Tính năng",
+      "current": "Hiện tại",
+      "premium": "Premium",
+      "categories": {
+        "core": "Học cốt lõi",
+        "ai": "Công cụ AI",
+        "export": "Xuất & năng suất",
+        "personalized": "Học cá nhân hóa"
       }
     },
     "benefits": {
@@ -2333,6 +2354,58 @@
         "title": "Học tập cá nhân hóa hơn",
         "body": "Dùng công cụ AI để từ vựng, viết và luyện tập phù hợp hơn với bạn."
       }
+    },
+    "distinction": "Pro mang lại công cụ. Premium giúp bạn dùng chúng thông minh hơn.",
+    "modalTitlePro": "Bạn đang dùng Pro",
+    "modalSubtitlePro": "Bạn đã có trọn bộ công cụ Notoria. Premium thêm trí tuệ học tập cá nhân hóa.",
+    "modalTitlePremium": "Bạn đang dùng Premium",
+    "modalSubtitlePremium": "Trí tuệ học tập cá nhân hóa đang hoạt động.",
+    "premiumActiveCopy": "Huấn luyện viên dùng hoạt động học thật trong không gian này để gợi ý việc tiếp theo.",
+    "premiumActiveFineprint": "Quản lý thanh toán bất cứ lúc nào trên Stripe.",
+    "downgradeScheduled": "Đã lên lịch chuyển sang Pro",
+    "startsOn": "Bắt đầu {date}",
+    "downgradeScheduleHint": "Premium vẫn hoạt động đến {date}. Pro bắt đầu sau đó — chưa thay đổi ngay.",
+    "switchingToProOn": "Chuyển sang Pro vào {date}. Quyền Premium vẫn còn đến lúc đó.",
+    "cell": {
+      "unlimited": "Không giới hạn",
+      "limited": "Có giới hạn",
+      "perDay": "{count}/ngày",
+      "quotaPerDay": {
+        "ai_meeting": "{count, plural, one {# cuộc gọi/ngày} other {# cuộc gọi/ngày}}",
+        "ai_listening_transcript": "{count, plural, one {# bản ghi/ngày} other {# bản ghi/ngày}}",
+        "ai_exercise": "{count, plural, one {# lần tạo/ngày} other {# lần tạo/ngày}}",
+        "ai_vocabulary": "{count, plural, one {# thao tác/ngày} other {# thao tác/ngày}}",
+        "ai_writing": "{count, plural, one {# thao tác/ngày} other {# thao tác/ngày}}",
+        "ask_learning_coach": "{count, plural, one {# tin nhắn/ngày} other {# tin nhắn/ngày}}"
+      },
+      "includedSr": "Đã gồm",
+      "unavailableSr": "Không có"
+    },
+    "features": {
+      "vocabulary": "Từ vựng",
+      "exercises": "Bài tập",
+      "theory": "Lý thuyết",
+      "workspace": "Không gian làm việc",
+      "aiMeeting": "Họp AI",
+      "aiListeningTranscript": "Bản ghi nghe AI",
+      "aiExercise": "Tạo bài tập AI",
+      "aiVocabulary": "Thao tác từ vựng AI",
+      "aiSpeakingTutor": "Gia sư nói AI",
+      "aiWriting": "Viết AI",
+      "aiWritingSupport": "Hỗ trợ viết AI",
+      "listening": "Nghe",
+      "speaking": "Nói",
+      "pdfDocxExport": "Xuất PDF/DOCX",
+      "learningCoach": "Huấn luyện viên học tập",
+      "askLearningCoach": "Hỏi huấn luyện viên AI",
+      "learningProfile": "Hồ sơ học cá nhân",
+      "adaptiveDailyPractice": "Luyện hàng ngày thích ứng",
+      "practiceFromMistakes": "Luyện từ lỗi sai",
+      "weeklyLearningReview": "Ôn tập tuần",
+      "learningTrends": "Xu hướng học",
+      "personalLearningPath": "Lộ trình học cá nhân",
+      "personalizedRecommendations": "Gợi ý cá nhân hóa",
+      "crossModuleIntelligence": "Cá nhân hóa xuyên mô-đun"
     }
   },
   "writing": {
@@ -2570,6 +2643,170 @@
       "writing": "Mở studio viết",
       "theory": "Mở ghi chú lý thuyết",
       "keep-going": "Giữ nhịp bạn đang có"
+    },
+    "descriptionIntelligence": "Nên làm gì tiếp, vì sao quan trọng, và việc học của bạn đang thay đổi thế nào.",
+    "distinction": "Pro mang lại công cụ. Premium giúp bạn dùng chúng thông minh hơn.",
+    "focusLabel": "Trọng tâm học của bạn",
+    "focusCta": "Bắt đầu tại đây",
+    "plan": "Luyện thích ứng",
+    "planTitle": "Kế hoạch {minutes} phút hôm nay",
+    "planMinutes": "~{count} phút",
+    "startStep": "Bắt đầu",
+    "startPlan": "Bắt đầu bài luyện hôm nay",
+    "mistakes": "Luyện từ lỗi sai",
+    "mistakesTitle": "Từ cần chú ý",
+    "practiceMistakes": "Luyện các từ này",
+    "path": "Lộ trình học",
+    "pathTitle": "Lộ trình học của bạn",
+    "pathCurrent": "Trọng tâm hiện tại",
+    "pathNext": "Tiếp theo",
+    "pathThen": "Sau đó",
+    "pathLater": "Muộn hơn",
+    "cross": "Liên kết",
+    "crossTitle": "Giữa các mô-đun của bạn",
+    "crossHints": {
+      "theory_to_practice": "Luyện điều bạn vừa học",
+      "vocab_to_speaking": "Dùng từ yếu khi nói"
+    },
+    "trends": "Xu hướng học",
+    "trendsTitle": "Từ tuần trước",
+    "trendsEmpty": "Xu hướng học sẽ hiện ở đây khi bạn có thêm hoạt động.",
+    "speakingLevel": "Nói",
+    "ask": {
+      "label": "Hỏi huấn luyện viên",
+      "title": "Hỏi huấn luyện viên học tập",
+      "description": "Hỏi bất cứ điều gì về việc học — tiến độ, nên luyện gì tiếp, từ vựng, ngữ pháp, lý thuyết, bản dịch, hoặc nội dung học bạn dán vào. Câu trả lời theo ngôn ngữ câu hỏi của bạn.",
+      "emptyReady": "Huấn luyện viên đã sẵn sàng. Tôi chưa biết thói quen học của bạn, hãy hỏi về một từ, điểm ngữ pháp, hoặc nên luyện gì trước.",
+      "placeholder": "Hỏi huấn luyện viên học tập...",
+      "inputHint": "Enter để gửi. Shift+Enter để xuống dòng.",
+      "send": "Gửi tin nhắn",
+      "thinking": "Huấn luyện viên đang suy nghĩ…",
+      "you": "Bạn",
+      "coach": "Huấn luyện viên",
+      "promptsLabel": "Câu hỏi gợi ý",
+      "retry": "Thử lại",
+      "upgrade": "Nâng cấp lên Premium",
+      "errorQuota": "Bạn đã hết hạn mức huấn luyện viên hôm nay. Huấn luyện viên sẽ có lại vào ngày mai.",
+      "errorPremium": "Huấn luyện viên học tập là tính năng Premium. Nhận gợi ý cá nhân dựa trên hoạt động học của bạn.",
+      "errorUnavailable": "Huấn luyện viên không phản hồi được lúc này. Tin nhắn của bạn chưa được tính. Vui lòng thử lại.",
+      "prompts": {
+        "practice_today": "Tôi nên tập trung vào điều gì hôm nay?",
+        "struggling_words": "Vì sao tôi khó với những từ này?",
+        "practice_weak": "Giúp tôi luyện các từ yếu.",
+        "review_first": "Tôi nên ôn gì trước?",
+        "neglecting": "Tôi đã bỏ quên điều gì?",
+        "improve_speaking": "Vì sao kỹ năng nói của tôi chưa tiến bộ?",
+        "study_20": "Tôi nên dùng 20 phút hôm nay thế nào?",
+        "getting_started": "Tôi nên luyện gì trước?",
+        "am_i_improving": "Tôi có thực sự đang tiến bộ không?",
+        "what_changed": "Việc học của tôi tuần này thay đổi thế nào?"
+      }
+    },
+    "next": {
+      "label": "Quyết định",
+      "title": "Bước tiếp theo",
+      "planTitle": "Bài luyện được gợi ý hôm nay",
+      "whyOrder": "Vì sao thứ tự này? Từ đến hạn và khó trước, rồi đến mô-đun bạn đang bỏ quên.",
+      "cta": "Bắt đầu bài luyện hôm nay"
+    },
+    "why": {
+      "title": "Vì sao vậy?",
+      "due": "{count} thẻ từ vựng đến hạn",
+      "weak": "{count} từ vẫn khó lặp lại",
+      "reviews": "{count} lần ôn flashcard trong 7 ngày qua",
+      "speakingIdle": "Không có buổi nói trong 7 ngày qua",
+      "listeningIdle": "Không có hoạt động nghe trong 7 ngày qua",
+      "writingIdle": "Không có cập nhật viết trong 7 ngày qua",
+      "theoryIdle": "Không có cập nhật ghi chú lý thuyết trong 7 ngày qua",
+      "focus": "Trọng tâm hiện tại: {focus}"
+    },
+    "chips": {
+      "due": "{count} thẻ đến hạn",
+      "weak": "{count} từ khó",
+      "speakingIdle": "Không có buổi nói trong 7 ngày",
+      "mastered": "{count} đã thành thạo",
+      "dueLabel": "Thẻ đến hạn",
+      "weakLabel": "Từ khó"
+    },
+    "quick": {
+      "label": "Ngữ cảnh",
+      "title": "Ngữ cảnh nhanh"
+    },
+    "progress": {
+      "label": "Đo lường",
+      "title": "Tiến độ của bạn",
+      "description": "Xem việc học đã thay đổi thế nào — và huấn luyện viên nhận ra điều gì.",
+      "empty": "Bạn mới bắt đầu. Tiếp tục học để huấn luyện viên bắt đầu hiện tiến độ có ý nghĩa theo thời gian.",
+      "chartEmpty": "Chưa đủ lịch sử sự kiện cho biểu đồ này. Tiếp tục ôn hoặc nói để xu hướng xuất hiện.",
+      "chartSr": "{metric} trong {days} ngày gần nhất, từ {from} đến {to} ở các khoảng gần đây.",
+      "activityTitle": "Hoạt động học — {days} ngày gần nhất",
+      "activityNote": "Hoạt động cho thấy bạn dành thời gian ở đâu — không phải liệu thời gian đó có cải thiện kỹ năng.",
+      "compareLabel": "So sánh kỳ",
+      "noticesTitle": "Huấn luyện viên nhận thấy điều gì",
+      "askAbout": "Hỏi huấn luyện viên về điều này",
+      "periodLabel": "Kỳ tiến độ",
+      "metricLabel": "Chỉ số biểu đồ",
+      "period": {
+        "7": "7 ngày",
+        "30": "30 ngày",
+        "90": "90 ngày"
+      },
+      "metrics": {
+        "flashcardReviews": "Lần ôn",
+        "againOrHard": "Đánh giá khó",
+        "speakingSessions": "Buổi nói"
+      },
+      "tooltip": {
+        "weekOf": "Tuần từ {date}",
+        "firstAt": "Hoạt động đầu {time}",
+        "reviews": "{count, plural, one {# lần ôn flashcard} other {# lần ôn flashcard}}",
+        "againOrHard": "{count, plural, one {# đánh giá Again/Hard} other {# đánh giá Again/Hard}}",
+        "speaking": "{count, plural, one {# buổi nói} other {# buổi nói}}",
+        "none": "Không có hoạt động trong kỳ này",
+        "words": "Từ: {list}",
+        "topics": "Chủ đề: {list}"
+      },
+      "streak": {
+        "label": "Chuỗi ngày",
+        "days": "{count, plural, one {ngày liên tiếp} other {ngày liên tiếp}}",
+        "practicedToday": "Bạn đã luyện hôm nay — chuỗi vẫn an toàn.",
+        "keepGoing": "Luyện hôm nay để giữ chuỗi ngày.",
+        "start": "Học gì đó hôm nay để bắt đầu một chuỗi.",
+        "weekLabel": "7 ngày gần nhất",
+        "best": "Chuỗi tốt nhất: {count, plural, one {# ngày} other {# ngày}}",
+        "dayEmpty": "Không có hoạt động học ngày này",
+        "dayActive": "Đã ghi nhận hoạt động học",
+        "dayReviews": "{count, plural, one {# lần ôn flashcard} other {# lần ôn flashcard}}",
+        "daySpeaking": "{count, plural, one {# buổi nói} other {# buổi nói}}",
+        "dayListening": "{count, plural, one {# cập nhật nghe} other {# cập nhật nghe}}",
+        "dayWriting": "{count, plural, one {# cập nhật viết} other {# cập nhật viết}}",
+        "dayTheory": "{count, plural, one {# cập nhật lý thuyết} other {# cập nhật lý thuyết}}"
+      }
+    },
+    "notices": {
+      "reviews_up": "Hoạt động ôn flashcard cao hơn kỳ trước.",
+      "reviews_down": "Hoạt động ôn flashcard thấp hơn kỳ trước.",
+      "misses_down": "Đánh giá Again/Hard giảm so với kỳ trước.",
+      "misses_up": "Đánh giá Again/Hard tăng so với kỳ trước.",
+      "speaking_quiet": "Buổi nói vẫn ít so với hoạt động từ vựng của bạn.",
+      "speaking_up": "Buổi nói tăng so với kỳ trước.",
+      "due_open": "Bạn vẫn còn thẻ đến hạn cần ôn.",
+      "weak_open": "Một số từ vẫn khó lặp lại.",
+      "getting_started": "Chưa đủ lịch sử để đọc tiến độ vững chắc."
+    },
+    "attention": {
+      "label": "Hành động",
+      "title": "Cần chú ý",
+      "dueTitle": "{count} thẻ đến hạn",
+      "dueBody": "Ôn từ đến hạn để thẻ quá hạn không chồng chất.",
+      "weakTitle": "{count} từ khó lặp lại",
+      "weakBody": "Luyện các từ này: {words}",
+      "review": "Ôn",
+      "practice": "Luyện"
+    },
+    "rating": {
+      "AGAIN": "Again",
+      "HARD": "Hard"
     }
   },
   "gettingStarted": {
@@ -2811,7 +3048,10 @@
     "terms": "Điều khoản sử dụng",
     "privacyTitle": "Chính sách quyền riêng tư",
     "termsTitle": "Điều khoản sử dụng",
+    "privacyDescription": "Cách Notoria thu thập, sử dụng và xóa dữ liệu cá nhân cũng như nội dung học tập cho không gian học ngôn ngữ riêng tư.",
+    "termsDescription": "Điều khoản sử dụng không gian học ngôn ngữ riêng tư của Notoria, tài khoản, tính năng AI và thanh toán Notoria Pro.",
     "updated": "Cập nhật lần cuối {date}",
+    "updatedDate": "23 tháng 9 năm 2026",
     "backToSignIn": "Quay lại đăng nhập",
     "backHome": "Quay lại Notoria",
     "authFooter": "Quyền riêng tư · Điều khoản",
@@ -2820,7 +3060,424 @@
     "registerAgreement": "Khi tạo tài khoản, bạn đồng ý với <terms>Điều khoản sử dụng</terms> và <privacy>Chính sách quyền riêng tư</privacy>.",
     "settingsLinksTitle": "Chính sách",
     "settingsLinksDescription": "Đọc cách Notoria xử lý dữ liệu và quy tắc sử dụng dịch vụ.",
-    "contactEmail": "contact@notoria.fi"
+    "contactEmail": "contact@notoria.fi",
+    "privacyPolicy": {
+      "intro": "Chính sách quyền riêng tư này giải thích cách Notoria (<site>www.notoria.fi</site>) xử lý dữ liệu cá nhân cho ứng dụng web học ngôn ngữ riêng tư của mình. Nội dung được viết để khớp với cách sản phẩm hoạt động hiện nay. Nếu một thực tiễn không được mô tả ở đây, chúng tôi không tuyên bố thực hiện điều đó.",
+      "tocTitle": "Trên trang này",
+      "tocAria": "Trên trang này",
+      "toc": {
+        "controller": "Ai chịu trách nhiệm",
+        "scope": "Chính sách này bao gồm những gì",
+        "data": "Dữ liệu chúng tôi xử lý",
+        "purposes": "Vì sao chúng tôi xử lý dữ liệu",
+        "auth": "Tài khoản và đăng nhập",
+        "ai": "Tính năng AI",
+        "payments": "Thanh toán (Notoria Pro)",
+        "processors": "Nhà cung cấp dịch vụ",
+        "cookies": "Cookie và lưu trữ trên thiết bị",
+        "transfers": "Chuyển dữ liệu quốc tế",
+        "retention": "Chúng tôi lưu dữ liệu bao lâu",
+        "deletion": "Xuất dữ liệu và xóa tài khoản",
+        "rights": "Quyền của bạn (GDPR)",
+        "children": "Trẻ em",
+        "changes": "Thay đổi",
+        "contact": "Liên hệ"
+      },
+      "sections": {
+        "controller": {
+          "title": "1. Ai chịu trách nhiệm",
+          "p1": "Notoria là dịch vụ học ngôn ngữ tại <site>www.notoria.fi</site>, dành cho người dùng ở Phần Lan và khu vực EU/EEA rộng hơn.",
+          "p2": "Với câu hỏi về quyền riêng tư, yêu cầu của chủ thể dữ liệu và liên hệ người dùng khác, gửi email tới <contact>contact@notoria.fi</contact>.",
+          "p3": "Tên công ty đã đăng ký và địa chỉ bưu điện của bên kiểm soát dữ liệu không được công bố trong sản phẩm hiện tại. Nếu bạn cần nhận dạng chính thức của bên kiểm soát cho yêu cầu GDPR, hãy gửi email tới <contact>contact@notoria.fi</contact> và chúng tôi sẽ cung cấp."
+        },
+        "scope": {
+          "title": "2. Chính sách này bao gồm những gì",
+          "p1": "Nó bao gồm dữ liệu cá nhân và nội dung học tập được xử lý khi bạn:",
+          "list": [
+            "tạo hoặc sử dụng tài khoản",
+            "lưu tài liệu trong không gian học riêng tư",
+            "đăng ký Notoria Pro",
+            "dùng công cụ hỗ trợ AI tùy chọn",
+            "tải lên media cho nghe hoặc hồ sơ",
+            "dùng luyện nói",
+            "gửi phản hồi hoặc liên hệ chúng tôi"
+          ],
+          "p2": "Mã ứng dụng hiện tại không bao gồm SDK phân tích tiếp thị hoặc quảng cáo của bên thứ ba. Chúng tôi không tuyên bố sử dụng trình theo dõi không có trong sản phẩm."
+        },
+        "data": {
+          "title": "3. Dữ liệu chúng tôi xử lý",
+          "p1": "Notoria xử lý các loại dữ liệu khác nhau vì các lý do khác nhau. Các nhóm chính là:",
+          "accountAuth": {
+            "title": "Tài khoản và xác thực",
+            "list": [
+              "Tên và địa chỉ email",
+              "Hash mật khẩu cho tài khoản email/mật khẩu (mật khẩu không bao giờ được lưu dạng văn bản thuần)",
+              "Định danh tài khoản Google và token OAuth nếu bạn đăng nhập bằng Google",
+              "Ảnh hồ sơ tùy chọn (avatar)",
+              "Vai trò tài khoản và dấu thời gian tạo/cập nhật"
+            ]
+          },
+          "learningContent": {
+            "title": "Nội dung học tập bạn tạo",
+            "p1": "Nội dung bạn thêm trong không gian học riêng tư, chẳng hạn từ vựng, ghi chú lý thuyết, tài liệu viết, bài tập và tài liệu luyện tập đã nhập, bài nghe (bao gồm tham chiếu media và bản ghi), bản ghi phiên nói và các trường phiên liên quan, thư mục, thẻ, và tiến độ học như ôn flashcard.",
+            "p2": "Đây là tài liệu học của bạn. Notoria lưu trữ để bạn có thể quay lại và luyện tập từ đó."
+          },
+          "subscription": {
+            "title": "Siêu dữ liệu đăng ký và thanh toán",
+            "list": [
+              "Gói (miễn phí hoặc Pro) và trạng thái đăng ký",
+              "Định danh khách hàng và đăng ký Stripe, và thời điểm kết thúc kỳ hiện tại khi áp dụng"
+            ],
+            "p1": "Số thẻ và bí mật phương thức thanh toán ở lại với Stripe. Notoria chỉ giữ siêu dữ liệu thanh toán cần thiết để phản ánh trạng thái Pro của bạn."
+          },
+          "device": {
+            "title": "Dữ liệu thiết bị và tùy chọn",
+            "p1": "Cookie và lưu trữ trình duyệt dùng cho đăng nhập, ngôn ngữ, không gian học đang dùng, tùy chọn hỗ trợ AI, giao diện và các cài đặt sản phẩm tương tự. Xem <cookies>Cookie và lưu trữ trên thiết bị</cookies>."
+          },
+          "support": {
+            "title": "Hỗ trợ và phản hồi",
+            "list0": "Email bạn gửi tới <contact>contact@notoria.fi</contact>",
+            "list1": "Phản hồi trong ứng dụng từ Hỗ trợ (tin nhắn, loại phản hồi, email của bạn, bạn có đăng nhập hay không, id tài khoản tùy chọn, đường dẫn trang, user-agent, và tối đa ba tệp đính kèm hình ảnh tùy chọn)",
+            "p1": "Phản hồi được gửi bằng email tới hộp thư kỹ thuật của Notoria (<technical></technical>). Nó không được lưu như cơ sở dữ liệu ticket riêng trong Notoria."
+          }
+        },
+        "purposes": {
+          "title": "4. Vì sao chúng tôi xử lý dữ liệu",
+          "headers": {
+            "purpose": "Mục đích",
+            "basis": "Cơ sở GDPR điển hình"
+          },
+          "rows": [
+            {
+              "purpose": "Cung cấp tài khoản, không gian học và tài liệu học đã lưu của bạn",
+              "basis": "Hợp đồng (Điều 6(1)(b))"
+            },
+            {
+              "purpose": "Xác thực bạn (email/mật khẩu hoặc Google) và đặt lại mật khẩu",
+              "basis": "Hợp đồng (Điều 6(1)(b))"
+            },
+            {
+              "purpose": "Chạy thanh toán Notoria Pro và trạng thái đăng ký qua Stripe",
+              "basis": "Hợp đồng (Điều 6(1)(b))"
+            },
+            {
+              "purpose": "Hỗ trợ AI tùy chọn, phiên âm nghe và luyện nói khi bạn dùng các tính năng đó",
+              "basis": "Hợp đồng (Điều 6(1)(b)); kiểm soát tùy chọn khi có"
+            },
+            {
+              "purpose": "Giữ dịch vụ an toàn và đáng tin cậy (ngăn lạm dụng, gỡ lỗi)",
+              "basis": "Lợi ích hợp pháp (Điều 6(1)(f))"
+            },
+            {
+              "purpose": "Phản hồi tin nhắn hỗ trợ và phản hồi",
+              "basis": "Lợi ích hợp pháp / hợp đồng, tùy theo yêu cầu"
+            },
+            {
+              "purpose": "Tuân thủ nghĩa vụ pháp lý",
+              "basis": "Nghĩa vụ pháp lý (Điều 6(1)(c))"
+            }
+          ],
+          "p1": "Nếu bạn cần ghi chú cơ sở pháp lý chính thức cho một hoạt động cụ thể, gửi email tới <contact>contact@notoria.fi</contact>."
+        },
+        "auth": {
+          "title": "5. Tài khoản và đăng nhập",
+          "p1": "Notoria dùng Auth.js (NextAuth) với phiên JWT. Bạn có thể đăng nhập bằng email và mật khẩu, hoặc bằng Google OAuth khi đăng nhập Google được cấu hình.",
+          "p2": "Email đặt lại mật khẩu chỉ được gửi cho tài khoản có mật khẩu. Token đặt lại được lưu dạng hash, hết hạn sau 30 phút, và chỉ dùng để đặt mật khẩu mới."
+        },
+        "ai": {
+          "title": "6. Tính năng AI",
+          "p1": "Các tính năng AI tùy chọn trong sản phẩm hiện tại dùng <strong>OpenAI</strong>. Tùy công cụ bạn dùng, Notoria có thể gửi nội dung học liên quan — ví dụ mục từ vựng, văn bản hoặc phần chọn khi viết, ngữ cảnh bài tập hoặc lý thuyết, bản ghi nghe, bản ghi nói, hoặc âm thanh trực tiếp cho gia sư nói.",
+          "p2": "Tùy chọn hỗ trợ AI (bao gồm hỗ trợ có được bật hay không) được lưu trong cookie trình duyệt để sản phẩm tôn trọng cài đặt của bạn. Nhiều server action gọi mô hình kiểm tra hỗ trợ đã bật trước. Tắt hỗ trợ trong <settings>Cài đặt</settings> sẽ chặn các công cụ AI cần nó.",
+          "p3": "Phiên âm nghe qua AssemblyAI vẫn có thể chạy khi bạn dùng tính năng Nghe cần bản ghi, vì phiên âm là một phần của quy trình media đó chứ không chỉ tùy chọn “hỗ trợ AI” riêng.",
+          "p4": "Mã nguồn hiện tại không dùng nhà cung cấp mô hình ngôn ngữ lớn nào khác ngoài OpenAI. OpenAI xử lý dữ liệu theo điều khoản và chính sách quyền riêng tư của riêng họ với tư cách bên xử lý cho các tính năng này."
+        },
+        "payments": {
+          "title": "7. Thanh toán (Notoria Pro)",
+          "p1": "Đăng ký trả phí được xử lý bởi <strong>Stripe</strong>. Thanh toán, hóa đơn, phương thức thanh toán và hủy chạy qua Stripe Checkout và Stripe Customer Portal. Webhook Stripe cập nhật gói và trạng thái của bạn trong Notoria.",
+          "p2": "Stripe xử lý dữ liệu thanh toán với tư cách nhà cung cấp thanh toán. Xem tài liệu quyền riêng tư của Stripe về xử lý thẻ."
+        },
+        "processors": {
+          "title": "8. Nhà cung cấp dịch vụ",
+          "p1": "Tùy tính năng bạn dùng, dữ liệu cá nhân hoặc nội dung học có thể được xử lý bởi:",
+          "headers": {
+            "provider": "Nhà cung cấp",
+            "role": "Vai trò trong Notoria"
+          },
+          "rows": [
+            {
+              "provider": "Cơ sở dữ liệu PostgreSQL (production được ghi nhận là Neon)",
+              "role": "Dữ liệu tài khoản và học tập"
+            },
+            {
+              "provider": "Vercel",
+              "role": "Hosting ứng dụng (vùng cấu hình gồm Frankfurt / fra1)"
+            },
+            {
+              "provider": "Cloudinary",
+              "role": "Avatar, media nghe, ảnh trình soạn thảo và tệp nhập bài tập"
+            },
+            {
+              "provider": "AssemblyAI",
+              "role": "Phiên âm âm thanh nghe"
+            },
+            {
+              "provider": "Stream Video",
+              "role": "Cuộc gọi nói trực tiếp; phiên âm tự động; trường phiên như URL bản ghi (và URL ghi hình chỉ nếu sau đó nhận được sự kiện ghi hình)"
+            },
+            {
+              "provider": "OpenAI",
+              "role": "Hỗ trợ AI tùy chọn và âm thanh realtime của gia sư nói"
+            },
+            {
+              "provider": "Resend",
+              "role": "Email đặt lại mật khẩu và gửi phản hồi Hỗ trợ"
+            },
+            {
+              "provider": "Stripe",
+              "role": "Checkout Notoria Pro, portal và trạng thái đăng ký"
+            },
+            {
+              "provider": "Google",
+              "role": "Đăng nhập OAuth khi bạn chọn Google; web font cho giao diện"
+            },
+            {
+              "provider": "Dicebear",
+              "role": "Ảnh avatar được tạo dùng trong phiên nói (từ seed tên; không gửi mật khẩu tài khoản)"
+            }
+          ],
+          "p2": "Cuộc gọi nói được tạo với phiên âm bật. Ghi hình bị tắt khi tạo cuộc gọi trong triển khai hiện tại; URL ghi hình chỉ được lưu nếu sản phẩm sau đó nhận sự kiện recording-ready từ Stream."
+        },
+        "cookies": {
+          "title": "9. Cookie và lưu trữ trên thiết bị",
+          "p1": "Notoria dùng cookie và lưu trữ tương tự cho các chức năng sản phẩm cần thiết. Không có Chính sách cookie riêng vì triển khai hiện tại không bao gồm chương trình cookie quảng cáo hoặc phân tích đòi hỏi điều đó.",
+          "cookiesTitle": "Cookie mà ứng dụng dùng",
+          "headers": {
+            "cookie": "Cookie",
+            "purpose": "Mục đích"
+          },
+          "rows": [
+            {
+              "cookie": "Cookie phiên Auth.js",
+              "purpose": "Giữ bạn đăng nhập (phiên JWT; đặt tên mặc định của thư viện)",
+              "code": false
+            },
+            {
+              "cookie": "notoria-locale",
+              "purpose": "Ngôn ngữ giao diện",
+              "code": true
+            },
+            {
+              "cookie": "notoria-workspace",
+              "purpose": "Không gian học đang dùng",
+              "code": true
+            },
+            {
+              "cookie": "notoria-ai-preferences",
+              "purpose": "Tùy chọn hỗ trợ AI",
+              "code": true
+            },
+            {
+              "cookie": "sidebar_state",
+              "purpose": "Tùy chọn mở/đóng thanh bên",
+              "code": true
+            }
+          ],
+          "storageTitle": "Lưu trữ cục bộ và phiên",
+          "p2": "Trình duyệt của bạn cũng có thể lưu tùy chọn giao diện (qua next-themes), cờ onboarding/hướng dẫn, tùy chọn bàn phím và chuyển động, lựa chọn chế độ xem, trạng thái phiên bài tập hoặc flashcard tạm thời, và các cài đặt chỉ phía client tương tự.",
+          "p3": "Xóa tùy chọn cục bộ trong Cài đặt sẽ gỡ các tùy chọn thiết bị đó. Nó không xóa tài khoản hoặc nội dung không gian học trên máy chủ."
+        },
+        "transfers": {
+          "title": "10. Chuyển dữ liệu quốc tế",
+          "p1": "Một số nhà cung cấp ở trên đặt trụ sở ngoài EEA (ví dụ tại Hoa Kỳ) hoặc có thể xử lý dữ liệu ở nhiều vùng. Khi dữ liệu cá nhân rời EEA/UK, việc chuyển dựa trên các biện pháp bảo vệ mà các nhà cung cấp đó cung cấp theo luật áp dụng — chẳng hạn Standard Contractual Clauses khi áp dụng — và theo điều khoản quyền riêng tư đã công bố của họ.",
+          "p2": "Hosting ứng dụng của Notoria được cấu hình hướng tới vùng Frankfurt (fra1). Hỏi <contact>contact@notoria.fi</contact> nếu bạn cần trợ giúp tìm tài liệu nhà cung cấp liên quan cho một tính năng cụ thể."
+        },
+        "retention": {
+          "title": "11. Chúng tôi lưu dữ liệu bao lâu",
+          "list": [
+            "Dữ liệu tài khoản và học tập được giữ khi tài khoản của bạn còn mở để bạn dùng dịch vụ",
+            "Token đặt lại mật khẩu hết hạn sau 30 phút",
+            "Siêu dữ liệu đăng ký được giữ khi cần để phản ánh trạng thái Pro hiện tại và quan hệ thanh toán Stripe",
+            "Email hỗ trợ và phản hồi được giữ đủ lâu để xử lý yêu cầu và theo dõi liên quan"
+          ],
+          "p1": "Khung thời gian giữ bản sao lưu chính xác của nhà cung cấp hạ tầng không được hard-code trong ứng dụng và có thể theo thực tiễn vận hành của các nhà cung cấp đó. Liên hệ chúng tôi nếu bạn cần làm rõ cho yêu cầu xóa."
+        },
+        "deletion": {
+          "title": "12. Xuất dữ liệu và xóa tài khoản",
+          "exportTitle": "Xuất dữ liệu",
+          "exportP1": "Từ <account>Tài khoản</account> bạn có thể tải bản sao lưu JSON của không gian học và nội dung học (bao gồm từ vựng, ghi chú lý thuyết, bài tập/viết, bài nghe và phiên nói). Tệp media được tham chiếu bằng URL chứ không nhúng dạng nhị phân.",
+          "exportP2": "Bản xuất hiện tại không bao gồm mọi bản ghi liên quan tài khoản. Ví dụ, tiến độ/ôn flashcard và bản ghi nguồn nhập bài tập không nằm trong bản sao lưu JSON. Token OAuth, hash mật khẩu và định danh Stripe không được xuất.",
+          "deleteTitle": "Xóa tài khoản",
+          "deleteP1": "Bạn có thể xóa vĩnh viễn tài khoản từ <account>Tài khoản</account>. Khi xóa thành công, Notoria:",
+          "deleteList": [
+            "xóa bản ghi người dùng và dữ liệu học cascade từ cơ sở dữ liệu của Notoria",
+            "hủy và gỡ dữ liệu khách hàng Stripe liên quan khi Stripe được cấu hình (best effort)",
+            "hủy media avatar và media bài nghe mà luồng xóa được triển khai để gỡ khỏi Cloudinary"
+          ],
+          "deleteP2": "Luồng xóa hiện tại không tuyên bố tự động dọn mọi artifact của bên thứ ba. Đặc biệt, một số tài sản Cloudinary (như ảnh trình soạn thảo hoặc tệp nhập bài tập) và artifact cuộc gọi nói Stream có thể vẫn thuộc các nhà cung cấp đó cho đến khi được dọn riêng hoặc xóa theo lịch của họ.",
+          "deleteP3": "Sau khi xóa, bản sao dư hạn chế cũng có thể còn ngắn trong bản sao lưu mã hóa hoặc nhật ký cho đến khi các hệ thống đó xoay vòng. Nếu có thứ cụ thể còn lại sau khi bạn xóa tài khoản, gửi email tới <contact>contact@notoria.fi</contact>."
+        },
+        "rights": {
+          "title": "13. Quyền của bạn (GDPR)",
+          "p1": "Nếu bạn ở EU/EEA hoặc được GDPR bảo vệ, bạn có thể có quyền:",
+          "list": [
+            "truy cập dữ liệu cá nhân của bạn",
+            "sửa dữ liệu không chính xác",
+            "xóa dữ liệu (bao gồm bằng cách xóa tài khoản)",
+            "hạn chế hoặc phản đối một số xử lý nhất định",
+            "nhận bản sao có thể chuyển của dữ liệu bạn đã cung cấp (xem Xuất dữ liệu ở trên)",
+            "rút đồng ý khi xử lý dựa trên đồng ý"
+          ],
+          "listComplaint": "nộp khiếu nại tới cơ quan giám sát — tại Phần Lan, Văn phòng Ombudsman bảo vệ dữ liệu (<ombudsman>tietosuoja.fi</ombudsman>)",
+          "p2": "Để thực hiện các quyền này, gửi email tới <contact>contact@notoria.fi</contact>. Chúng tôi có thể cần xác minh yêu cầu đến từ chủ tài khoản."
+        },
+        "children": {
+          "title": "14. Trẻ em",
+          "p1": "Notoria yêu cầu tài khoản và được xây dựng như không gian học cá nhân. Sản phẩm không triển khai cổng tuổi riêng. Nó không hướng tới trẻ em. Nếu bạn tin dữ liệu của trẻ đã được gửi mà không có thẩm quyền thích hợp, liên hệ <contact>contact@notoria.fi</contact>."
+        },
+        "changes": {
+          "title": "15. Thay đổi",
+          "p1": "Chúng tôi có thể cập nhật Chính sách quyền riêng tư này khi sản phẩm hoặc yêu cầu pháp lý thay đổi. Ngày “Cập nhật lần cuối” ở đầu trang thay đổi khi bản sửa đổi được công bố.",
+          "p2": "Khi thay đổi mang tính trọng yếu, chúng tôi sẽ thông báo theo cách hợp lý có sẵn vào thời điểm đó — ví dụ bằng cách cập nhật trang này và, khi phù hợp, thông báo trong sản phẩm hoặc email."
+        },
+        "contact": {
+          "title": "16. Liên hệ",
+          "p1": "Quyền riêng tư và liên hệ chung: <contact>contact@notoria.fi</contact>",
+          "p2": "Hộp thư kỹ thuật phản hồi sản phẩm (cũng liệt kê trên <contactPage>Liên hệ với chúng tôi</contactPage>): <technical></technical>",
+          "p3": "Trang web: <site>www.notoria.fi</site>"
+        }
+      }
+    },
+    "termsOfUse": {
+      "intro": "Các Điều khoản sử dụng này giải thích quy tắc dùng Notoria tại <site>www.notoria.fi</site>. Chúng mô tả cách sản phẩm hoạt động hiện nay: không gian học riêng tư, thanh toán Notoria Pro tùy chọn qua Stripe, và các tính năng hỗ trợ AI. Chúng không thay thế lời khuyên của luật sư về tình huống cụ thể của bạn.",
+      "tocTitle": "Trên trang này",
+      "tocAria": "Trên trang này",
+      "toc": {
+        "agreement": "Thỏa thuận",
+        "service": "Dịch vụ",
+        "accounts": "Tài khoản",
+        "content": "Nội dung của bạn",
+        "acceptable-use": "Sử dụng chấp nhận được",
+        "ip": "Sở hữu trí tuệ",
+        "ai": "Kết quả do AI tạo",
+        "plans": "Gói miễn phí và Notoria Pro",
+        "billing": "Đăng ký và thanh toán",
+        "refunds": "Hoàn tiền và quyền người tiêu dùng",
+        "availability": "Khả năng sẵn có",
+        "termination": "Đình chỉ và chấm dứt",
+        "liability": "Tuyên bố miễn trừ và trách nhiệm",
+        "changes": "Thay đổi",
+        "law": "Luật điều chỉnh",
+        "contact": "Liên hệ"
+      },
+      "sections": {
+        "agreement": {
+          "title": "1. Thỏa thuận",
+          "p1": "Bằng việc tạo tài khoản hoặc dùng Notoria, bạn đồng ý với các Điều khoản này và <privacy>Chính sách quyền riêng tư</privacy>. Nếu bạn không đồng ý, đừng dùng dịch vụ.",
+          "p2": "Câu hỏi về các Điều khoản này: <contact>contact@notoria.fi</contact>."
+        },
+        "service": {
+          "title": "2. Dịch vụ",
+          "p1": "Notoria là ứng dụng web học ngôn ngữ riêng tư. Bạn có thể tạo không gian học và giữ tài liệu học như từ vựng, ghi chú lý thuyết, viết, bài tập, bài nghe và phiên nói.",
+          "p2": "Một số tính năng có trên gói miễn phí. Notoria Pro mở thêm khả năng như hiển thị trong sản phẩm và trên trang <account>Tài khoản</account> — bao gồm Nghe, Nói, một số công cụ học AI, nhập bài tập và định dạng xuất tài liệu trả phí. Khả năng sẵn có của tính năng có thể thay đổi khi sản phẩm phát triển.",
+          "p3": "Notoria dành cho học ngôn ngữ cá nhân. Nó không phải trường học, cơ quan thi cử hay dịch vụ tư vấn chuyên nghiệp."
+        },
+        "accounts": {
+          "title": "3. Tài khoản",
+          "list": [
+            "Cung cấp thông tin tài khoản chính xác",
+            "Giữ mật khẩu và quyền truy cập tài khoản an toàn",
+            "Đăng nhập bằng email và mật khẩu, hoặc bằng Google khi đăng nhập Google khả dụng",
+            "Chỉ dùng Notoria nếu bạn có thể giao kết thỏa thuận ràng buộc theo luật áp dụng"
+          ],
+          "p1": "Sản phẩm không triển khai cổng tuổi riêng. Nếu bạn tin tài khoản đã được tạo mà không có thẩm quyền thích hợp, liên hệ <contact>contact@notoria.fi</contact>.",
+          "p2": "Thông báo cho chúng tôi tại <contact>contact@notoria.fi</contact> nếu bạn nghĩ tài khoản đã bị xâm phạm."
+        },
+        "content": {
+          "title": "4. Nội dung của bạn",
+          "p1": "Bạn giữ quyền sở hữu nội dung học bạn tạo hoặc tải lên trong Notoria.",
+          "p2": "Bạn cấp cho Notoria giấy phép hạn chế để lưu trữ, xử lý, hiển thị và sao lưu nội dung đó để dịch vụ hoạt động — bao gồm gửi tài liệu liên quan tới nhà cung cấp AI, phiên âm, media hoặc thanh toán khi bạn dùng các tính năng đó. Giấy phép đó chỉ tồn tại để vận hành Notoria cho bạn. Nó không chuyển quyền sở hữu nội dung của bạn cho chúng tôi.",
+          "p3": "Bạn chịu trách nhiệm về những gì bạn lưu. Đừng tải lên tài liệu bạn không có quyền dùng, và đừng dùng Notoria để lưu nội dung bất hợp pháp."
+        },
+        "acceptableUse": {
+          "title": "5. Sử dụng chấp nhận được",
+          "p1": "Bạn đồng ý không:",
+          "list": [
+            "vi phạm pháp luật hoặc xâm phạm quyền của người khác",
+            "cố truy cập không gian học hoặc tài khoản riêng tư của người dùng khác",
+            "dò, quá tải hoặc làm gián đoạn dịch vụ, API hoặc hạ tầng liên quan",
+            "lạm dụng tính năng AI, phiên âm, nghe hoặc nói theo cách gây hại cho người khác hoặc lách giới hạn gói bằng gian lận",
+            "đảo ngược kỹ thuật dịch vụ trừ khi luật địa phương bắt buộc cho phép",
+            "xuyên tạc danh tính của bạn với Stripe, Google hoặc hỗ trợ Notoria"
+          ]
+        },
+        "ip": {
+          "title": "6. Sở hữu trí tuệ",
+          "p1": "Tên, thương hiệu, phần mềm và thiết kế sản phẩm của Notoria thuộc sở hữu của Notoria hoặc bên cấp phép. Các Điều khoản này không chuyển quyền sở hữu sản phẩm cho bạn.",
+          "p2": "Nội dung học của bạn vẫn là của bạn, chịu giấy phép hạn chế ở mục 4."
+        },
+        "ai": {
+          "title": "7. Kết quả do AI tạo",
+          "p1": "Một số tính năng có thể kiểm tra, gợi ý, tạo, phiên âm, tóm tắt hoặc kèm học dựa trên tài liệu của bạn. Kết quả có thể không đầy đủ, không chính xác hoặc không phù hợp mục tiêu của bạn. Bạn vẫn chịu trách nhiệm xem lại kết quả AI trước khi dựa vào chúng cho học tập, thi cử, dùng chuyên môn hoặc xuất bản.",
+          "p2": "Tính năng AI có thể không khả dụng nếu hỗ trợ bị tắt trong <settings>Cài đặt</settings>, nếu gói của bạn không bao gồm một công cụ cụ thể, hoặc nếu nhà cung cấp tạm thời không truy cập được.",
+          "p3": "Không phải mọi trợ lý AI đều yêu cầu Notoria Pro. Sản phẩm hiển thị công cụ nào miễn phí và công cụ nào cần Pro."
+        },
+        "plans": {
+          "title": "8. Gói miễn phí và Notoria Pro",
+          "p1": "Gói miễn phí bao gồm luyện tập cốt lõi với từ vựng của bạn và các công cụ học liên quan như hiển thị trong sản phẩm.",
+          "p2": "Notoria Pro là đăng ký trả phí mở thêm tính năng. Trong sản phẩm hiện tại, thường bao gồm Nghe, Nói, nhập bài tập, luyện tạo câu, nhiều công cụ học hỗ trợ AI và xuất tài liệu PDF/DOCX. Một số trợ lý AI nhẹ hơn (như một số hỗ trợ từ vựng hoặc định dạng trình soạn thảo) có thể vẫn có trên gói miễn phí khi hỗ trợ AI được bật.",
+          "p3": "Quyền truy cập Pro gắn với tài khoản người dùng của bạn, nên áp dụng trên các không gian học dưới tài khoản đó. Tài khoản có vai trò quản trị viên có thể có quyền Pro mà không cần đăng ký Stripe cá nhân.",
+          "p4": "Giá áp dụng cho giao dịch của bạn là giá hiển thị tại Stripe Checkout cho gói Pro hiện tại. Mọi giá hiển thị nơi khác trong sản phẩm (ví dụ trên Tài khoản) chỉ mang tính tham khảo và phải khớp cấu hình giá Stripe đang hoạt động."
+        },
+        "billing": {
+          "title": "9. Đăng ký, thanh toán và hủy",
+          "list0": "Đăng ký Pro được thanh toán qua <strong>Stripe</strong>",
+          "list1": "Bạn có thể bắt đầu checkout từ <account>Tài khoản</account> hoặc từ các điều khiển Pro bị khóa trong ứng dụng",
+          "list2": "Từ Tài khoản, bạn có thể mở Stripe Customer Portal để xem hóa đơn, cập nhật phương thức thanh toán và hủy đăng ký",
+          "list3": "Hủy theo hành vi Stripe Customer Portal cho đăng ký của bạn",
+          "p1": "Sau khi bạn hủy, quyền Pro chỉ tiếp tục khi trạng thái đăng ký Stripe vẫn cấp Pro trong sản phẩm. Trong triển khai hiện tại, các trạng thái được coi là Pro gồm <code>active</code>, <code>trialing</code> và <code>past_due</code>. Khi trạng thái không còn đủ điều kiện, tài khoản trở về gói miễn phí.",
+          "p2": "Nếu thanh toán thất bại, Stripe có thể chuyển đăng ký sang <code>past_due</code> hoặc trạng thái khác. Notoria đồng bộ trạng thái đó từ webhook Stripe. Trong khi trạng thái vẫn là <code>past_due</code>, tính năng Pro vẫn khả dụng theo quy tắc truy cập hiện tại; nếu đăng ký sau đó bị hủy hoặc không còn đủ điều kiện, quyền Pro kết thúc.",
+          "p3": "Xóa tài khoản Notoria sẽ hủy đăng ký Stripe ngay lập tức (best effort) như một phần của xóa tài khoản. Điều đó khác với hủy gia hạn qua Customer Portal trong khi giữ tài khoản."
+        },
+        "refunds": {
+          "title": "10. Hoàn tiền và quyền người tiêu dùng",
+          "p1": "Notoria không triển khai nút hoàn tiền tự động trong ứng dụng. Hủy có sẵn qua Stripe Customer Portal.",
+          "p2": "Nếu bạn muốn xem xét hoàn tiền, hoặc nếu quy tắc người tiêu dùng EU/EEA về nội dung số hoặc hợp đồng từ xa trao cho bạn quyền áp dụng cho giao dịch, gửi email tới <contact>contact@notoria.fi</contact> với email tài khoản và chi tiết biên lai Stripe. Chúng tôi sẽ xử lý yêu cầu theo luật áp dụng và công cụ của Stripe.",
+          "p3": "Không có điều gì trong các Điều khoản này nhằm hạn chế quyền người tiêu dùng bắt buộc không thể từ bỏ theo luật Phần Lan hoặc EU."
+        },
+        "availability": {
+          "title": "11. Khả năng sẵn có",
+          "p1": "Chúng tôi hướng tới giữ Notoria sẵn sàng, nhưng không hứa dịch vụ không gián đoạn hoặc không lỗi. Bảo trì, sự cố nhà cung cấp, hoặc thay đổi dịch vụ AI, media, email hay thanh toán bên thứ ba có thể ảnh hưởng tính năng."
+        },
+        "termination": {
+          "title": "12. Đình chỉ và chấm dứt",
+          "p1": "Bạn có thể xóa tài khoản bất cứ lúc nào từ <account>Tài khoản</account>. Việc xóa gỡ vĩnh viễn tài khoản và dữ liệu học liên quan khỏi cơ sở dữ liệu của Notoria, theo chi tiết và ghi chú bộ xử lý dư trong <privacy>Chính sách quyền riêng tư</privacy>. Bạn có thể xuất bản sao lưu JSON từ Tài khoản trước khi xóa.",
+          "p2": "Chúng tôi có thể đình chỉ hoặc chấm dứt quyền truy cập nếu bạn vi phạm nghiêm trọng hoặc lặp lại các Điều khoản này, lạm dụng dịch vụ, hoặc tạo rủi ro bảo mật hay pháp lý. Khi hợp lý và hợp pháp, chúng tôi sẽ cố thông báo tới email trên tài khoản của bạn."
+        },
+        "liability": {
+          "title": "13. Tuyên bố miễn trừ và trách nhiệm",
+          "p1": "Notoria được cung cấp trên cơ sở “khi sẵn có” cho học ngôn ngữ cá nhân. Trong phạm vi luật áp dụng cho phép, chúng tôi từ chối các bảo đảm mà pháp luật không yêu cầu.",
+          "p2": "Trong phạm vi luật áp dụng cho phép, Notoria không chịu trách nhiệm về thiệt hại gián tiếp, ngẫu nhiên, đặc biệt, hệ quả hoặc mất dữ liệu phát sinh từ việc bạn dùng dịch vụ hoặc dựa vào kết quả AI. Khi trách nhiệm không thể loại trừ, nó được giới hạn ở số tiền bạn đã trả cho Notoria Pro trong ba tháng trước khiếu nại, hoặc bất kỳ số tiền lớn hơn nào mà luật bắt buộc yêu cầu.",
+          "p3": "Các giới hạn này không loại trừ trách nhiệm mà luật Phần Lan hoặc EU không cho phép hạn chế — bao gồm trách nhiệm người tiêu dùng không thể từ bỏ, và trách nhiệm về tử vong hoặc thương tích cá nhân do sơ suất khi các quy tắc đó áp dụng."
+        },
+        "changes": {
+          "title": "14. Thay đổi dịch vụ và Điều khoản",
+          "p1": "Chúng tôi có thể cập nhật tính năng, gói và các Điều khoản này. Ngày “Cập nhật lần cuối” trên trang này thay đổi khi phiên bản mới được công bố.",
+          "p2": "Nếu thay đổi mang tính trọng yếu, chúng tôi sẽ thông báo hợp lý khi thực tế cho phép — ví dụ bằng cách cập nhật trang này và, khi phù hợp, thông báo trong sản phẩm hoặc email. Tiếp tục sử dụng sau ngày có hiệu lực nghĩa là bạn chấp nhận Điều khoản đã cập nhật, trừ khi luật bắt buộc yêu cầu quy trình khác."
+        },
+        "law": {
+          "title": "15. Luật điều chỉnh",
+          "p1": "Các Điều khoản này được điều chỉnh bởi luật Phần Lan, không xét đến quy tắc xung đột pháp luật đòi hỏi luật của thẩm quyền khác.",
+          "p2": "Tòa án tại Phần Lan có thẩm quyền, không ảnh hưởng tới bảo vệ người tiêu dùng bắt buộc cho phép bạn khởi kiện tại quốc gia cư trú trong EU/EEA.",
+          "p3": "Danh tính nhà vận hành chính thức ngoài dịch vụ Notoria và email liên hệ không được công bố trong sản phẩm hiện tại. Với thư từ hợp đồng hoặc quy định, dùng <contact>contact@notoria.fi</contact>."
+        },
+        "contact": {
+          "title": "16. Liên hệ",
+          "p1": "Câu hỏi thanh toán, câu hỏi Điều khoản và thông báo pháp lý liên quan: <contact>contact@notoria.fi</contact>",
+          "p2": "Trang web: <site>www.notoria.fi</site>",
+          "p3": "Với các tùy chọn hỗ trợ chung và hộp thư phản hồi kỹ thuật, xem <contactPage>Liên hệ với chúng tôi</contactPage> và <support>Hỗ trợ</support>."
+        }
+      }
+    }
   },
   "footer": {
     "navLabel": "Liên kết trang",
@@ -3007,34 +3664,34 @@
         "title": "Các khu vực chính",
         "intro": "Bản đồ ngắn về việc mỗi khu vực dùng để làm gì:",
         "vocab": {
-          "label": "Vocabulary",
+          "label": "Từ vựng",
           "body": "Ngân hàng từ cá nhân — nghĩa, ví dụ, thẻ và tiến độ flashcard. Thường là nền tảng mọi thứ khác lấy từ đó."
         },
         "theory": {
-          "label": "Theory",
+          "label": "Lý thuyết",
           "body": "Ghi chú ngữ pháp và cách dùng bằng lời của bạn, sẵn để quay lại khi cùng mẫu xuất hiện lần nữa."
         },
         "exercises": {
-          "label": "Exercise",
+          "label": "Luyện tập",
           "body": "Buổi luyện từ từ vựng, ghi chú lý thuyết hoặc tài liệu nhập — để bài tập gắn với những gì bạn thật sự đã lưu."
         },
         "writing": {
-          "label": "Writing",
+          "label": "Viết",
           "body": "Tài liệu và bộ câu hỏi để dùng ngôn ngữ chủ động, không chỉ nhận ra."
         },
         "listening": {
-          "label": "Listening",
+          "label": "Nghe",
           "body": "Biến media thành luyện nghe trong workspace. Có trên Notoria Pro."
         },
         "speaking": {
-          "label": "Speaking",
+          "label": "Nói",
           "body": "Luyện trực tiếp với gia sư AI, xoay quanh ngôn ngữ bạn đang học. Có trên Notoria Pro."
         }
       },
       "notEverything": {
         "title": "Bạn không cần dùng hết",
         "p1": "Bỏ qua khu vực chưa giúp ngay. Một ngân hàng từ yên tĩnh và vài ghi chú đã có thể là một hệ thống vững.",
-        "p2": "Thêm Exercise khi muốn ôn có cấu trúc. Thêm Writing khi muốn sản xuất. Thêm Listening và Speaking khi nghe và nói là bước hữu ích tiếp theo."
+        "p2": "Thêm Luyện tập khi muốn ôn có cấu trúc. Thêm Viết khi muốn sản xuất. Thêm Nghe và Nói khi nghe và nói là bước hữu ích tiếp theo."
       },
       "cta": {
         "title": "Sẵn sàng bắt đầu?",

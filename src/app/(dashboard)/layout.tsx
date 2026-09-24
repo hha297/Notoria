@@ -17,9 +17,19 @@ import {
   getCurrentSubscription,
   hasActiveProSubscription,
 } from "@/lib/stripe/pro";
-import { displayPlan } from "@/lib/billing/plans";
+import { displayPlan, isIntroOfferEligible } from "@/lib/billing/plans";
+import {
+  getStripePremiumFirstMonthCouponId,
+  getStripeProFirstMonthCouponId,
+} from "@/lib/stripe/config";
 import { createPerfTimer } from "@/lib/perf/dev-timing";
 import { getUserWorkspaces, getActiveWorkspace } from "@/lib/workspace";
+
+function introOfferAvailable() {
+  return Boolean(
+    getStripeProFirstMonthCouponId() && getStripePremiumFirstMonthCouponId(),
+  );
+}
 
 export const preferredRegion = ["fra1"];
 
@@ -74,6 +84,9 @@ export default async function DashboardLayout({
         subscription.scheduledSubscriptionPlan !== displayPlan(subscription)
           ? subscription.scheduledSubscriptionPlan
           : null
+      }
+      introOfferEligible={
+        isIntroOfferEligible(subscription ?? {}) && introOfferAvailable()
       }
     >
       <AiPreferencesProvider initial={aiPreferences}>

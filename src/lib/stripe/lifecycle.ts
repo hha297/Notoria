@@ -186,7 +186,10 @@ export function checkoutSessionParams(input: {
   customerId: string;
   successUrl: string;
   cancelUrl: string;
+  /** Stripe coupon id for first-invoice intro discount, if eligible. */
+  introCouponId?: string | null;
 }) {
+  const introApplied = Boolean(input.introCouponId);
   return {
     mode: "subscription" as const,
     customer: input.customerId,
@@ -194,14 +197,19 @@ export function checkoutSessionParams(input: {
     line_items: [{ price: input.priceId, quantity: 1 }],
     success_url: input.successUrl,
     cancel_url: input.cancelUrl,
+    ...(introApplied
+      ? { discounts: [{ coupon: input.introCouponId as string }] }
+      : {}),
     metadata: {
       userId: input.userId,
       plan: input.plan,
+      introOfferApplied: introApplied ? "true" : "false",
     },
     subscription_data: {
       metadata: {
         userId: input.userId,
         plan: input.plan,
+        introOfferApplied: introApplied ? "true" : "false",
       },
     },
   };

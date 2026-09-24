@@ -52,6 +52,7 @@ export async function POST(request: Request) {
         subscriptionStatus: true,
         stripeCustomerId: true,
         stripeSubscriptionId: true,
+        introOfferUsedAt: true,
       },
     });
 
@@ -69,6 +70,7 @@ export async function POST(request: Request) {
       subscriptionStatus: user.subscriptionStatus,
       stripeCustomerId: user.stripeCustomerId,
       stripeSubscriptionId: user.stripeSubscriptionId,
+      introOfferUsedAt: user.introOfferUsedAt,
       command: parsed.command,
     });
 

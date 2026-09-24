@@ -2,11 +2,25 @@ import { cache } from "react";
 import { NextResponse } from "next/server";
 import type { User } from "@/db/schema";
 import { getQuotaStatuses } from "@/lib/billing/entitlements";
-import { displayPlan, entitlementPlan } from "@/lib/billing/plans";
+import {
+  displayPlan,
+  entitlementPlan,
+  isIntroOfferEligible,
+} from "@/lib/billing/plans";
 import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { getSession } from "@/lib/auth/session";
 import { hasActivePaidPlan, hasProAccess } from "@/lib/auth/paid-access";
+import {
+  getStripePremiumFirstMonthCouponId,
+  getStripeProFirstMonthCouponId,
+} from "@/lib/stripe/config";
 import type { BillingState } from "@/lib/stripe/types";
+
+function introCouponsConfigured() {
+  return Boolean(
+    getStripeProFirstMonthCouponId() && getStripePremiumFirstMonthCouponId(),
+  );
+}
 
 export type SubscriptionSnapshot = Pick<
   User,
@@ -19,6 +33,7 @@ export type SubscriptionSnapshot = Pick<
   | "stripeCancelAtPeriodEnd"
   | "scheduledSubscriptionPlan"
   | "stripeScheduleId"
+  | "introOfferUsedAt"
 >;
 
 export class ProRequiredError extends Error {
@@ -105,6 +120,7 @@ export async function toBillingState(
     | "stripeCurrentPeriodEnd"
     | "stripeCancelAtPeriodEnd"
     | "scheduledSubscriptionPlan"
+    | "introOfferUsedAt"
   >,
 ): Promise<BillingState> {
   const plan = displayPlan(user);
@@ -125,6 +141,8 @@ export async function toBillingState(
     cancelAtPeriodEnd: plan !== "free" && user.stripeCancelAtPeriodEnd && !scheduled,
     scheduledPlan: scheduled,
     hasStripeCustomer: Boolean(user.stripeCustomerId),
+    introOfferEligible:
+      isIntroOfferEligible(user) && introCouponsConfigured(),
     quotas,
   };
 }

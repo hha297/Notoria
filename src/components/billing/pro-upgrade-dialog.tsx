@@ -17,7 +17,7 @@ import {
 } from "@/components/ui/dialog";
 import styles from "@/components/style/billing/pro-upgrade.module.css";
 import { mx } from "@/lib/css-module";
-import { planMonthlyPrice, type PlanId } from "@/lib/billing/plans";
+import { planIntroMonthlyPrice, planMonthlyPrice, type PlanId } from "@/lib/billing/plans";
 import { planDialogCta } from "@/lib/stripe/lifecycle";
 import {
   billingErrorKey,
@@ -41,13 +41,20 @@ export function ProUpgradeDialog({
   openOnResume = false,
 }: ProUpgradeDialogProps) {
   const t = useTranslations("billing");
-  const { plan, cancelAtPeriodEnd, currentPeriodEnd, scheduledPlan } = useProAccess();
+  const {
+    plan,
+    cancelAtPeriodEnd,
+    currentPeriodEnd,
+    scheduledPlan,
+    introOfferEligible,
+  } = useProAccess();
   const [pending, setPending] = useState(false);
   const [selected, setSelected] = useState<PlanId>(plan);
   const [confirm, setConfirm] = useState<ConfirmKind | null>(null);
   const wasOpen = useRef(false);
   const isLocked = variant === "locked";
   const [, startTransition] = useTransition();
+  const showIntro = introOfferEligible && plan === "free";
   const cta = planDialogCta({
     current: plan,
     selected,
@@ -140,6 +147,45 @@ export function ProUpgradeDialog({
           ? t("lockedDescription")
           : t("modalSubtitle");
 
+  const fineprint = (() => {
+    if (selected === plan) {
+      if (cancelAtPeriodEnd) {
+        return t("accessUntil", { plan: currentPlanLabel, date: periodLabel });
+      }
+      if (scheduledPlan === "pro") {
+        return t("switchingToProOn", { date: periodLabel });
+      }
+      if (plan === "premium" || plan === "pro") {
+        return t("premiumActiveFineprint");
+      }
+      return t("cancelAnytime");
+    }
+    if (cta.kind === "none" && cancelAtPeriodEnd && selected === "free") {
+      return t("switchScheduled");
+    }
+    if (cta.kind === "none" && scheduledPlan === selected) {
+      return t("downgradeScheduleHint", { date: periodLabel });
+    }
+    if (cta.kind === "cancel") return t("switchToFreeHint");
+    if (cta.kind === "switch") {
+      return t("downgradeScheduleHint", { date: periodLabel });
+    }
+    if (
+      (cta.kind === "checkout" || cta.kind === "upgrade") &&
+      showIntro &&
+      (selected === "pro" || selected === "premium")
+    ) {
+      return t("introCheckoutHint", {
+        intro: planIntroMonthlyPrice(selected),
+        price: planMonthlyPrice(selected),
+      });
+    }
+    if (cta.kind === "upgrade" || cta.kind === "checkout") {
+      return t("prorationHint");
+    }
+    return t("cancelAnytime");
+  })();
+
   return (
     <>
     <Dialog open={open} onOpenChange={handleOpenChange}>
@@ -187,8 +233,14 @@ export function ProUpgradeDialog({
             />
             <PlanSummary
               name={t("proBadge")}
-              price={planMonthlyPrice("pro")}
+              price={showIntro ? planIntroMonthlyPrice("pro") : planMonthlyPrice("pro")}
+              wasPrice={showIntro ? planMonthlyPrice("pro") : null}
               period={t("pricePeriod")}
+              hint={
+                showIntro
+                  ? t("introFirstMonthOnly", { price: planMonthlyPrice("pro") })
+                  : null
+              }
               description={t("proPlanDescription")}
               selected={selected === "pro"}
               current={plan === "pro"}
@@ -208,8 +260,16 @@ export function ProUpgradeDialog({
             />
             <PlanSummary
               name={t("premiumBadge")}
-              price={planMonthlyPrice("premium")}
+              price={
+                showIntro ? planIntroMonthlyPrice("premium") : planMonthlyPrice("premium")
+              }
+              wasPrice={showIntro ? planMonthlyPrice("premium") : null}
               period={t("pricePeriod")}
+              hint={
+                showIntro
+                  ? t("introFirstMonthOnly", { price: planMonthlyPrice("premium") })
+                  : null
+              }
               description={t("premiumPlanDescription")}
               selected={selected === "premium"}
               current={plan === "premium"}
@@ -315,27 +375,7 @@ export function ProUpgradeDialog({
                 {t(cta.label)}
               </Button>
             ) : null}
-            <p className={mx(styles, "pro-upgrade-fineprint")}>
-              {selected === plan
-                ? cancelAtPeriodEnd
-                  ? t("accessUntil", { plan: currentPlanLabel, date: periodLabel })
-                  : scheduledPlan === "pro"
-                    ? t("switchingToProOn", { date: periodLabel })
-                    : plan === "premium" || plan === "pro"
-                      ? t("premiumActiveFineprint")
-                      : t("cancelAnytime")
-                : cta.kind === "none" && cancelAtPeriodEnd && selected === "free"
-                  ? t("switchScheduled")
-                  : cta.kind === "none" && scheduledPlan === selected
-                    ? t("downgradeScheduleHint", { date: periodLabel })
-                    : cta.kind === "cancel"
-                      ? t("switchToFreeHint")
-                      : cta.kind === "switch"
-                        ? t("downgradeScheduleHint", { date: periodLabel })
-                        : cta.kind === "upgrade" || cta.kind === "checkout"
-                          ? t("prorationHint")
-                          : t("cancelAnytime")}
-            </p>
+            <p className={mx(styles, "pro-upgrade-fineprint")}>{fineprint}</p>
           </div>
         </div>
       </DialogContent>
@@ -416,7 +456,9 @@ export function ProUpgradeDialog({
 function PlanSummary({
   name,
   price,
+  wasPrice = null,
   period,
+  hint = null,
   description,
   selected = false,
   current = false,
@@ -427,7 +469,9 @@ function PlanSummary({
 }: {
   name: string;
   price: string;
+  wasPrice?: string | null;
   period?: string;
+  hint?: string | null;
   description: string;
   selected?: boolean;
   current?: boolean;
@@ -466,11 +510,15 @@ function PlanSummary({
         ) : null}
       </div>
       <div className={mx(styles, "pro-upgrade-plan-price")}>
+        {wasPrice ? (
+          <span className={mx(styles, "pro-upgrade-plan-was")}>{wasPrice}</span>
+        ) : null}
         <span className={mx(styles, "pro-upgrade-plan-amount")}>{price}</span>
         {period ? (
           <span className={mx(styles, "pro-upgrade-plan-period")}>{period}</span>
         ) : null}
       </div>
+      {hint ? <p className={mx(styles, "pro-upgrade-plan-hint")}>{hint}</p> : null}
       <p className={mx(styles, "pro-upgrade-plan-copy")}>{description}</p>
       {ends ? <p className={mx(styles, "pro-upgrade-plan-copy")}>{ends}</p> : null}
     </button>

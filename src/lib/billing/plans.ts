@@ -124,6 +124,28 @@ export const PLAN_PRICES = {
   premium: { monthlyCents: 1999, currency: "EUR" },
 } as const;
 
+/** Display-only first-month amount after 50% off (Stripe coupon does the real math). */
+export const INTRO_OFFER_PERCENT_OFF = 50;
+
+export function planIntroMonthlyCents(plan: "pro" | "premium") {
+  return Math.floor(PLAN_PRICES[plan].monthlyCents / 2);
+}
+
+export function planIntroMonthlyPrice(plan: "pro" | "premium") {
+  const price = PLAN_PRICES[plan];
+  return formatMonthlyPrice(planIntroMonthlyCents(plan), price.currency);
+}
+
+/**
+ * Lifetime eligibility for the first-month intro coupon.
+ * Independent of current Free/Pro/Premium status — once used, never again.
+ */
+export function isIntroOfferEligible(user: {
+  introOfferUsedAt?: Date | string | null;
+} | null | undefined) {
+  return !user?.introOfferUsedAt;
+}
+
 /**
  * Premium capabilities with a working Coach surface.
  * Scaffolded-only entitlements stay in CAPABILITY_FEATURES but stay out of marketing.

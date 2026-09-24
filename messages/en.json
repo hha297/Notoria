@@ -2335,6 +2335,8 @@
     "price": "€9.99 / month",
     "priceAmount": "€9.99",
     "pricePeriod": "/month",
+    "introFirstMonthOnly": "First month only · Then {price}/month",
+    "introCheckoutHint": "First month {intro}, then {price}/month. Cancel anytime.",
     "freePrice": "€0",
     "mostPopular": "Most Popular",
     "currentPlan": "Current Plan",
@@ -3046,7 +3048,10 @@
     "terms": "Terms of Use",
     "privacyTitle": "Privacy Policy",
     "termsTitle": "Terms of Use",
+    "privacyDescription": "How Notoria collects, uses, and deletes personal data and learning content for its private language-learning workspace.",
+    "termsDescription": "Terms for using Notoria’s private language-learning workspace, accounts, AI features, and Notoria Pro billing.",
     "updated": "Last updated {date}",
+    "updatedDate": "23 September 2026",
     "backToSignIn": "Back to sign in",
     "backHome": "Back to Notoria",
     "authFooter": "Privacy · Terms",
@@ -3055,7 +3060,424 @@
     "registerAgreement": "By creating an account, you agree to the <terms>Terms of Use</terms> and <privacy>Privacy Policy</privacy>.",
     "settingsLinksTitle": "Policies",
     "settingsLinksDescription": "Read how Notoria handles your data and the rules for using the service.",
-    "contactEmail": "contact@notoria.fi"
+    "contactEmail": "contact@notoria.fi",
+    "privacyPolicy": {
+      "intro": "This Privacy Policy explains how Notoria (<site>www.notoria.fi</site>) handles personal data for its private language-learning web app. It is written to match how the product works today. If a practice is not described here, we do not claim to do it.",
+      "tocTitle": "On this page",
+      "tocAria": "On this page",
+      "toc": {
+        "controller": "Who is responsible",
+        "scope": "What this policy covers",
+        "data": "Data we process",
+        "purposes": "Why we process data",
+        "auth": "Accounts and sign-in",
+        "ai": "AI features",
+        "payments": "Payments (Notoria Pro)",
+        "processors": "Service providers",
+        "cookies": "Cookies and device storage",
+        "transfers": "International transfers",
+        "retention": "How long we keep data",
+        "deletion": "Export and account deletion",
+        "rights": "Your rights (GDPR)",
+        "children": "Children",
+        "changes": "Changes",
+        "contact": "Contact"
+      },
+      "sections": {
+        "controller": {
+          "title": "1. Who is responsible",
+          "p1": "Notoria is the language-learning service at <site>www.notoria.fi</site>, offered to users in Finland and the wider EU/EEA.",
+          "p2": "For privacy questions, data-subject requests, and other user contact, email <contact>contact@notoria.fi</contact>.",
+          "p3": "A registered company name and postal address for the data controller are not published in the current product. If you need formal controller identification for a GDPR request, email <contact>contact@notoria.fi</contact> and we will provide it."
+        },
+        "scope": {
+          "title": "2. What this policy covers",
+          "p1": "It covers personal data and learning content processed when you:",
+          "list": [
+            "create or use an account",
+            "save material in private workspaces",
+            "subscribe to Notoria Pro",
+            "use optional AI-assisted tools",
+            "upload media for listening or profile use",
+            "use speaking practice",
+            "send feedback or contact us"
+          ],
+          "p2": "The current application code does not include a third-party marketing analytics or advertising SDK. We do not claim to use trackers that are not present in the product."
+        },
+        "data": {
+          "title": "3. Data we process",
+          "p1": "Notoria processes different kinds of data for different reasons. The main categories are:",
+          "accountAuth": {
+            "title": "Account and authentication",
+            "list": [
+              "Name and email address",
+              "Password hash for email/password accounts (passwords are never stored in plain text)",
+              "Google account identifiers and OAuth tokens if you sign in with Google",
+              "Optional profile photo (avatar)",
+              "Account role and created/updated timestamps"
+            ]
+          },
+          "learningContent": {
+            "title": "Learning content you create",
+            "p1": "Content you add in private workspaces, such as vocabulary, theory notes, writing documents, exercises and imported practice material, listening lessons (including media references and transcripts), speaking session transcripts and related session fields, folders, tags, and study progress such as flashcard reviews.",
+            "p2": "This is your learning material. Notoria stores it so you can return to it and practise from it."
+          },
+          "subscription": {
+            "title": "Subscription and payment metadata",
+            "list": [
+              "Plan (free or Pro) and subscription status",
+              "Stripe customer and subscription identifiers, and current period end when applicable"
+            ],
+            "p1": "Card numbers and payment-method secrets stay with Stripe. Notoria keeps only the billing metadata needed to reflect your Pro status."
+          },
+          "device": {
+            "title": "Device and preference data",
+            "p1": "Cookies and browser storage used for sign-in, locale, active workspace, AI assistance preferences, theme, and similar product settings. See <cookies>Cookies and device storage</cookies>."
+          },
+          "support": {
+            "title": "Support and feedback",
+            "list0": "Emails you send to <contact>contact@notoria.fi</contact>",
+            "list1": "In-app feedback from Support (message, feedback type, your email, whether you are signed in, optional account id, page path, user-agent, and up to three optional image attachments)",
+            "p1": "Feedback is delivered by email to Notoria’s technical inbox (<technical></technical>). It is not stored as a separate ticket database inside Notoria."
+          }
+        },
+        "purposes": {
+          "title": "4. Why we process data",
+          "headers": {
+            "purpose": "Purpose",
+            "basis": "Typical GDPR basis"
+          },
+          "rows": [
+            {
+              "purpose": "Provide accounts, workspaces, and your saved learning material",
+              "basis": "Contract (Art. 6(1)(b))"
+            },
+            {
+              "purpose": "Authenticate you (email/password or Google) and reset passwords",
+              "basis": "Contract (Art. 6(1)(b))"
+            },
+            {
+              "purpose": "Run Notoria Pro billing and subscription status via Stripe",
+              "basis": "Contract (Art. 6(1)(b))"
+            },
+            {
+              "purpose": "Optional AI help, listening transcription, and speaking practice when you use those features",
+              "basis": "Contract (Art. 6(1)(b)); preference controls where available"
+            },
+            {
+              "purpose": "Keep the service secure and reliable (abuse prevention, debugging)",
+              "basis": "Legitimate interests (Art. 6(1)(f))"
+            },
+            {
+              "purpose": "Respond to support and feedback messages",
+              "basis": "Legitimate interests / contract, depending on the request"
+            },
+            {
+              "purpose": "Comply with legal obligations",
+              "basis": "Legal obligation (Art. 6(1)(c))"
+            }
+          ],
+          "p1": "If you need a formal legal-basis note for a specific activity, email <contact>contact@notoria.fi</contact>."
+        },
+        "auth": {
+          "title": "5. Accounts and sign-in",
+          "p1": "Notoria uses Auth.js (NextAuth) with a JWT session. You can sign in with email and password, or with Google OAuth when Google sign-in is configured.",
+          "p2": "Password-reset emails are sent only for accounts that have a password. Reset tokens are stored hashed, expire after 30 minutes, and are used only to set a new password."
+        },
+        "ai": {
+          "title": "6. AI features",
+          "p1": "Optional AI features in the current product use <strong>OpenAI</strong>. Depending on the tool you use, Notoria may send relevant learning content — for example vocabulary items, writing text or selections, exercise or theory context, listening transcripts, speaking transcripts, or live audio for the speaking tutor.",
+          "p2": "AI assistance preferences (including whether assistance is enabled) are stored in a browser cookie so the product can respect your settings. Many server actions that call the model check that assistance is enabled first. Turning assistance off in <settings>Settings</settings> blocks AI tools that require it.",
+          "p3": "Listening transcription via AssemblyAI can still run when you use Listening features that need a transcript, because transcription is part of that media workflow rather than the optional “AI assistance” preference alone.",
+          "p4": "The current codebase does not use other large-language-model providers besides OpenAI. OpenAI processes data under its own terms and privacy policy as a processor for these features."
+        },
+        "payments": {
+          "title": "7. Payments (Notoria Pro)",
+          "p1": "Paid subscriptions are handled by <strong>Stripe</strong>. Checkout, invoices, payment methods, and cancellation run through Stripe Checkout and the Stripe Customer Portal. Stripe webhooks update your plan and status in Notoria.",
+          "p2": "Stripe processes payment data as a payment provider. See Stripe’s own privacy documentation for card handling."
+        },
+        "processors": {
+          "title": "8. Service providers",
+          "p1": "Depending on which features you use, personal data or learning content may be processed by:",
+          "headers": {
+            "provider": "Provider",
+            "role": "Role in Notoria"
+          },
+          "rows": [
+            {
+              "provider": "PostgreSQL database (production documented as Neon)",
+              "role": "Account and learning data"
+            },
+            {
+              "provider": "Vercel",
+              "role": "Application hosting (configured region includes Frankfurt / fra1)"
+            },
+            {
+              "provider": "Cloudinary",
+              "role": "Avatars, listening media, editor images, and exercise-import files"
+            },
+            {
+              "provider": "AssemblyAI",
+              "role": "Transcription of listening audio"
+            },
+            {
+              "provider": "Stream Video",
+              "role": "Live speaking calls; automatic transcription; session fields such as transcript URLs (and recording URLs only if a recording event is later received)"
+            },
+            {
+              "provider": "OpenAI",
+              "role": "Optional AI assistance and speaking-tutor realtime audio"
+            },
+            {
+              "provider": "Resend",
+              "role": "Password-reset email and Support feedback delivery"
+            },
+            {
+              "provider": "Stripe",
+              "role": "Notoria Pro checkout, portal, and subscription status"
+            },
+            {
+              "provider": "Google",
+              "role": "OAuth sign-in when you choose Google; web fonts for the UI"
+            },
+            {
+              "provider": "Dicebear",
+              "role": "Generated avatar images used in speaking sessions (from a name seed; no account password is sent)"
+            }
+          ],
+          "p2": "Speaking calls are created with transcription enabled. Recording is disabled at call creation in the current implementation; a recording URL is stored only if the product later receives a recording-ready event from Stream."
+        },
+        "cookies": {
+          "title": "9. Cookies and device storage",
+          "p1": "Notoria uses cookies and similar storage for necessary product functions. There is no separate Cookie Policy because the current implementation does not include advertising or analytics cookie programmes that would require one.",
+          "cookiesTitle": "Cookies used by the app",
+          "headers": {
+            "cookie": "Cookie",
+            "purpose": "Purpose"
+          },
+          "rows": [
+            {
+              "cookie": "Auth.js session cookie",
+              "purpose": "Keeps you signed in (JWT session; library default naming)",
+              "code": false
+            },
+            {
+              "cookie": "notoria-locale",
+              "purpose": "UI language",
+              "code": true
+            },
+            {
+              "cookie": "notoria-workspace",
+              "purpose": "Active workspace",
+              "code": true
+            },
+            {
+              "cookie": "notoria-ai-preferences",
+              "purpose": "AI assistance preferences",
+              "code": true
+            },
+            {
+              "cookie": "sidebar_state",
+              "purpose": "Sidebar open/closed preference",
+              "code": true
+            }
+          ],
+          "storageTitle": "Local and session storage",
+          "p2": "Your browser may also store theme preference (via next-themes), onboarding/tutorial flags, keyboard and motion preferences, view-mode choices, temporary exercise or flashcard session state, and similar client-only settings.",
+          "p3": "Clearing local preferences in Settings removes those device preferences. It does not delete your account or workspace content on the server."
+        },
+        "transfers": {
+          "title": "10. International transfers",
+          "p1": "Some providers above are based outside the EEA (for example in the United States) or may process data in more than one region. Where personal data leaves the EEA/UK, transfers rely on the safeguards those providers offer under applicable law — such as Standard Contractual Clauses where they apply — and on their published privacy terms.",
+          "p2": "Application hosting for Notoria is configured toward the Frankfurt region (fra1). Ask <contact>contact@notoria.fi</contact> if you need help finding the relevant provider documentation for a specific feature."
+        },
+        "retention": {
+          "title": "11. How long we keep data",
+          "list": [
+            "Account and learning data are kept while your account remains open so you can use the service",
+            "Password-reset tokens expire after 30 minutes",
+            "Subscription metadata is kept as needed to reflect your current Pro status and Stripe billing relationship",
+            "Support and feedback emails are retained as long as needed to handle your request and related follow-up"
+          ],
+          "p1": "Exact backup retention windows for infrastructure providers are not hard-coded in the application and may follow those providers’ operational practices. Contact us if you need clarification for a deletion request."
+        },
+        "deletion": {
+          "title": "12. Export and account deletion",
+          "exportTitle": "Export",
+          "exportP1": "From <account>Account</account> you can download a JSON backup of workspaces and learning content (including vocabulary, theory notes, exercises/writing, listening lessons, and speaking sessions). Media files are referenced by URL rather than embedded as binary files.",
+          "exportP2": "The current export does not include every account-related record. For example, flashcard progress/reviews and exercise-import source records are not part of the JSON backup. OAuth tokens, password hashes, and Stripe identifiers are not exported.",
+          "deleteTitle": "Delete account",
+          "deleteP1": "You can permanently delete your account from <account>Account</account>. When deletion succeeds, Notoria:",
+          "deleteList": [
+            "deletes your user record and cascaded learning data from Notoria’s database",
+            "cancels and removes related Stripe customer data where Stripe is configured (best effort)",
+            "destroys avatar media and listening-lesson media that the deletion flow is implemented to remove from Cloudinary"
+          ],
+          "deleteP2": "The current deletion flow does not claim to purge every third-party artefact automatically. In particular, some Cloudinary assets (such as editor images or exercise-import files) and Stream speaking-call artefacts may remain subject to those providers until cleaned up separately or purged under their own schedules.",
+          "deleteP3": "After deletion, limited residual copies may also remain briefly in encrypted backups or logs until those systems rotate. If something specific remains after you delete your account, email <contact>contact@notoria.fi</contact>."
+        },
+        "rights": {
+          "title": "13. Your rights (GDPR)",
+          "p1": "If you are in the EU/EEA or otherwise protected by GDPR, you may have the right to:",
+          "list": [
+            "access your personal data",
+            "correct inaccurate data",
+            "erase data (including by deleting your account)",
+            "restrict or object to certain processing",
+            "receive a portable copy of data you provided (see Export above)",
+            "withdraw consent where processing is based on consent"
+          ],
+          "listComplaint": "lodge a complaint with a supervisory authority — in Finland, the Office of the Data Protection Ombudsman (<ombudsman>tietosuoja.fi</ombudsman>)",
+          "p2": "To exercise these rights, email <contact>contact@notoria.fi</contact>. We may need to verify that the request comes from the account holder."
+        },
+        "children": {
+          "title": "14. Children",
+          "p1": "Notoria requires an account and is built as a personal learning workspace. The product does not implement a dedicated age-gate. It is not directed at children. If you believe a child’s data has been submitted without appropriate authority, contact <contact>contact@notoria.fi</contact>."
+        },
+        "changes": {
+          "title": "15. Changes",
+          "p1": "We may update this Privacy Policy when the product or legal requirements change. The “Last updated” date at the top of the page changes when a revision is published.",
+          "p2": "When a change is material, we will communicate it in a reasonable way available at the time — for example by updating this page and, where appropriate, an in-product notice or email."
+        },
+        "contact": {
+          "title": "16. Contact",
+          "p1": "Privacy and general contact: <contact>contact@notoria.fi</contact>",
+          "p2": "Product feedback technical inbox (also listed on <contactPage>Contact Us</contactPage>): <technical></technical>",
+          "p3": "Website: <site>www.notoria.fi</site>"
+        }
+      }
+    },
+    "termsOfUse": {
+      "intro": "These Terms of Use explain the rules for using Notoria at <site>www.notoria.fi</site>. They describe how the product works today: private learning workspaces, optional Notoria Pro billing through Stripe, and AI-assisted features. They are not a substitute for advice from a lawyer about your specific situation.",
+      "tocTitle": "On this page",
+      "tocAria": "On this page",
+      "toc": {
+        "agreement": "Agreement",
+        "service": "The service",
+        "accounts": "Accounts",
+        "content": "Your content",
+        "acceptable-use": "Acceptable use",
+        "ip": "Intellectual property",
+        "ai": "AI-generated output",
+        "plans": "Free plan and Notoria Pro",
+        "billing": "Subscription and billing",
+        "refunds": "Refunds and consumer rights",
+        "availability": "Availability",
+        "termination": "Suspension and termination",
+        "liability": "Disclaimer and liability",
+        "changes": "Changes",
+        "law": "Governing law",
+        "contact": "Contact"
+      },
+      "sections": {
+        "agreement": {
+          "title": "1. Agreement",
+          "p1": "By creating an account or using Notoria, you agree to these Terms and to the <privacy>Privacy Policy</privacy>. If you do not agree, do not use the service.",
+          "p2": "Questions about these Terms: <contact>contact@notoria.fi</contact>."
+        },
+        "service": {
+          "title": "2. The service",
+          "p1": "Notoria is a private language-learning web app. You can create workspaces and keep learning material such as vocabulary, theory notes, writing, exercises, listening lessons, and speaking sessions.",
+          "p2": "Some features are available on the free plan. Notoria Pro unlocks additional capabilities as shown in the product and on your <account>Account</account> page — including Listening, Speaking, certain AI study tools, exercise import, and paid document export formats. Feature availability can change as the product evolves.",
+          "p3": "Notoria is for personal language learning. It is not a school, exam authority, or professional advice service."
+        },
+        "accounts": {
+          "title": "3. Accounts",
+          "list": [
+            "Provide accurate account information",
+            "Keep your password and account access secure",
+            "Sign in with email and password, or with Google when Google sign-in is available",
+            "Use Notoria only if you are able to enter into a binding agreement under applicable law"
+          ],
+          "p1": "The product does not implement a separate age-gate. If you believe an account was created without appropriate authority, contact <contact>contact@notoria.fi</contact>.",
+          "p2": "Notify us at <contact>contact@notoria.fi</contact> if you think your account has been compromised."
+        },
+        "content": {
+          "title": "4. Your content",
+          "p1": "You keep ownership of the learning content you create or upload in Notoria.",
+          "p2": "You grant Notoria a limited licence to host, process, display, and back up that content so the service can function — including sending relevant material to AI, transcription, media, or payment providers when you use those features. That licence exists only to operate Notoria for you. It does not transfer ownership of your content to us.",
+          "p3": "You are responsible for what you store. Do not upload material you do not have the right to use, and do not use Notoria to store unlawful content."
+        },
+        "acceptableUse": {
+          "title": "5. Acceptable use",
+          "p1": "You agree not to:",
+          "list": [
+            "break the law or infringe others’ rights",
+            "attempt to access other users’ private workspaces or accounts",
+            "probe, overload, or disrupt the service, APIs, or related infrastructure",
+            "abuse AI, transcription, listening, or speaking features in ways that harm others or circumvent plan limits through fraud",
+            "reverse engineer the service except where mandatory local law allows",
+            "misrepresent your identity to Stripe, Google, or Notoria support"
+          ]
+        },
+        "ip": {
+          "title": "6. Intellectual property",
+          "p1": "Notoria’s name, branding, software, and product design are owned by Notoria or its licensors. These Terms do not transfer ownership of the product to you.",
+          "p2": "Your learning content remains yours, subject to the limited licence in section 4."
+        },
+        "ai": {
+          "title": "7. AI-generated output",
+          "p1": "Some features can check, suggest, generate, transcribe, summarise, or tutor based on your material. Output may be incomplete, incorrect, or unsuitable for your goal. You remain responsible for reviewing AI results before relying on them for study, exams, professional use, or publication.",
+          "p2": "AI features may be unavailable if assistance is turned off in <settings>Settings</settings>, if your plan does not include a particular tool, or if a provider is temporarily unreachable.",
+          "p3": "Not all AI helpers require Notoria Pro. The product shows which tools are free and which need Pro."
+        },
+        "plans": {
+          "title": "8. Free plan and Notoria Pro",
+          "p1": "The free plan covers core practice with your own vocabulary and related study tools as shown in the product.",
+          "p2": "Notoria Pro is a paid subscription that unlocks additional features. In the current product, that typically includes Listening, Speaking, exercise import, form-a-sentence practice, many AI-assisted study tools, and PDF/DOCX document export. Some lighter AI helpers (such as certain vocabulary or editor formatting aids) may remain available on the free plan when AI assistance is enabled.",
+          "p3": "Pro access is tied to your user account, so it applies across the workspaces under that account. Accounts with an administrator role may have Pro-level access without a personal Stripe subscription.",
+          "p4": "The price that applies to your purchase is the price shown at Stripe Checkout for the current Pro plan. Any price shown elsewhere in the product (for example on Account) is indicative only and must match the active Stripe price configuration."
+        },
+        "billing": {
+          "title": "9. Subscription, billing, and cancellation",
+          "list0": "Pro subscriptions are billed through <strong>Stripe</strong>",
+          "list1": "You can start checkout from <account>Account</account> or from locked Pro controls in the app",
+          "list2": "From Account, you can open the Stripe Customer Portal to view invoices, update payment methods, and cancel the subscription",
+          "list3": "Cancellation follows Stripe’s Customer Portal behaviour for your subscription",
+          "p1": "After you cancel, Pro access continues only while your Stripe subscription status still grants Pro in the product. In the current implementation, statuses treated as Pro include <code>active</code>, <code>trialing</code>, and <code>past_due</code>. When the status no longer qualifies, the account returns to the free plan.",
+          "p2": "If a payment fails, Stripe may move the subscription to <code>past_due</code> or another status. Notoria syncs that status from Stripe webhooks. While the status remains <code>past_due</code>, Pro features stay available under the current access rules; if the subscription later becomes cancelled or otherwise ineligible, Pro access ends.",
+          "p3": "Deleting your Notoria account cancels the Stripe subscription immediately (best effort) as part of account deletion. That is different from cancelling renewal through the Customer Portal while keeping the account."
+        },
+        "refunds": {
+          "title": "10. Refunds and consumer rights",
+          "p1": "Notoria does not implement an automatic in-app refund button. Cancellation is available through the Stripe Customer Portal.",
+          "p2": "If you want a refund review, or if EU/EEA consumer rules for digital content or distance contracts give you rights that apply to your purchase, email <contact>contact@notoria.fi</contact> with your account email and Stripe receipt details. We will handle the request in line with applicable law and Stripe’s tools.",
+          "p3": "Nothing in these Terms is intended to limit mandatory consumer rights that cannot be waived under Finnish or EU law."
+        },
+        "availability": {
+          "title": "11. Availability",
+          "p1": "We aim to keep Notoria available, but we do not promise uninterrupted or error-free service. Maintenance, provider outages, or changes to third-party AI, media, email, or payment services can affect features."
+        },
+        "termination": {
+          "title": "12. Suspension and termination",
+          "p1": "You may delete your account at any time from <account>Account</account>. Deletion permanently removes your account and associated learning data from Notoria’s database, subject to the details and residual-processor notes in the <privacy>Privacy Policy</privacy>. You can export a JSON backup from Account before you delete.",
+          "p2": "We may suspend or terminate access if you seriously or repeatedly breach these Terms, misuse the service, or create security or legal risk. Where reasonable and lawful, we will try to notify you at the email on your account."
+        },
+        "liability": {
+          "title": "13. Disclaimer and liability",
+          "p1": "Notoria is provided on an “as available” basis for personal language learning. To the fullest extent permitted by applicable law, we disclaim warranties that are not required by law.",
+          "p2": "To the fullest extent permitted by applicable law, Notoria is not liable for indirect, incidental, special, consequential, or lost-data damages arising from your use of the service or reliance on AI output. Where liability cannot be excluded, it is limited to the amount you paid for Notoria Pro in the three months before the claim, or any greater amount required by mandatory law.",
+          "p3": "These limits do not exclude liability that Finnish or EU law does not allow to be limited — including liability that cannot be waived for consumers, and liability for death or personal injury caused by negligence where such rules apply."
+        },
+        "changes": {
+          "title": "14. Changes to the service and Terms",
+          "p1": "We may update features, plans, and these Terms. The “Last updated” date on this page changes when a new version is published.",
+          "p2": "If a change is material, we will provide reasonable notice when practical — for example by updating this page and, where appropriate, an in-product notice or email. Continued use after the effective date means you accept the updated Terms, except where mandatory law requires a different process."
+        },
+        "law": {
+          "title": "15. Governing law",
+          "p1": "These Terms are governed by the laws of Finland, without regard to conflict-of-law rules that would require another jurisdiction’s law.",
+          "p2": "Courts in Finland have jurisdiction, without prejudice to mandatory consumer protections that allow you to bring proceedings in your country of residence inside the EU/EEA.",
+          "p3": "Formal operator identity beyond the Notoria service and contact email is not published in the current product. For contractual or regulatory correspondence, use <contact>contact@notoria.fi</contact>."
+        },
+        "contact": {
+          "title": "16. Contact",
+          "p1": "Billing questions, Terms questions, and related legal notices: <contact>contact@notoria.fi</contact>",
+          "p2": "Website: <site>www.notoria.fi</site>",
+          "p3": "For general support options and the technical feedback inbox, see <contactPage>Contact Us</contactPage> and <support>Support</support>."
+        }
+      }
+    }
   },
   "footer": {
     "navLabel": "Site links",

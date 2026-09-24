@@ -14,5 +14,7 @@ export type BillingState = {
   /** Future paid plan after period end (e.g. Premium → Pro). Null if none. */
   scheduledPlan: PlanId | null;
   hasStripeCustomer: boolean;
+  /** Server-side: user has never consumed the lifetime first-month intro offer. */
+  introOfferEligible: boolean;
   quotas: QuotaStatus[];
 };

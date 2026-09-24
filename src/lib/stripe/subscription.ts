@@ -1,4 +1,4 @@
-import { eq } from "drizzle-orm";
+import { and, eq, isNull } from "drizzle-orm";
 import type Stripe from "stripe";
 import { db } from "@/db";
 import { users, type SubscriptionPlan } from "@/db/schema";
@@ -18,6 +18,25 @@ import {
 function asId(value: string | { id: string } | null | undefined) {
   if (!value) return null;
   return typeof value === "string" ? value : value.id;
+}
+
+/** Idempotent: only the first successful write sets the lifetime flag. */
+export async function markIntroOfferUsed(userId: string, at = new Date()) {
+  await db
+    .update(users)
+    .set({
+      introOfferUsedAt: at,
+      updatedAt: at,
+    })
+    .where(and(eq(users.id, userId), isNull(users.introOfferUsedAt)));
+}
+
+function subscriptionAppliedIntroOffer(subscription: Stripe.Subscription) {
+  return subscription.metadata?.introOfferApplied === "true";
+}
+
+function checkoutAppliedIntroOffer(session: Stripe.Checkout.Session) {
+  return session.metadata?.introOfferApplied === "true";
 }
 
 export function planFromStripeStatus(
@@ -310,11 +329,23 @@ export async function syncCheckoutSession(session: Stripe.Checkout.Session) {
   }
 
   const subscription = await retrieveSubscription(subscriptionId);
-  return syncUserSubscription({
+  const syncedUserId = await syncUserSubscription({
     userId,
     customerId,
     subscription,
   });
+
+  // Only consume after Stripe reports payment succeeded — not on abandoned Checkout.
+  if (
+    syncedUserId &&
+    session.payment_status === "paid" &&
+    (checkoutAppliedIntroOffer(session) ||
+      subscriptionAppliedIntroOffer(subscription))
+  ) {
+    await markIntroOfferUsed(syncedUserId);
+  }
+
+  return syncedUserId;
 }
 
 export async function syncStripeSubscriptionObject(
@@ -345,9 +376,20 @@ export async function syncStripeInvoice(invoice: Stripe.Invoice) {
   }
 
   const subscription = await retrieveSubscription(subscriptionId);
-  return syncUserSubscription({
+  const syncedUserId = await syncUserSubscription({
     userId: subscription.metadata?.userId,
     customerId,
     subscription,
   });
+
+  // First paid invoice with intro metadata → consume lifetime offer (idempotent).
+  if (
+    syncedUserId &&
+    invoice.status === "paid" &&
+    subscriptionAppliedIntroOffer(subscription)
+  ) {
+    await markIntroOfferUsed(syncedUserId);
+  }
+
+  return syncedUserId;
 }

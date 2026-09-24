@@ -191,10 +191,29 @@
   color: var(--ink);
 }
 
+.pro-upgrade-plan-was {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--muted-foreground);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
 .pro-upgrade-plan-period {
   font-size: 0.72rem;
   line-height: 1.35;
   color: var(--muted-foreground);
+}
+
+.pro-upgrade-plan-hint {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: color-mix(in oklab, var(--accent-lime) 55%, var(--ink));
 }
 
 .pro-upgrade-plan-copy {

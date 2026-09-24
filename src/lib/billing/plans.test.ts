@@ -6,7 +6,11 @@ import {
   entitlementPlan,
   featureEnabled,
   getFeatureAccess,
+  isIntroOfferEligible,
   planForStripePrice,
+  planIntroMonthlyCents,
+  planIntroMonthlyPrice,
+  planMonthlyPrice,
   quotaResetAt,
   usageDateUtc,
 } from "@/lib/billing/plans";
@@ -252,5 +256,37 @@ describe("usage ledger", () => {
       expect(second.reused).toBe(true);
     }
     expect(ledger.getCount("u", "ai_exercise", "2026-09-23")).toBe(1);
+  });
+});
+
+describe("introductory offer", () => {
+  it("is eligible only when introOfferUsedAt is unset", () => {
+    expect(isIntroOfferEligible(null)).toBe(true);
+    expect(isIntroOfferEligible({})).toBe(true);
+    expect(isIntroOfferEligible({ introOfferUsedAt: null })).toBe(true);
+    expect(
+      isIntroOfferEligible({ introOfferUsedAt: new Date("2026-01-01") }),
+    ).toBe(false);
+    expect(
+      isIntroOfferEligible({ introOfferUsedAt: "2026-01-01T00:00:00.000Z" }),
+    ).toBe(false);
+  });
+
+  it("does not regain eligibility when the user is currently Free", () => {
+    // Current plan is irrelevant — only the lifetime timestamp matters.
+    expect(
+      isIntroOfferEligible({
+        introOfferUsedAt: new Date("2026-03-01"),
+      }),
+    ).toBe(false);
+  });
+
+  it("shows half-price display amounts without changing the catalog price", () => {
+    expect(planMonthlyPrice("pro")).toBe("€9.99");
+    expect(planMonthlyPrice("premium")).toBe("€19.99");
+    expect(planIntroMonthlyCents("pro")).toBe(499);
+    expect(planIntroMonthlyCents("premium")).toBe(999);
+    expect(planIntroMonthlyPrice("pro")).toBe("€4.99");
+    expect(planIntroMonthlyPrice("premium")).toBe("€9.99");
   });
 });

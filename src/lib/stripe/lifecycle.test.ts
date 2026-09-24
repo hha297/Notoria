@@ -124,6 +124,42 @@ describe("billing commands", () => {
     expect(checkout.line_items).toEqual([{ price: "price_pro", quantity: 1 }]);
     expect(checkout.customer).toBe("cus_1");
     expect(checkout).not.toHaveProperty("customer_email");
+    expect(checkout).not.toHaveProperty("discounts");
+    expect(checkout.metadata).toMatchObject({
+      introOfferApplied: "false",
+      plan: "pro",
+    });
+    expect(checkout.subscription_data.metadata).toMatchObject({
+      introOfferApplied: "false",
+    });
+
+    const withIntro = checkoutSessionParams({
+      priceId: "price_pro",
+      userId: "user_1",
+      plan: "pro",
+      customerId: "cus_1",
+      successUrl: "https://app.test/ok",
+      cancelUrl: "https://app.test/cancel",
+      introCouponId: "coup_pro_intro",
+    });
+    expect(withIntro.discounts).toEqual([{ coupon: "coup_pro_intro" }]);
+    expect(withIntro.line_items).toEqual([{ price: "price_pro", quantity: 1 }]);
+    expect(withIntro.metadata.introOfferApplied).toBe("true");
+    expect(withIntro.subscription_data.metadata.introOfferApplied).toBe("true");
+
+    const premiumIntro = checkoutSessionParams({
+      priceId: "price_premium",
+      userId: "user_1",
+      plan: "premium",
+      customerId: "cus_1",
+      successUrl: "https://app.test/ok",
+      cancelUrl: "https://app.test/cancel",
+      introCouponId: "coup_premium_intro",
+    });
+    expect(premiumIntro.discounts).toEqual([{ coupon: "coup_premium_intro" }]);
+    expect(premiumIntro.line_items).toEqual([
+      { price: "price_premium", quantity: 1 },
+    ]);
 
     const update = switchUpdateParams({
       itemId: "si_1",
@@ -135,6 +171,7 @@ describe("billing commands", () => {
     expect(update.payment_behavior).toBe("error_if_incomplete");
     expect(update.cancel_at_period_end).toBe(false);
     expect(update.items).toEqual([{ id: "si_1", price: "price_premium" }]);
+    expect(update).not.toHaveProperty("discounts");
   });
 });
 
@@ -182,7 +219,7 @@ describe("subscription sync", () => {
     expect(row.subscriptionPlan).toBe("pro");
     expect(row.stripeCancelAtPeriodEnd).toBe(true);
     expect(displayPlan(row)).toBe("pro");
-    expect(getFeatureAccess("pro", "ai_meeting")).toEqual({ kind: "quota", limit: null });
+    expect(getFeatureAccess("pro", "ai_meeting")).toEqual({ kind: "quota", limit: 10 });
   });
 
   it("keeps Premium when a Pro downgrade is scheduled", () => {

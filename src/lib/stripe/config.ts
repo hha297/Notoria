@@ -29,6 +29,22 @@ export function getStripePremiumPriceId() {
   return priceId;
 }
 
+/** Optional: Pro first-month 50% coupon (duration once). Null if unset. */
+export function getStripeProFirstMonthCouponId() {
+  return process.env.STRIPE_PRO_FIRST_MONTH_COUPON_ID?.trim() || null;
+}
+
+/** Optional: Premium first-month 50% coupon (duration once). Null if unset. */
+export function getStripePremiumFirstMonthCouponId() {
+  return process.env.STRIPE_PREMIUM_FIRST_MONTH_COUPON_ID?.trim() || null;
+}
+
+export function stripeIntroCouponId(plan: "pro" | "premium") {
+  return plan === "premium"
+    ? getStripePremiumFirstMonthCouponId()
+    : getStripeProFirstMonthCouponId();
+}
+
 export function stripePriceEnv() {
   const pro = process.env.STRIPE_PRO_PRICE_ID?.trim();
   const premium = process.env.STRIPE_PREMIUM_PRICE_ID?.trim() || null;

@@ -2150,6 +2150,8 @@
     "price": "9,99 € / kuukausi",
     "priceAmount": "9,99 €",
     "pricePeriod": "/kk",
+    "introFirstMonthOnly": "Vain ensimmäinen kuukausi · Sitten {price}/kk",
+    "introCheckoutHint": "Ensimmäinen kuukausi {intro}, sitten {price}/kk. Peru milloin tahansa.",
     "freePrice": "0 €",
     "mostPopular": "Suosituin",
     "currentPlan": "Nykyinen tilaus",
@@ -3046,7 +3048,10 @@
     "terms": "Käyttöehdot",
     "privacyTitle": "Tietosuojaseloste",
     "termsTitle": "Käyttöehdot",
+    "privacyDescription": "Miten Notoria kerää, käyttää ja poistaa henkilötietoja sekä oppimissisältöä yksityisessä kieltenoppimisen työtilassaan.",
+    "termsDescription": "Ehdot Notorian yksityisen kieltenoppimisen työtilan, tilien, tekoälyominaisuuksien ja Notoria Pro -laskutuksen käyttöön.",
     "updated": "Päivitetty {date}",
+    "updatedDate": "23. syyskuuta 2026",
     "backToSignIn": "Takaisin kirjautumiseen",
     "backHome": "Takaisin Notoriaan",
     "authFooter": "Tietosuoja · Ehdot",
@@ -3055,7 +3060,424 @@
     "registerAgreement": "Luomalla tilin hyväksyt <terms>käyttöehdot</terms> ja <privacy>tietosuojaselosteen</privacy>.",
     "settingsLinksTitle": "Käytännöt",
     "settingsLinksDescription": "Lue, miten Notoria käsittelee tietojasi ja mitä palvelun käyttöön kuuluu.",
-    "contactEmail": "contact@notoria.fi"
+    "contactEmail": "contact@notoria.fi",
+    "privacyPolicy": {
+      "intro": "Tässä tietosuojaselosteessa kerrotaan, miten Notoria (<site>www.notoria.fi</site>) käsittelee henkilötietoja yksityisessä kieltenoppimisen verkkosovelluksessaan. Seloste vastaa tuotteiden nykyistä toimintaa. Jos jotain menettelyä ei ole kuvattu tässä, emme väitä sitä tekevämme.",
+      "tocTitle": "Tällä sivulla",
+      "tocAria": "Tällä sivulla",
+      "toc": {
+        "controller": "Kuka on vastuussa",
+        "scope": "Mitä tämä seloste kattaa",
+        "data": "Mitä tietoja käsittelemme",
+        "purposes": "Miksi käsittelemme tietoja",
+        "auth": "Tilit ja kirjautuminen",
+        "ai": "Tekoälyominaisuudet",
+        "payments": "Maksut (Notoria Pro)",
+        "processors": "Palveluntarjoajat",
+        "cookies": "Evästeet ja laitteen tallennus",
+        "transfers": "Kansainväliset siirrot",
+        "retention": "Kuinka kauan säilytämme tietoja",
+        "deletion": "Vienti ja tilin poisto",
+        "rights": "Oikeutesi (GDPR)",
+        "children": "Lapset",
+        "changes": "Muutokset",
+        "contact": "Yhteystiedot"
+      },
+      "sections": {
+        "controller": {
+          "title": "1. Kuka on vastuussa",
+          "p1": "Notoria on kieltenoppimispalvelu osoitteessa <site>www.notoria.fi</site>. Sitä tarjotaan käyttäjille Suomessa ja laajemmin EU/ETA-alueella.",
+          "p2": "Tietosuojaan liittyvät kysymykset, rekisteröidyn pyynnöt ja muu käyttäjäyhteydenpito: <contact>contact@notoria.fi</contact>.",
+          "p3": "Rekisterinpitäjän rekisteröityä yritysnimeä ja postiosoitetta ei ole julkaistu nykyisessä tuotteessa. Jos tarvitset muodollisen rekisterinpitäjän tunnistetiedot GDPR-pyyntöä varten, lähetä sähköpostia osoitteeseen <contact>contact@notoria.fi</contact>, niin toimitamme ne."
+        },
+        "scope": {
+          "title": "2. Mitä tämä seloste kattaa",
+          "p1": "Se kattaa henkilötiedot ja oppimissisällön, joita käsitellään kun:",
+          "list": [
+            "luot tai käytät tiliä",
+            "tallennat materiaalia yksityisiin työtiloihin",
+            "tilaat Notoria Pron",
+            "käytät valinnaisia tekoälytyökaluja",
+            "lataat mediaa kuuntelua tai profiilia varten",
+            "käytät puheharjoittelua",
+            "lähetät palautetta tai otat meihin yhteyttä"
+          ],
+          "p2": "Nykyinen sovelluskoodi ei sisällä kolmannen osapuolen markkinointianalytiikka- tai mainonta-SDK:ta. Emme väitä käyttävämme seurantatyökaluja, joita tuotteessa ei ole."
+        },
+        "data": {
+          "title": "3. Mitä tietoja käsittelemme",
+          "p1": "Notoria käsittelee eri tyyppisiä tietoja eri syistä. Pääluokat ovat:",
+          "accountAuth": {
+            "title": "Tili ja todennus",
+            "list": [
+              "Nimi ja sähköpostiosoite",
+              "Salasanan tiiviste sähköposti-/salasanatileille (salasanoja ei koskaan tallenneta selkokielisenä)",
+              "Googlen tilitunnisteet ja OAuth-tunnukset, jos kirjaudut Googlella",
+              "Valinnainen profiilikuva (avatar)",
+              "Tilin rooli sekä luonti-/päivitysajat"
+            ]
+          },
+          "learningContent": {
+            "title": "Luomasi oppimissisältö",
+            "p1": "Yksityisiin työtiloihin lisäämäsi sisältö, kuten sanasto, teoriamuistiinpanot, kirjoitusasiakirjat, harjoitukset ja tuotu harjoitusmateriaali, kuuntelutunnit (mukaan lukien medialinkit ja litteraatit), puheistuntojen litteraatit ja niihin liittyvät istuntokentät, kansiot, tunnisteet sekä opiskelun edistyminen, kuten flashcard-kertaukset.",
+            "p2": "Tämä on oppimateriaaliasi. Notoria säilyttää sen, jotta voit palata siihen ja harjoitella sen avulla."
+          },
+          "subscription": {
+            "title": "Tilauksen ja maksun metatiedot",
+            "list": [
+              "Suunnitelma (ilmainen tai Pro) ja tilauksen tila",
+              "Stripen asiakas- ja tilaustunnisteet sekä tarvittaessa nykyisen jakson päättymisaika"
+            ],
+            "p1": "Korttinumerot ja maksutavan salaisuudet jäävät Stripelle. Notoria säilyttää vain Pro-tilan heijastamiseen tarvittavat laskutusmetatiedot."
+          },
+          "device": {
+            "title": "Laitteen ja asetusten tiedot",
+            "p1": "Evästeet ja selaimen tallennus, joita käytetään kirjautumiseen, kielivalintaan, aktiiviseen työtilaan, tekoälyavun asetuksiin, teemaan ja vastaaviin tuoteasetuksiin. Katso <cookies>Evästeet ja laitteen tallennus</cookies>."
+          },
+          "support": {
+            "title": "Tuki ja palaute",
+            "list0": "Sähköpostit, jotka lähetät osoitteeseen <contact>contact@notoria.fi</contact>",
+            "list1": "Sovelluksen sisäinen palaute Tuki-osiosta (viesti, palautetyyppi, sähköpostisi, oletko kirjautunut, valinnainen tilitunnus, sivun polku, user-agent ja enintään kolme valinnaista kuvaliitettä)",
+            "p1": "Palaute toimitetaan sähköpostitse Notorian tekniseen postilaatikkoon (<technical></technical>). Sitä ei tallenneta erilliseksi tikettitietokannaksi Notoriaan."
+          }
+        },
+        "purposes": {
+          "title": "4. Miksi käsittelemme tietoja",
+          "headers": {
+            "purpose": "Tarkoitus",
+            "basis": "Tyypillinen GDPR-peruste"
+          },
+          "rows": [
+            {
+              "purpose": "Tarjota tilit, työtilat ja tallentamasi oppimateriaali",
+              "basis": "Sopimus (6 artikla 1 kohta b)"
+            },
+            {
+              "purpose": "Todentaa sinut (sähköposti/salasana tai Google) ja nollata salasanoja",
+              "basis": "Sopimus (6 artikla 1 kohta b)"
+            },
+            {
+              "purpose": "Hoitaa Notoria Pron laskutus ja tilauksen tila Stripen kautta",
+              "basis": "Sopimus (6 artikla 1 kohta b)"
+            },
+            {
+              "purpose": "Valinnainen tekoälyapu, kuuntelun litterointi ja puheharjoittelu, kun käytät näitä ominaisuuksia",
+              "basis": "Sopimus (6 artikla 1 kohta b); asetusohjaus milloin saatavilla"
+            },
+            {
+              "purpose": "Pitää palvelu turvallisena ja luotettavana (väärinkäytön esto, virheenkorjaus)",
+              "basis": "Oikeutettu etu (6 artikla 1 kohta f)"
+            },
+            {
+              "purpose": "Vastata tuki- ja palauteviesteihin",
+              "basis": "Oikeutettu etu / sopimus pyynnöstä riippuen"
+            },
+            {
+              "purpose": "Noudattaa lakisääteisiä velvoitteita",
+              "basis": "Lakisääteinen velvoite (6 artikla 1 kohta c)"
+            }
+          ],
+          "p1": "Jos tarvitset muodollisen käsittelyperusteen tiettyä toimintaa varten, lähetä sähköpostia osoitteeseen <contact>contact@notoria.fi</contact>."
+        },
+        "auth": {
+          "title": "5. Tilit ja kirjautuminen",
+          "p1": "Notoria käyttää Auth.js:ää (NextAuth) JWT-istunnolla. Voit kirjautua sähköpostilla ja salasanalla tai Google OAuthilla, kun Google-kirjautuminen on määritetty.",
+          "p2": "Salasanan nollaussähköposteja lähetetään vain tileille, joilla on salasana. Nollaustunnukset tallennetaan tiivisteinä, vanhenevat 30 minuutin kuluttua ja niitä käytetään vain uuden salasanan asettamiseen."
+        },
+        "ai": {
+          "title": "6. Tekoälyominaisuudet",
+          "p1": "Nykyisen tuotteen valinnaiset tekoälyominaisuudet käyttävät <strong>OpenAI</strong>:ta. Käyttämäsi työkalun mukaan Notoria voi lähettää relevanttia oppimissisältöä — esimerkiksi sanastoeriä, kirjoitustekstiä tai valintoja, harjoituksen tai teorian kontekstia, kuuntelulitteraatteja, puhelitteraatteja tai live-ääntä puheohjaajalle.",
+          "p2": "Tekoälyavun asetukset (mukaan lukien onko apu käytössä) tallennetaan selain-evästeeseen, jotta tuote voi kunnioittaa asetuksiasi. Monet palvelintoiminnot, jotka kutsuvat mallia, tarkistavat ensin että apu on käytössä. Avun poiskytkentä <settings>Asetukset</settings>-sivulla estää tekoälytyökalut, jotka sitä edellyttävät.",
+          "p3": "Kuuntelun litterointi AssemblyAI:n kautta voi silti toimia, kun käytät litteraattia tarvitsevia Kuuntelu-ominaisuuksia, koska litterointi kuuluu kyseiseen mediaprosessiin eikä pelkästään valinnaiseen ”tekoälyapu”-asetukseen.",
+          "p4": "Nykyinen koodikanta ei käytä muita suuria kielimallipalveluita OpenAI:n lisäksi. OpenAI käsittelee tietoja omien ehtojensa ja tietosuojakäytäntönsä mukaisesti käsittelijänä näissä ominaisuuksissa."
+        },
+        "payments": {
+          "title": "7. Maksut (Notoria Pro)",
+          "p1": "Maksulliset tilaukset hoitaa <strong>Stripe</strong>. Kassavirta, laskut, maksutavat ja peruutus kulkevat Stripe Checkoutin ja Stripe Customer Portalin kautta. Stripen webhookit päivittävät suunnitelmasi ja tilasi Notoriassa.",
+          "p2": "Stripe käsittelee maksutietoja maksupalveluntarjoajana. Korttien käsittelystä kerrotaan Stripen omassa tietosuojadokumentaatiossa."
+        },
+        "processors": {
+          "title": "8. Palveluntarjoajat",
+          "p1": "Käyttämiesi ominaisuuksien mukaan henkilötietoja tai oppimissisältöä voivat käsitellä:",
+          "headers": {
+            "provider": "Palveluntarjoaja",
+            "role": "Rooli Notoriassa"
+          },
+          "rows": [
+            {
+              "provider": "PostgreSQL-tietokanta (tuotannossa dokumentoitu Neoniksi)",
+              "role": "Tili- ja oppimistiedot"
+            },
+            {
+              "provider": "Vercel",
+              "role": "Sovelluksen hosting (määritettyyn alueeseen kuuluu Frankfurt / fra1)"
+            },
+            {
+              "provider": "Cloudinary",
+              "role": "Avatarit, kuuntelumedia, editorin kuvat ja harjoitusten tuontitiedostot"
+            },
+            {
+              "provider": "AssemblyAI",
+              "role": "Kuunteluäänen litterointi"
+            },
+            {
+              "provider": "Stream Video",
+              "role": "Live-puhepuhelut; automaattinen litterointi; istuntokentät kuten litteraatti-URL:t (ja tallenne-URL:t vain jos tallenne-tapahtuma vastaanotetaan myöhemmin)"
+            },
+            {
+              "provider": "OpenAI",
+              "role": "Valinnainen tekoälyapu ja puheohjaajan reaaliaikainen ääni"
+            },
+            {
+              "provider": "Resend",
+              "role": "Salasanan nollaussähköposti ja Tuki-palautteen toimitus"
+            },
+            {
+              "provider": "Stripe",
+              "role": "Notoria Pron kassa, portaali ja tilauksen tila"
+            },
+            {
+              "provider": "Google",
+              "role": "OAuth-kirjautuminen, kun valitset Googlen; käyttöliittymän webfontit"
+            },
+            {
+              "provider": "Dicebear",
+              "role": "Puheistunnoissa käytettävät generoidut avatar-kuvat (nimisiemenestä; tilin salasanaa ei lähetetä)"
+            }
+          ],
+          "p2": "Puhepuhelut luodaan litterointi päällä. Tallennus on pois päältä puhelun luonnissa nykyisessä toteutuksessa; tallenne-URL tallennetaan vain, jos tuote myöhemmin vastaanottaa Streamilta recording-ready -tapahtuman."
+        },
+        "cookies": {
+          "title": "9. Evästeet ja laitteen tallennus",
+          "p1": "Notoria käyttää evästeitä ja vastaavaa tallennusta välttämättömiin tuoteominaisuuksiin. Erillistä evästekäytäntöä ei ole, koska nykyinen toteutus ei sisällä mainonta- tai analytiikkaevästeohjelmia, jotka sitä edellyttäisivät.",
+          "cookiesTitle": "Sovelluksen käyttämät evästeet",
+          "headers": {
+            "cookie": "Eväste",
+            "purpose": "Tarkoitus"
+          },
+          "rows": [
+            {
+              "cookie": "Auth.js-istuntoeväste",
+              "purpose": "Pitää sinut kirjautuneena (JWT-istunto; kirjaston oletusnimeäminen)",
+              "code": false
+            },
+            {
+              "cookie": "notoria-locale",
+              "purpose": "Käyttöliittymän kieli",
+              "code": true
+            },
+            {
+              "cookie": "notoria-workspace",
+              "purpose": "Aktiivinen työtila",
+              "code": true
+            },
+            {
+              "cookie": "notoria-ai-preferences",
+              "purpose": "Tekoälyavun asetukset",
+              "code": true
+            },
+            {
+              "cookie": "sidebar_state",
+              "purpose": "Sivupalkin auki/kiinni -asetus",
+              "code": true
+            }
+          ],
+          "storageTitle": "Paikallinen ja istuntotallennus",
+          "p2": "Selaimesi voi myös tallentaa teema-asetuksen (next-themesin kautta), onboarding-/tutorial-lippuja, näppäimistö- ja liikeasetuksia, näkymätilavalintoja, tilapäistä harjoitus- tai flashcard-istunnon tilaa sekä vastaavia vain asiakaspuolen asetuksia.",
+          "p3": "Paikallisten asetusten tyhjennys Asetuksissa poistaa nämä laiteasetukset. Se ei poista tiliäsi tai työtilan sisältöä palvelimelta."
+        },
+        "transfers": {
+          "title": "10. Kansainväliset siirrot",
+          "p1": "Osa yllä olevista palveluntarjoajista sijaitsee ETA-alueen ulkopuolella (esimerkiksi Yhdysvalloissa) tai voi käsitellä tietoja useammalla alueella. Kun henkilötietoja siirretään ETA-/UK-alueen ulkopuolelle, siirrot nojaavat sovellettavan lain mukaisiin turvamekanismeihin, joita palveluntarjoajat tarjoavat — kuten tarvittaessa vakiosopimuslausekkeisiin (Standard Contractual Clauses) — sekä heidän julkaisemiinsa tietosuojaehtoihin.",
+          "p2": "Notorian sovellushosting on suunnattu Frankfurtin alueelle (fra1). Kysy osoitteesta <contact>contact@notoria.fi</contact>, jos tarvitset apua tietyn ominaisuuden palveluntarjoajan dokumentaation löytämisessä."
+        },
+        "retention": {
+          "title": "11. Kuinka kauan säilytämme tietoja",
+          "list": [
+            "Tili- ja oppimistietoja säilytetään niin kauan kuin tilisi on auki, jotta voit käyttää palvelua",
+            "Salasanan nollaustunnukset vanhenevat 30 minuutin kuluttua",
+            "Tilauksen metatietoja säilytetään tarpeen mukaan nykyisen Pro-tilan ja Stripe-laskutussuhteen heijastamiseksi",
+            "Tuki- ja palautesähköposteja säilytetään niin kauan kuin pyynnön ja siihen liittyvän seurannan käsittely edellyttää"
+          ],
+          "p1": "Infrastruktuuripalveluntarjoajien tarkkoja varmuuskopioiden säilytysaikoja ei ole kovakoodattu sovellukseen, ja ne voivat noudattaa näiden palveluntarjoajien toimintakäytäntöjä. Ota yhteyttä, jos tarvitset selvennystä poistopyyntöön."
+        },
+        "deletion": {
+          "title": "12. Vienti ja tilin poisto",
+          "exportTitle": "Vienti",
+          "exportP1": "<account>Tili</account>-sivulta voit ladata JSON-varmuuskopion työtiloista ja oppimissisällöstä (mukaan lukien sanasto, teoriamuistiinpanot, harjoitukset/kirjoitus, kuuntelutunnit ja puheistunnot). Mediatiedostot viitataan URL:lla, ei upoteta binääritiedostoina.",
+          "exportP2": "Nykyinen vienti ei sisällä kaikkia tiliin liittyviä tietueita. Esimerkiksi flashcard-edistyminen/kertaukset ja harjoitusten tuonnin lähdetietueet eivät ole osa JSON-varmuuskopiota. OAuth-tunnuksia, salasanatiivisteitä ja Stripe-tunnisteita ei viedä.",
+          "deleteTitle": "Tilin poisto",
+          "deleteP1": "Voit poistaa tilisi pysyvästi <account>Tili</account>-sivulta. Kun poisto onnistuu, Notoria:",
+          "deleteList": [
+            "poistaa käyttäjätietueesi ja kaskadoidut oppimistiedot Notorian tietokannasta",
+            "peruuttaa ja poistaa liittyvät Stripe-asiakastiedot, kun Stripe on määritetty (parhaan mukaan)",
+            "tuhoaa avatar-median ja kuuntelutuntimedian, jonka poistovirta on toteutettu poistamaan Cloudinarysta"
+          ],
+          "deleteP2": "Nykyinen poistovirta ei väitä puhdistavansa automaattisesti jokaista kolmannen osapuolen artefaktia. Erityisesti osa Cloudinary-assettoista (kuten editorin kuvat tai harjoitusten tuontitiedostot) ja Streamin puhepuheluartifakteista voi jäädä näiden palveluntarjoajien piiriin, kunnes ne siivotaan erikseen tai poistetaan niiden omien aikataulujen mukaan.",
+          "deleteP3": "Poiston jälkeen rajoitettuja jäännöskopioita voi myös jäädä hetkeksi salattuihin varmuuskopioihin tai lokoihin, kunnes nämä järjestelmät kiertävät. Jos jotain tiettyä jää jäljelle tilin poiston jälkeen, lähetä sähköpostia osoitteeseen <contact>contact@notoria.fi</contact>."
+        },
+        "rights": {
+          "title": "13. Oikeutesi (GDPR)",
+          "p1": "Jos olet EU-/ETA-alueella tai muuten GDPR:n suojan piirissä, sinulla voi olla oikeus:",
+          "list": [
+            "saada pääsy henkilötietoihisi",
+            "oikaista virheellisiä tietoja",
+            "poistaa tietoja (myös poistamalla tilisi)",
+            "rajoittaa tai vastustaa tiettyä käsittelyä",
+            "saada siirrettävä kopio toimittamistasi tiedoista (ks. Vienti yllä)",
+            "peruuttaa suostumus, kun käsittely perustuu suostumukseen"
+          ],
+          "listComplaint": "tehdä valitus valvontaviranomaiselle — Suomessa Tietosuojavaltuutetun toimistolle (<ombudsman>tietosuoja.fi</ombudsman>)",
+          "p2": "Näiden oikeuksien käyttämiseksi lähetä sähköpostia osoitteeseen <contact>contact@notoria.fi</contact>. Saatamme joutua varmistamaan, että pyyntö tulee tilin haltijalta."
+        },
+        "children": {
+          "title": "14. Lapset",
+          "p1": "Notoria edellyttää tiliä ja on rakennettu henkilökohtaiseksi oppimistilaksi. Tuotteessa ei ole erillistä ikärajoitusta. Sitä ei ole suunnattu lapsille. Jos uskot, että lapsen tietoja on toimitettu ilman asianmukaista lupaa, ota yhteyttä osoitteeseen <contact>contact@notoria.fi</contact>."
+        },
+        "changes": {
+          "title": "15. Muutokset",
+          "p1": "Voimme päivittää tätä tietosuojaselostetta, kun tuote tai lainsäädännölliset vaatimukset muuttuvat. Sivun yläreunassa oleva ”Päivitetty”-päivämäärä muuttuu, kun uusi versio julkaistaan.",
+          "p2": "Kun muutos on olennainen, kerromme siitä kohtuullisella, sillä hetkellä käytettävissä olevalla tavalla — esimerkiksi päivittämällä tätä sivua ja tarvittaessa sovelluksen sisäistä ilmoitusta tai sähköpostia."
+        },
+        "contact": {
+          "title": "16. Yhteystiedot",
+          "p1": "Tietosuoja ja yleinen yhteydenotto: <contact>contact@notoria.fi</contact>",
+          "p2": "Tuotepalautteen tekninen postilaatikko (myös <contactPage>Ota yhteyttä</contactPage> -sivulla): <technical></technical>",
+          "p3": "Verkkosivusto: <site>www.notoria.fi</site>"
+        }
+      }
+    },
+    "termsOfUse": {
+      "intro": "Nämä käyttöehdot selittävät Notorian käyttöä koskevat säännöt osoitteessa <site>www.notoria.fi</site>. Ne kuvaavat, miten tuote toimii tänään: yksityiset oppimistyötilat, valinnainen Notoria Pro -laskutus Stripen kautta sekä tekoälyavusteiset ominaisuudet. Ne eivät korvaa oikeudellista neuvontaa omassa tilanteessasi.",
+      "tocTitle": "Tällä sivulla",
+      "tocAria": "Tällä sivulla",
+      "toc": {
+        "agreement": "Sopimus",
+        "service": "Palvelu",
+        "accounts": "Tilit",
+        "content": "Sisältösi",
+        "acceptable-use": "Hyväksyttävä käyttö",
+        "ip": "Immateriaalioikeudet",
+        "ai": "Tekoälyn tuottama sisältö",
+        "plans": "Ilmainen suunnitelma ja Notoria Pro",
+        "billing": "Tilaus ja laskutus",
+        "refunds": "Palautukset ja kuluttajaoikeudet",
+        "availability": "Saatavuus",
+        "termination": "Keskeytys ja päättäminen",
+        "liability": "Vastuuvapaus ja vastuu",
+        "changes": "Muutokset",
+        "law": "Sovellettava laki",
+        "contact": "Yhteystiedot"
+      },
+      "sections": {
+        "agreement": {
+          "title": "1. Sopimus",
+          "p1": "Luomalla tilin tai käyttämällä Notoriaa hyväksyt nämä ehdot ja <privacy>tietosuojaselosteen</privacy>. Jos et hyväksy, älä käytä palvelua.",
+          "p2": "Kysymykset näistä ehdoista: <contact>contact@notoria.fi</contact>."
+        },
+        "service": {
+          "title": "2. Palvelu",
+          "p1": "Notoria on yksityinen kieltenoppimisen verkkosovellus. Voit luoda työtiloja ja säilyttää oppimateriaalia, kuten sanastoa, teoriamuistiinpanoja, kirjoitusta, harjoituksia, kuuntelutunteja ja puheistuntoja.",
+          "p2": "Osa ominaisuuksista on saatavilla ilmaisella suunnitelmalla. Notoria Pro avaa lisäominaisuuksia tuotteessa ja <account>Tili</account>-sivullasi näkyvällä tavalla — mukaan lukien Kuuntelu, Puhuminen, tietyt tekoälytyökalut, harjoitusten tuonti ja maksulliset dokumenttivientimuodot. Ominaisuuksien saatavuus voi muuttua tuotteen kehittyessä.",
+          "p3": "Notoria on henkilökohtaiseen kieltenoppimiseen. Se ei ole koulu, tutkintoviranomainen eikä ammatillinen neuvontapalvelu."
+        },
+        "accounts": {
+          "title": "3. Tilit",
+          "list": [
+            "Anna oikeat tilitiedot",
+            "Pidä salasanasi ja tilisi käyttöoikeus turvassa",
+            "Kirjaudu sähköpostilla ja salasanalla tai Googlella, kun Google-kirjautuminen on saatavilla",
+            "Käytä Notoriaa vain, jos voit tehdä sitovan sopimuksen sovellettavan lain mukaan"
+          ],
+          "p1": "Tuotteessa ei ole erillistä ikärajoitusta. Jos uskot, että tili on luotu ilman asianmukaista lupaa, ota yhteyttä osoitteeseen <contact>contact@notoria.fi</contact>.",
+          "p2": "Ilmoita meille osoitteeseen <contact>contact@notoria.fi</contact>, jos epäilet tilisi joutuneen väärinkäytön kohteeksi."
+        },
+        "content": {
+          "title": "4. Sisältösi",
+          "p1": "Säilytät omistusoikeuden Notoriaan luomaasi tai lataamaasi oppimissisältöön.",
+          "p2": "Myönnät Notorialle rajoitetun lisenssin isännöidä, käsitellä, näyttää ja varmuuskopioida kyseistä sisältöä palvelun toiminnan mahdollistamiseksi — mukaan lukien relevantin materiaalin lähettäminen tekoäly-, litterointi-, media- tai maksupalveluntarjoajille, kun käytät näitä ominaisuuksia. Lisenssi on olemassa vain Notorian käyttämiseksi puolestasi. Se ei siirrä sisältösi omistusoikeutta meille.",
+          "p3": "Olet vastuussa siitä, mitä tallennat. Älä lataa materiaalia, johon sinulla ei ole käyttöoikeutta, äläkä käytä Notoriaa lainvastaisen sisällön säilyttämiseen."
+        },
+        "acceptableUse": {
+          "title": "5. Hyväksyttävä käyttö",
+          "p1": "Sitoudut siihen, että et:",
+          "list": [
+            "riko lakia tai loukkaa muiden oikeuksia",
+            "yritä päästä muiden käyttäjien yksityisiin työtiloihin tai tileihin",
+            "tutki, ylikuormita tai häiritse palvelua, API:ita tai niihin liittyvää infrastruktuuria",
+            "väärinkäytä tekoäly-, litterointi-, kuuntelu- tai puhumisominaisuuksia tavalla, joka vahingoittaa muita tai kiertää suunnitelmarajoja petoksella",
+            "tee reverse engineeringiä palvelulle paitsi siinä määrin kuin pakottava paikallinen laki sallii",
+            "esitä henkilöllisyyttäsi väärin Stripelle, Googlelle tai Notorian tukeen"
+          ]
+        },
+        "ip": {
+          "title": "6. Immateriaalioikeudet",
+          "p1": "Notorian nimi, brändi, ohjelmisto ja tuotesuunnittelu kuuluvat Notorialle tai sen lisenssinantajille. Nämä ehdot eivät siirrä tuotteen omistusoikeutta sinulle.",
+          "p2": "Oppimissisältösi pysyy sinun, kohdan 4 rajoitetun lisenssin mukaisesti."
+        },
+        "ai": {
+          "title": "7. Tekoälyn tuottama sisältö",
+          "p1": "Osa ominaisuuksista voi tarkistaa, ehdottaa, tuottaa, litteroida, tiivistää tai ohjata materiaaliisi perustuen. Tulokset voivat olla puutteellisia, virheellisiä tai sopimattomia tavoitteeseesi. Olet vastuussa tekoälytulosten tarkistamisesta ennen kuin tukeudut niihin opiskelussa, kokeissa, ammatillisessa käytössä tai julkaisussa.",
+          "p2": "Tekoälyominaisuudet voivat olla poissa käytöstä, jos apu on kytketty pois <settings>Asetukset</settings>-sivulla, jos suunnitelmasi ei sisällä tiettyä työkalua tai jos palveluntarjoaja on tilapäisesti tavoittamattomissa.",
+          "p3": "Kaikki tekoälyavustajat eivät edellytä Notoria Prota. Tuote näyttää, mitkä työkalut ovat ilmaisia ja mitkä tarvitsevat Pron."
+        },
+        "plans": {
+          "title": "8. Ilmainen suunnitelma ja Notoria Pro",
+          "p1": "Ilmainen suunnitelma kattaa ydinharjoittelun omalla sanastollasi ja siihen liittyvät opiskelutyökalut tuotteessa näkyvällä tavalla.",
+          "p2": "Notoria Pro on maksullinen tilaus, joka avaa lisäominaisuuksia. Nykyisessä tuotteessa siihen kuuluu tyypillisesti Kuuntelu, Puhuminen, harjoitusten tuonti, muodosta-lause -harjoittelu, monet tekoälyavusteiset opiskelutyökalut sekä PDF-/DOCX-dokumenttivienti. Jotkin kevyemmät tekoälyavustajat (kuten tietyt sanasto- tai editorin muotoiluavut) voivat säilyä käytössä ilmaisella suunnitelmalla, kun tekoälyapu on käytössä.",
+          "p3": "Pro-käyttöoikeus on sidottu käyttäjätiliisi, joten se koskee kaikkia kyseisen tilin työtiloja. Ylläpitäjäroolin tileillä voi olla Pro-tason käyttöoikeus ilman henkilökohtaista Stripe-tilausta.",
+          "p4": "Ostokseesi sovellettava hinta on Stripe Checkoutissa nykyiselle Pro-suunnitelmalle näytetty hinta. Mualla tuotteessa (esimerkiksi Tili-sivulla) näytetty hinta on vain suuntaa-antava ja sen on vastattava aktiivista Stripe-hintakonfiguraatiota."
+        },
+        "billing": {
+          "title": "9. Tilaus, laskutus ja peruutus",
+          "list0": "Pro-tilaukset laskutetaan <strong>Stripen</strong> kautta",
+          "list1": "Voit aloittaa kassavirran <account>Tili</account>-sivulta tai sovelluksen lukituista Pro-kontrolleista",
+          "list2": "Tili-sivulta voit avata Stripe Customer Portalin nähdäksesi laskut, päivittääksesi maksutavat ja peruuttaaksesi tilauksen",
+          "list3": "Peruutus noudattaa Stripen Customer Portalin käyttäytymistä tilauksellesi",
+          "p1": "Peruutuksen jälkeen Pro-käyttöoikeus jatkuu vain niin kauan kuin Stripen tilauksen tila edelleen myöntää Pron tuotteessa. Nykyisessä toteutuksessa Proksi käsiteltäviä tiloja ovat <code>active</code>, <code>trialing</code> ja <code>past_due</code>. Kun tila ei enää täytä ehtoja, tili palaa ilmaiseen suunnitelmaan.",
+          "p2": "Jos maksu epäonnistuu, Stripe voi siirtää tilauksen tilaan <code>past_due</code> tai toiseen tilaan. Notoria synkronoi tilan Stripen webhookeista. Niin kauan kuin tila on <code>past_due</code>, Pro-ominaisuudet pysyvät käytössä nykyisten käyttöoikeussääntöjen mukaan; jos tilaus myöhemmin peruuntuu tai muuten kelpaamattomaksi, Pro-käyttöoikeus päättyy.",
+          "p3": "Notoria-tilin poistaminen peruuttaa Stripe-tilauksen heti (parhaan mukaan) osana tilin poistoa. Se eroaa uusinnan peruuttamisesta Customer Portalin kautta tilin säilyttäen."
+        },
+        "refunds": {
+          "title": "10. Palautukset ja kuluttajaoikeudet",
+          "p1": "Notoriassa ei ole automaattista sovelluksen sisäistä palautuspainiketta. Peruutus on saatavilla Stripe Customer Portalin kautta.",
+          "p2": "Jos haluat palautusarvion tai jos EU-/ETA-alueen digisisältöä tai etäsopimuksia koskevat kuluttajasäännöt antavat ostokseesi sovellettavia oikeuksia, lähetä sähköpostia osoitteeseen <contact>contact@notoria.fi</contact> tilisi sähköpostilla ja Stripen kuittitiedoilla. Käsittelemme pyynnön sovellettavan lain ja Stripen työkalujen mukaisesti.",
+          "p3": "Mikään näissä ehdoissa ei ole tarkoitettu rajoittamaan pakottavia kuluttajaoikeuksia, joista ei voida luopua Suomen tai EU:n lain mukaan."
+        },
+        "availability": {
+          "title": "11. Saatavuus",
+          "p1": "Pyrimme pitämään Notorian saatavilla, mutta emme lupaa keskeytyksetöntä tai virheetöntä palvelua. Huolto, palveluntarjoajien katkokset tai muutokset kolmannen osapuolen tekoäly-, media-, sähköposti- tai maksupalveluihin voivat vaikuttaa ominaisuuksiin."
+        },
+        "termination": {
+          "title": "12. Keskeytys ja päättäminen",
+          "p1": "Voit poistaa tilisi milloin tahansa <account>Tili</account>-sivulta. Poisto poistaa pysyvästi tilisi ja siihen liittyvän oppimistiedon Notorian tietokannasta <privacy>tietosuojaselosteen</privacy> yksityiskohtien ja jäännöskäsittelijämerkintöjen mukaisesti. Voit viedä JSON-varmuuskopion Tili-sivulta ennen poistoa.",
+          "p2": "Voimme keskeyttää tai päättää käyttöoikeuden, jos rikot näitä ehtoja vakavasti tai toistuvasti, väärinkäytät palvelua tai aiheutat turvallisuus- tai oikeudellisen riskin. Kohtuullisesti ja lain salliessa pyrimme ilmoittamaan siitä tilisi sähköpostiosoitteeseen."
+        },
+        "liability": {
+          "title": "13. Vastuuvapaus ja vastuu",
+          "p1": "Notoria tarjotaan ”saatavuuden mukaan” henkilökohtaiseen kieltenoppimiseen. Sovellettavan lain sallimassa laajuudessa emme anna takuita, joita laki ei edellytä.",
+          "p2": "Sovellettavan lain sallimassa laajuudessa Notoria ei ole vastuussa epäsuorista, satunnaisista, erityisistä, seurannaisista tai tietojen menetyksen vahingoista, jotka johtuvat palvelun käytöstäsi tai tekoälytuloksiin tukeutumisesta. Missä vastuuta ei voida sulkea pois, se rajoittuu Notoria Prosta maksamaasi määrään kolmena kuukautena ennen vaatimusta tai mihin tahansa suurempaan määrään, jonka pakottava laki edellyttää.",
+          "p3": "Nämä rajoitukset eivät sulje pois vastuuta, jota Suomen tai EU:n laki ei salli rajoittaa — mukaan lukien vastuu, josta kuluttajat eivät voi luopua, sekä vastuu kuolemasta tai henkilövahingosta huolimattomuuden vuoksi, kun tällaiset säännöt soveltuvat."
+        },
+        "changes": {
+          "title": "14. Muutokset palveluun ja ehtoihin",
+          "p1": "Voimme päivittää ominaisuuksia, suunnitelmia ja näitä ehtoja. Tämän sivun ”Päivitetty”-päivämäärä muuttuu, kun uusi versio julkaistaan.",
+          "p2": "Jos muutos on olennainen, annamme kohtuullisen ilmoituksen kun se on käytännössä mahdollista — esimerkiksi päivittämällä tätä sivua ja tarvittaessa sovelluksen sisäistä ilmoitusta tai sähköpostia. Jatkuva käyttö voimaantulopäivän jälkeen tarkoittaa, että hyväksyt päivitetyt ehdot, paitsi jos pakottava laki edellyttää eri prosessia."
+        },
+        "law": {
+          "title": "15. Sovellettava laki",
+          "p1": "Näihin ehtoihin sovelletaan Suomen lakia ilman lainvalintasääntöjä, jotka johtaisivat toisen oikeusjärjestyksen lakiin.",
+          "p2": "Suomen tuomioistuimilla on toimivalta, rajoittamatta pakottavia kuluttajansuojia, jotka sallivat sinun nostaa kanteen asuinmaassasi EU-/ETA-alueella.",
+          "p3": "Muodollista toimijan henkilöllisyyttä Notoria-palvelun ja yhteyssähköpostin lisäksi ei ole julkaistu nykyisessä tuotteessa. Sopimus- tai viranomaiskirjeenvaihtoon käytä osoitetta <contact>contact@notoria.fi</contact>."
+        },
+        "contact": {
+          "title": "16. Yhteystiedot",
+          "p1": "Laskutus-, ehtokysymykset ja niihin liittyvät oikeudelliset ilmoitukset: <contact>contact@notoria.fi</contact>",
+          "p2": "Verkkosivusto: <site>www.notoria.fi</site>",
+          "p3": "Yleiset tukivaihtoehdot ja tekninen palaute postilaatikko: katso <contactPage>Ota yhteyttä</contactPage> ja <support>Tuki</support>."
+        }
+      }
+    }
   },
   "footer": {
     "navLabel": "Sivuston linkit",
@@ -3215,7 +3637,7 @@
           },
           "words": {
             "title": "Lisää kourallinen sanoja",
-            "body": "Avaa Vocabulary ja tallenna sanoja tai fraaseja jotka haluat muistaa, sekä merkityksiä tai esimerkkejä jos ne auttavat."
+            "body": "Avaa Sanasto ja tallenna sanoja tai fraaseja jotka haluat muistaa, sekä merkityksiä tai esimerkkejä jos ne auttavat."
           },
           "notes": {
             "title": "Kirjoita lyhyt muistiinpano tarvittaessa",
@@ -3233,43 +3655,43 @@
       },
       "connect": {
         "title": "Miten alueet liittyvät",
-        "p1": "Vocabulary ja Theory ovat paikkoja, joihin materiaali laskeutuu. Exercise muuttaa sen harjoitteluksi. Writing, Listening ja Speaking auttavat käyttämään kieltä aktiivisemmin.",
+        "p1": "Sanasto ja Teoria ovat paikkoja, joihin materiaali laskeutuu. Harjoitus muuttaa sen harjoitteluksi. Kirjoittaminen, Kuuntelu ja Puhuminen auttavat käyttämään kieltä aktiivisemmin.",
         "p2": "Sinun ei tarvitse kulkea joka aluetta järjestyksessä. Monet pysyvät sanoissa ja lyhyessä harjoittelussa pitkään.",
-        "p3": "Luonteva seuraava askel on kirjoittaminen, kun haluat tuottaa kieltä omin ehdoin, sitten kuuntelu ja puhuminen, kun sama materiaali tarvitaan korvaan ja ääneen — Listening ja Speaking kuuluvat Notoria Prohon.",
+        "p3": "Luonteva seuraava askel on kirjoittaminen, kun haluat tuottaa kieltä omin ehdoin, sitten kuuntelu ja puhuminen, kun sama materiaali tarvitaan korvaan ja ääneen — Kuuntelu ja Puhuminen kuuluvat Notoria Prohon.",
         "beat": "Kerää ja ymmärrä ensin. Käytä ja puhu, kun materiaali on valmis jättämään sivun."
       },
       "areas": {
         "title": "Pääalueet",
         "intro": "Lyhyt kartta siitä, mihin kukin alue on:",
         "vocab": {
-          "label": "Vocabulary",
+          "label": "Sanasto",
           "body": "Henkilökohtainen sanapankki — merkitykset, esimerkit, tunnisteet ja flashcard-edistyminen. Tämä on yleensä perusta, josta muu ammentaa."
         },
         "theory": {
-          "label": "Theory",
+          "label": "Teoria",
           "body": "Kielioppi- ja käyttömuistiinpanot omin sanoin, joihin voit palata kun sama kaava tulee uudelleen."
         },
         "exercises": {
-          "label": "Exercise",
+          "label": "Harjoitus",
           "body": "Harjoitushetkiä sanastostasi, teoriamuistiinpanoista tai tuodusta materiaalista — jotta tehtävät pysyvät kiinni siinä mitä olet oikeasti tallentanut."
         },
         "writing": {
-          "label": "Writing",
+          "label": "Kirjoittaminen",
           "body": "Dokumentteja ja kysymyssarjoja kielen aktiiviseen käyttöön, ei vain tunnistamiseen."
         },
         "listening": {
-          "label": "Listening",
+          "label": "Kuuntelu",
           "body": "Muuta mediaa kuunteluharjoitukseksi työtilassasi. Saatavilla Notoria Prolla."
         },
         "speaking": {
-          "label": "Speaking",
+          "label": "Puhuminen",
           "body": "Live-harjoittelua AI-tutorin kanssa, oppimasi kielen ympärillä. Saatavilla Notoria Prolla."
         }
       },
       "notEverything": {
         "title": "Kaikkea ei tarvitse käyttää",
         "p1": "Ohita alueet jotka eivät juuri nyt auta. Rauhallinen sanapankki ja muutama muistiinpano voivat jo olla vahva järjestelmä.",
-        "p2": "Lisää Exercise kun haluat jäsenneltyä kertausta. Lisää Writing kun haluat tuottaa. Lisää Listening ja Speaking kun kuuleminen ja sanominen on seuraava hyödyllinen askel."
+        "p2": "Lisää Harjoitus kun haluat jäsenneltyä kertausta. Lisää Kirjoittaminen kun haluat tuottaa. Lisää Kuuntelu ja Puhuminen kun kuuleminen ja sanominen on seuraava hyödyllinen askel."
       },
       "cta": {
         "title": "Valmis aloittamaan?",
@@ -3277,9 +3699,9 @@
         "createAccount": "Luo tili",
         "signIn": "Kirjaudu sisään",
         "openWorkspace": "Avaa työtila",
-        "inAppGuide": "Avaa Getting started",
-        "signedInNote": "Nappikohtaisiin ohjeisiin sovelluksessa avaa <link>Getting started</link>.",
-        "signedOutNote": "Onko sinulla jo tili? <link>Kirjaudu sisään</link> avataksesi työtilan. Sovelluksen Getting started -opas käsittelee yksityiskohtaiset UI-kierrokset kirjautumisen jälkeen."
+        "inAppGuide": "Avaa Aloitusopas",
+        "signedInNote": "Nappikohtaisiin ohjeisiin sovelluksessa avaa <link>Aloitusopas</link>.",
+        "signedOutNote": "Onko sinulla jo tili? <link>Kirjaudu sisään</link> avataksesi työtilan. Sovelluksen Aloitusopas käsittelee yksityiskohtaiset UI-kierrokset kirjautumisen jälkeen."
       }
     },
     "support": {
@@ -3301,19 +3723,19 @@
         },
         "start": {
           "q": "Miten kannattaa aloittaa?",
-          "a": "Luo työtila oppimallesi kielelle, lisää muutama sana <vocabulary>Vocabulary</vocabulary>-osioon ja kokeile lyhyttä harjoitusta. Oppimistavasta kertoo <howToUse>Näin käytät</howToUse>. Kirjautuneena avaa sovelluksen <gettingStarted>Getting started</gettingStarted> -opas UI-kierrokseen."
+          "a": "Luo työtila oppimallesi kielelle, lisää muutama sana <vocabulary>Sanasto</vocabulary>-osioon ja kokeile lyhyttä harjoitusta. Oppimistavasta kertoo <howToUse>Näin käytät</howToUse>. Kirjautuneena avaa sovelluksen <gettingStarted>Aloitusopas</gettingStarted> UI-kierrokseen."
         },
         "account": {
           "q": "Miten vaihdan salasanan tai suljen tilin?",
-          "a": "Avaa <account>Account</account>. Voit päivittää salasanan jos käytät sähköpostikirjautumista, hallita Notoria Prota, viedä varmuuskopion tai poistaa tilin pysyvästi."
+          "a": "Avaa <account>Tili</account>. Voit päivittää salasanan jos käytät sähköpostikirjautumista, hallita Notoria Prota, viedä varmuuskopion tai poistaa tilin pysyvästi."
         },
         "pro": {
           "q": "Miten laskutus ja peruutus toimivat?",
-          "a": "Notoria Pro laskutetaan Stripen kautta. <account>Account</account>-sivulta voit päivittää, avata Stripe-asiakasportaalin maksutapoihin ja laskuihin, tai peruuttaa uusinnan."
+          "a": "Notoria Pro laskutetaan Stripen kautta. <account>Tili</account>-sivulta voit päivittää, avata Stripe-asiakasportaalin maksutapoihin ja laskuihin, tai peruuttaa uusinnan."
         },
         "proFeatures": {
           "q": "Mikä on ilmaista, ja mikä vaatii Notoria Pron?",
-          "a": "Arjen sanastoharjoittelu ja siihen liittyvät työkalut kuuluvat ilmaiseen suunnitelmaan. Osa tekoälytyökaluista, kuuntelu, puhuminen ja dokumenttivienti kuuluvat Notoria Prohon. Vertaa ja päivitä <account>Account</account>-sivulla."
+          "a": "Arjen sanastoharjoittelu ja siihen liittyvät työkalut kuuluvat ilmaiseen suunnitelmaan. Osa tekoälytyökaluista, kuuntelu, puhuminen ja dokumenttivienti kuuluvat Notoria Prohon. Vertaa ja päivitä <account>Tili</account>-sivulla."
         },
         "learning": {
           "q": "Miten Notorian oppimistoiminnot toimivat?",
@@ -3329,7 +3751,7 @@
         },
         "backup": {
           "q": "Voinko viedä tai varmuuskopioida datani?",
-          "a": "Kyllä. <account>Account</account>-sivulta voit ladata JSON-varmuuskopion työtiloistasi ja oppimissisällöstä. Mediatiedostot linkitetään URL:lla, ei upoteta. Tietosuoja ja poisto: <privacy>Tietosuojaseloste</privacy>."
+          "a": "Kyllä. <account>Tili</account>-sivulta voit ladata JSON-varmuuskopion työtiloistasi ja oppimissisällöstä. Mediatiedostot linkitetään URL:lla, ei upoteta. Tietosuoja ja poisto: <privacy>Tietosuojaseloste</privacy>."
         }
       },
       "feedback": {

@@ -379,6 +379,8 @@ STRIPE_SECRET_KEY=
 STRIPE_WEBHOOK_SECRET=
 STRIPE_PRO_PRICE_ID=
 STRIPE_PREMIUM_PRICE_ID=
+STRIPE_PRO_FIRST_MONTH_COUPON_ID=
+STRIPE_PREMIUM_FIRST_MONTH_COUPON_ID=
 ```
 
 Copy from `.env.example` if you prefer a blank template. `STRIPE_PUBLISHABLE_KEY` is unused (Checkout is server-side).
@@ -443,6 +445,8 @@ Keep `.env.local` on **test** keys. Production env lives in **Vercel → Setting
 | `STRIPE_SECRET_KEY` | `sk_live_...` |
 | `STRIPE_PRO_PRICE_ID` | Pro price (`price_...`, €9.99/month) |
 | `STRIPE_PREMIUM_PRICE_ID` | Premium price (`price_...`, €19.99/month) |
+| `STRIPE_PRO_FIRST_MONTH_COUPON_ID` | Pro first-month 50% coupon (`coupon_...`, duration once) |
+| `STRIPE_PREMIUM_FIRST_MONTH_COUPON_ID` | Premium first-month 50% coupon (`coupon_...`, duration once) |
 | `STRIPE_WEBHOOK_SECRET` | Signing secret of the live webhook |
 
 After changing env vars, **Redeploy**.
@@ -462,14 +466,17 @@ Paid entitlements are written only after Stripe confirms the subscription. Check
 
 Switching Pro and Premium updates the existing subscription item and invoices the prorated difference immediately. A failed payment leaves the current price in place. Moving to Free schedules cancellation and keeps the current plan until the period ends.
 
+First-month intro (50% off once per user lifetime): Free → Pro/Premium Checkout attaches the matching coupon when `users.intro_offer_used_at` is null. The recurring Price stays €9.99 / €19.99. The offer is marked consumed only after a paid Checkout/invoice webhook — never on cancel, and never again on re-subscribe. Pro → Premium uses the normal switch/proration path with no second intro.
+
 1. Create **Notoria Pro** (€9.99/month) and **Notoria Premium** (€19.99/month). Put the price ids in `STRIPE_PRO_PRICE_ID` and `STRIPE_PREMIUM_PRICE_ID`.
-2. Webhook endpoint: `https://YOUR-DOMAIN/api/stripe/webhook`
-3. Events: `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed`
-4. Customer portal: invoices, payment method, and cancellation. Plan changes stay in Notoria on the existing subscription.
+2. Create (or reuse) the **Pro First Month** and **Premium First Month** coupons (50% off, duration once, restricted to each product). Put coupon ids in `STRIPE_PRO_FIRST_MONTH_COUPON_ID` and `STRIPE_PREMIUM_FIRST_MONTH_COUPON_ID`. Use Test-mode ids with Test keys and Live-mode ids with Live keys — do not mix.
+3. Webhook endpoint: `https://YOUR-DOMAIN/api/stripe/webhook`
+4. Events: `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed`
+5. Customer portal: invoices, payment method, and cancellation. Plan changes stay in Notoria on the existing subscription.
 
 The app does not enable Stripe Tax. Receipts and billing emails are Stripe Dashboard settings, not sent by Notoria.
 
-Schema changes go through `npm run db:push` (production, then local).
+Schema changes go through `npm run db:push` (production, then local). After pulling intro-offer work, run `db:push` so `users.intro_offer_used_at` exists (or apply `drizzle/0003_intro_offer.sql`).
 
 ---
 

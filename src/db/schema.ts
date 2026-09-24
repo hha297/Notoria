@@ -139,6 +139,13 @@ export const users = pgTable(
      */
     scheduledSubscriptionPlan: subscriptionPlanEnum("scheduled_subscription_plan"),
     stripeScheduleId: text("stripe_schedule_id"),
+    /**
+     * Lifetime first-month intro offer. Set once after Stripe confirms the
+     * discounted first paid invoice. Never cleared on cancel/expiry.
+     */
+    introOfferUsedAt: timestamp("intro_offer_used_at", {
+      withTimezone: true,
+    }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),

@@ -18,6 +18,7 @@ const USER_COLUMNS = {
   stripeCancelAtPeriodEnd: true,
   scheduledSubscriptionPlan: true,
   stripeScheduleId: true,
+  introOfferUsedAt: true,
 } as const;
 
 /**
