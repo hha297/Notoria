@@ -13,8 +13,20 @@ describe("plan comparison metadata", () => {
       kind: "quota",
       limit: FREE_DAILY_QUOTAS.ai_meeting,
     });
-    expect(speaking?.cells.pro).toEqual({ kind: "unlimited" });
+    expect(speaking?.cells.pro).toEqual({ kind: "quota", limit: 10 });
     expect(speaking?.cells.premium).toEqual({ kind: "unlimited" });
+  });
+
+  it("keeps lightweight AI unlimited on paid plans", () => {
+    const writing = getPlanComparisonRows().find((row) => row.id === "ai_writing");
+    expect(writing?.nameKey).toBe("aiWritingSupport");
+    expect(writing?.cells.pro).toEqual({ kind: "unlimited" });
+    expect(writing?.cells.premium).toEqual({ kind: "unlimited" });
+    const listening = getPlanComparisonRows().find(
+      (row) => row.id === "ai_listening_transcript",
+    );
+    expect(listening?.cells.pro).toEqual({ kind: "quota", limit: 10 });
+    expect(listening?.cells.premium).toEqual({ kind: "unlimited" });
   });
 
   it("does not duplicate AI Speaking Tutor as a second boolean row", () => {
@@ -54,7 +66,14 @@ describe("plan comparison metadata", () => {
     const delta = getPlanComparisonRows({ premiumDeltaOnly: true });
     expect(delta.every((row) => row.category === "personalized")).toBe(true);
     expect(delta.every((row) => row.cells.pro.kind === "unavailable")).toBe(true);
-    expect(delta.every((row) => row.cells.premium.kind === "included")).toBe(true);
+    expect(
+      delta.every(
+        (row) =>
+          row.cells.premium.kind === "included" ||
+          row.cells.premium.kind === "quota",
+      ),
+    ).toBe(true);
+    expect(delta.some((row) => row.id === "ask_learning_coach")).toBe(true);
   });
 
   it("formats scannable cells", () => {

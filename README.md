@@ -2,7 +2,7 @@
 
 **Notoria** is a private web app for language learning. Each account owns its own data: vocabulary, writing, theory notes, exercises, listening lessons, and speaking sessions live in **language-specific workspaces**. The app is not social — no public profiles, no sharing feed, no multiplayer.
 
-Free includes core learning plus a small daily AI allowance. **Pro** (€9.99 / month) removes those limits and keeps the current Pro tools. **Premium** (€19.99 / month) adds a coach that reads activity already stored in the workspace.
+Free includes core learning plus a small daily AI allowance. **Pro** (€9.99 / month) unlocks the full toolkit — expensive AI (speaking tutor, listening transcripts) stays metered; lightweight AI is unlimited. **Premium** (€19.99 / month) adds personalized learning intelligence (Coach), not merely higher quotas.
 
 ---
 
@@ -16,39 +16,38 @@ Daily AI limits use the UTC calendar day. They reset at 00:00 UTC. The browser c
 
 Core language-learning functionality plus limited daily AI:
 
-- 1 AI Meeting/day
-- 1 Listening Transcript/day
+- 1 AI Speaking Tutor call/day
+- 1 AI Listening Transcript/day
 - 3 AI Exercise generations/day
-- 5 AI Vocabulary AI actions/day
-- 1 AI Writing action/day (Check / Improve / Grammar each count as one)
+- 5 AI Vocabulary actions/day
+- 1 AI Writing Support action/day (Check / Improve / Grammar each count as one)
 
-PDF/DOCX export and generated listening practice stay on Pro. A meeting includes the tutor for that session. One user action counts as one use, including an exercise import (extract + generate share one charge).
+PDF/DOCX export and generated listening practice stay on Pro. A speaking call includes the tutor for that session (fair-use max 30 minutes). One user action counts as one use, including an exercise import (extract + generate share one charge). Listening transcripts are capped at 45 minutes of audio per action.
 
 ## Pro
 
 €9.99/month
 
-Everything in Free plus:
+Everything in Free, plus:
 
-- Unlimited AI meetings, transcripts, exercise generation, vocabulary AI, and writing AI
-- Full listening practice
-- Speaking sessions with the AI tutor
-- PDF/DOCX export
-- Exercise import without a daily cap
+- 10 AI Speaking Tutor calls/day
+- 10 AI Listening Transcripts/day
+- Unlimited AI Exercise generation, Vocabulary actions, and Writing Support
+- Full listening practice generation and PDF/DOCX export
 
 ## Premium
 
 €19.99/month
 
-Everything in Pro plus, on `/coach`:
+Everything in Pro, plus personalized intelligence on `/coach`:
 
-- AI learning coach (optional short note from the activity snapshot when OpenAI is configured)
-- Personal learning profile from the workspace language, vocabulary statuses, and the latest speaking level
-- Adaptive practice for today from due cards, weak flashcard ratings, and recent module use
-- Weekly review of counts from the last 7 days
-- Practice from flashcard ratings marked again or hard
+- Unlimited AI Speaking Tutor and AI Listening Transcripts
+- **Your next move** — recommendation, evidence, why, and today’s practice CTA from real workspace metrics
+- **Ask your Learning Coach** — 100 messages/day; ask about progress, vocabulary, grammar, theory, translations, or what to practice next (answers follow your question language)
+- **Your progress** — before→now period comparison (7/30/90 days) plus review/speaking charts from real events
+- **What needs attention** — due cards, weak words, neglected modules with links into existing tools
 
-Not shipped as their own screens: a sequenced learning path, and priority support. Those entitlements exist in the plan catalog for later work. The coach already reads vocabulary, flashcards, listening, speaking, writing, and theory together. It does not invent metrics.
+Historical charts use flashcard review and speaking session timestamps. Vocabulary status is a live snapshot (not a status audit log), so “mastered over time” is not invented. Listening/writing/theory period counts are entity `updatedAt` touches, same as before.
 
 ## How access is decided
 
@@ -67,16 +66,15 @@ Some Pro-only controls stay faded and open the upgrade dialog. Quota features st
 | Capability | Free | Pro | Premium |
 | ---------- | ---- | --- | ------- |
 | Vocabulary, writing editor, theory notes, CSV | Yes | Yes | Yes |
-| AI meeting | 1/day | Unlimited | Unlimited |
-| Listening transcript | 1/day | Unlimited | Unlimited |
-| AI exercise generation, including import | 3/day | Unlimited | Unlimited |
-| Vocabulary AI actions | 5/day | Unlimited | Unlimited |
-| Listening practice generation | No | Yes | Yes |
-| AI writing | No | Yes | Yes |
-| PDF / DOCX | No | Yes | Yes |
-| Learning coach | No | No | Yes |
+| AI Speaking Tutor | 1 call/day | 10 calls/day | Unlimited |
+| AI Listening Transcript | 1/day | 10/day | Unlimited |
+| AI Exercise generation | 3/day | Unlimited | Unlimited |
+| AI Vocabulary actions | 5/day | Unlimited | Unlimited |
+| AI Writing Support | 1/day | Unlimited | Unlimited |
+| Listening module / PDF export | No | Yes | Yes |
+| Learning Coach / Ask Coach | No | No | Yes (100 messages/day) |
 
-Subscribe from `/account`. Prices come from `src/lib/billing/plans.ts`.
+Subscribe from `/account`. Prices and quotas come from `src/lib/billing/plans.ts` (`PLAN_DAILY_QUOTAS`).
 
 ---
 

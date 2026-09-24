@@ -1860,6 +1860,7 @@
       "INVALID_FILE": "Valitse MP3- tai MP4-tiedosto.",
       "INVALID_FILE_TYPE": "Vain MP3- ja MP4-tiedostot ovat tuettuja.",
       "FILE_TOO_LARGE": "Tiedosto on liian suuri. Käytä alle 25 Mt:n tiedostoa.",
+      "AUDIO_TOO_LONG": "Ääni on pidempi kuin 45 minuuttia. Jaa se osiin tai käytä lyhyempää klippiä yhtä transkriptiota varten.",
       "TRANSCRIPTION_FAILED": "Ääntä ei voitu litteroida. Yritä uudelleen.",
       "GENERATION_FAILED": "Harjoituksia ei voitu luoda. Yritä uudelleen.",
       "GENERATION_UNAVAILABLE": "Harjoitusten luonti ei ole juuri nyt käytettävissä. Yritä myöhemmin uudelleen.",
@@ -1959,7 +1960,8 @@
       "endedTitle": "Puhelu päättyi",
       "endedDescription": "Palaute ilmestyy sessiosivulle hetken kuluttua.",
       "back": "Takaisin sessioon",
-      "notConfigured": "Videopuhelua ei ole vielä määritetty. Lisää Stream Videon API-avaimet aloittaaksesi."
+      "notConfigured": "Videopuhelua ei ole vielä määritetty. Lisää Stream Videon API-avaimet aloittaaksesi.",
+      "sessionLimitReached": "Tämä puhesessio saavutti 30 minuutin fair use -rajan ja päättyi."
     },
     "errors": {
       "STREAM_NOT_CONFIGURED": "Videopuhelua ei ole määritetty.",
@@ -2220,8 +2222,8 @@
     "monthlyPrice": "{price} / kk",
     "usageToday": "Tekoälyn käyttö tänään",
     "quotaCount": "{used} / {limit}",
-    "unlimitedAi": "Rajaton tekoäly",
-    "quotaExceeded": "Päivän ilmainen kiintiö on käytetty. Päivitä Prohon, niin tekoäly on rajaton.",
+    "unlimitedAi": "Keskeiset tekoälytyökalut",
+    "quotaExceeded": "Tämän tekoälyominaisuuden päiväkiintiö on käytetty. Se nollautuu UTC-keskiyöllä — tai päivitä suurempaan rajaan.",
     "alreadySubscribed": "Sinulla on jo tämä tilaus.",
     "status": "Tila: {status}",
     "renewsOn": "Uusiutuu {date}",
@@ -2239,27 +2241,29 @@
     "cancelAnytime": "Peru milloin tahansa",
     "points": {
       "core": "Kortit, kirjoittaminen, teoriamuistiinpanot ja CSV",
-      "meeting": "1 tekoälytapaaminen päivässä",
+      "meeting": "1 puheopettajapuhelu päivässä",
       "transcript": "1 kuuntelutranskriptio päivässä",
       "exercises": "3 tekoälyharjoitusta päivässä",
       "vocabulary": "5 sanaston tekoälytoimintoa päivässä",
-      "unlimited": "Rajattomat tapaamiset, transkriptiot, harjoitukset ja sanastoapu",
-      "listening": "Täysi kuunteluharjoittelu",
-      "speaking": "Puheharjoitukset tekoälyopettajan kanssa",
-      "writing": "Tekoäly kirjoittamiseen",
+      "unlimited": "Rajattomat harjoitusgenerointi, sanastoapu ja kirjoitustuki",
+      "listening": "10 kuuntelutranskriptiota päivässä",
+      "speaking": "10 puheopettajapuhelua päivässä",
+      "writing": "Tekoälykirjoitustuki",
       "export": "PDF- ja DOCX-vienti",
       "coach": "Oppimisvalmentaja omasta aktiivisuudestasi",
+      "askCoach": "Kysy AI-oppimisvalmentajalta — edistyminen, sanasto, kielioppi, teoria, käännökset ja mitä harjoitella seuraavaksi",
       "profile": "Henkilökohtainen oppimisprofiili",
       "daily": "Tämän päivän harjoitus",
       "weekly": "Viikoittainen katsaus",
       "mistakes": "Harjoitus korttien virheistä"
     },
     "quotaLabels": {
-      "ai_meeting": "Tekoälytapaaminen",
+      "ai_meeting": "Tekoälypuheopettaja",
       "ai_listening_transcript": "Kuuntelutranskriptio",
-      "ai_exercise": "Tekoälyharjoitukset",
-      "ai_vocabulary": "Sanaston tekoäly",
-      "ai_writing": "Tekoälykirjoitus"
+      "ai_exercise": "Tekoälyharjoitusten luonti",
+      "ai_vocabulary": "Sanaston tekoälytoiminnot",
+      "ai_writing": "Tekoälykirjoitustuki",
+      "ai_learning_coach_chat": "Oppimisvalmentaja"
     },
     "cell": {
       "unlimited": "Rajaton",
@@ -2270,7 +2274,8 @@
         "ai_listening_transcript": "{count, plural, one {# transkriptio/pv} other {# transkriptiota/pv}}",
         "ai_exercise": "{count, plural, one {# generointi/pv} other {# generointia/pv}}",
         "ai_vocabulary": "{count, plural, one {# toiminto/pv} other {# toimintoa/pv}}",
-        "ai_writing": "{count, plural, one {# toiminto/pv} other {# toimintoa/pv}}"
+        "ai_writing": "{count, plural, one {# toiminto/pv} other {# toimintoa/pv}}",
+        "ask_learning_coach": "{count, plural, one {# viesti/pv} other {# viestiä/pv}}"
       },
       "includedSr": "Sisältyy",
       "unavailableSr": "Ei saatavilla"
@@ -2286,10 +2291,12 @@
       "aiVocabulary": "Sanaston tekoälytoiminnot",
       "aiSpeakingTutor": "Tekoälypuheopettaja",
       "aiWriting": "Tekoälykirjoitus",
+      "aiWritingSupport": "Tekoälykirjoitustuki",
       "listening": "Kuuntelu",
       "speaking": "Puhuminen",
       "pdfDocxExport": "PDF/DOCX-vienti",
       "learningCoach": "Oppimisvalmentaja",
+      "askLearningCoach": "Kysy AI-oppimisvalmentajalta",
       "learningProfile": "Henkilökohtainen oppimisprofiili",
       "adaptiveDailyPractice": "Mukautuva päivittäinen harjoitus",
       "practiceFromMistakes": "Harjoitus virheistä",
@@ -2589,6 +2596,7 @@
     "title": "Oppimis",
     "highlight": "valmentaja",
     "description": "Henkilökohtainen näkymä siihen, miten opiskelet ja mihin kannattaa keskittyä seuraavaksi.",
+    "descriptionIntelligence": "Mitä tehdä seuraavaksi, miksi se kannattaa, ja miten oppimisesi muuttuu.",
     "lockedTitle": "Tämä ominaisuus kuuluu Notoria Premiumiin.",
     "lockedBody": "Premium muuttaa sanaston, kertaukset, kuuntelun, puhumisen, kirjoittamisen ja teorian keskittyneeksi harjoitussuunnitelmaksi.",
     "distinction": "Pro antaa työkalut. Premium auttaa käyttämään niitä älykkäästi.",
@@ -2647,6 +2655,138 @@
     "refresh": "Päivitä valmentaja",
     "refreshed": "Valmentaja päivitettiin viimeisimmän opiskelun mukaan.",
     "refreshFailed": "Valmentajaa ei voitu päivittää. Yritä uudelleen.",
+    "ask": {
+      "label": "Kysy valmentajalta",
+      "title": "Kysy oppimisvalmentajaltasi",
+      "description": "Kysy mitä tahansa oppimisestasi — edistyminen, mitä harjoitella seuraavaksi, sanasto, kielioppi, teoria, käännökset tai mikä tahansa opiskelumateriaali, jonka liität. Vastaus seuraa kysymyksesi kieltä.",
+      "emptyReady": "Valmentajasi on valmis. En vielä tunne opiskelutottumuksiasi, joten kysy sanasta, kieliopista tai mitä harjoitella ensin.",
+      "placeholder": "Kysy oppimisvalmentajaltasi...",
+      "inputHint": "Enter lähettää. Shift+Enter lisää rivinvaihdon.",
+      "send": "Lähetä viesti",
+      "thinking": "Valmentaja miettii…",
+      "you": "Sinä",
+      "coach": "Valmentaja",
+      "promptsLabel": "Ehdotetut kysymykset",
+      "retry": "Yritä uudelleen",
+      "upgrade": "Päivitä Premiumiin",
+      "errorQuota": "Olet käyttänyt tämän päivän oppimisvalmentaja-kiintiön. Valmentaja on taas käytettävissä huomenna.",
+      "errorPremium": "Oppimisvalmentaja on Premium-ominaisuus. Saat henkilökohtaisia suosituksia opiskeluaktiviteettisi perusteella.",
+      "errorUnavailable": "Valmentaja ei voinut vastata juuri nyt. Viestiäsi ei laskettu. Yritä uudelleen.",
+      "prompts": {
+        "practice_today": "Mihin minun pitäisi keskittyä tänään?",
+        "struggling_words": "Miksi nämä sanat ovat minulle vaikeita?",
+        "practice_weak": "Auta minua harjoittelemaan heikkoja sanojani.",
+        "review_first": "Mitä minun pitäisi kerrata ensin?",
+        "neglecting": "Mitä olen laiminlyönyt?",
+        "improve_speaking": "Miksi puhumiseni ei ole kehittynyt?",
+        "study_20": "Miten käyttäisin 20 minuuttia tänään?",
+        "getting_started": "Mitä minun pitäisi harjoitella ensin?",
+        "am_i_improving": "Kehittynkö oikeasti?",
+        "what_changed": "Mikä muuttui oppimisessani tällä viikolla?"
+      }
+    },
+    "next": {
+      "label": "Päätä",
+      "title": "Seuraava siirtosi",
+      "planTitle": "Tämän päivän suositeltu harjoitus",
+      "whyOrder": "Miksi tämä järjestys? Ensin erääntyvä ja vaikea sanasto, sitten moduuli jota olet laiminlyönyt.",
+      "cta": "Aloita tämän päivän harjoitus"
+    },
+    "why": {
+      "title": "Miksi tämä?",
+      "due": "{count} sanastokorttia on erääntynyt",
+      "weak": "{count} sanaa on ollut toistuvasti vaikeita",
+      "reviews": "{count} korttiarvostelua viimeisten 7 päivän aikana",
+      "speakingIdle": "Ei puheharjoituksia viimeiseen 7 päivään",
+      "listeningIdle": "Ei kuunteluaktiviteettia viimeiseen 7 päivään",
+      "writingIdle": "Ei kirjoituspäivityksiä viimeiseen 7 päivään",
+      "theoryIdle": "Ei teoriamuistiinpanojen päivityksiä viimeiseen 7 päivään",
+      "focus": "Nykyinen fokusus: {focus}"
+    },
+    "chips": {
+      "due": "{count} korttia erääntynyt",
+      "weak": "{count} vaikeaa sanaa",
+      "speakingIdle": "Ei puheharjoitusta 7 päivään",
+      "mastered": "{count} hallittua nyt",
+      "dueLabel": "Erääntyneet",
+      "weakLabel": "Vaikeat sanat"
+    },
+    "quick": {
+      "label": "Konteksti",
+      "title": "Pikakonteksti"
+    },
+    "progress": {
+      "label": "Mittaa",
+      "title": "Edistymisesi",
+      "description": "Katso mitä oppimisessasi on muuttunut — ja mitä valmentajasi huomaa.",
+      "empty": "Olet vasta alussa. Jatka opiskelua, niin valmentaja alkaa näyttää merkityksellistä edistymistä.",
+      "chartEmpty": "Tälle kaaviolle ei ole vielä tarpeeksi tapahtumahistoriaa. Jatka kertauksia tai puhumista, niin trendi ilmestyy.",
+      "chartSr": "{metric} viimeisten {days} päivän aikana, arvosta {from} arvoon {to} viimeisimmissä jaksoissa.",
+      "activityTitle": "Oppimisaktiviteetti — viimeiset {days} päivää",
+      "activityNote": "Aktiviteetti näyttää mihin käytit aikaa — ei sitä, kehittyikö taito.",
+      "compareLabel": "Jaksovertailu",
+      "noticesTitle": "Mitä valmentajasi huomaa",
+      "askAbout": "Kysy valmentajalta tästä",
+      "periodLabel": "Jakso",
+      "metricLabel": "Kaavion mittari",
+      "period": {
+        "7": "7 päivää",
+        "30": "30 päivää",
+        "90": "90 päivää"
+      },
+      "metrics": {
+        "flashcardReviews": "Kertaukset",
+        "againOrHard": "Vaikeat arviot",
+        "speakingSessions": "Puheharjoitukset"
+      },
+      "tooltip": {
+        "weekOf": "Viikko alkaen {date}",
+        "firstAt": "Ensimmäinen aktiviteetti {time}",
+        "reviews": "{count, plural, one {# flashcard-kertaus} other {# flashcard-kertausta}}",
+        "againOrHard": "{count, plural, one {# Again/Hard-arvio} other {# Again/Hard-arviota}}",
+        "speaking": "{count, plural, one {# puheharjoitus} other {# puheharjoitusta}}",
+        "none": "Ei aktiviteettia tällä jaksolla",
+        "words": "Sanat: {list}",
+        "topics": "Aiheet: {list}"
+      },
+      "streak": {
+        "label": "Putki",
+        "days": "{count, plural, one {päivän putki} other {päivän putki}}",
+        "practicedToday": "Harjoittelit tänään — putki on turvassa.",
+        "keepGoing": "Harjoittele tänään, jotta putki jatkuu.",
+        "start": "Aloita putki opiskelemalla tänään.",
+        "weekLabel": "Viimeiset 7 päivää",
+        "best": "Pisin putki: {count, plural, one {# päivä} other {# päivää}}",
+        "dayEmpty": "Ei oppimisaktiviteettia tänä päivänä",
+        "dayActive": "Oppimisaktiviteetti kirjattu",
+        "dayReviews": "{count, plural, one {# flashcard-kertaus} other {# flashcard-kertausta}}",
+        "daySpeaking": "{count, plural, one {# puheharjoitus} other {# puheharjoitusta}}",
+        "dayListening": "{count, plural, one {# kuuntelupäivitys} other {# kuuntelupäivitystä}}",
+        "dayWriting": "{count, plural, one {# kirjoituspäivitys} other {# kirjoituspäivitystä}}",
+        "dayTheory": "{count, plural, one {# teoriapäivitys} other {# teoriapäivitystä}}"
+      }
+    },
+    "notices": {
+      "reviews_up": "Korttikertaukset ovat korkeammalla kuin edellisellä jaksolla.",
+      "reviews_down": "Korttikertaukset ovat matalammalla kuin edellisellä jaksolla.",
+      "misses_down": "Again/Hard-arviot vähenivät edelliseen jaksoon verrattuna.",
+      "misses_up": "Again/Hard-arviot lisääntyivät edelliseen jaksoon verrattuna.",
+      "speaking_quiet": "Puheharjoituksia on edelleen vähän suhteessa sanastoaktiviteettiin.",
+      "speaking_up": "Puheharjoitukset lisääntyivät edelliseen jaksoon verrattuna.",
+      "due_open": "Sinulla on yhä erääntyneitä kortteja.",
+      "weak_open": "Jotkut sanat ovat yhä toistuvasti vaikeita.",
+      "getting_started": "Historiaa ei ole vielä tarpeeksi vahvaan edistymisarvioon."
+    },
+    "attention": {
+      "label": "Toimi",
+      "title": "Mikä tarvitsee huomiota",
+      "dueTitle": "{count} korttia erääntynyt",
+      "dueBody": "Kertaa erääntynyt sanasto, jotta kortit eivät kasaudu.",
+      "weakTitle": "{count} toistuvasti vaikeaa sanaa",
+      "weakBody": "Harjoittele näitä sanoja: {words}",
+      "review": "Kertaa",
+      "practice": "Harjoittele"
+    },
     "rating": {
       "AGAIN": "Again",
       "HARD": "Hard"

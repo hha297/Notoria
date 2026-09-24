@@ -17,9 +17,11 @@ import {
   DashboardGuide,
   suggestedModule,
 } from "@/components/dashboard/dashboard-guide";
+import { CoachStreakCard } from "@/components/coach/coach-streak-card";
 import { LinkButton } from "@/components/ui/link-button";
 import homeStyles from "@/components/style/dashboard/home.module.css";
 import { mx } from "@/lib/css-module";
+import type { CoachLearningStreak } from "@/lib/billing/coach-progress";
 import type { DashboardContinueItem } from "@/lib/dashboard/activity";
 import type { WorkspaceActivitySnapshot } from "@/lib/onboarding/requirements";
 
@@ -28,6 +30,7 @@ type DashboardHomeProps = {
   snapshot: WorkspaceActivitySnapshot;
   practiceReadyCount: number;
   continueItems: DashboardContinueItem[];
+  streak: CoachLearningStreak | null;
 };
 
 type HubModule = {
@@ -83,6 +86,7 @@ export function DashboardHome({
   snapshot,
   practiceReadyCount,
   continueItems,
+  streak,
 }: DashboardHomeProps) {
   const t = useTranslations("dashboard");
   const firstName = userName.trim().split(/\s+/)[0] || userName;
@@ -149,12 +153,19 @@ export function DashboardHome({
             ))}
           </ul>
         </div>
-        <div className="writing-hero-actions">
-          <LinkButton href="/exercises">
-            <Dumbbell className="size-4" />
-            {t("practiceNowCta")}
-            <ArrowRight className="size-4" />
-          </LinkButton>
+        <div className={mx(homeStyles, "home-hero-side")}>
+          {streak ? (
+            <div className={mx(homeStyles, "home-streak")}>
+              <CoachStreakCard streak={streak} variant="home" />
+            </div>
+          ) : null}
+          <div className="writing-hero-actions">
+            <LinkButton href="/exercises">
+              <Dumbbell className="size-4" />
+              {t("practiceNowCta")}
+              <ArrowRight className="size-4" />
+            </LinkButton>
+          </div>
         </div>
       </header>
 

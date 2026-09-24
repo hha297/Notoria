@@ -12,7 +12,12 @@ import { toast } from "sonner";
 import { ProUpgradeDialog } from "@/components/billing/pro-upgrade-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { planMonthlyPrice, QUOTA_FEATURES } from "@/lib/billing/plans";
+import {
+  planMonthlyPrice,
+  FREE_USAGE_QUOTA_FEATURES,
+  PLAN_DAILY_QUOTAS,
+  type QuotaFeatureId,
+} from "@/lib/billing/plans";
 import {
   accountBillingActions,
   isBillingExpect,
@@ -249,7 +254,7 @@ export function ProSubscriptionCard({
                 {t("usageToday")}
               </p>
               <ul className={mx(styles, "account-pro-feature-list")}>
-                {QUOTA_FEATURES.map((feature) => {
+                {FREE_USAGE_QUOTA_FEATURES.map((feature) => {
                   const quota = billing.quotas.find((item) => item.feature === feature);
                   const used = quota?.used ?? 0;
                   const limit = quota?.limit ?? 0;
@@ -277,23 +282,81 @@ export function ProSubscriptionCard({
               <p className={mx(styles, "account-pro-features-label")}>
                 {billing.plan === "premium"
                   ? tAccount("premiumIncluded")
-                  : t("unlimitedAi")}
+                  : t("usageToday")}
               </p>
-              <ul className={mx(styles, "account-pro-feature-list")}>
-                {(billing.plan === "premium"
-                  ? (["coach", "profile", "daily", "weekly", "mistakes"] as const)
-                  : (["unlimited", "listening", "speaking", "writing", "export"] as const)
-                ).map((id) => (
-                  <li key={id} className={mx(styles, "account-pro-feature")}>
-                    <span className={mx(styles, "account-pro-feature-mark")} aria-hidden>
-                      <Check className="size-3.5" strokeWidth={2.5} />
-                    </span>
-                    <p className={mx(styles, "account-pro-feature-title")}>
-                      {t(`points.${id}`)}
-                    </p>
-                  </li>
-                ))}
-              </ul>
+              {billing.plan === "pro" ? (
+                <ul className={mx(styles, "account-pro-feature-list")}>
+                  {(
+                    [
+                      "ai_meeting",
+                      "ai_listening_transcript",
+                    ] as const satisfies readonly QuotaFeatureId[]
+                  ).map((feature) => {
+                    const quota = billing.quotas.find(
+                      (item) => item.feature === feature,
+                    );
+                    const used = quota?.used ?? 0;
+                    const limit =
+                      quota?.limit ?? PLAN_DAILY_QUOTAS.pro[feature] ?? 0;
+                    return (
+                      <li key={feature} className={mx(styles, "account-pro-feature")}>
+                        <span
+                          className={mx(styles, "account-pro-feature-mark")}
+                          aria-hidden
+                        >
+                          <Check className="size-3.5" strokeWidth={2.5} />
+                        </span>
+                        <div>
+                          <p className={mx(styles, "account-pro-feature-title")}>
+                            {t(`quotaLabels.${feature}`)}
+                          </p>
+                          <p className={mx(styles, "account-pro-feature-impact")}>
+                            {t("quotaCount", { used, limit })}
+                          </p>
+                        </div>
+                      </li>
+                    );
+                  })}
+                  {(["unlimited", "writing", "export"] as const).map((id) => (
+                    <li key={id} className={mx(styles, "account-pro-feature")}>
+                      <span
+                        className={mx(styles, "account-pro-feature-mark")}
+                        aria-hidden
+                      >
+                        <Check className="size-3.5" strokeWidth={2.5} />
+                      </span>
+                      <p className={mx(styles, "account-pro-feature-title")}>
+                        {t(`points.${id}`)}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <ul className={mx(styles, "account-pro-feature-list")}>
+                  {(
+                    [
+                      "coach",
+                      "askCoach",
+                      "profile",
+                      "daily",
+                      "weekly",
+                      "mistakes",
+                    ] as const
+                  ).map((id) => (
+                    <li key={id} className={mx(styles, "account-pro-feature")}>
+                      <span
+                        className={mx(styles, "account-pro-feature-mark")}
+                        aria-hidden
+                      >
+                        <Check className="size-3.5" strokeWidth={2.5} />
+                      </span>
+                      <p className={mx(styles, "account-pro-feature-title")}>
+                        {t(`points.${id}`)}
+                      </p>
+                    </li>
+                  ))}
+                </ul>
+              )}
             </div>
           )}
         </div>

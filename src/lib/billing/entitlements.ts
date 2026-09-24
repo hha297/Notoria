@@ -48,10 +48,13 @@ export async function getQuotaStatuses(
   now = new Date(),
 ): Promise<QuotaStatus[]> {
   const resetAt = quotaResetAt(now);
-  const counts =
-    plan === "free"
-      ? await readUsageCounts(userId, usageDateUtc(now))
-      : new Map<string, number>();
+  const needsCounts = QUOTA_FEATURES.some((feature) => {
+    const access = getFeatureAccess(plan, feature);
+    return access.kind === "quota" && access.limit !== null;
+  });
+  const counts = needsCounts
+    ? await readUsageCounts(userId, usageDateUtc(now))
+    : new Map<string, number>();
 
   return QUOTA_FEATURES.map((feature) => {
     const access = getFeatureAccess(plan, feature);

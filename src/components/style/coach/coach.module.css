@@ -450,18 +450,24 @@
   gap: 0.35rem;
   margin-top: 0.35rem;
   padding: 0.7rem 1rem;
-  border-radius: 999px;
-  border: 1px solid color-mix(in oklab, var(--coach-fg) 28%, var(--hairline-cloud));
-  background: color-mix(in oklab, var(--coach-bg) 70%, transparent);
+  border-radius: 0.7rem;
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 32%, var(--border));
+  background: color-mix(in oklab, var(--coach-fg) 10%, transparent);
   font-size: 0.88rem;
   font-weight: 650;
-  color: var(--ink);
+  color: var(--foreground);
   text-decoration: none;
   width: fit-content;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .coach-plan-start:hover {
-  border-color: color-mix(in oklab, var(--coach-fg) 48%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--surface-elevated) 92%, transparent);
+  border-color: color-mix(in oklab, var(--coach-fg) 55%, var(--border));
+  color: color-mix(in oklab, var(--coach-fg) 82%, var(--foreground));
 }
 
 .coach-mistakes {
@@ -639,5 +645,1097 @@
 
   .coach-plan-item .coach-inline-link {
     grid-column: 2;
+  }
+}
+
+/* Ask your Learning Coach */
+
+.coach-ask-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  min-width: 0;
+  padding: 1.35rem 1.45rem 1.65rem;
+  border-radius: 1.15rem;
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 28%, var(--border));
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--coach-fg) 14%, transparent) 0%,
+      color-mix(in oklab, var(--coach-fg) 4%, transparent) 42%,
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 88%, var(--surface));
+  box-shadow: 0 1px 0 color-mix(in oklab, var(--coach-fg) 12%, transparent);
+}
+
+.coach-ask {
+  gap: 1.25rem;
+  width: 100%;
+  min-height: 30rem;
+  padding-top: 0.15rem;
+}
+
+.coach-ask-lede {
+  margin: 0.4rem 0 0;
+  max-width: 48rem;
+  font-size: 0.98rem;
+  line-height: 1.55;
+  color: var(--muted-foreground);
+}
+
+.coach-ask-ready {
+  margin: 0;
+  max-width: 40rem;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: color-mix(in oklab, var(--coach-fg) 55%, var(--foreground));
+}
+
+.coach-ask-prompts {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+}
+
+.coach-ask-prompt {
+  appearance: none;
+  cursor: pointer;
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 28%, var(--border));
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--coach-fg) 8%, var(--surface));
+  color: var(--foreground);
+  font: inherit;
+  font-size: 0.84rem;
+  font-weight: 600;
+  line-height: 1.3;
+  padding: 0.5rem 0.95rem;
+  text-align: left;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease;
+}
+
+.coach-ask-prompt:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--coach-fg) 16%, var(--surface));
+  border-color: color-mix(in oklab, var(--coach-fg) 45%, var(--border));
+}
+
+.coach-ask-prompt:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.coach-ask-thread {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-height: min(42rem, 68vh);
+  min-height: 16rem;
+  flex: 1 1 auto;
+  overflow-y: auto;
+  padding: 0.35rem 0.15rem 0.5rem;
+  scroll-behavior: smooth;
+}
+
+.coach-ask-bubble {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  max-width: min(42rem, 100%);
+  padding: 0.8rem 1rem;
+  border-radius: 0.9rem;
+}
+
+.coach-ask-bubble-user {
+  align-self: flex-end;
+  background: color-mix(in oklab, var(--coach-fg) 14%, var(--surface-elevated));
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 22%, transparent);
+}
+
+.coach-ask-bubble-coach {
+  align-self: flex-start;
+  background: color-mix(in oklab, var(--surface-elevated) 88%, transparent);
+  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 70%, transparent);
+}
+
+.coach-ask-bubble-failed {
+  opacity: 0.65;
+}
+
+.coach-ask-bubble-role {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--coach-fg) 65%, var(--muted-foreground));
+}
+
+.coach-ask-bubble-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.coach-ask-bubble-body p {
+  margin: 0;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  white-space: pre-wrap;
+}
+
+.coach-ask-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: 0.25rem;
+}
+
+.coach-ask-action {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 0.55rem;
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 35%, var(--border));
+  background: color-mix(in oklab, var(--coach-fg) 12%, var(--surface));
+  color: var(--foreground);
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+  padding: 0.4rem 0.7rem;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.coach-ask-action:hover {
+  background: color-mix(in oklab, var(--coach-fg) 22%, var(--surface));
+}
+
+.coach-ask-thinking {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--muted-foreground);
+}
+
+.coach-ask-error {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem 0.85rem;
+  padding: 0.75rem 0.9rem;
+  border-radius: 0.75rem;
+  border: 1px solid color-mix(in oklab, var(--destructive) 35%, var(--border));
+  background: color-mix(in oklab, var(--destructive) 8%, var(--surface));
+}
+
+.coach-ask-error p {
+  margin: 0;
+  flex: 1 1 14rem;
+  font-size: 0.9rem;
+  line-height: 1.45;
+}
+
+.coach-ask-composer {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 0.65rem;
+  align-items: end;
+  margin-top: auto;
+}
+
+.coach-ask-input {
+  min-height: 5.75rem;
+  resize: vertical;
+  border-color: color-mix(in oklab, var(--coach-fg) 26%, var(--border));
+  background: color-mix(in oklab, var(--coach-fg) 5%, var(--surface));
+}
+
+.coach-ask-send {
+  flex-shrink: 0;
+}
+
+@media (max-width: 560px) {
+  .coach-ask-composer {
+    grid-template-columns: 1fr;
+  }
+
+  .coach-ask-send {
+    justify-self: end;
+  }
+
+  .coach-ask-stage {
+    padding: 1rem 1.05rem 1.2rem;
+  }
+}
+
+/* Redesign: next move, ask stage, progress */
+
+.coach-next-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1.15rem 1.25rem 1.25rem;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 22%, var(--border));
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--coach-fg) 10%, transparent),
+      transparent 55%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 92%, transparent);
+}
+
+.coach-next-headline {
+  margin: 0;
+  font-size: 1.35rem;
+  font-weight: 700;
+  line-height: 1.25;
+  letter-spacing: -0.02em;
+}
+
+.coach-next-body {
+  margin: 0;
+  max-width: 42rem;
+  font-size: 1rem;
+  line-height: 1.55;
+  color: color-mix(in oklab, var(--foreground) 88%, var(--muted-foreground));
+}
+
+.coach-evidence {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.coach-evidence-chip {
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 30%, var(--border));
+  background: color-mix(in oklab, var(--coach-fg) 8%, var(--surface));
+  font-size: 0.8rem;
+  font-weight: 650;
+  padding: 0.35rem 0.75rem;
+}
+
+.coach-why {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  margin-top: 0.15rem;
+  padding: 0.9rem 1rem 1rem;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 20%, var(--border));
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--coach-fg) 10%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--surface) 55%, transparent);
+}
+
+.coach-why-title {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--coach-fg) 75%, var(--muted-foreground));
+}
+
+.coach-section-kicker {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--coach-fg) 75%, var(--muted-foreground));
+}
+
+.coach-why-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.coach-why-list li {
+  display: grid;
+  grid-template-columns: 1.75rem 1fr;
+  column-gap: 0.7rem;
+  align-items: baseline;
+  padding: 0.6rem 0;
+  border-top: 1px solid color-mix(in oklab, var(--coach-fg) 12%, transparent);
+}
+
+.coach-why-list li:first-child {
+  border-top: 0;
+  padding-top: 0.1rem;
+}
+
+.coach-why-list li:last-child {
+  padding-bottom: 0.1rem;
+}
+
+.coach-why-index {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in oklab, var(--coach-fg) 78%, var(--muted-foreground));
+}
+
+.coach-why-text {
+  font-size: 0.94rem;
+  line-height: 1.5;
+  color: color-mix(in oklab, var(--foreground) 90%, var(--muted-foreground));
+}
+
+.coach-why-order {
+  margin: 0.35rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+}
+
+.coach-today-plan {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.coach-plan-compact .coach-plan-item {
+  grid-template-columns: auto 1fr;
+}
+
+.coach-quick {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1rem 1.1rem;
+  border-radius: 0.9rem;
+  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 75%, transparent);
+  background: color-mix(in oklab, var(--surface-elevated) 85%, transparent);
+}
+
+.coach-quick-bar {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 0.75rem 1.25rem;
+  padding: 0.15rem 0 0.85rem;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid color-mix(in oklab, var(--coach-fg) 18%, transparent);
+  background: transparent;
+}
+
+.coach-quick-bar-head {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 7rem;
+}
+
+.coach-quick-bar-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+
+.coach-quick-list {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+}
+
+.coach-quick-list-inline {
+  display: flex;
+  flex: 1 1 18rem;
+  flex-wrap: wrap;
+  gap: 0.55rem 1.15rem;
+}
+
+.coach-quick-list div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  font-size: 0.9rem;
+}
+
+.coach-quick-list-inline div {
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 4.5rem;
+}
+
+.coach-quick-list dt {
+  color: var(--muted-foreground);
+}
+
+.coach-quick-list-inline dt {
+  font-size: 0.72rem;
+  font-weight: 650;
+}
+
+.coach-quick-list dd {
+  margin: 0;
+  font-weight: 700;
+}
+
+.coach-progress-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem 1rem;
+}
+
+.coach-progress-controls.is-pending {
+  opacity: 0.72;
+  pointer-events: none;
+}
+
+.coach-segment {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+  padding: 0.2rem;
+  border-radius: 0.65rem;
+  background: color-mix(in oklab, var(--muted) 55%, transparent);
+}
+
+.coach-segment-btn {
+  appearance: none;
+  cursor: pointer;
+  border: 0;
+  border-radius: 0.5rem;
+  padding: 0.35rem 0.7rem;
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 650;
+  color: var(--muted-foreground);
+  background: transparent;
+  text-decoration: none;
+}
+
+.coach-segment-btn:disabled {
+  cursor: wait;
+}
+
+.coach-segment-btn.is-active {
+  background: var(--surface);
+  color: var(--foreground);
+  box-shadow: 0 0 0 1px color-mix(in oklab, var(--coach-fg) 25%, transparent);
+}
+
+.coach-progress-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  min-height: 22rem;
+}
+
+.coach-progress-main {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(14rem, 3fr);
+  gap: 1.15rem 1.35rem;
+  align-items: stretch;
+}
+
+.coach-progress-lower {
+  display: grid;
+  grid-template-columns: minmax(0, 7fr) minmax(14rem, 3fr);
+  gap: 1.15rem 1.35rem;
+  align-items: start;
+}
+
+@media (max-width: 860px) {
+  .coach-progress-main,
+  .coach-progress-lower {
+    grid-template-columns: 1fr;
+  }
+}
+
+.coach-streak {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  padding: 1.1rem 1.15rem 1.15rem;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 26%, var(--border));
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--coach-fg) 16%, transparent) 0%,
+      color-mix(in oklab, var(--coach-fg) 4%, transparent) 48%,
+      transparent 78%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 92%, var(--surface));
+}
+
+.coach-streak-home {
+  --coach-fg: var(--module-home-fg);
+  border-color: color-mix(in oklab, var(--module-home-fg) 28%, var(--border));
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--module-home-bg) 70%, transparent) 0%,
+      color-mix(in oklab, var(--module-home-bg) 28%, transparent) 45%,
+      transparent 78%
+    ),
+    color-mix(in oklab, var(--module-home-bg) 35%, var(--surface));
+}
+
+.coach-streak-hero {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.coach-streak-flame {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  border-radius: 0.85rem;
+  color: color-mix(in oklab, var(--coach-fg) 45%, var(--muted-foreground));
+  background: color-mix(in oklab, var(--coach-fg) 8%, transparent);
+}
+
+.coach-streak-flame-lit {
+  color: color-mix(in oklab, var(--coach-fg) 95%, var(--foreground));
+  background: color-mix(in oklab, var(--coach-fg) 18%, transparent);
+}
+
+.coach-streak-count-wrap {
+  display: flex;
+  flex-direction: column;
+  gap: 0.05rem;
+  min-width: 0;
+}
+
+.coach-streak-count {
+  margin: 0;
+  font-size: 2.15rem;
+  font-weight: 800;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--foreground);
+}
+
+.coach-streak-unit {
+  margin: 0;
+  font-size: 0.82rem;
+  font-weight: 650;
+  color: color-mix(in oklab, var(--coach-fg) 70%, var(--muted-foreground));
+}
+
+.coach-streak-status {
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: color-mix(in oklab, var(--foreground) 88%, var(--muted-foreground));
+}
+
+.coach-streak-week {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 0.35rem;
+  margin: 0.15rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.coach-streak-day {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.coach-streak-dot {
+  appearance: none;
+  width: 0.78rem;
+  height: 0.78rem;
+  padding: 0;
+  border-radius: 999px;
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 22%, var(--border));
+  background: color-mix(in oklab, var(--muted) 45%, transparent);
+  cursor: pointer;
+  outline: none;
+  transition:
+    transform 0.12s ease,
+    background 0.12s ease,
+    border-color 0.12s ease;
+}
+
+.coach-streak-dot:hover,
+.coach-streak-dot:focus-visible {
+  transform: scale(1.18);
+  border-color: color-mix(in oklab, var(--coach-fg) 48%, var(--border));
+}
+
+.coach-streak-dot-active {
+  border-color: color-mix(in oklab, var(--coach-fg) 55%, var(--border));
+  background: color-mix(in oklab, var(--coach-fg) 85%, var(--foreground));
+}
+
+.coach-streak-day-label {
+  font-size: 0.65rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.coach-streak-best {
+  margin: 0.1rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+}
+
+.coach-streak-tooltip {
+  --coach-fg: var(--accent-lime);
+  position: fixed;
+  z-index: 9999;
+  min-width: 10.5rem;
+  max-width: 15rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.7rem;
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 32%, var(--border));
+  background: color-mix(in oklab, var(--surface-elevated) 98%, var(--surface));
+  color: var(--foreground);
+  box-shadow: 0 10px 28px color-mix(in oklab, var(--foreground) 16%, transparent);
+  transform: translate(-50%, calc(-100% - 0.7rem));
+  pointer-events: none;
+}
+
+.coach-streak-tooltip-home {
+  --coach-fg: var(--module-home-fg);
+  border-color: color-mix(in oklab, var(--module-home-fg) 32%, var(--border));
+  background: color-mix(in oklab, var(--module-home-bg) 55%, var(--surface-elevated));
+}
+
+.coach-streak-tooltip-date {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.coach-streak-tooltip-list {
+  margin: 0.4rem 0 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: color-mix(in oklab, var(--foreground) 88%, var(--muted-foreground));
+}
+
+.coach-streak-tooltip-empty {
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+}
+
+.coach-compare {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(11rem, 1fr));
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-height: 4.5rem;
+}
+
+.coach-compare-stack {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.55rem;
+  min-height: 0;
+  align-self: stretch;
+}
+
+.coach-compare-stack .coach-compare-item {
+  padding: 0.65rem 0.75rem;
+  min-width: 0;
+}
+
+.coach-compare-stack .coach-compare-label {
+  font-size: 0.72rem;
+  line-height: 1.25;
+}
+
+.coach-compare-stack .coach-compare-values {
+  font-size: 0.95rem;
+  gap: 0.2rem;
+}
+
+.coach-compare-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.7rem 0.8rem;
+  border-radius: 0.7rem;
+  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 70%, transparent);
+}
+
+.coach-compare-label {
+  font-size: 0.75rem;
+  font-weight: 650;
+  color: var(--muted-foreground);
+}
+
+.coach-compare-values {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.25rem;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.coach-compare-delta {
+  font-size: 0.8rem;
+  font-weight: 650;
+  color: var(--muted-foreground);
+}
+
+.coach-compare-delta.is-up {
+  color: color-mix(in oklab, var(--coach-fg) 75%, var(--foreground));
+}
+
+.coach-compare-delta.is-down {
+  color: color-mix(in oklab, var(--destructive) 70%, var(--foreground));
+}
+
+.coach-chart {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  min-height: 13.5rem;
+}
+
+.coach-chart-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.coach-chart-title {
+  font-size: 0.92rem;
+  font-weight: 700;
+}
+
+.coach-chart-frame {
+  position: relative;
+  width: 100%;
+  max-width: none;
+}
+
+.coach-chart-svg {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 560 / 180;
+  display: block;
+  overflow: visible;
+}
+
+.coach-chart-axis {
+  stroke: color-mix(in oklab, var(--border) 80%, transparent);
+  stroke-width: 1;
+}
+
+.coach-chart-line {
+  stroke: color-mix(in oklab, var(--coach-fg) 85%, var(--foreground));
+  stroke-width: 2.25;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.coach-chart-hit {
+  fill: transparent;
+  cursor: pointer;
+  outline: none;
+}
+
+.coach-chart-hit:focus-visible {
+  stroke: color-mix(in oklab, var(--coach-fg) 70%, transparent);
+  stroke-width: 1.5;
+}
+
+.coach-chart-dot {
+  fill: color-mix(in oklab, var(--coach-fg) 90%, var(--foreground));
+  transition: r 0.12s ease;
+}
+
+.coach-chart-dot-active {
+  fill: color-mix(in oklab, var(--coach-fg) 100%, var(--foreground));
+  stroke: color-mix(in oklab, var(--surface) 80%, transparent);
+  stroke-width: 2;
+}
+
+.coach-chart-tick {
+  fill: var(--muted-foreground);
+  font-size: 10px;
+}
+
+.coach-chart-tooltip {
+  --coach-fg: var(--accent-lime);
+  position: fixed;
+  z-index: 9999;
+  min-width: 11rem;
+  max-width: 16rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 0.7rem;
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 30%, var(--border));
+  background: color-mix(in oklab, var(--surface-elevated) 98%, var(--surface));
+  color: var(--foreground);
+  box-shadow: 0 10px 28px color-mix(in oklab, var(--foreground) 18%, transparent);
+  transform: translate(-50%, calc(-100% - 0.85rem));
+  pointer-events: none;
+}
+
+.coach-chart-tooltip-date {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--foreground);
+}
+
+.coach-chart-tooltip-time {
+  margin: 0.15rem 0 0;
+  font-size: 0.72rem;
+  color: color-mix(in oklab, var(--coach-fg) 75%, var(--muted-foreground));
+}
+
+.coach-chart-tooltip-summary {
+  margin: 0.4rem 0 0;
+  font-size: 0.84rem;
+  line-height: 1.4;
+  color: color-mix(in oklab, var(--foreground) 90%, var(--muted-foreground));
+}
+
+.coach-chart-tooltip-samples {
+  margin: 0.35rem 0 0;
+  font-size: 0.78rem;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+
+.coach-activity {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  max-width: none;
+  min-width: 0;
+  padding: 1.05rem 1.15rem 1.1rem;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 20%, var(--border));
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--coach-fg) 10%, transparent) 0%,
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 88%, var(--surface));
+}
+
+.coach-activity-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  max-width: none;
+}
+
+.coach-activity-row {
+  display: grid;
+  grid-template-columns: minmax(9.5rem, 11rem) minmax(0, 1fr) 2.5rem;
+  gap: 0.65rem 0.75rem;
+  align-items: center;
+  padding: 0.4rem 0.45rem;
+  margin-inline: -0.45rem;
+  border-radius: 0.55rem;
+  font-size: 0.85rem;
+  transition: background 0.15s ease;
+}
+
+.coach-activity-row:hover {
+  background: color-mix(in oklab, var(--coach-fg) 8%, transparent);
+}
+
+.coach-activity-label {
+  min-width: 0;
+  line-height: 1.3;
+  font-weight: 600;
+  color: color-mix(in oklab, var(--foreground) 92%, var(--muted-foreground));
+}
+
+.coach-activity-track {
+  display: block;
+  height: 0.5rem;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--muted) 65%, transparent);
+  overflow: hidden;
+}
+
+.coach-activity-fill {
+  display: block;
+  height: 100%;
+  border-radius: inherit;
+  background: color-mix(in oklab, var(--coach-fg) 75%, var(--foreground));
+}
+
+.coach-activity-count {
+  text-align: right;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: var(--foreground);
+}
+
+.coach-activity-note {
+  margin: 0;
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+}
+
+.coach-notices {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1.1rem 1.15rem 1.15rem;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 22%, var(--border));
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--coach-fg) 12%, transparent) 0%,
+      color-mix(in oklab, var(--coach-fg) 3%, transparent) 45%,
+      transparent 75%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 90%, var(--surface));
+}
+
+.coach-notice-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.coach-notice-list li {
+  display: grid;
+  grid-template-columns: 1.75rem 1fr;
+  column-gap: 0.7rem;
+  align-items: baseline;
+  padding: 0.6rem 0;
+  border-top: 1px solid color-mix(in oklab, var(--coach-fg) 14%, transparent);
+}
+
+.coach-notice-list li:first-child {
+  border-top: 0;
+  padding-top: 0.15rem;
+}
+
+.coach-notice-list li:last-child {
+  padding-bottom: 0.2rem;
+}
+
+.coach-notice-index {
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in oklab, var(--coach-fg) 78%, var(--muted-foreground));
+}
+
+.coach-notice-text {
+  font-size: 0.94rem;
+  line-height: 1.5;
+  color: color-mix(in oklab, var(--foreground) 92%, var(--muted-foreground));
+}
+
+.coach-notice-cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  align-self: flex-start;
+  margin-top: 0.15rem;
+  padding: 0.55rem 0.9rem;
+  border-radius: 0.65rem;
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 32%, var(--border));
+  background: color-mix(in oklab, var(--coach-fg) 10%, transparent);
+  color: var(--foreground);
+  font-size: 0.86rem;
+  font-weight: 700;
+  line-height: 1.2;
+  text-decoration: none;
+  transition:
+    background 0.15s ease,
+    border-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.coach-notice-cta:hover {
+  background: color-mix(in oklab, var(--surface-elevated) 90%, var(--surface));
+  border-color: color-mix(in oklab, var(--coach-fg) 55%, var(--border));
+  color: color-mix(in oklab, var(--coach-fg) 82%, var(--foreground));
+}
+
+.coach-attention {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.coach-attention-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem 1rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in oklab, var(--hairline-cloud) 70%, transparent);
+  background: color-mix(in oklab, var(--surface-elevated) 88%, transparent);
+}
+
+.coach-attention-title {
+  margin: 0;
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.coach-attention-body {
+  margin: 0.2rem 0 0;
+  font-size: 0.85rem;
+  color: var(--muted-foreground);
+}
+
+
+@media (prefers-reduced-motion: reduce) {
+  .coach-chart-line,
+  .coach-activity-fill {
+    transition: none;
   }
 }

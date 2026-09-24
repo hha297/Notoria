@@ -26,6 +26,10 @@ export type MeteredAiAccess = {
   reservationId: string | null;
 };
 
+export type MeteredAiAccessWithUser = MeteredAiAccess & {
+  user: NonNullable<Awaited<ReturnType<typeof getCurrentUserRecord>>>;
+};
+
 async function unauthorized() {
   return NextResponse.json(
     { ok: false, code: "AI_FORBIDDEN" },
@@ -128,6 +132,50 @@ export async function guardMeteredAi(
       reservationId: reservation.reservationId,
     };
   } catch (error) {
+    if (error instanceof QuotaExceededError) {
+      return {
+        ok: false,
+        response: NextResponse.json(error.body, { status: 402 }),
+      };
+    }
+    return {
+      ok: false,
+      response: NextResponse.json(
+        { ok: false, code: "AI_UNAVAILABLE" },
+        { status: 500 },
+      ),
+    };
+  }
+}
+
+/**
+ * Premium Learning Coach chat: capability gate first, then daily message quota.
+ * Free/Pro get PREMIUM_REQUIRED — never a Free-style quota toast for this surface.
+ */
+export async function guardPremiumCoachChat(): Promise<
+  MeteredAiAccessWithUser | { ok: false; response: NextResponse }
+> {
+  const access = await preferencesOrResponse();
+  if (!access.ok) return access;
+  try {
+    await requireFeature(access.user, "ai_learning_coach");
+    const reservation = await consumeUsage(
+      access.user,
+      "ai_learning_coach_chat",
+    );
+    return {
+      ok: true,
+      preferences: access.preferences,
+      reservationId: reservation.reservationId,
+      user: access.user,
+    };
+  } catch (error) {
+    if (error instanceof PremiumRequiredError || error instanceof ProRequiredError) {
+      return {
+        ok: false,
+        response: NextResponse.json(error.body, { status: 403 }),
+      };
+    }
     if (error instanceof QuotaExceededError) {
       return {
         ok: false,

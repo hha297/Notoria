@@ -8,6 +8,7 @@ import {
   countPracticeReadyWords,
   getDashboardContinueItems,
 } from "@/lib/dashboard/activity";
+import { getWorkspaceLearningStreak } from "@/lib/billing/coach";
 import { getWorkspaceActivitySnapshot } from "@/lib/onboarding/snapshot";
 import { getActiveWorkspace } from "@/lib/workspace";
 
@@ -32,11 +33,19 @@ export default async function DashboardPage() {
     );
   }
 
-  const [snapshot, practiceReadyWords, continueItems] = await Promise.all([
-    getWorkspaceActivitySnapshot(workspace.id),
-    countPracticeReadyWords(workspace.id),
-    getDashboardContinueItems(workspace.id),
-  ]);
+  const userId = session?.user?.id;
+  const [snapshot, practiceReadyWords, continueItems, streak] =
+    await Promise.all([
+      getWorkspaceActivitySnapshot(workspace.id),
+      countPracticeReadyWords(workspace.id),
+      getDashboardContinueItems(workspace.id),
+      userId
+        ? getWorkspaceLearningStreak({
+            userId,
+            workspaceId: workspace.id,
+          })
+        : Promise.resolve(null),
+    ]);
 
   return (
     <PageShell>
@@ -45,6 +54,7 @@ export default async function DashboardPage() {
         snapshot={snapshot}
         practiceReadyCount={practiceReadyWords}
         continueItems={continueItems}
+        streak={streak}
       />
     </PageShell>
   );

@@ -2045,6 +2045,7 @@
       "INVALID_FILE": "Choose an MP3 or MP4 file.",
       "INVALID_FILE_TYPE": "Only MP3 and MP4 files are supported.",
       "FILE_TOO_LARGE": "That file is too large. Use a file under 25 MB.",
+      "AUDIO_TOO_LONG": "That audio is longer than 45 minutes. Split it or use a shorter clip for one transcript.",
       "TRANSCRIPTION_FAILED": "We could not transcribe that audio. Try again.",
       "GENERATION_FAILED": "We could not generate exercises. Try again.",
       "GENERATION_UNAVAILABLE": "Exercise generation is unavailable right now. Please try again later.",
@@ -2144,7 +2145,8 @@
       "endedTitle": "Call ended",
       "endedDescription": "Feedback will appear on the session page in a few moments.",
       "back": "Back to session",
-      "notConfigured": "Video calling is not configured yet. Add Stream Video API keys to start a call."
+      "notConfigured": "Video calling is not configured yet. Add Stream Video API keys to start a call.",
+      "sessionLimitReached": "This speaking session reached the 30-minute fair-use limit and has ended."
     },
     "errors": {
       "STREAM_NOT_CONFIGURED": "Video calling is not configured.",
@@ -2350,7 +2352,7 @@
     "premiumActiveCopy": "Your coach uses this workspace’s real learning activity to suggest what to do next.",
     "premiumActiveFineprint": "Manage billing anytime in Stripe.",
     "lockedTitle": "This is a Pro feature",
-    "lockedDescription": "Upgrade to Pro for unlimited AI, full listening practice, writing help, and PDF/Word export.",
+    "lockedDescription": "Upgrade to Pro for Notoria's core AI toolkit, full listening practice, writing support, and PDF/Word export.",
     "planName": "Notoria",
     "cancelAnytime": "Cancel anytime",
     "upgrade": "Upgrade to Pro",
@@ -2363,8 +2365,8 @@
     "monthlyPrice": "{price} / month",
     "usageToday": "AI usage today",
     "quotaCount": "{used} / {limit}",
-    "unlimitedAi": "Unlimited AI",
-    "quotaExceeded": "You've used today's Free allowance. Upgrade to Pro for unlimited AI.",
+    "unlimitedAi": "Core AI toolkit",
+    "quotaExceeded": "You've used today's allowance for this AI feature. It resets at UTC midnight — or upgrade for a higher limit.",
     "explorePremium": "Explore Premium",
     "switchTo": "Switch to {plan}",
     "switchToFreeHint": "You keep this plan until the renewal date, then move to Free.",
@@ -2424,27 +2426,29 @@
     "noCustomer": "No billing customer is linked to this account yet.",
     "points": {
       "core": "Flashcards, writing, theory notes, and CSV export",
-      "meeting": "1 AI meeting per day",
+      "meeting": "1 speaking tutor call per day",
       "transcript": "1 listening transcript per day",
       "exercises": "3 AI exercise generations per day",
       "vocabulary": "5 vocabulary AI actions per day",
-      "unlimited": "Unlimited AI meetings, transcripts, exercises, and vocabulary help",
-      "listening": "Full listening practice",
-      "speaking": "Speaking sessions with the AI tutor",
-      "writing": "AI writing tools",
+      "unlimited": "Unlimited exercise generation, vocabulary AI, and writing support",
+      "listening": "10 listening transcripts per day",
+      "speaking": "10 speaking tutor calls per day",
+      "writing": "AI Writing Support",
       "export": "PDF and DOCX export",
       "coach": "AI learning coach from your activity",
+      "askCoach": "Ask your AI Learning Coach — progress, vocabulary, grammar, theory, translations, and what to practice next",
       "profile": "Personal learning profile",
       "daily": "Adaptive practice for today",
       "weekly": "Weekly learning review",
       "mistakes": "Practice from flashcard misses"
     },
     "quotaLabels": {
-      "ai_meeting": "AI Meeting",
-      "ai_listening_transcript": "Listening transcript",
-      "ai_exercise": "AI exercises",
-      "ai_vocabulary": "AI vocabulary",
-      "ai_writing": "AI Writing"
+      "ai_meeting": "AI Speaking Tutor",
+      "ai_listening_transcript": "AI Listening Transcript",
+      "ai_exercise": "AI Exercise generation",
+      "ai_vocabulary": "AI Vocabulary actions",
+      "ai_writing": "AI Writing Support",
+      "ai_learning_coach_chat": "AI Learning Coach"
     },
     "cell": {
       "unlimited": "Unlimited",
@@ -2455,7 +2459,8 @@
         "ai_listening_transcript": "{count, plural, one {# transcript/day} other {# transcripts/day}}",
         "ai_exercise": "{count, plural, one {# generation/day} other {# generations/day}}",
         "ai_vocabulary": "{count, plural, one {# action/day} other {# actions/day}}",
-        "ai_writing": "{count, plural, one {# action/day} other {# actions/day}}"
+        "ai_writing": "{count, plural, one {# action/day} other {# actions/day}}",
+        "ask_learning_coach": "{count, plural, one {# message/day} other {# messages/day}}"
       },
       "includedSr": "Included",
       "unavailableSr": "Not available"
@@ -2471,10 +2476,12 @@
       "aiVocabulary": "AI Vocabulary actions",
       "aiSpeakingTutor": "AI Speaking Tutor",
       "aiWriting": "AI Writing",
+      "aiWritingSupport": "AI Writing Support",
       "listening": "Listening",
       "speaking": "Speaking",
       "pdfDocxExport": "PDF/DOCX export",
       "learningCoach": "Learning Coach",
+      "askLearningCoach": "Ask your AI Learning Coach",
       "learningProfile": "Personal Learning Profile",
       "adaptiveDailyPractice": "Adaptive Daily Practice",
       "practiceFromMistakes": "Practice From Mistakes",
@@ -2589,6 +2596,7 @@
     "title": "Learning",
     "highlight": "coach",
     "description": "A personalized view of how you're learning and what to focus on next.",
+    "descriptionIntelligence": "What to do next, why it matters, and how your learning is changing.",
     "lockedTitle": "This feature is part of Notoria Premium.",
     "lockedBody": "Premium turns your vocabulary, reviews, listening, speaking, writing, and theory activity into a focused practice plan.",
     "distinction": "Pro gives you the tools. Premium helps you use them intelligently.",
@@ -2647,6 +2655,138 @@
     "refresh": "Update coach",
     "refreshed": "Coach updated from your latest activity.",
     "refreshFailed": "Could not update the coach. Please try again.",
+    "ask": {
+      "label": "Ask your coach",
+      "title": "Ask your Learning Coach",
+      "description": "Ask anything about your learning — progress, what to practice next, vocabulary, grammar, theory, translations, or any study content you paste. Answers follow the language of your question.",
+      "emptyReady": "Your Coach is ready. I don't know your learning habits yet, so ask about a word, a grammar point, or what to practice first.",
+      "placeholder": "Ask your Learning Coach...",
+      "inputHint": "Press Enter to send. Shift+Enter for a new line.",
+      "send": "Send message",
+      "thinking": "Coach is thinking…",
+      "you": "You",
+      "coach": "Coach",
+      "promptsLabel": "Suggested questions",
+      "retry": "Try again",
+      "upgrade": "Upgrade to Premium",
+      "errorQuota": "You've reached today's Learning Coach limit. Your Coach will be available again tomorrow.",
+      "errorPremium": "Learning Coach is a Premium feature. Get personalized recommendations based on your learning activity.",
+      "errorUnavailable": "Your Coach couldn't respond right now. Your message wasn't counted. Please try again.",
+      "prompts": {
+        "practice_today": "What should I focus on today?",
+        "struggling_words": "Why am I struggling with these words?",
+        "practice_weak": "Help me practice my weak words.",
+        "review_first": "What should I review first?",
+        "neglecting": "What have I been neglecting?",
+        "improve_speaking": "Why haven't I improved in speaking?",
+        "study_20": "How should I spend 20 minutes today?",
+        "getting_started": "What should I practice first?",
+        "am_i_improving": "Am I actually improving?",
+        "what_changed": "What changed in my learning this week?"
+      }
+    },
+    "next": {
+      "label": "Decide",
+      "title": "Your next move",
+      "planTitle": "Today's recommended practice",
+      "whyOrder": "Why this order? Due and difficult vocabulary first, then the module you've been neglecting.",
+      "cta": "Start today's practice"
+    },
+    "why": {
+      "title": "Why this?",
+      "due": "{count} vocabulary cards are due",
+      "weak": "{count} words have been repeatedly difficult",
+      "reviews": "{count} flashcard reviews in the last 7 days",
+      "speakingIdle": "No speaking session in the last 7 days",
+      "listeningIdle": "No listening activity in the last 7 days",
+      "writingIdle": "No writing updates in the last 7 days",
+      "theoryIdle": "No theory notes updated in the last 7 days",
+      "focus": "Current focus: {focus}"
+    },
+    "chips": {
+      "due": "{count} cards due",
+      "weak": "{count} difficult words",
+      "speakingIdle": "No speaking session in 7 days",
+      "mastered": "{count} mastered now",
+      "dueLabel": "Due cards",
+      "weakLabel": "Difficult words"
+    },
+    "quick": {
+      "label": "Context",
+      "title": "Quick context"
+    },
+    "progress": {
+      "label": "Measure",
+      "title": "Your progress",
+      "description": "See what has changed in your learning — and what your Coach notices.",
+      "empty": "You're just getting started. Keep learning and your Coach will start showing meaningful progress over time.",
+      "chartEmpty": "Not enough event history yet for this chart. Keep reviewing or speaking and a trend will appear.",
+      "chartSr": "{metric} over the last {days} days, from {from} to {to} in the latest buckets.",
+      "activityTitle": "Learning activity — last {days} days",
+      "activityNote": "Activity shows where you spent time — not whether that time improved skill.",
+      "compareLabel": "Period comparison",
+      "noticesTitle": "What your Coach notices",
+      "askAbout": "Ask your Coach about this",
+      "periodLabel": "Progress period",
+      "metricLabel": "Chart metric",
+      "period": {
+        "7": "7 days",
+        "30": "30 days",
+        "90": "90 days"
+      },
+      "metrics": {
+        "flashcardReviews": "Reviews",
+        "againOrHard": "Difficult ratings",
+        "speakingSessions": "Speaking sessions"
+      },
+      "tooltip": {
+        "weekOf": "Week of {date}",
+        "firstAt": "First activity {time}",
+        "reviews": "{count, plural, one {# flashcard review} other {# flashcard reviews}}",
+        "againOrHard": "{count, plural, one {# Again/Hard rating} other {# Again/Hard ratings}}",
+        "speaking": "{count, plural, one {# speaking session} other {# speaking sessions}}",
+        "none": "No activity in this period",
+        "words": "Words: {list}",
+        "topics": "Topics: {list}"
+      },
+      "streak": {
+        "label": "Streak",
+        "days": "{count, plural, one {day streak} other {day streak}}",
+        "practicedToday": "You practiced today — streak is safe.",
+        "keepGoing": "Practice today to keep your streak going.",
+        "start": "Learn something today to start a streak.",
+        "weekLabel": "Last 7 days",
+        "best": "Best streak: {count, plural, one {# day} other {# days}}",
+        "dayEmpty": "No learning activity this day",
+        "dayActive": "Learning activity recorded",
+        "dayReviews": "{count, plural, one {# flashcard review} other {# flashcard reviews}}",
+        "daySpeaking": "{count, plural, one {# speaking session} other {# speaking sessions}}",
+        "dayListening": "{count, plural, one {# listening update} other {# listening updates}}",
+        "dayWriting": "{count, plural, one {# writing update} other {# writing updates}}",
+        "dayTheory": "{count, plural, one {# theory update} other {# theory updates}}"
+      }
+    },
+    "notices": {
+      "reviews_up": "Flashcard review activity is higher than in the previous period.",
+      "reviews_down": "Flashcard review activity is lower than in the previous period.",
+      "misses_down": "Again/Hard ratings decreased compared with the previous period.",
+      "misses_up": "Again/Hard ratings increased compared with the previous period.",
+      "speaking_quiet": "Speaking sessions are still low relative to your vocabulary activity.",
+      "speaking_up": "Speaking sessions increased compared with the previous period.",
+      "due_open": "You still have cards due for review.",
+      "weak_open": "Some words remain repeatedly difficult.",
+      "getting_started": "There isn’t enough history yet for a strong progress reading."
+    },
+    "attention": {
+      "label": "Act",
+      "title": "What needs attention",
+      "dueTitle": "{count} cards due",
+      "dueBody": "Review your due vocabulary so overdue cards don’t pile up.",
+      "weakTitle": "{count} repeatedly difficult words",
+      "weakBody": "Practice these words: {words}",
+      "review": "Review",
+      "practice": "Practice"
+    },
     "rating": {
       "AGAIN": "Again",
       "HARD": "Hard"

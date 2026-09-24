@@ -3,6 +3,11 @@
  * Stripe price IDs are not stored here — only the server config reads those.
  *
  * Daily quotas use UTC calendar dates. The project has no user timezone.
+ *
+ * Product positioning:
+ * Free = limited AI tools
+ * Pro = broad toolkit (expensive AI still metered; lightweight AI unlimited)
+ * Premium = personalized learning intelligence (not merely higher quotas)
  */
 
 export const PLAN_IDS = ["free", "pro", "premium"] as const;
@@ -10,13 +15,17 @@ export type PlanId = (typeof PLAN_IDS)[number];
 
 export const PAID_ACCESS_STATUSES = new Set(["active", "trialing", "past_due"]);
 
-/** Metered AI actions. Free has a daily cap; Pro and Premium are unlimited. */
+/**
+ * Metered AI actions. Limits are per plan via PLAN_DAILY_QUOTAS.
+ * `null` means unlimited for ordinary use (still subject to rate/abuse limits).
+ */
 export const QUOTA_FEATURES = [
   "ai_meeting",
   "ai_listening_transcript",
   "ai_exercise",
   "ai_vocabulary",
   "ai_writing",
+  "ai_learning_coach_chat",
 ] as const;
 export type QuotaFeatureId = (typeof QUOTA_FEATURES)[number];
 
@@ -41,13 +50,73 @@ export type CapabilityFeatureId = (typeof CAPABILITY_FEATURES)[number];
 
 export type FeatureId = QuotaFeatureId | CapabilityFeatureId;
 
-export const FREE_DAILY_QUOTAS: Record<QuotaFeatureId, number> = {
-  ai_meeting: 1,
-  ai_listening_transcript: 1,
-  ai_exercise: 3,
-  ai_vocabulary: 5,
-  ai_writing: 1,
+/**
+ * Daily quotas by plan. Source of truth for pricing UI and server enforcement.
+ * - Speaking (`ai_meeting`): expensive realtime — capped Free/Pro; unlimited Premium
+ * - Listening transcript: AssemblyAI duration-sensitive — capped Free/Pro; unlimited Premium
+ * - Exercise / vocabulary / writing: lightweight — unlimited on paid plans
+ * - Coach chat: Premium-only conversational intelligence
+ */
+export const PLAN_DAILY_QUOTAS: Record<
+  PlanId,
+  Record<QuotaFeatureId, number | null>
+> = {
+  free: {
+    ai_meeting: 1,
+    ai_listening_transcript: 1,
+    ai_exercise: 3,
+    ai_vocabulary: 5,
+    ai_writing: 1,
+    ai_learning_coach_chat: 0,
+  },
+  pro: {
+    ai_meeting: 10,
+    ai_listening_transcript: 10,
+    ai_exercise: null,
+    ai_vocabulary: null,
+    ai_writing: null,
+    ai_learning_coach_chat: 0,
+  },
+  premium: {
+    ai_meeting: null,
+    ai_listening_transcript: null,
+    ai_exercise: null,
+    ai_vocabulary: null,
+    ai_writing: null,
+    ai_learning_coach_chat: 100,
+  },
 };
+
+/** @deprecated Prefer PLAN_DAILY_QUOTAS.free — kept for call sites that only need Free. */
+export const FREE_DAILY_QUOTAS: Record<QuotaFeatureId, number> = {
+  ai_meeting: PLAN_DAILY_QUOTAS.free.ai_meeting!,
+  ai_listening_transcript: PLAN_DAILY_QUOTAS.free.ai_listening_transcript!,
+  ai_exercise: PLAN_DAILY_QUOTAS.free.ai_exercise!,
+  ai_vocabulary: PLAN_DAILY_QUOTAS.free.ai_vocabulary!,
+  ai_writing: PLAN_DAILY_QUOTAS.free.ai_writing!,
+  ai_learning_coach_chat: PLAN_DAILY_QUOTAS.free.ai_learning_coach_chat!,
+};
+
+/** Features shown on Free account “usage today” list. */
+export const FREE_USAGE_QUOTA_FEATURES = QUOTA_FEATURES.filter(
+  (feature) => feature !== "ai_learning_coach_chat",
+);
+
+/** Premium Coach chat daily budget (alias of PLAN_DAILY_QUOTAS.premium). */
+export const PREMIUM_COACH_CHAT_DAILY =
+  PLAN_DAILY_QUOTAS.premium.ai_learning_coach_chat!;
+
+/**
+ * Fair-use: one speaking “call” is one user-facing session, not every realtime
+ * message. Cap duration so a single quota unit cannot run indefinitely.
+ */
+export const SPEAKING_MAX_SESSION_SECONDS = 30 * 60;
+
+/**
+ * Fair-use: one transcript quota unit covers one processing action up to this
+ * audio length. Longer files are rejected before the provider call.
+ */
+export const LISTENING_MAX_TRANSCRIPT_SECONDS = 45 * 60;
 
 export const PLAN_PRICES = {
   free: { monthlyCents: 0, currency: "EUR" },
@@ -55,10 +124,6 @@ export const PLAN_PRICES = {
   premium: { monthlyCents: 1999, currency: "EUR" },
 } as const;
 
-/**
- * Premium capabilities that have a working surface today.
- * Scaffolded entitlements stay in the plan config but are not advertised.
- */
 /**
  * Premium capabilities with a working Coach surface.
  * Scaffolded-only entitlements stay in CAPABILITY_FEATURES but stay out of marketing.
@@ -103,7 +168,7 @@ export function usageDateUtc(now = new Date()) {
   return now.toISOString().slice(0, 10);
 }
 
-/** Next UTC midnight, when Free daily counters start over. */
+/** Next UTC midnight, when daily counters start over. */
 export function quotaResetAt(now = new Date()) {
   const reset = new Date(now);
   reset.setUTCHours(24, 0, 0, 0);
@@ -159,7 +224,7 @@ export function getFeatureAccess(plan: PlanId, feature: FeatureId): FeatureAcces
   if (isQuotaFeature(feature)) {
     return {
       kind: "quota",
-      limit: plan === "free" ? FREE_DAILY_QUOTAS[feature] : null,
+      limit: PLAN_DAILY_QUOTAS[plan][feature],
     };
   }
 
@@ -193,6 +258,14 @@ export function featureEnabled(plan: PlanId, feature: FeatureId) {
   const access = getFeatureAccess(plan, feature);
   if (access.kind === "quota") return true;
   return access.enabled;
+}
+
+/** True when this plan has at least one finite daily AI quota. */
+export function planHasMeteredQuotas(plan: PlanId) {
+  return QUOTA_FEATURES.some((feature) => {
+    const limit = PLAN_DAILY_QUOTAS[plan][feature];
+    return typeof limit === "number" && limit > 0;
+  });
 }
 
 export type StripePriceEnv = {

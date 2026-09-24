@@ -68,20 +68,38 @@ describe("entitlements", () => {
     expect(featureEnabled("free", "ai_learning_coach")).toBe(false);
   });
 
-  it("gives Pro unlimited current AI and Premium the coach", () => {
-    for (const feature of [
-      "ai_meeting",
-      "ai_listening_transcript",
-      "ai_exercise",
-      "ai_vocabulary",
-      "ai_writing",
-    ] as const) {
+  it("meters expensive AI on Pro and keeps lightweight AI unlimited", () => {
+    expect(getFeatureAccess("pro", "ai_meeting")).toEqual({
+      kind: "quota",
+      limit: 10,
+    });
+    expect(getFeatureAccess("pro", "ai_listening_transcript")).toEqual({
+      kind: "quota",
+      limit: 10,
+    });
+    for (const feature of ["ai_exercise", "ai_vocabulary", "ai_writing"] as const) {
       expect(getFeatureAccess("pro", feature)).toEqual({ kind: "quota", limit: null });
       expect(getFeatureAccess("premium", feature)).toEqual({
         kind: "quota",
         limit: null,
       });
     }
+    expect(getFeatureAccess("premium", "ai_meeting")).toEqual({
+      kind: "quota",
+      limit: null,
+    });
+    expect(getFeatureAccess("premium", "ai_listening_transcript")).toEqual({
+      kind: "quota",
+      limit: null,
+    });
+    expect(getFeatureAccess("premium", "ai_learning_coach_chat")).toEqual({
+      kind: "quota",
+      limit: 100,
+    });
+    expect(getFeatureAccess("pro", "ai_learning_coach_chat")).toEqual({
+      kind: "quota",
+      limit: 0,
+    });
     expect(featureEnabled("pro", "listening")).toBe(true);
     expect(featureEnabled("pro", "ai_learning_coach")).toBe(false);
     expect(featureEnabled("premium", "ai_learning_coach")).toBe(true);

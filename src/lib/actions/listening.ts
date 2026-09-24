@@ -12,6 +12,7 @@ import { requireAiAssistanceEnabled } from "@/lib/ai/preferences-server";
 import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { getCurrentUserId } from "@/lib/auth/session";
 import { consumeUsage } from "@/lib/billing/entitlements";
+import { LISTENING_MAX_TRANSCRIPT_SECONDS } from "@/lib/billing/plans";
 import {
   finalizeUsageReservation,
   refundUsageReservation,
@@ -367,6 +368,14 @@ export async function transcribeListeningLesson(id: string) {
   }
   const reservation = await consumeUsage(user, "ai_listening_transcript");
 
+  if (
+    typeof lesson.duration === "number" &&
+    lesson.duration > LISTENING_MAX_TRANSCRIPT_SECONDS
+  ) {
+    await refundUsageReservation(reservation.reservationId);
+    throw new ListeningError("AUDIO_TOO_LONG");
+  }
+
   await db
     .update(listeningLessons)
     .set({
@@ -382,6 +391,13 @@ export async function transcribeListeningLesson(id: string) {
       audioUrl: lesson.cloudinaryUrl,
       languageHint: workspace.language,
     });
+
+    if (
+      typeof result.duration === "number" &&
+      result.duration > LISTENING_MAX_TRANSCRIPT_SECONDS
+    ) {
+      throw new ListeningError("AUDIO_TOO_LONG");
+    }
 
     const [updated] = await db
       .update(listeningLessons)

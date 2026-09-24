@@ -5,8 +5,9 @@
  */
 
 import {
-  FREE_DAILY_QUOTAS,
+  PREMIUM_COACH_CHAT_DAILY,
   VISIBLE_PREMIUM_FEATURES,
+  getFeatureAccess,
   type CapabilityFeatureId,
   type PlanId,
   type QuotaFeatureId,
@@ -51,19 +52,26 @@ function unlimited(): PlanCellDisplay {
   return { kind: "unlimited" };
 }
 
+function cellForQuota(plan: PlanId, feature: QuotaFeatureId): PlanCellDisplay {
+  const access = getFeatureAccess(plan, feature);
+  if (access.kind !== "quota") return no();
+  if (access.limit === null) return unlimited();
+  if (access.limit <= 0) return no();
+  return quota(access.limit);
+}
+
 function quotaRow(
   id: QuotaFeatureId,
   nameKey: string,
 ): PlanComparisonRow {
-  const freeLimit = FREE_DAILY_QUOTAS[id];
   return {
     id,
     category: "ai",
     nameKey,
     cells: {
-      free: quota(freeLimit),
-      pro: unlimited(),
-      premium: unlimited(),
+      free: cellForQuota("free", id),
+      pro: cellForQuota("pro", id),
+      premium: cellForQuota("premium", id),
     },
   };
 }
@@ -119,7 +127,7 @@ const ALL_COMPARISON_ROWS: PlanComparisonRow[] = [
   quotaRow("ai_listening_transcript", "aiListeningTranscript"),
   quotaRow("ai_exercise", "aiExercise"),
   quotaRow("ai_vocabulary", "aiVocabulary"),
-  quotaRow("ai_writing", "aiWriting"),
+  quotaRow("ai_writing", "aiWritingSupport"),
   {
     id: "pdf_export",
     category: "export",
@@ -132,6 +140,17 @@ const ALL_COMPARISON_ROWS: PlanComparisonRow[] = [
     nameKey: "learningCoach",
     premiumCapability: "ai_learning_coach",
     cells: { free: no(), pro: no(), premium: yes() },
+  },
+  {
+    id: "ask_learning_coach",
+    category: "personalized",
+    nameKey: "askLearningCoach",
+    premiumCapability: "ai_learning_coach",
+    cells: {
+      free: no(),
+      pro: no(),
+      premium: quota(PREMIUM_COACH_CHAT_DAILY),
+    },
   },
   {
     id: "personal_learning_profile",
