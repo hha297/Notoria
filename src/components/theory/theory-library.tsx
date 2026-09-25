@@ -17,6 +17,7 @@ import { TheoryListLoading } from "@/components/theory/theory-loading";
 import { TheoryRowActions } from "@/components/theory/theory-row-actions";
 import { DescriptionContent } from "@/components/form/description-content";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
+import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
@@ -153,16 +154,17 @@ export function TheoryLibrary({
   const actions = (
     <>
       <ShowTutorialButton section="theory" />
-      <Button
+      <LockedFeatureButton
         type="button"
         variant="outline"
         className="route-quiet-action"
         data-route-action="theory"
+        feature="content_import"
+        icon={<Upload className="size-4" />}
         onClick={() => setImportOpen(true)}
       >
-        <Upload className="size-4" />
         {tImport("button")}
-      </Button>
+      </LockedFeatureButton>
       <LinkButton href={createHref} data-tutorial="theory-add-note">
         <Plus className="size-4" />
         {isEmptyRoot ? t("createFirst") : t("create")}
@@ -193,17 +195,18 @@ export function TheoryLibrary({
                 <>
                   <ShowTutorialButton section="theory" />
                   <NewFolderButton variant="outline" size="sm" />
-                  <Button
+                  <LockedFeatureButton
                     type="button"
                     variant="outline"
                     size="sm"
                     className="route-quiet-action"
                     data-route-action="theory"
+                    feature="content_import"
+                    icon={<Upload className="size-4" />}
                     onClick={() => setImportOpen(true)}
                   >
-                    <Upload className="size-4" />
                     {tImport("button")}
-                  </Button>
+                  </LockedFeatureButton>
                   <LinkButton href={createHref} data-tutorial="theory-add-note">
                     <Plus className="size-4" />
                     {t("createFirst")}

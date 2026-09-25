@@ -89,8 +89,10 @@ function quotaRow(
  * Speaking and Listening modules are on all plans; AI tutor/transcript quotas
  * live under AI tools with the other AI meters.
  *
- * File import/export share the Import & export category: content_import for
- * bringing material in, pdf_export for printable/shareable files.
+ * File import/export share the Import & export category: learning_material_io
+ * for module CSV/PDF/DOCX import and PDF/DOCX export (Pro+), and
+ * account_backup_io for full learning-data backup export/import (all plans).
+ * Entitlements still use content_import / pdf_export under the hood.
  */
 const ALL_COMPARISON_ROWS: PlanComparisonRow[] = [
   {
@@ -138,12 +140,19 @@ const ALL_COMPARISON_ROWS: PlanComparisonRow[] = [
   // Speaking sessions consume ai_meeting — one marketing row.
   quotaRow("ai_meeting", "aiSpeakingTutor", "ai"),
   quotaRow("ai_listening_transcript", "aiListeningTranscript", "ai"),
-  quotaRow("content_import", "importLearningMaterial", "export"),
+  // Module file import/export + account backup restore share one marketing category.
   {
-    id: "pdf_export",
+    id: "learning_material_io",
     category: "export",
-    nameKey: "exportLearningMaterial",
-    cells: { free: no(), pro: unlimited(), premium: unlimited() },
+    nameKey: "importExportLearningMaterial",
+    cells: { free: no(), pro: yes(), premium: yes() },
+  },
+  {
+    id: "account_backup_io",
+    category: "export",
+    nameKey: "importExportAccountBackup",
+    // Account backup export/import is available on all plans.
+    cells: { free: yes(), pro: yes(), premium: yes() },
   },
   {
     id: "ai_learning_coach",

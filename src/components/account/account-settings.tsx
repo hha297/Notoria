@@ -9,6 +9,7 @@ import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { Loader2, Trash2, Upload, Download } from "lucide-react";
 import { toast } from "sonner";
+import { AccountBackupImportDialog } from "@/components/account/account-backup-import-dialog";
 import { DeleteAccountDialog } from "@/components/account/delete-account-dialog";
 import { ProSubscriptionCard } from "@/components/account/pro-subscription-card";
 import { UserAvatar } from "@/components/account/user-avatar";
@@ -56,6 +57,7 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
   const [isPasswordPending, startPasswordTransition] = useTransition();
   const [isBackupPending, startBackupTransition] = useTransition();
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [importBackupOpen, setImportBackupOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -477,6 +479,22 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
             {t("data.exportAction")}
           </Button>
         </div>
+        <div className={mx(styles, "account-panel-body account-danger-row")}>
+          <div className={mx(styles, "account-danger-copy")}>
+            <p className={mx(styles, "account-danger-title")}>{t("data.importTitle")}</p>
+            <p className={mx(styles, "account-danger-hint")}>{t("data.importHint")}</p>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="route-quiet-action shrink-0"
+            data-route-action="account"
+            onClick={() => setImportBackupOpen(true)}
+          >
+            <Upload className="size-4" />
+            {t("data.importAction")}
+          </Button>
+        </div>
       </section>
 
       <section className={mx(styles, "account-panel account-panel-danger")}>
@@ -510,6 +528,10 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
         </div>
       </section>
 
+      <AccountBackupImportDialog
+        open={importBackupOpen}
+        onOpenChange={setImportBackupOpen}
+      />
       <DeleteAccountDialog
         open={deleteOpen}
         onOpenChange={setDeleteOpen}

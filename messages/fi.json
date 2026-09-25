@@ -628,6 +628,7 @@
       "pastedImageTitle": "Liitetty kuva",
       "importAction": "Tuo ja luo",
       "unlockPro": "Avaa Prolla",
+      "lockedDescription": "Päivitä Prohon muuttaaksesi työarkit ja muistiinpanot tekoälyharjoituskorteiksi.",
       "myImports": "Omat tuonnit",
       "searchPlaceholder": "Hae otsikolla…",
       "noResults": "Ei tuonteja tällä otsikolla",
@@ -2312,12 +2313,74 @@
     },
     "data": {
       "title": "Tietosi",
-      "description": "Lataa kopio oppimisdatastasi milloin tahansa.",
+      "description": "Lataa kopio oppimisdatastasi milloin tahansa, tai palauta aiemmasta varmuuskopiosta.",
       "exportTitle": "Vie tilin varmuuskopio",
       "exportHint": "Lataa JSON-tiedosto työtiloistasi ja oppimissisällöstä. Mediatiedostot viitataan URL-osoitteella, niitä ei upoteta.",
       "exportAction": "Lataa varmuuskopio",
       "exportDone": "Varmuuskopio ladattu",
-      "exportFailed": "Varmuuskopiota ei voitu valmistella. Yritä uudelleen."
+      "exportFailed": "Varmuuskopiota ei voitu valmistella. Yritä uudelleen.",
+      "importTitle": "Tuo tilin varmuuskopio",
+      "importHint": "Palauta Notoria-oppimisdatasi aiemmasta tilin varmuuskopiosta. Tiliäsi, kirjautumistietoja ja tilaustasi ei muuteta.",
+      "importAction": "Tuo varmuuskopio"
+    },
+    "backupImport": {
+      "title": "Palauta Notoria-oppimisdatasi",
+      "description": "Tuo Notoriasta viety JSON-varmuuskopio. Vain oppimisdata palautetaan — ei tilin henkilöllisyyttä tai tilausta.",
+      "uploadHint": "Valitse JSON-tiedosto, joka on viety tilin varmuuskopiona.",
+      "chooseFile": "Valitse varmuuskopiotiedosto",
+      "analyzing": "Tarkistetaan varmuuskopiota…",
+      "detectedTitle": "Notoria-tilin varmuuskopio tunnistettu",
+      "strategyTitle": "Miten tuomme tämän varmuuskopion?",
+      "strategyAddAsNew": "Lisää uutena datana — luo uuden kopion korvaamatta nykyistä oppimisdataasi. Samalla kielellä olevat työtilat vastaanottavat sisällön sen sijaan, että niitä monistettaisiin.",
+      "readyTitle": "Valmis tuomaan",
+      "nothingToImport": "Tästä varmuuskopiosta ei ole uutta tuotavaa.",
+      "notImportedTitle": "Osaa tilitiedoista ei tuoda",
+      "notImportedHint": "Nimesi, sähköpostisi, kirjautumistietosi ja tilauksesi hallitaan nykyisellä tililläsi, eikä niitä voi muuttaa varmuuskopion tuonnilla. Oppimisdatasi voidaan silti tuoda.",
+      "notImportedFields": {
+        "name": "Tilin nimi",
+        "email": "Sähköposti",
+        "subscription": "Tilaus",
+        "auth": "Todennustiedot"
+      },
+      "skippedTitle": "Saatetaan ohittaa",
+      "warnings": {
+        "workspace_language_reuse": "Joitakin työtiloja on jo olemassa samalle kielelle. Niiden sisältö lisätään olemassa oleviin työtiloihin sen sijaan, että luotaisiin kaksoiskappaleita.",
+        "empty_backup": "Tämä varmuuskopio ei sisällä tuotavaa oppimisdataa."
+      },
+      "cancel": "Peruuta",
+      "confirm": "Tuo oppimisdata",
+      "close": "Sulje",
+      "doneTitle": "Oppimisdata tuotu",
+      "doneDescription": "Varmuuskopion oppimisdata on lisätty tälle tilille.",
+      "doneToast": "Oppimisdata tuotu",
+      "importedTitle": "Tuotu",
+      "counts": {
+        "workspaces": "{count, plural, one {# työtila} other {# työtilaa}}",
+        "folders": "{count, plural, one {# kansio} other {# kansiota}}",
+        "tags": "{count, plural, one {# tunniste} other {# tunnistetta}}",
+        "vocabulary": "{count, plural, one {# sanastoyksikkö} other {# sanastoyksikköä}}",
+        "theory": "{count, plural, one {# teoriasivu} other {# teoriasivua}}",
+        "writing": "{count, plural, one {# kirjoitusasiakirja} other {# kirjoitusasiakirjaa}}",
+        "exercises": "{count, plural, one {# harjoitus} other {# harjoitusta}}",
+        "listening": "{count, plural, one {# kuuntelutunti} other {# kuuntelutuntia}}",
+        "speaking": "{count, plural, one {# puhesessio} other {# puhesessiota}}"
+      },
+      "skips": {
+        "workspace_language_exists": "{count, plural, one {# työtila on jo olemassa tälle kielelle} other {# työtilaa on jo olemassa tälle kielelle}}",
+        "vocabulary_duplicate": "{count, plural, one {# sanastoyksikkö on jo olemassa} other {# sanastoyksikköä on jo olemassa}}",
+        "listening_missing_media": "{count, plural, one {# kuuntelutunnilta puuttuu media-URL} other {# kuuntelutunnilta puuttuu media-URL}}",
+        "listening_duplicate_filename": "{count, plural, one {# kuuntelutunti ohitettiin (päällekkäinen tiedostonimi)} other {# kuuntelutuntia ohitettiin (päällekkäinen tiedostonimi)}}",
+        "invalid_workspace_ref": "{count, plural, one {# kohde ilman työtilaa} other {# kohdetta ilman työtilaa}}",
+        "invalid_record": "{count, plural, one {# virheellinen tietue} other {# virheellistä tietuetta}}",
+        "unsupported_account_field": "Tilin henkilöllisyyskenttiä ei tuoda"
+      },
+      "errors": {
+        "fileTooLarge": "Varmuuskopiotiedosto on liian suuri. Vie uudelleen tai ota yhteyttä tukeen.",
+        "invalidBackup": "Tämä ei näytä kelvolliselta Notoria-varmuuskopiolta. Käytä JSON-tiedostoa, joka on viety tilin varmuuskopiona.",
+        "unauthorized": "Kirjaudu uudelleen tuodaksesi varmuuskopion.",
+        "invalidInput": "Valitse JSON-varmuuskopiotiedosto.",
+        "importFailed": "Varmuuskopiota ei voitu tuoda. Yritä uudelleen."
+      }
     },
     "danger": {
       "title": "Sulje tili",
@@ -2508,6 +2571,9 @@
       "aiWritingSupport": "Tekoälykirjoitustuki",
       "importLearningMaterial": "Oppimateriaalin tuonti",
       "exportLearningMaterial": "Oppimateriaalin vienti",
+      "importExportLearningMaterial": "Oppimateriaalin tuonti ja vienti",
+      "importAccountBackup": "Tilin varmuuskopion tuonti",
+      "importExportAccountBackup": "Tilin varmuuskopion tuonti ja vienti",
       "aiPracticeFromMaterial": "Tekoälyharjoitus työarkeista",
       "practiceFromMaterial": "Tekoälyharjoitus työarkeista",
       "listening": "Kuuntelu",

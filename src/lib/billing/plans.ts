@@ -298,6 +298,16 @@ export function featureEnabled(plan: PlanId, feature: FeatureId) {
   return access.enabled;
 }
 
+/**
+ * Whether this plan grants the feature at all (daily remaining is ignored).
+ * Use for UI lock indicators — Free with quota 0 is locked; paid unlimited is open.
+ */
+export function planGrantsFeature(plan: PlanId, feature: FeatureId) {
+  const access = getFeatureAccess(plan, feature);
+  if (access.kind === "flag") return access.enabled;
+  return access.limit === null || access.limit > 0;
+}
+
 /** True when this plan has at least one finite daily AI quota. */
 export function planHasMeteredQuotas(plan: PlanId) {
   return QUOTA_FEATURES.some((feature) => {

@@ -628,6 +628,7 @@
       "pastedImageTitle": "Pasted image",
       "importAction": "Import & generate",
       "unlockPro": "Unlock with Pro",
+      "lockedDescription": "Upgrade to Pro to turn worksheets and notes into AI practice cards.",
       "myImports": "My imports",
       "searchPlaceholder": "Search by title…",
       "noResults": "No imports match that title",
@@ -2479,7 +2480,7 @@
     "eyebrow": "Account",
     "title": "Your",
     "highlight": "account",
-    "description": "Manage your profile, subscription, data export, and account security — including permanently closing your account.",
+    "description": "Manage your profile, subscription, data export and import, and account security — including permanently closing your account.",
     "pro": {
       "freeLede": "Free includes core learning and a small daily AI allowance. Pro removes those limits.",
       "activeLede": "Pro is active. Current AI tools stay unlimited while the subscription renews.",
@@ -2506,12 +2507,74 @@
     },
     "data": {
       "title": "Your data",
-      "description": "Download a copy of your learning data whenever you need it.",
+      "description": "Download a copy of your learning data whenever you need it, or restore from a previous backup.",
       "exportTitle": "Export account backup",
       "exportHint": "Downloads a JSON file with your workspaces and learning content. Media files are linked by URL, not embedded.",
       "exportAction": "Download backup",
       "exportDone": "Backup downloaded",
-      "exportFailed": "Could not prepare your backup. Try again."
+      "exportFailed": "Could not prepare your backup. Try again.",
+      "importTitle": "Import account backup",
+      "importHint": "Restore your Notoria learning data from a previous account backup. Your account, login, and subscription information won't be changed.",
+      "importAction": "Import backup"
+    },
+    "backupImport": {
+      "title": "Restore your Notoria learning data",
+      "description": "Import a JSON backup exported from Notoria. Only learning data is restored — not your account identity or subscription.",
+      "uploadHint": "Choose a JSON file from Export account backup.",
+      "chooseFile": "Choose backup file",
+      "analyzing": "Checking backup…",
+      "detectedTitle": "Notoria account backup detected",
+      "strategyTitle": "How should we import this backup?",
+      "strategyAddAsNew": "Add as new data — creates a new copy without replacing your existing learning data. Workspaces that already exist for the same language receive the backup content instead of being duplicated.",
+      "readyTitle": "Ready to import",
+      "nothingToImport": "Nothing new to import from this backup.",
+      "notImportedTitle": "Some account information won't be imported",
+      "notImportedHint": "Your name, email, login information, and subscription are managed by your current account and cannot be changed by a backup import. Your learning data can still be imported.",
+      "notImportedFields": {
+        "name": "Account name",
+        "email": "Email",
+        "subscription": "Subscription",
+        "auth": "Authentication information"
+      },
+      "skippedTitle": "May be skipped",
+      "warnings": {
+        "workspace_language_reuse": "Some workspaces already exist for the same language. Their content will be added into your existing workspaces instead of creating duplicates.",
+        "empty_backup": "This backup does not contain any importable learning data."
+      },
+      "cancel": "Cancel",
+      "confirm": "Import learning data",
+      "close": "Close",
+      "doneTitle": "Learning data imported",
+      "doneDescription": "Your backup learning data has been added to this account.",
+      "doneToast": "Learning data imported",
+      "importedTitle": "Imported",
+      "counts": {
+        "workspaces": "{count, plural, one {# workspace} other {# workspaces}}",
+        "folders": "{count, plural, one {# folder} other {# folders}}",
+        "tags": "{count, plural, one {# tag} other {# tags}}",
+        "vocabulary": "{count, plural, one {# vocabulary item} other {# vocabulary items}}",
+        "theory": "{count, plural, one {# theory page} other {# theory pages}}",
+        "writing": "{count, plural, one {# writing document} other {# writing documents}}",
+        "exercises": "{count, plural, one {# exercise} other {# exercises}}",
+        "listening": "{count, plural, one {# listening lesson} other {# listening lessons}}",
+        "speaking": "{count, plural, one {# speaking session} other {# speaking sessions}}"
+      },
+      "skips": {
+        "workspace_language_exists": "{count, plural, one {# workspace already exists for that language} other {# workspaces already exist for that language}}",
+        "vocabulary_duplicate": "{count, plural, one {# vocabulary item already exists} other {# vocabulary items already exist}}",
+        "listening_missing_media": "{count, plural, one {# listening lesson missing media URL} other {# listening lessons missing media URLs}}",
+        "listening_duplicate_filename": "{count, plural, one {# listening lesson skipped (duplicate filename)} other {# listening lessons skipped (duplicate filename)}}",
+        "invalid_workspace_ref": "{count, plural, one {# item with missing workspace} other {# items with missing workspace}}",
+        "invalid_record": "{count, plural, one {# invalid record} other {# invalid records}}",
+        "unsupported_account_field": "Account identity fields are not imported"
+      },
+      "errors": {
+        "fileTooLarge": "That backup file is too large. Try exporting again or contact support.",
+        "invalidBackup": "This doesn't look like a valid Notoria backup. Please use a JSON file exported from Notoria's Export account backup feature.",
+        "unauthorized": "Please sign in again to import a backup.",
+        "invalidInput": "Please choose a JSON backup file.",
+        "importFailed": "Could not import this backup. Try again."
+      }
     },
     "danger": {
       "title": "Close account",
@@ -2702,6 +2765,9 @@
       "aiWritingSupport": "AI Writing Support",
       "importLearningMaterial": "Import learning material",
       "exportLearningMaterial": "Export learning material",
+      "importExportLearningMaterial": "Import & export material",
+      "importAccountBackup": "Import account backup",
+      "importExportAccountBackup": "Import & export account backup",
       "aiPracticeFromMaterial": "AI practice from worksheets",
       "practiceFromMaterial": "AI practice from worksheets",
       "listening": "Listening",

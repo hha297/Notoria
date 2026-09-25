@@ -22,7 +22,7 @@ Core language-learning functionality plus limited daily AI:
 - 5 AI Vocabulary actions/day
 - 1 AI Writing Support action/day (Check / Improve / Grammar each count as one)
 
-PDF/DOCX export and generated listening practice stay on Pro. A speaking call includes the tutor for that session (fair-use max 30 minutes). One user action counts as one use, including an exercise import (extract + generate share one charge). Listening transcripts are capped at 45 minutes of audio per action.
+PDF/DOCX export, module file import (CSV/PDF/DOCX), and generated listening practice stay on Pro. Account backup export/import is available on every plan. A speaking call includes the tutor for that session (fair-use max 30 minutes). One user action counts as one use, including an exercise import (extract + generate share one charge). Listening transcripts are capped at 45 minutes of audio per action.
 
 ## Pro
 
@@ -33,7 +33,9 @@ Everything in Free, plus:
 - 10 AI Speaking Tutor calls/day
 - 10 AI Listening Transcripts/day
 - Unlimited AI Exercise generation, Vocabulary actions, and Writing Support
-- Full listening practice generation and PDF/DOCX export
+- Full listening practice generation
+- **Import & export material** (CSV / PDF / DOCX into Vocabulary, Writing, Theory; PDF/DOCX export)
+- AI practice from imported worksheets
 
 ## Premium
 
@@ -65,13 +67,15 @@ Some Pro-only controls stay faded and open the upgrade dialog. Quota features st
 
 | Capability | Free | Pro | Premium |
 | ---------- | ---- | --- | ------- |
-| Vocabulary, writing editor, theory notes, CSV | Yes | Yes | Yes |
+| Vocabulary, writing editor, theory notes, CSV export | Yes | Yes | Yes |
 | AI Speaking Tutor | 1 call/day | 10 calls/day | Unlimited |
 | AI Listening Transcript | 1/day | 10/day | Unlimited |
 | AI Exercise generation | 3/day | Unlimited | Unlimited |
 | AI Vocabulary actions | 5/day | Unlimited | Unlimited |
 | AI Writing Support | 1/day | Unlimited | Unlimited |
-| Listening module / PDF export | No | Yes | Yes |
+| Import & export material (CSV/PDF/DOCX) | No | Yes | Yes |
+| Import & export account backup | Yes | Yes | Yes |
+| Listening module | No | Yes | Yes |
 | Learning Coach / Ask Coach | No | No | Yes (100 messages/day) |
 
 Subscribe from `/account`. Prices and quotas come from `src/lib/billing/plans.ts` (`PLAN_DAILY_QUOTAS`).
@@ -87,10 +91,30 @@ Subscribe from `/account`. Prices and quotas come from `src/lib/billing/plans.ts
 - **Forgot / reset password** via email link ([Resend](https://resend.com)); tokens stored hashed in `password_reset_tokens`
 - Protected dashboard routes via middleware
 - Learning-language onboarding when the user has no workspace yet
-- **Account settings** (`/account`): display name, password, Cloudinary avatar
+- **Account settings** (`/account`): display name, password, Cloudinary avatar, **export / import account backup**
 - **Billing card**: Free quotas, Pro, or Premium. Checkout and the Stripe Customer Portal live on `/account`. Premium opens `/coach`.
 - **Upgrade dialog**: Free, Pro, and Premium. The server chooses the Stripe price.
 - User roles: `USER` (default) and `ADMIN` (Premium capabilities without a Stripe subscription)
+
+### Import & export
+
+Two separate flows — do not confuse module file import with a full account restore.
+
+#### Import & export material (Pro)
+
+Bring external files into a specific module, or export printable/shareable documents.
+
+- **Import** CSV, PDF, or DOCX into Vocabulary, Writing, or Theory (shared analyze → map → preview → confirm pipeline)
+- **Import practice** from worksheets (Pro AI; metered separately from plain file import)
+- **Export** PDF/DOCX from Vocabulary, Writing, and Theory
+- Free still gets **vocabulary CSV export** as an escape hatch
+
+#### Import & export account backup (all plans)
+
+- **Export** a JSON backup of workspaces and learning content (media linked by URL, not embedded)
+- **Import** that JSON to restore learning data into the **current** signed-in account
+- Strategy: **add as new** (workspaces matched by language; vocabulary duplicates skipped; incomplete listening media skipped)
+- Never changes identity, login, password, OAuth, subscription, or Stripe data
 
 ### Workspaces
 
@@ -111,10 +135,11 @@ Personal word bank for the active workspace.
 - **Learning status** (`NEW`, `LEARNING`, `REVIEW`, `MASTERED`) updated by flashcard ratings
 - Search, filter (POS, tags), sort; list grouped by part of speech; pagination
 - Preview (read-only) → Edit → Save returns to preview
+- **Import (Pro):** CSV / PDF / DOCX via the shared content-import dialog
 - **Background AI (free):** spelling suggestions while typing, and meaning/gloss ideas when adding or editing a word. Always **word → meaning**. Failures stay silent so the form still works offline from the model.
 - **Export:** CSV for everyone; PDF and Word (.docx) for Pro, with optional columns (POS, tags, last updated, notes)
 
-**Impact:** learners keep a structured lexicon they actually own. AI speeds entry without replacing the user’s dictionary. CSV remains a free escape hatch; formatted documents are a Pro print/share feature.
+**Impact:** learners keep a structured lexicon they actually own. AI speeds entry without replacing the user’s dictionary. CSV remains a free escape hatch; formatted documents and file import are Pro features.
 
 ### Writing
 
@@ -123,6 +148,7 @@ Worksheets and drafts, separate from vocabulary quizzes.
 - **Rich document** — TipTap editor
 - **Question set** — sections and questions (prompt, example answer, notes) with reorder
 - List with search/sort; preview → edit; autosave after first save on `/writing/new`
+- **Import (Pro):** PDF / DOCX (and CSV where mapped) via the shared content-import dialog
 - **AI bar (Pro):** Check, Improve, and Grammar. Suggestions can be applied or skipped in the editor or question set
 - **Export (Pro):** PDF or Word (.docx), with options for example answers, notes, and blank writing space
 
@@ -134,7 +160,7 @@ A notebook for **how the language works**, not writing practice.
 
 - Categories: grammar, vocabulary, pronunciation, writing, communication, usage, culture
 - Title, short summary, TipTap explanation; search and category filters; read-time estimate
-- Preview → edit; **export PDF/DOCX is Pro**
+- Preview → edit; **import PDF/DOCX is Pro**; **export PDF/DOCX is Pro**
 
 **Impact:** grammar notes no longer live in random writing docs. Writing stays for production; Theory stays for rules and usage.
 
@@ -279,9 +305,10 @@ src/
 │       ├── stream/       # Stream Video webhooks
 │       └── stripe/       # Checkout, portal, webhook
 ├── components/
-│   ├── account/          # Settings + Pro subscription card
+│   ├── account/          # Settings, billing card, account backup import dialog
 │   ├── auth/             # Sign-in / sign-up / forgot / reset forms
-│   ├── billing/          # Upgrade modal (Free vs Pro table), locked buttons, Pro provider
+│   ├── billing/          # Upgrade modal, plan comparison, locked buttons, Pro provider
+│   ├── content-import/   # Shared CSV/PDF/DOCX import dialog
 │   ├── dashboard/        # How-to guide + continue / practice now
 │   ├── editor/           # TipTap
 │   ├── exercises/
@@ -299,8 +326,11 @@ src/
 │   └── writing/
 ├── db/                   # Drizzle schema and client
 ├── lib/
+│   ├── account-backup/   # Parse / preview / import Notoria JSON backups (server import only)
 │   ├── actions/          # Server Actions
 │   ├── auth/             # Session + paid/Pro/AI access + password-reset tokens
+│   ├── billing/          # Plans, entitlements, plan comparison metadata
+│   ├── content-import/   # Shared file extract / map / analyze for module import
 │   ├── email/            # Resend password-reset mail
 │   ├── exercises/        # Quiz generation + AI fill-in-blank / form-sentence
 │   ├── flashcards/       # SRS
@@ -529,7 +559,7 @@ Schema changes go through `npm run db:push` (production, then local). After pull
 | `/speaking/[id]/call` | Full-screen AI video call (Pro) |
 | `/getting-started` | Full product guide |
 | `/settings` | Theme, reduce-motion, keyboard shortcuts |
-| `/account` | Profile, password, avatar, billing |
+| `/account` | Profile, password, avatar, billing, account backup export/import |
 
 API: `POST /api/ai/writing`, `POST /api/ai/exercise`, `POST /api/ai/form-sentence` (Pro), `POST /api/stream/webhook`, `POST /api/stripe/create-checkout-session`, `POST /api/stripe/create-portal-session`, `POST /api/stripe/webhook`.
 
@@ -587,4 +617,3 @@ Then restart `npm run dev`.
 
 - Listening dictation and word-ordering practice (schema already has the types)
 - Statistics and charts
-- Vocabulary import (CSV / JSON)

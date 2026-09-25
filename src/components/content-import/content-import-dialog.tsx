@@ -40,6 +40,7 @@ import {
 } from "@/lib/content-import";
 import { useInvalidateWorkspaceQueries } from "@/hooks/use-invalidate-workspace-queries";
 import { mx } from "@/lib/css-module";
+import { planGrantsFeature } from "@/lib/billing/plans";
 import { cn } from "@/lib/utils";
 
 type Step = "upload" | "preview" | "done";
@@ -116,7 +117,7 @@ export function ContentImportDialog({
 }: ContentImportDialogProps) {
   const t = useTranslations("contentImport");
   const tc = useTranslations("common");
-  const { hasProAccess, openUpgrade, plan } = useProAccess();
+  const { openUpgrade, plan } = useProAccess();
   const fileRef = useRef<HTMLInputElement>(null);
   const [step, setStep] = useState<Step>("upload");
   const [analysis, setAnalysis] = useState<AnalyzeContentImportResult | null>(
@@ -182,7 +183,7 @@ export function ContentImportDialog({
   }
 
   function ensureAccess(): boolean {
-    if (!hasProAccess) {
+    if (!planGrantsFeature(plan, "content_import")) {
       openUpgrade();
       return false;
     }

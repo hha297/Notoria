@@ -17,6 +17,7 @@ import { CollapsibleRefine } from "@/components/filters/collapsible-refine";
 import { FolderWorkspace } from "@/components/folders/folder-workspace";
 import { FolderBreadcrumbs } from "@/components/folders/folder-breadcrumbs";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
+import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
@@ -269,16 +270,17 @@ export function WritingTable({
   const actions = (
     <>
       <ShowTutorialButton section="writing" />
-      <Button
+      <LockedFeatureButton
         type="button"
         variant="outline"
         className="route-quiet-action"
         data-route-action="writing"
+        feature="content_import"
+        icon={<Upload className="size-4" />}
         onClick={() => setImportOpen(true)}
       >
-        <Upload className="size-4" />
         {tImport("button")}
-      </Button>
+      </LockedFeatureButton>
       <LinkButton href={learningNoteHref} variant="outline">
         <Plus className="size-4" />
         {t("learningNote.create")}

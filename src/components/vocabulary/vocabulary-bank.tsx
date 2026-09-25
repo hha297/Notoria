@@ -11,6 +11,7 @@ import type { MultiFilterOptionGroup } from "@/components/filters/multi-filter-s
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
+import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
 import { ContentImportDialog } from "@/components/content-import/content-import-dialog";
@@ -165,16 +166,17 @@ export function VocabularyBank({
   const actions = (
     <>
       <ShowTutorialButton section="vocabulary" />
-      <Button
+      <LockedFeatureButton
         type="button"
         variant="outline"
         className="route-quiet-action"
         data-route-action="vocab"
+        feature="content_import"
+        icon={<Upload className="size-4" />}
         onClick={() => setImportOpen(true)}
       >
-        <Upload className="size-4" />
         {tImport("button")}
-      </Button>
+      </LockedFeatureButton>
       <Button
         type="button"
         variant="outline"

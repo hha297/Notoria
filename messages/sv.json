@@ -628,6 +628,7 @@
       "pastedImageTitle": "Klistrad bild",
       "importAction": "Importera & generera",
       "unlockPro": "Lås upp med Pro",
+      "lockedDescription": "Uppgradera till Pro för att förvandla arbetsblad och anteckningar till AI-övningskort.",
       "myImports": "Mina importer",
       "searchPlaceholder": "Sök efter titel…",
       "noResults": "Inga importer matchar den titeln",
@@ -2506,12 +2507,74 @@
     },
     "data": {
       "title": "Dina data",
-      "description": "Ladda ner en kopia av dina inlärningsdata när du behöver det.",
+      "description": "Ladda ner en kopia av dina inlärningsdata när du behöver det, eller återställ från en tidigare säkerhetskopia.",
       "exportTitle": "Exportera kontosäkerhetskopia",
       "exportHint": "Laddar ner en JSON-fil med dina arbetsytor och lärandeinnehåll. Mediefiler länkas via URL, inte inbäddade.",
       "exportAction": "Ladda ner säkerhetskopia",
       "exportDone": "Säkerhetskopia nedladdad",
-      "exportFailed": "Kunde inte förbereda din säkerhetskopia. Försök igen."
+      "exportFailed": "Kunde inte förbereda din säkerhetskopia. Försök igen.",
+      "importTitle": "Importera kontosäkerhetskopia",
+      "importHint": "Återställ dina Notoria-inlärningsdata från en tidigare kontosäkerhetskopia. Ditt konto, inloggning och prenumeration ändras inte.",
+      "importAction": "Importera säkerhetskopia"
+    },
+    "backupImport": {
+      "title": "Återställ dina Notoria-inlärningsdata",
+      "description": "Importera en JSON-säkerhetskopia exporterad från Notoria. Endast inlärningsdata återställs — inte din kontoidentitet eller prenumeration.",
+      "uploadHint": "Välj en JSON-fil från Exportera kontosäkerhetskopia.",
+      "chooseFile": "Välj säkerhetskopiefil",
+      "analyzing": "Kontrollerar säkerhetskopia…",
+      "detectedTitle": "Notoria-kontosäkerhetskopia upptäckt",
+      "strategyTitle": "Hur ska vi importera den här säkerhetskopian?",
+      "strategyAddAsNew": "Lägg till som nya data — skapar en ny kopia utan att ersätta dina befintliga inlärningsdata. Arbetsytor som redan finns för samma språk tar emot innehållet i stället för att dupliceras.",
+      "readyTitle": "Klar att importera",
+      "nothingToImport": "Inget nytt att importera från den här säkerhetskopian.",
+      "notImportedTitle": "Viss kontoinformation importeras inte",
+      "notImportedHint": "Ditt namn, e-post, inloggningsuppgifter och prenumeration hanteras av ditt nuvarande konto och kan inte ändras via en säkerhetskopieimport. Dina inlärningsdata kan fortfarande importeras.",
+      "notImportedFields": {
+        "name": "Kontonamn",
+        "email": "E-post",
+        "subscription": "Prenumeration",
+        "auth": "Autentiseringsinformation"
+      },
+      "skippedTitle": "Kan hoppas över",
+      "warnings": {
+        "workspace_language_reuse": "Vissa arbetsytor finns redan för samma språk. Deras innehåll läggs till i dina befintliga arbetsytor i stället för att dupliceras.",
+        "empty_backup": "Den här säkerhetskopian innehåller ingen importerbar inlärningsdata."
+      },
+      "cancel": "Avbryt",
+      "confirm": "Importera inlärningsdata",
+      "close": "Stäng",
+      "doneTitle": "Inlärningsdata importerade",
+      "doneDescription": "Säkerhetskopians inlärningsdata har lagts till på det här kontot.",
+      "doneToast": "Inlärningsdata importerade",
+      "importedTitle": "Importerat",
+      "counts": {
+        "workspaces": "{count, plural, one {# arbetsyta} other {# arbetsytor}}",
+        "folders": "{count, plural, one {# mapp} other {# mappar}}",
+        "tags": "{count, plural, one {# tagg} other {# taggar}}",
+        "vocabulary": "{count, plural, one {# ordförrådspost} other {# ordförrådsposter}}",
+        "theory": "{count, plural, one {# teorisida} other {# teorisidor}}",
+        "writing": "{count, plural, one {# skrivdokument} other {# skrivdokument}}",
+        "exercises": "{count, plural, one {# övning} other {# övningar}}",
+        "listening": "{count, plural, one {# lyssningslektion} other {# lyssningslektioner}}",
+        "speaking": "{count, plural, one {# talsession} other {# talsessioner}}"
+      },
+      "skips": {
+        "workspace_language_exists": "{count, plural, one {# arbetsyta finns redan för det språket} other {# arbetsytor finns redan för det språket}}",
+        "vocabulary_duplicate": "{count, plural, one {# ordförrådspost finns redan} other {# ordförrådsposter finns redan}}",
+        "listening_missing_media": "{count, plural, one {# lyssningslektion saknar media-URL} other {# lyssningslektioner saknar media-URL}}",
+        "listening_duplicate_filename": "{count, plural, one {# lyssningslektion hoppades över (duplicerat filnamn)} other {# lyssningslektioner hoppades över (duplicerat filnamn)}}",
+        "invalid_workspace_ref": "{count, plural, one {# objekt med saknad arbetsyta} other {# objekt med saknad arbetsyta}}",
+        "invalid_record": "{count, plural, one {# ogiltig post} other {# ogiltiga poster}}",
+        "unsupported_account_field": "Kontoidentitetsfält importeras inte"
+      },
+      "errors": {
+        "fileTooLarge": "Säkerhetskopiefilen är för stor. Exportera igen eller kontakta support.",
+        "invalidBackup": "Det här ser inte ut som en giltig Notoria-säkerhetskopia. Använd en JSON-fil exporterad från Exportera kontosäkerhetskopia.",
+        "unauthorized": "Logga in igen för att importera en säkerhetskopia.",
+        "invalidInput": "Välj en JSON-säkerhetskopiefil.",
+        "importFailed": "Kunde inte importera säkerhetskopian. Försök igen."
+      }
     },
     "danger": {
       "title": "Stäng konto",
@@ -2801,6 +2864,9 @@
       "aiWritingSupport": "AI-skrivhjälp",
       "importLearningMaterial": "Importera lärande material",
       "exportLearningMaterial": "Exportera lärande material",
+      "importExportLearningMaterial": "Importera och exportera material",
+      "importAccountBackup": "Importera kontosäkerhetskopia",
+      "importExportAccountBackup": "Importera och exportera kontosäkerhetskopia",
       "aiPracticeFromMaterial": "AI-övning från arbetsblad",
       "practiceFromMaterial": "AI-övning från arbetsblad",
       "listening": "Lyssnande",

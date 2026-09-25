@@ -31,15 +31,30 @@ describe("plan comparison metadata", () => {
     expect(listening?.cells.premium).toEqual({ kind: "unlimited" });
   });
 
-  it("meters content import from the plan SoT", () => {
-    const importRow = getPlanComparisonRows().find(
-      (row) => row.id === "content_import",
+  it("groups learning material import/export as one Pro+ row", () => {
+    const row = getPlanComparisonRows().find(
+      (r) => r.id === "learning_material_io",
     );
-    expect(importRow?.category).toBe("export");
-    expect(importRow?.nameKey).toBe("importLearningMaterial");
-    expect(importRow?.cells.free).toEqual({ kind: "unavailable" });
-    expect(importRow?.cells.pro).toEqual({ kind: "unlimited" });
-    expect(importRow?.cells.premium).toEqual({ kind: "unlimited" });
+    expect(row?.category).toBe("export");
+    expect(row?.nameKey).toBe("importExportLearningMaterial");
+    expect(row?.cells).toEqual({
+      free: { kind: "unavailable" },
+      pro: { kind: "included" },
+      premium: { kind: "included" },
+    });
+  });
+
+  it("keeps account backup import/export on all plans", () => {
+    const row = getPlanComparisonRows().find(
+      (r) => r.id === "account_backup_io",
+    );
+    expect(row?.category).toBe("export");
+    expect(row?.nameKey).toBe("importExportAccountBackup");
+    expect(row?.cells).toEqual({
+      free: { kind: "included" },
+      pro: { kind: "included" },
+      premium: { kind: "included" },
+    });
   });
 
   it("meters AI practice from worksheets separately from AI exercise generation", () => {
@@ -66,20 +81,11 @@ describe("plan comparison metadata", () => {
       (row) => row.category === "export",
     );
     expect(exportRows.map((row) => row.id)).toEqual([
-      "content_import",
-      "pdf_export",
+      "learning_material_io",
+      "account_backup_io",
     ]);
-    expect(exportRows[0]?.cells).toEqual({
-      free: { kind: "unavailable" },
-      pro: { kind: "unlimited" },
-      premium: { kind: "unlimited" },
-    });
-    expect(exportRows[1]?.nameKey).toBe("exportLearningMaterial");
-    expect(exportRows[1]?.cells).toEqual({
-      free: { kind: "unavailable" },
-      pro: { kind: "unlimited" },
-      premium: { kind: "unlimited" },
-    });
+    expect(exportRows[0]?.nameKey).toBe("importExportLearningMaterial");
+    expect(exportRows[1]?.nameKey).toBe("importExportAccountBackup");
   });
 
   it("does not duplicate AI Speaking Tutor as a second boolean row", () => {

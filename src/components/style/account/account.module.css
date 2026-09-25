@@ -83,6 +83,11 @@
   padding: 1.15rem 1.2rem 1.25rem;
 }
 
+.account-panel-body + .account-panel-body {
+  border-top: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 85%, transparent);
+}
+
 .account-profile-grid {
   display: grid;
   gap: 1.5rem;

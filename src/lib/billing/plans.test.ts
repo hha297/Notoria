@@ -8,6 +8,7 @@ import {
   getFeatureAccess,
   isIntroOfferEligible,
   planForStripePrice,
+  planGrantsFeature,
   planIntroMonthlyCents,
   planIntroMonthlyPrice,
   planMonthlyPrice,
@@ -135,6 +136,13 @@ describe("entitlements", () => {
     });
     expect(featureEnabled("free", "exercise_import")).toBe(false);
     expect(featureEnabled("pro", "exercise_import")).toBe(true);
+    expect(planGrantsFeature("free", "content_import")).toBe(false);
+    expect(planGrantsFeature("pro", "content_import")).toBe(true);
+    expect(planGrantsFeature("premium", "content_import")).toBe(true);
+    expect(planGrantsFeature("free", "exercise_import")).toBe(false);
+    expect(planGrantsFeature("pro", "exercise_import")).toBe(true);
+    expect(planGrantsFeature("free", "pdf_export")).toBe(false);
+    expect(planGrantsFeature("pro", "pdf_export")).toBe(true);
   });
 });
 

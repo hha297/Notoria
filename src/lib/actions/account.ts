@@ -448,6 +448,7 @@ export async function exportAccountBackup() {
 
   return {
     version: 1 as const,
+    format: "notoria-account-backup" as const,
     exportedAt: new Date().toISOString(),
     app: "notoria",
     account: {
@@ -519,6 +520,7 @@ export async function exportAccountBackup() {
       title: lesson.title,
       originalFilename: lesson.originalFilename,
       mediaUrl: lesson.cloudinaryUrl,
+      mediaPublicId: lesson.cloudinaryPublicId,
       mediaType: lesson.mediaType,
       format: lesson.format,
       duration: lesson.duration,
@@ -560,7 +562,8 @@ export async function exportAccountBackup() {
     })),
     notes: [
       "Media files (listening audio/video, speaking recordings, profile photo) are referenced by URL when available but are not embedded in this JSON file.",
-      "This backup is for personal safekeeping. Importing it back into Notoria is not supported yet.",
+      "Import restores learning data only. Account name, email, login, and subscription are never changed by a backup import.",
+      "Writing documents are included under exercises with type WRITING.",
     ],
   };
 }

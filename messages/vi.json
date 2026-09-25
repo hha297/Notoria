@@ -628,6 +628,7 @@
       "pastedImageTitle": "Ảnh đã dán",
       "importAction": "Nhập & tạo bài",
       "unlockPro": "Mở khoá với Pro",
+      "lockedDescription": "Nâng cấp Pro để biến phiếu bài và ghi chú thành thẻ luyện bằng AI.",
       "myImports": "Tài liệu đã nhập",
       "searchPlaceholder": "Tìm theo tiêu đề…",
       "noResults": "Không có tài liệu khớp tiêu đề đó",
@@ -2312,12 +2313,74 @@
     },
     "data": {
       "title": "Dữ liệu của bạn",
-      "description": "Tải bản sao dữ liệu học bất cứ lúc nào bạn cần.",
+      "description": "Tải bản sao dữ liệu học bất cứ lúc nào, hoặc khôi phục từ bản sao lưu trước đó.",
       "exportTitle": "Xuất bản sao lưu tài khoản",
       "exportHint": "Tải file JSON gồm workspace và nội dung học. Media chỉ tham chiếu bằng URL, không nhúng trong file.",
       "exportAction": "Tải backup",
       "exportDone": "Đã tải backup",
-      "exportFailed": "Không chuẩn bị được backup. Thử lại nhé."
+      "exportFailed": "Không chuẩn bị được backup. Thử lại nhé.",
+      "importTitle": "Nhập bản sao lưu tài khoản",
+      "importHint": "Khôi phục dữ liệu học Notoria từ bản sao lưu trước. Tài khoản, đăng nhập và gói đăng ký của bạn sẽ không bị thay đổi.",
+      "importAction": "Nhập backup"
+    },
+    "backupImport": {
+      "title": "Khôi phục dữ liệu học Notoria",
+      "description": "Nhập file JSON đã xuất từ Notoria. Chỉ khôi phục dữ liệu học — không đụng tới danh tính tài khoản hay gói đăng ký.",
+      "uploadHint": "Chọn file JSON từ Xuất bản sao lưu tài khoản.",
+      "chooseFile": "Chọn file backup",
+      "analyzing": "Đang kiểm tra backup…",
+      "detectedTitle": "Đã nhận diện bản sao lưu tài khoản Notoria",
+      "strategyTitle": "Cách nhập bản sao lưu này?",
+      "strategyAddAsNew": "Thêm như dữ liệu mới — tạo bản sao mà không ghi đè dữ liệu học hiện có. Workspace cùng ngôn ngữ sẽ nhận nội dung thay vì bị nhân đôi.",
+      "readyTitle": "Sẵn sàng nhập",
+      "nothingToImport": "Không có gì mới để nhập từ bản sao lưu này.",
+      "notImportedTitle": "Một số thông tin tài khoản sẽ không được nhập",
+      "notImportedHint": "Tên, email, đăng nhập và gói đăng ký do tài khoản hiện tại quản lý và không thể thay đổi qua nhập backup. Dữ liệu học vẫn có thể được nhập.",
+      "notImportedFields": {
+        "name": "Tên tài khoản",
+        "email": "Email",
+        "subscription": "Gói đăng ký",
+        "auth": "Thông tin xác thực"
+      },
+      "skippedTitle": "Có thể bỏ qua",
+      "warnings": {
+        "workspace_language_reuse": "Một số workspace đã tồn tại cho cùng ngôn ngữ. Nội dung sẽ được thêm vào workspace hiện có thay vì tạo bản trùng.",
+        "empty_backup": "Bản sao lưu này không chứa dữ liệu học có thể nhập."
+      },
+      "cancel": "Hủy",
+      "confirm": "Nhập dữ liệu học",
+      "close": "Đóng",
+      "doneTitle": "Đã nhập dữ liệu học",
+      "doneDescription": "Dữ liệu học từ bản sao lưu đã được thêm vào tài khoản này.",
+      "doneToast": "Đã nhập dữ liệu học",
+      "importedTitle": "Đã nhập",
+      "counts": {
+        "workspaces": "{count, plural, one {# workspace} other {# workspace}}",
+        "folders": "{count, plural, one {# thư mục} other {# thư mục}}",
+        "tags": "{count, plural, one {# thẻ} other {# thẻ}}",
+        "vocabulary": "{count, plural, one {# mục từ vựng} other {# mục từ vựng}}",
+        "theory": "{count, plural, one {# trang theory} other {# trang theory}}",
+        "writing": "{count, plural, one {# tài liệu writing} other {# tài liệu writing}}",
+        "exercises": "{count, plural, one {# bài tập} other {# bài tập}}",
+        "listening": "{count, plural, one {# bài listening} other {# bài listening}}",
+        "speaking": "{count, plural, one {# phiên speaking} other {# phiên speaking}}"
+      },
+      "skips": {
+        "workspace_language_exists": "{count, plural, one {# workspace đã tồn tại cho ngôn ngữ đó} other {# workspace đã tồn tại cho ngôn ngữ đó}}",
+        "vocabulary_duplicate": "{count, plural, one {# mục từ vựng đã tồn tại} other {# mục từ vựng đã tồn tại}}",
+        "listening_missing_media": "{count, plural, one {# bài listening thiếu URL media} other {# bài listening thiếu URL media}}",
+        "listening_duplicate_filename": "{count, plural, one {# bài listening bị bỏ qua (trùng tên file)} other {# bài listening bị bỏ qua (trùng tên file)}}",
+        "invalid_workspace_ref": "{count, plural, one {# mục thiếu workspace} other {# mục thiếu workspace}}",
+        "invalid_record": "{count, plural, one {# bản ghi không hợp lệ} other {# bản ghi không hợp lệ}}",
+        "unsupported_account_field": "Các trường danh tính tài khoản không được nhập"
+      },
+      "errors": {
+        "fileTooLarge": "File backup quá lớn. Hãy xuất lại hoặc liên hệ hỗ trợ.",
+        "invalidBackup": "Đây không giống bản sao lưu Notoria hợp lệ. Hãy dùng file JSON từ Xuất bản sao lưu tài khoản.",
+        "unauthorized": "Đăng nhập lại để nhập backup.",
+        "invalidInput": "Hãy chọn file JSON backup.",
+        "importFailed": "Không nhập được backup này. Thử lại nhé."
+      }
     },
     "danger": {
       "title": "Đóng tài khoản",
@@ -2607,6 +2670,9 @@
       "aiWritingSupport": "Hỗ trợ viết AI",
       "importLearningMaterial": "Nhập tài liệu học",
       "exportLearningMaterial": "Xuất tài liệu học",
+      "importExportLearningMaterial": "Nhập & xuất tài liệu",
+      "importAccountBackup": "Nhập bản sao lưu tài khoản",
+      "importExportAccountBackup": "Nhập & xuất bản sao lưu tài khoản",
       "aiPracticeFromMaterial": "Luyện AI từ phiếu bài",
       "practiceFromMaterial": "Luyện AI từ phiếu bài",
       "listening": "Nghe",
