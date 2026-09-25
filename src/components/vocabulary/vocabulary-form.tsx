@@ -831,7 +831,7 @@ export function VocabularyForm({
       <div
         className={mx(
           composerStyles,
-          "vocab-composer-actions sticky bottom-0 z-10 -mx-1 mt-4 flex flex-col gap-2.5 px-1 py-3.5 sm:static sm:mt-6 sm:flex-row sm:justify-end sm:border-0 sm:bg-transparent sm:py-1 sm:backdrop-blur-none",
+          "vocab-composer-actions mt-4 flex flex-col gap-2 sm:mt-6 sm:flex-row sm:justify-end sm:py-1",
         )}
       >
         {showCancel ? (
@@ -856,7 +856,7 @@ export function VocabularyForm({
           data-tutorial="vocab-composer-save"
           className={mx(
             composerStyles,
-            "vocab-composer-submit h-12 w-full sm:h-11 sm:min-w-44 sm:w-auto",
+            "vocab-composer-submit h-11 w-full sm:min-w-44 sm:w-auto",
           )}
         >
           {isSaving ? (

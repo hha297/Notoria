@@ -284,7 +284,7 @@ function DataPrivacySection() {
       <div className={mx(styles, "settings-row")}>
         <div className={mx(styles, "settings-row-copy")}>
           <p className={mx(styles, "settings-row-title")}>{t("data.policiesTitle")}</p>
-          <p className={mx(styles, "settings-row-hint")}>
+          <p className={mx(styles, "settings-row-hint", "settings-policies-line")}>
             {t("data.policiesDescription")}{" "}
             <Link href="/privacy" className={mx(styles, "settings-inline-link")}>
               {t("data.privacyLink")}

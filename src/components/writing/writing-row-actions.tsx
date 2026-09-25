@@ -120,6 +120,7 @@ export function WritingRowActions({
         <Button
           variant="ghost"
           size="icon-sm"
+          className="text-destructive hover:bg-destructive/10 hover:text-destructive"
           onClick={() => setDeleteOpen(true)}
           disabled={isPending}
         >

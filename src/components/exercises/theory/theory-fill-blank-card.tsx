@@ -104,9 +104,9 @@ export function TheoryFillBlankCard({
       initial={reduceMotion ? false : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: reduceMotion ? 0 : 0.22, ease: EASE }}
-      className="relative mx-auto w-full min-w-0 max-w-2xl"
+      className="relative mx-auto w-full min-w-0 max-w-3xl"
     >
-      <header className="flex items-start justify-between gap-3">
+      <header className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
         <div className="min-w-0">
           <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
             {t("lesson.tryIt")}
@@ -127,7 +127,7 @@ export function TheoryFillBlankCard({
           if (checked) onNext();
           else check();
         }}
-        className="relative mt-8 sm:mt-10"
+        className="relative mt-5 sm:mt-10"
       >
         <span
           aria-hidden
@@ -213,7 +213,7 @@ export function TheoryFillBlankCard({
           </ExerciseHint>
 
           {!checked ? (
-            <div className="mt-8">
+            <div className="mt-5">
               <Button
                 type="submit"
                 disabled={!value.trim()}

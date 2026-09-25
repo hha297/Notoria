@@ -93,20 +93,20 @@
 
 .vocab-group-head {
   position: sticky;
-  /* Sit just under studio chrome (h-14) */
-  top: 3.5rem;
+  /* Sit just under studio chrome (token tracks 1-row / 2-row chrome) */
+  top: var(--studio-chrome-offset, 3.5rem);
   z-index: 10;
   display: flex;
   flex-wrap: wrap;
   align-items: flex-end;
   justify-content: space-between;
   gap: 0.5rem 1.25rem;
-  /* Full-bleed across main padding (px-4 / sm:px-6) */
-  width: calc(100% + 2rem);
+  /* Full-bleed across main padding via shared --studio-main-pad token */
+  width: auto;
   max-width: none;
   margin: 0 0 0.35rem;
-  margin-inline: -1rem;
-  padding: 0.7rem 1rem;
+  margin-inline: calc(-1 * var(--studio-main-pad, 1rem));
+  padding: 0.7rem var(--studio-main-pad, 1rem);
   border: 0;
   border-bottom: 1px solid transparent;
   /* Solid-enough glass with a soft POS wash from the accent rail */
@@ -123,14 +123,6 @@
     border-color 160ms ease,
     box-shadow 160ms ease,
     background-color 160ms ease;
-}
-
-@media (min-width: 640px) {
-  .vocab-group-head {
-    width: calc(100% + 3rem);
-    margin-inline: -1.5rem;
-    padding-inline: 1.5rem;
-  }
 }
 
 .vocab-group-head[data-stuck] {
@@ -342,6 +334,18 @@
   box-shadow: 0 0 0 2px color-mix(in oklab, var(--vocab-pos-accent) 40%, transparent);
 }
 
+@media (max-width: 639px) {
+  .vocab-module {
+    overflow: visible;
+  }
+
+  .vocab-module-cta {
+    min-height: 2.25rem;
+    height: auto;
+    padding-block: 0.35rem;
+  }
+}
+
 .vocab-module-cta-sm {
   height: 1.85rem;
   padding-inline: 0.55rem;
@@ -371,6 +375,10 @@
 .vocab-module-action:hover {
   background: color-mix(in oklab, var(--vocab-pos-accent) 18%, transparent) !important;
   color: var(--vocab-pos-accent) !important;
+}
+
+.vocab-module-action-danger {
+  color: var(--destructive) !important;
 }
 
 .vocab-module-action-danger:hover {

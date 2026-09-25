@@ -30,7 +30,7 @@ export function TypeAnswerActions({
   const t = useTranslations("exercises.typeAnswer");
 
   return (
-    <div className="sticky bottom-0 z-10 mx-auto flex w-full max-w-2xl flex-col items-center gap-3 bg-background/90 pt-3 pb-[max(0.5rem,env(safe-area-inset-bottom))] backdrop-blur-md sm:static sm:bg-transparent sm:pt-2 sm:pb-0 sm:backdrop-blur-none">
+    <div className="mx-auto flex w-full max-w-2xl flex-col items-center gap-3 pt-2">
       <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-center sm:gap-3">
         <Button
           type="button"

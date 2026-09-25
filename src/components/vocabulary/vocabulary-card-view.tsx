@@ -70,8 +70,14 @@ function VocabularyCard({
       data-vocab-pos={pos || "none"}
       className={mx(featureStyles, "vocab-module-card group")}
     >
-      <div className="flex items-start justify-between gap-3">
-        <p className={mx(featureStyles, "vocab-module-index vocab-module-index-sm")} aria-hidden>
+      <div className="flex items-start justify-between gap-3 max-sm:justify-end">
+        <p
+          className={mx(
+            featureStyles,
+            "vocab-module-index vocab-module-index-sm max-sm:hidden",
+          )}
+          aria-hidden
+        >
           {String(index + 1).padStart(2, "0")}
         </p>
         <Link href={href} className={mx(featureStyles, "vocab-module-cta vocab-module-cta-sm")}>

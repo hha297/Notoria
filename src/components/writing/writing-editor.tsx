@@ -210,6 +210,8 @@ export function WritingEditor({
     !writingEditorSnapshotsEqual(baseline, currentSnapshot);
   const canSave = hasRequiredContent && (initialData?.id ? isDirty : true);
   const canExport = writingEditorHasExportableContent(editorState);
+  /** Export only after the document exists (edit / not the /new create form). */
+  const showExport = Boolean(initialData?.id);
 
   function adoptDescriptionBaseline(nextDescription: string) {
     const normalized = normalizeDescription(nextDescription);
@@ -529,7 +531,7 @@ export function WritingEditor({
     () => {
       setExportOpen(true);
     },
-    canExport,
+    showExport && canExport,
   );
 
   return (
@@ -555,19 +557,21 @@ export function WritingEditor({
               {tCommon("cancel")}
             </Button>
           ) : null}
-          <LockedFeatureButton
-            type="button"
-            variant="outline"
-            size="lg"
-            icon={<Download className="size-4" />}
-            onClick={() => setExportOpen(true)}
-            disabled={!canExport}
-            title={canExport ? undefined : t("export.empty")}
-            className="route-quiet-action h-11 w-full sm:h-9 sm:w-auto"
-            data-route-action="writing"
-          >
-            {t("export.button")}
-          </LockedFeatureButton>
+          {showExport ? (
+            <LockedFeatureButton
+              type="button"
+              variant="outline"
+              size="lg"
+              icon={<Download className="size-4" />}
+              onClick={() => setExportOpen(true)}
+              disabled={!canExport}
+              title={canExport ? undefined : t("export.empty")}
+              className="route-quiet-action h-11 w-full sm:h-9 sm:w-auto"
+              data-route-action="writing"
+            >
+              {t("export.button")}
+            </LockedFeatureButton>
+          ) : null}
           <Button
             onClick={() => void persistExercise(true)}
             disabled={isSaving || imageUploading || !canSave}
@@ -727,6 +731,7 @@ export function WritingEditor({
               <div className="space-y-2">
                 <Label>{t("content")}</Label>
                 <RichTextEditor
+                  className="sheet-content-tiptap"
                   content={editorState.doc}
                   placeholder={t("contentPlaceholder")}
                   language={language}

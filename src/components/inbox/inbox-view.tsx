@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { format, formatDistanceToNow } from "date-fns";
-import { Check, Inbox, Plus, Search } from "lucide-react";
+import { Inbox, Plus, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { InboxCaptureDialog } from "@/components/inbox/inbox-capture-dialog";
 import { InboxItemActions } from "@/components/inbox/inbox-item-actions";
@@ -218,23 +218,10 @@ export function InboxView({ items, initialFilter }: InboxViewProps) {
                     <SelectItem
                       key={option}
                       value={option}
-                      className={mx(styles, "inbox-sort-option")}
                       data-selected={sort === option || undefined}
+                      className={mx(styles, "inbox-sort-option")}
                     >
-                      <span className={mx(styles, "inbox-sort-option-label")}>
-                        {sortLabel(option)}
-                      </span>
-                      {sort === option ? (
-                        <Check
-                          className={mx(styles, "inbox-sort-option-check")}
-                          aria-hidden
-                        />
-                      ) : (
-                        <span
-                          className={mx(styles, "inbox-sort-option-spacer")}
-                          aria-hidden
-                        />
-                      )}
+                      {sortLabel(option)}
                     </SelectItem>
                   ))}
                 </SelectContent>

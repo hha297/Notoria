@@ -109,6 +109,13 @@
   color: var(--muted-foreground);
 }
 
+@media (min-width: 768px) {
+  .settings-policies-line {
+    max-width: none;
+    white-space: nowrap;
+  }
+}
+
 .settings-inline-link {
   font-weight: 650;
   color: var(--ink);
@@ -152,6 +159,17 @@
     border-color 140ms ease,
     background-color 140ms ease,
     color 140ms ease;
+}
+
+@media (max-width: 639px) {
+  .settings-choice-chip {
+    height: auto;
+    min-height: 2.15rem;
+    padding-block: 0.35rem;
+    white-space: normal;
+    text-align: center;
+    line-height: 1.25;
+  }
 }
 
 .settings-choice-chip:hover:not(:disabled) {

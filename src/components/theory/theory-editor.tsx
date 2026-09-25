@@ -485,6 +485,7 @@ export function TheoryEditor({
         <div className="space-y-2">
           <Label>{t("content")}</Label>
           <RichTextEditor
+            className="sheet-content-tiptap"
             content={doc}
             placeholder={t("contentPlaceholder")}
             language={language}

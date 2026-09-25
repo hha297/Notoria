@@ -7,7 +7,7 @@
 
 .site-footer[data-variant="public"],
 .site-footer[data-variant="app"] {
-  margin-top: 3rem;
+  margin-top: 1.5rem;
   border-radius: 0;
   border-top: 1px solid
     color-mix(in oklab, var(--footer-ink) 20%, var(--hairline-cloud));
@@ -28,8 +28,8 @@
 @media (min-width: 768px) {
   .site-footer[data-variant="public"],
   .site-footer[data-variant="app"] {
-    margin-top: 3.75rem;
-    padding: 2rem clamp(1.25rem, 4vw, 2.5rem) 1.75rem;
+    margin-top: 1.5rem;
+    padding: 1.5rem clamp(1.25rem, 4vw, 2.5rem) 1.25rem;
   }
 }
 

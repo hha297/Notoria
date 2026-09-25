@@ -46,7 +46,7 @@ export function TheoryPracticeFeedback({
           animate={{ opacity: 1, y: 0 }}
           exit={reduceMotion ? undefined : { opacity: 0 }}
           transition={{ duration: reduceMotion ? 0 : 0.22, ease: EASE }}
-          className="mt-8 space-y-5"
+          className="mt-5 space-y-4"
           aria-live="polite"
         >
           <p

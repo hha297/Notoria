@@ -165,6 +165,7 @@
   },
   "header": {
     "createWorkspace": "Luo työtila",
+    "createWorkspaceHint": "Lisää toinen kielityötila",
     "switchWorkspace": "Vaihda työtilaa",
     "switchFailed": "Työtilan vaihto epäonnistui"
   },

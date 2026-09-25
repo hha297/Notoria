@@ -93,7 +93,7 @@ export function TheoryLessonStudy({
 
   return (
     <article
-      className="relative mx-auto w-full min-w-0 max-w-3xl"
+      className="relative mx-auto w-full min-w-0 max-w-5xl"
       data-theory-category={category || undefined}
     >
       <LessonOpening
@@ -267,6 +267,7 @@ function OverviewActions({
   onRetryGenerate?: () => void;
 }) {
   const t = useTranslations("exercises.theory");
+  const outlineSeen = new Set<string>();
 
   return (
     <div className="mt-8 space-y-7 sm:mt-10">
@@ -293,8 +294,7 @@ function OverviewActions({
                 {String(index + 1).padStart(2, "0")}
               </span>
               <span className="min-w-0 wrap-anywhere text-ink/90">
-                {section.title?.trim() ||
-                  fallbackLabelForKind(section.kind, (key) => t(key))}
+                {outlineSectionLabel(section, outlineSeen, (key) => t(key))}
               </span>
             </li>
           ))}
@@ -379,6 +379,7 @@ function ReviewDocument({
   onStartPractice: () => void;
 }) {
   const t = useTranslations("exercises.theory");
+  const outlineSeen = new Set<string>();
 
   const scrollToSection = (id: string) => {
     document.getElementById(`theory-lesson-${id}`)?.scrollIntoView({
@@ -408,7 +409,7 @@ function ReviewDocument({
       {sections.length > 1 ? (
         <nav
           aria-label={t("lesson.outline")}
-          className="sticky top-0 z-10 -mx-4 mb-6 bg-surface-elevated px-5 py-3 before:pointer-events-none before:absolute before:inset-x-0 before:-top-24 before:h-24 before:bg-surface-elevated sm:-mx-6 sm:px-7"
+          className="sticky top-[var(--studio-chrome-offset,3.5rem)] z-10 -mx-4 mb-6 bg-surface-elevated px-5 py-3 before:pointer-events-none before:absolute before:inset-x-0 before:-top-24 before:h-24 before:bg-surface-elevated sm:-mx-6 sm:px-7"
         >
           <p className="mb-2 text-[0.65rem] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
             {t("lesson.outline")}
@@ -434,8 +435,7 @@ function ReviewDocument({
                     {String(index + 1).padStart(2, "0")}
                   </span>
                   <span className="min-w-0 wrap-anywhere">
-                    {section.title?.trim() ||
-                      fallbackLabelForKind(section.kind, (key) => t(key))}
+                    {outlineSectionLabel(section, outlineSeen, (key) => t(key))}
                   </span>
                 </button>
               </li>
@@ -497,6 +497,22 @@ function fallbackLabelForKind(
   if (kind === "examples") return t("lesson.seeIt");
   if (kind === "detail") return t("lesson.notice");
   return t("lesson.theIdea");
+}
+
+function outlineSectionLabel(
+  section: TheoryLessonSection,
+  seenTitles: Set<string>,
+  t: (key: "lesson.theIdea" | "lesson.seeIt" | "lesson.notice") => string,
+) {
+  const fallback = fallbackLabelForKind(section.kind, t);
+  const raw = section.title?.trim() ?? "";
+  // Drop list markers already shown via 01/02 indices
+  const cleaned = raw.replace(/^\d+[.)]\s*/u, "").trim();
+  const candidate = cleaned || fallback;
+  const key = candidate.toLowerCase();
+  if (seenTitles.has(key)) return fallback;
+  seenTitles.add(key);
+  return candidate;
 }
 
 function isInsightSection(section: TheoryLessonSection): boolean {

@@ -221,7 +221,7 @@ export function UploadListeningDialog({
                   <Upload className="size-5" />
                 )}
               </div>
-              <p className="font-medium text-ink">
+              <p className="min-w-0 break-all font-medium text-ink">
                 {file ? file.name : t("dropTitle")}
               </p>
               <p className="mt-1 text-sm text-muted-foreground">
@@ -266,7 +266,10 @@ export function UploadListeningDialog({
                         : tMeta(`cefr.${cefrLevel as WritingCefr}`)}
                     </SelectValue>
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent
+                    className={mx(styles, "workspace-sheet-menu")}
+                    data-sheet-route="listen"
+                  >
                     <SelectItem value="none">{tMeta("none")}</SelectItem>
                     {WRITING_CEFR_LEVELS.map((level) => (
                       <SelectItem key={level} value={level}>
@@ -289,7 +292,10 @@ export function UploadListeningDialog({
                         : resolveTopicLabel(topic, (key) => tTags(key))}
                     </SelectValue>
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent
+                    className={mx(styles, "workspace-sheet-menu")}
+                    data-sheet-route="listen"
+                  >
                     <SelectItem value="none">{tMeta("none")}</SelectItem>
                     {WRITING_TOPICS.map((item) => (
                       <SelectItem key={item} value={item}>
@@ -314,7 +320,10 @@ export function UploadListeningDialog({
                         : tMeta(`formality.${formality as WritingFormality}`)}
                     </SelectValue>
                   </SelectTrigger>
-                  <SelectContent>
+                  <SelectContent
+                    className={mx(styles, "workspace-sheet-menu")}
+                    data-sheet-route="listen"
+                  >
                     <SelectItem value="none">{tMeta("none")}</SelectItem>
                     {WRITING_FORMALITY.map((item) => (
                       <SelectItem key={item} value={item}>

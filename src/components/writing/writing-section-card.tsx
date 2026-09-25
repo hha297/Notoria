@@ -257,7 +257,7 @@ export function WritingSectionCard({
       <div
         className={mx(
           qsStyles,
-          "writing-qs-section-head flex items-start gap-2.5 border-b border-hairline-cloud px-4 py-4 sm:gap-3 sm:px-5 sm:py-5",
+          "writing-qs-section-head flex flex-wrap items-start gap-2.5 border-b border-hairline-cloud px-4 py-4 sm:flex-nowrap sm:gap-3 sm:px-5 sm:py-5",
         )}
       >
         <div className="flex items-center gap-0.5 pt-2.5">

@@ -70,6 +70,65 @@
   align-items: start;
 }
 
+@media (max-width: 639px) {
+  .vocab-composer-section-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.35rem;
+  }
+
+  .vocab-composer-section-index {
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    padding-top: 0;
+  }
+
+  .vocab-composer-index {
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 0.65rem;
+  }
+
+  .vocab-composer-item {
+    flex-wrap: wrap;
+  }
+
+  .vocab-composer-item .vocab-composer-field {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .vocab-search-shell {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .vocab-search-field {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  .vocab-composer-actions {
+    position: static;
+    z-index: auto;
+    margin-top: 1rem;
+    margin-inline: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    backdrop-filter: none;
+  }
+
+  .vocab-suggest-item:has(.vocab-suggest-meta) .vocab-suggest-title,
+  .vocab-suggest-meta {
+    max-width: none;
+  }
+
+  .vocab-suggest-item {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+}
+
 @media (min-width: 640px) {
   .vocab-composer-section-grid {
     grid-template-columns: 4.25rem minmax(0, 1fr);
@@ -478,6 +537,24 @@
 .vocab-search-field {
   flex: 1 1 14rem;
   min-width: 0;
+  width: auto;
+  height: 2.75rem !important;
+  min-height: 2.75rem !important;
+  max-height: 2.75rem !important;
+  padding-block: 0.5rem !important;
+  box-sizing: border-box;
+}
+
+@media (max-width: 639px) {
+  .vocab-search-shell {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .vocab-search-field {
+    flex: 0 0 auto;
+    width: 100%;
+  }
 }
 
 .vocab-suggest {
@@ -704,6 +781,12 @@
   background: color-mix(in oklab, var(--composer-accent) 12%, transparent);
 }
 
+@media (max-width: 639px) {
+  .vocab-composer-drag {
+    display: none;
+  }
+}
+
 .vocab-composer-details-toggle {
   display: inline-flex;
   align-items: center;
@@ -810,10 +893,11 @@
 
 .vocab-composer-submit {
   border-radius: 0.8rem !important;
+  overflow: hidden;
   font-family: var(--font-heading);
   font-weight: 700 !important;
   letter-spacing: -0.02em;
-  box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 0%, transparent);
+  box-shadow: none;
   transition:
     transform 0.15s ease,
     box-shadow 0.2s ease,
@@ -854,10 +938,15 @@
 }
 
 .vocab-composer-actions {
-  background: color-mix(in oklab, var(--background) 78%, transparent);
-  backdrop-filter: blur(12px);
-  border-top: 1px solid
-    color-mix(in oklab, var(--module-vocab-fg) 10%, transparent);
+  position: static;
+  margin-inline: 0;
+  padding: 0;
+  border: 0;
+  border-top: 0;
+  background: transparent !important;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
 }
 
 /* --- Vocabulary notes (TipTap) --- */
@@ -1077,7 +1166,7 @@
 }
 
 .vocab-pos-menu {
-  width: min(22rem, calc(100vw - 2rem)) !important;
+  width: min(22rem, calc(100dvw - 2rem)) !important;
   min-width: min(18rem, var(--anchor-width, 100%)) !important;
   padding: 0.55rem !important;
   border-radius: 0.95rem !important;

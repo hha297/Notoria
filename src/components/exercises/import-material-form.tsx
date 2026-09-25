@@ -321,7 +321,7 @@ export function ImportMaterialForm() {
         <p className="text-[0.68rem] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
           {t("chooseSource")}
         </p>
-        <div className="grid grid-cols-2 gap-1 sm:grid-cols-4 sm:gap-2">
+        <div className="grid grid-cols-1 gap-1 sm:grid-cols-2 sm:gap-2 lg:grid-cols-4">
           {modes.map((item, index) => {
             const Icon = item.icon;
             const active = mode === item.id;

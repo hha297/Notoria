@@ -1,19 +1,21 @@
-/* Question-set UI: clear nesting, solid surfaces, theory accent only as
- * border/focus — not translucent washes on every field. */
+/* Question-set UI: clear nesting, blended surfaces, theory accent on
+ * border/focus — keeps fields on the shared control language. */
 
 .writing-qs-section {
   border: 1px solid var(--hairline-cloud);
   border-left: 3px solid var(--module-theory-fg);
-  background: var(--surface-elevated);
+  background-image: var(--elevated-surface);
   box-shadow: 0 10px 28px color-mix(in oklab, var(--ink) 6%, transparent);
 }
 
 .writing-qs-section-head {
-  background: color-mix(
-    in oklab,
-    var(--module-theory-bg) 34%,
-    var(--surface-elevated)
-  );
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-theory-bg) 48%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--module-theory-bg) 28%, var(--surface-elevated));
   border-bottom: 1px solid
     color-mix(in oklab, var(--module-theory-fg) 14%, var(--hairline-cloud));
 }
@@ -21,13 +23,14 @@
 .writing-qs-question {
   border: 1px solid
     color-mix(in oklab, var(--module-theory-fg) 14%, var(--hairline-cloud));
-  background: var(--popover);
+  background-image: var(--menu-surface);
   border-radius: 0.9rem;
 }
 
 .writing-qs-field {
   border-color: var(--hairline-cloud) !important;
-  background: var(--surface-elevated) !important;
+  background-color: transparent !important;
+  background-image: var(--control-surface) !important;
   box-shadow: none !important;
   color: var(--ink);
 }
@@ -42,6 +45,7 @@
     var(--module-theory-fg) 28%,
     var(--hairline-cloud)
   ) !important;
+  background-image: var(--control-surface-hover) !important;
 }
 
 .writing-qs-field:focus-visible {
@@ -50,7 +54,7 @@
     var(--module-theory-fg) 55%,
     var(--hairline-cloud)
   ) !important;
-  background: var(--surface-elevated) !important;
+  background-image: var(--control-surface-hover) !important;
   box-shadow: 0 0 0 3px
     color-mix(in oklab, var(--module-theory-fg) 18%, transparent) !important;
 }

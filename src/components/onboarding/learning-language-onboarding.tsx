@@ -98,7 +98,7 @@ export function LearningLanguageOnboarding() {
         </header>
 
         <section
-          className={mx(styles, "learning-onboarding-panel flex flex-col gap-4 rounded-[0.95rem] border border-hairline-cloud bg-surface-elevated/70 p-4 sm:gap-5 sm:p-5")}
+          className={mx(styles, "learning-onboarding-panel elevated-surface flex flex-col gap-4 rounded-[0.95rem] border border-hairline-cloud p-4 sm:gap-5 sm:p-5")}
           aria-labelledby="learning-onboarding-heading"
         >
           <h2 id="learning-onboarding-heading" className="sr-only">
@@ -206,8 +206,8 @@ function LanguageOption({
       disabled={disabled}
       onClick={onSelect}
       className={cn(
-        "flex w-full min-h-11 items-center gap-2.5 rounded-xl border border-hairline-cloud bg-surface-elevated/80 px-3 py-2.5 text-left transition-colors",
-        "hover:border-primary/35 hover:bg-muted/60",
+        "flex w-full min-h-11 items-center gap-2.5 rounded-xl border border-hairline-cloud control-surface px-3 py-2.5 text-left transition-colors",
+        "hover:border-primary/35",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
         "disabled:cursor-not-allowed disabled:opacity-70",
         selected &&

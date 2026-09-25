@@ -165,6 +165,7 @@
   },
   "header": {
     "createWorkspace": "Skapa arbetsyta",
+    "createWorkspaceHint": "Lägg till en till språkarbeetsyta",
     "switchWorkspace": "Byt arbetsyta",
     "switchFailed": "Kunde inte byta arbetsyta"
   },

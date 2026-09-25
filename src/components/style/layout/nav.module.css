@@ -2,15 +2,28 @@
 
 .floating-panel {
   height: fit-content;
-  max-height: calc(100dvh - 1.5rem);
+  max-height: calc(100dvh - 1.25rem - 0.75rem);
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
   border-radius: 1rem;
   border: 1px solid var(--hairline-cloud);
-  background: var(--surface-elevated);
+  /* Opaque white/elevated + soft module blend (no glass) */
+  background-color: var(--surface-elevated);
+  background-image:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-theory-bg) 32%, var(--surface-elevated)),
+      color-mix(in oklab, var(--module-listen-bg) 14%, var(--surface-elevated)) 48%,
+      var(--surface-elevated) 78%
+    ),
+    linear-gradient(
+      205deg,
+      color-mix(in oklab, var(--module-vocab-bg) 18%, var(--surface-elevated)),
+      var(--surface-elevated) 62%
+    );
   color: var(--ink);
-  box-shadow: 0 1px 2px rgba(35, 37, 29, 0.04);
+  box-shadow: none;
   position: relative;
   isolation: isolate;
   scrollbar-width: thin;
@@ -32,27 +45,46 @@
 }
 
 .floating-panel::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    radial-gradient(
-      ellipse 80% 50% at 20% 0%,
-      color-mix(in oklab, var(--module-theory-bg) 46%, transparent),
-      transparent 70%
-    ),
-    radial-gradient(
-      ellipse 70% 45% at 90% 100%,
-      color-mix(in oklab, var(--module-vocab-bg) 34%, transparent),
-      transparent 68%
-    );
+  content: none;
 }
 
 .floating-panel > * {
   position: relative;
   z-index: 1;
+}
+
+:global(.dark) .floating-panel {
+  background-color: transparent;
+  background-image: none;
+  background: color-mix(in oklab, var(--background) 42%, transparent);
+  backdrop-filter: blur(20px) saturate(1.2);
+  -webkit-backdrop-filter: blur(20px) saturate(1.2);
+  box-shadow: 0 1px 2px color-mix(in oklab, var(--ink) 4%, transparent);
+}
+
+:global(.dark) .floating-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  border-radius: inherit;
+  background:
+    radial-gradient(
+      ellipse 80% 55% at 18% 0%,
+      color-mix(in oklab, var(--module-theory-bg) 62%, transparent),
+      transparent 72%
+    ),
+    radial-gradient(
+      ellipse 70% 50% at 92% 100%,
+      color-mix(in oklab, var(--module-vocab-bg) 48%, transparent),
+      transparent 70%
+    ),
+    radial-gradient(
+      ellipse 55% 40% at 50% 40%,
+      color-mix(in oklab, var(--module-listen-bg) 28%, transparent),
+      transparent 68%
+    );
 }
 
 .nav-link {
@@ -197,34 +229,40 @@
     color-mix(in oklab, var(--module-account-fg) 22%, transparent);
 }
 
-/* Match the open userbutton surface — not the olive panel behind it. */
+/* Opaque account blend on the open menu (beats flat menu-surface). */
 .nav-account-menu {
   border-color: color-mix(
     in oklab,
-    var(--module-account-fg) 40%,
+    var(--module-account-fg) 36%,
     var(--hairline-cloud)
   );
-  background: color-mix(
-    in oklab,
-    var(--module-account-bg) 58%,
-    var(--surface-elevated)
-  );
+  background-color: var(--popover);
+  background-image:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--module-account-bg) 62%, var(--popover)),
+      color-mix(in oklab, var(--module-account-bg) 32%, var(--popover)) 58%,
+      var(--popover)
+    );
 }
 
 .nav-account-menu :global([data-slot="dropdown-menu-item"]) {
   transition:
     background-color 140ms ease,
+    background-image 140ms ease,
     color 140ms ease;
 }
 
 .nav-account-menu :global([data-slot="dropdown-menu-item"]:hover),
 .nav-account-menu :global([data-slot="dropdown-menu-item"]:focus),
 .nav-account-menu :global([data-slot="dropdown-menu-item"][data-highlighted]) {
-  background: color-mix(
-    in oklab,
-    var(--module-account-fg) 22%,
-    var(--module-account-bg)
-  ) !important;
+  background-color: var(--popover) !important;
+  background-image:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-account-bg) 82%, var(--popover)),
+      color-mix(in oklab, var(--module-account-bg) 52%, var(--popover))
+    ) !important;
   color: var(--ink) !important;
 }
 

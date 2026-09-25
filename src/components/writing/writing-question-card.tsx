@@ -55,7 +55,7 @@ export const WritingQuestionCard = memo(function WritingQuestionCard({
         className,
       )}
     >
-      <div className="mb-3 flex min-w-0 items-center gap-2">
+      <div className="mb-3 flex min-w-0 flex-wrap items-center gap-2">
         {dragHandle}
         <p className="min-w-0 flex-1 text-xs font-semibold uppercase tracking-wide text-muted-foreground">
           {t("question")} {index + 1}

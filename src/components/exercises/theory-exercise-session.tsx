@@ -337,7 +337,7 @@ export function TheoryExerciseSessionView({
     <div
       data-exercise="theory"
       data-theory-category={session.category}
-      className={mx(featureStyles, "theory-practice-stage -mx-4 space-y-8 px-4 py-7 sm:-mx-6 sm:space-y-10 sm:px-6 sm:py-9")}
+      className={mx(featureStyles, "theory-practice-stage -mx-4 space-y-5 px-4 py-4 sm:-mx-6 sm:space-y-10 sm:px-6 sm:py-9")}
       key={`${round}-${current?.id ?? index}`}
     >
       <div className="space-y-4">

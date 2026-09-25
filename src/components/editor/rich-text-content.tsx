@@ -36,7 +36,8 @@ const PROSE_CLASSES =
   "prose-h2:text-[1.2rem] prose-h2:leading-[1.3] " +
   "prose-h3:text-[1.05rem] prose-h3:leading-snug " +
   "[&_img]:h-auto [&_img]:max-h-80 [&_img]:max-w-full [&_img]:rounded-sm " +
-  "[&_pre]:max-w-full [&_pre]:overflow-x-auto [&_table]:max-w-full";
+  "[&_pre]:max-w-full [&_pre]:overflow-x-auto " +
+  "[&_table]:block [&_table]:w-max [&_table]:max-w-full [&_table]:overflow-x-auto";
 
 function blockStableKey(block: JSONContent, index: number): string {
   if (block.type !== "heading") return `b:${index}`;

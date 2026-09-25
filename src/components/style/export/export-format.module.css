@@ -3,6 +3,12 @@
   gap: 0.55rem;
 }
 
+@media (max-width: 480px) {
+  .export-format-grid {
+    grid-template-columns: 1fr !important;
+  }
+}
+
 .export-format-chip {
   display: flex;
   min-height: 5.1rem;

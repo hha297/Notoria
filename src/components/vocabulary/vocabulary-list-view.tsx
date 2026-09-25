@@ -73,11 +73,14 @@ function VocabularyListItem({
         data-vocab-pos={pos || "none"}
         className={mx(
           featureStyles,
-          "vocab-module group grid gap-3 px-3 py-4 sm:grid-cols-[3.5rem_minmax(0,1fr)_auto] sm:items-center sm:gap-x-4 sm:px-3.5 sm:py-4",
+          "vocab-module group grid gap-2.5 px-3 py-3.5 sm:grid-cols-[3.5rem_minmax(0,1fr)_auto] sm:items-center sm:gap-3 sm:gap-x-4 sm:px-3.5 sm:py-4",
         )}
       >
         <p
-          className={mx(featureStyles, "vocab-module-index")}
+          className={mx(
+            featureStyles,
+            "vocab-module-index max-sm:hidden",
+          )}
           aria-hidden
         >
           {String(index + 1).padStart(2, "0")}
@@ -102,7 +105,7 @@ function VocabularyListItem({
             className="mt-1 max-w-xl text-sm leading-snug text-muted-foreground"
           />
           {word.tags.length > 0 ? (
-            <div className="mt-2">
+            <div className="mt-2 min-w-0">
               <VocabularyWordTags tags={word.tags} limit={4} />
             </div>
           ) : null}
@@ -111,10 +114,10 @@ function VocabularyListItem({
           </p>
         </div>
 
-        <div className="flex shrink-0 flex-wrap items-center gap-1.5 sm:flex-col sm:items-end sm:gap-1.5">
+        <div className="flex min-w-0 flex-wrap items-center gap-1.5 max-sm:col-span-full sm:shrink-0 sm:flex-col sm:items-end">
           <Link
             href={href}
-            className={mx(featureStyles, "vocab-module-cta")}
+            className={mx(featureStyles, "vocab-module-cta max-sm:flex-1 max-sm:justify-center")}
           >
             {tCommon("open")}
             <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none" />

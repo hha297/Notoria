@@ -6,6 +6,18 @@
   background: none;
 }
 
+@media (max-width: 639px) {
+  .import-hero,
+  .import-stage {
+    overflow: visible;
+  }
+
+  .import-hero::before,
+  .import-stage::before {
+    inset: 0;
+  }
+}
+
 .import-hero::before,
 .import-stage::before {
   content: "";
@@ -166,4 +178,34 @@
     color-mix(in oklab, var(--import-mode-bg) 38%, transparent),
     transparent 72%
   );
+}
+
+.import-row-delete {
+  color: var(--destructive) !important;
+}
+
+.import-row-delete:hover {
+  background: color-mix(in oklab, var(--destructive) 12%, transparent) !important;
+  color: var(--destructive) !important;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .import-row-delete {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 140ms ease;
+  }
+
+  .import-row:hover .import-row-delete,
+  .import-row:focus-within .import-row-delete {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+@media (hover: none) {
+  .import-row-delete {
+    opacity: 1;
+    pointer-events: auto;
+  }
 }

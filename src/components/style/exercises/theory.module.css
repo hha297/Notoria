@@ -145,10 +145,14 @@
 }
 
 .theory-lesson-prose table {
-  width: 100%;
+  display: block;
+  width: max-content;
+  max-width: 100%;
+  overflow-x: auto;
   border-collapse: collapse;
   font-size: 0.95rem;
   line-height: 1.5;
+  -webkit-overflow-scrolling: touch;
 }
 
 .theory-lesson-prose th,
@@ -197,6 +201,33 @@
   isolation: isolate;
   overflow: visible;
   background: none;
+}
+
+@media (max-width: 639px) {
+  /*
+    overflow-x:hidden makes overflow-y compute to auto; combined with the
+    negative-inset ::before wash that inflated scroll height (dead space after reveal).
+    Clip horizontally without creating a scrollport; keep wash inside the box.
+  */
+  .theory-library-hero,
+  .theory-zone-hero,
+  .theory-zone-idea,
+  .theory-zone-examples,
+  .theory-zone-insight,
+  .theory-zone-practice,
+  .theory-practice-stage {
+    overflow: visible;
+  }
+
+  .theory-library-hero::before,
+  .theory-zone-hero::before,
+  .theory-zone-idea::before,
+  .theory-zone-examples::before,
+  .theory-zone-insight::before,
+  .theory-zone-practice::before,
+  .theory-practice-stage::before {
+    inset: 0;
+  }
 }
 
 .theory-library-hero > *:not(.theory-decor),

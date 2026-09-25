@@ -23,10 +23,10 @@ const RATING_OPTIONS: Array<{
 
 const TONE_CLASS: Record<(typeof RATING_OPTIONS)[number]["tone"], string> = {
   again:
-    "border-error/25 bg-background text-error hover:border-error hover:bg-error-muted",
-  hard: "border-warning/30 bg-background text-warning hover:border-warning hover:bg-warning/10",
-  good: "border-transparent bg-primary text-on-primary hover:bg-primary-hover",
-  easy: "border-success/30 bg-background text-success hover:border-success hover:bg-success-muted",
+    "border-error/25 text-error hover:border-error hover:bg-error-muted",
+  hard: "border-warning/30 text-warning hover:border-warning hover:bg-warning/10",
+  good: "border-transparent",
+  easy: "border-success/30 text-success hover:border-success hover:bg-success-muted",
 };
 
 export function FlashcardRatingBar({

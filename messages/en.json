@@ -165,6 +165,7 @@
   },
   "header": {
     "createWorkspace": "Create workspace",
+    "createWorkspaceHint": "Add another language workspace",
     "switchWorkspace": "Switch workspace",
     "switchFailed": "Could not switch workspace"
   },

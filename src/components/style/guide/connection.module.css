@@ -4,8 +4,15 @@
   gap: 0.35rem;
   border-radius: 0.95rem;
   border: 1px solid
-    color-mix(in oklab, var(--module-guide-fg) 16%, var(--hairline-cloud));
-  background: color-mix(in oklab, var(--surface-elevated) 42%, transparent);
+    color-mix(in oklab, var(--module-guide-fg) 24%, var(--hairline-cloud));
+  background-color: var(--surface-elevated);
+  background-image:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-guide-bg) 58%, var(--surface-elevated)),
+      color-mix(in oklab, var(--module-guide-bg) 28%, var(--surface-elevated)) 72%,
+      var(--surface-elevated)
+    );
   padding: 1.1rem;
 }
 
@@ -24,65 +31,101 @@
   text-align: center;
   font-size: 0.95rem;
   font-weight: 650;
-  background: color-mix(in oklab, var(--module-guide-bg) 48%, transparent);
+  background: color-mix(
+    in oklab,
+    var(--module-guide-bg) 58%,
+    var(--surface-elevated)
+  );
   color: var(--ink);
 }
 
 .stage[data-connection-tint="vocab"] {
-  background: color-mix(in oklab, var(--module-vocab-bg) 78%, transparent);
+  background: color-mix(
+    in oklab,
+    var(--module-vocab-bg) 72%,
+    var(--surface-elevated)
+  );
   color: var(--module-vocab-fg);
 }
 
 .stage[data-connection-tint="vocab-theory"] {
   background: linear-gradient(
     105deg,
-    color-mix(in oklab, var(--module-vocab-bg) 88%, transparent),
-    color-mix(in oklab, var(--module-theory-bg) 88%, transparent)
+    color-mix(in oklab, var(--module-vocab-bg) 78%, var(--surface-elevated)),
+    color-mix(in oklab, var(--module-theory-bg) 78%, var(--surface-elevated))
   );
   color: var(--module-vocab-fg);
 }
 
 .stage[data-connection-tint="exercise"] {
-  background: color-mix(in oklab, var(--module-exercise-bg) 78%, transparent);
+  background: color-mix(
+    in oklab,
+    var(--module-exercise-bg) 72%,
+    var(--surface-elevated)
+  );
   color: var(--module-exercise-fg);
 }
 
 .stage[data-connection-tint="writing"] {
-  background: color-mix(in oklab, var(--module-writing-bg) 78%, transparent);
+  background: color-mix(
+    in oklab,
+    var(--module-writing-bg) 72%,
+    var(--surface-elevated)
+  );
   color: var(--module-writing-fg);
 }
 
 .stage[data-connection-tint="writing-listen"] {
   background: linear-gradient(
     105deg,
-    color-mix(in oklab, var(--module-writing-bg) 88%, transparent),
-    color-mix(in oklab, var(--module-listen-bg) 88%, transparent)
+    color-mix(in oklab, var(--module-writing-bg) 78%, var(--surface-elevated)),
+    color-mix(in oklab, var(--module-listen-bg) 78%, var(--surface-elevated))
   );
   color: var(--module-writing-fg);
 }
 
 .stage[data-connection-tint="listen"] {
-  background: color-mix(in oklab, var(--module-listen-bg) 78%, transparent);
+  background: color-mix(
+    in oklab,
+    var(--module-listen-bg) 72%,
+    var(--surface-elevated)
+  );
   color: var(--module-listen-fg);
 }
 
 .stage[data-connection-tint="speak"] {
-  background: color-mix(in oklab, var(--module-speak-bg) 78%, transparent);
+  background: color-mix(
+    in oklab,
+    var(--module-speak-bg) 72%,
+    var(--surface-elevated)
+  );
   color: var(--module-speak-fg);
 }
 
 .stage[data-connection-tint="theory"] {
-  background: color-mix(in oklab, var(--module-theory-bg) 78%, transparent);
+  background: color-mix(
+    in oklab,
+    var(--module-theory-bg) 72%,
+    var(--surface-elevated)
+  );
   color: var(--module-theory-fg);
 }
 
 .stage[data-connection-tint="home"] {
-  background: color-mix(in oklab, var(--module-home-bg) 78%, transparent);
+  background: color-mix(
+    in oklab,
+    var(--module-home-bg) 72%,
+    var(--surface-elevated)
+  );
   color: var(--module-home-fg);
 }
 
 .stage[data-connection-tint="guide"] {
-  background: color-mix(in oklab, var(--module-guide-bg) 78%, transparent);
+  background: color-mix(
+    in oklab,
+    var(--module-guide-bg) 72%,
+    var(--surface-elevated)
+  );
   color: var(--module-guide-fg);
 }
 

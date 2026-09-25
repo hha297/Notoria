@@ -51,13 +51,14 @@ export function LocaleSelector({ value }: LocaleSelectorProps) {
   }
 
   return (
-    <div className="flex min-w-0 items-center gap-2">
+    <div className="shrink-0">
       <Select value={value} onValueChange={handleChange} disabled={isPending}>
         <SelectTrigger
-          className="h-10 w-[8.5rem] min-w-0 bg-surface-elevated sm:w-auto sm:min-w-[148px]"
+          aria-label={LOCALE_META[value].label}
+          className="control-surface h-10 w-auto shrink-0 px-2 sm:min-w-[148px] sm:px-2.5"
         >
           <SelectValue>
-            <LocaleOption locale={value} />
+            <LocaleOption locale={value} compact />
           </SelectValue>
         </SelectTrigger>
         <SelectContent>
@@ -74,12 +75,21 @@ export function LocaleSelector({ value }: LocaleSelectorProps) {
   );
 }
 
-function LocaleOption({ locale }: { locale: AppLocale }) {
+function LocaleOption({
+  locale,
+  compact = false,
+}: {
+  locale: AppLocale;
+  compact?: boolean;
+}) {
   const meta = LOCALE_META[locale];
   return (
     <span className="flex min-w-0 items-center gap-2">
       <CountryFlag code={meta.flag} className="h-3.5 w-5 shrink-0" />
-      <span className="truncate">{meta.label}</span>
+      {/* Compact trigger: flag only below sm — avoids “E.” truncation; menu always shows label */}
+      <span className={compact ? "hidden truncate sm:inline" : "truncate"}>
+        {meta.label}
+      </span>
     </span>
   );
 }

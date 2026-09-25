@@ -66,6 +66,19 @@
   display: flex;
   flex-direction: column;
   gap: 1.15rem;
+  min-height: 0;
+}
+
+@media (max-width: 639px) {
+  .export-sheet {
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .export-sheet-body {
+    overflow-y: visible;
+    max-height: none;
+  }
 }
 
 .export-sheet-section {

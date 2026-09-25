@@ -1,6 +1,6 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { useTranslations } from "next-intl";
 import {
   useLayoutEffect,
@@ -103,12 +103,12 @@ export function GettingStartedGuide() {
           <GuideBulletList items={t.raw("welcome.examples") as string[]} />
           <p className={mx(styles, "guide-body")}>{t("welcome.overTime")}</p>
           <GuideCallout variant="dark">
-            <p className={mx(styles, "guide-callout-title text-on-inverse")}>
+            <p className={mx(styles, "guide-callout-title")}>
               {t("welcome.noWrongWay.title")}
             </p>
             <GuideParagraphs
               className="mt-3"
-              tone="inverse"
+              tone="callout"
               items={t.raw("welcome.noWrongWay.paragraphs") as string[]}
             />
           </GuideCallout>
@@ -364,7 +364,7 @@ function GuideParagraphs({
 }: {
   items: string[];
   className?: string;
-  tone?: "default" | "inverse";
+  tone?: "default" | "callout";
 }) {
   return (
     <div className={cn("space-y-3", className)}>
@@ -373,8 +373,8 @@ function GuideParagraphs({
           key={paragraph}
           className={cn(
             "text-base leading-relaxed",
-            tone === "inverse"
-              ? "text-on-inverse-muted"
+            tone === "callout"
+              ? mx(styles, "guide-callout-muted")
               : "text-muted-foreground",
           )}
         >
@@ -439,8 +439,8 @@ function FlowDiagram({ stages }: { stages: string[] }) {
         <span key={stage} className={mx(styles, "guide-flow-item")}>
           <span className={mx(styles, "guide-flow-chip")}>{stage}</span>
           {index < stages.length - 1 ? (
-            <ArrowRight
-              className="size-3.5 shrink-0 text-on-inverse-muted"
+            <ArrowDown
+              className={mx(styles, "guide-flow-arrow size-3.5 shrink-0")}
               aria-hidden
             />
           ) : null}

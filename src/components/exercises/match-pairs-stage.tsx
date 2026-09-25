@@ -429,14 +429,14 @@ function MatchTile({
         !selected &&
         !wrong &&
         !pairing &&
-        "border-hairline-cloud bg-surface-elevated shadow-sm shadow-ink/4 hover:border-(--exercise-accent)/50 hover:bg-(--exercise-accent-soft)/55",
+        "border-hairline-cloud control-surface shadow-sm shadow-ink/4 hover:border-(--exercise-accent)/50 hover:bg-(--exercise-accent-soft)/55",
         pairing &&
         !wrong &&
-        "border-(--exercise-accent)/45 bg-surface-elevated shadow-sm shadow-ink/4 hover:border-(--exercise-accent) hover:bg-(--exercise-accent-soft)/80",
+        "border-(--exercise-accent)/45 control-surface shadow-sm shadow-ink/4 hover:border-(--exercise-accent) hover:bg-(--exercise-accent-soft)/80",
         selected &&
         !wrong &&
         "border-(--exercise-accent) bg-(--exercise-accent-soft) shadow-sm",
-        matched && "bg-surface-elevated text-muted-foreground",
+        matched && "control-surface text-muted-foreground",
         wrong && !reduceMotion && mx(featureStyles, "feedback-error exercise-shake"),
         wrong && reduceMotion && mx(featureStyles, "feedback-error"),
         idleMeaning && reduceMotion && "opacity-70",

@@ -188,6 +188,8 @@ function isActivePath(pathname: string, href: string, match: NavMatch) {
 type SidebarNavProps = SidebarUser & {
   workspaceId?: string;
   onNavigate?: () => void;
+  /** `drawer` fills the mobile sheet and pins the account block to the bottom. */
+  layout?: "panel" | "drawer";
 };
 
 export function SidebarNav({
@@ -198,12 +200,14 @@ export function SidebarNav({
   userImage,
   isPro,
   plan,
+  layout = "panel",
 }: SidebarNavProps) {
   const pathname = usePathname();
   const router = useRouter();
   const queryClient = useQueryClient();
   const t = useTranslations("nav");
   const { hasProAccess, openUpgrade } = useProAccess();
+  const isDrawer = layout === "drawer";
 
   function prefetchItem(href: string) {
     try {
@@ -215,83 +219,100 @@ export function SidebarNav({
   }
 
   return (
-    <div className="flex h-fit w-full flex-col">
-      <Link
-        href="/"
-        onClick={onNavigate}
-        onPointerEnter={() => prefetchItem("/")}
-        onFocus={() => prefetchItem("/")}
-        className="mb-3 flex items-center gap-2.5 rounded-lg px-2 py-1 outline-none hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring"
+    <div
+      className={cn(
+        "flex w-full flex-col",
+        isDrawer ? "h-full min-h-0" : "h-fit",
+      )}
+    >
+      <div
+        className={cn(
+          "flex min-h-0 flex-col",
+          isDrawer && "flex-1 overflow-y-auto overscroll-contain",
+        )}
       >
-        <Logo size="md" />
-        <LogoWordmark tone="ink" />
-      </Link>
+        <Link
+          href="/"
+          onClick={onNavigate}
+          onPointerEnter={() => prefetchItem("/")}
+          onFocus={() => prefetchItem("/")}
+          className="mb-3 flex items-center gap-2.5 rounded-lg px-2 py-1 outline-none hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring"
+        >
+          <Logo size="md" />
+          <LogoWordmark tone="ink" />
+        </Link>
 
-      {NAV_GROUPS.map((group, groupIndex) => (
-        <div key={group.id} className={cn(groupIndex > 0 && "mt-3")}>
-          <p className="px-2.5 pb-1.5 font-heading text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
-            {t(group.labelKey)}
-          </p>
-          <nav className="flex flex-col gap-0.5" aria-label={t(group.labelKey)}>
-            {group.items.map((item) => {
-              const Icon = item.icon;
-              const locked = Boolean(item.pro && !hasProAccess);
-              const active =
-                !locked && isActivePath(pathname, item.href, item.match);
-              const className = cn(
-                mx(navStyles, "nav-link", active && "is-active"),
-                locked && lockedFeatureClassName,
-              );
+        {NAV_GROUPS.map((group, groupIndex) => (
+          <div key={group.id} className={cn(groupIndex > 0 && "mt-3")}>
+            <p className="px-2.5 pb-1.5 font-heading text-[10px] font-semibold uppercase tracking-[0.16em] text-muted-foreground">
+              {t(group.labelKey)}
+            </p>
+            <nav className="flex flex-col gap-0.5" aria-label={t(group.labelKey)}>
+              {group.items.map((item) => {
+                const Icon = item.icon;
+                const locked = Boolean(item.pro && !hasProAccess);
+                const active =
+                  !locked && isActivePath(pathname, item.href, item.match);
+                const className = cn(
+                  mx(navStyles, "nav-link", active && "is-active"),
+                  locked && lockedFeatureClassName,
+                );
 
-              if (locked) {
+                if (locked) {
+                  return (
+                    <button
+                      key={item.href}
+                      type="button"
+                      data-nav={item.route}
+                      className={className}
+                      onClick={() => {
+                        onNavigate?.();
+                        openUpgrade();
+                      }}
+                    >
+                      <Lock
+                        className="nav-link-icon size-4 shrink-0 text-muted-foreground"
+                        aria-hidden
+                      />
+                      {t(item.key)}
+                    </button>
+                  );
+                }
+
                 return (
-                  <button
+                  <Link
                     key={item.href}
-                    type="button"
+                    href={item.href}
                     data-nav={item.route}
+                    onClick={onNavigate}
+                    onPointerEnter={() => prefetchItem(item.href)}
+                    onFocus={() => prefetchItem(item.href)}
+                    aria-current={active ? "page" : undefined}
                     className={className}
-                    onClick={() => {
-                      onNavigate?.();
-                      openUpgrade();
-                    }}
                   >
-                    <Lock
-                      className="nav-link-icon size-4 shrink-0 text-muted-foreground"
+                    <Icon
+                      className={cn(
+                        "nav-link-icon size-4 shrink-0",
+                        active ? undefined : item.tint,
+                      )}
                       aria-hidden
                     />
-                    {t(item.key)}
-                  </button>
+                    <span className="min-w-0 flex-1 truncate">{t(item.key)}</span>
+                    <LinkPendingIndicator />
+                  </Link>
                 );
-              }
+              })}
+            </nav>
+          </div>
+        ))}
+      </div>
 
-              return (
-                <Link
-                  key={item.href}
-                  href={item.href}
-                  data-nav={item.route}
-                  onClick={onNavigate}
-                  onPointerEnter={() => prefetchItem(item.href)}
-                  onFocus={() => prefetchItem(item.href)}
-                  aria-current={active ? "page" : undefined}
-                  className={className}
-                >
-                  <Icon
-                    className={cn(
-                      "nav-link-icon size-4 shrink-0",
-                      active ? undefined : item.tint,
-                    )}
-                    aria-hidden
-                  />
-                  <span className="min-w-0 flex-1 truncate">{t(item.key)}</span>
-                  <LinkPendingIndicator />
-                </Link>
-              );
-            })}
-          </nav>
-        </div>
-      ))}
-
-      <div className="mt-4 border-t border-hairline-cloud pt-3">
+      <div
+        className={cn(
+          "shrink-0 border-t border-hairline-cloud pt-3",
+          isDrawer ? "mt-auto" : "mt-4",
+        )}
+      >
         <SidebarProCta plan={plan} onNavigate={onNavigate} />
         <div className="mt-1">
           <UserButton

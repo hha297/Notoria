@@ -23,7 +23,6 @@ import {
 import styles from "@/components/style/inbox/inbox.module.css";
 import { mx } from "@/lib/css-module";
 import { processStudyInboxItem } from "@/lib/actions/study-inbox";
-import { cn } from "@/lib/utils";
 import type { StudyInboxProcessTarget } from "@/schemas/study-inbox";
 
 type InboxItemActionsProps = {
@@ -106,15 +105,11 @@ export function InboxItemActions({ id, status }: InboxItemActionsProps) {
             {t("process.keep")}
           </DropdownMenuItem>
         ) : null}
-        {status === "unprocessed" ? (
-          <DropdownMenuSeparator className={mx(styles, "inbox-process-separator")} />
-        ) : null}
+        {status === "unprocessed" ? <DropdownMenuSeparator /> : null}
         <DropdownMenuItem
           disabled={isPending}
-          className={cn(
-            mx(styles, "inbox-process-option"),
-            mx(styles, "inbox-process-delete"),
-          )}
+          variant="destructive"
+          className={mx(styles, "inbox-process-delete")}
           onClick={() => run("delete")}
         >
           <Trash2 className="size-4 shrink-0" />

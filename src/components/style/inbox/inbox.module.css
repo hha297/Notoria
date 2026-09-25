@@ -1,4 +1,4 @@
-/* Capture — atelier hero + list, toolbar, sort/process menus */
+/* Capture — opaque color-mix surfaces (no glass / transparent fills) */
 
 .inbox-shell {
   --writing-ink: var(--module-home-fg);
@@ -12,7 +12,7 @@
 .inbox-search-input {
   border: 0 !important;
   border-bottom: 1px solid
-    color-mix(in oklab, var(--module-home-fg) 42%, transparent) !important;
+    color-mix(in oklab, var(--module-home-fg) 42%, var(--hairline-cloud)) !important;
   border-radius: 0 !important;
   background: transparent !important;
   box-shadow: none !important;
@@ -45,8 +45,14 @@
   padding: 0.35rem;
   border-radius: 0.95rem;
   border: 1px solid
-    color-mix(in oklab, var(--module-home-fg) 20%, var(--hairline-cloud));
-  background: color-mix(in oklab, var(--module-home-bg) 40%, transparent);
+    color-mix(in oklab, var(--module-home-fg) 22%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-home-bg) 58%, var(--surface-elevated)),
+      var(--surface-elevated) 72%
+    ),
+    var(--surface-elevated);
   width: fit-content;
   max-width: 100%;
 }
@@ -72,12 +78,17 @@
 
 .inbox-tab:hover {
   color: var(--ink);
-  background: color-mix(in oklab, var(--module-home-bg) 55%, transparent);
+  background: color-mix(in oklab, var(--module-home-bg) 62%, var(--surface-elevated));
 }
 
 .inbox-tab[data-active] {
-  border-color: color-mix(in oklab, var(--module-home-fg) 34%, transparent);
-  background: color-mix(in oklab, var(--module-home-bg) 78%, transparent);
+  border-color: color-mix(in oklab, var(--module-home-fg) 38%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-home-bg) 78%, var(--surface-elevated)),
+      color-mix(in oklab, var(--module-home-bg) 42%, var(--surface-elevated)) 100%
+    );
   color: var(--module-home-fg);
 }
 
@@ -91,8 +102,12 @@
   border-radius: 999px;
   font-size: 0.75rem;
   font-weight: 700;
-  background: color-mix(in oklab, var(--module-home-fg) 14%, transparent);
+  background: color-mix(in oklab, var(--module-home-fg) 16%, var(--surface-elevated));
   color: inherit;
+}
+
+.inbox-tab[data-active] .inbox-tab-count {
+  background: color-mix(in oklab, var(--module-home-fg) 22%, var(--module-home-bg));
 }
 
 .inbox-tools {
@@ -111,118 +126,94 @@
   flex: 0 0 auto;
 }
 
+/* Match shared Select / locale / workspace controls */
 .inbox-sort-trigger {
-  --inbox-accent: var(--module-home-fg);
-  display: inline-flex !important;
-  height: 2.65rem !important;
-  min-width: 13.5rem !important;
-  width: auto !important;
-  gap: 0.55rem !important;
-  border-radius: 0.75rem !important;
-  border: 1px solid
-    color-mix(in oklab, var(--inbox-accent) 28%, var(--hairline-cloud)) !important;
-  background:
-    linear-gradient(
-      160deg,
-      color-mix(in oklab, var(--module-home-bg) 55%, transparent),
-      transparent 70%
-    ),
-    color-mix(in oklab, var(--surface-elevated) 88%, transparent) !important;
-  padding: 0.55rem 0.8rem !important;
-  color: var(--ink) !important;
-  font-size: 0.9375rem !important;
-  font-weight: 600 !important;
-  box-shadow: 0 1px 0 color-mix(in oklab, var(--inbox-accent) 8%, transparent);
-}
-
-.inbox-sort-trigger:hover,
-.inbox-sort-trigger[data-popup-open],
-.inbox-sort-trigger[data-state="open"] {
-  border-color: color-mix(in oklab, var(--inbox-accent) 52%, transparent) !important;
-  background: color-mix(in oklab, var(--module-home-bg) 62%, transparent) !important;
+  min-width: min(13.5rem, 100%);
+  max-width: 100%;
+  width: auto;
+  font-weight: 600;
 }
 
 .inbox-sort-menu {
-  width: auto !important;
-  min-width: 14.5rem !important;
-  padding: 0.5rem !important;
-  border-radius: 0.95rem !important;
+  min-width: 14rem;
+  padding: 0.4rem !important;
+  border-radius: 0.75rem !important;
   border: 1px solid
-    color-mix(in oklab, var(--module-home-fg) 20%, var(--hairline-cloud)) !important;
-  background:
-    radial-gradient(
-      ellipse 70% 55% at 8% 0%,
-      color-mix(in oklab, var(--module-home-bg) 48%, transparent),
-      transparent 72%
+    color-mix(in oklab, var(--module-home-fg) 28%, var(--hairline-cloud)) !important;
+  background-color: color-mix(
+    in oklab,
+    var(--module-home-bg) 58%,
+    var(--popover)
+  ) !important;
+  background-image:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-home-bg) 78%, var(--popover)),
+      color-mix(in oklab, var(--module-home-bg) 42%, var(--popover)) 58%,
+      color-mix(in oklab, var(--module-home-bg) 28%, var(--popover))
     ),
-    var(--popover) !important;
-  box-shadow:
-    0 18px 40px color-mix(in oklab, var(--ink) 14%, transparent),
-    0 0 0 1px color-mix(in oklab, var(--module-home-fg) 8%, transparent) !important;
+    linear-gradient(
+      color-mix(in oklab, var(--module-home-bg) 58%, var(--popover)),
+      color-mix(in oklab, var(--module-home-bg) 58%, var(--popover))
+    ) !important;
+  box-shadow: none !important;
 }
 
 .inbox-sort-option {
-  --option-accent: var(--module-home-fg);
-  display: flex !important;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.65rem;
-  min-height: 2.55rem;
-  margin: 0 0 0.3rem !important;
-  border-radius: 0.7rem !important;
-  border: 1px solid
-    color-mix(in oklab, var(--option-accent) 16%, transparent);
-  background: color-mix(in oklab, var(--option-accent) 8%, transparent);
-  padding: 0.55rem 0.7rem !important;
-  color: var(--ink) !important;
-  font-size: 0.9375rem !important;
-  font-weight: 550 !important;
+  border: 1px solid transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  margin: 0.12rem 0;
   transition:
-    border-color 0.15s ease,
-    background 0.15s ease;
-}
-
-.inbox-sort-option:last-child {
-  margin-bottom: 0 !important;
+    border-color 140ms ease,
+    background-color 140ms ease,
+    background-image 140ms ease;
 }
 
 .inbox-sort-option:hover,
 .inbox-sort-option:focus,
 .inbox-sort-option:focus-visible,
 .inbox-sort-option[data-highlighted] {
-  border-color: color-mix(in oklab, var(--option-accent) 42%, transparent) !important;
-  background: color-mix(in oklab, var(--option-accent) 18%, transparent) !important;
+  border-color: color-mix(
+    in oklab,
+    var(--module-home-fg) 44%,
+    var(--hairline-cloud)
+  ) !important;
+  background-color: color-mix(
+    in oklab,
+    var(--module-home-bg) 72%,
+    var(--popover)
+  ) !important;
+  background-image:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-home-bg) 88%, var(--popover)),
+      color-mix(in oklab, var(--module-home-bg) 55%, var(--popover))
+    ) !important;
   color: var(--ink) !important;
 }
 
-.inbox-sort-option[data-selected] {
-  border-color: color-mix(in oklab, var(--option-accent) 52%, transparent) !important;
-  background: color-mix(in oklab, var(--option-accent) 20%, transparent) !important;
+.inbox-sort-option[data-selected],
+.inbox-sort-option[aria-selected="true"] {
+  border-color: color-mix(
+    in oklab,
+    var(--module-home-fg) 48%,
+    var(--hairline-cloud)
+  ) !important;
+  background-color: color-mix(
+    in oklab,
+    var(--module-home-bg) 68%,
+    var(--popover)
+  ) !important;
+  background-image:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-home-bg) 82%, var(--popover)),
+      color-mix(in oklab, var(--module-home-bg) 48%, var(--popover))
+    ) !important;
+  color: var(--module-home-fg) !important;
 }
 
-.inbox-sort-option :global([data-slot="select-item"] span.absolute),
-.inbox-sort-option:global(span.absolute) {
-  display: none !important;
-}
-
-.inbox-sort-option-label {
-  flex: 1;
-  min-width: 0;
-  text-align: left;
-}
-
-.inbox-sort-option-check {
-  width: 1rem;
-  height: 1rem;
-  flex-shrink: 0;
-  color: var(--option-accent);
-}
-
-.inbox-sort-option-spacer {
-  width: 1rem;
-  height: 1rem;
-  flex-shrink: 0;
-}
 .inbox-list {
   display: flex;
   flex-direction: column;
@@ -239,32 +230,32 @@
   border: 1px solid
     color-mix(in oklab, var(--inbox-accent) 26%, var(--hairline-cloud));
   background:
-    radial-gradient(
-      ellipse 72% 62% at 0% 0%,
-      color-mix(in oklab, var(--inbox-wash) 58%, transparent),
-      transparent 74%
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--inbox-wash) 62%, var(--surface-elevated)),
+      var(--surface-elevated) 74%
     ),
-    color-mix(in oklab, var(--surface-elevated) 94%, transparent);
+    var(--surface-elevated);
   padding: 1.15rem 1.2rem;
-  box-shadow:
-    0 1px 0 color-mix(in oklab, var(--inbox-accent) 10%, transparent),
-    0 10px 24px color-mix(in oklab, var(--ink) 4%, transparent);
   transition:
     border-color 160ms ease,
-    background 160ms ease,
-    box-shadow 160ms ease;
+    background 160ms ease;
 }
 
 .inbox-card:hover {
   border-color: color-mix(in oklab, var(--inbox-accent) 40%, var(--hairline-cloud));
-  box-shadow:
-    0 1px 0 color-mix(in oklab, var(--inbox-accent) 12%, transparent),
-    0 14px 28px color-mix(in oklab, var(--ink) 6%, transparent);
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--inbox-wash) 72%, var(--surface-elevated)),
+      var(--surface-elevated) 74%
+    ),
+    var(--surface-elevated);
 }
 
 .inbox-card[data-status="processed"] {
   --inbox-accent: color-mix(in oklab, var(--muted-foreground) 70%, var(--module-home-fg));
-  opacity: 0.92;
+  --inbox-wash: color-mix(in oklab, var(--surface-muted) 55%, var(--module-home-bg));
 }
 
 .inbox-card-row {
@@ -315,8 +306,8 @@
   padding: 0.15rem 0.5rem;
   border-radius: 999px;
   border: 1px solid
-    color-mix(in oklab, var(--module-home-fg) 22%, transparent);
-  background: color-mix(in oklab, var(--module-home-bg) 55%, transparent);
+    color-mix(in oklab, var(--module-home-fg) 24%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-home-bg) 70%, var(--surface-elevated));
   color: var(--module-home-fg);
   font-size: 0.72rem;
   font-weight: 650;
@@ -332,12 +323,12 @@
   border: 1px dashed
     color-mix(in oklab, var(--module-home-fg) 28%, var(--hairline-cloud));
   background:
-    radial-gradient(
-      ellipse 70% 60% at 0% 0%,
-      color-mix(in oklab, var(--module-home-bg) 42%, transparent),
-      transparent 72%
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-home-bg) 48%, var(--surface-elevated)),
+      var(--surface-elevated) 72%
     ),
-    color-mix(in oklab, var(--surface-elevated) 50%, transparent);
+    var(--surface-elevated);
 }
 
 .inbox-empty-icon {
@@ -347,7 +338,7 @@
   width: 2.75rem;
   height: 2.75rem;
   border-radius: 0.8rem;
-  background: color-mix(in oklab, var(--module-home-bg) 70%, transparent);
+  background: color-mix(in oklab, var(--module-home-bg) 72%, var(--surface-elevated));
   color: var(--module-home-fg);
 }
 
@@ -368,37 +359,39 @@
   color: var(--muted-foreground);
 }
 
+/* Match workspace / writing row menus: control trigger + flat menu items */
 .inbox-process-trigger {
-  --inbox-accent: var(--module-home-fg);
   display: inline-flex;
   align-items: center;
   justify-content: center;
   width: 2.25rem;
   height: 2.25rem;
-  border-radius: 0.7rem;
-  border: 1px solid
-    color-mix(in oklab, var(--inbox-accent) 30%, var(--hairline-cloud));
-  background: color-mix(in oklab, var(--module-home-bg) 48%, transparent);
-  color: var(--inbox-accent);
+  border-radius: var(--radius);
+  border: 1px solid var(--hairline-cloud);
+  background-color: var(--surface-elevated);
+  background-image: var(--control-surface);
+  color: var(--muted-foreground);
   cursor: pointer;
   outline: none;
   transition:
     border-color 150ms ease,
-    background 150ms ease,
+    background-image 150ms ease,
     color 150ms ease;
 }
 
 .inbox-process-trigger:hover:not(:disabled),
 .inbox-process-trigger[data-popup-open],
 .inbox-process-trigger[data-state="open"] {
-  border-color: color-mix(in oklab, var(--inbox-accent) 55%, transparent);
-  background: color-mix(in oklab, var(--module-home-bg) 78%, transparent);
-  color: var(--inbox-accent);
+  border-color: color-mix(in oklab, var(--module-home-fg) 28%, var(--hairline-cloud));
+  background-image: var(--control-surface-hover);
+  color: var(--ink);
 }
 
 .inbox-process-trigger:focus-visible {
-  border-color: color-mix(in oklab, var(--inbox-accent) 60%, transparent);
-  box-shadow: 0 0 0 2px color-mix(in oklab, var(--inbox-accent) 22%, transparent);
+  border-color: color-mix(in oklab, var(--module-home-fg) 45%, var(--hairline-cloud));
+  outline: 2px solid
+    color-mix(in oklab, var(--module-home-fg) 35%, var(--surface-elevated));
+  outline-offset: 1px;
 }
 
 .inbox-process-trigger:disabled {
@@ -407,73 +400,80 @@
 }
 
 .inbox-process-menu {
-  width: auto !important;
-  min-width: 15.5rem !important;
-  padding: 0.55rem !important;
-  border-radius: 1rem !important;
+  min-width: 12.5rem;
   border: 1px solid
-    color-mix(in oklab, var(--module-home-fg) 20%, var(--hairline-cloud)) !important;
-  background:
-    radial-gradient(
-      ellipse 70% 55% at 8% 0%,
-      color-mix(in oklab, var(--module-home-bg) 48%, transparent),
-      transparent 72%
+    color-mix(in oklab, var(--module-home-fg) 28%, var(--hairline-cloud)) !important;
+  background-color: color-mix(
+    in oklab,
+    var(--module-home-bg) 58%,
+    var(--popover)
+  ) !important;
+  background-image:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-home-bg) 78%, var(--popover)),
+      color-mix(in oklab, var(--module-home-bg) 42%, var(--popover)) 58%,
+      color-mix(in oklab, var(--module-home-bg) 28%, var(--popover))
     ),
-    var(--popover) !important;
-  box-shadow:
-    0 18px 40px color-mix(in oklab, var(--ink) 14%, transparent),
-    0 0 0 1px color-mix(in oklab, var(--module-home-fg) 8%, transparent) !important;
+    linear-gradient(
+      color-mix(in oklab, var(--module-home-bg) 58%, var(--popover)),
+      color-mix(in oklab, var(--module-home-bg) 58%, var(--popover))
+    ) !important;
+  box-shadow: none !important;
 }
 
 .inbox-process-option {
   --option-accent: var(--module-home-fg);
-  display: flex !important;
-  align-items: center;
-  gap: 0.65rem;
-  min-height: 2.65rem;
-  margin: 0 0 0.35rem !important;
-  border-radius: 0.75rem !important;
-  border: 1px solid
-    color-mix(in oklab, var(--option-accent) 18%, transparent);
-  background: color-mix(in oklab, var(--option-accent) 10%, transparent);
-  padding: 0.65rem 0.8rem !important;
-  color: var(--ink) !important;
-  font-size: 0.9375rem !important;
+  --option-wash: var(--module-home-bg);
+  border: 1px solid transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  margin: 0.1rem 0;
   transition:
-    border-color 0.15s ease,
-    background 0.15s ease;
-}
-
-.inbox-process-option:last-of-type {
-  margin-bottom: 0 !important;
+    border-color 140ms ease,
+    background-color 140ms ease;
 }
 
 .inbox-process-option[data-target="vocabulary"] {
   --option-accent: var(--module-vocab-fg);
+  --option-wash: var(--module-vocab-bg);
 }
 
 .inbox-process-option[data-target="theory"] {
   --option-accent: var(--module-theory-fg);
+  --option-wash: var(--module-theory-bg);
 }
 
 .inbox-process-option[data-target="writing"] {
   --option-accent: var(--module-writing-fg);
+  --option-wash: var(--module-writing-bg);
 }
 
 .inbox-process-option[data-target="exercise"] {
   --option-accent: var(--module-exercise-fg);
+  --option-wash: var(--module-exercise-bg);
 }
 
 .inbox-process-option[data-target="keep"] {
   --option-accent: var(--module-home-fg);
+  --option-wash: var(--module-home-bg);
 }
 
 .inbox-process-option:hover,
 .inbox-process-option:focus,
 .inbox-process-option:focus-visible,
 .inbox-process-option[data-highlighted] {
-  border-color: color-mix(in oklab, var(--option-accent) 42%, transparent) !important;
-  background: color-mix(in oklab, var(--option-accent) 18%, transparent) !important;
+  border-color: color-mix(
+    in oklab,
+    var(--option-accent) 42%,
+    var(--hairline-cloud)
+  ) !important;
+  background-color: color-mix(
+    in oklab,
+    var(--option-wash) 62%,
+    var(--popover)
+  ) !important;
+  background-image: none !important;
   color: var(--ink) !important;
 }
 
@@ -481,29 +481,32 @@
   color: var(--option-accent);
 }
 
-.inbox-process-separator {
-  margin: 0.55rem 0.15rem 0.45rem !important;
-  background: color-mix(in oklab, var(--module-home-fg) 16%, var(--hairline-cloud)) !important;
-}
-
 .inbox-process-delete {
-  margin-top: 0 !important;
-  border-color: color-mix(in oklab, var(--destructive) 28%, transparent) !important;
-  background: color-mix(in oklab, var(--destructive) 10%, transparent) !important;
-  color: var(--destructive) !important;
+  border: 1px solid transparent !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  margin: 0.1rem 0;
+  transition:
+    border-color 140ms ease,
+    background-color 140ms ease;
 }
 
 .inbox-process-delete:hover,
 .inbox-process-delete:focus,
 .inbox-process-delete:focus-visible,
 .inbox-process-delete[data-highlighted] {
-  border-color: color-mix(in oklab, var(--destructive) 48%, transparent) !important;
-  background: color-mix(in oklab, var(--destructive) 18%, transparent) !important;
+  border-color: color-mix(
+    in oklab,
+    var(--destructive) 45%,
+    var(--hairline-cloud)
+  ) !important;
+  background-color: color-mix(
+    in oklab,
+    var(--destructive) 16%,
+    var(--popover)
+  ) !important;
+  background-image: none !important;
   color: var(--destructive) !important;
-}
-
-.inbox-process-delete :global(svg) {
-  color: inherit;
 }
 
 @media (min-width: 720px) {

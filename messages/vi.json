@@ -165,6 +165,7 @@
   },
   "header": {
     "createWorkspace": "Tạo không gian học",
+    "createWorkspaceHint": "Thêm không gian học cho ngôn ngữ khác",
     "switchWorkspace": "Đổi không gian học",
     "switchFailed": "Không đổi được không gian học. Thử lại nhé."
   },

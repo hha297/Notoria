@@ -76,7 +76,7 @@ export function FlashcardCard({
               ? { duration: 0 }
               : { duration: 0.52, ease: [0.22, 1, 0.36, 1] }
           }
-          className="relative h-[min(48dvh,21rem)] w-full cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-ring/50 sm:h-[min(52dvh,26rem)] md:h-[min(56dvh,30rem)]"
+          className="relative h-[min(38dvh,17rem)] w-full cursor-pointer outline-none focus-visible:ring-2 focus-visible:ring-ring/50 sm:h-[min(52dvh,26rem)] md:h-[min(56dvh,30rem)]"
           style={{ transformStyle: "preserve-3d" }}
         >
           <div

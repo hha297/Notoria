@@ -189,7 +189,7 @@ export function GuidedSectionTutorial({
         transition={{ duration: 0.22, ease: EASE }}
         className={mx(
           styles,
-          "tutorial-sheet fixed z-[191] w-[min(100vw-2rem,24rem)]",
+          "tutorial-sheet fixed z-[191] w-[min(100dvw-2rem,24rem)] max-w-[calc(100%-1rem)]",
           guided ? "" : "max-w-md",
         )}
         style={{ top: position.top, left: position.left }}

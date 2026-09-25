@@ -69,6 +69,12 @@
   z-index: 1;
 }
 
+@media (max-width: 639px) {
+  .activity-module::before {
+    inset: 0;
+  }
+}
+
 .exercise-caret {
   animation: exercise-caret 1.1s steps(1) infinite;
 }
