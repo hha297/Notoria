@@ -20,13 +20,66 @@ describe("plan comparison metadata", () => {
   it("keeps lightweight AI unlimited on paid plans", () => {
     const writing = getPlanComparisonRows().find((row) => row.id === "ai_writing");
     expect(writing?.nameKey).toBe("aiWritingSupport");
+    expect(writing?.category).toBe("ai");
     expect(writing?.cells.pro).toEqual({ kind: "unlimited" });
     expect(writing?.cells.premium).toEqual({ kind: "unlimited" });
     const listening = getPlanComparisonRows().find(
       (row) => row.id === "ai_listening_transcript",
     );
+    expect(listening?.category).toBe("ai");
     expect(listening?.cells.pro).toEqual({ kind: "quota", limit: 10 });
     expect(listening?.cells.premium).toEqual({ kind: "unlimited" });
+  });
+
+  it("meters content import from the plan SoT", () => {
+    const importRow = getPlanComparisonRows().find(
+      (row) => row.id === "content_import",
+    );
+    expect(importRow?.category).toBe("export");
+    expect(importRow?.nameKey).toBe("importLearningMaterial");
+    expect(importRow?.cells.free).toEqual({ kind: "unavailable" });
+    expect(importRow?.cells.pro).toEqual({ kind: "unlimited" });
+    expect(importRow?.cells.premium).toEqual({ kind: "unlimited" });
+  });
+
+  it("meters AI practice from worksheets separately from AI exercise generation", () => {
+    const practice = getPlanComparisonRows().find(
+      (row) => row.id === "ai_exercise_import",
+    );
+    const aiExercise = getPlanComparisonRows().find(
+      (row) => row.id === "ai_exercise",
+    );
+    expect(practice?.category).toBe("ai");
+    expect(practice?.nameKey).toBe("aiPracticeFromMaterial");
+    expect(practice?.cells.free).toEqual({ kind: "unavailable" });
+    expect(practice?.cells.pro).toEqual({ kind: "quota", limit: 10 });
+    expect(practice?.cells.premium).toEqual({ kind: "unlimited" });
+    expect(aiExercise?.cells.free).toEqual({
+      kind: "quota",
+      limit: FREE_DAILY_QUOTAS.ai_exercise,
+    });
+    expect(aiExercise?.cells.pro).toEqual({ kind: "unlimited" });
+  });
+
+  it("groups import with export under one category", () => {
+    const exportRows = getPlanComparisonRows().filter(
+      (row) => row.category === "export",
+    );
+    expect(exportRows.map((row) => row.id)).toEqual([
+      "content_import",
+      "pdf_export",
+    ]);
+    expect(exportRows[0]?.cells).toEqual({
+      free: { kind: "unavailable" },
+      pro: { kind: "unlimited" },
+      premium: { kind: "unlimited" },
+    });
+    expect(exportRows[1]?.nameKey).toBe("exportLearningMaterial");
+    expect(exportRows[1]?.cells).toEqual({
+      free: { kind: "unavailable" },
+      pro: { kind: "unlimited" },
+      premium: { kind: "unlimited" },
+    });
   });
 
   it("does not duplicate AI Speaking Tutor as a second boolean row", () => {

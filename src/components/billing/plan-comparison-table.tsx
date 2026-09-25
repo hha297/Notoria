@@ -94,10 +94,11 @@ export function PlanComparisonTable({
                     </th>
                     {plans.map((plan) => {
                       const cell = row.cells[plan];
+                      const quotaKey = row.quotaLabelId ?? row.id;
                       const text =
                         cell.kind === "quota"
                           ? t(
-                              `cell.quotaPerDay.${row.id}` as "cell.quotaPerDay.ai_meeting",
+                              `cell.quotaPerDay.${quotaKey}` as "cell.quotaPerDay.ai_meeting",
                               { count: cell.limit },
                             )
                           : formatPlanCell(cell, labels);

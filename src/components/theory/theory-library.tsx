@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
-import { Clock, Plus, Search } from "lucide-react";
+import { Clock, Plus, Search, Upload } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
 import { PageShell } from "@/components/layout/page-shell";
@@ -17,8 +17,10 @@ import { TheoryListLoading } from "@/components/theory/theory-loading";
 import { TheoryRowActions } from "@/components/theory/theory-row-actions";
 import { DescriptionContent } from "@/components/form/description-content";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
+import { ContentImportDialog } from "@/components/content-import/content-import-dialog";
 import { useQuery } from "@tanstack/react-query";
 import { sectionCreateHref } from "@/lib/folders/paths";
 import { childrenOf, folderMatchesQuery, itemsInFolder } from "@/lib/folders/tree";
@@ -68,9 +70,11 @@ export function TheoryLibrary({
 }: TheoryLibraryProps) {
   const router = useRouter();
   const t = useTranslations("theory");
+  const tImport = useTranslations("contentImport");
   const tFolders = useTranslations("folders");
   const [search, setSearch] = useState("");
   const [categories, setCategories] = useState<MultiFilterValue>([]);
+  const [importOpen, setImportOpen] = useState(false);
   const createHref = sectionCreateHref("theory", currentFolderId);
   const notesQuery = useQuery(theoryListQueryOptions(workspaceId));
   const foldersQuery = useQuery(folderListQueryOptions(workspaceId, "theory"));
@@ -149,6 +153,16 @@ export function TheoryLibrary({
   const actions = (
     <>
       <ShowTutorialButton section="theory" />
+      <Button
+        type="button"
+        variant="outline"
+        className="route-quiet-action"
+        data-route-action="theory"
+        onClick={() => setImportOpen(true)}
+      >
+        <Upload className="size-4" />
+        {tImport("button")}
+      </Button>
       <LinkButton href={createHref} data-tutorial="theory-add-note">
         <Plus className="size-4" />
         {isEmptyRoot ? t("createFirst") : t("create")}
@@ -179,6 +193,17 @@ export function TheoryLibrary({
                 <>
                   <ShowTutorialButton section="theory" />
                   <NewFolderButton variant="outline" size="sm" />
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="sm"
+                    className="route-quiet-action"
+                    data-route-action="theory"
+                    onClick={() => setImportOpen(true)}
+                  >
+                    <Upload className="size-4" />
+                    {tImport("button")}
+                  </Button>
                   <LinkButton href={createHref} data-tutorial="theory-add-note">
                     <Plus className="size-4" />
                     {t("createFirst")}
@@ -292,6 +317,13 @@ export function TheoryLibrary({
           )}
         </div>
       </FolderWorkspace>
+
+      <ContentImportDialog
+        open={importOpen}
+        onOpenChange={setImportOpen}
+        target="theory"
+        workspaceId={workspaceId}
+      />
     </PageShell>
   );
 }

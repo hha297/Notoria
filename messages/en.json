@@ -16,6 +16,87 @@
     "filters": "Filters",
     "hideFilters": "Hide filters"
   },
+  "contentImport": {
+    "title": {
+      "vocabulary": "Import vocabulary",
+      "writing": "Import writing",
+      "theory": "Import theory"
+    },
+    "description": {
+      "vocabulary": "Upload a CSV, PDF, or DOCX. We'll map columns before anything is saved.",
+      "writing": "Upload notes or a CSV of documents. Preview first, then confirm.",
+      "theory": "Upload theory notes or a CSV. Preview first, then confirm."
+    },
+    "guidance": "Don't know the required format? That's okay. Upload your file and we'll try to understand its structure before importing anything.",
+    "dropzone": "Drop a file here or click to browse",
+    "formats": "CSV, PDF, DOCX, or TXT · max 10 MB",
+    "downloadTemplate": "Need a starting point? Download a template",
+    "quota": {
+      "free": "File import is available on Pro and Premium.",
+      "pro": "Pro and Premium: unlimited imports.",
+      "premium": "Premium: unlimited imports."
+    },
+    "fields": {
+      "word": "Word",
+      "meaning": "Meaning",
+      "partOfSpeech": "Part of speech",
+      "example": "Example",
+      "tags": "Tags",
+      "notes": "Notes",
+      "title": "Title",
+      "content": "Content",
+      "category": "Category",
+      "ignore": "Don't import"
+    },
+    "preview": {
+      "summary": "{ready} ready to import · {issues} need attention",
+      "mappingTitle": "Column mapping",
+      "yourColumn": "Your column",
+      "notoriaField": "Notoria field",
+      "missingRequired": "Map the required fields before importing.",
+      "unmapped": "Not used: {columns}",
+      "issuesTitle": "{count} rows need attention",
+      "issueRow": "Row {row}:",
+      "skipHint": "Rows with problems will be skipped. Ready rows will still import.",
+      "sampleTitle": "Sample of what we'll create"
+    },
+    "back": "Choose another file",
+    "importReady": "Import {count}",
+    "close": "Close",
+    "progress": {
+      "reading": "Reading file…",
+      "analyzing": "Understanding structure…",
+      "mapping": "Updating column mapping…",
+      "importing": "Importing…",
+      "finishing": "Finishing…",
+      "count": "{current} / {total}"
+    },
+    "done": {
+      "title": "Imported {count}",
+      "detail": "Skipped {skipped} · failed {failed}",
+      "skippedExists": "Skipped {count} — already in your vocabulary",
+      "skippedInvalid": "Skipped {count} — missing data or row problems",
+      "failed": "Failed {count} — couldn't save (we continued with the rest)",
+      "allGood": "Nothing was skipped or failed.",
+      "detailsTitle": "What happened",
+      "reasonExists": "Already in your vocabulary",
+      "reasonFailed": "Couldn't save — continued with the rest",
+      "moreDetails": "…and {count} more",
+      "toast": "Imported {count} items",
+      "toastAllExist": "Nothing new — {count} already in your vocabulary",
+      "toastNone": "Nothing was imported"
+    },
+    "errors": {
+      "proRequired": "File import is available on Pro and Premium.",
+      "quotaExceeded": "You've used today's import limit. Try again tomorrow, or upgrade for a higher limit.",
+      "fileTooLarge": "That file is too large. Keep it under 10 MB.",
+      "unsupportedFormat": "Use a CSV, PDF, DOCX, or plain text file.",
+      "emptyFile": "We couldn't find readable content in this file.",
+      "parseFailed": "We couldn't read this file. Try exporting it again or use the CSV template.",
+      "generic": "Something went wrong. Please try again."
+    },
+    "button": "Import"
+  },
   "editor": {
     "linkTitle": "Insert link",
     "linkEditTitle": "Edit link",
@@ -1099,6 +1180,9 @@
       "success": "Download started",
       "failed": "Export failed",
       "empty": "Add at least one question or some document content before exporting",
+      "preparing": "Preparing export…",
+      "writingFile": "Saving file…",
+      "progressCount": "{current} / {total}",
       "documentHeading": "Writing",
       "titleLabel": "Title",
       "descriptionLabel": "Description",
@@ -2021,6 +2105,9 @@
       "success": "Download started",
       "failed": "Export failed",
       "empty": "Add some content before exporting",
+      "preparing": "Preparing export…",
+      "writingFile": "Saving file…",
+      "progressCount": "{current} / {total}",
       "documentHeading": "Theory",
       "titleLabel": "Title",
       "descriptionLabel": "Description"
@@ -2482,7 +2569,7 @@
     "premiumActiveCopy": "Your coach uses this workspace’s real learning activity to suggest what to do next.",
     "premiumActiveFineprint": "Manage billing anytime in Stripe.",
     "lockedTitle": "This is a Pro feature",
-    "lockedDescription": "Upgrade to Pro for Notoria's core AI toolkit, full listening practice, writing support, and PDF/Word export.",
+    "lockedDescription": "Upgrade to Pro for Notoria's core AI toolkit, file import, full listening practice, writing support, and PDF/Word export.",
     "planName": "Notoria",
     "cancelAnytime": "Cancel anytime",
     "upgrade": "Upgrade to Pro",
@@ -2561,6 +2648,8 @@
       "exercises": "3 AI exercise generations per day",
       "vocabulary": "5 vocabulary AI actions per day",
       "unlimited": "Unlimited exercise generation, vocabulary AI, and writing support",
+      "import": "Import learning material",
+      "practiceFromMaterial": "AI practice from worksheets",
       "listening": "10 listening transcripts per day",
       "speaking": "10 speaking tutor calls per day",
       "writing": "AI Writing Support",
@@ -2576,9 +2665,11 @@
       "ai_meeting": "AI Speaking Tutor",
       "ai_listening_transcript": "AI Listening Transcript",
       "ai_exercise": "AI Exercise generation",
+      "ai_exercise_import": "AI practice from worksheets",
       "ai_vocabulary": "AI Vocabulary actions",
       "ai_writing": "AI Writing Support",
-      "ai_learning_coach_chat": "AI Learning Coach"
+      "ai_learning_coach_chat": "AI Learning Coach",
+      "content_import": "Import learning material"
     },
     "cell": {
       "unlimited": "Unlimited",
@@ -2588,8 +2679,10 @@
         "ai_meeting": "{count, plural, one {# call/day} other {# calls/day}}",
         "ai_listening_transcript": "{count, plural, one {# transcript/day} other {# transcripts/day}}",
         "ai_exercise": "{count, plural, one {# generation/day} other {# generations/day}}",
+        "ai_exercise_import": "{count, plural, one {# generation/day} other {# generations/day}}",
         "ai_vocabulary": "{count, plural, one {# action/day} other {# actions/day}}",
         "ai_writing": "{count, plural, one {# action/day} other {# actions/day}}",
+        "content_import": "{count, plural, one {# import/day} other {# imports/day}}",
         "ask_learning_coach": "{count, plural, one {# message/day} other {# messages/day}}"
       },
       "includedSr": "Included",
@@ -2607,9 +2700,13 @@
       "aiSpeakingTutor": "AI Speaking Tutor",
       "aiWriting": "AI Writing",
       "aiWritingSupport": "AI Writing Support",
+      "importLearningMaterial": "Import learning material",
+      "exportLearningMaterial": "Export learning material",
+      "aiPracticeFromMaterial": "AI practice from worksheets",
+      "practiceFromMaterial": "AI practice from worksheets",
       "listening": "Listening",
       "speaking": "Speaking",
-      "pdfDocxExport": "PDF/DOCX export",
+      "pdfDocxExport": "Export learning material",
       "learningCoach": "Learning Coach",
       "askLearningCoach": "Ask your AI Learning Coach",
       "learningProfile": "Personal Learning Profile",
@@ -2640,7 +2737,7 @@
       "categories": {
         "core": "Core learning",
         "ai": "AI tools",
-        "export": "Export & productivity",
+        "export": "Import & export",
         "personalized": "Personalized learning"
       },
       "rows": {

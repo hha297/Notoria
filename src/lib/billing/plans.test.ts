@@ -109,6 +109,32 @@ describe("entitlements", () => {
     expect(featureEnabled("premium", "ai_learning_coach")).toBe(true);
     expect(featureEnabled("premium", "pdf_export")).toBe(true);
     expect(featureEnabled("premium", "adaptive_daily_practice")).toBe(true);
+    expect(getFeatureAccess("free", "content_import")).toEqual({
+      kind: "quota",
+      limit: 0,
+    });
+    expect(getFeatureAccess("pro", "content_import")).toEqual({
+      kind: "quota",
+      limit: null,
+    });
+    expect(getFeatureAccess("premium", "content_import")).toEqual({
+      kind: "quota",
+      limit: null,
+    });
+    expect(getFeatureAccess("free", "ai_exercise_import")).toEqual({
+      kind: "quota",
+      limit: 0,
+    });
+    expect(getFeatureAccess("pro", "ai_exercise_import")).toEqual({
+      kind: "quota",
+      limit: 10,
+    });
+    expect(getFeatureAccess("premium", "ai_exercise_import")).toEqual({
+      kind: "quota",
+      limit: null,
+    });
+    expect(featureEnabled("free", "exercise_import")).toBe(false);
+    expect(featureEnabled("pro", "exercise_import")).toBe(true);
   });
 });
 

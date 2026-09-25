@@ -16,6 +16,87 @@
     "filters": "Suodattimet",
     "hideFilters": "Piilota suodattimet"
   },
+  "contentImport": {
+    "title": {
+      "vocabulary": "Tuo sanasto",
+      "writing": "Tuo kirjoitus",
+      "theory": "Tuo teoria"
+    },
+    "description": {
+      "vocabulary": "Lataa CSV, PDF tai DOCX. Kartoitamme sarakkeet ennen tallennusta.",
+      "writing": "Lataa muistiinpanoja tai CSV. Esikatselu ennen vahvistusta.",
+      "theory": "Lataa teoriamuistiinpanoja tai CSV. Esikatselu ennen vahvistusta."
+    },
+    "guidance": "Etkö tiedä vaadittua muotoa? Ei haittaa. Lataa tiedosto, niin yritämme ymmärtää rakenteen ennen tuontia.",
+    "dropzone": "Pudota tiedosto tähän tai valitse",
+    "formats": "CSV, PDF, DOCX tai TXT · max 10 MB",
+    "downloadTemplate": "Tarvitsetko mallin? Lataa CSV-pohja",
+    "quota": {
+      "free": "Tiedostotuonti on Pro- ja Premium-ominaisuus.",
+      "pro": "Pro ja Premium: rajaton tuonti.",
+      "premium": "Premium: rajaton tuonti."
+    },
+    "fields": {
+      "word": "Sana",
+      "meaning": "Merkitys",
+      "partOfSpeech": "Sanaluokka",
+      "example": "Esimerkki",
+      "tags": "Tunnisteet",
+      "notes": "Muistiinpanot",
+      "title": "Otsikko",
+      "content": "Sisältö",
+      "category": "Kategoria",
+      "ignore": "Älä tuo"
+    },
+    "preview": {
+      "summary": "{ready} valmiina · {issues} tarvitsee huomiota",
+      "mappingTitle": "Sarakkeiden kartoitus",
+      "yourColumn": "Oma sarake",
+      "notoriaField": "Notoria-kenttä",
+      "missingRequired": "Kartoita pakolliset kentät ennen tuontia.",
+      "unmapped": "Ei käytössä: {columns}",
+      "issuesTitle": "{count} riviä tarvitsee huomiota",
+      "issueRow": "Rivi {row}:",
+      "skipHint": "Ongelmalliset rivit ohitetaan. Kelvolliset tuodaan.",
+      "sampleTitle": "Esimerkki luotavasta sisällöstä"
+    },
+    "back": "Valitse toinen tiedosto",
+    "importReady": "Tuo {count}",
+    "close": "Sulje",
+    "progress": {
+      "reading": "Luetaan tiedostoa…",
+      "analyzing": "Tulkitaan rakennetta…",
+      "mapping": "Päivitetään sarakkeiden kartoitusta…",
+      "importing": "Tuodaan…",
+      "finishing": "Viimeistellään…",
+      "count": "{current} / {total}"
+    },
+    "done": {
+      "title": "Tuotu {count}",
+      "detail": "Ohitettu {skipped} · epäonnistui {failed}",
+      "skippedExists": "Ohitettu {count} — on jo sanastossa",
+      "skippedInvalid": "Ohitettu {count} — puuttuva data tai riviongelma",
+      "failed": "Epäonnistui {count} — ei voitu tallentaa (jatkettiin muilla)",
+      "allGood": "Mitään ei ohitettu tai epäonnistunut.",
+      "detailsTitle": "Mitä tapahtui",
+      "reasonExists": "On jo sanastossa",
+      "reasonFailed": "Ei voitu tallentaa — jatkettiin muilla",
+      "moreDetails": "…ja {count} lisää",
+      "toast": "Tuotu {count} kohdetta",
+      "toastAllExist": "Ei uusia — {count} on jo sanastossa",
+      "toastNone": "Mitään ei tuotu"
+    },
+    "errors": {
+      "proRequired": "Tiedostotuonti on Pro- ja Premium-ominaisuus.",
+      "quotaExceeded": "Päivän tuontiraja on täynnä. Yritä huomenna tai päivitä suurempaan rajaan.",
+      "fileTooLarge": "Tiedosto on liian suuri. Pidä alle 10 MB.",
+      "unsupportedFormat": "Käytä CSV-, PDF-, DOCX- tai tekstitiedostoa.",
+      "emptyFile": "Tiedostosta ei löytynyt luettavaa sisältöä.",
+      "parseFailed": "Tiedostoa ei voitu lukea. Kokeile uudelleen tai CSV-pohjaa.",
+      "generic": "Jotain meni pieleen. Yritä uudelleen."
+    },
+    "button": "Tuo"
+  },
   "editor": {
     "linkTitle": "Lisää linkki",
     "linkEditTitle": "Muokkaa linkkiä",
@@ -1830,6 +1911,9 @@
       "success": "Lataus aloitettu",
       "failed": "Vienti epäonnistui",
       "empty": "Lisää sisältöä ennen vientiä",
+      "preparing": "Valmistellaan vientiä…",
+      "writingFile": "Tallennetaan tiedostoa…",
+      "progressCount": "{current} / {total}",
       "documentHeading": "Teoria",
       "titleLabel": "Otsikko",
       "descriptionLabel": "Kuvaus"
@@ -2360,7 +2444,7 @@
     "notConfigured": "Laskutusta ei ole vielä määritetty.",
     "noCustomer": "Tähän tiliin ei ole vielä liitetty laskutusasiakasta.",
     "lockedTitle": "Tämä on Pro-ominaisuus",
-    "lockedDescription": "Päivitä Prohon saadaksesi tekoälyharjoitukset, kirjoitusavun, kuuntelun, puhumisen ja PDF/Word-viennin.",
+    "lockedDescription": "Päivitä Prohon saadaksesi tekoälyharjoitukset, tiedostotuonnin, kirjoitusavun, kuuntelun, puhumisen ja PDF/Word-viennin.",
     "planName": "Notoria",
     "cancelAnytime": "Peru milloin tahansa",
     "points": {
@@ -2370,6 +2454,8 @@
       "exercises": "3 tekoälyharjoitusta päivässä",
       "vocabulary": "5 sanaston tekoälytoimintoa päivässä",
       "unlimited": "Rajattomat harjoitusgenerointi, sanastoapu ja kirjoitustuki",
+      "import": "Oppimateriaalin tuonti",
+      "practiceFromMaterial": "Tekoälyharjoitus työarkeista",
       "listening": "10 kuuntelutranskriptiota päivässä",
       "speaking": "10 puheopettajapuhelua päivässä",
       "writing": "Tekoälykirjoitustuki",
@@ -2385,9 +2471,11 @@
       "ai_meeting": "Tekoälypuheopettaja",
       "ai_listening_transcript": "Kuuntelutranskriptio",
       "ai_exercise": "Tekoälyharjoitusten luonti",
+      "ai_exercise_import": "Tekoälyharjoitus työarkeista",
       "ai_vocabulary": "Sanaston tekoälytoiminnot",
       "ai_writing": "Tekoälykirjoitustuki",
-      "ai_learning_coach_chat": "Oppimisvalmentaja"
+      "ai_learning_coach_chat": "Oppimisvalmentaja",
+      "content_import": "Oppimateriaalin tuonti"
     },
     "cell": {
       "unlimited": "Rajaton",
@@ -2397,8 +2485,10 @@
         "ai_meeting": "{count, plural, one {# puhelu/pv} other {# puhelua/pv}}",
         "ai_listening_transcript": "{count, plural, one {# transkriptio/pv} other {# transkriptiota/pv}}",
         "ai_exercise": "{count, plural, one {# generointi/pv} other {# generointia/pv}}",
+        "ai_exercise_import": "{count, plural, one {# generointi/pv} other {# generointia/pv}}",
         "ai_vocabulary": "{count, plural, one {# toiminto/pv} other {# toimintoa/pv}}",
         "ai_writing": "{count, plural, one {# toiminto/pv} other {# toimintoa/pv}}",
+        "content_import": "{count, plural, one {# tuonti/pv} other {# tuontia/pv}}",
         "ask_learning_coach": "{count, plural, one {# viesti/pv} other {# viestiä/pv}}"
       },
       "includedSr": "Sisältyy",
@@ -2416,9 +2506,13 @@
       "aiSpeakingTutor": "Tekoälypuheopettaja",
       "aiWriting": "Tekoälykirjoitus",
       "aiWritingSupport": "Tekoälykirjoitustuki",
+      "importLearningMaterial": "Oppimateriaalin tuonti",
+      "exportLearningMaterial": "Oppimateriaalin vienti",
+      "aiPracticeFromMaterial": "Tekoälyharjoitus työarkeista",
+      "practiceFromMaterial": "Tekoälyharjoitus työarkeista",
       "listening": "Kuuntelu",
       "speaking": "Puhuminen",
-      "pdfDocxExport": "PDF/DOCX-vienti",
+      "pdfDocxExport": "Oppimateriaalin vienti",
       "learningCoach": "Oppimisvalmentaja",
       "askLearningCoach": "Kysy AI-oppimisvalmentajalta",
       "learningProfile": "Henkilökohtainen oppimisprofiili",
@@ -2449,7 +2543,7 @@
       "categories": {
         "core": "Perusopiskelu",
         "ai": "Tekoälytyökalut",
-        "export": "Vienti ja tuottavuus",
+        "export": "Tuonti ja vienti",
         "personalized": "Henkilökohtainen oppiminen"
       },
       "rows": {
@@ -2712,6 +2806,9 @@
       "success": "Lataus aloitettu",
       "failed": "Vienti epäonnistui",
       "empty": "Lisää vähintään yksi kysymys tai sisältöä ennen vientiä",
+      "preparing": "Valmistellaan vientiä…",
+      "writingFile": "Tallennetaan tiedostoa…",
+      "progressCount": "{current} / {total}",
       "documentHeading": "Kirjoittaminen",
       "titleLabel": "Otsikko",
       "descriptionLabel": "Kuvaus",

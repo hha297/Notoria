@@ -1,6 +1,6 @@
 /**
  * Canonical plan comparison metadata for pricing UI and upgrade modal.
- * Display values derive from FREE_DAILY_QUOTAS / getFeatureAccess — do not
+ * Display values derive from PLAN_DAILY_QUOTAS / getFeatureAccess — do not
  * duplicate limits as prose elsewhere.
  */
 
@@ -34,6 +34,11 @@ export type PlanComparisonRow = {
   cells: Record<PlanId, PlanCellDisplay>;
   /** When set, row only appears if the Premium capability is in VISIBLE_PREMIUM_FEATURES. */
   premiumCapability?: CapabilityFeatureId;
+  /**
+   * i18n key under billing.cell.quotaPerDay.* when this row meters a shared
+   * quota feature (defaults to `id`).
+   */
+  quotaLabelId?: string;
 };
 
 function quota(limit: number): PlanCellDisplay {
@@ -63,10 +68,11 @@ function cellForQuota(plan: PlanId, feature: QuotaFeatureId): PlanCellDisplay {
 function quotaRow(
   id: QuotaFeatureId,
   nameKey: string,
+  category: PlanFeatureCategory = "ai",
 ): PlanComparisonRow {
   return {
     id,
-    category: "ai",
+    category,
     nameKey,
     cells: {
       free: cellForQuota("free", id),
@@ -81,7 +87,10 @@ function quotaRow(
  * read time so scaffolded capabilities never appear in marketing.
  *
  * Speaking and Listening modules are on all plans; AI tutor/transcript quotas
- * are the Free limits under AI tools.
+ * live under AI tools with the other AI meters.
+ *
+ * File import/export share the Import & export category: content_import for
+ * bringing material in, pdf_export for printable/shareable files.
  */
 const ALL_COMPARISON_ROWS: PlanComparisonRow[] = [
   {
@@ -122,17 +131,19 @@ const ALL_COMPARISON_ROWS: PlanComparisonRow[] = [
     // Module is open on Free; live tutor calls meter ai_meeting under AI tools.
     cells: { free: yes(), pro: yes(), premium: yes() },
   },
+  quotaRow("ai_exercise_import", "aiPracticeFromMaterial", "ai"),
+  quotaRow("ai_exercise", "aiExercise", "ai"),
+  quotaRow("ai_vocabulary", "aiVocabulary", "ai"),
+  quotaRow("ai_writing", "aiWritingSupport", "ai"),
   // Speaking sessions consume ai_meeting — one marketing row.
-  quotaRow("ai_meeting", "aiSpeakingTutor"),
-  quotaRow("ai_listening_transcript", "aiListeningTranscript"),
-  quotaRow("ai_exercise", "aiExercise"),
-  quotaRow("ai_vocabulary", "aiVocabulary"),
-  quotaRow("ai_writing", "aiWritingSupport"),
+  quotaRow("ai_meeting", "aiSpeakingTutor", "ai"),
+  quotaRow("ai_listening_transcript", "aiListeningTranscript", "ai"),
+  quotaRow("content_import", "importLearningMaterial", "export"),
   {
     id: "pdf_export",
     category: "export",
-    nameKey: "pdfDocxExport",
-    cells: { free: no(), pro: yes(), premium: yes() },
+    nameKey: "exportLearningMaterial",
+    cells: { free: no(), pro: unlimited(), premium: unlimited() },
   },
   {
     id: "ai_learning_coach",

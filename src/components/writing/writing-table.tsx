@@ -10,15 +10,17 @@ import {
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { FileText, ListChecks, Plus, Search } from "lucide-react";
+import { FileText, ListChecks, Plus, Search, Upload } from "lucide-react";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { CollapsibleRefine } from "@/components/filters/collapsible-refine";
 import { FolderWorkspace } from "@/components/folders/folder-workspace";
 import { FolderBreadcrumbs } from "@/components/folders/folder-breadcrumbs";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
+import { ContentImportDialog } from "@/components/content-import/content-import-dialog";
 import { WritingCard, type WritingListItem } from "@/components/writing/writing-card";
 import { WritingCollections } from "@/components/writing/writing-collections";
 import {
@@ -89,6 +91,7 @@ export function WritingTable({
 }: WritingTableProps) {
   const router = useRouter();
   const t = useTranslations("writing");
+  const tImport = useTranslations("contentImport");
   const tCommon = useTranslations("common");
   const tFolders = useTranslations("folders");
   const tMeta = useTranslations("writing.meta");
@@ -100,6 +103,7 @@ export function WritingTable({
   const [topicFilter, setTopicFilter] = useState<MultiFilterValue>([]);
   const [formalityFilter, setFormalityFilter] = useState<MultiFilterValue>([]);
   const [learningNotesOnly, setLearningNotesOnly] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
   const createHref = sectionCreateHref("writing", currentFolderId);
   const learningNoteHref = createHref.includes("?")
     ? `${createHref}&kind=learning_note`
@@ -265,6 +269,16 @@ export function WritingTable({
   const actions = (
     <>
       <ShowTutorialButton section="writing" />
+      <Button
+        type="button"
+        variant="outline"
+        className="route-quiet-action"
+        data-route-action="writing"
+        onClick={() => setImportOpen(true)}
+      >
+        <Upload className="size-4" />
+        {tImport("button")}
+      </Button>
       <LinkButton href={learningNoteHref} variant="outline">
         <Plus className="size-4" />
         {t("learningNote.create")}
@@ -462,6 +476,13 @@ export function WritingTable({
           </section>
         </div>
       </FolderWorkspace>
+
+      <ContentImportDialog
+        open={importOpen}
+        onOpenChange={setImportOpen}
+        target="writing"
+        workspaceId={workspaceId}
+      />
     </PageShell>
   );
 }

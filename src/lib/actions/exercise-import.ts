@@ -5,9 +5,8 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { exerciseImports, importedExercises } from "@/db/schema";
 import { requireAiAssistanceEnabled } from "@/lib/ai/preferences-server";
-import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { getCurrentUserId } from "@/lib/auth/session";
-import { runSharedUsage } from "@/lib/billing/entitlements";
+import { runSharedUsage, requireFeature, loadEntitlementUser } from "@/lib/billing/entitlements";
 import {
   configureCloudinary,
   getCloudinaryPublicConfig,
@@ -50,6 +49,14 @@ function revalidateImports(id?: string) {
   if (id) {
     revalidatePath(`/exercises/import/${id}`);
   }
+}
+
+async function requireExerciseImportPlan() {
+  const userId = await getCurrentUserId();
+  const user = await loadEntitlementUser(userId);
+  if (!user) throw new Error("Unauthorized");
+  await requireFeature(user, "exercise_import");
+  return user;
 }
 
 async function requireOwnedImport(id: string) {
@@ -321,6 +328,7 @@ export async function createExerciseImportFromUploadedAsset(input: {
   title?: string;
   byteSize?: number;
 }) {
+  await requireExerciseImportPlan();
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
 
@@ -370,6 +378,7 @@ export async function createExerciseImportFromUploadedAsset(input: {
 }
 
 export async function createExerciseImportFromFile(formData: FormData) {
+  await requireExerciseImportPlan();
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
 
@@ -421,6 +430,7 @@ export async function createExerciseImportFromFile(formData: FormData) {
 }
 
 export async function createExerciseImportFromUrl(formData: FormData) {
+  await requireExerciseImportPlan();
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
 
@@ -466,12 +476,11 @@ export async function extractExerciseImport(id: string) {
     throw new ExerciseImportError("ALREADY_PROCESSING");
   }
 
-  const user = await getCurrentUserRecord();
-  if (!user) throw new Error("Unauthorized");
+  const user = await requireExerciseImportPlan();
 
   return runSharedUsage(
     user,
-    "ai_exercise",
+    "ai_exercise_import",
     id,
     async () => {
       try {
@@ -523,10 +532,9 @@ export async function generateExerciseImportExercises(id: string) {
     throw new ExerciseImportError("EMPTY_CONTENT");
   }
 
-  const user = await getCurrentUserRecord();
-  if (!user) throw new Error("Unauthorized");
+  const user = await requireExerciseImportPlan();
 
-  return runSharedUsage(user, "ai_exercise", id, async () => {
+  return runSharedUsage(user, "ai_exercise_import", id, async () => {
     try {
       await db
         .update(exerciseImports)

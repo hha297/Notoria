@@ -16,6 +16,87 @@
     "hideFilters": "Dölj filter",
     "open": "Öppna"
   },
+  "contentImport": {
+    "title": {
+      "vocabulary": "Importera ordförråd",
+      "writing": "Importera skrivande",
+      "theory": "Importera teori"
+    },
+    "description": {
+      "vocabulary": "Ladda upp CSV, PDF eller DOCX. Vi mappar kolumner innan något sparas.",
+      "writing": "Ladda upp anteckningar eller en CSV. Förhandsgranska först.",
+      "theory": "Ladda upp teorianteckningar eller en CSV. Förhandsgranska först."
+    },
+    "guidance": "Vet du inte vilket format som krävs? Ladda upp filen så försöker vi förstå strukturen innan import.",
+    "dropzone": "Släpp en fil här eller klicka för att välja",
+    "formats": "CSV, PDF, DOCX eller TXT · max 10 MB",
+    "downloadTemplate": "Behöver du en mall? Ladda ner CSV-mall",
+    "quota": {
+      "free": "Filimport finns på Pro och Premium.",
+      "pro": "Pro och Premium: obegränsad import.",
+      "premium": "Premium: obegränsad import."
+    },
+    "fields": {
+      "word": "Ord",
+      "meaning": "Betydelse",
+      "partOfSpeech": "Ordklass",
+      "example": "Exempel",
+      "tags": "Taggar",
+      "notes": "Anteckningar",
+      "title": "Titel",
+      "content": "Innehåll",
+      "category": "Kategori",
+      "ignore": "Importera inte"
+    },
+    "preview": {
+      "summary": "{ready} redo att importera · {issues} behöver åtgärdas",
+      "mappingTitle": "Kolumnmappning",
+      "yourColumn": "Din kolumn",
+      "notoriaField": "Notoria-fält",
+      "missingRequired": "Mappa obligatoriska fält innan import.",
+      "unmapped": "Används inte: {columns}",
+      "issuesTitle": "{count} rader behöver åtgärdas",
+      "issueRow": "Rad {row}:",
+      "skipHint": "Rader med problem hoppas över. Giltiga rader importeras.",
+      "sampleTitle": "Exempel på vad som skapas"
+    },
+    "back": "Välj en annan fil",
+    "importReady": "Importera {count}",
+    "close": "Stäng",
+    "progress": {
+      "reading": "Läser fil…",
+      "analyzing": "Tolkar struktur…",
+      "mapping": "Uppdaterar kolumnmappning…",
+      "importing": "Importerar…",
+      "finishing": "Slutför…",
+      "count": "{current} / {total}"
+    },
+    "done": {
+      "title": "Importerade {count}",
+      "detail": "Hoppade över {skipped} · misslyckades {failed}",
+      "skippedExists": "Hoppade över {count} — finns redan i vocabulary",
+      "skippedInvalid": "Hoppade över {count} — saknad data eller radproblem",
+      "failed": "Misslyckades {count} — kunde inte sparas (fortsatte med resten)",
+      "allGood": "Inget hoppades över eller misslyckades.",
+      "detailsTitle": "Vad hände",
+      "reasonExists": "Finns redan i vocabulary",
+      "reasonFailed": "Kunde inte sparas — fortsatte med resten",
+      "moreDetails": "…och {count} till",
+      "toast": "Importerade {count} objekt",
+      "toastAllExist": "Inget nytt — {count} finns redan i vocabulary",
+      "toastNone": "Inget importerades"
+    },
+    "errors": {
+      "proRequired": "Filimport finns på Pro och Premium.",
+      "quotaExceeded": "Dagens importgräns är nådd. Försök i morgon eller uppgradera för en högre gräns.",
+      "fileTooLarge": "Filen är för stor. Håll under 10 MB.",
+      "unsupportedFormat": "Använd CSV, PDF, DOCX eller textfil.",
+      "emptyFile": "Vi hittade inget läsbart innehåll i filen.",
+      "parseFailed": "Filen kunde inte läsas. Exportera igen eller använd CSV-mallen.",
+      "generic": "Något gick fel. Försök igen."
+    },
+    "button": "Importera"
+  },
   "editor": {
     "linkTitle": "Infoga länk",
     "linkEditTitle": "Redigera länk",
@@ -1099,6 +1180,9 @@
       "success": "Nedladdning påbörjad",
       "failed": "Export misslyckades",
       "empty": "Lägg till minst en fråga eller något dokumentinnehåll innan du exporterar",
+      "preparing": "Förbereder export…",
+      "writingFile": "Sparar fil…",
+      "progressCount": "{current} / {total}",
       "documentHeading": "Skrivande",
       "titleLabel": "Titel",
       "descriptionLabel": "Beskrivning",
@@ -2021,6 +2105,9 @@
       "success": "Nedladdning påbörjad",
       "failed": "Export misslyckades",
       "empty": "Lägg till något innehåll innan du exporterar",
+      "preparing": "Förbereder export…",
+      "writingFile": "Sparar fil…",
+      "progressCount": "{current} / {total}",
       "documentHeading": "Teori",
       "titleLabel": "Titel",
       "descriptionLabel": "Beskrivning"
@@ -2540,7 +2627,7 @@
     "modalTitle": "Uppgradera plan",
     "modalSubtitle": "Gratis täcker vardaglig övning och ditt bibliotek. Pro låser upp AI-övningar, skrivhjälp, lyssnande, talande och utskrivbara filer.",
     "lockedTitle": "Detta är en Pro-funktion",
-    "lockedDescription": "Uppgradera för AI-övningar, skrivhjälp, lyssnande, talande och PDF/Word-export.",
+    "lockedDescription": "Uppgradera för AI-övningar, filimport, skrivhjälp, lyssnande, talande och PDF/Word-export.",
     "planName": "Pro",
     "cancelAnytime": "Avbryt när som helst",
     "points": {
@@ -2550,6 +2637,8 @@
       "exercises": "3 AI-övningar per dag",
       "vocabulary": "5 ordförrådsåtgärder per dag",
       "unlimited": "Obegränsade möten, transkript, övningar och ordförrådshjälp",
+      "import": "Importera lärande material",
+      "practiceFromMaterial": "AI-övning från arbetsblad",
       "listening": "Full lyssningsövning",
       "speaking": "Talövningar med AI-handledaren",
       "writing": "AI-skrivverktyg",
@@ -2565,9 +2654,11 @@
       "ai_meeting": "AI-möte",
       "ai_listening_transcript": "Lyssningstranskript",
       "ai_exercise": "AI-övningar",
+      "ai_exercise_import": "AI-övning från arbetsblad",
       "ai_vocabulary": "Ordförråd med AI",
       "ai_writing": "AI-skrivhjälp",
-      "ai_learning_coach_chat": "AI-lärcoach"
+      "ai_learning_coach_chat": "AI-lärcoach",
+      "content_import": "Importera lärande material"
     },
     "compare": {
       "capability": "Vad du får",
@@ -2626,7 +2717,7 @@
       "categories": {
         "core": "Kärnlärande",
         "ai": "AI-verktyg",
-        "export": "Export och produktivitet",
+        "export": "Import och export",
         "personalized": "Personligt lärande"
       }
     },
@@ -2687,8 +2778,10 @@
         "ai_meeting": "{count, plural, one {# samtal/dag} other {# samtal/dag}}",
         "ai_listening_transcript": "{count, plural, one {# transkript/dag} other {# transkript/dag}}",
         "ai_exercise": "{count, plural, one {# generering/dag} other {# genereringar/dag}}",
+        "ai_exercise_import": "{count, plural, one {# generering/dag} other {# genereringar/dag}}",
         "ai_vocabulary": "{count, plural, one {# åtgärd/dag} other {# åtgärder/dag}}",
         "ai_writing": "{count, plural, one {# åtgärd/dag} other {# åtgärder/dag}}",
+        "content_import": "{count, plural, one {# import/dag} other {# importer/dag}}",
         "ask_learning_coach": "{count, plural, one {# meddelande/dag} other {# meddelanden/dag}}"
       },
       "includedSr": "Ingår",
@@ -2706,9 +2799,13 @@
       "aiSpeakingTutor": "AI-talhandledare",
       "aiWriting": "AI-skrivande",
       "aiWritingSupport": "AI-skrivhjälp",
+      "importLearningMaterial": "Importera lärande material",
+      "exportLearningMaterial": "Exportera lärande material",
+      "aiPracticeFromMaterial": "AI-övning från arbetsblad",
+      "practiceFromMaterial": "AI-övning från arbetsblad",
       "listening": "Lyssnande",
       "speaking": "Talande",
-      "pdfDocxExport": "PDF/DOCX-export",
+      "pdfDocxExport": "Exportera lärande material",
       "learningCoach": "Lärcoach",
       "askLearningCoach": "Fråga din AI-lärcoach",
       "learningProfile": "Personlig lärprofil",

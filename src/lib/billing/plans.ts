@@ -23,9 +23,13 @@ export const QUOTA_FEATURES = [
   "ai_meeting",
   "ai_listening_transcript",
   "ai_exercise",
+  /** Worksheet/notes → practice cards (Exercise Import). */
+  "ai_exercise_import",
   "ai_vocabulary",
   "ai_writing",
   "ai_learning_coach_chat",
+  /** Vocab / Writing / Theory file import (CSV, PDF, DOCX). */
+  "content_import",
 ] as const;
 export type QuotaFeatureId = (typeof QUOTA_FEATURES)[number];
 
@@ -65,25 +69,31 @@ export const PLAN_DAILY_QUOTAS: Record<
     ai_meeting: 1,
     ai_listening_transcript: 1,
     ai_exercise: 3,
+    ai_exercise_import: 0,
     ai_vocabulary: 5,
     ai_writing: 1,
     ai_learning_coach_chat: 0,
+    content_import: 0,
   },
   pro: {
     ai_meeting: 10,
     ai_listening_transcript: 10,
     ai_exercise: null,
+    ai_exercise_import: 10,
     ai_vocabulary: null,
     ai_writing: null,
     ai_learning_coach_chat: 0,
+    content_import: null,
   },
   premium: {
     ai_meeting: null,
     ai_listening_transcript: null,
     ai_exercise: null,
+    ai_exercise_import: null,
     ai_vocabulary: null,
     ai_writing: null,
     ai_learning_coach_chat: 100,
+    content_import: null,
   },
 };
 
@@ -92,15 +102,19 @@ export const FREE_DAILY_QUOTAS: Record<QuotaFeatureId, number> = {
   ai_meeting: PLAN_DAILY_QUOTAS.free.ai_meeting!,
   ai_listening_transcript: PLAN_DAILY_QUOTAS.free.ai_listening_transcript!,
   ai_exercise: PLAN_DAILY_QUOTAS.free.ai_exercise!,
+  ai_exercise_import: PLAN_DAILY_QUOTAS.free.ai_exercise_import!,
   ai_vocabulary: PLAN_DAILY_QUOTAS.free.ai_vocabulary!,
   ai_writing: PLAN_DAILY_QUOTAS.free.ai_writing!,
   ai_learning_coach_chat: PLAN_DAILY_QUOTAS.free.ai_learning_coach_chat!,
+  content_import: PLAN_DAILY_QUOTAS.free.content_import!,
 };
 
-/** Features shown on Free account “usage today” list. */
-export const FREE_USAGE_QUOTA_FEATURES = QUOTA_FEATURES.filter(
-  (feature) => feature !== "ai_learning_coach_chat",
-);
+/** Features shown on Free account “usage today” list (finite Free quotas only). */
+export const FREE_USAGE_QUOTA_FEATURES = QUOTA_FEATURES.filter((feature) => {
+  if (feature === "ai_learning_coach_chat") return false;
+  const limit = PLAN_DAILY_QUOTAS.free[feature];
+  return typeof limit === "number" && limit > 0;
+});
 
 /** Premium Coach chat daily budget (alias of PLAN_DAILY_QUOTAS.premium). */
 export const PREMIUM_COACH_CHAT_DAILY =
@@ -258,9 +272,11 @@ export function getFeatureAccess(plan: PlanId, feature: FeatureId): FeatureAcces
     case "listening":
       return { kind: "flag", enabled: pro };
     case "ai_speaking_tutor":
-    case "exercise_import":
-      // Open to Free. Meetings and exercise generation are metered separately.
+      // Open to Free. Meetings are metered separately via ai_meeting.
       return { kind: "flag", enabled: true };
+    case "exercise_import":
+      // Page + AI generation; Free is blocked (ai_exercise_import quota is 0).
+      return { kind: "flag", enabled: pro };
     case "ai_learning_coach":
     case "adaptive_daily_practice":
     case "weekly_learning_review":

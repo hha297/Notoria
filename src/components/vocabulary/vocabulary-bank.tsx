@@ -3,7 +3,7 @@
 import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
 import { mx } from "@/lib/css-module";
 import { format } from "date-fns";
-import { Download, Plus } from "lucide-react";
+import { Download, Plus, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
@@ -13,6 +13,7 @@ import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
+import { ContentImportDialog } from "@/components/content-import/content-import-dialog";
 import { VocabularyExportDialog } from "@/components/vocabulary/export-dialog";
 import { VocabularyGroup } from "@/components/vocabulary/vocabulary-group";
 import { VocabularyQuickEditDialog } from "@/components/vocabulary/vocabulary-quick-edit-dialog";
@@ -60,6 +61,7 @@ export function VocabularyBank({
 }: VocabularyBankProps) {
   const router = useRouter();
   const t = useTranslations("vocabulary");
+  const tImport = useTranslations("contentImport");
   const tTags = useTranslations("tags");
   const tPos = useTranslations("tags.pos");
 
@@ -76,6 +78,7 @@ export function VocabularyBank({
     useState<VocabularySortDirection>("desc");
   const [viewMode, setViewMode] = useVocabularyViewMode();
   const [exportOpen, setExportOpen] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
   const [editingWord, setEditingWord] = useState<VocabularyWordRow | null>(null);
   const { invalidateVocabulary } = useInvalidateWorkspaceQueries(workspaceId);
 
@@ -162,6 +165,16 @@ export function VocabularyBank({
   const actions = (
     <>
       <ShowTutorialButton section="vocabulary" />
+      <Button
+        type="button"
+        variant="outline"
+        className="route-quiet-action"
+        data-route-action="vocab"
+        onClick={() => setImportOpen(true)}
+      >
+        <Upload className="size-4" />
+        {tImport("button")}
+      </Button>
       <Button
         type="button"
         variant="outline"
@@ -276,6 +289,13 @@ export function VocabularyBank({
         onOpenChange={setExportOpen}
         workspaceName={workspaceName}
         words={exportWords}
+      />
+
+      <ContentImportDialog
+        open={importOpen}
+        onOpenChange={setImportOpen}
+        target="vocabulary"
+        workspaceId={workspaceId}
       />
     </PageShell>
   );

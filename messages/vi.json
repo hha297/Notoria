@@ -16,6 +16,87 @@
     "hideFilters": "Ẩn bộ lọc",
     "open": "Mở"
   },
+  "contentImport": {
+    "title": {
+      "vocabulary": "Nhập từ vựng",
+      "writing": "Nhập bài viết",
+      "theory": "Nhập lý thuyết"
+    },
+    "description": {
+      "vocabulary": "Tải CSV, PDF hoặc DOCX. Chúng tôi sẽ map cột trước khi lưu.",
+      "writing": "Tải ghi chú hoặc CSV. Xem trước rồi xác nhận.",
+      "theory": "Tải ghi chú lý thuyết hoặc CSV. Xem trước rồi xác nhận."
+    },
+    "guidance": "Không biết định dạng? Không sao. Tải file lên, chúng tôi sẽ cố hiểu cấu trúc trước khi nhập.",
+    "dropzone": "Thả file vào đây hoặc bấm để chọn",
+    "formats": "CSV, PDF, DOCX hoặc TXT · tối đa 10 MB",
+    "downloadTemplate": "Cần mẫu? Tải template CSV",
+    "quota": {
+      "free": "Nhập file dành cho Pro và Premium.",
+      "pro": "Pro và Premium: không giới hạn.",
+      "premium": "Premium: không giới hạn."
+    },
+    "fields": {
+      "word": "Từ",
+      "meaning": "Nghĩa",
+      "partOfSpeech": "Loại từ",
+      "example": "Ví dụ",
+      "tags": "Thẻ",
+      "notes": "Ghi chú",
+      "title": "Tiêu đề",
+      "content": "Nội dung",
+      "category": "Danh mục",
+      "ignore": "Bỏ qua"
+    },
+    "preview": {
+      "summary": "{ready} sẵn sàng nhập · {issues} cần xem lại",
+      "mappingTitle": "Ánh xạ cột",
+      "yourColumn": "Cột của bạn",
+      "notoriaField": "Trường Notoria",
+      "missingRequired": "Hãy map các trường bắt buộc trước khi nhập.",
+      "unmapped": "Không dùng: {columns}",
+      "issuesTitle": "{count} dòng cần chú ý",
+      "issueRow": "Dòng {row}:",
+      "skipHint": "Các dòng lỗi sẽ được bỏ qua. Dòng hợp lệ vẫn được nhập.",
+      "sampleTitle": "Mẫu nội dung sẽ tạo"
+    },
+    "back": "Chọn file khác",
+    "importReady": "Nhập {count}",
+    "close": "Đóng",
+    "progress": {
+      "reading": "Đang đọc file…",
+      "analyzing": "Đang hiểu cấu trúc…",
+      "mapping": "Đang cập nhật ánh xạ cột…",
+      "importing": "Đang nhập…",
+      "finishing": "Đang hoàn tất…",
+      "count": "{current} / {total}"
+    },
+    "done": {
+      "title": "Đã nhập {count}",
+      "detail": "Bỏ qua {skipped} · lỗi {failed}",
+      "skippedExists": "Bỏ qua {count} — đã có trong vocabulary",
+      "skippedInvalid": "Bỏ qua {count} — thiếu dữ liệu hoặc dòng lỗi",
+      "failed": "Lỗi {count} — không lưu được (vẫn tiếp tục các mục khác)",
+      "allGood": "Không có mục nào bị bỏ qua hoặc lỗi.",
+      "detailsTitle": "Chi tiết",
+      "reasonExists": "Đã có trong vocabulary",
+      "reasonFailed": "Không lưu được — đã tiếp tục các mục khác",
+      "moreDetails": "…và {count} mục nữa",
+      "toast": "Đã nhập {count} mục",
+      "toastAllExist": "Không có mục mới — {count} đã có trong vocabulary",
+      "toastNone": "Không nhập được mục nào"
+    },
+    "errors": {
+      "proRequired": "Nhập file dành cho Pro và Premium.",
+      "quotaExceeded": "Bạn đã hết hạn mức nhập hôm nay. Thử lại ngày mai, hoặc nâng cấp để tăng hạn mức.",
+      "fileTooLarge": "File quá lớn. Giữ dưới 10 MB.",
+      "unsupportedFormat": "Dùng CSV, PDF, DOCX hoặc TXT.",
+      "emptyFile": "Không tìm thấy nội dung đọc được trong file.",
+      "parseFailed": "Không đọc được file. Thử xuất lại hoặc dùng template CSV.",
+      "generic": "Đã có lỗi. Vui lòng thử lại."
+    },
+    "button": "Nhập"
+  },
   "editor": {
     "linkTitle": "Chèn liên kết",
     "linkEditTitle": "Sửa liên kết",
@@ -1830,6 +1911,9 @@
       "success": "Đang tải file xuống…",
       "failed": "Xuất file không thành công",
       "empty": "Thêm nội dung trước khi xuất",
+      "preparing": "Đang chuẩn bị xuất…",
+      "writingFile": "Đang lưu file…",
+      "progressCount": "{current} / {total}",
       "documentHeading": "Lý thuyết",
       "titleLabel": "Tiêu đề",
       "descriptionLabel": "Mô tả"
@@ -2349,7 +2433,7 @@
     "modalTitle": "Nâng cấp gói",
     "modalSubtitle": "Miễn phí đủ luyện mỗi ngày và thư viện. Pro mở bài AI, hỗ trợ viết, nghe, nói và file in được.",
     "lockedTitle": "Đây là tính năng Pro",
-    "lockedDescription": "Nâng cấp để mở bài AI, hỗ trợ viết, nghe, nói và xuất PDF/Word.",
+    "lockedDescription": "Nâng cấp để mở bài AI, nhập file, hỗ trợ viết, nghe, nói và xuất PDF/Word.",
     "planName": "Pro",
     "cancelAnytime": "Hủy bất cứ lúc nào",
     "points": {
@@ -2359,6 +2443,8 @@
       "exercises": "3 lần tạo bài tập AI mỗi ngày",
       "vocabulary": "5 thao tác AI từ vựng mỗi ngày",
       "unlimited": "Họp, bản ghi, bài tập và từ vựng AI không giới hạn",
+      "import": "Nhập tài liệu học",
+      "practiceFromMaterial": "Luyện AI từ phiếu bài",
       "listening": "Luyện nghe đầy đủ",
       "speaking": "Luyện nói với gia sư AI",
       "writing": "Công cụ viết AI",
@@ -2374,9 +2460,11 @@
       "ai_meeting": "Họp AI",
       "ai_listening_transcript": "Bản ghi nghe",
       "ai_exercise": "Bài tập AI",
+      "ai_exercise_import": "Luyện AI từ phiếu bài",
       "ai_vocabulary": "Từ vựng AI",
       "ai_writing": "Hỗ trợ viết AI",
-      "ai_learning_coach_chat": "Huấn luyện viên AI"
+      "ai_learning_coach_chat": "Huấn luyện viên AI",
+      "content_import": "Nhập tài liệu học"
     },
     "compare": {
       "capability": "Bạn nhận được gì",
@@ -2435,7 +2523,7 @@
       "categories": {
         "core": "Học cốt lõi",
         "ai": "Công cụ AI",
-        "export": "Xuất & năng suất",
+        "export": "Nhập & xuất",
         "personalized": "Học cá nhân hóa"
       }
     },
@@ -2496,8 +2584,10 @@
         "ai_meeting": "{count, plural, one {# cuộc gọi/ngày} other {# cuộc gọi/ngày}}",
         "ai_listening_transcript": "{count, plural, one {# bản ghi/ngày} other {# bản ghi/ngày}}",
         "ai_exercise": "{count, plural, one {# lần tạo/ngày} other {# lần tạo/ngày}}",
+        "ai_exercise_import": "{count, plural, one {# lần tạo/ngày} other {# lần tạo/ngày}}",
         "ai_vocabulary": "{count, plural, one {# thao tác/ngày} other {# thao tác/ngày}}",
         "ai_writing": "{count, plural, one {# thao tác/ngày} other {# thao tác/ngày}}",
+        "content_import": "{count, plural, one {# lần nhập/ngày} other {# lần nhập/ngày}}",
         "ask_learning_coach": "{count, plural, one {# tin nhắn/ngày} other {# tin nhắn/ngày}}"
       },
       "includedSr": "Đã gồm",
@@ -2515,9 +2605,13 @@
       "aiSpeakingTutor": "Gia sư nói AI",
       "aiWriting": "Viết AI",
       "aiWritingSupport": "Hỗ trợ viết AI",
+      "importLearningMaterial": "Nhập tài liệu học",
+      "exportLearningMaterial": "Xuất tài liệu học",
+      "aiPracticeFromMaterial": "Luyện AI từ phiếu bài",
+      "practiceFromMaterial": "Luyện AI từ phiếu bài",
       "listening": "Nghe",
       "speaking": "Nói",
-      "pdfDocxExport": "Xuất PDF/DOCX",
+      "pdfDocxExport": "Xuất tài liệu học",
       "learningCoach": "Huấn luyện viên học tập",
       "askLearningCoach": "Hỏi huấn luyện viên AI",
       "learningProfile": "Hồ sơ học cá nhân",
@@ -2712,6 +2806,9 @@
       "success": "Đang tải file xuống…",
       "failed": "Xuất file không thành công",
       "empty": "Thêm ít nhất một câu hỏi hoặc một đoạn nội dung trước khi xuất",
+      "preparing": "Đang chuẩn bị xuất…",
+      "writingFile": "Đang lưu file…",
+      "progressCount": "{current} / {total}",
       "documentHeading": "Viết",
       "titleLabel": "Tiêu đề",
       "descriptionLabel": "Mô tả",
