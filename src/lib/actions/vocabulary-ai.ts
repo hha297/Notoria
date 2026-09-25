@@ -7,7 +7,9 @@ import {
   getResolvedAiPreferences,
   requireAiAssistanceEnabled,
 } from "@/lib/ai/preferences-server";
-import { getCurrentUserId } from "@/lib/auth/session";
+import { getCurrentUserRecord } from "@/lib/auth/current-user";
+import { runWithUsage } from "@/lib/billing/entitlements";
+import { QuotaExceededError } from "@/lib/billing/errors";
 import {
   analyzeVocabularyMeaning,
   analyzeVocabularySpelling,
@@ -27,7 +29,7 @@ import {
 
 export type VocabularyAiFailure = {
   ok: false;
-  code: "AI_UNAVAILABLE" | "AI_DISABLED";
+  code: "AI_UNAVAILABLE" | "AI_DISABLED" | "AI_QUOTA_EXCEEDED";
 };
 
 export type VocabularySpellingActionResult =
@@ -44,6 +46,14 @@ export type VocabularyNotesFormatActionResult =
 
 function toFailure(code: VocabularyAiFailure["code"] = "AI_UNAVAILABLE"): VocabularyAiFailure {
   return { ok: false, code };
+}
+
+async function meteredVocabularyAi<T>(fn: () => Promise<T>): Promise<T> {
+  const user = await getCurrentUserRecord();
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+  return runWithUsage(user, "ai_vocabulary", fn);
 }
 
 const EMPTY_SPELLING: VocabularySpellingResult = {
@@ -75,7 +85,6 @@ export async function suggestVocabularySpelling(
   }
 
   try {
-    await getCurrentUserId();
     const prefs = await getResolvedAiPreferences();
     if (!prefs.enabled) return toFailure("AI_DISABLED");
     if (!aiSuggestionsAllowed(prefs)) {
@@ -84,11 +93,16 @@ export async function suggestVocabularySpelling(
         result: { ...EMPTY_SPELLING, original: parsed.data.word },
       };
     }
-    const result = await analyzeVocabularySpelling(parsed.data);
-    return { ok: true, result };
+    return await meteredVocabularyAi(async () => {
+      const result = await analyzeVocabularySpelling(parsed.data);
+      return { ok: true as const, result };
+    });
   } catch (error) {
     if (error instanceof AiAssistanceDisabledError) {
       return toFailure("AI_DISABLED");
+    }
+    if (error instanceof QuotaExceededError) {
+      return toFailure("AI_QUOTA_EXCEEDED");
     }
     return toFailure();
   }
@@ -103,7 +117,6 @@ export async function validateVocabularyMeaning(
   }
 
   try {
-    await getCurrentUserId();
     const prefs = await getResolvedAiPreferences();
     if (!prefs.enabled) return toFailure("AI_DISABLED");
     if (!aiSuggestionsAllowed(prefs)) {
@@ -112,11 +125,16 @@ export async function validateVocabularyMeaning(
         result: emptyMeaning(parsed.data.meaning),
       };
     }
-    const result = await analyzeVocabularyMeaning(parsed.data);
-    return { ok: true, result };
+    return await meteredVocabularyAi(async () => {
+      const result = await analyzeVocabularyMeaning(parsed.data);
+      return { ok: true as const, result };
+    });
   } catch (error) {
     if (error instanceof AiAssistanceDisabledError) {
       return toFailure("AI_DISABLED");
+    }
+    if (error instanceof QuotaExceededError) {
+      return toFailure("AI_QUOTA_EXCEEDED");
     }
     return toFailure();
   }
@@ -131,16 +149,20 @@ export async function formatVocabularyNotesAi(
   }
 
   try {
-    await getCurrentUserId();
     await requireAiAssistanceEnabled();
-    const result = await formatVocabularyNotesWithAi(parsed.data);
-    if (result.blocks.length === 0) {
-      return toFailure();
-    }
-    return { ok: true, doc: notesFormatBlocksToDoc(result.blocks) };
+    return await meteredVocabularyAi(async () => {
+      const result = await formatVocabularyNotesWithAi(parsed.data);
+      if (result.blocks.length === 0) {
+        throw new Error("AI_EMPTY");
+      }
+      return { ok: true as const, doc: notesFormatBlocksToDoc(result.blocks) };
+    });
   } catch (error) {
     if (error instanceof AiAssistanceDisabledError) {
       return toFailure("AI_DISABLED");
+    }
+    if (error instanceof QuotaExceededError) {
+      return toFailure("AI_QUOTA_EXCEEDED");
     }
     return toFailure();
   }

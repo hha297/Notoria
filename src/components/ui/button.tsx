@@ -4,18 +4,14 @@ import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@/lib/utils"
 
 const buttonVariants = cva(
-  "group/button inline-flex h-10 shrink-0 cursor-pointer items-center justify-center rounded-md border border-transparent bg-clip-padding text-sm font-bold whitespace-nowrap transition-colors outline-none select-none focus-visible:ring-2 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+  "group/button inline-flex h-10 shrink-0 cursor-pointer items-center justify-center rounded-md border border-transparent bg-clip-padding text-sm font-bold whitespace-nowrap transition-[color,background-image,background-color,border-color,box-shadow,transform] outline-none select-none focus-visible:ring-2 focus-visible:ring-ring/50 active:not-aria-[haspopup]:translate-y-px disabled:pointer-events-none disabled:cursor-not-allowed disabled:opacity-50 aria-invalid:border-destructive aria-invalid:ring-2 aria-invalid:ring-destructive/20 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
   {
     variants: {
       variant: {
-        default:
-          "bg-primary text-primary-foreground hover:bg-primary-hover",
-        outline:
-          "border-border bg-surface-elevated text-ink hover:bg-muted aria-expanded:bg-muted",
-        secondary:
-          "bg-secondary text-secondary-foreground hover:bg-muted",
-        ghost:
-          "hover:bg-muted hover:text-ink aria-expanded:bg-muted",
+        default: "btn-blend-primary border-transparent",
+        outline: "control-surface border-border text-ink",
+        secondary: "control-surface border-transparent text-secondary-foreground",
+        ghost: "btn-ghost-surface",
         destructive:
           "border border-destructive/45 bg-destructive/12 text-destructive hover:border-destructive hover:bg-destructive hover:text-white focus-visible:ring-destructive/25 dark:hover:text-white",
         link: "text-link underline-offset-4 hover:underline",

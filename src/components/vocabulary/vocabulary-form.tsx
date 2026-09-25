@@ -19,6 +19,7 @@ import {
 } from "@/components/vocabulary/sortable-meanings";
 import { TagMultiSelect } from "@/components/vocabulary/tag-multi-select";
 import { SynonymPicker } from "@/components/vocabulary/synonym-picker";
+import { PartOfSpeechSelect } from "@/components/vocabulary/part-of-speech-select";
 import { VocabularyAiChecking, VocabularyAiSuggestionCard } from "@/components/vocabulary/ai-suggestion-card";
 import { useAiPreferences } from "@/components/providers/ai-preferences-provider";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
@@ -32,17 +33,11 @@ import {
 import { Label } from "@/components/ui/label";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import {
   checkVocabularyWordExists,
   createVocabularyWord,
   updateVocabularyWord,
 } from "@/lib/actions/vocabulary";
+import { completeStudyInboxItem } from "@/lib/actions/study-inbox";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { mx } from "@/lib/css-module";
 import { afterEditorHydration } from "@/lib/editor/hydration";
@@ -70,7 +65,6 @@ import {
   getCustomTagName,
   isCustomTagKey,
   normalizeWordTags,
-  PARTS_OF_SPEECH,
   uniqueCustomTagNames,
 } from "@/lib/vocabulary-tags";
 import {
@@ -116,6 +110,12 @@ type VocabularyFormProps = {
   synonymOptions?: VocabularySynonymRef[];
   language?: string;
   initialData?: VocabularyFormInitialData;
+  /** Prefill word when creating from Study Inbox. */
+  prefillWord?: string;
+  /** Prefill notes when creating from Study Inbox. */
+  prefillNotes?: string;
+  /** When set, mark this inbox item processed after a successful create. */
+  fromInboxId?: string;
   /** `modal` hides the page card chrome and reports success via `onSuccess`. */
   mode?: "page" | "modal";
   onSuccess?: () => void;
@@ -194,6 +194,9 @@ export function VocabularyForm({
   existingCustomTags,
   synonymOptions = [],
   language = "en",
+  prefillWord,
+  prefillNotes,
+  fromInboxId,
   mode = "page",
   onSuccess,
   onCancel,
@@ -203,7 +206,6 @@ export function VocabularyForm({
   const t = useTranslations("vocabulary");
   const { suggestionsAllowed, shouldAutoApplyContentChange } = useAiPreferences();
   const tCommon = useTranslations("common");
-  const tPos = useTranslations("tags.pos");
   const isModal = mode === "modal";
   const { isPending: isSaving, tryBegin, release } = useMutationLock();
   const [wordCheckStatus, setWordCheckStatus] =
@@ -258,14 +260,15 @@ export function VocabularyForm({
   }, [synonymQuery.data, localSynonyms]);
 
   const initialNotesDoc = useMemo(
-    () => parseVocabularyNotes(initialData?.notes ?? ""),
-    [initialData?.notes],
+    () =>
+      parseVocabularyNotes(initialData?.notes ?? prefillNotes ?? ""),
+    [initialData?.notes, prefillNotes],
   );
 
   const form = useForm<VocabularyFormClientValues>({
     resolver: zodResolver(vocabularyFormClientSchema),
     defaultValues: {
-      word: initialData?.word ?? "",
+      word: initialData?.word ?? prefillWord ?? "",
       partOfSpeech:
         (initialData?.partOfSpeech as VocabularyFormClientValues["partOfSpeech"]) ??
         undefined,
@@ -294,7 +297,7 @@ export function VocabularyForm({
     markNotesBaselineReady,
   } = useVocabularyFormDirtyState({
     initial: {
-      word: initialData?.word ?? "",
+      word: initialData?.word ?? prefillWord ?? "",
       partOfSpeech: initialData?.partOfSpeech,
       notesDoc: initialNotesDoc,
       meanings:
@@ -483,7 +486,18 @@ export function VocabularyForm({
           toast: () => toast.success(t("updated")),
         });
       } else {
-        await createVocabularyWord(payload);
+        const created = await createVocabularyWord(payload);
+        if (fromInboxId) {
+          try {
+            await completeStudyInboxItem({
+              id: fromInboxId,
+              linkedEntityType: "vocabulary",
+              linkedEntityId: created.id,
+            });
+          } catch {
+            // Create already succeeded; leave inbox item for a later retry.
+          }
+        }
         if (workspaceId) {
           void queryClient.invalidateQueries({
             queryKey: queryKeys.vocabulary.all(workspaceId),
@@ -589,7 +603,7 @@ export function VocabularyForm({
       className={mx(
         composerStyles,
         "vocab-composer",
-        isModal ? "space-y-6" : "space-y-8",
+        isModal ? "space-y-6" : "flex flex-col gap-0",
       )}
     >
       {!isModal ? (
@@ -609,97 +623,70 @@ export function VocabularyForm({
         />
       ) : null}
 
-      <VocabularyComposerSection slot="word" className="space-y-4">
-        <div className="grid grid-cols-1 gap-x-5 gap-y-2 lg:grid-cols-[minmax(0,1.45fr)_minmax(14rem,0.55fr)]">
-          <Label
-            htmlFor="word"
-            className={mx(
-              composerStyles,
-              "vocab-composer-kicker text-[0.68rem] font-semibold tracking-[0.18em] uppercase lg:col-start-1 lg:row-start-1",
-            )}
-          >
-            {t("word")}
-          </Label>
-          <div
-            className="relative lg:col-start-1 lg:row-start-2"
-            data-tutorial="vocab-composer-word"
-          >
-            <CapitalizedInput
-              id="word"
-              placeholder={t("wordPlaceholder")}
+      <VocabularyComposerSection slot="word" index={1}>
+        <div className={mx(composerStyles, "vocab-composer-word-row")}>
+          <div className={mx(composerStyles, "vocab-composer-word-col")}>
+            <Label
+              htmlFor="word"
               className={mx(
                 composerStyles,
-                "vocab-composer-word-field vocab-composer-control pr-12 font-heading text-[1.3rem] sm:text-[1.5rem]",
-                wordCheckStatus === "unique" && "vocab-composer-word-ok",
+                "vocab-composer-kicker text-[0.68rem] font-semibold tracking-[0.18em] uppercase",
               )}
-              aria-invalid={isDuplicate || undefined}
-              aria-describedby={
-                isDuplicate ||
-                  wordCheckStatus === "error" ||
-                  isWordBusy
-                  ? "word-duplicate-status"
-                  : undefined
-              }
-              {...form.register("word")}
-            />
-            {isWordBusy ? (
-              <Loader2
-                className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 animate-spin text-(--composer-word)"
-                aria-hidden
-              />
-            ) : null}
-          </div>
-          <Label
-            className={mx(
-              composerStyles,
-              "vocab-composer-kicker mt-3 text-[0.68rem] font-semibold tracking-[0.18em] uppercase lg:col-start-2 lg:row-start-1 lg:mt-0",
-            )}
-          >
-            {t("partOfSpeech")}
-          </Label>
-          <div
-            className="lg:col-start-2 lg:row-start-2"
-            data-tutorial="vocab-composer-pos"
-          >
-            <Select
-              value={form.watch("partOfSpeech") ?? ""}
-              onValueChange={(value) =>
-                form.setValue(
-                  "partOfSpeech",
-                  value
-                    ? (value as VocabularyFormClientValues["partOfSpeech"])
-                    : undefined,
-                  { shouldDirty: true, shouldTouch: true },
-                )
-              }
             >
-              <SelectTrigger
+              {t("word")}
+            </Label>
+            <div className="relative" data-tutorial="vocab-composer-word">
+              <CapitalizedInput
+                id="word"
+                placeholder={t("wordPlaceholder")}
                 className={mx(
                   composerStyles,
-                  "vocab-composer-word-field vocab-composer-control h-16! w-full rounded-md px-3 py-0! data-[size=default]:h-16!",
+                  "vocab-composer-word-field vocab-composer-control pr-12 font-heading text-[1.35rem] sm:text-[1.55rem]",
+                  wordCheckStatus === "unique" && "vocab-composer-word-ok",
                 )}
-              >
-                <SelectValue placeholder={t("partOfSpeechPlaceholder")}>
-                  {selectedPartOfSpeech &&
-                    PARTS_OF_SPEECH.includes(
-                      selectedPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
-                    )
-                    ? tPos(
-                      selectedPartOfSpeech as (typeof PARTS_OF_SPEECH)[number],
-                    )
-                    : null}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent>
-                {PARTS_OF_SPEECH.map((pos) => (
-                  <SelectItem key={pos} value={pos}>
-                    {tPos(pos)}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
+                aria-invalid={isDuplicate || undefined}
+                aria-describedby={
+                  isDuplicate ||
+                    wordCheckStatus === "error" ||
+                    isWordBusy
+                    ? "word-duplicate-status"
+                    : undefined
+                }
+                {...form.register("word")}
+              />
+              {isWordBusy ? (
+                <Loader2
+                  className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 animate-spin text-(--composer-word)"
+                  aria-hidden
+                />
+              ) : null}
+            </div>
           </div>
-          <div className="space-y-2 empty:hidden lg:col-span-2">
+
+          <div className={mx(composerStyles, "vocab-composer-pos-col")}>
+            <Label
+              className={mx(
+                composerStyles,
+                "vocab-composer-kicker text-[0.68rem] font-semibold tracking-[0.18em] uppercase",
+              )}
+            >
+              {t("partOfSpeech")}
+            </Label>
+            <div data-tutorial="vocab-composer-pos">
+              <PartOfSpeechSelect
+                size="composer"
+                value={form.watch("partOfSpeech") ?? ""}
+                onChange={(value) =>
+                  form.setValue("partOfSpeech", value, {
+                    shouldDirty: true,
+                    shouldTouch: true,
+                  })
+                }
+              />
+            </div>
+          </div>
+
+          <div className={mx(composerStyles, "vocab-composer-word-status")}>
             {form.formState.errors.word ? (
               <p className="text-sm text-destructive">
                 {form.formState.errors.word.message}
@@ -764,6 +751,7 @@ export function VocabularyForm({
 
       <VocabularyComposerSection
         slot="meaning"
+        index={2}
         data-tutorial="vocab-composer-meanings"
       >
         <SortableMeanings
@@ -785,53 +773,57 @@ export function VocabularyForm({
 
       <VocabularyComposerSection
         slot="example"
+        index={3}
         data-tutorial="vocab-composer-examples"
       >
         <SortableExamples examples={examples} onChange={setExamples} />
       </VocabularyComposerSection>
 
-      <VocabularyComposerSection slot="extra" className="space-y-6">
-        <div data-tutorial="vocab-composer-tags">
-          <TagMultiSelect
-            value={tags}
-            onChange={setTags}
-            customTags={customTags}
-            onCustomTagsChange={setLocalCustomTags}
-          />
-        </div>
-
-        <div data-tutorial="vocab-composer-synonyms">
-          <SynonymPicker
-            value={synonyms}
-            onChange={setSynonyms}
-            options={availableSynonyms}
-            onOptionsChange={setLocalSynonyms}
-            currentWordId={initialData?.id}
-            currentWord={watchedWord}
-          />
-        </div>
-
-        <div className="space-y-2" data-tutorial="vocab-composer-notes">
-          <Label
-            htmlFor="notes-editor"
-            className={mx(
-              composerStyles,
-              "vocab-composer-kicker font-heading text-base font-bold tracking-tight",
-            )}
-          >
-            {t("notes")}
-          </Label>
-          <div id="notes-editor">
-            <RichTextEditor
-              content={notesDoc}
-              placeholder={t("notesPlaceholder")}
-              variant="notes"
-              language={language}
-              formatWord={watchedWord}
-              onChange={handleNotesChange}
-              onImageUploadPendingChange={setNotesImageUploading}
-              onEditorReady={handleNotesEditorReady}
+      <VocabularyComposerSection slot="extra" index={4} title={t("tags")}>
+        <div className={mx(composerStyles, "vocab-composer-extra-stack")}>
+          <div data-tutorial="vocab-composer-tags">
+            <TagMultiSelect
+              value={tags}
+              onChange={setTags}
+              customTags={customTags}
+              onCustomTagsChange={setLocalCustomTags}
             />
+          </div>
+
+          <div data-tutorial="vocab-composer-synonyms">
+            <SynonymPicker
+              value={synonyms}
+              onChange={setSynonyms}
+              options={availableSynonyms}
+              onOptionsChange={setLocalSynonyms}
+              currentWordId={initialData?.id}
+              currentWord={watchedWord}
+            />
+          </div>
+
+          <div className="space-y-3.5" data-tutorial="vocab-composer-notes">
+            <Label
+              htmlFor="notes-editor"
+              className={mx(
+                composerStyles,
+                "vocab-composer-kicker text-[0.68rem] font-semibold tracking-[0.18em] uppercase",
+              )}
+            >
+              {t("notes")}
+            </Label>
+            <div id="notes-editor">
+              <RichTextEditor
+                content={notesDoc}
+                placeholder={t("notesPlaceholder")}
+                variant="notes"
+                language={language}
+                formatWord={watchedWord}
+                className={mx(composerStyles, "vocab-notes-editor")}
+                onChange={handleNotesChange}
+                onImageUploadPendingChange={setNotesImageUploading}
+                onEditorReady={handleNotesEditorReady}
+              />
+            </div>
           </div>
         </div>
       </VocabularyComposerSection>
@@ -839,7 +831,7 @@ export function VocabularyForm({
       <div
         className={mx(
           composerStyles,
-          "vocab-composer-actions sticky bottom-0 z-10 -mx-1 flex flex-col gap-2 px-1 py-3 sm:static sm:flex-row sm:justify-end sm:py-0",
+          "vocab-composer-actions mt-4 flex flex-col gap-2 sm:mt-6 sm:flex-row sm:justify-end sm:py-1",
         )}
       >
         {showCancel ? (
@@ -849,7 +841,10 @@ export function VocabularyForm({
             size="lg"
             onClick={handleCancel}
             disabled={isSaving}
-            className="h-12 w-full sm:h-11 sm:w-auto"
+            className={mx(
+              composerStyles,
+              "vocab-composer-cancel h-12 w-full sm:h-11 sm:w-auto",
+            )}
           >
             {tCommon("cancel")}
           </Button>
@@ -861,7 +856,7 @@ export function VocabularyForm({
           data-tutorial="vocab-composer-save"
           className={mx(
             composerStyles,
-            "vocab-composer-submit h-12 w-full sm:h-11 sm:min-w-44 sm:w-auto",
+            "vocab-composer-submit h-11 w-full sm:min-w-44 sm:w-auto",
           )}
         >
           {isSaving ? (

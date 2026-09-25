@@ -6,6 +6,7 @@ export const SEARCH_RESULT_TYPES = [
   "speaking",
   "folder",
   "exercise",
+  "inbox",
 ] as const;
 
 export type SearchResultType = (typeof SEARCH_RESULT_TYPES)[number];

@@ -39,6 +39,17 @@
   gap: 0.65rem;
 }
 
+@media (max-width: 480px) {
+  .row {
+    flex-wrap: wrap;
+  }
+
+  .seekBlock {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+}
+
 .play {
   display: inline-flex;
   flex-shrink: 0;

@@ -297,7 +297,7 @@ function ChoiceOption({
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
         "disabled:cursor-default",
         !revealed &&
-          "border-hairline-cloud bg-surface-elevated shadow-sm shadow-ink/4 hover:border-(--exercise-accent)/55 hover:bg-(--exercise-accent-soft)/70 hover:shadow-md hover:shadow-ink/6",
+          "border-hairline-cloud control-surface shadow-sm shadow-ink/4 hover:border-(--exercise-accent)/55 hover:bg-(--exercise-accent-soft)/70 hover:shadow-md hover:shadow-ink/6",
         !revealed &&
           isSelected &&
           "border-(--exercise-accent) bg-(--exercise-accent-soft) shadow-sm",

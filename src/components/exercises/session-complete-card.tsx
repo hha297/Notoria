@@ -45,7 +45,7 @@ export function SessionCompleteCard({
         {title}
       </p>
       {hasStats ? (
-        <dl className="mt-6 grid grid-cols-3 gap-3 text-ink">
+        <dl className="mt-6 grid grid-cols-1 gap-3 text-ink sm:grid-cols-3">
           <div>
             <dt className="text-xs text-muted-foreground">{t("questionsLabel")}</dt>
             <dd className="mt-1 font-heading text-2xl font-bold tabular-nums">

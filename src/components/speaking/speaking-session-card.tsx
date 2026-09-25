@@ -122,7 +122,7 @@ export function SpeakingSessionCard({
               type="button"
               size="icon-sm"
               variant="ghost"
-              className="size-7 text-muted-foreground hover:text-destructive"
+              className="size-7 text-destructive hover:bg-destructive/10 hover:text-destructive"
               onClick={() => setDeleteOpen(true)}
               disabled={isPending}
             >

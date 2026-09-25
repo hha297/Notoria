@@ -8,6 +8,7 @@ import {
   Dumbbell,
   Folder,
   Headphones,
+  Inbox,
   Languages,
   LoaderCircle,
   PenLine,
@@ -39,6 +40,7 @@ const TYPE_ICONS: Record<SearchResultType, LucideIcon> = {
   speaking: Video,
   folder: Folder,
   exercise: Dumbbell,
+  inbox: Inbox,
 };
 
 const DEBOUNCE_MS = 200;
@@ -197,7 +199,7 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
           aria-activedescendant={activeId}
           aria-autocomplete="list"
           className={cn(
-            "rounded-md border-hairline-cloud bg-surface-elevated pr-20 pl-10 shadow-none",
+            "control-surface rounded-md border-hairline-cloud pr-20 pl-10 shadow-none",
             compact && "h-10",
           )}
         />
@@ -211,7 +213,7 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
                 setDebounced("");
                 inputRef.current?.focus();
               }}
-              className="rounded-md p-1 text-muted-foreground transition-colors hover:bg-muted hover:text-ink"
+              className="rounded-md p-1 text-muted-foreground transition-colors btn-ghost-surface"
               aria-label={t("clear")}
             >
               <X className="size-4" />
@@ -220,7 +222,7 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
           {isFetching && query ? (
             <LoaderCircle className="size-4 animate-spin text-muted-foreground" />
           ) : (
-            <kbd className="hidden rounded-md border border-hairline-cloud bg-muted/60 px-1.5 py-0.5 text-[11px] font-medium text-muted-foreground sm:inline-block">
+            <kbd className="control-surface hidden rounded-md border border-hairline-cloud px-1.5 py-0.5 text-[11px] font-medium text-muted-foreground sm:inline-block">
               {searchShortcutLabel}
             </kbd>
           )}
@@ -229,7 +231,7 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
 
       {showPanel ? (
         <div
-          className="absolute z-30 mt-2 w-full overflow-hidden rounded-md border border-hairline-cloud bg-popover shadow-[0_1px_2px_rgba(35,37,29,0.06)]"
+          className="menu-surface absolute z-30 mt-2 w-full overflow-hidden rounded-md border border-hairline-cloud shadow-[0_1px_2px_rgba(35,37,29,0.06)]"
           onMouseDown={(event) => event.preventDefault()}
         >
           {showEmptyHint ? (
@@ -275,18 +277,20 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
                       href={result.href}
                       className={cn(
                         "flex gap-3 px-4 py-2.5 transition-colors",
-                        active ? "bg-muted/80" : "hover:bg-muted/50",
+                        active
+                          ? "menu-item-surface"
+                          : "hover:bg-[image:var(--menu-item-hover)]",
                       )}
                       onMouseEnter={() => setActiveIndex(index)}
                     >
-                      <span className="mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg bg-muted text-ink">
+                      <span className="control-surface mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg text-ink">
                         <Icon className="size-4" />
                       </span>
                       <span className="min-w-0 flex-1">
                         <span className="block truncate text-sm font-medium text-ink">
                           <HighlightedText text={result.title} query={query} />
                         </span>
-                        <span className="mt-0.5 inline-flex max-w-full truncate rounded-full bg-muted px-2 py-px text-[11px] font-medium text-muted-foreground">
+                        <span className="control-surface mt-0.5 inline-flex max-w-full truncate rounded-full px-2 py-px text-[11px] font-medium text-muted-foreground">
                           {result.collection}
                         </span>
                         {result.subtitle ? (

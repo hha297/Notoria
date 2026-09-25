@@ -39,6 +39,7 @@ export function NewSpeakingDialog({
   onOpenChange,
 }: NewSpeakingDialogProps) {
   const t = useTranslations("speaking");
+  const tBilling = useTranslations("billing");
   const tMeta = useTranslations("speaking.meta");
   const tTags = useTranslations("tags");
   const tc = useTranslations("common");
@@ -58,6 +59,7 @@ export function NewSpeakingDialog({
 
   function errorMessage(error: unknown) {
     const code = error instanceof Error ? error.message : "STREAM_CALL_FAILED";
+    if (code === "AI_QUOTA_EXCEEDED") return tBilling("quotaExceeded");
     return isSpeakingErrorCode(code)
       ? t(`errors.${code}`)
       : t("errors.STREAM_CALL_FAILED");

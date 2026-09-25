@@ -44,6 +44,24 @@
   max-width: 42rem;
 }
 
+/* Beat legal-prose ol/li indent so cards sit centered, not shifted right */
+.guide .guide-loop,
+.guide .guide-steps {
+  margin: 0.35rem 0 0;
+  padding: 0;
+  list-style: none;
+  max-width: 42rem;
+  width: 100%;
+}
+
+.guide .guide-loop-item,
+.guide .guide-step {
+  margin: 0;
+  padding: 0.85rem 0.95rem;
+  padding-left: 0.95rem;
+  list-style: none;
+}
+
 .guide-loop-item,
 .guide-step {
   display: grid;
@@ -113,6 +131,10 @@
       transparent 72%
     ),
     color-mix(in oklab, var(--surface-elevated) 45%, transparent);
+}
+
+.guide-area[data-area="capture"] {
+  --area-tint: var(--module-home-bg);
 }
 
 .guide-area[data-area="vocab"] {
@@ -210,6 +232,57 @@
 .guide-cta-note a {
   color: var(--link);
   font-weight: 600;
+}
+
+@media (max-width: 639px) {
+  .guide .guide-loop,
+  .guide .guide-steps {
+    margin-inline: auto;
+    max-width: none;
+    width: 100%;
+  }
+
+  .guide-loop-item,
+  .guide-step {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .guide-loop-index,
+  .guide-step-index {
+    margin-top: 0;
+  }
+
+  .guide-loop-copy,
+  .guide-step > div {
+    width: 100%;
+  }
+
+  .guide-cta {
+    text-align: center;
+    width: 100%;
+    box-sizing: border-box;
+  }
+
+  .guide-cta h2,
+  .guide-cta p {
+    margin-inline: auto;
+  }
+
+  .guide-cta-actions {
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+  }
+
+  .guide-cta-actions a {
+    width: 100%;
+    justify-content: center;
+  }
 }
 
 @media (min-width: 640px) {

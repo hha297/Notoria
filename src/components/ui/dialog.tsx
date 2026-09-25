@@ -53,7 +53,7 @@ function DialogContent({
       <DialogPrimitive.Popup
         data-slot="dialog-content"
         className={cn(
-          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] max-h-[min(92dvh,calc(100%-2rem))] -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto rounded-sm border border-hairline-cloud bg-popover p-4 text-sm text-popover-foreground duration-100 outline-none sm:max-w-sm sm:p-5 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
+          "fixed top-1/2 left-1/2 z-50 grid w-full max-w-[calc(100%-2rem)] max-h-[min(92dvh,calc(100%-2rem))] -translate-x-1/2 -translate-y-1/2 gap-4 overflow-y-auto rounded-sm border border-hairline-cloud menu-surface p-4 text-sm text-popover-foreground duration-100 outline-none sm:max-w-sm sm:p-5 data-open:animate-in data-open:fade-in-0 data-open:zoom-in-95 data-closed:animate-out data-closed:fade-out-0 data-closed:zoom-out-95",
           className
         )}
         {...props}
@@ -102,7 +102,8 @@ function DialogFooter({
     <div
       data-slot="dialog-footer"
       className={cn(
-        "-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t bg-muted/50 p-4 sm:flex-row sm:justify-end",
+        /* Bleed matches DialogContent padding (p-4 / sm:p-5). Override with mx-0 mb-0 on p-0 sheets. */
+        "-mx-4 -mb-4 flex flex-col-reverse gap-2 rounded-b-xl border-t border-hairline-cloud control-surface p-4 sm:-mx-5 sm:-mb-5 sm:flex-row sm:justify-end",
         className
       )}
       {...props}

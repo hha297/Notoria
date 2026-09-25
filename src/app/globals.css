@@ -238,6 +238,83 @@
   --control-h-sm: 2rem;
   --control-h-md: 2.5rem;
   --control-h-lg: 2.75rem;
+
+  /* Opaque tinted blends — no glass/transparent washes */
+  --control-surface-base: var(--surface-elevated);
+  --control-surface:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-theory-bg) 34%, var(--surface-elevated)),
+      color-mix(in oklab, var(--module-listen-bg) 16%, var(--surface-elevated)) 46%,
+      var(--surface-elevated) 78%
+    ),
+    linear-gradient(
+      205deg,
+      color-mix(in oklab, var(--module-vocab-bg) 18%, var(--surface-elevated)),
+      var(--surface-elevated) 62%
+    ),
+    linear-gradient(var(--control-surface-base), var(--control-surface-base));
+  --control-surface-hover:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-theory-bg) 48%, var(--surface-elevated)),
+      color-mix(in oklab, var(--module-listen-bg) 24%, var(--surface-elevated)) 46%,
+      var(--surface-elevated) 78%
+    ),
+    linear-gradient(
+      205deg,
+      color-mix(in oklab, var(--module-vocab-bg) 28%, var(--surface-elevated)),
+      var(--surface-elevated) 62%
+    ),
+    linear-gradient(
+      color-mix(in oklab, var(--surface-muted) 42%, var(--surface-elevated)),
+      color-mix(in oklab, var(--surface-muted) 42%, var(--surface-elevated))
+    );
+  --elevated-surface:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-theory-bg) 22%, transparent),
+      transparent 58%
+    ),
+    linear-gradient(
+      210deg,
+      color-mix(in oklab, var(--module-listen-bg) 12%, transparent),
+      transparent 64%
+    ),
+    var(--surface-elevated);
+  --menu-surface:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--module-theory-bg) 22%, var(--popover)),
+      var(--popover) 65%
+    ),
+    linear-gradient(
+      200deg,
+      color-mix(in oklab, var(--module-vocab-bg) 12%, var(--popover)),
+      var(--popover) 70%
+    ),
+    linear-gradient(var(--popover), var(--popover));
+  --menu-item-hover:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-theory-bg) 28%, var(--surface-muted)),
+      var(--surface-muted) 70%
+    ),
+    linear-gradient(var(--surface-muted), var(--surface-muted));
+  --btn-primary-surface:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, #ffffff 32%, var(--primary)),
+      var(--primary) 48%,
+      color-mix(in oklab, var(--primary-hover) 58%, var(--primary))
+    );
+  --btn-primary-surface-hover:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, #ffffff 38%, var(--primary-hover)),
+      var(--primary-hover) 50%,
+      color-mix(in oklab, var(--primary-active) 42%, var(--primary-hover))
+    );
 }
 
 .dark {
@@ -329,6 +406,83 @@
   --module-account-fg: #9aa8b4;
   --module-settings-bg: #2c322e;
   --module-settings-fg: #a8b4ac;
+
+  /* Dark: opaque tinted blends, not glass */
+  --control-surface-base: var(--surface-elevated);
+  --control-surface:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-theory-bg) 52%, var(--surface-elevated)),
+      color-mix(in oklab, var(--module-listen-bg) 28%, var(--surface-elevated)) 48%,
+      var(--surface-elevated) 80%
+    ),
+    linear-gradient(
+      210deg,
+      color-mix(in oklab, var(--module-vocab-bg) 26%, var(--surface-elevated)),
+      var(--surface-elevated) 60%
+    ),
+    linear-gradient(var(--control-surface-base), var(--control-surface-base));
+  --control-surface-hover:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-theory-bg) 64%, var(--surface-elevated)),
+      color-mix(in oklab, var(--module-listen-bg) 36%, var(--surface-elevated)) 48%,
+      var(--surface-elevated) 80%
+    ),
+    linear-gradient(
+      210deg,
+      color-mix(in oklab, var(--module-vocab-bg) 34%, var(--surface-elevated)),
+      var(--surface-elevated) 60%
+    ),
+    linear-gradient(
+      color-mix(in oklab, var(--surface-muted) 48%, var(--surface-elevated)),
+      color-mix(in oklab, var(--surface-muted) 48%, var(--surface-elevated))
+    );
+  --elevated-surface:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-theory-bg) 36%, transparent),
+      transparent 58%
+    ),
+    linear-gradient(
+      210deg,
+      color-mix(in oklab, var(--module-listen-bg) 18%, transparent),
+      transparent 64%
+    ),
+    var(--surface-elevated);
+  --menu-surface:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--module-theory-bg) 32%, var(--popover)),
+      var(--popover) 62%
+    ),
+    linear-gradient(
+      200deg,
+      color-mix(in oklab, var(--module-vocab-bg) 18%, var(--popover)),
+      var(--popover) 70%
+    ),
+    linear-gradient(var(--popover), var(--popover));
+  --menu-item-hover:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-theory-bg) 36%, var(--surface-muted)),
+      var(--surface-muted) 70%
+    ),
+    linear-gradient(var(--surface-muted), var(--surface-muted));
+  --btn-primary-surface:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, #ffffff 22%, var(--primary)),
+      var(--primary) 48%,
+      color-mix(in oklab, var(--primary-hover) 52%, var(--primary))
+    );
+  --btn-primary-surface-hover:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, #ffffff 28%, var(--primary-hover)),
+      var(--primary-hover) 50%,
+      color-mix(in oklab, var(--primary-active) 38%, var(--primary-hover))
+    );
 }
 
 @layer base {
@@ -371,7 +525,71 @@
   }
 
   .card-surface {
-    @apply min-w-0 max-w-full rounded-md border border-hairline-cloud bg-surface-elevated p-5 text-ink;
+    @apply min-w-0 max-w-full rounded-md border border-hairline-cloud p-5 text-ink;
+    background-color: var(--surface-elevated);
+    background-image: var(--elevated-surface);
+  }
+
+  .control-surface {
+    background-color: var(--surface-elevated);
+    background-image: var(--control-surface);
+  }
+
+  .control-surface:hover:not(:disabled):not([aria-disabled="true"]),
+  .control-surface:focus-visible,
+  .control-surface[data-popup-open],
+  .control-surface[aria-expanded="true"] {
+    background-image: var(--control-surface-hover);
+  }
+
+  .elevated-surface {
+    background-color: var(--surface-elevated);
+    background-image: var(--elevated-surface);
+  }
+
+  .menu-surface {
+    background-color: var(--popover);
+    background-image: var(--menu-surface);
+  }
+
+  .menu-item-surface:hover,
+  .menu-item-surface:focus,
+  .menu-item-surface[data-highlighted],
+  .menu-item-surface[data-popup-open],
+  .menu-item-surface[data-open],
+  .menu-item-surface[aria-selected="true"] {
+    background-color: var(--surface-muted);
+    background-image: var(--menu-item-hover);
+  }
+
+  .btn-blend-primary {
+    background-color: var(--primary);
+    background-image: var(--btn-primary-surface);
+    color: var(--primary-foreground);
+  }
+
+  .btn-blend-primary:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-color: var(--primary-hover);
+    background-image: var(--btn-primary-surface-hover);
+  }
+
+  .btn-ghost-surface:hover:not(:disabled):not([aria-disabled="true"]),
+  .btn-ghost-surface[aria-expanded="true"],
+  .btn-ghost-surface[data-popup-open] {
+    background-image: var(--control-surface-hover);
+    color: var(--ink);
+  }
+
+  .toggle-surface:hover:not(:disabled):not([aria-disabled="true"]) {
+    background-image: var(--control-surface-hover);
+    color: var(--foreground);
+  }
+
+  .toggle-surface[aria-pressed="true"],
+  .toggle-surface[data-state="on"],
+  .toggle-surface[data-pressed] {
+    background-image: var(--control-surface);
+    color: var(--foreground);
   }
 
   .studio-shell {
@@ -400,9 +618,32 @@
   }
 
   .studio-paper {
-    @apply min-w-0 rounded-2xl border border-hairline-cloud bg-surface-elevated text-ink shadow-[0_1px_2px_rgba(35,37,29,0.04)];
+    /* Rounded content frame — natural height follows content */
+    @apply min-w-0 border border-hairline-cloud text-ink shadow-[0_1px_2px_rgba(35,37,29,0.04)];
+    border-radius: 1rem;
     position: relative;
     isolation: isolate;
+    background-color: transparent;
+    background-image:
+      linear-gradient(
+        180deg,
+        color-mix(in oklab, var(--surface-elevated) 88%, transparent),
+        color-mix(in oklab, var(--surface-elevated) 96%, transparent) 42%,
+        var(--surface-elevated)
+      );
+  }
+
+  /*
+    Dock section under the sticky navbar so page scroll never pulls content
+    behind the nav. Uses measured chrome height + existing inset/gap tokens.
+  */
+  .studio-paper-dock {
+    position: sticky;
+    top: calc(
+      var(--studio-inset, 1.25rem) + var(--studio-chrome-height, 3.5rem) +
+        var(--studio-stack-gap, 0.75rem)
+    );
+    z-index: 10;
   }
 
   .studio-paper::before,
@@ -412,87 +653,68 @@
     inset: 0;
     z-index: 0;
     pointer-events: none;
-    -webkit-mask-image:
-      linear-gradient(
-        to right,
-        transparent 0%,
-        #000 2%,
-        #000 98%,
-        transparent 100%
-      ),
-      linear-gradient(
-        to bottom,
-        transparent 0%,
-        #000 3%,
-        #000 94%,
-        transparent 100%
-      );
-    -webkit-mask-composite: source-in;
-    mask-image:
-      linear-gradient(
-        to right,
-        transparent 0%,
-        #000 2%,
-        #000 98%,
-        transparent 100%
-      ),
-      linear-gradient(
-        to bottom,
-        transparent 0%,
-        #000 3%,
-        #000 94%,
-        transparent 100%
-      );
-    mask-composite: intersect;
+    border-radius: inherit;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      #000 0%,
+      #000 36%,
+      transparent 62%
+    );
+    mask-image: linear-gradient(to bottom, #000 0%, #000 36%, transparent 62%);
   }
 
   .studio-paper::before {
     background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--module-theory-bg) 40%, transparent),
+        transparent 44%
+      ),
       radial-gradient(
-        ellipse 58% 42% at 6% 0%,
+        ellipse 72% 55% at 8% 0%,
         color-mix(in oklab, var(--module-theory-bg) 58%, transparent),
         transparent 72%
       ),
       radial-gradient(
-        ellipse 48% 38% at 94% 4%,
+        ellipse 58% 48% at 92% 0%,
         color-mix(in oklab, var(--module-listen-bg) 48%, transparent),
-        transparent 70%
-      ),
-      radial-gradient(
-        ellipse 42% 34% at 78% 100%,
-        color-mix(in oklab, var(--module-writing-bg) 40%, transparent),
-        transparent 72%
-      ),
-      radial-gradient(
-        ellipse 38% 32% at 8% 88%,
-        color-mix(in oklab, var(--module-vocab-bg) 44%, transparent),
         transparent 70%
       );
   }
 
   .studio-paper[data-studio-scene="vocabulary"]::after {
     background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--module-vocab-bg) 55%, transparent),
+        transparent 46%
+      ),
       radial-gradient(
-        ellipse 62% 48% at 10% 12%,
-        color-mix(in oklab, var(--module-vocab-bg) 62%, transparent),
+        ellipse 78% 58% at 8% 0%,
+        color-mix(in oklab, var(--module-vocab-bg) 78%, transparent),
         transparent 74%
       ),
       radial-gradient(
-        ellipse 44% 36% at 92% 8%,
-        color-mix(in oklab, var(--module-listen-bg) 36%, transparent),
+        ellipse 54% 46% at 92% 0%,
+        color-mix(in oklab, var(--module-listen-bg) 40%, transparent),
         transparent 70%
       );
   }
 
   .studio-paper[data-studio-scene="home"]::after {
     background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--module-home-bg) 50%, transparent),
+        transparent 46%
+      ),
       radial-gradient(
-        ellipse 64% 50% at 8% 10%,
+        ellipse 72% 54% at 8% 0%,
         color-mix(in oklab, var(--module-home-bg) 68%, transparent),
         transparent 74%
       ),
       radial-gradient(
-        ellipse 42% 36% at 94% 6%,
+        ellipse 48% 44% at 94% 0%,
         color-mix(in oklab, var(--module-vocab-bg) 34%, transparent),
         transparent 70%
       );
@@ -500,13 +722,18 @@
 
   .studio-paper[data-studio-scene="guide"]::after {
     background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--module-guide-bg) 50%, transparent),
+        transparent 46%
+      ),
       radial-gradient(
-        ellipse 60% 48% at 10% 10%,
+        ellipse 70% 52% at 10% 0%,
         color-mix(in oklab, var(--module-guide-bg) 66%, transparent),
         transparent 74%
       ),
       radial-gradient(
-        ellipse 40% 34% at 92% 8%,
+        ellipse 48% 42% at 90% 0%,
         color-mix(in oklab, var(--module-writing-bg) 30%, transparent),
         transparent 70%
       );
@@ -514,13 +741,18 @@
 
   .studio-paper[data-studio-scene="account"]::after {
     background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--module-account-bg) 48%, transparent),
+        transparent 46%
+      ),
       radial-gradient(
-        ellipse 58% 46% at 10% 10%,
+        ellipse 68% 50% at 10% 0%,
         color-mix(in oklab, var(--module-account-bg) 64%, transparent),
         transparent 74%
       ),
       radial-gradient(
-        ellipse 40% 34% at 92% 8%,
+        ellipse 48% 42% at 90% 0%,
         color-mix(in oklab, var(--module-listen-bg) 28%, transparent),
         transparent 70%
       );
@@ -528,13 +760,18 @@
 
   .studio-paper[data-studio-scene="settings"]::after {
     background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--module-settings-bg) 48%, transparent),
+        transparent 46%
+      ),
       radial-gradient(
-        ellipse 58% 46% at 10% 10%,
+        ellipse 68% 50% at 10% 0%,
         color-mix(in oklab, var(--module-settings-bg) 66%, transparent),
         transparent 74%
       ),
       radial-gradient(
-        ellipse 40% 34% at 92% 8%,
+        ellipse 48% 42% at 90% 0%,
         color-mix(in oklab, var(--module-home-bg) 28%, transparent),
         transparent 70%
       );
@@ -542,32 +779,37 @@
 
   .studio-paper[data-studio-scene="exercises"]::after {
     background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--module-exercise-bg) 55%, transparent),
+        transparent 46%
+      ),
       radial-gradient(
-        ellipse 56% 44% at 8% 8%,
-        color-mix(in oklab, var(--module-exercise-bg) 58%, transparent),
+        ellipse 76% 56% at 8% 0%,
+        color-mix(in oklab, var(--module-exercise-bg) 76%, transparent),
         transparent 72%
       ),
       radial-gradient(
-        ellipse 46% 38% at 92% 6%,
-        color-mix(in oklab, var(--module-theory-bg) 42%, transparent),
+        ellipse 54% 46% at 92% 0%,
+        color-mix(in oklab, var(--module-theory-bg) 46%, transparent),
         transparent 70%
-      ),
-      radial-gradient(
-        ellipse 40% 32% at 70% 100%,
-        color-mix(in oklab, var(--module-writing-bg) 36%, transparent),
-        transparent 72%
       );
   }
 
   .studio-paper[data-studio-scene="theory"]::after {
     background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--module-theory-bg) 50%, transparent),
+        transparent 46%
+      ),
       radial-gradient(
-        ellipse 62% 48% at 8% 6%,
+        ellipse 70% 52% at 8% 0%,
         color-mix(in oklab, var(--module-theory-bg) 64%, transparent),
         transparent 74%
       ),
       radial-gradient(
-        ellipse 44% 36% at 94% 10%,
+        ellipse 50% 44% at 92% 0%,
         color-mix(in oklab, var(--module-listen-bg) 38%, transparent),
         transparent 70%
       );
@@ -575,13 +817,18 @@
 
   .studio-paper[data-studio-scene="writing"]::after {
     background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--module-writing-bg) 50%, transparent),
+        transparent 46%
+      ),
       radial-gradient(
-        ellipse 60% 46% at 10% 8%,
+        ellipse 70% 52% at 10% 0%,
         color-mix(in oklab, var(--module-writing-bg) 60%, transparent),
         transparent 74%
       ),
       radial-gradient(
-        ellipse 42% 34% at 90% 12%,
+        ellipse 48% 42% at 88% 0%,
         color-mix(in oklab, var(--module-exercise-bg) 34%, transparent),
         transparent 70%
       );
@@ -589,13 +836,18 @@
 
   .studio-paper[data-studio-scene="listen"]::after {
     background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--module-listen-bg) 50%, transparent),
+        transparent 46%
+      ),
       radial-gradient(
-        ellipse 60% 46% at 8% 8%,
+        ellipse 70% 52% at 8% 0%,
         color-mix(in oklab, var(--module-listen-bg) 60%, transparent),
         transparent 74%
       ),
       radial-gradient(
-        ellipse 42% 34% at 92% 10%,
+        ellipse 48% 42% at 90% 0%,
         color-mix(in oklab, var(--module-vocab-bg) 32%, transparent),
         transparent 70%
       );
@@ -603,13 +855,18 @@
 
   .studio-paper[data-studio-scene="speak"]::after {
     background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--module-speak-bg) 50%, transparent),
+        transparent 46%
+      ),
       radial-gradient(
-        ellipse 60% 46% at 10% 8%,
+        ellipse 70% 52% at 10% 0%,
         color-mix(in oklab, var(--module-speak-bg) 60%, transparent),
         transparent 74%
       ),
       radial-gradient(
-        ellipse 42% 34% at 90% 12%,
+        ellipse 48% 42% at 90% 0%,
         color-mix(in oklab, var(--module-theory-bg) 32%, transparent),
         transparent 70%
       );
@@ -621,9 +878,66 @@
   }
 
   .studio-chrome {
-    @apply border-b border-hairline-cloud text-ink;
-    background: color-mix(in oklab, var(--surface-elevated) 70%, transparent);
-    backdrop-filter: blur(18px);
+    @apply relative isolate shrink-0 border border-hairline-cloud text-ink;
+    border-radius: 1rem;
+    /* Opaque white/elevated + soft module blend (no glass) */
+    background-color: var(--surface-elevated);
+    background-image:
+      linear-gradient(
+        155deg,
+        color-mix(in oklab, var(--module-theory-bg) 28%, var(--surface-elevated)),
+        color-mix(in oklab, var(--module-listen-bg) 14%, var(--surface-elevated)) 48%,
+        var(--surface-elevated) 78%
+      ),
+      linear-gradient(
+        205deg,
+        color-mix(in oklab, var(--module-vocab-bg) 16%, var(--surface-elevated)),
+        var(--surface-elevated) 62%
+      );
+    box-shadow: none;
+  }
+
+  .studio-chrome::before {
+    content: none;
+  }
+
+  .studio-chrome > * {
+    position: relative;
+    z-index: 1;
+  }
+
+  .dark .studio-chrome {
+    background-color: transparent;
+    background-image: none;
+    background: color-mix(in oklab, var(--background) 42%, transparent);
+    backdrop-filter: blur(20px) saturate(1.2);
+    -webkit-backdrop-filter: blur(20px) saturate(1.2);
+    box-shadow: 0 1px 2px color-mix(in oklab, var(--ink) 4%, transparent);
+  }
+
+  .dark .studio-chrome::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
+    border-radius: inherit;
+    background:
+      radial-gradient(
+        ellipse 72% 80% at 8% 0%,
+        color-mix(in oklab, var(--module-theory-bg) 62%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 58% 70% at 92% 100%,
+        color-mix(in oklab, var(--module-listen-bg) 48%, transparent),
+        transparent 70%
+      ),
+      radial-gradient(
+        ellipse 48% 55% at 55% 0%,
+        color-mix(in oklab, var(--module-vocab-bg) 28%, transparent),
+        transparent 68%
+      );
   }
 
   .empty-state {
@@ -694,7 +1008,13 @@
   .route-view-toggle-item[data-pressed],
   .vocab-view-toggle-item[data-state="on"],
   .vocab-view-toggle-item[data-pressed] {
-    background: var(--route-view-bg) !important;
+    background:
+      linear-gradient(
+        155deg,
+        color-mix(in oklab, #ffffff 28%, transparent),
+        transparent 62%
+      ),
+      var(--route-view-bg) !important;
     color: var(--route-view-fg) !important;
     box-shadow: none !important;
   }
@@ -703,7 +1023,13 @@
   .route-view-toggle-item[data-pressed]:hover,
   .vocab-view-toggle-item[data-state="on"]:hover,
   .vocab-view-toggle-item[data-pressed]:hover {
-    background: var(--route-view-bg) !important;
+    background:
+      linear-gradient(
+        155deg,
+        color-mix(in oklab, #ffffff 36%, transparent),
+        transparent 62%
+      ),
+      var(--route-view-bg) !important;
     color: var(--route-view-fg) !important;
   }
 
@@ -819,6 +1145,7 @@
   .listening-atelier-shell,
   .speaking-atelier-shell,
   .vocab-lexicon-shell,
+  .coach-atelier-shell,
   .writing-paper,
   .theory-paper,
   .listening-paper,
@@ -882,6 +1209,17 @@
     --writing-accent-bg: var(--module-vocab-bg);
   }
 
+  .coach-atelier-shell {
+    --writing-ink: var(--accent-lime);
+    --writing-wash: color-mix(in oklab, var(--accent-lime) 22%, var(--surface));
+    --writing-accent-fg: var(--accent-lime);
+    --writing-accent-bg: color-mix(
+      in oklab,
+      var(--accent-lime) 22%,
+      var(--surface)
+    );
+  }
+
   .writing-atelier,
   .theory-atelier,
   .listening-atelier,
@@ -890,6 +1228,7 @@
   .account-atelier,
   .settings-atelier,
   .vocab-lexicon,
+  .coach-atelier,
   .writing-paper-page,
   .writing-sheet,
   .writing-feature,
@@ -899,6 +1238,11 @@
     overflow: visible;
   }
 
+  /*
+    Route shells: studio-paper owns the top scene wash (flush to chrome border).
+    Keep nested sheet/feature washes only — page ::before created a dark gap
+    under the chrome hairline and bled through translucent chrome.
+  */
   .writing-atelier::before,
   .theory-atelier::before,
   .listening-atelier::before,
@@ -907,6 +1251,11 @@
   .account-atelier::before,
   .settings-atelier::before,
   .vocab-lexicon::before,
+  .coach-atelier::before,
+  .route-atelier::before {
+    content: none;
+  }
+
   .writing-paper-page::before,
   .writing-sheet::before,
   .writing-feature::before,
@@ -950,7 +1299,6 @@
     mask-composite: intersect;
   }
 
-  .writing-atelier::before,
   .writing-sheet::before {
     background:
       radial-gradient(
@@ -993,103 +1341,7 @@
       );
   }
 
-  .theory-atelier::before {
-    background:
-      radial-gradient(
-        ellipse 70% 55% at 8% 8%,
-        color-mix(in oklab, var(--module-theory-bg) 68%, transparent),
-        transparent 72%
-      ),
-      radial-gradient(
-        ellipse 40% 40% at 96% 4%,
-        color-mix(in oklab, var(--module-writing-bg) 26%, transparent),
-        transparent 70%
-      );
-  }
-
-  .listening-atelier::before {
-    background:
-      radial-gradient(
-        ellipse 70% 55% at 8% 8%,
-        color-mix(in oklab, var(--module-listen-bg) 72%, transparent),
-        transparent 72%
-      ),
-      radial-gradient(
-        ellipse 40% 40% at 96% 4%,
-        color-mix(in oklab, var(--module-vocab-bg) 24%, transparent),
-        transparent 70%
-      );
-  }
-
-  .speaking-atelier::before {
-    background:
-      radial-gradient(
-        ellipse 70% 55% at 8% 8%,
-        color-mix(in oklab, var(--module-speak-bg) 72%, transparent),
-        transparent 72%
-      ),
-      radial-gradient(
-        ellipse 40% 40% at 96% 4%,
-        color-mix(in oklab, var(--module-theory-bg) 24%, transparent),
-        transparent 70%
-      );
-  }
-
-  .vocab-lexicon::before {
-    background:
-      radial-gradient(
-        ellipse 72% 58% at 6% 6%,
-        color-mix(in oklab, var(--module-vocab-bg) 72%, transparent),
-        transparent 74%
-      ),
-      radial-gradient(
-        ellipse 42% 38% at 94% 8%,
-        color-mix(in oklab, var(--module-listen-bg) 22%, transparent),
-        transparent 70%
-      );
-  }
-
-  .guide-atelier::before {
-    background:
-      radial-gradient(
-        ellipse 70% 55% at 8% 8%,
-        color-mix(in oklab, var(--module-guide-bg) 72%, transparent),
-        transparent 72%
-      ),
-      radial-gradient(
-        ellipse 40% 40% at 96% 4%,
-        color-mix(in oklab, var(--module-writing-bg) 22%, transparent),
-        transparent 70%
-      );
-  }
-
-  .account-atelier::before {
-    background:
-      radial-gradient(
-        ellipse 70% 55% at 8% 8%,
-        color-mix(in oklab, var(--module-account-bg) 72%, transparent),
-        transparent 72%
-      ),
-      radial-gradient(
-        ellipse 40% 40% at 96% 4%,
-        color-mix(in oklab, var(--module-guide-bg) 20%, transparent),
-        transparent 70%
-      );
-  }
-
-  .settings-atelier::before {
-    background:
-      radial-gradient(
-        ellipse 70% 55% at 8% 8%,
-        color-mix(in oklab, var(--module-settings-bg) 72%, transparent),
-        transparent 72%
-      ),
-      radial-gradient(
-        ellipse 40% 40% at 96% 4%,
-        color-mix(in oklab, var(--module-home-bg) 22%, transparent),
-        transparent 70%
-      );
-  }
+  /* Route-shell washes disabled — studio-paper[data-studio-scene] owns top blend */
 
   .writing-feature::before,
   .writing-empty-desk::before,
@@ -1133,6 +1385,7 @@
   .account-atelier > *,
   .settings-atelier > *,
   .vocab-lexicon > *,
+  .coach-atelier > *,
   .writing-paper-page > *,
   .writing-sheet > *,
   .writing-feature > *,
@@ -1154,7 +1407,8 @@
   }
 
   .listening-atelier,
-  .speaking-atelier {
+  .speaking-atelier,
+  .coach-atelier {
     min-width: 0;
     overflow: visible;
   }
@@ -1173,33 +1427,6 @@
     isolation: isolate;
     min-width: 0;
     overflow: visible;
-  }
-
-  .route-atelier::before {
-    content: "";
-    position: absolute;
-    inset: -18% -32% 0;
-    z-index: 0;
-    pointer-events: none;
-    background:
-      radial-gradient(
-        ellipse 72% 56% at 6% 6%,
-        color-mix(in oklab, var(--route-wash-bg) 72%, transparent),
-        transparent 74%
-      ),
-      radial-gradient(
-        ellipse 42% 36% at 94% 8%,
-        color-mix(in oklab, var(--route-wash-alt) 30%, transparent),
-        transparent 70%
-      );
-    -webkit-mask-image:
-      linear-gradient(to right, transparent, #000 6%, #000 94%, transparent),
-      linear-gradient(to bottom, transparent, #000 10%, #000 88%, transparent);
-    -webkit-mask-composite: source-in;
-    mask-image:
-      linear-gradient(to right, transparent, #000 6%, #000 94%, transparent),
-      linear-gradient(to bottom, transparent, #000 10%, #000 88%, transparent);
-    mask-composite: intersect;
   }
 
   .route-atelier > * {
@@ -1447,18 +1674,21 @@
       color-mix(in oklab, var(--module-vocab-fg) 16%, transparent);
   }
 
-  /* Portaled menu — match soft chip wash, not solid module bg */
+  /* Portaled menu — vocab tint over shared menu surface */
   .vocab-custom-tag-menu {
     border-color: color-mix(
       in oklab,
       var(--module-vocab-fg) 28%,
       var(--hairline-cloud)
     ) !important;
-    background: color-mix(
-      in oklab,
-      var(--module-vocab-bg) 42%,
-      var(--popover)
-    ) !important;
+    background-color: var(--popover) !important;
+    background-image:
+      linear-gradient(
+        160deg,
+        color-mix(in oklab, var(--module-vocab-bg) 36%, var(--popover)),
+        var(--popover) 68%
+      ),
+      var(--menu-surface) !important;
     color: color-mix(
       in oklab,
       var(--ink) 78%,
@@ -1497,12 +1727,16 @@
     ) !important;
   }
 
-  .vocab-custom-tag-menu .bg-popover {
-    background: color-mix(
-      in oklab,
-      var(--module-vocab-bg) 42%,
-      var(--popover)
-    ) !important;
+  .vocab-custom-tag-menu .bg-popover,
+  .vocab-custom-tag-menu.menu-surface {
+    background-color: var(--popover) !important;
+    background-image:
+      linear-gradient(
+        160deg,
+        color-mix(in oklab, var(--module-vocab-bg) 36%, var(--popover)),
+        var(--popover) 68%
+      ),
+      var(--menu-surface) !important;
   }
 
   .vocab-custom-tag-menu input {
@@ -1511,11 +1745,8 @@
       var(--module-vocab-fg) 24%,
       var(--hairline-cloud)
     ) !important;
-    background: color-mix(
-      in oklab,
-      var(--module-vocab-bg) 28%,
-      var(--surface-elevated)
-    ) !important;
+    background-color: transparent !important;
+    background-image: var(--control-surface) !important;
     color: var(--ink) !important;
   }
 
@@ -1525,6 +1756,7 @@
       var(--module-vocab-fg) 48%,
       var(--hairline-cloud)
     ) !important;
+    background-image: var(--control-surface-hover) !important;
     box-shadow: 0 0 0 2px
       color-mix(in oklab, var(--module-vocab-fg) 18%, transparent) !important;
   }
@@ -1540,6 +1772,23 @@
   .vocab-lexicon .writing-spine-search:focus-visible {
     border-bottom-color: var(--module-vocab-fg) !important;
     box-shadow: none !important;
+  }
+
+  .inbox-atelier .writing-spine-search {
+    border-bottom-color: color-mix(
+      in oklab,
+      var(--module-home-fg) 42%,
+      transparent
+    ) !important;
+  }
+
+  .inbox-atelier .writing-spine-search:focus-visible {
+    border-bottom-color: var(--module-home-fg) !important;
+    box-shadow: none !important;
+  }
+
+  .inbox-atelier .writing-spine-search-icon {
+    color: var(--module-home-fg);
   }
 
   .theory-atelier .writing-kicker,
@@ -2034,6 +2283,23 @@
     background: transparent;
   }
 
+  @media (max-width: 639px) {
+    .writing-entry {
+      grid-template-columns: minmax(0, 1fr);
+      gap: 0.75rem;
+    }
+
+    .writing-entry-actions {
+      justify-self: start;
+    }
+
+    .writing-collection-item,
+    .writing-collection-root {
+      min-width: 0;
+      width: 100%;
+    }
+  }
+
   .writing-entry::before {
     content: "";
     position: absolute;
@@ -2184,6 +2450,21 @@
     gap: 0.5rem;
   }
 
+  /* Mobile: keep Back at top; park Save/Export under the writing surface */
+  @media (max-width: 639px) {
+    .writing-sheet > .writing-paper-chrome {
+      display: contents;
+    }
+
+    .writing-sheet .writing-back {
+      order: -1;
+    }
+
+    .writing-sheet .writing-paper-actions {
+      order: 40;
+    }
+  }
+
   .writing-paper-page {
     max-width: 70rem;
     margin-inline: auto;
@@ -2288,45 +2569,187 @@
   }
 
   .writing-sheet[data-writing-kind="rich_document"] .writing-sheet-surface {
-    padding: 1.15rem 1.2rem 0.55rem;
+    padding: 1.45rem 1.4rem 1.45rem;
     border-radius: 1rem;
+    border: 1px solid
+      color-mix(in oklab, var(--module-writing-fg) 28%, var(--hairline-cloud));
+    border-left: 4px solid var(--module-writing-fg);
     background: linear-gradient(
       165deg,
       color-mix(in oklab, var(--module-writing-bg) 72%, transparent),
       color-mix(in oklab, var(--module-writing-bg) 22%, transparent) 70%,
       transparent
     );
-    box-shadow:
-      inset 4px 0 0 var(--module-writing-fg),
-      0 0 0 1px color-mix(in oklab, var(--module-writing-fg) 12%, transparent);
+    box-shadow: none;
   }
 
   .writing-sheet[data-writing-kind="question_set"] .writing-sheet-surface {
-    padding: 1.15rem 1.2rem 0.55rem;
+    padding: 1.45rem 1.4rem 1.45rem;
     border-radius: 1rem;
+    border: 1px solid
+      color-mix(in oklab, var(--module-theory-fg) 28%, var(--hairline-cloud));
+    border-left: 4px solid var(--module-theory-fg);
     background: linear-gradient(
       165deg,
       color-mix(in oklab, var(--module-theory-bg) 72%, transparent),
       color-mix(in oklab, var(--module-theory-bg) 22%, transparent) 70%,
       transparent
     );
-    box-shadow:
-      inset 4px 0 0 var(--module-theory-fg),
-      0 0 0 1px color-mix(in oklab, var(--module-theory-fg) 12%, transparent);
+    box-shadow: none;
   }
 
   .theory-sheet-surface {
-    padding: 1.15rem 1.2rem 0.55rem;
+    padding: 1.45rem 1.4rem 1.45rem;
     border-radius: 1rem;
+    border: 1px solid
+      color-mix(in oklab, var(--theory-cat-fg) 28%, var(--hairline-cloud));
+    border-left: 4px solid var(--theory-cat-fg);
     background: linear-gradient(
       165deg,
       color-mix(in oklab, var(--theory-cat-bg) 72%, transparent),
       color-mix(in oklab, var(--theory-cat-bg) 22%, transparent) 70%,
       transparent
     );
-    box-shadow:
-      inset 4px 0 0 var(--theory-cat-fg),
-      0 0 0 1px color-mix(in oklab, var(--theory-cat-fg) 12%, transparent);
+    box-shadow: none;
+  }
+
+  /* Mobile only: no outer Content frame; section blend on TipTap chrome only */
+  @media (max-width: 639px) {
+    .writing-sheet[data-writing-kind="rich_document"] .writing-sheet-surface,
+    .writing-sheet[data-writing-kind="question_set"] .writing-sheet-surface,
+    .theory-sheet-surface {
+      padding: 0;
+      border: 0;
+      border-radius: 0;
+      background: none;
+      box-shadow: none;
+    }
+
+    .writing-sheet[data-writing-kind="rich_document"] .sheet-content-tiptap {
+      background-color: var(--surface-elevated) !important;
+      background-image: linear-gradient(
+        165deg,
+        color-mix(in oklab, var(--module-writing-bg) 62%, var(--surface-elevated)),
+        color-mix(in oklab, var(--module-writing-bg) 24%, var(--surface-elevated)) 72%,
+        var(--surface-elevated)
+      ) !important;
+    }
+
+    .theory-sheet-surface .sheet-content-tiptap {
+      background-color: var(--surface-elevated) !important;
+      background-image: linear-gradient(
+        165deg,
+        color-mix(in oklab, var(--theory-cat-bg) 62%, var(--surface-elevated)),
+        color-mix(in oklab, var(--theory-cat-bg) 24%, var(--surface-elevated)) 72%,
+        var(--surface-elevated)
+      ) !important;
+    }
+  }
+
+  /* Short description TipTap — tinted like content surface (writing + theory). */
+  .sheet-description-editor {
+    overflow: hidden;
+    border-radius: 0.95rem;
+    border: 1px solid color-mix(in oklab, var(--hairline-cloud) 88%, var(--ink));
+    background:
+      linear-gradient(
+        165deg,
+        color-mix(in oklab, var(--surface-elevated) 28%, transparent),
+        transparent 70%
+      ),
+      color-mix(in oklab, var(--surface-elevated) 42%, transparent);
+    transition:
+      border-color 160ms ease,
+      box-shadow 160ms ease;
+  }
+
+  .sheet-description-editor:focus-within {
+    border-color: color-mix(in oklab, var(--ring) 55%, var(--hairline-cloud));
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 22%, transparent);
+  }
+
+  .sheet-description-editor[aria-invalid="true"] {
+    border-color: var(--destructive);
+  }
+
+  .sheet-description-editor[aria-invalid="true"]:focus-within {
+    border-color: var(--destructive);
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--destructive) 20%, transparent);
+  }
+
+  .writing-sheet[data-writing-kind="rich_document"] .sheet-description-editor {
+    border-color: color-mix(
+      in oklab,
+      var(--module-writing-fg) 26%,
+      var(--hairline-cloud)
+    );
+    background: linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-writing-bg) 72%, transparent),
+      color-mix(in oklab, var(--module-writing-bg) 22%, transparent) 70%,
+      transparent
+    );
+  }
+
+  .writing-sheet[data-writing-kind="rich_document"]
+    .sheet-description-editor:focus-within {
+    border-color: color-mix(
+      in oklab,
+      var(--module-writing-fg) 48%,
+      var(--hairline-cloud)
+    );
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--module-writing-fg) 18%, transparent);
+  }
+
+  .writing-sheet[data-writing-kind="question_set"] .sheet-description-editor {
+    border-color: color-mix(
+      in oklab,
+      var(--module-theory-fg) 26%,
+      var(--hairline-cloud)
+    );
+    background: linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-theory-bg) 72%, transparent),
+      color-mix(in oklab, var(--module-theory-bg) 22%, transparent) 70%,
+      transparent
+    );
+  }
+
+  .writing-sheet[data-writing-kind="question_set"]
+    .sheet-description-editor:focus-within {
+    border-color: color-mix(
+      in oklab,
+      var(--module-theory-fg) 48%,
+      var(--hairline-cloud)
+    );
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--module-theory-fg) 18%, transparent);
+  }
+
+  .theory-sheet .sheet-description-editor {
+    border-color: color-mix(
+      in oklab,
+      var(--theory-cat-fg) 26%,
+      var(--hairline-cloud)
+    );
+    background: linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--theory-cat-bg) 72%, transparent),
+      color-mix(in oklab, var(--theory-cat-bg) 22%, transparent) 70%,
+      transparent
+    );
+  }
+
+  .theory-sheet .sheet-description-editor:focus-within {
+    border-color: color-mix(
+      in oklab,
+      var(--theory-cat-fg) 48%,
+      var(--hairline-cloud)
+    );
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--theory-cat-fg) 18%, transparent);
   }
 
   .writing-sheet-meta {
@@ -2459,14 +2882,13 @@
   }
 }
 
+/* Opacity-only: a lasting/transforming ancestor breaks position:sticky. */
 @keyframes notoria-fade-up {
   from {
     opacity: 0;
-    transform: translateY(4px);
   }
   to {
     opacity: 1;
-    transform: none;
   }
 }
 
@@ -2516,6 +2938,59 @@
   }
 }
 
+/* Arrow affordance: ← / → nudge outward on hover across the app. */
+a .lucide-arrow-right,
+button .lucide-arrow-right,
+[role="button"] .lucide-arrow-right,
+a .lucide-arrow-left,
+button .lucide-arrow-left,
+[role="button"] .lucide-arrow-left {
+  transition: transform 180ms ease;
+  will-change: transform;
+}
+
+a:hover .lucide-arrow-right,
+button:hover .lucide-arrow-right,
+[role="button"]:hover .lucide-arrow-right,
+a:focus-visible .lucide-arrow-right,
+button:focus-visible .lucide-arrow-right,
+[role="button"]:focus-visible .lucide-arrow-right {
+  transform: translateX(0.28rem);
+}
+
+a:hover .lucide-arrow-left,
+button:hover .lucide-arrow-left,
+[role="button"]:hover .lucide-arrow-left,
+a:focus-visible .lucide-arrow-left,
+button:focus-visible .lucide-arrow-left,
+[role="button"]:focus-visible .lucide-arrow-left {
+  transform: translateX(-0.28rem);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a .lucide-arrow-right,
+  button .lucide-arrow-right,
+  [role="button"] .lucide-arrow-right,
+  a .lucide-arrow-left,
+  button .lucide-arrow-left,
+  [role="button"] .lucide-arrow-left,
+  a:hover .lucide-arrow-right,
+  button:hover .lucide-arrow-right,
+  [role="button"]:hover .lucide-arrow-right,
+  a:hover .lucide-arrow-left,
+  button:hover .lucide-arrow-left,
+  [role="button"]:hover .lucide-arrow-left,
+  a:focus-visible .lucide-arrow-right,
+  button:focus-visible .lucide-arrow-right,
+  [role="button"]:focus-visible .lucide-arrow-right,
+  a:focus-visible .lucide-arrow-left,
+  button:focus-visible .lucide-arrow-left,
+  [role="button"]:focus-visible .lucide-arrow-left {
+    transition: none;
+    transform: none;
+  }
+}
+
 /* Unlayered so these beat shadcn @layer base defaults. */
 html {
   background-color: var(--background);
@@ -2531,6 +3006,7 @@ html.dark {
 .speaking-paper .writing-back,
 .theory-paper .writing-back,
 .theory-sheet .writing-back,
+.vocab-lexicon .writing-back,
 .writing-paper .writing-back,
 .writing-sheet .writing-back {
   width: fit-content;
@@ -2547,6 +3023,7 @@ html:not(.dark) .listening-paper .writing-back,
 html:not(.dark) .speaking-paper .writing-back,
 html:not(.dark) .theory-paper .writing-back,
 html:not(.dark) .theory-sheet .writing-back,
+html:not(.dark) .vocab-lexicon .writing-back,
 html:not(.dark) .writing-paper .writing-back,
 html:not(.dark) .writing-sheet .writing-back {
   color: var(--ink) !important;
@@ -2566,6 +3043,11 @@ html:not(.dark) .writing-sheet .writing-back {
 .theory-sheet .writing-back:hover {
   color: var(--theory-cat-fg, var(--module-theory-fg)) !important;
   background: var(--theory-cat-bg, var(--module-theory-bg));
+}
+
+.vocab-lexicon .writing-back:hover {
+  color: var(--module-vocab-fg) !important;
+  background: var(--module-vocab-bg);
 }
 
 .writing-paper:not(.listening-paper):not(.speaking-paper):not(.theory-paper)

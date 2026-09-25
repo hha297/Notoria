@@ -364,7 +364,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
             onRestart={handleRestart}
           />
 
-          <div className="relative min-h-0 flex-1">
+          <div className="relative min-h-0">
             <AnimatePresence mode="wait" initial={false}>
               <motion.div
                 key={currentWord!.id}
@@ -394,7 +394,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
             </AnimatePresence>
           </div>
 
-          <div className="sticky bottom-0 z-10 -mx-4 mt-auto space-y-3 border-t border-hairline-cloud bg-background px-4 pt-3 pb-[max(0.75rem,env(safe-area-inset-bottom))] sm:static sm:mx-0 sm:border-0 sm:bg-transparent sm:px-0 sm:pt-2 sm:pb-0">
+          <div className="space-y-3 pt-2">
             {session.isFlipped ? (
               <FlashcardRatingBar onRate={handleRate} isSubmitting={isPending} />
             ) : null}

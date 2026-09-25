@@ -3,7 +3,6 @@
 import { and, count, eq } from "drizzle-orm";
 import { db } from "@/db";
 import { vocabularyWords } from "@/db/schema";
-import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { getCurrentUserId } from "@/lib/auth/session";
 import { getExerciseImports } from "@/lib/actions/exercise-import";
 import { getTheoryExerciseCards } from "@/lib/actions/theory";
@@ -38,12 +37,9 @@ async function getWorkspaceVocabularyCount() {
 
 export async function getExerciseStudioData(): Promise<ExerciseStudioData> {
   return withTiming("exercises.studio", async () => {
-    const { hasProAccess } = await getCurrentProAccess();
     const [theories, imports, vocabularyCount] = await Promise.all([
       getTheoryExerciseCards(),
-      hasProAccess
-        ? getExerciseImports().catch(() => [] as ExerciseImportListItem[])
-        : Promise.resolve([] as ExerciseImportListItem[]),
+      getExerciseImports().catch(() => [] as ExerciseImportListItem[]),
       getWorkspaceVocabularyCount().catch(() => 0),
     ]);
 

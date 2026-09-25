@@ -2,9 +2,12 @@
 
 import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
 import { mx } from "@/lib/css-module";
-import { Plus } from "lucide-react";
+import { Plus, Upload } from "lucide-react";
+import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
+import { ContentImportDialog } from "@/components/content-import/content-import-dialog";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { Button } from "@/components/ui/button";
@@ -25,6 +28,8 @@ export function VocabularyView({
   language,
 }: VocabularyViewProps) {
   const t = useTranslations("vocabulary");
+  const tImport = useTranslations("contentImport");
+  const [importOpen, setImportOpen] = useState(false);
   const { data: words, isPending, isError, refetch, isFetching } = useQuery(
     vocabularyListQueryOptions(workspaceId),
   );
@@ -80,6 +85,17 @@ export function VocabularyView({
             </div>
             <div className="writing-hero-actions">
               <ShowTutorialButton section="vocabulary" />
+              <LockedFeatureButton
+                type="button"
+                variant="outline"
+                className="route-quiet-action"
+                data-route-action="vocab"
+                feature="content_import"
+                icon={<Upload className="size-4" />}
+                onClick={() => setImportOpen(true)}
+              >
+                {tImport("button")}
+              </LockedFeatureButton>
               <LinkButton href="/vocabulary/new" data-tutorial="vocab-add-word">
                 <Plus className="size-4" />
                 {t("addWord")}
@@ -99,6 +115,12 @@ export function VocabularyView({
             </LinkButton>
           </div>
         </div>
+        <ContentImportDialog
+          open={importOpen}
+          onOpenChange={setImportOpen}
+          target="vocabulary"
+          workspaceId={workspaceId}
+        />
       </PageShell>
     );
   }

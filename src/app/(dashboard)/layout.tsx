@@ -17,8 +17,19 @@ import {
   getCurrentSubscription,
   hasActiveProSubscription,
 } from "@/lib/stripe/pro";
+import { displayPlan, isIntroOfferEligible } from "@/lib/billing/plans";
+import {
+  getStripePremiumFirstMonthCouponId,
+  getStripeProFirstMonthCouponId,
+} from "@/lib/stripe/config";
 import { createPerfTimer } from "@/lib/perf/dev-timing";
 import { getUserWorkspaces, getActiveWorkspace } from "@/lib/workspace";
+
+function introOfferAvailable() {
+  return Boolean(
+    getStripeProFirstMonthCouponId() && getStripePremiumFirstMonthCouponId(),
+  );
+}
 
 export const preferredRegion = ["fra1"];
 
@@ -58,7 +69,26 @@ export default async function DashboardLayout({
       : "en";
 
   return (
-    <ProAccessProvider hasProAccess={proAccess.hasProAccess}>
+    <ProAccessProvider
+      hasProAccess={proAccess.hasProAccess}
+      plan={displayPlan(subscription)}
+      cancelAtPeriodEnd={Boolean(
+        subscription?.stripeCancelAtPeriodEnd &&
+          !subscription?.scheduledSubscriptionPlan &&
+          displayPlan(subscription) !== "free",
+      )}
+      currentPeriodEnd={subscription?.stripeCurrentPeriodEnd?.toISOString() ?? null}
+      scheduledPlan={
+        subscription?.scheduledSubscriptionPlan &&
+        subscription.scheduledSubscriptionPlan !== "free" &&
+        subscription.scheduledSubscriptionPlan !== displayPlan(subscription)
+          ? subscription.scheduledSubscriptionPlan
+          : null
+      }
+      introOfferEligible={
+        isIntroOfferEligible(subscription ?? {}) && introOfferAvailable()
+      }
+    >
       <AiPreferencesProvider initial={aiPreferences}>
       <DashboardDocumentTitle />
       <DashboardStudio
@@ -69,6 +99,7 @@ export default async function DashboardLayout({
         userEmail={session?.user?.email ?? ""}
         userImage={session?.user?.image}
         isPro={hasActiveProSubscription(subscription)}
+        plan={displayPlan(subscription)}
         footer={<SiteFooter variant="app" />}
       >
         <WelcomePromptModal

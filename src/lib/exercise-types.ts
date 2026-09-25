@@ -29,7 +29,7 @@ export const EXERCISE_TYPES: ExerciseTypeConfig[] = [
   { slug: "multiple-choice", icon: ListChecks },
   { slug: "match-pairs", icon: Link2 },
   { slug: "type-answer", icon: Keyboard },
-  { slug: "form-sentence", icon: PenLine, pro: true },
+  { slug: "form-sentence", icon: PenLine },
 ];
 
 const slugMap = new Map(EXERCISE_TYPES.map((item) => [item.slug, item]));

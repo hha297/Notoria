@@ -52,6 +52,25 @@
   color: var(--muted-foreground);
 }
 
+.pro-upgrade-distinction {
+  margin: 0.35rem 0 0;
+  max-width: 36rem;
+  font-size: 0.9rem;
+  font-weight: 650;
+  line-height: 1.45;
+  color: var(--ink);
+}
+
+.pro-upgrade-premium-status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  padding: 1rem 1.05rem;
+  border-radius: 1rem;
+  border: 1px solid color-mix(in oklab, var(--accent-lime) 28%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--accent-soft) 55%, var(--surface));
+}
+
 .pro-upgrade-plans {
   display: grid;
   grid-template-columns: 1fr;
@@ -60,8 +79,8 @@
 
 @media (min-width: 640px) {
   .pro-upgrade-plans {
-    grid-template-columns: 1fr 1.15fr;
-    gap: 0.85rem;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 0.75rem;
   }
 }
 
@@ -70,14 +89,29 @@
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
+  width: 100%;
   padding: 0.95rem 1rem 1rem;
   border-radius: 1rem;
   border: 1px solid var(--hairline-cloud);
   background: color-mix(in oklab, var(--surface) 88%, transparent);
+  text-align: left;
+  cursor: pointer;
   transition:
     border-color 160ms ease,
     background-color 160ms ease,
     transform 160ms ease;
+}
+
+.pro-upgrade-plan:hover:not(:disabled) {
+  border-color: color-mix(
+    in oklab,
+    var(--accent-lime) 35%,
+    var(--hairline-cloud)
+  );
+}
+
+.pro-upgrade-plan:disabled {
+  cursor: default;
 }
 
 .pro-upgrade-plan.is-featured {
@@ -157,10 +191,29 @@
   color: var(--ink);
 }
 
+.pro-upgrade-plan-was {
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: var(--muted-foreground);
+  text-decoration: line-through;
+  text-decoration-thickness: 1.5px;
+}
+
 .pro-upgrade-plan-period {
   font-size: 0.72rem;
   line-height: 1.35;
   color: var(--muted-foreground);
+}
+
+.pro-upgrade-plan-hint {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: color-mix(in oklab, var(--accent-lime) 55%, var(--ink));
 }
 
 .pro-upgrade-plan-copy {
@@ -274,35 +327,96 @@
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
-  padding: 0.95rem 1.35rem 1.2rem;
+  width: 100%;
+  margin: 0;
+  padding: 1rem 0 0;
   border-top: 1px solid
     color-mix(in oklab, var(--accent-lime) 12%, var(--hairline-cloud));
   background: color-mix(in oklab, var(--surface) 55%, var(--popover));
 }
 
 .pro-upgrade-actions {
-  display: grid;
-  grid-template-columns: 1fr;
+  display: flex;
+  flex-direction: column;
   gap: 0.55rem;
-}
-
-@media (min-width: 640px) {
-  .pro-upgrade-actions {
-    grid-template-columns: minmax(7rem, 0.7fr) minmax(0, 1.3fr);
-    gap: 0.7rem;
-  }
+  width: 100%;
+  padding: 0.15rem 1.35rem 1.15rem;
 }
 
 .pro-upgrade-cta {
   width: 100%;
+  min-height: 2.75rem;
+  border-radius: 0.85rem;
+  font-weight: 700;
+  gap: 0.45rem;
+}
+
+.pro-upgrade-cta.is-primary {
+  border-color: transparent !important;
+  background: var(--accent-lime) !important;
+  color: #111 !important;
+}
+
+.pro-upgrade-cta.is-primary:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--accent-lime) 88%, #111) !important;
+  color: #111 !important;
+}
+
+.pro-upgrade-cta.is-primary:disabled {
+  opacity: 0.7;
+}
+
+.pro-upgrade-confirm-sheet {
+  overflow: hidden;
+  border-radius: 1.2rem;
+  border-color: color-mix(
+    in oklab,
+    var(--accent-lime) 22%,
+    var(--hairline-cloud)
+  );
+  background: linear-gradient(
+    165deg,
+    color-mix(in oklab, var(--accent-soft) 45%, var(--popover)) 0%,
+    var(--popover) 42%
+  );
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--accent-lime) 10%, transparent),
+    0 24px 48px color-mix(in oklab, var(--ink) 16%, transparent);
+}
+
+.pro-upgrade-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  width: 100%;
+  padding: 1.35rem 1.35rem 1.25rem;
+}
+
+.pro-upgrade-confirm-title {
+  margin: 0;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.pro-upgrade-confirm .pro-upgrade-fineprint {
+  margin: 0;
+  text-align: left;
+  font-size: 0.875rem;
+  line-height: 1.45;
 }
 
 .pro-upgrade-cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
   width: 100%;
 }
 
 .pro-upgrade-fineprint {
-  margin: 0;
+  margin: 0.15rem 0 0;
   text-align: center;
   font-size: 0.72rem;
   color: var(--muted-foreground);

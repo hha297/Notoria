@@ -4,36 +4,39 @@ import { useState } from "react";
 import { Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ProUpgradeDialog } from "@/components/billing/pro-upgrade-dialog";
-import { Button } from "@/components/ui/button";
+import navStyles from "@/components/style/layout/nav.module.css";
+import { mx } from "@/lib/css-module";
 
 type SidebarProCtaProps = {
-  isPro: boolean;
+  plan: "free" | "pro" | "premium";
   onNavigate?: () => void;
 };
 
-export function SidebarProCta({ isPro, onNavigate }: SidebarProCtaProps) {
+export function SidebarProCta({ plan, onNavigate }: SidebarProCtaProps) {
   const t = useTranslations("billing");
   const [upgradeOpen, setUpgradeOpen] = useState(false);
 
-  if (isPro) {
+  if (plan === "premium") {
     return null;
   }
 
   return (
     <>
-      <Button
+      <button
         type="button"
-        variant="ghost"
-        className="h-8 w-full justify-start gap-2 px-2 font-heading text-[13px] font-medium text-primary hover:bg-surface-active"
+        className={mx(navStyles, "nav-plan-cta")}
         onClick={() => {
           onNavigate?.();
           setUpgradeOpen(true);
         }}
       >
-        <Sparkles className="size-3.5" />
-        {t("upgrade")}
-      </Button>
-      <ProUpgradeDialog open={upgradeOpen} onOpenChange={setUpgradeOpen} />
+        <Sparkles className="size-3.5 shrink-0" aria-hidden />
+        {plan === "pro" ? t("explorePremium") : t("upgrade")}
+      </button>
+      <ProUpgradeDialog
+        open={upgradeOpen}
+        onOpenChange={setUpgradeOpen}
+      />
     </>
   );
 }

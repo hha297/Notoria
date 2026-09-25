@@ -13,7 +13,89 @@
     "selectedCount": "{count} valda",
     "clearFilter": "Rensa",
     "filters": "Filter",
-    "hideFilters": "Dölj filter"
+    "hideFilters": "Dölj filter",
+    "open": "Öppna"
+  },
+  "contentImport": {
+    "title": {
+      "vocabulary": "Importera ordförråd",
+      "writing": "Importera skrivande",
+      "theory": "Importera teori"
+    },
+    "description": {
+      "vocabulary": "Ladda upp CSV, PDF eller DOCX. Vi mappar kolumner innan något sparas.",
+      "writing": "Ladda upp anteckningar eller en CSV. Förhandsgranska först.",
+      "theory": "Ladda upp teorianteckningar eller en CSV. Förhandsgranska först."
+    },
+    "guidance": "Vet du inte vilket format som krävs? Ladda upp filen så försöker vi förstå strukturen innan import.",
+    "dropzone": "Släpp en fil här eller klicka för att välja",
+    "formats": "CSV, PDF, DOCX eller TXT · max 10 MB",
+    "downloadTemplate": "Behöver du en mall? Ladda ner CSV-mall",
+    "quota": {
+      "free": "Filimport finns på Pro och Premium.",
+      "pro": "Pro och Premium: obegränsad import.",
+      "premium": "Premium: obegränsad import."
+    },
+    "fields": {
+      "word": "Ord",
+      "meaning": "Betydelse",
+      "partOfSpeech": "Ordklass",
+      "example": "Exempel",
+      "tags": "Taggar",
+      "notes": "Anteckningar",
+      "title": "Titel",
+      "content": "Innehåll",
+      "category": "Kategori",
+      "ignore": "Importera inte"
+    },
+    "preview": {
+      "summary": "{ready} redo att importera · {issues} behöver åtgärdas",
+      "mappingTitle": "Kolumnmappning",
+      "yourColumn": "Din kolumn",
+      "notoriaField": "Notoria-fält",
+      "missingRequired": "Mappa obligatoriska fält innan import.",
+      "unmapped": "Används inte: {columns}",
+      "issuesTitle": "{count} rader behöver åtgärdas",
+      "issueRow": "Rad {row}:",
+      "skipHint": "Rader med problem hoppas över. Giltiga rader importeras.",
+      "sampleTitle": "Exempel på vad som skapas"
+    },
+    "back": "Välj en annan fil",
+    "importReady": "Importera {count}",
+    "close": "Stäng",
+    "progress": {
+      "reading": "Läser fil…",
+      "analyzing": "Tolkar struktur…",
+      "mapping": "Uppdaterar kolumnmappning…",
+      "importing": "Importerar…",
+      "finishing": "Slutför…",
+      "count": "{current} / {total}"
+    },
+    "done": {
+      "title": "Importerade {count}",
+      "detail": "Hoppade över {skipped} · misslyckades {failed}",
+      "skippedExists": "Hoppade över {count} — finns redan i vocabulary",
+      "skippedInvalid": "Hoppade över {count} — saknad data eller radproblem",
+      "failed": "Misslyckades {count} — kunde inte sparas (fortsatte med resten)",
+      "allGood": "Inget hoppades över eller misslyckades.",
+      "detailsTitle": "Vad hände",
+      "reasonExists": "Finns redan i vocabulary",
+      "reasonFailed": "Kunde inte sparas — fortsatte med resten",
+      "moreDetails": "…och {count} till",
+      "toast": "Importerade {count} objekt",
+      "toastAllExist": "Inget nytt — {count} finns redan i vocabulary",
+      "toastNone": "Inget importerades"
+    },
+    "errors": {
+      "proRequired": "Filimport finns på Pro och Premium.",
+      "quotaExceeded": "Dagens importgräns är nådd. Försök i morgon eller uppgradera för en högre gräns.",
+      "fileTooLarge": "Filen är för stor. Håll under 10 MB.",
+      "unsupportedFormat": "Använd CSV, PDF, DOCX eller textfil.",
+      "emptyFile": "Vi hittade inget läsbart innehåll i filen.",
+      "parseFailed": "Filen kunde inte läsas. Exportera igen eller använd CSV-mallen.",
+      "generic": "Något gick fel. Försök igen."
+    },
+    "button": "Importera"
   },
   "editor": {
     "linkTitle": "Infoga länk",
@@ -53,12 +135,14 @@
   },
   "nav": {
     "dashboard": "Instrumentpanel",
+    "inbox": "Fångst",
     "vocabulary": "Ordlista",
     "writing": "Skrivande",
     "theory": "Teori",
     "exercises": "Övningar",
     "listening": "Lyssnande",
     "speaking": "Tala",
+    "coach": "Lärcoach",
     "account": "Konto",
     "settings": "Inställningar",
     "workspace": "Arbetsyta",
@@ -68,6 +152,55 @@
       "listenSpeak": "Lyssna och tala",
       "more": "Mer"
     }
+  },
+  "inbox": {
+    "eyebrow": "Samla",
+    "title": "Fångst",
+    "description": "Släpp snabba anteckningar, fraser och idéer här — och gör om dem till ordförråd, teori, skrivande eller övningar när du har tid.",
+    "disabledNoWorkspace": "Skapa en arbetsyta innan du sparar till Fångst.",
+    "capture": "Spara",
+    "captureTitle": "Spara till Fångst",
+    "captureDescription": "Spara något att bearbeta senare. Du behöver inte bestämma var det hör hemma ännu.",
+    "captureSubmit": "Spara till Fångst",
+    "captured": "Sparad i Fångst",
+    "contentLabel": "Innehåll",
+    "contentPlaceholder": "Ett ord, en fras, en idé eller något du vill återkomma till…",
+    "contentRequired": "Lägg till innehåll först",
+    "noteLabel": "Anteckning (valfritt)",
+    "notePlaceholder": "Kontext eller varför det spelar roll…",
+    "sourceLabel": "Källa (valfritt)",
+    "sourcePlaceholder": "Bok, podcast, lektion…",
+    "sourcePrefix": "Från {source}",
+    "filterUnprocessed": "Att bearbeta",
+    "filterProcessed": "Bearbetade",
+    "emptyTitle": "Fångst är tom",
+    "emptyDescription": "Spara något snabbt — ett ord från ett samtal, ett grammatiktvivel, en skrividé — och sortera det senare.",
+    "emptyProcessedTitle": "Inga bearbetade objekt ännu",
+    "emptyProcessedDescription": "När du har sparat något från Fångst till ordförråd, teori, skrivande eller övningar visas det här.",
+    "statusProcessed": "Bearbetad",
+    "processMenu": "Bearbeta",
+    "processed": "Markerad som bearbetad",
+    "deleted": "Borttagen från Fångst",
+    "process": {
+      "vocabulary": "Ordlista",
+      "theory": "Teori",
+      "writing": "Skrivande",
+      "exercise": "Övning",
+      "keep": "Behåll till senare",
+      "delete": "Ta bort"
+    },
+    "searchPlaceholder": "Sök fångster…",
+    "sortBy": "Sortera efter",
+    "sortNewest": "Nyast först",
+    "sortOldest": "Äldst först",
+    "sortNameAsc": "Namn (A → Ö)",
+    "sortNameDesc": "Namn (Ö → A)",
+    "noResultsTitle": "Inga träffar",
+    "noResultsDescription": "Prova en annan sökning, eller rensa den för att se allt på den här fliken."
+  },
+  "reviewLater": {
+    "add": "Granska senare",
+    "remove": "Ta bort från granska senare"
   },
   "folders": {
     "new": "Ny mapp",
@@ -113,6 +246,7 @@
   },
   "header": {
     "createWorkspace": "Skapa arbetsyta",
+    "createWorkspaceHint": "Lägg till en till språkarbeetsyta",
     "switchWorkspace": "Byt arbetsyta",
     "switchFailed": "Kunde inte byta arbetsyta"
   },
@@ -494,6 +628,7 @@
       "pastedImageTitle": "Klistrad bild",
       "importAction": "Importera & generera",
       "unlockPro": "Lås upp med Pro",
+      "lockedDescription": "Uppgradera till Pro för att förvandla arbetsblad och anteckningar till AI-övningskort.",
       "myImports": "Mina importer",
       "searchPlaceholder": "Sök efter titel…",
       "noResults": "Inga importer matchar den titeln",
@@ -871,6 +1006,12 @@
     "disabledNoWorkspace": "Skapa ett arbetsutrymme innan du lägger till skrivdokument.",
     "create": "Skapa skrivande",
     "createFirst": "Skapa ditt första skrivande",
+    "learningNote": {
+      "create": "Inlärningsanteckning",
+      "filter": "Inlärningsanteckningar",
+      "filterLabel": "Typ",
+      "badge": "Inlärningsanteckning"
+    },
     "onTheDesk": "På skrivbordet",
     "library": "Bibliotek",
     "allWritings": "Alla skrifter",
@@ -1040,6 +1181,9 @@
       "success": "Nedladdning påbörjad",
       "failed": "Export misslyckades",
       "empty": "Lägg till minst en fråga eller något dokumentinnehåll innan du exporterar",
+      "preparing": "Förbereder export…",
+      "writingFile": "Sparar fil…",
+      "progressCount": "{current} / {total}",
       "documentHeading": "Skrivande",
       "titleLabel": "Titel",
       "descriptionLabel": "Beskrivning",
@@ -1104,7 +1248,8 @@
     },
     "sessionComplete": "Sessionen är komplett!",
     "tryAgain": "Försök igen",
-    "ratingFailed": "Kunde inte spara ditt betyg"
+    "ratingFailed": "Kunde inte spara ditt betyg",
+    "weakTitle": "Öva svåra ord"
   },
   "dashboard": {
     "overview": "Översikt",
@@ -1120,7 +1265,7 @@
     "guideTitle": "Hur du använder Notoria",
     "guideTagline": "Ditt språk. Din kunskap. Din lärdagbok.",
     "guideSubtitle": "Notoria är en privat, personlig arbetsyta – inte en traditionell kurs som säger vad du ska lära dig. Du väljer ditt språk, dina ord, dina grammatiknoteringar, dina exempel och de material du vill öva med.",
-    "guideSubtitleSecondary": "Din arbetsyta växer med din lärande resa. Börja med vokabulär och teori, och omvandla sedan det du samlar till övningar, skrivande, lyssnande och talande.",
+    "guideSubtitleSecondary": "Din arbetsyta växer med din läranderesa. Börja med Fångst för snabba lappar, sedan Ordförråd och Teori — och gör om det du samlar till övningar, skrivande, lyssning och tal.",
     "guideFullCtaPrompt": "Vill du lära dig mer om hur Notoria fungerar?",
     "guideFullCta": "Läs hela guiden",
     "modulesTitle": "Utforska arbetsytan",
@@ -1130,6 +1275,10 @@
     "unlock": "Lås upp Pro",
     "open": "Öppna",
     "steps": {
+      "inbox": {
+        "title": "Fångst",
+        "body": "Släpp ett ord, en fras, ett grammatikfrågetecken eller en skrividé på sekunder — du behöver inte bestämma var det hör hemma ännu. Lägg till en valfri anteckning eller källa, håll poster i Att bearbeta, och gör om en fångst till Ordförråd, Teori, Skrivande eller Övning när du har tid. En post markeras Bearbetad först när du sparat den länkade posten."
+      },
       "vocabulary": {
         "title": "Vokabulär",
         "body": "Lägg till dina egna ord och fraser med betydelser, exempelmeningar, uttal och taggar. Organisera efter ämne, nivå eller situation – och återanvänd dem i övningar och repetition. Börja med ord från vardagen, lektioner, böcker eller media; ditt bibliotek blir grunden för övning."
@@ -1183,13 +1332,13 @@
       "listening": {
         "title": "Lyssnande",
         "description": "Omvandla verkligt ljud eller video till en lektion.",
-        "how": "Ladda upp ett klipp, läs transkriptionen och öva sedan. Hela denna modul är Pro.",
+        "how": "Ladda upp ett klipp och skapa en transkription på Free. Genererad lyssningsövning ingår i Pro.",
         "cta": "Öppna lyssnande"
       },
       "speaking": {
         "title": "Tala",
         "description": "Live videokonversation med en AI-tutor.",
-        "how": "Skapa en session, gå med i samtalet och granska sedan transkriptionen och sammanfattningen. Endast Pro.",
+        "how": "Skapa en session och gå med i samtalet. Free inkluderar ett AI-möte per dag, med tutor.",
         "cta": "Öppna tala"
       }
     },
@@ -1221,6 +1370,42 @@
     "quickOpenSpeaking": "Öppna tal",
     "nextStepTitle": "Nästa steg",
     "continueEmpty": "Inget att återuppta ännu — lägg till en teorinot, en text, en lyssningslektion eller en talsession så syns den här.",
+    "inbox": {
+      "title": "Fångst",
+      "subtitle": "Snabba anteckningar som väntar på att sorteras in i ditt bibliotek.",
+      "count": "{count, plural, =0 {Inget väntar} one {# att bearbeta} other {# att bearbeta}}",
+      "cta": "Öppna Fångst"
+    },
+    "reviewLater": {
+      "title": "Granska senare",
+      "subtitle": "Saker du bokmärkt för en andra titt.",
+      "empty": "Bokmärk något från ordlista, teori eller skrivande så syns det här."
+    },
+    "recentActivity": {
+      "title": "Senaste aktivitet",
+      "subtitle": "Vad du skapat eller bearbetat nyligen.",
+      "empty": "Aktivitet visas här när du lägger till och bearbetar studiematerial.",
+      "untitled": "Namnlös",
+      "verbs": {
+        "created": "Skapade {entity}: {title}",
+        "updated": "Uppdaterade {entity}: {title}",
+        "completed": "Avslutade {entity}: {title}",
+        "processed": "Bearbetade inkorg: {title}",
+        "review_later_added": "Markerad för granskning: {title}",
+        "review_later_removed": "Borttagen från granskning: {title}"
+      },
+      "verbLabels": {
+        "created": "Skapad",
+        "updated": "Uppdaterad",
+        "completed": "Klar",
+        "processed": "Bearbetad",
+        "review_later_added": "Granska senare",
+        "review_later_removed": "Borttagen"
+      }
+    },
+    "learningNote": {
+      "label": "Senaste inlärningsanteckning"
+    },
     "loopEyebrow": "Loopen",
     "loopTitle": "Samla, öva, använd",
     "loopSubtitle": "Notoria fungerar bäst som en cykel: spara det du möter, öva kort, och använd det i skrivande, lyssning och tal.",
@@ -1617,6 +1802,37 @@
           "body": "Öppna en session för att läsa transkriptionen och feedbacken. Använd den för att upptäcka misstag, återanvända användbara fraser och bestämma vad du ska lägga till i din dagbok nästa gång."
         }
       }
+    },
+    "inbox": {
+      "title": "Fångst",
+      "description": "Spara snabbt ord, frågetecken och idéer — och gör om dem till riktiga studieposter när du har en stund.",
+      "cta": "Jag förstår",
+      "steps": {
+        "capture": {
+          "title": "1. Fånga något",
+          "body": "Använd Fångst för att spara ett ord, en fras, ett grammatikfrågetecken eller en skrividé utan att bestämma var det hör hemma ännu. Hastighet är viktigare än perfekt struktur här."
+        },
+        "filters": {
+          "title": "2. Att bearbeta vs bearbetat",
+          "body": "Att bearbeta håller poster som fortfarande väntar. Bearbetat visar fångster du redan gjort om till ordförråd, teori, skrivande eller övningar."
+        },
+        "search": {
+          "title": "3. Sök",
+          "body": "Filtrera den aktuella fliken efter innehåll, anteckning eller källa så du hittar en fångst snabbt."
+        },
+        "sort": {
+          "title": "4. Sortera",
+          "body": "Sortera efter nyast, äldst eller namn så listan passar hur du vill arbeta igenom den."
+        },
+        "list": {
+          "title": "5. Din fångstlista",
+          "body": "Varje kort visar innehållet, valfri anteckning/källa och när du sparade det. Öppna ···-menyn på ett kort för att bearbeta det."
+        },
+        "process": {
+          "title": "6. Bearbeta till Notoria",
+          "body": "Skicka en fångst till Ordförråd, Teori, Skrivande eller Övning. Den blir Bearbetad först när du sparat klart där — avbryter du skapandet lämnas den kvar."
+        }
+      }
     }
   },
   "settings": {
@@ -1890,6 +2106,9 @@
       "success": "Nedladdning påbörjad",
       "failed": "Export misslyckades",
       "empty": "Lägg till något innehåll innan du exporterar",
+      "preparing": "Förbereder export…",
+      "writingFile": "Sparar fil…",
+      "progressCount": "{current} / {total}",
       "documentHeading": "Teori",
       "titleLabel": "Titel",
       "descriptionLabel": "Beskrivning"
@@ -2050,7 +2269,8 @@
       "PROCESSING_FAILED": "Något gick fel när denna lektion skapades. Försök igen.",
       "EMPTY_TRANSCRIPT": "Inget tal hittades i den filen.",
       "DUPLICATE_FILENAME": "En fil med detta namn finns redan.",
-      "FILENAME_REQUIRED": "Ange ett filnamn."
+      "FILENAME_REQUIRED": "Ange ett filnamn.",
+      "AUDIO_TOO_LONG": "Ljudet är längre än 45 minuter. Dela upp det eller använd ett kortare klipp för ett transkript."
     }
   },
   "speaking": {
@@ -2141,7 +2361,8 @@
       "endedTitle": "Samtal avslutat",
       "endedDescription": "Feedback kommer att visas på sessionssidan om några ögonblick.",
       "back": "Tillbaka till session",
-      "notConfigured": "Videomöten är inte konfigurerade än. Lägg till Stream Video API-nycklar för att starta ett samtal."
+      "notConfigured": "Videomöten är inte konfigurerade än. Lägg till Stream Video API-nycklar för att starta ett samtal.",
+      "sessionLimitReached": "Den här talsessionen nådde 30-minutersgränsen för rimlig användning och har avslutats."
     },
     "errors": {
       "STREAM_NOT_CONFIGURED": "Videomöten är inte konfigurerade.",
@@ -2263,6 +2484,8 @@
     "pro": {
       "freeLede": "Gratis täcker vardaglig övning. Pro låser upp AI-verktygen som omvandlar dina anteckningar till hjälp med lyssnande, talande, skrivande och utskrivbara filer.",
       "activeLede": "Din Pro-plan är aktiv. Dessa AI-lärande verktyg förblir upplåsta medan din prenumeration förnyas.",
+      "premiumLede": "Premium är aktivt. Coachen använder studier som redan finns i Notoria.",
+      "premiumIncluded": "Ingår i Premium",
       "unlockLabel": "Lås upp med Pro",
       "includedLabel": "Ingår i din Pro-plan",
       "features": {
@@ -2284,12 +2507,74 @@
     },
     "data": {
       "title": "Dina data",
-      "description": "Ladda ner en kopia av dina inlärningsdata när du behöver det.",
+      "description": "Ladda ner en kopia av dina inlärningsdata när du behöver det, eller återställ från en tidigare säkerhetskopia.",
       "exportTitle": "Exportera kontosäkerhetskopia",
       "exportHint": "Laddar ner en JSON-fil med dina arbetsytor och lärandeinnehåll. Mediefiler länkas via URL, inte inbäddade.",
       "exportAction": "Ladda ner säkerhetskopia",
       "exportDone": "Säkerhetskopia nedladdad",
-      "exportFailed": "Kunde inte förbereda din säkerhetskopia. Försök igen."
+      "exportFailed": "Kunde inte förbereda din säkerhetskopia. Försök igen.",
+      "importTitle": "Importera kontosäkerhetskopia",
+      "importHint": "Återställ dina Notoria-inlärningsdata från en tidigare kontosäkerhetskopia. Ditt konto, inloggning och prenumeration ändras inte.",
+      "importAction": "Importera säkerhetskopia"
+    },
+    "backupImport": {
+      "title": "Återställ dina Notoria-inlärningsdata",
+      "description": "Importera en JSON-säkerhetskopia exporterad från Notoria. Endast inlärningsdata återställs — inte din kontoidentitet eller prenumeration.",
+      "uploadHint": "Välj en JSON-fil från Exportera kontosäkerhetskopia.",
+      "chooseFile": "Välj säkerhetskopiefil",
+      "analyzing": "Kontrollerar säkerhetskopia…",
+      "detectedTitle": "Notoria-kontosäkerhetskopia upptäckt",
+      "strategyTitle": "Hur ska vi importera den här säkerhetskopian?",
+      "strategyAddAsNew": "Lägg till som nya data — skapar en ny kopia utan att ersätta dina befintliga inlärningsdata. Arbetsytor som redan finns för samma språk tar emot innehållet i stället för att dupliceras.",
+      "readyTitle": "Klar att importera",
+      "nothingToImport": "Inget nytt att importera från den här säkerhetskopian.",
+      "notImportedTitle": "Viss kontoinformation importeras inte",
+      "notImportedHint": "Ditt namn, e-post, inloggningsuppgifter och prenumeration hanteras av ditt nuvarande konto och kan inte ändras via en säkerhetskopieimport. Dina inlärningsdata kan fortfarande importeras.",
+      "notImportedFields": {
+        "name": "Kontonamn",
+        "email": "E-post",
+        "subscription": "Prenumeration",
+        "auth": "Autentiseringsinformation"
+      },
+      "skippedTitle": "Kan hoppas över",
+      "warnings": {
+        "workspace_language_reuse": "Vissa arbetsytor finns redan för samma språk. Deras innehåll läggs till i dina befintliga arbetsytor i stället för att dupliceras.",
+        "empty_backup": "Den här säkerhetskopian innehåller ingen importerbar inlärningsdata."
+      },
+      "cancel": "Avbryt",
+      "confirm": "Importera inlärningsdata",
+      "close": "Stäng",
+      "doneTitle": "Inlärningsdata importerade",
+      "doneDescription": "Säkerhetskopians inlärningsdata har lagts till på det här kontot.",
+      "doneToast": "Inlärningsdata importerade",
+      "importedTitle": "Importerat",
+      "counts": {
+        "workspaces": "{count, plural, one {# arbetsyta} other {# arbetsytor}}",
+        "folders": "{count, plural, one {# mapp} other {# mappar}}",
+        "tags": "{count, plural, one {# tagg} other {# taggar}}",
+        "vocabulary": "{count, plural, one {# ordförrådspost} other {# ordförrådsposter}}",
+        "theory": "{count, plural, one {# teorisida} other {# teorisidor}}",
+        "writing": "{count, plural, one {# skrivdokument} other {# skrivdokument}}",
+        "exercises": "{count, plural, one {# övning} other {# övningar}}",
+        "listening": "{count, plural, one {# lyssningslektion} other {# lyssningslektioner}}",
+        "speaking": "{count, plural, one {# talsession} other {# talsessioner}}"
+      },
+      "skips": {
+        "workspace_language_exists": "{count, plural, one {# arbetsyta finns redan för det språket} other {# arbetsytor finns redan för det språket}}",
+        "vocabulary_duplicate": "{count, plural, one {# ordförrådspost finns redan} other {# ordförrådsposter finns redan}}",
+        "listening_missing_media": "{count, plural, one {# lyssningslektion saknar media-URL} other {# lyssningslektioner saknar media-URL}}",
+        "listening_duplicate_filename": "{count, plural, one {# lyssningslektion hoppades över (duplicerat filnamn)} other {# lyssningslektioner hoppades över (duplicerat filnamn)}}",
+        "invalid_workspace_ref": "{count, plural, one {# objekt med saknad arbetsyta} other {# objekt med saknad arbetsyta}}",
+        "invalid_record": "{count, plural, one {# ogiltig post} other {# ogiltiga poster}}",
+        "unsupported_account_field": "Kontoidentitetsfält importeras inte"
+      },
+      "errors": {
+        "fileTooLarge": "Säkerhetskopiefilen är för stor. Exportera igen eller kontakta support.",
+        "invalidBackup": "Det här ser inte ut som en giltig Notoria-säkerhetskopia. Använd en JSON-fil exporterad från Exportera kontosäkerhetskopia.",
+        "unauthorized": "Logga in igen för att importera en säkerhetskopia.",
+        "invalidInput": "Välj en JSON-säkerhetskopiefil.",
+        "importFailed": "Kunde inte importera säkerhetskopian. Försök igen."
+      }
     },
     "danger": {
       "title": "Stäng konto",
@@ -2321,13 +2606,15 @@
     }
   },
   "billing": {
-    "title": "Notoria Pro",
-    "description": "Lås upp AI-drivna lärandefunktioner.",
+    "title": "Prenumeration",
+    "description": "Grundläggande lärande, en daglig AI-kvot och betalplaner.",
     "proDescription": "Du har för närvarande Notoria Pro.",
-    "tagline": "Lås upp AI-drivna lärandefunktioner.",
+    "tagline": "Grundläggande lärande plus en liten daglig AI-kvot.",
     "price": "€9.99 / månad",
     "priceAmount": "€9.99",
-    "pricePeriod": "per månad faktureras månadsvis",
+    "pricePeriod": "/månad",
+    "introFirstMonthOnly": "Endast första månaden · Sedan {price}/månad",
+    "introCheckoutHint": "Första månaden {intro}, sedan {price}/månad. Avsluta när som helst.",
     "freePrice": "€0",
     "mostPopular": "Mest populär",
     "currentPlan": "Aktuell plan",
@@ -2338,9 +2625,62 @@
     "manage": "Hantera prenumeration",
     "proBadge": "Pro",
     "freeBadge": "Gratis",
+    "premiumBadge": "Premium",
+    "premiumPlanDescription": "Personlig coachning från din egen studieaktivitet.",
+    "choosePremium": "Välj Premium",
+    "explorePremium": "Utforska Premium",
+    "switchTo": "Byt till {plan}",
+    "switchToFreeHint": "Du behåller den här planen till förnyelsedatumet och går sedan över till Free.",
+    "switchScheduled": "Du går över till Free när den här perioden tar slut.",
+    "planUpdated": "Din plan har uppdaterats.",
+    "continueToStripe": "Fortsätt till Stripe",
+    "upgradeToPremium": "Uppgradera till Premium",
+    "switchToPro": "Byt till Pro",
+    "switchToFree": "Byt till Free",
+    "cancelPro": "Avsluta Pro",
+    "cancelPremium": "Avsluta Premium",
+    "keepPro": "Behåll Pro",
+    "keepPremium": "Behåll Premium",
+    "changePlan": "Byt plan",
+    "manageBilling": "Hantera betalning",
+    "cancellationScheduled": "Uppsägning schemalagd",
+    "accessUntil": "Din {plan}-åtkomst gäller till {date}.",
+    "thenFree": "Därefter går kontot över till Free.",
+    "endsOn": "Slutar {date}",
+    "periodEndFallback": "slutet av den här perioden",
+    "confirming": "Betalning mottagen. Bekräftar din prenumeration…",
+    "confirmingChange": "Bekräftar din prenumeration…",
+    "stillConfirming": "Stripe bekräftar fortfarande ändringen. Planen uppdateras när Stripe gör det.",
+    "nowOnPro": "Du har nu Pro.",
+    "nowOnPremium": "Du har nu Premium.",
+    "keptPlan": "{plan} fortsätter att förnyas.",
+    "paymentFailed": "Betalningen slutfördes inte. Planen ändrades inte.",
+    "priceMissing": "Priset för den här planen finns inte i det här Stripe-kontot. Kontrollera att pris-id:t matchar hemliga nyckelns läge.",
+    "priceModeMismatch": "Det här Stripe-priset tillhör ett annat läge än den hemliga nyckeln.",
+    "priceInactive": "Det här Stripe-priset är inte aktivt.",
+    "priceCurrency": "Det här Stripe-priset måste faktureras i EUR.",
+    "priceInterval": "Det här Stripe-priset måste vara en månadsprenumeration.",
+    "prorationHint": "Priset ändras nu. Stripe debiterar eller krediterar mellanskillnaden direkt.",
+    "confirmUpgradeTitle": "Byta till Premium?",
+    "confirmUpgradeBody": "Premium ersätter Pro på din nuvarande prenumeration direkt. Stripe debiterar den proportionella mellanskillnaden omedelbart. Ingen andra prenumeration skapas. En schemalagd uppsägning tas bort.",
+    "confirmDowngradeTitle": "Byta till Pro?",
+    "confirmDowngradeBody": "Pro ersätter Premium direkt. Stripe krediterar den proportionella mellanskillnaden omedelbart. Premium-funktioner upphör när Stripe bekräftar det nya priset. En schemalagd uppsägning tas bort.",
+    "confirmCancelTitle": "Avsluta {plan}?",
+    "confirmCancelBody": "Din {plan}-åtkomst gäller till {date}. Därefter går kontot över till Free. Du debiteras inte igen.",
+    "confirmKeepTitle": "Behålla {plan}?",
+    "confirmKeepBody": "Den schemalagda uppsägningen tas bort. {plan} fortsätter att förnyas, och nästa debitering är {date}.",
+    "back": "Tillbaka",
+    "openCoach": "Öppna lärcoach",
+    "monthlyPrice": "{price} / månad",
+    "usageToday": "AI-användning idag",
+    "quotaCount": "{used} / {limit}",
+    "unlimitedAi": "Obegränsad AI",
+    "quotaExceeded": "Dagens gratiskvot är slut. Uppgradera till Pro för obegränsad AI.",
+    "alreadySubscribed": "Du har redan den här planen.",
+    "status": "Status: {status}",
     "renewsOn": "Förnyas den {date}",
     "activating": "Bekräftar din prenumeration…",
-    "checkoutSuccess": "Betalning mottagen. Pro aktiveras inom kort.",
+    "checkoutSuccess": "Betalning mottagen. Din plan aktiveras inom kort.",
     "checkoutCanceled": "Kassan avbröts. Du debiterades inte.",
     "checkoutFailed": "Kunde inte starta kassan. Försök igen.",
     "portalFailed": "Kunde inte öppna faktureringshantering. Försök igen.",
@@ -2350,15 +2690,46 @@
     "modalTitle": "Uppgradera plan",
     "modalSubtitle": "Gratis täcker vardaglig övning och ditt bibliotek. Pro låser upp AI-övningar, skrivhjälp, lyssnande, talande och utskrivbara filer.",
     "lockedTitle": "Detta är en Pro-funktion",
-    "lockedDescription": "Uppgradera för AI-övningar, skrivhjälp, lyssnande, talande och PDF/Word-export.",
+    "lockedDescription": "Uppgradera för AI-övningar, filimport, skrivhjälp, lyssnande, talande och PDF/Word-export.",
     "planName": "Pro",
     "cancelAnytime": "Avbryt när som helst",
+    "points": {
+      "core": "Kort, skrivande, teorianteckningar och CSV",
+      "meeting": "1 AI-möte per dag",
+      "transcript": "1 lyssningstranskript per dag",
+      "exercises": "3 AI-övningar per dag",
+      "vocabulary": "5 ordförrådsåtgärder per dag",
+      "unlimited": "Obegränsade möten, transkript, övningar och ordförrådshjälp",
+      "import": "Importera lärande material",
+      "practiceFromMaterial": "AI-övning från arbetsblad",
+      "listening": "Full lyssningsövning",
+      "speaking": "Talövningar med AI-handledaren",
+      "writing": "AI-skrivverktyg",
+      "export": "PDF- och DOCX-export",
+      "coach": "Lärcoach från din aktivitet",
+      "profile": "Personlig lärprofil",
+      "daily": "Dagens övning",
+      "weekly": "Veckogenomgång",
+      "mistakes": "Öva på kort du missade",
+      "askCoach": "Fråga din AI-lärcoach — framsteg, ordförråd, grammatik, teori, översättningar och vad du ska öva härnäst"
+    },
+    "quotaLabels": {
+      "ai_meeting": "AI-möte",
+      "ai_listening_transcript": "Lyssningstranskript",
+      "ai_exercise": "AI-övningar",
+      "ai_exercise_import": "AI-övning från arbetsblad",
+      "ai_vocabulary": "Ordförråd med AI",
+      "ai_writing": "AI-skrivhjälp",
+      "ai_learning_coach_chat": "AI-lärcoach",
+      "content_import": "Importera lärande material"
+    },
     "compare": {
       "capability": "Vad du får",
       "free": "Gratis",
       "pro": "Pro",
       "freeIncludes": "Ingår i Gratis",
       "proUnlocks": "Pro låser upp",
+      "premiumAdds": "Premium lägger till",
       "impact": "Varför det är viktigt",
       "yes": "Ja",
       "locked": "Låst",
@@ -2399,6 +2770,18 @@
           "capability": "Talande samtal med AI",
           "impact": "Live handledarsamtal, sedan en transkription"
         }
+      },
+      "heading": "Jämför planer",
+      "premiumDelta": "Premium lägger till personlig lärintelligens",
+      "tableCaption": "Funktionsjämförelse för Gratis, Pro och Premium",
+      "feature": "Funktion",
+      "current": "Nuvarande",
+      "premium": "Premium",
+      "categories": {
+        "core": "Kärnlärande",
+        "ai": "AI-verktyg",
+        "export": "Import och export",
+        "personalized": "Personligt lärande"
       }
     },
     "benefits": {
@@ -2438,6 +2821,283 @@
         "title": "En mer personlig lärandeupplevelse",
         "body": "Använd AI-drivna verktyg för att göra din vokabulär, skrivande och övningssessioner mer användbara och skräddarsydda för dig."
       }
+    },
+    "distinction": "Pro ger dig verktygen. Premium hjälper dig att använda dem smart.",
+    "modalTitlePro": "Du har Pro",
+    "modalSubtitlePro": "Du har redan hela Notoria-verktygslådan. Premium lägger till personlig lärintelligens.",
+    "modalTitlePremium": "Du har Premium",
+    "modalSubtitlePremium": "Personlig lärintelligens är aktiv.",
+    "premiumActiveCopy": "Din coach använder den här arbetsytans verkliga studieaktivitet för att föreslå nästa steg.",
+    "premiumActiveFineprint": "Hantera fakturering när som helst i Stripe.",
+    "downgradeScheduled": "Byte till Pro schemalagt",
+    "startsOn": "Börjar {date}",
+    "downgradeScheduleHint": "Premium förblir aktivt till {date}. Pro börjar därefter — inget ändras direkt.",
+    "switchingToProOn": "Byter till Pro den {date}. Premium-åtkomst förblir aktiv till dess.",
+    "cell": {
+      "unlimited": "Obegränsat",
+      "limited": "Begränsat",
+      "perDay": "{count}/dag",
+      "quotaPerDay": {
+        "ai_meeting": "{count, plural, one {# samtal/dag} other {# samtal/dag}}",
+        "ai_listening_transcript": "{count, plural, one {# transkript/dag} other {# transkript/dag}}",
+        "ai_exercise": "{count, plural, one {# generering/dag} other {# genereringar/dag}}",
+        "ai_exercise_import": "{count, plural, one {# generering/dag} other {# genereringar/dag}}",
+        "ai_vocabulary": "{count, plural, one {# åtgärd/dag} other {# åtgärder/dag}}",
+        "ai_writing": "{count, plural, one {# åtgärd/dag} other {# åtgärder/dag}}",
+        "content_import": "{count, plural, one {# import/dag} other {# importer/dag}}",
+        "ask_learning_coach": "{count, plural, one {# meddelande/dag} other {# meddelanden/dag}}"
+      },
+      "includedSr": "Ingår",
+      "unavailableSr": "Inte tillgängligt"
+    },
+    "features": {
+      "vocabulary": "Ordförråd",
+      "exercises": "Övningar",
+      "theory": "Teori",
+      "workspace": "Arbetsyta",
+      "aiMeeting": "AI-möte",
+      "aiListeningTranscript": "AI-lyssningstranskript",
+      "aiExercise": "AI-övningsgenerering",
+      "aiVocabulary": "AI-ordförrådsåtgärder",
+      "aiSpeakingTutor": "AI-talhandledare",
+      "aiWriting": "AI-skrivande",
+      "aiWritingSupport": "AI-skrivhjälp",
+      "importLearningMaterial": "Importera lärande material",
+      "exportLearningMaterial": "Exportera lärande material",
+      "importExportLearningMaterial": "Importera och exportera material",
+      "importAccountBackup": "Importera kontosäkerhetskopia",
+      "importExportAccountBackup": "Importera och exportera kontosäkerhetskopia",
+      "aiPracticeFromMaterial": "AI-övning från arbetsblad",
+      "practiceFromMaterial": "AI-övning från arbetsblad",
+      "listening": "Lyssnande",
+      "speaking": "Talande",
+      "pdfDocxExport": "Exportera lärande material",
+      "learningCoach": "Lärcoach",
+      "askLearningCoach": "Fråga din AI-lärcoach",
+      "learningProfile": "Personlig lärprofil",
+      "adaptiveDailyPractice": "Anpassad daglig övning",
+      "practiceFromMistakes": "Öva från misstag",
+      "weeklyLearningReview": "Veckovis genomgång",
+      "learningTrends": "Lärtrender",
+      "personalLearningPath": "Personlig lärväg",
+      "personalizedRecommendations": "Personliga rekommendationer",
+      "crossModuleIntelligence": "Personalisering över moduler"
+    }
+  },
+  "coach": {
+    "eyebrow": "Premium",
+    "title": "Lär",
+    "highlight": "coach",
+    "description": "En kort läsning av studier som redan finns i den här arbetsytan.",
+    "lockedTitle": "Den här funktionen ingår i Notoria Premium.",
+    "lockedBody": "Få personliga rekommendationer baserade på ditt ordförråd, övningar, lyssnande, tal, skrivande och senaste lärande.",
+    "upgrade": "Uppgradera till Premium",
+    "noteLabel": "Coachanteckning",
+    "profile": "Lärprofil",
+    "profileTitle": "Var du står",
+    "today": "Idag",
+    "todayTitle": "Vad du ska göra härnäst",
+    "week": "Senaste 7 dagarna",
+    "weekTitle": "Senaste aktivitet",
+    "language": "Arbetsytans språk",
+    "vocabulary": "Ordförråd",
+    "vocabularyEmpty": "Inga ord ännu",
+    "reviews": "Kortrepetitioner",
+    "misses": "Again eller hard",
+    "listening": "Lyssning uppdaterad",
+    "speaking": "Talsessioner",
+    "writing": "Skrivande uppdaterat",
+    "theory": "Teori uppdaterad",
+    "due": "{count} kort redo för repetition",
+    "weak": "Ord markerade again eller hard: {words}",
+    "weakShort": "{words}",
+    "noWeak": "Inga again- eller hard-betyg ännu.",
+    "empty": "Du har inte byggt upp mycket lärhistorik ännu. Börja med några ordförrådsrepetitioner, en kort talsession eller en lyssningslektion så blir coachen mer användbar.",
+    "hintSpeaking": "Inga talsessioner de senaste 7 dagarna",
+    "hintListening": "Inga lyssningslektioner uppdaterade nyligen",
+    "hintWriting": "Inga texter uppdaterade nyligen",
+    "hintTheory": "Inga teorianteckningar uppdaterade nyligen",
+    "refresh": "Uppdatera coach",
+    "refreshed": "Coachen uppdaterades från din senaste aktivitet.",
+    "refreshFailed": "Kunde inte uppdatera coachen. Försök igen.",
+    "status": {
+      "MASTERED": "Bemästrat",
+      "REVIEW": "Repetition",
+      "LEARNING": "Inlärning",
+      "NEW": "Nytt"
+    },
+    "focus": {
+      "review-due": "Repetera kort som är redo",
+      "weak-words": "Öva orden du markerade again eller hard",
+      "listening": "Lägg till eller återvänd till en lyssningslektion",
+      "speaking": "Starta en talsession",
+      "writing": "Öppna skrivstudion",
+      "theory": "Öppna dina teorianteckningar",
+      "keep-going": "Fortsätt i den takt du redan har"
+    },
+    "descriptionIntelligence": "Vad du ska göra härnäst, varför det spelar roll och hur ditt lärande förändras.",
+    "distinction": "Pro ger dig verktygen. Premium hjälper dig att använda dem smart.",
+    "focusLabel": "Ditt lärfokus",
+    "focusCta": "Börja här",
+    "plan": "Anpassad övning",
+    "planTitle": "Dagens {minutes}-minutersplan",
+    "planMinutes": "~{count} min",
+    "startStep": "Starta",
+    "startPlan": "Starta dagens övning",
+    "mistakes": "Öva från misstag",
+    "mistakesTitle": "Ord som behöver uppmärksamhet",
+    "practiceMistakes": "Öva dessa ord",
+    "path": "Lärväg",
+    "pathTitle": "Din lärväg",
+    "pathCurrent": "Nuvarande fokus",
+    "pathNext": "Nästa",
+    "pathThen": "Sedan",
+    "pathLater": "Senare",
+    "cross": "Kopplingar",
+    "crossTitle": "Över dina moduler",
+    "crossHints": {
+      "theory_to_practice": "Öva det du just studerade",
+      "vocab_to_speaking": "Använd svaga ord i tal"
+    },
+    "trends": "Lärtrender",
+    "trendsTitle": "Sedan förra veckan",
+    "trendsEmpty": "Dina lärtrender visas här när du bygger mer aktivitet.",
+    "speakingLevel": "Talande",
+    "ask": {
+      "label": "Fråga din coach",
+      "title": "Fråga din lärcoach",
+      "description": "Fråga vad som helst om ditt lärande — framsteg, vad du ska öva härnäst, ordförråd, grammatik, teori, översättningar eller studiematerial du klistrar in. Svaren följer frågans språk.",
+      "emptyReady": "Din coach är redo. Jag känner inte dina studievanor ännu, så fråga om ett ord, en grammatikpunkt eller vad du ska öva först.",
+      "placeholder": "Fråga din lärcoach...",
+      "inputHint": "Enter skickar. Shift+Enter för ny rad.",
+      "send": "Skicka meddelande",
+      "thinking": "Coachen tänker…",
+      "you": "Du",
+      "coach": "Lärcoach",
+      "promptsLabel": "Föreslagna frågor",
+      "retry": "Försök igen",
+      "upgrade": "Uppgradera till Premium",
+      "errorQuota": "Du har nått dagens gräns för lärcoachen. Coachen är tillgänglig igen i morgon.",
+      "errorPremium": "Lärcoachen är en Premium-funktion. Få personliga rekommendationer baserade på din studieaktivitet.",
+      "errorUnavailable": "Din coach kunde inte svara just nu. Ditt meddelande räknades inte. Försök igen.",
+      "prompts": {
+        "practice_today": "Vad ska jag fokusera på idag?",
+        "struggling_words": "Varför har jag svårt med dessa ord?",
+        "practice_weak": "Hjälp mig öva mina svaga ord.",
+        "review_first": "Vad ska jag repetera först?",
+        "neglecting": "Vad har jag försummat?",
+        "improve_speaking": "Varför har mitt talande inte förbättrats?",
+        "study_20": "Hur ska jag använda 20 minuter idag?",
+        "getting_started": "Vad ska jag öva först?",
+        "am_i_improving": "Blir jag verkligen bättre?",
+        "what_changed": "Vad förändrades i mitt lärande den här veckan?"
+      }
+    },
+    "next": {
+      "label": "Bestäm",
+      "title": "Ditt nästa steg",
+      "planTitle": "Dagens rekommenderade övning",
+      "whyOrder": "Varför den här ordningen? Förfallna och svåra ord först, sedan den modul du har försummat.",
+      "cta": "Starta dagens övning"
+    },
+    "why": {
+      "title": "Varför detta?",
+      "due": "{count} ordförrådskort är redo",
+      "weak": "{count} ord har varit upprepade gånger svåra",
+      "reviews": "{count} flashcard-repetitioner de senaste 7 dagarna",
+      "speakingIdle": "Ingen talsession de senaste 7 dagarna",
+      "listeningIdle": "Ingen lyssningsaktivitet de senaste 7 dagarna",
+      "writingIdle": "Inga skrivuppdateringar de senaste 7 dagarna",
+      "theoryIdle": "Inga teorinoteringar uppdaterade de senaste 7 dagarna",
+      "focus": "Nuvarande fokus: {focus}"
+    },
+    "chips": {
+      "due": "{count} kort redo",
+      "weak": "{count} svåra ord",
+      "speakingIdle": "Ingen talsession på 7 dagar",
+      "mastered": "{count} bemästrade nu",
+      "dueLabel": "Redo kort",
+      "weakLabel": "Svåra ord"
+    },
+    "quick": {
+      "label": "Kontext",
+      "title": "Snabbkontext"
+    },
+    "progress": {
+      "label": "Mät",
+      "title": "Dina framsteg",
+      "description": "Se vad som har förändrats i ditt lärande — och vad din coach lägger märke till.",
+      "empty": "Du har precis börjat. Fortsätt lära dig så börjar din coach visa meningsfulla framsteg över tid.",
+      "chartEmpty": "Inte tillräckligt med händelsehistorik för det här diagrammet ännu. Fortsätt repetera eller tala så visas en trend.",
+      "chartSr": "{metric} under de senaste {days} dagarna, från {from} till {to} i de senaste intervallen.",
+      "activityTitle": "Studieaktivitet — senaste {days} dagarna",
+      "activityNote": "Aktivitet visar var du la tid — inte om den tiden förbättrade färdigheten.",
+      "compareLabel": "Periodjämförelse",
+      "noticesTitle": "Vad din coach lägger märke till",
+      "askAbout": "Fråga din coach om detta",
+      "periodLabel": "Framstegsperiod",
+      "metricLabel": "Diagrammått",
+      "period": {
+        "7": "7 dagar",
+        "30": "30 dagar",
+        "90": "90 dagar"
+      },
+      "metrics": {
+        "flashcardReviews": "Repetitioner",
+        "againOrHard": "Svåra betyg",
+        "speakingSessions": "Talsessioner"
+      },
+      "tooltip": {
+        "weekOf": "Vecka från {date}",
+        "firstAt": "Första aktiviteten {time}",
+        "reviews": "{count, plural, one {# flashcard-repetition} other {# flashcard-repetitioner}}",
+        "againOrHard": "{count, plural, one {# Again/Hard-betyg} other {# Again/Hard-betyg}}",
+        "speaking": "{count, plural, one {# talsession} other {# talsessioner}}",
+        "none": "Ingen aktivitet under den här perioden",
+        "words": "Ord: {list}",
+        "topics": "Ämnen: {list}"
+      },
+      "streak": {
+        "label": "Streak",
+        "days": "{count, plural, one {dags streak} other {dagars streak}}",
+        "practicedToday": "Du övade idag — streaken är säkrad.",
+        "keepGoing": "Öva idag för att hålla streaken igång.",
+        "start": "Lär dig något idag för att starta en streak.",
+        "weekLabel": "Senaste 7 dagarna",
+        "best": "Bästa streak: {count, plural, one {# dag} other {# dagar}}",
+        "dayEmpty": "Ingen studieaktivitet den här dagen",
+        "dayActive": "Studieaktivitet registrerad",
+        "dayReviews": "{count, plural, one {# flashcard-repetition} other {# flashcard-repetitioner}}",
+        "daySpeaking": "{count, plural, one {# talsession} other {# talsessioner}}",
+        "dayListening": "{count, plural, one {# lyssningsuppdatering} other {# lyssningsuppdateringar}}",
+        "dayWriting": "{count, plural, one {# skrivuppdatering} other {# skrivuppdateringar}}",
+        "dayTheory": "{count, plural, one {# teoriuppdatering} other {# teoriuppdateringar}}"
+      }
+    },
+    "notices": {
+      "reviews_up": "Flashcard-repetitioner är högre än under föregående period.",
+      "reviews_down": "Flashcard-repetitioner är lägre än under föregående period.",
+      "misses_down": "Again/Hard-betyg minskade jämfört med föregående period.",
+      "misses_up": "Again/Hard-betyg ökade jämfört med föregående period.",
+      "speaking_quiet": "Talsessioner är fortfarande få i förhållande till din ordförrådsaktivitet.",
+      "speaking_up": "Talsessioner ökade jämfört med föregående period.",
+      "due_open": "Du har fortfarande kort som är redo för repetition.",
+      "weak_open": "Vissa ord är fortfarande upprepade gånger svåra.",
+      "getting_started": "Det finns ännu inte tillräckligt med historik för en stark framstegsavläsning."
+    },
+    "attention": {
+      "label": "Agera",
+      "title": "Vad behöver uppmärksamhet",
+      "dueTitle": "{count} kort redo",
+      "dueBody": "Repetera ditt förfallna ordförråd så att försenade kort inte staplas.",
+      "weakTitle": "{count} upprepade gånger svåra ord",
+      "weakBody": "Öva dessa ord: {words}",
+      "review": "Repetera",
+      "practice": "Öva"
+    },
+    "rating": {
+      "AGAIN": "Again",
+      "HARD": "Hard"
     }
   },
   "gettingStarted": {
@@ -2459,7 +3119,8 @@
       "speaking": "Tala",
       "connections": "Din kunskap blir praktik",
       "philosophy": "Din inlärningsdagbok",
-      "startHere": "Börja här"
+      "startHere": "Börja här",
+      "inbox": "Fångst"
     },
     "welcome": {
       "title": "Vad är Notoria?",
@@ -2501,7 +3162,7 @@
       "steps": {
         "collect": {
           "title": "1. Samla din kunskap",
-          "body": "Lägg till ord och teori från lektioner, samtal, böcker, media eller var som helst du stöter på språket."
+          "body": "Använd Fångst för snabba lappar, och lägg sedan till ordförråd och teori från lektioner, samtal, böcker, media eller var du än möter språket."
         },
         "understand": {
           "title": "2. Förstå det",
@@ -2615,6 +3276,27 @@
           "Läs feedback och identifiera områden att förbättra"
         ],
         "emphasis": "Tala behöver inte vara perfekt. Syftet är att öva på att använda språket i en realistisk situation — och sedan lära sig av vad som hände."
+      },
+      "inbox": {
+        "title": "Fångst",
+        "intro": "Fångst är din snabba droppzon — spara något i samma ögonblick du möter det, och bestäm senare var det hör hemma.",
+        "bullets": [
+          "Spara ett ord, en fras, ett grammatikfrågetecken eller en skrividé på sekunder",
+          "Lägg till en valfri anteckning eller källa för sammanhang",
+          "Håll poster i Att bearbeta tills du är redo",
+          "Gör om en fångst till Ordförråd, Teori, Skrivande eller Övning när du har tid",
+          "En post markeras Bearbetad först när du sparat den länkade posten"
+        ],
+        "body": "Fångst sitter i början av loopen: samla först, organisera sedan. Du behöver ingen perfekt kategori i stunden — du behöver tanken sparad.",
+        "emphasis": "Om du bara har tio sekunder räcker fångst. Sorteringen kan vänta.",
+        "exampleIntro": "Till exempel hör du en fras på bussen och har bara en stund:",
+        "examples": [
+          "Innehåll: varata aika",
+          "Anteckning: hört på bussen — boka tid",
+          "Källa: vardag",
+          "Senare: bearbeta till Ordförråd med betydelse och exempel"
+        ],
+        "exampleNote": "Lappen är trygg i Fångst. När du har fem lugna minuter skickar du den till Ordförråd (eller Teori / Skrivande) och slutför posten — först då blir den Bearbetad."
       }
     },
     "connections": {
@@ -2629,6 +3311,7 @@
         "addMore": "Lägg till mer kunskap"
       },
       "paragraphs": [
+        "Fångst håller lapparna tills du är redo att placera dem.",
         "Det du samlar i Ordlista och Teori blir källan för dina övningar.",
         "Skrivande och Lyssnande hjälper dig att använda och förstå språket i nya sammanhang.",
         "Tala sätter allt i aktiv konversation.",
@@ -2666,7 +3349,8 @@
           "exercise": "Skapa en övning från din kunskap.",
           "writing": "Försök att skriva några meningar.",
           "listeningSpeaking": "När du är redo, försök att lyssna eller tala.",
-          "return": "Kom tillbaka imorgon och lägg till något nytt."
+          "return": "Kom tillbaka imorgon och lägg till något nytt.",
+          "capture": "Öppna Fångst och spara en snabb anteckning eller fras du vill återkomma till."
         }
       },
       "closing": "Börja bara med något du vill minnas. Din dagbok kommer att växa naturligt därifrån."
@@ -2679,7 +3363,10 @@
     "terms": "Användarvillkor",
     "privacyTitle": "Integritetspolicy",
     "termsTitle": "Användarvillkor",
+    "privacyDescription": "Hur Notoria samlar in, använder och raderar personuppgifter och lärinnehåll för sin privata arbetsyta för språkinlärning.",
+    "termsDescription": "Villkor för att använda Notorias privata arbetsyta för språkinlärning, konton, AI-funktioner och Notoria Pro-fakturering.",
     "updated": "Senast uppdaterad {date}",
+    "updatedDate": "23 september 2026",
     "backToSignIn": "Tillbaka till inloggning",
     "backHome": "Tillbaka till Notoria",
     "authFooter": "Integritet · Villkor",
@@ -2688,7 +3375,424 @@
     "registerAgreement": "Genom att skapa ett konto godkänner du <terms>användarvillkoren</terms> och <privacy>integritetspolicyn</privacy>.",
     "settingsLinksTitle": "Policyer",
     "settingsLinksDescription": "Läs hur Notoria hanterar dina uppgifter och reglerna för tjänsten.",
-    "contactEmail": "contact@notoria.fi"
+    "contactEmail": "contact@notoria.fi",
+    "privacyPolicy": {
+      "intro": "Denna integritetspolicy förklarar hur Notoria (<site>www.notoria.fi</site>) hanterar personuppgifter i sin privata webbapp för språkinlärning. Den är skriven för att motsvara hur produkten fungerar i dag. Om en praxis inte beskrivs här gör vi inte anspråk på att tillämpa den.",
+      "tocTitle": "På den här sidan",
+      "tocAria": "På den här sidan",
+      "toc": {
+        "controller": "Vem är ansvarig",
+        "scope": "Vad policyn omfattar",
+        "data": "Uppgifter vi behandlar",
+        "purposes": "Varför vi behandlar uppgifter",
+        "auth": "Konton och inloggning",
+        "ai": "AI-funktioner",
+        "payments": "Betalningar (Notoria Pro)",
+        "processors": "Tjänsteleverantörer",
+        "cookies": "Cookies och lagring på enheten",
+        "transfers": "Internationella överföringar",
+        "retention": "Hur länge vi sparar uppgifter",
+        "deletion": "Export och radering av konto",
+        "rights": "Dina rättigheter (GDPR)",
+        "children": "Barn",
+        "changes": "Ändringar",
+        "contact": "Kontakt"
+      },
+      "sections": {
+        "controller": {
+          "title": "1. Vem är ansvarig",
+          "p1": "Notoria är tjänsten för språkinlärning på <site>www.notoria.fi</site>, som erbjuds användare i Finland och i övriga EU/EES.",
+          "p2": "För frågor om integritet, begäranden från registrerade och annan användarkontakt, mejla <contact></contact>.",
+          "p3": "Ett registrerat företagsnamn och en postadress för den personuppgiftsansvarige publiceras inte i den nuvarande produkten. Om du behöver en formell identifiering av den personuppgiftsansvarige för en GDPR-begäran, mejla <contact></contact> så tillhandahåller vi den."
+        },
+        "scope": {
+          "title": "2. Vad policyn omfattar",
+          "p1": "Den omfattar personuppgifter och lärinnehåll som behandlas när du:",
+          "list": [
+            "skapar eller använder ett konto",
+            "sparar material i privata arbetsytor",
+            "abonnerar på Notoria Pro",
+            "använder valfria AI-assisterade verktyg",
+            "laddar upp media för lyssning eller profilbruk",
+            "använder talövning",
+            "skickar feedback eller kontaktar oss"
+          ],
+          "p2": "Den nuvarande applikationskoden innehåller inte någon tredjeparts-SDK för marknadsföringsanalys eller annonsering. Vi gör inte anspråk på att använda spårare som inte finns i produkten."
+        },
+        "data": {
+          "title": "3. Uppgifter vi behandlar",
+          "p1": "Notoria behandlar olika typer av uppgifter av olika skäl. De huvudsakliga kategorierna är:",
+          "accountAuth": {
+            "title": "Konto och autentisering",
+            "list": [
+              "Namn och e-postadress",
+              "Lösenordshash för konton med e-post och lösenord (lösenord lagras aldrig i klartext)",
+              "Google-kontoidentifierare och OAuth-tokens om du loggar in med Google",
+              "Valfritt profilfoto (avatar)",
+              "Kontoroll samt tidsstämplar för skapande och uppdatering"
+            ]
+          },
+          "learningContent": {
+            "title": "Lärinnehåll som du skapar",
+            "p1": "Innehåll du lägger till i privata arbetsytor, till exempel ordförråd, teorianteckningar, skrivdokument, övningar och importerat övningsmaterial, lyssningslektioner (inklusive mediereferenser och transkriptioner), transkriptioner från talsessioner och relaterade sessionsfält, mappar, taggar och studieframsteg såsom flashcard-repetitioner.",
+            "p2": "Detta är ditt läromaterial. Notoria lagrar det så att du kan återvända till det och öva med det."
+          },
+          "subscription": {
+            "title": "Metadata för abonnemang och betalning",
+            "list": [
+              "Plan (gratis eller Pro) och abonnemangsstatus",
+              "Stripe-identifierare för kund och abonnemang samt slutet på den aktuella perioden när det är tillämpligt"
+            ],
+            "p1": "Kortnummer och hemligheter för betalningsmetoder stannar hos Stripe. Notoria sparar bara den faktureringsmetadata som behövs för att spegla din Pro-status."
+          },
+          "device": {
+            "title": "Enhets- och inställningsdata",
+            "p1": "Cookies och webbläsarlagring som används för inloggning, språk, aktiv arbetsyta, inställningar för AI-assistans, tema och liknande produktinställningar. Se <cookies>Cookies och lagring på enheten</cookies>."
+          },
+          "support": {
+            "title": "Support och feedback",
+            "list0": "E-post du skickar till <contact></contact>",
+            "list1": "Feedback i appen från Support (meddelande, typ av feedback, din e-postadress, om du är inloggad, valfritt konto-id, sidväg, user-agent och upp till tre valfria bildbilagor)",
+            "p1": "Feedback levereras via e-post till Notorias tekniska inkorg (<technical></technical>). Den lagras inte som en separat ärendedatabas inuti Notoria."
+          }
+        },
+        "purposes": {
+          "title": "4. Varför vi behandlar uppgifter",
+          "headers": {
+            "purpose": "Syfte",
+            "basis": "Typisk rättslig grund enligt GDPR"
+          },
+          "rows": [
+            {
+              "purpose": "Tillhandahålla konton, arbetsytor och ditt sparade läromaterial",
+              "basis": "Avtal (Art. 6(1)(b))"
+            },
+            {
+              "purpose": "Autentisera dig (e-post/lösenord eller Google) och återställa lösenord",
+              "basis": "Avtal (Art. 6(1)(b))"
+            },
+            {
+              "purpose": "Sköta fakturering och abonnemangsstatus för Notoria Pro via Stripe",
+              "basis": "Avtal (Art. 6(1)(b))"
+            },
+            {
+              "purpose": "Valfri AI-hjälp, transkribering av lyssning och talövning när du använder dessa funktioner",
+              "basis": "Avtal (Art. 6(1)(b)); inställningskontroller där de finns"
+            },
+            {
+              "purpose": "Hålla tjänsten säker och tillförlitlig (förhindrande av missbruk, felsökning)",
+              "basis": "Berättigat intresse (Art. 6(1)(f))"
+            },
+            {
+              "purpose": "Svara på support- och feedbackmeddelanden",
+              "basis": "Berättigat intresse / avtal, beroende på förfrågan"
+            },
+            {
+              "purpose": "Uppfylla rättsliga förpliktelser",
+              "basis": "Rättslig förpliktelse (Art. 6(1)(c))"
+            }
+          ],
+          "p1": "Om du behöver en formell anteckning om rättslig grund för en specifik aktivitet, mejla <contact></contact>."
+        },
+        "auth": {
+          "title": "5. Konton och inloggning",
+          "p1": "Notoria använder Auth.js (NextAuth) med en JWT-session. Du kan logga in med e-post och lösenord, eller med Google OAuth när Google-inloggning är konfigurerad.",
+          "p2": "E-post för lösenordsåterställning skickas endast för konton som har ett lösenord. Återställningstokens lagras hashade, upphör att gälla efter 30 minuter och används endast för att ange ett nytt lösenord."
+        },
+        "ai": {
+          "title": "6. AI-funktioner",
+          "p1": "Valfria AI-funktioner i den nuvarande produkten använder <strong>OpenAI</strong>. Beroende på vilket verktyg du använder kan Notoria skicka relevant lärinnehåll — till exempel ord ur ordförrådet, skriven text eller markeringar, sammanhang från övningar eller teori, transkriptioner av lyssning, transkriptioner av tal, eller direktljud till taltutorn.",
+          "p2": "Inställningar för AI-assistans (inklusive om assistansen är aktiverad) lagras i en webbläsarcookie så att produkten kan respektera dina inställningar. Många serveråtgärder som anropar modellen kontrollerar först att assistansen är aktiverad. Att stänga av assistansen i <settings>Inställningar</settings> blockerar AI-verktyg som kräver den.",
+          "p3": "Transkribering av lyssning via AssemblyAI kan fortfarande köras när du använder lyssningsfunktioner som behöver en transkription, eftersom transkriberingen är en del av det mediearbetsflödet snarare än enbart den valfria inställningen för ”AI-assistans”.",
+          "p4": "Den nuvarande kodbasen använder inga andra leverantörer av stora språkmodeller än OpenAI. OpenAI behandlar uppgifter enligt sina egna villkor och sin integritetspolicy som personuppgiftsbiträde för dessa funktioner."
+        },
+        "payments": {
+          "title": "7. Betalningar (Notoria Pro)",
+          "p1": "Betalda abonnemang hanteras av <strong>Stripe</strong>. Kassa, fakturor, betalningsmetoder och uppsägning sköts via Stripe Checkout och Stripe Customer Portal. Stripe-webhooks uppdaterar din plan och status i Notoria.",
+          "p2": "Stripe behandlar betalningsuppgifter som betaltjänstleverantör. Se Stripes egen integritetsdokumentation för korthantering."
+        },
+        "processors": {
+          "title": "8. Tjänsteleverantörer",
+          "p1": "Beroende på vilka funktioner du använder kan personuppgifter eller lärinnehåll behandlas av:",
+          "headers": {
+            "provider": "Leverantör",
+            "role": "Roll i Notoria"
+          },
+          "rows": [
+            {
+              "provider": "PostgreSQL-databas (produktion dokumenterad som Neon)",
+              "role": "Konto- och läruppgifter"
+            },
+            {
+              "provider": "Vercel",
+              "role": "Applikationshosting (konfigurerad region inkluderar Frankfurt / fra1)"
+            },
+            {
+              "provider": "Cloudinary",
+              "role": "Avatarer, lyssningsmedia, redigerarbilder och filer för övningsimport"
+            },
+            {
+              "provider": "AssemblyAI",
+              "role": "Transkribering av lyssningsljud"
+            },
+            {
+              "provider": "Stream Video",
+              "role": "Direktsamtal för tal; automatisk transkribering; sessionsfält såsom transkriptions-URL:er (och inspelnings-URL:er endast om en inspelningshändelse senare tas emot)"
+            },
+            {
+              "provider": "OpenAI",
+              "role": "Valfri AI-assistans och realtidsljud för taltutorn"
+            },
+            {
+              "provider": "Resend",
+              "role": "Leverans av e-post för lösenordsåterställning och av supportfeedback"
+            },
+            {
+              "provider": "Stripe",
+              "role": "Kassa, portal och abonnemangsstatus för Notoria Pro"
+            },
+            {
+              "provider": "Google",
+              "role": "OAuth-inloggning när du väljer Google; webbtypsnitt för gränssnittet"
+            },
+            {
+              "provider": "Dicebear",
+              "role": "Genererade avatarbilder som används i talsessioner (från ett namnfrö; inget kontolösenord skickas)"
+            }
+          ],
+          "p2": "Talsamtal skapas med transkribering aktiverad. Inspelning är avaktiverad när samtalet skapas i den nuvarande implementationen; en inspelnings-URL lagras endast om produkten senare tar emot en händelse om färdig inspelning från Stream."
+        },
+        "cookies": {
+          "title": "9. Cookies och lagring på enheten",
+          "p1": "Notoria använder cookies och liknande lagring för nödvändiga produktfunktioner. Det finns ingen separat cookiepolicy eftersom den nuvarande implementationen inte innehåller några annons- eller analyscookieprogram som skulle kräva en sådan.",
+          "cookiesTitle": "Cookies som appen använder",
+          "headers": {
+            "cookie": "Cookie",
+            "purpose": "Syfte"
+          },
+          "rows": [
+            {
+              "cookie": "Auth.js sessionscookie",
+              "purpose": "Håller dig inloggad (JWT-session; bibliotekets standardnamn)",
+              "code": false
+            },
+            {
+              "cookie": "notoria-locale",
+              "purpose": "Språk i gränssnittet",
+              "code": true
+            },
+            {
+              "cookie": "notoria-workspace",
+              "purpose": "Aktiv arbetsyta",
+              "code": true
+            },
+            {
+              "cookie": "notoria-ai-preferences",
+              "purpose": "Inställningar för AI-assistans",
+              "code": true
+            },
+            {
+              "cookie": "sidebar_state",
+              "purpose": "Inställning för öppet/stängt sidofält",
+              "code": true
+            }
+          ],
+          "storageTitle": "Local storage och session storage",
+          "p2": "Din webbläsare kan också lagra temainställning (via next-themes), flaggor för introduktion och handledning, inställningar för tangentbord och rörelse, val av visningsläge, tillfälligt sessionstillstånd för övningar eller flashcards, och liknande inställningar som bara finns i klienten.",
+          "p3": "Att rensa lokala inställningar i Inställningar tar bort dessa enhetsinställningar. Det raderar inte ditt konto eller innehållet i din arbetsyta på servern."
+        },
+        "transfers": {
+          "title": "10. Internationella överföringar",
+          "p1": "Vissa av leverantörerna ovan är baserade utanför EES (till exempel i USA) eller kan behandla uppgifter i mer än en region. När personuppgifter lämnar EES/Storbritannien bygger överföringarna på de skyddsåtgärder som dessa leverantörer erbjuder enligt tillämplig lag — såsom standardavtalsklausuler där de är tillämpliga — och på deras publicerade integritetsvillkor.",
+          "p2": "Applikationshostingen för Notoria är konfigurerad mot Frankfurt-regionen (fra1). Fråga <contact></contact> om du behöver hjälp att hitta relevant leverantörsdokumentation för en specifik funktion."
+        },
+        "retention": {
+          "title": "11. Hur länge vi sparar uppgifter",
+          "list": [
+            "Konto- och läruppgifter sparas så länge ditt konto är öppet så att du kan använda tjänsten",
+            "Tokens för lösenordsåterställning upphör att gälla efter 30 minuter",
+            "Abonnemangsmetadata sparas så länge det behövs för att spegla din nuvarande Pro-status och faktureringsrelationen med Stripe",
+            "Support- och feedbackmejl sparas så länge det behövs för att hantera din förfrågan och relaterad uppföljning"
+          ],
+          "p1": "Exakta bevarandetider för säkerhetskopior hos infrastrukturleverantörer är inte hårdkodade i applikationen och kan följa dessa leverantörers operativa praxis. Kontakta oss om du behöver ett förtydligande för en raderingsbegäran."
+        },
+        "deletion": {
+          "title": "12. Export och radering av konto",
+          "exportTitle": "Export",
+          "exportP1": "Från <account>Konto</account> kan du ladda ner en JSON-säkerhetskopia av arbetsytor och lärinnehåll (inklusive ordförråd, teorianteckningar, övningar/skrivande, lyssningslektioner och talsessioner). Mediefiler refereras via URL i stället för att bäddas in som binära filer.",
+          "exportP2": "Den nuvarande exporten innehåller inte alla kontorelaterade poster. Till exempel ingår inte flashcard-framsteg/repetitioner och källposter för övningsimport i JSON-säkerhetskopian. OAuth-tokens, lösenordshashar och Stripe-identifierare exporteras inte.",
+          "deleteTitle": "Radera konto",
+          "deleteP1": "Du kan permanent radera ditt konto från <account>Konto</account>. När raderingen lyckas gör Notoria följande:",
+          "deleteList": [
+            "raderar din användarpost och kaskaderade läruppgifter från Notorias databas",
+            "avbryter och tar bort relaterade Stripe-kunduppgifter där Stripe är konfigurerat (efter bästa förmåga)",
+            "förstör avatarmedia och media för lyssningslektioner som raderingsflödet är implementerat att ta bort från Cloudinary"
+          ],
+          "deleteP2": "Det nuvarande raderingsflödet gör inte anspråk på att automatiskt rensa varje artefakt hos tredje part. Särskilt kan vissa Cloudinary-tillgångar (såsom redigerarbilder eller filer för övningsimport) och Stream-artefakter från talsamtal kvarstå hos dessa leverantörer till dess att de rensas separat eller raderas enligt deras egna scheman.",
+          "deleteP3": "Efter radering kan begränsade kvarvarande kopior också finnas kvar en kort tid i krypterade säkerhetskopior eller loggar till dess att dessa system roteras. Om något specifikt kvarstår efter att du har raderat ditt konto, mejla <contact></contact>."
+        },
+        "rights": {
+          "title": "13. Dina rättigheter (GDPR)",
+          "p1": "Om du befinner dig i EU/EES eller på annat sätt skyddas av GDPR kan du ha rätt att:",
+          "list": [
+            "få tillgång till dina personuppgifter",
+            "rätta felaktiga uppgifter",
+            "radera uppgifter (bland annat genom att radera ditt konto)",
+            "begränsa eller invända mot viss behandling",
+            "få en portabel kopia av de uppgifter du har lämnat (se Export ovan)",
+            "återkalla samtycke där behandlingen bygger på samtycke"
+          ],
+          "listComplaint": "lämna in ett klagomål till en tillsynsmyndighet — i Finland till dataombudsmannens byrå (<ombudsman>tietosuoja.fi</ombudsman>)",
+          "p2": "För att utöva dessa rättigheter, mejla <contact></contact>. Vi kan behöva verifiera att begäran kommer från kontoinnehavaren."
+        },
+        "children": {
+          "title": "14. Barn",
+          "p1": "Notoria kräver ett konto och är byggt som en personlig arbetsyta för inlärning. Produkten implementerar ingen särskild ålderskontroll. Den riktar sig inte till barn. Om du tror att ett barns uppgifter har lämnats utan behörighet, kontakta <contact></contact>."
+        },
+        "changes": {
+          "title": "15. Ändringar",
+          "p1": "Vi kan uppdatera denna integritetspolicy när produkten eller lagkraven ändras. Datumet ”Senast uppdaterad” högst upp på sidan ändras när en revidering publiceras.",
+          "p2": "När en ändring är väsentlig kommunicerar vi den på ett rimligt sätt som är tillgängligt vid tidpunkten — till exempel genom att uppdatera den här sidan och, där det är lämpligt, genom ett meddelande i produkten eller ett e-postmeddelande."
+        },
+        "contact": {
+          "title": "16. Kontakt",
+          "p1": "Integritet och allmän kontakt: <contact></contact>",
+          "p2": "Teknisk inkorg för produktfeedback (finns även på <contactPage>Kontakta oss</contactPage>): <technical></technical>",
+          "p3": "Webbplats: <site>www.notoria.fi</site>"
+        }
+      }
+    },
+    "termsOfUse": {
+      "intro": "Dessa användarvillkor förklarar reglerna för att använda Notoria på <site>www.notoria.fi</site>. De beskriver hur produkten fungerar i dag: privata arbetsytor för inlärning, valfri Notoria Pro-fakturering via Stripe och AI-assisterade funktioner. De ersätter inte råd från en jurist om din specifika situation.",
+      "tocTitle": "På den här sidan",
+      "tocAria": "På den här sidan",
+      "toc": {
+        "agreement": "Avtal",
+        "service": "Tjänsten",
+        "accounts": "Konton",
+        "content": "Ditt innehåll",
+        "acceptable-use": "Godtagbar användning",
+        "ip": "Immateriella rättigheter",
+        "ai": "AI-genererat innehåll",
+        "plans": "Gratisplan och Notoria Pro",
+        "billing": "Abonnemang och fakturering",
+        "refunds": "Återbetalningar och konsumenträttigheter",
+        "availability": "Tillgänglighet",
+        "termination": "Avstängning och uppsägning",
+        "liability": "Ansvarsfriskrivning och ansvar",
+        "changes": "Ändringar",
+        "law": "Tillämplig lag",
+        "contact": "Kontakt"
+      },
+      "sections": {
+        "agreement": {
+          "title": "1. Avtal",
+          "p1": "Genom att skapa ett konto eller använda Notoria godkänner du dessa villkor och <privacy>integritetspolicyn</privacy>. Om du inte godkänner dem ska du inte använda tjänsten.",
+          "p2": "Frågor om dessa villkor: <contact></contact>."
+        },
+        "service": {
+          "title": "2. Tjänsten",
+          "p1": "Notoria är en privat webbapp för språkinlärning. Du kan skapa arbetsytor och spara läromaterial såsom ordförråd, teorianteckningar, skrivande, övningar, lyssningslektioner och talsessioner.",
+          "p2": "Vissa funktioner är tillgängliga i gratisplanen. Notoria Pro låser upp ytterligare möjligheter enligt vad som visas i produkten och på din <account>Konto</account>-sida — inklusive Lyssning, Tal, vissa AI-studieverktyg, övningsimport och betalda exportformat för dokument. Vilka funktioner som är tillgängliga kan ändras när produkten utvecklas.",
+          "p3": "Notoria är avsett för personlig språkinlärning. Det är inte en skola, en examensmyndighet eller en tjänst för professionell rådgivning."
+        },
+        "accounts": {
+          "title": "3. Konton",
+          "list": [
+            "Lämna korrekta kontouppgifter",
+            "Håll ditt lösenord och din kontoåtkomst säkra",
+            "Logga in med e-post och lösenord, eller med Google när Google-inloggning är tillgänglig",
+            "Använd Notoria endast om du kan ingå ett bindande avtal enligt tillämplig lag"
+          ],
+          "p1": "Produkten implementerar ingen separat ålderskontroll. Om du tror att ett konto har skapats utan behörighet, kontakta <contact></contact>.",
+          "p2": "Meddela oss på <contact></contact> om du tror att ditt konto har komprometterats."
+        },
+        "content": {
+          "title": "4. Ditt innehåll",
+          "p1": "Du behåller äganderätten till det lärinnehåll du skapar eller laddar upp i Notoria.",
+          "p2": "Du ger Notoria en begränsad licens att lagra, behandla, visa och säkerhetskopiera det innehållet så att tjänsten kan fungera — inklusive att skicka relevant material till leverantörer av AI, transkribering, media eller betalningar när du använder dessa funktioner. Licensen finns endast för att driva Notoria för dig. Den överför inte äganderätten till ditt innehåll till oss.",
+          "p3": "Du ansvarar för vad du lagrar. Ladda inte upp material du inte har rätt att använda, och använd inte Notoria för att lagra olagligt innehåll."
+        },
+        "acceptableUse": {
+          "title": "5. Godtagbar användning",
+          "p1": "Du samtycker till att inte:",
+          "list": [
+            "bryta mot lagen eller kränka andras rättigheter",
+            "försöka få åtkomst till andra användares privata arbetsytor eller konton",
+            "sondera, överbelasta eller störa tjänsten, API:er eller relaterad infrastruktur",
+            "missbruka funktioner för AI, transkribering, lyssning eller tal på sätt som skadar andra eller kringgå planbegränsningar genom bedrägeri",
+            "baklängeskonstruera tjänsten utom där tvingande lokal lag tillåter det",
+            "ge en felaktig bild av din identitet för Stripe, Google eller Notorias support"
+          ]
+        },
+        "ip": {
+          "title": "6. Immateriella rättigheter",
+          "p1": "Notorias namn, varumärke, programvara och produktdesign ägs av Notoria eller dess licensgivare. Dessa villkor överför inte äganderätten till produkten till dig.",
+          "p2": "Ditt lärinnehåll förblir ditt, med förbehåll för den begränsade licensen i avsnitt 4."
+        },
+        "ai": {
+          "title": "7. AI-genererat innehåll",
+          "p1": "Vissa funktioner kan kontrollera, föreslå, generera, transkribera, sammanfatta eller undervisa utifrån ditt material. Resultatet kan vara ofullständigt, felaktigt eller olämpligt för ditt syfte. Du ansvarar själv för att granska AI-resultat innan du förlitar dig på dem för studier, examina, professionellt bruk eller publicering.",
+          "p2": "AI-funktioner kan vara otillgängliga om assistansen är avstängd i <settings>Inställningar</settings>, om din plan inte inkluderar ett visst verktyg, eller om en leverantör tillfälligt inte går att nå.",
+          "p3": "Alla AI-hjälpmedel kräver inte Notoria Pro. Produkten visar vilka verktyg som är gratis och vilka som kräver Pro."
+        },
+        "plans": {
+          "title": "8. Gratisplan och Notoria Pro",
+          "p1": "Gratisplanen täcker grundläggande övning med ditt eget ordförråd och relaterade studieverktyg enligt vad som visas i produkten.",
+          "p2": "Notoria Pro är ett betalt abonnemang som låser upp ytterligare funktioner. I den nuvarande produkten omfattar det vanligtvis Lyssning, Tal, övningsimport, meningsbyggnadsövning, många AI-assisterade studieverktyg och dokumentexport till PDF/DOCX. Vissa enklare AI-hjälpmedel (såsom vissa hjälpmedel för ordförråd eller formatering i redigeraren) kan fortsätta att vara tillgängliga i gratisplanen när AI-assistans är aktiverad.",
+          "p3": "Pro-åtkomst är kopplad till ditt användarkonto och gäller därför alla arbetsytor under det kontot. Konton med administratörsroll kan ha åtkomst på Pro-nivå utan ett personligt Stripe-abonnemang.",
+          "p4": "Det pris som gäller för ditt köp är det pris som visas i Stripe Checkout för den aktuella Pro-planen. Priser som visas någon annanstans i produkten (till exempel på Konto) är endast vägledande och måste överensstämma med den aktiva priskonfigurationen i Stripe."
+        },
+        "billing": {
+          "title": "9. Abonnemang, fakturering och uppsägning",
+          "list0": "Pro-abonnemang faktureras via <strong>Stripe</strong>",
+          "list1": "Du kan starta kassan från <account>Konto</account> eller från låsta Pro-kontroller i appen",
+          "list2": "Från Konto kan du öppna Stripe Customer Portal för att se fakturor, uppdatera betalningsmetoder och avsluta abonnemanget",
+          "list3": "Uppsägning följer beteendet i Stripes Customer Portal för ditt abonnemang",
+          "p1": "Efter att du har sagt upp abonnemanget fortsätter Pro-åtkomsten endast så länge din Stripe-abonnemangsstatus fortfarande ger Pro i produkten. I den nuvarande implementationen räknas statusarna <code>active</code>, <code>trialing</code> och <code>past_due</code> som Pro. När statusen inte längre kvalificerar återgår kontot till gratisplanen.",
+          "p2": "Om en betalning misslyckas kan Stripe flytta abonnemanget till <code>past_due</code> eller en annan status. Notoria synkroniserar den statusen från Stripe-webhooks. Så länge statusen förblir <code>past_due</code> är Pro-funktionerna tillgängliga enligt de nuvarande åtkomstreglerna; om abonnemanget senare avslutas eller på annat sätt blir icke-berättigat upphör Pro-åtkomsten.",
+          "p3": "Att radera ditt Notoria-konto avslutar Stripe-abonnemanget omedelbart (efter bästa förmåga) som en del av kontoraderingen. Det skiljer sig från att säga upp förnyelsen via Customer Portal och samtidigt behålla kontot."
+        },
+        "refunds": {
+          "title": "10. Återbetalningar och konsumenträttigheter",
+          "p1": "Notoria implementerar ingen automatisk återbetalningsknapp i appen. Uppsägning är tillgänglig via Stripe Customer Portal.",
+          "p2": "Om du vill få en återbetalning prövad, eller om EU/EES-konsumentregler för digitalt innehåll eller distansavtal ger dig rättigheter som gäller för ditt köp, mejla <contact></contact> med din kontomejladress och uppgifterna på ditt Stripe-kvitto. Vi hanterar begäran i enlighet med tillämplig lag och Stripes verktyg.",
+          "p3": "Inget i dessa villkor är avsett att begränsa tvingande konsumenträttigheter som inte kan avstås enligt finsk eller EU-rättslig lagstiftning."
+        },
+        "availability": {
+          "title": "11. Tillgänglighet",
+          "p1": "Vi strävar efter att hålla Notoria tillgängligt, men vi utlovar inte oavbruten eller felfri drift. Underhåll, driftstörningar hos leverantörer eller ändringar i tredjepartstjänster för AI, media, e-post eller betalningar kan påverka funktioner."
+        },
+        "termination": {
+          "title": "12. Avstängning och uppsägning",
+          "p1": "Du kan radera ditt konto när som helst från <account>Konto</account>. Raderingen tar permanent bort ditt konto och tillhörande läruppgifter från Notorias databas, med förbehåll för detaljerna och noteringarna om kvarvarande behandling hos leverantörer i <privacy>integritetspolicyn</privacy>. Du kan exportera en JSON-säkerhetskopia från Konto innan du raderar.",
+          "p2": "Vi kan stänga av eller avsluta åtkomsten om du allvarligt eller upprepat bryter mot dessa villkor, missbrukar tjänsten eller skapar säkerhetsmässig eller rättslig risk. Där det är rimligt och lagligt försöker vi meddela dig på e-postadressen på ditt konto."
+        },
+        "liability": {
+          "title": "13. Ansvarsfriskrivning och ansvar",
+          "p1": "Notoria tillhandahålls ”i mån av tillgänglighet” för personlig språkinlärning. I den utsträckning tillämplig lag tillåter frånsäger vi oss garantier som inte krävs enligt lag.",
+          "p2": "I den utsträckning tillämplig lag tillåter ansvarar Notoria inte för indirekta skador, oförutsedda skador, särskilda skador, följdskador eller skador till följd av förlorade data som uppstår genom din användning av tjänsten eller ditt förlitande på AI-resultat. Där ansvar inte kan uteslutas är det begränsat till det belopp du betalat för Notoria Pro under de tre månaderna före anspråket, eller ett högre belopp om tvingande lag kräver det.",
+          "p3": "Dessa begränsningar utesluter inte ansvar som finsk eller EU-rättslig lagstiftning inte tillåter att begränsas — inklusive ansvar som inte kan avstås gentemot konsumenter, och ansvar för dödsfall eller personskada orsakad av vårdslöshet där sådana regler gäller."
+        },
+        "changes": {
+          "title": "14. Ändringar av tjänsten och villkoren",
+          "p1": "Vi kan uppdatera funktioner, planer och dessa villkor. Datumet ”Senast uppdaterad” på den här sidan ändras när en ny version publiceras.",
+          "p2": "Om en ändring är väsentlig ger vi rimligt varsel när det är praktiskt möjligt — till exempel genom att uppdatera den här sidan och, där det är lämpligt, genom ett meddelande i produkten eller ett e-postmeddelande. Fortsatt användning efter ikraftträdandedatumet innebär att du godkänner de uppdaterade villkoren, utom där tvingande lag kräver ett annat förfarande."
+        },
+        "law": {
+          "title": "15. Tillämplig lag",
+          "p1": "Dessa villkor regleras av finsk lag, utan hänsyn till lagvalsregler som skulle kräva att en annan jurisdiktions lag tillämpas.",
+          "p2": "Domstolar i Finland har jurisdiktion, utan att det påverkar tvingande konsumentskydd som tillåter dig att väcka talan i ditt bosättningsland inom EU/EES.",
+          "p3": "Formell operatörsidentitet utöver tjänsten Notoria och kontaktmejladressen publiceras inte i den nuvarande produkten. För avtalsmässig eller regulatorisk korrespondens, använd <contact></contact>."
+        },
+        "contact": {
+          "title": "16. Kontakt",
+          "p1": "Frågor om fakturering, frågor om villkoren och relaterade rättsliga meddelanden: <contact></contact>",
+          "p2": "Webbplats: <site>www.notoria.fi</site>",
+          "p3": "För allmänna supportalternativ och den tekniska inkorgen för feedback, se <contactPage>Kontakta oss</contactPage> och <support>Support</support>."
+        }
+      }
+    }
   },
   "footer": {
     "navLabel": "Webbplatslänkar",
@@ -2799,7 +3903,7 @@
       "intro": {
         "title": "En arbetsyta, inte en kurs",
         "p1": "Notoria är en privat plats för språket du redan lär dig. Du tar in material, håller det organiserat och övar utifrån det — i stället för att börja i en katalog med lektioner du inte valt.",
-        "p2": "Varje arbetsyta är ett språk. Ordförråd, teori, övningar, skrivande, lyssning och tal lever där tillsammans, så att det du sparar kan bli det du övar.",
+        "p2": "Varje arbetsyta är ett språk. Fångst, ordförråd, teori, övningar, skrivande, lyssning och tal lever där tillsammans, så det du sparar kan bli det du övar.",
         "beat": "Du behöver inte lära dig Notoria på en gång. Du växer det tillsammans med språket."
       },
       "loop": {
@@ -2808,7 +3912,7 @@
         "stages": {
           "bring": {
             "label": "Ta in",
-            "body": "Spara ord, fraser och anteckningar från lektioner, böcker, media, samtal — där du möter språket."
+            "body": "Spara ord, fraser och anteckningar — använd Fångst för snabba lappar, eller lägg in direkt i Ordförråd och Teori från lektioner, böcker, media och samtal."
           },
           "organise": {
             "label": "Organisera",
@@ -2836,7 +3940,7 @@
       "startSmall": {
         "title": "Börja smått",
         "p1": "Notoria är inte något du klarar av. Det finns ingen checklista som betyder att produkten är färdig.",
-        "p2": "En bra första dag kan vara en arbetsyta och fem ord du bryr dig om. Anteckningar, längre övning, skrivande, lyssning och tal kan vänta tills de förtjänar en plats i din loop."
+        "p2": "En bra första dag kan vara en arbetsyta, ett par Fångst-anteckningar och fem ord du bryr dig om. Anteckningar, längre övning, skrivande, lyssning och tal kan vänta tills de förtjänar en plats i din loop."
       },
       "firstSession": {
         "title": "En första session",
@@ -2848,7 +3952,7 @@
           },
           "words": {
             "title": "Lägg till en handfull ord",
-            "body": "Öppna Vocabulary och spara ord eller fraser du vill minnas, med betydelser eller exempel om det hjälper."
+            "body": "Öppna Ordförråd och spara ord eller fraser du vill minnas, med betydelser eller exempel om det hjälper. Eller släpp en snabb lapp i Fångst först och bearbeta den senare."
           },
           "notes": {
             "title": "Skriv en kort anteckning om du behöver",
@@ -2866,7 +3970,7 @@
       },
       "connect": {
         "title": "Hur områdena hänger ihop",
-        "p1": "Vocabulary och Theory är där material landar. Exercise gör om det till övning. Writing, Listening och Speaking hjälper dig använda språket mer aktivt.",
+        "p1": "Fångst är den snabba ingången. Ordförråd och Teori är där materialet landar. Övning gör om materialet till träning. Skrivande, Lyssning och Tal hjälper dig använda språket mer aktivt.",
         "p2": "Du behöver inte gå igenom varje område i ordning. Många stannar länge vid ord och korta övningar.",
         "p3": "Ett naturligt nästa steg är skrivande när du vill producera språk på egna villkor, sedan lyssning och tal när samma material ska fungera i örat och rösten — Listening och Speaking ingår i Notoria Pro.",
         "beat": "Samla och förstå först. Använd och tala när materialet är redo att lämna sidan."
@@ -2875,34 +3979,38 @@
         "title": "Huvudområdena",
         "intro": "En kort karta över vad varje område är till för:",
         "vocab": {
-          "label": "Vocabulary",
+          "label": "Ordlista",
           "body": "Din personliga ordbank — betydelser, exempel, taggar och flashcard-framsteg. Det är oftast grunden allt annat hämtar från."
         },
         "theory": {
-          "label": "Theory",
+          "label": "Teori",
           "body": "Grammatik- och användningsanteckningar med egna ord, redo att återvända till när samma mönster dyker upp igen."
         },
         "exercises": {
-          "label": "Exercise",
+          "label": "Övningar",
           "body": "Övningssessioner från ditt ordförråd, teorianteckningar eller importerat material — så drills förblir kopplade till det du faktiskt sparat."
         },
         "writing": {
-          "label": "Writing",
+          "label": "Skrivande",
           "body": "Dokument och frågeset för att använda språket aktivt, inte bara känna igen det."
         },
         "listening": {
-          "label": "Listening",
+          "label": "Lyssnande",
           "body": "Gör om media till lyssningsövning i din arbetsyta. Finns i Notoria Pro."
         },
         "speaking": {
-          "label": "Speaking",
+          "label": "Tala",
           "body": "Liveövning med en AI-tutor, kopplad till språket du studerar. Finns i Notoria Pro."
+        },
+        "capture": {
+          "label": "Fångst",
+          "body": "En snabb droppzon för lappar — ord, frågetecken och idéer — som du bearbetar till Ordförråd, Teori, Skrivande eller Övning senare. Använd Fångst först när du bara har en stund; poster förblir obearbetade tills du sparat den länkade posten."
         }
       },
       "notEverything": {
         "title": "Du behöver inte använda allt",
         "p1": "Hoppa över områden som inte hjälper just nu. En lugn ordbank och några anteckningar kan redan vara ett starkt system.",
-        "p2": "Lägg till Exercise när du vill ha strukturerad repetition. Lägg till Writing när du vill producera. Lägg till Listening och Speaking när höra och säga språket är nästa användbara steg."
+        "p2": "Lägg till Övningar när du vill ha strukturerad repetition. Lägg till Skrivande när du vill producera. Lägg till Lyssnande och Tala när höra och säga språket är nästa användbara steg."
       },
       "cta": {
         "title": "Redo att börja?",
@@ -2938,15 +4046,15 @@
         },
         "account": {
           "q": "Hur byter jag lösenord eller stänger mitt konto?",
-          "a": "Öppna <account>Account</account>. Där kan du uppdatera lösenordet om du använder e-postinloggning, hantera Notoria Pro, exportera en säkerhetskopia eller permanent ta bort kontot."
+          "a": "Öppna <account>Konto</account>. Där kan du uppdatera lösenordet om du använder e-postinloggning, hantera Notoria Pro, exportera en säkerhetskopia eller permanent ta bort kontot."
         },
         "pro": {
           "q": "Hur fungerar fakturering och avbokning?",
-          "a": "Notoria Pro faktureras via Stripe. Från <account>Account</account> kan du uppgradera, öppna Stripe-kundportalen för betalningsmetoder och fakturor, eller avbryta förnyelse."
+          "a": "Notoria Pro faktureras via Stripe. Från <account>Konto</account> kan du uppgradera, öppna Stripe-kundportalen för betalningsmetoder och fakturor, eller avbryta förnyelse."
         },
         "proFeatures": {
           "q": "Vad är gratis, och vad kräver Notoria Pro?",
-          "a": "Vardaglig ordförrådsövning och relaterade studieverktyg finns i gratisplanen. Vissa AI-verktyg, lyssning, tal och dokumentexport ingår i Notoria Pro. Jämför och uppgradera från <account>Account</account>."
+          "a": "Vardaglig ordförrådsövning och relaterade studieverktyg finns i gratisplanen. Vissa AI-verktyg, lyssning, tal och dokumentexport ingår i Notoria Pro. Jämför och uppgradera från <account>Konto</account>."
         },
         "learning": {
           "q": "Hur fungerar Notorias inlärningsfunktioner?",
@@ -2954,7 +4062,7 @@
         },
         "ai": {
           "q": "Kan jag stänga av AI-hjälp?",
-          "a": "Ja. AI-assistentens preferenser finns i <settings>Settings</settings>. När assistansen är av stängs AI-verktyg som kräver den."
+          "a": "Ja. AI-assistentens preferenser finns i <settings>Inställningar</settings>. När assistansen är av stängs AI-verktyg som kräver den."
         },
         "data": {
           "q": "Var lagras mitt inlärningsinnehåll?",
@@ -2962,7 +4070,7 @@
         },
         "backup": {
           "q": "Kan jag exportera eller säkerhetskopiera mina data?",
-          "a": "Ja. Från <account>Account</account> kan du ladda ner en JSON-säkerhetskopia av dina arbetsytor och ditt inlärningsinnehåll. Mediefiler länkas via URL, inte inbäddade. För integritet och radering, se <privacy>Integritetspolicyn</privacy>."
+          "a": "Ja. Från <account>Konto</account> kan du ladda ner en JSON-säkerhetskopia av dina arbetsytor och ditt inlärningsinnehåll. Mediefiler länkas via URL, inte inbäddade. För integritet och radering, se <privacy>Integritetspolicyn</privacy>."
         }
       },
       "feedback": {

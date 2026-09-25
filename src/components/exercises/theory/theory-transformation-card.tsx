@@ -57,9 +57,9 @@ export function TheoryTransformationCard({
       initial={reduceMotion ? false : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: reduceMotion ? 0 : 0.22, ease: EASE }}
-      className="relative mx-auto w-full min-w-0 max-w-2xl"
+      className="relative mx-auto w-full min-w-0 max-w-3xl"
     >
-      <header className="flex items-start justify-between gap-3">
+      <header className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
         <div className="min-w-0">
           <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
             {t("lesson.tryIt")}
@@ -83,7 +83,7 @@ export function TheoryTransformationCard({
           if (checked) onNext();
           else check();
         }}
-        className="relative mt-8 sm:mt-10"
+        className="relative mt-5 sm:mt-10"
       >
         <span
           aria-hidden
@@ -134,7 +134,7 @@ export function TheoryTransformationCard({
                     data-1p-ignore
                     data-lpignore="true"
                     data-form-type="other"
-                    className="h-[1.15em] w-[8ch] max-w-full bg-transparent p-0 text-center text-[1em] leading-none font-heading font-semibold tracking-tight text-(--exercise-accent) caret-(--exercise-accent) outline-none placeholder:text-(--exercise-accent)/30"
+                    className="h-[1.15em] w-full min-w-[8ch] max-w-[min(100%,20ch)] bg-transparent p-0 text-center text-[1em] leading-none font-heading font-semibold tracking-tight text-(--exercise-accent) caret-(--exercise-accent) outline-none placeholder:text-(--exercise-accent)/30 sm:w-[8ch]"
                   />
                 )}
               </span>

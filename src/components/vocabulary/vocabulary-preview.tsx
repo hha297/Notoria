@@ -1,13 +1,17 @@
 "use client";
 
-import { Pencil, Star } from "lucide-react";
+import Link from "next/link";
+import { ArrowLeft, Pencil, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { Badge } from "@/components/ui/badge";
-import { LinkButton } from "@/components/ui/link-button";
+import { ReviewLaterButton } from "@/components/review-later/review-later-button";
+import { Button } from "@/components/ui/button";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { SynonymLinks } from "@/components/vocabulary/synonym-links";
 import { VocabularyNotesContent } from "@/components/vocabulary/vocabulary-notes-content";
+import detailStyles from "@/components/style/workspace/detail.module.css";
+import lexiconStyles from "@/components/style/vocabulary/lexicon.module.css";
+import { mx } from "@/lib/css-module";
 import {
   isNotesDocEmpty,
   parseVocabularyNotes,
@@ -37,6 +41,7 @@ type VocabularyPreviewProps = {
     sortOrder: number;
   }>;
   tags: Array<{ tag: string }>;
+  reviewLaterMarked?: boolean;
 };
 
 export function VocabularyPreview({
@@ -49,6 +54,7 @@ export function VocabularyPreview({
   meanings,
   examples,
   tags,
+  reviewLaterMarked = false,
 }: VocabularyPreviewProps) {
   const router = useRouter();
   const t = useTranslations("vocabulary");
@@ -68,33 +74,42 @@ export function VocabularyPreview({
   );
   const sortedExamples = [...examples].sort((a, b) => a.sortOrder - b.sortOrder);
 
-  const partOfSpeechLabel =
+  const knownPos =
     partOfSpeech &&
-      PARTS_OF_SPEECH.includes(partOfSpeech as (typeof PARTS_OF_SPEECH)[number])
-      ? tPos(partOfSpeech as (typeof PARTS_OF_SPEECH)[number])
-      : partOfSpeech;
+    PARTS_OF_SPEECH.includes(partOfSpeech as (typeof PARTS_OF_SPEECH)[number])
+      ? (partOfSpeech as (typeof PARTS_OF_SPEECH)[number])
+      : null;
+  const partOfSpeechLabel = knownPos
+    ? tPos(knownPos)
+    : partOfSpeech?.trim() || null;
+  const posKey = knownPos ?? "other";
 
   function renderMeaningList(
     items: typeof sortedMeanings,
     opts?: { muted?: boolean; showStar?: boolean },
   ) {
     return (
-      <ol className="space-y-2">
+      <ol className={mx(lexiconStyles, "vocab-preview-list")}>
         {items.map((meaning, index) => (
           <li
             key={meaning.id}
             className={cn(
-              "flex items-start gap-2 text-sm sm:text-base",
-              opts?.muted ? "text-muted-foreground" : "text-ink",
+              mx(lexiconStyles, "vocab-preview-item"),
+              opts?.muted && mx(lexiconStyles, "vocab-preview-item-muted"),
             )}
           >
-            <span className="mt-0.5 w-5 shrink-0 text-muted-foreground">
-              {index + 1}.
+            <span className={mx(lexiconStyles, "vocab-preview-index")} aria-hidden>
+              {String(index + 1).padStart(2, "0")}
             </span>
             {opts?.showStar ? (
-              <Star className="mt-0.5 size-3.5 shrink-0 fill-current text-accent-lime" />
+              <Star
+                className={mx(lexiconStyles, "vocab-preview-star")}
+                aria-hidden
+              />
             ) : null}
-            <span>{meaning.meaning}</span>
+            <span className={mx(lexiconStyles, "vocab-preview-copy")}>
+              {meaning.meaning}
+            </span>
           </li>
         ))}
       </ol>
@@ -102,100 +117,140 @@ export function VocabularyPreview({
   }
 
   return (
-    <div className="space-y-6 sm:space-y-8">
-      <div className="flex justify-stretch sm:justify-end">
-        <LinkButton
-          href={`/vocabulary/${id}/edit`}
-          size="lg"
-          className="h-11 w-full sm:h-9 sm:w-auto"
-        >
-          <Pencil className="size-4" />
-          {t("edit")}
-        </LinkButton>
-      </div>
+    <div
+      className={mx(detailStyles, "shell")}
+      data-detail="vocab"
+      data-vocab-pos={posKey}
+    >
+      <header className={mx(detailStyles, "header")}>
+        <Link href="/vocabulary" className={mx(detailStyles, "back writing-back")}>
+          <ArrowLeft className="size-4 shrink-0" />
+          {t("backToList")}
+        </Link>
+        <div className={mx(detailStyles, "actions")}>
+          <ReviewLaterButton
+            entityType="vocabulary"
+            entityId={id}
+            titleSnapshot={word}
+            marked={reviewLaterMarked}
+          />
+          <Button
+            type="button"
+            onClick={() => router.push(`/vocabulary/${id}/edit`)}
+          >
+            <Pencil className="size-4" />
+            {t("edit")}
+          </Button>
+        </div>
+      </header>
 
-      <article className="card-surface space-y-6 p-4 sm:space-y-8 sm:p-6 md:p-8">
-        <header className="space-y-3 border-b border-hairline-cloud pb-5">
-          <div className="flex flex-wrap items-center gap-2">
+      <section className={mx(detailStyles, "hero")}>
+        <p className={mx(detailStyles, "kicker")}>{t("title")}</p>
+        <div className={mx(detailStyles, "titleRow")}>
+          <h1 className={mx(detailStyles, "title wrap-break-word")}>{word}</h1>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            className={mx(detailStyles, "titleEdit")}
+            onClick={() => router.push(`/vocabulary/${id}/edit`)}
+            aria-label={t("edit")}
+            title={t("edit")}
+          >
+            <Pencil className="size-4" />
+          </Button>
+        </div>
+        {partOfSpeechLabel || tags.length > 0 ? (
+          <div className={mx(detailStyles, "meta")}>
             {partOfSpeechLabel ? (
-              <Badge variant="secondary">{partOfSpeechLabel}</Badge>
+              <span className={mx(detailStyles, "tag")}>{partOfSpeechLabel}</span>
             ) : null}
             {tags.map((item) => (
-              <Badge key={item.tag} variant="outline">
+              <span key={item.tag} className={mx(detailStyles, "tag")}>
                 {getTagLabel(item.tag, (key) => tTags(key))}
-              </Badge>
+              </span>
             ))}
           </div>
-          <h2 className="heading-md text-ink">{word}</h2>
-          <SynonymLinks
-            synonyms={synonyms}
-            unmatched={unmatchedSynonyms}
-          />
-        </header>
-
-        {primaryMeanings.length > 0 ? (
-          <section className="space-y-3">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground">
-              {t("primaryMeanings")}
-            </h3>
-            {renderMeaningList(primaryMeanings, { showStar: true })}
-          </section>
         ) : null}
-
-        {otherMeanings.length > 0 ? (
-          <section className="space-y-3">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground">
-              {t("otherMeanings")}
-            </h3>
-            {renderMeaningList(otherMeanings, { muted: true })}
-          </section>
+        {synonyms.length > 0 || unmatchedSynonyms.length > 0 ? (
+          <div className={mx(lexiconStyles, "vocab-preview-synonyms")}>
+            <SynonymLinks synonyms={synonyms} unmatched={unmatchedSynonyms} />
+          </div>
         ) : null}
+      </section>
 
-        {sortedExamples.length > 0 ? (
-          <section className="space-y-4">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground">
-              {t("examples")}
-            </h3>
-            <ol className="space-y-4">
-              {sortedExamples.map((example, index) => (
-                <li key={example.id} className="space-y-1.5">
-                  <p className="text-sm font-medium text-ink sm:text-base">
-                    <span className="mr-2 text-muted-foreground">
-                      {index + 1}.
+      <div className={mx(detailStyles, "body")}>
+        <div className={mx(lexiconStyles, "vocab-preview-stages")}>
+          {primaryMeanings.length > 0 ? (
+            <section className={mx(lexiconStyles, "vocab-preview-stage")}>
+              <p className="writing-kicker writing-stage-kicker">
+                {t("primaryMeanings")}
+              </p>
+              {renderMeaningList(primaryMeanings, { showStar: true })}
+            </section>
+          ) : null}
+
+          {otherMeanings.length > 0 ? (
+            <section className={mx(lexiconStyles, "vocab-preview-stage")}>
+              <p className="writing-kicker writing-stage-kicker">
+                {t("otherMeanings")}
+              </p>
+              {renderMeaningList(otherMeanings, { muted: true })}
+            </section>
+          ) : null}
+
+          {sortedExamples.length > 0 ? (
+            <section className={mx(lexiconStyles, "vocab-preview-stage")}>
+              <p className="writing-kicker writing-stage-kicker">{t("examples")}</p>
+              <ol className={mx(lexiconStyles, "vocab-preview-list")}>
+                {sortedExamples.map((example, index) => (
+                  <li
+                    key={example.id}
+                    className={mx(lexiconStyles, "vocab-preview-example")}
+                  >
+                    <span
+                      className={mx(lexiconStyles, "vocab-preview-index")}
+                      aria-hidden
+                    >
+                      {String(index + 1).padStart(2, "0")}
                     </span>
-                    {example.sentence}
-                  </p>
-                  {example.meaning?.trim() ? (
-                    <p className="pl-5 text-sm text-muted-foreground sm:pl-6">
-                      <span className="font-medium text-ink/70">
-                        {t("exampleMeaning")}:{" "}
-                      </span>
-                      {example.meaning.trim()}
-                    </p>
-                  ) : null}
-                  {example.notes?.trim() ? (
-                    <p className="pl-5 text-sm text-muted-foreground sm:pl-6">
-                      <span className="font-medium text-ink/70">
-                        {t("exampleNotes")}:{" "}
-                      </span>
-                      {example.notes.trim()}
-                    </p>
-                  ) : null}
-                </li>
-              ))}
-            </ol>
-          </section>
-        ) : null}
+                    <div className={mx(lexiconStyles, "vocab-preview-example-body")}>
+                      <p className={mx(lexiconStyles, "vocab-preview-copy")}>
+                        {example.sentence}
+                      </p>
+                      {example.meaning?.trim() ? (
+                        <p className={mx(lexiconStyles, "vocab-preview-aside")}>
+                          <span className={mx(lexiconStyles, "vocab-preview-aside-label")}>
+                            {t("exampleMeaning")}
+                          </span>
+                          {example.meaning.trim()}
+                        </p>
+                      ) : null}
+                      {example.notes?.trim() ? (
+                        <p className={mx(lexiconStyles, "vocab-preview-aside")}>
+                          <span className={mx(lexiconStyles, "vocab-preview-aside-label")}>
+                            {t("exampleNotes")}
+                          </span>
+                          {example.notes.trim()}
+                        </p>
+                      ) : null}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ) : null}
 
-        {notes && !isNotesDocEmpty(parseVocabularyNotes(notes)) ? (
-          <section className="space-y-2">
-            <h3 className="text-xs font-semibold uppercase tracking-[0.2px] text-muted-foreground">
-              {t("notes")}
-            </h3>
-            <VocabularyNotesContent notes={notes} />
-          </section>
-        ) : null}
-      </article>
+          {notes && !isNotesDocEmpty(parseVocabularyNotes(notes)) ? (
+            <section className={mx(lexiconStyles, "vocab-preview-stage")}>
+              <p className="writing-kicker writing-stage-kicker">{t("notes")}</p>
+              <div className={mx(lexiconStyles, "vocab-preview-notes")}>
+                <VocabularyNotesContent notes={notes} />
+              </div>
+            </section>
+          ) : null}
+        </div>
+      </div>
     </div>
   );
 }

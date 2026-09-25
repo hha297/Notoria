@@ -10,15 +10,18 @@ import {
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { FileText, ListChecks, Plus, Search } from "lucide-react";
+import { FileText, ListChecks, Plus, Search, Upload } from "lucide-react";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { CollapsibleRefine } from "@/components/filters/collapsible-refine";
 import { FolderWorkspace } from "@/components/folders/folder-workspace";
 import { FolderBreadcrumbs } from "@/components/folders/folder-breadcrumbs";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
+import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
+import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
+import { ContentImportDialog } from "@/components/content-import/content-import-dialog";
 import { WritingCard, type WritingListItem } from "@/components/writing/writing-card";
 import { WritingCollections } from "@/components/writing/writing-collections";
 import {
@@ -89,6 +92,7 @@ export function WritingTable({
 }: WritingTableProps) {
   const router = useRouter();
   const t = useTranslations("writing");
+  const tImport = useTranslations("contentImport");
   const tCommon = useTranslations("common");
   const tFolders = useTranslations("folders");
   const tMeta = useTranslations("writing.meta");
@@ -99,7 +103,12 @@ export function WritingTable({
   const [cefrFilter, setCefrFilter] = useState<MultiFilterValue>([]);
   const [topicFilter, setTopicFilter] = useState<MultiFilterValue>([]);
   const [formalityFilter, setFormalityFilter] = useState<MultiFilterValue>([]);
+  const [learningNotesOnly, setLearningNotesOnly] = useState(false);
+  const [importOpen, setImportOpen] = useState(false);
   const createHref = sectionCreateHref("writing", currentFolderId);
+  const learningNoteHref = createHref.includes("?")
+    ? `${createHref}&kind=learning_note`
+    : `${createHref}?kind=learning_note`;
 
   useRegisterShortcutAction("createNew", () => {
     router.push(createHref);
@@ -111,6 +120,7 @@ export function WritingTable({
     : childFolders;
   const hasFilters =
     search.trim() !== "" ||
+    learningNotesOnly ||
     isMultiFilterActive(cefrFilter) ||
     isMultiFilterActive(topicFilter) ||
     isMultiFilterActive(formalityFilter);
@@ -124,6 +134,9 @@ export function WritingTable({
       const listMeta = document.listMeta;
       const { meta } = listMeta;
 
+      if (learningNotesOnly && meta.kind !== "learning_note") {
+        return false;
+      }
       if (!matchesMultiFilter(cefrFilter, meta.cefrLevel)) {
         return false;
       }
@@ -154,44 +167,44 @@ export function WritingTable({
       return haystack.includes(query);
     });
 
-    result.sort((a, b) => {
-      if (sort.startsWith("title")) {
-        const comparison = a.title.localeCompare(b.title, undefined, {
-          sensitivity: "base",
-        });
-        return sort === "title:asc" ? comparison : -comparison;
-      }
+    const [sortKey, sortDir] = sort.split(":") as [
+      "updated" | "created" | "title" | "cefr",
+      "asc" | "desc",
+    ];
+    const direction = sortDir === "asc" ? 1 : -1;
 
-      if (sort.startsWith("cefr")) {
-        const aLevel = a.listMeta.meta.cefrLevel;
-        const bLevel = b.listMeta.meta.cefrLevel;
-        const aOrder = aLevel ? CEFR_ORDER[aLevel] : 0;
-        const bOrder = bLevel ? CEFR_ORDER[bLevel] : 0;
-        return sort === "cefr:asc" ? aOrder - bOrder : bOrder - aOrder;
+    return [...result].sort((a, b) => {
+      if (sortKey === "title") {
+        return a.title.localeCompare(b.title) * direction;
       }
-
-      if (sort.startsWith("created")) {
-        const aTime = new Date(a.createdAt).getTime();
-        const bTime = new Date(b.createdAt).getTime();
-        return sort === "created:asc" ? aTime - bTime : bTime - aTime;
+      if (sortKey === "cefr") {
+        const aOrder = a.listMeta.meta.cefrLevel
+          ? CEFR_ORDER[a.listMeta.meta.cefrLevel]
+          : 0;
+        const bOrder = b.listMeta.meta.cefrLevel
+          ? CEFR_ORDER[b.listMeta.meta.cefrLevel]
+          : 0;
+        return (aOrder - bOrder) * direction;
       }
-
-      const aTime = new Date(a.updatedAt).getTime();
-      const bTime = new Date(b.updatedAt).getTime();
-      return sort === "updated:asc" ? aTime - bTime : bTime - aTime;
+      const aTime = new Date(
+        sortKey === "created" ? a.createdAt : a.updatedAt,
+      ).getTime();
+      const bTime = new Date(
+        sortKey === "created" ? b.createdAt : b.updatedAt,
+      ).getTime();
+      return (aTime - bTime) * direction;
     });
-
-    return result;
   }, [
-    documents,
+    cefrFilter,
     currentFolderId,
+    documents,
+    formalityFilter,
+    learningNotesOnly,
     search,
     sort,
-    cefrFilter,
-    topicFilter,
-    formalityFilter,
     tMeta,
     tTags,
+    topicFilter,
   ]);
 
   const groups = useMemo((): DocumentGroup[] => {
@@ -257,6 +270,21 @@ export function WritingTable({
   const actions = (
     <>
       <ShowTutorialButton section="writing" />
+      <LockedFeatureButton
+        type="button"
+        variant="outline"
+        className="route-quiet-action"
+        data-route-action="writing"
+        feature="content_import"
+        icon={<Upload className="size-4" />}
+        onClick={() => setImportOpen(true)}
+      >
+        {tImport("button")}
+      </LockedFeatureButton>
+      <LinkButton href={learningNoteHref} variant="outline">
+        <Plus className="size-4" />
+        {t("learningNote.create")}
+      </LinkButton>
       <LinkButton href={createHref} data-tutorial="writing-create">
         <Plus className="size-4" />
         {t("create")}
@@ -299,6 +327,7 @@ export function WritingTable({
                 label={tCommon("filters")}
                 hideLabel={tCommon("hideFilters")}
                 active={
+                  learningNotesOnly ||
                   isMultiFilterActive(cefrFilter) ||
                   isMultiFilterActive(formalityFilter) ||
                   isMultiFilterActive(topicFilter) ||
@@ -321,6 +350,21 @@ export function WritingTable({
                   </div>
                 }
               >
+                <WritingChipPicker
+                  labelId="writing-filter-kind"
+                  label={t("learningNote.filterLabel")}
+                  value={learningNotesOnly ? "learning_note" : "all"}
+                  onChange={(value) =>
+                    setLearningNotesOnly(value === "learning_note")
+                  }
+                  options={[
+                    { value: "all", label: t("filterAll") },
+                    {
+                      value: "learning_note",
+                      label: t("learningNote.filter"),
+                    },
+                  ]}
+                />
                 <WritingFilterChipPicker
                   labelId="writing-filter-cefr"
                   label={tMeta("cefrLabel")}
@@ -434,6 +478,13 @@ export function WritingTable({
           </section>
         </div>
       </FolderWorkspace>
+
+      <ContentImportDialog
+        open={importOpen}
+        onOpenChange={setImportOpen}
+        target="writing"
+        workspaceId={workspaceId}
+      />
     </PageShell>
   );
 }

@@ -1,6 +1,5 @@
 import type { User } from "@/db/schema";
-
-const PRO_ACCESS_STATUSES = new Set(["active", "trialing", "past_due"]);
+import { entitlementPlan } from "@/lib/billing/plans";
 
 export type PaidAccessUser = Pick<
   User,
@@ -21,19 +20,21 @@ export function hasActivePaidPlan(
     | undefined,
 ) {
   if (!user) return false;
-
-  return (
-    user.subscriptionPlan === "pro" &&
-    Boolean(user.subscriptionStatus) &&
-    PRO_ACCESS_STATUSES.has(user.subscriptionStatus as string)
-  );
+  const plan = entitlementPlan({
+    subscriptionPlan: user.subscriptionPlan,
+    subscriptionStatus: user.subscriptionStatus,
+  });
+  return plan === "pro" || plan === "premium";
 }
 
-/** Pro subscribers and admins share the same paid-feature access. */
+/**
+ * Pro-tier capabilities: active Pro, active Premium, and admins.
+ * Premium includes every Pro capability.
+ */
 export function hasProAccess(user: PaidAccessUser | null | undefined) {
   if (!user) return false;
-  if (user.role === "ADMIN") return true;
-  return hasActivePaidPlan(user);
+  const plan = entitlementPlan(user);
+  return plan === "pro" || plan === "premium";
 }
 
 export function isPaidDocumentFormat(format: string) {

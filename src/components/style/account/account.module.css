@@ -1,11 +1,11 @@
 /* --- Account atelier --- */
 .account-atelier :global(.writing-hero) {
-  width: min(100%, 52rem);
+  width: min(100%, 72rem);
   margin-inline: auto;
 }
 
 .account-atelier :global(.writing-brand-lede) {
-  max-width: 38rem;
+  max-width: 44rem;
 }
 
 .account-atelier :global(.writing-kicker) {
@@ -15,8 +15,8 @@
 .account-stack {
   display: grid;
   gap: 1rem;
-  width: min(100%, 52rem);
-  max-width: 52rem;
+  width: min(100%, 72rem);
+  max-width: 72rem;
   margin-inline: auto;
 }
 
@@ -81,6 +81,11 @@
 
 .account-panel-body {
   padding: 1.15rem 1.2rem 1.25rem;
+}
+
+.account-panel-body + .account-panel-body {
+  border-top: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 85%, transparent);
 }
 
 .account-profile-grid {

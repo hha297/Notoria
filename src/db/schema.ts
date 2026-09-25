@@ -3,6 +3,7 @@ import {
   type AnyPgColumn,
   boolean,
   check,
+  date,
   index,
   integer,
   jsonb,
@@ -17,7 +18,11 @@ import {
 
 export const userRoleEnum = pgEnum("user_role", ["USER", "ADMIN"]);
 
-export const subscriptionPlanEnum = pgEnum("subscription_plan", ["free", "pro"]);
+export const subscriptionPlanEnum = pgEnum("subscription_plan", [
+  "free",
+  "pro",
+  "premium",
+]);
 
 export const vocabularyStatusEnum = pgEnum("vocabulary_status", [
   "NEW",
@@ -103,6 +108,32 @@ export const importedExerciseTypeEnum = pgEnum("imported_exercise_type", [
   "multiple_choice",
 ]);
 
+export const studyInboxStatusEnum = pgEnum("study_inbox_status", [
+  "unprocessed",
+  "processed",
+]);
+
+export const bookmarkPurposeEnum = pgEnum("bookmark_purpose", ["review_later"]);
+
+export const learningEntityTypeEnum = pgEnum("learning_entity_type", [
+  "vocabulary",
+  "theory",
+  "writing",
+  "exercise",
+  "listening",
+  "speaking",
+  "inbox",
+]);
+
+export const activityVerbEnum = pgEnum("activity_verb", [
+  "created",
+  "updated",
+  "completed",
+  "processed",
+  "review_later_added",
+  "review_later_removed",
+]);
+
 export const users = pgTable(
   "users",
   {
@@ -123,6 +154,22 @@ export const users = pgTable(
     stripeCustomerId: text("stripe_customer_id"),
     stripeSubscriptionId: text("stripe_subscription_id"),
     stripeCurrentPeriodEnd: timestamp("stripe_current_period_end", {
+      withTimezone: true,
+    }),
+    stripeCancelAtPeriodEnd: boolean("stripe_cancel_at_period_end")
+      .notNull()
+      .default(false),
+    /**
+     * Paid plan scheduled to take effect at period end (e.g. Premium → Pro).
+     * Effective entitlements stay on subscriptionPlan until then.
+     */
+    scheduledSubscriptionPlan: subscriptionPlanEnum("scheduled_subscription_plan"),
+    stripeScheduleId: text("stripe_schedule_id"),
+    /**
+     * Lifetime first-month intro offer. Set once after Stripe confirms the
+     * discounted first paid invoice. Never cleared on cancel/expiry.
+     */
+    introOfferUsedAt: timestamp("intro_offer_used_at", {
       withTimezone: true,
     }),
     createdAt: timestamp("created_at", { withTimezone: true })
@@ -999,6 +1046,194 @@ export const importedExercisesRelations = relations(
   }),
 );
 
+/**
+ * Daily AI usage counters. One row per user, feature, and UTC usage date.
+ * The unique key makes quota increments a single conditional upsert.
+ */
+export const aiUsage = pgTable(
+  "ai_usage",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    feature: text("feature").notNull(),
+    usageDate: date("usage_date").notNull(),
+    count: integer("count").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("ai_usage_user_feature_date_unique").on(
+      table.userId,
+      table.feature,
+      table.usageDate,
+    ),
+    check("ai_usage_count_nonnegative", sql`${table.count} >= 0`),
+  ],
+);
+
+/**
+ * One reservation per metered AI action. Refunds flip status once so a
+ * failure cannot decrement usage twice.
+ */
+export const aiUsageReservations = pgTable(
+  "ai_usage_reservations",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    feature: text("feature").notNull(),
+    usageDate: date("usage_date").notNull(),
+    /** Groups multi-step actions (for example an exercise import) into one charge. */
+    subjectId: text("subject_id"),
+    status: text("status").notNull().default("reserved"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("ai_usage_reservations_user_feature_date_idx").on(
+      table.userId,
+      table.feature,
+      table.usageDate,
+    ),
+    uniqueIndex("ai_usage_reservations_subject_unique")
+      .on(table.userId, table.feature, table.usageDate, table.subjectId)
+      .where(sql`${table.subjectId} is not null`),
+  ],
+);
+
+/** Processed Stripe event ids. Failed handlers delete the row so Stripe can retry. */
+export const stripeWebhookEvents = pgTable("stripe_webhook_events", {
+  id: text("id").primaryKey(),
+  type: text("type").notNull(),
+  createdAt: timestamp("created_at", { withTimezone: true })
+    .notNull()
+    .defaultNow(),
+});
+
+/**
+ * Temporary capture queue. Items stay until the user processes or deletes them.
+ * Converting to Vocab/Theory/Writing/Exercise marks processed — does not auto-delete.
+ */
+export const studyInboxItems = pgTable(
+  "study_inbox_items",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    content: text("content").notNull(),
+    note: text("note"),
+    source: text("source"),
+    status: studyInboxStatusEnum("status").notNull().default("unprocessed"),
+    processedAt: timestamp("processed_at", { withTimezone: true }),
+    linkedEntityType: learningEntityTypeEnum("linked_entity_type"),
+    linkedEntityId: uuid("linked_entity_id"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("study_inbox_items_workspace_status_created_idx").on(
+      table.workspaceId,
+      table.userId,
+      table.status,
+      table.createdAt,
+    ),
+    index("study_inbox_items_fts_idx").using(
+      "gin",
+      sql`to_tsvector('simple', coalesce(${table.content}, '') || ' ' || coalesce(${table.note}, '') || ' ' || coalesce(${table.source}, ''))`,
+    ),
+  ],
+);
+
+/**
+ * Cross-module Review Later marks. One row per entity; toggle by insert/delete.
+ * Never duplicates the underlying learning item.
+ */
+export const workspaceBookmarks = pgTable(
+  "workspace_bookmarks",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    entityType: learningEntityTypeEnum("entity_type").notNull(),
+    entityId: uuid("entity_id").notNull(),
+    purpose: bookmarkPurposeEnum("purpose").notNull().default("review_later"),
+    titleSnapshot: text("title_snapshot"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("workspace_bookmarks_unique").on(
+      table.workspaceId,
+      table.userId,
+      table.entityType,
+      table.entityId,
+      table.purpose,
+    ),
+    index("workspace_bookmarks_list_idx").on(
+      table.workspaceId,
+      table.userId,
+      table.purpose,
+      table.createdAt,
+    ),
+  ],
+);
+
+/**
+ * Meaningful learning/workspace events for the Dashboard diary feed.
+ * Prefer entity references + titleSnapshot over copying full content.
+ */
+export const workspaceActivityEvents = pgTable(
+  "workspace_activity_events",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    verb: activityVerbEnum("verb").notNull(),
+    entityType: learningEntityTypeEnum("entity_type").notNull(),
+    entityId: uuid("entity_id"),
+    titleSnapshot: text("title_snapshot"),
+    meta: jsonb("meta"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("workspace_activity_events_list_idx").on(
+      table.workspaceId,
+      table.userId,
+      table.createdAt,
+    ),
+  ],
+);
+
 export type User = typeof users.$inferSelect;
 export type Account = typeof accounts.$inferSelect;
 export type SubscriptionPlan = (typeof subscriptionPlanEnum.enumValues)[number];
@@ -1026,3 +1261,11 @@ export type ExerciseImportSource =
   (typeof exerciseImportSourceEnum.enumValues)[number];
 export type ImportedExerciseType =
   (typeof importedExerciseTypeEnum.enumValues)[number];
+export type StudyInboxItem = typeof studyInboxItems.$inferSelect;
+export type StudyInboxStatus = (typeof studyInboxStatusEnum.enumValues)[number];
+export type WorkspaceBookmark = typeof workspaceBookmarks.$inferSelect;
+export type LearningEntityType =
+  (typeof learningEntityTypeEnum.enumValues)[number];
+export type WorkspaceActivityEvent =
+  typeof workspaceActivityEvents.$inferSelect;
+export type ActivityVerb = (typeof activityVerbEnum.enumValues)[number];

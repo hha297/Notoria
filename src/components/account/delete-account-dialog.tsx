@@ -149,7 +149,7 @@ export function DeleteAccountDialog({
           </div>
         </div>
 
-        <DialogFooter className={mx(styles, "account-delete-footer shrink-0")}>
+        <DialogFooter className={mx(styles, "account-delete-footer mx-0 mb-0 shrink-0")}>
           <Button
             type="button"
             variant="outline"

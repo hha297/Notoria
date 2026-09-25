@@ -1,8 +1,14 @@
 "use client";
 
-import { ArrowRight } from "lucide-react";
+import { ArrowDown } from "lucide-react";
 import { useTranslations } from "next-intl";
-import type { ReactNode } from "react";
+import {
+  useLayoutEffect,
+  useRef,
+  useState,
+  type CSSProperties,
+  type ReactNode,
+} from "react";
 import connectionStyles from "@/components/style/guide/connection.module.css";
 import styles from "@/components/style/guide/guide.module.css";
 import { mx } from "@/lib/css-module";
@@ -12,6 +18,7 @@ const TOC_IDS = [
   "welcome",
   "how-it-works",
   "vocabulary",
+  "inbox",
   "theory",
   "exercise",
   "writing",
@@ -46,6 +53,7 @@ const CONNECTION_STAGES = [
 const FIRST_STEPS = [
   "language",
   "words",
+  "capture",
   "theory",
   "exercise",
   "writing",
@@ -54,9 +62,16 @@ const FIRST_STEPS = [
 ] as const;
 
 const MODULE_TINT: Record<
-  "vocabulary" | "theory" | "exercise" | "writing" | "listening" | "speaking",
+  | "inbox"
+  | "vocabulary"
+  | "theory"
+  | "exercise"
+  | "writing"
+  | "listening"
+  | "speaking",
   string
 > = {
+  inbox: "home",
   vocabulary: "vocab",
   theory: "theory",
   exercise: "exercise",
@@ -88,12 +103,12 @@ export function GettingStartedGuide() {
           <GuideBulletList items={t.raw("welcome.examples") as string[]} />
           <p className={mx(styles, "guide-body")}>{t("welcome.overTime")}</p>
           <GuideCallout variant="dark">
-            <p className={mx(styles, "guide-callout-title text-on-inverse")}>
+            <p className={mx(styles, "guide-callout-title")}>
               {t("welcome.noWrongWay.title")}
             </p>
             <GuideParagraphs
               className="mt-3"
-              tone="inverse"
+              tone="callout"
               items={t.raw("welcome.noWrongWay.paragraphs") as string[]}
             />
           </GuideCallout>
@@ -133,6 +148,7 @@ export function GettingStartedGuide() {
         </GuideSection>
 
         <ModuleSection id="vocabulary" module="vocabulary" />
+        <ModuleSection id="inbox" module="inbox" />
         <ModuleSection id="theory" module="theory" />
         <ModuleSection id="exercise" module="exercise" />
         <ModuleSection id="writing" module="writing" />
@@ -191,20 +207,69 @@ export function GettingStartedGuide() {
 
 function GuideToc() {
   const t = useTranslations("gettingStarted");
+  const slotRef = useRef<HTMLDivElement>(null);
+  const [pinStyle, setPinStyle] = useState<CSSProperties | null>(null);
+
+  useLayoutEffect(() => {
+    const slot = slotRef.current;
+    if (!slot) return;
+
+    const stickyTopPx = () => {
+      const raw = getComputedStyle(document.documentElement).fontSize;
+      const root = Number.parseFloat(raw) || 16;
+      return 4.75 * root;
+    };
+
+    const sync = () => {
+      const desktop = window.matchMedia("(min-width: 1024px)").matches;
+      if (!desktop) {
+        setPinStyle(null);
+        return;
+      }
+
+      const rect = slot.getBoundingClientRect();
+      const top = stickyTopPx();
+      // Stay in normal flow at the page top (below Back to workspace).
+      // Only pin once the slot reaches the sticky offset.
+      if (rect.top <= top) {
+        setPinStyle({ left: rect.left, width: rect.width });
+      } else {
+        setPinStyle(null);
+      }
+    };
+
+    sync();
+    const ro = new ResizeObserver(sync);
+    ro.observe(slot);
+    window.addEventListener("resize", sync);
+    window.addEventListener("scroll", sync, { passive: true });
+    return () => {
+      ro.disconnect();
+      window.removeEventListener("resize", sync);
+      window.removeEventListener("scroll", sync);
+    };
+  }, []);
 
   return (
-    <nav aria-label={t("toc.title")} className={mx(styles, "guide-toc")}>
-      <p className={mx(styles, "guide-toc-title")}>{t("toc.title")}</p>
-      <ul className={mx(styles, "guide-toc-list")}>
-        {TOC_IDS.map((id) => (
-          <li key={id}>
-            <a href={`#${id}`} className={mx(styles, "guide-toc-link")}>
-              {t(`toc.${tocKey(id)}`)}
-            </a>
-          </li>
-        ))}
-      </ul>
-    </nav>
+    <div ref={slotRef} className={mx(styles, "guide-toc-slot")}>
+      <nav
+        aria-label={t("toc.title")}
+        className={mx(styles, "guide-toc")}
+        data-guide-toc-pinned={pinStyle ? "" : undefined}
+        style={pinStyle ?? undefined}
+      >
+        <p className={mx(styles, "guide-toc-title")}>{t("toc.title")}</p>
+        <ul className={mx(styles, "guide-toc-list")}>
+          {TOC_IDS.map((id) => (
+            <li key={id}>
+              <a href={`#${id}`} className={mx(styles, "guide-toc-link")}>
+                {t(`toc.${tocKey(id)}`)}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </nav>
+    </div>
   );
 }
 
@@ -214,12 +279,13 @@ function ModuleSection({
 }: {
   id: TocId;
   module:
-    | "vocabulary"
-    | "theory"
-    | "exercise"
-    | "writing"
-    | "listening"
-    | "speaking";
+  | "inbox"
+  | "vocabulary"
+  | "theory"
+  | "exercise"
+  | "writing"
+  | "listening"
+  | "speaking";
 }) {
   const t = useTranslations("gettingStarted");
   const bullets = t.raw(`sections.${module}.bullets`) as string[];
@@ -298,7 +364,7 @@ function GuideParagraphs({
 }: {
   items: string[];
   className?: string;
-  tone?: "default" | "inverse";
+  tone?: "default" | "callout";
 }) {
   return (
     <div className={cn("space-y-3", className)}>
@@ -307,8 +373,8 @@ function GuideParagraphs({
           key={paragraph}
           className={cn(
             "text-base leading-relaxed",
-            tone === "inverse"
-              ? "text-on-inverse-muted"
+            tone === "callout"
+              ? mx(styles, "guide-callout-muted")
               : "text-muted-foreground",
           )}
         >
@@ -373,8 +439,8 @@ function FlowDiagram({ stages }: { stages: string[] }) {
         <span key={stage} className={mx(styles, "guide-flow-item")}>
           <span className={mx(styles, "guide-flow-chip")}>{stage}</span>
           {index < stages.length - 1 ? (
-            <ArrowRight
-              className="size-3.5 shrink-0 text-on-inverse-muted"
+            <ArrowDown
+              className={mx(styles, "guide-flow-arrow size-3.5 shrink-0")}
               aria-hidden
             />
           ) : null}

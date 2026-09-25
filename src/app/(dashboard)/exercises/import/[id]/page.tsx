@@ -47,7 +47,7 @@ export default async function ImportExercisePracticePage({
   }
 
   return (
-    <div className="mx-auto max-w-3xl space-y-10 pt-2">
+    <div className="mx-auto max-w-5xl space-y-10 pt-2">
       <div className="space-y-6">
         <Link
           href="/exercises"

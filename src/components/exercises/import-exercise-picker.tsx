@@ -35,6 +35,8 @@ import {
 } from "@/lib/actions/exercise-import";
 import { isExerciseImportErrorCode } from "@/lib/exercise-import/errors";
 import type { ExerciseImportListItem } from "@/lib/exercise-import/types";
+import importStyles from "@/components/style/exercises/import.module.css";
+import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
 type ImportPickerProps = {
@@ -225,7 +227,10 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
                     data-import-source={item.sourceType}
                     data-featured={featured ? "" : undefined}
                     className={cn(
-                      "import-row group relative grid gap-4 px-1 py-7 sm:grid-cols-[4.25rem_minmax(0,1fr)_auto] sm:items-start sm:gap-x-5 sm:px-2 sm:py-8",
+                      mx(
+                        importStyles,
+                        "import-row group relative grid gap-4 px-1 py-7 sm:grid-cols-[4.25rem_minmax(0,1fr)_auto] sm:items-start sm:gap-x-5 sm:px-2 sm:py-8",
+                      ),
                     )}
                   >
                     {ready ? (
@@ -322,6 +327,7 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
                         variant="ghost"
                         disabled={isPending || isRetrying || processingStatus}
                         onClick={() => setDeleteTarget(item)}
+                        className={mx(importStyles, "import-row-delete")}
                       >
                         <Trash2 className="size-3.5" />
                         {t("delete")}

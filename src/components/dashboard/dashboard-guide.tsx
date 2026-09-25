@@ -10,6 +10,7 @@ import { mx } from "@/lib/css-module";
 import type { WorkspaceActivitySnapshot } from "@/lib/onboarding/requirements";
 
 type ModuleId =
+  | "inbox"
   | "vocabulary"
   | "theory"
   | "exercises"
@@ -26,6 +27,7 @@ type ModuleDef = {
 
 const MODULES: ModuleDef[] = [
   { id: "vocabulary", href: "/vocabulary", accent: "vocab" },
+  { id: "inbox", href: "/inbox", accent: "home" },
   { id: "theory", href: "/theory", accent: "theory" },
   { id: "exercises", href: "/exercises", accent: "exercise" },
   { id: "writing", href: "/writing", accent: "writing" },
@@ -33,15 +35,21 @@ const MODULES: ModuleDef[] = [
   { id: "speaking", href: "/speaking", accent: "speak", pro: true },
 ];
 
+function moduleById(id: ModuleId): ModuleDef {
+  const found = MODULES.find((module) => module.id === id);
+  if (!found) throw new Error(`Unknown guide module: ${id}`);
+  return found;
+}
+
 export function suggestedModule(
   snapshot: WorkspaceActivitySnapshot,
   practiceReadyCount: number,
 ): ModuleDef {
-  if (snapshot.vocabularyCount === 0) return MODULES[0];
-  if (snapshot.theoryCount === 0) return MODULES[1];
-  if (practiceReadyCount < 5) return MODULES[0];
-  if (snapshot.writingCount === 0) return MODULES[3];
-  return MODULES[2];
+  if (snapshot.vocabularyCount === 0) return moduleById("vocabulary");
+  if (snapshot.theoryCount === 0) return moduleById("theory");
+  if (practiceReadyCount < 5) return moduleById("vocabulary");
+  if (snapshot.writingCount === 0) return moduleById("writing");
+  return moduleById("exercises");
 }
 
 export function DashboardGuide() {
@@ -67,7 +75,7 @@ export function DashboardGuide() {
         </p>
         <Link
           href="/getting-started"
-          className="mt-4 inline-flex items-center gap-1 text-sm font-semibold text-module-guide-fg hover:underline"
+          className={mx(homeStyles, "home-guide-full-link")}
         >
           {t("guideFullCta")}
           <ArrowRight className="size-3.5" aria-hidden />
@@ -130,7 +138,12 @@ function ModuleCard({
       <p className="mt-3 text-sm leading-relaxed text-ink/80">
         {t(`steps.${module.id}.body`)}
       </p>
-      <LinkButton href={module.href} variant="outline" size="sm" className="mt-4 w-fit">
+      <LinkButton
+        href={module.href}
+        variant="outline"
+        size="sm"
+        className={mx(homeStyles, "home-guide-open mt-4 w-fit")}
+      >
         {t("open")}
         <ArrowRight />
       </LinkButton>

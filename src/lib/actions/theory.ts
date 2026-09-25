@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { grammarNotes } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
+import { recordActivity } from "@/lib/activity/record";
 import { resolveFolderId } from "@/lib/actions/folders";
 import { getActiveWorkspace, requireActiveWorkspace } from "@/lib/workspace";
 import { withTiming } from "@/lib/perf/dev-timing";
@@ -145,7 +146,16 @@ export async function createTheoryNote(
         title: parsed.data.title,
         content: contentFromForm(parsed.data),
       })
-      .returning({ id: grammarNotes.id });
+      .returning({ id: grammarNotes.id, title: grammarNotes.title });
+
+    await recordActivity({
+      userId,
+      workspaceId: workspace.id,
+      verb: "created",
+      entityType: "theory",
+      entityId: note.id,
+      titleSnapshot: note.title,
+    });
 
     revalidateTheory(note.id);
     return { ok: true, id: note.id };

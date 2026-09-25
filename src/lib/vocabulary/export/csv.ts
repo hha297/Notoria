@@ -30,16 +30,8 @@ export function generateVocabularyCsvBlob(
   if (columns.notes) headers.push(labels.columns.notes);
   if (columns.updated) headers.push(labels.columns.updated);
 
-  const meta = [
-    labels.documentHeading,
-    document.workspaceName,
-    labels.wordCount,
-  ]
-    .filter((value) => value.trim())
-    .map(escapeCsvCell)
-    .join(",");
-
-  const lines = [meta, headers.map(escapeCsvCell).join(",")];
+  // Header-first CSV so Export → edit → Import works without a schema doc.
+  const lines = [headers.map(escapeCsvCell).join(",")];
 
   for (const row of document.rows) {
     const cells: string[] = [row.word];

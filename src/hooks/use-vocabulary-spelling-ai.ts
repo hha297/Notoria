@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
+import { useTranslations } from "next-intl";
+import { toast } from "sonner";
 import { suggestVocabularySpelling } from "@/lib/actions/vocabulary-ai";
 import type { VocabularySpellingResult } from "@/lib/vocabulary/ai-types";
 
@@ -27,6 +29,7 @@ export function useVocabularySpellingAi({
   partOfSpeech,
   initialWord,
 }: UseVocabularySpellingAiOptions) {
+  const tBilling = useTranslations("billing");
   const [isChecking, setIsChecking] = useState(false);
   const [suggestion, setSuggestion] = useState<VocabularySpellingResult | null>(
     null,
@@ -35,6 +38,7 @@ export function useVocabularySpellingAi({
   const lastRequested = useRef("");
   const skipped = useRef(new Set<string>());
   const accepted = useRef(new Set<string>());
+  const quotaToast = useRef(false);
 
   useEffect(() => {
     if (!enabled) {
@@ -80,8 +84,16 @@ export function useVocabularySpellingAi({
           });
           if (currentRequest !== requestId.current) return;
 
+          if (!result.ok) {
+            if (result.code === "AI_QUOTA_EXCEEDED" && !quotaToast.current) {
+              quotaToast.current = true;
+              toast.message(tBilling("quotaExceeded"));
+            }
+            setSuggestion(null);
+            return;
+          }
+
           if (
-            !result.ok ||
             result.result.isLikelyValid ||
             !result.result.suggestion ||
             result.result.confidence < MIN_CONFIDENCE ||
@@ -106,7 +118,7 @@ export function useVocabularySpellingAi({
     return () => {
       window.clearTimeout(timer);
     };
-  }, [enabled, word, language, partOfSpeech, initialWord]);
+  }, [enabled, word, language, partOfSpeech, initialWord, tBilling]);
 
   function skip() {
     skipped.current.add(normalize(word));

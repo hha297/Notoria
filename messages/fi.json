@@ -5,6 +5,7 @@
     "delete": "Poista",
     "edit": "Muokkaa",
     "view": "Näytä",
+    "open": "Avaa",
     "back": "Takaisin",
     "create": "Luo",
     "loading": "Ladataan...",
@@ -14,6 +15,87 @@
     "clearFilter": "Tyhjennä",
     "filters": "Suodattimet",
     "hideFilters": "Piilota suodattimet"
+  },
+  "contentImport": {
+    "title": {
+      "vocabulary": "Tuo sanasto",
+      "writing": "Tuo kirjoitus",
+      "theory": "Tuo teoria"
+    },
+    "description": {
+      "vocabulary": "Lataa CSV, PDF tai DOCX. Kartoitamme sarakkeet ennen tallennusta.",
+      "writing": "Lataa muistiinpanoja tai CSV. Esikatselu ennen vahvistusta.",
+      "theory": "Lataa teoriamuistiinpanoja tai CSV. Esikatselu ennen vahvistusta."
+    },
+    "guidance": "Etkö tiedä vaadittua muotoa? Ei haittaa. Lataa tiedosto, niin yritämme ymmärtää rakenteen ennen tuontia.",
+    "dropzone": "Pudota tiedosto tähän tai valitse",
+    "formats": "CSV, PDF, DOCX tai TXT · max 10 MB",
+    "downloadTemplate": "Tarvitsetko mallin? Lataa CSV-pohja",
+    "quota": {
+      "free": "Tiedostotuonti on Pro- ja Premium-ominaisuus.",
+      "pro": "Pro ja Premium: rajaton tuonti.",
+      "premium": "Premium: rajaton tuonti."
+    },
+    "fields": {
+      "word": "Sana",
+      "meaning": "Merkitys",
+      "partOfSpeech": "Sanaluokka",
+      "example": "Esimerkki",
+      "tags": "Tunnisteet",
+      "notes": "Muistiinpanot",
+      "title": "Otsikko",
+      "content": "Sisältö",
+      "category": "Kategoria",
+      "ignore": "Älä tuo"
+    },
+    "preview": {
+      "summary": "{ready} valmiina · {issues} tarvitsee huomiota",
+      "mappingTitle": "Sarakkeiden kartoitus",
+      "yourColumn": "Oma sarake",
+      "notoriaField": "Notoria-kenttä",
+      "missingRequired": "Kartoita pakolliset kentät ennen tuontia.",
+      "unmapped": "Ei käytössä: {columns}",
+      "issuesTitle": "{count} riviä tarvitsee huomiota",
+      "issueRow": "Rivi {row}:",
+      "skipHint": "Ongelmalliset rivit ohitetaan. Kelvolliset tuodaan.",
+      "sampleTitle": "Esimerkki luotavasta sisällöstä"
+    },
+    "back": "Valitse toinen tiedosto",
+    "importReady": "Tuo {count}",
+    "close": "Sulje",
+    "progress": {
+      "reading": "Luetaan tiedostoa…",
+      "analyzing": "Tulkitaan rakennetta…",
+      "mapping": "Päivitetään sarakkeiden kartoitusta…",
+      "importing": "Tuodaan…",
+      "finishing": "Viimeistellään…",
+      "count": "{current} / {total}"
+    },
+    "done": {
+      "title": "Tuotu {count}",
+      "detail": "Ohitettu {skipped} · epäonnistui {failed}",
+      "skippedExists": "Ohitettu {count} — on jo sanastossa",
+      "skippedInvalid": "Ohitettu {count} — puuttuva data tai riviongelma",
+      "failed": "Epäonnistui {count} — ei voitu tallentaa (jatkettiin muilla)",
+      "allGood": "Mitään ei ohitettu tai epäonnistunut.",
+      "detailsTitle": "Mitä tapahtui",
+      "reasonExists": "On jo sanastossa",
+      "reasonFailed": "Ei voitu tallentaa — jatkettiin muilla",
+      "moreDetails": "…ja {count} lisää",
+      "toast": "Tuotu {count} kohdetta",
+      "toastAllExist": "Ei uusia — {count} on jo sanastossa",
+      "toastNone": "Mitään ei tuotu"
+    },
+    "errors": {
+      "proRequired": "Tiedostotuonti on Pro- ja Premium-ominaisuus.",
+      "quotaExceeded": "Päivän tuontiraja on täynnä. Yritä huomenna tai päivitä suurempaan rajaan.",
+      "fileTooLarge": "Tiedosto on liian suuri. Pidä alle 10 MB.",
+      "unsupportedFormat": "Käytä CSV-, PDF-, DOCX- tai tekstitiedostoa.",
+      "emptyFile": "Tiedostosta ei löytynyt luettavaa sisältöä.",
+      "parseFailed": "Tiedostoa ei voitu lukea. Kokeile uudelleen tai CSV-pohjaa.",
+      "generic": "Jotain meni pieleen. Yritä uudelleen."
+    },
+    "button": "Tuo"
   },
   "editor": {
     "linkTitle": "Lisää linkki",
@@ -53,12 +135,14 @@
   },
   "nav": {
     "dashboard": "Etusivu",
+    "inbox": "Keräys",
     "vocabulary": "Sanasto",
     "writing": "Kirjoittaminen",
     "theory": "Teoria",
     "exercises": "Harjoitus",
     "listening": "Kuuntelu",
     "speaking": "Puhuminen",
+    "coach": "Oppimisvalmentaja",
     "account": "Tili",
     "settings": "Asetukset",
     "workspace": "Työtila",
@@ -68,6 +152,55 @@
       "listenSpeak": "Kuuntelu ja puhe",
       "more": "Lisää"
     }
+  },
+  "inbox": {
+    "eyebrow": "Kerää",
+    "title": "Keräys",
+    "description": "Pudota tänne nopeita muistiinpanoja, fraaseja ja ideoita — ja muuta ne myöhemmin sanastoksi, teoriaksi, kirjoitukseksi tai harjoituksiksi.",
+    "disabledNoWorkspace": "Luo työtila ennen kuin voit tallentaa Keräykseen.",
+    "capture": "Tallenna",
+    "captureTitle": "Tallenna Keräykseen",
+    "captureDescription": "Säilytä jotain käsiteltäväksi myöhemmin. Sinun ei tarvitse vielä päättää, mihin se kuuluu.",
+    "captureSubmit": "Tallenna Keräykseen",
+    "captured": "Tallennettu Keräykseen",
+    "contentLabel": "Sisältö",
+    "contentPlaceholder": "Sana, fraasi, idea tai mitä tahansa, johon haluat palata…",
+    "contentRequired": "Lisää ensin sisältöä",
+    "noteLabel": "Muistiinpano (valinnainen)",
+    "notePlaceholder": "Konteksti tai miksi tämä on tärkeä…",
+    "sourceLabel": "Lähde (valinnainen)",
+    "sourcePlaceholder": "Kirja, podcast, tunti…",
+    "sourcePrefix": "Lähde: {source}",
+    "filterUnprocessed": "Käsittelemättä",
+    "filterProcessed": "Käsitelty",
+    "emptyTitle": "Keräys on tyhjä",
+    "emptyDescription": "Tallenna jotain nopeasti — sana keskustelusta, kielioppi-epäilys, kirjoitusidea — ja järjestä se myöhemmin.",
+    "emptyProcessedTitle": "Ei vielä käsiteltyjä kohteita",
+    "emptyProcessedDescription": "Kun olet tallentanut Keräyksestä sanaston, teorian, kirjoituksen tai harjoituksen, kohde näkyy täällä.",
+    "statusProcessed": "Käsitelty",
+    "processMenu": "Käsittele",
+    "processed": "Merkitty käsitellyksi",
+    "deleted": "Poistettu Keräyksestä",
+    "process": {
+      "vocabulary": "Sanasto",
+      "theory": "Teoria",
+      "writing": "Kirjoittaminen",
+      "exercise": "Harjoitus",
+      "keep": "Pidä myöhemmäksi",
+      "delete": "Poista"
+    },
+    "searchPlaceholder": "Hae keräyksiä…",
+    "sortBy": "Järjestä",
+    "sortNewest": "Uusimmat ensin",
+    "sortOldest": "Vanhimmat ensin",
+    "sortNameAsc": "Nimi (A → Ö)",
+    "sortNameDesc": "Nimi (Ö → A)",
+    "noResultsTitle": "Ei osumia",
+    "noResultsDescription": "Kokeile toista hakua tai tyhjennä haku nähdäksesi kaiken tällä välilehdellä."
+  },
+  "reviewLater": {
+    "add": "Tarkista myöhemmin",
+    "remove": "Poista myöhemmästä tarkistuksesta"
   },
   "folders": {
     "new": "Uusi kansio",
@@ -113,6 +246,7 @@
   },
   "header": {
     "createWorkspace": "Luo työtila",
+    "createWorkspaceHint": "Lisää toinen kielityötila",
     "switchWorkspace": "Vaihda työtilaa",
     "switchFailed": "Työtilan vaihto epäonnistui"
   },
@@ -494,6 +628,7 @@
       "pastedImageTitle": "Liitetty kuva",
       "importAction": "Tuo ja luo",
       "unlockPro": "Avaa Prolla",
+      "lockedDescription": "Päivitä Prohon muuttaaksesi työarkit ja muistiinpanot tekoälyharjoituskorteiksi.",
       "myImports": "Omat tuonnit",
       "searchPlaceholder": "Hae otsikolla…",
       "noResults": "Ei tuonteja tällä otsikolla",
@@ -866,6 +1001,7 @@
   },
   "flashcards": {
     "title": "Muistikortit",
+    "weakTitle": "Harjoittele vaikeita sanoja",
     "mode": "tila",
     "description": "Opettele sanastoa sujuvilla käännöskorteilla, pikanäppäimillä ja toistoväleillä.",
     "noWorkspace": "Luo työtila ennen muistikorttiopiskelua.",
@@ -935,7 +1071,7 @@
     "guideTitle": "Näin käytät Notoriaa",
     "guideTagline": "Sinun kielesi. Sinun tietosi. Sinun oppimispäiväkirjasi.",
     "guideSubtitle": "Notoria on yksityinen, henkilökohtainen työtila — ei perinteinen kurssi, joka kertoo mitä opit. Sinä valitset kielen, sanat, kielioppimuistiinpanot, esimerkit ja harjoittelumateriaalit.",
-    "guideSubtitleSecondary": "Työtilasi kasvaa oppimismatkasi mukana. Aloita Sanastosta ja Teoriasta, ja muuta keräämäsi tieto harjoituksiksi, kirjoittamiseksi, kuunteluksi ja puhumiseksi.",
+    "guideSubtitleSecondary": "Työtilasi kasvaa oppimismatkasi mukana. Aloita Keräyksellä nopeisiin muistiinpanoihin, sitten Sanastoon ja Teoriaan — ja muuta keräämäsi harjoituksiksi, kirjoitukseksi, kuunteluksi ja puhumiseksi.",
     "guideFullCtaPrompt": "Haluatko tietää lisää siitä, miten Notoria toimii?",
     "guideFullCta": "Lue koko opas",
     "modulesTitle": "Tutustu työtilaan",
@@ -945,6 +1081,10 @@
     "unlock": "Avaa Pro",
     "open": "Avaa",
     "steps": {
+      "inbox": {
+        "title": "Keräys",
+        "body": "Pudota sana, fraasi, kielioppiepäys tai kirjoitusidea sekunneissa — sinun ei tarvitse vielä päättää, mihin se kuuluu. Lisää valinnainen muistiinpano tai lähde, pidä kohteet Käsittelemättä-listalla, ja muuta keräys Sanastoksi, Teoriaksi, Kirjoitukseksi tai Harjoitukseksi kun ehdit. Kohde merkitään käsitellyksi vasta, kun tallennus on valmis."
+      },
       "vocabulary": {
         "title": "Sanasto",
         "body": "Lisää omia sanoja ja ilmauksia merkityksineen, esimerkkilauseineen, ääntämisineen ja tunnisteineen. Järjestä aiheen, tason tai tilanteen mukaan — ja käytä uudelleen harjoituksissa. Aloita arjesta, oppitunneista, kirjoista tai mediasta; kirjastosi on harjoittelun perusta."
@@ -998,13 +1138,13 @@
       "listening": {
         "title": "Kuuntelu",
         "description": "Muuta aito ääni tai video oppitunniksi.",
-        "how": "Lataa klippi, lue litterointi ja harjoittele. Koko osio on Pro.",
+        "how": "Lataa klippi ja luo litterointi Ilmaisella. Kuunteluharjoitusten luonti kuuluu Prohon.",
         "cta": "Avaa kuuntelu"
       },
       "speaking": {
         "title": "Puhuminen",
         "description": "Live-videokeskustelu tekoälyohjaajan kanssa.",
-        "how": "Luo sessio, liity puheluun ja käy sitten litterointi ja yhteenveto läpi. Vain Pro.",
+        "how": "Luo sessio ja liity puheluun. Ilmainen sisältää yhden tekoälytapaamisen päivässä, ohjaaja mukana.",
         "cta": "Avaa puhuminen"
       }
     },
@@ -1036,6 +1176,42 @@
     "quickOpenSpeaking": "Avaa puhuminen",
     "nextStepTitle": "Seuraava askel",
     "continueEmpty": "Ei vielä mitään jatkettavaa — lisää teoria, kirjoitus, kuuntelutunti tai puhesessio, niin se näkyy täällä.",
+    "inbox": {
+      "title": "Keräys",
+      "subtitle": "Nopeat muistiinpanot odottavat järjestämistä kirjastoosi.",
+      "count": "{count, plural, =0 {Ei odottavia} one {# käsiteltävä} other {# käsiteltävää}}",
+      "cta": "Avaa Keräys"
+    },
+    "reviewLater": {
+      "title": "Tarkista myöhemmin",
+      "subtitle": "Kirjanmerkityt kohteet toista katselua varten.",
+      "empty": "Lisää kirjanmerkki sanastosta, teoriasta tai kirjoituksesta, niin se näkyy täällä."
+    },
+    "recentActivity": {
+      "title": "Viimeisin toiminta",
+      "subtitle": "Mitä olet luonut tai käsitellyt viime aikoina.",
+      "empty": "Toiminta näkyy täällä, kun lisäät ja käsittelet oppimateriaalia.",
+      "untitled": "Nimetön",
+      "verbs": {
+        "created": "Luotu {entity}: {title}",
+        "updated": "Päivitetty {entity}: {title}",
+        "completed": "Valmis {entity}: {title}",
+        "processed": "Käsitelty inbox: {title}",
+        "review_later_added": "Merkitty tarkistettavaksi: {title}",
+        "review_later_removed": "Poistettu tarkistuksesta: {title}"
+      },
+      "verbLabels": {
+        "created": "Luotu",
+        "updated": "Päivitetty",
+        "completed": "Valmis",
+        "processed": "Käsitelty",
+        "review_later_added": "Tarkista myöhemmin",
+        "review_later_removed": "Poistettu"
+      }
+    },
+    "learningNote": {
+      "label": "Viimeisin oppismuistiinpano"
+    },
     "loopEyebrow": "Kierto",
     "loopTitle": "Kerää, harjoittele, käytä",
     "loopSubtitle": "Notoria toimii parhaiten kehänä: tallenna kohtaamasi, harjoittele lyhyesti, ja palauta se kirjoittamiseen, kuunteluun ja puhumiseen.",
@@ -1432,6 +1608,37 @@
           "body": "Avaa sessio lukeaksesi litteroinnin ja palautteen. Huomaa virheet, käytä hyviä ilmauksia uudelleen ja päätä, mitä lisätä päiväkirjaan."
         }
       }
+    },
+    "inbox": {
+      "title": "Keräys",
+      "description": "Tallenna nopeasti sanoja, epäilyksiä ja ideoita — ja muuta ne oikeiksi oppimiskohteiksi, kun ehdit.",
+      "cta": "Selvä",
+      "steps": {
+        "capture": {
+          "title": "1. Kerää jotain",
+          "body": "Käytä Keräystä tallentaaksesi sanan, fraasin, kielioppiepäyksen tai kirjoitusidean ilman että päätät vielä, mihin se kuuluu. Nopeus on tärkeämpää kuin täydellinen rakenne."
+        },
+        "filters": {
+          "title": "2. Käsittelemättä vs käsitelty",
+          "body": "Käsittelemättä sisältää odottavat kohteet. Käsitelty näyttää keräykset, jotka olet jo muuttanut sanastoksi, teoriaksi, kirjoitukseksi tai harjoitukseksi."
+        },
+        "search": {
+          "title": "3. Haku",
+          "body": "Suodata nykyistä välilehteä sisällön, muistiinpanon tai lähteen mukaan."
+        },
+        "sort": {
+          "title": "4. Järjestys",
+          "body": "Järjestä uusimman, vanhimman tai nimen mukaan, jotta lista sopii tapaasi työskennellä."
+        },
+        "list": {
+          "title": "5. Keräyslista",
+          "body": "Jokainen kortti näyttää sisällön, valinnaisen muistiinpanon/lähteen ja milloin tallensit sen. Avaa ···-valikko käsitelläksesi kohteen."
+        },
+        "process": {
+          "title": "6. Muuta Notoriaan",
+          "body": "Lähetä keräys Sanastoon, Teoriaan, Kirjoitukseen tai Harjoitukseen. Se merkitään käsitellyksi vasta, kun tallennus on valmis — jos peruutat luonnin, kohde jää odottamaan."
+        }
+      }
     }
   },
   "settings": {
@@ -1705,6 +1912,9 @@
       "success": "Lataus aloitettu",
       "failed": "Vienti epäonnistui",
       "empty": "Lisää sisältöä ennen vientiä",
+      "preparing": "Valmistellaan vientiä…",
+      "writingFile": "Tallennetaan tiedostoa…",
+      "progressCount": "{current} / {total}",
       "documentHeading": "Teoria",
       "titleLabel": "Otsikko",
       "descriptionLabel": "Kuvaus"
@@ -1857,6 +2067,7 @@
       "INVALID_FILE": "Valitse MP3- tai MP4-tiedosto.",
       "INVALID_FILE_TYPE": "Vain MP3- ja MP4-tiedostot ovat tuettuja.",
       "FILE_TOO_LARGE": "Tiedosto on liian suuri. Käytä alle 25 Mt:n tiedostoa.",
+      "AUDIO_TOO_LONG": "Ääni on pidempi kuin 45 minuuttia. Jaa se osiin tai käytä lyhyempää klippiä yhtä transkriptiota varten.",
       "TRANSCRIPTION_FAILED": "Ääntä ei voitu litteroida. Yritä uudelleen.",
       "GENERATION_FAILED": "Harjoituksia ei voitu luoda. Yritä uudelleen.",
       "GENERATION_UNAVAILABLE": "Harjoitusten luonti ei ole juuri nyt käytettävissä. Yritä myöhemmin uudelleen.",
@@ -1956,7 +2167,8 @@
       "endedTitle": "Puhelu päättyi",
       "endedDescription": "Palaute ilmestyy sessiosivulle hetken kuluttua.",
       "back": "Takaisin sessioon",
-      "notConfigured": "Videopuhelua ei ole vielä määritetty. Lisää Stream Videon API-avaimet aloittaaksesi."
+      "notConfigured": "Videopuhelua ei ole vielä määritetty. Lisää Stream Videon API-avaimet aloittaaksesi.",
+      "sessionLimitReached": "Tämä puhesessio saavutti 30 minuutin fair use -rajan ja päättyi."
     },
     "errors": {
       "STREAM_NOT_CONFIGURED": "Videopuhelua ei ole määritetty.",
@@ -2078,6 +2290,8 @@
     "pro": {
       "freeLede": "Ilmainen kattaa arjen harjoittelun. Pro avaa tekoälytyökalut, joilla muistiinpanoistasi tulee kuuntelua, puhumista, kirjoitusapua ja tulostettavia tiedostoja.",
       "activeLede": "Pro-tilauksesi on aktiivinen. Nämä tekoälytyökalut pysyvät auki tilauksen uusiutuessa.",
+      "premiumLede": "Premium on käytössä. Valmentaja käyttää Notoriaan jo tallennettua opiskelua.",
+      "premiumIncluded": "Sisältyy Premiumiin",
       "unlockLabel": "Avaa Prolla",
       "includedLabel": "Sisältyy Pro-tilaukseesi",
       "features": {
@@ -2099,12 +2313,74 @@
     },
     "data": {
       "title": "Tietosi",
-      "description": "Lataa kopio oppimisdatastasi milloin tahansa.",
+      "description": "Lataa kopio oppimisdatastasi milloin tahansa, tai palauta aiemmasta varmuuskopiosta.",
       "exportTitle": "Vie tilin varmuuskopio",
       "exportHint": "Lataa JSON-tiedosto työtiloistasi ja oppimissisällöstä. Mediatiedostot viitataan URL-osoitteella, niitä ei upoteta.",
       "exportAction": "Lataa varmuuskopio",
       "exportDone": "Varmuuskopio ladattu",
-      "exportFailed": "Varmuuskopiota ei voitu valmistella. Yritä uudelleen."
+      "exportFailed": "Varmuuskopiota ei voitu valmistella. Yritä uudelleen.",
+      "importTitle": "Tuo tilin varmuuskopio",
+      "importHint": "Palauta Notoria-oppimisdatasi aiemmasta tilin varmuuskopiosta. Tiliäsi, kirjautumistietoja ja tilaustasi ei muuteta.",
+      "importAction": "Tuo varmuuskopio"
+    },
+    "backupImport": {
+      "title": "Palauta Notoria-oppimisdatasi",
+      "description": "Tuo Notoriasta viety JSON-varmuuskopio. Vain oppimisdata palautetaan — ei tilin henkilöllisyyttä tai tilausta.",
+      "uploadHint": "Valitse JSON-tiedosto, joka on viety tilin varmuuskopiona.",
+      "chooseFile": "Valitse varmuuskopiotiedosto",
+      "analyzing": "Tarkistetaan varmuuskopiota…",
+      "detectedTitle": "Notoria-tilin varmuuskopio tunnistettu",
+      "strategyTitle": "Miten tuomme tämän varmuuskopion?",
+      "strategyAddAsNew": "Lisää uutena datana — luo uuden kopion korvaamatta nykyistä oppimisdataasi. Samalla kielellä olevat työtilat vastaanottavat sisällön sen sijaan, että niitä monistettaisiin.",
+      "readyTitle": "Valmis tuomaan",
+      "nothingToImport": "Tästä varmuuskopiosta ei ole uutta tuotavaa.",
+      "notImportedTitle": "Osaa tilitiedoista ei tuoda",
+      "notImportedHint": "Nimesi, sähköpostisi, kirjautumistietosi ja tilauksesi hallitaan nykyisellä tililläsi, eikä niitä voi muuttaa varmuuskopion tuonnilla. Oppimisdatasi voidaan silti tuoda.",
+      "notImportedFields": {
+        "name": "Tilin nimi",
+        "email": "Sähköposti",
+        "subscription": "Tilaus",
+        "auth": "Todennustiedot"
+      },
+      "skippedTitle": "Saatetaan ohittaa",
+      "warnings": {
+        "workspace_language_reuse": "Joitakin työtiloja on jo olemassa samalle kielelle. Niiden sisältö lisätään olemassa oleviin työtiloihin sen sijaan, että luotaisiin kaksoiskappaleita.",
+        "empty_backup": "Tämä varmuuskopio ei sisällä tuotavaa oppimisdataa."
+      },
+      "cancel": "Peruuta",
+      "confirm": "Tuo oppimisdata",
+      "close": "Sulje",
+      "doneTitle": "Oppimisdata tuotu",
+      "doneDescription": "Varmuuskopion oppimisdata on lisätty tälle tilille.",
+      "doneToast": "Oppimisdata tuotu",
+      "importedTitle": "Tuotu",
+      "counts": {
+        "workspaces": "{count, plural, one {# työtila} other {# työtilaa}}",
+        "folders": "{count, plural, one {# kansio} other {# kansiota}}",
+        "tags": "{count, plural, one {# tunniste} other {# tunnistetta}}",
+        "vocabulary": "{count, plural, one {# sanastoyksikkö} other {# sanastoyksikköä}}",
+        "theory": "{count, plural, one {# teoriasivu} other {# teoriasivua}}",
+        "writing": "{count, plural, one {# kirjoitusasiakirja} other {# kirjoitusasiakirjaa}}",
+        "exercises": "{count, plural, one {# harjoitus} other {# harjoitusta}}",
+        "listening": "{count, plural, one {# kuuntelutunti} other {# kuuntelutuntia}}",
+        "speaking": "{count, plural, one {# puhesessio} other {# puhesessiota}}"
+      },
+      "skips": {
+        "workspace_language_exists": "{count, plural, one {# työtila on jo olemassa tälle kielelle} other {# työtilaa on jo olemassa tälle kielelle}}",
+        "vocabulary_duplicate": "{count, plural, one {# sanastoyksikkö on jo olemassa} other {# sanastoyksikköä on jo olemassa}}",
+        "listening_missing_media": "{count, plural, one {# kuuntelutunnilta puuttuu media-URL} other {# kuuntelutunnilta puuttuu media-URL}}",
+        "listening_duplicate_filename": "{count, plural, one {# kuuntelutunti ohitettiin (päällekkäinen tiedostonimi)} other {# kuuntelutuntia ohitettiin (päällekkäinen tiedostonimi)}}",
+        "invalid_workspace_ref": "{count, plural, one {# kohde ilman työtilaa} other {# kohdetta ilman työtilaa}}",
+        "invalid_record": "{count, plural, one {# virheellinen tietue} other {# virheellistä tietuetta}}",
+        "unsupported_account_field": "Tilin henkilöllisyyskenttiä ei tuoda"
+      },
+      "errors": {
+        "fileTooLarge": "Varmuuskopiotiedosto on liian suuri. Vie uudelleen tai ota yhteyttä tukeen.",
+        "invalidBackup": "Tämä ei näytä kelvolliselta Notoria-varmuuskopiolta. Käytä JSON-tiedostoa, joka on viety tilin varmuuskopiona.",
+        "unauthorized": "Kirjaudu uudelleen tuodaksesi varmuuskopion.",
+        "invalidInput": "Valitse JSON-varmuuskopiotiedosto.",
+        "importFailed": "Varmuuskopiota ei voitu tuoda. Yritä uudelleen."
+      }
     },
     "danger": {
       "title": "Sulje tili",
@@ -2136,47 +2412,206 @@
     }
   },
   "billing": {
-    "title": "Notoria Pro",
-    "description": "Avaa tekoälyyn perustuvat oppimisominaisuudet.",
+    "title": "Tilaus",
+    "description": "Perusopiskelu, päivittäinen tekoälykiintiö ja maksulliset tilaukset.",
     "proDescription": "Sinulla on Notoria Pro.",
-    "tagline": "Avaa tekoälyyn perustuvat oppimisominaisuudet.",
+    "tagline": "Perusopiskelu ja pieni päivittäinen tekoälykiintiö.",
     "price": "9,99 € / kuukausi",
     "priceAmount": "9,99 €",
-    "pricePeriod": "kuukaudessa, laskutetaan kuukausittain",
+    "pricePeriod": "/kk",
+    "introFirstMonthOnly": "Vain ensimmäinen kuukausi · Sitten {price}/kk",
+    "introCheckoutHint": "Ensimmäinen kuukausi {intro}, sitten {price}/kk. Peru milloin tahansa.",
     "freePrice": "0 €",
     "mostPopular": "Suosituin",
     "currentPlan": "Nykyinen tilaus",
     "choosePro": "Valitse Pro",
-    "freePlanDescription": "Perusharjoitukset, sanasto-tekoäly, kirjoitus ja CSV.",
-    "proPlanDescription": "Tekoälyharjoitukset, kirjoitusapu, kuuntelu, puhuminen ja PDF/Word.",
+    "freePlanDescription": "Aloita oppiminen olennaisella.",
+    "proPlanDescription": "Koko Notoria-työkalupakki.",
     "upgrade": "Päivitä Pro-tilaukseen",
     "manage": "Hallinnoi tilausta",
     "proBadge": "Pro",
     "freeBadge": "Ilmainen",
+    "premiumBadge": "Premium",
+    "premiumPlanDescription": "Henkilökohtainen tekoälyoppimisäly.",
+    "distinction": "Pro antaa työkalut. Premium auttaa käyttämään niitä älykkäästi.",
+    "modalTitle": "Päivitä Notoria-tilauksesi",
+    "modalSubtitle": "Ilmainen kattaa olennaisen. Pro avaa koko työkalupakin. Premium lisää henkilökohtaisen oppimisälyn.",
+    "modalTitlePro": "Olet Pro-tilassa",
+    "modalSubtitlePro": "Sinulla on jo koko Notoria-työkalupakki. Premium lisää henkilökohtaisen oppimisälyn.",
+    "modalTitlePremium": "Olet Premium-tilassa",
+    "modalSubtitlePremium": "Henkilökohtainen oppimisäly on käytössä.",
+    "premiumActiveCopy": "Valmentaja käyttää tämän työtilan todellista opiskeluaktiivisuutta ehdottaakseen seuraavaa askelta.",
+    "premiumActiveFineprint": "Hallitse laskutusta milloin tahansa Stripessä.",
+    "choosePremium": "Valitse Premium",
+    "explorePremium": "Tutustu Premiumiin",
+    "switchTo": "Vaihda tilaan {plan}",
+    "switchToFreeHint": "Nykyinen tilaus säilyy uusimispäivään, sitten siirryt ilmaiseen.",
+    "switchScheduled": "Siirryt ilmaiseen, kun tämä laskutuskausi päättyy.",
+    "downgradeScheduled": "Siirtyminen Prohon ajastettu",
+    "planUpdated": "Tilaus on päivitetty.",
+    "continueToStripe": "Jatka Stripeen",
+    "upgradeToPremium": "Päivitä Premiumiin",
+    "switchToPro": "Vaihda Pro-tilaan",
+    "switchToFree": "Vaihda ilmaiseen",
+    "cancelPro": "Peru Pro",
+    "cancelPremium": "Peru Premium",
+    "keepPro": "Pidä Pro",
+    "keepPremium": "Pidä Premium",
+    "changePlan": "Vaihda tilausta",
+    "manageBilling": "Hallitse laskutusta",
+    "cancellationScheduled": "Peruutus ajastettu",
+    "accessUntil": "{plan}-käyttöoikeus säilyy {date} asti.",
+    "thenFree": "Sen jälkeen tili siirtyy ilmaiseen.",
+    "endsOn": "Päättyy {date}",
+    "startsOn": "Alkaa {date}",
+    "periodEndFallback": "tämän laskutusjakson loppuun",
+    "confirming": "Maksu vastaanotettu. Vahvistetaan tilausta…",
+    "confirmingChange": "Vahvistetaan tilausta…",
+    "stillConfirming": "Stripe vahvistaa muutosta vielä. Tila päivittyy, kun Stripe vahvistaa sen.",
+    "nowOnPro": "Olet nyt Pro-tilassa.",
+    "nowOnPremium": "Olet nyt Premium-tilassa.",
+    "keptPlan": "{plan} uusiutuu jatkossakin.",
+    "paymentFailed": "Maksu ei mennyt läpi. Tilausta ei muutettu.",
+    "priceMissing": "Tämän tilan hintaa ei löydy tästä Stripe-tilistä. Tarkista, että hinnan tunnus vastaa salaisen avaimen tilaa.",
+    "priceModeMismatch": "Tämä Stripe-hinta on eri tilassa kuin salainen avain.",
+    "priceInactive": "Tämä Stripe-hinta ei ole aktiivinen.",
+    "priceCurrency": "Tämän Stripe-hinnan on oltava euroissa.",
+    "priceInterval": "Tämän Stripe-hinnan on oltava kuukausitilaus.",
+    "prorationHint": "Hinta vaihtuu nyt. Stripe veloittaa tai hyvittää jaksotetun erotuksen heti.",
+    "confirmUpgradeTitle": "Vaihdetaanko Premiumiin?",
+    "confirmUpgradeBody": "Premium korvaa Pron nykyisessä tilauksessa heti. Stripe veloittaa jaksotetun erotuksen saman tien. Toista tilausta ei luoda. Ajastettu peruutus poistetaan.",
+    "confirmDowngradeTitle": "Vaihdetaanko Prohon?",
+    "confirmDowngradeBody": "Säilytät kaikki Premium-ominaisuudet {date} asti. Sen jälkeen tilaus jatkuu Pro-tilana (9,99 €/kk). Nykyinen tila pysyy Premiumina siihen asti.",
+    "downgradeScheduleHint": "Premium pysyy aktiivisena {date} asti. Pro alkaa sen jälkeen — mitään ei muutu heti.",
+    "switchingToProOn": "Siirtyminen Prohon {date}. Premium-käyttöoikeus säilyy siihen asti.",
+    "confirmCancelTitle": "Perutaanko {plan}?",
+    "confirmCancelBody": "{plan}-käyttöoikeus säilyy {date} asti. Sen jälkeen tili siirtyy ilmaiseen. Uutta veloitusta ei tule.",
+    "confirmKeepTitle": "Pidä {plan}?",
+    "confirmKeepBody": "Ajastettu peruutus poistetaan. {plan} uusiutuu, ja seuraava veloitus on {date}.",
+    "back": "Takaisin",
+    "openCoach": "Avaa oppimisvalmentaja",
+    "monthlyPrice": "{price} / kk",
+    "usageToday": "Tekoälyn käyttö tänään",
+    "quotaCount": "{used} / {limit}",
+    "unlimitedAi": "Keskeiset tekoälytyökalut",
+    "quotaExceeded": "Tämän tekoälyominaisuuden päiväkiintiö on käytetty. Se nollautuu UTC-keskiyöllä — tai päivitä suurempaan rajaan.",
+    "alreadySubscribed": "Sinulla on jo tämä tilaus.",
+    "status": "Tila: {status}",
     "renewsOn": "Uusiutuu {date}",
     "activating": "Vahvistetaan tilaustasi…",
-    "checkoutSuccess": "Maksu vastaanotettu. Pro aktivoituu hetken kuluttua.",
+    "checkoutSuccess": "Maksu vastaanotettu. Tilaus aktivoituu hetken kuluttua.",
     "checkoutCanceled": "Kassa peruutettiin. Sinua ei veloitettu.",
     "checkoutFailed": "Kassaa ei voitu aloittaa. Yritä uudelleen.",
     "portalFailed": "Laskutuksen hallintaa ei voitu avata. Yritä uudelleen.",
     "alreadyPro": "Sinulla on jo aktiivinen Pro-tilaus.",
     "notConfigured": "Laskutusta ei ole vielä määritetty.",
     "noCustomer": "Tähän tiliin ei ole vielä liitetty laskutusasiakasta.",
-    "modalTitle": "Päivitä tilaus",
-    "modalSubtitle": "Ilmainen kattaa arjen harjoittelun ja kirjaston. Pro avaa tekoälyharjoitukset, kirjoitusavun, kuuntelun, puhumisen ja tulostettavat tiedostot.",
     "lockedTitle": "Tämä on Pro-ominaisuus",
-    "lockedDescription": "Päivitä Prohon saadaksesi tekoälyharjoitukset, kirjoitusavun, kuuntelun, puhumisen ja PDF/Word-viennin.",
-    "planName": "Pro",
+    "lockedDescription": "Päivitä Prohon saadaksesi tekoälyharjoitukset, tiedostotuonnin, kirjoitusavun, kuuntelun, puhumisen ja PDF/Word-viennin.",
+    "planName": "Notoria",
     "cancelAnytime": "Peru milloin tahansa",
+    "points": {
+      "core": "Kortit, kirjoittaminen, teoriamuistiinpanot ja CSV",
+      "meeting": "1 puheopettajapuhelu päivässä",
+      "transcript": "1 kuuntelutranskriptio päivässä",
+      "exercises": "3 tekoälyharjoitusta päivässä",
+      "vocabulary": "5 sanaston tekoälytoimintoa päivässä",
+      "unlimited": "Rajattomat harjoitusgenerointi, sanastoapu ja kirjoitustuki",
+      "import": "Oppimateriaalin tuonti",
+      "practiceFromMaterial": "Tekoälyharjoitus työarkeista",
+      "listening": "10 kuuntelutranskriptiota päivässä",
+      "speaking": "10 puheopettajapuhelua päivässä",
+      "writing": "Tekoälykirjoitustuki",
+      "export": "PDF- ja DOCX-vienti",
+      "coach": "Oppimisvalmentaja omasta aktiivisuudestasi",
+      "askCoach": "Kysy AI-oppimisvalmentajalta — edistyminen, sanasto, kielioppi, teoria, käännökset ja mitä harjoitella seuraavaksi",
+      "profile": "Henkilökohtainen oppimisprofiili",
+      "daily": "Tämän päivän harjoitus",
+      "weekly": "Viikoittainen katsaus",
+      "mistakes": "Harjoitus korttien virheistä"
+    },
+    "quotaLabels": {
+      "ai_meeting": "Tekoälypuheopettaja",
+      "ai_listening_transcript": "Kuuntelutranskriptio",
+      "ai_exercise": "Tekoälyharjoitusten luonti",
+      "ai_exercise_import": "Tekoälyharjoitus työarkeista",
+      "ai_vocabulary": "Sanaston tekoälytoiminnot",
+      "ai_writing": "Tekoälykirjoitustuki",
+      "ai_learning_coach_chat": "Oppimisvalmentaja",
+      "content_import": "Oppimateriaalin tuonti"
+    },
+    "cell": {
+      "unlimited": "Rajaton",
+      "limited": "Rajoitettu",
+      "perDay": "{count}/pv",
+      "quotaPerDay": {
+        "ai_meeting": "{count, plural, one {# puhelu/pv} other {# puhelua/pv}}",
+        "ai_listening_transcript": "{count, plural, one {# transkriptio/pv} other {# transkriptiota/pv}}",
+        "ai_exercise": "{count, plural, one {# generointi/pv} other {# generointia/pv}}",
+        "ai_exercise_import": "{count, plural, one {# generointi/pv} other {# generointia/pv}}",
+        "ai_vocabulary": "{count, plural, one {# toiminto/pv} other {# toimintoa/pv}}",
+        "ai_writing": "{count, plural, one {# toiminto/pv} other {# toimintoa/pv}}",
+        "content_import": "{count, plural, one {# tuonti/pv} other {# tuontia/pv}}",
+        "ask_learning_coach": "{count, plural, one {# viesti/pv} other {# viestiä/pv}}"
+      },
+      "includedSr": "Sisältyy",
+      "unavailableSr": "Ei saatavilla"
+    },
+    "features": {
+      "vocabulary": "Sanasto",
+      "exercises": "Harjoitukset",
+      "theory": "Teoria",
+      "workspace": "Työtila",
+      "aiMeeting": "Tekoälytapaaminen",
+      "aiListeningTranscript": "Kuuntelutranskriptio",
+      "aiExercise": "Tekoälyharjoitusten luonti",
+      "aiVocabulary": "Sanaston tekoälytoiminnot",
+      "aiSpeakingTutor": "Tekoälypuheopettaja",
+      "aiWriting": "Tekoälykirjoitus",
+      "aiWritingSupport": "Tekoälykirjoitustuki",
+      "importLearningMaterial": "Oppimateriaalin tuonti",
+      "exportLearningMaterial": "Oppimateriaalin vienti",
+      "importExportLearningMaterial": "Oppimateriaalin tuonti ja vienti",
+      "importAccountBackup": "Tilin varmuuskopion tuonti",
+      "importExportAccountBackup": "Tilin varmuuskopion tuonti ja vienti",
+      "aiPracticeFromMaterial": "Tekoälyharjoitus työarkeista",
+      "practiceFromMaterial": "Tekoälyharjoitus työarkeista",
+      "listening": "Kuuntelu",
+      "speaking": "Puhuminen",
+      "pdfDocxExport": "Oppimateriaalin vienti",
+      "learningCoach": "Oppimisvalmentaja",
+      "askLearningCoach": "Kysy AI-oppimisvalmentajalta",
+      "learningProfile": "Henkilökohtainen oppimisprofiili",
+      "adaptiveDailyPractice": "Mukautuva päivittäinen harjoitus",
+      "practiceFromMistakes": "Harjoitus virheistä",
+      "weeklyLearningReview": "Viikoittainen katsaus",
+      "learningTrends": "Oppimistrendit",
+      "personalLearningPath": "Henkilökohtainen oppimispolku",
+      "personalizedRecommendations": "Henkilökohtaiset suositukset",
+      "crossModuleIntelligence": "Moduulien välinen personointi"
+    },
     "compare": {
+      "heading": "Vertaa tilauksia",
+      "premiumDelta": "Premium lisää henkilökohtaisen oppimisälyn",
+      "tableCaption": "Ominaisuusvertailu: Ilmainen, Pro ja Premium",
+      "feature": "Ominaisuus",
+      "current": "Nykyinen",
       "capability": "Mitä saat",
       "free": "Ilmainen",
       "pro": "Pro",
+      "premium": "Premium",
       "freeIncludes": "Sisältyy ilmaiseen",
       "proUnlocks": "Pro avaa",
+      "premiumAdds": "Premium lisää",
       "impact": "Miksi se auttaa",
       "yes": "Kyllä",
       "locked": "Lukittu",
+      "categories": {
+        "core": "Perusopiskelu",
+        "ai": "Tekoälytyökalut",
+        "export": "Tuonti ja vienti",
+        "personalized": "Henkilökohtainen oppiminen"
+      },
       "rows": {
         "practice": {
           "capability": "Muistikortit, paritus, visailu & kirjoitusvastaus",
@@ -2262,6 +2697,12 @@
     "disabledNoWorkspace": "Luo työtila ennen kirjoitusten lisäämistä.",
     "create": "Luo kirjoitus",
     "createFirst": "Luo ensimmäinen kirjoitus",
+    "learningNote": {
+      "create": "Oppismuistiinpano",
+      "filter": "Oppismuistiinpanot",
+      "filterLabel": "Tyyppi",
+      "badge": "Oppismuistiinpano"
+    },
     "onTheDesk": "Pöydällä",
     "library": "Kirjasto",
     "allWritings": "Kaikki kirjoitukset",
@@ -2431,6 +2872,9 @@
       "success": "Lataus aloitettu",
       "failed": "Vienti epäonnistui",
       "empty": "Lisää vähintään yksi kysymys tai sisältöä ennen vientiä",
+      "preparing": "Valmistellaan vientiä…",
+      "writingFile": "Tallennetaan tiedostoa…",
+      "progressCount": "{current} / {total}",
       "documentHeading": "Kirjoittaminen",
       "titleLabel": "Otsikko",
       "descriptionLabel": "Kuvaus",
@@ -2438,6 +2882,222 @@
       "questionLabel": "Kysymys",
       "exampleAnswerLabel": "Esimerkkivastaus",
       "notesLabel": "Muistiinpanot"
+    }
+  },
+  "coach": {
+    "eyebrow": "Premium",
+    "title": "Oppimis",
+    "highlight": "valmentaja",
+    "description": "Henkilökohtainen näkymä siihen, miten opiskelet ja mihin kannattaa keskittyä seuraavaksi.",
+    "descriptionIntelligence": "Mitä tehdä seuraavaksi, miksi se kannattaa, ja miten oppimisesi muuttuu.",
+    "lockedTitle": "Tämä ominaisuus kuuluu Notoria Premiumiin.",
+    "lockedBody": "Premium muuttaa sanaston, kertaukset, kuuntelun, puhumisen, kirjoittamisen ja teorian keskittyneeksi harjoitussuunnitelmaksi.",
+    "distinction": "Pro antaa työkalut. Premium auttaa käyttämään niitä älykkäästi.",
+    "upgrade": "Päivitä Premiumiin",
+    "noteLabel": "Valmentajan huomio",
+    "focusLabel": "Oppimisen fokus",
+    "focusCta": "Aloita tästä",
+    "profile": "Oppimisprofiili",
+    "profileTitle": "Missä olet nyt",
+    "today": "Tämän päivän fokus",
+    "todayTitle": "Mitä tehdä seuraavaksi",
+    "plan": "Mukautuva harjoitus",
+    "planTitle": "Tämän päivän {minutes} minuutin suunnitelma",
+    "planMinutes": "~{count} min",
+    "startStep": "Aloita",
+    "startPlan": "Aloita tämän päivän harjoitus",
+    "mistakes": "Harjoitus virheistä",
+    "mistakesTitle": "Sanat, jotka tarvitsevat huomiota",
+    "practiceMistakes": "Harjoittele näitä sanoja",
+    "path": "Oppimispolku",
+    "pathTitle": "Oppimispolkusi",
+    "pathCurrent": "Nykyinen fokus",
+    "pathNext": "Seuraavaksi",
+    "pathThen": "Sitten",
+    "pathLater": "Myöhemmin",
+    "cross": "Yhteydet",
+    "crossTitle": "Moduulien välillä",
+    "crossHints": {
+      "theory_to_practice": "Harjoittele juuri oppimaasi",
+      "vocab_to_speaking": "Käytä heikkoja sanoja puhumisessa"
+    },
+    "week": "Viikkosi",
+    "weekTitle": "Viimeiset 7 päivää",
+    "trends": "Oppimistrendit",
+    "trendsTitle": "Viime viikosta",
+    "trendsEmpty": "Oppimistrendit näkyvät täällä, kun aktiivisuutta kertyy enemmän.",
+    "language": "Työtilan kieli",
+    "speakingLevel": "Puhuminen",
+    "vocabulary": "Sanasto",
+    "vocabularyEmpty": "Ei vielä sanastoa",
+    "reviews": "Korttikerrat",
+    "misses": "Again / Hard",
+    "listening": "Kuuntelu",
+    "speaking": "Puhuminen",
+    "writing": "Kirjoitus",
+    "theory": "Teoria",
+    "due": "{count} korttia kertauksen vuoro",
+    "weak": "Sanat merkitty again tai hard: {words}",
+    "weakShort": "{words}",
+    "noWeak": "Again- tai hard-arvioita ei ole vielä.",
+    "empty": "Oppimisvalmentaja tutustuu sinuun. Jatka opiskelua Notoriassa, niin valmentaja alkaa tunnistaa kuvioita ja suosituksia täällä.",
+    "hintSpeaking": "Ei puheharjoituksia viimeiseen 7 päivään",
+    "hintListening": "Ei päivitettyjä kuuntelutunteja äskettäin",
+    "hintWriting": "Ei päivitettyjä kirjoituksia äskettäin",
+    "hintTheory": "Ei päivitettyjä teoriamuistiinpanoja äskettäin",
+    "refresh": "Päivitä valmentaja",
+    "refreshed": "Valmentaja päivitettiin viimeisimmän opiskelun mukaan.",
+    "refreshFailed": "Valmentajaa ei voitu päivittää. Yritä uudelleen.",
+    "ask": {
+      "label": "Kysy valmentajalta",
+      "title": "Kysy oppimisvalmentajaltasi",
+      "description": "Kysy mitä tahansa oppimisestasi — edistyminen, mitä harjoitella seuraavaksi, sanasto, kielioppi, teoria, käännökset tai mikä tahansa opiskelumateriaali, jonka liität. Vastaus seuraa kysymyksesi kieltä.",
+      "emptyReady": "Valmentajasi on valmis. En vielä tunne opiskelutottumuksiasi, joten kysy sanasta, kieliopista tai mitä harjoitella ensin.",
+      "placeholder": "Kysy oppimisvalmentajaltasi...",
+      "inputHint": "Enter lähettää. Shift+Enter lisää rivinvaihdon.",
+      "send": "Lähetä viesti",
+      "thinking": "Valmentaja miettii…",
+      "you": "Sinä",
+      "coach": "Valmentaja",
+      "promptsLabel": "Ehdotetut kysymykset",
+      "retry": "Yritä uudelleen",
+      "upgrade": "Päivitä Premiumiin",
+      "errorQuota": "Olet käyttänyt tämän päivän oppimisvalmentaja-kiintiön. Valmentaja on taas käytettävissä huomenna.",
+      "errorPremium": "Oppimisvalmentaja on Premium-ominaisuus. Saat henkilökohtaisia suosituksia opiskeluaktiviteettisi perusteella.",
+      "errorUnavailable": "Valmentaja ei voinut vastata juuri nyt. Viestiäsi ei laskettu. Yritä uudelleen.",
+      "prompts": {
+        "practice_today": "Mihin minun pitäisi keskittyä tänään?",
+        "struggling_words": "Miksi nämä sanat ovat minulle vaikeita?",
+        "practice_weak": "Auta minua harjoittelemaan heikkoja sanojani.",
+        "review_first": "Mitä minun pitäisi kerrata ensin?",
+        "neglecting": "Mitä olen laiminlyönyt?",
+        "improve_speaking": "Miksi puhumiseni ei ole kehittynyt?",
+        "study_20": "Miten käyttäisin 20 minuuttia tänään?",
+        "getting_started": "Mitä minun pitäisi harjoitella ensin?",
+        "am_i_improving": "Kehittynkö oikeasti?",
+        "what_changed": "Mikä muuttui oppimisessani tällä viikolla?"
+      }
+    },
+    "next": {
+      "label": "Päätä",
+      "title": "Seuraava siirtosi",
+      "planTitle": "Tämän päivän suositeltu harjoitus",
+      "whyOrder": "Miksi tämä järjestys? Ensin erääntyvä ja vaikea sanasto, sitten moduuli jota olet laiminlyönyt.",
+      "cta": "Aloita tämän päivän harjoitus"
+    },
+    "why": {
+      "title": "Miksi tämä?",
+      "due": "{count} sanastokorttia on erääntynyt",
+      "weak": "{count} sanaa on ollut toistuvasti vaikeita",
+      "reviews": "{count} korttiarvostelua viimeisten 7 päivän aikana",
+      "speakingIdle": "Ei puheharjoituksia viimeiseen 7 päivään",
+      "listeningIdle": "Ei kuunteluaktiviteettia viimeiseen 7 päivään",
+      "writingIdle": "Ei kirjoituspäivityksiä viimeiseen 7 päivään",
+      "theoryIdle": "Ei teoriamuistiinpanojen päivityksiä viimeiseen 7 päivään",
+      "focus": "Nykyinen fokusus: {focus}"
+    },
+    "chips": {
+      "due": "{count} korttia erääntynyt",
+      "weak": "{count} vaikeaa sanaa",
+      "speakingIdle": "Ei puheharjoitusta 7 päivään",
+      "mastered": "{count} hallittua nyt",
+      "dueLabel": "Erääntyneet",
+      "weakLabel": "Vaikeat sanat"
+    },
+    "quick": {
+      "label": "Konteksti",
+      "title": "Pikakonteksti"
+    },
+    "progress": {
+      "label": "Mittaa",
+      "title": "Edistymisesi",
+      "description": "Katso mitä oppimisessasi on muuttunut — ja mitä valmentajasi huomaa.",
+      "empty": "Olet vasta alussa. Jatka opiskelua, niin valmentaja alkaa näyttää merkityksellistä edistymistä.",
+      "chartEmpty": "Tälle kaaviolle ei ole vielä tarpeeksi tapahtumahistoriaa. Jatka kertauksia tai puhumista, niin trendi ilmestyy.",
+      "chartSr": "{metric} viimeisten {days} päivän aikana, arvosta {from} arvoon {to} viimeisimmissä jaksoissa.",
+      "activityTitle": "Oppimisaktiviteetti — viimeiset {days} päivää",
+      "activityNote": "Aktiviteetti näyttää mihin käytit aikaa — ei sitä, kehittyikö taito.",
+      "compareLabel": "Jaksovertailu",
+      "noticesTitle": "Mitä valmentajasi huomaa",
+      "askAbout": "Kysy valmentajalta tästä",
+      "periodLabel": "Jakso",
+      "metricLabel": "Kaavion mittari",
+      "period": {
+        "7": "7 päivää",
+        "30": "30 päivää",
+        "90": "90 päivää"
+      },
+      "metrics": {
+        "flashcardReviews": "Kertaukset",
+        "againOrHard": "Vaikeat arviot",
+        "speakingSessions": "Puheharjoitukset"
+      },
+      "tooltip": {
+        "weekOf": "Viikko alkaen {date}",
+        "firstAt": "Ensimmäinen aktiviteetti {time}",
+        "reviews": "{count, plural, one {# flashcard-kertaus} other {# flashcard-kertausta}}",
+        "againOrHard": "{count, plural, one {# Again/Hard-arvio} other {# Again/Hard-arviota}}",
+        "speaking": "{count, plural, one {# puheharjoitus} other {# puheharjoitusta}}",
+        "none": "Ei aktiviteettia tällä jaksolla",
+        "words": "Sanat: {list}",
+        "topics": "Aiheet: {list}"
+      },
+      "streak": {
+        "label": "Putki",
+        "days": "{count, plural, one {päivän putki} other {päivän putki}}",
+        "practicedToday": "Harjoittelit tänään — putki on turvassa.",
+        "keepGoing": "Harjoittele tänään, jotta putki jatkuu.",
+        "start": "Aloita putki opiskelemalla tänään.",
+        "weekLabel": "Viimeiset 7 päivää",
+        "best": "Pisin putki: {count, plural, one {# päivä} other {# päivää}}",
+        "dayEmpty": "Ei oppimisaktiviteettia tänä päivänä",
+        "dayActive": "Oppimisaktiviteetti kirjattu",
+        "dayReviews": "{count, plural, one {# flashcard-kertaus} other {# flashcard-kertausta}}",
+        "daySpeaking": "{count, plural, one {# puheharjoitus} other {# puheharjoitusta}}",
+        "dayListening": "{count, plural, one {# kuuntelupäivitys} other {# kuuntelupäivitystä}}",
+        "dayWriting": "{count, plural, one {# kirjoituspäivitys} other {# kirjoituspäivitystä}}",
+        "dayTheory": "{count, plural, one {# teoriapäivitys} other {# teoriapäivitystä}}"
+      }
+    },
+    "notices": {
+      "reviews_up": "Korttikertaukset ovat korkeammalla kuin edellisellä jaksolla.",
+      "reviews_down": "Korttikertaukset ovat matalammalla kuin edellisellä jaksolla.",
+      "misses_down": "Again/Hard-arviot vähenivät edelliseen jaksoon verrattuna.",
+      "misses_up": "Again/Hard-arviot lisääntyivät edelliseen jaksoon verrattuna.",
+      "speaking_quiet": "Puheharjoituksia on edelleen vähän suhteessa sanastoaktiviteettiin.",
+      "speaking_up": "Puheharjoitukset lisääntyivät edelliseen jaksoon verrattuna.",
+      "due_open": "Sinulla on yhä erääntyneitä kortteja.",
+      "weak_open": "Jotkut sanat ovat yhä toistuvasti vaikeita.",
+      "getting_started": "Historiaa ei ole vielä tarpeeksi vahvaan edistymisarvioon."
+    },
+    "attention": {
+      "label": "Toimi",
+      "title": "Mikä tarvitsee huomiota",
+      "dueTitle": "{count} korttia erääntynyt",
+      "dueBody": "Kertaa erääntynyt sanasto, jotta kortit eivät kasaudu.",
+      "weakTitle": "{count} toistuvasti vaikeaa sanaa",
+      "weakBody": "Harjoittele näitä sanoja: {words}",
+      "review": "Kertaa",
+      "practice": "Harjoittele"
+    },
+    "rating": {
+      "AGAIN": "Again",
+      "HARD": "Hard"
+    },
+    "status": {
+      "MASTERED": "Hallittu",
+      "REVIEW": "Kertaus",
+      "LEARNING": "Oppiminen",
+      "NEW": "Uusi"
+    },
+    "focus": {
+      "review-due": "Kertaa erääntyvä sanasto",
+      "weak-words": "Harjoittele vaikeita sanoja",
+      "listening": "Lisää tai palaa kuuntelutuntiin",
+      "speaking": "Aloita puheharjoitus",
+      "writing": "Avaa kirjoitusstudio",
+      "theory": "Avaa teoriamuistiinpanot",
+      "keep-going": "Jatka nykyistä tahtia"
     }
   },
   "gettingStarted": {
@@ -2459,7 +3119,8 @@
       "speaking": "Puhuminen",
       "connections": "Tietosi muuttuu harjoitukseksi",
       "philosophy": "Oppimispäiväkirjasi",
-      "startHere": "Aloita tästä"
+      "startHere": "Aloita tästä",
+      "inbox": "Keräys"
     },
     "welcome": {
       "title": "Mikä on Notoria?",
@@ -2501,7 +3162,7 @@
       "steps": {
         "collect": {
           "title": "1. Kerää tietosi",
-          "body": "Lisää sanastoa ja teoriaa tunneista, keskusteluista, kirjoista, mediasta tai mistä tahansa kohtaat kielen."
+          "body": "Käytä Keräystä nopeisiin muistiinpanoihin, ja lisää sitten sanastoa ja teoriaa tunneista, keskusteluista, kirjoista, mediasta tai mistä tahansa, missä kohtaat kielen."
         },
         "understand": {
           "title": "2. Ymmärrä se",
@@ -2615,6 +3276,27 @@
           "Lue palaute ja tunnista parannettavat kohdat"
         ],
         "emphasis": "Puhumisen ei tarvitse olla täydellistä. Tarkoitus on harjoitella kielen käyttöä realistisessa tilanteessa — ja oppia siitä, mitä tapahtui."
+      },
+      "inbox": {
+        "title": "Keräys",
+        "intro": "Keräys on nopea pudotuspaikka — tallenna asia heti kun kohtaat sen, ja päätä myöhemmin mihin se kuuluu.",
+        "bullets": [
+          "Tallenna sana, fraasi, kielioppiepäys tai kirjoitusidea sekunneissa",
+          "Lisää valinnainen muistiinpano tai lähde kontekstiksi",
+          "Pidä kohteet käsittelemättä-listalla kunnes olet valmis",
+          "Muuta keräys sanastoksi, teoriaksi, kirjoitukseksi tai harjoitukseksi, kun ehdit",
+          "Kohde merkitään käsitellyksi vasta, kun siihen liittyvä tallennus on valmis"
+        ],
+        "body": "Keräys on silmukan alku: kerää ensin, järjestä sitten. Et tarvitse täydellistä kategoriaa juuri nyt — tarvitset ajatuksen talteen.",
+        "emphasis": "Jos sinulla on vain kymmenen sekuntia, keräys riittää. Järjestäminen voi odottaa.",
+        "exampleIntro": "Esimerkiksi kuulet bussissa fraasin ja sinulla on vain hetki:",
+        "examples": [
+          "Sisältö: varata aika",
+          "Muistiinpano: kuultu bussissa — ajan varaaminen",
+          "Lähde: arki",
+          "Myöhemmin: käsittele Sanastoon merkityksen ja esimerkin kanssa"
+        ],
+        "exampleNote": "Sirpale on turvassa Keräyksessä. Kun sinulla on viisi hiljaista minuuttia, lähetä se Sanastoon (tai Teoriaan / Kirjoitukseen) ja viimeistele merkkaus — vasta sitten se on Käsitelty."
       }
     },
     "connections": {
@@ -2666,7 +3348,8 @@
           "exercise": "Luo harjoitus tiedoistasi.",
           "writing": "Kokeile kirjoittaa muutama lause.",
           "listeningSpeaking": "Kun olet valmis, kokeile kuuntelua tai puhumista.",
-          "return": "Palaa huomenna ja lisää jotain uutta."
+          "return": "Palaa huomenna ja lisää jotain uutta.",
+          "capture": "Avaa Keräys ja tallenna yksi nopea muistiinpano tai fraasi, johon haluat palata."
         }
       },
       "closing": "Aloita vain jostain, jonka haluat muistaa. Päiväkirjasi kasvaa luonnollisesti siitä eteenpäin."
@@ -2679,7 +3362,10 @@
     "terms": "Käyttöehdot",
     "privacyTitle": "Tietosuojaseloste",
     "termsTitle": "Käyttöehdot",
+    "privacyDescription": "Miten Notoria kerää, käyttää ja poistaa henkilötietoja sekä oppimissisältöä yksityisessä kieltenoppimisen työtilassaan.",
+    "termsDescription": "Ehdot Notorian yksityisen kieltenoppimisen työtilan, tilien, tekoälyominaisuuksien ja Notoria Pro -laskutuksen käyttöön.",
     "updated": "Päivitetty {date}",
+    "updatedDate": "23. syyskuuta 2026",
     "backToSignIn": "Takaisin kirjautumiseen",
     "backHome": "Takaisin Notoriaan",
     "authFooter": "Tietosuoja · Ehdot",
@@ -2688,7 +3374,424 @@
     "registerAgreement": "Luomalla tilin hyväksyt <terms>käyttöehdot</terms> ja <privacy>tietosuojaselosteen</privacy>.",
     "settingsLinksTitle": "Käytännöt",
     "settingsLinksDescription": "Lue, miten Notoria käsittelee tietojasi ja mitä palvelun käyttöön kuuluu.",
-    "contactEmail": "contact@notoria.fi"
+    "contactEmail": "contact@notoria.fi",
+    "privacyPolicy": {
+      "intro": "Tässä tietosuojaselosteessa kerrotaan, miten Notoria (<site>www.notoria.fi</site>) käsittelee henkilötietoja yksityisessä kieltenoppimisen verkkosovelluksessaan. Seloste vastaa tuotteiden nykyistä toimintaa. Jos jotain menettelyä ei ole kuvattu tässä, emme väitä sitä tekevämme.",
+      "tocTitle": "Tällä sivulla",
+      "tocAria": "Tällä sivulla",
+      "toc": {
+        "controller": "Kuka on vastuussa",
+        "scope": "Mitä tämä seloste kattaa",
+        "data": "Mitä tietoja käsittelemme",
+        "purposes": "Miksi käsittelemme tietoja",
+        "auth": "Tilit ja kirjautuminen",
+        "ai": "Tekoälyominaisuudet",
+        "payments": "Maksut (Notoria Pro)",
+        "processors": "Palveluntarjoajat",
+        "cookies": "Evästeet ja laitteen tallennus",
+        "transfers": "Kansainväliset siirrot",
+        "retention": "Kuinka kauan säilytämme tietoja",
+        "deletion": "Vienti ja tilin poisto",
+        "rights": "Oikeutesi (GDPR)",
+        "children": "Lapset",
+        "changes": "Muutokset",
+        "contact": "Yhteystiedot"
+      },
+      "sections": {
+        "controller": {
+          "title": "1. Kuka on vastuussa",
+          "p1": "Notoria on kieltenoppimispalvelu osoitteessa <site>www.notoria.fi</site>. Sitä tarjotaan käyttäjille Suomessa ja laajemmin EU/ETA-alueella.",
+          "p2": "Tietosuojaan liittyvät kysymykset, rekisteröidyn pyynnöt ja muu käyttäjäyhteydenpito: <contact>contact@notoria.fi</contact>.",
+          "p3": "Rekisterinpitäjän rekisteröityä yritysnimeä ja postiosoitetta ei ole julkaistu nykyisessä tuotteessa. Jos tarvitset muodollisen rekisterinpitäjän tunnistetiedot GDPR-pyyntöä varten, lähetä sähköpostia osoitteeseen <contact>contact@notoria.fi</contact>, niin toimitamme ne."
+        },
+        "scope": {
+          "title": "2. Mitä tämä seloste kattaa",
+          "p1": "Se kattaa henkilötiedot ja oppimissisällön, joita käsitellään kun:",
+          "list": [
+            "luot tai käytät tiliä",
+            "tallennat materiaalia yksityisiin työtiloihin",
+            "tilaat Notoria Pron",
+            "käytät valinnaisia tekoälytyökaluja",
+            "lataat mediaa kuuntelua tai profiilia varten",
+            "käytät puheharjoittelua",
+            "lähetät palautetta tai otat meihin yhteyttä"
+          ],
+          "p2": "Nykyinen sovelluskoodi ei sisällä kolmannen osapuolen markkinointianalytiikka- tai mainonta-SDK:ta. Emme väitä käyttävämme seurantatyökaluja, joita tuotteessa ei ole."
+        },
+        "data": {
+          "title": "3. Mitä tietoja käsittelemme",
+          "p1": "Notoria käsittelee eri tyyppisiä tietoja eri syistä. Pääluokat ovat:",
+          "accountAuth": {
+            "title": "Tili ja todennus",
+            "list": [
+              "Nimi ja sähköpostiosoite",
+              "Salasanan tiiviste sähköposti-/salasanatileille (salasanoja ei koskaan tallenneta selkokielisenä)",
+              "Googlen tilitunnisteet ja OAuth-tunnukset, jos kirjaudut Googlella",
+              "Valinnainen profiilikuva (avatar)",
+              "Tilin rooli sekä luonti-/päivitysajat"
+            ]
+          },
+          "learningContent": {
+            "title": "Luomasi oppimissisältö",
+            "p1": "Yksityisiin työtiloihin lisäämäsi sisältö, kuten sanasto, teoriamuistiinpanot, kirjoitusasiakirjat, harjoitukset ja tuotu harjoitusmateriaali, kuuntelutunnit (mukaan lukien medialinkit ja litteraatit), puheistuntojen litteraatit ja niihin liittyvät istuntokentät, kansiot, tunnisteet sekä opiskelun edistyminen, kuten flashcard-kertaukset.",
+            "p2": "Tämä on oppimateriaaliasi. Notoria säilyttää sen, jotta voit palata siihen ja harjoitella sen avulla."
+          },
+          "subscription": {
+            "title": "Tilauksen ja maksun metatiedot",
+            "list": [
+              "Suunnitelma (ilmainen tai Pro) ja tilauksen tila",
+              "Stripen asiakas- ja tilaustunnisteet sekä tarvittaessa nykyisen jakson päättymisaika"
+            ],
+            "p1": "Korttinumerot ja maksutavan salaisuudet jäävät Stripelle. Notoria säilyttää vain Pro-tilan heijastamiseen tarvittavat laskutusmetatiedot."
+          },
+          "device": {
+            "title": "Laitteen ja asetusten tiedot",
+            "p1": "Evästeet ja selaimen tallennus, joita käytetään kirjautumiseen, kielivalintaan, aktiiviseen työtilaan, tekoälyavun asetuksiin, teemaan ja vastaaviin tuoteasetuksiin. Katso <cookies>Evästeet ja laitteen tallennus</cookies>."
+          },
+          "support": {
+            "title": "Tuki ja palaute",
+            "list0": "Sähköpostit, jotka lähetät osoitteeseen <contact>contact@notoria.fi</contact>",
+            "list1": "Sovelluksen sisäinen palaute Tuki-osiosta (viesti, palautetyyppi, sähköpostisi, oletko kirjautunut, valinnainen tilitunnus, sivun polku, user-agent ja enintään kolme valinnaista kuvaliitettä)",
+            "p1": "Palaute toimitetaan sähköpostitse Notorian tekniseen postilaatikkoon (<technical></technical>). Sitä ei tallenneta erilliseksi tikettitietokannaksi Notoriaan."
+          }
+        },
+        "purposes": {
+          "title": "4. Miksi käsittelemme tietoja",
+          "headers": {
+            "purpose": "Tarkoitus",
+            "basis": "Tyypillinen GDPR-peruste"
+          },
+          "rows": [
+            {
+              "purpose": "Tarjota tilit, työtilat ja tallentamasi oppimateriaali",
+              "basis": "Sopimus (6 artikla 1 kohta b)"
+            },
+            {
+              "purpose": "Todentaa sinut (sähköposti/salasana tai Google) ja nollata salasanoja",
+              "basis": "Sopimus (6 artikla 1 kohta b)"
+            },
+            {
+              "purpose": "Hoitaa Notoria Pron laskutus ja tilauksen tila Stripen kautta",
+              "basis": "Sopimus (6 artikla 1 kohta b)"
+            },
+            {
+              "purpose": "Valinnainen tekoälyapu, kuuntelun litterointi ja puheharjoittelu, kun käytät näitä ominaisuuksia",
+              "basis": "Sopimus (6 artikla 1 kohta b); asetusohjaus milloin saatavilla"
+            },
+            {
+              "purpose": "Pitää palvelu turvallisena ja luotettavana (väärinkäytön esto, virheenkorjaus)",
+              "basis": "Oikeutettu etu (6 artikla 1 kohta f)"
+            },
+            {
+              "purpose": "Vastata tuki- ja palauteviesteihin",
+              "basis": "Oikeutettu etu / sopimus pyynnöstä riippuen"
+            },
+            {
+              "purpose": "Noudattaa lakisääteisiä velvoitteita",
+              "basis": "Lakisääteinen velvoite (6 artikla 1 kohta c)"
+            }
+          ],
+          "p1": "Jos tarvitset muodollisen käsittelyperusteen tiettyä toimintaa varten, lähetä sähköpostia osoitteeseen <contact>contact@notoria.fi</contact>."
+        },
+        "auth": {
+          "title": "5. Tilit ja kirjautuminen",
+          "p1": "Notoria käyttää Auth.js:ää (NextAuth) JWT-istunnolla. Voit kirjautua sähköpostilla ja salasanalla tai Google OAuthilla, kun Google-kirjautuminen on määritetty.",
+          "p2": "Salasanan nollaussähköposteja lähetetään vain tileille, joilla on salasana. Nollaustunnukset tallennetaan tiivisteinä, vanhenevat 30 minuutin kuluttua ja niitä käytetään vain uuden salasanan asettamiseen."
+        },
+        "ai": {
+          "title": "6. Tekoälyominaisuudet",
+          "p1": "Nykyisen tuotteen valinnaiset tekoälyominaisuudet käyttävät <strong>OpenAI</strong>:ta. Käyttämäsi työkalun mukaan Notoria voi lähettää relevanttia oppimissisältöä — esimerkiksi sanastoeriä, kirjoitustekstiä tai valintoja, harjoituksen tai teorian kontekstia, kuuntelulitteraatteja, puhelitteraatteja tai live-ääntä puheohjaajalle.",
+          "p2": "Tekoälyavun asetukset (mukaan lukien onko apu käytössä) tallennetaan selain-evästeeseen, jotta tuote voi kunnioittaa asetuksiasi. Monet palvelintoiminnot, jotka kutsuvat mallia, tarkistavat ensin että apu on käytössä. Avun poiskytkentä <settings>Asetukset</settings>-sivulla estää tekoälytyökalut, jotka sitä edellyttävät.",
+          "p3": "Kuuntelun litterointi AssemblyAI:n kautta voi silti toimia, kun käytät litteraattia tarvitsevia Kuuntelu-ominaisuuksia, koska litterointi kuuluu kyseiseen mediaprosessiin eikä pelkästään valinnaiseen ”tekoälyapu”-asetukseen.",
+          "p4": "Nykyinen koodikanta ei käytä muita suuria kielimallipalveluita OpenAI:n lisäksi. OpenAI käsittelee tietoja omien ehtojensa ja tietosuojakäytäntönsä mukaisesti käsittelijänä näissä ominaisuuksissa."
+        },
+        "payments": {
+          "title": "7. Maksut (Notoria Pro)",
+          "p1": "Maksulliset tilaukset hoitaa <strong>Stripe</strong>. Kassavirta, laskut, maksutavat ja peruutus kulkevat Stripe Checkoutin ja Stripe Customer Portalin kautta. Stripen webhookit päivittävät suunnitelmasi ja tilasi Notoriassa.",
+          "p2": "Stripe käsittelee maksutietoja maksupalveluntarjoajana. Korttien käsittelystä kerrotaan Stripen omassa tietosuojadokumentaatiossa."
+        },
+        "processors": {
+          "title": "8. Palveluntarjoajat",
+          "p1": "Käyttämiesi ominaisuuksien mukaan henkilötietoja tai oppimissisältöä voivat käsitellä:",
+          "headers": {
+            "provider": "Palveluntarjoaja",
+            "role": "Rooli Notoriassa"
+          },
+          "rows": [
+            {
+              "provider": "PostgreSQL-tietokanta (tuotannossa dokumentoitu Neoniksi)",
+              "role": "Tili- ja oppimistiedot"
+            },
+            {
+              "provider": "Vercel",
+              "role": "Sovelluksen hosting (määritettyyn alueeseen kuuluu Frankfurt / fra1)"
+            },
+            {
+              "provider": "Cloudinary",
+              "role": "Avatarit, kuuntelumedia, editorin kuvat ja harjoitusten tuontitiedostot"
+            },
+            {
+              "provider": "AssemblyAI",
+              "role": "Kuunteluäänen litterointi"
+            },
+            {
+              "provider": "Stream Video",
+              "role": "Live-puhepuhelut; automaattinen litterointi; istuntokentät kuten litteraatti-URL:t (ja tallenne-URL:t vain jos tallenne-tapahtuma vastaanotetaan myöhemmin)"
+            },
+            {
+              "provider": "OpenAI",
+              "role": "Valinnainen tekoälyapu ja puheohjaajan reaaliaikainen ääni"
+            },
+            {
+              "provider": "Resend",
+              "role": "Salasanan nollaussähköposti ja Tuki-palautteen toimitus"
+            },
+            {
+              "provider": "Stripe",
+              "role": "Notoria Pron kassa, portaali ja tilauksen tila"
+            },
+            {
+              "provider": "Google",
+              "role": "OAuth-kirjautuminen, kun valitset Googlen; käyttöliittymän webfontit"
+            },
+            {
+              "provider": "Dicebear",
+              "role": "Puheistunnoissa käytettävät generoidut avatar-kuvat (nimisiemenestä; tilin salasanaa ei lähetetä)"
+            }
+          ],
+          "p2": "Puhepuhelut luodaan litterointi päällä. Tallennus on pois päältä puhelun luonnissa nykyisessä toteutuksessa; tallenne-URL tallennetaan vain, jos tuote myöhemmin vastaanottaa Streamilta recording-ready -tapahtuman."
+        },
+        "cookies": {
+          "title": "9. Evästeet ja laitteen tallennus",
+          "p1": "Notoria käyttää evästeitä ja vastaavaa tallennusta välttämättömiin tuoteominaisuuksiin. Erillistä evästekäytäntöä ei ole, koska nykyinen toteutus ei sisällä mainonta- tai analytiikkaevästeohjelmia, jotka sitä edellyttäisivät.",
+          "cookiesTitle": "Sovelluksen käyttämät evästeet",
+          "headers": {
+            "cookie": "Eväste",
+            "purpose": "Tarkoitus"
+          },
+          "rows": [
+            {
+              "cookie": "Auth.js-istuntoeväste",
+              "purpose": "Pitää sinut kirjautuneena (JWT-istunto; kirjaston oletusnimeäminen)",
+              "code": false
+            },
+            {
+              "cookie": "notoria-locale",
+              "purpose": "Käyttöliittymän kieli",
+              "code": true
+            },
+            {
+              "cookie": "notoria-workspace",
+              "purpose": "Aktiivinen työtila",
+              "code": true
+            },
+            {
+              "cookie": "notoria-ai-preferences",
+              "purpose": "Tekoälyavun asetukset",
+              "code": true
+            },
+            {
+              "cookie": "sidebar_state",
+              "purpose": "Sivupalkin auki/kiinni -asetus",
+              "code": true
+            }
+          ],
+          "storageTitle": "Paikallinen ja istuntotallennus",
+          "p2": "Selaimesi voi myös tallentaa teema-asetuksen (next-themesin kautta), onboarding-/tutorial-lippuja, näppäimistö- ja liikeasetuksia, näkymätilavalintoja, tilapäistä harjoitus- tai flashcard-istunnon tilaa sekä vastaavia vain asiakaspuolen asetuksia.",
+          "p3": "Paikallisten asetusten tyhjennys Asetuksissa poistaa nämä laiteasetukset. Se ei poista tiliäsi tai työtilan sisältöä palvelimelta."
+        },
+        "transfers": {
+          "title": "10. Kansainväliset siirrot",
+          "p1": "Osa yllä olevista palveluntarjoajista sijaitsee ETA-alueen ulkopuolella (esimerkiksi Yhdysvalloissa) tai voi käsitellä tietoja useammalla alueella. Kun henkilötietoja siirretään ETA-/UK-alueen ulkopuolelle, siirrot nojaavat sovellettavan lain mukaisiin turvamekanismeihin, joita palveluntarjoajat tarjoavat — kuten tarvittaessa vakiosopimuslausekkeisiin (Standard Contractual Clauses) — sekä heidän julkaisemiinsa tietosuojaehtoihin.",
+          "p2": "Notorian sovellushosting on suunnattu Frankfurtin alueelle (fra1). Kysy osoitteesta <contact>contact@notoria.fi</contact>, jos tarvitset apua tietyn ominaisuuden palveluntarjoajan dokumentaation löytämisessä."
+        },
+        "retention": {
+          "title": "11. Kuinka kauan säilytämme tietoja",
+          "list": [
+            "Tili- ja oppimistietoja säilytetään niin kauan kuin tilisi on auki, jotta voit käyttää palvelua",
+            "Salasanan nollaustunnukset vanhenevat 30 minuutin kuluttua",
+            "Tilauksen metatietoja säilytetään tarpeen mukaan nykyisen Pro-tilan ja Stripe-laskutussuhteen heijastamiseksi",
+            "Tuki- ja palautesähköposteja säilytetään niin kauan kuin pyynnön ja siihen liittyvän seurannan käsittely edellyttää"
+          ],
+          "p1": "Infrastruktuuripalveluntarjoajien tarkkoja varmuuskopioiden säilytysaikoja ei ole kovakoodattu sovellukseen, ja ne voivat noudattaa näiden palveluntarjoajien toimintakäytäntöjä. Ota yhteyttä, jos tarvitset selvennystä poistopyyntöön."
+        },
+        "deletion": {
+          "title": "12. Vienti ja tilin poisto",
+          "exportTitle": "Vienti",
+          "exportP1": "<account>Tili</account>-sivulta voit ladata JSON-varmuuskopion työtiloista ja oppimissisällöstä (mukaan lukien sanasto, teoriamuistiinpanot, harjoitukset/kirjoitus, kuuntelutunnit ja puheistunnot). Mediatiedostot viitataan URL:lla, ei upoteta binääritiedostoina.",
+          "exportP2": "Nykyinen vienti ei sisällä kaikkia tiliin liittyviä tietueita. Esimerkiksi flashcard-edistyminen/kertaukset ja harjoitusten tuonnin lähdetietueet eivät ole osa JSON-varmuuskopiota. OAuth-tunnuksia, salasanatiivisteitä ja Stripe-tunnisteita ei viedä.",
+          "deleteTitle": "Tilin poisto",
+          "deleteP1": "Voit poistaa tilisi pysyvästi <account>Tili</account>-sivulta. Kun poisto onnistuu, Notoria:",
+          "deleteList": [
+            "poistaa käyttäjätietueesi ja kaskadoidut oppimistiedot Notorian tietokannasta",
+            "peruuttaa ja poistaa liittyvät Stripe-asiakastiedot, kun Stripe on määritetty (parhaan mukaan)",
+            "tuhoaa avatar-median ja kuuntelutuntimedian, jonka poistovirta on toteutettu poistamaan Cloudinarysta"
+          ],
+          "deleteP2": "Nykyinen poistovirta ei väitä puhdistavansa automaattisesti jokaista kolmannen osapuolen artefaktia. Erityisesti osa Cloudinary-assettoista (kuten editorin kuvat tai harjoitusten tuontitiedostot) ja Streamin puhepuheluartifakteista voi jäädä näiden palveluntarjoajien piiriin, kunnes ne siivotaan erikseen tai poistetaan niiden omien aikataulujen mukaan.",
+          "deleteP3": "Poiston jälkeen rajoitettuja jäännöskopioita voi myös jäädä hetkeksi salattuihin varmuuskopioihin tai lokoihin, kunnes nämä järjestelmät kiertävät. Jos jotain tiettyä jää jäljelle tilin poiston jälkeen, lähetä sähköpostia osoitteeseen <contact>contact@notoria.fi</contact>."
+        },
+        "rights": {
+          "title": "13. Oikeutesi (GDPR)",
+          "p1": "Jos olet EU-/ETA-alueella tai muuten GDPR:n suojan piirissä, sinulla voi olla oikeus:",
+          "list": [
+            "saada pääsy henkilötietoihisi",
+            "oikaista virheellisiä tietoja",
+            "poistaa tietoja (myös poistamalla tilisi)",
+            "rajoittaa tai vastustaa tiettyä käsittelyä",
+            "saada siirrettävä kopio toimittamistasi tiedoista (ks. Vienti yllä)",
+            "peruuttaa suostumus, kun käsittely perustuu suostumukseen"
+          ],
+          "listComplaint": "tehdä valitus valvontaviranomaiselle — Suomessa Tietosuojavaltuutetun toimistolle (<ombudsman>tietosuoja.fi</ombudsman>)",
+          "p2": "Näiden oikeuksien käyttämiseksi lähetä sähköpostia osoitteeseen <contact>contact@notoria.fi</contact>. Saatamme joutua varmistamaan, että pyyntö tulee tilin haltijalta."
+        },
+        "children": {
+          "title": "14. Lapset",
+          "p1": "Notoria edellyttää tiliä ja on rakennettu henkilökohtaiseksi oppimistilaksi. Tuotteessa ei ole erillistä ikärajoitusta. Sitä ei ole suunnattu lapsille. Jos uskot, että lapsen tietoja on toimitettu ilman asianmukaista lupaa, ota yhteyttä osoitteeseen <contact>contact@notoria.fi</contact>."
+        },
+        "changes": {
+          "title": "15. Muutokset",
+          "p1": "Voimme päivittää tätä tietosuojaselostetta, kun tuote tai lainsäädännölliset vaatimukset muuttuvat. Sivun yläreunassa oleva ”Päivitetty”-päivämäärä muuttuu, kun uusi versio julkaistaan.",
+          "p2": "Kun muutos on olennainen, kerromme siitä kohtuullisella, sillä hetkellä käytettävissä olevalla tavalla — esimerkiksi päivittämällä tätä sivua ja tarvittaessa sovelluksen sisäistä ilmoitusta tai sähköpostia."
+        },
+        "contact": {
+          "title": "16. Yhteystiedot",
+          "p1": "Tietosuoja ja yleinen yhteydenotto: <contact>contact@notoria.fi</contact>",
+          "p2": "Tuotepalautteen tekninen postilaatikko (myös <contactPage>Ota yhteyttä</contactPage> -sivulla): <technical></technical>",
+          "p3": "Verkkosivusto: <site>www.notoria.fi</site>"
+        }
+      }
+    },
+    "termsOfUse": {
+      "intro": "Nämä käyttöehdot selittävät Notorian käyttöä koskevat säännöt osoitteessa <site>www.notoria.fi</site>. Ne kuvaavat, miten tuote toimii tänään: yksityiset oppimistyötilat, valinnainen Notoria Pro -laskutus Stripen kautta sekä tekoälyavusteiset ominaisuudet. Ne eivät korvaa oikeudellista neuvontaa omassa tilanteessasi.",
+      "tocTitle": "Tällä sivulla",
+      "tocAria": "Tällä sivulla",
+      "toc": {
+        "agreement": "Sopimus",
+        "service": "Palvelu",
+        "accounts": "Tilit",
+        "content": "Sisältösi",
+        "acceptable-use": "Hyväksyttävä käyttö",
+        "ip": "Immateriaalioikeudet",
+        "ai": "Tekoälyn tuottama sisältö",
+        "plans": "Ilmainen suunnitelma ja Notoria Pro",
+        "billing": "Tilaus ja laskutus",
+        "refunds": "Palautukset ja kuluttajaoikeudet",
+        "availability": "Saatavuus",
+        "termination": "Keskeytys ja päättäminen",
+        "liability": "Vastuuvapaus ja vastuu",
+        "changes": "Muutokset",
+        "law": "Sovellettava laki",
+        "contact": "Yhteystiedot"
+      },
+      "sections": {
+        "agreement": {
+          "title": "1. Sopimus",
+          "p1": "Luomalla tilin tai käyttämällä Notoriaa hyväksyt nämä ehdot ja <privacy>tietosuojaselosteen</privacy>. Jos et hyväksy, älä käytä palvelua.",
+          "p2": "Kysymykset näistä ehdoista: <contact>contact@notoria.fi</contact>."
+        },
+        "service": {
+          "title": "2. Palvelu",
+          "p1": "Notoria on yksityinen kieltenoppimisen verkkosovellus. Voit luoda työtiloja ja säilyttää oppimateriaalia, kuten sanastoa, teoriamuistiinpanoja, kirjoitusta, harjoituksia, kuuntelutunteja ja puheistuntoja.",
+          "p2": "Osa ominaisuuksista on saatavilla ilmaisella suunnitelmalla. Notoria Pro avaa lisäominaisuuksia tuotteessa ja <account>Tili</account>-sivullasi näkyvällä tavalla — mukaan lukien Kuuntelu, Puhuminen, tietyt tekoälytyökalut, harjoitusten tuonti ja maksulliset dokumenttivientimuodot. Ominaisuuksien saatavuus voi muuttua tuotteen kehittyessä.",
+          "p3": "Notoria on henkilökohtaiseen kieltenoppimiseen. Se ei ole koulu, tutkintoviranomainen eikä ammatillinen neuvontapalvelu."
+        },
+        "accounts": {
+          "title": "3. Tilit",
+          "list": [
+            "Anna oikeat tilitiedot",
+            "Pidä salasanasi ja tilisi käyttöoikeus turvassa",
+            "Kirjaudu sähköpostilla ja salasanalla tai Googlella, kun Google-kirjautuminen on saatavilla",
+            "Käytä Notoriaa vain, jos voit tehdä sitovan sopimuksen sovellettavan lain mukaan"
+          ],
+          "p1": "Tuotteessa ei ole erillistä ikärajoitusta. Jos uskot, että tili on luotu ilman asianmukaista lupaa, ota yhteyttä osoitteeseen <contact>contact@notoria.fi</contact>.",
+          "p2": "Ilmoita meille osoitteeseen <contact>contact@notoria.fi</contact>, jos epäilet tilisi joutuneen väärinkäytön kohteeksi."
+        },
+        "content": {
+          "title": "4. Sisältösi",
+          "p1": "Säilytät omistusoikeuden Notoriaan luomaasi tai lataamaasi oppimissisältöön.",
+          "p2": "Myönnät Notorialle rajoitetun lisenssin isännöidä, käsitellä, näyttää ja varmuuskopioida kyseistä sisältöä palvelun toiminnan mahdollistamiseksi — mukaan lukien relevantin materiaalin lähettäminen tekoäly-, litterointi-, media- tai maksupalveluntarjoajille, kun käytät näitä ominaisuuksia. Lisenssi on olemassa vain Notorian käyttämiseksi puolestasi. Se ei siirrä sisältösi omistusoikeutta meille.",
+          "p3": "Olet vastuussa siitä, mitä tallennat. Älä lataa materiaalia, johon sinulla ei ole käyttöoikeutta, äläkä käytä Notoriaa lainvastaisen sisällön säilyttämiseen."
+        },
+        "acceptableUse": {
+          "title": "5. Hyväksyttävä käyttö",
+          "p1": "Sitoudut siihen, että et:",
+          "list": [
+            "riko lakia tai loukkaa muiden oikeuksia",
+            "yritä päästä muiden käyttäjien yksityisiin työtiloihin tai tileihin",
+            "tutki, ylikuormita tai häiritse palvelua, API:ita tai niihin liittyvää infrastruktuuria",
+            "väärinkäytä tekoäly-, litterointi-, kuuntelu- tai puhumisominaisuuksia tavalla, joka vahingoittaa muita tai kiertää suunnitelmarajoja petoksella",
+            "tee reverse engineeringiä palvelulle paitsi siinä määrin kuin pakottava paikallinen laki sallii",
+            "esitä henkilöllisyyttäsi väärin Stripelle, Googlelle tai Notorian tukeen"
+          ]
+        },
+        "ip": {
+          "title": "6. Immateriaalioikeudet",
+          "p1": "Notorian nimi, brändi, ohjelmisto ja tuotesuunnittelu kuuluvat Notorialle tai sen lisenssinantajille. Nämä ehdot eivät siirrä tuotteen omistusoikeutta sinulle.",
+          "p2": "Oppimissisältösi pysyy sinun, kohdan 4 rajoitetun lisenssin mukaisesti."
+        },
+        "ai": {
+          "title": "7. Tekoälyn tuottama sisältö",
+          "p1": "Osa ominaisuuksista voi tarkistaa, ehdottaa, tuottaa, litteroida, tiivistää tai ohjata materiaaliisi perustuen. Tulokset voivat olla puutteellisia, virheellisiä tai sopimattomia tavoitteeseesi. Olet vastuussa tekoälytulosten tarkistamisesta ennen kuin tukeudut niihin opiskelussa, kokeissa, ammatillisessa käytössä tai julkaisussa.",
+          "p2": "Tekoälyominaisuudet voivat olla poissa käytöstä, jos apu on kytketty pois <settings>Asetukset</settings>-sivulla, jos suunnitelmasi ei sisällä tiettyä työkalua tai jos palveluntarjoaja on tilapäisesti tavoittamattomissa.",
+          "p3": "Kaikki tekoälyavustajat eivät edellytä Notoria Prota. Tuote näyttää, mitkä työkalut ovat ilmaisia ja mitkä tarvitsevat Pron."
+        },
+        "plans": {
+          "title": "8. Ilmainen suunnitelma ja Notoria Pro",
+          "p1": "Ilmainen suunnitelma kattaa ydinharjoittelun omalla sanastollasi ja siihen liittyvät opiskelutyökalut tuotteessa näkyvällä tavalla.",
+          "p2": "Notoria Pro on maksullinen tilaus, joka avaa lisäominaisuuksia. Nykyisessä tuotteessa siihen kuuluu tyypillisesti Kuuntelu, Puhuminen, harjoitusten tuonti, muodosta-lause -harjoittelu, monet tekoälyavusteiset opiskelutyökalut sekä PDF-/DOCX-dokumenttivienti. Jotkin kevyemmät tekoälyavustajat (kuten tietyt sanasto- tai editorin muotoiluavut) voivat säilyä käytössä ilmaisella suunnitelmalla, kun tekoälyapu on käytössä.",
+          "p3": "Pro-käyttöoikeus on sidottu käyttäjätiliisi, joten se koskee kaikkia kyseisen tilin työtiloja. Ylläpitäjäroolin tileillä voi olla Pro-tason käyttöoikeus ilman henkilökohtaista Stripe-tilausta.",
+          "p4": "Ostokseesi sovellettava hinta on Stripe Checkoutissa nykyiselle Pro-suunnitelmalle näytetty hinta. Mualla tuotteessa (esimerkiksi Tili-sivulla) näytetty hinta on vain suuntaa-antava ja sen on vastattava aktiivista Stripe-hintakonfiguraatiota."
+        },
+        "billing": {
+          "title": "9. Tilaus, laskutus ja peruutus",
+          "list0": "Pro-tilaukset laskutetaan <strong>Stripen</strong> kautta",
+          "list1": "Voit aloittaa kassavirran <account>Tili</account>-sivulta tai sovelluksen lukituista Pro-kontrolleista",
+          "list2": "Tili-sivulta voit avata Stripe Customer Portalin nähdäksesi laskut, päivittääksesi maksutavat ja peruuttaaksesi tilauksen",
+          "list3": "Peruutus noudattaa Stripen Customer Portalin käyttäytymistä tilauksellesi",
+          "p1": "Peruutuksen jälkeen Pro-käyttöoikeus jatkuu vain niin kauan kuin Stripen tilauksen tila edelleen myöntää Pron tuotteessa. Nykyisessä toteutuksessa Proksi käsiteltäviä tiloja ovat <code>active</code>, <code>trialing</code> ja <code>past_due</code>. Kun tila ei enää täytä ehtoja, tili palaa ilmaiseen suunnitelmaan.",
+          "p2": "Jos maksu epäonnistuu, Stripe voi siirtää tilauksen tilaan <code>past_due</code> tai toiseen tilaan. Notoria synkronoi tilan Stripen webhookeista. Niin kauan kuin tila on <code>past_due</code>, Pro-ominaisuudet pysyvät käytössä nykyisten käyttöoikeussääntöjen mukaan; jos tilaus myöhemmin peruuntuu tai muuten kelpaamattomaksi, Pro-käyttöoikeus päättyy.",
+          "p3": "Notoria-tilin poistaminen peruuttaa Stripe-tilauksen heti (parhaan mukaan) osana tilin poistoa. Se eroaa uusinnan peruuttamisesta Customer Portalin kautta tilin säilyttäen."
+        },
+        "refunds": {
+          "title": "10. Palautukset ja kuluttajaoikeudet",
+          "p1": "Notoriassa ei ole automaattista sovelluksen sisäistä palautuspainiketta. Peruutus on saatavilla Stripe Customer Portalin kautta.",
+          "p2": "Jos haluat palautusarvion tai jos EU-/ETA-alueen digisisältöä tai etäsopimuksia koskevat kuluttajasäännöt antavat ostokseesi sovellettavia oikeuksia, lähetä sähköpostia osoitteeseen <contact>contact@notoria.fi</contact> tilisi sähköpostilla ja Stripen kuittitiedoilla. Käsittelemme pyynnön sovellettavan lain ja Stripen työkalujen mukaisesti.",
+          "p3": "Mikään näissä ehdoissa ei ole tarkoitettu rajoittamaan pakottavia kuluttajaoikeuksia, joista ei voida luopua Suomen tai EU:n lain mukaan."
+        },
+        "availability": {
+          "title": "11. Saatavuus",
+          "p1": "Pyrimme pitämään Notorian saatavilla, mutta emme lupaa keskeytyksetöntä tai virheetöntä palvelua. Huolto, palveluntarjoajien katkokset tai muutokset kolmannen osapuolen tekoäly-, media-, sähköposti- tai maksupalveluihin voivat vaikuttaa ominaisuuksiin."
+        },
+        "termination": {
+          "title": "12. Keskeytys ja päättäminen",
+          "p1": "Voit poistaa tilisi milloin tahansa <account>Tili</account>-sivulta. Poisto poistaa pysyvästi tilisi ja siihen liittyvän oppimistiedon Notorian tietokannasta <privacy>tietosuojaselosteen</privacy> yksityiskohtien ja jäännöskäsittelijämerkintöjen mukaisesti. Voit viedä JSON-varmuuskopion Tili-sivulta ennen poistoa.",
+          "p2": "Voimme keskeyttää tai päättää käyttöoikeuden, jos rikot näitä ehtoja vakavasti tai toistuvasti, väärinkäytät palvelua tai aiheutat turvallisuus- tai oikeudellisen riskin. Kohtuullisesti ja lain salliessa pyrimme ilmoittamaan siitä tilisi sähköpostiosoitteeseen."
+        },
+        "liability": {
+          "title": "13. Vastuuvapaus ja vastuu",
+          "p1": "Notoria tarjotaan ”saatavuuden mukaan” henkilökohtaiseen kieltenoppimiseen. Sovellettavan lain sallimassa laajuudessa emme anna takuita, joita laki ei edellytä.",
+          "p2": "Sovellettavan lain sallimassa laajuudessa Notoria ei ole vastuussa epäsuorista, satunnaisista, erityisistä, seurannaisista tai tietojen menetyksen vahingoista, jotka johtuvat palvelun käytöstäsi tai tekoälytuloksiin tukeutumisesta. Missä vastuuta ei voida sulkea pois, se rajoittuu Notoria Prosta maksamaasi määrään kolmena kuukautena ennen vaatimusta tai mihin tahansa suurempaan määrään, jonka pakottava laki edellyttää.",
+          "p3": "Nämä rajoitukset eivät sulje pois vastuuta, jota Suomen tai EU:n laki ei salli rajoittaa — mukaan lukien vastuu, josta kuluttajat eivät voi luopua, sekä vastuu kuolemasta tai henkilövahingosta huolimattomuuden vuoksi, kun tällaiset säännöt soveltuvat."
+        },
+        "changes": {
+          "title": "14. Muutokset palveluun ja ehtoihin",
+          "p1": "Voimme päivittää ominaisuuksia, suunnitelmia ja näitä ehtoja. Tämän sivun ”Päivitetty”-päivämäärä muuttuu, kun uusi versio julkaistaan.",
+          "p2": "Jos muutos on olennainen, annamme kohtuullisen ilmoituksen kun se on käytännössä mahdollista — esimerkiksi päivittämällä tätä sivua ja tarvittaessa sovelluksen sisäistä ilmoitusta tai sähköpostia. Jatkuva käyttö voimaantulopäivän jälkeen tarkoittaa, että hyväksyt päivitetyt ehdot, paitsi jos pakottava laki edellyttää eri prosessia."
+        },
+        "law": {
+          "title": "15. Sovellettava laki",
+          "p1": "Näihin ehtoihin sovelletaan Suomen lakia ilman lainvalintasääntöjä, jotka johtaisivat toisen oikeusjärjestyksen lakiin.",
+          "p2": "Suomen tuomioistuimilla on toimivalta, rajoittamatta pakottavia kuluttajansuojia, jotka sallivat sinun nostaa kanteen asuinmaassasi EU-/ETA-alueella.",
+          "p3": "Muodollista toimijan henkilöllisyyttä Notoria-palvelun ja yhteyssähköpostin lisäksi ei ole julkaistu nykyisessä tuotteessa. Sopimus- tai viranomaiskirjeenvaihtoon käytä osoitetta <contact>contact@notoria.fi</contact>."
+        },
+        "contact": {
+          "title": "16. Yhteystiedot",
+          "p1": "Laskutus-, ehtokysymykset ja niihin liittyvät oikeudelliset ilmoitukset: <contact>contact@notoria.fi</contact>",
+          "p2": "Verkkosivusto: <site>www.notoria.fi</site>",
+          "p3": "Yleiset tukivaihtoehdot ja tekninen palaute postilaatikko: katso <contactPage>Ota yhteyttä</contactPage> ja <support>Tuki</support>."
+        }
+      }
+    }
   },
   "footer": {
     "navLabel": "Sivuston linkit",
@@ -2799,7 +3902,7 @@
       "intro": {
         "title": "Työtila, ei kurssi",
         "p1": "Notoria on yksityinen paikka kielelle, jota jo opiskelet. Tuo materiaalia sisään, pidä se järjestyksessä ja harjoittele siitä — sen sijaan että aloittaisit katalogista, jota et valinnut.",
-        "p2": "Jokainen työtila on yksi kieli. Sanasto, teoria, harjoitukset, kirjoittaminen, kuuntelu ja puhuminen elävät siellä yhdessä, jotta tallentamastasi voi tulla harjoittelemaasi.",
+        "p2": "Kukin työtila on yksi kieli. Keräys, sanasto, teoria, harjoitukset, kirjoittaminen, kuuntelu ja puhuminen elävät siellä yhdessä, jotta tallentamasi voi muuttua harjoitteluksi.",
         "beat": "Sinun ei tarvitse oppia Notoriaa kerralla. Kasvatat sitä kielen kanssa."
       },
       "loop": {
@@ -2808,7 +3911,7 @@
         "stages": {
           "bring": {
             "label": "Tuo sisään",
-            "body": "Tallenna sanoja, fraaseja ja muistiinpanoja tunneista, kirjoista, mediasta, keskusteluista — sieltä missä tapaat kielen."
+            "body": "Tallenna sanoja, fraaseja ja muistiinpanoja — käytä Keräystä nopeisiin sirpaleisiin, tai lisää suoraan Sanastoon ja Teoriaan tunneista, kirjoista, mediasta ja keskusteluista."
           },
           "organise": {
             "label": "Järjestä",
@@ -2836,7 +3939,7 @@
       "startSmall": {
         "title": "Aloita pienesti",
         "p1": "Notoriaa ei suoriteta. Ei ole checklistiä, joka tarkoittaisi että tuote on valmis.",
-        "p2": "Hyvä ensimmäinen päivä voi olla työtila ja viisi sanaa joista välität. Muistiinpanot, pidempi harjoittelu, kirjoittaminen, kuuntelu ja puhuminen voivat odottaa, kunnes niillä on paikka loopissasi."
+        "p2": "Hyvä ensimmäinen päivä voi olla työtila, pari Keräys-muistiinpanoa ja viisi sanaa, joista välität. Muistiinpanot, pidempi harjoittelu, kirjoittaminen, kuuntelu ja puhuminen voivat odottaa, kunnes ne ansaitsevat paikan silmukassasi."
       },
       "firstSession": {
         "title": "Ensimmäinen hetki",
@@ -2848,7 +3951,7 @@
           },
           "words": {
             "title": "Lisää kourallinen sanoja",
-            "body": "Avaa Vocabulary ja tallenna sanoja tai fraaseja jotka haluat muistaa, sekä merkityksiä tai esimerkkejä jos ne auttavat."
+            "body": "Avaa Sanasto ja tallenna sanoja tai fraaseja, jotka haluat muistaa, merkityksineen tai esimerkkeineen jos ne auttavat. Tai pudota nopea sirpale Keräykseen ensin ja käsittele se myöhemmin."
           },
           "notes": {
             "title": "Kirjoita lyhyt muistiinpano tarvittaessa",
@@ -2866,43 +3969,47 @@
       },
       "connect": {
         "title": "Miten alueet liittyvät",
-        "p1": "Vocabulary ja Theory ovat paikkoja, joihin materiaali laskeutuu. Exercise muuttaa sen harjoitteluksi. Writing, Listening ja Speaking auttavat käyttämään kieltä aktiivisemmin.",
+        "p1": "Keräys on nopea sisäänkäynti. Sanasto ja Teoria ovat paikkoja, joihin ainesto asettuu. Harjoitus muuttaa sen harjoitteluksi. Kirjoittaminen, kuuntelu ja puhuminen auttavat käyttämään kieltä aktiivisemmin.",
         "p2": "Sinun ei tarvitse kulkea joka aluetta järjestyksessä. Monet pysyvät sanoissa ja lyhyessä harjoittelussa pitkään.",
-        "p3": "Luonteva seuraava askel on kirjoittaminen, kun haluat tuottaa kieltä omin ehdoin, sitten kuuntelu ja puhuminen, kun sama materiaali tarvitaan korvaan ja ääneen — Listening ja Speaking kuuluvat Notoria Prohon.",
+        "p3": "Luonteva seuraava askel on kirjoittaminen, kun haluat tuottaa kieltä omin ehdoin, sitten kuuntelu ja puhuminen, kun sama materiaali tarvitaan korvaan ja ääneen — Kuuntelu ja Puhuminen kuuluvat Notoria Prohon.",
         "beat": "Kerää ja ymmärrä ensin. Käytä ja puhu, kun materiaali on valmis jättämään sivun."
       },
       "areas": {
         "title": "Pääalueet",
         "intro": "Lyhyt kartta siitä, mihin kukin alue on:",
         "vocab": {
-          "label": "Vocabulary",
+          "label": "Sanasto",
           "body": "Henkilökohtainen sanapankki — merkitykset, esimerkit, tunnisteet ja flashcard-edistyminen. Tämä on yleensä perusta, josta muu ammentaa."
         },
         "theory": {
-          "label": "Theory",
+          "label": "Teoria",
           "body": "Kielioppi- ja käyttömuistiinpanot omin sanoin, joihin voit palata kun sama kaava tulee uudelleen."
         },
         "exercises": {
-          "label": "Exercise",
+          "label": "Harjoitus",
           "body": "Harjoitushetkiä sanastostasi, teoriamuistiinpanoista tai tuodusta materiaalista — jotta tehtävät pysyvät kiinni siinä mitä olet oikeasti tallentanut."
         },
         "writing": {
-          "label": "Writing",
+          "label": "Kirjoittaminen",
           "body": "Dokumentteja ja kysymyssarjoja kielen aktiiviseen käyttöön, ei vain tunnistamiseen."
         },
         "listening": {
-          "label": "Listening",
+          "label": "Kuuntelu",
           "body": "Muuta mediaa kuunteluharjoitukseksi työtilassasi. Saatavilla Notoria Prolla."
         },
         "speaking": {
-          "label": "Speaking",
+          "label": "Puhuminen",
           "body": "Live-harjoittelua AI-tutorin kanssa, oppimasi kielen ympärillä. Saatavilla Notoria Prolla."
+        },
+        "capture": {
+          "label": "Keräys",
+          "body": "Nopea pudotuspaikka sirpaleille — sanoille, epäilyksille ja ideoille — jotka käsittelet myöhemmin Sanastoksi, Teoriaksi, Kirjoitukseksi tai Harjoitukseksi. Käytä Keräystä ensin, kun sinulla on vain hetki; kohteet pysyvät käsittelemättä, kunnes linkitetty tallennus on valmis."
         }
       },
       "notEverything": {
         "title": "Kaikkea ei tarvitse käyttää",
         "p1": "Ohita alueet jotka eivät juuri nyt auta. Rauhallinen sanapankki ja muutama muistiinpano voivat jo olla vahva järjestelmä.",
-        "p2": "Lisää Exercise kun haluat jäsenneltyä kertausta. Lisää Writing kun haluat tuottaa. Lisää Listening ja Speaking kun kuuleminen ja sanominen on seuraava hyödyllinen askel."
+        "p2": "Lisää Harjoitus kun haluat jäsenneltyä kertausta. Lisää Kirjoittaminen kun haluat tuottaa. Lisää Kuuntelu ja Puhuminen kun kuuleminen ja sanominen on seuraava hyödyllinen askel."
       },
       "cta": {
         "title": "Valmis aloittamaan?",
@@ -2910,9 +4017,9 @@
         "createAccount": "Luo tili",
         "signIn": "Kirjaudu sisään",
         "openWorkspace": "Avaa työtila",
-        "inAppGuide": "Avaa Getting started",
-        "signedInNote": "Nappikohtaisiin ohjeisiin sovelluksessa avaa <link>Getting started</link>.",
-        "signedOutNote": "Onko sinulla jo tili? <link>Kirjaudu sisään</link> avataksesi työtilan. Sovelluksen Getting started -opas käsittelee yksityiskohtaiset UI-kierrokset kirjautumisen jälkeen."
+        "inAppGuide": "Avaa Aloitusopas",
+        "signedInNote": "Nappikohtaisiin ohjeisiin sovelluksessa avaa <link>Aloitusopas</link>.",
+        "signedOutNote": "Onko sinulla jo tili? <link>Kirjaudu sisään</link> avataksesi työtilan. Sovelluksen Aloitusopas käsittelee yksityiskohtaiset UI-kierrokset kirjautumisen jälkeen."
       }
     },
     "support": {
@@ -2934,19 +4041,19 @@
         },
         "start": {
           "q": "Miten kannattaa aloittaa?",
-          "a": "Luo työtila oppimallesi kielelle, lisää muutama sana <vocabulary>Vocabulary</vocabulary>-osioon ja kokeile lyhyttä harjoitusta. Oppimistavasta kertoo <howToUse>Näin käytät</howToUse>. Kirjautuneena avaa sovelluksen <gettingStarted>Getting started</gettingStarted> -opas UI-kierrokseen."
+          "a": "Luo työtila oppimallesi kielelle, lisää muutama sana <vocabulary>Sanasto</vocabulary>-osioon ja kokeile lyhyttä harjoitusta. Oppimistavasta kertoo <howToUse>Näin käytät</howToUse>. Kirjautuneena avaa sovelluksen <gettingStarted>Aloitusopas</gettingStarted> UI-kierrokseen."
         },
         "account": {
           "q": "Miten vaihdan salasanan tai suljen tilin?",
-          "a": "Avaa <account>Account</account>. Voit päivittää salasanan jos käytät sähköpostikirjautumista, hallita Notoria Prota, viedä varmuuskopion tai poistaa tilin pysyvästi."
+          "a": "Avaa <account>Tili</account>. Voit päivittää salasanan jos käytät sähköpostikirjautumista, hallita Notoria Prota, viedä varmuuskopion tai poistaa tilin pysyvästi."
         },
         "pro": {
           "q": "Miten laskutus ja peruutus toimivat?",
-          "a": "Notoria Pro laskutetaan Stripen kautta. <account>Account</account>-sivulta voit päivittää, avata Stripe-asiakasportaalin maksutapoihin ja laskuihin, tai peruuttaa uusinnan."
+          "a": "Notoria Pro laskutetaan Stripen kautta. <account>Tili</account>-sivulta voit päivittää, avata Stripe-asiakasportaalin maksutapoihin ja laskuihin, tai peruuttaa uusinnan."
         },
         "proFeatures": {
           "q": "Mikä on ilmaista, ja mikä vaatii Notoria Pron?",
-          "a": "Arjen sanastoharjoittelu ja siihen liittyvät työkalut kuuluvat ilmaiseen suunnitelmaan. Osa tekoälytyökaluista, kuuntelu, puhuminen ja dokumenttivienti kuuluvat Notoria Prohon. Vertaa ja päivitä <account>Account</account>-sivulla."
+          "a": "Arjen sanastoharjoittelu ja siihen liittyvät työkalut kuuluvat ilmaiseen suunnitelmaan. Osa tekoälytyökaluista, kuuntelu, puhuminen ja dokumenttivienti kuuluvat Notoria Prohon. Vertaa ja päivitä <account>Tili</account>-sivulla."
         },
         "learning": {
           "q": "Miten Notorian oppimistoiminnot toimivat?",
@@ -2954,7 +4061,7 @@
         },
         "ai": {
           "q": "Voinko kytkeä tekoälyavun pois?",
-          "a": "Kyllä. Tekoälyasetukset ovat <settings>Settings</settings>-sivulla. Kun apu on pois päältä, sitä vaativat tekoälytyökalut pysyvät estettyinä."
+          "a": "Kyllä. Tekoälyasetukset ovat <settings>Asetukset</settings>-sivulla. Kun apu on pois päältä, sitä vaativat tekoälytyökalut pysyvät estettyinä."
         },
         "data": {
           "q": "Missä oppimissisältöni säilytetään?",
@@ -2962,7 +4069,7 @@
         },
         "backup": {
           "q": "Voinko viedä tai varmuuskopioida datani?",
-          "a": "Kyllä. <account>Account</account>-sivulta voit ladata JSON-varmuuskopion työtiloistasi ja oppimissisällöstä. Mediatiedostot linkitetään URL:lla, ei upoteta. Tietosuoja ja poisto: <privacy>Tietosuojaseloste</privacy>."
+          "a": "Kyllä. <account>Tili</account>-sivulta voit ladata JSON-varmuuskopion työtiloistasi ja oppimissisällöstä. Mediatiedostot linkitetään URL:lla, ei upoteta. Tietosuoja ja poisto: <privacy>Tietosuojaseloste</privacy>."
         }
       },
       "feedback": {

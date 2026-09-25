@@ -251,7 +251,7 @@ export function RichTextEditor({
     editorProps: {
       attributes: {
         class: cn(
-          "prose prose-neutral dark:prose-invert max-w-none break-words px-4 py-3 [overflow-wrap:anywhere] focus:outline-none",
+          "prose prose-neutral dark:prose-invert max-w-none break-words px-4 py-4 sm:px-5 sm:py-5 [overflow-wrap:anywhere] focus:outline-none",
           "prose-headings:font-heading prose-headings:font-bold prose-headings:tracking-tight",
           "prose-p:font-sans prose-p:leading-[1.7] prose-p:text-[1.05rem]",
           "prose-h1:text-[1.5rem] prose-h1:leading-[1.25]",
@@ -508,7 +508,7 @@ export function RichTextEditor({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-md border border-hairline-cloud bg-surface",
+        "overflow-hidden rounded-md border border-hairline-cloud bg-transparent",
         className,
       )}
     >
@@ -530,7 +530,7 @@ export function RichTextEditor({
         />
       </div>
       {editable && footerVisible && (
-        <div className="flex flex-col gap-1 border-t border-hairline-cloud bg-muted/30 px-3 py-2 font-mono text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-4">
+        <div className="flex flex-col gap-1 border-t border-hairline-cloud bg-transparent px-4 py-3.5 font-mono text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-4">
           <span>
             {words} words · {characters} characters
           </span>

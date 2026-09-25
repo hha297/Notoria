@@ -15,6 +15,7 @@ const labels: SearchLabels = {
       speaking: "Speaking",
       folder: "Folder",
       exercise: "Exercise",
+      inbox: "Capture",
     })[type],
   posGroup: (pos) => ({ noun: "Nouns", adjective: "Adjectives" }[pos] ?? pos),
   posSingular: (pos) => ({ noun: "Noun", adjective: "Adjective" }[pos] ?? pos),
@@ -132,6 +133,7 @@ describe("search result types", () => {
       "speaking",
       "folder",
       "exercise",
+      "inbox",
     ]);
   });
 });

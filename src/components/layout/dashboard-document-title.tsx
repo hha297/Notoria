@@ -63,6 +63,10 @@ export function DashboardDocumentTitle() {
       return tNav("speaking");
     }
 
+    if (pathname === "/coach" || pathname.startsWith("/coach/")) {
+      return tNav("coach");
+    }
+
     if (pathname === "/exercises/flashcard") return tFlashcards("title");
     if (pathname === "/exercises/fill-in-blank") {
       return tExercises("types.fill-in-blank.label");

@@ -1,8 +1,6 @@
 import { notFound } from "next/navigation";
 import { ListeningLessonView } from "@/components/listening/listening-lesson-view";
-import { ListeningLockedPage } from "@/components/listening/listening-locked";
 import { getListeningLesson } from "@/lib/actions/listening";
-import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { folderHref } from "@/lib/folders/paths";
 
 export const maxDuration = 300;
@@ -13,12 +11,6 @@ export default async function ListeningLessonPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const proAccess = await getCurrentProAccess();
-
-  if (!proAccess.hasProAccess) {
-    return <ListeningLockedPage />;
-  }
-
   const lesson = await getListeningLesson(id);
 
   if (!lesson) {

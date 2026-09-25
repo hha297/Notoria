@@ -361,11 +361,11 @@ function TheoryListRow({
         </p>
       </div>
 
-      <div className="flex shrink-0 items-center gap-1 sm:flex-col sm:items-end sm:gap-2 sm:pt-7">
+      <div className="flex min-w-0 flex-wrap items-center gap-1 max-sm:w-full sm:shrink-0 sm:flex-col sm:items-end sm:gap-2 sm:pt-7">
         <Link
           href={`/exercises/theory/${note.id}`}
           className={cn(
-            "inline-flex h-9 items-center gap-1.5 rounded-md px-3 text-sm font-semibold",
+            "inline-flex h-9 items-center gap-1.5 rounded-md px-3 text-sm font-semibold max-sm:flex-1 max-sm:justify-center",
             "bg-(--lesson-row-fg) text-(--lesson-row-on) transition-opacity hover:opacity-90",
             "focus-visible:ring-2 focus-visible:ring-(--lesson-row-fg)/40 focus-visible:outline-none",
           )}
@@ -375,7 +375,7 @@ function TheoryListRow({
         </Link>
         <Link
           href={`/theory/${note.id}`}
-          className="inline-flex h-9 items-center px-3 text-sm font-semibold text-muted-foreground transition-colors hover:text-(--lesson-row-fg) focus-visible:ring-2 focus-visible:ring-(--lesson-row-fg)/40 focus-visible:outline-none"
+          className="inline-flex h-9 items-center px-3 text-sm font-semibold text-muted-foreground transition-colors hover:text-(--lesson-row-fg) focus-visible:ring-2 focus-visible:ring-(--lesson-row-fg)/40 focus-visible:outline-none max-sm:flex-1 max-sm:justify-center"
         >
           {viewLabel}
         </Link>

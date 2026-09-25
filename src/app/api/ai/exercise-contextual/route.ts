@@ -1,14 +1,11 @@
 import { NextResponse } from "next/server";
-import { guardAiRoute } from "@/lib/ai/guard-route";
+import { guardMeteredAi, settleMeteredAi } from "@/lib/ai/guard-route";
 import { generateContextualExercises } from "@/lib/exercises/contextual-ai";
 import { contextualAiRequestSchema } from "@/lib/exercises/contextual-ai-types";
 
 export const runtime = "nodejs";
 
 export async function POST(request: Request) {
-  const access = await guardAiRoute();
-  if (!access.ok) return access.response;
-
   let body: unknown;
   try {
     body = await request.json();
@@ -25,10 +22,15 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, code: "AI_INVALID_REQUEST" }, { status: 400 });
   }
 
+  const access = await guardMeteredAi("ai_exercise");
+  if (!access.ok) return access.response;
+
   try {
     const exercises = await generateContextualExercises(parsed.data);
+    await settleMeteredAi(access, true);
     return NextResponse.json({ ok: true, exercises });
   } catch (error) {
+    await settleMeteredAi(access, false);
     const message = error instanceof Error ? error.message : "";
     if (message === "OPENAI_NOT_CONFIGURED" || message === "AI_INVALID_RESPONSE") {
       console.error("contextual exercise AI failed", message);

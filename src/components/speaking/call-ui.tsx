@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { StreamTheme, useCall } from "@stream-io/video-react-sdk";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
@@ -11,6 +11,7 @@ import {
   connectSpeakingTutor,
   endSpeakingSession,
 } from "@/lib/actions/speaking";
+import { SPEAKING_MAX_SESSION_SECONDS } from "@/lib/billing/plans";
 import { isSpeakingErrorCode } from "@/lib/speaking/errors";
 
 type CallUIProps = {
@@ -73,6 +74,17 @@ export function CallUI({
       );
     }
   }
+
+  // Fair-use: one quota unit = one session; cap realtime duration.
+  useEffect(() => {
+    if (show !== "call") return;
+    const timer = window.setTimeout(() => {
+      toast.message(t("sessionLimitReached"));
+      void handleLeave();
+    }, SPEAKING_MAX_SESSION_SECONDS * 1000);
+    return () => window.clearTimeout(timer);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [show]);
 
   return (
     <StreamTheme className="h-full">

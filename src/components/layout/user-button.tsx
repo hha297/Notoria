@@ -25,6 +25,7 @@ type UserButtonProps = {
   email: string;
   image?: string | null;
   isPro?: boolean;
+  plan?: "free" | "pro" | "premium";
   onNavigate?: () => void;
   active?: boolean;
 };
@@ -34,12 +35,20 @@ export function UserButton({
   email,
   image,
   isPro = false,
+  plan = "free",
   onNavigate,
   active = false,
 }: UserButtonProps) {
   const router = useRouter();
   const t = useTranslations("auth");
   const tb = useTranslations("billing");
+
+  const planBadge =
+    plan === "premium"
+      ? tb("premiumBadge")
+      : plan === "pro" || isPro
+        ? tb("proBadge")
+        : null;
 
   async function handleSignOut() {
     onNavigate?.();
@@ -64,9 +73,9 @@ export function UserButton({
         <span className="min-w-0 flex-1">
           <span className="flex min-w-0 items-center gap-1.5">
             <span className="block truncate font-medium text-ink">{name}</span>
-            {isPro ? (
+            {planBadge ? (
               <Badge variant="pro" className="h-4 px-1.5 text-[10px]">
-                {tb("proBadge")}
+                {planBadge}
               </Badge>
             ) : null}
           </span>
@@ -86,9 +95,9 @@ export function UserButton({
             <div className="flex flex-col gap-0.5">
               <span className="flex items-center gap-1.5">
                 <span className="font-medium text-ink">{name}</span>
-                {isPro ? (
+                {planBadge ? (
                   <Badge variant="pro" className="h-4 px-1.5 text-[10px]">
-                    {tb("proBadge")}
+                    {planBadge}
                   </Badge>
                 ) : null}
               </span>

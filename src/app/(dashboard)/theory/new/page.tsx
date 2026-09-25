@@ -10,13 +10,14 @@ import { getActiveWorkspace } from "@/lib/workspace";
 export default async function NewTheoryPage({
   searchParams,
 }: {
-  searchParams: Promise<{ folder?: string }>;
+  searchParams: Promise<{ folder?: string; prefill?: string; fromInbox?: string }>;
 }) {
   const t = await getTranslations("theory");
   const workspace = await getActiveWorkspace();
-  const { folder } = await searchParams;
+  const { folder, prefill, fromInbox } = await searchParams;
   const folderId = await resolveFolderId(folder, "theory");
   const listHref = folderHref("theory", folderId);
+  const fromInboxId = fromInbox?.trim() || undefined;
 
   if (!workspace) {
     return (
@@ -35,6 +36,8 @@ export default async function NewTheoryPage({
       folderId={folderId}
       language={workspace.language}
       listHref={listHref}
+      initialTitle={prefill?.trim() || null}
+      fromInboxId={fromInboxId}
     />
   );
 }

@@ -133,7 +133,7 @@ export function MultiFilterSelect({
       <DropdownMenuTrigger
         className={cn(
           buttonVariants({ variant: "outline" }),
-          "h-10 w-full min-w-0 justify-between gap-1.5 border-input bg-surface-elevated px-2.5 font-normal normal-case tracking-normal shadow-none hover:bg-muted",
+          "h-10 w-full min-w-0 justify-between gap-1.5 border-input px-2.5 font-normal normal-case tracking-normal shadow-none",
           values.length > 0 && "border-accent-lime/40",
           triggerClassName,
         )}
@@ -143,11 +143,14 @@ export function MultiFilterSelect({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align={align}
-        className={cn("max-h-80 min-w-[var(--anchor-width)]", contentClassName)}
+        className={cn(
+          "max-h-80 min-w-[var(--anchor-width)] max-sm:max-w-[calc(100vw-2rem)] max-sm:min-w-0",
+          contentClassName,
+        )}
       >
         {searchable ? (
           <div
-            className="sticky top-0 z-10 -mx-1 mb-1 border-b border-hairline-cloud bg-popover px-1.5 pb-1.5 pt-0.5"
+            className="sticky top-0 z-10 -mx-1 mb-1 border-b border-hairline-cloud menu-surface px-1.5 pb-1.5 pt-0.5"
             onKeyDown={(event) => event.stopPropagation()}
             onPointerDown={(event) => event.stopPropagation()}
           >
@@ -162,7 +165,7 @@ export function MultiFilterSelect({
                 placeholder={
                   searchPlaceholder ?? tSearch("placeholder")
                 }
-                className="h-8 border-input bg-surface-elevated pl-7 text-sm shadow-none"
+                className="h-8 border-input pl-7 text-sm shadow-none"
                 autoFocus
               />
             </div>

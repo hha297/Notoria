@@ -10,6 +10,7 @@ import { LockedFeatureButton } from "@/components/billing/locked-feature-button"
 import { RichTextContent } from "@/components/editor/rich-text-content";
 import { DescriptionContent } from "@/components/form/description-content";
 import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
+import { ReviewLaterButton } from "@/components/review-later/review-later-button";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { Button } from "@/components/ui/button";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
@@ -30,6 +31,7 @@ type WritingPreviewProps = {
   description?: string | null;
   content: unknown;
   backHref: string;
+  reviewLaterMarked?: boolean;
 };
 
 export function WritingPreview({
@@ -38,6 +40,7 @@ export function WritingPreview({
   description,
   content,
   backHref,
+  reviewLaterMarked = false,
 }: WritingPreviewProps) {
   const router = useRouter();
   const t = useTranslations("writing");
@@ -122,6 +125,12 @@ export function WritingPreview({
             {t("backToList")}
           </Link>
           <div className={mx(detailStyles, "actions")}>
+            <ReviewLaterButton
+              entityType="writing"
+              entityId={id}
+              titleSnapshot={title}
+              marked={reviewLaterMarked}
+            />
             <LockedFeatureButton
               type="button"
               variant="outline"
@@ -148,7 +157,11 @@ export function WritingPreview({
 
         <section className={mx(detailStyles, "hero")}>
           <p className={mx(detailStyles, "kicker")}>
-            {isQuestionSet ? t("modes.questionSet") : t("modes.richDocument")}
+            {meta.kind === "learning_note"
+              ? t("learningNote.badge")
+              : isQuestionSet
+                ? t("modes.questionSet")
+                : t("modes.richDocument")}
           </p>
           <div className={mx(detailStyles, "titleRow")}>
             <h1 className={mx(detailStyles, "title wrap-break-word")}>

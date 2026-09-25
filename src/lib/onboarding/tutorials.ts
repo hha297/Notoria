@@ -1,4 +1,5 @@
 export const TUTORIAL_SECTIONS = [
+  "inbox",
   "vocabulary",
   "vocabularyAdd",
   "theory",
@@ -47,6 +48,18 @@ export type TutorialDefinition = {
  * to support another section without changing the tutorial UI.
  */
 export const SECTION_TUTORIALS = {
+  inbox: {
+    id: "inbox",
+    ctaHref: "/inbox",
+    steps: [
+      { id: "capture", target: "inbox-capture" },
+      { id: "filters", target: "inbox-filters" },
+      { id: "search", target: "inbox-search" },
+      { id: "sort", target: "inbox-sort" },
+      { id: "list", target: "inbox-list" },
+      { id: "process", target: "inbox-process" },
+    ],
+  },
   vocabulary: {
     id: "vocabulary",
     ctaHref: "/vocabulary/new",

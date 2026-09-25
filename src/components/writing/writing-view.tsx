@@ -1,11 +1,14 @@
 "use client";
 
-import { Plus } from "lucide-react";
+import { useState } from "react";
+import { Plus, Upload } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
+import { ContentImportDialog } from "@/components/content-import/content-import-dialog";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { FolderWorkspace } from "@/components/folders/folder-workspace";
+import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { NewFolderButton } from "@/components/folders/new-folder-button";
 import { LinkButton } from "@/components/ui/link-button";
 import { WritingTable } from "@/components/writing/writing-table";
@@ -26,7 +29,12 @@ export function WritingView({
   workspaceId,
 }: WritingViewProps) {
   const t = useTranslations("writing");
+  const tImport = useTranslations("contentImport");
+  const [importOpen, setImportOpen] = useState(false);
   const createHref = sectionCreateHref("writing", currentFolderId);
+  const learningNoteHref = createHref.includes("?")
+    ? `${createHref}&kind=learning_note`
+    : `${createHref}?kind=learning_note`;
   const documentsQuery = useQuery(writingListQueryOptions(workspaceId));
   const foldersQuery = useQuery(folderListQueryOptions(workspaceId, "writing"));
   const documents = documentsQuery.data ?? [];
@@ -57,6 +65,22 @@ export function WritingView({
               <div className="writing-hero-actions">
                 <ShowTutorialButton section="writing" />
                 <NewFolderButton variant="outline" size="sm" />
+                <LockedFeatureButton
+                  type="button"
+                  variant="outline"
+                  size="sm"
+                  className="route-quiet-action"
+                  data-route-action="writing"
+                  feature="content_import"
+                  icon={<Upload className="size-4" />}
+                  onClick={() => setImportOpen(true)}
+                >
+                  {tImport("button")}
+                </LockedFeatureButton>
+                <LinkButton href={learningNoteHref} variant="outline">
+                  <Plus className="size-4" />
+                  {t("learningNote.create")}
+                </LinkButton>
                 <LinkButton href={createHref}>
                   <Plus className="size-4" />
                   {t("createFirst")}
@@ -69,6 +93,12 @@ export function WritingView({
             </div>
           </div>
         </FolderWorkspace>
+        <ContentImportDialog
+          open={importOpen}
+          onOpenChange={setImportOpen}
+          target="writing"
+          workspaceId={workspaceId}
+        />
       </PageShell>
     );
   }

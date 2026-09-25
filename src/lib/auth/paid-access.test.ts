@@ -4,7 +4,7 @@ import { hasProAccess, isPaidDocumentFormat } from "@/lib/auth/paid-access";
 function user(
   overrides: Partial<{
     role: "USER" | "ADMIN";
-    subscriptionPlan: "free" | "pro";
+    subscriptionPlan: "free" | "pro" | "premium";
     subscriptionStatus: string | null;
   }> = {},
 ) {
@@ -27,6 +27,22 @@ describe("paid feature access", () => {
         user({ subscriptionPlan: "pro", subscriptionStatus: "active" }),
       ),
     ).toBe(true);
+  });
+
+  it("grants access to active Premium subscribers", () => {
+    expect(
+      hasProAccess(
+        user({ subscriptionPlan: "premium", subscriptionStatus: "active" }),
+      ),
+    ).toBe(true);
+  });
+
+  it("locks canceled Pro subscribers", () => {
+    expect(
+      hasProAccess(
+        user({ subscriptionPlan: "pro", subscriptionStatus: "canceled" }),
+      ),
+    ).toBe(false);
   });
 
   it("locks free users", () => {

@@ -1,9 +1,7 @@
 import { getTranslations } from "next-intl/server";
 import { redirect } from "next/navigation";
-import { SpeakingLockedPage } from "@/components/speaking/speaking-locked";
 import { CallProvider } from "@/components/speaking/call-provider";
 import { getSpeakingSession } from "@/lib/actions/speaking";
-import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { isSpeakingJoinable } from "@/lib/speaking/types";
 
 export const maxDuration = 300;
@@ -19,16 +17,6 @@ export default async function SpeakingCallPage({
   params: Promise<{ id: string }>;
 }) {
   const { id } = await params;
-  const proAccess = await getCurrentProAccess();
-
-  if (!proAccess.hasProAccess) {
-    return (
-      <div className="bg-background text-ink">
-        <SpeakingLockedPage />
-      </div>
-    );
-  }
-
   const session = await getSpeakingSession(id);
   if (!session) {
     redirect("/speaking");

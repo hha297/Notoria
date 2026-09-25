@@ -6,7 +6,6 @@ import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Loader2, RotateCcw, Sparkles } from "lucide-react";
 import { useProAccess } from "@/components/billing/pro-access-provider";
-import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
@@ -25,7 +24,6 @@ import {
 import type { TheoryExercise, TheoryExerciseSession } from "@/lib/theory-exercises/types";
 import featureStyles from "@/components/style/exercises/theory.module.css";
 import { mx } from "@/lib/css-module";
-import { cn } from "@/lib/utils";
 
 type TheoryExerciseSessionViewProps = {
   session: TheoryExerciseSession;
@@ -41,6 +39,7 @@ export function TheoryExerciseSessionView({
   practiceOnly = false,
 }: TheoryExerciseSessionViewProps) {
   const t = useTranslations("exercises.theory");
+  const tBilling = useTranslations("billing");
   const tSession = useTranslations("exercises.session");
   const { hasProAccess, openUpgrade } = useProAccess();
   const [items, setItems] = useState<TheoryExercise[]>(() => shuffleArray(session.items));
@@ -82,10 +81,6 @@ export function TheoryExerciseSessionView({
   const uiLocale = useLocale();
 
   const generateWithAi = useCallback(async () => {
-    if (!hasProAccess) {
-      openUpgrade();
-      return;
-    }
     setStage("generating", { title: session.theoryTitle });
     try {
       const response = await fetch("/api/ai/theory-exercise", {
@@ -103,6 +98,10 @@ export function TheoryExerciseSessionView({
         exercises?: TheoryExercise[];
       };
       if (!response.ok || !result.ok) {
+        if (result.code === "AI_QUOTA_EXCEEDED") {
+          fail(tBilling("quotaExceeded"));
+          return;
+        }
         if (result.code === "AI_FORBIDDEN") {
           fail(t("aiForbidden"));
           openUpgrade();
@@ -131,7 +130,6 @@ export function TheoryExerciseSessionView({
   }, [
     completeProcessing,
     fail,
-    hasProAccess,
     openUpgrade,
     resetProcessing,
     restart,
@@ -139,6 +137,7 @@ export function TheoryExerciseSessionView({
     session.theoryTitle,
     setStage,
     t,
+    tBilling,
     uiLocale,
   ]);
 
@@ -207,7 +206,7 @@ export function TheoryExerciseSessionView({
           practiceReady={items.length > 0}
           generating={generating}
           generateError={generateError}
-          practiceLocked={!hasProAccess}
+          practiceLocked={false}
           onQuickReview={() => setPhase("quick")}
           onSkipToPractice={goToPractice}
           onStartPractice={goToPractice}
@@ -263,18 +262,16 @@ export function TheoryExerciseSessionView({
               {t("needAiTitle")}
             </p>
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
-              {hasProAccess ? t("needAiDescription") : t("needAiProDescription")}
+              {t("needAiDescription")}
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-2">
               <Button
                 type="button"
                 onClick={generateWithAi}
                 disabled={generating}
-                aria-disabled={!hasProAccess || undefined}
-                className={cn(!hasProAccess && lockedFeatureClassName)}
               >
                 <Sparkles className="size-4" />
-                {hasProAccess ? t("generateAi") : t("unlockAi")}
+                {t("generateAi")}
               </Button>
               <LinkButton href={`/theory/${session.theoryId}/edit`} variant="outline">
                 {t("editTheory")}
@@ -328,7 +325,7 @@ export function TheoryExerciseSessionView({
                 label: t("generateMore"),
                 onClick: () => void generateWithAi(),
                 loading: generating,
-                locked: !hasProAccess,
+                locked: false,
               }
           }
         />
@@ -340,7 +337,7 @@ export function TheoryExerciseSessionView({
     <div
       data-exercise="theory"
       data-theory-category={session.category}
-      className={mx(featureStyles, "theory-practice-stage -mx-4 space-y-8 px-4 py-7 sm:-mx-6 sm:space-y-10 sm:px-6 sm:py-9")}
+      className={mx(featureStyles, "theory-practice-stage -mx-4 space-y-5 px-4 py-4 sm:-mx-6 sm:space-y-10 sm:px-6 sm:py-9")}
       key={`${round}-${current?.id ?? index}`}
     >
       <div className="space-y-4">
@@ -381,8 +378,6 @@ export function TheoryExerciseSessionView({
                 size="sm"
                 onClick={() => void generateWithAi()}
                 disabled={generating}
-                aria-disabled={!hasProAccess || undefined}
-                className={cn(!hasProAccess && lockedFeatureClassName)}
               >
                 {generating ? (
                   <Loader2 className="size-4 animate-spin" />

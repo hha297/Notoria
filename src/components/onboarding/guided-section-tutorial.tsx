@@ -5,6 +5,7 @@ import {
   BookOpen,
   Dumbbell,
   Headphones,
+  Inbox,
   Languages,
   PenLine,
   Video,
@@ -42,6 +43,7 @@ import {
 const EASE = [0.25, 0.1, 0.25, 1] as const;
 
 const SECTION_ICONS: Record<TutorialSectionId, LucideIcon> = {
+  inbox: Inbox,
   vocabulary: Languages,
   vocabularyAdd: Languages,
   theory: BookOpen,
@@ -187,7 +189,7 @@ export function GuidedSectionTutorial({
         transition={{ duration: 0.22, ease: EASE }}
         className={mx(
           styles,
-          "tutorial-sheet fixed z-[191] w-[min(100vw-2rem,24rem)]",
+          "tutorial-sheet fixed z-[191] w-[min(100dvw-2rem,24rem)] max-w-[calc(100%-1rem)]",
           guided ? "" : "max-w-md",
         )}
         style={{ top: position.top, left: position.left }}

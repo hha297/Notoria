@@ -17,6 +17,7 @@ import { useMutationLock } from "@/hooks/use-mutation-lock";
 import libraryStyles from "@/components/style/theory/library.module.css";
 import { mx } from "@/lib/css-module";
 import { createTheoryNote, updateTheoryNote } from "@/lib/actions/theory";
+import { completeStudyInboxItem } from "@/lib/actions/study-inbox";
 import { afterEditorHydration } from "@/lib/editor/hydration";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
 import { useQueryClient } from "@tanstack/react-query";
@@ -46,6 +47,9 @@ type TheoryEditorProps = {
   listHref?: string;
   folderId?: string | null;
   language?: string;
+  initialTitle?: string | null;
+  /** When set, mark this inbox item processed after a successful create. */
+  fromInboxId?: string;
   initialData?: {
     id: string;
     title: string;
@@ -60,6 +64,8 @@ export function TheoryEditor({
   listHref = "/theory",
   folderId = null,
   language,
+  initialTitle = null,
+  fromInboxId,
   initialData,
 }: TheoryEditorProps) {
   const router = useRouter();
@@ -71,7 +77,9 @@ export function TheoryEditor({
     [initialData?.content],
   );
 
-  const [title, setTitle] = useState(initialData?.title ?? "");
+  const [title, setTitle] = useState(
+    initialData?.title ?? initialTitle?.trim() ?? "",
+  );
   const [category, setCategory] = useState(parsed.category);
   const [description, setDescription] = useState(parsed.description);
   const [doc, setDoc] = useState<JSONContent>(parsed.doc);
@@ -81,7 +89,7 @@ export function TheoryEditor({
 
   const [baseline, setBaseline] = useState<TheoryEditorSnapshot>(() =>
     buildTheoryEditorSnapshot({
-      title: initialData?.title ?? "",
+      title: initialData?.title ?? initialTitle?.trim() ?? "",
       category: parsed.category,
       description: parsed.description,
       doc: parsed.doc,
@@ -90,7 +98,7 @@ export function TheoryEditor({
   const baselineRef = useRef(baseline);
   /** Original non-editor fields — TipTap hydration must not treat title edits as clean. */
   const originalFieldsRef = useRef({
-    title: initialData?.title ?? "",
+    title: initialData?.title ?? initialTitle?.trim() ?? "",
     category: parsed.category,
     description: parsed.description,
   });
@@ -318,6 +326,17 @@ export function TheoryEditor({
           release();
           return;
         }
+        if (fromInboxId) {
+          try {
+            await completeStudyInboxItem({
+              id: fromInboxId,
+              linkedEntityType: "theory",
+              linkedEntityId: created.id,
+            });
+          } catch {
+            // Create already succeeded; leave inbox item for a later retry.
+          }
+        }
         void queryClient.invalidateQueries({ queryKey: ["theory"] });
         try {
           router.prefetch("/theory");
@@ -466,6 +485,7 @@ export function TheoryEditor({
         <div className="space-y-2">
           <Label>{t("content")}</Label>
           <RichTextEditor
+            className="sheet-content-tiptap"
             content={doc}
             placeholder={t("contentPlaceholder")}
             language={language}

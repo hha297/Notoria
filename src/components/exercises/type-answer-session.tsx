@@ -49,8 +49,9 @@ export function TypeAnswerSession({
   const t = useTranslations("exercises.typeAnswer");
   const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
+  const tBilling = useTranslations("billing");
   const uiLocale = useLocale();
-  const { hasProAccess, openUpgrade } = useProAccess();
+  const { openUpgrade } = useProAccess();
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [studyMode, setStudyMode] =
     useState<TypeAnswerStudyMode>("word-to-meaning");
@@ -118,10 +119,6 @@ export function TypeAnswerSession({
   ]);
 
   const startContextualSession = useCallback(async () => {
-    if (!hasProAccess) {
-      openUpgrade();
-      return;
-    }
     if (filteredWords.length < 2) return;
 
     const prefs = commitAndBeginNext();
@@ -167,6 +164,10 @@ export function TypeAnswerSession({
       });
 
       if (!result.ok) {
+        if (result.code === "AI_QUOTA_EXCEEDED") {
+          fail(tBilling("quotaExceeded"));
+          return;
+        }
         if (result.code === "AI_FORBIDDEN") {
           fail(tAi("forbidden"));
           openUpgrade();
@@ -209,13 +210,13 @@ export function TypeAnswerSession({
     difficulty,
     fail,
     filteredWords,
-    hasProAccess,
     language,
     openUpgrade,
     resetProcessing,
     restart,
     setStage,
     tAi,
+    tBilling,
     uiLocale,
   ]);
 
@@ -238,10 +239,6 @@ export function TypeAnswerSession({
   }, [startSession, workspaceId]);
 
   const handleStudyModeChange = (mode: string) => {
-    if (mode === "contextual" && !hasProAccess) {
-      openUpgrade();
-      return;
-    }
     if (
       mode === "word-to-meaning" ||
       mode === "meaning-to-word" ||
@@ -297,7 +294,7 @@ export function TypeAnswerSession({
       onStudyModeChange={handleStudyModeChange}
       showStudyMode
       studyModeVariant="with-contextual"
-      contextualPro={!hasProAccess}
+      contextualPro={false}
     />
   );
 
@@ -428,9 +425,7 @@ export function TypeAnswerSession({
             {t("contextualEmptyTitle")}
           </p>
           <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
-            {hasProAccess
-              ? t("contextualEmptyDescription")
-              : t("contextualProDescription")}
+            {t("contextualEmptyDescription")}
           </p>
           <Button
             type="button"
@@ -439,7 +434,7 @@ export function TypeAnswerSession({
             disabled={generating}
           >
             <Sparkles className="size-4" />
-            {hasProAccess ? tAi("generate") : t("unlockContextual")}
+            {tAi("generate")}
           </Button>
         </div>
       ) : null}

@@ -5,6 +5,7 @@ import { listeningSearchSource } from "@/lib/search/sources/listening";
 import { speakingSearchSource } from "@/lib/search/sources/speaking";
 import { folderSearchSource } from "@/lib/search/sources/folders";
 import { exerciseSearchSource } from "@/lib/search/sources/exercises";
+import { inboxSearchSource } from "@/lib/search/sources/inbox";
 import type { SearchSource } from "@/lib/search/types";
 
 /**
@@ -19,5 +20,6 @@ export const SEARCH_SOURCES: readonly SearchSource[] = [
   speakingSearchSource,
   folderSearchSource,
   exerciseSearchSource,
+  inboxSearchSource,
 ];
 

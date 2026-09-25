@@ -99,19 +99,25 @@ export function VocabularyFiltersBar({
               const next = value[0];
               if (next) onStudyModeChange(next);
             }}
-            className="flex w-full flex-wrap gap-2"
+            className="flex w-full flex-col gap-2 sm:flex-row sm:flex-wrap"
           >
-            <ToggleGroupItem value="word-to-meaning" className="flex-1 cursor-pointer">
+            <ToggleGroupItem
+              value="word-to-meaning"
+              className="h-auto min-h-8 w-full justify-center whitespace-normal px-3 py-2 text-center sm:flex-1"
+            >
               {tFlash("modes.wordToMeaning")}
             </ToggleGroupItem>
-            <ToggleGroupItem value="meaning-to-word" className="flex-1 cursor-pointer">
+            <ToggleGroupItem
+              value="meaning-to-word"
+              className="h-auto min-h-8 w-full justify-center whitespace-normal px-3 py-2 text-center sm:flex-1"
+            >
               {tFlash("modes.meaningToWord")}
             </ToggleGroupItem>
             {studyModeVariant === "with-contextual" ? (
               <ToggleGroupItem
                 value="contextual"
                 className={cn(
-                  "flex-1 cursor-pointer gap-1.5",
+                  "h-auto min-h-8 w-full justify-center gap-1.5 whitespace-normal px-3 py-2 text-center sm:flex-1",
                   contextualPro && "data-[state=on]:bg-accent-lime/20",
                 )}
               >
@@ -126,7 +132,10 @@ export function VocabularyFiltersBar({
                 ) : null}
               </ToggleGroupItem>
             ) : (
-              <ToggleGroupItem value="mixed" className="flex-1 cursor-pointer">
+              <ToggleGroupItem
+                value="mixed"
+                className="h-auto min-h-8 w-full justify-center whitespace-normal px-3 py-2 text-center sm:flex-1"
+              >
                 {tFlash("modes.mixed")}
               </ToggleGroupItem>
             )}

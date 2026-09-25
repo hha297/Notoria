@@ -84,11 +84,7 @@ export function DescriptionField({
       <div
         id={id}
         aria-invalid={ariaInvalid || overLimit || undefined}
-        className={cn(
-          "rounded-lg border border-input bg-background transition-colors focus-within:border-ring focus-within:ring-3 focus-within:ring-ring/50",
-          (ariaInvalid || overLimit) &&
-            "border-destructive focus-within:border-destructive focus-within:ring-destructive/20",
-        )}
+        className="sheet-description-editor"
       >
         <RichTextEditor
           content={doc}

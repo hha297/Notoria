@@ -87,7 +87,7 @@ export function AiProcessingProgress({
 
       <div className="space-y-2">
         <Progress value={isError ? state.progress : state.progress} />
-        <div className="flex items-center justify-between gap-3 text-sm">
+        <div className="flex flex-col gap-1 text-sm sm:flex-row sm:items-center sm:justify-between sm:gap-3">
           <span className="font-medium tabular-nums text-ink">
             {Math.round(state.progress)}%
           </span>

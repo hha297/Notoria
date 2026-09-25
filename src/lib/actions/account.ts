@@ -24,6 +24,7 @@ import {
 import { getStripeClient } from "@/lib/stripe/client";
 import { isStripeConfigured } from "@/lib/stripe/config";
 import { toBillingState } from "@/lib/stripe/pro";
+import { reconcileUserSubscription } from "@/lib/stripe/subscription";
 import { DELETE_ACCOUNT_CONFIRMATION } from "@/lib/account/constants";
 
 const MAX_AVATAR_SIZE = 5 * 1024 * 1024;
@@ -56,6 +57,19 @@ const updateNameSchema = z.object({
 export async function getAccountUser() {
   const userId = await getCurrentUserId();
 
+  try {
+    await reconcileUserSubscription(userId);
+  } catch (error) {
+    console.error("Stripe subscription reconcile failed", {
+      userId,
+      message: error instanceof Error ? error.message : String(error),
+      code:
+        error && typeof error === "object" && "code" in error
+          ? (error as { code?: string }).code
+          : undefined,
+    });
+  }
+
   const user = await db.query.users.findFirst({
     where: eq(users.id, userId),
     columns: {
@@ -64,10 +78,14 @@ export async function getAccountUser() {
       email: true,
       image: true,
       passwordHash: true,
+      role: true,
       subscriptionPlan: true,
       subscriptionStatus: true,
       stripeCustomerId: true,
       stripeCurrentPeriodEnd: true,
+      stripeCancelAtPeriodEnd: true,
+      scheduledSubscriptionPlan: true,
+      introOfferUsedAt: true,
     },
   });
 
@@ -81,7 +99,7 @@ export async function getAccountUser() {
     email: user.email,
     image: user.image,
     passwordHash: user.passwordHash,
-    billing: toBillingState(user),
+    billing: await toBillingState(user),
   };
 }
 
@@ -430,6 +448,7 @@ export async function exportAccountBackup() {
 
   return {
     version: 1 as const,
+    format: "notoria-account-backup" as const,
     exportedAt: new Date().toISOString(),
     app: "notoria",
     account: {
@@ -501,6 +520,7 @@ export async function exportAccountBackup() {
       title: lesson.title,
       originalFilename: lesson.originalFilename,
       mediaUrl: lesson.cloudinaryUrl,
+      mediaPublicId: lesson.cloudinaryPublicId,
       mediaType: lesson.mediaType,
       format: lesson.format,
       duration: lesson.duration,
@@ -542,7 +562,8 @@ export async function exportAccountBackup() {
     })),
     notes: [
       "Media files (listening audio/video, speaking recordings, profile photo) are referenced by URL when available but are not embedded in this JSON file.",
-      "This backup is for personal safekeeping. Importing it back into Notoria is not supported yet.",
+      "Import restores learning data only. Account name, email, login, and subscription are never changed by a backup import.",
+      "Writing documents are included under exercises with type WRITING.",
     ],
   };
 }

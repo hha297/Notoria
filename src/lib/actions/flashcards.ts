@@ -1,6 +1,6 @@
 "use server";
 
-import { and, asc, desc, eq, inArray } from "drizzle-orm";
+import { and, asc, desc, eq, gte, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import {
@@ -91,7 +91,9 @@ function computeNextProgress(
   }
 }
 
-export async function getFlashcardWords(): Promise<FlashcardWord[]> {
+export async function getFlashcardWords(params?: {
+  focus?: "weak" | "due";
+}): Promise<FlashcardWord[]> {
   const userId = await getCurrentUserId();
   const workspace = await getActiveWorkspace();
 
@@ -115,7 +117,7 @@ export async function getFlashcardWords(): Promise<FlashcardWord[]> {
         eq(flashcardProgress.userId, userId),
         eq(flashcardProgress.workspaceId, workspace.id),
       ),
-      columns: { wordId: true, nextReviewAt: true },
+      columns: { wordId: true, nextReviewAt: true, lastRating: true },
     }),
   ]);
 
@@ -123,16 +125,53 @@ export async function getFlashcardWords(): Promise<FlashcardWord[]> {
   const nextReviewByWordId = new Map(
     progressRows.map((row) => [row.wordId, row.nextReviewAt] as const),
   );
+  const weakWordIds = new Set(
+    progressRows
+      .filter((row) => row.lastRating === "AGAIN" || row.lastRating === "HARD")
+      .map((row) => row.wordId),
+  );
+
+  // Recent again/hard reviews also count as weak for focus mode
+  if (params?.focus === "weak") {
+    const since = new Date();
+    since.setUTCHours(0, 0, 0, 0);
+    since.setUTCDate(since.getUTCDate() - 6);
+    const recentWeak = await db
+      .select({ wordId: flashcardReviews.wordId })
+      .from(flashcardReviews)
+      .where(
+        and(
+          eq(flashcardReviews.userId, userId),
+          eq(flashcardReviews.workspaceId, workspace.id),
+          gte(flashcardReviews.createdAt, since),
+          inArray(flashcardReviews.rating, ["AGAIN", "HARD"]),
+        ),
+      )
+      .limit(80);
+    for (const row of recentWeak) weakWordIds.add(row.wordId);
+  }
 
   const isDue = (wordId: string) => {
     const nextReviewAt = nextReviewByWordId.get(wordId);
     return nextReviewAt == null || nextReviewAt.getTime() <= now;
   };
 
-  // Due first (already newest→oldest), then not-due (also newest→oldest).
-  const dueIds = wordIds.filter((row) => isDue(row.id)).map((row) => row.id);
-  const laterIds = wordIds.filter((row) => !isDue(row.id)).map((row) => row.id);
-  const selectedIds = [...dueIds, ...laterIds].slice(0, PRACTICE_DECK_LIMIT);
+  let orderedIds: string[];
+  if (params?.focus === "weak") {
+    const weakOrdered = wordIds
+      .filter((row) => weakWordIds.has(row.id))
+      .map((row) => row.id);
+    orderedIds =
+      weakOrdered.length > 0
+        ? weakOrdered
+        : wordIds.filter((row) => isDue(row.id)).map((row) => row.id);
+  } else {
+    const dueIds = wordIds.filter((row) => isDue(row.id)).map((row) => row.id);
+    const laterIds = wordIds.filter((row) => !isDue(row.id)).map((row) => row.id);
+    orderedIds = [...dueIds, ...laterIds];
+  }
+
+  const selectedIds = orderedIds.slice(0, PRACTICE_DECK_LIMIT);
 
   if (selectedIds.length === 0) {
     return [];

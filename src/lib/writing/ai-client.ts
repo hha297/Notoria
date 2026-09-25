@@ -7,7 +7,8 @@ export type WritingAiClientFailure = {
     | "AI_DISABLED"
     | "AI_UNAVAILABLE"
     | "AI_INVALID_REQUEST"
-    | "AI_EMPTY";
+    | "AI_EMPTY"
+    | "AI_QUOTA_EXCEEDED";
 };
 
 export type WritingAiClientResult =
@@ -46,9 +47,11 @@ export async function requestWritingAi(input: {
         code:
           payload && "code" in payload && payload.code
             ? payload.code
-            : response.status === 403 || response.status === 401
-              ? "AI_FORBIDDEN"
-              : "AI_UNAVAILABLE",
+            : response.status === 402
+              ? "AI_QUOTA_EXCEEDED"
+              : response.status === 403 || response.status === 401
+                ? "AI_FORBIDDEN"
+                : "AI_UNAVAILABLE",
       };
     }
 

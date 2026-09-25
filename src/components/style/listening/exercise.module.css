@@ -49,8 +49,18 @@
   color: var(--ink);
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space:nowrap;
+  white-space: nowrap;
   max-width: min(100%, 22rem);
+}
+
+@media (max-width: 639px) {
+  .headerTitle {
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    max-width: 100%;
+    line-height: 1.3;
+  }
 }
 
 .headerActions {
@@ -229,7 +239,8 @@
 
 .mediaDock {
   position: sticky;
-  top: 0.5rem;
+  /* Clear studio chrome (tracks 1-row / 2-row height) */
+  top: var(--studio-chrome-offset, 3.5rem);
   z-index: 12;
 }
 

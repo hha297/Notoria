@@ -3,23 +3,43 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { auth } from "@/auth";
-import { getStripeClient } from "@/lib/stripe/client";
 import {
-  getAppBaseUrl,
-  getStripePriceId,
-  StripeConfigError,
-} from "@/lib/stripe/config";
-import { hasActiveProSubscription } from "@/lib/stripe/pro";
+  billingFailureCode,
+  billingFailureStatus,
+  requestBillingChange,
+} from "@/lib/stripe/commands";
+import { parseBillingCommand } from "@/lib/stripe/lifecycle";
 
 export const runtime = "nodejs";
 
-export async function POST() {
+export async function POST(request: Request) {
   try {
     const session = await auth();
     if (!session?.user?.id || !session.user.email) {
       return NextResponse.json(
         { error: "Unauthorized", code: "UNAUTHORIZED" },
         { status: 401 },
+      );
+    }
+
+    let json: unknown = {};
+    const text = await request.text();
+    if (text.trim()) {
+      try {
+        json = JSON.parse(text);
+      } catch {
+        return NextResponse.json(
+          { error: "Invalid plan", code: "INVALID_PLAN" },
+          { status: 400 },
+        );
+      }
+    }
+
+    const parsed = parseBillingCommand(json);
+    if (!parsed.ok) {
+      return NextResponse.json(
+        { error: "Invalid plan", code: "INVALID_PLAN" },
+        { status: 400 },
       );
     }
 
@@ -31,73 +51,38 @@ export async function POST() {
         subscriptionPlan: true,
         subscriptionStatus: true,
         stripeCustomerId: true,
+        stripeSubscriptionId: true,
+        introOfferUsedAt: true,
       },
     });
 
-    if (!user) {
+    if (!user?.email) {
       return NextResponse.json(
         { error: "Unauthorized", code: "UNAUTHORIZED" },
         { status: 401 },
       );
     }
 
-    if (hasActiveProSubscription(user)) {
-      return NextResponse.json(
-        { error: "Already subscribed", code: "ALREADY_PRO" },
-        { status: 409 },
-      );
-    }
-
-    const stripe = getStripeClient();
-    const appUrl = getAppBaseUrl();
-    const checkoutSession = await stripe.checkout.sessions.create({
-      mode: "subscription",
-      line_items: [
-        {
-          price: getStripePriceId(),
-          quantity: 1,
-        },
-      ],
-      success_url: `${appUrl}/account?billing=success`,
-      cancel_url: `${appUrl}/account?billing=canceled`,
-      client_reference_id: user.id,
-      customer: user.stripeCustomerId ?? undefined,
-      customer_email: user.stripeCustomerId ? undefined : user.email,
-      metadata: {
-        userId: user.id,
-      },
-      subscription_data: {
-        metadata: {
-          userId: user.id,
-        },
-      },
+    const result = await requestBillingChange({
+      userId: user.id,
+      email: user.email,
+      subscriptionPlan: user.subscriptionPlan,
+      subscriptionStatus: user.subscriptionStatus,
+      stripeCustomerId: user.stripeCustomerId,
+      stripeSubscriptionId: user.stripeSubscriptionId,
+      introOfferUsedAt: user.introOfferUsedAt,
+      command: parsed.command,
     });
 
-    if (!checkoutSession.url) {
-      return NextResponse.json(
-        { error: "Could not start checkout", code: "CHECKOUT_FAILED" },
-        { status: 500 },
-      );
-    }
-
-    return NextResponse.json({ url: checkoutSession.url });
+    return NextResponse.json({ url: result.url });
   } catch (error) {
-    if (error instanceof StripeConfigError) {
-      return NextResponse.json(
-        { error: "Billing is not configured", code: "STRIPE_NOT_CONFIGURED" },
-        { status: 503 },
-      );
-    }
-
-    const message = error instanceof Error ? error.message : "";
-    if (message.includes("No such price")) {
-      console.error("Failed to create Stripe checkout session: price not found");
-    } else {
-      console.error("Failed to create Stripe checkout session");
+    const code = billingFailureCode(error);
+    if (code === "CHECKOUT_FAILED" || code === "PRICE_NOT_FOUND") {
+      console.error("Stripe billing change failed", { code });
     }
     return NextResponse.json(
-      { error: "Could not start checkout", code: "CHECKOUT_FAILED" },
-      { status: 500 },
+      { error: "Could not change subscription", code },
+      { status: billingFailureStatus(error) },
     );
   }
 }

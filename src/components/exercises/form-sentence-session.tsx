@@ -79,7 +79,8 @@ export function FormSentenceSession({
 }: FormSentenceSessionProps) {
   const t = useTranslations("exercises.formSentence");
   const tSession = useTranslations("exercises.session");
-  const { hasProAccess, openUpgrade } = useProAccess();
+  const tBilling = useTranslations("billing");
+  const { openUpgrade } = useProAccess();
   const [filters, setFilters] = useState<FlashcardFilters>(
     DEFAULT_FLASHCARD_FILTERS,
   );
@@ -154,10 +155,6 @@ export function FormSentenceSession({
       toast.error(t("errors.tooLong"));
       return;
     }
-    if (!hasProAccess) {
-      openUpgrade();
-      return;
-    }
 
     setRound((currentRound) => ({ ...currentRound, evaluating: true }));
     try {
@@ -172,6 +169,10 @@ export function FormSentenceSession({
 
       if (!result.ok) {
         setRound((currentRound) => ({ ...currentRound, evaluating: false }));
+        if (result.code === "AI_QUOTA_EXCEEDED") {
+          toast.error(tBilling("quotaExceeded"));
+          return;
+        }
         if (result.code === "AI_FORBIDDEN") {
           toast.error(t("errors.forbidden"));
           openUpgrade();
@@ -286,7 +287,7 @@ export function FormSentenceSession({
       next();
     },
     { enableOnFormTags: true },
-    [round, current, hasProAccess],
+    [round, current],
   );
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
@@ -355,7 +356,7 @@ export function FormSentenceSession({
             hasFeedback={Boolean(round.feedback)}
             canSubmit={canSubmit}
             evaluating={round.evaluating}
-            hasProAccess={hasProAccess}
+            hasProAccess={true}
             isLast={round.index >= total - 1}
             saved={Boolean(round.feedback?.saved)}
             saving={saving}

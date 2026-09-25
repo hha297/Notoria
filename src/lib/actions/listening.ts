@@ -9,7 +9,14 @@ import {
 } from "@/db/schema";
 import { requireProAccess } from "@/lib/auth/pro-access";
 import { requireAiAssistanceEnabled } from "@/lib/ai/preferences-server";
+import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { getCurrentUserId } from "@/lib/auth/session";
+import { consumeUsage } from "@/lib/billing/entitlements";
+import { LISTENING_MAX_TRANSCRIPT_SECONDS } from "@/lib/billing/plans";
+import {
+  finalizeUsageReservation,
+  refundUsageReservation,
+} from "@/lib/billing/usage";
 import {
   configureCloudinary,
   getListeningFolder,
@@ -177,7 +184,6 @@ async function destroyListeningAsset(publicId: string) {
 }
 
 export async function getListeningLessons(): Promise<ListeningLessonListItem[]> {
-  await requireProAccess();
   const userId = await getCurrentUserId();
   const workspace = await getActiveWorkspace();
 
@@ -208,7 +214,6 @@ export async function getListeningLessons(): Promise<ListeningLessonListItem[]> 
 export async function getListeningLesson(
   id: string,
 ): Promise<ListeningLessonDetail | null> {
-  await requireProAccess();
   const userId = await getCurrentUserId();
   const workspace = await getActiveWorkspace();
 
@@ -268,7 +273,6 @@ async function assertListeningFilenameIsUnique(
 }
 
 export async function createListeningLesson(formData: FormData) {
-  await requireProAccess();
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
   const file = formData.get("file");
@@ -357,8 +361,20 @@ export async function createListeningLesson(formData: FormData) {
 }
 
 export async function transcribeListeningLesson(id: string) {
-  await requireProAccess();
   const { lesson, workspace } = await requireOwnedLesson(id);
+  const user = await getCurrentUserRecord();
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+  const reservation = await consumeUsage(user, "ai_listening_transcript");
+
+  if (
+    typeof lesson.duration === "number" &&
+    lesson.duration > LISTENING_MAX_TRANSCRIPT_SECONDS
+  ) {
+    await refundUsageReservation(reservation.reservationId);
+    throw new ListeningError("AUDIO_TOO_LONG");
+  }
 
   await db
     .update(listeningLessons)
@@ -376,6 +392,13 @@ export async function transcribeListeningLesson(id: string) {
       languageHint: workspace.language,
     });
 
+    if (
+      typeof result.duration === "number" &&
+      result.duration > LISTENING_MAX_TRANSCRIPT_SECONDS
+    ) {
+      throw new ListeningError("AUDIO_TOO_LONG");
+    }
+
     const [updated] = await db
       .update(listeningLessons)
       .set({
@@ -390,9 +413,11 @@ export async function transcribeListeningLesson(id: string) {
       .where(eq(listeningLessons.id, id))
       .returning();
 
+    await finalizeUsageReservation(reservation.reservationId);
     revalidateListening(id);
     return { id: updated.id };
   } catch (error) {
+    await refundUsageReservation(reservation.reservationId);
     const listeningError = await markLessonFailed(id, error);
     throw listeningError;
   }
@@ -470,7 +495,6 @@ export async function generateListeningExercises(
 }
 
 export async function ensureListeningSpeakers(id: string) {
-  await requireProAccess();
   const { lesson } = await requireOwnedLesson(id);
   const transcript = lesson.transcript?.trim();
   if (!transcript) {
@@ -518,7 +542,6 @@ export async function ensureListeningSpeakers(id: string) {
 }
 
 export async function processListeningLesson(id: string) {
-  await requireProAccess();
   const { lesson } = await requireOwnedLesson(id);
 
   try {
@@ -546,7 +569,6 @@ export async function processListeningLesson(id: string) {
 }
 
 export async function deleteListeningLesson(id: string) {
-  await requireProAccess();
   const { lesson } = await requireOwnedLesson(id);
 
   await db.delete(listeningLessons).where(eq(listeningLessons.id, id));
@@ -555,7 +577,6 @@ export async function deleteListeningLesson(id: string) {
 }
 
 export async function renameListeningLesson(id: string, filename: string) {
-  await requireProAccess();
   const { lesson, workspace } = await requireOwnedLesson(id);
   const currentFilename = fallbackListeningFilename(
     lesson.originalFilename,

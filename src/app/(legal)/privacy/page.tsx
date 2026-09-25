@@ -3,14 +3,16 @@ import { getTranslations } from "next-intl/server";
 import { LegalPageShell } from "@/components/legal/legal-page-shell";
 import { PrivacyPolicyContent } from "@/components/legal/privacy-policy-content";
 
-export const metadata: Metadata = {
-  title: "Privacy Policy",
-  description:
-    "How Notoria collects, uses, and deletes personal data and learning content for its private language-learning workspace.",
-  alternates: {
-    canonical: "https://www.notoria.fi/privacy",
-  },
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("legal");
+  return {
+    title: t("privacyTitle"),
+    description: t("privacyDescription"),
+    alternates: {
+      canonical: "https://www.notoria.fi/privacy",
+    },
+  };
+}
 
 export default async function PrivacyPage() {
   const t = await getTranslations("legal");
@@ -18,7 +20,7 @@ export default async function PrivacyPage() {
   return (
     <LegalPageShell
       title={t("privacyTitle")}
-      updatedLabel={t("updated", { date: "23 September 2026" })}
+      updatedLabel={t("updated", { date: t("updatedDate") })}
       active="privacy"
     >
       <PrivacyPolicyContent />

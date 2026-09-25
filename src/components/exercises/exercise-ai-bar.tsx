@@ -1,13 +1,10 @@
 "use client";
 
-import { Loader2, Lock, Sparkles } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useProAccess } from "@/components/billing/pro-access-provider";
-import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import { ExerciseDifficultySelect } from "@/components/exercises/exercise-difficulty-select";
 import { Button } from "@/components/ui/button";
 import type { ExerciseDifficulty } from "@/lib/exercises/difficulty";
-import { cn } from "@/lib/utils";
 
 type ExerciseAiBarProps = {
   generating: boolean;
@@ -27,15 +24,6 @@ export function ExerciseAiBar({
   onGenerate,
 }: ExerciseAiBarProps) {
   const t = useTranslations("exercises.ai");
-  const { hasProAccess, openUpgrade } = useProAccess();
-
-  function handleGenerate() {
-    if (!hasProAccess) {
-      openUpgrade();
-      return;
-    }
-    onGenerate();
-  }
 
   return (
     <div className="flex flex-col gap-3 rounded-sm border border-hairline-cloud bg-surface-elevated p-3 sm:p-4">
@@ -50,17 +38,13 @@ export function ExerciseAiBar({
         <Button
           type="button"
           size="sm"
-          aria-disabled={!hasProAccess || undefined}
-          disabled={hasProAccess && (generating || disabled)}
-          className={cn(!hasProAccess && lockedFeatureClassName)}
-          onClick={handleGenerate}
+          disabled={generating || disabled}
+          onClick={onGenerate}
         >
           {generating ? (
             <Loader2 className="size-3.5 animate-spin" />
-          ) : hasProAccess ? (
-            <Sparkles className="size-3.5" />
           ) : (
-            <Lock className="size-3.5" />
+            <Sparkles className="size-3.5" />
           )}
           {generating
             ? t("generating")

@@ -299,7 +299,7 @@ function WordBank({
               ? "cursor-not-allowed border-hairline-cloud bg-muted/30 text-muted-foreground opacity-70"
               : placed
                 ? "border-(--exercise-accent)/35 bg-(--exercise-accent-soft) text-ink shadow-[0_1px_0_color-mix(in_oklab,var(--ink)_8%,transparent)]"
-                : "border-(--exercise-accent)/45 bg-background text-ink shadow-[0_2px_0_color-mix(in_oklab,var(--ink)_12%,transparent)] hover:-translate-y-0.5 hover:border-(--exercise-accent) hover:shadow-[0_3px_0_color-mix(in_oklab,var(--ink)_14%,transparent)]",
+                : "border-(--exercise-accent)/45 control-surface text-ink shadow-[0_2px_0_color-mix(in_oklab,var(--ink)_12%,transparent)] hover:-translate-y-0.5 hover:border-(--exercise-accent) hover:shadow-[0_3px_0_color-mix(in_oklab,var(--ink)_14%,transparent)]",
           )}
         >
           {word}

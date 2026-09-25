@@ -57,9 +57,9 @@ export function TheoryMultipleChoiceCard({
       initial={reduceMotion ? false : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: reduceMotion ? 0 : 0.22, ease: EASE }}
-      className="relative mx-auto w-full min-w-0 max-w-2xl"
+      className="relative mx-auto w-full min-w-0 max-w-3xl"
     >
-      <header className="flex items-start justify-between gap-3">
+      <header className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
         <div className="min-w-0">
           <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
             {t("lesson.tryIt")}
@@ -74,7 +74,7 @@ export function TheoryMultipleChoiceCard({
         </p>
       </header>
 
-      <div className="relative mt-8 sm:mt-10">
+      <div className="relative mt-5 sm:mt-10">
         <span
           aria-hidden
           className="pointer-events-none absolute top-1 bottom-1 left-0 w-px bg-linear-to-b from-(--exercise-accent)/55 via-(--exercise-accent)/18 to-transparent"
@@ -112,7 +112,7 @@ export function TheoryMultipleChoiceCard({
                     "min-h-14 rounded-xl border px-4 py-3.5 text-left text-[0.95rem] font-medium wrap-anywhere transition-[border-color,background-color,transform] duration-150",
                     "focus-visible:ring-2 focus-visible:ring-(--exercise-accent)/35 focus-visible:outline-none",
                     !checked &&
-                      "border-hairline-cloud bg-background hover:border-(--exercise-accent)/40 hover:bg-(--exercise-accent-soft)/40",
+                      "border-hairline-cloud control-surface hover:border-(--exercise-accent)/40 hover:bg-(--exercise-accent-soft)/40",
                     !checked && isSelected && "border-(--exercise-accent) bg-(--exercise-accent-soft)",
                     showState && isAnswer && "border-success bg-success-muted text-success",
                     showState && isSelected && !isCorrect && "border-error bg-error-muted text-error",

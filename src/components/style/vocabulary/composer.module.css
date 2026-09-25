@@ -7,110 +7,263 @@
   overflow: visible;
 }
 
-.vocab-composer-hero,
-.vocab-composer-section {
-  position: relative;
-  isolation: isolate;
-  overflow: visible;
-  background: none;
-}
-
-.vocab-composer-hero::before,
-.vocab-composer-section::before {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  pointer-events: none;
-  -webkit-mask-image:
-    linear-gradient(
-      to right,
-      transparent 0%,
-      #000 16%,
-      #000 84%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      #000 18%,
-      #000 78%,
-      transparent 100%
-    );
-  -webkit-mask-composite: source-in;
-  mask-image:
-    linear-gradient(
-      to right,
-      transparent 0%,
-      #000 16%,
-      #000 84%,
-      transparent 100%
-    ),
-    linear-gradient(
-      to bottom,
-      transparent 0%,
-      #000 18%,
-      #000 78%,
-      transparent 100%
-    );
-  mask-composite: intersect;
-}
-
-.vocab-composer-hero::before {
-  inset: -8% -5%;
-  background: radial-gradient(
-    ellipse 48% 90% at 10% 32%,
-    color-mix(in oklab, var(--module-vocab-bg) 52%, transparent),
-    transparent 72%
-  );
-}
-
-.vocab-composer-hero > *,
-.vocab-composer-section > * {
-  position: relative;
-  z-index: 1;
+.vocab-composer-hero {
+  margin-bottom: 0.75rem;
 }
 
 .vocab-composer-lang {
-  border: 1px solid
-    color-mix(in oklab, var(--module-vocab-fg) 22%, transparent);
-  background: color-mix(in oklab, var(--module-vocab-bg) 22%, transparent);
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem 0.65rem;
+  margin-top: 0.5rem;
+  width: fit-content;
+  padding: 0.45rem 0.8rem;
+  border-radius: 0.45rem;
+  border: 1px solid color-mix(in oklab, var(--module-vocab-fg) 28%, transparent);
+  background: color-mix(in oklab, var(--module-vocab-bg) 28%, transparent);
+  font-size: 0.875rem;
 }
 
 .vocab-composer-section {
-  animation: vocab-composer-in 0.42s ease both;
+  position: relative;
+  margin: 0;
+  padding: 2.15rem 0 1.15rem;
+  border: 0;
+  border-top: 1px solid
+    color-mix(
+      in oklab,
+      var(--composer-accent, var(--module-vocab-fg)) 20%,
+      transparent
+    );
+  background: none;
+  box-shadow: none;
+  animation: vocab-composer-in 0.36s ease both;
 }
 
 .vocab-composer-section[data-composer="word"] {
   --composer-accent: var(--composer-word);
+  padding-top: 0.85rem;
+  border-top: 0;
   animation-delay: 0.04s;
 }
 
 .vocab-composer-section[data-composer="meaning"] {
   --composer-accent: var(--composer-meaning);
-  animation-delay: 0.1s;
+  animation-delay: 0.08s;
 }
 
 .vocab-composer-section[data-composer="example"] {
   --composer-accent: var(--composer-example);
-  animation-delay: 0.16s;
+  animation-delay: 0.12s;
 }
 
 .vocab-composer-section[data-composer="extra"] {
   --composer-accent: var(--composer-extra);
-  animation-delay: 0.22s;
+  animation-delay: 0.16s;
 }
 
-.vocab-composer-section::before {
-  inset: -12% -8%;
-  background: radial-gradient(
-    ellipse 38% 60% at 8% 8%,
-    color-mix(in oklab, var(--composer-accent) 26%, transparent),
-    transparent 70%
-  );
+.vocab-composer-section-grid {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  gap: 1rem 1.15rem;
+  align-items: start;
+}
+
+@media (max-width: 639px) {
+  .vocab-composer-section-grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.35rem;
+  }
+
+  .vocab-composer-section-index {
+    font-size: 0.8rem;
+    letter-spacing: 0.06em;
+    padding-top: 0;
+  }
+
+  .vocab-composer-index {
+    width: 1.25rem;
+    height: 1.25rem;
+    font-size: 0.65rem;
+  }
+
+  .vocab-composer-item {
+    flex-wrap: wrap;
+  }
+
+  .vocab-composer-item .vocab-composer-field {
+    flex: 1 1 100%;
+    min-width: 0;
+  }
+
+  .vocab-search-shell {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .vocab-search-field {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+
+  .vocab-composer-actions {
+    position: static;
+    z-index: auto;
+    margin-top: 1rem;
+    margin-inline: 0;
+    padding: 0;
+    border: 0;
+    background: transparent;
+    backdrop-filter: none;
+  }
+
+  .vocab-suggest-item:has(.vocab-suggest-meta) .vocab-suggest-title,
+  .vocab-suggest-meta {
+    max-width: none;
+  }
+
+  .vocab-suggest-item {
+    flex-wrap: wrap;
+    align-items: flex-start;
+  }
+}
+
+@media (min-width: 640px) {
+  .vocab-composer-section-grid {
+    grid-template-columns: 4.25rem minmax(0, 1fr);
+    gap: 1.15rem 1.6rem;
+  }
+}
+
+.vocab-composer-section-index {
+  margin: 0;
+  padding-top: 0.2rem;
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 1.55rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  font-variant-numeric: tabular-nums;
+  color: var(--composer-accent);
+}
+
+@media (min-width: 640px) {
+  .vocab-composer-section-index {
+    font-size: 1.85rem;
+    padding-top: 0.25rem;
+  }
+}
+
+.vocab-composer-section-main {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.vocab-composer-section-body {
+  min-width: 0;
+}
+
+.vocab-composer-extra-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+@media (min-width: 640px) {
+  .vocab-composer-extra-stack {
+    gap: 1.5rem;
+  }
+}
+
+.vocab-composer-section-action {
+  flex-shrink: 0;
 }
 
 .vocab-composer-kicker {
   color: var(--composer-accent);
+}
+
+.vocab-composer-word-row {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 1rem 1.25rem;
+}
+
+@media (min-width: 1024px) {
+  .vocab-composer-word-row {
+    grid-template-columns: minmax(0, 1.45fr) minmax(13.5rem, 0.55fr);
+    align-items: end;
+  }
+}
+
+.vocab-composer-word-col,
+.vocab-composer-pos-col {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.vocab-composer-word-status {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  grid-column: 1 / -1;
+}
+
+.vocab-composer-word-status:empty {
+  display: none;
+}
+
+.vocab-composer-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.75rem 1.15rem;
+  margin-bottom: 0;
+}
+
+.vocab-composer-block {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.vocab-composer-section-copy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.vocab-composer-section-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 1.35rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.15;
+  color: var(--ink);
+}
+
+@media (min-width: 640px) {
+  .vocab-composer-section-title {
+    font-size: 1.55rem;
+  }
+}
+
+.vocab-composer-section-hint {
+  margin: 0;
+  max-width: 36rem;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+  text-wrap: pretty;
 }
 
 .vocab-composer-control {
@@ -132,71 +285,619 @@
 }
 
 .vocab-composer-word-field {
-  border-color: color-mix(in oklab, var(--composer-word) 28%, transparent);
-  background: color-mix(in oklab, var(--module-vocab-bg) 18%, transparent);
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in oklab, var(--composer-word) 36%, transparent);
+  background:
+    linear-gradient(
+      125deg,
+      color-mix(in oklab, var(--module-vocab-bg) 42%, transparent),
+      color-mix(in oklab, var(--module-vocab-bg) 8%, transparent) 48%,
+      transparent 78%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 55%, transparent);
+  box-shadow:
+    inset 3px 0 0 0 var(--composer-word),
+    inset 0 1px 0 color-mix(in oklab, var(--module-vocab-fg) 8%, transparent);
+  padding-inline-start: 1.05rem !important;
+  letter-spacing: -0.03em;
   transition:
     border-color 0.2s ease,
     box-shadow 0.2s ease,
-    background-color 0.2s ease;
+    background 0.2s ease;
 }
 
 .vocab-composer-word-field:hover {
-  border-color: color-mix(in oklab, var(--composer-word) 42%, transparent);
+  border-color: color-mix(in oklab, var(--composer-word) 55%, transparent);
+  box-shadow:
+    inset 3px 0 0 0 var(--composer-word),
+    inset 0 1px 0 color-mix(in oklab, var(--module-vocab-fg) 10%, transparent),
+    0 0 0 3px color-mix(in oklab, var(--composer-word) 10%, transparent);
 }
 
 .vocab-composer-word-field:focus-visible {
   border-color: var(--composer-word);
-  box-shadow: 0 0 0 3px
-    color-mix(in oklab, var(--composer-word) 18%, transparent);
-  background: color-mix(in oklab, var(--module-vocab-bg) 24%, transparent);
+  box-shadow:
+    inset 3px 0 0 0 var(--composer-word),
+    0 0 0 3px color-mix(in oklab, var(--composer-word) 20%, transparent);
+  background:
+    linear-gradient(
+      125deg,
+      color-mix(in oklab, var(--module-vocab-bg) 52%, transparent),
+      color-mix(in oklab, var(--module-vocab-bg) 12%, transparent) 50%,
+      transparent 78%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 72%, transparent);
 }
 
 .vocab-composer-word-ok:not(:focus-visible) {
-  border-color: color-mix(in oklab, var(--success) 45%, transparent);
+  border-color: color-mix(in oklab, var(--success) 52%, transparent);
+  box-shadow:
+    inset 3px 0 0 0
+      color-mix(in oklab, var(--success) 85%, var(--composer-word)),
+    0 0 0 3px color-mix(in oklab, var(--success) 14%, transparent);
+}
+
+.vocab-composer-field {
+  border-radius: 0.75rem !important;
+  border: 1px solid
+    color-mix(in oklab, var(--composer-accent) 22%, var(--hairline-cloud)) !important;
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--composer-accent) 8%, transparent),
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 58%, transparent) !important;
+  box-shadow: inset 0 1px 0
+    color-mix(in oklab, var(--composer-accent) 6%, transparent);
+  padding-block: 0.7rem !important;
+  font-size: 0.95rem !important;
+  line-height: 1.4 !important;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease;
+}
+
+.vocab-composer-field:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--composer-accent) 40%,
+    var(--hairline-cloud)
+  ) !important;
+}
+
+.vocab-composer-field:focus-visible {
+  border-color: color-mix(
+    in oklab,
+    var(--composer-accent) 58%,
+    transparent
+  ) !important;
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--composer-accent) 8%, transparent),
+    0 0 0 3px color-mix(in oklab, var(--composer-accent) 16%, transparent);
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--composer-accent) 12%, transparent),
+      transparent 72%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 78%, transparent) !important;
+}
+
+/* Nested fields inside meaning/example cards keep a visible border */
+.vocab-composer-item .vocab-composer-field {
+  border: 1px solid
+    color-mix(in oklab, var(--composer-accent) 28%, var(--hairline-cloud)) !important;
+  border-radius: 0.65rem !important;
+  background: color-mix(
+    in oklab,
+    var(--surface-elevated) 70%,
+    transparent
+  ) !important;
+  box-shadow: none !important;
+  padding-block: 0.55rem !important;
+  padding-inline: 0.75rem !important;
+}
+
+.vocab-composer-item .vocab-composer-field:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--composer-accent) 45%,
+    transparent
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--surface-elevated) 82%,
+    transparent
+  ) !important;
+}
+
+.vocab-composer-item .vocab-composer-field:focus-visible {
+  border-color: color-mix(
+    in oklab,
+    var(--composer-accent) 58%,
+    transparent
+  ) !important;
+  box-shadow: 0 0 0 2px
+    color-mix(in oklab, var(--composer-accent) 16%, transparent) !important;
+  background: color-mix(
+    in oklab,
+    var(--surface-elevated) 90%,
+    transparent
+  ) !important;
+}
+
+.vocab-composer-item textarea.vocab-composer-field {
+  min-height: 4.25rem !important;
+}
+
+.vocab-composer-star-primary {
+  color: #f5c542 !important;
+}
+
+.vocab-composer-star-primary:hover:not(:disabled) {
+  color: #ffd666 !important;
+  background: color-mix(in oklab, #f5c542 16%, transparent) !important;
+}
+
+/* --- Chip boards (tags / synonyms) --- */
+
+.vocab-chip-board {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+}
+
+.vocab-chip-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.vocab-chip-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.vocab-chip {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  border: 1px solid
+    color-mix(in oklab, var(--composer-accent) 22%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--composer-accent) 8%, transparent);
+  padding: 0.4rem 0.8rem;
+  color: color-mix(in oklab, var(--ink) 82%, var(--muted-foreground));
+  font-family: var(--font-heading);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.2;
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    color 0.15s ease,
+    transform 0.15s ease;
+}
+
+.vocab-chip:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--composer-accent) 48%, transparent);
+  background: color-mix(in oklab, var(--composer-accent) 32%, transparent);
+  color: var(--ink);
+}
+
+.vocab-chip:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.vocab-chip[data-active="true"] {
+  border-color: color-mix(in oklab, var(--composer-accent) 55%, transparent);
+  background: color-mix(in oklab, var(--composer-accent) 36%, transparent);
+  color: var(--ink);
+  box-shadow: inset 0 0 0 1px
+    color-mix(in oklab, var(--composer-accent) 14%, transparent);
+}
+
+.vocab-chip-remove {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1rem;
+  height: 1rem;
+  margin-right: -0.15rem;
+  border-radius: 999px;
+  color: color-mix(
+    in oklab,
+    var(--composer-accent) 70%,
+    var(--muted-foreground)
+  );
+  transition:
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.vocab-chip-remove:hover {
+  background: color-mix(in oklab, var(--composer-accent) 22%, transparent);
+  color: var(--ink);
+}
+
+.vocab-search-shell {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: stretch;
+  gap: 0.75rem;
+}
+
+.vocab-search-field {
+  flex: 1 1 14rem;
+  min-width: 0;
+  width: auto;
+  height: 2.75rem !important;
+  min-height: 2.75rem !important;
+  max-height: 2.75rem !important;
+  padding-block: 0.5rem !important;
+  box-sizing: border-box;
+}
+
+@media (max-width: 639px) {
+  .vocab-search-shell {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .vocab-search-field {
+    flex: 0 0 auto;
+    width: 100%;
+  }
+}
+
+.vocab-suggest {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+  max-height: 11.5rem;
+  height: fit-content;
+  overflow: auto;
+  margin-top: 0.45rem;
+  border: 1px solid
+    color-mix(in oklab, var(--composer-accent) 22%, var(--hairline-cloud));
+  border-radius: 0.9rem;
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--composer-accent) 10%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 48%, transparent);
+  padding: 0.5rem;
+}
+
+.vocab-suggest-item {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 0.65rem;
+  border-radius: 0.65rem;
+  border: 1px solid transparent;
+  background: transparent;
+  padding: 0.6rem 0.75rem;
+  text-align: left;
+  color: var(--ink);
+  cursor: pointer;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease;
+}
+
+.vocab-suggest-item:hover {
+  border-color: color-mix(in oklab, var(--composer-accent) 28%, transparent);
+  background: color-mix(in oklab, var(--composer-accent) 18%, transparent);
+}
+
+.vocab-suggest-item[data-active="true"] {
+  border-color: color-mix(in oklab, var(--composer-accent) 40%, transparent);
+  background: color-mix(in oklab, var(--composer-accent) 24%, transparent);
+}
+
+.vocab-suggest-title {
+  min-width: 0;
+  flex: 1 1 auto;
+  overflow: hidden;
+  font-family: var(--font-heading);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vocab-suggest-item:has(.vocab-suggest-meta) .vocab-suggest-title {
+  flex: 0 1 auto;
+  max-width: min(14rem, 48%);
+}
+
+.vocab-suggest-meta {
+  min-width: 0;
+  flex: 0 1 auto;
+  max-width: min(16rem, 42%);
+  overflow: hidden;
+  font-size: 0.8rem;
+  line-height: 1.35;
+  color: var(--muted-foreground);
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vocab-suggest-actions {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 0.1rem;
+  margin-left: auto;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 140ms ease;
+}
+
+.vocab-suggest-item:hover .vocab-suggest-actions,
+.vocab-suggest-item:focus-within .vocab-suggest-actions {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (hover: none) {
+  .vocab-suggest-actions {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+.vocab-suggest-action {
+  color: var(--muted-foreground) !important;
+}
+
+.vocab-suggest-action:hover {
+  background: color-mix(
+    in oklab,
+    var(--composer-accent) 18%,
+    transparent
+  ) !important;
+  color: var(--composer-accent) !important;
+}
+
+.vocab-suggest-action-danger:hover {
+  background: color-mix(
+    in oklab,
+    var(--destructive) 16%,
+    transparent
+  ) !important;
+  color: var(--destructive) !important;
+}
+
+.vocab-suggest-empty {
+  margin: 0;
+  padding: 0.65rem 0.35rem;
+  font-size: 0.86rem;
+  color: var(--muted-foreground);
 }
 
 .vocab-composer-item {
   border: 1px solid
-    color-mix(in oklab, var(--composer-accent) 22%, transparent);
-  background: radial-gradient(
-    ellipse 88% 140% at 8% 50%,
-    color-mix(in oklab, var(--composer-accent) 12%, transparent),
-    transparent 72%
-  );
-  transition: border-color 0.2s ease;
+    color-mix(in oklab, var(--composer-accent) 28%, var(--hairline-cloud));
+  border-radius: 0.9rem;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--composer-accent) 12%, transparent),
+      transparent 58%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 42%, transparent);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
 .vocab-composer-item:focus-within {
-  border-color: color-mix(in oklab, var(--composer-accent) 42%, transparent);
+  border-color: color-mix(in oklab, var(--composer-accent) 44%, transparent);
+  box-shadow: 0 0 0 3px
+    color-mix(in oklab, var(--composer-accent) 10%, transparent);
 }
 
 .vocab-composer-item-primary {
-  border-color: color-mix(in oklab, var(--accent-lime) 45%, transparent);
-  background: radial-gradient(
-    ellipse 88% 140% at 8% 50%,
-    color-mix(in oklab, var(--accent-lime) 14%, transparent),
-    transparent 72%
+  border-color: color-mix(in oklab, var(--accent-lime) 48%, transparent);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--accent-lime) 16%, transparent),
+      transparent 60%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 48%, transparent);
+}
+
+.vocab-composer-index {
+  display: inline-flex;
+  width: 1.55rem;
+  height: 1.55rem;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--composer-accent) 16%, transparent);
+  color: color-mix(in oklab, var(--composer-accent) 82%, var(--ink));
+  font-family: var(--font-heading);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.vocab-composer-icon-btn {
+  color: var(--muted-foreground) !important;
+  border-radius: 0.55rem !important;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease !important;
+}
+
+.vocab-composer-icon-btn:hover:not(:disabled) {
+  color: var(--ink) !important;
+  background: color-mix(
+    in oklab,
+    var(--composer-accent) 14%,
+    transparent
+  ) !important;
+}
+
+.vocab-composer-icon-btn-danger:hover:not(:disabled) {
+  color: var(--destructive) !important;
+  background: color-mix(
+    in oklab,
+    var(--destructive) 12%,
+    transparent
+  ) !important;
+}
+
+.vocab-composer-drag {
+  color: color-mix(
+    in oklab,
+    var(--composer-accent) 55%,
+    var(--muted-foreground)
   );
+  border-radius: 0.5rem;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.vocab-composer-drag:hover {
+  color: var(--composer-accent);
+  background: color-mix(in oklab, var(--composer-accent) 12%, transparent);
+}
+
+@media (max-width: 639px) {
+  .vocab-composer-drag {
+    display: none;
+  }
+}
+
+.vocab-composer-details-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  border-radius: 999px;
+  padding: 0.2rem 0.55rem 0.2rem 0.35rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: color-mix(
+    in oklab,
+    var(--composer-accent) 70%,
+    var(--muted-foreground)
+  );
+  background: color-mix(in oklab, var(--composer-accent) 8%, transparent);
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
+}
+
+.vocab-composer-details-toggle:hover {
+  color: var(--composer-accent);
+  background: color-mix(in oklab, var(--composer-accent) 16%, transparent);
+}
+
+.vocab-composer-details-badge {
+  margin-left: 0.15rem;
+  border-radius: 999px;
+  padding: 0.05rem 0.4rem;
+  background: color-mix(in oklab, var(--composer-accent) 18%, transparent);
+  color: var(--composer-accent);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.vocab-composer-details {
+  border: 1px solid
+    color-mix(in oklab, var(--composer-accent) 30%, var(--hairline-cloud));
+  border-radius: 0.8rem;
+  background: color-mix(in oklab, var(--composer-accent) 7%, transparent);
+  margin: 0 0.75rem 0.75rem;
 }
 
 .vocab-composer-panel {
   border: 1px solid
-    color-mix(in oklab, var(--composer-accent) 22%, transparent);
-  background: radial-gradient(
-    ellipse 80% 70% at 8% 0%,
-    color-mix(in oklab, var(--composer-accent) 10%, transparent),
-    transparent 72%
-  );
+    color-mix(in oklab, var(--composer-accent) 24%, var(--hairline-cloud));
+  border-radius: 0.95rem;
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--composer-accent) 10%, transparent),
+      transparent 70%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 45%, transparent);
+  overflow: hidden;
 }
 
 .vocab-composer-ai {
-  border: 1px solid
-    color-mix(in oklab, var(--module-vocab-fg) 28%, transparent);
-  background: color-mix(in oklab, var(--module-vocab-bg) 28%, transparent);
+  border: 1px solid color-mix(in oklab, var(--module-vocab-fg) 26%, transparent);
+  border-radius: 0.85rem;
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--module-vocab-bg) 38%, transparent),
+      transparent 68%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 50%, transparent);
+}
+
+.vocab-composer-add {
+  border-color: color-mix(
+    in oklab,
+    var(--composer-accent) 28%,
+    var(--hairline-cloud)
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--composer-accent) 10%,
+    transparent
+  ) !important;
+  color: color-mix(in oklab, var(--composer-accent) 78%, var(--ink)) !important;
+  font-weight: 600 !important;
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease !important;
+}
+
+.vocab-composer-add:hover:not(:disabled) {
+  border-color: color-mix(
+    in oklab,
+    var(--composer-accent) 48%,
+    transparent
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--composer-accent) 18%,
+    transparent
+  ) !important;
+  color: var(--ink) !important;
 }
 
 .vocab-composer-submit {
-  box-shadow: 0 0 0 0 color-mix(in oklab, var(--primary) 0%, transparent);
+  border-radius: 0.8rem !important;
+  overflow: hidden;
+  font-family: var(--font-heading);
+  font-weight: 700 !important;
+  letter-spacing: -0.02em;
+  box-shadow: none;
   transition:
     transform 0.15s ease,
     box-shadow 0.2s ease,
@@ -204,12 +905,411 @@
 }
 
 .vocab-composer-submit:hover:not(:disabled) {
-  box-shadow: 0 8px 24px color-mix(in oklab, var(--primary) 22%, transparent);
+  transform: translateY(-1px);
+  box-shadow: 0 10px 28px color-mix(in oklab, var(--primary) 24%, transparent);
+}
+
+.vocab-composer-cancel {
+  border-radius: 0.8rem !important;
+  border-color: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 22%,
+    var(--hairline-cloud)
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--module-vocab-bg) 12%,
+    transparent
+  ) !important;
+  font-weight: 600 !important;
+}
+
+.vocab-composer-cancel:hover:not(:disabled) {
+  border-color: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 38%,
+    transparent
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--module-vocab-bg) 22%,
+    transparent
+  ) !important;
 }
 
 .vocab-composer-actions {
-  background: color-mix(in oklab, var(--background) 78%, transparent);
-  backdrop-filter: blur(12px);
+  position: static;
+  margin-inline: 0;
+  padding: 0;
+  border: 0;
+  border-top: 0;
+  background: transparent !important;
+  box-shadow: none;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
+
+/* --- Vocabulary notes (TipTap) --- */
+
+.vocab-notes-editor {
+  border-radius: 0.95rem !important;
+  border: 1px solid
+    color-mix(in oklab, var(--composer-accent) 26%, var(--hairline-cloud)) !important;
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--composer-accent) 10%, transparent),
+      transparent 62%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 52%, transparent) !important;
+  overflow: hidden;
+}
+
+.vocab-notes-editor > div:first-child {
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--composer-accent) 16%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--composer-accent) 7%, transparent);
+}
+
+.vocab-notes-editor :global(.ProseMirror) {
+  min-height: 9.5rem !important;
+  padding: 1.2rem 1.25rem !important;
+}
+
+.vocab-notes-editor
+  :global(.ProseMirror p.is-editor-empty:first-child::before) {
+  color: color-mix(
+    in oklab,
+    var(--composer-accent) 45%,
+    var(--muted-foreground)
+  );
+}
+
+/* --- Part of speech picker --- */
+
+.vocab-pos-trigger {
+  --vocab-pos-accent: color-mix(
+    in oklab,
+    var(--muted-foreground) 72%,
+    var(--module-vocab-fg)
+  );
+  display: flex;
+  width: 100%;
+  min-width: 0;
+  align-items: center;
+  gap: 0.75rem;
+  border-radius: 0.7rem;
+  border: 1px solid
+    color-mix(in oklab, var(--vocab-pos-accent) 34%, transparent);
+  background:
+    linear-gradient(
+      120deg,
+      color-mix(in oklab, var(--vocab-pos-accent) 16%, transparent),
+      transparent 62%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 55%, transparent);
+  padding: 0 0.85rem 0 0.7rem;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  outline: none;
+  transition:
+    border-color 0.18s ease,
+    background 0.18s ease,
+    box-shadow 0.18s ease,
+    transform 0.15s ease;
+}
+
+.vocab-pos-trigger[data-size="compact"] {
+  height: 2.5rem;
+  min-height: 2.5rem;
+  gap: 0.55rem;
+  border-radius: 0.6rem;
+  padding-inline: 0.65rem 0.55rem;
+}
+
+.vocab-pos-trigger:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--vocab-pos-accent) 52%, transparent);
+  background:
+    linear-gradient(
+      120deg,
+      color-mix(in oklab, var(--vocab-pos-accent) 24%, transparent),
+      transparent 64%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 70%, transparent);
+}
+
+.vocab-pos-trigger:focus-visible {
+  border-color: var(--vocab-pos-accent);
+  box-shadow: 0 0 0 3px
+    color-mix(in oklab, var(--vocab-pos-accent) 22%, transparent);
+}
+
+.vocab-pos-trigger:disabled {
+  cursor: not-allowed;
+  opacity: 0.55;
+}
+
+.vocab-pos-trigger[data-popup-open],
+.vocab-pos-trigger[data-state="open"] {
+  border-color: color-mix(in oklab, var(--vocab-pos-accent) 58%, transparent);
+  box-shadow: 0 0 0 3px
+    color-mix(in oklab, var(--vocab-pos-accent) 16%, transparent);
+}
+
+.vocab-pos-trigger[data-vocab-pos="noun"] {
+  --vocab-pos-accent: var(--module-vocab-fg);
+}
+.vocab-pos-trigger[data-vocab-pos="verb"] {
+  --vocab-pos-accent: var(--module-exercise-fg);
+}
+.vocab-pos-trigger[data-vocab-pos="adjective"] {
+  --vocab-pos-accent: var(--module-listen-fg);
+}
+.vocab-pos-trigger[data-vocab-pos="adverb"] {
+  --vocab-pos-accent: var(--module-home-fg);
+}
+.vocab-pos-trigger[data-vocab-pos="pronoun"] {
+  --vocab-pos-accent: var(--module-theory-fg);
+}
+.vocab-pos-trigger[data-vocab-pos="preposition"] {
+  --vocab-pos-accent: var(--module-speak-fg);
+}
+.vocab-pos-trigger[data-vocab-pos="conjunction"] {
+  --vocab-pos-accent: color-mix(
+    in oklab,
+    var(--module-exercise-fg) 70%,
+    var(--module-vocab-fg)
+  );
+}
+.vocab-pos-trigger[data-vocab-pos="interjection"] {
+  --vocab-pos-accent: color-mix(
+    in oklab,
+    var(--module-speak-fg) 55%,
+    var(--module-exercise-fg)
+  );
+}
+.vocab-pos-trigger[data-vocab-pos="article"] {
+  --vocab-pos-accent: color-mix(
+    in oklab,
+    var(--module-listen-fg) 60%,
+    var(--module-home-fg)
+  );
+}
+.vocab-pos-trigger[data-vocab-pos="determiner"] {
+  --vocab-pos-accent: color-mix(
+    in oklab,
+    var(--module-theory-fg) 55%,
+    var(--module-listen-fg)
+  );
+}
+
+.vocab-pos-swatch {
+  width: 0.28rem;
+  height: 1.55rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--vocab-pos-accent);
+  box-shadow: 0 0 0 3px
+    color-mix(in oklab, var(--vocab-pos-accent) 18%, transparent);
+}
+
+.vocab-pos-trigger[data-size="compact"] .vocab-pos-swatch {
+  height: 1.15rem;
+  box-shadow: none;
+}
+
+.vocab-pos-trigger-copy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.vocab-pos-trigger-value {
+  overflow: hidden;
+  font-family: var(--font-heading);
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.vocab-pos-trigger[data-size="compact"] .vocab-pos-trigger-value {
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.vocab-pos-trigger-placeholder {
+  font-weight: 600;
+  color: var(--muted-foreground);
+}
+
+.vocab-pos-chevron {
+  width: 1rem;
+  height: 1rem;
+  flex-shrink: 0;
+  color: color-mix(
+    in oklab,
+    var(--vocab-pos-accent) 70%,
+    var(--muted-foreground)
+  );
+  transition: transform 0.18s ease;
+}
+
+.vocab-pos-trigger[data-popup-open] .vocab-pos-chevron,
+.vocab-pos-trigger[data-state="open"] .vocab-pos-chevron {
+  transform: rotate(180deg);
+}
+
+.vocab-pos-menu {
+  width: min(22rem, calc(100dvw - 2rem)) !important;
+  min-width: min(18rem, var(--anchor-width, 100%)) !important;
+  padding: 0.55rem !important;
+  border-radius: 0.95rem !important;
+  border: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 18%, var(--hairline-cloud)) !important;
+  background:
+    radial-gradient(
+      ellipse 70% 55% at 8% 0%,
+      color-mix(in oklab, var(--module-vocab-bg) 42%, transparent),
+      transparent 72%
+    ),
+    var(--popover) !important;
+  box-shadow:
+    0 18px 40px color-mix(in oklab, var(--ink) 14%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--module-vocab-fg) 8%, transparent) !important;
+}
+
+.vocab-pos-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.35rem;
+}
+
+.vocab-pos-option {
+  --vocab-pos-accent: var(--module-vocab-fg);
+  display: flex !important;
+  align-items: center;
+  gap: 0.55rem;
+  min-height: 2.55rem;
+  margin: 0 !important;
+  border-radius: 0.7rem !important;
+  border: 1px solid
+    color-mix(in oklab, var(--vocab-pos-accent) 16%, transparent);
+  background: color-mix(in oklab, var(--vocab-pos-accent) 8%, transparent);
+  padding: 0.55rem 0.65rem !important;
+  color: var(--ink) !important;
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    transform 0.15s ease;
+}
+
+.vocab-pos-option[data-vocab-pos="noun"] {
+  --vocab-pos-accent: var(--module-vocab-fg);
+}
+.vocab-pos-option[data-vocab-pos="verb"] {
+  --vocab-pos-accent: var(--module-exercise-fg);
+}
+.vocab-pos-option[data-vocab-pos="adjective"] {
+  --vocab-pos-accent: var(--module-listen-fg);
+}
+.vocab-pos-option[data-vocab-pos="adverb"] {
+  --vocab-pos-accent: var(--module-home-fg);
+}
+.vocab-pos-option[data-vocab-pos="pronoun"] {
+  --vocab-pos-accent: var(--module-theory-fg);
+}
+.vocab-pos-option[data-vocab-pos="preposition"] {
+  --vocab-pos-accent: var(--module-speak-fg);
+}
+.vocab-pos-option[data-vocab-pos="conjunction"] {
+  --vocab-pos-accent: color-mix(
+    in oklab,
+    var(--module-exercise-fg) 70%,
+    var(--module-vocab-fg)
+  );
+}
+.vocab-pos-option[data-vocab-pos="interjection"] {
+  --vocab-pos-accent: color-mix(
+    in oklab,
+    var(--module-speak-fg) 55%,
+    var(--module-exercise-fg)
+  );
+}
+.vocab-pos-option[data-vocab-pos="article"] {
+  --vocab-pos-accent: color-mix(
+    in oklab,
+    var(--module-listen-fg) 60%,
+    var(--module-home-fg)
+  );
+}
+.vocab-pos-option[data-vocab-pos="determiner"] {
+  --vocab-pos-accent: color-mix(
+    in oklab,
+    var(--module-theory-fg) 55%,
+    var(--module-listen-fg)
+  );
+}
+
+.vocab-pos-option:hover,
+.vocab-pos-option:focus,
+.vocab-pos-option[data-highlighted] {
+  border-color: color-mix(
+    in oklab,
+    var(--vocab-pos-accent) 42%,
+    transparent
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--vocab-pos-accent) 18%,
+    transparent
+  ) !important;
+  color: var(--ink) !important;
+}
+
+.vocab-pos-option[data-selected] {
+  border-color: color-mix(in oklab, var(--vocab-pos-accent) 55%, transparent);
+  background: color-mix(in oklab, var(--vocab-pos-accent) 22%, transparent);
+  box-shadow: inset 0 0 0 1px
+    color-mix(in oklab, var(--vocab-pos-accent) 18%, transparent);
+}
+
+.vocab-pos-option-dot {
+  width: 0.55rem;
+  height: 0.55rem;
+  flex-shrink: 0;
+  border-radius: 999px;
+  background: var(--vocab-pos-accent);
+  box-shadow: 0 0 0 3px
+    color-mix(in oklab, var(--vocab-pos-accent) 18%, transparent);
+}
+
+.vocab-pos-option-label {
+  min-width: 0;
+  flex: 1;
+  font-family: var(--font-heading);
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.2;
+}
+
+.vocab-pos-option-check {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
+  color: var(--vocab-pos-accent);
+}
+
+.vocab-pos-option-check-spacer {
+  width: 0.95rem;
+  height: 0.95rem;
+  flex-shrink: 0;
 }
 
 @keyframes vocab-composer-in {
@@ -235,8 +1335,17 @@
   .vocab-composer-hero,
   .vocab-composer-submit,
   .vocab-composer-word-field,
-  .vocab-composer-item {
+  .vocab-composer-field,
+  .vocab-composer-item,
+  .vocab-composer-add,
+  .vocab-composer-cancel,
+  .vocab-chip,
+  .vocab-suggest-item,
+  .vocab-pos-trigger,
+  .vocab-pos-option,
+  .vocab-pos-chevron {
     animation: none;
     transition: none;
+    transform: none;
   }
 }

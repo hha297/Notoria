@@ -80,7 +80,7 @@ export function FolderCard({
       {...listeners}
       {...attributes}
       className={cn(
-        "group relative flex cursor-pointer items-center gap-3 rounded-sm border border-hairline-cloud bg-surface-elevated px-3 py-3 transition-colors hover:border-primary/40 hover:bg-surface-hover",
+        "group relative flex cursor-pointer items-center gap-3 rounded-sm border border-hairline-cloud elevated-surface px-3 py-3 transition-colors hover:border-primary/40",
         isDragging && "opacity-40",
         isOver && !dropDisabled && "ring-2 ring-accent-lime",
       )}

@@ -11,6 +11,7 @@ import { LockedFeatureButton } from "@/components/billing/locked-feature-button"
 import { RichTextContent } from "@/components/editor/rich-text-content";
 import { DescriptionContent } from "@/components/form/description-content";
 import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
+import { ReviewLaterButton } from "@/components/review-later/review-later-button";
 import { TheoryExportDialog } from "@/components/theory/export-dialog";
 import { Button } from "@/components/ui/button";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
@@ -31,6 +32,7 @@ type TheoryReaderProps = {
   content: unknown;
   updatedAt: string;
   backHref: string;
+  reviewLaterMarked?: boolean;
 };
 
 export function TheoryReader({
@@ -39,6 +41,7 @@ export function TheoryReader({
   content,
   updatedAt,
   backHref,
+  reviewLaterMarked = false,
 }: TheoryReaderProps) {
   const router = useRouter();
   const t = useTranslations("theory");
@@ -101,6 +104,12 @@ export function TheoryReader({
             {t("backToList")}
           </Link>
           <div className={mx(detailStyles, "actions")}>
+            <ReviewLaterButton
+              entityType="theory"
+              entityId={id}
+              titleSnapshot={title}
+              marked={reviewLaterMarked}
+            />
             <LockedFeatureButton
               type="button"
               variant="outline"

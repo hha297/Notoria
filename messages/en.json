@@ -5,6 +5,7 @@
     "delete": "Delete",
     "edit": "Edit",
     "view": "View",
+    "open": "Open",
     "back": "Back",
     "create": "Create",
     "loading": "Loading...",
@@ -14,6 +15,87 @@
     "clearFilter": "Clear",
     "filters": "Filters",
     "hideFilters": "Hide filters"
+  },
+  "contentImport": {
+    "title": {
+      "vocabulary": "Import vocabulary",
+      "writing": "Import writing",
+      "theory": "Import theory"
+    },
+    "description": {
+      "vocabulary": "Upload a CSV, PDF, or DOCX. We'll map columns before anything is saved.",
+      "writing": "Upload notes or a CSV of documents. Preview first, then confirm.",
+      "theory": "Upload theory notes or a CSV. Preview first, then confirm."
+    },
+    "guidance": "Don't know the required format? That's okay. Upload your file and we'll try to understand its structure before importing anything.",
+    "dropzone": "Drop a file here or click to browse",
+    "formats": "CSV, PDF, DOCX, or TXT · max 10 MB",
+    "downloadTemplate": "Need a starting point? Download a template",
+    "quota": {
+      "free": "File import is available on Pro and Premium.",
+      "pro": "Pro and Premium: unlimited imports.",
+      "premium": "Premium: unlimited imports."
+    },
+    "fields": {
+      "word": "Word",
+      "meaning": "Meaning",
+      "partOfSpeech": "Part of speech",
+      "example": "Example",
+      "tags": "Tags",
+      "notes": "Notes",
+      "title": "Title",
+      "content": "Content",
+      "category": "Category",
+      "ignore": "Don't import"
+    },
+    "preview": {
+      "summary": "{ready} ready to import · {issues} need attention",
+      "mappingTitle": "Column mapping",
+      "yourColumn": "Your column",
+      "notoriaField": "Notoria field",
+      "missingRequired": "Map the required fields before importing.",
+      "unmapped": "Not used: {columns}",
+      "issuesTitle": "{count} rows need attention",
+      "issueRow": "Row {row}:",
+      "skipHint": "Rows with problems will be skipped. Ready rows will still import.",
+      "sampleTitle": "Sample of what we'll create"
+    },
+    "back": "Choose another file",
+    "importReady": "Import {count}",
+    "close": "Close",
+    "progress": {
+      "reading": "Reading file…",
+      "analyzing": "Understanding structure…",
+      "mapping": "Updating column mapping…",
+      "importing": "Importing…",
+      "finishing": "Finishing…",
+      "count": "{current} / {total}"
+    },
+    "done": {
+      "title": "Imported {count}",
+      "detail": "Skipped {skipped} · failed {failed}",
+      "skippedExists": "Skipped {count} — already in your vocabulary",
+      "skippedInvalid": "Skipped {count} — missing data or row problems",
+      "failed": "Failed {count} — couldn't save (we continued with the rest)",
+      "allGood": "Nothing was skipped or failed.",
+      "detailsTitle": "What happened",
+      "reasonExists": "Already in your vocabulary",
+      "reasonFailed": "Couldn't save — continued with the rest",
+      "moreDetails": "…and {count} more",
+      "toast": "Imported {count} items",
+      "toastAllExist": "Nothing new — {count} already in your vocabulary",
+      "toastNone": "Nothing was imported"
+    },
+    "errors": {
+      "proRequired": "File import is available on Pro and Premium.",
+      "quotaExceeded": "You've used today's import limit. Try again tomorrow, or upgrade for a higher limit.",
+      "fileTooLarge": "That file is too large. Keep it under 10 MB.",
+      "unsupportedFormat": "Use a CSV, PDF, DOCX, or plain text file.",
+      "emptyFile": "We couldn't find readable content in this file.",
+      "parseFailed": "We couldn't read this file. Try exporting it again or use the CSV template.",
+      "generic": "Something went wrong. Please try again."
+    },
+    "button": "Import"
   },
   "editor": {
     "linkTitle": "Insert link",
@@ -53,12 +135,14 @@
   },
   "nav": {
     "dashboard": "Dashboard",
+    "inbox": "Capture",
     "vocabulary": "Vocabulary",
     "writing": "Writing",
     "theory": "Theory",
     "exercises": "Exercise",
     "listening": "Listening",
     "speaking": "Speaking",
+    "coach": "Learning coach",
     "account": "Account",
     "settings": "Settings",
     "workspace": "Workspace",
@@ -68,6 +152,55 @@
       "listenSpeak": "Listen and speak",
       "more": "More"
     }
+  },
+  "inbox": {
+    "eyebrow": "Collect",
+    "title": "Capture",
+    "description": "Drop quick notes, phrases, and ideas here — then turn them into vocabulary, theory, writing, or exercises when you have a moment.",
+    "disabledNoWorkspace": "Create a workspace before capturing.",
+    "capture": "Capture",
+    "captureTitle": "Capture something",
+    "captureDescription": "Save something to process later. You do not need to decide where it belongs yet.",
+    "captureSubmit": "Save to Capture",
+    "captured": "Saved to Capture",
+    "contentLabel": "Content",
+    "contentPlaceholder": "A word, phrase, idea, or anything you want to come back to…",
+    "contentRequired": "Add some content first",
+    "noteLabel": "Note (optional)",
+    "notePlaceholder": "Context or why it matters…",
+    "sourceLabel": "Source (optional)",
+    "sourcePlaceholder": "Book, podcast, class…",
+    "sourcePrefix": "From {source}",
+    "filterUnprocessed": "To process",
+    "filterProcessed": "Processed",
+    "emptyTitle": "Nothing captured yet",
+    "emptyDescription": "Capture something quickly — a word from a conversation, a grammar doubt, a writing idea — and sort it later.",
+    "emptyProcessedTitle": "No processed items yet",
+    "emptyProcessedDescription": "When you finish adding something from Capture into vocabulary, theory, writing, or exercises, it shows up here.",
+    "statusProcessed": "Processed",
+    "processMenu": "Process item",
+    "processed": "Marked as processed",
+    "deleted": "Deleted from Capture",
+    "process": {
+      "vocabulary": "Vocabulary",
+      "theory": "Theory",
+      "writing": "Writing",
+      "exercise": "Exercise",
+      "keep": "Keep for later",
+      "delete": "Delete"
+    },
+    "searchPlaceholder": "Search captures…",
+    "sortBy": "Sort by",
+    "sortNewest": "Newest first",
+    "sortOldest": "Oldest first",
+    "sortNameAsc": "Name (A → Z)",
+    "sortNameDesc": "Name (Z → A)",
+    "noResultsTitle": "No matches",
+    "noResultsDescription": "Try another search, or clear it to see everything in this tab."
+  },
+  "reviewLater": {
+    "add": "Review later",
+    "remove": "Remove from review later"
   },
   "folders": {
     "new": "New folder",
@@ -113,6 +246,7 @@
   },
   "header": {
     "createWorkspace": "Create workspace",
+    "createWorkspaceHint": "Add another language workspace",
     "switchWorkspace": "Switch workspace",
     "switchFailed": "Could not switch workspace"
   },
@@ -494,6 +628,7 @@
       "pastedImageTitle": "Pasted image",
       "importAction": "Import & generate",
       "unlockPro": "Unlock with Pro",
+      "lockedDescription": "Upgrade to Pro to turn worksheets and notes into AI practice cards.",
       "myImports": "My imports",
       "searchPlaceholder": "Search by title…",
       "noResults": "No imports match that title",
@@ -760,7 +895,7 @@
       "unavailable": "Could not generate questions right now. Please try again later.",
       "forbidden": "AI exercise generation is available with Pro.",
       "disabled": "AI assistance is turned off in Settings.",
-      "upgradeHint": "AI exercise generation is available with Pro.",
+      "upgradeHint": "Free includes a few AI exercise generations each day. Pro removes the limit.",
       "emptyWords": "Add vocabulary words before generating questions.",
       "noneValid": "AI could not create valid questions for these words. Try again."
     },
@@ -871,6 +1006,12 @@
     "disabledNoWorkspace": "Create a workspace before adding writing documents.",
     "create": "Create writing",
     "createFirst": "Create your first writing",
+    "learningNote": {
+      "create": "Learning note",
+      "filter": "Learning notes",
+      "filterLabel": "Kind",
+      "badge": "Learning note"
+    },
     "onTheDesk": "On the desk",
     "library": "Library",
     "allWritings": "All writings",
@@ -1040,6 +1181,9 @@
       "success": "Download started",
       "failed": "Export failed",
       "empty": "Add at least one question or some document content before exporting",
+      "preparing": "Preparing export…",
+      "writingFile": "Saving file…",
+      "progressCount": "{current} / {total}",
       "documentHeading": "Writing",
       "titleLabel": "Title",
       "descriptionLabel": "Description",
@@ -1051,6 +1195,7 @@
   },
   "flashcards": {
     "title": "Flashcards",
+    "weakTitle": "Practice difficult words",
     "mode": "mode",
     "description": "Study vocabulary with smooth flip cards, keyboard shortcuts, and spaced-repetition ratings.",
     "noWorkspace": "Create a workspace before starting a flashcard session.",
@@ -1120,7 +1265,7 @@
     "guideTitle": "How to use Notoria",
     "guideTagline": "Your language. Your knowledge. Your learning diary.",
     "guideSubtitle": "Notoria is a private, personal workspace — not a traditional course that tells you what to learn. You choose your language, your words, your grammar notes, your examples, and the materials you want to practice with.",
-    "guideSubtitleSecondary": "Your workspace grows with your learning journey. Start with Vocabulary and Theory, then turn what you collect into exercises, writing, listening, and speaking.",
+    "guideSubtitleSecondary": "Your workspace grows with your learning journey. Start with Capture for quick scraps, then Vocabulary and Theory — and turn what you collect into exercises, writing, listening, and speaking.",
     "guideFullCtaPrompt": "Want to learn more about how Notoria works?",
     "guideFullCta": "Read the full guide",
     "modulesTitle": "Explore the workspace",
@@ -1130,6 +1275,10 @@
     "unlock": "Unlock Pro",
     "open": "Open",
     "steps": {
+      "inbox": {
+        "title": "Capture",
+        "body": "Drop a word, phrase, grammar doubt, or writing idea in seconds — no need to decide where it belongs yet. Add an optional note or source, keep items in To process, then turn a capture into Vocabulary, Theory, Writing, or Exercise when you have time. An item is marked Processed only after you finish creating that linked entry."
+      },
       "vocabulary": {
         "title": "Vocabulary",
         "body": "Add your own words and phrases with meanings, example sentences, pronunciation, and tags. Organize by topic, level, or situation — then reuse them in exercises and review. Start with words from daily life, lessons, books, or media; your library becomes the foundation for practice."
@@ -1183,13 +1332,13 @@
       "listening": {
         "title": "Listening",
         "description": "Turn real audio or video into a lesson.",
-        "how": "Upload a clip, read the transcript, then practice. This whole module is Pro.",
+        "how": "Upload a clip and generate a transcript on Free. Generated listening practice is part of Pro.",
         "cta": "Open listening"
       },
       "speaking": {
         "title": "Speaking",
         "description": "Live video conversation with an AI tutor.",
-        "how": "Create a session, join the call, then review the transcript and summary. Pro only.",
+        "how": "Create a session and join the call. Free includes one AI meeting per day, tutor included.",
         "cta": "Open speaking"
       }
     },
@@ -1221,6 +1370,42 @@
     "quickOpenSpeaking": "Open speaking",
     "nextStepTitle": "Next step",
     "continueEmpty": "Nothing to resume yet — add a theory note, writing piece, listening lesson, or speaking session and it will show up here.",
+    "inbox": {
+      "title": "Capture",
+      "subtitle": "Quick notes waiting to be sorted into your library.",
+      "count": "{count, plural, =0 {Nothing waiting} one {# item to process} other {# items to process}}",
+      "cta": "Open Capture"
+    },
+    "reviewLater": {
+      "title": "Review later",
+      "subtitle": "Items you bookmarked for a second look.",
+      "empty": "Bookmark something from vocabulary, theory, or writing and it will show up here."
+    },
+    "recentActivity": {
+      "title": "Recent activity",
+      "subtitle": "What you created or processed lately.",
+      "empty": "Activity will appear here as you add and process study material.",
+      "untitled": "Untitled",
+      "verbs": {
+        "created": "Created {entity}: {title}",
+        "updated": "Updated {entity}: {title}",
+        "completed": "Completed {entity}: {title}",
+        "processed": "Processed inbox: {title}",
+        "review_later_added": "Marked for review: {title}",
+        "review_later_removed": "Removed from review: {title}"
+      },
+      "verbLabels": {
+        "created": "Created",
+        "updated": "Updated",
+        "completed": "Completed",
+        "processed": "Processed",
+        "review_later_added": "Review later",
+        "review_later_removed": "Unmarked"
+      }
+    },
+    "learningNote": {
+      "label": "Latest learning note"
+    },
     "loopEyebrow": "The loop",
     "loopTitle": "Collect, practice, then use it",
     "loopSubtitle": "Notoria works best as a cycle: save what you meet, drill it briefly, then put it back into real writing, listening, and speaking.",
@@ -1617,6 +1802,37 @@
           "body": "Open a session to read the transcript and feedback. Use it to spot mistakes, reuse useful phrases, and decide what to add to your diary next."
         }
       }
+    },
+    "inbox": {
+      "title": "Capture",
+      "description": "Save scraps fast — words, doubts, ideas — then turn them into real study items when you have a moment.",
+      "cta": "Got it",
+      "steps": {
+        "capture": {
+          "title": "1. Capture something",
+          "body": "Use Capture to save a word, phrase, grammar doubt, or writing idea without deciding where it belongs yet. Speed matters more than perfect structure here."
+        },
+        "filters": {
+          "title": "2. To process vs processed",
+          "body": "To process holds items still waiting. Processed shows captures you already turned into vocabulary, theory, writing, or exercises."
+        },
+        "search": {
+          "title": "3. Search",
+          "body": "Filter the current tab by content, note, or source so you can find a capture quickly."
+        },
+        "sort": {
+          "title": "4. Sort",
+          "body": "Sort by newest, oldest, or name so the list matches how you want to work through it."
+        },
+        "list": {
+          "title": "5. Your capture list",
+          "body": "Each card shows the content, optional note/source, and when you saved it. Open the ··· menu on a card to process it."
+        },
+        "process": {
+          "title": "6. Process into Notoria",
+          "body": "Send a capture to Vocabulary, Theory, Writing, or Exercise. It only becomes Processed after you finish saving there — canceling the create form leaves it waiting."
+        }
+      }
     }
   },
   "settings": {
@@ -1890,6 +2106,9 @@
       "success": "Download started",
       "failed": "Export failed",
       "empty": "Add some content before exporting",
+      "preparing": "Preparing export…",
+      "writingFile": "Saving file…",
+      "progressCount": "{current} / {total}",
       "documentHeading": "Theory",
       "titleLabel": "Title",
       "descriptionLabel": "Description"
@@ -2042,6 +2261,7 @@
       "INVALID_FILE": "Choose an MP3 or MP4 file.",
       "INVALID_FILE_TYPE": "Only MP3 and MP4 files are supported.",
       "FILE_TOO_LARGE": "That file is too large. Use a file under 25 MB.",
+      "AUDIO_TOO_LONG": "That audio is longer than 45 minutes. Split it or use a shorter clip for one transcript.",
       "TRANSCRIPTION_FAILED": "We could not transcribe that audio. Try again.",
       "GENERATION_FAILED": "We could not generate exercises. Try again.",
       "GENERATION_UNAVAILABLE": "Exercise generation is unavailable right now. Please try again later.",
@@ -2141,7 +2361,8 @@
       "endedTitle": "Call ended",
       "endedDescription": "Feedback will appear on the session page in a few moments.",
       "back": "Back to session",
-      "notConfigured": "Video calling is not configured yet. Add Stream Video API keys to start a call."
+      "notConfigured": "Video calling is not configured yet. Add Stream Video API keys to start a call.",
+      "sessionLimitReached": "This speaking session reached the 30-minute fair-use limit and has ended."
     },
     "errors": {
       "STREAM_NOT_CONFIGURED": "Video calling is not configured.",
@@ -2259,10 +2480,12 @@
     "eyebrow": "Account",
     "title": "Your",
     "highlight": "account",
-    "description": "Manage your profile, Notoria Pro, data export, and account security — including permanently closing your account.",
+    "description": "Manage your profile, subscription, data export and import, and account security — including permanently closing your account.",
     "pro": {
-      "freeLede": "Free covers everyday practice. Pro unlocks the AI tools that turn your notes into listening, speaking, writing help, and printable files.",
-      "activeLede": "Your Pro plan is active. These AI learning tools stay unlocked while your subscription renews.",
+      "freeLede": "Free includes core learning and a small daily AI allowance. Pro removes those limits.",
+      "activeLede": "Pro is active. Current AI tools stay unlimited while the subscription renews.",
+      "premiumLede": "Premium is active. Your coach uses the study activity already stored in Notoria.",
+      "premiumIncluded": "Included with Premium",
       "unlockLabel": "Unlock with Pro",
       "includedLabel": "Included with your Pro plan",
       "features": {
@@ -2284,12 +2507,74 @@
     },
     "data": {
       "title": "Your data",
-      "description": "Download a copy of your learning data whenever you need it.",
+      "description": "Download a copy of your learning data whenever you need it, or restore from a previous backup.",
       "exportTitle": "Export account backup",
       "exportHint": "Downloads a JSON file with your workspaces and learning content. Media files are linked by URL, not embedded.",
       "exportAction": "Download backup",
       "exportDone": "Backup downloaded",
-      "exportFailed": "Could not prepare your backup. Try again."
+      "exportFailed": "Could not prepare your backup. Try again.",
+      "importTitle": "Import account backup",
+      "importHint": "Restore your Notoria learning data from a previous account backup. Your account, login, and subscription information won't be changed.",
+      "importAction": "Import backup"
+    },
+    "backupImport": {
+      "title": "Restore your Notoria learning data",
+      "description": "Import a JSON backup exported from Notoria. Only learning data is restored — not your account identity or subscription.",
+      "uploadHint": "Choose a JSON file from Export account backup.",
+      "chooseFile": "Choose backup file",
+      "analyzing": "Checking backup…",
+      "detectedTitle": "Notoria account backup detected",
+      "strategyTitle": "How should we import this backup?",
+      "strategyAddAsNew": "Add as new data — creates a new copy without replacing your existing learning data. Workspaces that already exist for the same language receive the backup content instead of being duplicated.",
+      "readyTitle": "Ready to import",
+      "nothingToImport": "Nothing new to import from this backup.",
+      "notImportedTitle": "Some account information won't be imported",
+      "notImportedHint": "Your name, email, login information, and subscription are managed by your current account and cannot be changed by a backup import. Your learning data can still be imported.",
+      "notImportedFields": {
+        "name": "Account name",
+        "email": "Email",
+        "subscription": "Subscription",
+        "auth": "Authentication information"
+      },
+      "skippedTitle": "May be skipped",
+      "warnings": {
+        "workspace_language_reuse": "Some workspaces already exist for the same language. Their content will be added into your existing workspaces instead of creating duplicates.",
+        "empty_backup": "This backup does not contain any importable learning data."
+      },
+      "cancel": "Cancel",
+      "confirm": "Import learning data",
+      "close": "Close",
+      "doneTitle": "Learning data imported",
+      "doneDescription": "Your backup learning data has been added to this account.",
+      "doneToast": "Learning data imported",
+      "importedTitle": "Imported",
+      "counts": {
+        "workspaces": "{count, plural, one {# workspace} other {# workspaces}}",
+        "folders": "{count, plural, one {# folder} other {# folders}}",
+        "tags": "{count, plural, one {# tag} other {# tags}}",
+        "vocabulary": "{count, plural, one {# vocabulary item} other {# vocabulary items}}",
+        "theory": "{count, plural, one {# theory page} other {# theory pages}}",
+        "writing": "{count, plural, one {# writing document} other {# writing documents}}",
+        "exercises": "{count, plural, one {# exercise} other {# exercises}}",
+        "listening": "{count, plural, one {# listening lesson} other {# listening lessons}}",
+        "speaking": "{count, plural, one {# speaking session} other {# speaking sessions}}"
+      },
+      "skips": {
+        "workspace_language_exists": "{count, plural, one {# workspace already exists for that language} other {# workspaces already exist for that language}}",
+        "vocabulary_duplicate": "{count, plural, one {# vocabulary item already exists} other {# vocabulary items already exist}}",
+        "listening_missing_media": "{count, plural, one {# listening lesson missing media URL} other {# listening lessons missing media URLs}}",
+        "listening_duplicate_filename": "{count, plural, one {# listening lesson skipped (duplicate filename)} other {# listening lessons skipped (duplicate filename)}}",
+        "invalid_workspace_ref": "{count, plural, one {# item with missing workspace} other {# items with missing workspace}}",
+        "invalid_record": "{count, plural, one {# invalid record} other {# invalid records}}",
+        "unsupported_account_field": "Account identity fields are not imported"
+      },
+      "errors": {
+        "fileTooLarge": "That backup file is too large. Try exporting again or contact support.",
+        "invalidBackup": "This doesn't look like a valid Notoria backup. Please use a JSON file exported from Notoria's Export account backup feature.",
+        "unauthorized": "Please sign in again to import a backup.",
+        "invalidInput": "Please choose a JSON backup file.",
+        "importFailed": "Could not import this backup. Try again."
+      }
     },
     "danger": {
       "title": "Close account",
@@ -2321,47 +2606,206 @@
     }
   },
   "billing": {
-    "title": "Notoria Pro",
-    "description": "Unlock AI-powered learning features.",
+    "title": "Subscription",
+    "description": "Core learning, a daily AI allowance, and paid plans.",
     "proDescription": "You currently have Notoria Pro.",
-    "tagline": "Unlock AI-powered learning features.",
+    "tagline": "Core learning plus a daily AI allowance.",
     "price": "€9.99 / month",
     "priceAmount": "€9.99",
-    "pricePeriod": "per month billed monthly",
+    "pricePeriod": "/month",
+    "introFirstMonthOnly": "First month only · Then {price}/month",
+    "introCheckoutHint": "First month {intro}, then {price}/month. Cancel anytime.",
     "freePrice": "€0",
     "mostPopular": "Most Popular",
     "currentPlan": "Current Plan",
     "choosePro": "Choose Pro",
-    "freePlanDescription": "Core practice, vocab AI help, writing, and CSV.",
-    "proPlanDescription": "AI exercises, writing help, listening, speaking, and PDF/Word.",
+    "freePlanDescription": "Start learning with the essentials.",
+    "proPlanDescription": "The complete Notoria toolkit.",
+    "premiumPlanDescription": "Personalized AI learning intelligence.",
+    "distinction": "Pro gives you the tools. Premium helps you use them intelligently.",
+    "modalTitle": "Upgrade your Notoria plan",
+    "modalSubtitle": "Free covers the essentials. Pro unlocks the full toolkit. Premium adds personalized learning intelligence.",
+    "modalTitlePro": "You're on Pro",
+    "modalSubtitlePro": "You already have the complete Notoria toolkit. Premium adds personalized learning intelligence.",
+    "modalTitlePremium": "You're on Premium",
+    "modalSubtitlePremium": "Personalized learning intelligence is active.",
+    "premiumActiveCopy": "Your coach uses this workspace’s real learning activity to suggest what to do next.",
+    "premiumActiveFineprint": "Manage billing anytime in Stripe.",
+    "lockedTitle": "This is a Pro feature",
+    "lockedDescription": "Upgrade to Pro for Notoria's core AI toolkit, file import, full listening practice, writing support, and PDF/Word export.",
+    "planName": "Notoria",
+    "cancelAnytime": "Cancel anytime",
     "upgrade": "Upgrade to Pro",
     "manage": "Manage subscription",
     "proBadge": "Pro",
     "freeBadge": "Free",
+    "premiumBadge": "Premium",
     "renewsOn": "Renews on {date}",
+    "status": "Status: {status}",
+    "monthlyPrice": "{price} / month",
+    "usageToday": "AI usage today",
+    "quotaCount": "{used} / {limit}",
+    "unlimitedAi": "Core AI toolkit",
+    "quotaExceeded": "You've used today's allowance for this AI feature. It resets at UTC midnight — or upgrade for a higher limit.",
+    "explorePremium": "Explore Premium",
+    "switchTo": "Switch to {plan}",
+    "switchToFreeHint": "You keep this plan until the renewal date, then move to Free.",
+    "switchScheduled": "You'll move to Free when this billing period ends.",
+    "downgradeScheduled": "Switch to Pro scheduled",
+    "planUpdated": "Your plan has been updated.",
+    "continueToStripe": "Continue to Stripe",
+    "upgradeToPremium": "Upgrade to Premium",
+    "switchToPro": "Switch to Pro",
+    "switchToFree": "Switch to Free",
+    "cancelPro": "Cancel Pro",
+    "cancelPremium": "Cancel Premium",
+    "keepPro": "Keep Pro",
+    "keepPremium": "Keep Premium",
+    "changePlan": "Change plan",
+    "manageBilling": "Manage billing",
+    "cancellationScheduled": "Cancellation scheduled",
+    "accessUntil": "Your {plan} access remains active until {date}.",
+    "thenFree": "After that, your account will switch to Free.",
+    "endsOn": "Ends {date}",
+    "startsOn": "Starts {date}",
+    "periodEndFallback": "the end of this billing period",
+    "confirming": "Payment received. Confirming your subscription…",
+    "confirmingChange": "Confirming your subscription…",
+    "stillConfirming": "Stripe is still confirming this change. Your plan updates when Stripe does.",
+    "nowOnPro": "You're now on Pro.",
+    "nowOnPremium": "You're now on Premium.",
+    "keptPlan": "Your {plan} plan will keep renewing.",
+    "paymentFailed": "The payment did not complete. Your plan was not changed.",
+    "priceMissing": "The price for this plan does not exist in this Stripe account. Check that the price id matches the secret key's mode.",
+    "priceModeMismatch": "This Stripe price belongs to a different mode than the secret key.",
+    "priceInactive": "This Stripe price is not active.",
+    "priceCurrency": "This Stripe price must be billed in EUR.",
+    "priceInterval": "This Stripe price must be a monthly subscription.",
+    "prorationHint": "The price changes now. Stripe charges or credits the prorated difference immediately.",
+    "confirmUpgradeTitle": "Switch to Premium?",
+    "confirmUpgradeBody": "Premium replaces Pro on your current subscription now. Stripe charges the prorated difference immediately. This does not start a second subscription. Any scheduled cancellation is removed.",
+    "confirmDowngradeTitle": "Switch to Pro?",
+    "confirmDowngradeBody": "You'll keep all Premium features until {date}. After that, your subscription continues as Pro at €9.99/month. Your current plan stays Premium until then.",
+    "downgradeScheduleHint": "Premium stays active until {date}. Pro starts after that — nothing changes immediately.",
+    "switchingToProOn": "Switching to Pro on {date}. Premium access remains active until then.",
+    "confirmCancelTitle": "Cancel {plan}?",
+    "confirmCancelBody": "Your {plan} access remains active until {date}. After that, your account moves to Free. You will not be charged again.",
+    "confirmKeepTitle": "Keep {plan}?",
+    "confirmKeepBody": "The scheduled cancellation will be removed. {plan} keeps renewing, and the next charge is on {date}.",
+    "back": "Back",
+    "choosePremium": "Choose Premium",
+    "openCoach": "Open learning coach",
+    "alreadySubscribed": "You already have this plan.",
     "activating": "Confirming your subscription…",
-    "checkoutSuccess": "Payment received. Pro will activate shortly.",
+    "checkoutSuccess": "Payment received. Your plan will activate shortly.",
     "checkoutCanceled": "Checkout was canceled. You were not charged.",
     "checkoutFailed": "Could not start checkout. Please try again.",
     "portalFailed": "Could not open billing management. Please try again.",
     "alreadyPro": "You already have an active Pro subscription.",
     "notConfigured": "Billing is not configured yet.",
     "noCustomer": "No billing customer is linked to this account yet.",
-    "modalTitle": "Upgrade Plan",
-    "modalSubtitle": "Free covers everyday practice and your library. Pro unlocks AI exercises, writing help, listening, speaking, and printable files.",
-    "lockedTitle": "This is a Pro feature",
-    "lockedDescription": "Upgrade for AI exercises, writing help, listening, speaking, and PDF/Word export.",
-    "planName": "Pro",
-    "cancelAnytime": "Cancel anytime",
+    "points": {
+      "core": "Flashcards, writing, theory notes, and CSV export",
+      "meeting": "1 speaking tutor call per day",
+      "transcript": "1 listening transcript per day",
+      "exercises": "3 AI exercise generations per day",
+      "vocabulary": "5 vocabulary AI actions per day",
+      "unlimited": "Unlimited exercise generation, vocabulary AI, and writing support",
+      "import": "Import learning material",
+      "practiceFromMaterial": "AI practice from worksheets",
+      "listening": "10 listening transcripts per day",
+      "speaking": "10 speaking tutor calls per day",
+      "writing": "AI Writing Support",
+      "export": "PDF and DOCX export",
+      "coach": "AI learning coach from your activity",
+      "askCoach": "Ask your AI Learning Coach — progress, vocabulary, grammar, theory, translations, and what to practice next",
+      "profile": "Personal learning profile",
+      "daily": "Adaptive practice for today",
+      "weekly": "Weekly learning review",
+      "mistakes": "Practice from flashcard misses"
+    },
+    "quotaLabels": {
+      "ai_meeting": "AI Speaking Tutor",
+      "ai_listening_transcript": "AI Listening Transcript",
+      "ai_exercise": "AI Exercise generation",
+      "ai_exercise_import": "AI practice from worksheets",
+      "ai_vocabulary": "AI Vocabulary actions",
+      "ai_writing": "AI Writing Support",
+      "ai_learning_coach_chat": "AI Learning Coach",
+      "content_import": "Import learning material"
+    },
+    "cell": {
+      "unlimited": "Unlimited",
+      "limited": "Limited",
+      "perDay": "{count}/day",
+      "quotaPerDay": {
+        "ai_meeting": "{count, plural, one {# call/day} other {# calls/day}}",
+        "ai_listening_transcript": "{count, plural, one {# transcript/day} other {# transcripts/day}}",
+        "ai_exercise": "{count, plural, one {# generation/day} other {# generations/day}}",
+        "ai_exercise_import": "{count, plural, one {# generation/day} other {# generations/day}}",
+        "ai_vocabulary": "{count, plural, one {# action/day} other {# actions/day}}",
+        "ai_writing": "{count, plural, one {# action/day} other {# actions/day}}",
+        "content_import": "{count, plural, one {# import/day} other {# imports/day}}",
+        "ask_learning_coach": "{count, plural, one {# message/day} other {# messages/day}}"
+      },
+      "includedSr": "Included",
+      "unavailableSr": "Not available"
+    },
+    "features": {
+      "vocabulary": "Vocabulary",
+      "exercises": "Exercises",
+      "theory": "Theory",
+      "workspace": "Workspace",
+      "aiMeeting": "AI Meeting",
+      "aiListeningTranscript": "AI Listening Transcript",
+      "aiExercise": "AI Exercise generation",
+      "aiVocabulary": "AI Vocabulary actions",
+      "aiSpeakingTutor": "AI Speaking Tutor",
+      "aiWriting": "AI Writing",
+      "aiWritingSupport": "AI Writing Support",
+      "importLearningMaterial": "Import learning material",
+      "exportLearningMaterial": "Export learning material",
+      "importExportLearningMaterial": "Import & export material",
+      "importAccountBackup": "Import account backup",
+      "importExportAccountBackup": "Import & export account backup",
+      "aiPracticeFromMaterial": "AI practice from worksheets",
+      "practiceFromMaterial": "AI practice from worksheets",
+      "listening": "Listening",
+      "speaking": "Speaking",
+      "pdfDocxExport": "Export learning material",
+      "learningCoach": "Learning Coach",
+      "askLearningCoach": "Ask your AI Learning Coach",
+      "learningProfile": "Personal Learning Profile",
+      "adaptiveDailyPractice": "Adaptive Daily Practice",
+      "practiceFromMistakes": "Practice From Mistakes",
+      "weeklyLearningReview": "Weekly Learning Review",
+      "learningTrends": "Learning Trends",
+      "personalLearningPath": "Personal Learning Path",
+      "personalizedRecommendations": "Personalized recommendations",
+      "crossModuleIntelligence": "Cross-module personalization"
+    },
     "compare": {
+      "heading": "Compare plans",
+      "premiumDelta": "Premium adds personalized learning intelligence",
+      "tableCaption": "Feature comparison across Free, Pro, and Premium",
+      "feature": "Feature",
+      "current": "Current",
       "capability": "What you get",
       "free": "Free",
       "pro": "Pro",
+      "premium": "Premium",
       "freeIncludes": "Included on Free",
-      "proUnlocks": "Pro unlocks",
+      "proUnlocks": "Pro adds",
+      "premiumAdds": "Premium adds",
       "impact": "Why it matters",
       "yes": "Yes",
       "locked": "Locked",
+      "categories": {
+        "core": "Core learning",
+        "ai": "AI tools",
+        "export": "Import & export",
+        "personalized": "Personalized learning"
+      },
       "rows": {
         "practice": {
           "capability": "Flashcards, match pairs, quizzes & type-answer",
@@ -2440,6 +2884,222 @@
       }
     }
   },
+  "coach": {
+    "eyebrow": "Premium",
+    "title": "Learning",
+    "highlight": "coach",
+    "description": "A personalized view of how you're learning and what to focus on next.",
+    "descriptionIntelligence": "What to do next, why it matters, and how your learning is changing.",
+    "lockedTitle": "This feature is part of Notoria Premium.",
+    "lockedBody": "Premium turns your vocabulary, reviews, listening, speaking, writing, and theory activity into a focused practice plan.",
+    "distinction": "Pro gives you the tools. Premium helps you use them intelligently.",
+    "upgrade": "Upgrade to Premium",
+    "noteLabel": "Coach note",
+    "focusLabel": "Your learning focus",
+    "focusCta": "Start here",
+    "profile": "Learning profile",
+    "profileTitle": "Where you stand",
+    "today": "Today's focus",
+    "todayTitle": "What to do next",
+    "plan": "Adaptive practice",
+    "planTitle": "Today's {minutes}-minute plan",
+    "planMinutes": "~{count} min",
+    "startStep": "Start",
+    "startPlan": "Start today's practice",
+    "mistakes": "Practice from mistakes",
+    "mistakesTitle": "Words that need attention",
+    "practiceMistakes": "Practice these words",
+    "path": "Learning path",
+    "pathTitle": "Your learning path",
+    "pathCurrent": "Current focus",
+    "pathNext": "Next",
+    "pathThen": "Then",
+    "pathLater": "Later",
+    "cross": "Connections",
+    "crossTitle": "Across your modules",
+    "crossHints": {
+      "theory_to_practice": "Practice what you just studied",
+      "vocab_to_speaking": "Use weak words in speaking"
+    },
+    "week": "Your week",
+    "weekTitle": "Last 7 days",
+    "trends": "Learning trends",
+    "trendsTitle": "Since last week",
+    "trendsEmpty": "Your learning trends will appear here as you build more activity.",
+    "language": "Workspace language",
+    "speakingLevel": "Speaking",
+    "vocabulary": "Vocabulary",
+    "vocabularyEmpty": "No vocabulary words yet",
+    "reviews": "Flashcard reviews",
+    "misses": "Again / Hard",
+    "listening": "Listening",
+    "speaking": "Speaking",
+    "writing": "Writing",
+    "theory": "Theory",
+    "due": "{count} cards due for review",
+    "weak": "Words marked again or hard: {words}",
+    "weakShort": "{words}",
+    "noWeak": "No again or hard flashcard ratings yet.",
+    "empty": "Your learning coach is getting to know you. Keep learning across Notoria and your coach will start identifying patterns and recommendations here.",
+    "hintSpeaking": "No speaking sessions in the last 7 days",
+    "hintListening": "No listening lessons updated recently",
+    "hintWriting": "No writing documents updated recently",
+    "hintTheory": "No theory notes updated recently",
+    "refresh": "Update coach",
+    "refreshed": "Coach updated from your latest activity.",
+    "refreshFailed": "Could not update the coach. Please try again.",
+    "ask": {
+      "label": "Ask your coach",
+      "title": "Ask your Learning Coach",
+      "description": "Ask anything about your learning — progress, what to practice next, vocabulary, grammar, theory, translations, or any study content you paste. Answers follow the language of your question.",
+      "emptyReady": "Your Coach is ready. I don't know your learning habits yet, so ask about a word, a grammar point, or what to practice first.",
+      "placeholder": "Ask your Learning Coach...",
+      "inputHint": "Press Enter to send. Shift+Enter for a new line.",
+      "send": "Send message",
+      "thinking": "Coach is thinking…",
+      "you": "You",
+      "coach": "Coach",
+      "promptsLabel": "Suggested questions",
+      "retry": "Try again",
+      "upgrade": "Upgrade to Premium",
+      "errorQuota": "You've reached today's Learning Coach limit. Your Coach will be available again tomorrow.",
+      "errorPremium": "Learning Coach is a Premium feature. Get personalized recommendations based on your learning activity.",
+      "errorUnavailable": "Your Coach couldn't respond right now. Your message wasn't counted. Please try again.",
+      "prompts": {
+        "practice_today": "What should I focus on today?",
+        "struggling_words": "Why am I struggling with these words?",
+        "practice_weak": "Help me practice my weak words.",
+        "review_first": "What should I review first?",
+        "neglecting": "What have I been neglecting?",
+        "improve_speaking": "Why haven't I improved in speaking?",
+        "study_20": "How should I spend 20 minutes today?",
+        "getting_started": "What should I practice first?",
+        "am_i_improving": "Am I actually improving?",
+        "what_changed": "What changed in my learning this week?"
+      }
+    },
+    "next": {
+      "label": "Decide",
+      "title": "Your next move",
+      "planTitle": "Today's recommended practice",
+      "whyOrder": "Why this order? Due and difficult vocabulary first, then the module you've been neglecting.",
+      "cta": "Start today's practice"
+    },
+    "why": {
+      "title": "Why this?",
+      "due": "{count} vocabulary cards are due",
+      "weak": "{count} words have been repeatedly difficult",
+      "reviews": "{count} flashcard reviews in the last 7 days",
+      "speakingIdle": "No speaking session in the last 7 days",
+      "listeningIdle": "No listening activity in the last 7 days",
+      "writingIdle": "No writing updates in the last 7 days",
+      "theoryIdle": "No theory notes updated in the last 7 days",
+      "focus": "Current focus: {focus}"
+    },
+    "chips": {
+      "due": "{count} cards due",
+      "weak": "{count} difficult words",
+      "speakingIdle": "No speaking session in 7 days",
+      "mastered": "{count} mastered now",
+      "dueLabel": "Due cards",
+      "weakLabel": "Difficult words"
+    },
+    "quick": {
+      "label": "Context",
+      "title": "Quick context"
+    },
+    "progress": {
+      "label": "Measure",
+      "title": "Your progress",
+      "description": "See what has changed in your learning — and what your Coach notices.",
+      "empty": "You're just getting started. Keep learning and your Coach will start showing meaningful progress over time.",
+      "chartEmpty": "Not enough event history yet for this chart. Keep reviewing or speaking and a trend will appear.",
+      "chartSr": "{metric} over the last {days} days, from {from} to {to} in the latest buckets.",
+      "activityTitle": "Learning activity — last {days} days",
+      "activityNote": "Activity shows where you spent time — not whether that time improved skill.",
+      "compareLabel": "Period comparison",
+      "noticesTitle": "What your Coach notices",
+      "askAbout": "Ask your Coach about this",
+      "periodLabel": "Progress period",
+      "metricLabel": "Chart metric",
+      "period": {
+        "7": "7 days",
+        "30": "30 days",
+        "90": "90 days"
+      },
+      "metrics": {
+        "flashcardReviews": "Reviews",
+        "againOrHard": "Difficult ratings",
+        "speakingSessions": "Speaking sessions"
+      },
+      "tooltip": {
+        "weekOf": "Week of {date}",
+        "firstAt": "First activity {time}",
+        "reviews": "{count, plural, one {# flashcard review} other {# flashcard reviews}}",
+        "againOrHard": "{count, plural, one {# Again/Hard rating} other {# Again/Hard ratings}}",
+        "speaking": "{count, plural, one {# speaking session} other {# speaking sessions}}",
+        "none": "No activity in this period",
+        "words": "Words: {list}",
+        "topics": "Topics: {list}"
+      },
+      "streak": {
+        "label": "Streak",
+        "days": "{count, plural, one {day streak} other {day streak}}",
+        "practicedToday": "You practiced today — streak is safe.",
+        "keepGoing": "Practice today to keep your streak going.",
+        "start": "Learn something today to start a streak.",
+        "weekLabel": "Last 7 days",
+        "best": "Best streak: {count, plural, one {# day} other {# days}}",
+        "dayEmpty": "No learning activity this day",
+        "dayActive": "Learning activity recorded",
+        "dayReviews": "{count, plural, one {# flashcard review} other {# flashcard reviews}}",
+        "daySpeaking": "{count, plural, one {# speaking session} other {# speaking sessions}}",
+        "dayListening": "{count, plural, one {# listening update} other {# listening updates}}",
+        "dayWriting": "{count, plural, one {# writing update} other {# writing updates}}",
+        "dayTheory": "{count, plural, one {# theory update} other {# theory updates}}"
+      }
+    },
+    "notices": {
+      "reviews_up": "Flashcard review activity is higher than in the previous period.",
+      "reviews_down": "Flashcard review activity is lower than in the previous period.",
+      "misses_down": "Again/Hard ratings decreased compared with the previous period.",
+      "misses_up": "Again/Hard ratings increased compared with the previous period.",
+      "speaking_quiet": "Speaking sessions are still low relative to your vocabulary activity.",
+      "speaking_up": "Speaking sessions increased compared with the previous period.",
+      "due_open": "You still have cards due for review.",
+      "weak_open": "Some words remain repeatedly difficult.",
+      "getting_started": "There isn’t enough history yet for a strong progress reading."
+    },
+    "attention": {
+      "label": "Act",
+      "title": "What needs attention",
+      "dueTitle": "{count} cards due",
+      "dueBody": "Review your due vocabulary so overdue cards don’t pile up.",
+      "weakTitle": "{count} repeatedly difficult words",
+      "weakBody": "Practice these words: {words}",
+      "review": "Review",
+      "practice": "Practice"
+    },
+    "rating": {
+      "AGAIN": "Again",
+      "HARD": "Hard"
+    },
+    "status": {
+      "MASTERED": "Mastered",
+      "REVIEW": "Review",
+      "LEARNING": "Learning",
+      "NEW": "New"
+    },
+    "focus": {
+      "review-due": "Review due vocabulary",
+      "weak-words": "Practice difficult words",
+      "listening": "Add or revisit a listening lesson",
+      "speaking": "Start speaking practice",
+      "writing": "Open your writing studio",
+      "theory": "Open your theory notes",
+      "keep-going": "Keep the rhythm you already have"
+    }
+  },
   "gettingStarted": {
     "backToWorkspace": "Back to workspace",
     "meta": {
@@ -2459,7 +3119,8 @@
       "speaking": "Speaking",
       "connections": "Your knowledge becomes practice",
       "philosophy": "Your learning diary",
-      "startHere": "Start here"
+      "startHere": "Start here",
+      "inbox": "Capture"
     },
     "welcome": {
       "title": "What is Notoria?",
@@ -2501,7 +3162,7 @@
       "steps": {
         "collect": {
           "title": "1. Collect your knowledge",
-          "body": "Add vocabulary and theory from lessons, conversations, books, media, or anywhere you encounter the language."
+          "body": "Use Capture for quick scraps, then add vocabulary and theory from lessons, conversations, books, media, or anywhere you meet the language."
         },
         "understand": {
           "title": "2. Understand it",
@@ -2615,6 +3276,27 @@
           "Read feedback and identify areas to improve"
         ],
         "emphasis": "Speaking doesn't need to be perfect. The purpose is to practice using the language in a realistic situation — then learn from what happened."
+      },
+      "inbox": {
+        "title": "Capture",
+        "intro": "Capture is your quick drop zone — save something the moment you meet it, then decide later where it belongs.",
+        "bullets": [
+          "Save a word, phrase, grammar doubt, or writing idea in seconds",
+          "Add an optional note or source for context",
+          "Keep items in To process until you are ready",
+          "Turn a capture into Vocabulary, Theory, Writing, or Exercise when you have time",
+          "An item is marked Processed only after you finish creating that linked entry"
+        ],
+        "body": "Capture sits at the start of the loop: collect first, organize second. You do not need a perfect category in the moment — you need the thought saved.",
+        "emphasis": "If you only have ten seconds, capture is enough. Sorting can wait.",
+        "exampleIntro": "For example, you overhear a phrase on the bus and only have a moment:",
+        "examples": [
+          "Content: varata aika",
+          "Note: heard on the bus — booking an appointment",
+          "Source: daily life",
+          "Later: process into Vocabulary with meaning and an example"
+        ],
+        "exampleNote": "The scrap is safe in Capture. When you have five quiet minutes, send it to Vocabulary (or Theory / Writing) and finish the entry — only then is it Processed."
       }
     },
     "connections": {
@@ -2629,6 +3311,7 @@
         "addMore": "Add more knowledge"
       },
       "paragraphs": [
+        "Capture holds the scraps until you are ready to place them.",
         "What you collect in Vocabulary and Theory becomes the source for your exercises.",
         "Writing and Listening help you use and understand the language in new contexts.",
         "Speaking puts it all into active conversation.",
@@ -2666,7 +3349,8 @@
           "exercise": "Create an exercise from your knowledge.",
           "writing": "Try writing a few sentences.",
           "listeningSpeaking": "When you're ready, try listening or speaking.",
-          "return": "Come back tomorrow and add something new."
+          "return": "Come back tomorrow and add something new.",
+          "capture": "Open Capture and save one quick note or phrase you want to come back to."
         }
       },
       "closing": "Just start with something you want to remember. Your diary will grow naturally from there."
@@ -2679,7 +3363,10 @@
     "terms": "Terms of Use",
     "privacyTitle": "Privacy Policy",
     "termsTitle": "Terms of Use",
+    "privacyDescription": "How Notoria collects, uses, and deletes personal data and learning content for its private language-learning workspace.",
+    "termsDescription": "Terms for using Notoria’s private language-learning workspace, accounts, AI features, and Notoria Pro billing.",
     "updated": "Last updated {date}",
+    "updatedDate": "23 September 2026",
     "backToSignIn": "Back to sign in",
     "backHome": "Back to Notoria",
     "authFooter": "Privacy · Terms",
@@ -2688,7 +3375,424 @@
     "registerAgreement": "By creating an account, you agree to the <terms>Terms of Use</terms> and <privacy>Privacy Policy</privacy>.",
     "settingsLinksTitle": "Policies",
     "settingsLinksDescription": "Read how Notoria handles your data and the rules for using the service.",
-    "contactEmail": "contact@notoria.fi"
+    "contactEmail": "contact@notoria.fi",
+    "privacyPolicy": {
+      "intro": "This Privacy Policy explains how Notoria (<site>www.notoria.fi</site>) handles personal data for its private language-learning web app. It is written to match how the product works today. If a practice is not described here, we do not claim to do it.",
+      "tocTitle": "On this page",
+      "tocAria": "On this page",
+      "toc": {
+        "controller": "Who is responsible",
+        "scope": "What this policy covers",
+        "data": "Data we process",
+        "purposes": "Why we process data",
+        "auth": "Accounts and sign-in",
+        "ai": "AI features",
+        "payments": "Payments (Notoria Pro)",
+        "processors": "Service providers",
+        "cookies": "Cookies and device storage",
+        "transfers": "International transfers",
+        "retention": "How long we keep data",
+        "deletion": "Export and account deletion",
+        "rights": "Your rights (GDPR)",
+        "children": "Children",
+        "changes": "Changes",
+        "contact": "Contact"
+      },
+      "sections": {
+        "controller": {
+          "title": "1. Who is responsible",
+          "p1": "Notoria is the language-learning service at <site>www.notoria.fi</site>, offered to users in Finland and the wider EU/EEA.",
+          "p2": "For privacy questions, data-subject requests, and other user contact, email <contact>contact@notoria.fi</contact>.",
+          "p3": "A registered company name and postal address for the data controller are not published in the current product. If you need formal controller identification for a GDPR request, email <contact>contact@notoria.fi</contact> and we will provide it."
+        },
+        "scope": {
+          "title": "2. What this policy covers",
+          "p1": "It covers personal data and learning content processed when you:",
+          "list": [
+            "create or use an account",
+            "save material in private workspaces",
+            "subscribe to Notoria Pro",
+            "use optional AI-assisted tools",
+            "upload media for listening or profile use",
+            "use speaking practice",
+            "send feedback or contact us"
+          ],
+          "p2": "The current application code does not include a third-party marketing analytics or advertising SDK. We do not claim to use trackers that are not present in the product."
+        },
+        "data": {
+          "title": "3. Data we process",
+          "p1": "Notoria processes different kinds of data for different reasons. The main categories are:",
+          "accountAuth": {
+            "title": "Account and authentication",
+            "list": [
+              "Name and email address",
+              "Password hash for email/password accounts (passwords are never stored in plain text)",
+              "Google account identifiers and OAuth tokens if you sign in with Google",
+              "Optional profile photo (avatar)",
+              "Account role and created/updated timestamps"
+            ]
+          },
+          "learningContent": {
+            "title": "Learning content you create",
+            "p1": "Content you add in private workspaces, such as vocabulary, theory notes, writing documents, exercises and imported practice material, listening lessons (including media references and transcripts), speaking session transcripts and related session fields, folders, tags, and study progress such as flashcard reviews.",
+            "p2": "This is your learning material. Notoria stores it so you can return to it and practise from it."
+          },
+          "subscription": {
+            "title": "Subscription and payment metadata",
+            "list": [
+              "Plan (free or Pro) and subscription status",
+              "Stripe customer and subscription identifiers, and current period end when applicable"
+            ],
+            "p1": "Card numbers and payment-method secrets stay with Stripe. Notoria keeps only the billing metadata needed to reflect your Pro status."
+          },
+          "device": {
+            "title": "Device and preference data",
+            "p1": "Cookies and browser storage used for sign-in, locale, active workspace, AI assistance preferences, theme, and similar product settings. See <cookies>Cookies and device storage</cookies>."
+          },
+          "support": {
+            "title": "Support and feedback",
+            "list0": "Emails you send to <contact>contact@notoria.fi</contact>",
+            "list1": "In-app feedback from Support (message, feedback type, your email, whether you are signed in, optional account id, page path, user-agent, and up to three optional image attachments)",
+            "p1": "Feedback is delivered by email to Notoria’s technical inbox (<technical></technical>). It is not stored as a separate ticket database inside Notoria."
+          }
+        },
+        "purposes": {
+          "title": "4. Why we process data",
+          "headers": {
+            "purpose": "Purpose",
+            "basis": "Typical GDPR basis"
+          },
+          "rows": [
+            {
+              "purpose": "Provide accounts, workspaces, and your saved learning material",
+              "basis": "Contract (Art. 6(1)(b))"
+            },
+            {
+              "purpose": "Authenticate you (email/password or Google) and reset passwords",
+              "basis": "Contract (Art. 6(1)(b))"
+            },
+            {
+              "purpose": "Run Notoria Pro billing and subscription status via Stripe",
+              "basis": "Contract (Art. 6(1)(b))"
+            },
+            {
+              "purpose": "Optional AI help, listening transcription, and speaking practice when you use those features",
+              "basis": "Contract (Art. 6(1)(b)); preference controls where available"
+            },
+            {
+              "purpose": "Keep the service secure and reliable (abuse prevention, debugging)",
+              "basis": "Legitimate interests (Art. 6(1)(f))"
+            },
+            {
+              "purpose": "Respond to support and feedback messages",
+              "basis": "Legitimate interests / contract, depending on the request"
+            },
+            {
+              "purpose": "Comply with legal obligations",
+              "basis": "Legal obligation (Art. 6(1)(c))"
+            }
+          ],
+          "p1": "If you need a formal legal-basis note for a specific activity, email <contact>contact@notoria.fi</contact>."
+        },
+        "auth": {
+          "title": "5. Accounts and sign-in",
+          "p1": "Notoria uses Auth.js (NextAuth) with a JWT session. You can sign in with email and password, or with Google OAuth when Google sign-in is configured.",
+          "p2": "Password-reset emails are sent only for accounts that have a password. Reset tokens are stored hashed, expire after 30 minutes, and are used only to set a new password."
+        },
+        "ai": {
+          "title": "6. AI features",
+          "p1": "Optional AI features in the current product use <strong>OpenAI</strong>. Depending on the tool you use, Notoria may send relevant learning content — for example vocabulary items, writing text or selections, exercise or theory context, listening transcripts, speaking transcripts, or live audio for the speaking tutor.",
+          "p2": "AI assistance preferences (including whether assistance is enabled) are stored in a browser cookie so the product can respect your settings. Many server actions that call the model check that assistance is enabled first. Turning assistance off in <settings>Settings</settings> blocks AI tools that require it.",
+          "p3": "Listening transcription via AssemblyAI can still run when you use Listening features that need a transcript, because transcription is part of that media workflow rather than the optional “AI assistance” preference alone.",
+          "p4": "The current codebase does not use other large-language-model providers besides OpenAI. OpenAI processes data under its own terms and privacy policy as a processor for these features."
+        },
+        "payments": {
+          "title": "7. Payments (Notoria Pro)",
+          "p1": "Paid subscriptions are handled by <strong>Stripe</strong>. Checkout, invoices, payment methods, and cancellation run through Stripe Checkout and the Stripe Customer Portal. Stripe webhooks update your plan and status in Notoria.",
+          "p2": "Stripe processes payment data as a payment provider. See Stripe’s own privacy documentation for card handling."
+        },
+        "processors": {
+          "title": "8. Service providers",
+          "p1": "Depending on which features you use, personal data or learning content may be processed by:",
+          "headers": {
+            "provider": "Provider",
+            "role": "Role in Notoria"
+          },
+          "rows": [
+            {
+              "provider": "PostgreSQL database (production documented as Neon)",
+              "role": "Account and learning data"
+            },
+            {
+              "provider": "Vercel",
+              "role": "Application hosting (configured region includes Frankfurt / fra1)"
+            },
+            {
+              "provider": "Cloudinary",
+              "role": "Avatars, listening media, editor images, and exercise-import files"
+            },
+            {
+              "provider": "AssemblyAI",
+              "role": "Transcription of listening audio"
+            },
+            {
+              "provider": "Stream Video",
+              "role": "Live speaking calls; automatic transcription; session fields such as transcript URLs (and recording URLs only if a recording event is later received)"
+            },
+            {
+              "provider": "OpenAI",
+              "role": "Optional AI assistance and speaking-tutor realtime audio"
+            },
+            {
+              "provider": "Resend",
+              "role": "Password-reset email and Support feedback delivery"
+            },
+            {
+              "provider": "Stripe",
+              "role": "Notoria Pro checkout, portal, and subscription status"
+            },
+            {
+              "provider": "Google",
+              "role": "OAuth sign-in when you choose Google; web fonts for the UI"
+            },
+            {
+              "provider": "Dicebear",
+              "role": "Generated avatar images used in speaking sessions (from a name seed; no account password is sent)"
+            }
+          ],
+          "p2": "Speaking calls are created with transcription enabled. Recording is disabled at call creation in the current implementation; a recording URL is stored only if the product later receives a recording-ready event from Stream."
+        },
+        "cookies": {
+          "title": "9. Cookies and device storage",
+          "p1": "Notoria uses cookies and similar storage for necessary product functions. There is no separate Cookie Policy because the current implementation does not include advertising or analytics cookie programmes that would require one.",
+          "cookiesTitle": "Cookies used by the app",
+          "headers": {
+            "cookie": "Cookie",
+            "purpose": "Purpose"
+          },
+          "rows": [
+            {
+              "cookie": "Auth.js session cookie",
+              "purpose": "Keeps you signed in (JWT session; library default naming)",
+              "code": false
+            },
+            {
+              "cookie": "notoria-locale",
+              "purpose": "UI language",
+              "code": true
+            },
+            {
+              "cookie": "notoria-workspace",
+              "purpose": "Active workspace",
+              "code": true
+            },
+            {
+              "cookie": "notoria-ai-preferences",
+              "purpose": "AI assistance preferences",
+              "code": true
+            },
+            {
+              "cookie": "sidebar_state",
+              "purpose": "Sidebar open/closed preference",
+              "code": true
+            }
+          ],
+          "storageTitle": "Local and session storage",
+          "p2": "Your browser may also store theme preference (via next-themes), onboarding/tutorial flags, keyboard and motion preferences, view-mode choices, temporary exercise or flashcard session state, and similar client-only settings.",
+          "p3": "Clearing local preferences in Settings removes those device preferences. It does not delete your account or workspace content on the server."
+        },
+        "transfers": {
+          "title": "10. International transfers",
+          "p1": "Some providers above are based outside the EEA (for example in the United States) or may process data in more than one region. Where personal data leaves the EEA/UK, transfers rely on the safeguards those providers offer under applicable law — such as Standard Contractual Clauses where they apply — and on their published privacy terms.",
+          "p2": "Application hosting for Notoria is configured toward the Frankfurt region (fra1). Ask <contact>contact@notoria.fi</contact> if you need help finding the relevant provider documentation for a specific feature."
+        },
+        "retention": {
+          "title": "11. How long we keep data",
+          "list": [
+            "Account and learning data are kept while your account remains open so you can use the service",
+            "Password-reset tokens expire after 30 minutes",
+            "Subscription metadata is kept as needed to reflect your current Pro status and Stripe billing relationship",
+            "Support and feedback emails are retained as long as needed to handle your request and related follow-up"
+          ],
+          "p1": "Exact backup retention windows for infrastructure providers are not hard-coded in the application and may follow those providers’ operational practices. Contact us if you need clarification for a deletion request."
+        },
+        "deletion": {
+          "title": "12. Export and account deletion",
+          "exportTitle": "Export",
+          "exportP1": "From <account>Account</account> you can download a JSON backup of workspaces and learning content (including vocabulary, theory notes, exercises/writing, listening lessons, and speaking sessions). Media files are referenced by URL rather than embedded as binary files.",
+          "exportP2": "The current export does not include every account-related record. For example, flashcard progress/reviews and exercise-import source records are not part of the JSON backup. OAuth tokens, password hashes, and Stripe identifiers are not exported.",
+          "deleteTitle": "Delete account",
+          "deleteP1": "You can permanently delete your account from <account>Account</account>. When deletion succeeds, Notoria:",
+          "deleteList": [
+            "deletes your user record and cascaded learning data from Notoria’s database",
+            "cancels and removes related Stripe customer data where Stripe is configured (best effort)",
+            "destroys avatar media and listening-lesson media that the deletion flow is implemented to remove from Cloudinary"
+          ],
+          "deleteP2": "The current deletion flow does not claim to purge every third-party artefact automatically. In particular, some Cloudinary assets (such as editor images or exercise-import files) and Stream speaking-call artefacts may remain subject to those providers until cleaned up separately or purged under their own schedules.",
+          "deleteP3": "After deletion, limited residual copies may also remain briefly in encrypted backups or logs until those systems rotate. If something specific remains after you delete your account, email <contact>contact@notoria.fi</contact>."
+        },
+        "rights": {
+          "title": "13. Your rights (GDPR)",
+          "p1": "If you are in the EU/EEA or otherwise protected by GDPR, you may have the right to:",
+          "list": [
+            "access your personal data",
+            "correct inaccurate data",
+            "erase data (including by deleting your account)",
+            "restrict or object to certain processing",
+            "receive a portable copy of data you provided (see Export above)",
+            "withdraw consent where processing is based on consent"
+          ],
+          "listComplaint": "lodge a complaint with a supervisory authority — in Finland, the Office of the Data Protection Ombudsman (<ombudsman>tietosuoja.fi</ombudsman>)",
+          "p2": "To exercise these rights, email <contact>contact@notoria.fi</contact>. We may need to verify that the request comes from the account holder."
+        },
+        "children": {
+          "title": "14. Children",
+          "p1": "Notoria requires an account and is built as a personal learning workspace. The product does not implement a dedicated age-gate. It is not directed at children. If you believe a child’s data has been submitted without appropriate authority, contact <contact>contact@notoria.fi</contact>."
+        },
+        "changes": {
+          "title": "15. Changes",
+          "p1": "We may update this Privacy Policy when the product or legal requirements change. The “Last updated” date at the top of the page changes when a revision is published.",
+          "p2": "When a change is material, we will communicate it in a reasonable way available at the time — for example by updating this page and, where appropriate, an in-product notice or email."
+        },
+        "contact": {
+          "title": "16. Contact",
+          "p1": "Privacy and general contact: <contact>contact@notoria.fi</contact>",
+          "p2": "Product feedback technical inbox (also listed on <contactPage>Contact Us</contactPage>): <technical></technical>",
+          "p3": "Website: <site>www.notoria.fi</site>"
+        }
+      }
+    },
+    "termsOfUse": {
+      "intro": "These Terms of Use explain the rules for using Notoria at <site>www.notoria.fi</site>. They describe how the product works today: private learning workspaces, optional Notoria Pro billing through Stripe, and AI-assisted features. They are not a substitute for advice from a lawyer about your specific situation.",
+      "tocTitle": "On this page",
+      "tocAria": "On this page",
+      "toc": {
+        "agreement": "Agreement",
+        "service": "The service",
+        "accounts": "Accounts",
+        "content": "Your content",
+        "acceptable-use": "Acceptable use",
+        "ip": "Intellectual property",
+        "ai": "AI-generated output",
+        "plans": "Free plan and Notoria Pro",
+        "billing": "Subscription and billing",
+        "refunds": "Refunds and consumer rights",
+        "availability": "Availability",
+        "termination": "Suspension and termination",
+        "liability": "Disclaimer and liability",
+        "changes": "Changes",
+        "law": "Governing law",
+        "contact": "Contact"
+      },
+      "sections": {
+        "agreement": {
+          "title": "1. Agreement",
+          "p1": "By creating an account or using Notoria, you agree to these Terms and to the <privacy>Privacy Policy</privacy>. If you do not agree, do not use the service.",
+          "p2": "Questions about these Terms: <contact>contact@notoria.fi</contact>."
+        },
+        "service": {
+          "title": "2. The service",
+          "p1": "Notoria is a private language-learning web app. You can create workspaces and keep learning material such as vocabulary, theory notes, writing, exercises, listening lessons, and speaking sessions.",
+          "p2": "Some features are available on the free plan. Notoria Pro unlocks additional capabilities as shown in the product and on your <account>Account</account> page — including Listening, Speaking, certain AI study tools, exercise import, and paid document export formats. Feature availability can change as the product evolves.",
+          "p3": "Notoria is for personal language learning. It is not a school, exam authority, or professional advice service."
+        },
+        "accounts": {
+          "title": "3. Accounts",
+          "list": [
+            "Provide accurate account information",
+            "Keep your password and account access secure",
+            "Sign in with email and password, or with Google when Google sign-in is available",
+            "Use Notoria only if you are able to enter into a binding agreement under applicable law"
+          ],
+          "p1": "The product does not implement a separate age-gate. If you believe an account was created without appropriate authority, contact <contact>contact@notoria.fi</contact>.",
+          "p2": "Notify us at <contact>contact@notoria.fi</contact> if you think your account has been compromised."
+        },
+        "content": {
+          "title": "4. Your content",
+          "p1": "You keep ownership of the learning content you create or upload in Notoria.",
+          "p2": "You grant Notoria a limited licence to host, process, display, and back up that content so the service can function — including sending relevant material to AI, transcription, media, or payment providers when you use those features. That licence exists only to operate Notoria for you. It does not transfer ownership of your content to us.",
+          "p3": "You are responsible for what you store. Do not upload material you do not have the right to use, and do not use Notoria to store unlawful content."
+        },
+        "acceptableUse": {
+          "title": "5. Acceptable use",
+          "p1": "You agree not to:",
+          "list": [
+            "break the law or infringe others’ rights",
+            "attempt to access other users’ private workspaces or accounts",
+            "probe, overload, or disrupt the service, APIs, or related infrastructure",
+            "abuse AI, transcription, listening, or speaking features in ways that harm others or circumvent plan limits through fraud",
+            "reverse engineer the service except where mandatory local law allows",
+            "misrepresent your identity to Stripe, Google, or Notoria support"
+          ]
+        },
+        "ip": {
+          "title": "6. Intellectual property",
+          "p1": "Notoria’s name, branding, software, and product design are owned by Notoria or its licensors. These Terms do not transfer ownership of the product to you.",
+          "p2": "Your learning content remains yours, subject to the limited licence in section 4."
+        },
+        "ai": {
+          "title": "7. AI-generated output",
+          "p1": "Some features can check, suggest, generate, transcribe, summarise, or tutor based on your material. Output may be incomplete, incorrect, or unsuitable for your goal. You remain responsible for reviewing AI results before relying on them for study, exams, professional use, or publication.",
+          "p2": "AI features may be unavailable if assistance is turned off in <settings>Settings</settings>, if your plan does not include a particular tool, or if a provider is temporarily unreachable.",
+          "p3": "Not all AI helpers require Notoria Pro. The product shows which tools are free and which need Pro."
+        },
+        "plans": {
+          "title": "8. Free plan and Notoria Pro",
+          "p1": "The free plan covers core practice with your own vocabulary and related study tools as shown in the product.",
+          "p2": "Notoria Pro is a paid subscription that unlocks additional features. In the current product, that typically includes Listening, Speaking, exercise import, form-a-sentence practice, many AI-assisted study tools, and PDF/DOCX document export. Some lighter AI helpers (such as certain vocabulary or editor formatting aids) may remain available on the free plan when AI assistance is enabled.",
+          "p3": "Pro access is tied to your user account, so it applies across the workspaces under that account. Accounts with an administrator role may have Pro-level access without a personal Stripe subscription.",
+          "p4": "The price that applies to your purchase is the price shown at Stripe Checkout for the current Pro plan. Any price shown elsewhere in the product (for example on Account) is indicative only and must match the active Stripe price configuration."
+        },
+        "billing": {
+          "title": "9. Subscription, billing, and cancellation",
+          "list0": "Pro subscriptions are billed through <strong>Stripe</strong>",
+          "list1": "You can start checkout from <account>Account</account> or from locked Pro controls in the app",
+          "list2": "From Account, you can open the Stripe Customer Portal to view invoices, update payment methods, and cancel the subscription",
+          "list3": "Cancellation follows Stripe’s Customer Portal behaviour for your subscription",
+          "p1": "After you cancel, Pro access continues only while your Stripe subscription status still grants Pro in the product. In the current implementation, statuses treated as Pro include <code>active</code>, <code>trialing</code>, and <code>past_due</code>. When the status no longer qualifies, the account returns to the free plan.",
+          "p2": "If a payment fails, Stripe may move the subscription to <code>past_due</code> or another status. Notoria syncs that status from Stripe webhooks. While the status remains <code>past_due</code>, Pro features stay available under the current access rules; if the subscription later becomes cancelled or otherwise ineligible, Pro access ends.",
+          "p3": "Deleting your Notoria account cancels the Stripe subscription immediately (best effort) as part of account deletion. That is different from cancelling renewal through the Customer Portal while keeping the account."
+        },
+        "refunds": {
+          "title": "10. Refunds and consumer rights",
+          "p1": "Notoria does not implement an automatic in-app refund button. Cancellation is available through the Stripe Customer Portal.",
+          "p2": "If you want a refund review, or if EU/EEA consumer rules for digital content or distance contracts give you rights that apply to your purchase, email <contact>contact@notoria.fi</contact> with your account email and Stripe receipt details. We will handle the request in line with applicable law and Stripe’s tools.",
+          "p3": "Nothing in these Terms is intended to limit mandatory consumer rights that cannot be waived under Finnish or EU law."
+        },
+        "availability": {
+          "title": "11. Availability",
+          "p1": "We aim to keep Notoria available, but we do not promise uninterrupted or error-free service. Maintenance, provider outages, or changes to third-party AI, media, email, or payment services can affect features."
+        },
+        "termination": {
+          "title": "12. Suspension and termination",
+          "p1": "You may delete your account at any time from <account>Account</account>. Deletion permanently removes your account and associated learning data from Notoria’s database, subject to the details and residual-processor notes in the <privacy>Privacy Policy</privacy>. You can export a JSON backup from Account before you delete.",
+          "p2": "We may suspend or terminate access if you seriously or repeatedly breach these Terms, misuse the service, or create security or legal risk. Where reasonable and lawful, we will try to notify you at the email on your account."
+        },
+        "liability": {
+          "title": "13. Disclaimer and liability",
+          "p1": "Notoria is provided on an “as available” basis for personal language learning. To the fullest extent permitted by applicable law, we disclaim warranties that are not required by law.",
+          "p2": "To the fullest extent permitted by applicable law, Notoria is not liable for indirect, incidental, special, consequential, or lost-data damages arising from your use of the service or reliance on AI output. Where liability cannot be excluded, it is limited to the amount you paid for Notoria Pro in the three months before the claim, or any greater amount required by mandatory law.",
+          "p3": "These limits do not exclude liability that Finnish or EU law does not allow to be limited — including liability that cannot be waived for consumers, and liability for death or personal injury caused by negligence where such rules apply."
+        },
+        "changes": {
+          "title": "14. Changes to the service and Terms",
+          "p1": "We may update features, plans, and these Terms. The “Last updated” date on this page changes when a new version is published.",
+          "p2": "If a change is material, we will provide reasonable notice when practical — for example by updating this page and, where appropriate, an in-product notice or email. Continued use after the effective date means you accept the updated Terms, except where mandatory law requires a different process."
+        },
+        "law": {
+          "title": "15. Governing law",
+          "p1": "These Terms are governed by the laws of Finland, without regard to conflict-of-law rules that would require another jurisdiction’s law.",
+          "p2": "Courts in Finland have jurisdiction, without prejudice to mandatory consumer protections that allow you to bring proceedings in your country of residence inside the EU/EEA.",
+          "p3": "Formal operator identity beyond the Notoria service and contact email is not published in the current product. For contractual or regulatory correspondence, use <contact>contact@notoria.fi</contact>."
+        },
+        "contact": {
+          "title": "16. Contact",
+          "p1": "Billing questions, Terms questions, and related legal notices: <contact>contact@notoria.fi</contact>",
+          "p2": "Website: <site>www.notoria.fi</site>",
+          "p3": "For general support options and the technical feedback inbox, see <contactPage>Contact Us</contactPage> and <support>Support</support>."
+        }
+      }
+    }
   },
   "footer": {
     "navLabel": "Site links",
@@ -2799,7 +3903,7 @@
       "intro": {
         "title": "A workspace, not a course",
         "p1": "Notoria is a private place for the language you are already learning. You bring material in, keep it organised, and practise from it — instead of starting from a catalogue of lessons you did not choose.",
-        "p2": "Each workspace is one language. Vocabulary, theory, exercises, writing, listening, and speaking live together there, so what you save can become what you practise.",
+        "p2": "Each workspace is one language. Capture, Vocabulary, Theory, exercises, writing, listening, and speaking live together there, so what you save can become what you practise.",
         "beat": "You do not need to learn Notoria all at once. You grow it with the language."
       },
       "loop": {
@@ -2808,7 +3912,7 @@
         "stages": {
           "bring": {
             "label": "Bring in",
-            "body": "Save words, phrases, and notes from lessons, books, media, conversations — wherever you meet the language."
+            "body": "Save words, phrases, and notes — use Capture for fast scraps, or add straight into Vocabulary and Theory from lessons, books, media, and conversations."
           },
           "organise": {
             "label": "Organise",
@@ -2836,7 +3940,7 @@
       "startSmall": {
         "title": "Start small",
         "p1": "Notoria is not something you complete. There is no checklist that means you are done with the product.",
-        "p2": "A good first day can be a workspace and five words you actually care about. Notes, longer practice, writing, listening, and speaking can wait until they earn a place in your loop."
+        "p2": "A good first day can be a workspace, a couple of Capture notes, and five words you actually care about. Notes, longer practice, writing, listening, and speaking can wait until they earn a place in your loop."
       },
       "firstSession": {
         "title": "A first session",
@@ -2848,7 +3952,7 @@
           },
           "words": {
             "title": "Add a handful of words",
-            "body": "Open Vocabulary and save words or phrases you want to remember, with meanings or examples if they help."
+            "body": "Open Vocabulary and save words or phrases you want to remember, with meanings or examples if they help. Or drop a quick scrap in Capture first and process it later."
           },
           "notes": {
             "title": "Write a short note if you need one",
@@ -2866,7 +3970,7 @@
       },
       "connect": {
         "title": "How the areas connect",
-        "p1": "Vocabulary and Theory are where material lands. Exercise turns that material into practice. Writing, Listening, and Speaking help you use the language more actively.",
+        "p1": "Capture is the quick entry point. Vocabulary and Theory are where material settles. Exercise turns that material into practice. Writing, Listening, and Speaking help you use the language more actively.",
         "p2": "You do not have to move through every area in order. Many people stay with words and short practice for a while.",
         "p3": "A natural next step is writing when you want to produce language on your own terms, then listening and speaking when you want the same material to work in your ear and voice — Listening and Speaking are part of Notoria Pro.",
         "beat": "Collect and understand first. Use and speak when the material is ready to leave the page."
@@ -2897,6 +4001,10 @@
         "speaking": {
           "label": "Speaking",
           "body": "Live practice with an AI tutor, grounded in the language you are studying. Available on Notoria Pro."
+        },
+        "capture": {
+          "label": "Capture",
+          "body": "A fast drop zone for scraps — words, doubts, and ideas — that you process into Vocabulary, Theory, Writing, or Exercise later. Capture first when you only have a moment; items stay unprocessed until you finish creating the linked entry."
         }
       },
       "notEverything": {
