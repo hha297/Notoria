@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="public/logo.png" alt="Notoria" width="120" height="120"/>
+  <img src="./public/logo.png" alt="Notoria" width="120"/>
 </p>
 
 <h1 align="center">Notoria</h1>
@@ -9,28 +9,40 @@
   Vocabulary, theory, writing, exercises, listening, and speaking — owned by you, scoped by language.
 </p>
 
-<!-- Action badges (linked). Extra &nbsp; keeps them from sitting flush on GitHub. -->
 <p align="center">
   <a href="https://www.notoria.fi"><img src="https://img.shields.io/badge/Live-www.notoria.fi-f7a501?style=flat-square&labelColor=23251d" alt="Live — www.notoria.fi"/></a>
-  &nbsp;&nbsp;
+  &nbsp;
+  <a href="https://www.notoria.fi"><img src="https://hits.sh/www.notoria.fi.svg?style=flat-square&label=views&color=f7a501" alt="Live site views"/></a>
+  &nbsp;&nbsp;&nbsp;
   <a href="https://www.notoria.fi/sign-up"><img src="https://img.shields.io/badge/Sign_up-free_account-2c8c66?style=flat-square&labelColor=23251d" alt="Sign up"/></a>
-</p>
-
-<!-- Info-only badges (not links — app UI locales, not README translations). -->
-<p align="center">
-  <img src="https://img.shields.io/badge/Stack-Next.js_16-black?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js 16"/>
-  &nbsp;&nbsp;
-  <img src="https://img.shields.io/badge/App_UI-EN_·_FI_·_SV_·_VI-5c4aa8?style=flat-square&labelColor=23251d" alt="App UI languages"/>
+  &nbsp;
+  <a href="https://www.notoria.fi/sign-up"><img src="https://hits.sh/www.notoria.fi/sign-up.svg?style=flat-square&label=views&color=2c8c66" alt="Sign-up views"/></a>
 </p>
 
 <p align="center">
-  <a href="https://www.notoria.fi">Website</a>
-  &nbsp;·&nbsp;
-  <a href="https://www.notoria.fi/privacy">Privacy</a>
-  &nbsp;·&nbsp;
-  <a href="https://www.notoria.fi/terms">Terms</a>
-  &nbsp;·&nbsp;
-  <a href="mailto:contact@notoria.fi">contact@notoria.fi</a>
+  <img src="https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/Drizzle-ORM-C5F74F?style=flat-square&labelColor=23251d" alt="Drizzle"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/Stripe-Billing-635BFF?style=flat-square&logo=stripe&logoColor=white" alt="Stripe"/>
+  &nbsp;
+  <img src="https://img.shields.io/badge/OpenAI-AI-412991?style=flat-square&logo=openai&logoColor=white" alt="OpenAI"/>
+</p>
+
+<p align="center">
+  <a href="https://www.notoria.fi"><img src="https://img.shields.io/badge/Website-notoria.fi-23251d?style=flat-square" alt="Website"/></a>
+  &nbsp;
+  <a href="https://www.notoria.fi/privacy"><img src="https://img.shields.io/badge/Privacy-policy-5e6a72?style=flat-square" alt="Privacy"/></a>
+  &nbsp;
+  <a href="https://www.notoria.fi/terms"><img src="https://img.shields.io/badge/Terms-of_use-5e6a72?style=flat-square" alt="Terms"/></a>
+  &nbsp;
+  <a href="mailto:contact@notoria.fi"><img src="https://img.shields.io/badge/Contact-contact%40notoria.fi-2c84e0?style=flat-square" alt="Contact"/></a>
 </p>
 
 ---
@@ -60,7 +72,7 @@ Notoria is a **private** language-learning product — not a social network. The
 | You get | What that means |
 | --- | --- |
 | **Owned learning data** | Words, notes, drafts, lessons, and sessions belong to your account |
-| **One workspace per language** | Finnish, Vietnamese, Japanese, … stay separated |
+| **One workspace per language** | English, Finnish, Swedish, Vietnamese, … stay separated |
 | **Practice from your material** | Exercises drill *your* vocabulary and examples — not a generic dictionary |
 | **Optional AI** | Free has a small daily allowance; Pro unlocks the toolkit; Premium adds a Learning Coach |
 
@@ -415,7 +427,16 @@ No open-source license file is published in this repository. Treat the codebase 
 
 ---
 
-<p align="center">
-  <sub>Built for learners who want their material — and their progress — in one private place.</sub><br/>
-  <a href="https://www.notoria.fi">www.notoria.fi</a>
-</p>
+<div align="center">
+  <img src="./public/logo.png" alt="Notoria logo" width="88"/>
+
+  <p><strong>Notoria</strong></p>
+
+  <p>
+    <sub>Built for learners who want their material — and their progress — in one private place.</sub>
+  </p>
+
+  <p>
+    <a href="https://www.notoria.fi">www.notoria.fi</a>
+  </p>
+</div>
