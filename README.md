@@ -1,619 +1,421 @@
-# Notoria
+<p align="center">
+  <img src="public/logo.png" alt="Notoria" width="120" height="120"/>
+</p>
 
-**Notoria** is a private web app for language learning. Each account owns its own data: vocabulary, writing, theory notes, exercises, listening lessons, and speaking sessions live in **language-specific workspaces**. The app is not social — no public profiles, no sharing feed, no multiplayer.
+<h1 align="center">Notoria</h1>
 
-Free includes core learning plus a small daily AI allowance. **Pro** (€9.99 / month) unlocks the full toolkit — expensive AI (speaking tutor, listening transcripts) stays metered; lightweight AI is unlimited. **Premium** (€19.99 / month) adds personalized learning intelligence (Coach), not merely higher quotas.
+<p align="center">
+  <strong>Private language learning workspaces</strong><br/>
+  Vocabulary, theory, writing, exercises, listening, and speaking — owned by you, scoped by language.
+</p>
 
----
+<!-- Action badges (linked). Extra &nbsp; keeps them from sitting flush on GitHub. -->
+<p align="center">
+  <a href="https://www.notoria.fi"><img src="https://img.shields.io/badge/Live-www.notoria.fi-f7a501?style=flat-square&labelColor=23251d" alt="Live — www.notoria.fi"/></a>
+  &nbsp;&nbsp;
+  <a href="https://www.notoria.fi/sign-up"><img src="https://img.shields.io/badge/Sign_up-free_account-2c8c66?style=flat-square&labelColor=23251d" alt="Sign up"/></a>
+</p>
 
-# Plans
+<!-- Info-only badges (not links — app UI locales, not README translations). -->
+<p align="center">
+  <img src="https://img.shields.io/badge/Stack-Next.js_16-black?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js 16"/>
+  &nbsp;&nbsp;
+  <img src="https://img.shields.io/badge/App_UI-EN_·_FI_·_SV_·_VI-5c4aa8?style=flat-square&labelColor=23251d" alt="App UI languages"/>
+</p>
 
-Daily AI limits use the UTC calendar day. They reset at 00:00 UTC. The browser clock is not used.
-
-## Free
-
-€0
-
-Core language-learning functionality plus limited daily AI:
-
-- 1 AI Speaking Tutor call/day
-- 1 AI Listening Transcript/day
-- 3 AI Exercise generations/day
-- 5 AI Vocabulary actions/day
-- 1 AI Writing Support action/day (Check / Improve / Grammar each count as one)
-
-PDF/DOCX export, module file import (CSV/PDF/DOCX), and generated listening practice stay on Pro. Account backup export/import is available on every plan. A speaking call includes the tutor for that session (fair-use max 30 minutes). One user action counts as one use, including an exercise import (extract + generate share one charge). Listening transcripts are capped at 45 minutes of audio per action.
-
-## Pro
-
-€9.99/month
-
-Everything in Free, plus:
-
-- 10 AI Speaking Tutor calls/day
-- 10 AI Listening Transcripts/day
-- Unlimited AI Exercise generation, Vocabulary actions, and Writing Support
-- Full listening practice generation
-- **Import & export material** (CSV / PDF / DOCX into Vocabulary, Writing, Theory; PDF/DOCX export)
-- AI practice from imported worksheets
-
-## Premium
-
-€19.99/month
-
-Everything in Pro, plus personalized intelligence on `/coach`:
-
-- Unlimited AI Speaking Tutor and AI Listening Transcripts
-- **Your next move** — recommendation, evidence, why, and today’s practice CTA from real workspace metrics
-- **Ask your Learning Coach** — 100 messages/day; ask about progress, vocabulary, grammar, theory, translations, or what to practice next (answers follow your question language)
-- **Your progress** — before→now period comparison (7/30/90 days) plus review/speaking charts from real events
-- **What needs attention** — due cards, weak words, neglected modules with links into existing tools
-
-Historical charts use flashcard review and speaking session timestamps. Vocabulary status is a live snapshot (not a status audit log), so “mastered over time” is not invented. Listening/writing/theory period counts are entity `updatedAt` touches, same as before.
-
-## How access is decided
-
-Stripe is the source of truth for paid status. Webhooks store `subscription_plan` and `subscription_status` on the user. The entitlement layer maps that plan to capabilities and quotas. The server reserves usage before an AI call and refunds the reservation if the provider call fails. The client cannot set the plan, the price, or the usage count.
-
-Paid access statuses: `active`, `trialing`, `past_due`. Other statuses, including `canceled`, `unpaid`, `incomplete`, and `incomplete_expired`, are Free. An active subscription whose price is not the Premium price stays Pro, so existing Pro customers are not dropped when Premium is added. Admins receive Premium capabilities without a Stripe subscription.
-
-Checkout accepts `pro` or `premium` and looks up the price id on the server. A user who already has a paid subscription changes price on that subscription instead of starting a second one.
+<p align="center">
+  <a href="https://www.notoria.fi">Website</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.notoria.fi/privacy">Privacy</a>
+  &nbsp;·&nbsp;
+  <a href="https://www.notoria.fi/terms">Terms</a>
+  &nbsp;·&nbsp;
+  <a href="mailto:contact@notoria.fi">contact@notoria.fi</a>
+</p>
 
 ---
 
-## Free vs Pro
+## Table of contents
 
-Some Pro-only controls stay faded and open the upgrade dialog. Quota features stay usable until the server returns `AI_QUOTA_EXCEEDED`.
-
-| Capability | Free | Pro | Premium |
-| ---------- | ---- | --- | ------- |
-| Vocabulary, writing editor, theory notes, CSV export | Yes | Yes | Yes |
-| AI Speaking Tutor | 1 call/day | 10 calls/day | Unlimited |
-| AI Listening Transcript | 1/day | 10/day | Unlimited |
-| AI Exercise generation | 3/day | Unlimited | Unlimited |
-| AI Vocabulary actions | 5/day | Unlimited | Unlimited |
-| AI Writing Support | 1/day | Unlimited | Unlimited |
-| Import & export material (CSV/PDF/DOCX) | No | Yes | Yes |
-| Import & export account backup | Yes | Yes | Yes |
-| Listening module | No | Yes | Yes |
-| Learning Coach / Ask Coach | No | No | Yes (100 messages/day) |
-
-Subscribe from `/account`. Prices and quotas come from `src/lib/billing/plans.ts` (`PLAN_DAILY_QUOTAS`).
+- [What is Notoria?](#what-is-notoria)
+- [Key features](#key-features)
+- [How Notoria works](#how-notoria-works)
+- [Plans at a glance](#plans-at-a-glance)
+- [Import & export](#import--export)
+- [Tech stack](#tech-stack)
+- [Project structure](#project-structure)
+- [Getting started](#getting-started)
+- [Configuration](#configuration)
+- [Data & privacy](#data--privacy)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
 
 ---
 
-## Features
+## What is Notoria?
 
-### Authentication & Account
+Notoria is a **private** language-learning product — not a social network. There are no public profiles, sharing feeds, or multiplayer classrooms.
 
-- Register and sign in with email and password (NextAuth credentials, JWT sessions)
-- **Google OAuth** sign-in (Auth.js Google provider + Drizzle adapter `accounts` table)
-- **Forgot / reset password** via email link ([Resend](https://resend.com)); tokens stored hashed in `password_reset_tokens`
-- Protected dashboard routes via middleware
-- Learning-language onboarding when the user has no workspace yet
-- **Account settings** (`/account`): display name, password, Cloudinary avatar, **export / import account backup**
-- **Billing card**: Free quotas, Pro, or Premium. Checkout and the Stripe Customer Portal live on `/account`. Premium opens `/coach`.
-- **Upgrade dialog**: Free, Pro, and Premium. The server chooses the Stripe price.
-- User roles: `USER` (default) and `ADMIN` (Premium capabilities without a Stripe subscription)
+| You get | What that means |
+| --- | --- |
+| **Owned learning data** | Words, notes, drafts, lessons, and sessions belong to your account |
+| **One workspace per language** | Finnish, Vietnamese, Japanese, … stay separated |
+| **Practice from your material** | Exercises drill *your* vocabulary and examples — not a generic dictionary |
+| **Optional AI** | Free has a small daily allowance; Pro unlocks the toolkit; Premium adds a Learning Coach |
 
-### Import & export
-
-Two separate flows — do not confuse module file import with a full account restore.
-
-#### Import & export material (Pro)
-
-Bring external files into a specific module, or export printable/shareable documents.
-
-- **Import** CSV, PDF, or DOCX into Vocabulary, Writing, or Theory (shared analyze → map → preview → confirm pipeline)
-- **Import practice** from worksheets (Pro AI; metered separately from plain file import)
-- **Export** PDF/DOCX from Vocabulary, Writing, and Theory
-- Free still gets **vocabulary CSV export** as an escape hatch
-
-#### Import & export account backup (all plans)
-
-- **Export** a JSON backup of workspaces and learning content (media linked by URL, not embedded)
-- **Import** that JSON to restore learning data into the **current** signed-in account
-- Strategy: **add as new** (workspaces matched by language; vocabulary duplicates skipped; incomplete listening media skipped)
-- Never changes identity, login, password, OAuth, subscription, or Stripe data
-
-### Workspaces
-
-- One workspace per language you are learning (duplicate languages are blocked)
-- Create, rename, delete, and switch workspaces from the header
-- Vocabulary, writing, theory, exercises, listening, and speaking always use the **active** workspace
-- Active workspace is stored in a cookie and restored across sessions
-- A default English workspace is created on signup
-
-### Vocabulary
-
-Personal word bank for the active workspace.
-
-- Multiple **meanings** and **example sentences** (drag-and-drop reorder)
-- Optional meaning/translation and notes per example
-- Part of speech, word-level notes, tags (built-in CEFR/topic/usage + workspace custom tags)
-- **Primary meaning** selection for practice
-- **Learning status** (`NEW`, `LEARNING`, `REVIEW`, `MASTERED`) updated by flashcard ratings
-- Search, filter (POS, tags), sort; list grouped by part of speech; pagination
-- Preview (read-only) → Edit → Save returns to preview
-- **Import (Pro):** CSV / PDF / DOCX via the shared content-import dialog
-- **Background AI (free):** spelling suggestions while typing, and meaning/gloss ideas when adding or editing a word. Always **word → meaning**. Failures stay silent so the form still works offline from the model.
-- **Export:** CSV for everyone; PDF and Word (.docx) for Pro, with optional columns (POS, tags, last updated, notes)
-
-**Impact:** learners keep a structured lexicon they actually own. AI speeds entry without replacing the user’s dictionary. CSV remains a free escape hatch; formatted documents and file import are Pro features.
-
-### Writing
-
-Worksheets and drafts, separate from vocabulary quizzes.
-
-- **Rich document** — TipTap editor
-- **Question set** — sections and questions (prompt, example answer, notes) with reorder
-- List with search/sort; preview → edit; autosave after first save on `/writing/new`
-- **Import (Pro):** PDF / DOCX (and CSV where mapped) via the shared content-import dialog
-- **AI bar (Pro):** Check, Improve, and Grammar. Suggestions can be applied or skipped in the editor or question set
-- **Export (Pro):** PDF or Word (.docx), with options for example answers, notes, and blank writing space
-
-**Impact:** writing practice stays in-app instead of bouncing to a word processor. Pro AI is user-triggered only (never silent rewrites).
-
-### Theory
-
-A notebook for **how the language works**, not writing practice.
-
-- Categories: grammar, vocabulary, pronunciation, writing, communication, usage, culture
-- Title, short summary, TipTap explanation; search and category filters; read-time estimate
-- Preview → edit; **import PDF/DOCX is Pro**; **export PDF/DOCX is Pro**
-
-**Impact:** grammar notes no longer live in random writing docs. Writing stays for production; Theory stays for rules and usage.
-
-### Exercise
-
-Five study modes under `/exercises`, plus **Form a Sentence** (Pro). Quiz items come from **workspace vocabulary**, not a third-party dictionary. Sessions sample from the filtered pool (flashcards 30, fill-in-the-blank 15, multiple choice 20, match pairs 10, type-the-answer 15, form-a-sentence 5–10).
-
-| Mode | Description |
-| ---- | ----------- |
-| **Flashcards** | Flip cards, keyboard shortcuts; Again / Hard / Good / Easy update learning status (SRS). No exercise-difficulty selector. |
-| **Fill in the Blank** | Free: blanks in **your example sentences**. Pro: **Generate with AI** invents 10 new sentences per batch from your selected words, with **Easy / Medium / Hard / Intensive** controlling sentence complexity (not which words are chosen). |
-| **Multiple Choice** | Three study modes (see below). Filters: part of speech, learning status, tags. Difficulty applies only to **Contextual**. |
-| **Match Pairs** | Quizlet-style boards. No exercise-difficulty selector. |
-| **Type the Answer** | Three study modes: **Word → Meaning** / **Meaning → Word** (deterministic, free); **Contextual** (Pro AI fill-in-the-blank typing in the workspace language, Easy–Intensive). |
-| **Form a Sentence (Pro)** | Write a full sentence with a saved word; AI checks grammar/usage. No exercise-difficulty selector in the current implementation. |
-
-#### Multiple Choice
-
-| Study mode | Access | How it works |
-| ---------- | ------ | ------------ |
-| **Word → Meaning** | Free | Deterministic: show the saved word, pick the meaning. No AI. |
-| **Meaning → Word** | Free | Deterministic: show the meaning, pick the word. No AI. |
-| **Contextual** | Pro | AI generates fill-in-the-blank questions from your filtered vocabulary in the **active workspace language**. Easy / Medium / Hard / Intensive change context, clues, and distractors — not which words are chosen. Target answers never invent vocabulary outside your selection. Used by Multiple Choice (pick an option) and Type the Answer (type the form). |
-
-Filters (all modes): part of speech, learning status, tags. Difficulty is shown only for Contextual and is **not** used as a CEFR vocabulary filter.
-
-#### Exercise difficulty (Pro AI)
-
-Available in **Fill in the Blank**, **Multiple Choice (Contextual)**, and **Type the Answer (Contextual)**:
-
-- Levels: **Easy**, **Medium**, **Hard**, **Intensive**
-- Difficulty changes **how** your existing vocabulary is tested (context, clue strength, distractors) — it does **not** swap in higher-CEFR words or introduce new target vocabulary
-- Flashcards, Match Pairs, and Form a Sentence do not use this control
-
-Shared filters: part of speech, learning status, tags. Study direction (word → meaning / meaning → word / mixed or Contextual) where it applies.
-
-**Impact:** free users can still drill. Pro AI tests whether the learner can *use* their own words in new contexts without inventing a new word list.
-
-### Listening (Pro)
-
-Upload real audio or video and practice against a transcript.
-
-- MP3 / MP4, max 25 MB; stored on Cloudinary
-- AssemblyAI transcription; optional multi-speaker labels
-- OpenAI generates practice from the transcript: **fill in the blank** and **multiple choice** (dictation / word-ordering types exist in the schema for later)
-- Sticky audio player with seek from transcript utterances
-- Lesson list: search, CEFR / topic / formality / status filters, rename file, retry failed jobs
-- Entire module is Pro from the sidebar through pages and server actions. Free users see a lock screen and a faded Listening nav item
-
-**Impact:** listening is no longer “play a file in another tab”. One upload becomes transcript + graded practice in the target language.
-
-### Speaking (Pro)
-
-Live video conversation with an AI tutor, then written feedback.
-
-- Create a session (topic, CEFR level, optional notes); join from a full-screen call UI outside the dashboard chrome (`/speaking/[id]/call`)
-- Stream Video for the call; OpenAI Realtime (`gpt-realtime`) as **Notoria Tutor** — greets the learner, stays on topic, matches CEFR, corrects important mistakes briefly
-- Auto transcription; after hang-up the app disconnects the tutor, pulls the transcript, and writes a short summary (overview, what went well, what to practice)
-- Session list with status (`upcoming` → `active` → `processing` → `completed`); reopen a completed call for transcript + feedback
-- Entire module is Pro. Free users see a lock screen and a faded Speaking nav item
-- Locally, the tutor connects from the call page because Stream webhooks cannot reach localhost. In production, configure `/api/stream/webhook` (see below)
-
-**Impact:** speaking practice stays in the same workspace as vocabulary and listening, instead of a separate chatbot or an in-person tutor. The recording is off; the artifact is the transcript and tutor notes.
-
-### Dashboard
-
-Home is a workspace hub, not a word dump.
-
-- Stats: words saved, words ready to practice, theory notes, writing pieces
-- **Practice now** — jump into exercises when words have a primary meaning
-- **Continue** — reopen the latest theory, writing, listening, or speaking item
-- **How to use Notoria** — six-step path in sidebar order (Vocabulary → Theory → Exercise → Writing → Listening → Speaking)
-- Per-module cards with a short “how”, a CTA, and a replayable tutorial
-- Time-of-day greetings and first-workspace onboarding still run on top
-
-**Impact:** new users see the whole product and a next action, instead of three counts and a list of recent words.
-
-### Internationalization
-
-- UI in **English**, **Finnish**, **Swedish**, and **Vietnamese** (`next-intl`, cookie-persisted via `notoria-locale`)
-- Message catalogs live in `messages/{en,fi,sv,vi}.json`
-- Separate from workspace learning languages (Finnish, Vietnamese, Japanese, …)
-
-### Responsive design
-
-- Mobile, tablet, and desktop layouts
-- Mobile sidebar drawer; touch-friendly controls; vocabulary cards on small screens
+**Who it’s for:** learners who want a structured personal study space (lexicon → theory → drills → production → listening/speaking) with optional AI help and clear data ownership.
 
 ---
 
-## Tech Stack
+## Key features
 
-| Layer | Technology |
-| ----- | ---------- |
-| Framework | Next.js 16 (App Router), React 19 |
-| Language | TypeScript |
-| Styling | Tailwind CSS v4, CSS Modules (`src/components/style/`), shadcn/ui (Base UI) |
-| Database | PostgreSQL 16 (local Docker; production Neon) |
-| ORM | Drizzle |
-| Auth | NextAuth v5 (credentials + Google OAuth) |
-| Email | Resend (password-reset emails) |
-| Billing | Stripe Checkout + Customer Portal + webhooks |
-| i18n | next-intl (EN / FI / SV / VI UI locales) |
-| Server state | TanStack Query |
-| Forms | React Hook Form + Zod |
-| Editor | TipTap |
-| Drag & drop | dnd-kit |
-| Export | `@react-pdf/renderer`, `docx` |
-| AI | OpenAI (vocabulary, writing, exercises, listening generation, speaking summary) + OpenAI Realtime (speaking tutor) |
-| Speech | AssemblyAI (listening transcription); Stream Video transcription (speaking) |
-| Realtime video | Stream Video + `@stream-io/openai-realtime-api` (AI tutor on the call) |
-| Media | Cloudinary (avatars + listening files) |
-| Tests | Vitest (unit/integration: access rules, AI contracts, export, taxonomy, …) |
-| Icons | Lucide; country flags via `country-flag-icons` |
-| Motion | Motion (flashcards) |
-| Deployment | Vercel (app) + Docker Compose (local Postgres) |
+| Module | Highlights |
+| --- | --- |
+| **Vocabulary** | Meanings, examples, tags, POS, learning status (`NEW` → `MASTERED`). SRS via flashcards. CSV export free; PDF/DOCX + file import on Pro. |
+| **Exercises** | Flashcards, fill-blank, multiple choice, match pairs, type-answer from your words. Pro: AI contextual drills + **Form a Sentence**. |
+| **Theory** | TipTap notebook for grammar, usage, culture, …. Category filters. PDF/DOCX import & export on Pro. |
+| **Writing** | Rich documents and question-set worksheets. Pro AI: Check / Improve / Grammar. PDF/DOCX export on Pro. |
+| **Listening** *(Pro)* | Upload audio/video → AssemblyAI transcript → OpenAI practice. Sticky player linked to transcript. |
+| **Speaking** | Live AI video tutor (Stream + OpenAI Realtime). Transcript + feedback. Tutor calls metered on Free. |
+
+### AI & personalization
+
+| Layer | What’s included |
+| --- | --- |
+| **Free AI** | Small daily quotas (speaking tutor, listening transcript, exercise gen, vocab helpers, writing support) |
+| **Pro AI** | Higher / unlimited lightweight AI; listening practice generation; AI practice from imported worksheets |
+| **Premium** | Learning Coach on `/coach` — next-move recommendations, Ask Coach chat, progress views, attention cues from real activity |
+
+Quotas use the **UTC calendar day** (reset 00:00 UTC). Stripe is the source of truth for paid status; the server reserves usage before AI calls and refunds on provider failure.
+
+### Account & access
+
+- Email/password + **Google OAuth** (Auth.js)
+- Forgot / reset password via Resend
+- Account settings: profile, password, avatar, billing, **account backup**
+- UI locales: **English, Finnish, Swedish, Vietnamese**
 
 ---
 
-## Project Structure
+## How Notoria works
 
+```text
+Onboard language workspace
+        ↓
+Build vocabulary & theory notes
+        ↓
+Practice (flashcards / quizzes / form-a-sentence)
+        ↓
+Produce (writing) · Listen · Speak
+        ↓
+Optional: Premium coach from real activity
 ```
-messages/                 # UI locales: en.json, fi.json, sv.json, vi.json
-public/
-├── fonts/                # Export fonts (PDF)
-└── background.png        # Auth hero
+
+Everything scopes to the **active workspace** (cookie). Modules share that language context so drills stay aligned with what you saved.
+
+## Plans at a glance
+
+Daily limits and prices live in `src/lib/billing/plans.ts` (`PLAN_DAILY_QUOTAS`). Subscribe from `/account`.
+
+| Capability                                 | Free  | Pro (€9.99/mo) | Premium (€19.99/mo) |
+| ------------------------------------------ | ----- | -------------- | ------------------- |
+| Core vocab / writing / theory / CSV export | Yes   | Yes            | Yes                 |
+| AI Speaking Tutor                          | 1/day | 10/day         | Unlimited           |
+| AI Listening Transcript                    | 1/day | 10/day         | Unlimited           |
+| AI Exercise generation                     | 3/day | Unlimited      | Unlimited           |
+| AI Vocabulary actions                      | 5/day | Unlimited      | Unlimited           |
+| AI Writing Support                         | 1/day | Unlimited      | Unlimited           |
+| Import & export material                   | —     | Yes            | Yes                 |
+| Import & export account backup             | Yes   | Yes            | Yes                 |
+| Listening module                           | —     | Yes            | Yes                 |
+| Learning Coach / Ask Coach                 | —     | —              | Yes (100 msg/day)   |
+
+Paid statuses: `active`, `trialing`, `past_due`. Admins get Premium capabilities without Stripe.
+
+---
+
+## Import & export
+
+Two different flows — keep them separate:
+
+| Flow                         | Formats        | Availability                           | What it does                                                             |
+| ---------------------------- | -------------- | -------------------------------------- | ------------------------------------------------------------------------ |
+| **Material import / export** | CSV, PDF, DOCX | **Pro+** (CSV _export_ free for vocab) | Bring files into Vocabulary / Writing / Theory, or export printable docs |
+| **Account backup**           | Notoria JSON   | **All plans**                          | Export / restore learning data for the signed-in account                 |
+
+**Account backup rules (important):**
+
+- Restores workspaces, vocabulary, theory, writing/exercises, listening, speaking, tags, folders
+- Uses **add as new** (match workspace by language; skip duplicate words; skip listening without media URLs)
+- Media is **linked by URL**, not embedded
+- Never changes name, email, password, OAuth, subscription, or Stripe data
+
+---
+
+## Tech stack
+
+| Layer            | Choice                                                        |
+| ---------------- | ------------------------------------------------------------- |
+| App              | **Next.js 16** (App Router), **React 19**, TypeScript         |
+| UI               | Tailwind CSS v4, CSS Modules, shadcn/ui (Base UI), Lucide     |
+| Data             | PostgreSQL 16, **Drizzle ORM**, TanStack Query                |
+| Auth             | NextAuth v5 (credentials + Google), Resend (password reset)   |
+| Billing          | Stripe Checkout + Customer Portal + webhooks                  |
+| i18n             | next-intl (EN / FI / SV / VI)                                 |
+| Editor           | TipTap                                                        |
+| Export / import  | `@react-pdf/renderer`, `docx`, `unpdf`, `mammoth`             |
+| AI               | OpenAI (+ Realtime for speaking tutor)                        |
+| Speech           | AssemblyAI (listening); Stream Video transcription (speaking) |
+| Media / realtime | Cloudinary; Stream Video                                      |
+| Tests            | Vitest                                                        |
+| Deploy           | Vercel + Docker Compose (local Postgres)                      |
+
+---
+
+## Project structure
+
+```text
+messages/                     # next-intl UI strings: en, fi, sv, vi
+public/                       # logo, export fonts, static images
+drizzle/                      # SQL migrations / entitlement schema dumps
+scripts/                      # db-push and tooling helpers
+
 src/
 ├── app/
-│   ├── (auth)/           # Sign in, sign up, forgot / reset password
-│   ├── (call)/           # Full-screen speaking call (no sidebar)
-│   ├── (dashboard)/      # Sidebar layout
-│   │   ├── account/      # Profile, password, avatar, billing
-│   │   ├── exercises/    # Vocabulary practice modes
-│   │   ├── listening/    # Pro listening lessons
-│   │   ├── speaking/     # Pro speaking sessions
-│   │   ├── theory/       # Grammar / usage notes
-│   │   ├── vocabulary/
-│   │   └── writing/
+│   ├── (auth)/               # sign-in, sign-up, forgot / reset password
+│   ├── (onboarding)/         # first workspace / language setup
+│   ├── (dashboard)/          # main app shell (sidebar)
+│   │   ├── account/          # profile, billing, backup export/import
+│   │   ├── coach/            # Premium Learning Coach
+│   │   ├── vocabulary/       # word bank routes
+│   │   ├── theory/           # grammar / usage notes
+│   │   ├── writing/          # documents & worksheets
+│   │   ├── exercises/        # study modes + import practice
+│   │   ├── listening/        # lessons (Pro)
+│   │   ├── speaking/         # sessions list / detail
+│   │   ├── inbox/            # review-later / activity inbox
+│   │   ├── getting-started/  # product guide
+│   │   └── settings/         # appearance, shortcuts, prefs
+│   ├── (call)/               # full-screen speaking call UI
+│   ├── (legal)/              # privacy, terms, contact pages
+│   ├── (public)/             # marketing / public surfaces
 │   └── api/
-│       ├── auth/         # NextAuth
-│       ├── ai/           # Writing + exercise AI (Pro-gated)
-│       ├── stream/       # Stream Video webhooks
-│       └── stripe/       # Checkout, portal, webhook
+│       ├── auth/             # NextAuth
+│       ├── ai/               # writing, exercises, coach chat, …
+│       ├── stream/           # Stream Video webhooks
+│       └── stripe/           # checkout, portal, webhook, sync
+│
 ├── components/
-│   ├── account/          # Settings, billing card, account backup import dialog
-│   ├── auth/             # Sign-in / sign-up / forgot / reset forms
-│   ├── billing/          # Upgrade modal, plan comparison, locked buttons, Pro provider
-│   ├── content-import/   # Shared CSV/PDF/DOCX import dialog
-│   ├── dashboard/        # How-to guide + continue / practice now
-│   ├── editor/           # TipTap
-│   ├── exercises/
-│   ├── flashcards/
-│   ├── getting-started/  # Long-form product guide
-│   ├── layout/           # Sidebar (Listening + Speaking locked for free), header
-│   ├── listening/
-│   ├── onboarding/       # Workspace onboarding + section tutorials
-│   ├── settings/         # Appearance, shortcuts, local prefs
-│   ├── speaking/
-│   ├── style/            # Feature CSS Modules (auth, vocabulary, exercises, …)
-│   ├── theory/
-│   ├── vocabulary/
-│   ├── workspace/
-│   └── writing/
-├── db/                   # Drizzle schema and client
+│   ├── account/              # settings, avatar, backup import dialog
+│   ├── auth/                 # auth forms & shells
+│   ├── billing/              # upgrade modal, plan table, locks
+│   ├── coach/                # Premium coach UI
+│   ├── content-import/       # shared CSV/PDF/DOCX import dialog
+│   ├── vocabulary/           # bank, form, preview, export
+│   ├── theory/               # library, editor, rows
+│   ├── writing/              # list, editor, AI panel, export
+│   ├── exercises/            # studio, modes, import practice
+│   ├── flashcards/           # SRS card UI
+│   ├── listening/            # lessons, player, practice
+│   ├── speaking/             # sessions + call lobby/active/ended
+│   ├── folders/              # workspace folders
+│   ├── workspace/            # create / switch / edit workspace
+│   ├── dashboard/            # home, guide, continue cards
+│   ├── layout/               # sidebar, header, page shell, locale
+│   ├── editor/               # TipTap editor chrome
+│   ├── export/               # shared export dialogs / format UI
+│   ├── search/ · filters/    # global search & multi-filters
+│   ├── onboarding/           # tutorials, language onboarding
+│   ├── settings/ · preferences/
+│   ├── legal/ · getting-started/ · help/
+│   ├── providers/            # session, prefs, AI prefs
+│   ├── style/                # CSS Modules per feature
+│   ├── ui/                   # shadcn/Base UI primitives
+│   └── shared/ · form/ · prompts/ · inbox/ · review-later/
+│
+├── db/                       # Drizzle schema + Postgres client
 ├── lib/
-│   ├── account-backup/   # Parse / preview / import Notoria JSON backups (server import only)
-│   ├── actions/          # Server Actions
-│   ├── auth/             # Session + paid/Pro/AI access + password-reset tokens
-│   ├── billing/          # Plans, entitlements, plan comparison metadata
-│   ├── content-import/   # Shared file extract / map / analyze for module import
-│   ├── email/            # Resend password-reset mail
-│   ├── exercises/        # Quiz generation + AI fill-in-blank / form-sentence
-│   ├── flashcards/       # SRS
-│   ├── listening/        # Transcribe, speakers, generate practice
-│   ├── speaking/         # Tutor instructions, Stream, transcript summary
-│   ├── stripe/           # Checkout, portal, subscription sync
-│   ├── theory/
-│   ├── vocabulary/       # Export + background AI
-│   └── writing/          # Content model, export, AI
-├── schemas/
-└── types/
+│   ├── actions/              # Server Actions (CRUD per domain)
+│   ├── account-backup/       # parse / preview / import JSON backups
+│   ├── content-import/       # extract → map → analyze pipeline
+│   ├── billing/              # plans, quotas, entitlements, coach
+│   ├── auth/ · email/        # sessions, Pro gates, password reset
+│   ├── stripe/               # checkout / portal / subscription sync
+│   ├── vocabulary/ · writing/ · theory/ · theory-exercises/
+│   ├── exercises/ · exercise-import/ · flashcards/
+│   ├── listening/ · speaking/
+│   ├── editor/ · export/ · search/ · folders/ · ai/
+│   └── query/ · activity/ · onboarding/ · taxonomy/ · …
+├── schemas/                  # Zod input schemas
+└── types/                    # shared TypeScript types
 ```
 
 ---
 
-## Prerequisites
+## Getting started
 
-- **Node.js** 20+
-- **Docker Desktop** (local PostgreSQL)
+### Requirements
+
+- **Node.js 20+**
+- **Docker Desktop** (local Postgres)
 - **npm**
-- Optional for full local features: Cloudinary, OpenAI, AssemblyAI, Stream Video, Stripe (test mode), Resend (password reset)
+- Optional providers for full features: Cloudinary, OpenAI, AssemblyAI, Stream, Stripe (test), Resend
 
----
-
-## Getting Started
-
-### 1. Install dependencies
+### Install & run
 
 ```bash
 npm install
-```
-
-### 2. Environment variables
-
-Create `.env.local` in the project root:
-
-```env
-DATABASE_URL=postgresql://notoria:notoria@localhost:5434/notoria
-
-# Used by `npm run db:push` (prod first, then local)
-DATABASE_URL_PROD=
-
-# Auth.js / NextAuth — openssl rand -base64 32
-AUTH_SECRET=your-secret-here
-# Canonical app URL (no trailing slash). Used for Auth.js, Stripe return URLs, and password-reset links.
-AUTH_URL=http://localhost:3000
-# Optional fallback if AUTH_URL is unset (see getAppBaseUrl)
-# NEXT_PUBLIC_APP_URL=http://localhost:3000
-
-# Google OAuth (Auth.js provider — never commit real secrets)
-GOOGLE_CLIENT_ID=
-GOOGLE_CLIENT_SECRET=
-
-# Password reset email (Resend) — required for /forgot-password to send mail
-RESEND_API_KEY=
-# Verified sender, e.g. Notoria <onboarding@resend.dev> (dev) or Notoria <noreply@yourdomain.com>
-RESEND_FROM_EMAIL=
-
-# Cloudinary (avatars + listening uploads)
-CLOUDINARY_CLOUD_NAME=
-CLOUDINARY_API_KEY=
-CLOUDINARY_API_SECRET=
-
-# OpenAI (vocabulary / writing / exercise / listening AI / speaking tutor + summary)
-OPENAI_API_KEY=
-
-# AssemblyAI (listening transcription)
-ASSEMBLYAI_API_KEY=
-
-# Stream Video (speaking calls)
-NEXT_PUBLIC_STREAM_VIDEO_API_KEY=
-STREAM_VIDEO_SECRET_KEY=
-
-# Stripe (local and production — names only, never commit values)
-STRIPE_SECRET_KEY=
-STRIPE_WEBHOOK_SECRET=
-STRIPE_PRO_PRICE_ID=
-STRIPE_PREMIUM_PRICE_ID=
-STRIPE_PRO_FIRST_MONTH_COUPON_ID=
-STRIPE_PREMIUM_FIRST_MONTH_COUPON_ID=
-```
-
-Copy from `.env.example` if you prefer a blank template. `STRIPE_PUBLISHABLE_KEY` is unused (Checkout is server-side).
-
-Without `RESEND_API_KEY` + `RESEND_FROM_EMAIL`, forgot-password still works for UX (always shows a generic success message) but no email is sent.
-
-PostgreSQL runs on port **5434** (not 5432) to avoid clashing with other local databases.
-
-### 3. Start the database
-
-```bash
-docker compose up -d
-```
-
-Container: `notoria-db` (`postgres:16-alpine`).
-
-### 4. Apply the schema
-
-```bash
+docker compose up -d          # Postgres on localhost:5434
+# create .env.local (see Configuration)
 npm run db:push
+npm run dev                   # http://localhost:3000
 ```
 
-Pushes the Drizzle schema to **production** (`DATABASE_URL_PROD`) then **local** (`DATABASE_URL`), and leaves `DATABASE_URL` pointing at local.
+| Script                        | Purpose                                   |
+| ----------------------------- | ----------------------------------------- |
+| `npm run dev`                 | Next.js development server                |
+| `npm run build` / `npm start` | Production build & serve                  |
+| `npm run lint`                | ESLint                                    |
+| `npm test`                    | Vitest                                    |
+| `npm run db:push`             | Push Drizzle schema (prod URL then local) |
+| `npm run db:studio`           | Drizzle Studio                            |
 
-### 5. Run the app
-
-```bash
-npm run dev
-```
-
-Open [http://localhost:3000](http://localhost:3000), sign up at `/sign-up`, then add vocabulary.
-
-For local Stripe webhooks:
+Local Stripe webhooks:
 
 ```bash
 stripe listen --forward-to localhost:3000/api/stripe/webhook
 ```
 
-Use the printed `whsec_...` as `STRIPE_WEBHOOK_SECRET`.
-
 ---
 
-## Production (Vercel)
+## Configuration
 
-Keep `.env.local` on **test** keys. Production env lives in **Vercel → Settings → Environment Variables → Production**.
+Create `.env.local` in the project root:
 
-| Variable | Production |
-| -------- | ---------- |
-| `DATABASE_URL` | Neon (pooled, `sslmode=require`) |
-| `AUTH_SECRET` | Strong secret; do not rotate unless you intend to sign everyone out |
-| `AUTH_URL` | Canonical site URL, no trailing slash (Auth.js, Stripe return URLs, password-reset links) |
-| `NEXT_PUBLIC_APP_URL` | Optional fallback base URL if `AUTH_URL` is unset |
-| `GOOGLE_CLIENT_ID` | Google OAuth client ID |
-| `GOOGLE_CLIENT_SECRET` | Google OAuth client secret |
-| `RESEND_API_KEY` | Resend API key (password-reset email) |
-| `RESEND_FROM_EMAIL` | Verified From address, e.g. `Notoria <noreply@yourdomain.com>` |
-| `CLOUDINARY_*` | Same account as media |
-| `OPENAI_API_KEY` | Live key |
-| `ASSEMBLYAI_API_KEY` | Live key |
-| `NEXT_PUBLIC_STREAM_VIDEO_API_KEY` | Stream Video API key |
-| `STREAM_VIDEO_SECRET_KEY` | Stream Video API secret |
-| `STRIPE_SECRET_KEY` | `sk_live_...` |
-| `STRIPE_PRO_PRICE_ID` | Pro price (`price_...`, €9.99/month) |
-| `STRIPE_PREMIUM_PRICE_ID` | Premium price (`price_...`, €19.99/month) |
-| `STRIPE_PRO_FIRST_MONTH_COUPON_ID` | Pro first-month 50% coupon (`coupon_...`, duration once) |
-| `STRIPE_PREMIUM_FIRST_MONTH_COUPON_ID` | Premium first-month 50% coupon (`coupon_...`, duration once) |
-| `STRIPE_WEBHOOK_SECRET` | Signing secret of the live webhook |
+```env
+# ── Database (PostgreSQL) ──────────────────────────────────────────
+# Local Docker URL (host port 5434 → container 5432). Required for app + db:push local.
+DATABASE_URL=postgresql://notoria:notoria@localhost:5434/notoria
+# Production / remote Neon (or other) URL. db:push applies schema here first, then local.
+DATABASE_URL_PROD=
 
-After changing env vars, **Redeploy**.
+# ── Auth.js / NextAuth ─────────────────────────────────────────────
+# Random secret for signing sessions/JWTs. Generate: openssl rand -base64 32
+AUTH_SECRET=
+# Canonical site origin (no trailing slash). Used for Auth.js, Stripe returns, reset links.
+AUTH_URL=http://localhost:3000
+# Optional public fallback if AUTH_URL is unset (see getAppBaseUrl).
+# NEXT_PUBLIC_APP_URL=http://localhost:3000
 
-**Speaking (Stream Video)**
+# ── Google OAuth (Auth.js Google provider) ─────────────────────────
+# From Google Cloud Console → OAuth client. Leave empty to hide Google sign-in.
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
 
-1. [Stream Dashboard](https://dashboard.getstream.io) → Video app → copy API key + secret into the Vercel env vars above
-2. Webhooks → add `https://YOUR-DOMAIN/api/stream/webhook`
-3. Events: `call.session_started`, `call.session_participant_left`, `call.session_ended`, `call.transcription_ready`
-4. Redeploy so `NEXT_PUBLIC_STREAM_VIDEO_API_KEY` is in the client bundle
+# ── Email / password reset (Resend) ────────────────────────────────
+# API key from resend.com. Without both keys, forgot-password UI still “succeeds” but sends nothing.
+RESEND_API_KEY=
+# Verified sender, e.g. Notoria <onboarding@resend.dev> or Notoria <noreply@yourdomain.com>
+RESEND_FROM_EMAIL=
 
-The AI tutor stays connected through the Next.js server for the length of the call (`maxDuration` 300s). Use a Vercel plan that allows that, or a long-running Node host.
+# ── Media (Cloudinary) ─────────────────────────────────────────────
+# Avatars + listening audio/video uploads. Required for avatar/listening upload flows.
+CLOUDINARY_CLOUD_NAME=
+CLOUDINARY_API_KEY=
+CLOUDINARY_API_SECRET=
 
-**Stripe (Live mode)**
+# ── AI (OpenAI) ────────────────────────────────────────────────────
+# Vocabulary helpers, writing AI, exercise generation, listening practice, speaking tutor + summary.
+OPENAI_API_KEY=
 
-Paid entitlements are written only after Stripe confirms the subscription. Checkout and in-app plan changes do not set the plan themselves. The webhook, and a short confirm step that reads the subscription back from Stripe, update the database.
+# ── Speech-to-text (AssemblyAI) ────────────────────────────────────
+# Listening lesson transcription. Required for listening upload → transcript.
+ASSEMBLYAI_API_KEY=
 
-Switching Pro and Premium updates the existing subscription item and invoices the prorated difference immediately. A failed payment leaves the current price in place. Moving to Free schedules cancellation and keeps the current plan until the period ends.
+# ── Realtime video (Stream) ────────────────────────────────────────
+# Public key is safe in the browser; secret stays server-only (tokens + webhooks).
+NEXT_PUBLIC_STREAM_VIDEO_API_KEY=
+STREAM_VIDEO_SECRET_KEY=
 
-First-month intro (50% off once per user lifetime): Free → Pro/Premium Checkout attaches the matching coupon when `users.intro_offer_used_at` is null. The recurring Price stays €9.99 / €19.99. The offer is marked consumed only after a paid Checkout/invoice webhook — never on cancel, and never again on re-subscribe. Pro → Premium uses the normal switch/proration path with no second intro.
-
-1. Create **Notoria Pro** (€9.99/month) and **Notoria Premium** (€19.99/month). Put the price ids in `STRIPE_PRO_PRICE_ID` and `STRIPE_PREMIUM_PRICE_ID`.
-2. Create (or reuse) the **Pro First Month** and **Premium First Month** coupons (50% off, duration once, restricted to each product). Put coupon ids in `STRIPE_PRO_FIRST_MONTH_COUPON_ID` and `STRIPE_PREMIUM_FIRST_MONTH_COUPON_ID`. Use Test-mode ids with Test keys and Live-mode ids with Live keys — do not mix.
-3. Webhook endpoint: `https://YOUR-DOMAIN/api/stripe/webhook`
-4. Events: `checkout.session.completed`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`, `invoice.paid`, `invoice.payment_failed`
-5. Customer portal: invoices, payment method, and cancellation. Plan changes stay in Notoria on the existing subscription.
-
-The app does not enable Stripe Tax. Receipts and billing emails are Stripe Dashboard settings, not sent by Notoria.
-
-Schema changes go through `npm run db:push` (production, then local). After pulling intro-offer work, run `db:push` so `users.intro_offer_used_at` exists (or apply `drizzle/0003_intro_offer.sql`).
-
----
-
-## Scripts
-
-| Command | Description |
-| ------- | ----------- |
-| `npm run dev` | Development server |
-| `npm run build` | Production build |
-| `npm run start` | Run the production build |
-| `npm run lint` | ESLint |
-| `npm test` / `npm run test` | Vitest — unit & contract tests (`vitest run`) |
-| `npm run db:push` | Push schema to production, then local (`DATABASE_URL_PROD` then `DATABASE_URL`) |
-| `npm run db:studio` | Drizzle Studio |
-
----
-
-## Application Routes
-
-| Path | Description |
-| ---- | ----------- |
-| `/sign-in` | Sign in |
-| `/sign-up` | Create an account |
-| `/forgot-password` | Request a password-reset email (Resend) |
-| `/reset-password` | Set a new password from the email link (`?token=...`) |
-| `/` | Dashboard |
-| `/vocabulary` | Word list (POS groups, search, filters, export) |
-| `/vocabulary/new` | Add a word |
-| `/vocabulary/[id]` | Word preview |
-| `/vocabulary/[id]/edit` | Edit a word |
-| `/writing` | Writing list |
-| `/writing/new` | Create writing |
-| `/writing/[id]` | Writing preview |
-| `/writing/[id]/edit` | Edit writing |
-| `/theory` | Theory notes |
-| `/theory/new` | New theory note |
-| `/theory/[id]` | Theory preview |
-| `/theory/[id]/edit` | Edit theory |
-| `/exercises` | Pick a study mode |
-| `/exercises/flashcard` | Flashcards |
-| `/exercises/fill-in-blank` | Fill in the blank (+ Pro AI generate) |
-| `/exercises/multiple-choice` | Multiple choice |
-| `/exercises/match-pairs` | Match pairs |
-| `/exercises/type-answer` | Type the answer |
-| `/exercises/form-sentence` | Form a sentence with AI feedback (Pro) |
-| `/listening` | Listening list (Pro) |
-| `/listening/[id]` | Lesson + practice (Pro) |
-| `/speaking` | Speaking sessions (Pro) |
-| `/speaking/[id]` | Session detail / transcript (Pro) |
-| `/speaking/[id]/call` | Full-screen AI video call (Pro) |
-| `/getting-started` | Full product guide |
-| `/settings` | Theme, reduce-motion, keyboard shortcuts |
-| `/account` | Profile, password, avatar, billing, account backup export/import |
-
-API: `POST /api/ai/writing`, `POST /api/ai/exercise`, `POST /api/ai/form-sentence` (Pro), `POST /api/stream/webhook`, `POST /api/stripe/create-checkout-session`, `POST /api/stripe/create-portal-session`, `POST /api/stripe/webhook`.
-
----
-
-## Database
-
-### Schema overview
-
-| Table | Purpose |
-| ----- | ------- |
-| `users` | Account, role, avatar, **subscription + Stripe ids** |
-| `accounts` | OAuth accounts (Google / Auth.js adapter) |
-| `password_reset_tokens` | Hashed one-time password-reset tokens + expiry |
-| `workspaces` | One workspace per user per language |
-| `workspace_tags` | Custom tag catalog |
-| `workspace_folders` | Folders for vocabulary / writing / theory organization |
-| `vocabulary_words` | Words (POS, notes, learning status) |
-| `word_meanings` | Ordered meanings (primary flag) |
-| `word_examples` | Ordered example sentences |
-| `vocabulary_word_tags` | Word ↔ tag links |
-| `exercises` | Saved writing documents (JSONB: rich doc or question set) |
-| `grammar_notes` | Theory notes (JSONB TipTap) |
-| `listening_lessons` | Uploaded media, transcript, metadata, job status |
-| `listening_exercises` | Generated listening questions |
-| `speaking_sessions` | AI video-call sessions, transcript, summary |
-| `flashcard_reviews` | Per-review rating log |
-| `flashcard_progress` | Spaced-repetition state |
-
-Subscription columns on `users`: `subscription_plan` (`free` / `pro` / `premium`), `subscription_status`, `stripe_customer_id`, `stripe_subscription_id`, `stripe_current_period_end`, `stripe_cancel_at_period_end`.
-
-Daily AI counters live in `ai_usage` (unique on user, feature, and UTC date) and `ai_usage_reservations` (one refundable reservation per action). `stripe_webhook_events` records processed event ids. SQL for these tables is in `drizzle/0001_subscription_entitlements.sql`. `npm run db:push` applies the Drizzle schema, which is the source the app runs against.
-
-### Reset the local database
-
-```bash
-docker compose down -v
-docker compose up -d
-npm run db:push
+# ── Billing (Stripe) ───────────────────────────────────────────────
+# Secret key (sk_test_… / sk_live_…). Checkout is server-side — no publishable key needed.
+STRIPE_SECRET_KEY=
+# Signing secret from `stripe listen` (local) or Dashboard webhook endpoint (prod).
+STRIPE_WEBHOOK_SECRET=
+# Price IDs for Pro / Premium monthly products.
+STRIPE_PRO_PRICE_ID=
+STRIPE_PREMIUM_PRICE_ID=
+# Optional first-month intro coupons (leave empty if unused).
+STRIPE_PRO_FIRST_MONTH_COUPON_ID=
+STRIPE_PREMIUM_FIRST_MONTH_COUPON_ID=
 ```
 
-### Connection pool errors
+**Notes**
 
-If you see `sorry, too many clients already`:
+- Postgres maps to host port **5434** (see `docker-compose.yml`) to avoid clashing with other local DBs.
+- Without Resend keys, forgot-password still shows a generic success UI but sends no email.
+- Checkout is server-side; a publishable Stripe key is not required by the app.
+- `npm run db:push` targets `DATABASE_URL_PROD` then `DATABASE_URL`.
+
+---
+
+## Data & privacy
+
+Notoria is built as a **personal learning workspace**:
+
+- Learning content is private to the account (no social graph)
+- Auth: credentials and/or Google OAuth; password-reset tokens are stored hashed
+- Media (avatars, listening files) uses Cloudinary when configured
+- Billing identity lives with Stripe; entitlements sync via webhooks
+- Account deletion removes learning data and cancels active Pro/Premium per product rules
+- **Account backup** is learning-data portability — not an identity or subscription transfer
+
+Official policy pages: [Privacy](https://www.notoria.fi/privacy) · [Terms](https://www.notoria.fi/terms) · [contact@notoria.fi](mailto:contact@notoria.fi)
+
+**Local DB helpers**
 
 ```bash
+# Reset local volume
+docker compose down -v && docker compose up -d && npm run db:push
+
+# Too many Postgres clients
 docker restart notoria-db
 ```
-
-Then restart `npm run dev`.
 
 ---
 
 ## Roadmap
 
-- Listening dictation and word-ordering practice (schema already has the types)
+Tracked in the product backlog of this repo:
+
+- Listening dictation and word-ordering practice (types already exist in the schema)
 - Statistics and charts
+
+---
+
+## Contributing
+
+This repository powers the live Notoria product (`package.json` is marked `"private": true`).
+
+If you have access and want to contribute:
+
+1. Branch from the current default branch
+2. Keep changes scoped; match existing patterns in `src/`
+3. Run `npm run lint` and `npm test` before opening a PR
+4. Prefer small PRs with a clear “why”
+
+Questions: [contact@notoria.fi](mailto:contact@notoria.fi)
+
+---
+
+## License
+
+No open-source license file is published in this repository. Treat the codebase as **proprietary** unless the maintainers state otherwise.
+
+---
+
+<p align="center">
+  <sub>Built for learners who want their material — and their progress — in one private place.</sub><br/>
+  <a href="https://www.notoria.fi">www.notoria.fi</a>
+</p>
