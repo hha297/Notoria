@@ -25,6 +25,7 @@ import {
   verifyCurrentPassword,
 } from "@/lib/actions/account";
 import { downloadAccountBackupJson } from "@/lib/account/download-backup";
+import { isPasswordValid } from "@/lib/auth/password";
 import type { BillingState } from "@/lib/stripe/types";
 
 const CURRENT_PASSWORD_DEBOUNCE_MS = 450;
@@ -70,7 +71,7 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
 
   const newPasswordError = useMemo(() => {
     if (!newPassword) return null;
-    if (newPassword.length < 8) return tAuth("passwordTooShort");
+    if (!isPasswordValid(newPassword)) return tAuth("passwordInvalid");
     if (currentPassword && newPassword === currentPassword) {
       return tAuth("passwordSameAsCurrent");
     }

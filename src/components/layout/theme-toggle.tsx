@@ -4,8 +4,14 @@ import { Moon, Sun } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
-export function ThemeToggle() {
+type ThemeToggleProps = {
+  /** Auth pages: match compact language control (~36px). */
+  compact?: boolean;
+};
+
+export function ThemeToggle({ compact = false }: ThemeToggleProps) {
   const { resolvedTheme, setTheme } = useTheme();
   const t = useTranslations("theme");
   const isDark = resolvedTheme === "dark";
@@ -15,7 +21,7 @@ export function ThemeToggle() {
       type="button"
       variant="outline"
       size="icon"
-      className="shrink-0"
+      className={cn("shrink-0", compact && "size-9")}
       aria-label={t("toggle")}
       onClick={() => setTheme(isDark ? "light" : "dark")}
     >

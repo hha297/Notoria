@@ -4,8 +4,7 @@ import { useEffect, useRef, useState, type ReactNode } from "react";
 import { usePathname } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Menu } from "lucide-react";
-import { LocaleSelector } from "@/components/layout/locale-selector";
-import { ThemeToggle } from "@/components/layout/theme-toggle";
+import { LocaleThemeControls } from "@/components/layout/locale-theme-controls";
 import { WorkspaceSelector } from "@/components/layout/workspace-selector";
 import { FloatingSidebar, SidebarNav } from "@/components/layout/floating-sidebar";
 import { WorkspaceSearch } from "@/components/search/workspace-search";
@@ -152,8 +151,7 @@ export function DashboardStudio({
                             activeWorkspaceId={activeWorkspaceId}
                           />
                         </div>
-                        <LocaleSelector value={locale} />
-                        <ThemeToggle />
+                        <LocaleThemeControls locale={locale} />
                       </div>
                     </div>
                   </header>

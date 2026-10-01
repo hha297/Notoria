@@ -15,6 +15,7 @@ import {
   workspaces,
 } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
+import { strongPasswordSchema } from "@/lib/auth/password";
 import {
   configureCloudinary,
   extractCloudinaryPublicId,
@@ -38,8 +39,8 @@ const ALLOWED_AVATAR_TYPES = new Set([
 const updatePasswordSchema = z
   .object({
     currentPassword: z.string().min(1),
-    newPassword: z.string().min(8).max(128),
-    confirmPassword: z.string().min(8).max(128),
+    newPassword: strongPasswordSchema,
+    confirmPassword: z.string().min(1).max(128),
   })
   .refine((data) => data.newPassword === data.confirmPassword, {
     message: "PASSWORD_MISMATCH",

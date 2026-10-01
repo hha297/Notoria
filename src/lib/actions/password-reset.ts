@@ -5,6 +5,7 @@ import { compare, hash } from "bcryptjs";
 import { z } from "zod";
 import { db } from "@/db";
 import { passwordResetTokens, users } from "@/db/schema";
+import { strongPasswordSchema } from "@/lib/auth/password";
 import { consumeRateLimit } from "@/lib/auth/rate-limit";
 import {
   generatePasswordResetToken,
@@ -27,8 +28,8 @@ const requestSchema = z.object({
 const resetSchema = z
   .object({
     token: z.string().trim().min(20).max(256),
-    password: z.string().min(8).max(128),
-    confirmPassword: z.string().min(8).max(128),
+    password: strongPasswordSchema,
+    confirmPassword: z.string().min(1).max(128),
   })
   .refine((data) => data.password === data.confirmPassword, {
     message: "PASSWORD_MISMATCH",

@@ -11,6 +11,7 @@ import { PasswordInput } from "@/components/auth/password-input";
 import styles from "@/components/style/auth/auth.module.css";
 import { mx } from "@/lib/css-module";
 import { resetPassword } from "@/lib/actions/password-reset";
+import { isPasswordValid } from "@/lib/auth/password";
 
 type ResetPasswordFormProps = {
   token: string;
@@ -34,7 +35,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   const passwordError = useMemo(() => {
     if (serverPasswordError) return serverPasswordError;
     if (!password) return null;
-    if (password.length < 8) return t("passwordTooShort");
+    if (!isPasswordValid(password)) return t("passwordInvalid");
     return null;
   }, [password, serverPasswordError, t]);
 
@@ -79,7 +80,7 @@ export function ResetPasswordForm({ token }: ResetPasswordFormProps) {
           return;
         }
         if (code === "INVALID_PASSWORD") {
-          setServerPasswordError(t("passwordTooShort"));
+          setServerPasswordError(t("passwordInvalid"));
           return;
         }
         if (code === "INVALID_TOKEN") {

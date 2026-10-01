@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useId, useMemo, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { Loader2 } from "lucide-react";
+import { ArrowRight, Loader2, LogIn } from "lucide-react";
 import {
   AuthGoogleSection,
 } from "@/components/auth/google-sign-in-button";
@@ -164,7 +164,9 @@ export function LoginForm({
         >
           {isLoading ? (
             <Loader2 className="size-4 animate-spin" aria-hidden />
-          ) : null}
+          ) : (
+            <LogIn className="size-4" aria-hidden />
+          )}
           {isLoading ? t("signingIn") : t("signIn")}
         </Button>
 
@@ -172,6 +174,7 @@ export function LoginForm({
           {t("noAccount")}{" "}
           <Link href="/sign-up" className={mx(styles, "auth-switch-link")}>
             {t("createAccount")}
+            <ArrowRight className="size-3.5" aria-hidden />
           </Link>
         </p>
       </form>
