@@ -26,6 +26,7 @@ function studioSceneFromPath(pathname: string) {
   if (pathname.startsWith("/vocabulary")) return "vocabulary";
   if (pathname.startsWith("/exercises")) return "exercises";
   if (pathname.startsWith("/theory")) return "theory";
+  if (pathname.startsWith("/reading")) return "read";
   if (pathname.startsWith("/writing")) return "writing";
   if (pathname.startsWith("/listening")) return "listen";
   if (pathname.startsWith("/speaking")) return "speak";
@@ -178,6 +179,7 @@ export function DashboardStudio({
                         className={cn(
                           "mx-auto w-full min-w-0",
                           pathname.startsWith("/writing/") ||
+                            pathname.startsWith("/reading/") ||
                             pathname.startsWith("/theory/") ||
                             pathname.startsWith("/listening/") ||
                             pathname.startsWith("/speaking/")

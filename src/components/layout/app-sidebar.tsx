@@ -3,10 +3,12 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
+  BookMarked,
   BookOpen,
   Dumbbell,
   Headphones,
   Home,
+  Inbox,
   Languages,
   Lock,
   PenLine,
@@ -46,9 +48,11 @@ const navItems = [
   { titleKey: "vocabulary", href: "/vocabulary", icon: Languages },
   { titleKey: "theory", href: "/theory", icon: BookOpen },
   { titleKey: "exercises", href: "/exercises", icon: Dumbbell },
-  { titleKey: "writing", href: "/writing", icon: PenLine },
+  { titleKey: "inbox", href: "/inbox", icon: Inbox },
   { titleKey: "listening", href: "/listening", icon: Headphones },
   { titleKey: "speaking", href: "/speaking", icon: Video },
+  { titleKey: "reading", href: "/reading", icon: BookMarked },
+  { titleKey: "writing", href: "/writing", icon: PenLine },
   { titleKey: "coach", href: "/coach", icon: Sparkles },
 ] as const;
 

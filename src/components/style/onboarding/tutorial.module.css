@@ -120,6 +120,12 @@
   --tutorial-accent-bg: var(--module-speak-bg);
 }
 
+.tutorial-sheet[data-tutorial-section="reading"],
+.tutorial-spotlight-cutout[data-tutorial-section="reading"] {
+  --tutorial-accent-fg: var(--module-read-fg);
+  --tutorial-accent-bg: var(--module-read-bg);
+}
+
 .tutorial-sheet-arrow {
   border: 1px solid
     color-mix(in oklab, var(--tutorial-accent-fg) 18%, var(--hairline-cloud));
@@ -306,4 +312,9 @@
 .route-tutorial-btn[data-tutorial-section="speaking"] {
   --route-tutorial-fg: var(--module-speak-fg);
   --route-tutorial-bg: var(--module-speak-bg);
+}
+
+.route-tutorial-btn[data-tutorial-section="reading"] {
+  --route-tutorial-fg: var(--module-read-fg);
+  --route-tutorial-bg: var(--module-read-bg);
 }

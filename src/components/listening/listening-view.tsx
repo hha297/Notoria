@@ -14,11 +14,13 @@ import { ListeningFiltersBar } from "@/components/listening/listening-filters-ba
 import { ListeningLessonCard } from "@/components/listening/listening-lesson-card";
 import { UploadListeningDialog } from "@/components/listening/upload-listening-dialog";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
+import { CollectionViewModeToggle } from "@/components/shared/collection-view-mode-toggle";
 import { WritingCollections } from "@/components/writing/writing-collections";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { Button } from "@/components/ui/button";
 import { ListPageLoading } from "@/components/layout/page-loading";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useCollectionViewMode } from "@/hooks/use-collection-view-mode";
 import { childrenOf, itemsInFolder } from "@/lib/folders/tree";
 import {
   DEFAULT_LISTENING_LIST_QUERY,
@@ -34,6 +36,7 @@ import {
 import { queryKeys } from "@/lib/query/keys";
 import { resolveTopicLabel } from "@/lib/taxonomy/topics";
 import { onTutorialPrepare } from "@/lib/onboarding/tutorial-prepare";
+import { cn } from "@/lib/utils";
 
 const EMPTY_LESSONS: ListeningLessonListItem[] = [];
 
@@ -55,6 +58,7 @@ export function ListeningView({
   const [query, setQuery] = useState<ListeningListQuery>(
     DEFAULT_LISTENING_LIST_QUERY,
   );
+  const [viewMode, setViewMode] = useCollectionViewMode("listening");
 
   useRegisterShortcutAction("createNew", () => {
     setUploadOpen(true);
@@ -207,7 +211,16 @@ export function ListeningView({
                   </FolderEmptyState>
                 ) : (
                   <div data-tutorial="listening-lessons">
-                    <p className="writing-kicker mb-3">{t("myLessons")}</p>
+                    <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+                      <p className="writing-kicker writing-stage-kicker mb-0">
+                        {t("myLessons")}
+                      </p>
+                      <CollectionViewModeToggle
+                        value={viewMode}
+                        onChange={setViewMode}
+                        route="listen"
+                      />
+                    </div>
                     {filteredLessons.length === 0 ? (
                       isListeningListQueryFiltered(query) &&
                       childFolders.length === 0 ? (
@@ -219,7 +232,13 @@ export function ListeningView({
                         </div>
                       ) : null
                     ) : (
-                      <div className="writing-entry-list">
+                      <div
+                        className={cn(
+                          viewMode === "cards"
+                            ? "writing-entry-grid"
+                            : "writing-entry-list",
+                        )}
+                      >
                         {filteredLessons.map((lesson) => (
                           <ListeningLessonCard
                             key={lesson.id}

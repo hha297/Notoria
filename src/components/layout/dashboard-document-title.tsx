@@ -15,6 +15,7 @@ export function DashboardDocumentTitle() {
   const tTheory = useTranslations("theory");
   const tListening = useTranslations("listening");
   const tSpeaking = useTranslations("speaking");
+  const tReading = useTranslations("reading");
 
   const title = useMemo(() => {
     if (pathname === "/") return "Notoria";
@@ -43,6 +44,13 @@ export function DashboardDocumentTitle() {
     if (/^\/writing\/[^/]+$/.test(pathname)) return tWriting("previewTitle");
     if (pathname === "/writing" || pathname.startsWith("/writing/")) {
       return tNav("writing");
+    }
+
+    if (/^\/reading\/[^/]+\/practice/.test(pathname)) {
+      return tReading("practiceTitle");
+    }
+    if (pathname === "/reading" || pathname.startsWith("/reading/")) {
+      return tNav("reading");
     }
 
     if (pathname === "/theory/new") return tTheory("newTitle");

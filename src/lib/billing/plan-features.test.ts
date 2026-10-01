@@ -29,6 +29,15 @@ describe("plan comparison metadata", () => {
     expect(listening?.category).toBe("ai");
     expect(listening?.cells.pro).toEqual({ kind: "quota", limit: 10 });
     expect(listening?.cells.premium).toEqual({ kind: "unlimited" });
+    const reading = getPlanComparisonRows().find((row) => row.id === "ai_reading");
+    expect(reading?.nameKey).toBe("aiReading");
+    expect(reading?.category).toBe("ai");
+    expect(reading?.cells.free).toEqual({
+      kind: "quota",
+      limit: FREE_DAILY_QUOTAS.ai_reading,
+    });
+    expect(reading?.cells.pro).toEqual({ kind: "quota", limit: 10 });
+    expect(reading?.cells.premium).toEqual({ kind: "unlimited" });
   });
 
   it("groups learning material import/export as one Pro+ row", () => {

@@ -22,6 +22,8 @@ export const PAID_ACCESS_STATUSES = new Set(["active", "trialing", "past_due"]);
 export const QUOTA_FEATURES = [
   "ai_meeting",
   "ai_listening_transcript",
+  /** Reading AI: generate question sets + grade written answers. */
+  "ai_reading",
   "ai_exercise",
   /** Worksheet/notes → practice cards (Exercise Import). */
   "ai_exercise_import",
@@ -58,6 +60,7 @@ export type FeatureId = QuotaFeatureId | CapabilityFeatureId;
  * Daily quotas by plan. Source of truth for pricing UI and server enforcement.
  * - Speaking (`ai_meeting`): expensive realtime — capped Free/Pro; unlimited Premium
  * - Listening transcript: AssemblyAI duration-sensitive — capped Free/Pro; unlimited Premium
+ * - Reading AI: generate/grade — capped Free/Pro; unlimited Premium
  * - Exercise / vocabulary / writing: lightweight — unlimited on paid plans
  * - Coach chat: Premium-only conversational intelligence
  */
@@ -68,6 +71,7 @@ export const PLAN_DAILY_QUOTAS: Record<
   free: {
     ai_meeting: 1,
     ai_listening_transcript: 1,
+    ai_reading: 1,
     ai_exercise: 3,
     ai_exercise_import: 0,
     ai_vocabulary: 5,
@@ -78,6 +82,7 @@ export const PLAN_DAILY_QUOTAS: Record<
   pro: {
     ai_meeting: 10,
     ai_listening_transcript: 10,
+    ai_reading: 10,
     ai_exercise: null,
     ai_exercise_import: 10,
     ai_vocabulary: null,
@@ -88,6 +93,7 @@ export const PLAN_DAILY_QUOTAS: Record<
   premium: {
     ai_meeting: null,
     ai_listening_transcript: null,
+    ai_reading: null,
     ai_exercise: null,
     ai_exercise_import: null,
     ai_vocabulary: null,
@@ -101,6 +107,7 @@ export const PLAN_DAILY_QUOTAS: Record<
 export const FREE_DAILY_QUOTAS: Record<QuotaFeatureId, number> = {
   ai_meeting: PLAN_DAILY_QUOTAS.free.ai_meeting!,
   ai_listening_transcript: PLAN_DAILY_QUOTAS.free.ai_listening_transcript!,
+  ai_reading: PLAN_DAILY_QUOTAS.free.ai_reading!,
   ai_exercise: PLAN_DAILY_QUOTAS.free.ai_exercise!,
   ai_exercise_import: PLAN_DAILY_QUOTAS.free.ai_exercise_import!,
   ai_vocabulary: PLAN_DAILY_QUOTAS.free.ai_vocabulary!,

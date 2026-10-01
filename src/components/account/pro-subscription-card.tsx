@@ -290,6 +290,7 @@ export function ProSubscriptionCard({
                     [
                       "ai_meeting",
                       "ai_listening_transcript",
+                      "ai_reading",
                     ] as const satisfies readonly QuotaFeatureId[]
                   ).map((feature) => {
                     const quota = billing.quotas.find(

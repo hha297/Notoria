@@ -12,7 +12,7 @@ export function folderHref(section: FolderSection, folderId: string | null) {
 }
 
 export function sectionCreateHref(
-  section: Exclude<FolderSection, "listening">,
+  section: Exclude<FolderSection, "listening" | "reading">,
   folderId: string | null,
 ) {
   const base = `/${section}/new`;

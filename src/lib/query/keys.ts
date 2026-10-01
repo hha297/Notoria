@@ -9,6 +9,7 @@
  * - writing CRUD           → writing.all(workspaceId)
  * - listening CRUD         → listening.all(workspaceId)
  * - speaking CRUD          → speaking.all(workspaceId)
+ * - reading CRUD           → reading.all(workspaceId)
  * - exercise studio/import → exercises.studio(workspaceId)
  * - folder tree            → folders.list(workspaceId, section)
  * - workspace switch       → new workspaceId (old keys remain until gc)
@@ -50,6 +51,13 @@ export const queryKeys = {
       ["speaking", workspaceId, "list", filters] as const,
     detail: (workspaceId: string, id: string) =>
       ["speaking", workspaceId, "session", id] as const,
+  },
+  reading: {
+    all: (workspaceId: string) => ["reading", workspaceId] as const,
+    list: (workspaceId: string, filters?: unknown) =>
+      ["reading", workspaceId, "list", filters] as const,
+    detail: (workspaceId: string, id: string) =>
+      ["reading", workspaceId, "passage", id] as const,
   },
   exercises: {
     studio: (workspaceId: string) =>

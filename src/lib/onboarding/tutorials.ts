@@ -7,6 +7,7 @@ export const TUTORIAL_SECTIONS = [
   "writing",
   "listening",
   "speaking",
+  "reading",
 ] as const;
 
 export type TutorialSectionId = (typeof TUTORIAL_SECTIONS)[number];
@@ -14,6 +15,8 @@ export type TutorialSectionId = (typeof TUTORIAL_SECTIONS)[number];
 export type TutorialPrepareAction =
   | "open-listening-upload"
   | "close-listening-upload"
+  | "open-reading-import"
+  | "close-reading-import"
   | "open-folder-create"
   | "close-folder-create";
 
@@ -133,6 +136,21 @@ export const SECTION_TUTORIALS = {
     steps: [
       { id: "start", target: "speaking-start" },
       { id: "sessions", target: "speaking-sessions" },
+    ],
+  },
+  reading: {
+    id: "reading",
+    ctaHref: "/reading",
+    steps: [
+      { id: "import", target: "reading-import" },
+      {
+        id: "importForm",
+        target: "reading-import-dialog",
+        prepare: "open-reading-import",
+      },
+      { id: "search", target: "reading-search" },
+      { id: "passages", target: "reading-passages" },
+      ...FOLDER_TUTORIAL_STEPS,
     ],
   },
 } as const satisfies Record<TutorialSectionId, TutorialDefinition>;

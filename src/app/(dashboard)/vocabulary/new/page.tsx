@@ -9,13 +9,19 @@ import { getActiveWorkspace } from "@/lib/workspace";
 export default async function NewVocabularyPage({
   searchParams,
 }: {
-  searchParams: Promise<{ prefill?: string; note?: string; fromInbox?: string }>;
+  searchParams: Promise<{
+    prefill?: string;
+    note?: string;
+    example?: string;
+    fromInbox?: string;
+  }>;
 }) {
   const t = await getTranslations("vocabulary");
   const workspace = await getActiveWorkspace();
-  const { prefill, note, fromInbox } = await searchParams;
+  const { prefill, note, example, fromInbox } = await searchParams;
   const word = prefill?.trim() || "";
   const notes = note?.trim() || "";
+  const exampleSentence = example?.trim() || "";
   const fromInboxId = fromInbox?.trim() || undefined;
 
   if (!workspace) {
@@ -54,6 +60,7 @@ export default async function NewVocabularyPage({
           language={workspace.language}
           prefillWord={word || undefined}
           prefillNotes={notes || undefined}
+          prefillExample={exampleSentence || undefined}
           fromInboxId={fromInboxId}
         />
       </div>

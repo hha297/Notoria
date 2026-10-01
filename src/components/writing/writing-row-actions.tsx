@@ -97,9 +97,9 @@ export function WritingRowActions({
           size="icon-sm"
           icon={
             isLoadingExport ? (
-              <Loader2 className="size-4 animate-spin" />
+              <Loader2 className="size-[1.15rem] animate-spin" />
             ) : (
-              <Download className="size-4" />
+              <Download className="size-[1.15rem]" />
             )
           }
           onClick={() => {
@@ -114,7 +114,7 @@ export function WritingRowActions({
           href={`/writing/${id}/edit`}
           className={cn(buttonVariants({ variant: "ghost", size: "icon-sm" }))}
         >
-          <Pencil className="size-4" />
+          <Pencil className="size-[1.15rem]" />
           <span className="sr-only">{t("edit")}</span>
         </Link>
         <Button
@@ -124,7 +124,7 @@ export function WritingRowActions({
           onClick={() => setDeleteOpen(true)}
           disabled={isPending}
         >
-          <Trash2 className="size-4" />
+          <Trash2 className="size-[1.15rem]" />
           <span className="sr-only">{t("delete")}</span>
         </Button>
       </div>

@@ -204,6 +204,10 @@
   --guide-module-fg: var(--module-speak-fg);
   --guide-module-bg: var(--module-speak-bg);
 }
+.guide-section[data-guide-module="read"] {
+  --guide-module-fg: var(--module-read-fg);
+  --guide-module-bg: var(--module-read-bg);
+}
 
 .guide-section-body {
   display: flex;

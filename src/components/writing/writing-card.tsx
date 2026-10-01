@@ -6,6 +6,7 @@ import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { FolderItemDrag } from "@/components/folders/folder-dnd";
 import { DescriptionContent } from "@/components/form/description-content";
+import { LinkButton } from "@/components/ui/link-button";
 import { WritingMetaBadges } from "@/components/writing/writing-meta-badges";
 import { WritingRowActions } from "@/components/writing/writing-row-actions";
 import type { WritingListMeta } from "@/lib/writing/content";
@@ -145,6 +146,20 @@ export function WritingCard({
           <WritingKindFacts document={document} />
           <div className="mt-1.5">
             <WritingMetaBadges meta={listMeta.meta} />
+          </div>
+          <div className="writing-entry-cta mt-2">
+            <LinkButton
+              href={href}
+              size="sm"
+              variant="outline"
+              className="route-quiet-action"
+              data-route-action={isQuestionSet ? "theory" : "writing"}
+              onPointerDown={(event) => event.stopPropagation()}
+              onClick={(event) => event.stopPropagation()}
+            >
+              {t("openWriting")}
+              <ArrowRight className="size-3.5" aria-hidden="true" />
+            </LinkButton>
           </div>
         </div>
         <div className="writing-entry-actions">

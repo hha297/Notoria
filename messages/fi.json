@@ -14,7 +14,8 @@
     "selectedCount": "{count} valittu",
     "clearFilter": "Tyhjennä",
     "filters": "Suodattimet",
-    "hideFilters": "Piilota suodattimet"
+    "hideFilters": "Piilota suodattimet",
+    "remove": "Poista"
   },
   "contentImport": {
     "title": {
@@ -150,8 +151,10 @@
     "groups": {
       "main": "Päävalikko",
       "listenSpeak": "Kuuntelu ja puhe",
-      "more": "Lisää"
-    }
+      "more": "Lisää",
+      "skills": "Taidot"
+    },
+    "reading": "Lukeminen"
   },
   "inbox": {
     "eyebrow": "Kerää",
@@ -1108,6 +1111,10 @@
       "speaking": {
         "title": "Puhuminen",
         "body": "Soita tekoälyohjaajalle videolla ja harjoittele luonnollista puhetta omalla oppimistiedollasi. Käy jokaisen session jälkeen litterointi ja palaute läpi. Näin sulkeutuu oppimiskierros: opi → harjoittele → käytä → arvioi → paranna."
+      },
+      "reading": {
+        "title": "Lukeminen",
+        "body": "Tuo tai liitä tekstejä ja luo ymmärtämisharjoituksia — monivalinta, kirjoitetut vastaukset sekä tosi / epätosi / ei mainita. Ilmaisella on päivittäinen tekoälyraja; Prolla raja nousee 10:een päivässä, Premiumilla käyttö on rajaton."
       }
     },
     "modules": {
@@ -1146,6 +1153,12 @@
         "description": "Live-videokeskustelu tekoälyohjaajan kanssa.",
         "how": "Luo sessio ja liity puheluun. Ilmainen sisältää yhden tekoälytapaamisen päivässä, ohjaaja mukana.",
         "cta": "Avaa puhuminen"
+      },
+      "reading": {
+        "title": "Lukeminen",
+        "description": "Tekstit ja tekoälyn ymmärtämisharjoitukset.",
+        "how": "Tuo tai liitä teksti, luo kysymyksiä ja harjoittele. Ilmaisella on päivittäinen tekoälyraja; Prolla 10/pv; Premiumilla rajaton.",
+        "cta": "Avaa lukeminen"
       }
     },
     "counts": {
@@ -1639,6 +1652,45 @@
           "body": "Lähetä keräys Sanastoon, Teoriaan, Kirjoitukseen tai Harjoitukseen. Se merkitään käsitellyksi vasta, kun tallennus on valmis — jos peruutat luonnin, kohde jää odottamaan."
         }
       }
+    },
+    "reading": {
+      "title": "Lukeminen",
+      "description": "Tuo tai liitä tekstejä, luo ymmärtämisharjoituksia ja tarkastele tuloksia.",
+      "cta": "Avaa lukeminen",
+      "steps": {
+        "import": {
+          "title": "1. Lisää teksti",
+          "body": "Liitä teksti tai lataa PDF/DOCX luodaksesi lukutekstin, jolla voit harjoitella."
+        },
+        "importForm": {
+          "title": "2. Tarkista teksti",
+          "body": "Tarkista otsikko, kieli ja sisältö ennen tallennusta. Voit muokata poimittua tekstiä tarvittaessa."
+        },
+        "search": {
+          "title": "3. Etsi tekstejä",
+          "body": "Hae lukukirjastosta otsikon tai lähdetiedostonimen perusteella, kun lista kasvaa."
+        },
+        "passages": {
+          "title": "4. Harjoittele kirjastostasi",
+          "body": "Avaa teksti luodaksesi kysymyksiä, vastataksesi niihin ja tarkastellaksesi tuloksia — myös kirjoitettujen vastausten tekoälyarvioinnin kanssa."
+        },
+        "newFolder": {
+          "title": "5. Luo kansio",
+          "body": "Napsauta Uusi kansio ryhmitelläksesi tekstejä aiheen, kokeen tai tason mukaan. Kansiot ovat valinnaisia."
+        },
+        "nameFolder": {
+          "title": "6. Nimeä kansio",
+          "body": "Anna selkeä nimi (esimerkiksi Uutiset tai Koevalmistelu). Kansio luodaan nykyiseen sijaintiin."
+        },
+        "organize": {
+          "title": "7. Kansiot ja tekstit",
+          "body": "Kansiot näkyvät tekstien yläpuolella. Avaa kansio selataksesi vain sitä ryhmää — tuonnit kansion sisällä tallentuvat sinne."
+        },
+        "moveItem": {
+          "title": "8. Siirrä tekstejä",
+          "body": "Käytä siirtokuvaketta tai vedä teksti kansikortille. Voit myös sisäkkäistää kansioita."
+        }
+      }
     }
   },
   "settings": {
@@ -1919,6 +1971,186 @@
       "titleLabel": "Otsikko",
       "descriptionLabel": "Kuvaus"
     }
+  },
+  "reading": {
+    "eyebrow": "Lukeminen",
+    "title": "Lukeminen",
+    "description": "Liitä tai tuo teksti, luo ymmärtämistehtäviä ja harjoittele tallennetuilla tuloksilla.",
+    "disabledNoWorkspace": "Luo työtila ennen lukutekstien lisäämistä.",
+    "import": "Lisää teksti",
+    "importFirst": "Lisää ensimmäinen teksti",
+    "importTitle": "Lisää lukuteksti",
+    "importDescription": "Liitä teksti tai lataa PDF/DOCX, muokkaa esikatselua ja luo halutessasi tehtäviä.",
+    "importTabsAria": "Tekstin lähde",
+    "tabPaste": "Liitä",
+    "tabUpload": "Lataa",
+    "bodyLabel": "Teksti",
+    "bodyPlaceholder": "Liitä tai kirjoita lukuteksti tähän…",
+    "titleLabel": "Otsikko",
+    "titlePlaceholder": "Valinnainen otsikko",
+    "languageLabel": "Tekstin kieli",
+    "wordCount": "{count, plural, one {# sana} other {# sanaa}}",
+    "continuePreview": "Jatka esikatseluun",
+    "dropTitle": "Pudota PDF tai DOCX tähän",
+    "dropDescription": "tai napsauta selataksesi. Skannatut PDF:t käyttävät OCR:ää tarvittaessa.",
+    "extractSuccess": "Teksti poimittu — tarkista ja muokkaa ennen tallennusta.",
+    "sourcePaste": "Liitetty teksti",
+    "back": "Takaisin",
+    "savePassage": "Tallenna teksti",
+    "saveAndGenerate": "Tallenna ja luo tehtäviä",
+    "generateHint": "Luo ymmärtämiskysymyksiä kielellä {language}. Käyttää tekoälytehtäväkiintiötäsi.",
+    "modeLabel": "Tehtävätyyppi",
+    "questionCountLabel": "Kysymykset",
+    "difficultyLabel": "Vaikeustaso",
+    "difficultyNone": "Automaattinen",
+    "questionLanguageLabel": "Kysymysten kieli",
+    "skipGenerate": "Ohita toistaiseksi",
+    "generateExercises": "Luo tehtäviä",
+    "generateTitle": "Luo tehtäviä",
+    "generateDescription": "Luo tästä tekstistä ymmärtämiskysymyksiä. Luonti tehdään kerran ja tallennetaan.",
+    "exercisesGenerated": "Tehtävät valmiina.",
+    "created": "Teksti tallennettu",
+    "deleted": "Teksti poistettu",
+    "submitted": "Vastaukset lähetetty",
+    "emptyTitle": "Ei lukutekstejä vielä",
+    "emptyDescription": "Liitä teksti tai lataa PDF/DOCX aloittaaksesi lukuharjoittelun.",
+    "myPassages": "Omat tekstit",
+    "passageHint": "Avaa teksti luodaksesi tehtäviä tai jatkaaksesi harjoittelua.",
+    "open": "Avaa",
+    "practice": {
+      "submit": "Lähetä vastaukset",
+      "loading": "Ladataan kysymyksiä…",
+      "questionLabel": "K{number}.",
+      "writtenPlaceholder": "Kirjoita vastauksesi…",
+      "correct": "Oikein",
+      "incorrect": "Ei aivan",
+      "expected": "Oikea vastaus",
+      "objectiveScore": "{correct} / {total} objektiivista oikein",
+      "mobileTabsAria": "Harjoitusnäkymät",
+      "unansweredWarn": "Joitakin kysymyksiä ei ole vastattu. Lähetetäänkö silti?",
+      "gradingPending": "Vapaamuotoisia vastauksia ei voitu vielä arvioida. Vastauksesi on tallennettu — voit yrittää arviointia uudelleen.",
+      "retryGrading": "Yritä arviointia uudelleen",
+      "retryAttempt": "Yritä uudelleen",
+      "progress": "Kysymys {current} / {total}",
+      "aiFeedbackLabel": "AI-palaute",
+      "understood": "Ymmärretty",
+      "missing": "Puuttuu"
+    },
+    "startPractice": "Aloita harjoitus",
+    "practiceTitle": "Lukuharjoitus",
+    "backToList": "Takaisin lukemiseen",
+    "backToPassage": "Takaisin tekstiin",
+    "passagePanel": "Teksti",
+    "questionsPanel": "Kysymykset",
+    "questionSets": "Tehtäväsarjat",
+    "noSetsYet": "Ei tehtäviä vielä",
+    "noSetsDescription": "Luo tehtävät kerran — ne pysyvät tallessa, joten päivitys ei luo niitä uudelleen.",
+    "setCount": "{count, plural, one {# tehtäväsarja} other {# tehtäväsarjaa}}",
+    "questionCountValue": "{count, plural, one {# kysymys} other {# kysymystä}}",
+    "staleSet": "Tekstiä on päivitetty tämän sarjan jälkeen",
+    "vocabHint": "Valitse sana tai lyhyt lause tekstistä lisätäksesi sen sanastoon.",
+    "addToVocabulary": "Lisää sanastoon",
+    "deleteConfirmTitle": "Poistetaanko tämä teksti?",
+    "deleteConfirmDescription": "”{title}” ja kaikki sen tehtävät sekä yritykset poistetaan pysyvästi.",
+    "modes": {
+      "multiple_choice": "Monivalinta",
+      "written": "Kirjalliset vastaukset",
+      "true_false_not_stated": "Tosi / Epätosi / Ei mainita",
+      "mixed": "Sekalainen"
+    },
+    "sources": {
+      "paste": "Liitä",
+      "pdf": "PDF",
+      "docx": "DOCX"
+    },
+    "setStatus": {
+      "generating": "Luodaan",
+      "ready": "Valmis",
+      "failed": "Epäonnistui"
+    },
+    "tfns": {
+      "true": "Tosi",
+      "false": "Epätosi",
+      "not_stated": "Ei mainita"
+    },
+    "errors": {
+      "UNAUTHORIZED": "Kirjaudu sisään jatkaaksesi.",
+      "OPENAI_NOT_CONFIGURED": "Tekoälyä ei ole määritetty.",
+      "INVALID_INPUT": "Tarkista syöte ja yritä uudelleen.",
+      "INVALID_FILE": "Valitse PDF- tai DOCX-tiedosto.",
+      "INVALID_FILE_TYPE": "Vain PDF- ja DOCX-tiedostot ovat tuettuja.",
+      "FILE_TOO_LARGE": "Tiedosto on liian suuri. Käytä alle 10 MB:n tiedostoa.",
+      "EMPTY_CONTENT": "Lisää pidempi teksti (vähintään muutama lausetta).",
+      "SCANNED_PDF": "PDF näyttää skannatulta. OCR ei saanut riittävästi tekstiä — liitä teksti sen sijaan.",
+      "UNSUPPORTED_PARSE": "Tiedostoa ei voitu lukea. Kokeile .docx-tiedostoa tai tekstipohjaista PDF:ää.",
+      "PASSAGE_NOT_FOUND": "Lukutekstiä ei löytynyt.",
+      "SET_NOT_FOUND": "Tehtäväsarjaa ei löytynyt.",
+      "ATTEMPT_NOT_FOUND": "Harjoitusyritystä ei löytynyt.",
+      "SET_NOT_READY": "Tehtävät eivät ole vielä valmiita.",
+      "GENERATION_FAILED": "Tehtäviä ei voitu luoda. Yritä uudelleen.",
+      "GENERATION_UNAVAILABLE": "Tehtävien luonti ei ole juuri nyt käytettävissä.",
+      "VALIDATION_FAILED": "Luodut tehtävät eivät olleet käytettäviä. Yritä uudelleen.",
+      "GRADING_FAILED": "Kirjallisia vastauksia ei voitu arvioida. Yritä uudelleen.",
+      "ATTEMPT_NOT_EDITABLE": "Tätä yritystä ei voi enää muokata.",
+      "PROCESSING_FAILED": "Jokin meni pieleen. Yritä uudelleen.",
+      "AI_DISABLED": "Tekoälyapu on pois päältä asetuksissasi.",
+      "AI_QUOTA_EXCEEDED": "Tekoälytehtävien kiintiö tälle jaksolle on täynnä.",
+      "generic": "Jokin meni pieleen. Yritä uudelleen."
+    },
+    "newPassage": "Lisää teksti",
+    "saving": "Tallennetaan…",
+    "saved": "Teksti tallennettu",
+    "openPassage": "Avaa",
+    "searchPlaceholder": "Hae tekstejä…",
+    "noResults": "Ei hakua vastaavia tekstejä",
+    "generateNew": "Luo harjoituksia",
+    "generate": "Luo",
+    "generating": "Luodaan…",
+    "generated": "Harjoitukset valmiina.",
+    "exerciseMode": "Harjoitustyyppi",
+    "modeMultipleChoice": "Monivalinta",
+    "modeWritten": "Kirjalliset vastaukset",
+    "modeTfns": "Tosi / Epätosi / Ei mainita",
+    "modeMixed": "Sekoitus",
+    "questionCount": "Kysymykset",
+    "questionLanguage": "Kysymysten kieli",
+    "difficulty": "Vaikeustaso",
+    "setsHeading": "Harjoituskokonaisuudet",
+    "noSets": "Ei harjoituksia vielä.",
+    "resumePractice": "Jatka",
+    "retryAttempt": "Yritä uudelleen",
+    "deleteSet": "Poistetaanko tämä tehtäväsarja?",
+    "setFailed": "Luonti epäonnistui",
+    "setGenerating": "Luodaan…",
+    "passageTab": "Teksti",
+    "questionsTab": "Kysymykset",
+    "progress": "{current} / {total}",
+    "submit": "Lähetä vastaukset",
+    "submitting": "Lähetetään…",
+    "resultsTitle": "Tulokset valmiina",
+    "objectiveScore": "{correct} / {total} objektiivista oikein",
+    "aiFeedbackLabel": "Tekoälypalaute",
+    "explanation": "Selitys",
+    "excerpt": "Ote",
+    "correctAnswer": "Oikea vastaus",
+    "yourAnswer": "Vastauksesi",
+    "unansweredWarn": "Joitakin kysymyksiä ei ole vastattu. Lähetetäänkö silti?",
+    "gradingPending": "Kirjallisia vastauksia ei voitu arvioida.",
+    "retryGrading": "Yritä arviointia uudelleen",
+    "selectWordHint": "Valitse sana tai lyhyt ilmaus lisätäksesi sen sanastoon.",
+    "uploadHint": "Lataa PDF tai DOCX. Skannattuja kuvapohjaisia PDF-tiedostoja ei vielä tueta.",
+    "uploadChoose": "Valitse tiedosto",
+    "extracting": "Poimitaan tekstiä…",
+    "status": {
+      "generating": "Luodaan",
+      "ready": "Valmis",
+      "failed": "Epäonnistui"
+    },
+    "deleteSetDescription": "Tämä tehtäväsarja ja sen yritykset poistetaan pysyvästi. Itse teksti säilyy.",
+    "dropActive": "Pudota tekstin poimintaa varten",
+    "supportedFiles": "PDF ja DOCX · enintään 10 Mt",
+    "replaceFile": "Napsauta valitaksesi toisen tiedoston",
+    "emptyFolder": "Tämä kansio on tyhjä"
   },
   "listening": {
     "eyebrow": "Kuuntelu",
@@ -2545,6 +2777,7 @@
     "quotaLabels": {
       "ai_meeting": "Tekoälypuheopettaja",
       "ai_listening_transcript": "Kuuntelutranskriptio",
+      "ai_reading": "Lukemisen tekoälyharjoitus",
       "ai_exercise": "Tekoälyharjoitusten luonti",
       "ai_exercise_import": "Tekoälyharjoitus työarkeista",
       "ai_vocabulary": "Sanaston tekoälytoiminnot",
@@ -2559,6 +2792,7 @@
       "quotaPerDay": {
         "ai_meeting": "{count, plural, one {# puhelu/pv} other {# puhelua/pv}}",
         "ai_listening_transcript": "{count, plural, one {# transkriptio/pv} other {# transkriptiota/pv}}",
+        "ai_reading": "{count, plural, one {# lukemistekoäly/pv} other {# lukemistekoälyä/pv}}",
         "ai_exercise": "{count, plural, one {# generointi/pv} other {# generointia/pv}}",
         "ai_exercise_import": "{count, plural, one {# generointi/pv} other {# generointia/pv}}",
         "ai_vocabulary": "{count, plural, one {# toiminto/pv} other {# toimintoa/pv}}",
@@ -2576,6 +2810,7 @@
       "workspace": "Työtila",
       "aiMeeting": "Tekoälytapaaminen",
       "aiListeningTranscript": "Kuuntelutranskriptio",
+      "aiReading": "Lukemisen tekoälyharjoitus",
       "aiExercise": "Tekoälyharjoitusten luonti",
       "aiVocabulary": "Sanaston tekoälytoiminnot",
       "aiSpeakingTutor": "Tekoälypuheopettaja",
@@ -2590,6 +2825,7 @@
       "practiceFromMaterial": "Tekoälyharjoitus työarkeista",
       "listening": "Kuuntelu",
       "speaking": "Puhuminen",
+      "reading": "Lukeminen",
       "pdfDocxExport": "Oppimateriaalin vienti",
       "learningCoach": "Oppimisvalmentaja",
       "askLearningCoach": "Kysy AI-oppimisvalmentajalta",
@@ -2800,7 +3036,8 @@
       "richDocument": "Rich-dokumentti",
       "questionSet": "Kysymyssarja",
       "richDocumentHint": "Vapaamuotoinen kirjoitus rich-tekstieditorilla.",
-      "questionSetHint": "Strukturoidut osiot ja kysymykset — kuin oppikirjan tehtävä."
+      "questionSetHint": "Strukturoidut osiot ja kysymykset — kuin oppikirjan tehtävä.",
+      "learningNoteHint": "Henkilökohtaiset opiskelumuistiinpanot — tageilla, jotta löydät ne myöhemmin."
     },
     "content": "Sisältö",
     "contentPlaceholder": "Aloita tehtävän sisällön kirjoittaminen…",
@@ -3132,7 +3369,8 @@
       "connections": "Tietosi muuttuu harjoitukseksi",
       "philosophy": "Oppimispäiväkirjasi",
       "startHere": "Aloita tästä",
-      "inbox": "Keräys"
+      "inbox": "Keräys",
+      "reading": "Lukeminen"
     },
     "welcome": {
       "title": "Mikä on Notoria?",
@@ -3309,6 +3547,18 @@
           "Myöhemmin: käsittele Sanastoon merkityksen ja esimerkin kanssa"
         ],
         "exampleNote": "Sirpale on turvassa Keräyksessä. Kun sinulla on viisi hiljaista minuuttia, lähetä se Sanastoon (tai Teoriaan / Kirjoitukseen) ja viimeistele merkkaus — vasta sitten se on Käsitelty."
+      },
+      "reading": {
+        "title": "Lukeminen",
+        "intro": "Lukeminen muuttaa valitsemasi tekstit ymmärtämisharjoituksiksi.",
+        "bullets": [
+          "Liitä tekstiä tai lataa PDF/DOCX-tekstejä",
+          "Luo monivalinta-, kirjoitus- tai tosi/epätosi/ei mainita -kysymyksiä",
+          "Harjoittele ja tarkastele vastauksia tekoälyarvioinnilla kirjoitetuille vastauksille",
+          "Tallenna hyödyllisiä sanoja tekstistä Sanastoon",
+          "Järjestä tekstejä kansioilla"
+        ],
+        "emphasis": "Tuo materiaalia, jota todella haluat ymmärtää — uutisia, tarinoita, työarkkeja — ja muuta se harjoitukseksi, joka kuuluu päiväkirjaasi."
       }
     },
     "connections": {
@@ -4016,6 +4266,10 @@
         "capture": {
           "label": "Keräys",
           "body": "Nopea pudotuspaikka sirpaleille — sanoille, epäilyksille ja ideoille — jotka käsittelet myöhemmin Sanastoksi, Teoriaksi, Kirjoitukseksi tai Harjoitukseksi. Käytä Keräystä ensin, kun sinulla on vain hetki; kohteet pysyvät käsittelemättä, kunnes linkitetty tallennus on valmis."
+        },
+        "reading": {
+          "label": "Lukeminen",
+          "body": "Tuo tai liitä tekstejä, luo ymmärtämisharjoituksia ja tarkastele tuloksia. Ilmaisella on päivittäinen tekoälyraja; Pro ja Premium nostavat tai poistavat rajan."
         }
       },
       "notEverything": {

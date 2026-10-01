@@ -9,10 +9,12 @@ import {
 import type { WritingMode } from "@/lib/writing/content";
 import { cn } from "@/lib/utils";
 
+export type WritingChipKind = WritingMode | "learning_note";
+
 export type WritingChipOption = {
   value: string;
   label: ReactNode;
-  kind?: WritingMode;
+  kind?: WritingChipKind;
 };
 
 type WritingChipPickerProps = {

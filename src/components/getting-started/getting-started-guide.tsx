@@ -24,6 +24,7 @@ const TOC_IDS = [
   "writing",
   "listening",
   "speaking",
+  "reading",
   "connections",
   "philosophy",
   "start-here",
@@ -68,7 +69,8 @@ const MODULE_TINT: Record<
   | "exercise"
   | "writing"
   | "listening"
-  | "speaking",
+  | "speaking"
+  | "reading",
   string
 > = {
   inbox: "home",
@@ -78,6 +80,7 @@ const MODULE_TINT: Record<
   writing: "writing",
   listening: "listen",
   speaking: "speak",
+  reading: "read",
 };
 
 export function GettingStartedGuide() {
@@ -154,6 +157,7 @@ export function GettingStartedGuide() {
         <ModuleSection id="writing" module="writing" />
         <ModuleSection id="listening" module="listening" />
         <ModuleSection id="speaking" module="speaking" />
+        <ModuleSection id="reading" module="reading" />
 
         <GuideSection id="connections" title={t("connections.title")}>
           <p className={mx(styles, "guide-body")}>{t("connections.intro")}</p>

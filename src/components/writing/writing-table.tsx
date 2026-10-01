@@ -13,6 +13,7 @@ import { useTranslations } from "next-intl";
 import { FileText, ListChecks, Plus, Search, Upload } from "lucide-react";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
+import { CollectionViewModeToggle } from "@/components/shared/collection-view-mode-toggle";
 import { CollapsibleRefine } from "@/components/filters/collapsible-refine";
 import { FolderWorkspace } from "@/components/folders/folder-workspace";
 import { FolderBreadcrumbs } from "@/components/folders/folder-breadcrumbs";
@@ -28,6 +29,7 @@ import {
   WritingChipPicker,
   WritingFilterChipPicker,
 } from "@/components/writing/writing-chip-picker";
+import { useCollectionViewMode } from "@/hooks/use-collection-view-mode";
 import type { WritingMode } from "@/lib/writing/content";
 import { childrenOf, folderMatchesQuery, itemsInFolder } from "@/lib/folders/tree";
 import type { FolderListItem } from "@/lib/folders/types";
@@ -37,6 +39,7 @@ import {
   matchesMultiFilter,
   type MultiFilterValue,
 } from "@/lib/filters/multi-select";
+import { cn } from "@/lib/utils";
 import {
   WRITING_CEFR_LEVELS,
   WRITING_FORMALITY,
@@ -105,10 +108,8 @@ export function WritingTable({
   const [formalityFilter, setFormalityFilter] = useState<MultiFilterValue>([]);
   const [learningNotesOnly, setLearningNotesOnly] = useState(false);
   const [importOpen, setImportOpen] = useState(false);
+  const [viewMode, setViewMode] = useCollectionViewMode("writing");
   const createHref = sectionCreateHref("writing", currentFolderId);
-  const learningNoteHref = createHref.includes("?")
-    ? `${createHref}&kind=learning_note`
-    : `${createHref}?kind=learning_note`;
 
   useRegisterShortcutAction("createNew", () => {
     router.push(createHref);
@@ -281,10 +282,6 @@ export function WritingTable({
       >
         {tImport("button")}
       </LockedFeatureButton>
-      <LinkButton href={learningNoteHref} variant="outline">
-        <Plus className="size-4" />
-        {t("learningNote.create")}
-      </LinkButton>
       <LinkButton href={createHref} data-tutorial="writing-create">
         <Plus className="size-4" />
         {t("create")}
@@ -433,7 +430,16 @@ export function WritingTable({
           <section className="writing-stage" data-tutorial="writing-list">
             {groups.length > 0 ? (
               <>
-                <p className="writing-kicker writing-stage-kicker">{t("library")}</p>
+                <div className="mb-3 flex flex-wrap items-center justify-between gap-3">
+                  <p className="writing-kicker writing-stage-kicker mb-0">
+                    {t("library")}
+                  </p>
+                  <CollectionViewModeToggle
+                    value={viewMode}
+                    onChange={setViewMode}
+                    route="writing"
+                  />
+                </div>
                 {groups.map((group) => (
                   <div
                     key={group.key}
@@ -448,14 +454,22 @@ export function WritingTable({
                       ) : null}
                       {group.title}
                     </h2>
-                    {group.documents.map((document) => (
-                      <WritingCard
-                        key={document.id}
-                        document={document}
-                        workspaceId={workspaceId}
-                        variant="entry"
-                      />
-                    ))}
+                    <div
+                      className={cn(
+                        viewMode === "cards"
+                          ? "writing-entry-grid"
+                          : "writing-entry-list",
+                      )}
+                    >
+                      {group.documents.map((document) => (
+                        <WritingCard
+                          key={document.id}
+                          document={document}
+                          workspaceId={workspaceId}
+                          variant="entry"
+                        />
+                      ))}
+                    </div>
                   </div>
                 ))}
               </>

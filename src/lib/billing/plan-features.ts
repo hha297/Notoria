@@ -133,6 +133,13 @@ const ALL_COMPARISON_ROWS: PlanComparisonRow[] = [
     // Module is open on Free; live tutor calls meter ai_meeting under AI tools.
     cells: { free: yes(), pro: yes(), premium: yes() },
   },
+  {
+    id: "reading",
+    category: "core",
+    nameKey: "reading",
+    // Module is open on Free; AI generate/grade meters ai_reading under AI tools.
+    cells: { free: yes(), pro: yes(), premium: yes() },
+  },
   quotaRow("ai_exercise_import", "aiPracticeFromMaterial", "ai"),
   quotaRow("ai_exercise", "aiExercise", "ai"),
   quotaRow("ai_vocabulary", "aiVocabulary", "ai"),
@@ -140,6 +147,7 @@ const ALL_COMPARISON_ROWS: PlanComparisonRow[] = [
   // Speaking sessions consume ai_meeting — one marketing row.
   quotaRow("ai_meeting", "aiSpeakingTutor", "ai"),
   quotaRow("ai_listening_transcript", "aiListeningTranscript", "ai"),
+  quotaRow("ai_reading", "aiReading", "ai"),
   // Module file import/export + account backup restore share one marketing category.
   {
     id: "learning_material_io",
