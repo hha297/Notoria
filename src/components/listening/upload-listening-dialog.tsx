@@ -4,6 +4,7 @@ import { useRef, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Headphones, Loader2, Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -64,6 +65,7 @@ export function UploadListeningDialog({
   const tTags = useTranslations("tags");
   const tc = useTranslations("common");
   const router = useRouter();
+  const queryClient = useQueryClient();
   const inputRef = useRef<HTMLInputElement>(null);
   const [file, setFile] = useState<File | null>(null);
   const [title, setTitle] = useState("");
@@ -150,6 +152,7 @@ export function UploadListeningDialog({
         setStep("transcribing");
         await transcribeListeningLesson(created.id);
 
+        void queryClient.invalidateQueries({ queryKey: ["listening"] });
         router.push("/listening");
         toast.success(t("created"));
         onOpenChange(false);

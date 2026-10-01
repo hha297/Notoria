@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { ArrowLeft, Loader2, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { ListeningAudioPlayer } from "@/components/listening/listening-audio-player";
 import { ListeningPracticeSession } from "@/components/listening/listening-practice-session";
@@ -20,6 +21,7 @@ import {
 import exerciseStyles from "@/components/style/listening/exercise.module.css";
 import detailStyles from "@/components/style/workspace/detail.module.css";
 import sheetStyles from "@/components/style/workspace/sheet.module.css";
+import { removeCachedListItem } from "@/hooks/use-invalidate-workspace-queries";
 import {
   deleteListeningLesson,
   processListeningLesson,
@@ -48,6 +50,7 @@ export function ListeningLessonView({
   const tTags = useTranslations("tags");
   const tc = useTranslations("common");
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [renameOpen, setRenameOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -75,6 +78,7 @@ export function ListeningLessonView({
     startTransition(async () => {
       try {
         await processListeningLesson(lesson.id);
+        void queryClient.invalidateQueries({ queryKey: ["listening"] });
         toast.success(t("created"));
         router.refresh();
       } catch (error) {
@@ -89,6 +93,7 @@ export function ListeningLessonView({
     startTransition(async () => {
       try {
         await deleteListeningLesson(lesson.id);
+        removeCachedListItem(queryClient, "listening", lesson.id);
         setIsLeaving(true);
         setDeleteOpen(false);
         router.push("/listening");

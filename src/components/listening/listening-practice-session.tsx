@@ -10,6 +10,7 @@ import {
   RotateCcw,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { lockedFeatureClassName } from "@/components/billing/locked-styles";
@@ -64,6 +65,7 @@ export function ListeningPracticeSession({
   const tTypes = useTranslations("listening.types");
   const { hasProAccess, openUpgrade } = useProAccess();
   const router = useRouter();
+  const queryClient = useQueryClient();
   const reduceMotion = useReducedMotion();
   const [isPending, startTransition] = useTransition();
   const [speakersPending, startSpeakersTransition] = useTransition();
@@ -238,6 +240,7 @@ export function ListeningPracticeSession({
         await generateListeningExercises(lesson.id, type);
         toast.success(t("exercisesGenerated"));
         setPhase("active");
+        void queryClient.invalidateQueries({ queryKey: ["listening"] });
         router.refresh();
       } catch (error) {
         if (error instanceof Error && error.message === "PRO_REQUIRED") {

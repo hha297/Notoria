@@ -4,6 +4,7 @@ import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
 import { Loader2, Plus, X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -46,6 +47,7 @@ export function SynonymPicker({
   const t = useTranslations("vocabulary");
   const tCommon = useTranslations("common");
   const tErrors = useTranslations("errors");
+  const queryClient = useQueryClient();
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const [createOpen, setCreateOpen] = useState(false);
@@ -164,6 +166,9 @@ export function SynonymPicker({
         toast.message(t("synonymsAlreadyLinked"));
       } else {
         toast.success(t("synonymsCreated"));
+      }
+      if (result.created) {
+        void queryClient.invalidateQueries({ queryKey: ["vocabulary"] });
       }
       setCreateOpen(false);
       setQuery("");

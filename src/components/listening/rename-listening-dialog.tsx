@@ -3,6 +3,7 @@
 import { useEffect, useState, useTransition } from "react";
 import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -44,6 +45,7 @@ export function RenameListeningDialog({
 }: RenameListeningDialogProps) {
   const t = useTranslations("listening");
   const tc = useTranslations("common");
+  const queryClient = useQueryClient();
   const [isPending, startTransition] = useTransition();
   const currentFilename = fallbackListeningFilename(
     originalFilename,
@@ -81,12 +83,22 @@ export function RenameListeningDialog({
     startTransition(async () => {
       try {
         const result = await renameListeningLesson(lessonId, nextFilename);
-        toast.success(t("renamed"));
-        onOpenChange(false);
-        onRenamed?.({
+        const patch = {
           title: result.title,
           originalFilename: result.originalFilename,
-        });
+        };
+        queryClient.setQueriesData(
+          { queryKey: ["listening"] },
+          (current: unknown) => {
+            if (!Array.isArray(current)) return current;
+            return (current as Array<{ id: string }>).map((item) =>
+              item.id === lessonId ? { ...item, ...patch } : item,
+            );
+          },
+        );
+        toast.success(t("renamed"));
+        onOpenChange(false);
+        onRenamed?.(patch);
       } catch (caught) {
         const message = errorMessage(caught);
         setError(message);

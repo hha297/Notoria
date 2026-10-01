@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { ArrowLeft, Download, Pencil, Trash2 } from "lucide-react";
 import { useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { RichTextContent } from "@/components/editor/rich-text-content";
@@ -15,6 +16,7 @@ import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { Button } from "@/components/ui/button";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import detailStyles from "@/components/style/workspace/detail.module.css";
+import { removeCachedListItem } from "@/hooks/use-invalidate-workspace-queries";
 import { deleteWritingDocument } from "@/lib/actions/writing";
 import { mx } from "@/lib/css-module";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
@@ -43,6 +45,7 @@ export function WritingPreview({
   reviewLaterMarked = false,
 }: WritingPreviewProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const t = useTranslations("writing");
   const tMeta = useTranslations("writing.meta");
   const tTags = useTranslations("tags");
@@ -95,6 +98,7 @@ export function WritingPreview({
     startTransition(async () => {
       try {
         await deleteWritingDocument(id);
+        removeCachedListItem(queryClient, "writing", id);
         setIsLeaving(true);
         setDeleteOpen(false);
         navigateAfterSuccess(router, "/writing", {

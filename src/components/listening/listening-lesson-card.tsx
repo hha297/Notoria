@@ -5,6 +5,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -54,6 +55,7 @@ export function ListeningLessonCard({
   const tTags = useTranslations("tags");
   const tc = useTranslations("common");
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [renameOpen, setRenameOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -77,6 +79,7 @@ export function ListeningLessonCard({
     startTransition(async () => {
       try {
         await processListeningLesson(lesson.id);
+        void queryClient.invalidateQueries({ queryKey: ["listening"] });
         toast.success(t("created"));
         router.refresh();
       } catch (error) {

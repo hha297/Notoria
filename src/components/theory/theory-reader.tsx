@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { RichTextContent } from "@/components/editor/rich-text-content";
@@ -16,6 +17,7 @@ import { TheoryExportDialog } from "@/components/theory/export-dialog";
 import { Button } from "@/components/ui/button";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import detailStyles from "@/components/style/workspace/detail.module.css";
+import { removeCachedListItem } from "@/hooks/use-invalidate-workspace-queries";
 import { deleteTheoryNote } from "@/lib/actions/theory";
 import { mx } from "@/lib/css-module";
 import { navigateAfterSuccess } from "@/lib/navigation/after-success";
@@ -44,6 +46,7 @@ export function TheoryReader({
   reviewLaterMarked = false,
 }: TheoryReaderProps) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const t = useTranslations("theory");
   const tCommon = useTranslations("common");
   const te = useTranslations("errors");
@@ -78,6 +81,7 @@ export function TheoryReader({
     startTransition(async () => {
       try {
         await deleteTheoryNote(id);
+        removeCachedListItem(queryClient, "theory", id);
         setIsLeaving(true);
         setDeleteOpen(false);
         navigateAfterSuccess(router, "/theory", {

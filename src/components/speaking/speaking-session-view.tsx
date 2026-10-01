@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { formatDistanceToNow } from "date-fns";
 import { ArrowLeft, Loader2, PhoneOff, Trash2, Video } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { DescriptionContent } from "@/components/form/description-content";
@@ -19,6 +20,7 @@ import {
 import { LinkButton } from "@/components/ui/link-button";
 import detailStyles from "@/components/style/workspace/detail.module.css";
 import sheetStyles from "@/components/style/workspace/sheet.module.css";
+import { removeCachedListItem } from "@/hooks/use-invalidate-workspace-queries";
 import { deleteSpeakingSession, endSpeakingSession } from "@/lib/actions/speaking";
 import { mx } from "@/lib/css-module";
 import { isSpeakingErrorCode } from "@/lib/speaking/errors";
@@ -37,6 +39,7 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
   const tTags = useTranslations("tags");
   const tc = useTranslations("common");
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [isLeaving, setIsLeaving] = useState(false);
@@ -61,6 +64,7 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
     startTransition(async () => {
       try {
         await endSpeakingSession(session.id);
+        void queryClient.invalidateQueries({ queryKey: ["speaking"] });
         toast.success(t("ended"));
         router.refresh();
       } catch (error) {
@@ -74,6 +78,7 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
     startTransition(async () => {
       try {
         await deleteSpeakingSession(session.id);
+        removeCachedListItem(queryClient, "speaking", session.id);
         setIsLeaving(true);
         setDeleteOpen(false);
         router.push("/speaking");

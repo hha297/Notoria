@@ -1,6 +1,6 @@
 "use client";
 
-import { useQueryClient } from "@tanstack/react-query";
+import { useQueryClient, type QueryClient } from "@tanstack/react-query";
 import { queryKeys } from "@/lib/query/keys";
 
 function filterById<T extends { id: string }>(
@@ -9,6 +9,22 @@ function filterById<T extends { id: string }>(
 ): T[] | undefined {
   if (!items) return items;
   return items.filter((item) => item.id !== id);
+}
+
+/**
+ * Optimistically drop an entity from every cached list under a feature root key
+ * (e.g. ["writing"], ["listening"]). Non-array caches (details) are left alone.
+ * Use from detail pages that don't have workspaceId in props.
+ */
+export function removeCachedListItem(
+  queryClient: QueryClient,
+  rootKey: string,
+  id: string,
+) {
+  queryClient.setQueriesData({ queryKey: [rootKey] }, (old: unknown) => {
+    if (!Array.isArray(old)) return old;
+    return filterById(old as Array<{ id: string }>, id);
+  });
 }
 
 export function useInvalidateWorkspaceQueries(
@@ -96,6 +112,32 @@ export function useInvalidateWorkspaceQueries(
       );
       queryClient.removeQueries({
         queryKey: queryKeys.theory.detail(workspaceId, id),
+      });
+    },
+    removeListeningLesson: (id: string) => {
+      if (!workspaceId) return;
+      queryClient.setQueriesData(
+        { queryKey: queryKeys.listening.all(workspaceId) },
+        (old: unknown) => {
+          if (!Array.isArray(old)) return old;
+          return filterById(old as Array<{ id: string }>, id);
+        },
+      );
+      queryClient.removeQueries({
+        queryKey: queryKeys.listening.detail(workspaceId, id),
+      });
+    },
+    removeSpeakingSession: (id: string) => {
+      if (!workspaceId) return;
+      queryClient.setQueriesData(
+        { queryKey: queryKeys.speaking.all(workspaceId) },
+        (old: unknown) => {
+          if (!Array.isArray(old)) return old;
+          return filterById(old as Array<{ id: string }>, id);
+        },
+      );
+      queryClient.removeQueries({
+        queryKey: queryKeys.speaking.detail(workspaceId, id),
       });
     },
   };

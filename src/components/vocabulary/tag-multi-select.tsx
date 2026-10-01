@@ -3,6 +3,7 @@
 import { useMemo, useRef, useState } from "react";
 import { Loader2, Pencil, Plus, Trash2, X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -101,6 +102,7 @@ export function TagMultiSelect({
   const tSettings = useTranslations("settings");
   const tCommon = useTranslations("common");
   const tErrors = useTranslations("errors");
+  const queryClient = useQueryClient();
   const inputRef = useRef<HTMLInputElement>(null);
   const [query, setQuery] = useState("");
   const [isCreating, setIsCreating] = useState(false);
@@ -186,6 +188,7 @@ export function TagMultiSelect({
 
       if (result.created) {
         toast.success(tSettings("tagCreated"));
+        void queryClient.invalidateQueries({ queryKey: ["workspace"] });
       } else {
         toast.message(tSettings("tagExists"));
       }
@@ -269,6 +272,8 @@ export function TagMultiSelect({
         ),
       );
       onChange(replaceSelectedTag(value, fromKey, toKey));
+      void queryClient.invalidateQueries({ queryKey: ["workspace"] });
+      void queryClient.invalidateQueries({ queryKey: ["vocabulary"] });
       toast.success(tSettings("tagUpdated"));
       setEditingTag(null);
     } catch (error) {
@@ -296,6 +301,8 @@ export function TagMultiSelect({
       onChange(
         value.filter((tag) => tag.toLowerCase() !== removedKey.toLowerCase()),
       );
+      void queryClient.invalidateQueries({ queryKey: ["workspace"] });
+      void queryClient.invalidateQueries({ queryKey: ["vocabulary"] });
       toast.success(tSettings("tagDeleted"));
       setDeletingTag(null);
     } catch {

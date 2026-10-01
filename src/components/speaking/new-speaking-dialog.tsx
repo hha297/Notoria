@@ -4,6 +4,7 @@ import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, Video } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import {
@@ -44,6 +45,7 @@ export function NewSpeakingDialog({
   const tTags = useTranslations("tags");
   const tc = useTranslations("common");
   const router = useRouter();
+  const queryClient = useQueryClient();
   const [title, setTitle] = useState("");
   const [cefrLevel, setCefrLevel] = useState("b1");
   const [topic, setTopic] = useState<string>(DEFAULT_TOPIC_ID);
@@ -80,6 +82,7 @@ export function NewSpeakingDialog({
         formData.set("topic", topic);
         formData.set("notes", notes);
         await createSpeakingSession(formData);
+        void queryClient.invalidateQueries({ queryKey: ["speaking"] });
         router.push("/speaking");
         toast.success(t("created"));
         onOpenChange(false);
