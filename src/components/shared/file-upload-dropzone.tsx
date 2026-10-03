@@ -19,6 +19,9 @@ type FileUploadDropzoneProps = {
   disabled?: boolean;
   selectedFile?: File | null;
   extracting?: boolean;
+  /** 0–100 while uploading; null/undefined hides the bar. */
+  progressPercent?: number | null;
+  progressLabel?: string | null;
   error?: string | null;
   dropTitle: string;
   dropActiveTitle: string;
@@ -38,6 +41,8 @@ export function FileUploadDropzone({
   disabled,
   selectedFile,
   extracting,
+  progressPercent,
+  progressLabel,
   error,
   dropTitle,
   dropActiveTitle,
@@ -136,7 +141,7 @@ export function FileUploadDropzone({
         <div className="relative space-y-2">
           <p className="font-heading text-[1.35rem] font-bold tracking-tight text-ink sm:text-[1.55rem]">
             {extracting
-              ? extractingLabel
+              ? progressLabel || extractingLabel
               : dragOver
                 ? dropActiveTitle
                 : selectedFile
@@ -148,6 +153,21 @@ export function FileUploadDropzone({
               ? `${formatByteSize(selectedFile.size)} · ${replaceLabel}`
               : dropDescription}
           </p>
+          {typeof progressPercent === "number" && extracting ? (
+            <div
+              className="mx-auto mt-3 h-1.5 w-full max-w-xs overflow-hidden rounded-full bg-hairline-cloud"
+              role="progressbar"
+              aria-valuemin={0}
+              aria-valuemax={100}
+              aria-valuenow={progressPercent}
+              aria-label={progressLabel || extractingLabel}
+            >
+              <div
+                className="h-full rounded-full bg-(--import-mode-fg) transition-[width] duration-200"
+                style={{ width: `${Math.min(100, Math.max(0, progressPercent))}%` }}
+              />
+            </div>
+          ) : null}
         </div>
         <p className="relative max-w-md text-xs leading-5 text-muted-foreground">
           {supportedFormats}

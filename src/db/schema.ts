@@ -79,6 +79,12 @@ export const readingSourceTypeEnum = pgEnum("reading_source_type", [
   "docx",
 ]);
 
+export const readingUploadStatusEnum = pgEnum("reading_upload_status", [
+  "uploading",
+  "ready",
+  "failed",
+]);
+
 export const readingExerciseModeEnum = pgEnum("reading_exercise_mode", [
   "multiple_choice",
   "written",
@@ -776,6 +782,14 @@ export const readingPassages = pgTable(
     folderId: uuid("folder_id").references(() => workspaceFolders.id, {
       onDelete: "set null",
     }),
+    /** Object storage for original PDF/DOCX. Paste passages leave these null. */
+    storageProvider: text("storage_provider"),
+    storagePath: text("storage_path"),
+    mimeType: text("mime_type"),
+    sizeBytes: integer("size_bytes"),
+    uploadStatus: readingUploadStatusEnum("upload_status")
+      .notNull()
+      .default("ready"),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -790,6 +804,7 @@ export const readingPassages = pgTable(
       table.updatedAt,
     ),
     index("reading_passages_folder_id_idx").on(table.folderId),
+    index("reading_passages_upload_status_idx").on(table.uploadStatus),
     index("reading_passages_fts_idx").using(
       "gin",
       sql`to_tsvector('simple', coalesce(${table.title}, '') || ' ' || coalesce(${table.body}, ''))`,

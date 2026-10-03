@@ -141,6 +141,9 @@ export function toReadingPassageDetail(row: {
   sourceFilename: string | null;
   wordCount: number;
   contentVersion: number;
+  storagePath?: string | null;
+  storageProvider?: string | null;
+  uploadStatus?: string | null;
   createdAt: Date;
   updatedAt: Date;
   questionSets: Array<{
@@ -164,6 +167,11 @@ export function toReadingPassageDetail(row: {
     sourceFilename: row.sourceFilename,
     wordCount: row.wordCount,
     contentVersion: row.contentVersion,
+    hasOriginalFile: Boolean(
+      row.storagePath &&
+        row.storageProvider === "vercel-blob" &&
+        (row.uploadStatus == null || row.uploadStatus === "ready"),
+    ),
     createdAt: asIso(row.createdAt)!,
     updatedAt: asIso(row.updatedAt)!,
     questionSets: [...row.questionSets]

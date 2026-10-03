@@ -1,11 +1,12 @@
 "use client";
 
-import { useEffect, useRef, useState, useTransition } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Loader2, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { upload } from "@vercel/blob/client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -15,10 +16,11 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Progress } from "@/components/ui/progress";
 import {
   analyzeAccountBackupFromUpload,
+  beginAccountBackupUpload,
   confirmAccountBackupFromUpload,
-  getAccountBackupUploadSignature,
   type AccountBackupActionError,
 } from "@/lib/actions/account-backup";
 import {
@@ -27,9 +29,10 @@ import {
   type BackupPreview,
 } from "@/lib/account-backup/types";
 import { isRequestTooLargeError } from "@/lib/account/prepare-avatar";
-import { uploadImportFileWithProgress } from "@/lib/exercise-import/client-upload";
+import { formatByteSize } from "@/lib/exercise-import/format-bytes";
 
 type Step = "upload" | "preview" | "done";
+type Phase = "idle" | "uploading" | "analyzing" | "importing";
 
 type AccountBackupImportDialogProps = {
   open: boolean;
@@ -46,6 +49,7 @@ function friendlyError(
     case "REQUEST_TOO_LARGE":
       return t("errors.requestTooLarge");
     case "CLOUDINARY_NOT_CONFIGURED":
+    case "STORAGE_NOT_CONFIGURED":
       return t("errors.notConfigured");
     case "INVALID_BACKUP":
       return error.message || t("errors.invalidBackup");
@@ -98,32 +102,45 @@ export function AccountBackupImportDialog({
   const router = useRouter();
   const queryClient = useQueryClient();
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const busyRef = useRef(false);
   const [step, setStep] = useState<Step>("upload");
-  const [uploadPublicId, setUploadPublicId] = useState<string | null>(null);
-  const [fileUrl, setFileUrl] = useState<string | null>(null);
+  const [storagePath, setStoragePath] = useState<string | null>(null);
   const [preview, setPreview] = useState<BackupPreview | null>(null);
   const [result, setResult] = useState<BackupImportResult | null>(null);
-  const [isPending, startTransition] = useTransition();
+  const [phase, setPhase] = useState<Phase>("idle");
+  const [percent, setPercent] = useState(0);
+  const [bytesDetail, setBytesDetail] = useState<string | null>(null);
+  const [fileName, setFileName] = useState<string | null>(null);
+
+  const isBusy = phase !== "idle";
 
   useEffect(() => {
     if (!open) {
       setStep("upload");
-      setUploadPublicId(null);
-      setFileUrl(null);
+      setStoragePath(null);
       setPreview(null);
       setResult(null);
+      setPhase("idle");
+      setPercent(0);
+      setBytesDetail(null);
+      setFileName(null);
+      busyRef.current = false;
       if (fileInputRef.current) fileInputRef.current.value = "";
     }
   }, [open]);
 
   function resetSelection() {
-    setUploadPublicId(null);
-    setFileUrl(null);
+    setStoragePath(null);
     setPreview(null);
+    setPhase("idle");
+    setPercent(0);
+    setBytesDetail(null);
+    setFileName(null);
+    busyRef.current = false;
     if (fileInputRef.current) fileInputRef.current.value = "";
   }
 
-  function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
+  async function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const next = event.target.files?.[0] ?? null;
     if (!next) return;
 
@@ -133,94 +150,166 @@ export function AccountBackupImportDialog({
       return;
     }
 
-    if (isPending) {
+    if (busyRef.current) {
       event.target.value = "";
       return;
     }
 
+    busyRef.current = true;
     setPreview(null);
     setResult(null);
     setStep("upload");
+    setFileName(next.name);
+    setPhase("uploading");
+    setPercent(0);
+    setBytesDetail(
+      t("uploadBytes", {
+        loaded: formatByteSize(0),
+        total: formatByteSize(next.size),
+      }),
+    );
 
-    startTransition(async () => {
-      try {
-        const signResult = await getAccountBackupUploadSignature({
-          filename: next.name,
-          byteSize: next.size,
-        });
-        if (!signResult.ok) {
-          toast.error(friendlyError(signResult.error, t));
-          resetSelection();
-          return;
-        }
-
-        const uploaded = await uploadImportFileWithProgress(
-          next,
-          signResult.result,
-          { onProgress: () => {} },
-        );
-
-        const response = await analyzeAccountBackupFromUpload({
-          publicId: uploaded.publicId,
-          fileUrl: uploaded.secureUrl,
-          byteSize: next.size,
-        });
-
-        if (!response.ok) {
-          toast.error(friendlyError(response.error, t));
-          resetSelection();
-          return;
-        }
-
-        setUploadPublicId(response.result.uploadPublicId);
-        setFileUrl(uploaded.secureUrl);
-        setPreview(response.result.preview);
-        setStep("preview");
-      } catch (error) {
-        if (isRequestTooLargeError(error)) {
-          toast.error(t("errors.requestTooLarge"));
-        } else {
-          toast.error(t("errors.importFailed"));
-        }
+    try {
+      const begun = await beginAccountBackupUpload({
+        filename: next.name,
+        byteSize: next.size,
+      });
+      if (!begun.ok) {
+        toast.error(friendlyError(begun.error, t));
         resetSelection();
+        return;
       }
-    });
-  }
 
-  function handleConfirm() {
-    if (!uploadPublicId || isPending) return;
+      const uploaded = await upload(begun.result.pathname, next, {
+        access: "private",
+        handleUploadUrl: "/api/blob/upload",
+        multipart: next.size >= 8 * 1024 * 1024,
+        clientPayload: JSON.stringify({
+          purpose: "account-backup",
+          uploadId: begun.result.uploadId,
+        }),
+        contentType: "application/json",
+        onUploadProgress: (progress) => {
+          const total = progress.total || next.size;
+          const loaded = progress.loaded ?? 0;
+          const nextPercent =
+            total > 0
+              ? Math.min(
+                  100,
+                  Math.round(progress.percentage ?? (loaded / total) * 100),
+                )
+              : 0;
+          setPercent(nextPercent);
+          setBytesDetail(
+            t("uploadBytes", {
+              loaded: formatByteSize(loaded),
+              total: formatByteSize(total),
+            }),
+          );
+        },
+      });
 
-    startTransition(async () => {
-      try {
-        const response = await confirmAccountBackupFromUpload({
-          publicId: uploadPublicId,
-          fileUrl: fileUrl ?? undefined,
-        });
-        if (!response.ok) {
-          toast.error(friendlyError(response.error, t));
-          return;
-        }
-        setResult(response.result);
-        setStep("done");
-        await queryClient.invalidateQueries();
-        router.refresh();
-        toast.success(t("doneToast"));
-      } catch (error) {
-        if (isRequestTooLargeError(error)) {
-          toast.error(t("errors.requestTooLarge"));
-          return;
-        }
+      setPercent(100);
+      setBytesDetail(null);
+      setPhase("analyzing");
+
+      const response = await analyzeAccountBackupFromUpload({
+        storagePath: uploaded.pathname,
+        byteSize: next.size,
+      });
+
+      if (!response.ok) {
+        toast.error(friendlyError(response.error, t));
+        resetSelection();
+        return;
+      }
+
+      setStoragePath(response.result.storagePath);
+      setPreview(response.result.preview);
+      setPhase("idle");
+      setPercent(0);
+      setStep("preview");
+      busyRef.current = false;
+    } catch (error) {
+      if (isRequestTooLargeError(error)) {
+        toast.error(t("errors.requestTooLarge"));
+      } else {
         toast.error(t("errors.importFailed"));
       }
-    });
+      resetSelection();
+    }
+  }
+
+  async function handleConfirm() {
+    if (!storagePath || busyRef.current) return;
+
+    busyRef.current = true;
+    setPhase("importing");
+    setPercent(15);
+
+    // Soft progress while the server imports (no byte stream).
+    const tick = window.setInterval(() => {
+      setPercent((current) =>
+        current >= 90 ? current : current + Math.max(1, Math.round((90 - current) * 0.08)),
+      );
+    }, 400);
+
+    try {
+      const response = await confirmAccountBackupFromUpload({
+        storagePath,
+      });
+      window.clearInterval(tick);
+
+      if (!response.ok) {
+        toast.error(friendlyError(response.error, t));
+        setPhase("idle");
+        setPercent(0);
+        busyRef.current = false;
+        return;
+      }
+
+      setPercent(100);
+      setResult(response.result);
+      setStep("done");
+      setPhase("idle");
+      busyRef.current = false;
+      await queryClient.invalidateQueries();
+      router.refresh();
+      toast.success(t("doneToast"));
+    } catch (error) {
+      window.clearInterval(tick);
+      setPhase("idle");
+      setPercent(0);
+      busyRef.current = false;
+      if (isRequestTooLargeError(error)) {
+        toast.error(t("errors.requestTooLarge"));
+        return;
+      }
+      toast.error(t("errors.importFailed"));
+    }
   }
 
   const willImportAnything =
     preview &&
     Object.values(preview.willImport).some((count) => count > 0);
 
+  const phaseLabel =
+    phase === "uploading"
+      ? t("uploading", { percent })
+      : phase === "analyzing"
+        ? t("analyzing")
+        : phase === "importing"
+          ? t("importing")
+          : null;
+
   return (
-    <Dialog open={open} onOpenChange={onOpenChange}>
+    <Dialog
+      open={open}
+      onOpenChange={(next) => {
+        if (!next && isBusy) return;
+        onOpenChange(next);
+      }}
+    >
       <DialogContent className="max-h-[90vh] overflow-y-auto sm:max-w-lg">
         <DialogHeader>
           <DialogTitle>
@@ -239,27 +328,71 @@ export function AccountBackupImportDialog({
               type="file"
               accept="application/json,.json"
               className="hidden"
-              onChange={handleFileChange}
+              disabled={isBusy}
+              onChange={(event) => {
+                void handleFileChange(event);
+              }}
             />
-            <Button
-              type="button"
-              variant="outline"
-              className="w-full justify-center gap-2"
-              disabled={isPending}
-              onClick={() => fileInputRef.current?.click()}
-            >
-              {isPending ? (
-                <Loader2 className="size-4 animate-spin" />
-              ) : (
+            {isBusy ? (
+              <div
+                className="space-y-3 rounded-lg border border-border/70 bg-muted/30 p-4"
+                role="status"
+                aria-live="polite"
+                aria-busy
+              >
+                <div className="flex items-start gap-3">
+                  <Loader2 className="mt-0.5 size-4 shrink-0 animate-spin text-muted-foreground" />
+                  <div className="min-w-0 flex-1 space-y-1">
+                    <p className="truncate text-sm font-medium text-foreground">
+                      {fileName || t("chooseFile")}
+                    </p>
+                    <p className="text-sm text-muted-foreground">
+                      {phaseLabel}
+                      {bytesDetail ? ` · ${bytesDetail}` : null}
+                    </p>
+                  </div>
+                  <span className="shrink-0 text-sm font-medium tabular-nums text-foreground">
+                    {percent}%
+                  </span>
+                </div>
+                <Progress value={phase === "analyzing" ? 100 : percent} />
+              </div>
+            ) : (
+              <Button
+                type="button"
+                variant="outline"
+                className="w-full justify-center gap-2"
+                onClick={() => fileInputRef.current?.click()}
+              >
                 <Upload className="size-4" />
-              )}
-              {isPending ? t("analyzing") : t("chooseFile")}
-            </Button>
+                {t("chooseFile")}
+              </Button>
+            )}
           </div>
         ) : null}
 
         {step === "preview" && preview ? (
           <div className="space-y-4 py-2">
+            {phase === "importing" ? (
+              <div
+                className="space-y-3 rounded-lg border border-border/70 bg-muted/30 p-4"
+                role="status"
+                aria-live="polite"
+                aria-busy
+              >
+                <div className="flex items-center justify-between gap-3">
+                  <div className="flex items-center gap-2 text-sm font-medium">
+                    <Loader2 className="size-4 animate-spin" />
+                    {t("importing")}
+                  </div>
+                  <span className="text-sm font-medium tabular-nums">
+                    {percent}%
+                  </span>
+                </div>
+                <Progress value={percent} />
+              </div>
+            ) : null}
+
             <div>
               <p className="mb-2 text-sm font-semibold text-foreground">
                 {t("detectedTitle")}
@@ -341,24 +474,30 @@ export function AccountBackupImportDialog({
               <Button
                 type="button"
                 variant="outline"
-                disabled={isPending}
+                disabled={isBusy}
                 onClick={() => onOpenChange(false)}
               >
                 {t("cancel")}
               </Button>
               <Button
                 type="button"
-                disabled={isPending || !willImportAnything}
-                onClick={handleConfirm}
+                disabled={isBusy || !willImportAnything}
+                onClick={() => {
+                  void handleConfirm();
+                }}
               >
-                {isPending ? (
+                {isBusy ? (
                   <Loader2 className="size-4 animate-spin" />
                 ) : null}
-                {t("confirm")}
+                {phase === "importing" ? t("importing") : t("confirm")}
               </Button>
             </>
           ) : (
-            <Button type="button" onClick={() => onOpenChange(false)}>
+            <Button
+              type="button"
+              disabled={isBusy && step !== "done"}
+              onClick={() => onOpenChange(false)}
+            >
               {step === "done" ? t("close") : t("cancel")}
             </Button>
           )}

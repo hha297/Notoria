@@ -3,14 +3,14 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { ArrowLeft, Loader2, Sparkles, Trash2 } from "lucide-react";
+import { ArrowLeft, Download, Loader2, Sparkles, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { PageShell } from "@/components/layout/page-shell";
 import { DetailPageLoading } from "@/components/layout/page-loading";
 import { GenerateReadingDialog } from "@/components/reading/generate-reading-dialog";
-import { Button } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
 import {
   deleteReadingPassage,
@@ -20,6 +20,7 @@ import { isReadingErrorCode } from "@/lib/reading/errors";
 import { readingDetailQueryOptions } from "@/lib/query/options";
 import { queryKeys } from "@/lib/query/keys";
 import { removeCachedListItem } from "@/hooks/use-invalidate-workspace-queries";
+import { cn } from "@/lib/utils";
 import { formatDistanceToNow } from "date-fns";
 
 type ReadingPassageViewProps = {
@@ -97,6 +98,15 @@ export function ReadingPassageView({
               <Sparkles className="size-4" aria-hidden />
               {t("generateExercises")}
             </Button>
+            {data.hasOriginalFile ? (
+              <a
+                href={`/api/reading/documents/${passageId}/download`}
+                className={cn(buttonVariants({ variant: "outline" }), "gap-1.5")}
+              >
+                <Download className="size-4" />
+                {t("downloadOriginal")}
+              </a>
+            ) : null}
             <Button
               type="button"
               variant="outline"

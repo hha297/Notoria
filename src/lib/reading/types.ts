@@ -86,6 +86,8 @@ export type ReadingPassageDetail = {
   sourceFilename: string | null;
   wordCount: number;
   contentVersion: number;
+  /** True when a private original PDF/DOCX is stored in Blob. */
+  hasOriginalFile: boolean;
   createdAt: string;
   updatedAt: string;
   questionSets: ReadingQuestionSetSummary[];
