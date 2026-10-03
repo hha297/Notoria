@@ -14,7 +14,8 @@
     "selectedCount": "{count} selected",
     "clearFilter": "Clear",
     "filters": "Filters",
-    "hideFilters": "Hide filters"
+    "hideFilters": "Hide filters",
+    "remove": "Remove"
   },
   "contentImport": {
     "title": {
@@ -140,6 +141,7 @@
     "writing": "Writing",
     "theory": "Theory",
     "exercises": "Exercise",
+    "reading": "Reading",
     "listening": "Listening",
     "speaking": "Speaking",
     "coach": "Learning coach",
@@ -149,6 +151,7 @@
     "gettingStarted": "Getting started",
     "groups": {
       "main": "Main menu",
+      "skills": "Skills",
       "listenSpeak": "Listen and speak",
       "more": "More"
     }
@@ -1097,7 +1100,8 @@
       "richDocument": "Rich Document",
       "questionSet": "Question Set",
       "richDocumentHint": "Free-form writing with the rich text editor.",
-      "questionSetHint": "Structured sections and questions — like a textbook worksheet."
+      "questionSetHint": "Structured sections and questions — like a textbook worksheet.",
+      "learningNoteHint": "Personal study notes — tagged so you can find them later."
     },
     "content": "Content",
     "contentPlaceholder": "Start writing your content here...",
@@ -1302,6 +1306,10 @@
       "speaking": {
         "title": "Speaking",
         "body": "Call an AI tutor on video and practice speaking naturally with your own learning knowledge. After each session, review the transcript and feedback to see what to improve. This closes the loop: learn → practice → use → review → improve."
+      },
+      "reading": {
+        "title": "Reading",
+        "body": "Import or paste passages, then generate comprehension practice — multiple choice, written answers, and true / false / not stated. Free includes limited AI generation and grading each day; Pro raises the daily limit, and Premium is unlimited."
       }
     },
     "modules": {
@@ -1340,6 +1348,12 @@
         "description": "Live video conversation with an AI tutor.",
         "how": "Create a session and join the call. Free includes one AI meeting per day, tutor included.",
         "cta": "Open speaking"
+      },
+      "reading": {
+        "title": "Reading",
+        "description": "Passages with AI comprehension practice.",
+        "how": "Import or paste a text, generate questions, then practice and review. Free has a daily AI limit; Pro allows 10/day; Premium is unlimited.",
+        "cta": "Open reading"
       }
     },
     "counts": {
@@ -1803,6 +1817,45 @@
         }
       }
     },
+    "reading": {
+      "title": "Reading",
+      "description": "Import or paste passages, generate comprehension practice, and review your results.",
+      "cta": "Open reading",
+      "steps": {
+        "import": {
+          "title": "1. Add a passage",
+          "body": "Paste text or upload a PDF/DOCX to create a reading passage you can practice with."
+        },
+        "importForm": {
+          "title": "2. Review the text",
+          "body": "Check the title, language, and body before saving. You can edit the extracted text if needed."
+        },
+        "search": {
+          "title": "3. Find passages",
+          "body": "Search your reading library by title or source filename when the list grows."
+        },
+        "passages": {
+          "title": "4. Practice from your library",
+          "body": "Open a passage to generate questions, answer them, and review results — including written grading when needed."
+        },
+        "newFolder": {
+          "title": "5. Create a folder",
+          "body": "Click New folder to group passages by topic, exam, or level. Folders are optional — you can keep everything at the top level."
+        },
+        "nameFolder": {
+          "title": "6. Name your folder",
+          "body": "Type a clear name (for example News articles or Exam prep). The folder is created inside the location you are viewing."
+        },
+        "organize": {
+          "title": "7. Folders and passages",
+          "body": "Folders appear above your passages. Open a folder to browse only that group — new imports while inside a folder are saved there."
+        },
+        "moveItem": {
+          "title": "8. Move passages between folders",
+          "body": "Use the move icon on any passage, or drag it onto a folder card. You can also nest folders for larger collections."
+        }
+      }
+    },
     "inbox": {
       "title": "Capture",
       "description": "Save scraps fast — words, doubts, ideas — then turn them into real study items when you have a moment.",
@@ -2114,6 +2167,186 @@
       "descriptionLabel": "Description"
     }
   },
+  "reading": {
+    "eyebrow": "Reading",
+    "title": "Reading",
+    "description": "Paste or import a passage, generate comprehension exercises, and practice with saved results.",
+    "disabledNoWorkspace": "Create a workspace before adding reading passages.",
+    "import": "Add passage",
+    "importFirst": "Add your first passage",
+    "importTitle": "Add a reading passage",
+    "importDescription": "Paste text or upload a PDF/DOCX, edit the preview, then optionally generate exercises.",
+    "importTabsAria": "Passage source",
+    "tabPaste": "Paste",
+    "tabUpload": "Upload",
+    "bodyLabel": "Passage text",
+    "bodyPlaceholder": "Paste or type the reading passage here…",
+    "titleLabel": "Title",
+    "titlePlaceholder": "Optional title",
+    "languageLabel": "Passage language",
+    "wordCount": "{count, plural, one {# word} other {# words}}",
+    "continuePreview": "Continue to preview",
+    "dropTitle": "Drop a PDF or DOCX here",
+    "dropDescription": "or click to browse. Scanned PDFs use OCR when needed.",
+    "extractSuccess": "Text extracted — review and edit before saving.",
+    "sourcePaste": "Pasted text",
+    "back": "Back",
+    "savePassage": "Save passage",
+    "saveAndGenerate": "Save & generate exercises",
+    "generateHint": "Generate comprehension questions in {language}. Uses your AI exercise quota.",
+    "modeLabel": "Exercise type",
+    "questionCountLabel": "Questions",
+    "difficultyLabel": "Difficulty",
+    "difficultyNone": "Auto",
+    "questionLanguageLabel": "Question language",
+    "skipGenerate": "Skip for now",
+    "generateExercises": "Generate exercises",
+    "generateTitle": "Generate exercises",
+    "generateDescription": "Create comprehension questions from this passage. Generation runs once and is saved.",
+    "exercisesGenerated": "Exercises ready.",
+    "created": "Passage saved",
+    "deleted": "Passage deleted",
+    "submitted": "Answers submitted",
+    "emptyTitle": "No reading passages yet",
+    "emptyDescription": "Paste a text or upload a PDF/DOCX to start reading practice.",
+    "myPassages": "My passages",
+    "passageHint": "Open a passage to generate exercises or continue practice.",
+    "open": "Open",
+    "practice": {
+      "submit": "Submit answers",
+      "loading": "Loading questions…",
+      "questionLabel": "Q{number}.",
+      "writtenPlaceholder": "Write your answer…",
+      "correct": "Correct",
+      "incorrect": "Not quite",
+      "expected": "Correct answer",
+      "objectiveScore": "{correct} / {total} objective correct",
+      "mobileTabsAria": "Practice panels",
+      "unansweredWarn": "Some questions are unanswered. Submit anyway?",
+      "gradingPending": "Written answers could not be graded yet. Your answers are saved — you can retry grading.",
+      "retryGrading": "Retry grading",
+      "retryAttempt": "Try again",
+      "progress": "Question {current} of {total}",
+      "aiFeedbackLabel": "AI feedback",
+      "understood": "Understood",
+      "missing": "Missing"
+    },
+    "startPractice": "Start practice",
+    "practiceTitle": "Reading practice",
+    "backToList": "Back to Reading",
+    "backToPassage": "Back to passage",
+    "passagePanel": "Passage",
+    "questionsPanel": "Questions",
+    "questionSets": "Exercise sets",
+    "noSetsYet": "No exercises yet",
+    "noSetsDescription": "Generate exercises once — they stay saved, so refresh will not regenerate them.",
+    "setCount": "{count, plural, one {# exercise set} other {# exercise sets}}",
+    "questionCountValue": "{count, plural, one {# question} other {# questions}}",
+    "staleSet": "Passage updated since this set",
+    "vocabHint": "Select a word or short phrase in the passage to add it to Vocabulary.",
+    "addToVocabulary": "Add to Vocabulary",
+    "deleteConfirmTitle": "Delete this passage?",
+    "deleteConfirmDescription": "\"{title}\" and all of its exercises and attempts will be permanently removed.",
+    "modes": {
+      "multiple_choice": "Multiple choice",
+      "written": "Written answers",
+      "true_false_not_stated": "True / False / Not stated",
+      "mixed": "Mixed"
+    },
+    "sources": {
+      "paste": "Paste",
+      "pdf": "PDF",
+      "docx": "DOCX"
+    },
+    "setStatus": {
+      "generating": "Generating",
+      "ready": "Ready",
+      "failed": "Failed"
+    },
+    "tfns": {
+      "true": "True",
+      "false": "False",
+      "not_stated": "Not stated"
+    },
+    "errors": {
+      "UNAUTHORIZED": "Sign in to continue.",
+      "OPENAI_NOT_CONFIGURED": "AI is not configured.",
+      "INVALID_INPUT": "Check your input and try again.",
+      "INVALID_FILE": "Choose a PDF or DOCX file.",
+      "INVALID_FILE_TYPE": "Only PDF and DOCX files are supported.",
+      "FILE_TOO_LARGE": "That file is too large. Use a file under 10 MB.",
+      "EMPTY_CONTENT": "Add a longer passage (at least a few sentences).",
+      "SCANNED_PDF": "This PDF looks scanned. OCR could not recover enough text — paste the passage instead.",
+      "UNSUPPORTED_PARSE": "Could not read that file. Try a .docx or a text-based PDF.",
+      "PASSAGE_NOT_FOUND": "Reading passage not found.",
+      "SET_NOT_FOUND": "Exercise set not found.",
+      "ATTEMPT_NOT_FOUND": "Practice attempt not found.",
+      "SET_NOT_READY": "Exercises are not ready yet.",
+      "GENERATION_FAILED": "Could not generate exercises. Try again.",
+      "GENERATION_UNAVAILABLE": "Exercise generation is unavailable right now.",
+      "VALIDATION_FAILED": "Generated exercises were not usable. Try again.",
+      "GRADING_FAILED": "Could not grade written answers. Try again.",
+      "ATTEMPT_NOT_EDITABLE": "This attempt can no longer be edited.",
+      "PROCESSING_FAILED": "Something went wrong. Try again.",
+      "AI_DISABLED": "AI assistance is turned off in your settings.",
+      "AI_QUOTA_EXCEEDED": "You have reached your AI exercise limit for this period.",
+      "generic": "Something went wrong. Try again."
+    },
+    "newPassage": "Add passage",
+    "saving": "Saving…",
+    "saved": "Passage saved",
+    "openPassage": "Open",
+    "searchPlaceholder": "Search passages…",
+    "noResults": "No passages match your search",
+    "generateNew": "Generate exercises",
+    "generate": "Generate",
+    "generating": "Generating…",
+    "generated": "Exercises ready.",
+    "exerciseMode": "Exercise type",
+    "modeMultipleChoice": "Multiple choice",
+    "modeWritten": "Written answers",
+    "modeTfns": "True / False / Not stated",
+    "modeMixed": "Mixed",
+    "questionCount": "Questions",
+    "questionLanguage": "Question language",
+    "difficulty": "Difficulty",
+    "setsHeading": "Exercise sets",
+    "noSets": "No exercise sets yet. Generate once — refresh will not regenerate them.",
+    "resumePractice": "Resume",
+    "retryAttempt": "Try again",
+    "deleteSet": "Delete this exercise set?",
+    "setFailed": "Generation failed",
+    "setGenerating": "Generating…",
+    "passageTab": "Passage",
+    "questionsTab": "Questions",
+    "progress": "{current} / {total}",
+    "submit": "Submit answers",
+    "submitting": "Submitting…",
+    "resultsTitle": "Results ready",
+    "objectiveScore": "{correct} / {total} objective correct",
+    "aiFeedbackLabel": "AI feedback",
+    "explanation": "Explanation",
+    "excerpt": "Excerpt",
+    "correctAnswer": "Correct answer",
+    "yourAnswer": "Your answer",
+    "unansweredWarn": "Some questions are still empty. Submit anyway?",
+    "gradingPending": "Written answers could not be graded. You can retry grading.",
+    "retryGrading": "Retry grading",
+    "selectWordHint": "Select a word or short phrase to add it to Vocabulary.",
+    "uploadHint": "Upload a PDF or DOCX. Scanned image-only PDFs are not supported yet.",
+    "uploadChoose": "Choose file",
+    "extracting": "Extracting text…",
+    "status": {
+      "generating": "Generating",
+      "ready": "Ready",
+      "failed": "Failed"
+    },
+    "deleteSetDescription": "This exercise set and its attempts will be permanently removed. The passage itself is kept.",
+    "dropActive": "Drop to extract text",
+    "supportedFiles": "PDF and DOCX · max 10 MB",
+    "replaceFile": "Click to choose a different file",
+    "emptyFolder": "This folder is empty"
+  },
   "listening": {
     "eyebrow": "Listening",
     "title": "Listening",
@@ -2377,7 +2610,14 @@
   "errors": {
     "generic": "Something went wrong",
     "noWorkspace": "No active workspace",
-    "notFound": "Not found"
+    "notFound": "Page not found",
+    "unauthorized": "Sign in required",
+    "forbidden": "Access denied",
+    "rateLimit": "Too many requests",
+    "network": "Connection problem",
+    "offline": "You’re offline",
+    "timeout": "Request timed out",
+    "server": "Something went wrong on our side. Please try again. If the problem continues, contact support."
   },
   "learningOnboarding": {
     "step": "Getting started",
@@ -2452,14 +2692,14 @@
     "accountDescription": "Update your profile photo and password.",
     "profile": "Profile",
     "avatar": "Profile photo",
-    "avatarDescription": "Upload a photo for your account. JPG, PNG, WebP or GIF up to 5 MB.",
+    "avatarDescription": "Upload a photo for your account. JPG, PNG, WebP or GIF up to 5 MB — we compress it before upload.",
     "changeAvatar": "Upload photo",
     "removeAvatar": "Remove photo",
     "avatarUpdated": "Profile photo updated",
     "avatarRemoved": "Profile photo removed",
     "avatarUploadFailed": "Could not upload profile photo",
     "avatarInvalidType": "Please choose a JPG, PNG, WebP or GIF image",
-    "avatarTooLarge": "Image must be 5 MB or smaller",
+    "avatarTooLarge": "Image must be 5 MB or smaller (after compression under ~900 KB).",
     "avatarNotConfigured": "Image upload is not configured yet",
     "changePassword": "Change password",
     "currentPassword": "Current password",
@@ -2486,7 +2726,9 @@
     "oauthNotConfigured": "Google sign-in is not configured yet.",
     "legalPrivacy": "Privacy",
     "legalTerms": "Terms",
-    "registerAgreement": "By creating an account, you agree to the <terms>Terms of Use</terms> and <privacy>Privacy Policy</privacy>."
+    "registerAgreement": "By creating an account, you agree to the <terms>Terms of Use</terms> and <privacy>Privacy Policy</privacy>.",
+    "avatarRequestTooLarge": "That photo is too large to send. Try a smaller image.",
+    "requestTooLarge": "That request was too large. Your changes were kept — please try again."
   },
   "account": {
     "eyebrow": "Account",
@@ -2585,7 +2827,9 @@
         "invalidBackup": "This doesn't look like a valid Notoria backup. Please use a JSON file exported from Notoria's Export account backup feature.",
         "unauthorized": "Please sign in again to import a backup.",
         "invalidInput": "Please choose a JSON backup file.",
-        "importFailed": "Could not import this backup. Try again."
+        "importFailed": "Could not import this backup. Try again.",
+        "requestTooLarge": "That backup is too large to process through this page. Try a smaller export or contact support.",
+        "notConfigured": "File storage is not configured for backup import yet."
       }
     },
     "danger": {
@@ -2739,6 +2983,7 @@
     "quotaLabels": {
       "ai_meeting": "AI Speaking Tutor",
       "ai_listening_transcript": "AI Listening Transcript",
+      "ai_reading": "AI Reading practice",
       "ai_exercise": "AI Exercise generation",
       "ai_exercise_import": "AI practice from worksheets",
       "ai_vocabulary": "AI Vocabulary actions",
@@ -2753,6 +2998,7 @@
       "quotaPerDay": {
         "ai_meeting": "{count, plural, one {# call/day} other {# calls/day}}",
         "ai_listening_transcript": "{count, plural, one {# transcript/day} other {# transcripts/day}}",
+        "ai_reading": "{count, plural, one {# reading AI use/day} other {# reading AI uses/day}}",
         "ai_exercise": "{count, plural, one {# generation/day} other {# generations/day}}",
         "ai_exercise_import": "{count, plural, one {# generation/day} other {# generations/day}}",
         "ai_vocabulary": "{count, plural, one {# action/day} other {# actions/day}}",
@@ -2770,6 +3016,7 @@
       "workspace": "Workspace",
       "aiMeeting": "AI Meeting",
       "aiListeningTranscript": "AI Listening Transcript",
+      "aiReading": "AI Reading practice",
       "aiExercise": "AI Exercise generation",
       "aiVocabulary": "AI Vocabulary actions",
       "aiSpeakingTutor": "AI Speaking Tutor",
@@ -2784,6 +3031,7 @@
       "practiceFromMaterial": "AI practice from worksheets",
       "listening": "Listening",
       "speaking": "Speaking",
+      "reading": "Reading",
       "pdfDocxExport": "Export learning material",
       "learningCoach": "Learning Coach",
       "askLearningCoach": "Ask your AI Learning Coach",
@@ -3129,6 +3377,7 @@
       "writing": "Writing",
       "listening": "Listening",
       "speaking": "Speaking",
+      "reading": "Reading",
       "connections": "Your knowledge becomes practice",
       "philosophy": "Your learning diary",
       "startHere": "Start here",
@@ -3288,6 +3537,18 @@
           "Read feedback and identify areas to improve"
         ],
         "emphasis": "Speaking doesn't need to be perfect. The purpose is to practice using the language in a realistic situation — then learn from what happened."
+      },
+      "reading": {
+        "title": "Reading",
+        "intro": "Reading turns texts you choose into comprehension practice.",
+        "bullets": [
+          "Paste text or upload PDF/DOCX passages",
+          "Generate multiple-choice, written, or true/false/not stated questions",
+          "Practice and review answers with AI grading for written responses",
+          "Save useful words from the passage into Vocabulary",
+          "Organize passages with folders"
+        ],
+        "emphasis": "Bring material you actually want to understand — news, stories, worksheets — and turn it into practice that belongs to your diary."
       },
       "inbox": {
         "title": "Capture",
@@ -4014,6 +4275,10 @@
           "label": "Speaking",
           "body": "Live practice with an AI tutor, grounded in the language you are studying. Available on Notoria Pro."
         },
+        "reading": {
+          "label": "Reading",
+          "body": "Import or paste passages, generate comprehension practice, and review results. Free includes a daily AI limit; Pro and Premium raise or remove that limit."
+        },
         "capture": {
           "label": "Capture",
           "body": "A fast drop zone for scraps — words, doubts, and ideas — that you process into Vocabulary, Theory, Writing, or Exercise later. Capture first when you only have a moment; items stay unprocessed until you finish creating the linked entry."
@@ -4159,6 +4424,99 @@
       "supportCta": {
         "prompt": "Looking for answers or want to send feedback?",
         "link": "Support"
+      }
+    }
+  },
+  "errorPages": {
+    "statusUnavailable": "Unavailable",
+    "reference": "Reference: {id}",
+    "actions": {
+      "dashboard": "Go to Dashboard",
+      "home": "Return to Home",
+      "back": "Go back",
+      "tryAgain": "Try again",
+      "support": "Report a problem",
+      "report": "Report a problem"
+    },
+    "notFound": {
+      "title": "Page not found",
+      "description": "This page doesn’t exist, or the link may be outdated. Check the address or head back to a place you know."
+    },
+    "unauthorized": {
+      "title": "Sign in required",
+      "description": "Your session may have expired, or this page needs you to be signed in to continue.",
+      "primary": "Sign in"
+    },
+    "forbidden": {
+      "title": "Access denied",
+      "description": "Your account doesn’t have permission to view this. If you think this is a mistake, contact support."
+    },
+    "rateLimit": {
+      "title": "Too many requests",
+      "description": "You’ve sent requests too quickly. Please wait a moment, then try again.",
+      "retryIn": "Try again in {time}"
+    },
+    "server": {
+      "title": "Something went wrong",
+      "description": "Something went wrong on our side. Please try again. If the problem continues, contact support."
+    },
+    "network": {
+      "title": "Connection problem",
+      "description": "We couldn’t reach Notoria. Check your connection and try again. Your last action may not have been saved."
+    },
+    "offline": {
+      "title": "You’re offline",
+      "description": "It looks like there’s no internet connection. Reconnect, then retry. Unsaved changes may still be in the form."
+    },
+    "timeout": {
+      "title": "Request timed out",
+      "description": "That took too long to complete. Please try again. The action may not have finished."
+    },
+    "resources": {
+      "exercise": {
+        "title": "This exercise could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Back to Exercises"
+      },
+      "vocabulary": {
+        "title": "This vocabulary item could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Back to Vocabulary"
+      },
+      "reading": {
+        "title": "This reading passage could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Back to Reading"
+      },
+      "writing": {
+        "title": "This writing document could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Back to Writing"
+      },
+      "theory": {
+        "title": "This theory note could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Back to Theory"
+      },
+      "listening": {
+        "title": "This listening lesson could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Back to Listening"
+      },
+      "speaking": {
+        "title": "This speaking session could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Back to Speaking"
+      },
+      "folder": {
+        "title": "This folder could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Go to Dashboard"
+      },
+      "generic": {
+        "title": "This item could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Go to Dashboard"
       }
     }
   }

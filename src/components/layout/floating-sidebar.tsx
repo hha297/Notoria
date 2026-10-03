@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname, useRouter } from "next/navigation";
 import {
+  BookMarked,
   BookOpen,
   Compass,
   Dumbbell,
@@ -46,6 +47,7 @@ type NavRoute =
   | "inbox"
   | "vocabulary"
   | "exercises"
+  | "reading"
   | "writing"
   | "theory"
   | "listening"
@@ -85,20 +87,20 @@ const NAV_GROUPS: NavGroup[] = [
         tint: "text-module-home-fg",
       },
       {
-        href: "/inbox",
-        key: "inbox",
-        icon: Inbox,
-        match: "prefix",
-        route: "inbox",
-        tint: "text-module-home-fg",
-      },
-      {
         href: "/vocabulary",
         key: "vocabulary",
         icon: Languages,
         match: "prefix",
         route: "vocabulary",
         tint: "text-module-vocab-fg",
+      },
+      {
+        href: "/theory",
+        key: "theory",
+        icon: BookOpen,
+        match: "prefix",
+        route: "theory",
+        tint: "text-module-theory-fg",
       },
       {
         href: "/exercises",
@@ -109,26 +111,18 @@ const NAV_GROUPS: NavGroup[] = [
         tint: "text-module-exercise-fg",
       },
       {
-        href: "/writing",
-        key: "writing",
-        icon: PenLine,
+        href: "/inbox",
+        key: "inbox",
+        icon: Inbox,
         match: "prefix",
-        route: "writing",
-        tint: "text-module-writing-fg",
-      },
-      {
-        href: "/theory",
-        key: "theory",
-        icon: BookOpen,
-        match: "prefix",
-        route: "theory",
-        tint: "text-module-theory-fg",
+        route: "inbox",
+        tint: "text-module-home-fg",
       },
     ],
   },
   {
-    id: "listenSpeak",
-    labelKey: "groups.listenSpeak",
+    id: "skills",
+    labelKey: "groups.skills",
     items: [
       {
         href: "/listening",
@@ -145,6 +139,22 @@ const NAV_GROUPS: NavGroup[] = [
         match: "prefix",
         route: "speaking",
         tint: "text-module-speak-fg",
+      },
+      {
+        href: "/reading",
+        key: "reading",
+        icon: BookMarked,
+        match: "prefix",
+        route: "reading",
+        tint: "text-module-read-fg",
+      },
+      {
+        href: "/writing",
+        key: "writing",
+        icon: PenLine,
+        match: "prefix",
+        route: "writing",
+        tint: "text-module-writing-fg",
       },
     ],
   },

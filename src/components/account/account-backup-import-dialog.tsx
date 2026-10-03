@@ -16,8 +16,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import {
-  analyzeAccountBackup,
-  confirmAccountBackupImport,
+  analyzeAccountBackupFromUpload,
+  confirmAccountBackupFromUpload,
+  getAccountBackupUploadSignature,
   type AccountBackupActionError,
 } from "@/lib/actions/account-backup";
 import {
@@ -25,6 +26,8 @@ import {
   type BackupImportResult,
   type BackupPreview,
 } from "@/lib/account-backup/types";
+import { isRequestTooLargeError } from "@/lib/account/prepare-avatar";
+import { uploadImportFileWithProgress } from "@/lib/exercise-import/client-upload";
 
 type Step = "upload" | "preview" | "done";
 
@@ -40,6 +43,10 @@ function friendlyError(
   switch (error.code) {
     case "FILE_TOO_LARGE":
       return t("errors.fileTooLarge");
+    case "REQUEST_TOO_LARGE":
+      return t("errors.requestTooLarge");
+    case "CLOUDINARY_NOT_CONFIGURED":
+      return t("errors.notConfigured");
     case "INVALID_BACKUP":
       return error.message || t("errors.invalidBackup");
     case "UNAUTHORIZED":
@@ -92,7 +99,8 @@ export function AccountBackupImportDialog({
   const queryClient = useQueryClient();
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [step, setStep] = useState<Step>("upload");
-  const [file, setFile] = useState<File | null>(null);
+  const [uploadPublicId, setUploadPublicId] = useState<string | null>(null);
+  const [fileUrl, setFileUrl] = useState<string | null>(null);
   const [preview, setPreview] = useState<BackupPreview | null>(null);
   const [result, setResult] = useState<BackupImportResult | null>(null);
   const [isPending, startTransition] = useTransition();
@@ -100,12 +108,20 @@ export function AccountBackupImportDialog({
   useEffect(() => {
     if (!open) {
       setStep("upload");
-      setFile(null);
+      setUploadPublicId(null);
+      setFileUrl(null);
       setPreview(null);
       setResult(null);
       if (fileInputRef.current) fileInputRef.current.value = "";
     }
   }, [open]);
+
+  function resetSelection() {
+    setUploadPublicId(null);
+    setFileUrl(null);
+    setPreview(null);
+    if (fileInputRef.current) fileInputRef.current.value = "";
+  }
 
   function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
     const next = event.target.files?.[0] ?? null;
@@ -117,43 +133,85 @@ export function AccountBackupImportDialog({
       return;
     }
 
-    setFile(next);
+    if (isPending) {
+      event.target.value = "";
+      return;
+    }
+
     setPreview(null);
     setResult(null);
     setStep("upload");
 
-    const formData = new FormData();
-    formData.append("file", next);
-
     startTransition(async () => {
-      const response = await analyzeAccountBackup(formData);
-      if (!response.ok) {
-        toast.error(friendlyError(response.error, t));
-        setFile(null);
-        if (fileInputRef.current) fileInputRef.current.value = "";
-        return;
+      try {
+        const signResult = await getAccountBackupUploadSignature({
+          filename: next.name,
+          byteSize: next.size,
+        });
+        if (!signResult.ok) {
+          toast.error(friendlyError(signResult.error, t));
+          resetSelection();
+          return;
+        }
+
+        const uploaded = await uploadImportFileWithProgress(
+          next,
+          signResult.result,
+          { onProgress: () => {} },
+        );
+
+        const response = await analyzeAccountBackupFromUpload({
+          publicId: uploaded.publicId,
+          fileUrl: uploaded.secureUrl,
+          byteSize: next.size,
+        });
+
+        if (!response.ok) {
+          toast.error(friendlyError(response.error, t));
+          resetSelection();
+          return;
+        }
+
+        setUploadPublicId(response.result.uploadPublicId);
+        setFileUrl(uploaded.secureUrl);
+        setPreview(response.result.preview);
+        setStep("preview");
+      } catch (error) {
+        if (isRequestTooLargeError(error)) {
+          toast.error(t("errors.requestTooLarge"));
+        } else {
+          toast.error(t("errors.importFailed"));
+        }
+        resetSelection();
       }
-      setPreview(response.result.preview);
-      setStep("preview");
     });
   }
 
   function handleConfirm() {
-    if (!file) return;
-    const formData = new FormData();
-    formData.append("file", file);
+    if (!uploadPublicId || isPending) return;
 
     startTransition(async () => {
-      const response = await confirmAccountBackupImport(formData);
-      if (!response.ok) {
-        toast.error(friendlyError(response.error, t));
-        return;
+      try {
+        const response = await confirmAccountBackupFromUpload({
+          publicId: uploadPublicId,
+          fileUrl: fileUrl ?? undefined,
+        });
+        if (!response.ok) {
+          toast.error(friendlyError(response.error, t));
+          return;
+        }
+        setResult(response.result);
+        setStep("done");
+        await queryClient.invalidateQueries();
+        router.refresh();
+        toast.success(t("doneToast"));
+      } catch (error) {
+        if (isRequestTooLargeError(error)) {
+          toast.error(t("errors.requestTooLarge"));
+          return;
+        }
+        toast.error(t("errors.importFailed"));
       }
-      setResult(response.result);
-      setStep("done");
-      await queryClient.invalidateQueries();
-      router.refresh();
-      toast.success(t("doneToast"));
     });
   }
 

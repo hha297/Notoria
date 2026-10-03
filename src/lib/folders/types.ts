@@ -2,7 +2,12 @@ import type { FolderSection } from "@/db/schema";
 
 export type { FolderSection };
 
-export const FOLDER_SECTIONS = ["writing", "listening", "theory"] as const;
+export const FOLDER_SECTIONS = [
+  "writing",
+  "listening",
+  "theory",
+  "reading",
+] as const;
 
 export const MAX_FOLDER_NAME_LENGTH = 80;
 export const MAX_FOLDER_DEPTH = 20;

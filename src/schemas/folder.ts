@@ -1,7 +1,12 @@
 import { z } from "zod";
 import { MAX_FOLDER_NAME_LENGTH } from "@/lib/folders/types";
 
-export const folderSectionSchema = z.enum(["writing", "listening", "theory"]);
+export const folderSectionSchema = z.enum([
+  "writing",
+  "listening",
+  "theory",
+  "reading",
+]);
 
 export const folderNameSchema = z
   .string()
@@ -21,7 +26,7 @@ export const renameFolderSchema = z.object({
 });
 
 export const moveIntoFolderSchema = z.object({
-  itemType: z.enum(["folder", "writing", "listening", "theory"]),
+  itemType: z.enum(["folder", "writing", "listening", "theory", "reading"]),
   id: z.string().uuid(),
   folderId: z.string().uuid().nullable(),
 });

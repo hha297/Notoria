@@ -113,12 +113,22 @@ export function WritingPreview({
   return (
     <div
       className="writing-paper writing-atelier"
-      data-writing-kind={editorState.mode}
+      data-writing-kind={
+        editorState.meta.kind === "learning_note" &&
+        editorState.mode === "rich_document"
+          ? "learning_note"
+          : editorState.mode
+      }
     >
       <div
         className={mx(detailStyles, "shell")}
         data-detail="writing"
-        data-writing-kind={editorState.mode}
+        data-writing-kind={
+          editorState.meta.kind === "learning_note" &&
+          editorState.mode === "rich_document"
+            ? "learning_note"
+            : editorState.mode
+        }
       >
         <header className={mx(detailStyles, "header")}>
           <Link

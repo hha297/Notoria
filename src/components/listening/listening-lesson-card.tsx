@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Pencil, RotateCcw, Trash2 } from "lucide-react";
+import { Loader2, Pencil, RotateCcw, ArrowRight, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -149,7 +149,7 @@ export function ListeningLessonCard({
                 ))}
               </p>
             ) : null}
-            <div className="mt-2 flex flex-wrap items-center gap-2">
+            <div className="writing-entry-cta mt-2 flex flex-wrap items-center gap-2">
               {lesson.status === "FAILED" ? (
                 <Button
                   type="button"
@@ -170,11 +170,14 @@ export function ListeningLessonCard({
                 <LinkButton
                   href={href}
                   size="sm"
-                  className="route-primary-cta"
+                  variant="outline"
+                  className="route-quiet-action"
+                  data-route-action="listen"
                   onPointerDown={(event) => event.stopPropagation()}
                   onClick={(event) => event.stopPropagation()}
                 >
                   {t("continue")}
+                  <ArrowRight className="size-3.5" />
                 </LinkButton>
               ) : (
                 <LinkButton
@@ -187,6 +190,7 @@ export function ListeningLessonCard({
                   onClick={(event) => event.stopPropagation()}
                 >
                   {processing ? t("viewProgress") : t("open")}
+                  <ArrowRight className="size-3.5" />
                 </LinkButton>
               )}
             </div>
@@ -201,22 +205,22 @@ export function ListeningLessonCard({
               type="button"
               size="icon-sm"
               variant="ghost"
-              className="size-7 text-muted-foreground hover:text-ink"
+              className="text-muted-foreground"
               onClick={() => setRenameOpen(true)}
               disabled={isPending}
             >
-              <Pencil className="size-3.5" />
+              <Pencil className="size-[1.15rem]" />
               <span className="sr-only">{t("renameFile")}</span>
             </Button>
             <Button
               type="button"
               size="icon-sm"
               variant="ghost"
-              className="size-7 text-destructive hover:bg-destructive/10 hover:text-destructive"
+              className="text-destructive hover:bg-destructive/10 hover:text-destructive"
               onClick={() => setDeleteOpen(true)}
               disabled={isPending}
             >
-              <Trash2 className="size-3.5" />
+              <Trash2 className="size-[1.15rem]" />
               <span className="sr-only">{tc("delete")}</span>
             </Button>
           </div>

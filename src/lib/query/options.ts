@@ -3,6 +3,10 @@ import { getExerciseStudioData } from "@/lib/actions/exercise-studio";
 import { getFolders } from "@/lib/actions/folders";
 import type { FolderSection } from "@/lib/folders/types";
 import { getListeningLessons } from "@/lib/actions/listening";
+import {
+  getReadingPassage,
+  listReadingPassages,
+} from "@/lib/actions/reading";
 import { getSpeakingSessions } from "@/lib/actions/speaking";
 import { getTheoryNotes } from "@/lib/actions/theory";
 import {
@@ -95,6 +99,25 @@ export function speakingListQueryOptions(workspaceId: string) {
     queryKey: queryKeys.speaking.list(workspaceId),
     queryFn: () => getSpeakingSessions(),
     enabled: Boolean(workspaceId),
+  });
+}
+
+export function readingListQueryOptions(workspaceId: string) {
+  return queryOptions({
+    queryKey: queryKeys.reading.list(workspaceId),
+    queryFn: () => listReadingPassages(),
+    enabled: Boolean(workspaceId),
+  });
+}
+
+export function readingDetailQueryOptions(
+  workspaceId: string,
+  passageId: string,
+) {
+  return queryOptions({
+    queryKey: queryKeys.reading.detail(workspaceId, passageId),
+    queryFn: () => getReadingPassage(passageId),
+    enabled: Boolean(workspaceId && passageId),
   });
 }
 

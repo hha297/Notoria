@@ -623,6 +623,11 @@
   --home-accent-bg: var(--module-speak-bg);
 }
 
+:global([data-home-accent="read"]) {
+  --home-accent-fg: var(--module-read-fg);
+  --home-accent-bg: var(--module-read-bg);
+}
+
 @media (min-width: 640px) {
   .home-hub-grid,
   .home-guide-grid {

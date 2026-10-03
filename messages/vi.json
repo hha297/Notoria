@@ -14,7 +14,8 @@
     "clearFilter": "Xóa",
     "filters": "Bộ lọc",
     "hideFilters": "Ẩn bộ lọc",
-    "open": "Mở"
+    "open": "Mở",
+    "remove": "Xóa"
   },
   "contentImport": {
     "title": {
@@ -150,8 +151,10 @@
     "groups": {
       "main": "Menu chính",
       "listenSpeak": "Nghe và nói",
-      "more": "Thêm"
-    }
+      "more": "Thêm",
+      "skills": "Kỹ năng"
+    },
+    "reading": "Đọc"
   },
   "inbox": {
     "eyebrow": "Thu thập",
@@ -1108,6 +1111,10 @@
       "speaking": {
         "title": "Nói",
         "body": "Gọi video với gia sư AI và luyện nói tự nhiên với kiến thức bạn đã xây dựng. Sau mỗi buổi, xem lại transcript và phản hồi để biết cần cải thiện gì. Hoàn tất vòng học: học → luyện → dùng → xem lại → tiến bộ."
+      },
+      "reading": {
+        "title": "Đọc",
+        "body": "Nhập hoặc dán đoạn văn, rồi tạo bài luyện hiểu đọc — trắc nghiệm, trả lời viết và đúng / sai / không nêu. Free có giới hạn AI mỗi ngày; Pro nâng lên 10 lần/ngày; Premium không giới hạn."
       }
     },
     "modules": {
@@ -1146,6 +1153,12 @@
         "description": "Hội thoại video trực tiếp với gia sư AI.",
         "how": "Tạo phiên và vào cuộc gọi. Free gồm một cuộc họp AI mỗi ngày, có gia sư.",
         "cta": "Mở nói"
+      },
+      "reading": {
+        "title": "Đọc",
+        "description": "Đoạn văn kèm bài luyện hiểu đọc bằng AI.",
+        "how": "Nhập hoặc dán văn bản, tạo câu hỏi rồi luyện và xem lại. Free có giới hạn AI mỗi ngày; Pro 10 lần/ngày; Premium không giới hạn.",
+        "cta": "Mở đọc"
       }
     },
     "counts": {
@@ -1639,6 +1652,45 @@
           "body": "Gửi ghi nhanh sang Từ vựng, Lý thuyết, Viết hoặc Bài tập. Chỉ đánh dấu Đã xử lý sau khi bạn lưu xong — hủy form tạo thì mục vẫn chờ."
         }
       }
+    },
+    "reading": {
+      "title": "Đọc",
+      "description": "Nhập hoặc dán đoạn văn, tạo bài luyện hiểu đọc và xem lại kết quả.",
+      "cta": "Mở đọc",
+      "steps": {
+        "import": {
+          "title": "1. Thêm đoạn văn",
+          "body": "Dán văn bản hoặc tải PDF/DOCX để tạo đoạn đọc bạn có thể luyện."
+        },
+        "importForm": {
+          "title": "2. Xem lại văn bản",
+          "body": "Kiểm tra tiêu đề, ngôn ngữ và nội dung trước khi lưu. Bạn có thể sửa văn bản đã trích xuất nếu cần."
+        },
+        "search": {
+          "title": "3. Tìm đoạn văn",
+          "body": "Tìm trong thư viện đọc theo tiêu đề hoặc tên tệp nguồn khi danh sách dài hơn."
+        },
+        "passages": {
+          "title": "4. Luyện từ thư viện",
+          "body": "Mở một đoạn để tạo câu hỏi, trả lời và xem kết quả — kể cả chấm câu viết bằng AI khi cần."
+        },
+        "newFolder": {
+          "title": "5. Tạo thư mục",
+          "body": "Bấm Thư mục mới để nhóm đoạn theo chủ đề, kỳ thi hoặc trình độ. Thư mục là tùy chọn."
+        },
+        "nameFolder": {
+          "title": "6. Đặt tên thư mục",
+          "body": "Nhập tên rõ ràng (ví dụ Tin tức hoặc Ôn thi). Thư mục được tạo trong vị trí bạn đang xem."
+        },
+        "organize": {
+          "title": "7. Thư mục và đoạn văn",
+          "body": "Thư mục hiện phía trên danh sách đoạn. Mở thư mục để chỉ xem nhóm đó — lần nhập khi đang trong thư mục sẽ lưu vào đó."
+        },
+        "moveItem": {
+          "title": "8. Di chuyển đoạn giữa thư mục",
+          "body": "Dùng biểu tượng di chuyển trên đoạn, hoặc kéo sang thẻ thư mục. Bạn cũng có thể lồng thư mục."
+        }
+      }
     }
   },
   "settings": {
@@ -1920,6 +1972,186 @@
       "descriptionLabel": "Mô tả"
     }
   },
+  "reading": {
+    "eyebrow": "Đọc",
+    "title": "Đọc",
+    "description": "Dán hoặc nhập đoạn văn, tạo bài tập đọc hiểu và luyện tập với kết quả đã lưu.",
+    "disabledNoWorkspace": "Tạo workspace trước khi thêm bài đọc.",
+    "import": "Thêm đoạn văn",
+    "importFirst": "Thêm đoạn văn đầu tiên",
+    "importTitle": "Thêm bài đọc",
+    "importDescription": "Dán văn bản hoặc tải PDF/DOCX, chỉnh sửa bản xem trước, rồi tùy chọn tạo bài tập.",
+    "importTabsAria": "Nguồn đoạn văn",
+    "tabPaste": "Dán",
+    "tabUpload": "Tải lên",
+    "bodyLabel": "Nội dung đoạn văn",
+    "bodyPlaceholder": "Dán hoặc gõ đoạn văn tại đây…",
+    "titleLabel": "Tiêu đề",
+    "titlePlaceholder": "Tiêu đề tùy chọn",
+    "languageLabel": "Ngôn ngữ đoạn văn",
+    "wordCount": "{count, plural, one {# từ} other {# từ}}",
+    "continuePreview": "Tiếp tục xem trước",
+    "dropTitle": "Thả PDF hoặc DOCX vào đây",
+    "dropDescription": "hoặc nhấp để chọn. PDF scan sẽ dùng OCR khi cần.",
+    "extractSuccess": "Đã trích xuất văn bản — xem lại và chỉnh sửa trước khi lưu.",
+    "sourcePaste": "Văn bản đã dán",
+    "back": "Quay lại",
+    "savePassage": "Lưu đoạn văn",
+    "saveAndGenerate": "Lưu và tạo bài tập",
+    "generateHint": "Tạo câu hỏi đọc hiểu bằng {language}. Dùng hạn mức bài tập AI của bạn.",
+    "modeLabel": "Loại bài tập",
+    "questionCountLabel": "Số câu hỏi",
+    "difficultyLabel": "Độ khó",
+    "difficultyNone": "Tự động",
+    "questionLanguageLabel": "Ngôn ngữ câu hỏi",
+    "skipGenerate": "Bỏ qua tạm thời",
+    "generateExercises": "Tạo bài tập",
+    "generateTitle": "Tạo bài tập",
+    "generateDescription": "Tạo câu hỏi đọc hiểu từ đoạn văn này. Chỉ tạo một lần và được lưu lại.",
+    "exercisesGenerated": "Bài tập đã sẵn sàng.",
+    "created": "Đã lưu đoạn văn",
+    "deleted": "Đã xóa đoạn văn",
+    "submitted": "Đã nộp câu trả lời",
+    "emptyTitle": "Chưa có bài đọc nào",
+    "emptyDescription": "Dán văn bản hoặc tải PDF/DOCX để bắt đầu luyện đọc.",
+    "myPassages": "Bài đọc của tôi",
+    "passageHint": "Mở một đoạn văn để tạo bài tập hoặc tiếp tục luyện tập.",
+    "open": "Mở",
+    "practice": {
+      "submit": "Nộp bài",
+      "loading": "Đang tải câu hỏi…",
+      "questionLabel": "C{number}.",
+      "writtenPlaceholder": "Viết câu trả lời…",
+      "correct": "Đúng",
+      "incorrect": "Chưa đúng",
+      "expected": "Đáp án đúng",
+      "objectiveScore": "{correct} / {total} câu khách quan đúng",
+      "mobileTabsAria": "Bảng luyện tập",
+      "unansweredWarn": "Một số câu chưa trả lời. Vẫn nộp?",
+      "gradingPending": "Câu trả lời tự luận chưa chấm được. Câu trả lời đã lưu — bạn có thể thử chấm lại.",
+      "retryGrading": "Thử chấm lại",
+      "retryAttempt": "Làm lại",
+      "progress": "Câu {current} / {total}",
+      "aiFeedbackLabel": "Phản hồi AI",
+      "understood": "Đã hiểu",
+      "missing": "Còn thiếu"
+    },
+    "startPractice": "Bắt đầu luyện tập",
+    "practiceTitle": "Luyện đọc",
+    "backToList": "Quay lại Đọc",
+    "backToPassage": "Quay lại đoạn văn",
+    "passagePanel": "Đoạn văn",
+    "questionsPanel": "Câu hỏi",
+    "questionSets": "Bộ bài tập",
+    "noSetsYet": "Chưa có bài tập",
+    "noSetsDescription": "Tạo bài tập một lần — chúng được lưu, nên tải lại trang sẽ không tạo lại.",
+    "setCount": "{count, plural, one {# bộ bài tập} other {# bộ bài tập}}",
+    "questionCountValue": "{count, plural, one {# câu hỏi} other {# câu hỏi}}",
+    "staleSet": "Đoạn văn đã cập nhật sau khi tạo bộ này",
+    "vocabHint": "Chọn một từ hoặc cụm ngắn trong đoạn văn để thêm vào Từ vựng.",
+    "addToVocabulary": "Thêm vào Từ vựng",
+    "deleteConfirmTitle": "Xóa đoạn văn này?",
+    "deleteConfirmDescription": "\"{title}\" và tất cả bài tập cùng lượt làm sẽ bị xóa vĩnh viễn.",
+    "modes": {
+      "multiple_choice": "Trắc nghiệm",
+      "written": "Trả lời viết",
+      "true_false_not_stated": "Đúng / Sai / Không nêu",
+      "mixed": "Hỗn hợp"
+    },
+    "sources": {
+      "paste": "Dán",
+      "pdf": "PDF",
+      "docx": "DOCX"
+    },
+    "setStatus": {
+      "generating": "Đang tạo",
+      "ready": "Sẵn sàng",
+      "failed": "Thất bại"
+    },
+    "tfns": {
+      "true": "Đúng",
+      "false": "Sai",
+      "not_stated": "Không nêu"
+    },
+    "errors": {
+      "UNAUTHORIZED": "Đăng nhập để tiếp tục.",
+      "OPENAI_NOT_CONFIGURED": "AI chưa được cấu hình.",
+      "INVALID_INPUT": "Kiểm tra dữ liệu nhập và thử lại.",
+      "INVALID_FILE": "Chọn tệp PDF hoặc DOCX.",
+      "INVALID_FILE_TYPE": "Chỉ hỗ trợ tệp PDF và DOCX.",
+      "FILE_TOO_LARGE": "Tệp quá lớn. Dùng tệp dưới 10 MB.",
+      "EMPTY_CONTENT": "Thêm đoạn văn dài hơn (ít nhất vài câu).",
+      "SCANNED_PDF": "PDF có vẻ được quét. OCR không lấy đủ chữ — hãy dán đoạn văn thay thế.",
+      "UNSUPPORTED_PARSE": "Không đọc được tệp. Thử .docx hoặc PDF có lớp văn bản.",
+      "PASSAGE_NOT_FOUND": "Không tìm thấy bài đọc.",
+      "SET_NOT_FOUND": "Không tìm thấy bộ bài tập.",
+      "ATTEMPT_NOT_FOUND": "Không tìm thấy lượt luyện tập.",
+      "SET_NOT_READY": "Bài tập chưa sẵn sàng.",
+      "GENERATION_FAILED": "Không thể tạo bài tập. Thử lại.",
+      "GENERATION_UNAVAILABLE": "Tạo bài tập hiện không khả dụng.",
+      "VALIDATION_FAILED": "Bài tập tạo ra không dùng được. Thử lại.",
+      "GRADING_FAILED": "Không thể chấm câu trả lời viết. Thử lại.",
+      "ATTEMPT_NOT_EDITABLE": "Lượt này không còn chỉnh sửa được.",
+      "PROCESSING_FAILED": "Đã xảy ra lỗi. Thử lại.",
+      "AI_DISABLED": "Trợ lý AI đang tắt trong cài đặt của bạn.",
+      "AI_QUOTA_EXCEEDED": "Bạn đã hết hạn mức bài tập AI trong kỳ này.",
+      "generic": "Đã xảy ra lỗi. Thử lại."
+    },
+    "newPassage": "Thêm đoạn văn",
+    "saving": "Đang lưu…",
+    "saved": "Đã lưu đoạn văn",
+    "openPassage": "Mở",
+    "searchPlaceholder": "Tìm đoạn văn…",
+    "noResults": "Không có đoạn văn khớp tìm kiếm",
+    "generateNew": "Tạo bài tập",
+    "generate": "Tạo",
+    "generating": "Đang tạo…",
+    "generated": "Bài tập đã sẵn sàng.",
+    "exerciseMode": "Loại bài tập",
+    "modeMultipleChoice": "Trắc nghiệm",
+    "modeWritten": "Trả lời viết",
+    "modeTfns": "Đúng / Sai / Không nêu",
+    "modeMixed": "Hỗn hợp",
+    "questionCount": "Số câu hỏi",
+    "questionLanguage": "Ngôn ngữ câu hỏi",
+    "difficulty": "Độ khó",
+    "setsHeading": "Bộ bài tập",
+    "noSets": "Chưa có bài tập.",
+    "resumePractice": "Tiếp tục",
+    "retryAttempt": "Làm lại",
+    "deleteSet": "Xóa bộ bài tập này?",
+    "setFailed": "Tạo thất bại",
+    "setGenerating": "Đang tạo…",
+    "passageTab": "Đoạn văn",
+    "questionsTab": "Câu hỏi",
+    "progress": "{current} / {total}",
+    "submit": "Nộp bài",
+    "submitting": "Đang nộp…",
+    "resultsTitle": "Kết quả đã sẵn sàng",
+    "objectiveScore": "{correct} / {total} câu khách quan đúng",
+    "aiFeedbackLabel": "Phản hồi AI",
+    "explanation": "Giải thích",
+    "excerpt": "Đoạn trích",
+    "correctAnswer": "Đáp án đúng",
+    "yourAnswer": "Câu trả lời của bạn",
+    "unansweredWarn": "Một số câu còn trống. Vẫn nộp?",
+    "gradingPending": "Không chấm được câu viết.",
+    "retryGrading": "Chấm lại",
+    "selectWordHint": "Chọn từ hoặc cụm ngắn để thêm vào Từ vựng.",
+    "uploadHint": "Tải lên PDF hoặc DOCX. PDF scan chưa được hỗ trợ.",
+    "uploadChoose": "Chọn tệp",
+    "extracting": "Đang trích xuất văn bản…",
+    "status": {
+      "generating": "Đang tạo",
+      "ready": "Sẵn sàng",
+      "failed": "Thất bại"
+    },
+    "deleteSetDescription": "Bộ bài tập và các lần làm sẽ bị xóa vĩnh viễn. Đoạn văn vẫn được giữ lại.",
+    "dropActive": "Thả để trích xuất văn bản",
+    "supportedFiles": "PDF và DOCX · tối đa 10 MB",
+    "replaceFile": "Nhấp để chọn tệp khác",
+    "emptyFolder": "Thư mục này trống"
+  },
   "listening": {
     "eyebrow": "Nghe",
     "title": "Nghe",
@@ -2181,9 +2413,16 @@
     }
   },
   "errors": {
-    "generic": "Có lỗi xảy ra",
+    "generic": "Đã xảy ra lỗi",
     "noWorkspace": "Chưa có không gian học",
-    "notFound": "Không tìm thấy"
+    "notFound": "Không tìm thấy trang",
+    "unauthorized": "Cần đăng nhập",
+    "forbidden": "Không có quyền truy cập",
+    "rateLimit": "Quá nhiều yêu cầu",
+    "network": "Lỗi kết nối",
+    "offline": "Bạn đang ngoại tuyến",
+    "timeout": "Hết thời gian chờ",
+    "server": "Có lỗi phía chúng tôi. Hãy thử lại. Nếu vẫn tiếp diễn, hãy liên hệ hỗ trợ."
   },
   "learningOnboarding": {
     "step": "Bắt đầu",
@@ -2258,14 +2497,14 @@
     "accountDescription": "Đổi ảnh đại diện và mật khẩu.",
     "profile": "Hồ sơ",
     "avatar": "Ảnh đại diện",
-    "avatarDescription": "Tải ảnh cho tài khoản. JPG, PNG, WebP hoặc GIF, tối đa 5 MB.",
+    "avatarDescription": "Tải ảnh lên tài khoản. JPG, PNG, WebP hoặc GIF tối đa 5 MB — chúng tôi nén trước khi tải.",
     "changeAvatar": "Đổi ảnh",
     "removeAvatar": "Xóa ảnh",
     "avatarUpdated": "Đã cập nhật ảnh đại diện",
     "avatarRemoved": "Đã xóa ảnh đại diện",
     "avatarUploadFailed": "Không tải được ảnh lên",
     "avatarInvalidType": "Chọn ảnh JPG, PNG, WebP hoặc GIF nhé",
-    "avatarTooLarge": "Ảnh phải dưới 5 MB",
+    "avatarTooLarge": "Ảnh phải từ 5 MB trở xuống (sau nén dưới ~900 KB).",
     "avatarNotConfigured": "Chưa cấu hình tải ảnh",
     "changePassword": "Đổi mật khẩu",
     "currentPassword": "Mật khẩu hiện tại",
@@ -2292,7 +2531,9 @@
     "oauthNotConfigured": "Đăng nhập Google chưa được cấu hình.",
     "legalPrivacy": "Quyền riêng tư",
     "legalTerms": "Điều khoản",
-    "registerAgreement": "Khi tạo tài khoản, bạn đồng ý với <terms>Điều khoản sử dụng</terms> và <privacy>Chính sách quyền riêng tư</privacy>."
+    "registerAgreement": "Khi tạo tài khoản, bạn đồng ý với <terms>Điều khoản sử dụng</terms> và <privacy>Chính sách quyền riêng tư</privacy>.",
+    "avatarRequestTooLarge": "Ảnh quá lớn để gửi. Hãy thử ảnh nhỏ hơn.",
+    "requestTooLarge": "Yêu cầu quá lớn. Thay đổi của bạn vẫn được giữ — hãy thử lại."
   },
   "account": {
     "eyebrow": "Tài khoản",
@@ -2391,7 +2632,9 @@
         "invalidBackup": "Đây không giống bản sao lưu Notoria hợp lệ. Hãy dùng file JSON từ Xuất bản sao lưu tài khoản.",
         "unauthorized": "Đăng nhập lại để nhập backup.",
         "invalidInput": "Hãy chọn file JSON backup.",
-        "importFailed": "Không nhập được backup này. Thử lại nhé."
+        "importFailed": "Không nhập được backup này. Thử lại nhé.",
+        "requestTooLarge": "Bản sao lưu quá lớn để xử lý trên trang này. Hãy thử xuất nhỏ hơn hoặc liên hệ hỗ trợ.",
+        "notConfigured": "Lưu trữ tệp chưa được cấu hình cho nhập bản sao lưu."
       }
     },
     "danger": {
@@ -2534,6 +2777,7 @@
     "quotaLabels": {
       "ai_meeting": "Họp AI",
       "ai_listening_transcript": "Bản ghi nghe",
+      "ai_reading": "Luyện đọc AI",
       "ai_exercise": "Bài tập AI",
       "ai_exercise_import": "Luyện AI từ phiếu bài",
       "ai_vocabulary": "Từ vựng AI",
@@ -2658,6 +2902,7 @@
       "quotaPerDay": {
         "ai_meeting": "{count, plural, one {# cuộc gọi/ngày} other {# cuộc gọi/ngày}}",
         "ai_listening_transcript": "{count, plural, one {# bản ghi/ngày} other {# bản ghi/ngày}}",
+        "ai_reading": "{count, plural, one {# lần đọc AI/ngày} other {# lần đọc AI/ngày}}",
         "ai_exercise": "{count, plural, one {# lần tạo/ngày} other {# lần tạo/ngày}}",
         "ai_exercise_import": "{count, plural, one {# lần tạo/ngày} other {# lần tạo/ngày}}",
         "ai_vocabulary": "{count, plural, one {# thao tác/ngày} other {# thao tác/ngày}}",
@@ -2675,6 +2920,7 @@
       "workspace": "Không gian làm việc",
       "aiMeeting": "Họp AI",
       "aiListeningTranscript": "Bản ghi nghe AI",
+      "aiReading": "Luyện đọc AI",
       "aiExercise": "Tạo bài tập AI",
       "aiVocabulary": "Thao tác từ vựng AI",
       "aiSpeakingTutor": "Gia sư nói AI",
@@ -2689,6 +2935,7 @@
       "practiceFromMaterial": "Luyện AI từ phiếu bài",
       "listening": "Nghe",
       "speaking": "Nói",
+      "reading": "Đọc",
       "pdfDocxExport": "Xuất tài liệu học",
       "learningCoach": "Huấn luyện viên học tập",
       "askLearningCoach": "Hỏi huấn luyện viên AI",
@@ -2800,7 +3047,8 @@
       "richDocument": "Văn bản tự do",
       "questionSet": "Bộ câu hỏi",
       "richDocumentHint": "Viết tự do với trình soạn thảo có định dạng.",
-      "questionSetHint": "Chia phần và câu hỏi có sẵn — giống phiếu bài giáo trình."
+      "questionSetHint": "Chia phần và câu hỏi có sẵn — giống phiếu bài giáo trình.",
+      "learningNoteHint": "Ghi chú học tập cá nhân — có gắn thẻ để tìm lại sau."
     },
     "content": "Nội dung",
     "contentPlaceholder": "Bắt đầu viết nội dung…",
@@ -3132,7 +3380,8 @@
       "connections": "Kiến thức thành luyện tập",
       "philosophy": "Nhật ký học của bạn",
       "startHere": "Bắt đầu",
-      "inbox": "Ghi nhanh"
+      "inbox": "Ghi nhanh",
+      "reading": "Đọc"
     },
     "welcome": {
       "title": "Notoria là gì?",
@@ -3309,6 +3558,18 @@
           "Sau: xử lý vào Từ vựng kèm nghĩa và ví dụ"
         ],
         "exampleNote": "Mẩu ghi an toàn trong Ghi nhanh. Khi có năm phút yên, gửi sang Từ vựng (hoặc Lý thuyết / Viết) và hoàn tất mục — chỉ lúc đó mới Đã xử lý."
+      },
+      "reading": {
+        "title": "Đọc",
+        "intro": "Đọc biến các đoạn văn bạn chọn thành bài luyện hiểu đọc.",
+        "bullets": [
+          "Dán văn bản hoặc tải đoạn PDF/DOCX",
+          "Tạo câu hỏi trắc nghiệm, viết hoặc đúng/sai/không nêu",
+          "Luyện và xem lại câu trả lời, có chấm AI cho câu viết",
+          "Lưu từ hữu ích từ đoạn vào Từ vựng",
+          "Sắp xếp đoạn bằng thư mục"
+        ],
+        "emphasis": "Mang tài liệu bạn thực sự muốn hiểu — tin tức, chuyện, phiếu bài — rồi biến thành luyện tập thuộc nhật ký học của bạn."
       }
     },
     "connections": {
@@ -4017,6 +4278,10 @@
         "capture": {
           "label": "Ghi nhanh",
           "body": "Nơi thả nhanh cho mẩu vụn — từ, thắc mắc và ý tưởng — rồi xử lý thành Từ vựng, Lý thuyết, Viết hoặc Bài tập sau. Dùng Ghi nhanh trước khi chỉ có vài giây; mục vẫn chưa xử lý cho đến khi bạn tạo xong mục liên kết."
+        },
+        "reading": {
+          "label": "Đọc",
+          "body": "Nhập hoặc dán đoạn văn, tạo bài luyện hiểu đọc và xem kết quả. Free có giới hạn AI mỗi ngày; Pro và Premium nâng hoặc bỏ giới hạn đó."
         }
       },
       "notEverything": {
@@ -4159,6 +4424,99 @@
       "supportCta": {
         "prompt": "Đang tìm câu trả lời hoặc muốn gửi góp ý?",
         "link": "Hỗ trợ"
+      }
+    }
+  },
+  "errorPages": {
+    "statusUnavailable": "Không khả dụng",
+    "reference": "Mã tham chiếu: {id}",
+    "actions": {
+      "dashboard": "Về trang chính",
+      "home": "Về trang chủ",
+      "back": "Quay lại",
+      "tryAgain": "Thử lại",
+      "support": "Báo cáo sự cố",
+      "report": "Báo cáo sự cố"
+    },
+    "notFound": {
+      "title": "Không tìm thấy trang",
+      "description": "Trang này không tồn tại hoặc liên kết có thể đã cũ. Kiểm tra địa chỉ hoặc quay lại nơi bạn biết."
+    },
+    "unauthorized": {
+      "title": "Cần đăng nhập",
+      "description": "Phiên đăng nhập có thể đã hết hạn, hoặc trang này yêu cầu bạn đăng nhập để tiếp tục.",
+      "primary": "Đăng nhập"
+    },
+    "forbidden": {
+      "title": "Không có quyền truy cập",
+      "description": "Tài khoản của bạn không được phép xem nội dung này. Nếu bạn nghĩ đây là nhầm lẫn, hãy liên hệ hỗ trợ."
+    },
+    "rateLimit": {
+      "title": "Quá nhiều yêu cầu",
+      "description": "Bạn đã gửi yêu cầu quá nhanh. Hãy chờ một chút rồi thử lại.",
+      "retryIn": "Thử lại sau {time}"
+    },
+    "server": {
+      "title": "Đã xảy ra lỗi",
+      "description": "Có lỗi phía chúng tôi. Hãy thử lại. Nếu vẫn tiếp diễn, hãy liên hệ hỗ trợ."
+    },
+    "network": {
+      "title": "Lỗi kết nối",
+      "description": "Không thể kết nối tới Notoria. Kiểm tra mạng và thử lại. Thao tác vừa rồi có thể chưa được lưu."
+    },
+    "offline": {
+      "title": "Bạn đang ngoại tuyến",
+      "description": "Có vẻ như không có kết nối internet. Hãy kết nối lại rồi thử. Các thay đổi chưa lưu vẫn có thể còn trên biểu mẫu."
+    },
+    "timeout": {
+      "title": "Hết thời gian chờ",
+      "description": "Yêu cầu mất quá lâu. Hãy thử lại. Thao tác có thể chưa hoàn tất."
+    },
+    "resources": {
+      "exercise": {
+        "title": "Không tìm thấy bài tập này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Quay lại Bài tập"
+      },
+      "vocabulary": {
+        "title": "Không tìm thấy mục từ vựng này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Quay lại Từ vựng"
+      },
+      "reading": {
+        "title": "Không tìm thấy bài đọc này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Quay lại Đọc"
+      },
+      "writing": {
+        "title": "Không tìm thấy tài liệu viết này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Quay lại Viết"
+      },
+      "theory": {
+        "title": "Không tìm thấy ghi chú lý thuyết này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Quay lại Lý thuyết"
+      },
+      "listening": {
+        "title": "Không tìm thấy bài nghe này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Quay lại Nghe"
+      },
+      "speaking": {
+        "title": "Không tìm thấy phiên nói này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Quay lại Nói"
+      },
+      "folder": {
+        "title": "Không tìm thấy thư mục này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Về trang chính"
+      },
+      "generic": {
+        "title": "Không tìm thấy mục này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Về trang chính"
       }
     }
   }

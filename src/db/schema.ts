@@ -73,10 +73,44 @@ export const listeningExerciseTypeEnum = pgEnum("listening_exercise_type", [
   "WORD_ORDERING",
 ]);
 
+export const readingSourceTypeEnum = pgEnum("reading_source_type", [
+  "paste",
+  "pdf",
+  "docx",
+]);
+
+export const readingExerciseModeEnum = pgEnum("reading_exercise_mode", [
+  "multiple_choice",
+  "written",
+  "true_false_not_stated",
+  "mixed",
+]);
+
+export const readingQuestionTypeEnum = pgEnum("reading_question_type", [
+  "multiple_choice",
+  "written",
+  "true_false_not_stated",
+]);
+
+export const readingSetStatusEnum = pgEnum("reading_set_status", [
+  "generating",
+  "ready",
+  "failed",
+]);
+
+export const readingAttemptStatusEnum = pgEnum("reading_attempt_status", [
+  "in_progress",
+  "submitted",
+  "grading",
+  "graded",
+  "grading_failed",
+]);
+
 export const folderSectionEnum = pgEnum("folder_section", [
   "writing",
   "listening",
   "theory",
+  "reading",
 ]);
 
 export const speakingStatusEnum = pgEnum("speaking_status", [
@@ -122,6 +156,7 @@ export const learningEntityTypeEnum = pgEnum("learning_entity_type", [
   "exercise",
   "listening",
   "speaking",
+  "reading",
   "inbox",
 ]);
 
@@ -721,6 +756,164 @@ export const speakingSessions = pgTable(
   ],
 );
 
+export const readingPassages = pgTable(
+  "reading_passages",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    title: text("title").notNull(),
+    body: text("body").notNull(),
+    language: text("language").notNull(),
+    sourceType: readingSourceTypeEnum("source_type").notNull().default("paste"),
+    sourceFilename: text("source_filename"),
+    wordCount: integer("word_count").notNull().default(0),
+    contentVersion: integer("content_version").notNull().default(1),
+    folderId: uuid("folder_id").references(() => workspaceFolders.id, {
+      onDelete: "set null",
+    }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("reading_passages_user_workspace_updated_idx").on(
+      table.userId,
+      table.workspaceId,
+      table.updatedAt,
+    ),
+    index("reading_passages_folder_id_idx").on(table.folderId),
+    index("reading_passages_fts_idx").using(
+      "gin",
+      sql`to_tsvector('simple', coalesce(${table.title}, '') || ' ' || coalesce(${table.body}, ''))`,
+    ),
+  ],
+);
+
+export const readingQuestionSets = pgTable(
+  "reading_question_sets",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    passageId: uuid("passage_id")
+      .notNull()
+      .references(() => readingPassages.id, { onDelete: "cascade" }),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    workspaceId: uuid("workspace_id")
+      .notNull()
+      .references(() => workspaces.id, { onDelete: "cascade" }),
+    passageContentVersion: integer("passage_content_version").notNull(),
+    exerciseMode: readingExerciseModeEnum("exercise_mode").notNull(),
+    questionCount: integer("question_count").notNull(),
+    questionLanguage: text("question_language").notNull(),
+    difficulty: text("difficulty"),
+    status: readingSetStatusEnum("status").notNull().default("generating"),
+    errorCode: text("error_code"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("reading_question_sets_passage_id_idx").on(table.passageId),
+    index("reading_question_sets_user_workspace_idx").on(
+      table.userId,
+      table.workspaceId,
+    ),
+  ],
+);
+
+export const readingQuestions = pgTable(
+  "reading_questions",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    setId: uuid("set_id")
+      .notNull()
+      .references(() => readingQuestionSets.id, { onDelete: "cascade" }),
+    type: readingQuestionTypeEnum("type").notNull(),
+    prompt: text("prompt").notNull(),
+    options: jsonb("options"),
+    correctAnswer: jsonb("correct_answer"),
+    keyPoints: jsonb("key_points"),
+    explanation: text("explanation"),
+    excerpt: text("excerpt"),
+    excerptStart: integer("excerpt_start"),
+    excerptEnd: integer("excerpt_end"),
+    sortOrder: integer("sort_order").notNull().default(0),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [index("reading_questions_set_id_idx").on(table.setId)],
+);
+
+export const readingAttempts = pgTable(
+  "reading_attempts",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    setId: uuid("set_id")
+      .notNull()
+      .references(() => readingQuestionSets.id, { onDelete: "cascade" }),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    status: readingAttemptStatusEnum("status").notNull().default("in_progress"),
+    startedAt: timestamp("started_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    submittedAt: timestamp("submitted_at", { withTimezone: true }),
+    objectiveCorrect: integer("objective_correct"),
+    objectiveTotal: integer("objective_total"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("reading_attempts_set_id_idx").on(table.setId),
+    index("reading_attempts_user_id_idx").on(table.userId),
+  ],
+);
+
+export const readingAnswers = pgTable(
+  "reading_answers",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    attemptId: uuid("attempt_id")
+      .notNull()
+      .references(() => readingAttempts.id, { onDelete: "cascade" }),
+    questionId: uuid("question_id")
+      .notNull()
+      .references(() => readingQuestions.id, { onDelete: "cascade" }),
+    response: jsonb("response").notNull(),
+    isCorrect: boolean("is_correct"),
+    feedback: jsonb("feedback"),
+    gradedAt: timestamp("graded_at", { withTimezone: true }),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("reading_answers_attempt_question_unique").on(
+      table.attemptId,
+      table.questionId,
+    ),
+    index("reading_answers_attempt_id_idx").on(table.attemptId),
+  ],
+);
+
 export const exerciseImports = pgTable(
   "exercise_imports",
   {
@@ -784,6 +977,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   exercises: many(exercises),
   listeningLessons: many(listeningLessons),
   speakingSessions: many(speakingSessions),
+  readingPassages: many(readingPassages),
   grammarNotes: many(grammarNotes),
   folders: many(workspaceFolders),
   exerciseImports: many(exerciseImports),
@@ -816,6 +1010,7 @@ export const workspacesRelations = relations(workspaces, ({ one, many }) => ({
   exercises: many(exercises),
   listeningLessons: many(listeningLessons),
   speakingSessions: many(speakingSessions),
+  readingPassages: many(readingPassages),
   grammarNotes: many(grammarNotes),
   tags: many(workspaceTags),
   folders: many(workspaceFolders),
@@ -1020,6 +1215,81 @@ export const speakingSessionsRelations = relations(
     }),
   }),
 );
+
+export const readingPassagesRelations = relations(
+  readingPassages,
+  ({ one, many }) => ({
+    user: one(users, {
+      fields: [readingPassages.userId],
+      references: [users.id],
+    }),
+    workspace: one(workspaces, {
+      fields: [readingPassages.workspaceId],
+      references: [workspaces.id],
+    }),
+    folder: one(workspaceFolders, {
+      fields: [readingPassages.folderId],
+      references: [workspaceFolders.id],
+    }),
+    questionSets: many(readingQuestionSets),
+  }),
+);
+
+export const readingQuestionSetsRelations = relations(
+  readingQuestionSets,
+  ({ one, many }) => ({
+    passage: one(readingPassages, {
+      fields: [readingQuestionSets.passageId],
+      references: [readingPassages.id],
+    }),
+    user: one(users, {
+      fields: [readingQuestionSets.userId],
+      references: [users.id],
+    }),
+    workspace: one(workspaces, {
+      fields: [readingQuestionSets.workspaceId],
+      references: [workspaces.id],
+    }),
+    questions: many(readingQuestions),
+    attempts: many(readingAttempts),
+  }),
+);
+
+export const readingQuestionsRelations = relations(
+  readingQuestions,
+  ({ one }) => ({
+    set: one(readingQuestionSets, {
+      fields: [readingQuestions.setId],
+      references: [readingQuestionSets.id],
+    }),
+  }),
+);
+
+export const readingAttemptsRelations = relations(
+  readingAttempts,
+  ({ one, many }) => ({
+    set: one(readingQuestionSets, {
+      fields: [readingAttempts.setId],
+      references: [readingQuestionSets.id],
+    }),
+    user: one(users, {
+      fields: [readingAttempts.userId],
+      references: [users.id],
+    }),
+    answers: many(readingAnswers),
+  }),
+);
+
+export const readingAnswersRelations = relations(readingAnswers, ({ one }) => ({
+  attempt: one(readingAttempts, {
+    fields: [readingAnswers.attemptId],
+    references: [readingAttempts.id],
+  }),
+  question: one(readingQuestions, {
+    fields: [readingAnswers.questionId],
+    references: [readingQuestions.id],
+  }),
+}));
 
 export const exerciseImportsRelations = relations(
   exerciseImports,
@@ -1253,6 +1523,11 @@ export type ListeningLesson = typeof listeningLessons.$inferSelect;
 export type ListeningExercise = typeof listeningExercises.$inferSelect;
 export type SpeakingSession = typeof speakingSessions.$inferSelect;
 export type SpeakingStatus = (typeof speakingStatusEnum.enumValues)[number];
+export type ReadingPassage = typeof readingPassages.$inferSelect;
+export type ReadingQuestionSet = typeof readingQuestionSets.$inferSelect;
+export type ReadingQuestion = typeof readingQuestions.$inferSelect;
+export type ReadingAttempt = typeof readingAttempts.$inferSelect;
+export type ReadingAnswer = typeof readingAnswers.$inferSelect;
 export type ExerciseImport = typeof exerciseImports.$inferSelect;
 export type ImportedExercise = typeof importedExercises.$inferSelect;
 export type ExerciseImportStatus =

@@ -14,7 +14,8 @@
     "clearFilter": "Rensa",
     "filters": "Filter",
     "hideFilters": "Dölj filter",
-    "open": "Öppna"
+    "open": "Öppna",
+    "remove": "Ta bort"
   },
   "contentImport": {
     "title": {
@@ -150,8 +151,10 @@
     "groups": {
       "main": "Huvudmeny",
       "listenSpeak": "Lyssna och tala",
-      "more": "Mer"
-    }
+      "more": "Mer",
+      "skills": "Färdigheter"
+    },
+    "reading": "Läsning"
   },
   "inbox": {
     "eyebrow": "Samla",
@@ -1097,7 +1100,8 @@
       "richDocument": "Rikt dokument",
       "questionSet": "Frågeset",
       "richDocumentHint": "Skrivande i fri form med den rika textredigeraren.",
-      "questionSetHint": "Strukturerade sektioner och frågor — som ett läroboksarbetsblad."
+      "questionSetHint": "Strukturerade sektioner och frågor — som ett läroboksarbetsblad.",
+      "learningNoteHint": "Personliga studienanteckningar — taggade så du hittar dem senare."
     },
     "content": "Innehåll",
     "contentPlaceholder": "Börja skriva ditt innehåll här...",
@@ -1302,6 +1306,10 @@
       "speaking": {
         "title": "Tala",
         "body": "Ring en AI-tutor på video och öva att tala naturligt med din egen lärande kunskap. Efter varje session, granska transkriptionen och feedbacken för att se vad som kan förbättras. Detta sluter cirkeln: lär → öva → använd → repetera → förbättra."
+      },
+      "reading": {
+        "title": "Läsning",
+        "body": "Importera eller klistra in texter och skapa läsförståelseövningar — flerval, skriftliga svar och sant / falskt / anges ej. Free har en daglig AI-gräns; Pro höjer den till 10/dag, och Premium är obegränsat."
       }
     },
     "modules": {
@@ -1340,6 +1348,12 @@
         "description": "Live videokonversation med en AI-tutor.",
         "how": "Skapa en session och gå med i samtalet. Free inkluderar ett AI-möte per dag, med tutor.",
         "cta": "Öppna tala"
+      },
+      "reading": {
+        "title": "Läsning",
+        "description": "Texter med AI-läsförståelseövningar.",
+        "how": "Importera eller klistra in en text, generera frågor och öva. Free har en daglig AI-gräns; Pro tillåter 10/dag; Premium är obegränsat.",
+        "cta": "Öppna läsning"
       }
     },
     "counts": {
@@ -1833,6 +1847,45 @@
           "body": "Skicka en fångst till Ordförråd, Teori, Skrivande eller Övning. Den blir Bearbetad först när du sparat klart där — avbryter du skapandet lämnas den kvar."
         }
       }
+    },
+    "reading": {
+      "title": "Läsning",
+      "description": "Importera eller klistra in texter, skapa läsförståelseövningar och granska dina resultat.",
+      "cta": "Öppna läsning",
+      "steps": {
+        "import": {
+          "title": "1. Lägg till en text",
+          "body": "Klistra in text eller ladda upp PDF/DOCX för att skapa en läspassage du kan öva med."
+        },
+        "importForm": {
+          "title": "2. Granska texten",
+          "body": "Kontrollera titel, språk och brödtext innan du sparar. Du kan redigera den extraherade texten vid behov."
+        },
+        "search": {
+          "title": "3. Hitta texter",
+          "body": "Sök i ditt läsbibliotek efter titel eller källfilnamn när listan växer."
+        },
+        "passages": {
+          "title": "4. Öva från ditt bibliotek",
+          "body": "Öppna en text för att generera frågor, svara och granska resultat — inklusive AI-bedömning av skriftliga svar."
+        },
+        "newFolder": {
+          "title": "5. Skapa en mapp",
+          "body": "Klicka på Ny mapp för att gruppera texter efter ämne, prov eller nivå. Mappar är valfria."
+        },
+        "nameFolder": {
+          "title": "6. Namnge din mapp",
+          "body": "Skriv ett tydligt namn (till exempel Nyheter eller Tentamen). Mappen skapas i den plats du visar."
+        },
+        "organize": {
+          "title": "7. Mappar och texter",
+          "body": "Mappar visas ovanför dina texter. Öppna en mapp för att bläddra bara den gruppen — importer medan du är i en mapp sparas där."
+        },
+        "moveItem": {
+          "title": "8. Flytta texter mellan mappar",
+          "body": "Använd flytta-ikonen på en text, eller dra den till en mappkort. Du kan också nästla mappar."
+        }
+      }
     }
   },
   "settings": {
@@ -2114,6 +2167,186 @@
       "descriptionLabel": "Beskrivning"
     }
   },
+  "reading": {
+    "eyebrow": "Läsning",
+    "title": "Läsning",
+    "description": "Klistra in eller importera en text, skapa förståelseövningar och öva med sparade resultat.",
+    "disabledNoWorkspace": "Skapa en arbetsyta innan du lägger till lästexter.",
+    "import": "Lägg till text",
+    "importFirst": "Lägg till din första text",
+    "importTitle": "Lägg till en lästext",
+    "importDescription": "Klistra in text eller ladda upp PDF/DOCX, redigera förhandsgranskningen och skapa valfritt övningar.",
+    "importTabsAria": "Textkälla",
+    "tabPaste": "Klistra in",
+    "tabUpload": "Ladda upp",
+    "bodyLabel": "Text",
+    "bodyPlaceholder": "Klistra in eller skriv lästexten här…",
+    "titleLabel": "Titel",
+    "titlePlaceholder": "Valfri titel",
+    "languageLabel": "Textens språk",
+    "wordCount": "{count, plural, one {# ord} other {# ord}}",
+    "continuePreview": "Fortsätt till förhandsgranskning",
+    "dropTitle": "Släpp en PDF eller DOCX här",
+    "dropDescription": "eller klicka för att bläddra. Skannade PDF:er använder OCR vid behov.",
+    "extractSuccess": "Text extraherad — granska och redigera innan du sparar.",
+    "sourcePaste": "Inklistrad text",
+    "back": "Tillbaka",
+    "savePassage": "Spara text",
+    "saveAndGenerate": "Spara och skapa övningar",
+    "generateHint": "Skapa förståelsefrågor på {language}. Använder din AI-övningskvot.",
+    "modeLabel": "Övningstyp",
+    "questionCountLabel": "Frågor",
+    "difficultyLabel": "Svårighetsgrad",
+    "difficultyNone": "Automatisk",
+    "questionLanguageLabel": "Frågornas språk",
+    "skipGenerate": "Hoppa över så länge",
+    "generateExercises": "Skapa övningar",
+    "generateTitle": "Skapa övningar",
+    "generateDescription": "Skapa förståelsefrågor från denna text. Generering sker en gång och sparas.",
+    "exercisesGenerated": "Övningar klara.",
+    "created": "Text sparad",
+    "deleted": "Text borttagen",
+    "submitted": "Svar skickade",
+    "emptyTitle": "Inga lästexter ännu",
+    "emptyDescription": "Klistra in text eller ladda upp PDF/DOCX för att börja läsa.",
+    "myPassages": "Mina texter",
+    "passageHint": "Öppna en text för att skapa övningar eller fortsätta öva.",
+    "open": "Öppna",
+    "practice": {
+      "submit": "Skicka svar",
+      "loading": "Laddar frågor…",
+      "questionLabel": "F{number}.",
+      "writtenPlaceholder": "Skriv ditt svar…",
+      "correct": "Rätt",
+      "incorrect": "Inte riktigt",
+      "expected": "Rätt svar",
+      "objectiveScore": "{correct} / {total} objektiva rätt",
+      "mobileTabsAria": "Övningspaneler",
+      "unansweredWarn": "Vissa frågor är obesvarade. Skicka ändå?",
+      "gradingPending": "Fria svar kunde inte betygsättas ännu. Dina svar är sparade — du kan försöka betygsätta igen.",
+      "retryGrading": "Försök betygsätta igen",
+      "retryAttempt": "Försök igen",
+      "progress": "Fråga {current} av {total}",
+      "aiFeedbackLabel": "AI-feedback",
+      "understood": "Förstått",
+      "missing": "Saknas"
+    },
+    "startPractice": "Starta övning",
+    "practiceTitle": "Lästräning",
+    "backToList": "Tillbaka till läsning",
+    "backToPassage": "Tillbaka till texten",
+    "passagePanel": "Text",
+    "questionsPanel": "Frågor",
+    "questionSets": "Övningsset",
+    "noSetsYet": "Inga övningar ännu",
+    "noSetsDescription": "Skapa övningar en gång — de sparas, så uppdatering genererar inte om dem.",
+    "setCount": "{count, plural, one {# övningsset} other {# övningsset}}",
+    "questionCountValue": "{count, plural, one {# fråga} other {# frågor}}",
+    "staleSet": "Texten har uppdaterats sedan detta set skapades",
+    "vocabHint": "Markera ett ord eller en kort fras i texten för att lägga till det i ordlistan.",
+    "addToVocabulary": "Lägg till i ordlista",
+    "deleteConfirmTitle": "Ta bort denna text?",
+    "deleteConfirmDescription": "”{title}” och alla dess övningar och försök tas bort permanent.",
+    "modes": {
+      "multiple_choice": "Flerval",
+      "written": "Skrivna svar",
+      "true_false_not_stated": "Sant / Falskt / Inte angivet",
+      "mixed": "Blandat"
+    },
+    "sources": {
+      "paste": "Klistra in",
+      "pdf": "PDF",
+      "docx": "DOCX"
+    },
+    "setStatus": {
+      "generating": "Genererar",
+      "ready": "Klar",
+      "failed": "Misslyckades"
+    },
+    "tfns": {
+      "true": "Sant",
+      "false": "Falskt",
+      "not_stated": "Inte angivet"
+    },
+    "errors": {
+      "UNAUTHORIZED": "Logga in för att fortsätta.",
+      "OPENAI_NOT_CONFIGURED": "AI är inte konfigurerad.",
+      "INVALID_INPUT": "Kontrollera din inmatning och försök igen.",
+      "INVALID_FILE": "Välj en PDF- eller DOCX-fil.",
+      "INVALID_FILE_TYPE": "Endast PDF- och DOCX-filer stöds.",
+      "FILE_TOO_LARGE": "Filen är för stor. Använd en fil under 10 MB.",
+      "EMPTY_CONTENT": "Lägg till en längre text (minst några meningar).",
+      "SCANNED_PDF": "PDF:en verkar skannad. OCR kunde inte läsa tillräckligt — klistra in texten istället.",
+      "UNSUPPORTED_PARSE": "Kunde inte läsa filen. Prova .docx eller en textbaserad PDF.",
+      "PASSAGE_NOT_FOUND": "Lästexten hittades inte.",
+      "SET_NOT_FOUND": "Övningssetet hittades inte.",
+      "ATTEMPT_NOT_FOUND": "Övningsförsöket hittades inte.",
+      "SET_NOT_READY": "Övningarna är inte klara ännu.",
+      "GENERATION_FAILED": "Kunde inte skapa övningar. Försök igen.",
+      "GENERATION_UNAVAILABLE": "Övningsgenerering är inte tillgänglig just nu.",
+      "VALIDATION_FAILED": "Genererade övningar kunde inte användas. Försök igen.",
+      "GRADING_FAILED": "Kunde inte bedöma skrivna svar. Försök igen.",
+      "ATTEMPT_NOT_EDITABLE": "Detta försök kan inte längre redigeras.",
+      "PROCESSING_FAILED": "Något gick fel. Försök igen.",
+      "AI_DISABLED": "AI-hjälp är avstängd i dina inställningar.",
+      "AI_QUOTA_EXCEEDED": "Du har nått din AI-övningsgräns för den här perioden.",
+      "generic": "Något gick fel. Försök igen."
+    },
+    "newPassage": "Lägg till text",
+    "saving": "Sparar…",
+    "saved": "Texten sparades",
+    "openPassage": "Öppna",
+    "searchPlaceholder": "Sök texter…",
+    "noResults": "Inga texter matchar sökningen",
+    "generateNew": "Generera övningar",
+    "generate": "Generera",
+    "generating": "Genererar…",
+    "generated": "Övningarna är klara.",
+    "exerciseMode": "Övningstyp",
+    "modeMultipleChoice": "Flerval",
+    "modeWritten": "Skriftliga svar",
+    "modeTfns": "Sant / Falskt / Ej nämnt",
+    "modeMixed": "Blandat",
+    "questionCount": "Frågor",
+    "questionLanguage": "Frågespråk",
+    "difficulty": "Svårighetsgrad",
+    "setsHeading": "Övningsuppsättningar",
+    "noSets": "Inga övningar ännu.",
+    "resumePractice": "Fortsätt",
+    "retryAttempt": "Försök igen",
+    "deleteSet": "Ta bort den här uppgiftsserien?",
+    "setFailed": "Misslyckades",
+    "setGenerating": "Skapar…",
+    "passageTab": "Text",
+    "questionsTab": "Frågor",
+    "progress": "{current} / {total}",
+    "submit": "Skicka svar",
+    "submitting": "Skickar…",
+    "resultsTitle": "Resultaten är klara",
+    "objectiveScore": "{correct} / {total} objektiva rätt",
+    "aiFeedbackLabel": "AI-feedback",
+    "explanation": "Förklaring",
+    "excerpt": "Utdrag",
+    "correctAnswer": "Rätt svar",
+    "yourAnswer": "Ditt svar",
+    "unansweredWarn": "Vissa frågor är tomma. Skicka ändå?",
+    "gradingPending": "Skriftliga svar kunde inte bedömas.",
+    "retryGrading": "Försök betygsätta igen",
+    "selectWordHint": "Markera ett ord eller en kort fras för ordförrådet.",
+    "uploadHint": "Ladda upp PDF eller DOCX. Skannade bild-PDF stöds inte ännu.",
+    "uploadChoose": "Välj fil",
+    "extracting": "Extraherar text…",
+    "status": {
+      "generating": "Genererar",
+      "ready": "Klar",
+      "failed": "Misslyckades"
+    },
+    "deleteSetDescription": "Den här uppgiftsserien och dess försök tas bort permanent. Själva texten behålls.",
+    "dropActive": "Släpp för att hämta text",
+    "supportedFiles": "PDF och DOCX · max 10 MB",
+    "replaceFile": "Klicka för att välja en annan fil",
+    "emptyFolder": "Den här mappen är tom"
+  },
   "listening": {
     "eyebrow": "Lyssnande",
     "title": "Lyssnande",
@@ -2377,7 +2610,14 @@
   "errors": {
     "generic": "Något gick fel",
     "noWorkspace": "Ingen aktiv arbetsyta",
-    "notFound": "Hittades inte"
+    "notFound": "Sidan hittades inte",
+    "unauthorized": "Inloggning krävs",
+    "forbidden": "Åtkomst nekad",
+    "rateLimit": "För många förfrågningar",
+    "network": "Anslutningsproblem",
+    "offline": "Du är offline",
+    "timeout": "Begäran tog för lång tid",
+    "server": "Något gick fel hos oss. Försök igen. Kontakta support om problemet fortsätter."
   },
   "learningOnboarding": {
     "step": "Komma igång",
@@ -2452,14 +2692,14 @@
     "accountDescription": "Uppdatera din profilbild och lösenord.",
     "profile": "Profil",
     "avatar": "Profilbild",
-    "avatarDescription": "Ladda upp en bild för ditt konto. JPG, PNG, WebP eller GIF upp till 5 MB.",
+    "avatarDescription": "Ladda upp ett foto till ditt konto. JPG, PNG, WebP eller GIF upp till 5 MB — vi komprimerar det före uppladdning.",
     "changeAvatar": "Ladda upp bild",
     "removeAvatar": "Ta bort bild",
     "avatarUpdated": "Profilbilden har uppdaterats",
     "avatarRemoved": "Profilbilden har tagits bort",
     "avatarUploadFailed": "Kunde inte ladda upp profilbild",
     "avatarInvalidType": "Vänligen välj en JPG, PNG, WebP eller GIF-bild",
-    "avatarTooLarge": "Bilden måste vara 5 MB eller mindre",
+    "avatarTooLarge": "Bilden måste vara högst 5 MB (under ~900 KB efter komprimering).",
     "avatarNotConfigured": "Bilduppladdning är inte konfigurerad än",
     "changePassword": "Ändra lösenord",
     "currentPassword": "Nuvarande lösenord",
@@ -2486,7 +2726,9 @@
     "oauthNotConfigured": "Google-inloggning är inte konfigurerad än.",
     "legalPrivacy": "Integritet",
     "legalTerms": "Villkor",
-    "registerAgreement": "Genom att skapa ett konto godkänner du <terms>användarvillkoren</terms> och <privacy>integritetspolicyn</privacy>."
+    "registerAgreement": "Genom att skapa ett konto godkänner du <terms>användarvillkoren</terms> och <privacy>integritetspolicyn</privacy>.",
+    "avatarRequestTooLarge": "Fotot är för stort att skicka. Prova en mindre bild.",
+    "requestTooLarge": "Begäran var för stor. Dina ändringar sparades — försök igen."
   },
   "account": {
     "eyebrow": "Konto",
@@ -2585,7 +2827,9 @@
         "invalidBackup": "Det här ser inte ut som en giltig Notoria-säkerhetskopia. Använd en JSON-fil exporterad från Exportera kontosäkerhetskopia.",
         "unauthorized": "Logga in igen för att importera en säkerhetskopia.",
         "invalidInput": "Välj en JSON-säkerhetskopiefil.",
-        "importFailed": "Kunde inte importera säkerhetskopian. Försök igen."
+        "importFailed": "Kunde inte importera säkerhetskopian. Försök igen.",
+        "requestTooLarge": "Säkerhetskopian är för stor att bearbeta på den här sidan. Prova en mindre export eller kontakta support.",
+        "notConfigured": "Fillagring är inte konfigurerad för import av säkerhetskopior ännu."
       }
     },
     "danger": {
@@ -2728,6 +2972,7 @@
     "quotaLabels": {
       "ai_meeting": "AI-möte",
       "ai_listening_transcript": "Lyssningstranskript",
+      "ai_reading": "AI-läsövning",
       "ai_exercise": "AI-övningar",
       "ai_exercise_import": "AI-övning från arbetsblad",
       "ai_vocabulary": "Ordförråd med AI",
@@ -2852,6 +3097,7 @@
       "quotaPerDay": {
         "ai_meeting": "{count, plural, one {# samtal/dag} other {# samtal/dag}}",
         "ai_listening_transcript": "{count, plural, one {# transkript/dag} other {# transkript/dag}}",
+        "ai_reading": "{count, plural, one {# läs-AI/dag} other {# läs-AI/dag}}",
         "ai_exercise": "{count, plural, one {# generering/dag} other {# genereringar/dag}}",
         "ai_exercise_import": "{count, plural, one {# generering/dag} other {# genereringar/dag}}",
         "ai_vocabulary": "{count, plural, one {# åtgärd/dag} other {# åtgärder/dag}}",
@@ -2869,6 +3115,7 @@
       "workspace": "Arbetsyta",
       "aiMeeting": "AI-möte",
       "aiListeningTranscript": "AI-lyssningstranskript",
+      "aiReading": "AI-läsövning",
       "aiExercise": "AI-övningsgenerering",
       "aiVocabulary": "AI-ordförrådsåtgärder",
       "aiSpeakingTutor": "AI-talhandledare",
@@ -2883,6 +3130,7 @@
       "practiceFromMaterial": "AI-övning från arbetsblad",
       "listening": "Lyssnande",
       "speaking": "Talande",
+      "reading": "Läsning",
       "pdfDocxExport": "Exportera lärande material",
       "learningCoach": "Lärcoach",
       "askLearningCoach": "Fråga din AI-lärcoach",
@@ -3132,7 +3380,8 @@
       "connections": "Din kunskap blir praktik",
       "philosophy": "Din inlärningsdagbok",
       "startHere": "Börja här",
-      "inbox": "Fångst"
+      "inbox": "Fångst",
+      "reading": "Läsning"
     },
     "welcome": {
       "title": "Vad är Notoria?",
@@ -3309,6 +3558,18 @@
           "Senare: bearbeta till Ordförråd med betydelse och exempel"
         ],
         "exampleNote": "Lappen är trygg i Fångst. När du har fem lugna minuter skickar du den till Ordförråd (eller Teori / Skrivande) och slutför posten — först då blir den Bearbetad."
+      },
+      "reading": {
+        "title": "Läsning",
+        "intro": "Läsning förvandlar texter du väljer till läsförståelseövningar.",
+        "bullets": [
+          "Klistra in text eller ladda upp PDF/DOCX-passager",
+          "Generera flervals-, skriftliga eller sant/falskt/anges ej-frågor",
+          "Öva och granska svar med AI-bedömning för skriftliga svar",
+          "Spara användbara ord från texten till Ordförråd",
+          "Organisera texter med mappar"
+        ],
+        "emphasis": "Ta med material du faktiskt vill förstå — nyheter, berättelser, arbetsblad — och gör det till övning som hör till din dagbok."
       }
     },
     "connections": {
@@ -4017,6 +4278,10 @@
         "capture": {
           "label": "Fångst",
           "body": "En snabb droppzon för lappar — ord, frågetecken och idéer — som du bearbetar till Ordförråd, Teori, Skrivande eller Övning senare. Använd Fångst först när du bara har en stund; poster förblir obearbetade tills du sparat den länkade posten."
+        },
+        "reading": {
+          "label": "Läsning",
+          "body": "Importera eller klistra in texter, skapa läsförståelseövningar och granska resultat. Free har en daglig AI-gräns; Pro och Premium höjer eller tar bort gränsen."
         }
       },
       "notEverything": {
@@ -4159,6 +4424,99 @@
       "supportCta": {
         "prompt": "Letar du efter svar eller vill skicka feedback?",
         "link": "Support"
+      }
+    }
+  },
+  "errorPages": {
+    "statusUnavailable": "Otillgänglig",
+    "reference": "Referens: {id}",
+    "actions": {
+      "dashboard": "Gå till instrumentpanelen",
+      "home": "Till startsidan",
+      "back": "Gå tillbaka",
+      "tryAgain": "Försök igen",
+      "support": "Rapportera ett problem",
+      "report": "Rapportera ett problem"
+    },
+    "notFound": {
+      "title": "Sidan hittades inte",
+      "description": "Sidan finns inte, eller så är länken inaktuell. Kontrollera adressen eller gå tillbaka."
+    },
+    "unauthorized": {
+      "title": "Inloggning krävs",
+      "description": "Din session kan ha gått ut, eller så kräver sidan att du är inloggad.",
+      "primary": "Logga in"
+    },
+    "forbidden": {
+      "title": "Åtkomst nekad",
+      "description": "Ditt konto har inte behörighet att se detta. Kontakta support om det verkar fel."
+    },
+    "rateLimit": {
+      "title": "För många förfrågningar",
+      "description": "Du skickade förfrågningar för snabbt. Vänta en stund och försök igen.",
+      "retryIn": "Försök igen om {time}"
+    },
+    "server": {
+      "title": "Något gick fel",
+      "description": "Något gick fel hos oss. Försök igen. Kontakta support om problemet fortsätter."
+    },
+    "network": {
+      "title": "Anslutningsproblem",
+      "description": "Vi kunde inte nå Notoria. Kontrollera anslutningen och försök igen. Din senaste åtgärd kanske inte sparades."
+    },
+    "offline": {
+      "title": "Du är offline",
+      "description": "Det verkar saknas internet. Anslut igen och försök. Osparade ändringar kan fortfarande finnas i formuläret."
+    },
+    "timeout": {
+      "title": "Begäran tog för lång tid",
+      "description": "Det tog för lång tid. Försök igen. Åtgärden kanske inte slutfördes."
+    },
+    "resources": {
+      "exercise": {
+        "title": "Den här övningen hittades inte",
+        "description": "Den kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Tillbaka till övningar"
+      },
+      "vocabulary": {
+        "title": "Det här ordförrådet hittades inte",
+        "description": "Det kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Tillbaka till ordförråd"
+      },
+      "reading": {
+        "title": "Den här lästexten hittades inte",
+        "description": "Den kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Tillbaka till läsning"
+      },
+      "writing": {
+        "title": "Det här skrivdokumentet hittades inte",
+        "description": "Det kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Tillbaka till skrivande"
+      },
+      "theory": {
+        "title": "Den här teorianteckningen hittades inte",
+        "description": "Den kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Tillbaka till teori"
+      },
+      "listening": {
+        "title": "Den här hörövningen hittades inte",
+        "description": "Den kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Tillbaka till hörförståelse"
+      },
+      "speaking": {
+        "title": "Den här talsessionen hittades inte",
+        "description": "Den kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Tillbaka till tal"
+      },
+      "folder": {
+        "title": "Den här mappen hittades inte",
+        "description": "Den kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Gå till instrumentpanelen"
+      },
+      "generic": {
+        "title": "Det här objektet hittades inte",
+        "description": "Det kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Gå till instrumentpanelen"
       }
     }
   }

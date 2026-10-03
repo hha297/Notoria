@@ -18,13 +18,20 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import {
+  confirmAvatarUpload,
+  getAvatarUploadSignature,
   removeAvatar,
   updateName,
   updatePassword,
-  uploadAvatar,
   verifyCurrentPassword,
 } from "@/lib/actions/account";
 import { downloadAccountBackupJson } from "@/lib/account/download-backup";
+import {
+  AvatarClientError,
+  isRequestTooLargeError,
+  prepareAvatarFile,
+  uploadAvatarToCloudinary,
+} from "@/lib/account/prepare-avatar";
 import { isPasswordValid } from "@/lib/auth/password";
 import type { BillingState } from "@/lib/stripe/types";
 
@@ -137,6 +144,17 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
     isVerifyingCurrent;
 
   function handleAvatarError(error: unknown) {
+    if (error instanceof AvatarClientError) {
+      if (error.message === "INVALID_FILE_TYPE") {
+        toast.error(tAuth("avatarInvalidType"));
+        return;
+      }
+      if (error.message === "FILE_TOO_LARGE") {
+        toast.error(tAuth("avatarTooLarge"));
+        return;
+      }
+    }
+
     const code = error instanceof Error ? error.message : "GENERIC";
 
     if (code === "INVALID_FILE_TYPE") {
@@ -154,6 +172,11 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
       return;
     }
 
+    if (isRequestTooLargeError(error)) {
+      toast.error(tAuth("avatarRequestTooLarge"));
+      return;
+    }
+
     toast.error(tAuth("avatarUploadFailed"));
   }
 
@@ -163,12 +186,21 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
       return;
     }
 
-    const formData = new FormData();
-    formData.append("avatar", file);
+    // Prevent overlapping avatar uploads.
+    if (isAvatarPending) {
+      event.target.value = "";
+      return;
+    }
 
     startAvatarTransition(async () => {
       try {
-        const result = await uploadAvatar(formData);
+        const prepared = await prepareAvatarFile(file);
+        const sign = await getAvatarUploadSignature();
+        const uploaded = await uploadAvatarToCloudinary(prepared, sign);
+        const result = await confirmAvatarUpload({
+          imageUrl: uploaded.secureUrl,
+          publicId: uploaded.publicId,
+        });
         setImage(result.image);
         await update({ image: result.image });
         router.refresh();
@@ -208,6 +240,8 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
       return;
     }
 
+    if (isProfilePending) return;
+
     startProfileTransition(async () => {
       try {
         const result = await updateName({ name: trimmedName });
@@ -216,7 +250,11 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
         await update({ name: result.name });
         router.refresh();
         toast.success(tAuth("nameUpdated"));
-      } catch {
+      } catch (error) {
+        if (isRequestTooLargeError(error)) {
+          toast.error(tAuth("requestTooLarge"));
+          return;
+        }
         toast.error(tAuth("nameUpdateFailed"));
       }
     });

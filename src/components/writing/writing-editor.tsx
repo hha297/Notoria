@@ -1,7 +1,7 @@
 "use client";
 
 import type { Editor, JSONContent } from "@tiptap/react";
-import { ArrowLeft, Download, FileText, ListChecks, Loader2, Save } from "lucide-react";
+import { ArrowLeft, Download, FileText, ListChecks, Loader2, NotebookPen, Save } from "lucide-react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -416,14 +416,42 @@ export function WritingEditor({
     }, AUTOSAVE_MS);
   }
 
-  function setMode(mode: WritingMode) {
+  function setCreateType(value: WritingMode | "learning_note") {
     setEditorState((current) => {
-      if (current.mode === mode) return current;
-      return { ...current, mode };
+      if (value === "learning_note") {
+        if (
+          current.mode === "rich_document" &&
+          current.meta.kind === "learning_note"
+        ) {
+          return current;
+        }
+        return {
+          ...current,
+          mode: "rich_document",
+          meta: { ...current.meta, kind: "learning_note" },
+        };
+      }
+
+      const nextKind =
+        current.meta.kind === "learning_note" ? "free" : current.meta.kind;
+      if (current.mode === value && current.meta.kind === nextKind) {
+        return current;
+      }
+      return {
+        ...current,
+        mode: value,
+        meta: { ...current.meta, kind: nextKind },
+      };
     });
     setQuestionFeedback({});
     scheduleAutosave();
   }
+
+  const createType: WritingMode | "learning_note" =
+    editorState.mode === "rich_document" &&
+    editorState.meta.kind === "learning_note"
+      ? "learning_note"
+      : editorState.mode;
 
   function applyQuestionAiSuggestion(
     questionId: string,
@@ -535,7 +563,7 @@ export function WritingEditor({
   );
 
   return (
-    <div className="writing-sheet" data-writing-kind={editorState.mode}>
+    <div className="writing-sheet" data-writing-kind={createType}>
       <div className="writing-paper-chrome">
         <Link
           href={previewHref ?? listHref}
@@ -589,9 +617,11 @@ export function WritingEditor({
       </div>
 
       <p className="writing-kicker">
-        {editorState.mode === "question_set"
+        {createType === "question_set"
           ? t("modes.questionSet")
-          : t("modes.richDocument")}
+          : createType === "learning_note"
+            ? t("learningNote.create")
+            : t("modes.richDocument")}
       </p>
       <label className="sr-only" htmlFor="title">
         {t("documentTitle")}
@@ -612,8 +642,10 @@ export function WritingEditor({
         <WritingChipPicker
           labelId="writing-mode-label"
           label={t("mode")}
-          value={editorState.mode}
-          onChange={(value) => setMode(value as WritingMode)}
+          value={createType}
+          onChange={(value) =>
+            setCreateType(value as WritingMode | "learning_note")
+          }
           options={[
             {
               value: "rich_document",
@@ -635,12 +667,24 @@ export function WritingEditor({
                 </>
               ),
             },
+            {
+              value: "learning_note",
+              kind: "learning_note",
+              label: (
+                <>
+                  <NotebookPen className="size-3.5" />
+                  {t("learningNote.create")}
+                </>
+              ),
+            },
           ]}
         />
         <p className="text-xs text-muted-foreground">
-          {editorState.mode === "rich_document"
+          {createType === "rich_document"
             ? t("modes.richDocumentHint")
-            : t("modes.questionSetHint")}
+            : createType === "question_set"
+              ? t("modes.questionSetHint")
+              : t("modes.learningNoteHint")}
         </p>
 
         <WritingChipPicker

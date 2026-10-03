@@ -7,6 +7,7 @@ import {
   exercises,
   grammarNotes,
   listeningLessons,
+  readingPassages,
   workspaceFolders,
   type FolderSection,
 } from "@/db/schema";
@@ -376,6 +377,28 @@ export async function moveIntoFolder(input: {
       .where(eq(listeningLessons.id, parsed.id));
     revalidateSection("listening");
     return { id: lesson.id };
+  }
+
+  if (parsed.itemType === "reading") {
+    const passage = await db.query.readingPassages.findFirst({
+      where: eq(readingPassages.id, parsed.id),
+    });
+    if (
+      !passage ||
+      passage.userId !== userId ||
+      passage.workspaceId !== workspace.id
+    ) {
+      throw new Error("ITEM_NOT_FOUND");
+    }
+    if ((passage.folderId ?? null) === nextFolderId) {
+      return { id: passage.id };
+    }
+    await db
+      .update(readingPassages)
+      .set({ folderId: nextFolderId, updatedAt: new Date() })
+      .where(eq(readingPassages.id, parsed.id));
+    revalidateSection("reading");
+    return { id: passage.id };
   }
 
   const note = await db.query.grammarNotes.findFirst({

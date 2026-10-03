@@ -104,6 +104,8 @@
   --color-module-listen-fg: var(--module-listen-fg);
   --color-module-speak-bg: var(--module-speak-bg);
   --color-module-speak-fg: var(--module-speak-fg);
+  --color-module-read-bg: var(--module-read-bg);
+  --color-module-read-fg: var(--module-read-fg);
   --color-module-home-bg: var(--module-home-bg);
   --color-module-home-fg: var(--module-home-fg);
   --color-module-guide-bg: var(--module-guide-bg);
@@ -223,8 +225,11 @@
   --module-theory-fg: #5c4aa8;
   --module-listen-bg: #e4eef8;
   --module-listen-fg: #2c84e0;
-  --module-speak-bg: #f8e6f2;
-  --module-speak-fg: #b44d86;
+  /* Amber — distinct from Writing rose and Listening blue */
+  --module-speak-bg: #fef0e0;
+  --module-speak-fg: #c45c12;
+  --module-read-bg: #e8edf9;
+  --module-read-fg: #3d5a9e;
   --module-home-bg: #dcefeb;
   --module-home-fg: #2f7a72;
   --module-guide-bg: #f3ebe3;
@@ -396,8 +401,10 @@
   --module-theory-fg: #b8a3e6;
   --module-listen-bg: #243040;
   --module-listen-fg: #7eb3ee;
-  --module-speak-bg: #3a2433;
-  --module-speak-fg: #e090bc;
+  --module-speak-bg: #3a2c1c;
+  --module-speak-fg: #f0a45a;
+  --module-read-bg: #252a40;
+  --module-read-fg: #9eb0e8;
   --module-home-bg: #1e3331;
   --module-home-fg: #7dccc4;
   --module-guide-bg: #3a2c24;
@@ -834,6 +841,20 @@
       );
   }
 
+  .studio-paper[data-studio-scene="read"]::after {
+    background:
+      linear-gradient(
+        to bottom,
+        color-mix(in oklab, var(--module-read-bg) 46%, transparent),
+        transparent 48%
+      ),
+      radial-gradient(
+        ellipse 68% 48% at 12% 0%,
+        color-mix(in oklab, var(--module-read-bg) 54%, transparent),
+        transparent 74%
+      );
+  }
+
   .studio-paper[data-studio-scene="listen"]::after {
     background:
       linear-gradient(
@@ -983,6 +1004,16 @@
   .route-view-toggle[data-route="listen"] {
     --route-view-fg: var(--module-listen-fg);
     --route-view-bg: var(--module-listen-bg);
+  }
+
+  .route-view-toggle[data-route="speak"] {
+    --route-view-fg: var(--module-speak-fg);
+    --route-view-bg: var(--module-speak-bg);
+  }
+
+  .route-view-toggle[data-route="read"] {
+    --route-view-fg: var(--module-read-fg);
+    --route-view-bg: var(--module-read-bg);
   }
 
   .route-view-toggle-item,
@@ -1141,15 +1172,7 @@
   }
 
   .writing-atelier-shell,
-  .theory-atelier-shell,
-  .listening-atelier-shell,
-  .speaking-atelier-shell,
-  .vocab-lexicon-shell,
-  .coach-atelier-shell,
   .writing-paper,
-  .theory-paper,
-  .listening-paper,
-  .speaking-paper,
   .writing-sheet {
     --writing-ink: var(--module-writing-fg);
     --writing-wash: var(--module-writing-bg);
@@ -1171,6 +1194,14 @@
     --writing-wash: var(--module-listen-bg);
     --writing-accent-fg: var(--module-listen-fg);
     --writing-accent-bg: var(--module-listen-bg);
+  }
+
+  .reading-atelier-shell,
+  .reading-paper {
+    --writing-ink: var(--module-read-fg);
+    --writing-wash: var(--module-read-bg);
+    --writing-accent-fg: var(--module-read-fg);
+    --writing-accent-bg: var(--module-read-bg);
   }
 
   .speaking-atelier-shell,
@@ -1224,6 +1255,7 @@
   .theory-atelier,
   .listening-atelier,
   .speaking-atelier,
+  .reading-atelier,
   .guide-atelier,
   .account-atelier,
   .settings-atelier,
@@ -1247,6 +1279,7 @@
   .theory-atelier::before,
   .listening-atelier::before,
   .speaking-atelier::before,
+  .reading-atelier::before,
   .guide-atelier::before,
   .account-atelier::before,
   .settings-atelier::before,
@@ -1327,6 +1360,20 @@
       );
   }
 
+  .writing-sheet[data-writing-kind="learning_note"]::before {
+    background:
+      radial-gradient(
+        ellipse 70% 55% at 8% 8%,
+        color-mix(in oklab, var(--module-vocab-bg) 68%, transparent),
+        transparent 72%
+      ),
+      radial-gradient(
+        ellipse 40% 40% at 96% 4%,
+        color-mix(in oklab, var(--module-writing-bg) 22%, transparent),
+        transparent 70%
+      );
+  }
+
   .theory-sheet::before {
     background:
       radial-gradient(
@@ -1381,6 +1428,7 @@
   .theory-atelier > *,
   .listening-atelier > *,
   .speaking-atelier > *,
+  .reading-atelier > *,
   .guide-atelier > *,
   .account-atelier > *,
   .settings-atelier > *,
@@ -1462,6 +1510,14 @@
     color: var(--route-action-fg) !important;
   }
 
+  .route-quiet-action[data-route-action]:hover:not(:disabled) {
+    border-color: color-mix(
+      in oklab,
+      var(--route-action-fg) 62%,
+      transparent
+    ) !important;
+  }
+
   .route-quiet-action[data-route-action="theory"] {
     --route-action-fg: var(--module-theory-fg);
     --route-action-bg: var(--module-theory-bg);
@@ -1490,6 +1546,75 @@
   .route-quiet-action[data-route-action="speak"] {
     --route-action-fg: var(--module-speak-fg);
     --route-action-bg: var(--module-speak-bg);
+  }
+
+  .route-quiet-action[data-route-action="read"] {
+    --route-action-fg: var(--module-read-fg);
+    --route-action-bg: var(--module-read-bg);
+  }
+
+  /* Atelier-scoped CTAs: match entry accent, not a mismatched route token. */
+  .listening-atelier .writing-entry-cta .route-quiet-action {
+    --route-action-fg: var(--module-listen-fg);
+    --route-action-bg: var(--module-listen-bg);
+    border-color: color-mix(
+      in oklab,
+      var(--module-listen-fg) 52%,
+      var(--hairline-cloud)
+    ) !important;
+    color: var(--module-listen-fg) !important;
+  }
+
+  .speaking-atelier .writing-entry-cta .route-quiet-action {
+    --route-action-fg: var(--module-speak-fg);
+    --route-action-bg: var(--module-speak-bg);
+    border-color: color-mix(
+      in oklab,
+      var(--module-speak-fg) 52%,
+      var(--hairline-cloud)
+    ) !important;
+    color: var(--module-speak-fg) !important;
+  }
+
+  .reading-atelier .writing-entry-cta .route-quiet-action {
+    --route-action-fg: var(--module-read-fg);
+    --route-action-bg: var(--module-read-bg);
+    border-color: color-mix(
+      in oklab,
+      var(--module-read-fg) 52%,
+      var(--hairline-cloud)
+    ) !important;
+    color: var(--module-read-fg) !important;
+  }
+
+  .writing-atelier:not(.listening-atelier):not(.speaking-atelier):not(
+      .reading-atelier
+    )
+    .writing-entry:not([data-writing-kind="question_set"])
+    .writing-entry-cta
+    .route-quiet-action {
+    --route-action-fg: var(--module-writing-fg);
+    --route-action-bg: var(--module-writing-bg);
+    border-color: color-mix(
+      in oklab,
+      var(--module-writing-fg) 52%,
+      var(--hairline-cloud)
+    ) !important;
+    color: var(--module-writing-fg) !important;
+  }
+
+  .writing-atelier
+    .writing-entry[data-writing-kind="question_set"]
+    .writing-entry-cta
+    .route-quiet-action {
+    --route-action-fg: var(--module-theory-fg);
+    --route-action-bg: var(--module-theory-bg);
+    border-color: color-mix(
+      in oklab,
+      var(--module-theory-fg) 52%,
+      var(--hairline-cloud)
+    ) !important;
+    color: var(--module-theory-fg) !important;
   }
 
   .route-quiet-action[data-route-action="account"] {
@@ -1915,6 +2040,12 @@
     gap: 0.75rem min(1.5rem, 4vw);
   }
 
+  /* Parent section label (Collections) — larger than chapter titles */
+  .writing-collections-head .writing-kicker {
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
+  }
+
   .writing-collections-head .writing-spine-folder {
     align-self: center;
     height: 2rem;
@@ -2195,8 +2326,11 @@
     color: var(--muted-foreground);
   }
 
+  /* Parent section label (Library / My passages / …) — larger than chapter titles */
   .writing-stage-kicker {
     margin-bottom: 1.35rem;
+    font-size: 0.9rem;
+    letter-spacing: 0.1em;
   }
 
   .writing-stage-toolbar {
@@ -2281,6 +2415,19 @@
     padding: 1.25rem 0 1.25rem 1.2rem;
     border: 0;
     background: transparent;
+    align-items: start;
+  }
+
+  .writing-entry-body {
+    display: flex;
+    min-width: 0;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .writing-entry-cta {
+    margin-top: auto;
+    padding-top: 0.55rem;
   }
 
   @media (max-width: 639px) {
@@ -2363,11 +2510,6 @@
     );
   }
 
-  .listening-atelier .writing-entry:hover .writing-entry-title,
-  .listening-atelier .writing-entry:focus-within .writing-entry-title {
-    color: var(--module-listen-fg);
-  }
-
   .speaking-atelier .writing-entry::before,
   .speaking-atelier .writing-entry:not([data-writing-kind])::before {
     background: var(--module-speak-fg);
@@ -2383,9 +2525,57 @@
     );
   }
 
-  .speaking-atelier .writing-entry:hover .writing-entry-title,
-  .speaking-atelier .writing-entry:focus-within .writing-entry-title {
-    color: var(--module-speak-fg);
+  .reading-atelier .writing-entry::before,
+  .reading-atelier .writing-entry:not([data-writing-kind])::before {
+    background: var(--module-read-fg);
+    box-shadow: 0 0 12px
+      color-mix(in oklab, var(--module-read-fg) 42%, transparent);
+  }
+
+  .reading-atelier .writing-entry-wrap + .writing-entry-wrap {
+    border-top-color: color-mix(
+      in oklab,
+      var(--module-read-fg) 26%,
+      transparent
+    );
+  }
+
+  .writing-entry-grid {
+    display: grid;
+    gap: 0.75rem;
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  @media (min-width: 640px) {
+    .writing-entry-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+
+  .writing-entry-grid .writing-entry-wrap {
+    border: 1px solid
+      color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+    border-radius: 0.9rem;
+    background: color-mix(in oklab, var(--surface) 92%, transparent);
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+  }
+
+  .writing-entry-grid .writing-entry-wrap + .writing-entry-wrap {
+    border-top: 1px solid
+      color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+  }
+
+  .writing-entry-grid .writing-entry {
+    flex: 1;
+    height: 100%;
+    min-height: 100%;
+    align-items: stretch;
+  }
+
+  .writing-entry-grid .writing-entry-body {
+    height: 100%;
   }
 
   .writing-entry-title {
@@ -2404,6 +2594,27 @@
     color: var(--module-writing-fg);
   }
 
+  .listening-atelier .writing-entry:hover .writing-entry-title,
+  .listening-atelier .writing-entry:focus-within .writing-entry-title,
+  .listening-atelier .writing-entry:hover .writing-entry-title a,
+  .listening-atelier .writing-entry:focus-within .writing-entry-title a {
+    color: var(--module-listen-fg);
+  }
+
+  .speaking-atelier .writing-entry:hover .writing-entry-title,
+  .speaking-atelier .writing-entry:focus-within .writing-entry-title,
+  .speaking-atelier .writing-entry:hover .writing-entry-title a,
+  .speaking-atelier .writing-entry:focus-within .writing-entry-title a {
+    color: var(--module-speak-fg);
+  }
+
+  .reading-atelier .writing-entry:hover .writing-entry-title,
+  .reading-atelier .writing-entry:focus-within .writing-entry-title,
+  .reading-atelier .writing-entry:hover .writing-entry-title a,
+  .reading-atelier .writing-entry:focus-within .writing-entry-title a {
+    color: var(--module-read-fg);
+  }
+
   .writing-entry[data-writing-kind="question_set"]:hover .writing-entry-title,
   .writing-entry[data-writing-kind="question_set"]:focus-within
     .writing-entry-title {
@@ -2414,6 +2625,74 @@
   .writing-feature-tools {
     pointer-events: auto;
     opacity: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.2rem;
+  }
+
+  .writing-entry-actions button,
+  .writing-entry-actions a,
+  .writing-feature-tools button,
+  .writing-feature-tools a {
+    width: 2.25rem !important;
+    height: 2.25rem !important;
+    min-width: 2.25rem;
+    border-radius: 0.55rem !important;
+  }
+
+  .writing-entry-actions button svg,
+  .writing-entry-actions a svg,
+  .writing-feature-tools button svg,
+  .writing-feature-tools a svg {
+    width: 1.15rem !important;
+    height: 1.15rem !important;
+  }
+
+  .writing-entry-actions button:not(.text-destructive):hover:not(:disabled),
+  .writing-entry-actions a:hover,
+  .writing-feature-tools button:not(.text-destructive):hover:not(:disabled),
+  .writing-feature-tools a:hover {
+    background: var(--writing-accent-bg, var(--module-writing-bg)) !important;
+    color: var(--writing-accent-fg, var(--module-writing-fg)) !important;
+  }
+
+  .listening-atelier .writing-entry-actions button:not(.text-destructive):hover:not(:disabled),
+  .listening-atelier .writing-entry-actions a:hover {
+    background: var(--module-listen-bg) !important;
+    color: var(--module-listen-fg) !important;
+  }
+
+  .speaking-atelier .writing-entry-actions button:not(.text-destructive):hover:not(:disabled),
+  .speaking-atelier .writing-entry-actions a:hover {
+    background: var(--module-speak-bg) !important;
+    color: var(--module-speak-fg) !important;
+  }
+
+  .reading-atelier .writing-entry-actions button:not(.text-destructive):hover:not(:disabled),
+  .reading-atelier .writing-entry-actions a:hover {
+    background: var(--module-read-bg) !important;
+    color: var(--module-read-fg) !important;
+  }
+
+  .writing-entry[data-writing-kind="question_set"]
+    .writing-entry-actions
+    button:not(.text-destructive):hover:not(:disabled),
+  .writing-entry[data-writing-kind="question_set"] .writing-entry-actions a:hover,
+  .writing-feature[data-writing-kind="question_set"]
+    .writing-feature-tools
+    button:not(.text-destructive):hover:not(:disabled),
+  .writing-feature[data-writing-kind="question_set"]
+    .writing-feature-tools
+    a:hover {
+    background: var(--module-theory-bg) !important;
+    color: var(--module-theory-fg) !important;
+  }
+
+  .writing-entry-actions button.text-destructive:hover:not(:disabled),
+  .writing-feature-tools button.text-destructive:hover:not(:disabled) {
+    background: color-mix(in oklab, var(--destructive) 12%, transparent) !important;
+    color: var(--destructive) !important;
   }
 
   .writing-paper {
@@ -2517,11 +2796,22 @@
     --writing-accent-bg: var(--module-theory-bg);
   }
 
+  .writing-sheet[data-writing-kind="learning_note"] {
+    --writing-accent-fg: var(--module-vocab-fg);
+    --writing-accent-bg: var(--module-vocab-bg);
+  }
+
   .writing-sheet-title {
     height: auto !important;
     min-height: 0 !important;
-    padding: 0 !important;
+    padding: 0 0 0.55rem !important;
     border: 0 !important;
+    border-bottom: 2px solid
+      color-mix(
+        in oklab,
+        var(--writing-accent-fg, var(--module-writing-fg)) 48%,
+        var(--hairline-cloud)
+      ) !important;
     border-radius: 0 !important;
     background: transparent !important;
     box-shadow: none !important;
@@ -2531,11 +2821,31 @@
     line-height: 1.15 !important;
     letter-spacing: -0.03em;
     color: var(--ink);
+    transition: border-bottom-color 160ms ease;
   }
 
   .writing-sheet-title:focus-visible {
     box-shadow: none !important;
     outline: none !important;
+    border-bottom-color: var(
+      --writing-accent-fg,
+      var(--module-writing-fg)
+    ) !important;
+  }
+
+  .theory-sheet .writing-sheet-title {
+    border-bottom-color: color-mix(
+      in oklab,
+      var(--theory-cat-fg, var(--module-theory-fg)) 48%,
+      var(--hairline-cloud)
+    ) !important;
+  }
+
+  .theory-sheet .writing-sheet-title:focus-visible {
+    border-bottom-color: var(
+      --theory-cat-fg,
+      var(--module-theory-fg)
+    ) !important;
   }
 
   .writing-paper-page[data-writing-kind="rich_document"] .writing-kicker,
@@ -2548,12 +2858,9 @@
     color: var(--module-theory-fg);
   }
 
-  .writing-sheet[data-writing-kind="rich_document"] .writing-back:hover {
-    color: var(--module-writing-fg);
-  }
-
-  .writing-sheet[data-writing-kind="question_set"] .writing-back:hover {
-    color: var(--module-theory-fg);
+  .writing-paper-page[data-writing-kind="learning_note"] .writing-kicker,
+  .writing-sheet[data-writing-kind="learning_note"] .writing-kicker {
+    color: var(--module-vocab-fg);
   }
 
   .writing-paper-page[data-writing-kind="question_set"] .writing-paper-body {
@@ -2598,6 +2905,21 @@
     box-shadow: none;
   }
 
+  .writing-sheet[data-writing-kind="learning_note"] .writing-sheet-surface {
+    padding: 1.45rem 1.4rem 1.45rem;
+    border-radius: 1rem;
+    border: 1px solid
+      color-mix(in oklab, var(--module-vocab-fg) 28%, var(--hairline-cloud));
+    border-left: 4px solid var(--module-vocab-fg);
+    background: linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-vocab-bg) 72%, transparent),
+      color-mix(in oklab, var(--module-vocab-bg) 22%, transparent) 70%,
+      transparent
+    );
+    box-shadow: none;
+  }
+
   .theory-sheet-surface {
     padding: 1.45rem 1.4rem 1.45rem;
     border-radius: 1rem;
@@ -2617,6 +2939,7 @@
   @media (max-width: 639px) {
     .writing-sheet[data-writing-kind="rich_document"] .writing-sheet-surface,
     .writing-sheet[data-writing-kind="question_set"] .writing-sheet-surface,
+    .writing-sheet[data-writing-kind="learning_note"] .writing-sheet-surface,
     .theory-sheet-surface {
       padding: 0;
       border: 0;
@@ -2631,6 +2954,16 @@
         165deg,
         color-mix(in oklab, var(--module-writing-bg) 62%, var(--surface-elevated)),
         color-mix(in oklab, var(--module-writing-bg) 24%, var(--surface-elevated)) 72%,
+        var(--surface-elevated)
+      ) !important;
+    }
+
+    .writing-sheet[data-writing-kind="learning_note"] .sheet-content-tiptap {
+      background-color: var(--surface-elevated) !important;
+      background-image: linear-gradient(
+        165deg,
+        color-mix(in oklab, var(--module-vocab-bg) 62%, var(--surface-elevated)),
+        color-mix(in oklab, var(--module-vocab-bg) 24%, var(--surface-elevated)) 72%,
         var(--surface-elevated)
       ) !important;
     }
@@ -2728,6 +3061,31 @@
       color-mix(in oklab, var(--module-theory-fg) 18%, transparent);
   }
 
+  .writing-sheet[data-writing-kind="learning_note"] .sheet-description-editor {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 26%,
+      var(--hairline-cloud)
+    );
+    background: linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--module-vocab-bg) 72%, transparent),
+      color-mix(in oklab, var(--module-vocab-bg) 22%, transparent) 70%,
+      transparent
+    );
+  }
+
+  .writing-sheet[data-writing-kind="learning_note"]
+    .sheet-description-editor:focus-within {
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 48%,
+      var(--hairline-cloud)
+    );
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--module-vocab-fg) 18%, transparent);
+  }
+
   .theory-sheet .sheet-description-editor {
     border-color: color-mix(
       in oklab,
@@ -2801,6 +3159,16 @@
       var(--hairline-cloud)
     );
     background: color-mix(in oklab, var(--module-theory-bg) 28%, transparent);
+  }
+
+  .writing-chip[data-writing-kind="learning_note"] {
+    color: var(--module-vocab-fg);
+    border-color: color-mix(
+      in oklab,
+      var(--module-vocab-fg) 32%,
+      var(--hairline-cloud)
+    );
+    background: color-mix(in oklab, var(--module-vocab-bg) 28%, transparent);
   }
 
   @media (min-width: 640px) {
@@ -3050,16 +3418,19 @@ html:not(.dark) .writing-sheet .writing-back {
   background: var(--module-vocab-bg);
 }
 
+/* Writing back link: no accent pill on hover — keep text only. */
 .writing-paper:not(.listening-paper):not(.speaking-paper):not(.theory-paper)
   .writing-back:hover,
 .writing-sheet .writing-back:hover {
-  color: var(--writing-accent-fg, var(--module-writing-fg)) !important;
-  background: var(--writing-accent-bg, var(--module-writing-bg));
+  color: #ffffff !important;
+  background: transparent;
 }
 
-.writing-sheet[data-writing-kind="question_set"] .writing-back:hover {
-  color: var(--module-theory-fg) !important;
-  background: var(--module-theory-bg);
+html:not(.dark)
+  .writing-paper:not(.listening-paper):not(.speaking-paper):not(.theory-paper)
+  .writing-back:hover,
+html:not(.dark) .writing-sheet .writing-back:hover {
+  color: var(--ink) !important;
 }
 
 .listening-paper .paper-meta-tag,
@@ -3184,6 +3555,16 @@ body {
   color: var(--module-theory-fg);
 }
 
+.writing-chip[data-writing-kind="learning_note"]:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 42%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(in oklab, var(--module-vocab-bg) 36%, transparent);
+  color: var(--module-vocab-fg);
+}
+
 .writing-chip.is-active {
   border-color: color-mix(
     in oklab,
@@ -3221,4 +3602,17 @@ body {
   box-shadow:
     0 0 0 1px color-mix(in oklab, var(--module-theory-fg) 20%, transparent),
     0 10px 22px color-mix(in oklab, var(--module-theory-fg) 14%, transparent);
+}
+
+.writing-chip[data-writing-kind="learning_note"].is-active {
+  border-color: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 55%,
+    var(--hairline-cloud)
+  );
+  background: color-mix(in oklab, var(--module-vocab-bg) 42%, transparent);
+  color: var(--module-vocab-fg);
+  box-shadow:
+    0 0 0 1px color-mix(in oklab, var(--module-vocab-fg) 20%, transparent),
+    0 10px 22px color-mix(in oklab, var(--module-vocab-fg) 14%, transparent);
 }

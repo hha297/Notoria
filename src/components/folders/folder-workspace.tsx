@@ -113,6 +113,7 @@ export function FolderWorkspace({
     invalidateWriting,
     invalidateTheory,
     invalidateListening,
+    invalidateReading,
   } = useInvalidateWorkspaceQueries(workspaceId);
   const [internalCreateOpen, setInternalCreateOpen] = useState(false);
   const [renameTarget, setRenameTarget] = useState<FolderListItem | null>(null);
@@ -202,6 +203,7 @@ export function FolderWorkspace({
     if (section === "writing") invalidateWriting();
     else if (section === "theory") invalidateTheory();
     else if (section === "listening") invalidateListening();
+    else if (section === "reading") invalidateReading();
   }
 
   /** Folder lists come from TanStack Query; router.refresh alone leaves them stale. */

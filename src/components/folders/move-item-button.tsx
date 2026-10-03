@@ -29,7 +29,7 @@ export function MoveItemButton({ id, title, folderId }: MoveItemButtonProps) {
         workspace.openMoveItem({ id, title, folderId });
       }}
     >
-      <FolderInput className="size-4" />
+      <FolderInput className="size-[1.15rem]" />
       <span className="sr-only">{t("move")}</span>
     </Button>
   );

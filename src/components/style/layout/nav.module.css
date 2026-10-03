@@ -152,6 +152,11 @@
   --nav-route-fg: var(--module-writing-fg);
 }
 
+.nav-link[data-nav="reading"] {
+  --nav-route-bg: var(--module-read-bg);
+  --nav-route-fg: var(--module-read-fg);
+}
+
 .nav-link[data-nav="theory"] {
   --nav-route-bg: var(--module-theory-bg);
   --nav-route-fg: var(--module-theory-fg);

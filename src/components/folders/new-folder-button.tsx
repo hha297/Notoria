@@ -18,6 +18,7 @@ const SECTION_ROUTE_ACTION: Record<FolderSection, string> = {
   writing: "writing",
   theory: "theory",
   listening: "listen",
+  reading: "read",
 };
 
 export function NewFolderButton({

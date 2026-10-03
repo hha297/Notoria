@@ -10,6 +10,8 @@ const nextConfig: NextConfig = {
     return [{ source: "/help", destination: "/support", permanent: true }];
   },
   experimental: {
+    // Enables unauthorized() / forbidden() → unauthorized.tsx / forbidden.tsx
+    authInterrupts: true,
     serverActions: {
       // Listening allows up to 25 MB; keep headroom above Import's 10 MB limit.
       bodySizeLimit: "50mb",
@@ -22,6 +24,9 @@ const nextConfig: NextConfig = {
     "stripe",
     "@stream-io/node-sdk",
     "@stream-io/openai-realtime-api",
+    // Native binding — must stay external for Turbopack/webpack ESM chunks.
+    "@napi-rs/canvas",
+    "unpdf",
   ],
   images: {
     remotePatterns: [

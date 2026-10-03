@@ -3,6 +3,7 @@ import {
   exerciseStudioQueryOptions,
   folderListQueryOptions,
   listeningListQueryOptions,
+  readingListQueryOptions,
   speakingListQueryOptions,
   theoryListQueryOptions,
   vocabularyListQueryOptions,
@@ -67,6 +68,11 @@ export async function prefetchDashboardDestination(
 
   if (path === "/speaking") {
     await prefetchQuietly(queryClient, speakingListQueryOptions(workspaceId));
+    return;
+  }
+
+  if (path === "/reading") {
+    await prefetchQuietly(queryClient, readingListQueryOptions(workspaceId));
     return;
   }
 

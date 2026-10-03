@@ -7,14 +7,17 @@ import { PageShell } from "@/components/layout/page-shell";
 import { NewSpeakingDialog } from "@/components/speaking/new-speaking-dialog";
 import { SpeakingSessionCard } from "@/components/speaking/speaking-session-card";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
+import { CollectionViewModeToggle } from "@/components/shared/collection-view-mode-toggle";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import { Button } from "@/components/ui/button";
 import { ListPageLoading } from "@/components/layout/page-loading";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useCollectionViewMode } from "@/hooks/use-collection-view-mode";
 import { speakingListQueryOptions } from "@/lib/query/options";
 import { queryKeys } from "@/lib/query/keys";
 import styles from "@/components/style/speaking/session.module.css";
 import { mx } from "@/lib/css-module";
+import { cn } from "@/lib/utils";
 import {
   isSpeakingJoinable,
   type SpeakingSessionListItem,
@@ -28,6 +31,7 @@ export function SpeakingView({ workspaceId }: SpeakingViewProps) {
   const t = useTranslations("speaking");
   const queryClient = useQueryClient();
   const [createOpen, setCreateOpen] = useState(false);
+  const [viewMode, setViewMode] = useCollectionViewMode("speaking");
   const sessionsQuery = useQuery(speakingListQueryOptions(workspaceId));
   const sessions = sessionsQuery.data ?? [];
 
@@ -149,12 +153,27 @@ export function SpeakingView({ workspaceId }: SpeakingViewProps) {
             data-tutorial="speaking-sessions"
           >
             <div className="mb-3 flex flex-wrap items-end justify-between gap-2">
-              <p className="writing-kicker mb-0">{t("mySessions")}</p>
-              <p className="text-sm text-muted-foreground">
-                {t("sessionHint")}
+              <p className="writing-kicker writing-stage-kicker mb-0">
+                {t("mySessions")}
               </p>
+              <div className="flex flex-wrap items-center gap-2">
+                <p className="text-sm text-muted-foreground">
+                  {t("sessionHint")}
+                </p>
+                <CollectionViewModeToggle
+                  value={viewMode}
+                  onChange={setViewMode}
+                  route="speak"
+                />
+              </div>
             </div>
-            <div className="writing-entry-list">
+            <div
+              className={cn(
+                viewMode === "cards"
+                  ? "writing-entry-grid"
+                  : "writing-entry-list",
+              )}
+            >
               {sessions.map((session) => (
                 <SpeakingSessionCard
                   key={session.id}

@@ -100,6 +100,27 @@
   box-shadow: none;
 }
 
+.workspace-sheet[data-sheet-route="read"] {
+  --sheet-route-fg: var(--module-read-fg);
+  --sheet-route-bg: var(--module-read-bg);
+  --writing-accent-fg: var(--module-read-fg);
+  --writing-accent-bg: var(--module-read-bg);
+  --writing-ink: var(--module-read-fg);
+  border-color: color-mix(
+    in oklab,
+    var(--module-read-fg) 24%,
+    var(--hairline-cloud)
+  );
+  background-color: var(--popover);
+  background-image: linear-gradient(
+    165deg,
+    color-mix(in oklab, var(--module-read-bg) 52%, var(--popover)),
+    color-mix(in oklab, var(--module-read-bg) 22%, var(--popover)) 55%,
+    var(--popover)
+  );
+  box-shadow: none;
+}
+
 .workspace-sheet[data-sheet-route="speak"] {
   --sheet-route-fg: var(--module-speak-fg);
   --sheet-route-bg: var(--module-speak-bg);
@@ -188,6 +209,11 @@
   --sheet-route-bg: var(--module-listen-bg);
 }
 
+.workspace-sheet-menu[data-sheet-route="read"] {
+  --sheet-route-fg: var(--module-read-fg);
+  --sheet-route-bg: var(--module-read-bg);
+}
+
 .workspace-sheet-menu[data-sheet-route="speak"] {
   --sheet-route-fg: var(--module-speak-fg);
   --sheet-route-bg: var(--module-speak-bg);
@@ -267,11 +293,14 @@
 }
 
 .workspace-sheet[data-sheet-route="listen"] .workspace-sheet-kicker,
+.workspace-sheet[data-sheet-route="read"] .workspace-sheet-kicker,
 .workspace-sheet[data-sheet-route="speak"] .workspace-sheet-kicker {
   color: var(--sheet-route-fg);
 }
 
 .workspace-sheet[data-sheet-route="listen"]
+  .workspace-sheet-input:focus-visible,
+.workspace-sheet[data-sheet-route="read"]
   .workspace-sheet-input:focus-visible,
 .workspace-sheet[data-sheet-route="speak"]
   .workspace-sheet-input:focus-visible {

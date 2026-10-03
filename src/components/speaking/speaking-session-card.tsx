@@ -3,7 +3,7 @@
 import { useState, useTransition } from "react";
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
-import { Trash2 } from "lucide-react";
+import { ArrowRight, Trash2, Video } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
@@ -99,7 +99,7 @@ export function SpeakingSessionCard({
                 ))}
               </p>
             ) : null}
-            <div className="mt-2">
+            <div className="writing-entry-cta mt-2">
               <LinkButton
                 href={actionHref}
                 size="sm"
@@ -109,11 +109,13 @@ export function SpeakingSessionCard({
                 data-route-action={joinable ? undefined : "speak"}
                 variant={joinable ? "default" : "outline"}
               >
+                {joinable ? <Video className="size-3.5" /> : null}
                 {joinable
                   ? t("join")
                   : session.status === "processing"
                     ? t("viewProgress")
                     : t("open")}
+                {!joinable ? <ArrowRight className="size-3.5" /> : null}
               </LinkButton>
             </div>
           </div>
@@ -122,11 +124,11 @@ export function SpeakingSessionCard({
               type="button"
               size="icon-sm"
               variant="ghost"
-              className="size-7 text-destructive hover:bg-destructive/10 hover:text-destructive"
+              className="text-destructive hover:bg-destructive/10 hover:text-destructive"
               onClick={() => setDeleteOpen(true)}
               disabled={isPending}
             >
-              <Trash2 className="size-3.5" />
+              <Trash2 className="size-[1.15rem]" />
               <span className="sr-only">{tc("delete")}</span>
             </Button>
           </div>

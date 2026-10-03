@@ -63,6 +63,9 @@ describe("entitlements", () => {
     expect(getFeatureAccess("free", "ai_listening_transcript")).toMatchObject({
       limit: 1,
     });
+    expect(getFeatureAccess("free", "ai_reading")).toMatchObject({
+      limit: 1,
+    });
     expect(getFeatureAccess("free", "ai_writing")).toEqual({
       kind: "quota",
       limit: FREE_DAILY_QUOTAS.ai_writing,
@@ -82,6 +85,10 @@ describe("entitlements", () => {
       kind: "quota",
       limit: 10,
     });
+    expect(getFeatureAccess("pro", "ai_reading")).toEqual({
+      kind: "quota",
+      limit: 10,
+    });
     for (const feature of ["ai_exercise", "ai_vocabulary", "ai_writing"] as const) {
       expect(getFeatureAccess("pro", feature)).toEqual({ kind: "quota", limit: null });
       expect(getFeatureAccess("premium", feature)).toEqual({
@@ -94,6 +101,10 @@ describe("entitlements", () => {
       limit: null,
     });
     expect(getFeatureAccess("premium", "ai_listening_transcript")).toEqual({
+      kind: "quota",
+      limit: null,
+    });
+    expect(getFeatureAccess("premium", "ai_reading")).toEqual({
       kind: "quota",
       limit: null,
     });

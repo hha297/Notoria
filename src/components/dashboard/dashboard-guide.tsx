@@ -16,7 +16,8 @@ type ModuleId =
   | "exercises"
   | "writing"
   | "listening"
-  | "speaking";
+  | "speaking"
+  | "reading";
 
 type ModuleDef = {
   id: ModuleId;
@@ -33,6 +34,7 @@ const MODULES: ModuleDef[] = [
   { id: "writing", href: "/writing", accent: "writing" },
   { id: "listening", href: "/listening", accent: "listen", pro: true },
   { id: "speaking", href: "/speaking", accent: "speak", pro: true },
+  { id: "reading", href: "/reading", accent: "read", pro: true },
 ];
 
 function moduleById(id: ModuleId): ModuleDef {

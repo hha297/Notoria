@@ -114,6 +114,8 @@ type VocabularyFormProps = {
   prefillWord?: string;
   /** Prefill notes when creating from Study Inbox. */
   prefillNotes?: string;
+  /** Prefill first example sentence (e.g. reading selection). */
+  prefillExample?: string;
   /** When set, mark this inbox item processed after a successful create. */
   fromInboxId?: string;
   /** `modal` hides the page card chrome and reports success via `onSuccess`. */
@@ -196,6 +198,7 @@ export function VocabularyForm({
   language = "en",
   prefillWord,
   prefillNotes,
+  prefillExample,
   fromInboxId,
   mode = "page",
   onSuccess,
@@ -218,9 +221,23 @@ export function VocabularyForm({
       sortOrder: meaning.sortOrder,
     })) ?? createDefaultMeanings(),
   );
-  const [examples, setExamples] = useState<ExampleItem[]>(() =>
-    getInitialExamples(initialData?.examples),
-  );
+  const [examples, setExamples] = useState<ExampleItem[]>(() => {
+    if (initialData?.examples?.length) {
+      return getInitialExamples(initialData.examples);
+    }
+    if (prefillExample?.trim()) {
+      return [
+        {
+          id: "new-example-0",
+          sentence: prefillExample.trim(),
+          meaning: "",
+          notes: "",
+          sortOrder: 0,
+        },
+      ];
+    }
+    return createDefaultExamples();
+  });
   const [tags, setTags] = useState<string[]>(() =>
     normalizeWordTags(
       initialData?.tags.map((tag) => tag.tag) ?? [],

@@ -2,6 +2,7 @@
 
 import { AnimatePresence, motion } from "motion/react";
 import {
+  BookMarked,
   BookOpen,
   Dumbbell,
   Headphones,
@@ -51,6 +52,7 @@ const SECTION_ICONS: Record<TutorialSectionId, LucideIcon> = {
   writing: PenLine,
   listening: Headphones,
   speaking: Video,
+  reading: BookMarked,
 };
 
 type GuidedSectionTutorialProps = {
@@ -93,6 +95,7 @@ export function GuidedSectionTutorial({
       setStepIndex(0);
     } else {
       dispatchTutorialPrepare("close-listening-upload");
+      dispatchTutorialPrepare("close-reading-import");
       dispatchTutorialPrepare("close-folder-create");
     }
   }, [open, section]);
@@ -102,12 +105,19 @@ export function GuidedSectionTutorial({
 
     if (step?.prepare === "open-listening-upload") {
       dispatchTutorialPrepare("open-listening-upload");
+      dispatchTutorialPrepare("close-reading-import");
+      dispatchTutorialPrepare("close-folder-create");
+    } else if (step?.prepare === "open-reading-import") {
+      dispatchTutorialPrepare("open-reading-import");
+      dispatchTutorialPrepare("close-listening-upload");
       dispatchTutorialPrepare("close-folder-create");
     } else if (step?.prepare === "open-folder-create") {
       dispatchTutorialPrepare("open-folder-create");
       dispatchTutorialPrepare("close-listening-upload");
+      dispatchTutorialPrepare("close-reading-import");
     } else {
       dispatchTutorialPrepare("close-listening-upload");
+      dispatchTutorialPrepare("close-reading-import");
       dispatchTutorialPrepare("close-folder-create");
     }
 

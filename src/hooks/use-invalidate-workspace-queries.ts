@@ -63,6 +63,12 @@ export function useInvalidateWorkspaceQueries(
         queryKey: queryKeys.speaking.all(workspaceId),
       });
     },
+    invalidateReading: () => {
+      if (!workspaceId) return;
+      void queryClient.invalidateQueries({
+        queryKey: queryKeys.reading.all(workspaceId),
+      });
+    },
     invalidateExercisesStudio: () => {
       if (!workspaceId) return;
       void queryClient.invalidateQueries({
@@ -138,6 +144,19 @@ export function useInvalidateWorkspaceQueries(
       );
       queryClient.removeQueries({
         queryKey: queryKeys.speaking.detail(workspaceId, id),
+      });
+    },
+    removeReadingPassage: (id: string) => {
+      if (!workspaceId) return;
+      queryClient.setQueriesData(
+        { queryKey: queryKeys.reading.all(workspaceId) },
+        (old: unknown) => {
+          if (!Array.isArray(old)) return old;
+          return filterById(old as Array<{ id: string }>, id);
+        },
+      );
+      queryClient.removeQueries({
+        queryKey: queryKeys.reading.detail(workspaceId, id),
       });
     },
   };

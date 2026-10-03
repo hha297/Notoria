@@ -41,6 +41,7 @@ const AREAS = [
   "writing",
   "listening",
   "speaking",
+  "reading",
 ] as const;
 
 export default async function HowToUsePage() {

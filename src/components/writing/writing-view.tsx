@@ -32,9 +32,6 @@ export function WritingView({
   const tImport = useTranslations("contentImport");
   const [importOpen, setImportOpen] = useState(false);
   const createHref = sectionCreateHref("writing", currentFolderId);
-  const learningNoteHref = createHref.includes("?")
-    ? `${createHref}&kind=learning_note`
-    : `${createHref}?kind=learning_note`;
   const documentsQuery = useQuery(writingListQueryOptions(workspaceId));
   const foldersQuery = useQuery(folderListQueryOptions(workspaceId, "writing"));
   const documents = documentsQuery.data ?? [];
@@ -77,10 +74,6 @@ export function WritingView({
                 >
                   {tImport("button")}
                 </LockedFeatureButton>
-                <LinkButton href={learningNoteHref} variant="outline">
-                  <Plus className="size-4" />
-                  {t("learningNote.create")}
-                </LinkButton>
                 <LinkButton href={createHref}>
                   <Plus className="size-4" />
                   {t("createFirst")}
