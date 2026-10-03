@@ -2585,7 +2585,31 @@
       "exportFailed": "Varmuuskopiota ei voitu valmistella. Yritä uudelleen.",
       "importTitle": "Tuo tilin varmuuskopio",
       "importHint": "Palauta Notoria-oppimisdatasi aiemmasta tilin varmuuskopiosta. Tiliäsi, kirjautumistietoja ja tilaustasi ei muuteta.",
-      "importAction": "Tuo varmuuskopio"
+      "importAction": "Tuo varmuuskopio",
+      "clearTitle": "Poista kaikki tilin data",
+      "clearHint": "Poistaa kaikki työtilat ja oppimissisällön, mutta säilyttää kirjautumisen ja tilauksen. Tämä ei sulje tiliäsi.",
+      "clearAction": "Poista kaikki data"
+    },
+    "clearData": {
+      "kicker": "Säilytä tili",
+      "title": "Poistetaanko kaikki tilin data?",
+      "description": "Tämä poistaa pysyvästi oppimisdatan tililtä {email}, mutta pitää sinut kirjautuneena ja tilauksesi ennallaan.",
+      "warningTitle": "Ennen kuin jatkat",
+      "warnings": {
+        "workspaces": "Kaikki työtilat sekä sanasto, teoria, kirjoittaminen, lukeminen, kuuntelu, puhuminen, harjoitukset ja Capture poistetaan.",
+        "media": "Ladatut mediatiedostot (kuuntelu, lukudokumentit, tuonnit ja profiilikuva) poistetaan.",
+        "kept": "Kirjautumisesi, sähköpostisi ja tilauksesi säilyvät. Voit luoda uuden työtilan jälkeenpäin.",
+        "permanent": "Vahvistuksen jälkeen ei ole palautusaikaa."
+      },
+      "backupTitle": "Lataa ensin varmuuskopio",
+      "backupHint": "Vie oppimisdatasi JSON-tiedostoksi. Mediatiedostot linkitetään URL-osoitteella, niitä ei upoteta.",
+      "backup": "Lataa varmuuskopio",
+      "backupDone": "Varmuuskopio ladattu",
+      "backupFailed": "Varmuuskopiota ei voitu valmistella. Yritä uudelleen.",
+      "confirmLabel": "Kirjoita {phrase} vahvistaaksesi",
+      "confirm": "Poista kaikki data",
+      "deleted": "Kaikki oppimisdata on poistettu",
+      "failed": "Dataa ei voitu poistaa. Yritä uudelleen."
     },
     "backupImport": {
       "title": "Palauta Notoria-oppimisdatasi",
