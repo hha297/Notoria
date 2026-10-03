@@ -74,14 +74,14 @@ export default async function DashboardLayout({
       plan={displayPlan(subscription)}
       cancelAtPeriodEnd={Boolean(
         subscription?.stripeCancelAtPeriodEnd &&
-          !subscription?.scheduledSubscriptionPlan &&
-          displayPlan(subscription) !== "free",
+        !subscription?.scheduledSubscriptionPlan &&
+        displayPlan(subscription) !== "free",
       )}
       currentPeriodEnd={subscription?.stripeCurrentPeriodEnd?.toISOString() ?? null}
       scheduledPlan={
         subscription?.scheduledSubscriptionPlan &&
-        subscription.scheduledSubscriptionPlan !== "free" &&
-        subscription.scheduledSubscriptionPlan !== displayPlan(subscription)
+          subscription.scheduledSubscriptionPlan !== "free" &&
+          subscription.scheduledSubscriptionPlan !== displayPlan(subscription)
           ? subscription.scheduledSubscriptionPlan
           : null
       }
@@ -90,25 +90,25 @@ export default async function DashboardLayout({
       }
     >
       <AiPreferencesProvider initial={aiPreferences}>
-      <DashboardDocumentTitle />
-      <DashboardStudio
-        locale={locale}
-        workspaces={workspaces}
-        activeWorkspaceId={activeWorkspace?.id}
-        userName={session?.user?.name ?? "User"}
-        userEmail={session?.user?.email ?? ""}
-        userImage={session?.user?.image}
-        isPro={hasActiveProSubscription(subscription)}
-        plan={displayPlan(subscription)}
-        footer={<SiteFooter variant="app" />}
-      >
-        <WelcomePromptModal
-          hasWorkspace={Boolean(activeWorkspace)}
-          languageCode={activeWorkspace?.language ?? null}
-        />
-        <WorkspaceOnboardingGate workspaceId={activeWorkspace?.id ?? null} />
-        {children}
-      </DashboardStudio>
+        <DashboardDocumentTitle />
+        <DashboardStudio
+          locale={locale}
+          workspaces={workspaces}
+          activeWorkspaceId={activeWorkspace?.id}
+          userName={session?.user?.name ?? "User"}
+          userEmail={session?.user?.email ?? ""}
+          userImage={session?.user?.image}
+          isPro={hasActiveProSubscription(subscription)}
+          plan={displayPlan(subscription)}
+          footer={<SiteFooter variant="app" />}
+        >
+          <WelcomePromptModal
+            hasWorkspace={Boolean(activeWorkspace)}
+            languageCode={activeWorkspace?.language ?? null}
+          />
+          <WorkspaceOnboardingGate workspaceId={activeWorkspace?.id ?? null} />
+          {children}
+        </DashboardStudio>
       </AiPreferencesProvider>
     </ProAccessProvider>
   );

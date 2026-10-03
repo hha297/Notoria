@@ -2413,9 +2413,16 @@
     }
   },
   "errors": {
-    "generic": "Có lỗi xảy ra",
+    "generic": "Đã xảy ra lỗi",
     "noWorkspace": "Chưa có không gian học",
-    "notFound": "Không tìm thấy"
+    "notFound": "Không tìm thấy trang",
+    "unauthorized": "Cần đăng nhập",
+    "forbidden": "Không có quyền truy cập",
+    "rateLimit": "Quá nhiều yêu cầu",
+    "network": "Lỗi kết nối",
+    "offline": "Bạn đang ngoại tuyến",
+    "timeout": "Hết thời gian chờ",
+    "server": "Có lỗi phía chúng tôi. Hãy thử lại. Nếu vẫn tiếp diễn, hãy liên hệ hỗ trợ."
   },
   "learningOnboarding": {
     "step": "Bắt đầu",
@@ -4417,6 +4424,99 @@
       "supportCta": {
         "prompt": "Đang tìm câu trả lời hoặc muốn gửi góp ý?",
         "link": "Hỗ trợ"
+      }
+    }
+  },
+  "errorPages": {
+    "statusUnavailable": "Không khả dụng",
+    "reference": "Mã tham chiếu: {id}",
+    "actions": {
+      "dashboard": "Về trang chính",
+      "home": "Về trang chủ",
+      "back": "Quay lại",
+      "tryAgain": "Thử lại",
+      "support": "Báo cáo sự cố",
+      "report": "Báo cáo sự cố"
+    },
+    "notFound": {
+      "title": "Không tìm thấy trang",
+      "description": "Trang này không tồn tại hoặc liên kết có thể đã cũ. Kiểm tra địa chỉ hoặc quay lại nơi bạn biết."
+    },
+    "unauthorized": {
+      "title": "Cần đăng nhập",
+      "description": "Phiên đăng nhập có thể đã hết hạn, hoặc trang này yêu cầu bạn đăng nhập để tiếp tục.",
+      "primary": "Đăng nhập"
+    },
+    "forbidden": {
+      "title": "Không có quyền truy cập",
+      "description": "Tài khoản của bạn không được phép xem nội dung này. Nếu bạn nghĩ đây là nhầm lẫn, hãy liên hệ hỗ trợ."
+    },
+    "rateLimit": {
+      "title": "Quá nhiều yêu cầu",
+      "description": "Bạn đã gửi yêu cầu quá nhanh. Hãy chờ một chút rồi thử lại.",
+      "retryIn": "Thử lại sau {time}"
+    },
+    "server": {
+      "title": "Đã xảy ra lỗi",
+      "description": "Có lỗi phía chúng tôi. Hãy thử lại. Nếu vẫn tiếp diễn, hãy liên hệ hỗ trợ."
+    },
+    "network": {
+      "title": "Lỗi kết nối",
+      "description": "Không thể kết nối tới Notoria. Kiểm tra mạng và thử lại. Thao tác vừa rồi có thể chưa được lưu."
+    },
+    "offline": {
+      "title": "Bạn đang ngoại tuyến",
+      "description": "Có vẻ như không có kết nối internet. Hãy kết nối lại rồi thử. Các thay đổi chưa lưu vẫn có thể còn trên biểu mẫu."
+    },
+    "timeout": {
+      "title": "Hết thời gian chờ",
+      "description": "Yêu cầu mất quá lâu. Hãy thử lại. Thao tác có thể chưa hoàn tất."
+    },
+    "resources": {
+      "exercise": {
+        "title": "Không tìm thấy bài tập này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Quay lại Bài tập"
+      },
+      "vocabulary": {
+        "title": "Không tìm thấy mục từ vựng này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Quay lại Từ vựng"
+      },
+      "reading": {
+        "title": "Không tìm thấy bài đọc này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Quay lại Đọc"
+      },
+      "writing": {
+        "title": "Không tìm thấy tài liệu viết này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Quay lại Viết"
+      },
+      "theory": {
+        "title": "Không tìm thấy ghi chú lý thuyết này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Quay lại Lý thuyết"
+      },
+      "listening": {
+        "title": "Không tìm thấy bài nghe này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Quay lại Nghe"
+      },
+      "speaking": {
+        "title": "Không tìm thấy phiên nói này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Quay lại Nói"
+      },
+      "folder": {
+        "title": "Không tìm thấy thư mục này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Về trang chính"
+      },
+      "generic": {
+        "title": "Không tìm thấy mục này",
+        "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
+        "primary": "Về trang chính"
       }
     }
   }

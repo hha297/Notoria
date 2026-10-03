@@ -2610,7 +2610,14 @@
   "errors": {
     "generic": "Något gick fel",
     "noWorkspace": "Ingen aktiv arbetsyta",
-    "notFound": "Hittades inte"
+    "notFound": "Sidan hittades inte",
+    "unauthorized": "Inloggning krävs",
+    "forbidden": "Åtkomst nekad",
+    "rateLimit": "För många förfrågningar",
+    "network": "Anslutningsproblem",
+    "offline": "Du är offline",
+    "timeout": "Begäran tog för lång tid",
+    "server": "Något gick fel hos oss. Försök igen. Kontakta support om problemet fortsätter."
   },
   "learningOnboarding": {
     "step": "Komma igång",
@@ -4417,6 +4424,99 @@
       "supportCta": {
         "prompt": "Letar du efter svar eller vill skicka feedback?",
         "link": "Support"
+      }
+    }
+  },
+  "errorPages": {
+    "statusUnavailable": "Otillgänglig",
+    "reference": "Referens: {id}",
+    "actions": {
+      "dashboard": "Gå till instrumentpanelen",
+      "home": "Till startsidan",
+      "back": "Gå tillbaka",
+      "tryAgain": "Försök igen",
+      "support": "Rapportera ett problem",
+      "report": "Rapportera ett problem"
+    },
+    "notFound": {
+      "title": "Sidan hittades inte",
+      "description": "Sidan finns inte, eller så är länken inaktuell. Kontrollera adressen eller gå tillbaka."
+    },
+    "unauthorized": {
+      "title": "Inloggning krävs",
+      "description": "Din session kan ha gått ut, eller så kräver sidan att du är inloggad.",
+      "primary": "Logga in"
+    },
+    "forbidden": {
+      "title": "Åtkomst nekad",
+      "description": "Ditt konto har inte behörighet att se detta. Kontakta support om det verkar fel."
+    },
+    "rateLimit": {
+      "title": "För många förfrågningar",
+      "description": "Du skickade förfrågningar för snabbt. Vänta en stund och försök igen.",
+      "retryIn": "Försök igen om {time}"
+    },
+    "server": {
+      "title": "Något gick fel",
+      "description": "Något gick fel hos oss. Försök igen. Kontakta support om problemet fortsätter."
+    },
+    "network": {
+      "title": "Anslutningsproblem",
+      "description": "Vi kunde inte nå Notoria. Kontrollera anslutningen och försök igen. Din senaste åtgärd kanske inte sparades."
+    },
+    "offline": {
+      "title": "Du är offline",
+      "description": "Det verkar saknas internet. Anslut igen och försök. Osparade ändringar kan fortfarande finnas i formuläret."
+    },
+    "timeout": {
+      "title": "Begäran tog för lång tid",
+      "description": "Det tog för lång tid. Försök igen. Åtgärden kanske inte slutfördes."
+    },
+    "resources": {
+      "exercise": {
+        "title": "Den här övningen hittades inte",
+        "description": "Den kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Tillbaka till övningar"
+      },
+      "vocabulary": {
+        "title": "Det här ordförrådet hittades inte",
+        "description": "Det kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Tillbaka till ordförråd"
+      },
+      "reading": {
+        "title": "Den här lästexten hittades inte",
+        "description": "Den kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Tillbaka till läsning"
+      },
+      "writing": {
+        "title": "Det här skrivdokumentet hittades inte",
+        "description": "Det kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Tillbaka till skrivande"
+      },
+      "theory": {
+        "title": "Den här teorianteckningen hittades inte",
+        "description": "Den kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Tillbaka till teori"
+      },
+      "listening": {
+        "title": "Den här hörövningen hittades inte",
+        "description": "Den kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Tillbaka till hörförståelse"
+      },
+      "speaking": {
+        "title": "Den här talsessionen hittades inte",
+        "description": "Den kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Tillbaka till tal"
+      },
+      "folder": {
+        "title": "Den här mappen hittades inte",
+        "description": "Den kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Gå till instrumentpanelen"
+      },
+      "generic": {
+        "title": "Det här objektet hittades inte",
+        "description": "Det kan ha raderats, eller så är länken inaktuell.",
+        "primary": "Gå till instrumentpanelen"
       }
     }
   }

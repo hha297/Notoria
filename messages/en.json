@@ -2610,7 +2610,14 @@
   "errors": {
     "generic": "Something went wrong",
     "noWorkspace": "No active workspace",
-    "notFound": "Not found"
+    "notFound": "Page not found",
+    "unauthorized": "Sign in required",
+    "forbidden": "Access denied",
+    "rateLimit": "Too many requests",
+    "network": "Connection problem",
+    "offline": "You’re offline",
+    "timeout": "Request timed out",
+    "server": "Something went wrong on our side. Please try again. If the problem continues, contact support."
   },
   "learningOnboarding": {
     "step": "Getting started",
@@ -4417,6 +4424,99 @@
       "supportCta": {
         "prompt": "Looking for answers or want to send feedback?",
         "link": "Support"
+      }
+    }
+  },
+  "errorPages": {
+    "statusUnavailable": "Unavailable",
+    "reference": "Reference: {id}",
+    "actions": {
+      "dashboard": "Go to Dashboard",
+      "home": "Return to Home",
+      "back": "Go back",
+      "tryAgain": "Try again",
+      "support": "Report a problem",
+      "report": "Report a problem"
+    },
+    "notFound": {
+      "title": "Page not found",
+      "description": "This page doesn’t exist, or the link may be outdated. Check the address or head back to a place you know."
+    },
+    "unauthorized": {
+      "title": "Sign in required",
+      "description": "Your session may have expired, or this page needs you to be signed in to continue.",
+      "primary": "Sign in"
+    },
+    "forbidden": {
+      "title": "Access denied",
+      "description": "Your account doesn’t have permission to view this. If you think this is a mistake, contact support."
+    },
+    "rateLimit": {
+      "title": "Too many requests",
+      "description": "You’ve sent requests too quickly. Please wait a moment, then try again.",
+      "retryIn": "Try again in {time}"
+    },
+    "server": {
+      "title": "Something went wrong",
+      "description": "Something went wrong on our side. Please try again. If the problem continues, contact support."
+    },
+    "network": {
+      "title": "Connection problem",
+      "description": "We couldn’t reach Notoria. Check your connection and try again. Your last action may not have been saved."
+    },
+    "offline": {
+      "title": "You’re offline",
+      "description": "It looks like there’s no internet connection. Reconnect, then retry. Unsaved changes may still be in the form."
+    },
+    "timeout": {
+      "title": "Request timed out",
+      "description": "That took too long to complete. Please try again. The action may not have finished."
+    },
+    "resources": {
+      "exercise": {
+        "title": "This exercise could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Back to Exercises"
+      },
+      "vocabulary": {
+        "title": "This vocabulary item could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Back to Vocabulary"
+      },
+      "reading": {
+        "title": "This reading passage could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Back to Reading"
+      },
+      "writing": {
+        "title": "This writing document could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Back to Writing"
+      },
+      "theory": {
+        "title": "This theory note could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Back to Theory"
+      },
+      "listening": {
+        "title": "This listening lesson could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Back to Listening"
+      },
+      "speaking": {
+        "title": "This speaking session could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Back to Speaking"
+      },
+      "folder": {
+        "title": "This folder could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Go to Dashboard"
+      },
+      "generic": {
+        "title": "This item could not be found",
+        "description": "It may have been deleted, or the link may be outdated.",
+        "primary": "Go to Dashboard"
       }
     }
   }

@@ -2413,9 +2413,16 @@
     }
   },
   "errors": {
-    "generic": "Jokin meni pieleen",
+    "generic": "Jotain meni pieleen",
     "noWorkspace": "Ei aktiivista työtilaa",
-    "notFound": "Ei löytynyt"
+    "notFound": "Sivua ei löytynyt",
+    "unauthorized": "Kirjautuminen vaaditaan",
+    "forbidden": "Pääsy estetty",
+    "rateLimit": "Liian monta pyyntöä",
+    "network": "Yhteysongelma",
+    "offline": "Olet offline-tilassa",
+    "timeout": "Pyyntö aikakatkaistiin",
+    "server": "Meillä tapahtui virhe. Yritä uudelleen. Jos ongelma jatkuu, ota yhteyttä tukeen."
   },
   "learningOnboarding": {
     "step": "Aloitus",
@@ -4416,6 +4423,99 @@
       "supportCta": {
         "prompt": "Etsitkö vastauksia tai haluatko lähettää palautetta?",
         "link": "Tuki"
+      }
+    }
+  },
+  "errorPages": {
+    "statusUnavailable": "Ei saatavilla",
+    "reference": "Viite: {id}",
+    "actions": {
+      "dashboard": "Siirry kojelautaan",
+      "home": "Palaa etusivulle",
+      "back": "Takaisin",
+      "tryAgain": "Yritä uudelleen",
+      "support": "Ilmoita ongelmasta",
+      "report": "Ilmoita ongelmasta"
+    },
+    "notFound": {
+      "title": "Sivua ei löytynyt",
+      "description": "Tätä sivua ei ole olemassa, tai linkki voi olla vanhentunut. Tarkista osoite tai palaa tuttuun paikkaan."
+    },
+    "unauthorized": {
+      "title": "Kirjautuminen vaaditaan",
+      "description": "Istuntosi on ehkä vanhentunut, tai tämä sivu edellyttää kirjautumista.",
+      "primary": "Kirjaudu sisään"
+    },
+    "forbidden": {
+      "title": "Pääsy estetty",
+      "description": "Tililläsi ei ole oikeutta nähdä tätä. Jos tämä tuntuu virheeltä, ota yhteyttä tukeen."
+    },
+    "rateLimit": {
+      "title": "Liian monta pyyntöä",
+      "description": "Lähetit pyyntöjä liian nopeasti. Odota hetki ja yritä uudelleen.",
+      "retryIn": "Yritä uudelleen {time} kuluttua"
+    },
+    "server": {
+      "title": "Jotain meni pieleen",
+      "description": "Meillä tapahtui virhe. Yritä uudelleen. Jos ongelma jatkuu, ota yhteyttä tukeen."
+    },
+    "network": {
+      "title": "Yhteysongelma",
+      "description": "Notoriaan ei saatu yhteyttä. Tarkista yhteys ja yritä uudelleen. Viimeisin toiminto ei ehkä tallentunut."
+    },
+    "offline": {
+      "title": "Olet offline-tilassa",
+      "description": "Internet-yhteyttä ei näytä olevan. Yhdistä uudelleen ja yritä. Tallentamattomat muutokset voivat olla vielä lomakkeessa."
+    },
+    "timeout": {
+      "title": "Pyyntö aikakatkaistiin",
+      "description": "Toiminto kesti liian kauan. Yritä uudelleen. Toiminto ei ehkä valmistunut."
+    },
+    "resources": {
+      "exercise": {
+        "title": "Tätä harjoitusta ei löytynyt",
+        "description": "Se on ehkä poistettu, tai linkki voi olla vanhentunut.",
+        "primary": "Takaisin harjoituksiin"
+      },
+      "vocabulary": {
+        "title": "Tätä sanastoa ei löytynyt",
+        "description": "Se on ehkä poistettu, tai linkki voi olla vanhentunut.",
+        "primary": "Takaisin sanastoon"
+      },
+      "reading": {
+        "title": "Tätä lukutekstiä ei löytynyt",
+        "description": "Se on ehkä poistettu, tai linkki voi olla vanhentunut.",
+        "primary": "Takaisin lukemiseen"
+      },
+      "writing": {
+        "title": "Tätä kirjoitusasiakirjaa ei löytynyt",
+        "description": "Se on ehkä poistettu, tai linkki voi olla vanhentunut.",
+        "primary": "Takaisin kirjoittamiseen"
+      },
+      "theory": {
+        "title": "Tätä teoriaviestiä ei löytynyt",
+        "description": "Se on ehkä poistettu, tai linkki voi olla vanhentunut.",
+        "primary": "Takaisin teoriaan"
+      },
+      "listening": {
+        "title": "Tätä kuuntelutuntia ei löytynyt",
+        "description": "Se on ehkä poistettu, tai linkki voi olla vanhentunut.",
+        "primary": "Takaisin kuunteluun"
+      },
+      "speaking": {
+        "title": "Tätä puhumissessiota ei löytynyt",
+        "description": "Se on ehkä poistettu, tai linkki voi olla vanhentunut.",
+        "primary": "Takaisin puhumiseen"
+      },
+      "folder": {
+        "title": "Tätä kansiota ei löytynyt",
+        "description": "Se on ehkä poistettu, tai linkki voi olla vanhentunut.",
+        "primary": "Siirry kojelautaan"
+      },
+      "generic": {
+        "title": "Tätä kohdetta ei löytynyt",
+        "description": "Se on ehkä poistettu, tai linkki voi olla vanhentunut.",
+        "primary": "Siirry kojelautaan"
       }
     }
   }
