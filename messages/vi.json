@@ -2585,7 +2585,31 @@
       "exportFailed": "Không chuẩn bị được backup. Thử lại nhé.",
       "importTitle": "Nhập bản sao lưu tài khoản",
       "importHint": "Khôi phục dữ liệu học Notoria từ bản sao lưu trước. Tài khoản, đăng nhập và gói đăng ký của bạn sẽ không bị thay đổi.",
-      "importAction": "Nhập backup"
+      "importAction": "Nhập backup",
+      "clearTitle": "Xóa toàn bộ dữ liệu tài khoản",
+      "clearHint": "Xóa mọi workspace và nội dung học, nhưng giữ đăng nhập cùng gói đăng ký. Thao tác này không đóng tài khoản.",
+      "clearAction": "Xóa toàn bộ dữ liệu"
+    },
+    "clearData": {
+      "kicker": "Giữ tài khoản",
+      "title": "Xóa toàn bộ dữ liệu tài khoản?",
+      "description": "Thao tác này xóa vĩnh viễn dữ liệu học của {email}, nhưng giữ bạn đăng nhập và không đổi gói đăng ký.",
+      "warningTitle": "Trước khi tiếp tục",
+      "warnings": {
+        "workspaces": "Mọi workspace cùng vocabulary, theory, writing, reading, listening, speaking, exercises và inbox sẽ bị xóa.",
+        "media": "File media đã tải lên (listening, tài liệu reading, import và ảnh hồ sơ) sẽ bị gỡ.",
+        "kept": "Đăng nhập, email và gói đăng ký vẫn còn. Bạn có thể tạo workspace mới sau đó.",
+        "permanent": "Không có thời gian khôi phục sau khi xác nhận."
+      },
+      "backupTitle": "Tải backup trước",
+      "backupHint": "Xuất dữ liệu học thành file JSON để lưu. Media được liên kết bằng URL, không nhúng trong file.",
+      "backup": "Tải backup",
+      "backupDone": "Đã tải backup",
+      "backupFailed": "Không chuẩn bị được backup. Thử lại nhé.",
+      "confirmLabel": "Gõ {phrase} để xác nhận",
+      "confirm": "Xóa toàn bộ dữ liệu",
+      "deleted": "Đã xóa toàn bộ dữ liệu học",
+      "failed": "Không xóa được dữ liệu. Thử lại nhé."
     },
     "backupImport": {
       "title": "Khôi phục dữ liệu học Notoria",

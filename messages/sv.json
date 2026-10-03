@@ -2780,7 +2780,31 @@
       "exportFailed": "Kunde inte förbereda din säkerhetskopia. Försök igen.",
       "importTitle": "Importera kontosäkerhetskopia",
       "importHint": "Återställ dina Notoria-inlärningsdata från en tidigare kontosäkerhetskopia. Ditt konto, inloggning och prenumeration ändras inte.",
-      "importAction": "Importera säkerhetskopia"
+      "importAction": "Importera säkerhetskopia",
+      "clearTitle": "Radera all kontodata",
+      "clearHint": "Tar bort alla arbetsytor och inlärningsinnehåll men behåller inloggning och prenumeration. Detta stänger inte ditt konto.",
+      "clearAction": "Radera all data"
+    },
+    "clearData": {
+      "kicker": "Behåll kontot",
+      "title": "Radera all kontodata?",
+      "description": "Detta tar permanent bort inlärningsdata för {email}, men behåller dig inloggad och lämnar prenumerationen oförändrad.",
+      "warningTitle": "Innan du fortsätter",
+      "warnings": {
+        "workspaces": "Alla arbetsytor samt ordförråd, teori, skrivande, läsning, lyssnande, tal, övningar och Capture tas bort.",
+        "media": "Uppladdade mediefiler (lyssnande, läsdokument, importer och din profilbild) tas bort.",
+        "kept": "Din inloggning, e-post och prenumeration förblir aktiva. Du kan skapa en ny arbetsyta efteråt.",
+        "permanent": "Det finns ingen återställningsperiod efter bekräftelse."
+      },
+      "backupTitle": "Ladda ner en säkerhetskopia först",
+      "backupHint": "Exporterar dina inlärningsdata som en JSON-fil. Mediefiler länkas via URL, de bäddas inte in.",
+      "backup": "Ladda ner säkerhetskopia",
+      "backupDone": "Säkerhetskopia nedladdad",
+      "backupFailed": "Kunde inte förbereda din säkerhetskopia. Försök igen.",
+      "confirmLabel": "Skriv {phrase} för att bekräfta",
+      "confirm": "Radera all data",
+      "deleted": "All inlärningsdata har raderats",
+      "failed": "Kunde inte radera dina data. Försök igen."
     },
     "backupImport": {
       "title": "Återställ dina Notoria-inlärningsdata",

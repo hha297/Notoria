@@ -2780,7 +2780,31 @@
       "exportFailed": "Could not prepare your backup. Try again.",
       "importTitle": "Import account backup",
       "importHint": "Restore your Notoria learning data from a previous account backup. Your account, login, and subscription information won't be changed.",
-      "importAction": "Import backup"
+      "importAction": "Import backup",
+      "clearTitle": "Delete all account data",
+      "clearHint": "Remove all workspaces and learning content while keeping your login and subscription. This does not close your account.",
+      "clearAction": "Delete all data"
+    },
+    "clearData": {
+      "kicker": "Keep account",
+      "title": "Delete all account data?",
+      "description": "This permanently removes learning data for {email}, but keeps your account signed in and your subscription unchanged.",
+      "warningTitle": "Before you continue",
+      "warnings": {
+        "workspaces": "Every workspace and all vocabulary, theory, writing, reading, listening, speaking, exercises, and inbox items will be deleted.",
+        "media": "Uploaded media (listening files, reading documents, imports, and your profile photo) will be removed.",
+        "kept": "Your login, email, and subscription stay active. You can create a new workspace afterward.",
+        "permanent": "There is no recovery period after confirmation."
+      },
+      "backupTitle": "Download a backup first",
+      "backupHint": "Exports your learning data as a JSON file for safekeeping. Media files are linked by URL, not embedded.",
+      "backup": "Download backup",
+      "backupDone": "Backup downloaded",
+      "backupFailed": "Could not prepare your backup. Try again.",
+      "confirmLabel": "Type {phrase} to confirm",
+      "confirm": "Delete all data",
+      "deleted": "All learning data has been deleted",
+      "failed": "Could not delete your data. Try again."
     },
     "backupImport": {
       "title": "Restore your Notoria learning data",

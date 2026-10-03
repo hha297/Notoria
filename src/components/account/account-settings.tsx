@@ -7,10 +7,11 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { Loader2, Trash2, Upload, Download } from "lucide-react";
+import { Eraser, Loader2, Trash2, Upload, Download } from "lucide-react";
 import { toast } from "sonner";
 import { AccountBackupImportDialog } from "@/components/account/account-backup-import-dialog";
 import { DeleteAccountDialog } from "@/components/account/delete-account-dialog";
+import { DeleteAllDataDialog } from "@/components/account/delete-all-data-dialog";
 import { ProSubscriptionCard } from "@/components/account/pro-subscription-card";
 import { UserAvatar } from "@/components/account/user-avatar";
 import { PasswordInput } from "@/components/auth/password-input";
@@ -65,6 +66,7 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
   const [isPasswordPending, startPasswordTransition] = useTransition();
   const [isBackupPending, startBackupTransition] = useTransition();
   const [deleteOpen, setDeleteOpen] = useState(false);
+  const [clearDataOpen, setClearDataOpen] = useState(false);
   const [importBackupOpen, setImportBackupOpen] = useState(false);
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
@@ -534,6 +536,21 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
             {t("data.importAction")}
           </Button>
         </div>
+        <div className={mx(styles, "account-panel-body account-danger-row")}>
+          <div className={mx(styles, "account-danger-copy")}>
+            <p className={mx(styles, "account-danger-title")}>{t("data.clearTitle")}</p>
+            <p className={mx(styles, "account-danger-hint")}>{t("data.clearHint")}</p>
+          </div>
+          <Button
+            type="button"
+            variant="outline"
+            className="shrink-0 border-destructive/40 text-destructive hover:bg-destructive/10"
+            onClick={() => setClearDataOpen(true)}
+          >
+            <Eraser className="size-4" />
+            {t("data.clearAction")}
+          </Button>
+        </div>
       </section>
 
       <section className={mx(styles, "account-panel account-panel-danger")}>
@@ -570,6 +587,11 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
       <AccountBackupImportDialog
         open={importBackupOpen}
         onOpenChange={setImportBackupOpen}
+      />
+      <DeleteAllDataDialog
+        open={clearDataOpen}
+        onOpenChange={setClearDataOpen}
+        email={user.email}
       />
       <DeleteAccountDialog
         open={deleteOpen}

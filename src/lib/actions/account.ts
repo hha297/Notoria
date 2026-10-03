@@ -29,7 +29,11 @@ import { getStripeClient } from "@/lib/stripe/client";
 import { isStripeConfigured } from "@/lib/stripe/config";
 import { toBillingState } from "@/lib/stripe/pro";
 import { reconcileUserSubscription } from "@/lib/stripe/subscription";
-import { DELETE_ACCOUNT_CONFIRMATION } from "@/lib/account/constants";
+import {
+  DELETE_ACCOUNT_CONFIRMATION,
+  DELETE_ALL_DATA_CONFIRMATION,
+} from "@/lib/account/constants";
+import { purgeUserLearningData } from "@/lib/account/purge-learning-data";
 
 const MAX_AVATAR_SIZE = 5 * 1024 * 1024;
 const ALLOWED_AVATAR_TYPES = new Set([
@@ -670,6 +674,48 @@ export async function exportAccountBackup() {
       "Writing documents are included under exercises with type WRITING.",
     ],
   };
+}
+
+const deleteAllAccountDataSchema = z.object({
+  confirmation: z.literal(DELETE_ALL_DATA_CONFIRMATION),
+});
+
+/**
+ * Wipe all user-generated learning data and media while keeping the account,
+ * login credentials, and Stripe subscription identity.
+ */
+export async function deleteAllAccountData(
+  data: z.infer<typeof deleteAllAccountDataSchema>,
+) {
+  const parsed = deleteAllAccountDataSchema.parse(data);
+  if (parsed.confirmation !== DELETE_ALL_DATA_CONFIRMATION) {
+    throw new Error("INVALID_CONFIRMATION");
+  }
+
+  const userId = await getCurrentUserId();
+  const user = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+    columns: { id: true },
+  });
+  if (!user) {
+    throw new Error("Unauthorized");
+  }
+
+  await purgeUserLearningData(userId);
+
+  revalidatePath("/", "layout");
+  revalidatePath("/account");
+  revalidatePath("/onboarding");
+  revalidatePath("/vocabulary");
+  revalidatePath("/theory");
+  revalidatePath("/writing");
+  revalidatePath("/exercises");
+  revalidatePath("/listening");
+  revalidatePath("/speaking");
+  revalidatePath("/reading");
+  revalidatePath("/inbox");
+
+  return { ok: true as const };
 }
 
 export async function deleteAccount(
