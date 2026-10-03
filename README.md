@@ -179,7 +179,7 @@ Two different flows — keep them separate:
 | Export / import  | `@react-pdf/renderer`, `docx`, `unpdf`, `mammoth`             |
 | AI               | OpenAI (+ Realtime for speaking tutor)                        |
 | Speech           | AssemblyAI (listening); Stream Video transcription (speaking) |
-| Media / realtime | Cloudinary; Stream Video                                      |
+| Media / realtime | Cloudinary (images/audio); private Vercel Blob (Reading PDF/DOCX); Stream Video |
 | Tests            | Vitest                                                        |
 | Deploy           | Vercel + Docker Compose (local Postgres)                      |
 
@@ -333,9 +333,18 @@ RESEND_FROM_EMAIL=
 
 # ── Media (Cloudinary) ─────────────────────────────────────────────
 # Avatars + listening audio/video uploads. Required for avatar/listening upload flows.
+# Not used for Reading PDF/DOCX (those use Vercel Blob below).
 CLOUDINARY_CLOUD_NAME=
 CLOUDINARY_API_KEY=
 CLOUDINARY_API_SECRET=
+
+# ── Documents / backups (Vercel Blob, private) ─────────────────────
+# Storage → notoria-blob → Quickstart → .env.local (also add to Vercel Production).
+# Server-only — never expose as NEXT_PUBLIC_*.
+BLOB_STORE_ID=
+BLOB_READ_WRITE_TOKEN=
+# BLOB_READ_WRITE_TOKEN is required for browser client uploads (handleUpload).
+# Used for Reading PDF/DOCX and account-backup JSON (up to configured limits).
 
 # ── AI (OpenAI) ────────────────────────────────────────────────────
 # Vocabulary helpers, writing AI, exercise generation, listening practice, speaking tutor + summary.
@@ -378,7 +387,7 @@ Notoria is built as a **personal learning workspace**:
 
 - Learning content is private to the account (no social graph)
 - Auth: credentials and/or Google OAuth; password-reset tokens are stored hashed
-- Media (avatars, listening files) uses Cloudinary when configured
+- Media (avatars, listening files) uses Cloudinary when configured; Reading PDF/DOCX originals use private Vercel Blob
 - Billing identity lives with Stripe; entitlements sync via webhooks
 - Account deletion removes learning data and cancels active Pro/Premium per product rules
 - **Account backup** is learning-data portability — not an identity or subscription transfer

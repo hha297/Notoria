@@ -23,6 +23,8 @@ import {
   finalizeUsageReservation,
   refundUsageReservation,
 } from "@/lib/billing/usage";
+import { deleteReadingBlob } from "@/lib/reading/blob";
+import { beginReadingDocumentRecord } from "@/lib/reading/document-upload";
 import { ReadingError, toReadingError } from "@/lib/reading/errors";
 import { generateReadingQuestions } from "@/lib/reading/generate";
 import { gradeObjectiveAnswer, gradeWrittenAnswers } from "@/lib/reading/grade";
@@ -40,7 +42,6 @@ import type {
 } from "@/lib/reading/types";
 import {
   normalizePassageTitle,
-  titleFromFilename,
   validatePassageBody,
 } from "@/lib/reading/utils";
 import { requireActiveWorkspace } from "@/lib/workspace";
@@ -82,6 +83,7 @@ async function requireOwnedPassage(passageId: string) {
       eq(readingPassages.id, passageId),
       eq(readingPassages.userId, userId),
       eq(readingPassages.workspaceId, workspace.id),
+      eq(readingPassages.uploadStatus, "ready"),
     ),
   });
   if (!passage) throw new ReadingError("PASSAGE_NOT_FOUND");
@@ -115,6 +117,7 @@ export async function listReadingPassages(): Promise<ReadingPassageListItem[]> {
       and(
         eq(readingPassages.userId, userId),
         eq(readingPassages.workspaceId, workspace.id),
+        eq(readingPassages.uploadStatus, "ready"),
       ),
     )
     .groupBy(readingPassages.id)
@@ -203,38 +206,42 @@ export async function createReadingPassage(input: {
   });
 }
 
-export async function extractReadingUpload(formData: FormData) {
-  await getCurrentUserId();
-  await requireActiveWorkspace();
+/**
+ * Create a pending Reading document row and reserved private Blob pathname.
+ * The browser then uploads directly to Vercel Blob (not through this action).
+ */
+export async function beginReadingDocumentUpload(input: {
+  filename: string;
+  mimeType?: string | null;
+  sizeBytes: number;
+  language: string;
+  folderId?: string | null;
+}) {
+  const userId = await getCurrentUserId();
+  const workspace = await requireActiveWorkspace();
 
-  const file = formData.get("file");
-  if (!(file instanceof File)) throw new ReadingError("INVALID_FILE");
+  let folderId: string | null = null;
+  if (input.folderId) {
+    const folder = await db.query.workspaceFolders.findFirst({
+      where: and(
+        eq(workspaceFolders.id, input.folderId),
+        eq(workspaceFolders.userId, userId),
+        eq(workspaceFolders.workspaceId, workspace.id),
+        eq(workspaceFolders.section, "reading"),
+      ),
+    });
+    folderId = folder?.id ?? null;
+  }
 
-  // Lazy-load so practice/detail pages never pull native canvas into the RSC graph.
-  const { extractReadingDocument } = await import("@/lib/reading/extract");
-
-  const buffer = Buffer.from(await file.arrayBuffer());
-  const extracted = await extractReadingDocument({
-    buffer,
-    mimeType: file.type || "application/octet-stream",
-    filename: file.name,
+  return beginReadingDocumentRecord({
+    userId,
+    workspaceId: workspace.id,
+    filename: input.filename,
+    mimeType: input.mimeType,
+    sizeBytes: input.sizeBytes,
+    language: input.language,
+    folderId,
   });
-
-  const validated = validatePassageBody(extracted.text);
-  const body = validated.normalized || extracted.text;
-  const title = extracted.suggestedTitle || titleFromFilename(file.name);
-  return {
-    title,
-    body,
-    /** Aliases for callers that expect extractReadingDocument shape. */
-    suggestedTitle: title,
-    text: body,
-    sourceType: extracted.sourceType,
-    sourceFilename: extracted.sourceFilename,
-    wordCount: validated.wordCount || extracted.wordCount,
-    valid: validated.ok,
-    errorCode: validated.ok ? null : validated.code,
-  };
 }
 
 export async function updateReadingPassage(
@@ -275,6 +282,9 @@ export async function updateReadingPassage(
 export async function deleteReadingPassage(id: string) {
   const { passage } = await requireOwnedPassage(id);
   await db.delete(readingPassages).where(eq(readingPassages.id, passage.id));
+  if (passage.storagePath) {
+    await deleteReadingBlob(passage.storagePath);
+  }
   revalidateReading(id);
   return { ok: true as const };
 }

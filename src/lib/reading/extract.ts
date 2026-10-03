@@ -7,6 +7,12 @@ import {
 } from "unpdf";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { ReadingError } from "@/lib/reading/errors";
+import {
+  MAX_READING_FILE_SIZE_BYTES,
+  READING_DOCX_MIME,
+  READING_PDF_MIME,
+  resolveReadingMimeType,
+} from "@/lib/reading/storage";
 import type { ReadingExtractedDocument } from "@/lib/reading/types";
 import {
   countWords,
@@ -15,24 +21,12 @@ import {
   suggestedTitleFromFilename,
 } from "@/lib/reading/utils";
 
-const PDF_MIME = "application/pdf";
-const DOCX_MIME =
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
 const LEGACY_DOC_MIME = "application/msword";
-const MAX_FILE_BYTES = 10 * 1024 * 1024;
 const MIN_EXTRACTED_CHARS = 40;
 const MAX_OCR_PAGES = 8;
 const OCR_SCALE = 1.4;
 
-export const READING_MAX_UPLOAD_BYTES = MAX_FILE_BYTES;
-
-function mimeFromFilename(filename: string): string | null {
-  const lower = filename.toLowerCase();
-  if (lower.endsWith(".pdf")) return PDF_MIME;
-  if (lower.endsWith(".docx")) return DOCX_MIME;
-  if (lower.endsWith(".doc")) return LEGACY_DOC_MIME;
-  return null;
-}
+export const READING_MAX_UPLOAD_BYTES = MAX_READING_FILE_SIZE_BYTES;
 
 function getOpenAIClient() {
   const apiKey = process.env.OPENAI_API_KEY?.trim();
@@ -160,28 +154,33 @@ export async function extractReadingDocument(input: {
   buffer: Buffer;
   filename: string;
   mimeType?: string | null;
-}): Promise<ReadingExtractedDocument & { usedOcr?: boolean }> {
+}): Promise<
+  ReadingExtractedDocument & { usedOcr?: boolean; truncated?: boolean }
+> {
   if (!input.buffer.length) {
     throw new ReadingError("INVALID_FILE");
   }
-  if (input.buffer.byteLength > MAX_FILE_BYTES) {
+  if (input.buffer.byteLength > MAX_READING_FILE_SIZE_BYTES) {
     throw new ReadingError("FILE_TOO_LARGE");
   }
 
-  const mime =
-    (input.mimeType ?? "").toLowerCase() ||
-    mimeFromFilename(input.filename) ||
-    "";
-
-  if (mime === LEGACY_DOC_MIME || input.filename.toLowerCase().endsWith(".doc")) {
+  if (
+    input.filename.toLowerCase().endsWith(".doc") ||
+    (input.mimeType ?? "").toLowerCase() === LEGACY_DOC_MIME
+  ) {
     throw new ReadingError("UNSUPPORTED_PARSE");
+  }
+
+  const mime = resolveReadingMimeType(input.filename, input.mimeType);
+  if (!mime) {
+    throw new ReadingError("INVALID_FILE_TYPE");
   }
 
   let text = "";
   let sourceType: "pdf" | "docx";
   let usedOcr = false;
 
-  if (mime === PDF_MIME || input.filename.toLowerCase().endsWith(".pdf")) {
+  if (mime === READING_PDF_MIME) {
     sourceType = "pdf";
     const extracted = await extractPdfText(input.buffer);
     text = extracted.text;
@@ -189,19 +188,15 @@ export async function extractReadingDocument(input: {
       text = await extractPdfWithOcr(input.buffer);
       usedOcr = true;
     }
-  } else if (
-    mime === DOCX_MIME ||
-    input.filename.toLowerCase().endsWith(".docx")
-  ) {
+  } else {
     text = await extractDocxText(input.buffer);
     sourceType = "docx";
     if (!text || text.length < MIN_EXTRACTED_CHARS) {
       throw new ReadingError("EMPTY_CONTENT");
     }
-  } else {
-    throw new ReadingError("INVALID_FILE_TYPE");
   }
 
+  const truncated = text.length > MAX_PASSAGE_CHARS;
   const body = text.slice(0, MAX_PASSAGE_CHARS);
   return {
     text: body,
@@ -210,5 +205,6 @@ export async function extractReadingDocument(input: {
     suggestedTitle: suggestedTitleFromFilename(input.filename),
     wordCount: countWords(body),
     usedOcr,
+    truncated,
   };
 }

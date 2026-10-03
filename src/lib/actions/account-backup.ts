@@ -13,74 +13,62 @@ import {
   type BackupImportResult,
   type BackupPreview,
 } from "@/lib/account-backup";
-import { importAccountBackupLearningData } from "@/lib/account-backup/import";
 import {
-  configureCloudinary,
-  downloadCloudinaryAsset,
-  getAccountBackupFolder,
-  getCloudinaryPublicConfig,
-  isCloudinaryConfigured,
-  signCloudinaryUploadParams,
-} from "@/lib/cloudinary";
+  buildAccountBackupBlobPathname,
+  isOwnedAccountBackupBlobPathname,
+  newAccountBackupUploadId,
+  sanitizeBackupFilename,
+} from "@/lib/account-backup/blob-path";
+import { importAccountBackupLearningData } from "@/lib/account-backup/import";
+import { deleteReadingBlob, downloadReadingBlob } from "@/lib/reading/blob";
 
 export type AccountBackupActionError =
   | { code: "UNAUTHORIZED" }
   | { code: "INVALID_INPUT" }
   | { code: "FILE_TOO_LARGE" }
-  | { code: "CLOUDINARY_NOT_CONFIGURED" }
+  | { code: "STORAGE_NOT_CONFIGURED" }
   | { code: "INVALID_BACKUP"; message: string }
   | { code: "IMPORT_FAILED"; message?: string }
-  | { code: "REQUEST_TOO_LARGE" };
+  | { code: "REQUEST_TOO_LARGE" }
+  /** @deprecated Prefer STORAGE_NOT_CONFIGURED */
+  | { code: "CLOUDINARY_NOT_CONFIGURED" };
 
 export type AnalyzeAccountBackupResult = {
   preview: BackupPreview;
-  /** Temporary Cloudinary public id — reuse for confirm, then deleted. */
+  /** Temporary private Blob pathname — reuse for confirm, then deleted. */
+  storagePath: string;
+  /** @deprecated Alias of storagePath for older UI. */
   uploadPublicId: string;
 };
 
-function isOwnedBackupPublicId(userId: string, publicId: string) {
-  const folder = getAccountBackupFolder(userId);
-  return publicId === folder || publicId.startsWith(`${folder}/`);
+function isBlobConfigured() {
+  return Boolean(process.env.BLOB_READ_WRITE_TOKEN?.trim());
 }
 
-async function destroyBackupAsset(publicId: string) {
-  if (!isCloudinaryConfigured() || !publicId) return;
-  try {
-    const cloudinary = configureCloudinary();
-    await cloudinary.uploader.destroy(publicId, {
-      resource_type: "raw",
-      invalidate: true,
-    });
-  } catch {
-    // best-effort cleanup
-  }
+async function destroyBackupBlob(storagePath: string) {
+  await deleteReadingBlob(storagePath);
 }
 
-async function loadBackupTextFromCloudinary(
+async function loadBackupTextFromBlob(
   userId: string,
-  publicId: string,
-  fallbackUrl?: string | null,
+  storagePath: string,
 ): Promise<
   | { ok: true; text: string }
   | { ok: false; error: AccountBackupActionError }
 > {
-  const trimmed = publicId.trim();
-  if (!trimmed || !isOwnedBackupPublicId(userId, trimmed)) {
+  const trimmed = storagePath.trim();
+  if (!trimmed || !isOwnedAccountBackupBlobPathname(trimmed, userId)) {
     return { ok: false, error: { code: "INVALID_INPUT" } };
   }
 
   try {
-    const buffer = await downloadCloudinaryAsset({
-      publicId: trimmed,
-      resourceType: "raw",
-      fallbackUrl,
-    });
+    const { buffer } = await downloadReadingBlob(trimmed);
     if (buffer.byteLength > MAX_ACCOUNT_BACKUP_BYTES) {
-      await destroyBackupAsset(trimmed);
+      await destroyBackupBlob(trimmed);
       return { ok: false, error: { code: "FILE_TOO_LARGE" } };
     }
     if (buffer.byteLength <= 0) {
-      await destroyBackupAsset(trimmed);
+      await destroyBackupBlob(trimmed);
       return {
         ok: false,
         error: {
@@ -101,16 +89,16 @@ async function loadBackupTextFromCloudinary(
   }
 }
 
-/** Signed params so the browser can upload a backup JSON directly to Cloudinary. */
-export async function getAccountBackupUploadSignature(input: {
+/** Reserve a private Blob pathname for a direct browser backup upload. */
+export async function beginAccountBackupUpload(input: {
   filename?: string;
   byteSize?: number;
 }) {
   try {
-    if (!isCloudinaryConfigured()) {
+    if (!isBlobConfigured()) {
       return {
         ok: false as const,
-        error: { code: "CLOUDINARY_NOT_CONFIGURED" as const },
+        error: { code: "STORAGE_NOT_CONFIGURED" as const },
       };
     }
 
@@ -122,26 +110,23 @@ export async function getAccountBackupUploadSignature(input: {
     }
 
     const userId = await getCurrentUserId();
-    const { cloudName, apiKey } = getCloudinaryPublicConfig();
-    const timestamp = Math.round(Date.now() / 1000);
-    const folder = getAccountBackupFolder(userId);
-
-    const signature = signCloudinaryUploadParams({
-      folder,
-      timestamp,
-      unique_filename: "true",
-      use_filename: "true",
+    const uploadId = newAccountBackupUploadId();
+    const filename = sanitizeBackupFilename(
+      input.filename?.trim() || "notoria-backup.json",
+    );
+    const pathname = buildAccountBackupBlobPathname({
+      userId,
+      uploadId,
+      filename,
     });
 
     return {
       ok: true as const,
       result: {
-        cloudName,
-        apiKey,
-        timestamp,
-        signature,
-        folder,
-        resourceType: "raw" as const,
+        uploadId,
+        pathname,
+        filename,
+        maxBytes: MAX_ACCOUNT_BACKUP_BYTES,
       },
     };
   } catch (error) {
@@ -158,14 +143,25 @@ export async function getAccountBackupUploadSignature(input: {
   }
 }
 
+/** @deprecated Use beginAccountBackupUpload — backups now use Vercel Blob. */
+export async function getAccountBackupUploadSignature(input: {
+  filename?: string;
+  byteSize?: number;
+}) {
+  return beginAccountBackupUpload(input);
+}
+
 export async function analyzeAccountBackupFromUpload(input: {
-  publicId: string;
+  storagePath?: string;
+  /** @deprecated Prefer storagePath */
+  publicId?: string;
   fileUrl?: string;
   byteSize?: number;
 }): Promise<
   | { ok: true; result: AnalyzeAccountBackupResult }
   | { ok: false; error: AccountBackupActionError }
 > {
+  const storagePath = (input.storagePath || input.publicId || "").trim();
   try {
     const userId = await getCurrentUserId();
 
@@ -173,22 +169,18 @@ export async function analyzeAccountBackupFromUpload(input: {
       typeof input.byteSize === "number" &&
       input.byteSize > MAX_ACCOUNT_BACKUP_BYTES
     ) {
-      await destroyBackupAsset(input.publicId);
+      await destroyBackupBlob(storagePath);
       return { ok: false, error: { code: "FILE_TOO_LARGE" } };
     }
 
-    const loaded = await loadBackupTextFromCloudinary(
-      userId,
-      input.publicId,
-      input.fileUrl,
-    );
+    const loaded = await loadBackupTextFromBlob(userId, storagePath);
     if (!loaded.ok) return loaded;
 
     let backup;
     try {
       backup = parseAccountBackupJson(loaded.text);
     } catch (error) {
-      await destroyBackupAsset(input.publicId);
+      await destroyBackupBlob(storagePath);
       const message =
         error instanceof AccountBackupParseError
           ? error.message
@@ -225,7 +217,11 @@ export async function analyzeAccountBackupFromUpload(input: {
 
     return {
       ok: true,
-      result: { preview, uploadPublicId: input.publicId.trim() },
+      result: {
+        preview,
+        storagePath,
+        uploadPublicId: storagePath,
+      },
     };
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized") {
@@ -242,26 +238,25 @@ export async function analyzeAccountBackupFromUpload(input: {
 }
 
 export async function confirmAccountBackupFromUpload(input: {
-  publicId: string;
+  storagePath?: string;
+  /** @deprecated Prefer storagePath */
+  publicId?: string;
   fileUrl?: string;
 }): Promise<
   | { ok: true; result: BackupImportResult }
   | { ok: false; error: AccountBackupActionError }
 > {
+  const storagePath = (input.storagePath || input.publicId || "").trim();
   try {
     const userId = await getCurrentUserId();
-    const loaded = await loadBackupTextFromCloudinary(
-      userId,
-      input.publicId,
-      input.fileUrl,
-    );
+    const loaded = await loadBackupTextFromBlob(userId, storagePath);
     if (!loaded.ok) return loaded;
 
     let backup;
     try {
       backup = parseAccountBackupJson(loaded.text);
     } catch (error) {
-      await destroyBackupAsset(input.publicId);
+      await destroyBackupBlob(storagePath);
       const message =
         error instanceof AccountBackupParseError
           ? error.message
@@ -273,7 +268,7 @@ export async function confirmAccountBackupFromUpload(input: {
       userId,
       backup,
     });
-    await destroyBackupAsset(input.publicId);
+    await destroyBackupBlob(storagePath);
 
     revalidatePath("/");
     revalidatePath("/vocabulary");
@@ -287,7 +282,7 @@ export async function confirmAccountBackupFromUpload(input: {
 
     return { ok: true, result };
   } catch (error) {
-    await destroyBackupAsset(input.publicId);
+    await destroyBackupBlob(storagePath);
     if (error instanceof Error && error.message === "Unauthorized") {
       return { ok: false, error: { code: "UNAUTHORIZED" } };
     }
@@ -301,7 +296,7 @@ export async function confirmAccountBackupFromUpload(input: {
   }
 }
 
-/** @deprecated Use Cloudinary direct upload helpers — FormData hits Vercel 413. */
+/** @deprecated Use Blob direct upload helpers — FormData hits Vercel 413. */
 export async function analyzeAccountBackup(formData: FormData): Promise<
   | { ok: true; result: AnalyzeAccountBackupResult }
   | { ok: false; error: AccountBackupActionError }
@@ -313,7 +308,7 @@ export async function analyzeAccountBackup(formData: FormData): Promise<
   };
 }
 
-/** @deprecated Use Cloudinary direct upload helpers — FormData hits Vercel 413. */
+/** @deprecated Use Blob direct upload helpers — FormData hits Vercel 413. */
 export async function confirmAccountBackupImport(formData: FormData): Promise<
   | { ok: true; result: BackupImportResult }
   | { ok: false; error: AccountBackupActionError }
