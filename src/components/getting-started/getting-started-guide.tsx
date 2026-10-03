@@ -289,7 +289,8 @@ function ModuleSection({
   | "exercise"
   | "writing"
   | "listening"
-  | "speaking";
+  | "speaking"
+  | "reading";
 }) {
   const t = useTranslations("gettingStarted");
   const bullets = t.raw(`sections.${module}.bullets`) as string[];

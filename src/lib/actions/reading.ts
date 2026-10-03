@@ -23,7 +23,6 @@ import {
   finalizeUsageReservation,
   refundUsageReservation,
 } from "@/lib/billing/usage";
-import { extractReadingDocument } from "@/lib/reading/extract";
 import { ReadingError, toReadingError } from "@/lib/reading/errors";
 import { generateReadingQuestions } from "@/lib/reading/generate";
 import { gradeObjectiveAnswer, gradeWrittenAnswers } from "@/lib/reading/grade";
@@ -210,6 +209,9 @@ export async function extractReadingUpload(formData: FormData) {
 
   const file = formData.get("file");
   if (!(file instanceof File)) throw new ReadingError("INVALID_FILE");
+
+  // Lazy-load so practice/detail pages never pull native canvas into the RSC graph.
+  const { extractReadingDocument } = await import("@/lib/reading/extract");
 
   const buffer = Buffer.from(await file.arrayBuffer());
   const extracted = await extractReadingDocument({

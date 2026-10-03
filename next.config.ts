@@ -24,6 +24,9 @@ const nextConfig: NextConfig = {
     "stripe",
     "@stream-io/node-sdk",
     "@stream-io/openai-realtime-api",
+    // Native binding — must stay external for Turbopack/webpack ESM chunks.
+    "@napi-rs/canvas",
+    "unpdf",
   ],
   images: {
     remotePatterns: [

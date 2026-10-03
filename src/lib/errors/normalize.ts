@@ -16,7 +16,7 @@ function statusFromError(error: unknown): number | undefined {
     if (Number.isFinite(status) && status > 0) return status;
   }
   if ("statusCode" in error) {
-    const status = Number((error as { statusCode?: unknown }).status);
+    const status = Number((error as { statusCode?: unknown }).statusCode);
     if (Number.isFinite(status) && status > 0) return status;
   }
   return undefined;
