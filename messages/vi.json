@@ -2490,14 +2490,14 @@
     "accountDescription": "Đổi ảnh đại diện và mật khẩu.",
     "profile": "Hồ sơ",
     "avatar": "Ảnh đại diện",
-    "avatarDescription": "Tải ảnh cho tài khoản. JPG, PNG, WebP hoặc GIF, tối đa 5 MB.",
+    "avatarDescription": "Tải ảnh lên tài khoản. JPG, PNG, WebP hoặc GIF tối đa 5 MB — chúng tôi nén trước khi tải.",
     "changeAvatar": "Đổi ảnh",
     "removeAvatar": "Xóa ảnh",
     "avatarUpdated": "Đã cập nhật ảnh đại diện",
     "avatarRemoved": "Đã xóa ảnh đại diện",
     "avatarUploadFailed": "Không tải được ảnh lên",
     "avatarInvalidType": "Chọn ảnh JPG, PNG, WebP hoặc GIF nhé",
-    "avatarTooLarge": "Ảnh phải dưới 5 MB",
+    "avatarTooLarge": "Ảnh phải từ 5 MB trở xuống (sau nén dưới ~900 KB).",
     "avatarNotConfigured": "Chưa cấu hình tải ảnh",
     "changePassword": "Đổi mật khẩu",
     "currentPassword": "Mật khẩu hiện tại",
@@ -2524,7 +2524,9 @@
     "oauthNotConfigured": "Đăng nhập Google chưa được cấu hình.",
     "legalPrivacy": "Quyền riêng tư",
     "legalTerms": "Điều khoản",
-    "registerAgreement": "Khi tạo tài khoản, bạn đồng ý với <terms>Điều khoản sử dụng</terms> và <privacy>Chính sách quyền riêng tư</privacy>."
+    "registerAgreement": "Khi tạo tài khoản, bạn đồng ý với <terms>Điều khoản sử dụng</terms> và <privacy>Chính sách quyền riêng tư</privacy>.",
+    "avatarRequestTooLarge": "Ảnh quá lớn để gửi. Hãy thử ảnh nhỏ hơn.",
+    "requestTooLarge": "Yêu cầu quá lớn. Thay đổi của bạn vẫn được giữ — hãy thử lại."
   },
   "account": {
     "eyebrow": "Tài khoản",
@@ -2623,7 +2625,9 @@
         "invalidBackup": "Đây không giống bản sao lưu Notoria hợp lệ. Hãy dùng file JSON từ Xuất bản sao lưu tài khoản.",
         "unauthorized": "Đăng nhập lại để nhập backup.",
         "invalidInput": "Hãy chọn file JSON backup.",
-        "importFailed": "Không nhập được backup này. Thử lại nhé."
+        "importFailed": "Không nhập được backup này. Thử lại nhé.",
+        "requestTooLarge": "Bản sao lưu quá lớn để xử lý trên trang này. Hãy thử xuất nhỏ hơn hoặc liên hệ hỗ trợ.",
+        "notConfigured": "Lưu trữ tệp chưa được cấu hình cho nhập bản sao lưu."
       }
     },
     "danger": {

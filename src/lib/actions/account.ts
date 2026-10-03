@@ -19,8 +19,11 @@ import { strongPasswordSchema } from "@/lib/auth/password";
 import {
   configureCloudinary,
   extractCloudinaryPublicId,
+  getAvatarFolder,
   getAvatarPublicId,
+  getCloudinaryPublicConfig,
   isCloudinaryConfigured,
+  signCloudinaryUploadParams,
 } from "@/lib/cloudinary";
 import { getStripeClient } from "@/lib/stripe/client";
 import { isStripeConfigured } from "@/lib/stripe/config";
@@ -209,6 +212,104 @@ async function deleteCloudinaryAsset(url: string | null | undefined) {
   await cloudinary.uploader.destroy(publicId, { invalidate: true });
 }
 
+/**
+ * Signed params for browser → Cloudinary avatar upload.
+ * The image never travels through the `/account` Server Action body.
+ */
+export async function getAvatarUploadSignature() {
+  if (!isCloudinaryConfigured()) {
+    throw new Error("CLOUDINARY_NOT_CONFIGURED");
+  }
+
+  const userId = await getCurrentUserId();
+  const { cloudName, apiKey } = getCloudinaryPublicConfig();
+  const timestamp = Math.round(Date.now() / 1000);
+  const folder = getAvatarFolder(userId);
+  const publicId = "avatar";
+
+  // String "true" so FormData values match the signed params.
+  const signature = signCloudinaryUploadParams({
+    folder,
+    public_id: publicId,
+    overwrite: "true",
+    timestamp,
+  });
+
+  return {
+    cloudName,
+    apiKey,
+    timestamp,
+    signature,
+    folder,
+    publicId,
+  };
+}
+
+const confirmAvatarSchema = z.object({
+  imageUrl: z.string().url().max(2000),
+  publicId: z.string().trim().min(1).max(500),
+});
+
+/**
+ * Persist an avatar URL after a successful direct Cloudinary upload.
+ * Only accepts assets under this user's avatar folder.
+ */
+export async function confirmAvatarUpload(
+  data: z.infer<typeof confirmAvatarSchema>,
+) {
+  if (!isCloudinaryConfigured()) {
+    throw new Error("CLOUDINARY_NOT_CONFIGURED");
+  }
+
+  const parsed = confirmAvatarSchema.parse(data);
+  const userId = await getCurrentUserId();
+  const expectedPublicId = getAvatarPublicId(userId);
+  const expectedFolder = getAvatarFolder(userId);
+
+  if (
+    parsed.publicId !== expectedPublicId &&
+    !parsed.publicId.startsWith(`${expectedFolder}/`)
+  ) {
+    throw new Error("INVALID_FILE");
+  }
+
+  if (!parsed.imageUrl.includes("res.cloudinary.com")) {
+    throw new Error("INVALID_FILE");
+  }
+
+  const extracted = extractCloudinaryPublicId(parsed.imageUrl);
+  if (extracted && extracted !== parsed.publicId && extracted !== expectedPublicId) {
+    throw new Error("INVALID_FILE");
+  }
+
+  const currentUser = await db.query.users.findFirst({
+    where: eq(users.id, userId),
+    columns: { image: true },
+  });
+
+  await db
+    .update(users)
+    .set({
+      image: parsed.imageUrl,
+      updatedAt: new Date(),
+    })
+    .where(eq(users.id, userId));
+
+  if (currentUser?.image && currentUser.image !== parsed.imageUrl) {
+    await deleteCloudinaryAsset(currentUser.image);
+  }
+
+  revalidatePath("/account");
+  revalidatePath("/", "layout");
+
+  return { image: parsed.imageUrl };
+}
+
+/**
+ * @deprecated Prefer direct Cloudinary upload via {@link getAvatarUploadSignature}
+ * + {@link confirmAvatarUpload}. Kept only as a last-resort small-file path;
+ * large files hit Vercel's ~4.5 MB request limit on production.
+ */
 export async function uploadAvatar(formData: FormData) {
   if (!isCloudinaryConfigured()) {
     throw new Error("CLOUDINARY_NOT_CONFIGURED");
@@ -225,7 +326,9 @@ export async function uploadAvatar(formData: FormData) {
     throw new Error("INVALID_FILE_TYPE");
   }
 
-  if (file.size > MAX_AVATAR_SIZE) {
+  // Keep well under Vercel serverless body limit (~4.5 MB).
+  const vercelSafeMax = 3 * 1024 * 1024;
+  if (file.size > vercelSafeMax || file.size > MAX_AVATAR_SIZE) {
     throw new Error("FILE_TOO_LARGE");
   }
 
@@ -240,7 +343,7 @@ export async function uploadAvatar(formData: FormData) {
   const result = await new Promise<{ secure_url: string }>((resolve, reject) => {
     const upload = cloudinary.uploader.upload_stream(
       {
-        folder: `notoria/avatars/${userId}`,
+        folder: getAvatarFolder(userId),
         public_id: "avatar",
         overwrite: true,
         resource_type: "image",

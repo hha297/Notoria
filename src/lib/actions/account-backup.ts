@@ -14,71 +14,181 @@ import {
   type BackupPreview,
 } from "@/lib/account-backup";
 import { importAccountBackupLearningData } from "@/lib/account-backup/import";
+import {
+  configureCloudinary,
+  downloadCloudinaryAsset,
+  getAccountBackupFolder,
+  getCloudinaryPublicConfig,
+  isCloudinaryConfigured,
+  signCloudinaryUploadParams,
+} from "@/lib/cloudinary";
 
 export type AccountBackupActionError =
   | { code: "UNAUTHORIZED" }
   | { code: "INVALID_INPUT" }
   | { code: "FILE_TOO_LARGE" }
+  | { code: "CLOUDINARY_NOT_CONFIGURED" }
   | { code: "INVALID_BACKUP"; message: string }
-  | { code: "IMPORT_FAILED"; message?: string };
+  | { code: "IMPORT_FAILED"; message?: string }
+  | { code: "REQUEST_TOO_LARGE" };
 
 export type AnalyzeAccountBackupResult = {
   preview: BackupPreview;
+  /** Temporary Cloudinary public id — reuse for confirm, then deleted. */
+  uploadPublicId: string;
 };
 
-async function loadBackupText(formData: FormData): Promise<
+function isOwnedBackupPublicId(userId: string, publicId: string) {
+  const folder = getAccountBackupFolder(userId);
+  return publicId === folder || publicId.startsWith(`${folder}/`);
+}
+
+async function destroyBackupAsset(publicId: string) {
+  if (!isCloudinaryConfigured() || !publicId) return;
+  try {
+    const cloudinary = configureCloudinary();
+    await cloudinary.uploader.destroy(publicId, {
+      resource_type: "raw",
+      invalidate: true,
+    });
+  } catch {
+    // best-effort cleanup
+  }
+}
+
+async function loadBackupTextFromCloudinary(
+  userId: string,
+  publicId: string,
+  fallbackUrl?: string | null,
+): Promise<
   | { ok: true; text: string }
   | { ok: false; error: AccountBackupActionError }
 > {
-  const file = formData.get("file");
-  if (!(file instanceof File)) {
+  const trimmed = publicId.trim();
+  if (!trimmed || !isOwnedBackupPublicId(userId, trimmed)) {
     return { ok: false, error: { code: "INVALID_INPUT" } };
   }
 
-  const name = (file.name || "backup.json").toLowerCase();
-  const type = (file.type || "").toLowerCase();
-  if (!name.endsWith(".json") && type && !type.includes("json") && type !== "application/octet-stream") {
+  try {
+    const buffer = await downloadCloudinaryAsset({
+      publicId: trimmed,
+      resourceType: "raw",
+      fallbackUrl,
+    });
+    if (buffer.byteLength > MAX_ACCOUNT_BACKUP_BYTES) {
+      await destroyBackupAsset(trimmed);
+      return { ok: false, error: { code: "FILE_TOO_LARGE" } };
+    }
+    if (buffer.byteLength <= 0) {
+      await destroyBackupAsset(trimmed);
+      return {
+        ok: false,
+        error: {
+          code: "INVALID_BACKUP",
+          message: "The file is empty.",
+        },
+      };
+    }
+    return { ok: true, text: buffer.toString("utf8") };
+  } catch (error) {
     return {
       ok: false,
       error: {
-        code: "INVALID_BACKUP",
-        message:
-          "This doesn't look like a valid Notoria backup. Please use a JSON file exported from Notoria's Export account backup feature.",
+        code: "IMPORT_FAILED",
+        message: error instanceof Error ? error.message : undefined,
       },
     };
   }
-
-  if (file.size <= 0) {
-    return {
-      ok: false,
-      error: {
-        code: "INVALID_BACKUP",
-        message: "The file is empty.",
-      },
-    };
-  }
-
-  if (file.size > MAX_ACCOUNT_BACKUP_BYTES) {
-    return { ok: false, error: { code: "FILE_TOO_LARGE" } };
-  }
-
-  const text = await file.text();
-  return { ok: true, text };
 }
 
-export async function analyzeAccountBackup(formData: FormData): Promise<
+/** Signed params so the browser can upload a backup JSON directly to Cloudinary. */
+export async function getAccountBackupUploadSignature(input: {
+  filename?: string;
+  byteSize?: number;
+}) {
+  try {
+    if (!isCloudinaryConfigured()) {
+      return {
+        ok: false as const,
+        error: { code: "CLOUDINARY_NOT_CONFIGURED" as const },
+      };
+    }
+
+    if (
+      typeof input.byteSize === "number" &&
+      input.byteSize > MAX_ACCOUNT_BACKUP_BYTES
+    ) {
+      return { ok: false as const, error: { code: "FILE_TOO_LARGE" as const } };
+    }
+
+    const userId = await getCurrentUserId();
+    const { cloudName, apiKey } = getCloudinaryPublicConfig();
+    const timestamp = Math.round(Date.now() / 1000);
+    const folder = getAccountBackupFolder(userId);
+
+    const signature = signCloudinaryUploadParams({
+      folder,
+      timestamp,
+      unique_filename: "true",
+      use_filename: "true",
+    });
+
+    return {
+      ok: true as const,
+      result: {
+        cloudName,
+        apiKey,
+        timestamp,
+        signature,
+        folder,
+        resourceType: "raw" as const,
+      },
+    };
+  } catch (error) {
+    if (error instanceof Error && error.message === "Unauthorized") {
+      return { ok: false as const, error: { code: "UNAUTHORIZED" as const } };
+    }
+    return {
+      ok: false as const,
+      error: {
+        code: "IMPORT_FAILED" as const,
+        message: error instanceof Error ? error.message : undefined,
+      },
+    };
+  }
+}
+
+export async function analyzeAccountBackupFromUpload(input: {
+  publicId: string;
+  fileUrl?: string;
+  byteSize?: number;
+}): Promise<
   | { ok: true; result: AnalyzeAccountBackupResult }
   | { ok: false; error: AccountBackupActionError }
 > {
   try {
     const userId = await getCurrentUserId();
-    const loaded = await loadBackupText(formData);
+
+    if (
+      typeof input.byteSize === "number" &&
+      input.byteSize > MAX_ACCOUNT_BACKUP_BYTES
+    ) {
+      await destroyBackupAsset(input.publicId);
+      return { ok: false, error: { code: "FILE_TOO_LARGE" } };
+    }
+
+    const loaded = await loadBackupTextFromCloudinary(
+      userId,
+      input.publicId,
+      input.fileUrl,
+    );
     if (!loaded.ok) return loaded;
 
     let backup;
     try {
       backup = parseAccountBackupJson(loaded.text);
     } catch (error) {
+      await destroyBackupAsset(input.publicId);
       const message =
         error instanceof AccountBackupParseError
           ? error.message
@@ -113,7 +223,10 @@ export async function analyzeAccountBackup(formData: FormData): Promise<
       })),
     );
 
-    return { ok: true, result: { preview } };
+    return {
+      ok: true,
+      result: { preview, uploadPublicId: input.publicId.trim() },
+    };
   } catch (error) {
     if (error instanceof Error && error.message === "Unauthorized") {
       return { ok: false, error: { code: "UNAUTHORIZED" } };
@@ -128,19 +241,27 @@ export async function analyzeAccountBackup(formData: FormData): Promise<
   }
 }
 
-export async function confirmAccountBackupImport(formData: FormData): Promise<
+export async function confirmAccountBackupFromUpload(input: {
+  publicId: string;
+  fileUrl?: string;
+}): Promise<
   | { ok: true; result: BackupImportResult }
   | { ok: false; error: AccountBackupActionError }
 > {
   try {
     const userId = await getCurrentUserId();
-    const loaded = await loadBackupText(formData);
+    const loaded = await loadBackupTextFromCloudinary(
+      userId,
+      input.publicId,
+      input.fileUrl,
+    );
     if (!loaded.ok) return loaded;
 
     let backup;
     try {
       backup = parseAccountBackupJson(loaded.text);
     } catch (error) {
+      await destroyBackupAsset(input.publicId);
       const message =
         error instanceof AccountBackupParseError
           ? error.message
@@ -152,6 +273,7 @@ export async function confirmAccountBackupImport(formData: FormData): Promise<
       userId,
       backup,
     });
+    await destroyBackupAsset(input.publicId);
 
     revalidatePath("/");
     revalidatePath("/vocabulary");
@@ -165,10 +287,10 @@ export async function confirmAccountBackupImport(formData: FormData): Promise<
 
     return { ok: true, result };
   } catch (error) {
+    await destroyBackupAsset(input.publicId);
     if (error instanceof Error && error.message === "Unauthorized") {
       return { ok: false, error: { code: "UNAUTHORIZED" } };
     }
-    console.error("[account-backup] import failed", error);
     return {
       ok: false,
       error: {
@@ -177,4 +299,28 @@ export async function confirmAccountBackupImport(formData: FormData): Promise<
       },
     };
   }
+}
+
+/** @deprecated Use Cloudinary direct upload helpers — FormData hits Vercel 413. */
+export async function analyzeAccountBackup(formData: FormData): Promise<
+  | { ok: true; result: AnalyzeAccountBackupResult }
+  | { ok: false; error: AccountBackupActionError }
+> {
+  void formData;
+  return {
+    ok: false,
+    error: { code: "REQUEST_TOO_LARGE" },
+  };
+}
+
+/** @deprecated Use Cloudinary direct upload helpers — FormData hits Vercel 413. */
+export async function confirmAccountBackupImport(formData: FormData): Promise<
+  | { ok: true; result: BackupImportResult }
+  | { ok: false; error: AccountBackupActionError }
+> {
+  void formData;
+  return {
+    ok: false,
+    error: { code: "REQUEST_TOO_LARGE" },
+  };
 }

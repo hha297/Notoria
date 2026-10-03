@@ -2490,14 +2490,14 @@
     "accountDescription": "Päivitä profiilikuva ja salasana.",
     "profile": "Profiili",
     "avatar": "Profiilikuva",
-    "avatarDescription": "Lataa tilillesi kuva. JPG, PNG, WebP tai GIF, enintään 5 MB.",
+    "avatarDescription": "Lataa kuva tilillesi. JPG, PNG, WebP tai GIF enintään 5 Mt — pakkaamme sen ennen latausta.",
     "changeAvatar": "Lataa kuva",
     "removeAvatar": "Poista kuva",
     "avatarUpdated": "Profiilikuva päivitetty",
     "avatarRemoved": "Profiilikuva poistettu",
     "avatarUploadFailed": "Kuvan lataus epäonnistui",
     "avatarInvalidType": "Valitse JPG-, PNG-, WebP- tai GIF-kuva",
-    "avatarTooLarge": "Kuvan on oltava enintään 5 MB",
+    "avatarTooLarge": "Kuvan on oltava enintään 5 Mt (pakkauksen jälkeen alle ~900 kt).",
     "avatarNotConfigured": "Kuvan latausta ei ole määritetty",
     "changePassword": "Vaihda salasana",
     "currentPassword": "Nykyinen salasana",
@@ -2524,7 +2524,9 @@
     "oauthNotConfigured": "Googlen kirjautumista ei ole vielä määritetty.",
     "legalPrivacy": "Tietosuoja",
     "legalTerms": "Ehdot",
-    "registerAgreement": "Luomalla tilin hyväksyt <terms>käyttöehdot</terms> ja <privacy>tietosuojaselosteen</privacy>."
+    "registerAgreement": "Luomalla tilin hyväksyt <terms>käyttöehdot</terms> ja <privacy>tietosuojaselosteen</privacy>.",
+    "avatarRequestTooLarge": "Kuva on liian suuri lähetettäväksi. Kokeile pienempää kuvaa.",
+    "requestTooLarge": "Pyyntö oli liian suuri. Muutoksesi säilyivät — yritä uudelleen."
   },
   "account": {
     "eyebrow": "Tili",
@@ -2623,7 +2625,9 @@
         "invalidBackup": "Tämä ei näytä kelvolliselta Notoria-varmuuskopiolta. Käytä JSON-tiedostoa, joka on viety tilin varmuuskopiona.",
         "unauthorized": "Kirjaudu uudelleen tuodaksesi varmuuskopion.",
         "invalidInput": "Valitse JSON-varmuuskopiotiedosto.",
-        "importFailed": "Varmuuskopiota ei voitu tuoda. Yritä uudelleen."
+        "importFailed": "Varmuuskopiota ei voitu tuoda. Yritä uudelleen.",
+        "requestTooLarge": "Varmuuskopio on liian suuri käsiteltäväksi tällä sivulla. Kokeile pienempää vientiä tai ota yhteyttä tukeen.",
+        "notConfigured": "Tiedostojen tallennusta ei ole vielä määritetty varmuuskopioiden tuontia varten."
       }
     },
     "danger": {

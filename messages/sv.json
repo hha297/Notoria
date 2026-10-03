@@ -2685,14 +2685,14 @@
     "accountDescription": "Uppdatera din profilbild och lösenord.",
     "profile": "Profil",
     "avatar": "Profilbild",
-    "avatarDescription": "Ladda upp en bild för ditt konto. JPG, PNG, WebP eller GIF upp till 5 MB.",
+    "avatarDescription": "Ladda upp ett foto till ditt konto. JPG, PNG, WebP eller GIF upp till 5 MB — vi komprimerar det före uppladdning.",
     "changeAvatar": "Ladda upp bild",
     "removeAvatar": "Ta bort bild",
     "avatarUpdated": "Profilbilden har uppdaterats",
     "avatarRemoved": "Profilbilden har tagits bort",
     "avatarUploadFailed": "Kunde inte ladda upp profilbild",
     "avatarInvalidType": "Vänligen välj en JPG, PNG, WebP eller GIF-bild",
-    "avatarTooLarge": "Bilden måste vara 5 MB eller mindre",
+    "avatarTooLarge": "Bilden måste vara högst 5 MB (under ~900 KB efter komprimering).",
     "avatarNotConfigured": "Bilduppladdning är inte konfigurerad än",
     "changePassword": "Ändra lösenord",
     "currentPassword": "Nuvarande lösenord",
@@ -2719,7 +2719,9 @@
     "oauthNotConfigured": "Google-inloggning är inte konfigurerad än.",
     "legalPrivacy": "Integritet",
     "legalTerms": "Villkor",
-    "registerAgreement": "Genom att skapa ett konto godkänner du <terms>användarvillkoren</terms> och <privacy>integritetspolicyn</privacy>."
+    "registerAgreement": "Genom att skapa ett konto godkänner du <terms>användarvillkoren</terms> och <privacy>integritetspolicyn</privacy>.",
+    "avatarRequestTooLarge": "Fotot är för stort att skicka. Prova en mindre bild.",
+    "requestTooLarge": "Begäran var för stor. Dina ändringar sparades — försök igen."
   },
   "account": {
     "eyebrow": "Konto",
@@ -2818,7 +2820,9 @@
         "invalidBackup": "Det här ser inte ut som en giltig Notoria-säkerhetskopia. Använd en JSON-fil exporterad från Exportera kontosäkerhetskopia.",
         "unauthorized": "Logga in igen för att importera en säkerhetskopia.",
         "invalidInput": "Välj en JSON-säkerhetskopiefil.",
-        "importFailed": "Kunde inte importera säkerhetskopian. Försök igen."
+        "importFailed": "Kunde inte importera säkerhetskopian. Försök igen.",
+        "requestTooLarge": "Säkerhetskopian är för stor att bearbeta på den här sidan. Prova en mindre export eller kontakta support.",
+        "notConfigured": "Fillagring är inte konfigurerad för import av säkerhetskopior ännu."
       }
     },
     "danger": {

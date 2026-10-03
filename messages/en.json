@@ -2685,14 +2685,14 @@
     "accountDescription": "Update your profile photo and password.",
     "profile": "Profile",
     "avatar": "Profile photo",
-    "avatarDescription": "Upload a photo for your account. JPG, PNG, WebP or GIF up to 5 MB.",
+    "avatarDescription": "Upload a photo for your account. JPG, PNG, WebP or GIF up to 5 MB — we compress it before upload.",
     "changeAvatar": "Upload photo",
     "removeAvatar": "Remove photo",
     "avatarUpdated": "Profile photo updated",
     "avatarRemoved": "Profile photo removed",
     "avatarUploadFailed": "Could not upload profile photo",
     "avatarInvalidType": "Please choose a JPG, PNG, WebP or GIF image",
-    "avatarTooLarge": "Image must be 5 MB or smaller",
+    "avatarTooLarge": "Image must be 5 MB or smaller (after compression under ~900 KB).",
     "avatarNotConfigured": "Image upload is not configured yet",
     "changePassword": "Change password",
     "currentPassword": "Current password",
@@ -2719,7 +2719,9 @@
     "oauthNotConfigured": "Google sign-in is not configured yet.",
     "legalPrivacy": "Privacy",
     "legalTerms": "Terms",
-    "registerAgreement": "By creating an account, you agree to the <terms>Terms of Use</terms> and <privacy>Privacy Policy</privacy>."
+    "registerAgreement": "By creating an account, you agree to the <terms>Terms of Use</terms> and <privacy>Privacy Policy</privacy>.",
+    "avatarRequestTooLarge": "That photo is too large to send. Try a smaller image.",
+    "requestTooLarge": "That request was too large. Your changes were kept — please try again."
   },
   "account": {
     "eyebrow": "Account",
@@ -2818,7 +2820,9 @@
         "invalidBackup": "This doesn't look like a valid Notoria backup. Please use a JSON file exported from Notoria's Export account backup feature.",
         "unauthorized": "Please sign in again to import a backup.",
         "invalidInput": "Please choose a JSON backup file.",
-        "importFailed": "Could not import this backup. Try again."
+        "importFailed": "Could not import this backup. Try again.",
+        "requestTooLarge": "That backup is too large to process through this page. Try a smaller export or contact support.",
+        "notConfigured": "File storage is not configured for backup import yet."
       }
     },
     "danger": {

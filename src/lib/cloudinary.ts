@@ -68,6 +68,10 @@ export function getEditorImageFolder(userId: string) {
   return `notoria/editor/${userId}`;
 }
 
+export function getAccountBackupFolder(userId: string) {
+  return `notoria/account-backups/${userId}`;
+}
+
 export function extractCloudinaryPublicId(url: string): string | null {
   if (!url.includes("res.cloudinary.com")) {
     return null;
