@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 // Previous Notoria fonts.
 // Kept intentionally for rollback/reference.
@@ -46,6 +46,32 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.notoria.fi"),
+  applicationName: "Notoria",
+  manifest: "/manifest.webmanifest",
+
+  icons: {
+    icon: [
+      {
+        url: "/logo.png",
+        type: "image/png",
+        sizes: "512x512",
+      },
+    ],
+    apple: [
+      {
+        url: "/logo.png",
+        type: "image/png",
+        sizes: "512x512",
+      },
+    ],
+  },
+
+  appleWebApp: {
+    capable: true,
+    title: "Notoria",
+    statusBarStyle: "default",
+  },
+
   title: {
     default: "Notoria — Private language learning workspace",
     template: "%s",
@@ -80,6 +106,19 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://www.notoria.fi",
   },
+};
+
+export const viewport: Viewport = {
+  themeColor: [
+    {
+      media: "(prefers-color-scheme: light)",
+      color: "#eeefe9",
+    },
+    {
+      media: "(prefers-color-scheme: dark)",
+      color: "#151611",
+    },
+  ],
 };
 
 export default async function RootLayout({
