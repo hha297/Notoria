@@ -89,10 +89,16 @@ const BEFORE_PROVIDER_CODES = new Set([
   "AI_DISABLED",
   "AI_QUOTA_EXCEEDED",
   "AI_FORBIDDEN",
+  "AI_PAID_OPS_STOPPED",
   "PRO_REQUIRED",
   "PREMIUM_REQUIRED",
   "JOB_LOCK_LOST",
 ]);
+
+/**
+ * Note: AI_CANCELLED / AbortError are after_provider — cancellation does not
+ * refund quota and does not imply provider usage was free.
+ */
 
 export type AiCostPhase = "before_provider" | "after_provider" | "persist";
 

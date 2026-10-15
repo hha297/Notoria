@@ -31,15 +31,27 @@ export async function POST(request: Request) {
   if (!access.ok) return access.response;
 
   try {
+    if (request.signal.aborted) {
+      await settleMeteredAi(access, false, new Error("AI_CANCELLED"));
+      return NextResponse.json({ ok: false, code: "AI_CANCELLED" }, { status: 499 });
+    }
     const sentenceMeaning = await glossSentenceMeaning({
       sentence: parsed.data.sentence,
       uiLocale: parsed.data.uiLocale,
+      signal: request.signal,
     });
+    if (request.signal.aborted) {
+      await settleMeteredAi(access, false, new Error("AI_CANCELLED"));
+      return NextResponse.json({ ok: false, code: "AI_CANCELLED" }, { status: 499 });
+    }
     await settleMeteredAi(access, true);
     return NextResponse.json({ ok: true, sentenceMeaning });
   } catch (error) {
     await settleMeteredAi(access, false, error);
     const message = error instanceof Error ? error.message : "";
+    if (message === "AI_CANCELLED" || request.signal.aborted) {
+      return NextResponse.json({ ok: false, code: "AI_CANCELLED" }, { status: 499 });
+    }
     if (message === "OPENAI_NOT_CONFIGURED" || message === "AI_INVALID_RESPONSE") {
       console.error("theory sentence meaning failed", message);
     } else {

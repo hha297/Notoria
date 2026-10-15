@@ -1,5 +1,14 @@
 import { AI_OUTPUT_TOKENS, vocabularyAiFields } from "@/lib/ai/bounds";
-import { requireOpenAiClient } from "@/lib/ai/openai-client";
+import { throwIfAborted } from "@/lib/ai/cancellation";
+import { runChatCompletion } from "@/lib/ai/provider-call";
+import {
+  AI_PROMPT_VERSIONS,
+  buildAiResultCacheKey,
+  fingerprintAiContent,
+  getCachedAiResult,
+  setCachedAiResult,
+} from "@/lib/ai/result-cache";
+import { trackAiProviderEvent } from "@/lib/ai/telemetry";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import {
   MEANING_GLOSS_PROMPT,
@@ -15,9 +24,7 @@ import {
   type VocabularySpellingResult,
 } from "@/lib/vocabulary/ai-types";
 
-function getOpenAIClient() {
-  return requireOpenAiClient({ timeoutMs: 8_000 });
-}
+const VOCAB_MODEL = "gpt-4o-mini";
 
 function parseJsonContent(content: string | null | undefined) {
   if (!content?.trim()) return null;
@@ -28,28 +35,70 @@ function parseJsonContent(content: string | null | undefined) {
   }
 }
 
-export async function analyzeVocabularySpelling(input: {
-  word: string;
-  language: string;
-  partOfSpeech?: string | null;
-}): Promise<VocabularySpellingResult> {
-  const client = getOpenAIClient();
+export type VocabularyAiCallContext = {
+  userId?: string | null;
+  reservationId?: string | null;
+  signal?: AbortSignal;
+};
+
+export async function analyzeVocabularySpelling(
+  input: {
+    word: string;
+    language: string;
+    partOfSpeech?: string | null;
+  },
+  ctx: VocabularyAiCallContext = {},
+): Promise<VocabularySpellingResult> {
+  throwIfAborted(ctx.signal);
   const languageHint = learningLanguageHint(input.language);
   const fields = vocabularyAiFields({
     word: input.word,
     partOfSpeech: input.partOfSpeech,
   });
 
-  const completion = await client.chat.completions.create({
-    model: "gpt-4o-mini",
-    temperature: 0.1,
-    max_tokens: AI_OUTPUT_TOKENS.vocabSpelling,
-    response_format: { type: "json_object" },
-    messages: [
-      {
-        role: "system",
-        content: await aiSystemPrompt(
-          `You are a multilingual vocabulary-learning assistant for Notoria.
+  const cacheKey = buildAiResultCacheKey({
+    userId: ctx.userId ?? "anon",
+    operation: "vocabSpelling",
+    contentFingerprint: fingerprintAiContent({
+      word: fields.word,
+      language: input.language,
+      partOfSpeech: fields.partOfSpeech,
+    }),
+    language: input.language,
+    model: VOCAB_MODEL,
+    promptVersion: AI_PROMPT_VERSIONS.vocabSpelling,
+  });
+  const cached = getCachedAiResult<VocabularySpellingResult>(cacheKey);
+  if (cached) {
+    trackAiProviderEvent({
+      userId: ctx.userId,
+      operation: "vocab.spelling",
+      feature: "ai_vocabulary",
+      model: VOCAB_MODEL,
+      outcome: "cache_hit",
+      reservationId: ctx.reservationId,
+      workKind: "interactive",
+    });
+    return cached;
+  }
+
+  const { completion } = await runChatCompletion({
+    operation: "vocab.spelling",
+    feature: "ai_vocabulary",
+    userId: ctx.userId,
+    reservationId: ctx.reservationId,
+    signal: ctx.signal,
+    timeoutMs: 8_000,
+    body: {
+      model: VOCAB_MODEL,
+      temperature: 0.1,
+      max_tokens: AI_OUTPUT_TOKENS.vocabSpelling,
+      response_format: { type: "json_object" },
+      messages: [
+        {
+          role: "system",
+          content: await aiSystemPrompt(
+            `You are a multilingual vocabulary-learning assistant for Notoria.
 
 Judge only the WORD string. This is a spelling check of the word the learner is studying.
 
@@ -80,19 +129,20 @@ Rules:
 - suggestion must be a corrected spelling of the same word, not a translation or related word.
 - explanation should be short, gentle, and suitable to show as "Did you mean ...?"
 - Do not include markdown.`,
-          { responseStyle: true, correctionStyle: true },
-        ),
-      },
-      {
-        role: "user",
-        content: JSON.stringify({
-          word: fields.word,
-          learningLanguageCode: input.language,
-          learningLanguageHint: languageHint,
-          partOfSpeech: fields.partOfSpeech,
-        }),
-      },
-    ],
+            { responseStyle: true, correctionStyle: true },
+          ),
+        },
+        {
+          role: "user",
+          content: JSON.stringify({
+            word: fields.word,
+            learningLanguageCode: input.language,
+            learningLanguageHint: languageHint,
+            partOfSpeech: fields.partOfSpeech,
+          }),
+        },
+      ],
+    },
   });
 
   const parsed = vocabularySpellingResultSchema.safeParse(
@@ -107,26 +157,40 @@ Rules:
     throw new Error("AI_INVALID_RESPONSE");
   }
 
+  setCachedAiResult(cacheKey, parsed.data);
   return parsed.data;
 }
 
-async function completeMeaningJson(system: string, payload: unknown) {
-  const client = getOpenAIClient();
-  const completion = await client.chat.completions.create({
-    model: "gpt-4o-mini",
-    temperature: 0.1,
-    max_tokens: AI_OUTPUT_TOKENS.vocabMeaning,
-    response_format: { type: "json_object" },
-    messages: [
-      {
-        role: "system",
-        content: await aiSystemPrompt(system, {
-          responseStyle: true,
-          correctionStyle: true,
-        }),
-      },
-      { role: "user", content: JSON.stringify(payload) },
-    ],
+async function completeMeaningJson(
+  system: string,
+  payload: unknown,
+  ctx: VocabularyAiCallContext,
+  operation: string,
+) {
+  throwIfAborted(ctx.signal);
+  const { completion } = await runChatCompletion({
+    operation,
+    feature: "ai_vocabulary",
+    userId: ctx.userId,
+    reservationId: ctx.reservationId,
+    signal: ctx.signal,
+    timeoutMs: 8_000,
+    body: {
+      model: VOCAB_MODEL,
+      temperature: 0.1,
+      max_tokens: AI_OUTPUT_TOKENS.vocabMeaning,
+      response_format: { type: "json_object" },
+      messages: [
+        {
+          role: "system",
+          content: await aiSystemPrompt(system, {
+            responseStyle: true,
+            correctionStyle: true,
+          }),
+        },
+        { role: "user", content: JSON.stringify(payload) },
+      ],
+    },
   });
 
   const parsed = vocabularyMeaningResultSchema.safeParse(
@@ -144,28 +208,37 @@ async function completeMeaningJson(system: string, payload: unknown) {
   return parsed.data;
 }
 
-async function suggestMeaningGlosses(input: {
-  word: string;
-  meaning: string;
-  language: string;
-  partOfSpeech?: string | null;
-  wordLanguage?: string | null;
-  meaningLanguage?: string | null;
-}): Promise<VocabularyMeaningResult["suggestions"]> {
+async function suggestMeaningGlosses(
+  input: {
+    word: string;
+    meaning: string;
+    language: string;
+    partOfSpeech?: string | null;
+    wordLanguage?: string | null;
+    meaningLanguage?: string | null;
+  },
+  ctx: VocabularyAiCallContext,
+): Promise<VocabularyMeaningResult["suggestions"]> {
+  throwIfAborted(ctx.signal);
   const fields = vocabularyAiFields({
     word: input.word,
     meaning: input.meaning,
     partOfSpeech: input.partOfSpeech,
   });
-  const result = await completeMeaningJson(MEANING_GLOSS_PROMPT, {
-    word: fields.word,
-    currentMeaning: fields.meaning,
-    detectedWordLanguage: input.wordLanguage,
-    detectedMeaningLanguage: input.meaningLanguage,
-    learningLanguageCode: input.language,
-    learningLanguageHint: learningLanguageHint(input.language),
-    partOfSpeech: fields.partOfSpeech,
-  });
+  const result = await completeMeaningJson(
+    MEANING_GLOSS_PROMPT,
+    {
+      word: fields.word,
+      currentMeaning: fields.meaning,
+      detectedWordLanguage: input.wordLanguage,
+      detectedMeaningLanguage: input.meaningLanguage,
+      learningLanguageCode: input.language,
+      learningLanguageHint: learningLanguageHint(input.language),
+      partOfSpeech: fields.partOfSpeech,
+    },
+    ctx,
+    "vocab.meaning_gloss",
+  );
 
   return sanitizeMeaningSuggestions(
     input.word,
@@ -178,18 +251,50 @@ async function suggestMeaningGlosses(input: {
   );
 }
 
-export async function analyzeVocabularyMeaning(input: {
-  word: string;
-  meaning: string;
-  language: string;
-  partOfSpeech?: string | null;
-  examples?: string[];
-}): Promise<VocabularyMeaningResult> {
+export async function analyzeVocabularyMeaning(
+  input: {
+    word: string;
+    meaning: string;
+    language: string;
+    partOfSpeech?: string | null;
+    examples?: string[];
+  },
+  ctx: VocabularyAiCallContext = {},
+): Promise<VocabularyMeaningResult> {
+  throwIfAborted(ctx.signal);
   const fields = vocabularyAiFields({
     word: input.word,
     meaning: input.meaning,
     partOfSpeech: input.partOfSpeech,
   });
+
+  const cacheKey = buildAiResultCacheKey({
+    userId: ctx.userId ?? "anon",
+    operation: "vocabMeaning",
+    contentFingerprint: fingerprintAiContent({
+      word: fields.word,
+      meaning: fields.meaning,
+      language: input.language,
+      partOfSpeech: fields.partOfSpeech,
+    }),
+    language: input.language,
+    model: VOCAB_MODEL,
+    promptVersion: AI_PROMPT_VERSIONS.vocabMeaning,
+  });
+  const cached = getCachedAiResult<VocabularyMeaningResult>(cacheKey);
+  if (cached) {
+    trackAiProviderEvent({
+      userId: ctx.userId,
+      operation: "vocab.meaning",
+      feature: "ai_vocabulary",
+      model: VOCAB_MODEL,
+      outcome: "cache_hit",
+      reservationId: ctx.reservationId,
+      workKind: "interactive",
+    });
+    return cached;
+  }
+
   const parsed = await completeMeaningJson(
     MEANING_VALIDATOR_PROMPT,
     buildMeaningValidationPayload({
@@ -198,6 +303,8 @@ export async function analyzeVocabularyMeaning(input: {
       meaning: fields.meaning ?? input.meaning,
       partOfSpeech: fields.partOfSpeech,
     }),
+    ctx,
+    "vocab.meaning",
   );
 
   const languages = {
@@ -220,20 +327,28 @@ export async function analyzeVocabularyMeaning(input: {
       : parsed.isLikelyCorrect;
 
   if (isLikelyCorrect === false && suggestions.length === 0) {
+    throwIfAborted(ctx.signal);
     try {
-      suggestions = await suggestMeaningGlosses({
-        ...input,
-        word: fields.word ?? input.word,
-        meaning: fields.meaning ?? input.meaning,
-        partOfSpeech: fields.partOfSpeech,
-        ...languages,
-      });
-    } catch {
+      suggestions = await suggestMeaningGlosses(
+        {
+          ...input,
+          word: fields.word ?? input.word,
+          meaning: fields.meaning ?? input.meaning,
+          partOfSpeech: fields.partOfSpeech,
+          ...languages,
+        },
+        ctx,
+      );
+    } catch (error) {
+      throwIfAborted(ctx.signal);
+      if (error instanceof Error && error.message === "AI_CANCELLED") {
+        throw error;
+      }
       suggestions = [];
     }
   }
 
-  return {
+  const result: VocabularyMeaningResult = {
     ...parsed,
     word: parsed.word || input.word,
     meaning: parsed.meaning || input.meaning,
@@ -241,4 +356,6 @@ export async function analyzeVocabularyMeaning(input: {
     suggestions,
     isLikelyCorrect,
   };
+  setCachedAiResult(cacheKey, result);
+  return result;
 }

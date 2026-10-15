@@ -11,6 +11,7 @@ export const AI_ABUSE_OPERATIONS = [
   "reading_ocr",
   "content_import",
   "coach_refresh",
+  "vocabulary_meaning",
 ] as const;
 
 export type AiAbuseOperation = (typeof AI_ABUSE_OPERATIONS)[number];
@@ -40,6 +41,7 @@ export const AI_ABUSE_POLICY: Record<AiAbuseOperation, AbusePolicy> = {
     concurrency: 1,
     cooldownMs: 60_000,
   },
+  vocabulary_meaning: { limit: 30, windowMs: 60_000, concurrency: 2 },
 };
 
 export class RateLimitedError extends Error {

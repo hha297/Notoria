@@ -1,8 +1,10 @@
 import { after } from "next/server";
 import { and, eq, inArray, sql } from "drizzle-orm";
 import { AI_JOBS, JobLockLostError, runExclusiveJob } from "@/lib/ai/job-lock";
+import { trackAiProviderEvent } from "@/lib/ai/telemetry";
 import { db } from "@/db";
 import { speakingSessions } from "@/db/schema";
+import { speakingElapsedSeconds } from "@/lib/speaking/lifetime";
 import {
   formatSpeakingTranscript,
   parseTranscriptJsonl,
@@ -89,6 +91,11 @@ export async function saveSpeakingTranscript(input: {
 }
 
 export async function markSpeakingSessionEnded(sessionId: string) {
+  const prior = await db.query.speakingSessions.findFirst({
+    where: eq(speakingSessions.id, sessionId),
+    columns: { userId: true, startedAt: true, status: true },
+  });
+
   await db
     .update(speakingSessions)
     .set({
@@ -102,6 +109,20 @@ export async function markSpeakingSessionEnded(sessionId: string) {
         inArray(speakingSessions.status, ["upcoming", "active"]),
       ),
     );
+
+  // Speaking duration is tracked separately from text-generation token usage.
+  // Cleanup remains available even when AI_PAID_OPS_STOP is set.
+  if (prior && (prior.status === "upcoming" || prior.status === "active")) {
+    const durationSeconds = speakingElapsedSeconds(prior.startedAt) ?? 0;
+    trackAiProviderEvent({
+      userId: prior.userId,
+      operation: "speaking.session_duration",
+      feature: "ai_meeting",
+      outcome: "ok",
+      speakingDurationSeconds: durationSeconds,
+      workKind: "cleanup",
+    });
+  }
 
   disconnectSpeakingTutor(sessionId);
 

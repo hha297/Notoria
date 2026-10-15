@@ -21,6 +21,7 @@ import {
   type QuotaStatus,
 } from "@/lib/billing/plans";
 import { shouldRefundUsage } from "@/lib/ai/bounds";
+import { assertPaidOpsAllowed } from "@/lib/ai/paid-ops";
 import {
   finalizeUsageReservation,
   readUsageCounts,
@@ -132,6 +133,9 @@ export async function consumeUsage(
   feature: QuotaFeatureId,
   subjectId?: string | null,
 ) {
+  // Stops new paid reservations (including unlimited plans) without blocking
+  // cleanup/finalize that never calls consumeUsage.
+  assertPaidOpsAllowed();
   const plan = entitlementPlan(user);
   const access = getFeatureAccess(plan, feature);
   if (access.kind !== "quota") {

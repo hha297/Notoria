@@ -3,7 +3,8 @@ import {
   AI_OUTPUT_TOKENS,
   clipForAi,
 } from "@/lib/ai/bounds";
-import { requireOpenAiClient } from "@/lib/ai/openai-client";
+import { throwIfAborted } from "@/lib/ai/cancellation";
+import { runChatCompletion } from "@/lib/ai/provider-call";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import type { AppLocale } from "@/i18n/config";
 
@@ -13,10 +14,6 @@ const UI_LANGUAGE_NAMES: Record<AppLocale, string> = {
   sv: "Swedish",
   vi: "Vietnamese",
 };
-
-function getOpenAIClient() {
-  return requireOpenAiClient({ timeoutMs: 60_000 });
-}
 
 function parseJsonContent(content: string | null | undefined) {
   if (!content?.trim()) return null;
@@ -33,34 +30,41 @@ function parseJsonContent(content: string | null | undefined) {
 export async function glossSentenceMeaning(input: {
   sentence: string;
   uiLocale: AppLocale;
+  signal?: AbortSignal;
 }): Promise<string> {
+  throwIfAborted(input.signal);
   const sentence = clipForAi(input.sentence, AI_INPUT_LIMITS.sentenceText);
   if (!sentence) throw new Error("AI_INVALID_REQUEST");
 
   const uiLanguage = UI_LANGUAGE_NAMES[input.uiLocale];
-  const client = getOpenAIClient();
-  const completion = await client.chat.completions.create({
-    model: "gpt-4o-mini",
-    temperature: 0.2,
-    max_tokens: AI_OUTPUT_TOKENS.sentenceGloss,
-    response_format: { type: "json_object" },
-    messages: [
-      {
-        role: "system",
-        content: await aiSystemPrompt(
-          'Return JSON only: {"sentenceMeaning": string}. sentenceMeaning is a short natural translation/gloss of the full sentence in the requested UI language. No quotes wrapping the whole string. No explanations.',
-          { responseStyle: true },
-        ),
-      },
-      {
-        role: "user",
-        content: JSON.stringify({
-          uiLanguage,
-          sentence,
-          reminder: `Write sentenceMeaning in ${uiLanguage} only.`,
-        }),
-      },
-    ],
+  const { completion } = await runChatCompletion({
+    operation: "exercise.sentence_gloss",
+    feature: "ai_exercise",
+    signal: input.signal,
+    timeoutMs: 60_000,
+    body: {
+      model: "gpt-4o-mini",
+      temperature: 0.2,
+      max_tokens: AI_OUTPUT_TOKENS.sentenceGloss,
+      response_format: { type: "json_object" },
+      messages: [
+        {
+          role: "system",
+          content: await aiSystemPrompt(
+            'Return JSON only: {"sentenceMeaning": string}. sentenceMeaning is a short natural translation/gloss of the full sentence in the requested UI language. No quotes wrapping the whole string. No explanations.',
+            { responseStyle: true },
+          ),
+        },
+        {
+          role: "user",
+          content: JSON.stringify({
+            uiLanguage,
+            sentence,
+            reminder: `Write sentenceMeaning in ${uiLanguage} only.`,
+          }),
+        },
+      ],
+    },
   });
 
   const raw = parseJsonContent(completion.choices[0]?.message?.content);
@@ -94,9 +98,12 @@ export async function ensureSentenceMeanings<T>(
     setMeaning: (item: T, meaning: string) => T;
     /** Reused when AI gloss is unavailable — typically vocabulary.meaning */
     getFallbackMeaning?: (item: T) => string | null | undefined;
+    signal?: AbortSignal;
+    workKind?: "interactive" | "background";
   },
 ): Promise<T[]> {
   if (items.length === 0) return items;
+  throwIfAborted(options.signal);
 
   const slots: MeaningSlot[] = items.map((item, index) => {
     const existing = options.getMeaning(item)?.trim() || null;
@@ -109,6 +116,7 @@ export async function ensureSentenceMeanings<T>(
 
   const missing = slots.filter((slot) => !slot.sentenceMeaning && slot.sentence);
   if (missing.length > 0) {
+    throwIfAborted(options.signal);
     try {
       const filled = await glossSentenceMeaningsBatch({
         uiLocale: options.uiLocale,
@@ -116,12 +124,15 @@ export async function ensureSentenceMeanings<T>(
           index: slot.index,
           sentence: slot.sentence,
         })),
+        signal: options.signal,
+        workKind: options.workKind ?? "background",
       });
       for (const [index, meaning] of filled) {
         const slot = slots[index];
         if (slot && meaning) slot.sentenceMeaning = meaning;
       }
     } catch (error) {
+      throwIfAborted(options.signal);
       console.error(
         "batch sentence meaning failed",
         error instanceof Error ? error.message : "",
@@ -145,41 +156,50 @@ export async function ensureSentenceMeanings<T>(
 async function glossSentenceMeaningsBatch(input: {
   uiLocale: AppLocale;
   sentences: Array<{ index: number; sentence: string }>;
+  signal?: AbortSignal;
+  workKind?: "interactive" | "background";
 }): Promise<Map<number, string>> {
   const result = new Map<number, string>();
   if (input.sentences.length === 0) return result;
+  throwIfAborted(input.signal);
 
   const uiLanguage = UI_LANGUAGE_NAMES[input.uiLocale];
-  const client = getOpenAIClient();
   const sentences = input.sentences.map((item) => ({
     index: item.index,
     sentence: clipForAi(item.sentence, AI_INPUT_LIMITS.sentenceText),
   }));
-  const completion = await client.chat.completions.create({
-    model: "gpt-4o-mini",
-    temperature: 0.2,
-    max_tokens: Math.min(
-      400 + sentences.length * 80,
-      AI_OUTPUT_TOKENS.sentenceGlossBatch,
-    ),
-    response_format: { type: "json_object" },
-    messages: [
-      {
-        role: "system",
-        content: await aiSystemPrompt(
-          'Return JSON only: {"meanings":[{"index":number,"sentenceMeaning":string}]}. For each input index, provide a short natural translation/gloss of that full sentence in the requested UI language. Preserve every index. No markdown.',
-          { responseStyle: true },
-        ),
-      },
-      {
-        role: "user",
-        content: JSON.stringify({
-          uiLanguage,
-          sentences,
-          reminder: `Write every sentenceMeaning in ${uiLanguage} only.`,
-        }),
-      },
-    ],
+  const { completion } = await runChatCompletion({
+    operation: "exercise.sentence_gloss_batch",
+    feature: "ai_exercise",
+    signal: input.signal,
+    workKind: input.workKind ?? "background",
+    timeoutMs: 60_000,
+    body: {
+      model: "gpt-4o-mini",
+      temperature: 0.2,
+      max_tokens: Math.min(
+        400 + sentences.length * 80,
+        AI_OUTPUT_TOKENS.sentenceGlossBatch,
+      ),
+      response_format: { type: "json_object" },
+      messages: [
+        {
+          role: "system",
+          content: await aiSystemPrompt(
+            'Return JSON only: {"meanings":[{"index":number,"sentenceMeaning":string}]}. For each input index, provide a short natural translation/gloss of that full sentence in the requested UI language. Preserve every index. No markdown.',
+            { responseStyle: true },
+          ),
+        },
+        {
+          role: "user",
+          content: JSON.stringify({
+            uiLanguage,
+            sentences,
+            reminder: `Write every sentenceMeaning in ${uiLanguage} only.`,
+          }),
+        },
+      ],
+    },
   });
 
   const raw = parseJsonContent(completion.choices[0]?.message?.content);

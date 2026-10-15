@@ -1397,6 +1397,50 @@ export const aiJobLocks = pgTable(
 );
 
 /**
+ * Provider-usage telemetry (tokens, latency, outcome, request ids).
+ * Separate from quota counters in `ai_usage`. Cost fields are ESTIMATES only.
+ * Never store prompts, transcripts, audio, or secrets here.
+ */
+export const aiProviderEvents = pgTable(
+  "ai_provider_events",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id").references(() => users.id, { onDelete: "set null" }),
+    operation: text("operation").notNull(),
+    feature: text("feature"),
+    model: text("model"),
+    promptTokens: integer("prompt_tokens"),
+    completionTokens: integer("completion_tokens"),
+    totalTokens: integer("total_tokens"),
+    elapsedMs: integer("elapsed_ms"),
+    retryCount: integer("retry_count").notNull().default(0),
+    outcome: text("outcome").notNull(),
+    providerRequestId: text("provider_request_id"),
+    providerJobId: text("provider_job_id"),
+    /** Speaking duration only — not text-generation usage. */
+    speakingDurationSeconds: integer("speaking_duration_seconds"),
+    /** Millionths of a USD — ESTIMATE only, never an invoice amount. */
+    costEstimateMicros: integer("cost_estimate_micros"),
+    costIsEstimate: boolean("cost_is_estimate").notNull().default(true),
+    reservationId: uuid("reservation_id"),
+    workKind: text("work_kind").notNull().default("interactive"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("ai_provider_events_user_created_idx").on(
+      table.userId,
+      table.createdAt,
+    ),
+    index("ai_provider_events_operation_created_idx").on(
+      table.operation,
+      table.createdAt,
+    ),
+  ],
+);
+
+/**
  * One reservation per metered AI action. Refunds flip status once so a
  * failure cannot decrement usage twice.
  * A subject id dedupes the charge. It is not an execution lock.
@@ -1594,3 +1638,4 @@ export type LearningEntityType =
 export type WorkspaceActivityEvent =
   typeof workspaceActivityEvents.$inferSelect;
 export type ActivityVerb = (typeof activityVerbEnum.enumValues)[number];
+export type AiProviderEvent = typeof aiProviderEvents.$inferSelect;

@@ -34,13 +34,17 @@ import {
   MAX_PRIMARY_MEANINGS,
 } from "@/lib/vocabulary/primary-meanings";
 import { composerStyles } from "@/components/vocabulary/vocabulary-composer";
-import { validateVocabularyMeaning } from "@/lib/actions/vocabulary-ai";
 import { mx } from "@/lib/css-module";
 import { sanitizeMeaningSuggestions } from "@/lib/vocabulary/ai-sanitize";
 import type { VocabularyMeaningResult } from "@/lib/vocabulary/ai-types";
+import {
+  isPartialMeaningInput,
+  meaningCheckDebounceMs,
+} from "@/lib/vocabulary/meaning-ready";
 import { cn } from "@/lib/utils";
 
-const MEANING_DEBOUNCE_MS = 400;
+const MEANING_DEBOUNCE_MS = 500;
+const MEANING_PARTIAL_DEBOUNCE_MS = 1_200;
 
 export type MeaningItem = {
   id: string;
@@ -261,6 +265,7 @@ export function SortableMeanings({
   const lastSeenText = useRef<Record<string, string>>({});
   const checkQueue = useRef<string[]>([]);
   const drainingQueue = useRef(false);
+  const abortById = useRef<Record<string, AbortController>>({});
   meaningsRef.current = meanings;
   aiRef.current = ai;
 
@@ -287,6 +292,8 @@ export function SortableMeanings({
     checkGeneration.current[id] = (checkGeneration.current[id] ?? 0) + 1;
     delete inFlightKey.current[id];
     checkQueue.current = checkQueue.current.filter((queuedId) => queuedId !== id);
+    abortById.current[id]?.abort();
+    delete abortById.current[id];
   }
 
   async function runMeaningCheck(id: string) {
@@ -312,46 +319,61 @@ export function SortableMeanings({
 
     const generation = checkGeneration.current[id] ?? 0;
     inFlightKey.current[id] = key;
+    abortById.current[id]?.abort();
+    const controller = new AbortController();
+    abortById.current[id] = controller;
     setAiState((current) => ({
       ...current,
       [id]: { checking: true, result: null },
     }));
 
     try {
-      const result = await validateVocabularyMeaning({
-        word,
-        meaning,
-        language: aiNow.language,
-        partOfSpeech: aiNow.partOfSpeech ?? null,
-        examples: aiNow.examples,
+      const response = await fetch("/api/ai/vocabulary/meaning", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          word,
+          meaning,
+          language: aiNow.language,
+          partOfSpeech: aiNow.partOfSpeech ?? null,
+          examples: aiNow.examples,
+        }),
+        signal: controller.signal,
       });
 
       if (checkGeneration.current[id] !== generation) return;
 
-      if (!result.ok) {
+      const payload = (await response.json()) as {
+        ok: boolean;
+        result?: VocabularyMeaningResult;
+        code?: string;
+      };
+
+      if (!payload.ok || !payload.result) {
+        if (payload.code === "AI_CANCELLED") return;
         clearAi(id);
         return;
       }
 
       lastChecked.current.add(key);
 
-      if (result.result.isLikelyCorrect === true) {
+      if (payload.result.isLikelyCorrect === true) {
         clearAi(id);
         return;
       }
 
-      if (result.result.isLikelyCorrect !== false) {
+      if (payload.result.isLikelyCorrect !== false) {
         clearAi(id);
         return;
       }
 
-      const firstSuggestion = result.result.suggestions[0]?.meaning?.trim();
+      const firstSuggestion = payload.result.suggestions[0]?.meaning?.trim();
       if (aiNow.autoApply && firstSuggestion) {
         lastChecked.current.add(key);
         skipped.current.add(key);
         onChange(
-          meaningsRef.current.map((meaning) =>
-            meaning.id === id ? { ...meaning, meaning: firstSuggestion } : meaning,
+          meaningsRef.current.map((row) =>
+            row.id === id ? { ...row, meaning: firstSuggestion } : row,
           ),
         );
         clearAi(id);
@@ -360,12 +382,16 @@ export function SortableMeanings({
 
       setAiState((current) => ({
         ...current,
-        [id]: { checking: false, result: result.result },
+        [id]: { checking: false, result: payload.result ?? null },
       }));
-    } catch {
+    } catch (error) {
       if (checkGeneration.current[id] !== generation) return;
+      if (error instanceof DOMException && error.name === "AbortError") return;
       clearAi(id);
     } finally {
+      if (abortById.current[id] === controller) {
+        delete abortById.current[id];
+      }
       if (
         checkGeneration.current[id] === generation &&
         inFlightKey.current[id] === key
@@ -406,10 +432,34 @@ export function SortableMeanings({
     void drainCheckQueue();
   }
 
-  function scheduleMeaningCheck(id: string, delay = MEANING_DEBOUNCE_MS) {
+  function scheduleMeaningCheck(
+    id: string,
+    delay?: number,
+    options?: { force?: boolean },
+  ) {
     if (!aiRef.current?.enabled) return;
+    const item = meaningsRef.current.find((row) => row.id === id);
+    const text = item?.meaning.trim() ?? "";
+    if (!options?.force && isPartialMeaningInput(text)) {
+      // Keep waiting while the learner types a partial token; blur forces check.
+      delay =
+        delay ??
+        meaningCheckDebounceMs(
+          text,
+          MEANING_DEBOUNCE_MS,
+          MEANING_PARTIAL_DEBOUNCE_MS,
+        );
+    } else {
+      delay = delay ?? MEANING_DEBOUNCE_MS;
+    }
     window.clearTimeout(debounceTimers.current[id]);
     debounceTimers.current[id] = window.setTimeout(() => {
+      const latest =
+        meaningsRef.current.find((row) => row.id === id)?.meaning.trim() ?? "";
+      if (!options?.force && isPartialMeaningInput(latest)) {
+        scheduleMeaningCheck(id);
+        return;
+      }
       enqueueMeaningCheck(id);
     }, delay);
   }
@@ -425,11 +475,17 @@ export function SortableMeanings({
 
       if (text.length < 2) {
         window.clearTimeout(debounceTimers.current[item.id]);
+        cancelMeaningCheck(item.id);
         continue;
       }
 
       const key = checkKey(item.id, text, ai.word);
       if (skipped.current.has(key) || lastChecked.current.has(key)) continue;
+      // Superseded input: abort in-flight provider call for this row only.
+      abortById.current[item.id]?.abort();
+      delete abortById.current[item.id];
+      checkGeneration.current[item.id] =
+        (checkGeneration.current[item.id] ?? 0) + 1;
       scheduleMeaningCheck(item.id);
     }
   }, [meanings, ai?.enabled, ai?.word, ai?.language, ai?.partOfSpeech]);
@@ -460,8 +516,17 @@ export function SortableMeanings({
   }
 
   function handleMeaningBlur(id: string) {
-    scheduleMeaningCheck(id, 150);
+    scheduleMeaningCheck(id, 150, { force: true });
   }
+
+  useEffect(() => {
+    return () => {
+      for (const id of Object.keys(abortById.current)) {
+        abortById.current[id]?.abort();
+      }
+      abortById.current = {};
+    };
+  }, []);
 
   function skipAi(id: string, meaning: string) {
     skipped.current.add(checkKey(id, meaning, ai?.word ?? ""));

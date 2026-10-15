@@ -94,7 +94,10 @@ export async function suggestVocabularySpelling(
       };
     }
     return await meteredVocabularyAi(async () => {
-      const result = await analyzeVocabularySpelling(parsed.data);
+      const user = await getCurrentUserRecord();
+      const result = await analyzeVocabularySpelling(parsed.data, {
+        userId: user?.id,
+      });
       return { ok: true as const, result };
     });
   } catch (error) {
@@ -126,7 +129,10 @@ export async function validateVocabularyMeaning(
       };
     }
     return await meteredVocabularyAi(async () => {
-      const result = await analyzeVocabularyMeaning(parsed.data);
+      const user = await getCurrentUserRecord();
+      const result = await analyzeVocabularyMeaning(parsed.data, {
+        userId: user?.id,
+      });
       return { ok: true as const, result };
     });
   } catch (error) {

@@ -24,6 +24,7 @@ import {
 } from "@/lib/billing/errors";
 import type { FeatureId, QuotaFeatureId } from "@/lib/billing/plans";
 import { shouldRefundUsage } from "@/lib/ai/bounds";
+import { isPaidOpsStopped } from "@/lib/ai/paid-ops";
 import {
   finalizeUsageReservation,
   refundUsageReservation,
@@ -55,6 +56,15 @@ async function preferencesOrResponse(): Promise<
   const user = await getCurrentUserRecord();
   if (!user) {
     return { ok: false, response: await unauthorized() };
+  }
+  if (isPaidOpsStopped()) {
+    return {
+      ok: false,
+      response: NextResponse.json(
+        { ok: false, code: "AI_PAID_OPS_STOPPED" },
+        { status: 503 },
+      ),
+    };
   }
   try {
     const preferences = await requireAiAssistanceEnabled();
