@@ -90,6 +90,8 @@
     "errors": {
       "proRequired": "Filimport finns på Pro och Premium.",
       "quotaExceeded": "Dagens importgräns är nådd. Försök i morgon eller uppgradera för en högre gräns.",
+      "rateLimited": "För många importförfrågningar. Vänta en stund och försök igen.",
+      "busy": "En import pågår redan. Vänta tills den är klar och försök igen.",
       "fileTooLarge": "Filen är för stor. Håll under 10 MB.",
       "unsupportedFormat": "Använd CSV, PDF, DOCX eller textfil.",
       "emptyFile": "Vi hittade inget läsbart innehåll i filen.",
@@ -130,6 +132,8 @@
     "formatWorking": "Formaterar…",
     "formatAiFallback": "AI-formatering är inte tillgänglig — grundläggande städning tillämpades istället",
     "formatFailed": "Kunde inte formatera innehållet. Försök igen.",
+    "formatQuotaExceeded": "Dagens AI-formateringskvot är slut. Den återställs vid UTC midnatt — eller uppgradera för en högre gräns.",
+    "formatRateLimited": "För många formateringsförfrågningar. Vänta en stund och försök igen.",
     "tableSelectionInvalid": "Kunde inte konvertera urvalet till en tabell",
     "headingCollapse": "Kollapsa avsnitt",
     "headingExpand": "Expandera avsnitt"
@@ -2296,7 +2300,9 @@
       "ATTEMPT_NOT_EDITABLE": "Detta försök kan inte längre redigeras.",
       "PROCESSING_FAILED": "Något gick fel. Försök igen.",
       "AI_DISABLED": "AI-hjälp är avstängd i dina inställningar.",
-      "AI_QUOTA_EXCEEDED": "Du har nått din AI-övningsgräns för den här perioden.",
+      "AI_QUOTA_EXCEEDED": "Du har nått din AI-läsgräns för den här perioden.",
+      "RATE_LIMITED": "För många förfrågningar. Vänta en stund och försök igen.",
+      "AI_BUSY": "Läs-AI är redan upptagen. Vänta tills den är klar och försök igen.",
       "generic": "Något gick fel. Försök igen."
     },
     "newPassage": "Lägg till text",
@@ -3221,6 +3227,8 @@
     "refresh": "Uppdatera coach",
     "refreshed": "Coachen uppdaterades från din senaste aktivitet.",
     "refreshFailed": "Kunde inte uppdatera coachen. Försök igen.",
+    "refreshRateLimited": "Du uppdaterade nyligen. Vänta en minut och försök igen.",
+    "refreshBusy": "Coachen uppdateras redan. Vänta en stund.",
     "status": {
       "MASTERED": "Bemästrat",
       "REVIEW": "Repetition",

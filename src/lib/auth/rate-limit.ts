@@ -46,3 +46,8 @@ export function consumeRateLimit(input: {
   buckets.set(input.key, existing);
   return { allowed: true, retryAfterSeconds: 0 };
 }
+
+/** Test helper — clears in-memory rate-limit buckets. */
+export function resetRateLimitForTests() {
+  buckets.clear();
+}

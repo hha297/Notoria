@@ -18,6 +18,13 @@ export const PAID_ACCESS_STATUSES = new Set(["active", "trialing", "past_due"]);
 /**
  * Metered AI actions. Limits are per plan via PLAN_DAILY_QUOTAS.
  * `null` means unlimited for ordinary use (still subject to rate/abuse limits).
+ *
+ * Surfaces that reuse an existing feature id (no new daily quotas published):
+ * - Editor AI Format (GPT-4o) → `ai_writing`
+ * - Theory sentence-meaning API → `ai_exercise`
+ * - Reading PDF OCR (vision only) → `ai_reading` with subject `reading-ocr:{passageId}`
+ * - Content-import AI analyze + confirm → `content_import` with a shared file subject
+ * - Learning Coach force-refresh → no daily quota; cooldown + rate/concurrency only
  */
 export const QUOTA_FEATURES = [
   "ai_meeting",

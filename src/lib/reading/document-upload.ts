@@ -1,5 +1,10 @@
 import { and, eq } from "drizzle-orm";
 import {
+  beginAiAbuseControl,
+  isAiBusyError,
+  isRateLimitedError,
+} from "@/lib/ai/abuse-control";
+import {
   AI_JOBS,
   forceReleaseJobLock,
   JobLockLostError,
@@ -7,6 +12,14 @@ import {
 } from "@/lib/ai/job-lock";
 import { db } from "@/db";
 import { readingPassages } from "@/db/schema";
+import {
+  consumeUsage,
+  finalizeUsageReservation,
+  loadEntitlementUser,
+  refundUsageReservation,
+} from "@/lib/billing/entitlements";
+import { QuotaExceededError } from "@/lib/billing/errors";
+import { shouldRefundUsage } from "@/lib/ai/bounds";
 import { deleteReadingBlob, downloadReadingBlob } from "@/lib/reading/blob";
 import { ReadingError } from "@/lib/reading/errors";
 import {
@@ -195,46 +208,89 @@ export async function completeReadingDocumentUpload(input: {
         const { buffer, contentType } = await downloadReadingBlob(
           input.storagePath,
         );
-        const { extractReadingDocument } = await import("@/lib/reading/extract");
-        const extracted = await extractReadingDocument({
-          buffer,
-          filename: passage.sourceFilename || "document.pdf",
-          mimeType: input.mimeType ?? contentType ?? passage.mimeType,
-        });
-        if (!(await stillOwner())) throw new JobLockLostError();
+        const user = await loadEntitlementUser(input.userId);
+        if (!user) throw new ReadingError("UNAUTHORIZED");
 
-        const validated = validatePassageBody(extracted.text);
-        body = validated.normalized || extracted.text;
-        title = normalizePassageTitle(
-          extracted.suggestedTitle || passage.title,
-          body,
-        );
-        wordCount = validated.wordCount || extracted.wordCount;
-        valid = validated.ok;
-        errorCode = validated.ok ? null : validated.code;
-        truncated = Boolean(extracted.truncated);
-        sourceType = extracted.sourceType;
-        sourceFilename = extracted.sourceFilename;
+        let releaseAbuse: (() => void) | undefined;
+        let reservationId: string | null = null;
+        let ocrStarted = false;
 
-        await db
-          .update(readingPassages)
-          .set({
-            title,
-            body,
-            wordCount,
-            sourceType,
-            sourceFilename,
+        try {
+          const { extractReadingDocument } = await import(
+            "@/lib/reading/extract"
+          );
+          const extracted = await extractReadingDocument({
+            buffer,
+            filename: passage.sourceFilename || "document.pdf",
             mimeType: input.mimeType ?? contentType ?? passage.mimeType,
-            updatedAt: new Date(),
-          })
-          .where(eq(readingPassages.id, passage.id));
+            beforeOcr: async () => {
+              const gate = beginAiAbuseControl(user.id, "reading_ocr");
+              releaseAbuse = gate.release;
+              const reservation = await consumeUsage(
+                user,
+                "ai_reading",
+                `reading-ocr:${passage.id}`,
+              );
+              reservationId = reservation.reservationId;
+              ocrStarted = true;
+            },
+          });
+          if (!(await stillOwner())) throw new JobLockLostError();
 
-        if (truncated && !errorCode) {
-          errorCode = "EXTRACT_TRUNCATED";
+          if (ocrStarted) {
+            await finalizeUsageReservation(reservationId);
+          }
+
+          const validated = validatePassageBody(extracted.text);
+          body = validated.normalized || extracted.text;
+          title = normalizePassageTitle(
+            extracted.suggestedTitle || passage.title,
+            body,
+          );
+          wordCount = validated.wordCount || extracted.wordCount;
+          valid = validated.ok;
+          errorCode = validated.ok ? null : validated.code;
+          truncated = Boolean(extracted.truncated);
+          sourceType = extracted.sourceType;
+          sourceFilename = extracted.sourceFilename;
+
+          await db
+            .update(readingPassages)
+            .set({
+              title,
+              body,
+              wordCount,
+              sourceType,
+              sourceFilename,
+              mimeType: input.mimeType ?? contentType ?? passage.mimeType,
+              updatedAt: new Date(),
+            })
+            .where(eq(readingPassages.id, passage.id));
+
+          if (truncated && !errorCode) {
+            errorCode = "EXTRACT_TRUNCATED";
+          }
+        } catch (error) {
+          if (ocrStarted) {
+            if (shouldRefundUsage(error)) {
+              await refundUsageReservation(reservationId);
+            } else {
+              await finalizeUsageReservation(reservationId);
+            }
+          }
+          throw error;
+        } finally {
+          releaseAbuse?.();
         }
       } catch (error) {
         if (error instanceof JobLockLostError) throw error;
-        if (error instanceof ReadingError) {
+        if (error instanceof QuotaExceededError) {
+          errorCode = "AI_QUOTA_EXCEEDED";
+        } else if (isRateLimitedError(error)) {
+          errorCode = "RATE_LIMITED";
+        } else if (isAiBusyError(error)) {
+          errorCode = "AI_BUSY";
+        } else if (error instanceof ReadingError) {
           errorCode = error.code;
         } else {
           errorCode = "EXTRACT_UNAVAILABLE";

@@ -81,3 +81,26 @@ export class ProRequiredError extends Error {
 export function isQuotaExceededError(error: unknown): error is QuotaExceededError {
   return error instanceof QuotaExceededError;
 }
+
+export type RateLimitedBody = {
+  ok: false;
+  code: "RATE_LIMITED";
+  retryAfterSeconds: number;
+};
+
+export type AiBusyBody = {
+  ok: false;
+  code: "AI_BUSY";
+};
+
+export function rateLimitedBody(retryAfterSeconds: number): RateLimitedBody {
+  return {
+    ok: false,
+    code: "RATE_LIMITED",
+    retryAfterSeconds: Math.max(1, retryAfterSeconds),
+  };
+}
+
+export function aiBusyBody(): AiBusyBody {
+  return { ok: false, code: "AI_BUSY" };
+}

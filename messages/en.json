@@ -90,6 +90,8 @@
     "errors": {
       "proRequired": "File import is available on Pro and Premium.",
       "quotaExceeded": "You've used today's import limit. Try again tomorrow, or upgrade for a higher limit.",
+      "rateLimited": "Too many import requests. Wait a moment, then try again.",
+      "busy": "An import is already in progress. Wait for it to finish, then try again.",
       "fileTooLarge": "That file is too large. Keep it under 10 MB.",
       "unsupportedFormat": "Use a CSV, PDF, DOCX, or plain text file.",
       "emptyFile": "We couldn't find readable content in this file.",
@@ -130,6 +132,8 @@
     "formatWorking": "Formatting…",
     "formatAiFallback": "AI formatting unavailable — applied basic tidy instead",
     "formatFailed": "Could not format the content. Try again.",
+    "formatQuotaExceeded": "You've used today's AI formatting allowance. It resets at UTC midnight — or upgrade for a higher limit.",
+    "formatRateLimited": "Too many format requests. Wait a moment, then try again.",
     "tableSelectionInvalid": "Couldn't convert the selection into a table",
     "headingCollapse": "Collapse section",
     "headingExpand": "Expand section"
@@ -2296,7 +2300,9 @@
       "ATTEMPT_NOT_EDITABLE": "This attempt can no longer be edited.",
       "PROCESSING_FAILED": "Something went wrong. Try again.",
       "AI_DISABLED": "AI assistance is turned off in your settings.",
-      "AI_QUOTA_EXCEEDED": "You have reached your AI exercise limit for this period.",
+      "AI_QUOTA_EXCEEDED": "You have reached your AI reading limit for this period.",
+      "RATE_LIMITED": "Too many requests. Wait a moment, then try again.",
+      "AI_BUSY": "Reading AI is already busy. Wait for it to finish, then try again.",
       "generic": "Something went wrong. Try again."
     },
     "newPassage": "Add passage",
@@ -3249,6 +3255,8 @@
     "refresh": "Update coach",
     "refreshed": "Coach updated from your latest activity.",
     "refreshFailed": "Could not update the coach. Please try again.",
+    "refreshRateLimited": "You refreshed recently. Wait a minute, then try again.",
+    "refreshBusy": "Coach is already updating. Please wait a moment.",
     "ask": {
       "label": "Ask your coach",
       "title": "Ask your Learning Coach",

@@ -176,6 +176,11 @@ export async function extractReadingDocument(input: {
   buffer: Buffer;
   filename: string;
   mimeType?: string | null;
+  /**
+   * Called only when scanned-PDF OCR is about to contact OpenAI.
+   * Throw to abort before any paid vision call (quota / rate / busy).
+   */
+  beforeOcr?: () => Promise<void>;
 }): Promise<
   ReadingExtractedDocument & { usedOcr?: boolean; truncated?: boolean }
 > {
@@ -207,6 +212,7 @@ export async function extractReadingDocument(input: {
     const extracted = await extractPdfText(input.buffer);
     text = extracted.text;
     if (!text || text.length < MIN_EXTRACTED_CHARS) {
+      await input.beforeOcr?.();
       text = await extractPdfWithOcr(input.buffer);
       usedOcr = true;
     }

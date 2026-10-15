@@ -21,6 +21,11 @@ import {
 } from "@/lib/content-import/extract";
 import { writingContentFromPlainText } from "@/lib/content-import/map-document";
 import { resolveContentMime } from "@/lib/content-import/detect";
+import {
+  isAiBusyError,
+  isRateLimitedError,
+  withAiAbuseControl,
+} from "@/lib/ai/abuse-control";
 import { getCurrentUserId } from "@/lib/auth/session";
 import {
   loadEntitlementUser,
@@ -31,6 +36,7 @@ import {
   ProRequiredError,
 } from "@/lib/billing/errors";
 import { displayPlan, entitlementPlan } from "@/lib/billing/plans";
+import { contentImportUsageSubject } from "@/lib/content-import/usage-subject";
 import { createVocabularyWord } from "@/lib/actions/vocabulary";
 import { createWritingDocument } from "@/lib/actions/writing";
 import { createTheoryNote } from "@/lib/actions/theory";
@@ -50,6 +56,8 @@ import type { VocabularyFormValues } from "@/schemas/vocabulary";
 export type ContentImportActionError =
   | { code: "PRO_REQUIRED" }
   | { code: "QUOTA_EXCEEDED"; limit: number; resetAt: string }
+  | { code: "RATE_LIMITED"; retryAfterSeconds: number }
+  | { code: "AI_BUSY" }
   | { code: "FILE_TOO_LARGE" }
   | { code: "UNSUPPORTED_FORMAT"; message: string }
   | { code: "EMPTY_FILE"; message: string }
@@ -81,6 +89,15 @@ function mapBillingError(error: unknown): ContentImportActionError | null {
       resetAt: error.body.resetAt,
     };
   }
+  if (isRateLimitedError(error)) {
+    return {
+      code: "RATE_LIMITED",
+      retryAfterSeconds: error.retryAfterSeconds,
+    };
+  }
+  if (isAiBusyError(error)) {
+    return { code: "AI_BUSY" };
+  }
   return null;
 }
 
@@ -99,7 +116,7 @@ export async function analyzeContentImport(formData: FormData): Promise<
   | { ok: false; error: ContentImportActionError }
 > {
   try {
-    await requireImportAccess();
+    const user = await requireImportAccess();
 
     const target = String(formData.get("target") ?? "") as ContentImportTarget;
     if (
@@ -119,20 +136,44 @@ export async function analyzeContentImport(formData: FormData): Promise<
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-    const { format, extract } = await extractContentFromBuffer({
-      buffer,
-      fileName: file.name,
-      mimeType: resolveContentMime(file),
-    });
 
-    const analysis = await analyzeExtractedContent({
-      target,
-      format,
-      fileName: file.name,
-      extract,
-    });
+    return await withAiAbuseControl(user.id, "content_import", async () => {
+      const { format, extract } = await extractContentFromBuffer({
+        buffer,
+        fileName: file.name,
+        mimeType: resolveContentMime(file),
+      });
 
-    return { ok: true, analysis };
+      const usesAiStructuring =
+        target === "vocabulary" &&
+        extract.kind === "text" &&
+        Boolean(process.env.OPENAI_API_KEY?.trim());
+
+      if (usesAiStructuring) {
+        const usageSubjectId = contentImportUsageSubject(target, buffer);
+        const analysis = await runWithUsage(
+          user,
+          "content_import",
+          async () =>
+            analyzeExtractedContent({
+              target,
+              format,
+              fileName: file.name,
+              extract,
+            }),
+          usageSubjectId,
+        );
+        return { ok: true as const, analysis: { ...analysis, usageSubjectId } };
+      }
+
+      const analysis = await analyzeExtractedContent({
+        target,
+        format,
+        fileName: file.name,
+        extract,
+      });
+      return { ok: true as const, analysis };
+    });
   } catch (error) {
     if (error instanceof ContentImportExtractError) {
       return { ok: false, error: mapExtractError(error) };
@@ -407,6 +448,8 @@ export async function confirmContentImport(input: {
   vocabItems?: VocabImportDraft[];
   documents?: DocumentImportDraft[];
   skipIssueRows?: boolean;
+  /** From analyze when AI structuring already reserved usage for this file. */
+  usageSubjectId?: string;
 }): Promise<
   | { ok: true; result: ConfirmContentImportResult }
   | { ok: false; error: ContentImportActionError }
@@ -436,12 +479,19 @@ export async function confirmContentImport(input: {
       documents = remapped.documents;
     }
 
-    const result = await runWithUsage(user, "content_import", async () => {
-      if (input.target === "vocabulary") {
-        return saveVocabItems(vocabItems, skipIssueRows);
-      }
-      return saveDocuments(input.target, documents, skipIssueRows);
-    });
+    const result = await withAiAbuseControl(user.id, "content_import", async () =>
+      runWithUsage(
+        user,
+        "content_import",
+        async () => {
+          if (input.target === "vocabulary") {
+            return saveVocabItems(vocabItems, skipIssueRows);
+          }
+          return saveDocuments(input.target, documents, skipIssueRows);
+        },
+        input.usageSubjectId?.trim() || null,
+      ),
+    );
 
     if (input.target === "vocabulary") revalidatePath("/vocabulary");
     if (input.target === "writing") revalidatePath("/writing");

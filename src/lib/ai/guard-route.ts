@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
 import {
+  beginAiAbuseControl,
+  isAiBusyError,
+  isRateLimitedError,
+  type AiAbuseOperation,
+} from "@/lib/ai/abuse-control";
+import {
   AiAssistanceDisabledError,
   requireAiAssistanceEnabled,
 } from "@/lib/ai/preferences-server";
@@ -10,9 +16,11 @@ import {
   requireFeature,
 } from "@/lib/billing/entitlements";
 import {
+  aiBusyBody,
   PremiumRequiredError,
   ProRequiredError,
   QuotaExceededError,
+  rateLimitedBody,
 } from "@/lib/billing/errors";
 import type { FeatureId, QuotaFeatureId } from "@/lib/billing/plans";
 import { shouldRefundUsage } from "@/lib/ai/bounds";
@@ -25,6 +33,8 @@ export type MeteredAiAccess = {
   ok: true;
   preferences: AiPreferences;
   reservationId: string | null;
+  /** Release abuse concurrency slot (always call in finally). */
+  releaseAbuse?: () => void;
 };
 
 export type MeteredAiAccessWithUser = MeteredAiAccess & {
@@ -119,20 +129,43 @@ export async function guardProFeature(feature: FeatureId): Promise<
   }
 }
 
+function abuseFailureResponse(error: unknown): NextResponse | null {
+  if (isRateLimitedError(error)) {
+    return NextResponse.json(rateLimitedBody(error.retryAfterSeconds), {
+      status: 429,
+    });
+  }
+  if (isAiBusyError(error)) {
+    return NextResponse.json(aiBusyBody(), { status: 429 });
+  }
+  return null;
+}
+
 /** Reserves one Free quota unit. Pro and Premium skip the write. */
 export async function guardMeteredAi(
   feature: QuotaFeatureId,
+  options?: { abuse?: AiAbuseOperation },
 ): Promise<MeteredAiAccess | { ok: false; response: NextResponse }> {
   const access = await preferencesOrResponse();
   if (!access.ok) return access;
+
+  let releaseAbuse: (() => void) | undefined;
   try {
+    if (options?.abuse) {
+      const gate = beginAiAbuseControl(access.user.id, options.abuse);
+      releaseAbuse = gate.release;
+    }
     const reservation = await consumeUsage(access.user, feature);
     return {
       ok: true,
       preferences: access.preferences,
       reservationId: reservation.reservationId,
+      releaseAbuse,
     };
   } catch (error) {
+    releaseAbuse?.();
+    const abuseResponse = abuseFailureResponse(error);
+    if (abuseResponse) return { ok: false, response: abuseResponse };
     if (error instanceof QuotaExceededError) {
       return {
         ok: false,

@@ -453,6 +453,10 @@ export function RichTextEditor({
       if (!result.ok) {
         if (result.code === "EMPTY") {
           toast.message(tEditor("formatUnchanged"));
+        } else if (result.code === "AI_QUOTA_EXCEEDED") {
+          toast.error(tEditor("formatQuotaExceeded"));
+        } else if (result.code === "RATE_LIMITED" || result.code === "AI_BUSY") {
+          toast.error(tEditor("formatRateLimited"));
         } else {
           toast.error(tEditor("formatFailed"));
         }

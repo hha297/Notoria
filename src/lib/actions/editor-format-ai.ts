@@ -3,10 +3,17 @@
 import type { JSONContent } from "@tiptap/react";
 import { z } from "zod";
 import {
+  beginAiAbuseControl,
+  isAiBusyError,
+  isRateLimitedError,
+} from "@/lib/ai/abuse-control";
+import {
   AiAssistanceDisabledError,
   getResolvedAiPreferences,
 } from "@/lib/ai/preferences-server";
-import { getCurrentUserId } from "@/lib/auth/session";
+import { getCurrentUserRecord } from "@/lib/auth/current-user";
+import { runWithUsage } from "@/lib/billing/entitlements";
+import { QuotaExceededError } from "@/lib/billing/errors";
 import {
   editorDocToFormatPlainText,
   formatEditorDocumentWithAi,
@@ -18,7 +25,17 @@ import { isTipTapDoc } from "@/lib/editor/format/types";
 export type FormatEditorDocumentAiResult =
   | { ok: true; doc: JSONContent; source: "ai" }
   | { ok: true; doc: JSONContent; source: "fallback" }
-  | { ok: false; code: "EMPTY" | "AI_UNAVAILABLE" | "AI_DISABLED" };
+  | {
+      ok: false;
+      code:
+        | "EMPTY"
+        | "AI_UNAVAILABLE"
+        | "AI_DISABLED"
+        | "AI_QUOTA_EXCEEDED"
+        | "RATE_LIMITED"
+        | "AI_BUSY";
+      retryAfterSeconds?: number;
+    };
 
 const inputSchema = z.object({
   doc: z.unknown(),
@@ -28,7 +45,9 @@ const inputSchema = z.object({
 
 /**
  * AI Format for any TipTap editor (theory / writing / vocabulary notes).
- * Falls back to the deterministic formatter when AI is unavailable or disabled.
+ * Meters against `ai_writing`. Falls back to the deterministic formatter when
+ * AI is disabled; quota / rate / busy failures are returned to the client
+ * without contacting the provider.
  */
 export async function formatEditorDocumentAi(
   input: unknown,
@@ -45,9 +64,8 @@ export async function formatEditorDocumentAi(
     return { ok: false, code: "EMPTY" };
   }
 
-  try {
-    await getCurrentUserId();
-  } catch {
+  const user = await getCurrentUserRecord();
+  if (!user) {
     return { ok: false, code: "AI_UNAVAILABLE" };
   }
 
@@ -57,12 +75,18 @@ export async function formatEditorDocumentAi(
     return { ok: true, source: "fallback", doc: fallback };
   }
 
+  let releaseAbuse: (() => void) | undefined;
   try {
-    const aiDoc = await formatEditorDocumentWithAi({
-      text: plain,
-      language,
-      word: parsed.data.word,
-    });
+    const gate = beginAiAbuseControl(user.id, "editor_format");
+    releaseAbuse = gate.release;
+
+    const aiDoc = await runWithUsage(user, "ai_writing", async () =>
+      formatEditorDocumentWithAi({
+        text: plain,
+        language,
+        word: parsed.data.word,
+      }),
+    );
     const tidied = formatTiptapDocument(aiDoc, { language });
     return {
       ok: true,
@@ -70,6 +94,19 @@ export async function formatEditorDocumentAi(
       doc: mergePreservedEditorNodes(doc, tidied),
     };
   } catch (error) {
+    if (error instanceof QuotaExceededError) {
+      return { ok: false, code: "AI_QUOTA_EXCEEDED" };
+    }
+    if (isRateLimitedError(error)) {
+      return {
+        ok: false,
+        code: "RATE_LIMITED",
+        retryAfterSeconds: error.retryAfterSeconds,
+      };
+    }
+    if (isAiBusyError(error)) {
+      return { ok: false, code: "AI_BUSY" };
+    }
     if (error instanceof AiAssistanceDisabledError) {
       const fallback = formatTiptapDocument(doc, { language });
       return { ok: true, source: "fallback", doc: fallback };
@@ -81,5 +118,7 @@ export async function formatEditorDocumentAi(
       source: "fallback",
       doc: fallback,
     };
+  } finally {
+    releaseAbuse?.();
   }
 }

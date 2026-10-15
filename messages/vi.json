@@ -90,6 +90,8 @@
     "errors": {
       "proRequired": "Nhập file dành cho Pro và Premium.",
       "quotaExceeded": "Bạn đã hết hạn mức nhập hôm nay. Thử lại ngày mai, hoặc nâng cấp để tăng hạn mức.",
+      "rateLimited": "Quá nhiều yêu cầu nhập. Đợi một chút rồi thử lại.",
+      "busy": "Đang có bản nhập khác chạy. Đợi hoàn tất rồi thử lại.",
       "fileTooLarge": "File quá lớn. Giữ dưới 10 MB.",
       "unsupportedFormat": "Dùng CSV, PDF, DOCX hoặc TXT.",
       "emptyFile": "Không tìm thấy nội dung đọc được trong file.",
@@ -130,6 +132,8 @@
     "formatWorking": "Đang định dạng…",
     "formatAiFallback": "Không dùng được AI — đã làm sạch cơ bản thay thế",
     "formatFailed": "Không định dạng được nội dung. Thử lại.",
+    "formatQuotaExceeded": "Bạn đã hết hạn mức định dạng AI hôm nay. Hạn mức reset lúc nửa đêm UTC — hoặc nâng cấp để tăng hạn mức.",
+    "formatRateLimited": "Quá nhiều yêu cầu định dạng. Đợi một chút rồi thử lại.",
     "tableSelectionInvalid": "Không thể chuyển vùng chọn thành bảng",
     "headingCollapse": "Thu gọn mục",
     "headingExpand": "Mở rộng mục"
@@ -2101,7 +2105,9 @@
       "ATTEMPT_NOT_EDITABLE": "Lượt này không còn chỉnh sửa được.",
       "PROCESSING_FAILED": "Đã xảy ra lỗi. Thử lại.",
       "AI_DISABLED": "Trợ lý AI đang tắt trong cài đặt của bạn.",
-      "AI_QUOTA_EXCEEDED": "Bạn đã hết hạn mức bài tập AI trong kỳ này.",
+      "AI_QUOTA_EXCEEDED": "Bạn đã hết hạn mức AI đọc trong kỳ này.",
+      "RATE_LIMITED": "Quá nhiều yêu cầu. Đợi một chút rồi thử lại.",
+      "AI_BUSY": "AI đọc đang bận. Đợi hoàn tất rồi thử lại.",
       "generic": "Đã xảy ra lỗi. Thử lại."
     },
     "newPassage": "Thêm đoạn văn",
@@ -3221,6 +3227,8 @@
     "refresh": "Cập nhật huấn luyện viên",
     "refreshed": "Đã cập nhật từ hoạt động học mới nhất.",
     "refreshFailed": "Không cập nhật được. Thử lại.",
+    "refreshRateLimited": "Bạn vừa cập nhật. Đợi một phút rồi thử lại.",
+    "refreshBusy": "Coach đang cập nhật. Đợi một chút.",
     "status": {
       "MASTERED": "Đã thuộc",
       "REVIEW": "Ôn tập",

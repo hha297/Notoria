@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { guardAiEnabled } from "@/lib/ai/guard-route";
+import { guardMeteredAi, settleMeteredAi } from "@/lib/ai/guard-route";
 import { glossSentenceMeaning } from "@/lib/exercises/sentence-meaning";
 import { locales } from "@/i18n/config";
 
@@ -12,9 +12,6 @@ const bodySchema = z.object({
 });
 
 export async function POST(request: Request) {
-  const access = await guardAiEnabled();
-  if (!access.ok) return access.response;
-
   let body: unknown;
   try {
     body = await request.json();
@@ -27,13 +24,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, code: "AI_INVALID_REQUEST" }, { status: 400 });
   }
 
+  // Shares `ai_exercise` daily quota; abuse limits also bind unlimited plans.
+  const access = await guardMeteredAi("ai_exercise", {
+    abuse: "sentence_meaning",
+  });
+  if (!access.ok) return access.response;
+
   try {
     const sentenceMeaning = await glossSentenceMeaning({
       sentence: parsed.data.sentence,
       uiLocale: parsed.data.uiLocale,
     });
+    await settleMeteredAi(access, true);
     return NextResponse.json({ ok: true, sentenceMeaning });
   } catch (error) {
+    await settleMeteredAi(access, false, error);
     const message = error instanceof Error ? error.message : "";
     if (message === "OPENAI_NOT_CONFIGURED" || message === "AI_INVALID_RESPONSE") {
       console.error("theory sentence meaning failed", message);
@@ -41,5 +46,7 @@ export async function POST(request: Request) {
       console.error("theory sentence meaning failed");
     }
     return NextResponse.json({ ok: false, code: "AI_UNAVAILABLE" }, { status: 503 });
+  } finally {
+    access.releaseAbuse?.();
   }
 }
