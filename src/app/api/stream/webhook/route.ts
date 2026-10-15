@@ -9,14 +9,13 @@ import type {
 } from "@stream-io/node-sdk";
 import { db } from "@/db";
 import { speakingSessions } from "@/db/schema";
-import { finalizeSpeakingSession, saveSpeakingTranscript } from "@/lib/speaking/finalize";
+import {
+  finalizeSpeakingSession,
+  saveLegacyStreamTranscript,
+} from "@/lib/speaking/finalize";
 import { isSpeakingPastDeadline } from "@/lib/speaking/lifetime";
 import { scheduleSpeakingAbandonFinalize } from "@/lib/speaking/recovery";
 import { isSpeakingTutorUserId } from "@/lib/speaking/stream";
-import {
-  formatSpeakingTranscript,
-  parseTranscriptJsonl,
-} from "@/lib/speaking/summary";
 import { connectSpeakingTutorToCall } from "@/lib/speaking/tutor";
 import { getStreamVideo, isStreamVideoConfigured } from "@/lib/stream-video";
 
@@ -137,24 +136,22 @@ async function handleSessionEnded(event: CallEndedEvent) {
 }
 
 async function handleTranscriptionReady(event: CallTranscriptionReadyEvent) {
+  // Legacy only: new sessions use OpenAI transcripts and disable Stream transcription.
   const sessionId = speakingSessionIdFromCall(event);
   const transcriptUrl = event.call_transcription?.url;
   if (!sessionId || !transcriptUrl) return;
 
-  let transcriptText = "";
   try {
     const response = await fetch(transcriptUrl);
     const raw = await response.text();
-    transcriptText = formatSpeakingTranscript(parseTranscriptJsonl(raw));
+    await saveLegacyStreamTranscript({
+      sessionId,
+      transcriptUrl,
+      rawJsonl: raw,
+    });
   } catch (error) {
     console.error("Failed to fetch speaking transcript", error);
   }
-
-  await saveSpeakingTranscript({
-    sessionId,
-    transcriptUrl,
-    transcriptText,
-  });
 }
 
 async function handleRecordingReady(event: CallRecordingReadyEvent) {

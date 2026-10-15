@@ -2,7 +2,6 @@
 
 import { and, desc, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import type { TranscriptionSettingsRequest } from "@stream-io/node-sdk";
 import { db } from "@/db";
 import { speakingSessions, users } from "@/db/schema";
 import { ProAccessError } from "@/lib/auth/paid-access";
@@ -31,7 +30,6 @@ import {
   speakingAvatarUri,
   speakingTutorUserId,
   SPEAKING_TUTOR_NAME,
-  streamTranscriptionLanguage,
 } from "@/lib/speaking/stream";
 import {
   toSpeakingListItem,
@@ -246,12 +244,10 @@ export async function createSpeakingSession(formData: FormData) {
               max_duration_seconds: SPEAKING_MAX_SESSION_SECONDS,
               max_participants: 2,
             },
+            // Transcripts come from OpenAI Realtime (gpt-4o-transcribe), not Stream.
             transcription: {
-              language: streamTranscriptionLanguage(
-                workspace.language,
-              ) as NonNullable<TranscriptionSettingsRequest["language"]>,
-              mode: "auto-on",
-              closed_caption_mode: "auto-on",
+              mode: "disabled",
+              closed_caption_mode: "disabled",
             },
             recording: {
               mode: "disabled",

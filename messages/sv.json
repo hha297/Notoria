@@ -2616,6 +2616,12 @@
     "feedbackTitle": "Tutorns feedback",
     "feedbackDescription": "En kort sammanfattning av hur samtalet gick.",
     "transcriptTitle": "Transkript",
+    "transcriptFinalizing": "Slutför transkript",
+    "transcriptLoadingTitle": "Hämtar transkript",
+    "transcriptLoadingDescription": "Turerna från samtalet visas här snart.",
+    "transcriptEmpty": "Inget transkript sparades för den här sessionen.",
+    "transcriptError": "Transkriptet är ofullständigt",
+
     "status": {
       "upcoming": "Redo",
       "active": "I samtal",
@@ -3954,11 +3960,11 @@
             },
             {
               "provider": "Stream Video",
-              "role": "Direktsamtal för tal; automatisk transkribering; sessionsfält såsom transkriptions-URL:er (och inspelnings-URL:er endast om en inspelningshändelse senare tas emot)"
+              "role": "Ljud/video för talsamtal; inspelnings-URL:er endast om en inspelningshändelse senare tas emot. Nya samtal använder inte Stream-transkribering."
             },
             {
               "provider": "OpenAI",
-              "role": "Valfri AI-assistans och realtidsljud för taltutorn"
+              "role": "Valfri AI-assistans, realtidsljud för taltutorn och transkribering av talsamtal (gpt-4o-transcribe)"
             },
             {
               "provider": "Resend",
@@ -3977,7 +3983,7 @@
               "role": "Genererade avatarbilder som används i talsessioner (från ett namnfrö; inget kontolösenord skickas)"
             }
           ],
-          "p2": "Talsamtal skapas med transkribering aktiverad. Inspelning är avaktiverad när samtalet skapas i den nuvarande implementationen; en inspelnings-URL lagras endast om produkten senare tar emot en händelse om färdig inspelning från Stream."
+          "p2": "Transkriptioner från talsamtal hämtas med OpenAI Realtime (gpt-4o-transcribe) under sessionen och lagras på servern. Stream-transkribering och undertexter är avstängda för nya samtal. Inspelning är avaktiverad när samtalet skapas; en inspelnings-URL lagras endast om produkten senare tar emot en händelse om färdig inspelning från Stream."
         },
         "cookies": {
           "title": "9. Cookies och lagring på enheten",

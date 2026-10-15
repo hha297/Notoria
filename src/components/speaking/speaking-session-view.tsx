@@ -21,6 +21,10 @@ import { LinkButton } from "@/components/ui/link-button";
 import detailStyles from "@/components/style/workspace/detail.module.css";
 import sheetStyles from "@/components/style/workspace/sheet.module.css";
 import { removeCachedListItem } from "@/hooks/use-invalidate-workspace-queries";
+import {
+  resolveTranscriptView,
+  SpeakingTranscriptPanel,
+} from "@/components/speaking/speaking-transcript-panel";
 import { deleteSpeakingSession, endSpeakingSession } from "@/lib/actions/speaking";
 import { mx } from "@/lib/css-module";
 import { isSpeakingErrorCode } from "@/lib/speaking/errors";
@@ -45,13 +49,25 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
   const [isLeaving, setIsLeaving] = useState(false);
   const joinable = isSpeakingJoinable(session.status, session.startedAt);
 
+  const transcriptView = resolveTranscriptView({
+    transcript: session.transcript,
+    transcriptDebug: session.transcriptDebug,
+    sessionStatus: session.status,
+  });
+  const feedbackPending =
+    session.status === "processing" && !session.summary?.trim();
+
   useEffect(() => {
-    if (session.status !== "processing") return;
+    // Poll while feedback is pending or the transcript is still settling.
+    const transcriptSettling =
+      transcriptView.phase === "loading" ||
+      transcriptView.phase === "finalizing";
+    if (!feedbackPending && !transcriptSettling) return;
     const timer = window.setInterval(() => {
       router.refresh();
-    }, 3000);
+    }, 2500);
     return () => window.clearInterval(timer);
-  }, [router, session.status]);
+  }, [router, feedbackPending, transcriptView.phase]);
 
   function errorMessage(error: unknown) {
     const code = error instanceof Error ? error.message : "SESSION_NOT_FOUND";
@@ -106,11 +122,12 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
       tone: "difficulty",
     });
   }
-  metaTags.push(
-    formatDistanceToNow(new Date(session.createdAt), {
+  metaTags.push({
+    key: "created",
+    label: formatDistanceToNow(new Date(session.createdAt), {
       addSuffix: true,
     }),
-  );
+  });
 
   return (
     <div className="writing-paper speaking-paper speaking-atelier">
@@ -186,7 +203,7 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
           </div>
         ) : null}
 
-        {session.status === "processing" ? (
+        {feedbackPending && !session.summary ? (
           <div className={mx(detailStyles, "status")} role="status">
             <Loader2 className="size-4 animate-spin" />
             <div>
@@ -219,18 +236,11 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
           </div>
         ) : null}
 
-        {session.transcript ? (
-          <div className={mx(detailStyles, "panel")}>
-            <h2 className={mx(detailStyles, "panelTitle")}>
-              {t("transcriptTitle")}
-            </h2>
-            <div className={mx(detailStyles, "panelBody")}>
-              <pre className="max-h-112 overflow-auto whitespace-pre-wrap rounded-lg bg-[color-mix(in_oklab,var(--surface-muted)_55%,transparent)] p-4 text-sm leading-relaxed text-ink">
-                {session.transcript}
-              </pre>
-            </div>
-          </div>
-        ) : null}
+        <SpeakingTranscriptPanel
+          transcript={session.transcript}
+          transcriptDebug={session.transcriptDebug}
+          sessionStatus={session.status}
+        />
       </div>
 
       <Dialog open={deleteOpen} onOpenChange={setDeleteOpen}>

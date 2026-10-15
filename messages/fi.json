@@ -2421,6 +2421,12 @@
     "feedbackTitle": "Ohjaajan palaute",
     "feedbackDescription": "Lyhyt yhteenveto keskustelusta.",
     "transcriptTitle": "Litterointi",
+    "transcriptFinalizing": "Litterointia viimeistellään",
+    "transcriptLoadingTitle": "Kerätään litterointia",
+    "transcriptLoadingDescription": "Puhelun vuorot näkyvät tässä pian.",
+    "transcriptEmpty": "Tästä sessiosta ei tallentunut litterointia.",
+    "transcriptError": "Litterointi on epätäydellinen",
+
     "status": {
       "upcoming": "Valmis",
       "active": "Puhelussa",
@@ -3953,11 +3959,11 @@
             },
             {
               "provider": "Stream Video",
-              "role": "Live-puhepuhelut; automaattinen litterointi; istuntokentät kuten litteraatti-URL:t (ja tallenne-URL:t vain jos tallenne-tapahtuma vastaanotetaan myöhemmin)"
+              "role": "Live-puhepuhelujen ääni/video; tallenne-URL:t vain jos tallenne-tapahtuma vastaanotetaan myöhemmin. Uudet puhelut eivät käytä Stream-litterointia."
             },
             {
               "provider": "OpenAI",
-              "role": "Valinnainen tekoälyapu ja puheohjaajan reaaliaikainen ääni"
+              "role": "Valinnainen tekoälyapu, puheohjaajan reaaliaikainen ääni ja puhepuhelun litterointi (gpt-4o-transcribe)"
             },
             {
               "provider": "Resend",
@@ -3976,7 +3982,7 @@
               "role": "Puheistunnoissa käytettävät generoidut avatar-kuvat (nimisiemenestä; tilin salasanaa ei lähetetä)"
             }
           ],
-          "p2": "Puhepuhelut luodaan litterointi päällä. Tallennus on pois päältä puhelun luonnissa nykyisessä toteutuksessa; tallenne-URL tallennetaan vain, jos tuote myöhemmin vastaanottaa Streamilta recording-ready -tapahtuman."
+          "p2": "Puhepuhelujen litterointi kerätään OpenAI Realtime -yhteydellä (gpt-4o-transcribe) istunnon aikana ja tallennetaan palvelimelle. Stream-litterointi ja tekstitykset on pois päältä uusissa puheluissa. Tallennus on pois päältä puhelun luonnissa; tallenne-URL tallennetaan vain, jos tuote myöhemmin vastaanottaa Streamilta recording-ready -tapahtuman."
         },
         "cookies": {
           "title": "9. Evästeet ja laitteen tallennus",

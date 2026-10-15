@@ -738,6 +738,8 @@ export const speakingSessions = pgTable(
     endedAt: timestamp("ended_at", { withTimezone: true }),
     transcriptUrl: text("transcript_url"),
     transcript: text("transcript"),
+    /** Structured OpenAI Realtime transcript state (status + ordered entries). */
+    transcriptDebug: jsonb("transcript_debug"),
     recordingUrl: text("recording_url"),
     summary: text("summary"),
     createdAt: timestamp("created_at", { withTimezone: true })

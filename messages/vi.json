@@ -2421,6 +2421,12 @@
     "feedbackTitle": "Nhận xét của gia sư",
     "feedbackDescription": "Tóm tắt ngắn về buổi hội thoại.",
     "transcriptTitle": "Bản ghi",
+    "transcriptFinalizing": "Đang hoàn tất bản ghi",
+    "transcriptLoadingTitle": "Đang thu thập bản ghi",
+    "transcriptLoadingDescription": "Các lượt hội thoại sẽ sớm xuất hiện tại đây.",
+    "transcriptEmpty": "Không có bản ghi cho buổi nói này.",
+    "transcriptError": "Bản ghi chưa đầy đủ",
+
     "status": {
       "upcoming": "Sẵn sàng",
       "active": "Đang gọi",
@@ -3954,11 +3960,11 @@
             },
             {
               "provider": "Stream Video",
-              "role": "Cuộc gọi luyện nói trực tiếp; chép lời tự động; các trường của phiên như URL bản chép lời (và URL bản ghi chỉ khi sau đó nhận được sự kiện ghi âm)"
+              "role": "Truyền tải âm thanh/video cuộc gọi luyện nói; URL bản ghi chỉ khi sau đó nhận được sự kiện ghi âm. Cuộc gọi mới không dùng chép lời của Stream."
             },
             {
               "provider": "OpenAI",
-              "role": "Hỗ trợ AI tùy chọn và âm thanh thời gian thực cho gia sư luyện nói"
+              "role": "Hỗ trợ AI tùy chọn, âm thanh thời gian thực cho gia sư luyện nói, và chép lời cuộc gọi (gpt-4o-transcribe)"
             },
             {
               "provider": "Resend",
@@ -3977,7 +3983,7 @@
               "role": "Ảnh đại diện được tạo tự động dùng trong phiên luyện nói (từ một seed là tên; không gửi mật khẩu tài khoản)"
             }
           ],
-          "p2": "Các cuộc gọi luyện nói được tạo với chức năng chép lời bật sẵn. Việc ghi âm bị tắt khi tạo cuộc gọi trong cách triển khai hiện tại; URL bản ghi chỉ được lưu nếu sau đó sản phẩm nhận được sự kiện bản ghi đã sẵn sàng từ Stream."
+          "p2": "Bản ghi cuộc gọi luyện nói được thu thập qua OpenAI Realtime (gpt-4o-transcribe) trong phiên và lưu phía máy chủ. Chép lời và phụ đề của Stream bị tắt với cuộc gọi mới. Ghi âm bị tắt khi tạo cuộc gọi; URL bản ghi chỉ được lưu nếu sau đó sản phẩm nhận được sự kiện bản ghi đã sẵn sàng từ Stream."
         },
         "cookies": {
           "title": "9. Cookie và bộ nhớ trên thiết bị",

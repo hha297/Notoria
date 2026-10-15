@@ -4,8 +4,12 @@
  * 2. Disable JoinEndedCall for the ordinary `user` role
  * 3. Restrict JoinCall to call members when possible
  * 4. Do not grant learners UpdateCallSettings / EndCall / admin
- * 5. Webhooks: session_started, participant_left, session_ended, transcription_ready
+ * 5. Webhooks: session_started, participant_left, session_ended
+ *    (transcription_ready kept for legacy in-flight Stream transcripts only)
  * 6. Optional: session inactivity_timeout_seconds (5–900) after last participant leaves
+ *
+ * Speaking transcripts use OpenAI Realtime (gpt-4o-transcribe). Stream transcription
+ * and captions are disabled on new calls.
  */
 export const SPEAKING_TUTOR_NAME = "Notoria Tutor";
 

@@ -2616,6 +2616,12 @@
     "feedbackTitle": "Tutor feedback",
     "feedbackDescription": "A short recap of how the conversation went.",
     "transcriptTitle": "Transcript",
+    "transcriptFinalizing": "Finalizing transcript",
+    "transcriptLoadingTitle": "Collecting transcript",
+    "transcriptLoadingDescription": "Turns from the call will appear here shortly.",
+    "transcriptEmpty": "No transcript was captured for this session.",
+    "transcriptError": "Transcript incomplete",
+
     "status": {
       "upcoming": "Ready",
       "active": "In call",
@@ -3954,11 +3960,11 @@
             },
             {
               "provider": "Stream Video",
-              "role": "Live speaking calls; automatic transcription; session fields such as transcript URLs (and recording URLs only if a recording event is later received)"
+              "role": "Live speaking call audio/video transport; session fields such as recording URLs only if a recording event is later received. New calls do not use Stream transcription."
             },
             {
               "provider": "OpenAI",
-              "role": "Optional AI assistance and speaking-tutor realtime audio"
+              "role": "Optional AI assistance, speaking-tutor realtime audio, and speaking-call transcription (gpt-4o-transcribe)"
             },
             {
               "provider": "Resend",
@@ -3977,7 +3983,7 @@
               "role": "Generated avatar images used in speaking sessions (from a name seed; no account password is sent)"
             }
           ],
-          "p2": "Speaking calls are created with transcription enabled. Recording is disabled at call creation in the current implementation; a recording URL is stored only if the product later receives a recording-ready event from Stream."
+          "p2": "Speaking call transcripts are captured with OpenAI Realtime (gpt-4o-transcribe) during the session and stored server-side. Stream transcription and captions are disabled for new calls. Recording is disabled at call creation; a recording URL is stored only if the product later receives a recording-ready event from Stream."
         },
         "cookies": {
           "title": "9. Cookies and device storage",
