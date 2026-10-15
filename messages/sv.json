@@ -170,6 +170,11 @@
     "captureDescription": "Spara något att bearbeta senare. Du behöver inte bestämma var det hör hemma ännu.",
     "captureSubmit": "Spara till Fångst",
     "captured": "Sparad i Fångst",
+    "edit": "Redigera",
+    "editTitle": "Redigera fångst",
+    "editDescription": "Uppdatera innehållet eller flytta det till en annan mapp.",
+    "editSubmit": "Spara ändringar",
+    "updated": "Fångst uppdaterad",
     "contentLabel": "Innehåll",
     "contentPlaceholder": "Ett ord, en fras, en idé eller något du vill återkomma till…",
     "contentRequired": "Lägg till innehåll först",
@@ -178,14 +183,21 @@
     "sourceLabel": "Källa (valfritt)",
     "sourcePlaceholder": "Bok, podcast, lektion…",
     "sourcePrefix": "Från {source}",
+    "folderLabel": "Mapp",
+    "foldersNav": "Fångstmappar",
+    "scopeAll": "Alla fångster",
+    "unfiled": "Osorterade",
     "filterUnprocessed": "Att bearbeta",
     "filterProcessed": "Bearbetade",
     "emptyTitle": "Fångst är tom",
     "emptyDescription": "Spara något snabbt — ett ord från ett samtal, ett grammatiktvivel, en skrividé — och sortera det senare.",
     "emptyProcessedTitle": "Inga bearbetade objekt ännu",
     "emptyProcessedDescription": "När du har sparat något från Fångst till ordförråd, teori, skrivande eller övningar visas det här.",
+    "emptyFolderTitle": "Den här mappen är tom",
+    "emptyFolderDescription": "Flytta fångster hit, eller spara något nytt i den här mappen.",
+    "deleteFolderDescription": "Vill du radera “{name}”? Mappen tas bort, men {count, plural, one {# fångst blir kvar} other {# fångster blir kvar}} bland Osorterade.",
     "statusProcessed": "Bearbetad",
-    "processMenu": "Bearbeta",
+    "processMenu": "Fångståtgärder",
     "processed": "Markerad som bearbetad",
     "deleted": "Borttagen från Fångst",
     "process": {
@@ -197,13 +209,14 @@
       "delete": "Ta bort"
     },
     "searchPlaceholder": "Sök fångster…",
+    "searchInScope": "Sök i {scope}…",
     "sortBy": "Sortera efter",
     "sortNewest": "Nyast först",
     "sortOldest": "Äldst först",
     "sortNameAsc": "Namn (A → Ö)",
     "sortNameDesc": "Namn (Ö → A)",
     "noResultsTitle": "Inga träffar",
-    "noResultsDescription": "Prova en annan sökning, eller rensa den för att se allt på den här fliken."
+    "noResultsDescription": "Prova en annan sökning, eller rensa den för att se allt i den här mappen och fliken."
   },
   "reviewLater": {
     "add": "Granska senare",
@@ -228,6 +241,7 @@
     "deleteDescription": "“{name}” och allt inuti den ({folderCount, plural, one {# mapp} other {# mappar}}, {itemCount, plural, one {# objekt} other {# objekt}}) kommer att raderas permanent.",
     "deleteDescriptionEmpty": "“{name}” kommer att raderas permanent.",
     "root": "Alla filer",
+    "unfiled": "Osorterade",
     "open": "Öppna",
     "rename": "Döp om",
     "move": "Flytta till…",
@@ -1855,24 +1869,12 @@
           "title": "1. Fånga något",
           "body": "Använd Fångst för att spara ett ord, en fras, ett grammatikfrågetecken eller en skrividé utan att bestämma var det hör hemma ännu. Hastighet är viktigare än perfekt struktur här."
         },
-        "filters": {
-          "title": "2. Att bearbeta vs bearbetat",
-          "body": "Att bearbeta håller poster som fortfarande väntar. Bearbetat visar fångster du redan gjort om till ordförråd, teori, skrivande eller övningar."
-        },
-        "search": {
-          "title": "3. Sök",
-          "body": "Filtrera den aktuella fliken efter innehåll, anteckning eller källa så du hittar en fångst snabbt."
-        },
-        "sort": {
-          "title": "4. Sortera",
-          "body": "Sortera efter nyast, äldst eller namn så listan passar hur du vill arbeta igenom den."
-        },
         "list": {
-          "title": "5. Din fångstlista",
-          "body": "Varje kort visar innehållet, valfri anteckning/källa och när du sparade det. Öppna ···-menyn på ett kort för att bearbeta det."
+          "title": "2. Din fångstlista",
+          "body": "Varje kort visar innehållet, valfri anteckning/källa och när du sparade det. Använd mappar, Att bearbeta / Bearbetat, sök och sortering ovanför listan när du behöver hitta något. Öppna ···-menyn på ett kort för att bearbeta det."
         },
         "process": {
-          "title": "6. Bearbeta till Notoria",
+          "title": "3. Bearbeta till Notoria",
           "body": "Skicka en fångst till Ordförråd, Teori, Skrivande eller Övning. Den blir Bearbetad först när du sparat klart där — avbryter du skapandet lämnas den kvar."
         }
       }

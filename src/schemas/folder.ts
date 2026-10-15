@@ -6,6 +6,7 @@ export const folderSectionSchema = z.enum([
   "listening",
   "theory",
   "reading",
+  "inbox",
 ]);
 
 export const folderNameSchema = z
@@ -26,7 +27,14 @@ export const renameFolderSchema = z.object({
 });
 
 export const moveIntoFolderSchema = z.object({
-  itemType: z.enum(["folder", "writing", "listening", "theory", "reading"]),
+  itemType: z.enum([
+    "folder",
+    "writing",
+    "listening",
+    "theory",
+    "reading",
+    "inbox",
+  ]),
   id: z.string().uuid(),
   folderId: z.string().uuid().nullable(),
 });

@@ -170,6 +170,11 @@
     "captureDescription": "Lưu lại để xử lý sau. Bạn chưa cần quyết định nó thuộc phần nào.",
     "captureSubmit": "Lưu vào Ghi nhanh",
     "captured": "Đã lưu vào Ghi nhanh",
+    "edit": "Sửa",
+    "editTitle": "Sửa ghi nhanh",
+    "editDescription": "Cập nhật nội dung hoặc chuyển sang thư mục khác.",
+    "editSubmit": "Lưu thay đổi",
+    "updated": "Đã cập nhật ghi nhanh",
     "contentLabel": "Nội dung",
     "contentPlaceholder": "Một từ, cụm từ, ý tưởng hoặc bất cứ điều gì bạn muốn quay lại…",
     "contentRequired": "Hãy thêm nội dung trước",
@@ -178,14 +183,21 @@
     "sourceLabel": "Nguồn (tuỳ chọn)",
     "sourcePlaceholder": "Sách, podcast, lớp học…",
     "sourcePrefix": "Từ {source}",
+    "folderLabel": "Thư mục",
+    "foldersNav": "Thư mục Ghi nhanh",
+    "scopeAll": "Tất cả ghi nhanh",
+    "unfiled": "Chưa xếp thư mục",
     "filterUnprocessed": "Chưa xử lý",
     "filterProcessed": "Đã xử lý",
     "emptyTitle": "Ghi nhanh trống",
     "emptyDescription": "Ghi nhanh một điều gì đó — từ trong hội thoại, thắc mắc ngữ pháp, ý tưởng viết — rồi sắp xếp sau.",
     "emptyProcessedTitle": "Chưa có mục đã xử lý",
     "emptyProcessedDescription": "Khi bạn hoàn tất thêm mục từ Ghi nhanh vào từ vựng, lý thuyết, viết hoặc bài tập, nó sẽ hiện ở đây.",
+    "emptyFolderTitle": "Thư mục này trống",
+    "emptyFolderDescription": "Chuyển ghi nhanh vào đây, hoặc tạo mục mới trong thư mục này.",
+    "deleteFolderDescription": "Xóa “{name}”? Thư mục sẽ bị xóa, nhưng {count, plural, other {# ghi nhanh}} sẽ được giữ lại trong Chưa xếp thư mục.",
     "statusProcessed": "Đã xử lý",
-    "processMenu": "Xử lý mục",
+    "processMenu": "Thao tác ghi nhanh",
     "processed": "Đã đánh dấu xử lý",
     "deleted": "Đã xóa khỏi Ghi nhanh",
     "process": {
@@ -197,13 +209,14 @@
       "delete": "Xoá"
     },
     "searchPlaceholder": "Tìm ghi nhanh…",
+    "searchInScope": "Tìm trong {scope}…",
     "sortBy": "Sắp xếp",
     "sortNewest": "Mới nhất trước",
     "sortOldest": "Cũ nhất trước",
     "sortNameAsc": "Tên (A → Z)",
     "sortNameDesc": "Tên (Z → A)",
     "noResultsTitle": "Không có kết quả",
-    "noResultsDescription": "Thử tìm khác, hoặc xóa tìm kiếm để xem mọi mục trong tab này."
+    "noResultsDescription": "Thử tìm khác, hoặc xóa tìm kiếm để xem mọi mục trong thư mục và tab này."
   },
   "reviewLater": {
     "add": "Xem lại sau",
@@ -228,6 +241,7 @@
     "deleteDescription": "“{name}” và toàn bộ nội dung bên trong ({folderCount, plural, other {# thư mục}}, {itemCount, plural, other {# mục}}) sẽ bị xóa vĩnh viễn.",
     "deleteDescriptionEmpty": "“{name}” sẽ bị xóa vĩnh viễn.",
     "root": "Tất cả tệp",
+    "unfiled": "Chưa xếp thư mục",
     "open": "Mở",
     "rename": "Đổi tên",
     "move": "Chuyển đến…",
@@ -1660,24 +1674,12 @@
           "title": "1. Ghi lại điều gì đó",
           "body": "Dùng Ghi nhanh để lưu từ, cụm từ, thắc mắc ngữ pháp hoặc ý viết mà chưa cần quyết định chỗ thuộc về. Nhanh quan trọng hơn cấu trúc hoàn hảo."
         },
-        "filters": {
-          "title": "2. Cần xử lý và Đã xử lý",
-          "body": "Cần xử lý giữ các mục còn chờ. Đã xử lý hiện những ghi nhanh bạn đã chuyển thành từ vựng, lý thuyết, viết hoặc bài tập."
-        },
-        "search": {
-          "title": "3. Tìm kiếm",
-          "body": "Lọc tab hiện tại theo nội dung, ghi chú hoặc nguồn để tìm nhanh một mục."
-        },
-        "sort": {
-          "title": "4. Sắp xếp",
-          "body": "Sắp theo mới nhất, cũ nhất hoặc tên để danh sách khớp cách bạn muốn làm việc."
-        },
         "list": {
-          "title": "5. Danh sách ghi nhanh",
-          "body": "Mỗi thẻ hiện nội dung, ghi chú/nguồn tùy chọn và thời điểm lưu. Mở menu ··· trên thẻ để xử lý."
+          "title": "2. Danh sách ghi nhanh",
+          "body": "Mỗi thẻ hiện nội dung, ghi chú/nguồn tùy chọn và thời điểm lưu. Dùng thư mục, tab Chưa xử lý / Đã xử lý, tìm kiếm và sắp xếp phía trên danh sách khi cần. Mở menu ··· trên thẻ để xử lý."
         },
         "process": {
-          "title": "6. Đưa vào Notoria",
+          "title": "3. Đưa vào Notoria",
           "body": "Gửi ghi nhanh sang Từ vựng, Lý thuyết, Viết hoặc Bài tập. Chỉ đánh dấu Đã xử lý sau khi bạn lưu xong — hủy form tạo thì mục vẫn chờ."
         }
       }

@@ -117,6 +117,7 @@ export const folderSectionEnum = pgEnum("folder_section", [
   "listening",
   "theory",
   "reading",
+  "inbox",
 ]);
 
 export const speakingStatusEnum = pgEnum("speaking_status", [
@@ -1501,6 +1502,10 @@ export const studyInboxItems = pgTable(
     workspaceId: uuid("workspace_id")
       .notNull()
       .references(() => workspaces.id, { onDelete: "cascade" }),
+    /** Flat Capture folders; null = Unfiled. Deleting a folder sets this to null. */
+    folderId: uuid("folder_id").references(() => workspaceFolders.id, {
+      onDelete: "set null",
+    }),
     content: text("content").notNull(),
     note: text("note"),
     source: text("source"),
@@ -1522,6 +1527,7 @@ export const studyInboxItems = pgTable(
       table.status,
       table.createdAt,
     ),
+    index("study_inbox_items_folder_id_idx").on(table.folderId),
     index("study_inbox_items_fts_idx").using(
       "gin",
       sql`to_tsvector('simple', coalesce(${table.content}, '') || ' ' || coalesce(${table.note}, '') || ' ' || coalesce(${table.source}, ''))`,

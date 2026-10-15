@@ -56,9 +56,6 @@ export const SECTION_TUTORIALS = {
     ctaHref: "/inbox",
     steps: [
       { id: "capture", target: "inbox-capture" },
-      { id: "filters", target: "inbox-filters" },
-      { id: "search", target: "inbox-search" },
-      { id: "sort", target: "inbox-sort" },
       { id: "list", target: "inbox-list" },
       { id: "process", target: "inbox-process" },
     ],

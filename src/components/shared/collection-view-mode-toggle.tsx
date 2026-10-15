@@ -10,7 +10,7 @@ type CollectionViewModeToggleProps = {
   value: CollectionViewMode;
   onChange: (value: CollectionViewMode) => void;
   /** Matches `.route-view-toggle[data-route=…]` accent tokens. */
-  route: "writing" | "listen" | "speak" | "read";
+  route: "writing" | "listen" | "speak" | "read" | "home";
   className?: string;
 };
 

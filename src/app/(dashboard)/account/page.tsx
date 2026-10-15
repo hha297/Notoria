@@ -24,14 +24,11 @@ export default async function AccountPage({
   const user = await getAccountUser();
 
   return (
-    <PageShell className="writing-atelier-shell account-atelier-shell">
+    <PageShell className="account-atelier-shell">
       <div
         className={cn(
           "account-atelier",
-          mx(
-            styles,
-            "writing-atelier account-atelier flex flex-col gap-10 lg:gap-12",
-          ),
+          mx(styles, "account-atelier flex flex-col gap-10 lg:gap-12"),
         )}
       >
         <header className="writing-hero">

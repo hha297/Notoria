@@ -754,7 +754,12 @@
 
   [data-studio-scene="account"] {
     --page-accent: var(--module-account-fg);
-    --page-accent-soft: var(--module-account-bg);
+    /* Mix fg into soft so control-surface / outline buttons read as account slate, not flat grey. */
+    --page-accent-soft: color-mix(
+      in oklab,
+      var(--module-account-bg) 70%,
+      var(--module-account-fg) 30%
+    );
   }
 
   [data-studio-scene="settings"] {
@@ -1075,6 +1080,11 @@
   .route-view-toggle[data-route="read"] {
     --route-view-fg: var(--module-read-fg);
     --route-view-bg: var(--module-read-bg);
+  }
+
+  .route-view-toggle[data-route="home"] {
+    --route-view-fg: var(--module-home-fg);
+    --route-view-bg: var(--module-home-bg);
   }
 
   .route-view-toggle-item,
@@ -1523,7 +1533,11 @@
     --writing-ink: var(--module-account-fg);
     --writing-wash: var(--module-account-bg);
     --writing-accent-fg: var(--module-account-fg);
-    --writing-accent-bg: var(--module-account-bg);
+    --writing-accent-bg: color-mix(
+      in oklab,
+      var(--module-account-bg) 70%,
+      var(--module-account-fg) 30%
+    );
     --page-accent: var(--writing-accent-fg);
     --page-accent-soft: var(--writing-accent-bg);
   }
@@ -1864,6 +1878,11 @@
     --route-action-bg: var(--module-read-bg);
   }
 
+  .route-quiet-action[data-route-action="home"] {
+    --route-action-fg: var(--module-home-fg);
+    --route-action-bg: var(--module-home-bg);
+  }
+
   /* Atelier-scoped CTAs: match entry accent, not a mismatched route token. */
   .listening-atelier .writing-entry-cta .route-quiet-action {
     --route-action-fg: var(--module-listen-fg);
@@ -1931,6 +1950,31 @@
   .route-quiet-action[data-route-action="account"] {
     --route-action-fg: var(--module-account-fg);
     --route-action-bg: var(--module-account-bg);
+    border-color: color-mix(
+      in oklab,
+      var(--module-account-fg) 32%,
+      var(--hairline-cloud)
+    ) !important;
+    background: color-mix(
+      in oklab,
+      var(--module-account-bg) 55%,
+      transparent
+    ) !important;
+    color: var(--module-account-fg) !important;
+  }
+
+  .route-quiet-action[data-route-action="account"]:hover:not(:disabled) {
+    border-color: color-mix(
+      in oklab,
+      var(--module-account-fg) 58%,
+      transparent
+    ) !important;
+    background: color-mix(
+      in oklab,
+      var(--module-account-bg) 78%,
+      var(--module-account-fg) 12%
+    ) !important;
+    color: var(--module-account-fg) !important;
   }
 
   .route-quiet-action[data-route-action="settings"] {

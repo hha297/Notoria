@@ -170,6 +170,11 @@
     "captureDescription": "Save something to process later. You do not need to decide where it belongs yet.",
     "captureSubmit": "Save to Capture",
     "captured": "Saved to Capture",
+    "edit": "Edit",
+    "editTitle": "Edit capture",
+    "editDescription": "Update the content or move it to a different folder.",
+    "editSubmit": "Save changes",
+    "updated": "Capture updated",
     "contentLabel": "Content",
     "contentPlaceholder": "A word, phrase, idea, or anything you want to come back to…",
     "contentRequired": "Add some content first",
@@ -178,14 +183,21 @@
     "sourceLabel": "Source (optional)",
     "sourcePlaceholder": "Book, podcast, class…",
     "sourcePrefix": "From {source}",
+    "folderLabel": "Folder",
+    "foldersNav": "Capture folders",
+    "scopeAll": "All captures",
+    "unfiled": "Unfiled",
     "filterUnprocessed": "To process",
     "filterProcessed": "Processed",
     "emptyTitle": "Nothing captured yet",
     "emptyDescription": "Capture something quickly — a word from a conversation, a grammar doubt, a writing idea — and sort it later.",
     "emptyProcessedTitle": "No processed items yet",
     "emptyProcessedDescription": "When you finish adding something from Capture into vocabulary, theory, writing, or exercises, it shows up here.",
+    "emptyFolderTitle": "This folder is empty",
+    "emptyFolderDescription": "Move captures here, or capture something new into this folder.",
+    "deleteFolderDescription": "Delete “{name}”? The folder will be removed, but its {count, plural, one {# capture stays} other {# captures stay}} in Unfiled.",
     "statusProcessed": "Processed",
-    "processMenu": "Process item",
+    "processMenu": "Capture actions",
     "processed": "Marked as processed",
     "deleted": "Deleted from Capture",
     "process": {
@@ -197,13 +209,14 @@
       "delete": "Delete"
     },
     "searchPlaceholder": "Search captures…",
+    "searchInScope": "Search in {scope}…",
     "sortBy": "Sort by",
     "sortNewest": "Newest first",
     "sortOldest": "Oldest first",
     "sortNameAsc": "Name (A → Z)",
     "sortNameDesc": "Name (Z → A)",
     "noResultsTitle": "No matches",
-    "noResultsDescription": "Try another search, or clear it to see everything in this tab."
+    "noResultsDescription": "Try another search, or clear it to see everything in this folder and tab."
   },
   "reviewLater": {
     "add": "Review later",
@@ -228,6 +241,7 @@
     "deleteDescription": "“{name}” and everything inside it ({folderCount, plural, one {# folder} other {# folders}}, {itemCount, plural, one {# item} other {# items}}) will be permanently deleted.",
     "deleteDescriptionEmpty": "“{name}” will be permanently deleted.",
     "root": "All files",
+    "unfiled": "Unfiled",
     "open": "Open",
     "rename": "Rename",
     "move": "Move to…",
@@ -1894,24 +1908,12 @@
           "title": "1. Capture something",
           "body": "Use Capture to save a word, phrase, grammar doubt, or writing idea without deciding where it belongs yet. Speed matters more than perfect structure here."
         },
-        "filters": {
-          "title": "2. To process vs processed",
-          "body": "To process holds items still waiting. Processed shows captures you already turned into vocabulary, theory, writing, or exercises."
-        },
-        "search": {
-          "title": "3. Search",
-          "body": "Filter the current tab by content, note, or source so you can find a capture quickly."
-        },
-        "sort": {
-          "title": "4. Sort",
-          "body": "Sort by newest, oldest, or name so the list matches how you want to work through it."
-        },
         "list": {
-          "title": "5. Your capture list",
-          "body": "Each card shows the content, optional note/source, and when you saved it. Open the ··· menu on a card to process it."
+          "title": "2. Your capture list",
+          "body": "Each card shows the content, optional note/source, and when you saved it. Use folders, To process / Processed, search, and sort above the list when you need to find something. Open the ··· menu on a card to process it."
         },
         "process": {
-          "title": "6. Process into Notoria",
+          "title": "3. Process into Notoria",
           "body": "Send a capture to Vocabulary, Theory, Writing, or Exercise. It only becomes Processed after you finish saving there — canceling the create form leaves it waiting."
         }
       }

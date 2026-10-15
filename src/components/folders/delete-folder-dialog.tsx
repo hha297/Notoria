@@ -20,6 +20,8 @@ type DeleteFolderDialogProps = {
   itemCount: number;
   pending?: boolean;
   onConfirm: () => void;
+  /** Override body copy (e.g. Capture delete preserves items in Unfiled). */
+  description?: string;
 };
 
 export function DeleteFolderDialog({
@@ -30,6 +32,7 @@ export function DeleteFolderDialog({
   itemCount,
   pending = false,
   onConfirm,
+  description,
 }: DeleteFolderDialogProps) {
   const t = useTranslations("folders");
   const tc = useTranslations("common");
@@ -41,9 +44,10 @@ export function DeleteFolderDialog({
         <DialogHeader>
           <DialogTitle>{t("deleteTitle")}</DialogTitle>
           <DialogDescription>
-            {hasContents
-              ? t("deleteDescription", { name, folderCount, itemCount })
-              : t("deleteDescriptionEmpty", { name })}
+            {description ??
+              (hasContents
+                ? t("deleteDescription", { name, folderCount, itemCount })
+                : t("deleteDescriptionEmpty", { name }))}
           </DialogDescription>
         </DialogHeader>
         <DialogFooter>

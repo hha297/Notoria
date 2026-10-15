@@ -1,18 +1,21 @@
 "use client";
 
-import { useTransition } from "react";
+import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import {
   BookOpen,
   Bookmark,
   Dumbbell,
+  FolderInput,
   Languages,
   MoreHorizontal,
+  Pencil,
   PenLine,
   Trash2,
 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { MoveToFolderDialog } from "@/components/folders/move-to-folder-dialog";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,12 +25,17 @@ import {
 } from "@/components/ui/dropdown-menu";
 import styles from "@/components/style/inbox/inbox.module.css";
 import { mx } from "@/lib/css-module";
+import { moveIntoFolder } from "@/lib/actions/folders";
 import { processStudyInboxItem } from "@/lib/actions/study-inbox";
+import type { FolderListItem } from "@/lib/folders/types";
 import type { StudyInboxProcessTarget } from "@/schemas/study-inbox";
 
 type InboxItemActionsProps = {
   id: string;
   status: "unprocessed" | "processed";
+  folderId: string | null;
+  folders: FolderListItem[];
+  onEdit: () => void;
 };
 
 const PROCESS_TARGETS: Array<{
@@ -40,11 +48,19 @@ const PROCESS_TARGETS: Array<{
   { target: "exercise", icon: Dumbbell },
 ];
 
-export function InboxItemActions({ id, status }: InboxItemActionsProps) {
+export function InboxItemActions({
+  id,
+  status,
+  folderId,
+  folders,
+  onEdit,
+}: InboxItemActionsProps) {
   const t = useTranslations("inbox");
+  const tf = useTranslations("folders");
   const te = useTranslations("errors");
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
+  const [moveOpen, setMoveOpen] = useState(false);
 
   function run(target: StudyInboxProcessTarget) {
     startTransition(async () => {
@@ -66,56 +82,104 @@ export function InboxItemActions({ id, status }: InboxItemActionsProps) {
     });
   }
 
+  function handleMove(nextFolderId: string | null) {
+    startTransition(async () => {
+      try {
+        await moveIntoFolder({
+          itemType: "inbox",
+          id,
+          folderId: nextFolderId,
+        });
+        toast.success(tf("moved"));
+        setMoveOpen(false);
+        router.refresh();
+      } catch {
+        toast.error(te("generic"));
+      }
+    });
+  }
+
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger
-        disabled={isPending}
-        aria-label={t("processMenu")}
-        className={mx(styles, "inbox-process-trigger")}
-      >
-        <MoreHorizontal className="size-4" />
-      </DropdownMenuTrigger>
-      <DropdownMenuContent
-        align="end"
-        sideOffset={8}
-        className={mx(styles, "inbox-process-menu")}
-      >
-        {status === "unprocessed"
-          ? PROCESS_TARGETS.map(({ target, icon: Icon }) => (
-              <DropdownMenuItem
-                key={target}
-                disabled={isPending}
-                data-target={target}
-                className={mx(styles, "inbox-process-option")}
-                onClick={() => run(target)}
-              >
-                <Icon className="size-4 shrink-0" />
-                {t(`process.${target}`)}
-              </DropdownMenuItem>
-            ))
-          : null}
-        {status === "unprocessed" ? (
+    <>
+      <DropdownMenu>
+        <DropdownMenuTrigger
+          disabled={isPending}
+          aria-label={t("processMenu")}
+          className={mx(styles, "inbox-process-trigger")}
+        >
+          <MoreHorizontal className="size-4" />
+        </DropdownMenuTrigger>
+        <DropdownMenuContent
+          align="end"
+          sideOffset={8}
+          className={mx(styles, "inbox-process-menu")}
+        >
           <DropdownMenuItem
             disabled={isPending}
-            data-target="keep"
             className={mx(styles, "inbox-process-option")}
-            onClick={() => run("keep")}
+            onClick={onEdit}
           >
-            <Bookmark className="size-4 shrink-0" />
-            {t("process.keep")}
+            <Pencil className="size-4 shrink-0" />
+            {t("edit")}
           </DropdownMenuItem>
-        ) : null}
-        {status === "unprocessed" ? <DropdownMenuSeparator /> : null}
-        <DropdownMenuItem
-          disabled={isPending}
-          variant="destructive"
-          className={mx(styles, "inbox-process-delete")}
-          onClick={() => run("delete")}
-        >
-          <Trash2 className="size-4 shrink-0" />
-          {t("process.delete")}
-        </DropdownMenuItem>
-      </DropdownMenuContent>
-    </DropdownMenu>
+          <DropdownMenuItem
+            disabled={isPending}
+            className={mx(styles, "inbox-process-option")}
+            onClick={() => setMoveOpen(true)}
+          >
+            <FolderInput className="size-4 shrink-0" />
+            {tf("move")}
+          </DropdownMenuItem>
+          {status === "unprocessed" ? <DropdownMenuSeparator /> : null}
+          {status === "unprocessed"
+            ? PROCESS_TARGETS.map(({ target, icon: Icon }) => (
+                <DropdownMenuItem
+                  key={target}
+                  disabled={isPending}
+                  data-target={target}
+                  className={mx(styles, "inbox-process-option")}
+                  onClick={() => run(target)}
+                >
+                  <Icon className="size-4 shrink-0" />
+                  {t(`process.${target}`)}
+                </DropdownMenuItem>
+              ))
+            : null}
+          {status === "unprocessed" ? (
+            <DropdownMenuItem
+              disabled={isPending}
+              data-target="keep"
+              className={mx(styles, "inbox-process-option")}
+              onClick={() => run("keep")}
+            >
+              <Bookmark className="size-4 shrink-0" />
+              {t("process.keep")}
+            </DropdownMenuItem>
+          ) : null}
+          <DropdownMenuSeparator />
+          <DropdownMenuItem
+            disabled={isPending}
+            variant="destructive"
+            className={mx(styles, "inbox-process-delete")}
+            onClick={() => run("delete")}
+          >
+            <Trash2 className="size-4 shrink-0" />
+            {t("process.delete")}
+          </DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
+
+      <MoveToFolderDialog
+        open={moveOpen}
+        onOpenChange={setMoveOpen}
+        folders={folders}
+        section="inbox"
+        itemType="inbox"
+        itemId={id}
+        currentFolderId={folderId}
+        pending={isPending}
+        onMove={handleMove}
+      />
+    </>
   );
 }

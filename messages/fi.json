@@ -170,6 +170,11 @@
     "captureDescription": "Säilytä jotain käsiteltäväksi myöhemmin. Sinun ei tarvitse vielä päättää, mihin se kuuluu.",
     "captureSubmit": "Tallenna Keräykseen",
     "captured": "Tallennettu Keräykseen",
+    "edit": "Muokkaa",
+    "editTitle": "Muokkaa tallennetta",
+    "editDescription": "Päivitä sisältö tai siirrä se toiseen kansioon.",
+    "editSubmit": "Tallenna muutokset",
+    "updated": "Tallenne päivitetty",
     "contentLabel": "Sisältö",
     "contentPlaceholder": "Sana, fraasi, idea tai mitä tahansa, johon haluat palata…",
     "contentRequired": "Lisää ensin sisältöä",
@@ -178,14 +183,21 @@
     "sourceLabel": "Lähde (valinnainen)",
     "sourcePlaceholder": "Kirja, podcast, tunti…",
     "sourcePrefix": "Lähde: {source}",
+    "folderLabel": "Kansio",
+    "foldersNav": "Keräyksen kansiot",
+    "scopeAll": "Kaikki tallenteet",
+    "unfiled": "Ilman kansiota",
     "filterUnprocessed": "Käsittelemättä",
     "filterProcessed": "Käsitelty",
     "emptyTitle": "Keräys on tyhjä",
     "emptyDescription": "Tallenna jotain nopeasti — sana keskustelusta, kielioppi-epäilys, kirjoitusidea — ja järjestä se myöhemmin.",
     "emptyProcessedTitle": "Ei vielä käsiteltyjä kohteita",
     "emptyProcessedDescription": "Kun olet tallentanut Keräyksestä sanaston, teorian, kirjoituksen tai harjoituksen, kohde näkyy täällä.",
+    "emptyFolderTitle": "Tämä kansio on tyhjä",
+    "emptyFolderDescription": "Siirrä tallenteita tänne tai tallenna jotain uutta tähän kansioon.",
+    "deleteFolderDescription": "Poistetaanko “{name}”? Kansio poistetaan, mutta sen {count, plural, one {# tallenne jää} other {# tallennetta jää}} Ilman kansiota -näkymään.",
     "statusProcessed": "Käsitelty",
-    "processMenu": "Käsittele",
+    "processMenu": "Tallenteen toiminnot",
     "processed": "Merkitty käsitellyksi",
     "deleted": "Poistettu Keräyksestä",
     "process": {
@@ -197,13 +209,14 @@
       "delete": "Poista"
     },
     "searchPlaceholder": "Hae keräyksiä…",
+    "searchInScope": "Hae kohteesta {scope}…",
     "sortBy": "Järjestä",
     "sortNewest": "Uusimmat ensin",
     "sortOldest": "Vanhimmat ensin",
     "sortNameAsc": "Nimi (A → Ö)",
     "sortNameDesc": "Nimi (Ö → A)",
     "noResultsTitle": "Ei osumia",
-    "noResultsDescription": "Kokeile toista hakua tai tyhjennä haku nähdäksesi kaiken tällä välilehdellä."
+    "noResultsDescription": "Kokeile toista hakua tai tyhjennä haku nähdäksesi kaiken tässä kansiossa ja välilehdellä."
   },
   "reviewLater": {
     "add": "Tarkista myöhemmin",
@@ -228,6 +241,7 @@
     "deleteDescription": "“{name}” ja sen sisältö ({folderCount, plural, one {# kansio} other {# kansiota}}, {itemCount, plural, one {# kohde} other {# kohdetta}}) poistetaan pysyvästi.",
     "deleteDescriptionEmpty": "“{name}” poistetaan pysyvästi.",
     "root": "Kaikki tiedostot",
+    "unfiled": "Ilman kansiota",
     "open": "Avaa",
     "rename": "Nimeä uudelleen",
     "move": "Siirrä…",
@@ -1660,24 +1674,12 @@
           "title": "1. Kerää jotain",
           "body": "Käytä Keräystä tallentaaksesi sanan, fraasin, kielioppiepäyksen tai kirjoitusidean ilman että päätät vielä, mihin se kuuluu. Nopeus on tärkeämpää kuin täydellinen rakenne."
         },
-        "filters": {
-          "title": "2. Käsittelemättä vs käsitelty",
-          "body": "Käsittelemättä sisältää odottavat kohteet. Käsitelty näyttää keräykset, jotka olet jo muuttanut sanastoksi, teoriaksi, kirjoitukseksi tai harjoitukseksi."
-        },
-        "search": {
-          "title": "3. Haku",
-          "body": "Suodata nykyistä välilehteä sisällön, muistiinpanon tai lähteen mukaan."
-        },
-        "sort": {
-          "title": "4. Järjestys",
-          "body": "Järjestä uusimman, vanhimman tai nimen mukaan, jotta lista sopii tapaasi työskennellä."
-        },
         "list": {
-          "title": "5. Keräyslista",
-          "body": "Jokainen kortti näyttää sisällön, valinnaisen muistiinpanon/lähteen ja milloin tallensit sen. Avaa ···-valikko käsitelläksesi kohteen."
+          "title": "2. Keräyslista",
+          "body": "Jokainen kortti näyttää sisällön, valinnaisen muistiinpanon/lähteen ja milloin tallensit sen. Käytä kansioita, Käsittelemättä / Käsitelty -välilehtiä, hakua ja järjestystä listan yläpuolella tarvittaessa. Avaa ···-valikko käsitelläksesi kohteen."
         },
         "process": {
-          "title": "6. Muuta Notoriaan",
+          "title": "3. Muuta Notoriaan",
           "body": "Lähetä keräys Sanastoon, Teoriaan, Kirjoitukseen tai Harjoitukseen. Se merkitään käsitellyksi vasta, kun tallennus on valmis — jos peruutat luonnin, kohde jää odottamaan."
         }
       }
