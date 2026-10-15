@@ -1099,6 +1099,11 @@
     --exercise-accent-soft: var(--module-speak-bg);
   }
 
+  [data-exercise="theory"] {
+    --exercise-accent: var(--module-theory-fg);
+    --exercise-accent-soft: var(--module-theory-bg);
+  }
+
   [data-exercise="import"] {
     --exercise-accent: var(--module-exercise-fg);
     --exercise-accent-soft: var(--module-exercise-bg);

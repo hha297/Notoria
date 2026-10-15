@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
 import { useLocale, useTranslations } from "next-intl";
 import { Sparkles } from "lucide-react";
 import { QuotaLockButton } from "@/components/billing/quota-lock-button";
@@ -9,15 +8,16 @@ import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseDifficultySelect } from "@/components/exercises/exercise-difficulty-select";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
-import { MultipleChoiceActions } from "@/components/exercises/multiple-choice-actions";
+import { ExerciseSetSubmitBar } from "@/components/exercises/exercise-set-submit-bar";
 import { MultipleChoiceStage } from "@/components/exercises/multiple-choice-stage";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
+import { Button } from "@/components/ui/button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { useExerciseDifficulty } from "@/hooks/use-exercise-difficulty";
-import { useExerciseSessionController } from "@/hooks/use-exercise-session-controller";
+import { useExerciseSetAttempt } from "@/hooks/use-exercise-set-attempt";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import { isValidLocale } from "@/i18n/config";
 import { requestContextualExerciseAi } from "@/lib/exercises/contextual-ai-client";
@@ -35,6 +35,7 @@ import {
   type MultipleChoiceQuestion,
   type MultipleChoiceStudyMode,
 } from "@/lib/exercises/multiple-choice";
+import { isNonEmptyAnswer, type SetQuestionResult } from "@/lib/exercises/set-attempt";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
@@ -45,6 +46,19 @@ type MultipleChoiceSessionProps = {
   words: FlashcardWord[];
   language?: string;
 };
+
+function promptLabelFor(
+  question: MultipleChoiceQuestion,
+  labels: {
+    contextual: string;
+    wordToMeaning: string;
+    meaningToWord: string;
+  },
+) {
+  if (question.direction === "CONTEXTUAL") return labels.contextual;
+  if (question.direction === "WORD_TO_MEANING") return labels.wordToMeaning;
+  return labels.meaningToWord;
+}
 
 export function MultipleChoiceSession({
   workspaceId,
@@ -61,19 +75,7 @@ export function MultipleChoiceSession({
   const [studyMode, setStudyMode] =
     useState<MultipleChoiceStudyMode>("word-to-meaning");
   const [questions, setQuestions] = useState<MultipleChoiceQuestion[]>([]);
-  const [selected, setSelected] = useState<string | null>(null);
-  const {
-    currentIndex,
-    score,
-    answered,
-    peeked,
-    complete: sessionComplete,
-    restart,
-    next,
-    goPrev,
-    recordAnswer,
-    peek,
-  } = useExerciseSessionController();
+  const [activeIds, setActiveIds] = useState<string[] | null>(null);
   const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
   const { difficulty, setDifficulty } = useExerciseDifficulty("multiple_choice");
   const {
@@ -95,6 +97,36 @@ export function MultipleChoiceSession({
   );
   const isContextual = studyMode === "contextual";
 
+  const practiceQuestions = useMemo(() => {
+    if (!activeIds) return questions;
+    const byId = new Map(questions.map((q) => [q.id, q]));
+    return activeIds
+      .map((id) => byId.get(id))
+      .filter((q): q is MultipleChoiceQuestion => Boolean(q));
+  }, [activeIds, questions]);
+
+  const questionIds = useMemo(
+    () => practiceQuestions.map((q) => q.id),
+    [practiceQuestions],
+  );
+
+  const {
+    answers,
+    phase: attemptPhase,
+    results,
+    submitting,
+    attemptKey,
+    answeredCount,
+    totalQuestionCount,
+    unansweredIds,
+    score,
+    setAnswer,
+    resetAttempt,
+    submit,
+  } = useExerciseSetAttempt({ questionIds });
+
+  const submitted = attemptPhase === "submitted";
+
   const startDeterministicSession = useCallback(() => {
     const prefs = commitAndBeginNext();
     const built = sampleSessionItems(
@@ -111,15 +143,15 @@ export function MultipleChoiceSession({
       },
     );
     setQuestions(built);
-    setSelected(null);
-    restart();
+    setActiveIds(null);
+    resetAttempt();
     resetProcessing();
   }, [
     commitAndBeginNext,
     createdAtByWordId,
     filteredWords,
+    resetAttempt,
     resetProcessing,
-    restart,
     studyMode,
   ]);
 
@@ -146,8 +178,8 @@ export function MultipleChoiceSession({
     );
 
     setQuestions([]);
-    setSelected(null);
-    restart();
+    setActiveIds(null);
+    resetAttempt();
     setStage("generating");
 
     try {
@@ -174,7 +206,8 @@ export function MultipleChoiceSession({
           meaning: word.meanings[0]?.trim() || null,
           partOfSpeech: word.partOfSpeech,
           distractorPool: distractorPool.filter(
-            (candidate) => candidate.toLowerCase() !== word.word.trim().toLowerCase(),
+            (candidate) =>
+              candidate.toLowerCase() !== word.word.trim().toLowerCase(),
           ),
         })),
       });
@@ -230,11 +263,12 @@ export function MultipleChoiceSession({
     filteredWords,
     language,
     openUpgrade,
+    resetAttempt,
     resetProcessing,
-    restart,
     setStage,
     tAi,
-    exerciseQuota,
+    exerciseQuota.message,
+    exerciseQuota.refreshQuotas,
     uiLocale,
   ]);
 
@@ -246,15 +280,24 @@ export function MultipleChoiceSession({
     startDeterministicSession();
   }, [isContextual, startContextualSession, startDeterministicSession]);
 
+  // Restart only when the practice source changes — not when callback identities
+  // shift (e.g. quota message object rebuilt every render).
   useEffect(() => {
     let cancelled = false;
     void Promise.resolve().then(() => {
-      if (!cancelled) startSession();
+      if (cancelled) return;
+      if (isContextual) {
+        void startContextualSession();
+      } else {
+        startDeterministicSession();
+      }
     });
     return () => {
       cancelled = true;
     };
-  }, [startSession, workspaceId]);
+    // intentionally omit session starters from deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- avoid infinite reshuffle
+  }, [workspaceId, studyMode, filters, isContextual, difficulty]);
 
   const handleStudyModeChange = (mode: string) => {
     if (
@@ -266,58 +309,31 @@ export function MultipleChoiceSession({
     }
   };
 
-  const current = questions[currentIndex];
-  const total = questions.length;
-  const revealed = answered || peeked;
-  const isCorrect = Boolean(
-    current &&
-      !peeked &&
-      selected !== null &&
-      displayContextualOption(current, selected) ===
-        contextualSurfaceAnswer(current),
-  );
-
-  const pick = (option: string) => {
-    if (!current || revealed) return;
-    setSelected(option);
-    const correct =
-      displayContextualOption(current, option) ===
-      contextualSurfaceAnswer(current);
-    recordAnswer(correct);
-    recordOutcome({ wordId: current.wordId, correct });
+  const handleSubmit = () => {
+    void submit((currentAnswers) => {
+      const graded: Record<string, SetQuestionResult> = {};
+      for (const question of practiceQuestions) {
+        const raw = currentAnswers[question.id];
+        const value = typeof raw === "string" ? raw : "";
+        const unanswered = !isNonEmptyAnswer(value);
+        const correct =
+          !unanswered &&
+          displayContextualOption(question, value) ===
+            contextualSurfaceAnswer(question);
+        graded[question.id] = { correct, unanswered };
+        recordOutcome({ wordId: question.wordId, correct });
+      }
+      return graded;
+    });
   };
 
-  const revealAnswer = () => {
-    if (!current || revealed) return;
-    peek();
-    recordOutcome({ wordId: current.wordId, correct: false });
+  const jumpToUnanswered = () => {
+    const first = unansweredIds[0];
+    if (!first) return;
+    document
+      .getElementById(`mc-q-${first}`)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
-
-  useHotkeys(
-    "1,2,3,4",
-    (event) => {
-      if (!current || revealed) return;
-      const optionIndex = Number(event.key) - 1;
-      const option = current.options[optionIndex];
-      if (!option) return;
-      event.preventDefault();
-      pick(option);
-    },
-    [current, revealed, pick],
-  );
-
-  useHotkeys(
-    "enter",
-    (event) => {
-      if (!current || !revealed) return;
-      const target = event.target as HTMLElement | null;
-      if (target?.closest("button, a, [role='button']")) return;
-      event.preventDefault();
-      setSelected(null);
-      next(total);
-    },
-    [current, revealed, total, next],
-  );
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
 
@@ -375,7 +391,7 @@ export function MultipleChoiceSession({
     );
   }
 
-  if (questions.length === 0 && !sessionComplete && !isContextual) {
+  if (questions.length === 0 && !isContextual) {
     return (
       <div className="space-y-6">
         {filtersBar}
@@ -384,76 +400,10 @@ export function MultipleChoiceSession({
     );
   }
 
-  const promptLabel =
-    current?.direction === "CONTEXTUAL"
-      ? t("questionContext")
-      : current?.direction === "WORD_TO_MEANING"
-        ? t("questionWord")
-        : t("questionMeaning");
-
-  return (
-    <div className="space-y-6">
-      {filtersBar}
-
-      {isContextual ? (
-        <ExerciseDifficultySelect
-          value={difficulty}
-          onChange={(next) => {
-            setDifficulty(next);
-          }}
-          disabled={generating}
-          compact
-        />
-      ) : null}
-
-      {sessionComplete ? (
-        <SessionCompleteCard
-          title={tSession("complete")}
-          questions={total}
-          correct={score.correct}
-          tryAgainLabel={tSession("tryAgain")}
-          onTryAgain={startSession}
-        />
-      ) : current ? (
-        <>
-          <ExerciseProgressHeader
-            current={currentIndex + 1}
-            total={total}
-            progressLabel={t("progress", { current: currentIndex + 1, total })}
-            scoreLabel={t("score", {
-              correct: score.correct,
-              answered: score.answered,
-            })}
-            hint={t("keyboardHint")}
-            progressValue={total ? ((currentIndex + 1) / total) * 100 : 0}
-          />
-          <MultipleChoiceStage
-            question={current}
-            promptLabel={promptLabel}
-            selected={selected}
-            revealed={revealed}
-            peeked={peeked}
-            isCorrect={isCorrect}
-            onPick={pick}
-            onRevealAnswer={revealAnswer}
-          />
-          <MultipleChoiceActions
-            canPrev={currentIndex > 0}
-            revealed={revealed}
-            isLast={currentIndex >= total - 1}
-            tryAgainLabel={tSession("tryAgain")}
-            onPrev={() => {
-              setSelected(null);
-              goPrev();
-            }}
-            onNext={() => {
-              setSelected(null);
-              next(total);
-            }}
-            onTryAgain={startSession}
-          />
-        </>
-      ) : isContextual ? (
+  if (questions.length === 0 && isContextual) {
+    return (
+      <div className="space-y-6">
+        {filtersBar}
         <div className="relative mx-auto max-w-lg overflow-hidden px-4 py-10 text-center sm:px-8 sm:py-14">
           <div
             aria-hidden
@@ -467,7 +417,7 @@ export function MultipleChoiceSession({
               {t("contextualEmptyTitle")}
             </p>
             <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
-            {t("contextualEmptyDescription")}
+              {t("contextualEmptyDescription")}
             </p>
             <QuotaLockButton
               type="button"
@@ -483,7 +433,146 @@ export function MultipleChoiceSession({
             </QuotaLockButton>
           </div>
         </div>
+      </div>
+    );
+  }
+
+  return (
+    <div className="space-y-6">
+      {filtersBar}
+
+      {isContextual ? (
+        <ExerciseDifficultySelect
+          value={difficulty}
+          onChange={setDifficulty}
+          disabled={generating || submitted}
+          compact
+        />
       ) : null}
+
+      <ExerciseProgressHeader
+        current={submitted ? score.correct : answeredCount}
+        total={submitted ? score.total : totalQuestionCount}
+        progressLabel={
+          submitted
+            ? tSession("score", {
+                correct: score.correct,
+                total: score.total,
+              })
+            : tSession("answeredProgress", {
+                answered: answeredCount,
+                total: totalQuestionCount,
+              })
+        }
+        scoreLabel={
+          submitted
+            ? t("score", {
+                correct: score.correct,
+                answered: score.total,
+              })
+            : undefined
+        }
+        progressValue={
+          submitted
+            ? score.total
+              ? (score.correct / score.total) * 100
+              : 0
+            : totalQuestionCount
+              ? (answeredCount / totalQuestionCount) * 100
+              : 0
+        }
+      />
+
+      <div className="space-y-4" key={attemptKey}>
+        {practiceQuestions.map((question, index) => {
+          const selected =
+            typeof answers[question.id] === "string"
+              ? String(answers[question.id])
+              : null;
+          const result = results[question.id];
+          const unanswered = Boolean(result?.unanswered);
+          const isCorrect = Boolean(result?.correct);
+          return (
+            <MultipleChoiceStage
+              key={question.id}
+              question={question}
+              number={index + 1}
+              promptLabel={promptLabelFor(question, {
+                contextual: t("questionContext"),
+                wordToMeaning: t("questionWord"),
+                meaningToWord: t("questionMeaning"),
+              })}
+              selected={selected}
+              revealed={submitted}
+              peeked={false}
+              isCorrect={isCorrect}
+              unanswered={unanswered}
+              onPick={(option) => setAnswer(question.id, option)}
+            />
+          );
+        })}
+      </div>
+
+      {!submitted ? (
+        <ExerciseSetSubmitBar
+          answeredCount={answeredCount}
+          totalQuestionCount={totalQuestionCount}
+          unansweredCount={unansweredIds.length}
+          submitting={submitting}
+          onSubmit={handleSubmit}
+          onJumpToUnanswered={jumpToUnanswered}
+        />
+      ) : (
+        <div className="space-y-4">
+          <SessionCompleteCard
+            title={tSession("complete")}
+            questions={score.total}
+            correct={score.correct}
+            tryAgainLabel={tSession("restartSet")}
+            onTryAgain={startSession}
+          />
+          <div className="mx-auto flex w-full max-w-md flex-wrap justify-center gap-2">
+            {practiceQuestions.some(
+              (q) =>
+                results[q.id] &&
+                !results[q.id]!.correct &&
+                !results[q.id]!.unanswered,
+            ) ? (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  const ids = practiceQuestions
+                    .filter((q) => {
+                      const row = results[q.id];
+                      return row && !row.correct && !row.unanswered;
+                    })
+                    .map((q) => q.id);
+                  setActiveIds(ids.length > 0 ? ids : null);
+                  resetAttempt();
+                }}
+              >
+                {tSession("retryIncorrect")}
+              </Button>
+            ) : null}
+            {Object.values(results).some((row) => row.unanswered) ? (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  const ids = practiceQuestions
+                    .filter((q) => results[q.id]?.unanswered)
+                    .map((q) => q.id);
+                  setActiveIds(ids.length > 0 ? ids : null);
+                  resetAttempt();
+                }}
+              >
+                {tSession("retryUnanswered")}
+              </Button>
+            ) : null}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

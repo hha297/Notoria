@@ -913,7 +913,22 @@
       "tryAgain": "Try again",
       "questionsLabel": "Questions",
       "correctLabel": "Correct",
-      "reviewLabel": "To review"
+      "reviewLabel": "To review",
+      "answeredProgress": "{answered} / {total} answered",
+      "submitSet": "Submit answers",
+      "submitting": "Checking…",
+      "unansweredWarnTitle": "Unanswered questions",
+      "unansweredWarn": "You still have {count, plural, one {# unanswered question} other {# unanswered questions}}. Submit anyway?",
+      "submitAnyway": "Submit anyway",
+      "partialHint": "Hint: {mask}",
+      "jumpToUnanswered": "Go to unanswered",
+      "retryIncorrect": "Retry incorrect",
+      "retryUnanswered": "Retry unanswered",
+      "restartSet": "Restart set",
+      "resultsTitle": "Results",
+      "unanswered": "Not answered",
+      "yourAnswer": "Your answer",
+      "correctAnswer": "Correct answer"
     },
     "multipleChoice": {
       "questionWord": "What is the meaning of this word?",
@@ -2226,7 +2241,9 @@
       "expected": "Correct answer",
       "objectiveScore": "{correct} / {total} objective correct",
       "mobileTabsAria": "Practice panels",
+      "unansweredWarnTitle": "Unanswered questions",
       "unansweredWarn": "Some questions are unanswered. Submit anyway?",
+      "submitAnyway": "Submit anyway",
       "gradingPending": "Written answers could not be graded yet. Your answers are saved — you can retry grading.",
       "retryGrading": "Retry grading",
       "retryAttempt": "Try again",
@@ -2481,9 +2498,11 @@
     "fillBlankOverview": "Complete the passage by filling in the missing words.",
     "practice": {
       "progress": "{current} / {total}",
+      "answeredProgress": "{answered} / {total} answered",
       "score": "{correct} correct",
       "check": "Check",
       "checkAnswers": "Check Answers",
+      "submitSet": "Submit answers",
       "questionLabel": "Question {number}",
       "blankLabel": "Blank {number}",
       "listenPrompt": "Listen to this part of the audio.",
@@ -2504,7 +2523,11 @@
       "blanksProgress": "{filled} / {total} blanks",
       "changeType": "Change type",
       "hideReview": "Hide review",
-      "typeHintMc": "Listen, then choose the best answer for each question."
+      "jumpToUnanswered": "Go to unanswered",
+      "unansweredWarnTitle": "Unanswered questions",
+      "unansweredWarn": "You still have unanswered questions. Submit anyway?",
+      "submitAnyway": "Submit anyway",
+      "typeHintMc": "Listen, then choose the best answer for each question on this page."
     },
     "errors": {
       "CLOUDINARY_NOT_CONFIGURED": "Media storage is not configured.",

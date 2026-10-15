@@ -1,21 +1,19 @@
 "use client";
 
-import { useState } from "react";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Sparkles } from "lucide-react";
 import { HintText } from "@/components/exercises/theory/theory-card-shared";
 import { TheoryPracticeFeedback } from "@/components/exercises/theory/theory-practice-feedback";
-import { ExerciseHint } from "@/components/exercises/exercise-hint";
-import { Button } from "@/components/ui/button";
 import {
-  answersMatchAny,
   buildCanonicalCompletedSentence,
   extractSourceWordCueFromHint,
   revealTextForExercise,
   scrubFillBlankPresentation,
 } from "@/lib/theory-exercises/generate-ai";
 import type { TheoryFillBlankExercise } from "@/lib/theory-exercises/types";
+import { ExerciseSetPartialHint } from "@/components/exercises/exercise-set-partial-hint";
+import { EXERCISE_SET_QUESTION_CARD_CLASS } from "@/components/exercises/exercise-set-question-card";
 import theoryStyles from "@/components/style/exercises/theory.module.css";
 import sessionStyles from "@/components/style/exercises/session.module.css";
 import { mx } from "@/lib/css-module";
@@ -25,20 +23,25 @@ const EASE = [0.22, 1, 0.36, 1] as const;
 
 export function TheoryFillBlankCard({
   item,
-  onResolved,
-  onNext,
+  number,
+  value,
+  onChange,
+  submitted,
+  correct,
+  unanswered,
 }: {
   item: TheoryFillBlankExercise;
-  onResolved: (correct: boolean) => void;
-  onNext: () => void;
+  number: number;
+  value: string;
+  onChange: (value: string) => void;
+  submitted: boolean;
+  correct: boolean;
+  unanswered: boolean;
 }) {
   const t = useTranslations("exercises.theory");
   const tAi = useTranslations("exercises.ai");
   const reduceMotion = useReducedMotion();
-  const [value, setValue] = useState("");
-  const [checked, setChecked] = useState(false);
-  const [peeked, setPeeked] = useState(false);
-  const isCorrect = !peeked && answersMatchAny(value, item.acceptedAnswers);
+  const isCorrect = submitted && correct && !unanswered;
   const sentenceMeaning = item.sentenceMeaning?.trim() || "";
 
   const scrubbed = scrubFillBlankPresentation({
@@ -59,15 +62,15 @@ export function TheoryFillBlankCard({
     "";
   const displayHint = displaySourceWord
     ? fromHint.hint
-      .replace(
-        new RegExp(
-          `\\(\\s*${displaySourceWord.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*\\)`,
-          "giu",
-        ),
-        " ",
-      )
-      .replace(/\s{2,}/g, " ")
-      .trim()
+        .replace(
+          new RegExp(
+            `\\(\\s*${displaySourceWord.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")}\\s*\\)`,
+            "giu",
+          ),
+          " ",
+        )
+        .replace(/\s{2,}/g, " ")
+        .trim()
     : fromHint.hint.trim();
   const canonicalCompleted = buildCanonicalCompletedSentence({
     prefix: scrubbed.prefix,
@@ -89,38 +92,26 @@ export function TheoryFillBlankCard({
     ? suffixText.trim()
     : "";
   const bodySuffix = trailingPunctuation ? "" : suffixText;
-  // Always fill with the graded answer so the in-sentence reveal matches checking.
-  const filledText = checked ? item.answer : "";
-
-  const check = () => {
-    if (checked || !value.trim()) return;
-    setChecked(true);
-    onResolved(answersMatchAny(value, item.acceptedAnswers));
-  };
-
-  const revealAnswer = () => {
-    if (checked) return;
-    setPeeked(true);
-    setChecked(true);
-    setValue(item.answer);
-    onResolved(false);
-  };
+  const filledText = submitted ? item.answer : "";
 
   return (
-    <motion.div
-      key={item.id}
-      initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+    <motion.article
+      id={`theory-q-${item.id}`}
+      data-question-id={item.id}
+      initial={reduceMotion ? false : { opacity: 0, y: 8 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: reduceMotion ? 0 : 0.22, ease: EASE }}
-      className="relative mx-auto w-full min-w-0 max-w-3xl"
+      transition={{ duration: reduceMotion ? 0 : 0.18, ease: EASE }}
+      className={EXERCISE_SET_QUESTION_CARD_CLASS}
     >
       <header className="flex flex-col items-stretch gap-2 sm:flex-row sm:items-start sm:justify-between sm:gap-3">
         <div className="min-w-0">
-          <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
-            {t("lesson.tryIt")}
-          </p>
-          <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-            {item.instruction?.trim() || t("instructions.fillBlank")}
+          <p className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+            <span className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
+              {number}
+            </span>
+            <span className="text-sm font-medium text-muted-foreground">
+              {item.instruction?.trim() || t("instructions.fillBlank")}
+            </span>
           </p>
         </div>
         <p className="inline-flex shrink-0 items-center gap-1 pt-0.5 text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
@@ -129,20 +120,13 @@ export function TheoryFillBlankCard({
         </p>
       </header>
 
-      <form
-        onSubmit={(event) => {
-          event.preventDefault();
-          if (checked) onNext();
-          else check();
-        }}
-        className="relative mt-5 sm:mt-10"
-      >
+      <div className="relative mt-5 sm:mt-8">
         <span
           aria-hidden
           className="pointer-events-none absolute top-1 bottom-1 left-0 w-px bg-linear-to-b from-(--exercise-accent)/55 via-(--exercise-accent)/18 to-transparent"
         />
         <div className="min-w-0 pl-4 sm:pl-5">
-          <p className="font-heading text-[1.5rem] leading-[1.55] font-semibold tracking-tight text-pretty wrap-anywhere text-ink sm:text-[1.85rem] md:text-[2.05rem]">
+          <p className="font-heading text-[1.35rem] leading-[1.55] font-semibold tracking-tight text-pretty wrap-anywhere text-ink sm:text-[1.65rem]">
             {prefixText ? (
               <>
                 {prefixText}
@@ -152,20 +136,23 @@ export function TheoryFillBlankCard({
             <span
               className={cn(
                 "inline-flex max-w-full min-w-0 flex-col items-center align-baseline",
-                checked && !isCorrect && !reduceMotion && mx(sessionStyles, "exercise-shake"),
+                submitted &&
+                  !isCorrect &&
+                  !reduceMotion &&
+                  mx(sessionStyles, "exercise-shake"),
               )}
             >
               <span
                 className={cn(
                   "relative inline-flex max-w-full min-w-26 items-end justify-center border-b-2 px-1.5 transition-colors duration-200",
-                  !checked &&
+                  !submitted &&
                     "border-(--exercise-accent) has-focus-visible:border-b-[3px]",
-                  checked && isCorrect && "border-success",
-                  checked && !isCorrect && "border-error",
+                  submitted && isCorrect && "border-success",
+                  submitted && !isCorrect && "border-error",
                 )}
                 style={{ minWidth: `${blankMinWidth}ch` }}
               >
-                {checked ? (
+                {submitted ? (
                   <span
                     className={cn(
                       "px-0.5 text-center font-medium wrap-anywhere",
@@ -177,14 +164,13 @@ export function TheoryFillBlankCard({
                 ) : (
                   <input
                     value={value}
-                    onChange={(event) => setValue(event.target.value)}
-                    autoFocus
+                    onChange={(event) => onChange(event.target.value)}
                     autoComplete="off"
                     autoCorrect="off"
                     autoCapitalize="off"
                     spellCheck={false}
-                    name="theory-exercise-blank"
-                    aria-label={t("fillPlaceholder")}
+                    name={`theory-blank-${item.id}`}
+                    aria-label={`${number}. ${t("fillPlaceholder")}`}
                     placeholder="?"
                     data-1p-ignore
                     data-lpignore="true"
@@ -211,40 +197,32 @@ export function TheoryFillBlankCard({
             ) : null}
           </p>
 
-          <ExerciseHint
-            resetKey={item.id}
-            answered={checked}
-            correctAnswer={revealDisplay}
-            onRevealAnswer={revealAnswer}
-          >
-            {displayHint ? <HintText text={displayHint} /> : null}
-          </ExerciseHint>
-
-          {!checked ? (
-            <div className="mt-5">
-              <Button
-                type="submit"
-                disabled={!value.trim()}
-                className="h-11 w-full sm:h-9 sm:w-auto"
-              >
-                {t("check")}
-              </Button>
+          {!submitted && displayHint ? (
+            <div className="mt-4">
+              <HintText text={displayHint} />
             </div>
           ) : null}
 
+          {!submitted ? (
+            <ExerciseSetPartialHint
+              answer={item.answer}
+              resetKey={item.id}
+              answered={submitted}
+            />
+          ) : null}
+
           <TheoryPracticeFeedback
-            checked={checked}
+            checked={submitted}
             correct={isCorrect}
-            peeked={peeked}
+            unanswered={unanswered}
             userValue={value}
             revealDisplay={revealDisplay}
             explanation={item.explanation}
             learningObjective={item.learningObjective}
             sentenceMeaning={sentenceMeaning}
-            onNext={onNext}
           />
         </div>
-      </form>
-    </motion.div>
+      </div>
+    </motion.article>
   );
 }

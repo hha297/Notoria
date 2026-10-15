@@ -913,7 +913,22 @@
       "tryAgain": "Yritä uudelleen",
       "questionsLabel": "Kysymykset",
       "correctLabel": "Oikein",
-      "reviewLabel": "Kertaa"
+      "reviewLabel": "Kertaa",
+      "answeredProgress": "{answered} / {total} vastattu",
+      "submitSet": "Lähetä vastaukset",
+      "submitting": "Tarkistetaan…",
+      "unansweredWarnTitle": "Vastaamattomia kysymyksiä",
+      "unansweredWarn": "Sinulla on vielä {count, plural, one {# vastaamaton kysymys} other {# vastaamatonta kysymystä}}. Lähetä silti?",
+      "submitAnyway": "Lähetä silti",
+      "partialHint": "Vihje: {mask}",
+      "jumpToUnanswered": "Siirry vastaamattomiin",
+      "retryIncorrect": "Yritä väärät uudelleen",
+      "retryUnanswered": "Yritä vastaamattomat uudelleen",
+      "restartSet": "Aloita alusta",
+      "resultsTitle": "Tulokset",
+      "unanswered": "Ei vastausta",
+      "yourAnswer": "Vastauksesi",
+      "correctAnswer": "Oikea vastaus"
     },
     "multipleChoice": {
       "questionWord": "Mikä on tämän sanan merkitys?",
@@ -2031,7 +2046,9 @@
       "expected": "Oikea vastaus",
       "objectiveScore": "{correct} / {total} objektiivista oikein",
       "mobileTabsAria": "Harjoitusnäkymät",
+      "unansweredWarnTitle": "Vastaamattomia kysymyksiä",
       "unansweredWarn": "Joitakin kysymyksiä ei ole vastattu. Lähetetäänkö silti?",
+      "submitAnyway": "Lähetä silti",
       "gradingPending": "Vapaamuotoisia vastauksia ei voitu vielä arvioida. Vastauksesi on tallennettu — voit yrittää arviointia uudelleen.",
       "retryGrading": "Yritä arviointia uudelleen",
       "retryAttempt": "Yritä uudelleen",
@@ -2286,9 +2303,11 @@
     "fillBlankOverview": "Täydennä koko teksti täyttämällä puuttuvat sanat.",
     "practice": {
       "progress": "{current} / {total}",
+      "answeredProgress": "{answered} / {total} vastattu",
       "score": "{correct} oikein",
       "check": "Tarkista",
       "checkAnswers": "Tarkista vastaukset",
+      "submitSet": "Lähetä vastaukset",
       "questionLabel": "Kysymys {number}",
       "blankLabel": "Aukko {number}",
       "listenPrompt": "Kuuntele tämä kohta äänitteestä.",
@@ -2309,7 +2328,11 @@
       "blanksProgress": "{filled} / {total} aukkoa",
       "changeType": "Vaihda tyyppiä",
       "hideReview": "Piilota tarkistus",
-      "typeHintMc": "Kuuntele ja valitse paras vastaus jokaiseen kysymykseen."
+      "jumpToUnanswered": "Siirry vastaamattomiin",
+      "unansweredWarnTitle": "Vastaamattomia kysymyksiä",
+      "unansweredWarn": "Sinulla on vielä vastaamattomia kysymyksiä. Lähetä silti?",
+      "submitAnyway": "Lähetä silti",
+      "typeHintMc": "Kuuntele ja valitse paras vastaus jokaiseen kysymykseen tällä sivulla."
     },
     "errors": {
       "CLOUDINARY_NOT_CONFIGURED": "Mediatallennusta ei ole määritetty.",

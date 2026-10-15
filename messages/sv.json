@@ -913,7 +913,22 @@
       "tryAgain": "Försök igen",
       "questionsLabel": "Frågor",
       "correctLabel": "Korrekt",
-      "reviewLabel": "För att granska"
+      "reviewLabel": "För att granska",
+      "answeredProgress": "{answered} / {total} besvarade",
+      "submitSet": "Skicka svar",
+      "submitting": "Kontrollerar…",
+      "unansweredWarnTitle": "Obesvarade frågor",
+      "unansweredWarn": "Du har fortfarande {count, plural, one {# obesvarad fråga} other {# obesvarade frågor}}. Skicka ändå?",
+      "submitAnyway": "Skicka ändå",
+      "partialHint": "Ledtråd: {mask}",
+      "jumpToUnanswered": "Gå till obesvarade",
+      "retryIncorrect": "Försök felaktiga igen",
+      "retryUnanswered": "Försök obesvarade igen",
+      "restartSet": "Starta om setet",
+      "resultsTitle": "Resultat",
+      "unanswered": "Ej besvarad",
+      "yourAnswer": "Ditt svar",
+      "correctAnswer": "Rätt svar"
     },
     "multipleChoice": {
       "questionWord": "Vad är betydelsen av detta ord?",
@@ -2226,7 +2241,9 @@
       "expected": "Rätt svar",
       "objectiveScore": "{correct} / {total} objektiva rätt",
       "mobileTabsAria": "Övningspaneler",
+      "unansweredWarnTitle": "Obesvarade frågor",
       "unansweredWarn": "Vissa frågor är obesvarade. Skicka ändå?",
+      "submitAnyway": "Skicka ändå",
       "gradingPending": "Fria svar kunde inte betygsättas ännu. Dina svar är sparade — du kan försöka betygsätta igen.",
       "retryGrading": "Försök betygsätta igen",
       "retryAttempt": "Försök igen",
@@ -2481,9 +2498,11 @@
     "fillBlankOverview": "Fyll i luckorna i texten.",
     "practice": {
       "progress": "{current} / {total}",
+      "answeredProgress": "{answered} / {total} besvarade",
       "score": "{correct} korrekt",
       "check": "Kontrollera",
       "checkAnswers": "Kontrollera svar",
+      "submitSet": "Skicka svar",
       "questionLabel": "Fråga {number}",
       "blankLabel": "Lucka {number}",
       "listenPrompt": "Lyssna på denna del av ljudet.",
@@ -2504,7 +2523,11 @@
       "blanksProgress": "{filled} / {total} luckor",
       "changeType": "Byt typ",
       "hideReview": "Dölj granskning",
-      "typeHintMc": "Lyssna och välj bästa svaret på varje fråga."
+      "jumpToUnanswered": "Gå till obesvarade",
+      "unansweredWarnTitle": "Obesvarade frågor",
+      "unansweredWarn": "Du har fortfarande obesvarade frågor. Skicka ändå?",
+      "submitAnyway": "Skicka ändå",
+      "typeHintMc": "Lyssna och välj bästa svaret på varje fråga på den här sidan."
     },
     "errors": {
       "CLOUDINARY_NOT_CONFIGURED": "Medielagring är inte konfigurerad.",

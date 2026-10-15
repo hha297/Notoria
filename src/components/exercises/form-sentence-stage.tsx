@@ -4,6 +4,7 @@ import { useEffect, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Check, Loader2, X } from "lucide-react";
+import { EXERCISE_SET_QUESTION_CARD_CLASS } from "@/components/exercises/exercise-set-question-card";
 import type { FormSentenceItem } from "@/lib/exercises/form-sentence";
 import {
   FORM_SENTENCE_MAX_LENGTH,
@@ -23,6 +24,9 @@ type FormSentenceStageProps = {
   evaluating: boolean;
   onInputChange: (value: string) => void;
   onInsertWord: () => void;
+  number?: number;
+  /** When false, do not autofocus (full-set list). Default true. */
+  autoFocus?: boolean;
 };
 
 export function FormSentenceStage({
@@ -32,6 +36,8 @@ export function FormSentenceStage({
   evaluating,
   onInputChange,
   onInsertWord,
+  number,
+  autoFocus = true,
 }: FormSentenceStageProps) {
   const t = useTranslations("exercises.formSentence");
   const tType = useTranslations("exercises.types.form-sentence");
@@ -40,29 +46,50 @@ export function FormSentenceStage({
   const wordPlaced = wordAppearsIn(input, item.word);
 
   return (
-    <motion.div
+    <motion.article
+      id={`fs-q-${item.id}`}
+      data-question-id={item.id}
       key={item.id}
       initial={reduceMotion ? false : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={
         reduceMotion ? { duration: 0 } : { duration: 0.22, ease: [0.22, 1, 0.36, 1] }
       }
-      className="relative mx-auto w-full min-w-0 max-w-3xl"
+      className={
+        typeof number === "number"
+          ? EXERCISE_SET_QUESTION_CARD_CLASS
+          : "relative mx-auto w-full min-w-0 max-w-3xl"
+      }
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 -top-8 h-48 bg-[radial-gradient(ellipse_at_top,var(--exercise-accent-soft),transparent_74%)] opacity-80 dark:opacity-60"
-      />
+      {typeof number !== "number" ? (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-8 h-48 bg-[radial-gradient(ellipse_at_top,var(--exercise-accent-soft),transparent_74%)] opacity-80 dark:opacity-60"
+        />
+      ) : null}
 
       <div className="relative space-y-8 sm:space-y-10">
         <header className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
-              {tType("label")}
-            </p>
-            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-              {t("prompt")}
-            </p>
+            {typeof number === "number" ? (
+              <p className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                <span className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
+                  {number}
+                </span>
+                <span className="text-sm font-medium text-muted-foreground">
+                  {t("prompt")}
+                </span>
+              </p>
+            ) : (
+              <>
+                <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
+                  {tType("label")}
+                </p>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                  {t("prompt")}
+                </p>
+              </>
+            )}
           </div>
         </header>
 
@@ -85,6 +112,7 @@ export function FormSentenceStage({
           evaluating={evaluating}
           vocabWord={item.word}
           locked={locked}
+          autoFocus={autoFocus}
           placeholder={t("placeholder")}
           evaluatingLabel={t("evaluating")}
           yourSentenceLabel={t("yourSentence")}
@@ -114,7 +142,7 @@ export function FormSentenceStage({
           ) : null}
         </AnimatePresence>
       </div>
-    </motion.div>
+    </motion.article>
   );
 }
 
@@ -124,6 +152,7 @@ function SentenceCanvas({
   evaluating,
   vocabWord,
   locked,
+  autoFocus,
   placeholder,
   evaluatingLabel,
   yourSentenceLabel,
@@ -135,6 +164,7 @@ function SentenceCanvas({
   evaluating: boolean;
   vocabWord: string;
   locked: boolean;
+  autoFocus: boolean;
   placeholder: string;
   evaluatingLabel: string;
   yourSentenceLabel: string;
@@ -152,8 +182,8 @@ function SentenceCanvas({
       : "idle";
 
   useEffect(() => {
-    if (!locked) textareaRef.current?.focus();
-  }, [locked]);
+    if (!locked && autoFocus) textareaRef.current?.focus();
+  }, [autoFocus, locked]);
 
   useEffect(() => {
     const el = textareaRef.current;

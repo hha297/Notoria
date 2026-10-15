@@ -9,6 +9,7 @@ import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
+import { ExerciseSetSubmitBar } from "@/components/exercises/exercise-set-submit-bar";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { TheoryFillBlankCard } from "@/components/exercises/theory/theory-fill-blank-card";
 import { TheoryLessonStudy, type TheoryLessonView } from "@/components/exercises/theory/theory-lesson-study";
@@ -17,13 +18,18 @@ import { TheoryTransformationCard } from "@/components/exercises/theory/theory-t
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
+import { useExerciseSetAttempt } from "@/hooks/use-exercise-set-attempt";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
+import { isNonEmptyAnswer, type SetQuestionResult } from "@/lib/exercises/set-attempt";
 import { shuffleArray } from "@/lib/exercises/utils";
 import {
   buildTheoryLessonBeats,
   theoryLessonHasMaterial,
 } from "@/lib/theory-exercises/lesson-content";
-import { filterPersistedTheoryExercises } from "@/lib/theory-exercises/generate-ai";
+import {
+  answersMatchAny,
+  filterPersistedTheoryExercises,
+} from "@/lib/theory-exercises/generate-ai";
 import type { TheoryExercise, TheoryExerciseSession } from "@/lib/theory-exercises/types";
 import featureStyles from "@/components/style/exercises/theory.module.css";
 import { mx } from "@/lib/css-module";
@@ -37,6 +43,34 @@ type TheoryExerciseSessionViewProps = {
   practiceOnly?: boolean;
 };
 
+function gradeTheorySet(
+  items: TheoryExercise[],
+  answers: Readonly<Record<string, unknown>>,
+): Record<string, SetQuestionResult> {
+  const results: Record<string, SetQuestionResult> = {};
+  for (const item of items) {
+    const raw = answers[item.id];
+    const value = typeof raw === "string" ? raw : "";
+    const unanswered = !isNonEmptyAnswer(value);
+    if (unanswered) {
+      results[item.id] = { correct: false, unanswered: true };
+      continue;
+    }
+    if (item.type === "multiple_choice") {
+      results[item.id] = {
+        correct: value === item.correctOption,
+        unanswered: false,
+      };
+      continue;
+    }
+    results[item.id] = {
+      correct: answersMatchAny(value, item.acceptedAnswers),
+      unanswered: false,
+    };
+  }
+  return results;
+}
+
 export function TheoryExerciseSessionView({
   session,
   practiceOnly = false,
@@ -48,11 +82,8 @@ export function TheoryExerciseSessionView({
   const [items, setItems] = useState<TheoryExercise[]>(() =>
     shuffleArray(filterPersistedTheoryExercises(session.items)),
   );
-  const [index, setIndex] = useState(0);
-  const [score, setScore] = useState({ correct: 0, answered: 0 });
-  const [complete, setComplete] = useState(false);
-  const [round, setRound] = useState(0);
   const [autoTried, setAutoTried] = useState(false);
+  const [activeIds, setActiveIds] = useState<string[] | null>(null);
   const beats = useMemo(
     () => buildTheoryLessonBeats(session.doc),
     [session.doc],
@@ -75,13 +106,44 @@ export function TheoryExerciseSessionView({
     isActive: generating,
   } = useAiProcessing();
 
-  const restart = useCallback((nextItems: TheoryExercise[]) => {
-    setItems(shuffleArray(filterPersistedTheoryExercises(nextItems)));
-    setIndex(0);
-    setScore({ correct: 0, answered: 0 });
-    setComplete(false);
-    setRound((r) => r + 1);
-  }, []);
+  const practiceItems = useMemo(() => {
+    if (!activeIds) return items;
+    const byId = new Map(items.map((item) => [item.id, item]));
+    return activeIds
+      .map((id) => byId.get(id))
+      .filter((item): item is TheoryExercise => Boolean(item));
+  }, [activeIds, items]);
+
+  const questionIds = useMemo(
+    () => practiceItems.map((item) => item.id),
+    [practiceItems],
+  );
+
+  const {
+    answers,
+    phase: attemptPhase,
+    results,
+    submitting,
+    attemptKey,
+    answeredCount,
+    totalQuestionCount,
+    progressRatio,
+    unansweredIds,
+    score,
+    setAnswer,
+    resetAttempt,
+    submit,
+  } = useExerciseSetAttempt({ questionIds });
+
+  const loadItems = useCallback(
+    (nextItems: TheoryExercise[], shuffle = true) => {
+      const filtered = filterPersistedTheoryExercises(nextItems);
+      setItems(shuffle ? shuffleArray(filtered) : filtered);
+      setActiveIds(null);
+      resetAttempt();
+    },
+    [resetAttempt],
+  );
 
   const uiLocale = useLocale();
 
@@ -127,7 +189,7 @@ export function TheoryExerciseSessionView({
       }
       setStage("saving");
       completeProcessing();
-      restart(incoming);
+      loadItems(incoming, true);
       toast.success(t("aiReady"));
       window.setTimeout(() => resetProcessing(), 350);
     } catch {
@@ -135,26 +197,27 @@ export function TheoryExerciseSessionView({
     }
   }, [
     completeProcessing,
+    exerciseQuota,
     fail,
+    loadItems,
     openUpgrade,
     resetProcessing,
-    restart,
     session.theoryId,
     session.theoryTitle,
     setStage,
     t,
-    exerciseQuota,
     uiLocale,
   ]);
 
   useEffect(() => {
-    setItems(shuffleArray(filterPersistedTheoryExercises(session.items)));
-    setIndex(0);
-    setScore({ correct: 0, answered: 0 });
-    setComplete(false);
-    setRound((r) => r + 1);
+    const filtered = filterPersistedTheoryExercises(session.items);
+    setItems(shuffleArray(filtered));
+    setActiveIds(null);
+    resetAttempt();
     setAutoTried(false);
     setPhase(hasLesson ? "overview" : "practice");
+    // Only reset when the theory document / item source changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional: avoid reshuffling mid-attempt
   }, [hasLesson, session.theoryId, session.items]);
 
   useEffect(() => {
@@ -172,27 +235,27 @@ export function TheoryExerciseSessionView({
     practiceOnly,
   ]);
 
-  const current = items[index];
-  const total = items.length;
-  const progressValue = total ? ((complete ? total : index) / total) * 100 : 0;
+  const total = practiceItems.length;
+  const submitted = attemptPhase === "submitted";
+  const progressValue = progressRatio * 100;
   const generateError =
     processing.stage === "error"
       ? processing.errorMessage || t("aiUnavailable")
       : null;
 
-  const recordAnswer = (correct: boolean) => {
-    setScore((s) => ({
-      correct: s.correct + (correct ? 1 : 0),
-      answered: s.answered + 1,
-    }));
+  const jumpToUnanswered = () => {
+    const first = unansweredIds[0];
+    if (!first) return;
+    document
+      .getElementById(`theory-q-${first}`)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
   };
 
-  const goNext = () => {
-    if (index < total - 1) {
-      setIndex((i) => i + 1);
-      return;
-    }
-    setComplete(true);
+  const handleSubmit = () => {
+    void submit((currentAnswers, ids) => {
+      const subset = practiceItems.filter((item) => ids.includes(item.id));
+      return gradeTheorySet(subset, currentAnswers);
+    });
   };
 
   const goToPractice = () => setPhase("practice");
@@ -309,50 +372,16 @@ export function TheoryExerciseSessionView({
     );
   }
 
-  if (complete) {
-    return (
-      <div data-exercise="theory">
-        <p className="text-center text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
-          {t("lesson.complete")}
-        </p>
-        <p className="mx-auto mt-2 max-w-md text-center text-sm leading-relaxed text-muted-foreground">
-          {t("lesson.completeHint")}
-        </p>
-        <SessionCompleteCard
-          title={tSession("complete")}
-          scoreLabel={tSession("score", {
-            correct: score.correct,
-            total: score.answered,
-          })}
-          tryAgainLabel={tSession("tryAgain")}
-          onTryAgain={() => restart(items)}
-          extraAction={
-            practiceOnly
-              ? undefined
-              : {
-                label: t("generateMore"),
-                onClick: () => void generateWithAi(),
-                loading: generating,
-                locked: exerciseQuota.locked,
-                lockMessage: exerciseQuota.message,
-              }
-          }
-        />
-      </div>
-    );
-  }
-
   return (
     <div
       data-exercise="theory"
       data-theory-category={session.category}
-      className={mx(featureStyles, "theory-practice-stage -mx-4 space-y-5 px-4 py-4 sm:-mx-6 sm:space-y-10 sm:px-6 sm:py-9")}
-      key={`${round}-${current?.id ?? index}`}
+      className={mx(featureStyles, "theory-practice-stage -mx-4 space-y-5 px-4 py-4 sm:-mx-6 sm:space-y-8 sm:px-6 sm:py-9")}
     >
       <div className="space-y-4">
         <div className="min-w-0">
           <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
-            {t("lesson.nowPractice")}
+            {submitted ? tSession("resultsTitle") : t("lesson.nowPractice")}
           </p>
           <p className="mt-1.5 font-heading text-xl font-semibold tracking-tight text-pretty wrap-anywhere text-ink sm:text-2xl">
             {session.theoryTitle}
@@ -369,14 +398,34 @@ export function TheoryExerciseSessionView({
         <div className="flex flex-wrap items-end justify-between gap-2">
           <div className="min-w-0 flex-1">
             <ExerciseProgressHeader
-              progressLabel={t("progress", { current: index + 1, total })}
-              current={index + 1}
-              total={total}
-              scoreLabel={t("score", {
-                correct: score.correct,
-                answered: score.answered,
-              })}
-              progressValue={progressValue}
+              progressLabel={
+                submitted
+                  ? tSession("score", {
+                      correct: score.correct,
+                      total: score.total,
+                    })
+                  : tSession("answeredProgress", {
+                      answered: answeredCount,
+                      total: totalQuestionCount,
+                    })
+              }
+              current={submitted ? score.correct : answeredCount}
+              total={submitted ? score.total : totalQuestionCount}
+              scoreLabel={
+                submitted
+                  ? t("score", {
+                      correct: score.correct,
+                      answered: score.total,
+                    })
+                  : undefined
+              }
+              progressValue={
+                submitted
+                  ? total
+                    ? (score.correct / total) * 100
+                    : 0
+                  : progressValue
+              }
             />
           </div>
           <div className="flex items-center gap-2">
@@ -394,7 +443,12 @@ export function TheoryExerciseSessionView({
                 {t("regenerate")}
               </QuotaLockButton>
             ) : null}
-            <Button type="button" variant="ghost" size="sm" onClick={() => restart(items)}>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              onClick={() => loadItems(items, true)}
+            >
               <RotateCcw className="size-4" />
               {t("reshuffle")}
             </Button>
@@ -402,15 +456,132 @@ export function TheoryExerciseSessionView({
         </div>
       </div>
 
-      {current?.type === "fill_blank" ? (
-        <TheoryFillBlankCard item={current} onResolved={recordAnswer} onNext={goNext} />
-      ) : null}
-      {current?.type === "transformation" ? (
-        <TheoryTransformationCard item={current} onResolved={recordAnswer} onNext={goNext} />
-      ) : null}
-      {current?.type === "multiple_choice" ? (
-        <TheoryMultipleChoiceCard item={current} onResolved={recordAnswer} onNext={goNext} />
-      ) : null}
+      <div className="space-y-4" key={attemptKey}>
+        {practiceItems.map((item, index) => {
+          const value =
+            typeof answers[item.id] === "string" ? String(answers[item.id]) : "";
+          const result = results[item.id];
+          const correct = Boolean(result?.correct);
+          const unanswered = Boolean(result?.unanswered);
+          if (item.type === "fill_blank") {
+            return (
+              <TheoryFillBlankCard
+                key={item.id}
+                item={item}
+                number={index + 1}
+                value={value}
+                onChange={(next) => setAnswer(item.id, next)}
+                submitted={submitted}
+                correct={correct}
+                unanswered={unanswered}
+              />
+            );
+          }
+          if (item.type === "transformation") {
+            return (
+              <TheoryTransformationCard
+                key={item.id}
+                item={item}
+                number={index + 1}
+                value={value}
+                onChange={(next) => setAnswer(item.id, next)}
+                submitted={submitted}
+                correct={correct}
+                unanswered={unanswered}
+              />
+            );
+          }
+          return (
+            <TheoryMultipleChoiceCard
+              key={item.id}
+              item={item}
+              number={index + 1}
+              value={value}
+              onChange={(next) => setAnswer(item.id, next)}
+              submitted={submitted}
+              correct={correct}
+              unanswered={unanswered}
+            />
+          );
+        })}
+      </div>
+
+      {!submitted ? (
+        <ExerciseSetSubmitBar
+          answeredCount={answeredCount}
+          totalQuestionCount={totalQuestionCount}
+          unansweredCount={unansweredIds.length}
+          submitting={submitting}
+          onSubmit={handleSubmit}
+          onJumpToUnanswered={jumpToUnanswered}
+        />
+      ) : (
+        <div className="space-y-4 pt-2">
+          <SessionCompleteCard
+            title={tSession("complete")}
+            scoreLabel={tSession("score", {
+              correct: score.correct,
+              total: score.total,
+            })}
+            tryAgainLabel={tSession("restartSet")}
+            onTryAgain={() => {
+              setActiveIds(null);
+              resetAttempt();
+            }}
+            extraAction={
+              practiceOnly
+                ? undefined
+                : {
+                    label: t("generateMore"),
+                    onClick: () => void generateWithAi(),
+                    loading: generating,
+                    locked: exerciseQuota.locked,
+                    lockMessage: exerciseQuota.message,
+                  }
+            }
+          />
+          <div className="mx-auto flex w-full max-w-md flex-wrap justify-center gap-2">
+            {practiceItems.some(
+              (item) =>
+                results[item.id] &&
+                !results[item.id]!.correct &&
+                !results[item.id]!.unanswered,
+            ) ? (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  const ids = practiceItems
+                    .filter((item) => {
+                      const row = results[item.id];
+                      return row && !row.correct && !row.unanswered;
+                    })
+                    .map((item) => item.id);
+                  setActiveIds(ids.length > 0 ? ids : null);
+                  resetAttempt();
+                }}
+              >
+                {tSession("retryIncorrect")}
+              </Button>
+            ) : null}
+            {Object.values(results).some((row) => row.unanswered) ? (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  const ids = practiceItems
+                    .filter((item) => results[item.id]?.unanswered)
+                    .map((item) => item.id);
+                  setActiveIds(ids.length > 0 ? ids : null);
+                  resetAttempt();
+                }}
+              >
+                {tSession("retryUnanswered")}
+              </Button>
+            ) : null}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

@@ -124,16 +124,13 @@ export function ListeningMultipleChoiceQuestion({
   checked,
   onChange,
 }: MultipleChoiceProps) {
-  const t = useTranslations("listening.practice");
   const data = multipleChoiceDataSchema.safeParse(exercise.data);
   const options = data.success ? data.data.options : [];
   const correct = String(exercise.correctAnswer ?? "");
 
   return (
     <div className="flex flex-col gap-3">
-      <p className={mx(exerciseStyles, "questionLabel")}>
-        {t("questionLabel", { number: index + 1 })}
-      </p>
+      <p className={mx(exerciseStyles, "questionLabel")}>{index + 1}</p>
       <p className={mx(exerciseStyles, "prompt")}>{exercise.question}</p>
       <div className={mx(exerciseStyles, "options")} role="radiogroup">
         {options.map((option) => {

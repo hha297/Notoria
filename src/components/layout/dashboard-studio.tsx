@@ -171,8 +171,8 @@ export function DashboardStudio({
                           pathname.startsWith("/writing/folders") ||
                           pathname === "/theory" ||
                           pathname.startsWith("/theory/folders")
-                          ? "pb-3 sm:pb-4"
-                          : "pb-6 sm:pb-8",
+                          ? "pb-3 sm:pb-4 [--studio-main-pb:0.75rem] sm:[--studio-main-pb:1rem]"
+                          : "pb-6 sm:pb-8 [--studio-main-pb:1.5rem] sm:[--studio-main-pb:2rem]",
                       )}
                     >
                       <div

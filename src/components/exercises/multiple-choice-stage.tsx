@@ -14,6 +14,7 @@ import {
   displayContextualOption,
   type MultipleChoiceQuestion,
 } from "@/lib/exercises/multiple-choice";
+import { EXERCISE_SET_QUESTION_CARD_CLASS } from "@/components/exercises/exercise-set-question-card";
 import featureStyles from "@/components/style/exercises/session.module.css";
 import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
@@ -26,7 +27,11 @@ type MultipleChoiceStageProps = {
   peeked: boolean;
   isCorrect: boolean;
   onPick: (option: string) => void;
-  onRevealAnswer: () => void;
+  /** Omit in set-answering mode so answers are not revealed before submit. */
+  onRevealAnswer?: () => void;
+  /** 1-based index when rendering a full set list. */
+  number?: number;
+  unanswered?: boolean;
 };
 
 export function MultipleChoiceStage({
@@ -38,8 +43,11 @@ export function MultipleChoiceStage({
   isCorrect,
   onPick,
   onRevealAnswer,
+  number,
+  unanswered = false,
 }: MultipleChoiceStageProps) {
   const t = useTranslations("exercises.multipleChoice");
+  const tSession = useTranslations("exercises.session");
   const tType = useTranslations("exercises.types.multiple-choice");
   const tHint = useTranslations("exercises.timedHint");
   const tAi = useTranslations("exercises.ai");
@@ -48,30 +56,53 @@ export function MultipleChoiceStage({
   const cue = question.meaningHint?.trim() || null;
   const sentenceMeaning = question.sentenceMeaning?.trim() || "";
 
+  const inSetList = typeof number === "number";
+
   return (
-    <motion.div
+    <motion.article
+      id={`mc-q-${question.id}`}
+      data-question-id={question.id}
       key={question.id}
       initial={reduceMotion ? false : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={
         reduceMotion ? { duration: 0 } : { duration: 0.22, ease: [0.22, 1, 0.36, 1] }
       }
-      className="relative mx-auto w-full min-w-0 max-w-3xl"
+      className={
+        inSetList
+          ? EXERCISE_SET_QUESTION_CARD_CLASS
+          : "relative mx-auto w-full min-w-0 max-w-3xl"
+      }
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 -top-6 h-40 bg-[radial-gradient(ellipse_at_top,var(--exercise-accent-soft),transparent_72%)] opacity-90 dark:opacity-70"
-      />
+      {!inSetList ? (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-6 h-40 bg-[radial-gradient(ellipse_at_top,var(--exercise-accent-soft),transparent_72%)] opacity-90 dark:opacity-70"
+        />
+      ) : null}
 
       <div className="relative">
         <header className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
-              {tType("label")}
-            </p>
-            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-              {promptLabel}
-            </p>
+            {inSetList ? (
+              <p className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                <span className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
+                  {number}
+                </span>
+                <span className="text-sm font-medium text-muted-foreground">
+                  {promptLabel}
+                </span>
+              </p>
+            ) : (
+              <>
+                <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
+                  {tType("label")}
+                </p>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                  {promptLabel}
+                </p>
+              </>
+            )}
           </div>
           {question.aiGenerated ? (
             <p className="inline-flex shrink-0 items-center gap-1 pt-0.5 text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
@@ -118,21 +149,23 @@ export function MultipleChoiceStage({
           </div>
         </div>
 
-        <div className="mt-8">
-          <ExerciseHint
-            resetKey={question.id}
-            answered={revealed}
-            correctAnswer={surface}
-            onRevealAnswer={onRevealAnswer}
-          >
-            {tHint("startsWith", { letter: hintInitialLetter(surface) })}
-          </ExerciseHint>
-        </div>
+        {onRevealAnswer ? (
+          <div className="mt-8">
+            <ExerciseHint
+              resetKey={question.id}
+              answered={revealed}
+              correctAnswer={surface}
+              onRevealAnswer={onRevealAnswer}
+            >
+              {tHint("startsWith", { letter: hintInitialLetter(surface) })}
+            </ExerciseHint>
+          </div>
+        ) : null}
 
         <div
           role="group"
           aria-label={promptLabel}
-          className="mt-9 grid grid-cols-1 gap-2.5 sm:mt-10 sm:grid-cols-2 sm:gap-3"
+          className="mt-6 grid grid-cols-1 gap-2.5 sm:mt-8 sm:grid-cols-2 sm:gap-3"
         >
           {question.options.map((option, optionIndex) => {
             const label = displayContextualOption(question, option);
@@ -158,13 +191,15 @@ export function MultipleChoiceStage({
           revealed={revealed}
           peeked={peeked}
           isCorrect={isCorrect}
+          unanswered={unanswered}
           surface={surface}
           correctLabel={t("correct")}
           incorrectLabel={t("incorrect", { answer: surface })}
+          unansweredLabel={tSession("unanswered")}
           reduceMotion={Boolean(reduceMotion)}
         />
       </div>
-    </motion.div>
+    </motion.article>
   );
 }
 
@@ -349,16 +384,20 @@ function AnswerCaption({
   revealed,
   peeked,
   isCorrect,
+  unanswered,
   correctLabel,
   incorrectLabel,
+  unansweredLabel,
   reduceMotion,
 }: {
   revealed: boolean;
   peeked: boolean;
   isCorrect: boolean;
+  unanswered: boolean;
   surface: string;
   correctLabel: string;
   incorrectLabel: string;
+  unansweredLabel: string;
   reduceMotion: boolean;
 }) {
   return (
@@ -371,11 +410,17 @@ function AnswerCaption({
           transition={{ duration: reduceMotion ? 0 : 0.18 }}
           className={cn(
             "mt-5 text-sm font-medium wrap-anywhere",
-            peeked || !isCorrect ? "text-muted-foreground" : "text-success",
+            unanswered || peeked || !isCorrect
+              ? "text-muted-foreground"
+              : "text-success",
           )}
           aria-live="polite"
         >
-          {peeked || !isCorrect ? incorrectLabel : correctLabel}
+          {unanswered
+            ? unansweredLabel
+            : peeked || !isCorrect
+              ? incorrectLabel
+              : correctLabel}
         </motion.p>
       ) : null}
     </AnimatePresence>

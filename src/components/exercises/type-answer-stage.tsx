@@ -4,14 +4,14 @@ import { useEffect, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Check, Sparkles } from "lucide-react";
-import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import {
   applyAnswerFormCasing,
   blankMeaningHintFromItem,
   splitPromptAtBlank,
 } from "@/lib/exercises/blank-hint";
-import { hintInitialLetter } from "@/lib/exercises/hint";
 import type { TypeAnswerItem } from "@/lib/exercises/type-answer";
+import { ExerciseSetPartialHint } from "@/components/exercises/exercise-set-partial-hint";
+import { EXERCISE_SET_QUESTION_CARD_CLASS } from "@/components/exercises/exercise-set-question-card";
 import featureStyles from "@/components/style/exercises/session.module.css";
 import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
@@ -24,8 +24,14 @@ type TypeAnswerStageProps = {
   peeked: boolean;
   isCorrect: boolean;
   onInputChange: (value: string) => void;
-  onCheck: () => void;
-  onRevealAnswer: () => void;
+  onCheck?: () => void;
+  /** Omit in set-answering mode so answers are not revealed before submit. */
+  onRevealAnswer?: () => void;
+  /** When true (default if `onRevealAnswer` omitted), skip per-question check / hints. */
+  deferCheck?: boolean;
+  /** 1-based index when rendering a full set list. */
+  number?: number;
+  unanswered?: boolean;
 };
 
 export function TypeAnswerStage({
@@ -38,9 +44,13 @@ export function TypeAnswerStage({
   onInputChange,
   onCheck,
   onRevealAnswer,
+  deferCheck: deferCheckProp,
+  number,
+  unanswered = false,
 }: TypeAnswerStageProps) {
+  const deferCheck = deferCheckProp ?? onRevealAnswer == null;
   const t = useTranslations("exercises.typeAnswer");
-  const tHint = useTranslations("exercises.timedHint");
+  const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
   const tType = useTranslations("exercises.types.type-answer");
   const reduceMotion = useReducedMotion();
@@ -52,31 +62,53 @@ export function TypeAnswerStage({
   const showUserAttempt =
     revealed && !peeked && !isCorrect && input.trim().length > 0;
   const split = isContextual ? splitPromptAtBlank(item.prompt) : null;
+  const inSetList = typeof number === "number";
 
   return (
-    <motion.div
+    <motion.article
+      id={`ta-q-${item.id}`}
+      data-question-id={item.id}
       key={item.id}
       initial={reduceMotion ? false : { opacity: 0, y: 10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={
         reduceMotion ? { duration: 0 } : { duration: 0.22, ease: [0.22, 1, 0.36, 1] }
       }
-      className="relative mx-auto w-full min-w-0 max-w-3xl"
+      className={
+        inSetList
+          ? EXERCISE_SET_QUESTION_CARD_CLASS
+          : "relative mx-auto w-full min-w-0 max-w-3xl"
+      }
     >
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-x-0 -top-8 h-44 bg-[radial-gradient(ellipse_at_top,var(--exercise-accent-soft),transparent_72%)] opacity-80 dark:opacity-60"
-      />
+      {!inSetList ? (
+        <div
+          aria-hidden
+          className="pointer-events-none absolute inset-x-0 -top-8 h-44 bg-[radial-gradient(ellipse_at_top,var(--exercise-accent-soft),transparent_72%)] opacity-80 dark:opacity-60"
+        />
+      ) : null}
 
       <div className="relative">
         <header className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
-              {tType("label")}
-            </p>
-            <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
-              {promptLabel}
-            </p>
+            {inSetList ? (
+              <p className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                <span className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
+                  {number}
+                </span>
+                <span className="text-sm font-medium text-muted-foreground">
+                  {promptLabel}
+                </span>
+              </p>
+            ) : (
+              <>
+                <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
+                  {tType("label")}
+                </p>
+                <p className="mt-1.5 text-sm leading-relaxed text-muted-foreground">
+                  {promptLabel}
+                </p>
+              </>
+            )}
           </div>
           {item.aiGenerated ? (
             <p className="inline-flex shrink-0 items-center gap-1 pt-0.5 text-[11px] font-medium tracking-wide text-muted-foreground uppercase">
@@ -89,7 +121,7 @@ export function TypeAnswerStage({
         <form
           onSubmit={(event) => {
             event.preventDefault();
-            if (!revealed) onCheck();
+            if (!deferCheck && !revealed) onCheck?.();
           }}
           className="mt-8 sm:mt-12"
         >
@@ -109,6 +141,7 @@ export function TypeAnswerStage({
               isCorrect={isCorrect}
               placeholder={t("placeholder")}
               reduceMotion={Boolean(reduceMotion)}
+              deferCheck={deferCheck}
               onChange={onInputChange}
             />
           ) : (
@@ -121,6 +154,7 @@ export function TypeAnswerStage({
               isCorrect={isCorrect}
               placeholder={t("placeholder")}
               reduceMotion={Boolean(reduceMotion)}
+              deferCheck={deferCheck}
               onChange={onInputChange}
             />
           )}
@@ -143,6 +177,7 @@ export function TypeAnswerStage({
             revealed={revealed}
             peeked={peeked}
             isCorrect={isCorrect}
+            unanswered={unanswered}
             expected={expected}
             showUserAttempt={showUserAttempt}
             userInput={input}
@@ -150,24 +185,21 @@ export function TypeAnswerStage({
             correctAnswerLabel={t("correctAnswer")}
             correctLabel={t("correct")}
             incorrectLabel={t("incorrect")}
+            unansweredLabel={tSession("unanswered")}
             reduceMotion={Boolean(reduceMotion)}
           />
 
-          <div className="mt-8">
-            <ExerciseHint
+          {!revealed ? (
+            <ExerciseSetPartialHint
+              answer={expected}
               resetKey={item.id}
               answered={revealed}
-              correctAnswer={expected}
               onRevealAnswer={onRevealAnswer}
-            >
-              {tHint("startsWith", {
-                letter: hintInitialLetter(expected),
-              })}
-            </ExerciseHint>
-          </div>
+            />
+          ) : null}
         </form>
       </div>
-    </motion.div>
+    </motion.article>
   );
 }
 
@@ -182,6 +214,7 @@ function ContextualPrompt({
   isCorrect,
   placeholder,
   reduceMotion,
+  deferCheck,
   onChange,
 }: {
   before: string;
@@ -194,6 +227,7 @@ function ContextualPrompt({
   isCorrect: boolean;
   placeholder: string;
   reduceMotion: boolean;
+  deferCheck: boolean;
   onChange: (value: string) => void;
 }) {
   return (
@@ -218,6 +252,7 @@ function ContextualPrompt({
           cue={cue}
           placeholder={placeholder}
           reduceMotion={reduceMotion}
+          deferCheck={deferCheck}
           onChange={onChange}
         />
         {after}
@@ -235,6 +270,7 @@ function RecallPrompt({
   isCorrect,
   placeholder,
   reduceMotion,
+  deferCheck,
   onChange,
 }: {
   prompt: string;
@@ -245,6 +281,7 @@ function RecallPrompt({
   isCorrect: boolean;
   placeholder: string;
   reduceMotion: boolean;
+  deferCheck: boolean;
   onChange: (value: string) => void;
 }) {
   const tone = revealed
@@ -305,6 +342,7 @@ function RecallPrompt({
               <RecallField
                 value={value}
                 placeholder={placeholder}
+                deferCheck={deferCheck}
                 onChange={onChange}
               />
             )}
@@ -331,6 +369,7 @@ function BlankSlot({
   cue,
   placeholder,
   reduceMotion,
+  deferCheck,
   onChange,
 }: {
   value: string;
@@ -341,6 +380,7 @@ function BlankSlot({
   cue: string | null;
   placeholder: string;
   reduceMotion: boolean;
+  deferCheck: boolean;
   onChange: (value: string) => void;
 }) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
@@ -355,8 +395,8 @@ function BlankSlot({
   const widthCh = Math.min(32, Math.max(8, displayLength + 1));
 
   useEffect(() => {
-    if (!revealed) inputRef.current?.focus();
-  }, [revealed]);
+    if (!deferCheck && !revealed) inputRef.current?.focus();
+  }, [deferCheck, revealed]);
 
   useEffect(() => {
     const el = inputRef.current;
@@ -409,7 +449,7 @@ function BlankSlot({
             value={value}
             onChange={(event) => onChange(event.target.value)}
             onKeyDown={(event) => {
-              if (event.key === "Enter") {
+              if (event.key === "Enter" && !deferCheck) {
                 event.preventDefault();
                 event.currentTarget.form?.requestSubmit();
               }
@@ -450,18 +490,20 @@ function BlankSlot({
 function RecallField({
   value,
   placeholder,
+  deferCheck,
   onChange,
 }: {
   value: string;
   placeholder: string;
+  deferCheck: boolean;
   onChange: (value: string) => void;
 }) {
   const inputRef = useRef<HTMLTextAreaElement>(null);
   const reduceMotion = useReducedMotion();
 
   useEffect(() => {
-    inputRef.current?.focus();
-  }, []);
+    if (!deferCheck) inputRef.current?.focus();
+  }, [deferCheck]);
 
   useEffect(() => {
     const el = inputRef.current;
@@ -477,7 +519,7 @@ function RecallField({
       value={value}
       onChange={(event) => onChange(event.target.value)}
       onKeyDown={(event) => {
-        if (event.key === "Enter") {
+        if (event.key === "Enter" && !deferCheck) {
           event.preventDefault();
           event.currentTarget.form?.requestSubmit();
         }
@@ -504,6 +546,7 @@ function AnswerFeedback({
   revealed,
   peeked,
   isCorrect,
+  unanswered,
   expected,
   showUserAttempt,
   userInput,
@@ -511,11 +554,13 @@ function AnswerFeedback({
   correctAnswerLabel,
   correctLabel,
   incorrectLabel,
+  unansweredLabel,
   reduceMotion,
 }: {
   revealed: boolean;
   peeked: boolean;
   isCorrect: boolean;
+  unanswered: boolean;
   expected: string;
   showUserAttempt: boolean;
   userInput: string;
@@ -523,6 +568,7 @@ function AnswerFeedback({
   correctAnswerLabel: string;
   correctLabel: string;
   incorrectLabel: string;
+  unansweredLabel: string;
   reduceMotion: boolean;
 }) {
   return (
@@ -539,7 +585,11 @@ function AnswerFeedback({
           className="mt-6"
           aria-live="polite"
         >
-          {peeked ? (
+          {unanswered ? (
+            <p className="text-sm font-medium text-muted-foreground">
+              {unansweredLabel}
+            </p>
+          ) : peeked ? (
             <p className="text-sm text-muted-foreground">
               {incorrectLabel}
               <span className="mt-1 block font-heading text-base font-semibold text-ink wrap-anywhere">

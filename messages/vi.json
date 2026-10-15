@@ -913,7 +913,22 @@
       "tryAgain": "Làm lại",
       "questionsLabel": "Câu hỏi",
       "correctLabel": "Đúng",
-      "reviewLabel": "Cần ôn"
+      "reviewLabel": "Cần ôn",
+      "answeredProgress": "{answered} / {total} đã trả lời",
+      "submitSet": "Nộp bài",
+      "submitting": "Đang chấm…",
+      "unansweredWarnTitle": "Còn câu chưa trả lời",
+      "unansweredWarn": "Bạn còn {count, plural, one {# câu chưa trả lời} other {# câu chưa trả lời}}. Vẫn nộp?",
+      "submitAnyway": "Vẫn nộp",
+      "partialHint": "Gợi ý: {mask}",
+      "jumpToUnanswered": "Đến câu chưa làm",
+      "retryIncorrect": "Làm lại câu sai",
+      "retryUnanswered": "Làm lại câu trống",
+      "restartSet": "Làm lại cả bộ",
+      "resultsTitle": "Kết quả",
+      "unanswered": "Chưa trả lời",
+      "yourAnswer": "Câu trả lời của bạn",
+      "correctAnswer": "Đáp án đúng"
     },
     "multipleChoice": {
       "questionWord": "Từ này nghĩa là gì?",
@@ -2031,7 +2046,9 @@
       "expected": "Đáp án đúng",
       "objectiveScore": "{correct} / {total} câu khách quan đúng",
       "mobileTabsAria": "Bảng luyện tập",
+      "unansweredWarnTitle": "Còn câu chưa trả lời",
       "unansweredWarn": "Một số câu chưa trả lời. Vẫn nộp?",
+      "submitAnyway": "Vẫn nộp",
       "gradingPending": "Câu trả lời tự luận chưa chấm được. Câu trả lời đã lưu — bạn có thể thử chấm lại.",
       "retryGrading": "Thử chấm lại",
       "retryAttempt": "Làm lại",
@@ -2286,9 +2303,11 @@
     "fillBlankOverview": "Hoàn thành đoạn văn bằng cách điền các từ còn thiếu.",
     "practice": {
       "progress": "{current} / {total}",
+      "answeredProgress": "{answered} / {total} đã trả lời",
       "score": "{correct} đúng",
       "check": "Kiểm tra",
       "checkAnswers": "Kiểm tra đáp án",
+      "submitSet": "Nộp bài",
       "questionLabel": "Câu {number}",
       "blankLabel": "Chỗ trống {number}",
       "listenPrompt": "Nghe phần này của audio.",
@@ -2309,7 +2328,11 @@
       "blanksProgress": "{filled} / {total} chỗ trống",
       "changeType": "Đổi dạng bài",
       "hideReview": "Ẩn phần xem lại",
-      "typeHintMc": "Nghe rồi chọn đáp án phù hợp nhất cho từng câu."
+      "jumpToUnanswered": "Đến câu chưa làm",
+      "unansweredWarnTitle": "Còn câu chưa trả lời",
+      "unansweredWarn": "Bạn còn câu chưa trả lời. Vẫn nộp?",
+      "submitAnyway": "Vẫn nộp",
+      "typeHintMc": "Nghe rồi chọn đáp án phù hợp nhất cho từng câu trên trang này."
     },
     "errors": {
       "CLOUDINARY_NOT_CONFIGURED": "Chưa cấu hình lưu trữ media.",

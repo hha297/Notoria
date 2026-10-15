@@ -1,7 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
 import { useLocale, useTranslations } from "next-intl";
 import { Sparkles } from "lucide-react";
 import { toast } from "sonner";
@@ -9,12 +8,13 @@ import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseAiBar } from "@/components/exercises/exercise-ai-bar";
-import { FillBlankActions } from "@/components/exercises/fill-blank-actions";
 import { FillBlankStage } from "@/components/exercises/fill-blank-stage";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
+import { ExerciseSetSubmitBar } from "@/components/exercises/exercise-set-submit-bar";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
+import { Button } from "@/components/ui/button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { isValidLocale } from "@/i18n/config";
@@ -29,9 +29,11 @@ import {
   buildFillBlankItems,
   type FillBlankItem,
 } from "@/lib/exercises/fill-blank";
+import { isNonEmptyAnswer, type SetQuestionResult } from "@/lib/exercises/set-attempt";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { answersMatchAny, shuffleArray } from "@/lib/exercises/utils";
 import { useExerciseDifficulty } from "@/hooks/use-exercise-difficulty";
+import { useExerciseSetAttempt } from "@/hooks/use-exercise-set-attempt";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
@@ -56,13 +58,8 @@ export function FillBlankSession({
   const exerciseQuota = useQuotaLockMessage("ai_exercise");
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [aiItems, setAiItems] = useState<FillBlankItem[] | null>(null);
-  const [itemIds, setItemIds] = useState<string[]>([]);
-  const [index, setIndex] = useState(0);
-  const [input, setInput] = useState("");
-  const [revealed, setRevealed] = useState(false);
-  const [peeked, setPeeked] = useState(false);
-  const [sessionComplete, setSessionComplete] = useState(false);
-  const [score, setScore] = useState({ correct: 0, answered: 0 });
+  const [items, setItems] = useState<FillBlankItem[]>([]);
+  const [activeIds, setActiveIds] = useState<string[] | null>(null);
   const { difficulty, setDifficulty } = useExerciseDifficulty("fill_blank");
   const [usedWordIds, setUsedWordIds] = useState<string[]>([]);
   const avoidByWord = useRef<Record<string, string[]>>({});
@@ -90,21 +87,37 @@ export function FillBlankSession({
     () => new Map(filteredWords.map((word) => [word.id, word.createdAt] as const)),
     [filteredWords],
   );
-  const sessionItems = aiItems ?? (!hasProAccess ? exampleItems : []);
-  const itemMap = useMemo(
-    () => new Map(sessionItems.map((item) => [item.id, item])),
-    [sessionItems],
+
+  const practiceItems = useMemo(() => {
+    if (!activeIds) return items;
+    const byId = new Map(items.map((item) => [item.id, item]));
+    return activeIds
+      .map((id) => byId.get(id))
+      .filter((item): item is FillBlankItem => Boolean(item));
+  }, [activeIds, items]);
+
+  const questionIds = useMemo(
+    () => practiceItems.map((item) => item.id),
+    [practiceItems],
   );
 
-  const resetRound = useCallback((ids: string[]) => {
-    setItemIds(ids);
-    setIndex(0);
-    setScore({ correct: 0, answered: 0 });
-    setSessionComplete(false);
-    setInput("");
-    setRevealed(false);
-    setPeeked(false);
-  }, []);
+  const {
+    answers,
+    phase: attemptPhase,
+    results,
+    submitting,
+    attemptKey,
+    answeredCount,
+    totalQuestionCount,
+    unansweredIds,
+    score,
+    setAnswer,
+    resetAttempt,
+    submit,
+  } = useExerciseSetAttempt({ questionIds });
+
+  const submitted = attemptPhase === "submitted";
+  const hasSession = items.length > 0;
 
   const startExampleSession = useCallback(() => {
     const prefs = commitAndBeginNext();
@@ -117,15 +130,20 @@ export function FillBlankSession({
       softAvoidItemKeys: prefs.softAvoidItemKeys,
     });
     setAiItems(null);
-    resetRound(sampled.map((item) => item.id));
-  }, [commitAndBeginNext, createdAtByWordId, exampleItems, resetRound]);
+    setItems(sampled);
+    setActiveIds(null);
+    resetAttempt();
+  }, [commitAndBeginNext, createdAtByWordId, exampleItems, resetAttempt]);
 
-  const startFromAiItems = useCallback(
-    (items: FillBlankItem[]) => {
-      resetRound(shuffleArray(items).map((item) => item.id));
-    },
-    [resetRound],
-  );
+  const restartSet = useCallback(() => {
+    if (aiItems && aiItems.length > 0) {
+      setItems(shuffleArray(aiItems));
+      setActiveIds(null);
+      resetAttempt();
+      return;
+    }
+    startExampleSession();
+  }, [aiItems, resetAttempt, startExampleSession]);
 
   useEffect(() => {
     if (!hasProAccess) startExampleSession();
@@ -134,17 +152,13 @@ export function FillBlankSession({
   useEffect(() => {
     if (!hasProAccess) return;
     setAiItems(null);
+    setItems([]);
     setUsedWordIds([]);
     avoidByWord.current = {};
     clearPreferences();
-    resetRound([]);
-  }, [clearPreferences, hasProAccess, workspaceId, resetRound]);
-
-  useEffect(() => {
-    setInput("");
-    setRevealed(false);
-    setPeeked(false);
-  }, [index, itemIds]);
+    setActiveIds(null);
+    resetAttempt();
+  }, [clearPreferences, hasProAccess, workspaceId, resetAttempt]);
 
   const generateQuestions = useCallback(async () => {
     if (filteredWords.length === 0) {
@@ -238,7 +252,9 @@ export function FillBlankSession({
         ...nextItems.map((item) => item.wordId),
       ]);
       setAiItems(nextItems);
-      startFromAiItems(nextItems);
+      setItems(shuffleArray(nextItems));
+      setActiveIds(null);
+      resetAttempt();
       completeProcessing();
       window.setTimeout(() => resetProcessing(), 350);
     } catch {
@@ -252,73 +268,42 @@ export function FillBlankSession({
     filteredWords,
     language,
     openUpgrade,
+    resetAttempt,
     resetProcessing,
     setStage,
-    startFromAiItems,
     tAi,
     exerciseQuota,
     uiLocale,
     usedWordIds,
   ]);
 
-  const current = itemMap.get(itemIds[index] ?? "");
-  const total = itemIds.length;
-  const isCorrect = current
-    ? !peeked && answersMatchAny(input, current.acceptableAnswers)
-    : false;
-  const hasSession = total > 0;
-
-  const check = useCallback(() => {
-    if (!current || revealed || !input.trim()) return;
-    const correct = answersMatchAny(input, current.acceptableAnswers);
-    setRevealed(true);
-    setScore((s) => ({
-      correct: s.correct + (correct ? 1 : 0),
-      answered: s.answered + 1,
-    }));
-    recordOutcome({
-      wordId: current.wordId,
-      correct,
-      itemKey: fillBlankItemSentence(current),
+  const handleSubmit = () => {
+    void submit((currentAnswers) => {
+      const graded: Record<string, SetQuestionResult> = {};
+      for (const item of practiceItems) {
+        const raw = currentAnswers[item.id];
+        const value = typeof raw === "string" ? raw : "";
+        const unanswered = !isNonEmptyAnswer(value);
+        const correct =
+          !unanswered && answersMatchAny(value, item.acceptableAnswers);
+        graded[item.id] = { correct, unanswered };
+        recordOutcome({
+          wordId: item.wordId,
+          correct,
+          itemKey: fillBlankItemSentence(item),
+        });
+      }
+      return graded;
     });
-  }, [current, input, recordOutcome, revealed]);
+  };
 
-  const revealAnswer = useCallback(() => {
-    if (!current || revealed) return;
-    setPeeked(true);
-    setRevealed(true);
-    setScore((s) => ({
-      correct: s.correct,
-      answered: s.answered + 1,
-    }));
-    recordOutcome({
-      wordId: current.wordId,
-      correct: false,
-      itemKey: fillBlankItemSentence(current),
-    });
-  }, [current, recordOutcome, revealed]);
-
-  const next = useCallback(() => {
-    if (index < total - 1) {
-      setIndex((i) => i + 1);
-      return;
-    }
-    setSessionComplete(true);
-  }, [index, total]);
-
-  const tryAgain = useCallback(() => {
-    if (aiItems) {
-      void generateQuestions();
-      return;
-    }
-    startExampleSession();
-  }, [aiItems, generateQuestions, startExampleSession]);
-
-  useHotkeys("enter", (e) => {
-    e.preventDefault();
-    if (!revealed) check();
-    else next();
-  }, { enableOnFormTags: true }, [revealed, check, next]);
+  const jumpToUnanswered = () => {
+    const first = unansweredIds[0];
+    if (!first) return;
+    document
+      .getElementById(`fb-q-${first}`)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
 
@@ -327,7 +312,7 @@ export function FillBlankSession({
       generating={generating}
       hasSession={Boolean(aiItems)}
       difficulty={difficulty}
-      disabled={filteredWords.length === 0}
+      disabled={filteredWords.length === 0 || submitted}
       onDifficultyChange={setDifficulty}
       onGenerate={() => void generateQuestions()}
     />
@@ -353,14 +338,17 @@ export function FillBlankSession({
     );
   }
 
+  const showAiProgress =
+    generating ||
+    processing.stage === "error" ||
+    processing.stage === "completed";
+
   return (
     <div className="space-y-6">
       <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
       {aiBar}
 
-      {generating ||
-        processing.stage === "error" ||
-        processing.stage === "completed" ? (
+      {showAiProgress ? (
         <AiProcessingProgress
           state={processing}
           pipeline="aiGenerate"
@@ -370,65 +358,147 @@ export function FillBlankSession({
               : undefined
           }
           onDismissError={
-            processing.stage === "error"
-              ? () => resetProcessing()
-              : undefined
+            processing.stage === "error" ? () => resetProcessing() : undefined
           }
         />
-      ) : sessionComplete && hasSession ? (
-        <SessionCompleteCard
-          title={tSession("complete")}
-          questions={total}
-          correct={score.correct}
-          tryAgainLabel={tSession("tryAgain")}
-          onTryAgain={tryAgain}
-          extraAction={{
-            label: tAi("generateMore"),
-            onClick: () => void generateQuestions(),
-            loading: generating,
-            locked: exerciseQuota.locked,
-            lockMessage: exerciseQuota.message,
-          }}
-        />
-      ) : current ? (
-        <>
-          <ExerciseProgressHeader
-            current={index + 1}
-            total={total}
-            progressLabel={t("progress", { current: index + 1, total })}
-            scoreLabel={t("score", { correct: score.correct, answered: score.answered })}
-            hint={t("keyboardHint")}
-            progressValue={total ? ((index + 1) / total) * 100 : 0}
-          />
-          <FillBlankStage
-            key={current.id}
-            item={current}
-            input={input}
-            revealed={revealed}
-            peeked={peeked}
-            isCorrect={isCorrect}
-            onInputChange={setInput}
-            onCheck={check}
-            onRevealAnswer={revealAnswer}
-          />
-          <FillBlankActions
-            canPrev={index > 0}
-            revealed={revealed}
-            onPrev={() => setIndex((i) => i - 1)}
-            onNext={next}
-            onCheck={check}
-            onTryAgain={tryAgain}
-            tryAgainLabel={tSession("tryAgain")}
-            canCheck={!!input.trim()}
-            isLast={index >= total - 1}
-          />
-        </>
-      ) : hasProAccess ? (
+      ) : !hasSession && hasProAccess ? (
         <EmptyGenerateCard
           locked={exerciseQuota.locked}
           lockMessage={exerciseQuota.message}
           onGenerate={() => void generateQuestions()}
         />
+      ) : hasSession ? (
+        <>
+          <ExerciseProgressHeader
+            current={submitted ? score.correct : answeredCount}
+            total={submitted ? score.total : totalQuestionCount}
+            progressLabel={
+              submitted
+                ? tSession("score", {
+                    correct: score.correct,
+                    total: score.total,
+                  })
+                : tSession("answeredProgress", {
+                    answered: answeredCount,
+                    total: totalQuestionCount,
+                  })
+            }
+            scoreLabel={
+              submitted
+                ? t("score", {
+                    correct: score.correct,
+                    answered: score.total,
+                  })
+                : undefined
+            }
+            progressValue={
+              submitted
+                ? score.total
+                  ? (score.correct / score.total) * 100
+                  : 0
+                : totalQuestionCount
+                  ? (answeredCount / totalQuestionCount) * 100
+                  : 0
+            }
+          />
+
+          <div className="space-y-4" key={attemptKey}>
+            {practiceItems.map((item, index) => {
+              const input =
+                typeof answers[item.id] === "string"
+                  ? String(answers[item.id])
+                  : "";
+              const result = results[item.id];
+              const unanswered = Boolean(result?.unanswered);
+              const isCorrect = Boolean(result?.correct);
+              return (
+                <FillBlankStage
+                  key={item.id}
+                  item={item}
+                  number={index + 1}
+                  input={input}
+                  revealed={submitted}
+                  peeked={false}
+                  isCorrect={isCorrect}
+                  unanswered={unanswered}
+                  onInputChange={(value) => setAnswer(item.id, value)}
+                />
+              );
+            })}
+          </div>
+
+          {!submitted ? (
+            <ExerciseSetSubmitBar
+              answeredCount={answeredCount}
+              totalQuestionCount={totalQuestionCount}
+              unansweredCount={unansweredIds.length}
+              submitting={submitting}
+              onSubmit={handleSubmit}
+              onJumpToUnanswered={jumpToUnanswered}
+            />
+          ) : (
+            <div className="space-y-4">
+              <SessionCompleteCard
+                title={tSession("complete")}
+                questions={score.total}
+                correct={score.correct}
+                tryAgainLabel={tSession("restartSet")}
+                onTryAgain={restartSet}
+                extraAction={
+                  hasProAccess
+                    ? {
+                        label: tAi("generateMore"),
+                        onClick: () => void generateQuestions(),
+                        loading: generating,
+                        locked: exerciseQuota.locked,
+                        lockMessage: exerciseQuota.message,
+                      }
+                    : undefined
+                }
+              />
+              <div className="mx-auto flex w-full max-w-md flex-wrap justify-center gap-2">
+                {practiceItems.some(
+                  (item) =>
+                    results[item.id] &&
+                    !results[item.id]!.correct &&
+                    !results[item.id]!.unanswered,
+                ) ? (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      const ids = practiceItems
+                        .filter((item) => {
+                          const row = results[item.id];
+                          return row && !row.correct && !row.unanswered;
+                        })
+                        .map((item) => item.id);
+                      setActiveIds(ids.length > 0 ? ids : null);
+                      resetAttempt();
+                    }}
+                  >
+                    {tSession("retryIncorrect")}
+                  </Button>
+                ) : null}
+                {Object.values(results).some((row) => row.unanswered) ? (
+                  <Button
+                    type="button"
+                    variant="outline"
+                    onClick={() => {
+                      const ids = practiceItems
+                        .filter((item) => results[item.id]?.unanswered)
+                        .map((item) => item.id);
+                      setActiveIds(ids.length > 0 ? ids : null);
+                      resetAttempt();
+                    }}
+                  >
+                    {tSession("retryUnanswered")}
+                  </Button>
+                ) : null}
+              </div>
+            </div>
+          )}
+        </>
       ) : null}
     </div>
   );
