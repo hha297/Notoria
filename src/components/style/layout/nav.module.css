@@ -2,7 +2,8 @@
 
 .floating-panel {
   height: fit-content;
-  max-height: calc(100dvh - 1.25rem - 0.75rem);
+  /* Top sticky inset + bottom inset so the panel fits the viewport while stuck. */
+  max-height: calc(100dvh - 1.25rem - 1.25rem);
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
