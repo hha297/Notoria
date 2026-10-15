@@ -8,6 +8,7 @@ export const SPEAKING_ERROR_CODES = [
   "ACTIVE_SESSION_EXISTS",
   "STREAM_CALL_FAILED",
   "UNAUTHORIZED",
+  "AI_QUOTA_EXCEEDED",
 ] as const;
 
 export type SpeakingErrorCode = (typeof SPEAKING_ERROR_CODES)[number];

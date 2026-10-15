@@ -2632,8 +2632,11 @@
       "SESSION_EXPIRED": "This speaking session reached its time limit and can no longer be joined.",
       "ACTIVE_SESSION_EXISTS": "You already have an active speaking session. End it before starting another.",
       "STREAM_CALL_FAILED": "Could not start the video call. Try again.",
-      "UNAUTHORIZED": "Sign in to join a speaking call."
-    }
+      "UNAUTHORIZED": "Sign in to join a speaking call.",
+      "AI_QUOTA_EXCEEDED": "You've used your AI speaking allowance for today. It resets at UTC midnight — or upgrade for more sessions."
+    },
+    "quotaLockedTitle": "Daily speaking limit reached",
+    "quotaLockedBody": "You've used today's AI speaking session. Existing sessions stay available — upgrade for more, or come back after the allowance resets."
   },
   "errors": {
     "generic": "Something went wrong",
@@ -2957,7 +2960,59 @@
     "usageToday": "AI usage today",
     "quotaCount": "{used} / {limit}",
     "unlimitedAi": "Core AI toolkit",
+    "quotaUnlimitedHint": "Unlimited for ordinary use on this plan.",
+    "quotaRemainingHint": "{remaining} left today · resets {reset}",
+    "quotaExhaustedHint": "Allowance used · resets {reset}",
+    "quotaResetUtcMidnight": "at UTC midnight",
     "quotaExceeded": "You've used today's allowance for this AI feature. It resets at UTC midnight — or upgrade for a higher limit.",
+    "quotaExceededNoUpgrade": "You've used today's allowance for this AI feature. It resets {reset}.",
+    "quotaMessages": {
+      "ai_meeting": {
+        "free": "You've used your AI speaking session for today. Upgrade for more sessions, or return after your allowance resets ({reset}).",
+        "pro": "You've reached your daily AI speaking limit. Upgrade to Premium for a higher allowance, or return after your allowance resets ({reset}).",
+        "premium": "You've reached today's AI speaking limit. It resets {reset}."
+      },
+      "ai_reading": {
+        "free": "You've used today's AI reading allowance. Upgrade for more practice, or return after it resets ({reset}).",
+        "pro": "You've reached your daily AI reading limit. Upgrade to Premium for a higher allowance, or return after it resets ({reset}).",
+        "premium": "You've reached today's AI reading limit. It resets {reset}."
+      },
+      "ai_listening_transcript": {
+        "free": "You've used today's AI listening transcript. Upgrade for more, or return after it resets ({reset}).",
+        "pro": "You've reached your daily listening transcript limit. Upgrade to Premium for more, or return after it resets ({reset}).",
+        "premium": "You've reached today's listening transcript limit. It resets {reset}."
+      },
+      "ai_vocabulary": {
+        "free": "You've used today's AI vocabulary actions. Upgrade for more, or return after it resets ({reset}).",
+        "pro": "You've reached today's AI vocabulary limit. It resets {reset}.",
+        "premium": "You've reached today's AI vocabulary limit. It resets {reset}."
+      },
+      "ai_writing": {
+        "free": "You've used today's AI writing support. Upgrade for more, or return after it resets ({reset}).",
+        "pro": "You've reached today's AI writing limit. It resets {reset}.",
+        "premium": "You've reached today's AI writing limit. It resets {reset}."
+      },
+      "ai_exercise": {
+        "free": "You've used today's AI exercise generation. Upgrade for more, or return after it resets ({reset}).",
+        "pro": "You've reached today's AI exercise limit. It resets {reset}.",
+        "premium": "You've reached today's AI exercise limit. It resets {reset}."
+      },
+      "ai_exercise_import": {
+        "free": "Exercise import isn't included on Free. Upgrade to Pro to import worksheets.",
+        "pro": "You've reached today's exercise import limit. Upgrade to Premium for more, or return after it resets ({reset}).",
+        "premium": "You've reached today's exercise import limit. It resets {reset}."
+      },
+      "ai_learning_coach_chat": {
+        "free": "Learning Coach chat is a Premium feature.",
+        "pro": "Learning Coach chat is a Premium feature.",
+        "premium": "You've reached today's Learning Coach chat limit. It resets {reset}."
+      },
+      "content_import": {
+        "free": "Content import isn't included on Free. Upgrade to Pro to import learning material.",
+        "pro": "You've reached today's content import limit. It resets {reset}.",
+        "premium": "You've reached today's content import limit. It resets {reset}."
+      }
+    },
     "explorePremium": "Explore Premium",
     "switchTo": "Switch to {plan}",
     "switchToFreeHint": "You keep this plan until the renewal date, then move to Free.",

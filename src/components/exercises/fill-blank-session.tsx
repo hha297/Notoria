@@ -5,6 +5,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { useLocale, useTranslations } from "next-intl";
 import { Sparkles } from "lucide-react";
 import { toast } from "sonner";
+import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseAiBar } from "@/components/exercises/exercise-ai-bar";
@@ -14,8 +15,8 @@ import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
-import { Button } from "@/components/ui/button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
+import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { isValidLocale } from "@/i18n/config";
 import { requestExerciseAi } from "@/lib/exercises/ai-client";
 import {
@@ -50,9 +51,9 @@ export function FillBlankSession({
   const t = useTranslations("exercises.fillInBlank");
   const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
-  const tBilling = useTranslations("billing");
   const uiLocale = useLocale();
   const { hasProAccess, openUpgrade } = useProAccess();
+  const exerciseQuota = useQuotaLockMessage("ai_exercise");
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [aiItems, setAiItems] = useState<FillBlankItem[] | null>(null);
   const [itemIds, setItemIds] = useState<string[]>([]);
@@ -180,7 +181,8 @@ export function FillBlankSession({
 
       if (!result.ok) {
         if (result.code === "AI_QUOTA_EXCEEDED") {
-          fail(tBilling("quotaExceeded"));
+          fail(exerciseQuota.message);
+          await exerciseQuota.refreshQuotas();
           return;
         }
         if (result.code === "AI_FORBIDDEN") {
@@ -254,7 +256,7 @@ export function FillBlankSession({
     setStage,
     startFromAiItems,
     tAi,
-    tBilling,
+    exerciseQuota,
     uiLocale,
     usedWordIds,
   ]);
@@ -384,6 +386,8 @@ export function FillBlankSession({
             label: tAi("generateMore"),
             onClick: () => void generateQuestions(),
             loading: generating,
+            locked: exerciseQuota.locked,
+            lockMessage: exerciseQuota.message,
           }}
         />
       ) : current ? (
@@ -420,13 +424,25 @@ export function FillBlankSession({
           />
         </>
       ) : hasProAccess ? (
-        <EmptyGenerateCard onGenerate={() => void generateQuestions()} />
+        <EmptyGenerateCard
+          locked={exerciseQuota.locked}
+          lockMessage={exerciseQuota.message}
+          onGenerate={() => void generateQuestions()}
+        />
       ) : null}
     </div>
   );
 }
 
-function EmptyGenerateCard({ onGenerate }: { onGenerate: () => void }) {
+function EmptyGenerateCard({
+  onGenerate,
+  locked,
+  lockMessage,
+}: {
+  onGenerate: () => void;
+  locked: boolean;
+  lockMessage: string;
+}) {
   const tAi = useTranslations("exercises.ai");
 
   return (
@@ -445,10 +461,17 @@ function EmptyGenerateCard({ onGenerate }: { onGenerate: () => void }) {
         <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
           {tAi("emptyDescription")}
         </p>
-        <Button type="button" size="lg" className="mt-7 h-12 sm:h-11" onClick={onGenerate}>
-          <Sparkles className="size-4" />
+        <QuotaLockButton
+          type="button"
+          size="lg"
+          className="mt-7 h-12 sm:h-11"
+          locked={locked}
+          lockMessage={lockMessage}
+          icon={<Sparkles className="size-4" />}
+          onClick={onGenerate}
+        >
           {tAi("generate")}
-        </Button>
+        </QuotaLockButton>
       </div>
     </div>
   );

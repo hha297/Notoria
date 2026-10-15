@@ -2632,8 +2632,11 @@
       "SESSION_EXPIRED": "Den här talsessionen nådde tidsgränsen och kan inte längre anslutas till.",
       "ACTIVE_SESSION_EXISTS": "Du har redan en aktiv talsession. Avsluta den innan du startar en ny.",
       "STREAM_CALL_FAILED": "Kunde inte starta videomötet. Försök igen.",
-      "UNAUTHORIZED": "Logga in för att gå med i ett tal-samtal."
-    }
+      "UNAUTHORIZED": "Logga in för att gå med i ett tal-samtal.",
+      "AI_QUOTA_EXCEEDED": "Du har använt dagens AI-talkvot. Den återställs vid UTC midnatt — eller uppgradera för fler sessioner."
+    },
+    "quotaLockedTitle": "Daglig talkvot nådd",
+    "quotaLockedBody": "Du har använt dagens AI-talsession. Befintliga sessioner finns kvar — uppgradera för fler, eller kom tillbaka efter att kvoten återställs."
   },
   "errors": {
     "generic": "Något gick fel",
@@ -2986,7 +2989,59 @@
     "usageToday": "AI-användning idag",
     "quotaCount": "{used} / {limit}",
     "unlimitedAi": "Obegränsad AI",
-    "quotaExceeded": "Dagens gratiskvot är slut. Uppgradera till Pro för obegränsad AI.",
+    "quotaUnlimitedHint": "Obegränsad för vanlig användning på den här planen.",
+    "quotaRemainingHint": "{remaining} kvar idag · återställs {reset}",
+    "quotaExhaustedHint": "Kvoten är slut · återställs {reset}",
+    "quotaResetUtcMidnight": "vid UTC midnatt",
+    "quotaExceeded": "Dagens AI-kvot för den här funktionen är slut. Den återställs vid UTC midnatt — eller uppgradera för en högre gräns.",
+    "quotaExceededNoUpgrade": "Dagens AI-kvot för den här funktionen är slut. Återställs {reset}.",
+    "quotaMessages": {
+      "ai_meeting": {
+        "free": "Du har använt dagens AI-talsession. Uppgradera för fler sessioner, eller kom tillbaka efter att kvoten återställs ({reset}).",
+        "pro": "Du har nått din dagliga AI-talgräns. Uppgradera till Premium för högre kvot, eller kom tillbaka efter återställning ({reset}).",
+        "premium": "Du har nått dagens AI-talgräns. Återställs {reset}."
+      },
+      "ai_reading": {
+        "free": "Du har använt dagens AI-läskvot. Uppgradera för mer övning, eller kom tillbaka efter återställning ({reset}).",
+        "pro": "Du har nått din dagliga AI-läsgräns. Uppgradera till Premium, eller kom tillbaka efter återställning ({reset}).",
+        "premium": "Du har nått dagens AI-läsgräns. Återställs {reset}."
+      },
+      "ai_listening_transcript": {
+        "free": "Du har använt dagens AI-lyssningstranskript. Uppgradera för fler, eller kom tillbaka efter återställning ({reset}).",
+        "pro": "Du har nått din dagliga lyssningstranskriptgräns. Uppgradera till Premium, eller kom tillbaka efter återställning ({reset}).",
+        "premium": "Du har nått dagens lyssningstranskriptgräns. Återställs {reset}."
+      },
+      "ai_vocabulary": {
+        "free": "Du har använt dagens AI-ordförrådsåtgärder. Uppgradera för fler, eller kom tillbaka efter återställning ({reset}).",
+        "pro": "Du har nått dagens AI-ordförrådsgräns. Återställs {reset}.",
+        "premium": "Du har nått dagens AI-ordförrådsgräns. Återställs {reset}."
+      },
+      "ai_writing": {
+        "free": "Du har använt dagens AI-skrivstöd. Uppgradera för mer, eller kom tillbaka efter återställning ({reset}).",
+        "pro": "Du har nått dagens AI-skrivgräns. Återställs {reset}.",
+        "premium": "Du har nått dagens AI-skrivgräns. Återställs {reset}."
+      },
+      "ai_exercise": {
+        "free": "Du har använt dagens AI-övningsgenerering. Uppgradera för fler, eller kom tillbaka efter återställning ({reset}).",
+        "pro": "Du har nått dagens AI-övningsgräns. Återställs {reset}.",
+        "premium": "Du har nått dagens AI-övningsgräns. Återställs {reset}."
+      },
+      "ai_exercise_import": {
+        "free": "Övningsimport ingår inte i Free. Uppgradera till Pro för att importera arbetsblad.",
+        "pro": "Du har nått dagens övningsimportgräns. Uppgradera till Premium, eller kom tillbaka efter återställning ({reset}).",
+        "premium": "Du har nått dagens övningsimportgräns. Återställs {reset}."
+      },
+      "ai_learning_coach_chat": {
+        "free": "Learning Coach-chatt är en Premium-funktion.",
+        "pro": "Learning Coach-chatt är en Premium-funktion.",
+        "premium": "Du har nått dagens Learning Coach-chattgräns. Återställs {reset}."
+      },
+      "content_import": {
+        "free": "Innehållsimport ingår inte i Free. Uppgradera till Pro för att importera studiematerial.",
+        "pro": "Du har nått dagens innehållsimportgräns. Återställs {reset}.",
+        "premium": "Du har nått dagens innehållsimportgräns. Återställs {reset}."
+      }
+    },
     "alreadySubscribed": "Du har redan den här planen.",
     "status": "Status: {status}",
     "renewsOn": "Förnyas den {date}",

@@ -64,6 +64,8 @@ type SortableMeaningsProps = {
     examples: string[];
     /** When true, apply the first suggestion without an Accept click. */
     autoApply?: boolean;
+    /** When true, skip auto meaning checks (quota exhausted). */
+    quotaLocked?: boolean;
   };
 };
 
@@ -438,6 +440,7 @@ export function SortableMeanings({
     options?: { force?: boolean },
   ) {
     if (!aiRef.current?.enabled) return;
+    if (aiRef.current?.quotaLocked) return;
     const item = meaningsRef.current.find((row) => row.id === id);
     const text = item?.meaning.trim() ?? "";
     if (!options?.force && isPartialMeaningInput(text)) {

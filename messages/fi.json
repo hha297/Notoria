@@ -2437,8 +2437,11 @@
       "SESSION_EXPIRED": "Tämä puhesessio saavutti aikarajan, eikä siihen voi enää liittyä.",
       "ACTIVE_SESSION_EXISTS": "Sinulla on jo aktiivinen puhesessio. Lopeta se ennen uuden aloittamista.",
       "STREAM_CALL_FAILED": "Videopuhelua ei voitu aloittaa. Yritä uudelleen.",
-      "UNAUTHORIZED": "Kirjaudu sisään liittyäksesi puhumispuheluun."
-    }
+      "UNAUTHORIZED": "Kirjaudu sisään liittyäksesi puhumispuheluun.",
+      "AI_QUOTA_EXCEEDED": "Olet käyttänyt tämän päivän tekoälypuhekiintiön. Se nollautuu UTC-keskiyöllä — tai päivitä saadaksesi lisää sessioita."
+    },
+    "quotaLockedTitle": "Päivittäinen puhekiintiö täynnä",
+    "quotaLockedBody": "Olet käyttänyt tämän päivän tekoälypuhesession. Vanhat sessiot säilyvät — päivitä saadaksesi lisää, tai palaa kiintiön nollautumisen jälkeen."
   },
   "errors": {
     "generic": "Jotain meni pieleen",
@@ -2804,7 +2807,59 @@
     "usageToday": "Tekoälyn käyttö tänään",
     "quotaCount": "{used} / {limit}",
     "unlimitedAi": "Keskeiset tekoälytyökalut",
+    "quotaUnlimitedHint": "Rajoittamaton tavallisessa käytössä tällä suunnitelmalla.",
+    "quotaRemainingHint": "{remaining} jäljellä tänään · nollautuu {reset}",
+    "quotaExhaustedHint": "Kiintiö käytetty · nollautuu {reset}",
+    "quotaResetUtcMidnight": "UTC-keskiyöllä",
     "quotaExceeded": "Tämän tekoälyominaisuuden päiväkiintiö on käytetty. Se nollautuu UTC-keskiyöllä — tai päivitä suurempaan rajaan.",
+    "quotaExceededNoUpgrade": "Tämän tekoälyominaisuuden päiväkiintiö on käytetty. Nollautuu {reset}.",
+    "quotaMessages": {
+      "ai_meeting": {
+        "free": "Olet käyttänyt tämän päivän tekoälypuhesession. Päivitä saadaksesi lisää, tai palaa kiintiön nollautumisen jälkeen ({reset}).",
+        "pro": "Olet saavuttanut päivittäisen tekoälypuherajan. Päivitä Premiumiin suurempaa kiintiötä varten, tai palaa nollautumisen jälkeen ({reset}).",
+        "premium": "Olet saavuttanut tämän päivän tekoälypuherajan. Nollautuu {reset}."
+      },
+      "ai_reading": {
+        "free": "Olet käyttänyt tämän päivän tekoälylukukiintiön. Päivitä harjoitellaksesi enemmän, tai palaa nollautumisen jälkeen ({reset}).",
+        "pro": "Olet saavuttanut päivittäisen tekoälylukurajan. Päivitä Premiumiin, tai palaa nollautumisen jälkeen ({reset}).",
+        "premium": "Olet saavuttanut tämän päivän tekoälylukurajan. Nollautuu {reset}."
+      },
+      "ai_listening_transcript": {
+        "free": "Olet käyttänyt tämän päivän kuuntelutranskriptin. Päivitä saadaksesi lisää, tai palaa nollautumisen jälkeen ({reset}).",
+        "pro": "Olet saavuttanut päivittäisen kuuntelutranskriptirajan. Päivitä Premiumiin, tai palaa nollautumisen jälkeen ({reset}).",
+        "premium": "Olet saavuttanut tämän päivän kuuntelutranskriptirajan. Nollautuu {reset}."
+      },
+      "ai_vocabulary": {
+        "free": "Olet käyttänyt tämän päivän tekoälysanastotoiminnot. Päivitä saadaksesi lisää, tai palaa nollautumisen jälkeen ({reset}).",
+        "pro": "Olet saavuttanut tämän päivän tekoälysanastorajan. Nollautuu {reset}.",
+        "premium": "Olet saavuttanut tämän päivän tekoälysanastorajan. Nollautuu {reset}."
+      },
+      "ai_writing": {
+        "free": "Olet käyttänyt tämän päivän tekoälykirjoitustuen. Päivitä saadaksesi lisää, tai palaa nollautumisen jälkeen ({reset}).",
+        "pro": "Olet saavuttanut tämän päivän tekoälykirjoitusrajan. Nollautuu {reset}.",
+        "premium": "Olet saavuttanut tämän päivän tekoälykirjoitusrajan. Nollautuu {reset}."
+      },
+      "ai_exercise": {
+        "free": "Olet käyttänyt tämän päivän tekoälytehtävägeneroinnin. Päivitä saadaksesi lisää, tai palaa nollautumisen jälkeen ({reset}).",
+        "pro": "Olet saavuttanut tämän päivän tekoälytehtävärajan. Nollautuu {reset}.",
+        "premium": "Olet saavuttanut tämän päivän tekoälytehtävärajan. Nollautuu {reset}."
+      },
+      "ai_exercise_import": {
+        "free": "Tehtävien tuonti ei kuulu Free-suunnitelmaan. Päivitä Prohon tuodaksesi työarkkeja.",
+        "pro": "Olet saavuttanut tämän päivän tehtäväntuontirajan. Päivitä Premiumiin, tai palaa nollautumisen jälkeen ({reset}).",
+        "premium": "Olet saavuttanut tämän päivän tehtäväntuontirajan. Nollautuu {reset}."
+      },
+      "ai_learning_coach_chat": {
+        "free": "Oppimisvalmentajan chat on Premium-ominaisuus.",
+        "pro": "Oppimisvalmentajan chat on Premium-ominaisuus.",
+        "premium": "Olet saavuttanut tämän päivän oppimisvalmentajan chat-rajan. Nollautuu {reset}."
+      },
+      "content_import": {
+        "free": "Sisällön tuonti ei kuulu Free-suunnitelmaan. Päivitä Prohon tuodaksesi oppimateriaalia.",
+        "pro": "Olet saavuttanut tämän päivän sisällöntuontirajan. Nollautuu {reset}.",
+        "premium": "Olet saavuttanut tämän päivän sisällöntuontirajan. Nollautuu {reset}."
+      }
+    },
     "alreadySubscribed": "Sinulla on jo tämä tilaus.",
     "status": "Tila: {status}",
     "renewsOn": "Uusiutuu {date}",

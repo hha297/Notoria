@@ -2,15 +2,21 @@
 
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
-import { FileText, ImageIcon, Link2, Type, Upload } from "lucide-react";
+import { FileText, ImageIcon, Link2, Lock, Type, Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
+import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import {
   createExerciseImportFromUploadedAsset,
   createExerciseImportFromUrl,
@@ -54,7 +60,7 @@ function isPasteableImage(file: File) {
 
 export function ImportMaterialForm() {
   const t = useTranslations("exercises.import");
-  const tBilling = useTranslations("billing");
+  const importQuota = useQuotaLockMessage("ai_exercise_import");
   const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
   const abortRef = useRef<AbortController | null>(null);
@@ -85,7 +91,10 @@ export function ImportMaterialForm() {
 
   function errorMessage(error: unknown) {
     const code = error instanceof Error ? error.message : "PROCESSING_FAILED";
-    if (code === "AI_QUOTA_EXCEEDED") return tBilling("quotaExceeded");
+    if (code === "AI_QUOTA_EXCEEDED") {
+      void importQuota.refreshQuotas();
+      return importQuota.message;
+    }
     return isExerciseImportErrorCode(code)
       ? t(`errors.${code}`)
       : t("errors.PROCESSING_FAILED");
@@ -132,7 +141,7 @@ export function ImportMaterialForm() {
 
   const processFile = useCallback(
     async (file: File, options?: { requireImage?: boolean }) => {
-      if (isBusy) return;
+      if (isBusy || importQuota.locked) return;
 
       if (options?.requireImage && !isPasteableImage(file)) {
         toast.error(t("errors.INVALID_FILE_TYPE"));
@@ -217,6 +226,7 @@ export function ImportMaterialForm() {
     // eslint-disable-next-line react-hooks/exhaustive-deps -- stable helpers via t/router
     [
       fail,
+      importQuota.locked,
       isBusy,
       resetProcessing,
       router,
@@ -230,7 +240,7 @@ export function ImportMaterialForm() {
 
   useEffect(() => {
     function onPaste(event: ClipboardEvent) {
-      if (isBusy) return;
+      if (isBusy || importQuota.locked) return;
       const items = event.clipboardData?.items;
       if (!items?.length) return;
 
@@ -254,14 +264,14 @@ export function ImportMaterialForm() {
 
     window.addEventListener("paste", onPaste);
     return () => window.removeEventListener("paste", onPaste);
-  }, [isBusy, processFile]);
+  }, [importQuota.locked, isBusy, processFile]);
 
   function handleCancelUpload() {
     abortRef.current?.abort();
   }
 
   async function handleUrlImport() {
-    if (isBusy) return;
+    if (isBusy || importQuota.locked) return;
     const trimmed = url.trim();
     if (!trimmed || !isValidHttpUrl(trimmed)) {
       toast.error(t("errors.INVALID_URL"));
@@ -282,7 +292,7 @@ export function ImportMaterialForm() {
   }
 
   async function handleTextImport() {
-    if (isBusy) return;
+    if (isBusy || importQuota.locked) return;
     const trimmed = text.trim();
     if (trimmed.length < 20) {
       toast.error(t("errors.EMPTY_CONTENT"));
@@ -425,14 +435,16 @@ export function ImportMaterialForm() {
               }}
             />
           </div>
-          <Button
+          <QuotaLockButton
             type="button"
             onClick={() => void handleUrlImport()}
             disabled={!url.trim()}
+            locked={importQuota.locked}
+            lockMessage={importQuota.message}
             className="relative border-transparent bg-(--import-mode-fg) text-background hover:opacity-90"
           >
             {t("importAction")}
-          </Button>
+          </QuotaLockButton>
         </div>
       ) : mode === "text" ? (
         <div className={mx(importStyles, "import-stage import-dropzone space-y-5 rounded-md px-5 py-8 sm:px-7 sm:py-10")}>
@@ -450,83 +462,110 @@ export function ImportMaterialForm() {
               className="min-h-44 resize-y rounded-md border border-(--import-mode-fg)/28 bg-transparent px-3.5 py-3 font-heading text-lg leading-relaxed shadow-none focus-visible:border-(--import-mode-fg)/50 focus-visible:ring-0"
             />
           </div>
-          <Button
+          <QuotaLockButton
             type="button"
             onClick={() => void handleTextImport()}
             disabled={text.trim().length < 20}
+            locked={importQuota.locked}
+            lockMessage={importQuota.message}
             className="relative border-transparent bg-(--import-mode-fg) text-background hover:opacity-90"
           >
             {t("importAction")}
-          </Button>
+          </QuotaLockButton>
         </div>
       ) : (
-        <div
-          role="button"
-          tabIndex={0}
-          onKeyDown={(e) => {
-            if (e.key === "Enter" || e.key === " ") {
-              e.preventDefault();
-              inputRef.current?.click();
+        <Tooltip>
+          <TooltipTrigger
+            render={
+              <div
+                role="button"
+                tabIndex={importQuota.locked ? -1 : 0}
+                aria-disabled={importQuota.locked || undefined}
+                onKeyDown={(e) => {
+                  if (importQuota.locked) return;
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    inputRef.current?.click();
+                  }
+                }}
+                onClick={() => {
+                  if (importQuota.locked) return;
+                  inputRef.current?.click();
+                }}
+                onDragOver={(e) => {
+                  if (importQuota.locked) return;
+                  e.preventDefault();
+                  setDragOver(true);
+                }}
+                onDragLeave={() => setDragOver(false)}
+                onDrop={(e) => {
+                  e.preventDefault();
+                  setDragOver(false);
+                  if (importQuota.locked) return;
+                  const file = e.dataTransfer.files?.[0];
+                  if (!file) return;
+                  void processFile(file, { requireImage: mode === "image" });
+                }}
+                className={cn(
+                  mx(
+                    importStyles,
+                    "import-stage import-dropzone flex min-h-60 cursor-pointer flex-col items-center justify-center gap-5 rounded-md px-6 py-12 text-center sm:min-h-72 sm:py-14",
+                  ),
+                  "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--import-mode-fg)/40",
+                  dragOver && mx(importStyles, "import-dropzone-active"),
+                  importQuota.locked && "cursor-not-allowed opacity-60",
+                )}
+              />
             }
-          }}
-          onClick={() => {
-            inputRef.current?.click();
-          }}
-          onDragOver={(e) => {
-            e.preventDefault();
-            setDragOver(true);
-          }}
-          onDragLeave={() => setDragOver(false)}
-          onDrop={(e) => {
-            e.preventDefault();
-            setDragOver(false);
-            const file = e.dataTransfer.files?.[0];
-            if (!file) return;
-            void processFile(file, { requireImage: mode === "image" });
-          }}
-          className={cn(
-            mx(importStyles, "import-stage import-dropzone flex min-h-60 cursor-pointer flex-col items-center justify-center gap-5 rounded-md px-6 py-12 text-center sm:min-h-72 sm:py-14"),
-            "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--import-mode-fg)/40",
-            dragOver && mx(importStyles, "import-dropzone-active"),
-          )}
-        >
-          <StageDecor />
-          <div
-            className={cn(
-              "relative flex size-14 items-center justify-center rotate-45 border border-(--import-mode-fg)/35 text-(--import-mode-fg)",
-              dragOver && "border-(--import-mode-fg) bg-(--import-mode-bg)",
-            )}
           >
-            <Upload className="size-5 -rotate-45" />
-          </div>
-          <div className="relative space-y-2">
-            <p className="font-heading text-[1.65rem] font-bold tracking-tight text-ink sm:text-[1.95rem]">
-              {dragOver
-                ? t("dropActive")
-                : mode === "image"
-                  ? t("dropImageTitle")
-                  : t("dropFileTitle")}
+            <StageDecor />
+            <div
+              className={cn(
+                "relative flex size-14 items-center justify-center rotate-45 border border-(--import-mode-fg)/35 text-(--import-mode-fg)",
+                dragOver && "border-(--import-mode-fg) bg-(--import-mode-bg)",
+              )}
+            >
+              {importQuota.locked ? (
+                <Lock className="size-5 -rotate-45" />
+              ) : (
+                <Upload className="size-5 -rotate-45" />
+              )}
+            </div>
+            <div className="relative space-y-2">
+              <p className="font-heading text-[1.65rem] font-bold tracking-tight text-ink sm:text-[1.95rem]">
+                {dragOver
+                  ? t("dropActive")
+                  : mode === "image"
+                    ? t("dropImageTitle")
+                    : t("dropFileTitle")}
+              </p>
+              <p className="text-sm text-muted-foreground">{t("dropDescription")}</p>
+            </div>
+            <p className="relative max-w-md text-xs leading-5 text-muted-foreground">
+              {mode === "image" ? t("pasteHint") : t("supportedFiles")}
+              <span aria-hidden> · </span>
+              {t("pasteAlwaysHint")}
             </p>
-            <p className="text-sm text-muted-foreground">{t("dropDescription")}</p>
-          </div>
-          <p className="relative max-w-md text-xs leading-5 text-muted-foreground">
-            {mode === "image" ? t("pasteHint") : t("supportedFiles")}
-            <span aria-hidden> · </span>
-            {t("pasteAlwaysHint")}
-          </p>
-          <input
-            ref={inputRef}
-            type="file"
-            className="hidden"
-            accept={accept}
-            onChange={(e) => {
-              const file = e.target.files?.[0];
-              e.target.value = "";
-              if (!file) return;
-              void processFile(file, { requireImage: mode === "image" });
-            }}
-          />
-        </div>
+            <input
+              ref={inputRef}
+              type="file"
+              className="hidden"
+              accept={accept}
+              disabled={importQuota.locked}
+              onChange={(e) => {
+                const file = e.target.files?.[0];
+                e.target.value = "";
+                if (!file || importQuota.locked) return;
+                void processFile(file, { requireImage: mode === "image" });
+              }}
+            />
+          </TooltipTrigger>
+          {importQuota.locked ? (
+            <TooltipContent side="bottom" className="max-w-xs text-left">
+              {importQuota.message}
+            </TooltipContent>
+          ) : null}
+        </Tooltip>
       )}
     </div>
   );

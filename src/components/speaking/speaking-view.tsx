@@ -3,16 +3,17 @@
 import { useMemo, useState } from "react";
 import { CheckCircle2, MessageCircle, Plus, Sparkles, Video } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { PageShell } from "@/components/layout/page-shell";
 import { NewSpeakingDialog } from "@/components/speaking/new-speaking-dialog";
 import { SpeakingSessionCard } from "@/components/speaking/speaking-session-card";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { CollectionViewModeToggle } from "@/components/shared/collection-view-mode-toggle";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
-import { Button } from "@/components/ui/button";
 import { ListPageLoading } from "@/components/layout/page-loading";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCollectionViewMode } from "@/hooks/use-collection-view-mode";
+import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { speakingListQueryOptions } from "@/lib/query/options";
 import { queryKeys } from "@/lib/query/keys";
 import styles from "@/components/style/speaking/session.module.css";
@@ -34,8 +35,10 @@ export function SpeakingView({ workspaceId }: SpeakingViewProps) {
   const [viewMode, setViewMode] = useCollectionViewMode("speaking");
   const sessionsQuery = useQuery(speakingListQueryOptions(workspaceId));
   const sessions = sessionsQuery.data ?? [];
+  const speakingQuota = useQuotaLockMessage("ai_meeting");
 
   useRegisterShortcutAction("createNew", () => {
+    if (speakingQuota.locked) return;
     setCreateOpen(true);
   });
 
@@ -113,14 +116,16 @@ export function SpeakingView({ workspaceId }: SpeakingViewProps) {
           </div>
           <div className="writing-hero-actions">
             <ShowTutorialButton section="speaking" />
-            <Button
+            <QuotaLockButton
               className="route-primary-cta"
+              locked={speakingQuota.locked}
+              lockMessage={speakingQuota.message}
+              icon={<Plus className="size-4" />}
               onClick={() => setCreateOpen(true)}
               data-tutorial="speaking-start"
             >
-              <Plus className="size-4" />
               {sessions.length === 0 ? t("newCallFirst") : t("newCall")}
-            </Button>
+            </QuotaLockButton>
           </div>
         </header>
 

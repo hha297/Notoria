@@ -31,6 +31,7 @@ import {
   composerStyles,
 } from "@/components/vocabulary/vocabulary-composer";
 import { Label } from "@/components/ui/label";
+import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import {
   checkVocabularyWordExists,
@@ -208,6 +209,7 @@ export function VocabularyForm({
   const queryClient = useQueryClient();
   const t = useTranslations("vocabulary");
   const { suggestionsAllowed, shouldAutoApplyContentChange } = useAiPreferences();
+  const vocabQuota = useQuotaLockMessage("ai_vocabulary");
   const tCommon = useTranslations("common");
   const isModal = mode === "modal";
   const { isPending: isSaving, tryBegin, release } = useMutationLock();
@@ -784,6 +786,7 @@ export function VocabularyForm({
               .filter(Boolean)
               .slice(0, 6),
             autoApply: shouldAutoApplyContentChange,
+            quotaLocked: vocabQuota.locked,
           }}
         />
       </VocabularyComposerSection>

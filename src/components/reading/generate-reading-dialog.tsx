@@ -2,11 +2,11 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { useProAccess } from "@/components/billing/pro-access-provider";
+import { QuotaLockButton } from "@/components/billing/quota-lock-button";
+import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { LanguageSelect } from "@/components/shared/language-select";
 import { Button } from "@/components/ui/button";
 import {
@@ -58,9 +58,8 @@ export function GenerateReadingDialog({
   defaultLanguage,
 }: GenerateReadingDialogProps) {
   const t = useTranslations("reading");
-  const tBilling = useTranslations("billing");
   const tc = useTranslations("common");
-  const { openUpgrade } = useProAccess();
+  const readingQuota = useQuotaLockMessage("ai_reading");
   const router = useRouter();
   const queryClient = useQueryClient();
   const [mode, setMode] = useState<ReadingExerciseMode>("multiple_choice");
@@ -73,7 +72,7 @@ export function GenerateReadingDialog({
 
   function errorMessage(error: unknown) {
     const code = error instanceof Error ? error.message : "PROCESSING_FAILED";
-    if (code === "AI_QUOTA_EXCEEDED") return tBilling("quotaExceeded");
+    if (code === "AI_QUOTA_EXCEEDED") return readingQuota.message;
     if (isReadingErrorCode(code)) {
       return t(`errors.${code}`);
     }
@@ -81,6 +80,7 @@ export function GenerateReadingDialog({
   }
 
   function handleGenerate() {
+    if (readingQuota.locked) return;
     startTransition(async () => {
       try {
         const set = await generateReadingQuestionSet({
@@ -90,6 +90,7 @@ export function GenerateReadingDialog({
           questionLanguage,
           difficulty: difficulty === "none" ? null : difficulty,
         });
+        await readingQuota.refreshQuotas();
         await queryClient.invalidateQueries({
           queryKey: queryKeys.reading.detail(workspaceId, passageId),
         });
@@ -104,7 +105,7 @@ export function GenerateReadingDialog({
         const code = error instanceof Error ? error.message : "";
         toast.error(errorMessage(error));
         if (code === "AI_QUOTA_EXCEEDED") {
-          openUpgrade();
+          await readingQuota.refreshQuotas();
         }
       }
     });
@@ -249,15 +250,16 @@ export function GenerateReadingDialog({
           >
             {tc("cancel")}
           </Button>
-          <Button
+          <QuotaLockButton
             type="button"
             className="route-primary-cta"
+            locked={readingQuota.locked}
+            lockMessage={readingQuota.message}
+            pending={isPending}
             onClick={handleGenerate}
-            disabled={isPending}
           >
-            {isPending ? <Loader2 className="size-4 animate-spin" /> : null}
             {isPending ? t("generating") : t("generateExercises")}
-          </Button>
+          </QuotaLockButton>
         </div>
       </DialogContent>
     </Dialog>

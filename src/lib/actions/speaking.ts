@@ -10,6 +10,7 @@ import { requireAiAssistanceEnabled } from "@/lib/ai/preferences-server";
 import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { getCurrentUserId, getSession } from "@/lib/auth/session";
 import { consumeUsage } from "@/lib/billing/entitlements";
+import { isQuotaExceededError } from "@/lib/billing/errors";
 import { SPEAKING_MAX_SESSION_SECONDS } from "@/lib/billing/plans";
 import {
   finalizeUsageReservation,
@@ -170,7 +171,15 @@ export async function createSpeakingSession(formData: FormData) {
 
   await assertNoOtherActiveSpeakingSession(userId);
 
-  const reservation = await consumeUsage(user, "ai_meeting");
+  let reservation: Awaited<ReturnType<typeof consumeUsage>>;
+  try {
+    reservation = await consumeUsage(user, "ai_meeting");
+  } catch (error) {
+    if (isQuotaExceededError(error)) {
+      throw new SpeakingError("AI_QUOTA_EXCEEDED");
+    }
+    throw error;
+  }
 
   try {
     const title =

@@ -4,7 +4,8 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { Loader2, RotateCcw, Sparkles } from "lucide-react";
+import { RotateCcw, Sparkles } from "lucide-react";
+import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
@@ -16,6 +17,7 @@ import { TheoryTransformationCard } from "@/components/exercises/theory/theory-t
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
+import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { shuffleArray } from "@/lib/exercises/utils";
 import {
   buildTheoryLessonBeats,
@@ -39,9 +41,9 @@ export function TheoryExerciseSessionView({
   practiceOnly = false,
 }: TheoryExerciseSessionViewProps) {
   const t = useTranslations("exercises.theory");
-  const tBilling = useTranslations("billing");
   const tSession = useTranslations("exercises.session");
   const { hasProAccess, openUpgrade } = useProAccess();
+  const exerciseQuota = useQuotaLockMessage("ai_exercise");
   const [items, setItems] = useState<TheoryExercise[]>(() => shuffleArray(session.items));
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState({ correct: 0, answered: 0 });
@@ -99,7 +101,8 @@ export function TheoryExerciseSessionView({
       };
       if (!response.ok || !result.ok) {
         if (result.code === "AI_QUOTA_EXCEEDED") {
-          fail(tBilling("quotaExceeded"));
+          fail(exerciseQuota.message);
+          await exerciseQuota.refreshQuotas();
           return;
         }
         if (result.code === "AI_FORBIDDEN") {
@@ -137,7 +140,7 @@ export function TheoryExerciseSessionView({
     session.theoryTitle,
     setStage,
     t,
-    tBilling,
+    exerciseQuota,
     uiLocale,
   ]);
 
@@ -265,14 +268,16 @@ export function TheoryExerciseSessionView({
               {t("needAiDescription")}
             </p>
             <div className="mt-6 flex flex-wrap items-center gap-2">
-              <Button
+              <QuotaLockButton
                 type="button"
+                locked={exerciseQuota.locked}
+                lockMessage={exerciseQuota.message}
+                pending={generating}
+                icon={<Sparkles className="size-4" />}
                 onClick={generateWithAi}
-                disabled={generating}
               >
-                <Sparkles className="size-4" />
                 {t("generateAi")}
-              </Button>
+              </QuotaLockButton>
               <LinkButton href={`/theory/${session.theoryId}/edit`} variant="outline">
                 {t("editTheory")}
               </LinkButton>
@@ -325,7 +330,8 @@ export function TheoryExerciseSessionView({
                 label: t("generateMore"),
                 onClick: () => void generateWithAi(),
                 loading: generating,
-                locked: false,
+                locked: exerciseQuota.locked,
+                lockMessage: exerciseQuota.message,
               }
           }
         />
@@ -372,20 +378,18 @@ export function TheoryExerciseSessionView({
           </div>
           <div className="flex items-center gap-2">
             {!practiceOnly ? (
-              <Button
+              <QuotaLockButton
                 type="button"
                 variant="ghost"
                 size="sm"
+                locked={exerciseQuota.locked}
+                lockMessage={exerciseQuota.message}
+                pending={generating}
+                icon={<Sparkles className="size-4" />}
                 onClick={() => void generateWithAi()}
-                disabled={generating}
               >
-                {generating ? (
-                  <Loader2 className="size-4 animate-spin" />
-                ) : (
-                  <Sparkles className="size-4" />
-                )}
                 {t("regenerate")}
-              </Button>
+              </QuotaLockButton>
             ) : null}
             <Button type="button" variant="ghost" size="sm" onClick={() => restart(items)}>
               <RotateCcw className="size-4" />

@@ -13,6 +13,7 @@ import { LOCALE_COOKIE } from "@/i18n/request";
 import { getResolvedAiPreferences } from "@/lib/ai/preferences-server";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { getSession } from "@/lib/auth/session";
+import { getUserEntitlements } from "@/lib/billing/entitlements";
 import {
   getCurrentSubscription,
   hasActiveProSubscription,
@@ -55,6 +56,9 @@ export default async function DashboardLayout({
       getCurrentProAccess(),
       getResolvedAiPreferences(),
     ]);
+  const entitlements = session?.user?.id
+    ? await getUserEntitlements(session.user.id)
+    : null;
   timer.finish();
 
   if (workspaces.length === 0) {
@@ -88,6 +92,7 @@ export default async function DashboardLayout({
       introOfferEligible={
         isIntroOfferEligible(subscription ?? {}) && introOfferAvailable()
       }
+      initialQuotas={entitlements?.quotas ?? []}
     >
       <AiPreferencesProvider initial={aiPreferences}>
         <DashboardDocumentTitle />

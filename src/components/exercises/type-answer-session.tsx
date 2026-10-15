@@ -4,6 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useLocale, useTranslations } from "next-intl";
 import { Sparkles } from "lucide-react";
+import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseDifficultySelect } from "@/components/exercises/exercise-difficulty-select";
@@ -13,8 +14,8 @@ import { TypeAnswerActions } from "@/components/exercises/type-answer-actions";
 import { TypeAnswerStage } from "@/components/exercises/type-answer-stage";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
-import { Button } from "@/components/ui/button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
+import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { useExerciseDifficulty } from "@/hooks/use-exercise-difficulty";
 import { useExerciseSessionController } from "@/hooks/use-exercise-session-controller";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
@@ -49,9 +50,9 @@ export function TypeAnswerSession({
   const t = useTranslations("exercises.typeAnswer");
   const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
-  const tBilling = useTranslations("billing");
   const uiLocale = useLocale();
   const { openUpgrade } = useProAccess();
+  const exerciseQuota = useQuotaLockMessage("ai_exercise");
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [studyMode, setStudyMode] =
     useState<TypeAnswerStudyMode>("word-to-meaning");
@@ -165,7 +166,8 @@ export function TypeAnswerSession({
 
       if (!result.ok) {
         if (result.code === "AI_QUOTA_EXCEEDED") {
-          fail(tBilling("quotaExceeded"));
+          fail(exerciseQuota.message);
+          await exerciseQuota.refreshQuotas();
           return;
         }
         if (result.code === "AI_FORBIDDEN") {
@@ -216,7 +218,7 @@ export function TypeAnswerSession({
     restart,
     setStage,
     tAi,
-    tBilling,
+    exerciseQuota,
     uiLocale,
   ]);
 
@@ -427,15 +429,17 @@ export function TypeAnswerSession({
           <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
             {t("contextualEmptyDescription")}
           </p>
-          <Button
+          <QuotaLockButton
             type="button"
             className="mt-6"
+            locked={exerciseQuota.locked}
+            lockMessage={exerciseQuota.message}
+            pending={generating}
+            icon={<Sparkles className="size-4" />}
             onClick={() => void startContextualSession()}
-            disabled={generating}
           >
-            <Sparkles className="size-4" />
             {tAi("generate")}
-          </Button>
+          </QuotaLockButton>
         </div>
       ) : null}
     </div>

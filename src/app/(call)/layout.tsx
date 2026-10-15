@@ -2,8 +2,10 @@ import type { ReactNode } from "react";
 import "@stream-io/video-react-sdk/dist/css/styles.css";
 import "./call.css";
 import { ProAccessProvider } from "@/components/billing/pro-access-provider";
+import { getUserEntitlements } from "@/lib/billing/entitlements";
 import { displayPlan, isIntroOfferEligible } from "@/lib/billing/plans";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
+import { getSession } from "@/lib/auth/session";
 import {
   getStripePremiumFirstMonthCouponId,
   getStripeProFirstMonthCouponId,
@@ -21,10 +23,14 @@ export default async function CallLayout({
 }: {
   children: ReactNode;
 }) {
-  const [proAccess, subscription] = await Promise.all([
+  const [proAccess, subscription, session] = await Promise.all([
     getCurrentProAccess(),
     getCurrentSubscription(),
+    getSession(),
   ]);
+  const entitlements = session?.user?.id
+    ? await getUserEntitlements(session.user.id)
+    : null;
 
   return (
     <ProAccessProvider
@@ -37,6 +43,7 @@ export default async function CallLayout({
       introOfferEligible={
         isIntroOfferEligible(subscription ?? {}) && introOfferAvailable()
       }
+      initialQuotas={entitlements?.quotas ?? []}
     >
       <div className="speaking-call min-h-svh bg-surface-inverse text-on-inverse">
         {children}

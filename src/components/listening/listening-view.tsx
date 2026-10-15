@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { Plus } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { PageShell } from "@/components/layout/page-shell";
 import { FolderBreadcrumbs } from "@/components/folders/folder-breadcrumbs";
 import {
@@ -17,10 +18,10 @@ import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button
 import { CollectionViewModeToggle } from "@/components/shared/collection-view-mode-toggle";
 import { WritingCollections } from "@/components/writing/writing-collections";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
-import { Button } from "@/components/ui/button";
 import { ListPageLoading } from "@/components/layout/page-loading";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { useCollectionViewMode } from "@/hooks/use-collection-view-mode";
+import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { childrenOf, itemsInFolder } from "@/lib/folders/tree";
 import {
   DEFAULT_LISTENING_LIST_QUERY,
@@ -59,9 +60,15 @@ export function ListeningView({
     DEFAULT_LISTENING_LIST_QUERY,
   );
   const [viewMode, setViewMode] = useCollectionViewMode("listening");
+  const listeningQuota = useQuotaLockMessage("ai_listening_transcript");
+
+  function openUpload() {
+    if (listeningQuota.locked) return;
+    setUploadOpen(true);
+  }
 
   useRegisterShortcutAction("createNew", () => {
-    setUploadOpen(true);
+    openUpload();
   });
 
   const lessonsQuery = useQuery(listeningListQueryOptions(workspaceId));
@@ -120,15 +127,17 @@ export function ListeningView({
   const actions = (
     <>
       <ShowTutorialButton section="listening" />
-      <Button
+      <QuotaLockButton
         type="button"
         className="route-primary-cta"
-        onClick={() => setUploadOpen(true)}
+        locked={listeningQuota.locked}
+        lockMessage={listeningQuota.message}
+        icon={<Plus className="size-4" />}
+        onClick={openUpload}
         data-tutorial="listening-upload"
       >
-        <Plus className="size-4" />
         {t("upload")}
-      </Button>
+      </QuotaLockButton>
     </>
   );
 
@@ -155,15 +164,17 @@ export function ListeningView({
                 <>
                   <ShowTutorialButton section="listening" />
                   <NewFolderButton variant="outline" size="sm" />
-                  <Button
+                  <QuotaLockButton
                     type="button"
                     className="route-primary-cta"
-                    onClick={() => setUploadOpen(true)}
+                    locked={listeningQuota.locked}
+                    lockMessage={listeningQuota.message}
+                    icon={<Plus className="size-4" />}
+                    onClick={openUpload}
                     data-tutorial="listening-upload"
                   >
-                    <Plus className="size-4" />
                     {t("uploadFirst")}
-                  </Button>
+                  </QuotaLockButton>
                 </>
               ) : (
                 actions
@@ -200,14 +211,16 @@ export function ListeningView({
                     title={tFolders("emptyFolder")}
                     description={tFolders("emptyFolderDescription")}
                   >
-                    <Button
+                    <QuotaLockButton
                       className="mt-5 route-primary-cta"
-                      onClick={() => setUploadOpen(true)}
+                      locked={listeningQuota.locked}
+                      lockMessage={listeningQuota.message}
+                      icon={<Plus className="size-4" />}
+                      onClick={openUpload}
                       data-tutorial="listening-upload"
                     >
-                      <Plus className="size-4" />
                       {t("upload")}
-                    </Button>
+                    </QuotaLockButton>
                   </FolderEmptyState>
                 ) : (
                   <div data-tutorial="listening-lessons">

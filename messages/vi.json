@@ -2437,8 +2437,11 @@
       "SESSION_EXPIRED": "Buổi nói đã hết thời gian và không thể tham gia lại.",
       "ACTIVE_SESSION_EXISTS": "Bạn đang có một buổi nói đang mở. Hãy kết thúc trước khi tạo buổi mới.",
       "STREAM_CALL_FAILED": "Không thể bắt đầu cuộc gọi. Hãy thử lại.",
-      "UNAUTHORIZED": "Đăng nhập để tham gia cuộc gọi nói."
-    }
+      "UNAUTHORIZED": "Đăng nhập để tham gia cuộc gọi nói.",
+      "AI_QUOTA_EXCEEDED": "Bạn đã dùng hết hạn mức nói với AI hôm nay. Hạn mức đặt lại lúc nửa đêm UTC — hoặc nâng cấp để có thêm buổi."
+    },
+    "quotaLockedTitle": "Đã hết hạn mức nói hôm nay",
+    "quotaLockedBody": "Bạn đã dùng buổi nói AI hôm nay. Các buổi cũ vẫn xem được — nâng cấp để có thêm, hoặc quay lại sau khi hạn mức đặt lại."
   },
   "errors": {
     "generic": "Đã xảy ra lỗi",
@@ -2791,7 +2794,59 @@
     "usageToday": "Mức dùng AI hôm nay",
     "quotaCount": "{used} / {limit}",
     "unlimitedAi": "AI không giới hạn",
-    "quotaExceeded": "Bạn đã dùng hết hạn mức miễn phí hôm nay. Nâng cấp Pro để dùng AI không giới hạn.",
+    "quotaUnlimitedHint": "Không giới hạn cho mức dùng thông thường trên gói này.",
+    "quotaRemainingHint": "Còn {remaining} hôm nay · đặt lại {reset}",
+    "quotaExhaustedHint": "Đã hết hạn mức · đặt lại {reset}",
+    "quotaResetUtcMidnight": "lúc nửa đêm UTC",
+    "quotaExceeded": "Bạn đã dùng hết hạn mức AI hôm nay. Hạn mức đặt lại lúc nửa đêm UTC — hoặc nâng cấp để tăng hạn mức.",
+    "quotaExceededNoUpgrade": "Bạn đã dùng hết hạn mức AI hôm nay. Đặt lại {reset}.",
+    "quotaMessages": {
+      "ai_meeting": {
+        "free": "Bạn đã dùng buổi nói AI hôm nay. Nâng cấp để có thêm buổi, hoặc quay lại sau khi hạn mức đặt lại ({reset}).",
+        "pro": "Bạn đã đạt hạn mức nói AI trong ngày. Nâng lên Premium để tăng hạn mức, hoặc quay lại sau khi đặt lại ({reset}).",
+        "premium": "Bạn đã đạt hạn mức nói AI hôm nay. Đặt lại {reset}."
+      },
+      "ai_reading": {
+        "free": "Bạn đã dùng hết hạn mức đọc AI hôm nay. Nâng cấp để luyện thêm, hoặc quay lại sau khi đặt lại ({reset}).",
+        "pro": "Bạn đã đạt hạn mức đọc AI trong ngày. Nâng Premium để tăng hạn mức, hoặc quay lại sau ({reset}).",
+        "premium": "Bạn đã đạt hạn mức đọc AI hôm nay. Đặt lại {reset}."
+      },
+      "ai_listening_transcript": {
+        "free": "Bạn đã dùng hết transcript nghe AI hôm nay. Nâng cấp để có thêm, hoặc quay lại sau ({reset}).",
+        "pro": "Bạn đã đạt hạn mức transcript nghe trong ngày. Nâng Premium để có thêm, hoặc quay lại sau ({reset}).",
+        "premium": "Bạn đã đạt hạn mức transcript nghe hôm nay. Đặt lại {reset}."
+      },
+      "ai_vocabulary": {
+        "free": "Bạn đã dùng hết hành động từ vựng AI hôm nay. Nâng cấp để có thêm, hoặc quay lại sau ({reset}).",
+        "pro": "Bạn đã đạt hạn mức từ vựng AI hôm nay. Đặt lại {reset}.",
+        "premium": "Bạn đã đạt hạn mức từ vựng AI hôm nay. Đặt lại {reset}."
+      },
+      "ai_writing": {
+        "free": "Bạn đã dùng hết hỗ trợ viết AI hôm nay. Nâng cấp để có thêm, hoặc quay lại sau ({reset}).",
+        "pro": "Bạn đã đạt hạn mức viết AI hôm nay. Đặt lại {reset}.",
+        "premium": "Bạn đã đạt hạn mức viết AI hôm nay. Đặt lại {reset}."
+      },
+      "ai_exercise": {
+        "free": "Bạn đã dùng hết tạo bài tập AI hôm nay. Nâng cấp để có thêm, hoặc quay lại sau ({reset}).",
+        "pro": "Bạn đã đạt hạn mức bài tập AI hôm nay. Đặt lại {reset}.",
+        "premium": "Bạn đã đạt hạn mức bài tập AI hôm nay. Đặt lại {reset}."
+      },
+      "ai_exercise_import": {
+        "free": "Nhập bài tập không có trên Free. Nâng Pro để nhập worksheet.",
+        "pro": "Bạn đã đạt hạn mức nhập bài tập hôm nay. Nâng Premium để có thêm, hoặc quay lại sau ({reset}).",
+        "premium": "Bạn đã đạt hạn mức nhập bài tập hôm nay. Đặt lại {reset}."
+      },
+      "ai_learning_coach_chat": {
+        "free": "Chat Learning Coach là tính năng Premium.",
+        "pro": "Chat Learning Coach là tính năng Premium.",
+        "premium": "Bạn đã đạt hạn mức chat Learning Coach hôm nay. Đặt lại {reset}."
+      },
+      "content_import": {
+        "free": "Nhập tài liệu không có trên Free. Nâng Pro để nhập tài liệu học.",
+        "pro": "Bạn đã đạt hạn mức nhập tài liệu hôm nay. Đặt lại {reset}.",
+        "premium": "Bạn đã đạt hạn mức nhập tài liệu hôm nay. Đặt lại {reset}."
+      }
+    },
     "alreadySubscribed": "Bạn đã có gói này.",
     "status": "Trạng thái: {status}",
     "renewsOn": "Gia hạn vào {date}",
