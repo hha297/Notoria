@@ -28,7 +28,7 @@ export function ExerciseAiBar({
   const exerciseQuota = useQuotaLockMessage("ai_exercise");
 
   return (
-    <div className="flex flex-col gap-3 rounded-sm border border-hairline-cloud bg-surface-elevated p-3 sm:p-4">
+    <div className="exercise-panel flex flex-col gap-3 rounded-2xl border p-3 sm:p-4">
       <ExerciseDifficultySelect
         value={difficulty}
         onChange={onDifficultyChange}

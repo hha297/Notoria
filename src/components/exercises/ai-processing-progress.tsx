@@ -60,7 +60,7 @@ export function AiProcessingProgress({
   return (
     <div
       className={cn(
-        "space-y-5 rounded-2xl border border-hairline-cloud bg-card px-5 py-6 sm:px-6",
+        "exercise-panel space-y-5 rounded-2xl border px-5 py-6 sm:px-6",
         className,
       )}
       role="status"
@@ -70,7 +70,7 @@ export function AiProcessingProgress({
       <div className="flex items-start gap-3">
         <div className="mt-0.5 flex size-9 shrink-0 items-center justify-center rounded-full bg-muted">
           {isComplete ? (
-            <CheckCircle2 className="size-5 text-accent-lime" />
+            <CheckCircle2 className="size-5 text-page-accent" />
           ) : isError ? (
             <XCircle className="size-5 text-destructive" />
           ) : (
@@ -113,7 +113,7 @@ export function AiProcessingProgress({
               className={cn(
                 "rounded-md px-2 py-1 text-xs font-medium",
                 current && !isError
-                  ? "bg-accent-lime/25 text-ink"
+                  ? "bg-(--page-accent-selected) text-ink"
                   : reached && !isError
                     ? "bg-muted text-ink"
                     : "bg-muted/40 text-muted-foreground",

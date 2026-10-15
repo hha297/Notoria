@@ -199,7 +199,7 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
           aria-activedescendant={activeId}
           aria-autocomplete="list"
           className={cn(
-            "control-surface rounded-md border-hairline-cloud pr-20 pl-10 shadow-none",
+            "control-surface rounded-md border-page-accent-border pr-20 pl-10 shadow-none",
             compact && "h-10",
           )}
         />
@@ -222,7 +222,7 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
           {isFetching && query ? (
             <LoaderCircle className="size-4 animate-spin text-muted-foreground" />
           ) : (
-            <kbd className="control-surface hidden rounded-md border border-hairline-cloud px-1.5 py-0.5 text-[11px] font-medium text-muted-foreground sm:inline-block">
+            <kbd className="control-surface hidden rounded-md border border-page-accent-border px-1.5 py-0.5 text-[11px] font-medium text-muted-foreground sm:inline-block">
               {searchShortcutLabel}
             </kbd>
           )}
@@ -231,7 +231,7 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
 
       {showPanel ? (
         <div
-          className="menu-surface absolute z-30 mt-2 w-full overflow-hidden rounded-md border border-hairline-cloud shadow-[0_1px_2px_rgba(35,37,29,0.06)]"
+          className="menu-surface absolute z-30 mt-2 w-full overflow-hidden rounded-md border border-page-accent-border shadow-[0_1px_2px_rgba(35,37,29,0.06)]"
           onMouseDown={(event) => event.preventDefault()}
         >
           {showEmptyHint ? (

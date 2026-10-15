@@ -16,6 +16,11 @@ export type ExerciseTypeSlug =
   | "type-answer"
   | "form-sentence";
 
+/**
+ * Accent colors for each slug live in `exercise-accents.ts` /
+ * `globals.css` `[data-exercise]` — overview entries and detail pages
+ * share that mapping (yellow / blue / purple / green / pink / orange).
+ */
 export type ExerciseTypeConfig = {
   slug: ExerciseTypeSlug;
   icon: LucideIcon;

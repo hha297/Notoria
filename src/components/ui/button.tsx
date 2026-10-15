@@ -9,7 +9,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default: "btn-blend-primary border-transparent",
-        outline: "control-surface border-border text-ink",
+        outline: "control-surface border-page-accent-border text-ink",
         secondary: "control-surface border-transparent text-secondary-foreground",
         ghost: "btn-ghost-surface",
         destructive:

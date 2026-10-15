@@ -15,7 +15,6 @@ import {
 import type { FlashcardFilters, FlashcardStudyMode, FlashcardWord } from "@/types/flashcards";
 import type { MultipleChoiceStudyMode } from "@/lib/exercises/multiple-choice";
 import type { TypeAnswerStudyMode } from "@/lib/exercises/type-answer";
-import { cn } from "@/lib/utils";
 
 const STATUS_OPTIONS = ["NEW", "LEARNING", "REVIEW", "MASTERED"] as const;
 
@@ -87,7 +86,7 @@ export function VocabularyFiltersBar({
   );
 
   return (
-    <div className="space-y-4 rounded-2xl border border-hairline-cloud bg-card p-3 sm:p-4">
+    <div className="exercise-panel space-y-4 rounded-2xl border p-3 sm:p-4">
       {showStudyMode && onStudyModeChange && (
         <div className="space-y-2">
           <p className="text-xs font-semibold uppercase tracking-wide text-muted-foreground">
@@ -103,12 +102,14 @@ export function VocabularyFiltersBar({
           >
             <ToggleGroupItem
               value="word-to-meaning"
+              variant="outline"
               className="h-auto min-h-8 w-full justify-center whitespace-normal px-3 py-2 text-center sm:flex-1"
             >
               {tFlash("modes.wordToMeaning")}
             </ToggleGroupItem>
             <ToggleGroupItem
               value="meaning-to-word"
+              variant="outline"
               className="h-auto min-h-8 w-full justify-center whitespace-normal px-3 py-2 text-center sm:flex-1"
             >
               {tFlash("modes.meaningToWord")}
@@ -116,10 +117,8 @@ export function VocabularyFiltersBar({
             {studyModeVariant === "with-contextual" ? (
               <ToggleGroupItem
                 value="contextual"
-                className={cn(
-                  "h-auto min-h-8 w-full justify-center gap-1.5 whitespace-normal px-3 py-2 text-center sm:flex-1",
-                  contextualPro && "data-[state=on]:bg-accent-lime/20",
-                )}
+                variant="outline"
+                className="h-auto min-h-8 w-full justify-center gap-1.5 whitespace-normal px-3 py-2 text-center sm:flex-1"
               >
                 {tMc("modes.contextual")}
                 {contextualPro ? (
@@ -134,6 +133,7 @@ export function VocabularyFiltersBar({
             ) : (
               <ToggleGroupItem
                 value="mixed"
+                variant="outline"
                 className="h-auto min-h-8 w-full justify-center whitespace-normal px-3 py-2 text-center sm:flex-1"
               >
                 {tFlash("modes.mixed")}

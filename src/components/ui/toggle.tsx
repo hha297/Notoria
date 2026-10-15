@@ -11,7 +11,7 @@ const toggleVariants = cva(
     variants: {
       variant: {
         default: "bg-transparent",
-        outline: "border border-input control-surface",
+        outline: "border border-page-accent-border control-surface",
       },
       size: {
         default:

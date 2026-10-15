@@ -19,6 +19,7 @@ import { ShortcutActionsProvider } from "@/components/preferences/shortcut-actio
 import type { Workspace } from "@/db/schema";
 import type { AppLocale } from "@/i18n/config";
 import type { PlanId } from "@/lib/billing/plans";
+import { exerciseDetailSlugFromPath } from "@/lib/exercise-accents";
 import { cn } from "@/lib/utils";
 
 function studioSceneFromPath(pathname: string) {
@@ -63,6 +64,8 @@ export function DashboardStudio({
 }: DashboardStudioProps) {
   const [navOpen, setNavOpen] = useState(false);
   const pathname = usePathname();
+  const studioScene = studioSceneFromPath(pathname);
+  const exerciseDetailSlug = exerciseDetailSlugFromPath(pathname);
   const t = useTranslations("nav");
   const sidebarUser = { userName, userEmail, userImage, isPro, plan };
   const stackRef = useRef<HTMLDivElement>(null);
@@ -88,6 +91,21 @@ export function DashboardStudio({
     ro.observe(chrome);
     return () => ro.disconnect();
   }, []);
+
+  // Mirror page/exercise accent onto <html> so portaled menus/selects match.
+  useEffect(() => {
+    const root = document.documentElement;
+    root.setAttribute("data-portal-scene", studioScene);
+    if (exerciseDetailSlug) {
+      root.setAttribute("data-portal-exercise", exerciseDetailSlug);
+    } else {
+      root.removeAttribute("data-portal-exercise");
+    }
+    return () => {
+      root.removeAttribute("data-portal-scene");
+      root.removeAttribute("data-portal-exercise");
+    };
+  }, [studioScene, exerciseDetailSlug]);
 
   return (
     <ShortcutActionsProvider>
@@ -118,6 +136,8 @@ export function DashboardStudio({
               <header
                 ref={chromeRef}
                 className="studio-chrome z-20 shrink-0"
+                data-studio-scene={studioScene}
+                data-exercise={exerciseDetailSlug ?? undefined}
               >
                 <div className="flex flex-col gap-2 px-3 py-2.5 sm:h-14 sm:flex-row sm:items-center sm:gap-2 sm:px-4 sm:py-0">
                   <div className="flex min-w-0 w-full items-center gap-1.5 sm:flex-1 sm:basis-0 sm:gap-2">
@@ -156,7 +176,8 @@ export function DashboardStudio({
 
               <div
                 className="studio-paper flex min-h-0 min-w-0 flex-col max-sm:h-auto max-sm:flex-none max-sm:grow-0 sm:flex-1"
-                data-studio-scene={studioSceneFromPath(pathname)}
+                data-studio-scene={studioScene}
+                data-exercise={exerciseDetailSlug ?? undefined}
               >
                 <main
                   className={cn(
@@ -200,6 +221,8 @@ export function DashboardStudio({
           <SheetContent
             side="left"
             className="studio-chrome flex h-full w-[17.5rem] flex-col gap-0 p-3 sm:max-w-[17.5rem]"
+            data-studio-scene={studioScene}
+            data-exercise={exerciseDetailSlug ?? undefined}
           >
             <SheetHeader className="sr-only">
               <SheetTitle>{t("workspace")}</SheetTitle>
