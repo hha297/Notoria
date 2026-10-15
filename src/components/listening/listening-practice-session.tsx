@@ -237,7 +237,13 @@ export function ListeningPracticeSession({
 
     startTransition(async () => {
       try {
-        await generateListeningExercises(lesson.id, type);
+        const generated = await generateListeningExercises(lesson.id, type);
+        if (generated.inProgress) {
+          toast.message(t("generationInProgress"));
+          setSelectedType(null);
+          setPhase("lobby");
+          return;
+        }
         toast.success(t("exercisesGenerated"));
         setPhase("active");
         void queryClient.invalidateQueries({ queryKey: ["listening"] });

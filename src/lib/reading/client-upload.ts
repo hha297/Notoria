@@ -122,6 +122,7 @@ export async function completeReadingDocumentRequest(input: {
   valid: boolean;
   errorCode: string | null;
   truncated: boolean;
+  inProgress?: boolean;
 }> {
   const response = await fetch(
     `/api/reading/documents/${input.documentId}/complete`,
@@ -149,6 +150,7 @@ export async function completeReadingDocumentRequest(input: {
     valid?: boolean;
     errorCode?: string | null;
     truncated?: boolean;
+    inProgress?: boolean;
   } | null;
 
   if (!response.ok) {
@@ -165,6 +167,7 @@ export async function completeReadingDocumentRequest(input: {
     valid: Boolean(data?.valid),
     errorCode: data?.errorCode ?? null,
     truncated: Boolean(data?.truncated),
+    inProgress: Boolean(data?.inProgress),
   };
 }
 

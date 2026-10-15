@@ -148,10 +148,14 @@ export function ReadingPracticeView({
             response,
           })),
         });
-        setAttempt(result.attempt);
+        setAttempt((current) =>
+          current?.status === "graded" && result.attempt.status !== "graded"
+            ? current
+            : result.attempt,
+        );
         if (result.attempt.status === "grading_failed") {
           toast.message(t("practice.gradingPending"));
-        } else {
+        } else if (result.attempt.status === "graded") {
           toast.success(t("submitted"));
         }
       } catch (error) {
@@ -178,10 +182,14 @@ export function ReadingPracticeView({
     startTransition(async () => {
       try {
         const data = await retryReadingWrittenGrading(attempt.id);
-        setAttempt(data.attempt);
+        setAttempt((current) =>
+          current?.status === "graded" && data.attempt.status !== "graded"
+            ? current
+            : data.attempt,
+        );
         if (data.attempt.status === "grading_failed") {
           toast.message(t("practice.gradingPending"));
-        } else {
+        } else if (data.attempt.status === "graded") {
           toast.success(t("submitted"));
         }
       } catch (error) {

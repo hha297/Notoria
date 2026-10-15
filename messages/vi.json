@@ -2149,6 +2149,7 @@
     "uploadChoose": "Chọn tệp",
     "uploading": "Đang tải lên… {percent}%",
     "extracting": "Đang trích xuất văn bản…",
+    "uploadInProgress": "Tệp này đang được xử lý.",
     "cancelUpload": "Hủy tải lên",
     "retryUpload": "Thử tải lại",
     "downloadOriginal": "Tải bản gốc",
@@ -2224,6 +2225,7 @@
     "chooseExerciseType": "Chọn dạng bài tập:",
     "chooseTypeHint": "Chọn Điền vào chỗ trống hoặc Trắc nghiệm để tạo câu hỏi.",
     "exercisesGenerated": "Đã tạo bài tập.",
+    "generationInProgress": "Bài tập đang được tạo.",
     "exercisesTitle": "Bài tập",
     "exerciseCount": "{count, plural, one {# bài tập} other {# bài tập}}",
     "status": {

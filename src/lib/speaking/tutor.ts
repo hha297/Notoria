@@ -1,18 +1,24 @@
 import { after } from "next/server";
 import { and, eq } from "drizzle-orm";
 import type { RealtimeClient } from "@stream-io/openai-realtime-api";
+import { AI_JOBS, releaseJobLock } from "@/lib/ai/job-lock";
 import { db } from "@/db";
 import { speakingSessions, type SpeakingSession } from "@/db/schema";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { SpeakingError } from "@/lib/speaking/errors";
 import { speakingTutorInstructions } from "@/lib/speaking/instructions";
 import { speakingTutorUserId } from "@/lib/speaking/stream";
+import { claimSpeakingTutor } from "@/lib/speaking/tutor-claim";
 import { getStreamVideo } from "@/lib/stream-video";
+
+const TUTOR_HEARTBEAT_MS = 30_000;
 
 type TutorHandle = {
   client: RealtimeClient;
   done: Promise<void>;
   finish: () => void;
+  ownerId: string;
+  stopHeartbeat: () => void;
 };
 
 const globalForTutors = globalThis as unknown as {
@@ -29,12 +35,24 @@ export function hasLiveSpeakingTutor(sessionId: string) {
   return Boolean(handle?.client.isConnected());
 }
 
-export function disconnectSpeakingTutor(sessionId: string) {
+function dropLocalTutor(sessionId: string) {
   const handle = tutorHandles().get(sessionId);
-  if (!handle) return;
+  if (!handle) return null;
+  handle.stopHeartbeat();
   handle.client.disconnect();
   handle.finish();
   tutorHandles().delete(sessionId);
+  return handle.ownerId;
+}
+
+export function disconnectSpeakingTutor(sessionId: string) {
+  const ownerId = dropLocalTutor(sessionId);
+  if (!ownerId) return;
+  void releaseJobLock({
+    operation: AI_JOBS.speakingTutor,
+    subjectId: sessionId,
+    ownerId,
+  });
 }
 
 export function keepSpeakingTutorAlive(sessionId: string) {
@@ -45,8 +63,12 @@ export function keepSpeakingTutorAlive(sessionId: string) {
   });
 }
 
-async function joinOpenAiTutor(session: SpeakingSession) {
-  disconnectSpeakingTutor(session.id);
+async function joinOpenAiTutor(
+  session: SpeakingSession,
+  ownerId: string,
+  renew: () => Promise<boolean>,
+) {
+  dropLocalTutor(session.id);
 
   const openAiApiKey = process.env.OPENAI_API_KEY?.trim();
   if (!openAiApiKey) {
@@ -88,7 +110,19 @@ async function joinOpenAiTutor(session: SpeakingSession) {
   const done = new Promise<void>((resolve) => {
     finish = resolve;
   });
-  tutorHandles().set(session.id, { client: realtimeClient, done, finish });
+  const timer = setInterval(() => {
+    void renew();
+  }, TUTOR_HEARTBEAT_MS);
+  timer.unref?.();
+  const stopHeartbeat = () => clearInterval(timer);
+  done.finally(stopHeartbeat);
+  tutorHandles().set(session.id, {
+    client: realtimeClient,
+    done,
+    finish,
+    ownerId,
+    stopHeartbeat,
+  });
 }
 
 /** Connects the AI tutor. Safe to call from join + webhook; only one live socket wins. */
@@ -101,16 +135,17 @@ export async function connectSpeakingTutorToCall(sessionId: string) {
     throw new SpeakingError("SESSION_NOT_FOUND");
   }
 
-  if (
-    existing.status === "completed" ||
-    existing.status === "cancelled" ||
-    existing.status === "processing"
-  ) {
+  const claim = await claimSpeakingTutor({
+    status: existing.status,
+    localConnected: hasLiveSpeakingTutor(sessionId),
+    sessionId,
+  });
+
+  if (claim.action === "reject") {
     throw new SpeakingError("SESSION_NOT_JOINABLE");
   }
-
-  if (existing.status === "active" && hasLiveSpeakingTutor(sessionId)) {
-    keepSpeakingTutorAlive(sessionId);
+  if (claim.action === "already_connected") {
+    if (hasLiveSpeakingTutor(sessionId)) keepSpeakingTutorAlive(sessionId);
     return { alreadyConnected: true };
   }
 
@@ -129,10 +164,23 @@ export async function connectSpeakingTutorToCall(sessionId: string) {
     )
     .returning();
 
-  const session = claimed ?? existing;
+  const session =
+    claimed ??
+    (await db.query.speakingSessions.findFirst({
+      where: eq(speakingSessions.id, sessionId),
+    })) ??
+    existing;
+  if (
+    session.status === "completed" ||
+    session.status === "cancelled" ||
+    session.status === "processing"
+  ) {
+    await claim.release();
+    throw new SpeakingError("SESSION_NOT_JOINABLE");
+  }
 
   try {
-    await joinOpenAiTutor(session);
+    await joinOpenAiTutor(session, claim.ownerId, claim.renew);
     try {
       const streamVideo = getStreamVideo();
       await streamVideo.video.call("default", session.id).startTranscription();
@@ -142,6 +190,7 @@ export async function connectSpeakingTutorToCall(sessionId: string) {
     keepSpeakingTutorAlive(session.id);
     return { alreadyConnected: false };
   } catch (error) {
+    await claim.release();
     if (claimed) {
       await db
         .update(speakingSessions)

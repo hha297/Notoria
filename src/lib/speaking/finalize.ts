@@ -1,5 +1,6 @@
 import { after } from "next/server";
-import { and, eq, inArray } from "drizzle-orm";
+import { and, eq, inArray, sql } from "drizzle-orm";
+import { AI_JOBS, JobLockLostError, runExclusiveJob } from "@/lib/ai/job-lock";
 import { db } from "@/db";
 import { speakingSessions } from "@/db/schema";
 import {
@@ -7,6 +8,7 @@ import {
   parseTranscriptJsonl,
   summarizeSpeakingSession,
 } from "@/lib/speaking/summary";
+import { saveSpeakingTranscriptOnce } from "@/lib/speaking/transcript-job";
 import { disconnectSpeakingTutor } from "@/lib/speaking/tutor";
 import { getStreamVideo } from "@/lib/stream-video";
 
@@ -41,39 +43,66 @@ export async function saveSpeakingTranscript(input: {
   });
   if (!session) return;
 
-  if (session.status === "completed" && session.transcript) {
-    return;
-  }
-
   const transcriptText = input.transcriptText?.trim() || "";
-  let summary: string | null = session.summary;
-  if (transcriptText) {
-    try {
-      summary = await summarizeSpeakingSession({
+  const outcome = await saveSpeakingTranscriptOnce({
+    hasSummary: Boolean(session.summary?.trim()),
+    incomingText: transcriptText,
+    subjectId: session.id,
+    summarize: async ({ stillOwner }) => {
+      const summary = await summarizeSpeakingSession({
         language: session.language,
         cefrLevel: session.cefrLevel,
         topic: session.topic,
         title: session.title,
         transcript: transcriptText,
       });
-    } catch (error) {
-      console.error("Failed to summarize speaking session", error);
-    }
-  }
+      if (!(await stillOwner())) throw new JobLockLostError();
+      await db
+        .update(speakingSessions)
+        .set({
+          transcriptUrl: input.transcriptUrl ?? session.transcriptUrl,
+          transcript: transcriptText,
+          summary,
+          status: "completed",
+          updatedAt: new Date(),
+        })
+        .where(eq(speakingSessions.id, session.id));
+      return summary;
+    },
+  });
+
+  if (outcome.action !== "empty") return;
 
   await db
     .update(speakingSessions)
     .set({
       transcriptUrl: input.transcriptUrl ?? session.transcriptUrl,
-      transcript: transcriptText || session.transcript,
-      summary,
       status: "completed",
       updatedAt: new Date(),
     })
-    .where(eq(speakingSessions.id, session.id));
+    .where(
+      and(
+        eq(speakingSessions.id, session.id),
+        sql`${speakingSessions.summary} is null`,
+      ),
+    );
 }
 
 export async function markSpeakingSessionEnded(sessionId: string) {
+  await db
+    .update(speakingSessions)
+    .set({
+      status: "processing",
+      endedAt: new Date(),
+      updatedAt: new Date(),
+    })
+    .where(
+      and(
+        eq(speakingSessions.id, sessionId),
+        inArray(speakingSessions.status, ["upcoming", "active"]),
+      ),
+    );
+
   disconnectSpeakingTutor(sessionId);
 
   try {
@@ -88,50 +117,50 @@ export async function markSpeakingSessionEnded(sessionId: string) {
   } catch {
     // Stream cleanup is best-effort.
   }
-
-  await db
-    .update(speakingSessions)
-    .set({
-      status: "processing",
-      endedAt: new Date(),
-      updatedAt: new Date(),
-    })
-    .where(
-      and(
-        eq(speakingSessions.id, sessionId),
-        inArray(speakingSessions.status, ["upcoming", "active"]),
-      ),
-    );
 }
 
 export async function completeSpeakingSession(sessionId: string, captions?: string) {
   try {
-    for (let attempt = 0; attempt < 15; attempt += 1) {
-      if (attempt > 0) await sleep(2000);
-      try {
-        const latest = await latestStreamTranscript(sessionId);
-        if (latest.text) {
+    await runExclusiveJob({
+      operation: AI_JOBS.speakingFinalize,
+      subjectId: sessionId,
+      ttlMs: 3 * 60 * 1000,
+      run: async () => {
+        const existing = await db.query.speakingSessions.findFirst({
+          where: eq(speakingSessions.id, sessionId),
+          columns: { summary: true, transcript: true, status: true },
+        });
+        if (existing?.summary?.trim()) return { done: true };
+
+        for (let attempt = 0; attempt < 15; attempt += 1) {
+          if (attempt > 0) await sleep(2000);
+          try {
+            const latest = await latestStreamTranscript(sessionId);
+            if (latest.text) {
+              await saveSpeakingTranscript({
+                sessionId,
+                transcriptUrl: latest.url,
+                transcriptText: latest.text,
+              });
+              return { done: true };
+            }
+          } catch (error) {
+            console.error("Failed to list speaking transcriptions", error);
+          }
+        }
+
+        if (captions?.trim()) {
           await saveSpeakingTranscript({
             sessionId,
-            transcriptUrl: latest.url,
-            transcriptText: latest.text,
+            transcriptText: captions,
           });
-          return;
+          return { done: true };
         }
-      } catch (error) {
-        console.error("Failed to list speaking transcriptions", error);
-      }
-    }
 
-    if (captions?.trim()) {
-      await saveSpeakingTranscript({
-        sessionId,
-        transcriptText: captions,
-      });
-      return;
-    }
-
-    await saveSpeakingTranscript({ sessionId, transcriptText: "" });
+        await saveSpeakingTranscript({ sessionId, transcriptText: "" });
+        return { done: true };
+      },
+    });
   } catch (error) {
     console.error("Failed to complete speaking session", error);
     await db
@@ -140,7 +169,12 @@ export async function completeSpeakingSession(sessionId: string, captions?: stri
         status: "completed",
         updatedAt: new Date(),
       })
-      .where(eq(speakingSessions.id, sessionId));
+      .where(
+        and(
+          eq(speakingSessions.id, sessionId),
+          inArray(speakingSessions.status, ["upcoming", "active", "processing"]),
+        ),
+      );
   }
 }
 
@@ -148,6 +182,17 @@ export async function finalizeSpeakingSession(
   sessionId: string,
   captions?: string,
 ) {
+  const existing = await db.query.speakingSessions.findFirst({
+    where: eq(speakingSessions.id, sessionId),
+    columns: { status: true, summary: true, transcript: true },
+  });
+  if (
+    existing?.status === "completed" &&
+    (existing.summary?.trim() || existing.transcript?.trim())
+  ) {
+    return;
+  }
+
   await markSpeakingSessionEnded(sessionId);
   after(async () => {
     await completeSpeakingSession(sessionId, captions);

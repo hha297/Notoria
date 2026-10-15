@@ -2344,6 +2344,7 @@
     "uploadChoose": "Välj fil",
     "uploading": "Laddar upp… {percent} %",
     "extracting": "Extraherar text…",
+    "uploadInProgress": "Den här filen bearbetas redan.",
     "cancelUpload": "Avbryt uppladdning",
     "retryUpload": "Försök ladda upp igen",
     "downloadOriginal": "Ladda ner original",
@@ -2419,6 +2420,7 @@
     "chooseExerciseType": "Välj övningstyp:",
     "chooseTypeHint": "Välj Fyll i luckan eller Flervalsfråga för att generera frågor.",
     "exercisesGenerated": "Övningar genererade.",
+    "generationInProgress": "Övningar genereras redan.",
     "exercisesTitle": "Övningar",
     "exerciseCount": "{count, plural, one {# övning} other {# övningar}}",
     "status": {

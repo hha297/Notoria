@@ -186,6 +186,12 @@ export function ImportReadingDialog({
         mimeType: begun.mimeType,
       });
 
+      if (completed.inProgress) {
+        setExtractError(t("uploadInProgress"));
+        setUploadPhase("idle");
+        return;
+      }
+
       setTitle(completed.title);
       setBody(completed.body);
       setSourceType(completed.sourceType);

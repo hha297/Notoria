@@ -2149,6 +2149,7 @@
     "uploadChoose": "Valitse tiedosto",
     "uploading": "Ladataan… {percent} %",
     "extracting": "Poimitaan tekstiä…",
+    "uploadInProgress": "Tätä tiedostoa käsitellään jo.",
     "cancelUpload": "Peruuta lataus",
     "retryUpload": "Yritä latausta uudelleen",
     "downloadOriginal": "Lataa alkuperäinen",
@@ -2224,6 +2225,7 @@
     "chooseExerciseType": "Valitse harjoitustyyppi:",
     "chooseTypeHint": "Valitse Täydennä aukot tai Monivalinta luodaksesi kysymykset.",
     "exercisesGenerated": "Harjoitukset luotu.",
+    "generationInProgress": "Harjoituksia luodaan jo.",
     "exercisesTitle": "Harjoitukset",
     "exerciseCount": "{count, plural, one {# harjoitus} other {# harjoitusta}}",
     "status": {

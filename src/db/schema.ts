@@ -597,7 +597,7 @@ export const exercises = pgTable(
     ),
     index("exercises_fts_idx").using(
       "gin",
-      sql`setweight(to_tsvector('simple', coalesce(${table.title}, '') || ' ' || coalesce(${table.description}, '')), 'A') || setweight(jsonb_to_tsvector('simple', ${table.content}, '["string"]'::jsonb), 'C')`,
+      sql`(setweight(to_tsvector('simple', coalesce(${table.title}, '') || ' ' || coalesce(${table.description}, '')), 'A') || setweight(jsonb_to_tsvector('simple', ${table.content}, '["string"]'::jsonb), 'C'))`,
     ),
   ],
 );
@@ -713,7 +713,7 @@ export const grammarNotes = pgTable(
     ),
     index("grammar_notes_fts_idx").using(
       "gin",
-      sql`setweight(to_tsvector('simple', coalesce(${table.title}, '')), 'A') || setweight(jsonb_to_tsvector('simple', ${table.content}, '["string"]'::jsonb), 'C')`,
+      sql`(setweight(to_tsvector('simple', coalesce(${table.title}, '')), 'A') || setweight(jsonb_to_tsvector('simple', ${table.content}, '["string"]'::jsonb), 'C'))`,
     ),
   ],
 );
@@ -1363,8 +1363,43 @@ export const aiUsage = pgTable(
 );
 
 /**
+ * Execution lock for a paid or provider-backed job.
+ * Usage reservations dedupe quota only; this row is what stops a second
+ * provider call. Expired running locks can be taken over after a crash.
+ */
+export const aiJobLocks = pgTable(
+  "ai_job_locks",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    operation: text("operation").notNull(),
+    subjectId: text("subject_id").notNull(),
+    ownerId: text("owner_id").notNull(),
+    status: text("status").notNull(),
+    lockedUntil: timestamp("locked_until", { withTimezone: true }).notNull(),
+    result: jsonb("result"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("ai_job_locks_operation_subject_unique").on(
+      table.operation,
+      table.subjectId,
+    ),
+    check(
+      "ai_job_locks_status_check",
+      sql`${table.status} in ('running', 'completed', 'failed', 'released')`,
+    ),
+  ],
+);
+
+/**
  * One reservation per metered AI action. Refunds flip status once so a
  * failure cannot decrement usage twice.
+ * A subject id dedupes the charge. It is not an execution lock.
  */
 export const aiUsageReservations = pgTable(
   "ai_usage_reservations",

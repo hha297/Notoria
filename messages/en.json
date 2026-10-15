@@ -2344,6 +2344,7 @@
     "uploadChoose": "Choose file",
     "uploading": "Uploading… {percent}%",
     "extracting": "Extracting text…",
+    "uploadInProgress": "This file is already being processed.",
     "cancelUpload": "Cancel upload",
     "retryUpload": "Retry upload",
     "downloadOriginal": "Download original",
@@ -2419,6 +2420,7 @@
     "chooseExerciseType": "Choose exercise type:",
     "chooseTypeHint": "Choose Fill in the Blank or Multiple Choice to generate questions.",
     "exercisesGenerated": "Exercises generated.",
+    "generationInProgress": "Exercises are already being generated.",
     "exercisesTitle": "Exercises",
     "exerciseCount": "{count, plural, one {# exercise} other {# exercises}}",
     "status": {

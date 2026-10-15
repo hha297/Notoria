@@ -1,6 +1,6 @@
 "use server";
 
-import { and, asc, desc, eq, sql } from "drizzle-orm";
+import { and, asc, desc, eq, inArray, sql } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import {
@@ -11,6 +11,7 @@ import {
   readingQuestionSets,
   workspaceFolders,
 } from "@/db/schema";
+import { AI_JOBS, JobLockLostError, runExclusiveJob } from "@/lib/ai/job-lock";
 import {
   AiAssistanceDisabledError,
   requireAiAssistanceEnabled,
@@ -581,36 +582,11 @@ export async function saveReadingAnswers(input: {
   return { ok: true as const };
 }
 
-export async function submitReadingAttempt(
-  input: string | { attemptId: string; answers?: Array<{ questionId: string; response: unknown }> },
-): Promise<ReadingPracticePayload> {
-  const parsed =
-    typeof input === "string"
-      ? { attemptId: input, answers: [] as Array<{ questionId: string; response: unknown }> }
-      : submitReadingAttemptSchema.parse(input);
-
-  const userId = await getCurrentUserId();
+async function loadReadingPracticePayload(attemptId: string) {
   const attempt = await db.query.readingAttempts.findFirst({
-    where: and(
-      eq(readingAttempts.id, parsed.attemptId),
-      eq(readingAttempts.userId, userId),
-    ),
+    where: eq(readingAttempts.id, attemptId),
   });
   if (!attempt) throw new ReadingError("ATTEMPT_NOT_FOUND");
-  if (attempt.status !== "in_progress") {
-    throw new ReadingError("ATTEMPT_NOT_EDITABLE");
-  }
-
-  if (parsed.answers.length > 0) {
-    for (const answer of parsed.answers) {
-      await upsertReadingAnswer({
-        attemptId: attempt.id,
-        setId: attempt.setId,
-        questionId: answer.questionId,
-        response: answer.response,
-      });
-    }
-  }
 
   const set = await db.query.readingQuestionSets.findFirst({
     where: eq(readingQuestionSets.id, attempt.setId),
@@ -629,169 +605,250 @@ export async function submitReadingAttempt(
   const answers = await db.query.readingAnswers.findMany({
     where: eq(readingAnswers.attemptId, attempt.id),
   });
-  const answerByQuestion = new Map(answers.map((a) => [a.questionId, a]));
-
-  let objectiveCorrect = 0;
-  let objectiveTotal = 0;
-  const writtenItems: Array<{
-    questionId: string;
-    prompt: string;
-    keyPoints: string[] | null;
-    response: unknown;
-    explanation: string | null;
-    excerpt: string | null;
-  }> = [];
-
-  for (const question of questions) {
-    const answer = answerByQuestion.get(question.id);
-    if (question.type === "written") {
-      const responseText =
-        typeof answer?.response === "object" &&
-        answer.response &&
-        "value" in answer.response
-          ? String((answer.response as { value: unknown }).value ?? "")
-          : typeof answer?.response === "string"
-            ? answer.response
-            : "";
-      writtenItems.push({
-        questionId: question.id,
-        prompt: question.prompt,
-        keyPoints: Array.isArray(question.keyPoints)
-          ? (question.keyPoints as string[])
-          : null,
-        response: responseText,
-        explanation: question.explanation,
-        excerpt: question.excerpt,
-      });
-      continue;
-    }
-
-    objectiveTotal += 1;
-    if (!answer) continue;
-    const correct = gradeObjectiveAnswer({
-      type: question.type,
-      correctAnswer: question.correctAnswer,
-      response: answer.response,
-    });
-    if (correct) objectiveCorrect += 1;
-    await db
-      .update(readingAnswers)
-      .set({
-        isCorrect: correct,
-        gradedAt: new Date(),
-        updatedAt: new Date(),
-      })
-      .where(eq(readingAnswers.id, answer.id));
-  }
-
-  await db
-    .update(readingAttempts)
-    .set({
-      status: writtenItems.length > 0 ? "grading" : "graded",
-      submittedAt: new Date(),
-      objectiveCorrect,
-      objectiveTotal,
-      updatedAt: new Date(),
-    })
-    .where(eq(readingAttempts.id, attempt.id));
-
-  if (writtenItems.length > 0) {
-    try {
-      try {
-        await requireAiAssistanceEnabled();
-      } catch (error) {
-        mapUsageError(error);
-      }
-
-      let reservationId: string | null = null;
-      try {
-        const user = await getCurrentUserRecord();
-        if (!user) throw new ReadingError("UNAUTHORIZED");
-        const usage = await consumeUsage(user, "ai_reading");
-        reservationId = usage.reservationId;
-      } catch (error) {
-        mapUsageError(error);
-      }
-
-      try {
-        const grades = await gradeWrittenAnswers({
-          passageTitle: passage.title,
-          passageBody: passage.body,
-          questionLanguage: set.questionLanguage,
-          items: writtenItems.filter(
-            (item) =>
-              typeof item.response === "string" &&
-              item.response.trim().length > 0,
-          ),
-        });
-        const gradeById = new Map(grades.map((g) => [g.questionId, g]));
-
-        for (const item of writtenItems) {
-          const answer = answerByQuestion.get(item.questionId);
-          if (!answer) continue;
-          const grade = gradeById.get(item.questionId);
-          await db
-            .update(readingAnswers)
-            .set({
-              feedback: grade?.feedback ?? {
-                summary: "No answer provided.",
-              },
-              isCorrect: grade?.isCorrect ?? false,
-              gradedAt: new Date(),
-              updatedAt: new Date(),
-            })
-            .where(eq(readingAnswers.id, answer.id));
-        }
-
-        await finalizeUsageReservation(reservationId);
-        await db
-          .update(readingAttempts)
-          .set({ status: "graded", updatedAt: new Date() })
-          .where(eq(readingAttempts.id, attempt.id));
-      } catch (error) {
-        await refundUsageReservation(reservationId);
-        await db
-          .update(readingAttempts)
-          .set({ status: "grading_failed", updatedAt: new Date() })
-          .where(eq(readingAttempts.id, attempt.id));
-        if (error instanceof ReadingError) throw error;
-        throw new ReadingError("GRADING_FAILED");
-      }
-    } catch (error) {
-      await db
-        .update(readingAttempts)
-        .set({ status: "grading_failed", updatedAt: new Date() })
-        .where(eq(readingAttempts.id, attempt.id));
-      if (
-        !(error instanceof ReadingError) ||
-        (error.code !== "GRADING_FAILED" &&
-          error.code !== "AI_QUOTA_EXCEEDED" &&
-          error.code !== "OPENAI_NOT_CONFIGURED" &&
-          error.code !== "AI_DISABLED" &&
-          error.code !== "GENERATION_UNAVAILABLE")
-      ) {
-        throw error;
-      }
-    }
-  }
-
-  const freshAttempt = await db.query.readingAttempts.findFirst({
-    where: eq(readingAttempts.id, attempt.id),
-  });
-  const freshAnswers = await db.query.readingAnswers.findMany({
-    where: eq(readingAnswers.attemptId, attempt.id),
-  });
 
   revalidateReading(passage.id, set.id);
-
   return toPracticePayload({
     passage,
     set,
     questions,
-    attempt: freshAttempt!,
-    answers: freshAnswers,
-    revealed: true,
+    attempt,
+    answers,
+    revealed: attempt.status !== "in_progress",
   });
+}
+
+export async function submitReadingAttempt(
+  input: string | { attemptId: string; answers?: Array<{ questionId: string; response: unknown }> },
+  options?: { regenerate?: boolean },
+): Promise<ReadingPracticePayload> {
+  const parsed =
+    typeof input === "string"
+      ? { attemptId: input, answers: [] as Array<{ questionId: string; response: unknown }> }
+      : submitReadingAttemptSchema.parse(input);
+
+  const userId = await getCurrentUserId();
+  const attempt = await db.query.readingAttempts.findFirst({
+    where: and(
+      eq(readingAttempts.id, parsed.attemptId),
+      eq(readingAttempts.userId, userId),
+    ),
+  });
+  if (!attempt) throw new ReadingError("ATTEMPT_NOT_FOUND");
+  if (attempt.status === "graded" && !options?.regenerate) {
+    return loadReadingPracticePayload(attempt.id);
+  }
+
+  const retrying = options?.regenerate === true && attempt.status === "grading_failed";
+  if (
+    attempt.status !== "in_progress" &&
+    attempt.status !== "grading" &&
+    !retrying
+  ) {
+    throw new ReadingError("ATTEMPT_NOT_EDITABLE");
+  }
+
+  await runExclusiveJob({
+    operation: AI_JOBS.readingGrade,
+    subjectId: attempt.id,
+    regenerate: options?.regenerate === true,
+    run: async ({ stillOwner }) => {
+      if (parsed.answers.length > 0) {
+        for (const answer of parsed.answers) {
+          await upsertReadingAnswer({
+            attemptId: attempt.id,
+            setId: attempt.setId,
+            questionId: answer.questionId,
+            response: answer.response,
+          });
+        }
+      }
+
+      const set = await db.query.readingQuestionSets.findFirst({
+        where: eq(readingQuestionSets.id, attempt.setId),
+      });
+      if (!set) throw new ReadingError("SET_NOT_FOUND");
+
+      const passage = await db.query.readingPassages.findFirst({
+        where: eq(readingPassages.id, set.passageId),
+      });
+      if (!passage) throw new ReadingError("PASSAGE_NOT_FOUND");
+
+      const questions = await db.query.readingQuestions.findMany({
+        where: eq(readingQuestions.setId, set.id),
+        orderBy: [asc(readingQuestions.sortOrder)],
+      });
+      const answers = await db.query.readingAnswers.findMany({
+        where: eq(readingAnswers.attemptId, attempt.id),
+      });
+      const answerByQuestion = new Map(answers.map((a) => [a.questionId, a]));
+
+      let objectiveCorrect = 0;
+      let objectiveTotal = 0;
+      const writtenItems: Array<{
+        questionId: string;
+        prompt: string;
+        keyPoints: string[] | null;
+        response: unknown;
+        explanation: string | null;
+        excerpt: string | null;
+      }> = [];
+
+      for (const question of questions) {
+        const answer = answerByQuestion.get(question.id);
+        if (question.type === "written") {
+          const responseText =
+            typeof answer?.response === "object" &&
+            answer.response &&
+            "value" in answer.response
+              ? String((answer.response as { value: unknown }).value ?? "")
+              : typeof answer?.response === "string"
+                ? answer.response
+                : "";
+          writtenItems.push({
+            questionId: question.id,
+            prompt: question.prompt,
+            keyPoints: Array.isArray(question.keyPoints)
+              ? (question.keyPoints as string[])
+              : null,
+            response: responseText,
+            explanation: question.explanation,
+            excerpt: question.excerpt,
+          });
+          continue;
+        }
+
+        objectiveTotal += 1;
+        if (!answer) continue;
+        const correct = gradeObjectiveAnswer({
+          type: question.type,
+          correctAnswer: question.correctAnswer,
+          response: answer.response,
+        });
+        if (correct) objectiveCorrect += 1;
+        await db
+          .update(readingAnswers)
+          .set({
+            isCorrect: correct,
+            gradedAt: new Date(),
+            updatedAt: new Date(),
+          })
+          .where(eq(readingAnswers.id, answer.id));
+      }
+
+      const [marked] = await db
+        .update(readingAttempts)
+        .set({
+          status: writtenItems.length > 0 ? "grading" : "graded",
+          submittedAt: new Date(),
+          objectiveCorrect,
+          objectiveTotal,
+          updatedAt: new Date(),
+        })
+        .where(
+          and(
+            eq(readingAttempts.id, attempt.id),
+            inArray(readingAttempts.status, [
+              "in_progress",
+              "grading",
+              "grading_failed",
+            ]),
+          ),
+        )
+        .returning();
+      if (!marked) throw new JobLockLostError();
+
+      if (writtenItems.length === 0) return { graded: true };
+
+      try {
+        try {
+          await requireAiAssistanceEnabled();
+        } catch (error) {
+          mapUsageError(error);
+        }
+
+        let reservationId: string | null = null;
+        try {
+          const user = await getCurrentUserRecord();
+          if (!user) throw new ReadingError("UNAUTHORIZED");
+          const usage = await consumeUsage(
+            user,
+            "ai_reading",
+            `reading-grade:${attempt.id}`,
+          );
+          reservationId = usage.reservationId;
+        } catch (error) {
+          mapUsageError(error);
+        }
+
+        try {
+          const grades = await gradeWrittenAnswers({
+            passageTitle: passage.title,
+            passageBody: passage.body,
+            questionLanguage: set.questionLanguage,
+            items: writtenItems.filter(
+              (item) =>
+                typeof item.response === "string" &&
+                item.response.trim().length > 0,
+            ),
+          });
+          if (!(await stillOwner())) throw new JobLockLostError();
+          const gradeById = new Map(grades.map((g) => [g.questionId, g]));
+
+          for (const item of writtenItems) {
+            const answer = answerByQuestion.get(item.questionId);
+            if (!answer) continue;
+            const grade = gradeById.get(item.questionId);
+            await db
+              .update(readingAnswers)
+              .set({
+                feedback: grade?.feedback ?? {
+                  summary: "No answer provided.",
+                },
+                isCorrect: grade?.isCorrect ?? false,
+                gradedAt: new Date(),
+                updatedAt: new Date(),
+              })
+              .where(eq(readingAnswers.id, answer.id));
+          }
+
+          await finalizeUsageReservation(reservationId);
+          await db
+            .update(readingAttempts)
+            .set({ status: "graded", updatedAt: new Date() })
+            .where(eq(readingAttempts.id, attempt.id));
+        } catch (error) {
+          if (error instanceof JobLockLostError) throw error;
+          await refundUsageReservation(reservationId);
+          await db
+            .update(readingAttempts)
+            .set({ status: "grading_failed", updatedAt: new Date() })
+            .where(eq(readingAttempts.id, attempt.id));
+          if (error instanceof ReadingError) throw error;
+          throw new ReadingError("GRADING_FAILED");
+        }
+      } catch (error) {
+        if (error instanceof JobLockLostError) throw error;
+        await db
+          .update(readingAttempts)
+          .set({ status: "grading_failed", updatedAt: new Date() })
+          .where(eq(readingAttempts.id, attempt.id));
+        if (
+          !(error instanceof ReadingError) ||
+          (error.code !== "GRADING_FAILED" &&
+            error.code !== "AI_QUOTA_EXCEEDED" &&
+            error.code !== "OPENAI_NOT_CONFIGURED" &&
+            error.code !== "AI_DISABLED" &&
+            error.code !== "GENERATION_UNAVAILABLE")
+        ) {
+          throw error;
+        }
+      }
+
+      return { graded: true };
+    },
+  });
+
+  return loadReadingPracticePayload(attempt.id);
 }
 
 export async function retryReadingWrittenGrading(
@@ -814,7 +871,7 @@ export async function retryReadingWrittenGrading(
     .set({ status: "in_progress", submittedAt: null, updatedAt: new Date() })
     .where(eq(readingAttempts.id, attempt.id));
 
-  return submitReadingAttempt(attempt.id);
+  return submitReadingAttempt(attempt.id, { regenerate: true });
 }
 
 export async function startNewReadingAttempt(

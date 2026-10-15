@@ -108,16 +108,26 @@ export function ImportMaterialForm() {
     async (importId: string) => {
       retryImportIdRef.current = importId;
       setStage("extracting", { title: processing.title });
-      await extractExerciseImport(importId);
+      const extracted = await extractExerciseImport(importId);
+      if (extracted.inProgress) {
+        toast.error(t("errors.ALREADY_PROCESSING"));
+        resetProcessing();
+        return;
+      }
       setStage("analyzing");
       await new Promise<void>((resolve) => {
         requestAnimationFrame(() => resolve());
       });
       setStage("generating");
-      await generateExerciseImportExercises(importId);
+      const generated = await generateExerciseImportExercises(importId);
+      if (generated.inProgress) {
+        toast.error(t("errors.ALREADY_PROCESSING"));
+        resetProcessing();
+        return;
+      }
       await finishReady(importId);
     },
-    [finishReady, processing.title, setStage],
+    [finishReady, processing.title, resetProcessing, setStage, t],
   );
 
   const processFile = useCallback(
