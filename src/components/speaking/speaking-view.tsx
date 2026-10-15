@@ -45,7 +45,7 @@ export function SpeakingView({ workspaceId }: SpeakingViewProps) {
     const topics = new Set<string>();
     for (const session of sessions) {
       if (session.status === "completed") completed += 1;
-      if (isSpeakingJoinable(session.status)) ready += 1;
+      if (isSpeakingJoinable(session.status, session.startedAt)) ready += 1;
       if (session.topic) topics.add(session.topic);
     }
     return {

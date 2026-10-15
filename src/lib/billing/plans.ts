@@ -137,6 +137,11 @@ export const PREMIUM_COACH_CHAT_DAILY =
 /**
  * Fair-use: one speaking “call” is one user-facing session, not every realtime
  * message. Cap duration so a single quota unit cannot run indefinitely.
+ *
+ * Enforced in code via Stream `settings_override.limits.max_duration_seconds`
+ * on call create, plus app deadline from `startedAt`. Also configure the Stream
+ * Dashboard call type `default` → Limits → max duration 1800s and disable
+ * JoinEndedCall for the learner role (see speaking stream module comments).
  */
 export const SPEAKING_MAX_SESSION_SECONDS = 30 * 60;
 

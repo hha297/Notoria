@@ -2420,7 +2420,13 @@
       "endedDescription": "Palaute ilmestyy sessiosivulle hetken kuluttua.",
       "back": "Takaisin sessioon",
       "notConfigured": "Videopuhelua ei ole vielä määritetty. Lisää Stream Videon API-avaimet aloittaaksesi.",
-      "sessionLimitReached": "Tämä puhesessio saavutti 30 minuutin fair use -rajan ja päättyi."
+      "sessionLimitReached": "Tämä puhesessio saavutti 30 minuutin fair use -rajan ja päättyi.",
+      "tutorSetupTimeout": "Tekoälyohjaajan liittyminen kesti liian kauan, joten puhelu päätettiin. Aloita uusi sessio.",
+      "elapsedTitle": "Puhelun kesto",
+      "inactivityWarning": "Kukaan ei ole puhunut vähään aikaan. Puhelu päättyy pian.",
+      "inactivityCountdown": "Päättyy {seconds} s kuluttua…",
+      "inactivityEnded": "Puhelu päättyi käyttämättömyyden vuoksi.",
+      "continueCall": "Jatka puhelua"
     },
     "errors": {
       "STREAM_NOT_CONFIGURED": "Videopuhelua ei ole määritetty.",
@@ -2428,6 +2434,8 @@
       "INVALID_INPUT": "Tarkista aihe ja taso, ja yritä uudelleen.",
       "SESSION_NOT_FOUND": "Puhumissessiota ei löytynyt.",
       "SESSION_NOT_JOINABLE": "Tähän puheluun ei voi enää liittyä.",
+      "SESSION_EXPIRED": "Tämä puhesessio saavutti aikarajan, eikä siihen voi enää liittyä.",
+      "ACTIVE_SESSION_EXISTS": "Sinulla on jo aktiivinen puhesessio. Lopeta se ennen uuden aloittamista.",
       "STREAM_CALL_FAILED": "Videopuhelua ei voitu aloittaa. Yritä uudelleen.",
       "UNAUTHORIZED": "Kirjaudu sisään liittyäksesi puhumispuheluun."
     }

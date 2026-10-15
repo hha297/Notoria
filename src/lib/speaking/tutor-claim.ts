@@ -7,6 +7,7 @@ export async function claimSpeakingTutor(input: {
   status: string;
   localConnected: boolean;
   sessionId: string;
+  startedAt?: Date | string | null;
   store?: JobLockStore;
   now?: Date;
   ttlMs?: number;
@@ -14,6 +15,8 @@ export async function claimSpeakingTutor(input: {
   const plan = tutorConnectPlan({
     status: input.status,
     localConnected: input.localConnected,
+    startedAt: input.startedAt,
+    now: input.now,
   });
   if (plan === "reject") return { action: "reject" as const };
   if (plan === "already_connected") {

@@ -22,11 +22,15 @@ export default async function SpeakingCallPage({
     redirect("/speaking");
   }
 
-  if (!isSpeakingJoinable(session.status)) {
+  if (!isSpeakingJoinable(session.status, session.startedAt)) {
     redirect(`/speaking/${session.id}`);
   }
 
   return (
-    <CallProvider sessionId={session.id} title={session.title} />
+    <CallProvider
+      sessionId={session.id}
+      title={session.title}
+      startedAt={session.startedAt?.toISOString() ?? null}
+    />
   );
 }

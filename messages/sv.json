@@ -2615,7 +2615,13 @@
       "endedDescription": "Feedback kommer att visas på sessionssidan om några ögonblick.",
       "back": "Tillbaka till session",
       "notConfigured": "Videomöten är inte konfigurerade än. Lägg till Stream Video API-nycklar för att starta ett samtal.",
-      "sessionLimitReached": "Den här talsessionen nådde 30-minutersgränsen för rimlig användning och har avslutats."
+      "sessionLimitReached": "Den här talsessionen nådde 30-minutersgränsen för rimlig användning och har avslutats.",
+      "tutorSetupTimeout": "AI-tutorn tog för lång tid att ansluta, så samtalet avslutades. Starta en ny session.",
+      "elapsedTitle": "Tid i samtalet",
+      "inactivityWarning": "Ingen har pratat på ett tag. Samtalet avslutas snart.",
+      "inactivityCountdown": "Avslutas om {seconds}s…",
+      "inactivityEnded": "Samtalet avslutades efter inaktivitet.",
+      "continueCall": "Fortsätt samtal"
     },
     "errors": {
       "STREAM_NOT_CONFIGURED": "Videomöten är inte konfigurerade.",
@@ -2623,6 +2629,8 @@
       "INVALID_INPUT": "Kontrollera ämnet och nivån, försök sedan igen.",
       "SESSION_NOT_FOUND": "Tal-session hittades inte.",
       "SESSION_NOT_JOINABLE": "Detta samtal är inte längre tillgängligt att gå med i.",
+      "SESSION_EXPIRED": "Den här talsessionen nådde tidsgränsen och kan inte längre anslutas till.",
+      "ACTIVE_SESSION_EXISTS": "Du har redan en aktiv talsession. Avsluta den innan du startar en ny.",
       "STREAM_CALL_FAILED": "Kunde inte starta videomötet. Försök igen.",
       "UNAUTHORIZED": "Logga in för att gå med i ett tal-samtal."
     }

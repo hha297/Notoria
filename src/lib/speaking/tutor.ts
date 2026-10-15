@@ -135,14 +135,25 @@ export async function connectSpeakingTutorToCall(sessionId: string) {
     throw new SpeakingError("SESSION_NOT_FOUND");
   }
 
+  if (
+    existing.status === "completed" ||
+    existing.status === "cancelled" ||
+    existing.status === "processing"
+  ) {
+    throw new SpeakingError("SESSION_NOT_JOINABLE");
+  }
+
   const claim = await claimSpeakingTutor({
     status: existing.status,
     localConnected: hasLiveSpeakingTutor(sessionId),
     sessionId,
+    startedAt: existing.startedAt,
   });
 
   if (claim.action === "reject") {
-    throw new SpeakingError("SESSION_NOT_JOINABLE");
+    throw new SpeakingError(
+      existing.startedAt ? "SESSION_EXPIRED" : "SESSION_NOT_JOINABLE",
+    );
   }
   if (claim.action === "already_connected") {
     if (hasLiveSpeakingTutor(sessionId)) keepSpeakingTutorAlive(sessionId);

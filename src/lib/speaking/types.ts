@@ -1,4 +1,5 @@
 import type { SpeakingSession, SpeakingStatus } from "@/db/schema";
+import { isSpeakingJoinable as joinableWithDeadline } from "@/lib/speaking/lifetime";
 
 export type SpeakingSessionListItem = {
   id: string;
@@ -41,6 +42,17 @@ export function toSpeakingListItem(
   };
 }
 
-export function isSpeakingJoinable(status: SpeakingStatus) {
-  return status === "upcoming" || status === "active";
+/** Joinable when status is open and the original session deadline has not passed. */
+export function isSpeakingJoinable(
+  status: SpeakingStatus,
+  startedAt?: Date | string | null,
+  now = new Date(),
+) {
+  return joinableWithDeadline(status, startedAt, now);
 }
+
+export {
+  speakingDeadlineAt,
+  speakingRemainingSeconds,
+  isSpeakingPastDeadline,
+} from "@/lib/speaking/lifetime";

@@ -43,7 +43,7 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
   const [isLeaving, setIsLeaving] = useState(false);
-  const joinable = isSpeakingJoinable(session.status);
+  const joinable = isSpeakingJoinable(session.status, session.startedAt);
 
   useEffect(() => {
     if (session.status !== "processing") return;

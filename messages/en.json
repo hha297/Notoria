@@ -2611,11 +2611,17 @@
       "join": "Join call",
       "joining": "Joining…",
       "tutorFailed": "You are in the call, but the AI tutor could not join. Try leaving and joining again.",
+      "tutorSetupTimeout": "The AI tutor took too long to join, so the call was ended. Start a new session to try again.",
       "endedTitle": "Call ended",
       "endedDescription": "Feedback will appear on the session page in a few moments.",
       "back": "Back to session",
       "notConfigured": "Video calling is not configured yet. Add Stream Video API keys to start a call.",
-      "sessionLimitReached": "This speaking session reached the 30-minute fair-use limit and has ended."
+      "sessionLimitReached": "This speaking session reached the 30-minute fair-use limit and has ended.",
+      "elapsedTitle": "Time in call",
+      "inactivityWarning": "No one has spoken for a while. The call will end soon.",
+      "inactivityCountdown": "Ending in {seconds}s…",
+      "inactivityEnded": "The call ended after a period of inactivity.",
+      "continueCall": "Continue call"
     },
     "errors": {
       "STREAM_NOT_CONFIGURED": "Video calling is not configured.",
@@ -2623,6 +2629,8 @@
       "INVALID_INPUT": "Check the topic and level, then try again.",
       "SESSION_NOT_FOUND": "Speaking session not found.",
       "SESSION_NOT_JOINABLE": "This call is no longer available to join.",
+      "SESSION_EXPIRED": "This speaking session reached its time limit and can no longer be joined.",
+      "ACTIVE_SESSION_EXISTS": "You already have an active speaking session. End it before starting another.",
       "STREAM_CALL_FAILED": "Could not start the video call. Try again.",
       "UNAUTHORIZED": "Sign in to join a speaking call."
     }

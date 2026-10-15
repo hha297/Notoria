@@ -7,9 +7,14 @@ import { CallConnect } from "@/components/speaking/call-connect";
 type CallProviderProps = {
   sessionId: string;
   title: string;
+  startedAt?: string | null;
 };
 
-export function CallProvider({ sessionId, title }: CallProviderProps) {
+export function CallProvider({
+  sessionId,
+  title,
+  startedAt = null,
+}: CallProviderProps) {
   const { data, status } = useSession();
 
   if (status === "loading" || !data?.user?.id) {
@@ -24,6 +29,7 @@ export function CallProvider({ sessionId, title }: CallProviderProps) {
     <CallConnect
       sessionId={sessionId}
       title={title}
+      startedAt={startedAt}
       userId={data.user.id}
       userName={data.user.name || "Learner"}
       userImage={data.user.image}

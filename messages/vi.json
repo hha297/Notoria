@@ -2416,11 +2416,17 @@
       "join": "Vào cuộc gọi",
       "joining": "Đang vào…",
       "tutorFailed": "Bạn đã vào cuộc gọi, nhưng gia sư AI chưa vào được. Hãy thoát rồi thử lại.",
+      "tutorSetupTimeout": "Gia sư AI vào quá lâu nên cuộc gọi đã kết thúc. Hãy tạo buổi mới để thử lại.",
       "endedTitle": "Đã kết thúc cuộc gọi",
       "endedDescription": "Nhận xét sẽ xuất hiện trên trang buổi nói trong giây lát.",
       "back": "Quay lại buổi nói",
       "notConfigured": "Cuộc gọi video chưa được cấu hình. Thêm khóa Stream Video để bắt đầu.",
-      "sessionLimitReached": "Buổi nói này đã đạt giới hạn sử dụng hợp lý 30 phút và đã kết thúc."
+      "sessionLimitReached": "Buổi nói này đã đạt giới hạn sử dụng hợp lý 30 phút và đã kết thúc.",
+      "elapsedTitle": "Thời gian trong cuộc gọi",
+      "inactivityWarning": "Đã im lặng khá lâu. Cuộc gọi sẽ sớm kết thúc.",
+      "inactivityCountdown": "Kết thúc sau {seconds} giây…",
+      "inactivityEnded": "Cuộc gọi đã kết thúc vì không có ai nói chuyện.",
+      "continueCall": "Tiếp tục cuộc gọi"
     },
     "errors": {
       "STREAM_NOT_CONFIGURED": "Cuộc gọi video chưa được cấu hình.",
@@ -2428,6 +2434,8 @@
       "INVALID_INPUT": "Kiểm tra chủ đề và trình độ, rồi thử lại.",
       "SESSION_NOT_FOUND": "Không tìm thấy buổi nói.",
       "SESSION_NOT_JOINABLE": "Cuộc gọi này không còn thể tham gia.",
+      "SESSION_EXPIRED": "Buổi nói đã hết thời gian và không thể tham gia lại.",
+      "ACTIVE_SESSION_EXISTS": "Bạn đang có một buổi nói đang mở. Hãy kết thúc trước khi tạo buổi mới.",
       "STREAM_CALL_FAILED": "Không thể bắt đầu cuộc gọi. Hãy thử lại.",
       "UNAUTHORIZED": "Đăng nhập để tham gia cuộc gọi nói."
     }
