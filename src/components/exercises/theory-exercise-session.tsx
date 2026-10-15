@@ -23,6 +23,7 @@ import {
   buildTheoryLessonBeats,
   theoryLessonHasMaterial,
 } from "@/lib/theory-exercises/lesson-content";
+import { filterPersistedTheoryExercises } from "@/lib/theory-exercises/generate-ai";
 import type { TheoryExercise, TheoryExerciseSession } from "@/lib/theory-exercises/types";
 import featureStyles from "@/components/style/exercises/theory.module.css";
 import { mx } from "@/lib/css-module";
@@ -44,7 +45,9 @@ export function TheoryExerciseSessionView({
   const tSession = useTranslations("exercises.session");
   const { hasProAccess, openUpgrade } = useProAccess();
   const exerciseQuota = useQuotaLockMessage("ai_exercise");
-  const [items, setItems] = useState<TheoryExercise[]>(() => shuffleArray(session.items));
+  const [items, setItems] = useState<TheoryExercise[]>(() =>
+    shuffleArray(filterPersistedTheoryExercises(session.items)),
+  );
   const [index, setIndex] = useState(0);
   const [score, setScore] = useState({ correct: 0, answered: 0 });
   const [complete, setComplete] = useState(false);
@@ -73,7 +76,7 @@ export function TheoryExerciseSessionView({
   } = useAiProcessing();
 
   const restart = useCallback((nextItems: TheoryExercise[]) => {
-    setItems(shuffleArray(nextItems));
+    setItems(shuffleArray(filterPersistedTheoryExercises(nextItems)));
     setIndex(0);
     setScore({ correct: 0, answered: 0 });
     setComplete(false);
@@ -117,7 +120,7 @@ export function TheoryExerciseSessionView({
         fail(t("aiUnavailable"));
         return;
       }
-      const incoming = result.exercises ?? [];
+      const incoming = filterPersistedTheoryExercises(result.exercises ?? []);
       if (incoming.length === 0) {
         fail(t("aiUnavailable"));
         return;
@@ -145,7 +148,7 @@ export function TheoryExerciseSessionView({
   ]);
 
   useEffect(() => {
-    setItems(shuffleArray(session.items));
+    setItems(shuffleArray(filterPersistedTheoryExercises(session.items)));
     setIndex(0);
     setScore({ correct: 0, answered: 0 });
     setComplete(false);

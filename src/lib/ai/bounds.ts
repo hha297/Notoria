@@ -30,6 +30,7 @@ export const AI_OUTPUT_TOKENS = {
   contentImport: 4_000,
   defaultMini: 2_000,
   theoryBatch: 8_000,
+  theoryValidate: 3_500,
   editorFormat: 8_000,
   vocabNotesFormat: 4_000,
   readingOcr: 4_000,

@@ -2,13 +2,19 @@ import { describe, expect, it } from "vitest";
 import {
   answersMatchAny,
   extractSourceWordCueFromHint,
+  filterPersistedTheoryExercises,
   forceFullWordBlank,
+  isVagueExplanation,
   isValidTheoryExercise,
   mapAiDraftsToTheoryExercises,
   resolveFullWordAnswer,
   revealTextForExercise,
 } from "@/lib/theory-exercises/generate-ai";
 import { buildTheoryExerciseSession } from "@/lib/theory-exercises/build-session";
+import {
+  exercisePassesSemanticResult,
+  THEORY_EXERCISE_SEMANTIC_PROMPT,
+} from "@/lib/theory-exercises/semantic-validate";
 
 describe("AI theory exercise mapping", () => {
   it("maps fill_blank drafts with accepted answers and hints", () => {
@@ -432,4 +438,279 @@ describe("AI theory exercise mapping", () => {
       }),
     ).toBe(false);
   });
+
+  it("rejects when the target form is already visible and the blank asks for something unrelated", () => {
+    const items = mapAiDraftsToTheoryExercises("theory_1", [
+      {
+        type: "fill_blank",
+        learningObjective: "Practice the required plural form.",
+        targetType: "word_form",
+        sentence: "The alphas were near the ________ yesterday.",
+        answer: "river",
+        sourceWord: "alpha",
+        completedSentence: "The alphas were near the river yesterday.",
+        hint: "Use the place noun required by the frame.",
+      },
+    ]);
+    expect(items).toHaveLength(0);
+  });
+
+  it("rejects form practice with no source cue / insufficient pre-answer information", () => {
+    const noCue = mapAiDraftsToTheoryExercises("theory_1", [
+      {
+        type: "fill_blank",
+        learningObjective: "Practice the required form.",
+        targetType: "word_form",
+        sentence: "________.",
+        answer: "alphas",
+        completedSentence: "alphas.",
+        hint: "Inflect the word.",
+      },
+    ]);
+    expect(noCue).toHaveLength(0);
+
+    const thin = mapAiDraftsToTheoryExercises("theory_1", [
+      {
+        type: "fill_blank",
+        learningObjective: "Practice the required form.",
+        targetType: "word_form",
+        sentence: "________.",
+        answer: "alphas",
+        sourceWord: "alpha",
+        completedSentence: "alphas.",
+        hint: "Inflect the word.",
+      },
+    ]);
+    expect(thin).toHaveLength(0);
+  });
+
+  it("keeps blank answer, completed sentence, and grading on the same surface form", () => {
+    const items = mapAiDraftsToTheoryExercises("theory_1", [
+      {
+        type: "fill_blank",
+        learningObjective: "Practice the required form.",
+        targetType: "word_form",
+        sentence: "They chose the ________ carefully.",
+        answer: "alphas",
+        sourceWord: "alpha",
+        // Divergent reveal must not win over the graded blank answer.
+        completedSentence: "They chose the alphas carefully.",
+        acceptedAnswers: ["alphas", "Alphas"],
+        hint: "Use the required plural form.",
+      },
+    ]);
+    expect(items).toHaveLength(1);
+    const item = items[0]!;
+    expect(item.type).toBe("fill_blank");
+    if (item.type !== "fill_blank") return;
+    expect(item.answer).toBe("alphas");
+    expect(item.completedSentence).toBe("They chose the alphas carefully.");
+    expect(answersMatchAny("Alphas", item.acceptedAnswers)).toBe(true);
+    expect(answersMatchAny("alpha", item.acceptedAnswers)).toBe(false);
+    expect(revealTextForExercise(item)).toContain("alpha → alphas");
+    expect(item.sentence.replace("________", item.answer)).toBe(
+      item.completedSentence,
+    );
+  });
+
+  it("accepts legitimate casing variants without accepting the lemma", () => {
+    expect(
+      answersMatchAny("Alphas", ["alphas"]),
+    ).toBe(true);
+    expect(answersMatchAny("alpha", ["alphas"])).toBe(false);
+  });
+
+  it("enforces example reuse limits across the final mapped set", () => {
+    const exampleLexemes = ["alpha", "beta"];
+    const drafts = Array.from({ length: 10 }, (_, index) => ({
+      type: "fill_blank" as const,
+      learningObjective: "Practice the required form.",
+      targetType: "word_form" as const,
+      sentence:
+        index < 6
+          ? `People discussed the ________ today in room ${index}.`
+          : `Writers mentioned the ________ today in room ${index}.`,
+      answer: index < 6 ? "alphas" : `gamma${index}`,
+      sourceWord: index < 6 ? "alpha" : `gamma${index}`,
+      completedSentence:
+        index < 6
+          ? `People discussed the alphas today in room ${index}.`
+          : `Writers mentioned the gamma${index} today in room ${index}.`,
+      hint: "Use the required form of the cue.",
+      materialSource: index < 6 ? ("theory" as const) : ("ai" as const),
+    }));
+
+    const items = mapAiDraftsToTheoryExercises(
+      "theory_1",
+      drafts,
+      "Sample",
+      10,
+      { exampleLexemes },
+    );
+
+    // floor(10 * 0.2) = 2 example-derived items max.
+    const reused = items.filter(
+      (item) =>
+        item.type === "fill_blank" &&
+        (item.sourceWord === "alpha" || item.answer === "alphas"),
+    );
+    expect(reused.length).toBeLessThanOrEqual(2);
+    expect(items.length).toBeGreaterThan(0);
+  });
+
+  it("allows zero example reuse when theory has no examples", () => {
+    const items = mapAiDraftsToTheoryExercises(
+      "theory_1",
+      [
+        {
+          type: "fill_blank",
+          learningObjective: "Practice the required form.",
+          targetType: "word_form",
+          sentence: "Learners practised the ________ carefully today.",
+          answer: "alphas",
+          sourceWord: "alpha",
+          completedSentence: "Learners practised the alphas carefully today.",
+          hint: "Use the required plural form.",
+        },
+      ],
+      "Sample",
+      10,
+      { exampleLexemes: [] },
+    );
+    expect(items).toHaveLength(1);
+  });
+
+  it("rejects explanations that only restate the topic without grounding the answer", () => {
+    expect(
+      isVagueExplanation({
+        explanation: "Formation of the required grammatical case.",
+        learningObjective: "Formation of the required grammatical case.",
+        skillLabel: "Case forms",
+        sourceWord: "alpha",
+        answer: "alphas",
+      }),
+    ).toBe(true);
+
+    expect(
+      isVagueExplanation({
+        explanation: "Change alpha to alphas for the required plural role.",
+        learningObjective: "Practice the required plural form.",
+        sourceWord: "alpha",
+        answer: "alphas",
+      }),
+    ).toBe(false);
+  });
+
+  it("rejects drafts whose explanation mismatches the cue→answer task", () => {
+    const items = mapAiDraftsToTheoryExercises("theory_1", [
+      {
+        type: "fill_blank",
+        learningObjective: "Practice the required case form.",
+        targetType: "word_form",
+        sentence: "People admired the ________ near the lake today.",
+        answer: "alphas",
+        sourceWord: "alpha",
+        completedSentence: "People admired the alphas near the lake today.",
+        hint: "Use the required form of the cue.",
+        explanation: "Practice the required case form.",
+      },
+    ]);
+    expect(items).toHaveLength(0);
+  });
+
+  it("rejects when a related inflected form of the cue is already visible outside the blank", () => {
+    const items = mapAiDraftsToTheoryExercises("theory_1", [
+      {
+        type: "fill_blank",
+        learningObjective: "Practice the required form.",
+        targetType: "word_form",
+        sentence: "The alphas stood beside the ________ yesterday.",
+        answer: "river",
+        sourceWord: "alpha",
+        completedSentence: "The alphas stood beside the river yesterday.",
+        hint: "Write the place noun.",
+        explanation: "Change alpha into river for this frame.",
+      },
+    ]);
+    expect(items).toHaveLength(0);
+  });
+
+  it("filters persisted exercises that fail structural validation", () => {
+    const kept = filterPersistedTheoryExercises([
+      {
+        id: "ok",
+        source: "theory",
+        theoryId: "t",
+        generator: "ai",
+        type: "fill_blank",
+        typeLabelKey: "fill_blank",
+        materialSource: "ai",
+        sentence: "Learners practised the ________ carefully today.",
+        answer: "alphas",
+        acceptedAnswers: ["alphas"],
+        sourceWord: "alpha",
+        prefix: "Learners practised the",
+        suffix: "carefully today.",
+        completedSentence: "Learners practised the alphas carefully today.",
+        learningObjective: "Practice the required plural form.",
+        instruction: "Write the required plural form.",
+        targetType: "word_form",
+        hint: "Use the cue in the required plural form.",
+        explanation: "Change alpha to alphas in this plural slot.",
+        spaced: true,
+      },
+      {
+        id: "bad",
+        source: "theory",
+        theoryId: "t",
+        generator: "ai",
+        type: "fill_blank",
+        typeLabelKey: "fill_blank",
+        materialSource: "ai",
+        sentence: "________.",
+        answer: "alphas",
+        acceptedAnswers: ["alphas"],
+        learningObjective: "Practice the required form.",
+        targetType: "word_form",
+        hint: "Guess.",
+        spaced: true,
+      },
+    ]);
+    expect(kept.map((item) => item.id)).toEqual(["ok"]);
+  });
+
+  it("keeps the semantic validator prompt free of hardcoded learning samples", () => {
+    expect(THEORY_EXERCISE_SEMANTIC_PROMPT).toContain("Form-category match");
+    expect(THEORY_EXERCISE_SEMANTIC_PROMPT).toContain("formMatchesTheory");
+    expect(THEORY_EXERCISE_SEMANTIC_PROMPT).toContain("answerCategory");
+    expect(THEORY_EXERCISE_SEMANTIC_PROMPT).not.toMatch(
+      /\bvaate|naisten|koira|uutinen|keskustelu|missa|mihin\b/i,
+    );
+    expect(THEORY_EXERCISE_SEMANTIC_PROMPT).not.toContain("few-shot");
+  });
+
+  it("drops form-category mismatches even when accept is true", () => {
+    expect(exercisePassesSemanticResult(undefined)).toBe(true);
+    expect(
+      exercisePassesSemanticResult({
+        accept: true,
+        formMatchesTheory: false,
+      }),
+    ).toBe(false);
+    expect(
+      exercisePassesSemanticResult({
+        accept: false,
+        formMatchesTheory: true,
+      }),
+    ).toBe(false);
+    expect(
+      exercisePassesSemanticResult({
+        accept: true,
+        formMatchesTheory: true,
+      }),
+    ).toBe(true);
+  });
 });
+
+
+

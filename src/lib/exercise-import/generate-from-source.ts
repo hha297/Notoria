@@ -160,7 +160,7 @@ The source text IS the exercise material. You must NOT invent new practice conte
 
 ## Absolute fidelity rules
 1. Only use cues, prompts, instructions, column headers, and sentences that appear in the source.
-2. NEVER invent a new sentence frame (e.g. do not create "Kuulin ________ eilen." if that sentence is not in the source).
+2. NEVER invent a new sentence frame that does not already appear in the source.
 3. NEVER invent new vocabulary / paradigm rows. Do not mix cues from different rows.
 4. Keep source order (tables top→bottom, lists a→n).
 5. Do NOT pad the set to a target count. Output one card per blank/task found in the source (up to ~60). If the source has few items, return few exercises.
@@ -179,7 +179,7 @@ The source text IS the exercise material. You must NOT invent new practice conte
       (1) Copy the original explicit worksheet instruction from the source (same language).
       (2) If none, use a clearly present column header / task line from the source.
       (3) If still insufficient, use the neutral fallback exactly: "Complete the exercise."
-    NEVER invent a specific grammar/topic instruction (e.g. do not invent "Write the adjective in plural partitive") unless those words appear in the source.
+    NEVER invent a specific grammar/topic instruction unless those words appear in the source.
     skillLabel = short title/heading from the source when present (same language). Do not invent a fancy title.
 15. Keep instruction in the source language. Do not translate unless the source itself is translated.
 16. JSON only:

@@ -1,4 +1,9 @@
 import { z } from "zod";
+import { isRelatedWordForm } from "@/lib/exercises/lexical-surface";
+import {
+  enforceExampleReuseLimit,
+  type TheoryGenerationMaterial,
+} from "@/lib/theory-exercises/theory-material";
 import type {
   TheoryExercise,
   TheoryFillBlankExercise,
@@ -64,11 +69,32 @@ function uid(prefix: string) {
 }
 
 function normalize(value: string) {
-  return value.replace(/\s+/g, " ").trim();
+  return value.normalize("NFC").replace(/\s+/g, " ").trim();
 }
 
 function normalizeAnswerKey(value: string) {
   return normalize(value).replace(/^-/, "").toLowerCase();
+}
+
+function letterTokens(text: string): string[] {
+  return text.match(/\p{L}[\p{L}\p{M}'’-]*\p{L}|\p{L}/gu) ?? [];
+}
+
+function wholeTokenRegex(form: string, flags: string) {
+  return new RegExp(
+    `(^|[^\\p{L}\\p{M}])(${escapeRegExp(form)})(?=[^\\p{L}\\p{M}]|$)`,
+    flags.includes("u") ? flags : `${flags}u`,
+  );
+}
+
+function countWholeTokens(haystack: string, needle: string): number {
+  const value = needle.trim();
+  if (!value) return 0;
+  return [...haystack.matchAll(wholeTokenRegex(value, "giu"))].length;
+}
+
+function containsWholeToken(haystack: string, needle: string): boolean {
+  return countWholeTokens(haystack, needle) > 0;
 }
 
 function escapeRegExp(value: string) {
@@ -278,14 +304,178 @@ function uniqueAnswers(primary: string, extras: string[] = []): string[] {
   const seen = new Set<string>();
   const result: string[] = [];
   for (const raw of [primary, ...extras]) {
-    const value = normalize(raw);
+    const value = normalize(raw).replace(/^-/, "");
     if (!value) continue;
     const key = normalizeAnswerKey(value);
     if (seen.has(key)) continue;
     seen.add(key);
-    result.push(value.replace(/^-/, ""));
+    result.push(value);
+    // Accept simple casing variants without inventing new spellings.
+    const lower = value.toLowerCase();
+    if (!seen.has(lower)) {
+      seen.add(lower);
+      if (lower !== value) result.push(lower);
+    }
   }
   return result;
+}
+
+/**
+ * Blank the exact answer token inside a complete sentence.
+ * Keeps generation → grading → feedback on one canonical surface form.
+ */
+export function blankAnswerFromCompletedSentence(
+  completedSentence: string,
+  answer: string,
+): { sentence: string; prefix: string; suffix: string; answer: string } | null {
+  const completed = normalize(completedSentence);
+  const form = normalize(answer).replace(/^-/, "");
+  if (!completed || !form || completed.includes(BLANK)) return null;
+  if (countWholeTokens(completed, form) !== 1) return null;
+
+  const match =
+    wholeTokenRegex(form, "u").exec(completed) ??
+    wholeTokenRegex(form, "iu").exec(completed);
+  if (!match || match.index === undefined || match[2] == null) return null;
+
+  const used = match[2];
+  const prefixPad = match[1] ?? "";
+  const start = match.index + prefixPad.length;
+  const prefix = completed.slice(0, start);
+  const suffix = completed.slice(start + used.length);
+  const sentence = normalize(
+    `${prefix}${BLANK}${suffix}`.replace(/\s+([.,:;!?])/g, "$1"),
+  );
+  if (!sentence.includes(BLANK)) return null;
+  if (containsWholeToken(sentence.replace(/_{3,}/g, " "), used)) return null;
+  return { sentence, prefix, suffix, answer: used };
+}
+
+/**
+ * Visible context (outside the blank) must not already supply the target form,
+ * and form-practice blanks must transform the given source cue.
+ */
+export function hasObjectiveAlignmentIssue(input: {
+  prefix: string;
+  suffix: string;
+  answer: string;
+  sourceWord?: string;
+  needsSourceWord: boolean;
+}): boolean {
+  const answer = normalize(input.answer).replace(/^-/, "");
+  const visible = normalize(`${input.prefix} ${input.suffix}`);
+  if (!answer) return true;
+
+  if (containsWholeToken(visible, answer)) return true;
+
+  if (input.needsSourceWord) {
+    const source = input.sourceWord?.trim() ?? "";
+    if (!source) return true;
+    if (normalizeAnswerKey(source) === normalizeAnswerKey(answer)) return true;
+    if (!isRelatedWordForm(source, answer)) return true;
+
+    // Another inflected form of the same lemma already visible → objective given away
+    // while the blank may ask for something else.
+    // Skip tiny tokens: isRelatedWordForm uses substring checks that false-positive on
+    // single letters contained in the lemma (e.g. "topic".includes("i")).
+    const minTokenLen = Math.min(3, Math.max(2, source.length - 1));
+    for (const token of letterTokens(visible)) {
+      if (token.length < minTokenLen) continue;
+      if (normalizeAnswerKey(token) === normalizeAnswerKey(source)) continue;
+      if (normalizeAnswerKey(token) === normalizeAnswerKey(answer)) return true;
+      if (
+        isRelatedWordForm(source, token) &&
+        normalizeAnswerKey(token) !== normalizeAnswerKey(source)
+      ) {
+        return true;
+      }
+    }
+  }
+
+  return false;
+}
+
+/** Enough surrounding material that the blank is not open vocabulary guessing. */
+export function hasEnoughPreAnswerContext(input: {
+  prefix: string;
+  suffix: string;
+  sourceWord?: string;
+  needsSourceWord: boolean;
+  hint: string;
+}): boolean {
+  if (input.needsSourceWord && !input.sourceWord?.trim()) return false;
+  const visible = `${input.prefix} ${input.suffix}`;
+  const tokens = letterTokens(visible).filter((t) => t.length >= 2);
+  if (tokens.length >= 2) return true;
+  // Transformation-style cue with source word + short frame is answerable.
+  if (input.needsSourceWord && input.sourceWord?.trim() && tokens.length >= 1) {
+    return true;
+  }
+  // Concept/structure items may be shorter if the hint carries the task.
+  if (!input.needsSourceWord && input.hint.trim().length >= 8 && tokens.length >= 1) {
+    return true;
+  }
+  return false;
+}
+
+export function hintLeaksAnswer(hint: string, answer: string): boolean {
+  const h = normalize(hint);
+  const a = normalize(answer).replace(/^-/, "");
+  if (!h || !a) return false;
+  if (normalizeAnswerKey(h) === normalizeAnswerKey(a)) return true;
+  return containsWholeToken(h, a);
+}
+
+/**
+ * Reject explanations that only restate the topic/title without explaining
+ * the actual source→answer transformation in context.
+ */
+export function isVagueExplanation(input: {
+  explanation?: string | null;
+  learningObjective?: string | null;
+  skillLabel?: string | null;
+  sourceWord?: string | null;
+  answer?: string | null;
+}): boolean {
+  const explanation = normalize(input.explanation ?? "");
+  if (!explanation) return false;
+  if (explanation.length < 8) return true;
+
+  const explKey = normalizeAnswerKey(explanation);
+  const skill = normalize(input.skillLabel ?? "");
+  const objective = normalize(input.learningObjective ?? "");
+  const source = input.sourceWord?.trim() ?? "";
+  const answer = input.answer?.trim().replace(/^-/, "") ?? "";
+
+  // Exact topic/title echo with no extra guidance.
+  if (skill && normalizeAnswerKey(skill) === explKey) return true;
+  if (objective && normalizeAnswerKey(objective) === explKey) {
+    const mentionsSource =
+      source.length >= 2 &&
+      explanation.toLowerCase().includes(source.toLowerCase());
+    const mentionsAnswer =
+      answer.length >= 2 &&
+      explanation.toLowerCase().includes(answer.toLowerCase());
+    if (!mentionsSource && !mentionsAnswer) return true;
+  }
+
+  return false;
+}
+
+/**
+ * Instruction must not claim a transformation that ignores the actual cue→answer pair.
+ * Language-agnostic: when both cue and answer exist, instruction cannot be empty for form drills.
+ */
+export function instructionUnanswerable(input: {
+  instruction?: string | null;
+  learningObjective?: string | null;
+  needsSourceWord: boolean;
+  sourceWord?: string | null;
+}): boolean {
+  if (!input.needsSourceWord) return false;
+  if (!input.sourceWord?.trim()) return true;
+  const task = normalize(input.instruction ?? "") || normalize(input.learningObjective ?? "");
+  return task.length < 8;
 }
 
 export function looksLikeMetaLabel(value: string): boolean {
@@ -312,7 +502,32 @@ function splitSentenceBlank(sentence: string) {
 export function answersMatchAny(input: string, accepted: string[]): boolean {
   const normalized = normalizeAnswerKey(input);
   if (!normalized) return false;
-  return accepted.some((candidate) => normalizeAnswerKey(candidate) === normalized);
+  return accepted.some(
+    (candidate) => normalizeAnswerKey(candidate) === normalized,
+  );
+}
+
+/** Canonical completed sentence from blank parts — never trust a divergent AI string alone. */
+export function buildCanonicalCompletedSentence(input: {
+  prefix?: string;
+  suffix?: string;
+  answer: string;
+  sentence?: string;
+}): string {
+  const answer = normalize(input.answer).replace(/^-/, "");
+  if (input.prefix != null || input.suffix != null) {
+    const prefix = (input.prefix ?? "").replace(/\s+$/, "");
+    const suffix = (input.suffix ?? "").replace(/^\s+/, "");
+    const joinTail = (tail: string) =>
+      tail ? (/^[.,:;!?]/.test(tail) ? tail : ` ${tail}`) : "";
+    return normalize(
+      `${prefix} ${answer}${joinTail(suffix)}`.replace(/\s+([.,:;!?])/g, "$1"),
+    );
+  }
+  if (input.sentence?.includes(BLANK)) {
+    return normalize(input.sentence.replace(BLANK, answer));
+  }
+  return answer;
 }
 
 function contentKey(item: TheoryExercise): string {
@@ -361,16 +576,121 @@ export function isValidTheoryExercise(item: TheoryExercise): boolean {
     if (!item.sentence.includes(BLANK) && !item.prefix) return false;
     if (!item.answer.trim() || item.acceptedAnswers.length === 0) return false;
     if (looksLikeMetaLabel(item.answer)) return false;
+    if (hintLeaksAnswer(item.hint ?? "", item.answer)) return false;
+
+    const needsSourceWord =
+      item.targetType === "suffix" ||
+      item.targetType === "prefix" ||
+      item.targetType === "word_form";
+
     const sentence = item.sentence.includes(BLANK)
       ? item.sentence
       : `${item.prefix ?? ""} ${BLANK}${item.suffix ?? ""}`;
     if (!isFullWordBlank(forceFullWordBlank(sentence))) return false;
+
+    const split = splitSentenceBlank(forceFullWordBlank(sentence));
+    if (!split) return false;
+
+    if (
+      hasObjectiveAlignmentIssue({
+        prefix: split.before,
+        suffix: split.after,
+        answer: item.answer,
+        sourceWord: item.sourceWord,
+        needsSourceWord,
+      })
+    ) {
+      return false;
+    }
+
+    if (
+      !hasEnoughPreAnswerContext({
+        prefix: split.before,
+        suffix: split.after,
+        sourceWord: item.sourceWord,
+        needsSourceWord,
+        hint: item.hint ?? "",
+      })
+    ) {
+      return false;
+    }
+
+    const canonical = buildCanonicalCompletedSentence({
+      prefix: item.prefix ?? split.before,
+      suffix: item.suffix ?? split.after,
+      answer: item.answer,
+    });
+    if (item.completedSentence?.trim()) {
+      const stored = normalize(item.completedSentence);
+      // Stored reveal must place the graded answer exactly once.
+      if (countWholeTokens(stored, item.answer) !== 1) return false;
+      // Prefer rejecting divergent reveals that would confuse feedback.
+      if (
+        normalizeAnswerKey(stored) !== normalizeAnswerKey(canonical) &&
+        !stored.includes(item.answer)
+      ) {
+        return false;
+      }
+    }
+
+    if (
+      isVagueExplanation({
+        explanation: item.explanation,
+        learningObjective: item.learningObjective,
+        skillLabel: item.skillLabel,
+        sourceWord: item.sourceWord,
+        answer: item.answer,
+      })
+    ) {
+      return false;
+    }
+
+    if (
+      instructionUnanswerable({
+        instruction: item.instruction,
+        learningObjective: item.learningObjective,
+        needsSourceWord,
+        sourceWord: item.sourceWord,
+      })
+    ) {
+      return false;
+    }
+
+    // Inserting the graded answer must rebuild the canonical completed sentence.
+    if (
+      normalizeAnswerKey(canonical) !==
+      normalizeAnswerKey(
+        buildCanonicalCompletedSentence({
+          prefix: split.before,
+          suffix: split.after,
+          answer: item.answer,
+        }),
+      )
+    ) {
+      return false;
+    }
+
     return true;
   }
   if (item.type === "transformation") {
     if (!item.promptWord.trim() || !item.answer.trim()) return false;
-    if (item.promptWord.toLowerCase() === item.answer.toLowerCase()) return false;
+    if (normalizeAnswerKey(item.promptWord) === normalizeAnswerKey(item.answer)) {
+      return false;
+    }
     if (looksLikeMetaLabel(item.answer)) return false;
+    if (!isRelatedWordForm(item.promptWord, item.answer)) return false;
+    if (hintLeaksAnswer(item.hint ?? "", item.answer)) return false;
+    if (
+      isVagueExplanation({
+        explanation: item.explanation,
+        learningObjective: item.learningObjective,
+        skillLabel: item.skillLabel,
+        sourceWord: item.promptWord,
+        answer: item.answer,
+      })
+    ) {
+      return false;
+    }
     return item.acceptedAnswers.length > 0;
   }
   if (item.type === "multiple_choice") {
@@ -378,24 +698,28 @@ export function isValidTheoryExercise(item: TheoryExercise): boolean {
     if (!item.options.includes(item.correctOption)) return false;
     if (looksLikeMetaLabel(item.correctOption)) return false;
     if (item.options.some(looksLikeMetaLabel)) return false;
+    if (hintLeaksAnswer(item.hint ?? "", item.correctOption)) return false;
+    // Prompt must give enough to choose without guessing.
+    if (letterTokens(item.prompt).length < 3) return false;
     return true;
   }
   return false;
 }
 
 export function revealTextForExercise(item: TheoryExercise): string {
-  if (item.type === "fill_blank" && item.sourceWord?.trim()) {
-    return `${item.sourceWord.trim()} → ${item.answer}`;
-  }
-  if (item.completedSentence?.trim()) return item.completedSentence.trim();
   if (item.type === "fill_blank") {
-    if (item.sentence.includes(BLANK)) {
-      return item.sentence.replace(BLANK, item.answer);
+    const canonical = buildCanonicalCompletedSentence({
+      prefix: item.prefix,
+      suffix: item.suffix,
+      answer: item.answer,
+      sentence: item.sentence,
+    });
+    // Prefer the same sentence the learner sees filled — avoids feedback that
+    // looks identical to a rejected answer while grading a different string.
+    if (item.sourceWord?.trim()) {
+      return `${item.sourceWord.trim()} → ${item.answer}`;
     }
-    if (item.prefix) {
-      return `${item.prefix} ${item.answer}${item.suffix ?? ""}`;
-    }
-    return item.answer;
+    return item.completedSentence?.trim() || canonical;
   }
   if (item.type === "transformation") {
     return `${item.promptWord} → ${item.answer}`;
@@ -501,18 +825,32 @@ function effectiveTargetType(
   return targetType;
 }
 
+export type MapAiDraftsOptions = {
+  studyLanguage?: string;
+  exampleLexemes?: readonly string[];
+  /** When provided, overrides draft.materialSource for example-reuse accounting. */
+  material?: Pick<TheoryGenerationMaterial, "exampleLexemes">;
+};
+
 export function mapAiDraftsToTheoryExercises(
   theoryId: string,
   drafts: TheoryAiExerciseDraft[],
   fallbackSkill?: string,
   maxItems = 30,
-  studyLanguage?: string,
+  studyLanguageOrOptions?: string | MapAiDraftsOptions,
 ): TheoryExercise[] {
+  const options: MapAiDraftsOptions =
+    typeof studyLanguageOrOptions === "string" || studyLanguageOrOptions == null
+      ? { studyLanguage: studyLanguageOrOptions }
+      : studyLanguageOrOptions;
+  const studyLanguage = options.studyLanguage;
+  const exampleLexemes =
+    options.exampleLexemes ?? options.material?.exampleLexemes ?? [];
+
   const items: TheoryExercise[] = [];
   const skill = fallbackSkill?.trim() || undefined;
 
   for (const draft of drafts) {
-    const materialSource = draft.materialSource ?? "ai";
     const skillLabel = draft.skillLabel ?? skill;
     const hint = draft.hint.trim();
     const explanation = draft.explanation?.trim() || undefined;
@@ -521,34 +859,52 @@ export function mapAiDraftsToTheoryExercises(
     const completedSentence = draft.completedSentence?.trim() || undefined;
     let sourceWord = draft.sourceWord?.trim() || draft.promptWord?.trim() || undefined;
 
-    if (draft.type === "fill_blank" && draft.sentence && draft.answer) {
-      if (isWrongStudyLanguageSentence(draft.sentence, studyLanguage)) continue;
+    const needsSourceWord =
+      targetType === "suffix" ||
+      targetType === "prefix" ||
+      targetType === "word_form";
 
-      const answerText = resolveFullWordAnswer({
+    if (draft.type === "fill_blank" && draft.answer) {
+      let answerText = resolveFullWordAnswer({
         answer: draft.answer,
         sourceWord,
         completedSentence,
       });
       if (!answerText) continue;
 
-      const needsSourceWord =
-        targetType === "suffix" ||
-        targetType === "prefix" ||
-        targetType === "word_form";
+      // Prefer complete-sentence → blank so graded answer and reveal stay aligned.
+      let sentence = "";
+      let split: { before: string; after: string } | null = null;
+      const fromComplete =
+        completedSentence != null
+          ? blankAnswerFromCompletedSentence(completedSentence, answerText)
+          : null;
+
+      if (fromComplete) {
+        answerText = fromComplete.answer;
+        sentence = forceFullWordBlank(fromComplete.sentence);
+        split = {
+          before: fromComplete.prefix,
+          after: fromComplete.suffix,
+        };
+      } else if (draft.sentence) {
+        sentence = forceFullWordBlank(draft.sentence);
+        split = splitSentenceBlank(sentence);
+      } else {
+        continue;
+      }
+
+      if (!split || !isFullWordBlank(sentence)) continue;
+      if (isWrongStudyLanguageSentence(sentence, studyLanguage)) continue;
 
       // Parenthesis cue: required for form practice; must be the base, not the answer.
       if (
         sourceWord &&
         normalizeAnswerKey(sourceWord) === normalizeAnswerKey(answerText)
       ) {
-        // Invalid base — reject so we don't ship ________ without a cue / wrong cue.
         if (needsSourceWord) continue;
         sourceWord = undefined;
       }
-
-      const sentence = forceFullWordBlank(draft.sentence);
-      const split = splitSentenceBlank(sentence);
-      if (!split || !isFullWordBlank(sentence)) continue;
 
       const scrubbed = scrubFillBlankPresentation({
         prefix: split.before,
@@ -561,9 +917,37 @@ export function mapAiDraftsToTheoryExercises(
       if (!isFullWordBlank(scrubbed.sentence)) continue;
       if (isWrongStudyLanguageSentence(scrubbed.sentence, studyLanguage)) continue;
       if (!scrubbed.hint.trim()) continue;
+      if (hintLeaksAnswer(scrubbed.hint, answerText)) continue;
 
       const resolvedSourceWord = sourceWord || scrubbed.sourceWordCue;
       if (needsSourceWord && !resolvedSourceWord) continue;
+
+      if (
+        hasObjectiveAlignmentIssue({
+          prefix: scrubbed.prefix,
+          suffix: scrubbed.suffix,
+          answer: answerText,
+          sourceWord: resolvedSourceWord,
+          needsSourceWord,
+        })
+      ) {
+        continue;
+      }
+
+      if (
+        !hasEnoughPreAnswerContext({
+          prefix: scrubbed.prefix,
+          suffix: scrubbed.suffix,
+          sourceWord: resolvedSourceWord,
+          needsSourceWord,
+          hint: scrubbed.hint,
+        })
+      ) {
+        continue;
+      }
+
+      const canonicalCompleted = scrubbed.completedSentence;
+      const materialSource = draft.materialSource ?? "ai";
 
       const fill: TheoryFillBlankExercise = {
         id: uid("ai_fill"),
@@ -583,13 +967,8 @@ export function mapAiDraftsToTheoryExercises(
         learningObjective,
         targetType: effectiveTargetType(targetType, Boolean(resolvedSourceWord)),
         sourceWord: resolvedSourceWord,
-        completedSentence: (() => {
-          if (!completedSentence) return scrubbed.completedSentence;
-          const re = new RegExp(escapeRegExp(answerText), "gi");
-          const hits = completedSentence.match(re);
-          if (hits && hits.length > 1) return scrubbed.completedSentence;
-          return completedSentence;
-        })(),
+        // Always store the canonical rebuild so feedback matches grading.
+        completedSentence: canonicalCompleted,
         sentenceMeaning: draft.sentenceMeaning?.trim() || undefined,
         prefix: scrubbed.prefix || undefined,
         suffix: scrubbed.suffix || undefined,
@@ -607,6 +986,8 @@ export function mapAiDraftsToTheoryExercises(
         completedSentence,
       });
       if (!answerText || !promptWord) continue;
+      if (!isRelatedWordForm(promptWord, answerText)) continue;
+      if (hintLeaksAnswer(hint, answerText)) continue;
 
       const accepted = uniqueAnswers(answerText, draft.acceptedAnswers ?? []);
       const xf: TheoryTransformationExercise = {
@@ -616,7 +997,7 @@ export function mapAiDraftsToTheoryExercises(
         generator: "ai",
         type: "transformation",
         typeLabelKey: "transformation",
-        materialSource,
+        materialSource: draft.materialSource ?? "ai",
         skillLabel,
         instruction: draft.instruction?.trim() || undefined,
         promptWord,
@@ -627,7 +1008,7 @@ export function mapAiDraftsToTheoryExercises(
         explanation,
         learningObjective,
         targetType: effectiveTargetType(targetType, true),
-        completedSentence: completedSentence ?? `${promptWord} → ${answerText}`,
+        completedSentence: `${promptWord} → ${answerText}`,
       };
       if (isValidTheoryExercise(xf)) items.push(xf);
       continue;
@@ -643,6 +1024,7 @@ export function mapAiDraftsToTheoryExercises(
       ) {
         continue;
       }
+      if (hintLeaksAnswer(hint, draft.correctOption)) continue;
       const accepted = uniqueAnswers(draft.correctOption, draft.acceptedAnswers ?? []);
       const mc: TheoryMultipleChoiceExercise = {
         id: uid("ai_mc"),
@@ -651,7 +1033,7 @@ export function mapAiDraftsToTheoryExercises(
         generator: "ai",
         type: "multiple_choice",
         typeLabelKey: "multiple_choice",
-        materialSource,
+        materialSource: draft.materialSource ?? "ai",
         skillLabel,
         instruction: draft.instruction?.trim() || undefined,
         prompt: draft.prompt,
@@ -662,7 +1044,7 @@ export function mapAiDraftsToTheoryExercises(
         explanation,
         learningObjective,
         targetType,
-        completedSentence,
+        completedSentence: undefined,
       };
       if (isValidTheoryExercise(mc)) items.push(mc);
     }
@@ -673,5 +1055,16 @@ export function mapAiDraftsToTheoryExercises(
     ...items.filter((i) => i.type === "multiple_choice"),
   ];
 
-  return dedupeTheoryExercises(preferred, maxItems);
+  const deduped = dedupeTheoryExercises(preferred, maxItems);
+  return enforceExampleReuseLimit(deduped, exampleLexemes, maxItems);
+}
+
+/**
+ * Re-apply structural validation to persisted/cached exercises so old
+ * malformed items cannot bypass the corrected checks.
+ */
+export function filterPersistedTheoryExercises(
+  items: TheoryExercise[],
+): TheoryExercise[] {
+  return items.filter((item) => isValidTheoryExercise(item));
 }

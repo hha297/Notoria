@@ -110,7 +110,8 @@ describe("fill-in-blank AI prompt contract", () => {
       "Do NOT invent a specific grammar topic",
     );
     expect(FILL_BLANK_GENERATOR_PROMPT).toContain("meaningful context");
-    expect(FILL_BLANK_GENERATOR_PROMPT).toContain("I like ________.");
+    expect(FILL_BLANK_GENERATOR_PROMPT).toContain("context-free frames");
+    expect(FILL_BLANK_GENERATOR_PROMPT).not.toMatch(/I like _{3,}/);
   });
 
   it("includes structured difficulty guidance in the user payload", () => {

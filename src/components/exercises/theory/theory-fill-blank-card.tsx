@@ -10,6 +10,7 @@ import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import { Button } from "@/components/ui/button";
 import {
   answersMatchAny,
+  buildCanonicalCompletedSentence,
   extractSourceWordCueFromHint,
   revealTextForExercise,
   scrubFillBlankPresentation,
@@ -68,6 +69,12 @@ export function TheoryFillBlankCard({
       .replace(/\s{2,}/g, " ")
       .trim()
     : fromHint.hint.trim();
+  const canonicalCompleted = buildCanonicalCompletedSentence({
+    prefix: scrubbed.prefix,
+    suffix: scrubbed.suffix,
+    answer: item.answer,
+    sentence: scrubbed.sentence,
+  });
   const revealDisplay = revealTextForExercise({
     ...item,
     prefix: scrubbed.prefix || undefined,
@@ -75,14 +82,15 @@ export function TheoryFillBlankCard({
     hint: scrubbed.hint,
     sourceWord: displaySourceWord || item.sourceWord,
     sentence: scrubbed.sentence,
-    completedSentence: item.completedSentence ?? scrubbed.completedSentence,
+    completedSentence: canonicalCompleted,
   });
   const blankMinWidth = Math.min(Math.max(item.answer.length + 2, 6), 16);
   const trailingPunctuation = /^[.!?…]+$/.test(suffixText.trim())
     ? suffixText.trim()
     : "";
   const bodySuffix = trailingPunctuation ? "" : suffixText;
-  const filledText = checked ? (isCorrect ? value.trim() : item.answer) : "";
+  // Always fill with the graded answer so the in-sentence reveal matches checking.
+  const filledText = checked ? item.answer : "";
 
   const check = () => {
     if (checked || !value.trim()) return;
