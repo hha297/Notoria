@@ -67,7 +67,8 @@
   gap: 0.45rem;
   padding: 1rem 1.05rem;
   border-radius: 1rem;
-  border: 1px solid color-mix(in oklab, var(--accent-lime) 28%, var(--hairline-cloud));
+  border: 1px solid
+    color-mix(in oklab, var(--accent-lime) 28%, var(--hairline-cloud));
   background: color-mix(in oklab, var(--accent-soft) 55%, var(--surface));
 }
 
@@ -405,6 +406,136 @@
   text-align: left;
   font-size: 0.875rem;
   line-height: 1.45;
+}
+
+.pro-upgrade-cancel-feedback {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+}
+
+.pro-upgrade-cancel-feedback-label {
+  margin: 0;
+  font-size: 0.8rem;
+  font-weight: 650;
+  color: var(--ink);
+}
+
+.pro-upgrade-cancel-feedback-hint {
+  margin: 0;
+  font-size: 0.72rem;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+
+.pro-upgrade-cancel-reasons {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.pro-upgrade-cancel-reason {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.65rem;
+  width: 100%;
+  margin: 0;
+  padding: 0.45rem 0.35rem;
+  border-radius: 0.55rem;
+  border: 1px solid transparent;
+  background: transparent;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--ink);
+  text-align: left;
+  cursor: pointer;
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease;
+}
+
+.pro-upgrade-cancel-reason:hover {
+  background: color-mix(in oklab, var(--surface-muted) 55%, transparent);
+}
+
+.pro-upgrade-cancel-reason.is-active {
+  background: color-mix(in oklab, var(--accent-soft) 55%, var(--surface));
+}
+
+.pro-upgrade-cancel-reason:has(input:disabled) {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.pro-upgrade-cancel-reason-input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.pro-upgrade-cancel-reason-box {
+  flex-shrink: 0;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.1rem;
+  border-radius: 0.28rem;
+  border: 1.5px solid color-mix(in oklab, var(--ink) 28%, var(--hairline-cloud));
+  background: var(--surface);
+  box-shadow: inset 0 0 0 0
+    color-mix(in oklab, var(--accent-lime) 70%, transparent);
+  transition:
+    border-color 160ms ease,
+    background-color 160ms ease,
+    box-shadow 160ms ease;
+}
+
+.pro-upgrade-cancel-reason.is-active .pro-upgrade-cancel-reason-box {
+  border-color: color-mix(in oklab, var(--accent-lime) 72%, var(--ink));
+  background: color-mix(in oklab, var(--accent-lime) 78%, var(--ink));
+  box-shadow: inset 0 0 0 2px var(--surface);
+}
+
+.pro-upgrade-cancel-reason-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.pro-upgrade-cancel-comment {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+/* Soft cool border — not accent-lime. Checkbox styles stay unchanged. */
+.pro-upgrade-cancel-textarea {
+  border-color: color-mix(
+    in oklab,
+    var(--hairline-cloud) 75%,
+    transparent
+  ) !important;
+  background-image: none !important;
+  background-color: color-mix(
+    in oklab,
+    var(--surface-muted) 65%,
+    transparent
+  ) !important;
+  box-shadow: none !important;
+}
+
+.pro-upgrade-cancel-textarea:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--ink) 28%,
+    var(--hairline-cloud)
+  ) !important;
+}
+
+.pro-upgrade-cancel-textarea:focus-visible {
+  border-color: color-mix(in oklab, var(--ring) 70%, var(--hairline-cloud)) !important;
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--ring) 20%, transparent) !important;
 }
 
 .pro-upgrade-cancel {

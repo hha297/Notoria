@@ -37,8 +37,15 @@ export async function POST(request: Request) {
 
     const parsed = parseBillingCommand(json);
     if (!parsed.ok) {
+      const code = parsed.code;
       return NextResponse.json(
-        { error: "Invalid plan", code: "INVALID_PLAN" },
+        {
+          error:
+            code === "INVALID_FEEDBACK"
+              ? "Invalid cancellation feedback"
+              : "Invalid plan",
+          code,
+        },
         { status: 400 },
       );
     }

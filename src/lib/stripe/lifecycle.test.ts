@@ -2,12 +2,15 @@ import { describe, expect, it } from "vitest";
 import { displayPlan, getFeatureAccess } from "@/lib/billing/plans";
 import {
   accountBillingActions,
+  CANCELLATION_COMMENT_MAX_LENGTH,
   checkoutSessionParams,
   isDuplicateWebhookClaim,
   parseBillingCommand,
+  parseCancellationFeedback,
   planDialogCta,
   resolveBillingCommand,
   shouldApplyIncomingSubscription,
+  stripeCancellationDetails,
   stripeKeyMode,
   subscriptionChangeConfirmed,
   subscriptionRecordFromStripe,
@@ -37,6 +40,67 @@ describe("billing commands", () => {
     });
     const parsed = parseBillingCommand({ plan: "pro", priceId: "price_evil" });
     expect(parsed).toEqual({ ok: true, command: { intent: "change", plan: "pro" } });
+  });
+
+  it("accepts optional cancellation feedback only when moving to Free", () => {
+    expect(
+      parseBillingCommand({
+        intent: "change",
+        plan: "free",
+        feedback: "too_expensive",
+        comment: "  Budget changed  ",
+      }),
+    ).toEqual({
+      ok: true,
+      command: {
+        intent: "change",
+        plan: "free",
+        cancellation: {
+          feedback: "too_expensive",
+          comment: "Budget changed",
+        },
+      },
+    });
+    expect(parseBillingCommand({ intent: "change", plan: "free" })).toEqual({
+      ok: true,
+      command: { intent: "change", plan: "free" },
+    });
+    expect(
+      parseBillingCommand({
+        intent: "change",
+        plan: "pro",
+        feedback: "too_expensive",
+      }),
+    ).toEqual({ ok: false, code: "INVALID_FEEDBACK" });
+    expect(
+      parseBillingCommand({
+        intent: "resume",
+        feedback: "unused",
+      }),
+    ).toEqual({ ok: false, code: "INVALID_FEEDBACK" });
+    expect(
+      parseBillingCommand({
+        intent: "change",
+        plan: "free",
+        feedback: "not_a_reason",
+      }),
+    ).toEqual({ ok: false, code: "INVALID_FEEDBACK" });
+    expect(
+      parseCancellationFeedback({
+        plan: "free",
+        comment: "x".repeat(CANCELLATION_COMMENT_MAX_LENGTH + 1),
+      }),
+    ).toEqual({ ok: false, code: "INVALID_FEEDBACK" });
+    expect(
+      stripeCancellationDetails({
+        feedback: "missing_features",
+        comment: "Need offline mode",
+      }),
+    ).toEqual({
+      feedback: "missing_features",
+      comment: "Need offline mode",
+    });
+    expect(stripeCancellationDetails(undefined)).toBeUndefined();
   });
 
   it("sends a free user to Checkout for Pro and Premium", () => {

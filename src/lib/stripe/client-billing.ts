@@ -1,3 +1,5 @@
+import type { CancellationFeedbackReason } from "@/lib/stripe/lifecycle";
+
 export type CheckoutPlan = "pro" | "premium";
 export type BillingExpect = "pro" | "premium" | "cancel" | "resume" | "schedule_pro";
 
@@ -5,6 +7,11 @@ export type StripeSessionResult = {
   ok: boolean;
   url?: string;
   code?: string;
+};
+
+export type CancellationFeedbackInput = {
+  feedback?: CancellationFeedbackReason | null;
+  comment?: string | null;
 };
 
 export type SyncedSubscription = {
@@ -36,11 +43,25 @@ async function createStripeSession(
   };
 }
 
-export function requestPlanChange(plan: CheckoutPlan | "free") {
-  return createStripeSession("/api/stripe/create-checkout-session", {
+export function requestPlanChange(
+  plan: CheckoutPlan | "free",
+  cancellation?: CancellationFeedbackInput,
+) {
+  const body: Record<string, unknown> = {
     intent: "change",
     plan,
-  });
+  };
+  // Feedback is only sent for cancellation (paid → Free).
+  if (plan === "free" && cancellation) {
+    if (cancellation.feedback) {
+      body.feedback = cancellation.feedback;
+    }
+    const comment = cancellation.comment?.trim();
+    if (comment) {
+      body.comment = comment;
+    }
+  }
+  return createStripeSession("/api/stripe/create-checkout-session", body);
 }
 
 export function requestResumePlan() {
@@ -89,5 +110,6 @@ export function billingErrorKey(code?: string) {
   if (code === "PRICE_INACTIVE") return "priceInactive" as const;
   if (code === "PRICE_CURRENCY") return "priceCurrency" as const;
   if (code === "PRICE_INTERVAL") return "priceInterval" as const;
+  if (code === "INVALID_FEEDBACK") return "invalidCancellationFeedback" as const;
   return "checkoutFailed" as const;
 }
