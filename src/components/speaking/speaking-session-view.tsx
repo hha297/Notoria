@@ -89,14 +89,22 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
     });
   }
 
-  const metaTags: string[] = [
-    t(`status.${session.status}`),
+  const metaTags: Array<{ key: string; label: string; tone?: string }> = [
+    { key: "status", label: t(`status.${session.status}`) },
   ];
   if (session.topic) {
-    metaTags.push(resolveTopicLabel(session.topic, (key) => tTags(key)));
+    metaTags.push({
+      key: `topic-${session.topic}`,
+      label: resolveTopicLabel(session.topic, (key) => tTags(key)),
+      tone: "topic",
+    });
   }
   if (session.cefrLevel) {
-    metaTags.push(tMeta(`cefr.${session.cefrLevel as WritingCefr}`));
+    metaTags.push({
+      key: `cefr-${session.cefrLevel}`,
+      label: tMeta(`cefr.${session.cefrLevel as WritingCefr}`),
+      tone: "difficulty",
+    });
   }
   metaTags.push(
     formatDistanceToNow(new Date(session.createdAt), {
@@ -159,9 +167,13 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
             </h1>
           </div>
           <div className={mx(detailStyles, "meta")}>
-            {metaTags.map((label) => (
-              <span key={label} className={mx(detailStyles, "tag")}>
-                {label}
+            {metaTags.map((tag) => (
+              <span
+                key={tag.key}
+                data-tag-tone={tag.tone}
+                className={mx(detailStyles, "tag")}
+              >
+                {tag.label}
               </span>
             ))}
           </div>

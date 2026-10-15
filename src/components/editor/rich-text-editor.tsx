@@ -170,7 +170,7 @@ export function RichTextEditor({
 }: RichTextEditorProps) {
   const tEditor = useTranslations("editor");
   const tAi = useTranslations("settings.ai");
-  const { preferences, shouldConfirmContentChange } = useAiPreferences();
+  const { preferences } = useAiPreferences();
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSavedContent = useRef("");
   const pendingUploads = useRef(0);
@@ -436,10 +436,6 @@ export function RichTextEditor({
     if (!preferences.enabled) {
       toast.message(tAi("disabledToast"));
       return;
-    }
-    if (shouldConfirmContentChange) {
-      const confirmed = window.confirm(tAi("formatConfirm"));
-      if (!confirmed) return;
     }
     const current = activeEditor.getJSON();
     setFormatting(true);

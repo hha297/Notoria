@@ -166,7 +166,11 @@ export function VocabularyPreview({
               <span className={mx(detailStyles, "tag")}>{partOfSpeechLabel}</span>
             ) : null}
             {tags.map((item) => (
-              <span key={item.tag} className={mx(detailStyles, "tag")}>
+              <span
+                key={item.tag}
+                data-tag-tone="card"
+                className={mx(detailStyles, "tag")}
+              >
                 {getTagLabel(item.tag, (key) => tTags(key))}
               </span>
             ))}

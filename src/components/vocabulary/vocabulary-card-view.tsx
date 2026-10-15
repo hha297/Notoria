@@ -101,7 +101,7 @@ function VocabularyCard({
       />
       {word.tags.length > 0 ? (
         <div className="mt-3">
-          <VocabularyWordTags tags={word.tags} limit={3} />
+          <VocabularyWordTags tags={word.tags} limit={3} matchCardAccent />
         </div>
       ) : null}
 

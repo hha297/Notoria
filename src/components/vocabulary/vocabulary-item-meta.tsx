@@ -93,6 +93,7 @@ export function VocabularyCardTags({ word }: { word: VocabularyWordRow }) {
     <VocabularyWordTags
       tags={difficulty ? word.tags.filter((tag) => tag.tag !== difficulty.tag) : word.tags}
       limit={2}
+      matchCardAccent
     />
   );
 }

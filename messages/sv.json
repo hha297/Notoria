@@ -1963,8 +1963,7 @@
       "confirmContentChange": "Endast vid innehållsändring",
       "confirmNever": "Aldrig",
       "saveFailed": "Kunde inte spara AI-inställningar",
-      "disabledToast": "AI-hjälp är avstängd i Inställningar",
-      "formatConfirm": "AI kommer att skriva om detta innehåll. Fortsätta?"
+      "disabledToast": "AI-hjälp är avstängd i Inställningar"
     },
     "tutorials": "Sektionstutorials",
     "tutorialsDescription": "Återställ genomförda sektiongenomgångar så att \"Visa tutorial\" börjar från början igen.",

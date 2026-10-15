@@ -72,12 +72,28 @@ export function WritingPreview({
   const canExport = writingEditorHasExportableContent(editorState);
   const meta = editorState.meta;
 
-  const metaTags: string[] = [];
-  if (meta.cefrLevel) metaTags.push(tMeta(`cefr.${meta.cefrLevel}`));
-  if (meta.topic) {
-    metaTags.push(resolveTopicLabel(meta.topic, (key) => tTags(key)));
+  const metaTags: Array<{ key: string; label: string; tone: string }> = [];
+  if (meta.cefrLevel) {
+    metaTags.push({
+      key: `cefr-${meta.cefrLevel}`,
+      label: tMeta(`cefr.${meta.cefrLevel}`),
+      tone: "difficulty",
+    });
   }
-  if (meta.formality) metaTags.push(tMeta(`formality.${meta.formality}`));
+  if (meta.topic) {
+    metaTags.push({
+      key: `topic-${meta.topic}`,
+      label: resolveTopicLabel(meta.topic, (key) => tTags(key)),
+      tone: "topic",
+    });
+  }
+  if (meta.formality) {
+    metaTags.push({
+      key: `formality-${meta.formality}`,
+      label: tMeta(`formality.${meta.formality}`),
+      tone: "formality",
+    });
+  }
 
   useRegisterShortcutAction("quickEdit", () => {
     router.push(`/writing/${id}/edit`);
@@ -195,9 +211,13 @@ export function WritingPreview({
           </div>
           {metaTags.length > 0 ? (
             <div className={mx(detailStyles, "meta")}>
-              {metaTags.map((label) => (
-                <span key={label} className={mx(detailStyles, "tag")}>
-                  {label}
+              {metaTags.map((tag) => (
+                <span
+                  key={tag.key}
+                  data-tag-tone={tag.tone}
+                  className={mx(detailStyles, "tag")}
+                >
+                  {tag.label}
                 </span>
               ))}
             </div>

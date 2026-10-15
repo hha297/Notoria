@@ -1768,8 +1768,7 @@
       "confirmContentChange": "Chỉ khi đổi nội dung",
       "confirmNever": "Không hỏi",
       "saveFailed": "Không lưu được tuỳ chọn AI",
-      "disabledToast": "Hỗ trợ AI đang tắt trong Cài đặt",
-      "formatConfirm": "AI sẽ viết lại nội dung này. Tiếp tục?"
+      "disabledToast": "Hỗ trợ AI đang tắt trong Cài đặt"
     },
     "tutorials": "Tutorial từng mục",
     "tutorialsDescription": "Đặt lại các tutorial đã xem để “Show tutorial” bắt đầu lại từ đầu.",

@@ -933,6 +933,99 @@
     @apply flex flex-col items-center justify-center rounded-md border border-dashed border-hairline-cloud bg-muted/60 px-4 py-10 text-center sm:px-8 sm:py-12;
   }
 
+  /*
+    Card / detail tag chips — tint from each tag's tone (module token pairs),
+    not the surrounding page/card accent. Override --tag-fg/--tag-bg inline
+    when a tag carries an explicit color; omit data-tag-tone for neutral.
+  */
+  [data-tag-tone="difficulty"] {
+    --tag-fg: var(--module-exercise-fg);
+    --tag-bg: var(--module-exercise-bg);
+  }
+
+  [data-tag-tone="topic"] {
+    --tag-fg: var(--module-listen-fg);
+    --tag-bg: var(--module-listen-bg);
+  }
+
+  [data-tag-tone="grammar"] {
+    --tag-fg: var(--module-theory-fg);
+    --tag-bg: var(--module-theory-bg);
+  }
+
+  [data-tag-tone="learningStatus"] {
+    --tag-fg: var(--module-home-fg);
+    --tag-bg: var(--module-home-bg);
+  }
+
+  [data-tag-tone="custom"] {
+    --tag-fg: var(--module-vocab-fg);
+    --tag-bg: var(--module-vocab-bg);
+  }
+
+  [data-tag-tone="formality"] {
+    --tag-fg: var(--module-speak-fg);
+    --tag-bg: var(--module-speak-bg);
+  }
+
+  [data-tag-tone="neutral"] {
+    --tag-fg: var(--muted-foreground);
+    --tag-bg: var(--muted);
+  }
+
+  .tag-chip {
+    --tag-fg: var(--muted-foreground);
+    --tag-bg: var(--muted);
+    border-color: color-mix(
+      in oklab,
+      var(--tag-fg) 32%,
+      var(--hairline-cloud)
+    ) !important;
+    background-color: color-mix(
+      in oklab,
+      var(--tag-bg) 72%,
+      transparent
+    ) !important;
+    background-image: none !important;
+    color: color-mix(in oklab, var(--tag-fg) 88%, var(--ink)) !important;
+  }
+
+  /*
+    Vocab card/list chips — bg + border are soft blends of the card POS
+    accent (same language as .vocab-module border). Never muted/elevated
+    slate, which reads as fixed grey/black on dark cards.
+  */
+  .tag-chip[data-tag-tone="card"],
+  [data-vocab-pos] .tag-chip[data-tag-tone="card"] {
+    --tag-fg: var(--vocab-pos-accent);
+    border-color: color-mix(
+      in oklab,
+      var(--vocab-pos-accent) 36%,
+      transparent
+    ) !important;
+    background-color: color-mix(
+      in oklab,
+      var(--vocab-pos-accent) 16%,
+      transparent
+    ) !important;
+    background-image: none !important;
+    color: var(--vocab-pos-accent) !important;
+  }
+
+  .dark .tag-chip[data-tag-tone="card"],
+  .dark [data-vocab-pos] .tag-chip[data-tag-tone="card"] {
+    border-color: color-mix(
+      in oklab,
+      var(--vocab-pos-accent) 42%,
+      transparent
+    ) !important;
+    background-color: color-mix(
+      in oklab,
+      var(--vocab-pos-accent) 22%,
+      transparent
+    ) !important;
+  }
+
   .route-view-toggle,
   .vocab-view-toggle {
     --route-view-fg: var(--module-vocab-fg);

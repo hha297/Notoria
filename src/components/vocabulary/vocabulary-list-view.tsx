@@ -106,7 +106,7 @@ function VocabularyListItem({
           />
           {word.tags.length > 0 ? (
             <div className="mt-2 min-w-0">
-              <VocabularyWordTags tags={word.tags} limit={4} />
+              <VocabularyWordTags tags={word.tags} limit={4} matchCardAccent />
             </div>
           ) : null}
           <p className="mt-1.5 text-[11px] leading-4 text-muted-foreground">

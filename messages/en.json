@@ -1963,8 +1963,7 @@
       "confirmContentChange": "Only when changing content",
       "confirmNever": "Never",
       "saveFailed": "Could not save AI preferences",
-      "disabledToast": "AI assistance is turned off in Settings",
-      "formatConfirm": "AI will rewrite this content. Continue?"
+      "disabledToast": "AI assistance is turned off in Settings"
     },
     "tutorials": "Section tutorials",
     "tutorialsDescription": "Reset completed section walkthroughs so “Show tutorial” starts from the beginning again.",

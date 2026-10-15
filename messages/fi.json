@@ -1768,8 +1768,7 @@
       "confirmContentChange": "Vain sisältöä muuttaessa",
       "confirmNever": "Ei koskaan",
       "saveFailed": "AI-asetuksia ei voitu tallentaa",
-      "disabledToast": "AI-avustus on pois päältä Asetuksissa",
-      "formatConfirm": "AI kirjoittaa tämän sisällön uudelleen. Jatketaanko?"
+      "disabledToast": "AI-avustus on pois päältä Asetuksissa"
     },
     "tutorials": "Osioiden oppaat",
     "tutorialsDescription": "Nollaa suoritetut osio-oppaat, jotta “Show tutorial” alkaa alusta.",

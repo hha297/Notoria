@@ -8,21 +8,31 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { TAG_PREVIEW_LIMIT, visibleTags } from "@/lib/vocabulary/display";
-import { getTagLabel } from "@/lib/vocabulary-tags";
+import { getTagLabel, getTagTone } from "@/lib/vocabulary-tags";
 import type { VocabularyWordRow } from "@/lib/vocabulary/types";
+import { cn } from "@/lib/utils";
 
 type VocabularyWordTagsProps = {
   tags: VocabularyWordRow["tags"];
   limit?: number;
   emptyLabel?: string;
   className?: string;
+  /**
+   * Tint chips from the parent card POS accent (`--vocab-pos-accent`)
+   * instead of per-tag group tones.
+   */
+  matchCardAccent?: boolean;
 };
+
+const TAG_CHIP_CLASS =
+  "tag-chip h-5 max-w-full rounded-md px-1.5 text-[11px] font-medium";
 
 export function VocabularyWordTags({
   tags,
   limit = TAG_PREVIEW_LIMIT,
   emptyLabel,
   className,
+  matchCardAccent = false,
 }: VocabularyWordTagsProps) {
   const t = useTranslations("vocabulary");
   const tTags = useTranslations("tags");
@@ -43,8 +53,10 @@ export function VocabularyWordTags({
       {shown.map((tag) => (
         <Badge
           key={tag.id}
-          variant="outline"
-          className="h-5 max-w-full rounded-md border-hairline-cloud bg-muted/40 px-1.5 text-[11px] font-medium text-muted-foreground"
+          /* ghost avoids outline control-surface (grey elevated fill) */
+          variant="ghost"
+          data-tag-tone={matchCardAccent ? "card" : getTagTone(tag.tag)}
+          className={cn(TAG_CHIP_CLASS, "border")}
         >
           <span className="truncate">
             {getTagLabel(tag.tag, (key) => tTags(key))}
@@ -53,7 +65,13 @@ export function VocabularyWordTags({
       ))}
       {extra.length > 0 ? (
         <Tooltip>
-          <TooltipTrigger className="inline-flex h-5 cursor-default items-center rounded-md border border-hairline-cloud bg-muted/40 px-1.5 text-[11px] font-medium text-muted-foreground">
+          <TooltipTrigger
+            data-tag-tone={matchCardAccent ? "card" : "neutral"}
+            className={cn(
+              "inline-flex cursor-default items-center border",
+              TAG_CHIP_CLASS,
+            )}
+          >
             {t("moreTags", { count: extra.length })}
           </TooltipTrigger>
           <TooltipContent className="max-w-56 text-left">
