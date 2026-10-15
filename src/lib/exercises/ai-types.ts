@@ -40,9 +40,27 @@ export const exerciseAiCefrSchema = z
 export const exerciseAiWordSchema = z.object({
   id: z.string().trim().min(1).max(80),
   word: z.string().trim().min(1).max(120),
-  meaning: optionalTextSchema,
-  partOfSpeech: optionalTextSchema,
-  topic: optionalTextSchema,
+  meaning: z
+    .string()
+    .trim()
+    .max(500)
+    .optional()
+    .nullable()
+    .transform((value) => value?.trim() || null),
+  partOfSpeech: z
+    .string()
+    .trim()
+    .max(64)
+    .optional()
+    .nullable()
+    .transform((value) => value?.trim() || null),
+  topic: z
+    .string()
+    .trim()
+    .max(120)
+    .optional()
+    .nullable()
+    .transform((value) => value?.trim() || null),
   avoidSentences: z.array(z.string().trim().min(1).max(400)).max(12).optional(),
 });
 

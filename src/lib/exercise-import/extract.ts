@@ -1,6 +1,11 @@
 import mammoth from "mammoth";
 import { extractText, getDocumentProxy } from "unpdf";
-import OpenAI from "openai";
+import {
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  clipForAi,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import {
   cloudinaryResourceTypeForMime,
@@ -33,11 +38,15 @@ const DOCX_MIME =
 const LEGACY_DOC_MIME = "application/msword";
 
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
+  try {
+    return requireOpenAiClient({ timeoutMs: 90_000 });
+  } catch {
     throw new ExerciseImportError("OPENAI_NOT_CONFIGURED");
   }
-  return new OpenAI({ apiKey, timeout: 90_000 });
+}
+
+function clipImportText(text: string) {
+  return clipForAi(text, AI_INPUT_LIMITS.importText);
 }
 
 function stripHtml(html: string): string {
@@ -131,7 +140,7 @@ const imageExtractor: ContentExtractor = {
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
       temperature: 0.1,
-      max_tokens: 12_000,
+      max_tokens: AI_OUTPUT_TOKENS.importVision,
       messages: [
         {
           role: "system",
@@ -168,7 +177,9 @@ Rules:
       ],
     });
 
-    const text = completion.choices[0]?.message?.content?.trim() ?? "";
+    const text = clipImportText(
+      completion.choices[0]?.message?.content?.trim() ?? "",
+    );
     if (!text) {
       throw new ExerciseImportError("EMPTY_CONTENT");
     }
@@ -193,11 +204,11 @@ const plainTextExtractor: ContentExtractor = {
       filePublicId: input.filePublicId,
       mimeType: input.mimeType,
     });
-    const text = buffer.toString("utf8").trim();
+    const text = clipImportText(buffer.toString("utf8"));
     if (!text) {
       throw new ExerciseImportError("EMPTY_CONTENT");
     }
-    return { text: text.slice(0, 50_000), method: "plain_text" };
+    return { text, method: "plain_text" };
   },
 };
 
@@ -236,11 +247,12 @@ const documentExtractor: ContentExtractor = {
       throw new ExerciseImportError("INVALID_FILE_TYPE");
     }
 
-    if (!text || text.length < 20) {
+    const clipped = clipImportText(text);
+    if (!clipped || clipped.length < 20) {
       throw new ExerciseImportError("EMPTY_CONTENT");
     }
 
-    return { text: text.slice(0, 50_000), method: "parser" };
+    return { text: clipped, method: "parser" };
   },
 };
 
@@ -273,15 +285,16 @@ const urlExtractor: ContentExtractor = {
 
     const contentType = response.headers.get("content-type") ?? "";
     const raw = await response.text();
-    const text = contentType.includes("text/html")
-      ? stripHtml(raw)
-      : raw.trim();
+    const text = clipForAi(
+      contentType.includes("text/html") ? stripHtml(raw) : raw,
+      AI_INPUT_LIMITS.contentImport,
+    );
 
     if (!text || text.length < 40) {
       throw new ExerciseImportError("EMPTY_CONTENT");
     }
 
-    return { text: text.slice(0, 50_000), method: "url_html" };
+    return { text, method: "url_html" };
   },
 };
 

@@ -1,5 +1,6 @@
-import OpenAI from "openai";
 import { z } from "zod";
+import { AI_OUTPUT_TOKENS } from "@/lib/ai/bounds";
+import { createOpenAiClient } from "@/lib/ai/openai-client";
 import {
   buildDeterministicCoachNote,
   coachFactsForPrompt,
@@ -67,11 +68,10 @@ export async function resolveCoachNote(input: {
 }
 
 async function generateAiCoachNote(facts: CoachFacts) {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) return null;
+  const client = createOpenAiClient({ timeoutMs: 20_000, requireKey: false });
+  if (!client) return null;
 
   try {
-    const client = new OpenAI({ apiKey, timeout: 20_000 });
     const system = await aiSystemPrompt(
       [
         "You write a short Learning Coach note for a language learner.",
@@ -89,6 +89,7 @@ async function generateAiCoachNote(facts: CoachFacts) {
     const response = await client.chat.completions.create({
       model: "gpt-4o-mini",
       temperature: 0.2,
+      max_tokens: AI_OUTPUT_TOKENS.coachNote,
       response_format: { type: "json_object" },
       messages: [
         { role: "system", content: system },

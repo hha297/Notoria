@@ -6,6 +6,7 @@ export const LISTENING_ERROR_CODES = [
   "INVALID_FILE_TYPE",
   "FILE_TOO_LARGE",
   "AUDIO_TOO_LONG",
+  "AUDIO_DURATION_UNKNOWN",
   "TRANSCRIPTION_FAILED",
   "GENERATION_FAILED",
   "GENERATION_UNAVAILABLE",
@@ -36,6 +37,15 @@ export function isListeningErrorCode(value: string): value is ListeningErrorCode
 export function toListeningError(error: unknown): ListeningError {
   if (error instanceof ListeningError) {
     return error;
+  }
+
+  if (
+    error &&
+    typeof error === "object" &&
+    "cause" in error &&
+    (error as { cause?: unknown }).cause instanceof ListeningError
+  ) {
+    return (error as { cause: ListeningError }).cause;
   }
 
   if (error instanceof Error && isListeningErrorCode(error.message)) {

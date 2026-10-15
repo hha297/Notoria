@@ -2321,7 +2321,8 @@
       "EMPTY_TRANSCRIPT": "Không tìm thấy lời nói trong file này.",
       "DUPLICATE_FILENAME": "Đã có file với tên này.",
       "FILENAME_REQUIRED": "Hãy nhập tên file.",
-      "AUDIO_TOO_LONG": "Âm thanh dài hơn 45 phút. Hãy tách nhỏ hoặc dùng đoạn ngắn hơn cho một bản ghi."
+      "AUDIO_TOO_LONG": "Âm thanh dài hơn 45 phút. Hãy tách nhỏ hoặc dùng đoạn ngắn hơn cho một bản ghi.",
+      "AUDIO_DURATION_UNKNOWN": "Không xác nhận được độ dài âm thanh trước khi phiên âm. Hãy tải lại tệp và thử lại."
     }
   },
   "speaking": {

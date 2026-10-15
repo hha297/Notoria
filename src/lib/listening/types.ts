@@ -56,6 +56,8 @@ export type ListeningTranscriptionData = {
   speakersResolved?: boolean;
   speakerAssignmentVersion?: number;
   audioDuration: number | null;
+  /** AssemblyAI transcript id for poll reuse after a crash. */
+  assemblyTranscriptId?: string | null;
 };
 
 export type ListeningLessonListItem = {

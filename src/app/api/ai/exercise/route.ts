@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     await settleMeteredAi(access, true);
     return NextResponse.json({ ok: true, exercises });
   } catch (error) {
-    await settleMeteredAi(access, false);
+    await settleMeteredAi(access, false, error);
     const message = error instanceof Error ? error.message : "";
     if (message === "OPENAI_NOT_CONFIGURED" || message === "AI_INVALID_RESPONSE") {
       console.error("exercise AI failed", message);

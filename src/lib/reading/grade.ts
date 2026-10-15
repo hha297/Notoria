@@ -1,5 +1,10 @@
-import OpenAI from "openai";
 import { z } from "zod";
+import {
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  clipForAi,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { ReadingError, toReadingError } from "@/lib/reading/errors";
 import type {
@@ -25,11 +30,11 @@ const writtenGradeSchema = z.object({
 });
 
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
+  try {
+    return requireOpenAiClient({ timeoutMs: 90_000 });
+  } catch {
     throw new ReadingError("OPENAI_NOT_CONFIGURED");
   }
-  return new OpenAI({ apiKey, timeout: 90_000 });
 }
 
 function asTfns(value: unknown): ReadingTfnsAnswer | null {
@@ -85,7 +90,7 @@ export async function gradeWrittenAnswers(input: {
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
       temperature: 0.2,
-      max_tokens: 4_000,
+      max_tokens: AI_OUTPUT_TOKENS.readingGrade,
       response_format: { type: "json_object" },
       messages: [
         {
@@ -118,16 +123,18 @@ Rules:
         {
           role: "user",
           content: JSON.stringify({
-            passageTitle: input.passageTitle,
+            passageTitle: clipForAi(input.passageTitle, AI_INPUT_LIMITS.title),
             questionLanguage: input.questionLanguage,
-            passage: input.passageBody.slice(0, 12_000),
+            passage: clipForAi(input.passageBody, AI_INPUT_LIMITS.passage),
             items: input.items.map((item) => ({
               questionId: item.questionId,
-              prompt: item.prompt,
-              response:
+              prompt: clipForAi(item.prompt, AI_INPUT_LIMITS.writtenPrompt),
+              response: clipForAi(
                 typeof item.response === "string"
                   ? item.response
                   : JSON.stringify(item.response),
+                AI_INPUT_LIMITS.writtenAnswer,
+              ),
               keyPoints: item.keyPoints ?? [],
               explanation: item.explanation,
               excerpt: item.excerpt,

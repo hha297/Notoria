@@ -1,5 +1,10 @@
-import OpenAI from "openai";
 import { z } from "zod";
+import {
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  clipForAi,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { ReadingError, toReadingError } from "@/lib/reading/errors";
 import type {
@@ -49,11 +54,11 @@ export type GeneratedReadingQuestion = {
 };
 
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
+  try {
+    return requireOpenAiClient({ timeoutMs: 90_000 });
+  } catch {
     throw new ReadingError("OPENAI_NOT_CONFIGURED");
   }
-  return new OpenAI({ apiKey, timeout: 90_000 });
 }
 
 function parseJsonObject(raw: string): unknown {
@@ -243,10 +248,11 @@ export async function generateReadingQuestions(input: {
 
   try {
     const client = getOpenAIClient();
+    const passage = clipForAi(input.body, AI_INPUT_LIMITS.passage);
     const completion = await client.chat.completions.create({
       model: "gpt-4o-mini",
       temperature: 0.35,
-      max_tokens: 6_000,
+      max_tokens: AI_OUTPUT_TOKENS.readingGenerate,
       response_format: { type: "json_object" },
       messages: [
         {
@@ -258,14 +264,14 @@ export async function generateReadingQuestions(input: {
         {
           role: "user",
           content: JSON.stringify({
-            title: input.title,
+            title: clipForAi(input.title, AI_INPUT_LIMITS.title),
             passageLanguage: input.passageLanguage,
             questionLanguage: input.questionLanguage,
             exerciseMode: input.exerciseMode,
             allowedTypes,
             questionCount: count,
             difficulty,
-            passage: input.body.slice(0, 18_000),
+            passage,
           }),
         },
       ],

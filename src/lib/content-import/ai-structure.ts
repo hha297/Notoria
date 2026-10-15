@@ -1,12 +1,15 @@
-import OpenAI from "openai";
+import {
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  clipForAi,
+} from "@/lib/ai/bounds";
+import { createOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import type { VocabImportDraft } from "@/lib/content-import/types";
 import { MAX_VOCAB_IMPORT_ROWS } from "@/lib/content-import/types";
 
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) return null;
-  return new OpenAI({ apiKey, timeout: 90_000 });
+  return createOpenAiClient({ timeoutMs: 90_000, requireKey: false });
 }
 
 type AiVocabItem = {
@@ -30,10 +33,11 @@ export async function structureVocabularyWithAi(
   const client = getOpenAIClient();
   if (!client) return null;
 
-  const clipped = text.slice(0, 24_000);
+  const clipped = clipForAi(text, AI_INPUT_LIMITS.contentImport);
   const response = await client.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: 0.1,
+    max_tokens: AI_OUTPUT_TOKENS.contentImport,
     response_format: { type: "json_object" },
     messages: [
       {

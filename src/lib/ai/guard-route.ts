@@ -15,6 +15,7 @@ import {
   QuotaExceededError,
 } from "@/lib/billing/errors";
 import type { FeatureId, QuotaFeatureId } from "@/lib/billing/plans";
+import { shouldRefundUsage } from "@/lib/ai/bounds";
 import {
   finalizeUsageReservation,
   refundUsageReservation,
@@ -195,11 +196,18 @@ export async function guardPremiumCoachChat(): Promise<
 export async function settleMeteredAi(
   access: { reservationId: string | null },
   succeeded: boolean,
+  error?: unknown,
 ) {
   if (!access.reservationId) return;
   if (succeeded) {
     await finalizeUsageReservation(access.reservationId);
-  } else {
+    return;
+  }
+  // After a billable provider call, keep the charge so automatic retries
+  // cannot burn unlimited quota via refunds.
+  if (shouldRefundUsage(error)) {
     await refundUsageReservation(access.reservationId);
+  } else {
+    await finalizeUsageReservation(access.reservationId);
   }
 }

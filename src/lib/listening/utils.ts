@@ -168,6 +168,7 @@ export function toTranscriptionData(input: {
   speakersResolved?: boolean;
   speakerAssignmentVersion?: number;
   audioDuration?: number | null;
+  assemblyTranscriptId?: string | null;
 }): ListeningTranscriptionData {
   const words = (input.words ?? []).filter(
     (word) =>
@@ -216,5 +217,6 @@ export function toTranscriptionData(input: {
         : 0,
     audioDuration:
       typeof input.audioDuration === "number" ? input.audioDuration : null,
+    assemblyTranscriptId: input.assemblyTranscriptId?.trim() || null,
   };
 }

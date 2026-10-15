@@ -1,3 +1,4 @@
+import { vocabularyAiFields } from "@/lib/ai/bounds";
 import { FILL_BLANK_PLACEHOLDER } from "@/lib/exercises/ai-types";
 import { LEXICAL_SURFACE_GUIDANCE } from "@/lib/exercises/lexical-surface";
 import {
@@ -100,15 +101,23 @@ export function fillBlankUserPayload(input: {
     reminder:
       "Practice sentence/answer must be in languageHint. ALWAYS include sentenceMeaning in uiLanguage (website language), not the study language. Obey difficultyGuidance and fillBlankGuidance. Target words must come from the provided list only. Difficulty controls sentence construction only — never swap targets. word/baseWord is the lemma; answer is the contextual surface form.",
     regenerateReason: input.regenerateReason,
-    words: input.words.map((word) => ({
-      wordId: word.id,
-      lemma: word.word,
-      word: word.word,
-      meaning: word.meaning,
-      partOfSpeech: word.partOfSpeech,
-      topic: word.topic,
-      avoidSentences: word.avoidSentences?.slice(0, 12) ?? [],
-    })),
+    words: input.words.map((word) => {
+      const fields = vocabularyAiFields({
+        word: word.word,
+        meaning: word.meaning,
+        partOfSpeech: word.partOfSpeech,
+        topic: word.topic,
+      });
+      return {
+        wordId: word.id,
+        lemma: fields.word,
+        word: fields.word,
+        meaning: fields.meaning,
+        partOfSpeech: fields.partOfSpeech,
+        topic: fields.topic,
+        avoidSentences: word.avoidSentences?.slice(0, 12) ?? [],
+      };
+    }),
   };
 }
 

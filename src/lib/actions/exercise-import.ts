@@ -13,6 +13,7 @@ import {
 } from "@/lib/ai/job-lock";
 import { requireAiAssistanceEnabled } from "@/lib/ai/preferences-server";
 import { getCurrentUserId } from "@/lib/auth/session";
+import { shouldRefundUsage } from "@/lib/ai/bounds";
 import {
   consumeUsage,
   requireFeature,
@@ -539,7 +540,11 @@ export async function extractExerciseImport(
         return { id, status: "ANALYZING" as const, inProgress: false };
       } catch (error) {
         if (error instanceof JobLockLostError) throw error;
-        await refundUsageReservation(reservation.reservationId);
+        if (shouldRefundUsage(error)) {
+          await refundUsageReservation(reservation.reservationId);
+        } else {
+          await finalizeUsageReservation(reservation.reservationId);
+        }
         throw await markImportFailed(id, error);
       }
     },
@@ -637,7 +642,11 @@ export async function generateExerciseImportExercises(
         return { id, status: "COMPLETED" as const, inProgress: false };
       } catch (error) {
         if (error instanceof JobLockLostError) throw error;
-        await refundUsageReservation(reservation.reservationId);
+        if (shouldRefundUsage(error)) {
+          await refundUsageReservation(reservation.reservationId);
+        } else {
+          await finalizeUsageReservation(reservation.reservationId);
+        }
         throw await markImportFailed(id, error);
       }
     },

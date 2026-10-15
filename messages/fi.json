@@ -2313,6 +2313,7 @@
       "INVALID_FILE_TYPE": "Vain MP3- ja MP4-tiedostot ovat tuettuja.",
       "FILE_TOO_LARGE": "Tiedosto on liian suuri. Käytä alle 25 Mt:n tiedostoa.",
       "AUDIO_TOO_LONG": "Ääni on pidempi kuin 45 minuuttia. Jaa se osiin tai käytä lyhyempää klippiä yhtä transkriptiota varten.",
+      "AUDIO_DURATION_UNKNOWN": "Äänen pituutta ei voitu varmistaa ennen litterointia. Lataa tiedosto uudelleen ja yritä uudelleen.",
       "TRANSCRIPTION_FAILED": "Ääntä ei voitu litteroida. Yritä uudelleen.",
       "GENERATION_FAILED": "Harjoituksia ei voitu luoda. Yritä uudelleen.",
       "GENERATION_UNAVAILABLE": "Harjoitusten luonti ei ole juuri nyt käytettävissä. Yritä myöhemmin uudelleen.",

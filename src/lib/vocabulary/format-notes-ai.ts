@@ -1,5 +1,10 @@
 import type { JSONContent } from "@tiptap/react";
-import OpenAI from "openai";
+import {
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  clipForAi,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import {
   vocabularyNotesFormatResultSchema,
   type VocabularyNotesFormatBlock,
@@ -10,11 +15,7 @@ import { WORKPLACE_LANGUAGES, getLanguageByCode } from "@/lib/languages";
 import { PARADIGM_AI_RULES } from "@/lib/editor/format/paradigm-ai-rules";
 
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
-    throw new Error("OPENAI_NOT_CONFIGURED");
-  }
-  return new OpenAI({ apiKey, timeout: 45_000 });
+  return requireOpenAiClient({ timeoutMs: 45_000 });
 }
 
 function parseJsonContent(content: string | null | undefined) {
@@ -118,11 +119,12 @@ export async function formatVocabularyNotesWithAi(
   const languageHint = input.language
     ? (getLanguageByCode(input.language)?.name ?? input.language)
     : null;
+  const notes = clipForAi(input.notes, AI_INPUT_LIMITS.vocabNotes);
 
   const completion = await client.chat.completions.create({
     model: "gpt-4o",
     temperature: 0.1,
-    max_tokens: 4_000,
+    max_tokens: AI_OUTPUT_TOKENS.vocabNotesFormat,
     response_format: { type: "json_object" },
     messages: [
       { role: "system", content: notesFormatSystemPrompt() },
@@ -131,7 +133,7 @@ export async function formatVocabularyNotesWithAi(
         content: JSON.stringify({
           word: input.word?.trim() || null,
           studyLanguageHint: languageHint,
-          notes: input.notes,
+          notes,
           reminder:
             "Merge same-label rows with formA/formB. Strip person/possessive endings. First column = category labels only.",
         }),

@@ -1,4 +1,9 @@
-import OpenAI from "openai";
+import {
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  clipForAi,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { ExerciseImportError } from "@/lib/exercise-import/errors";
 import {
@@ -21,11 +26,11 @@ import { plainTextToTheoryDoc } from "@/lib/theory/content";
 const IMPORT_MAX_EXERCISES = 60;
 
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
+  try {
+    return requireOpenAiClient({ timeoutMs: 90_000 });
+  } catch {
     throw new ExerciseImportError("OPENAI_NOT_CONFIGURED");
   }
-  return new OpenAI({ apiKey, timeout: 90_000 });
 }
 
 function parseJsonContent(content: string | null | undefined) {
@@ -450,11 +455,12 @@ export async function generateExercisesFromSourceText(input: {
   }
 
   const client = getOpenAIClient();
+  const sourceText = clipForAi(extractedText, AI_INPUT_LIMITS.importText);
 
   const completion = await client.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: 0.2,
-    max_tokens: 8_000,
+    max_tokens: AI_OUTPUT_TOKENS.importGenerate,
     response_format: { type: "json_object" },
     messages: [
       {
@@ -466,11 +472,11 @@ export async function generateExercisesFromSourceText(input: {
       {
         role: "user",
         content: JSON.stringify({
-          title: input.title,
+          title: clipForAi(input.title, AI_INPUT_LIMITS.title),
           studyLanguage: studyLanguage ?? null,
           reminder:
             "Do NOT invent sentences or new words. Cards must reuse source cues/instructions only. Do not pad count.",
-          sourceText: extractedText.slice(0, 20_000),
+          sourceText,
         }),
       },
     ],

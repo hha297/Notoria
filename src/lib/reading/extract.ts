@@ -1,10 +1,16 @@
 import mammoth from "mammoth";
-import OpenAI from "openai";
+import type OpenAI from "openai";
 import {
   extractText,
   getDocumentProxy,
   renderPageAsImage,
 } from "unpdf";
+import {
+  AI_DEADLINES_MS,
+  AI_OUTPUT_TOKENS,
+  createAiDeadline,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { ReadingError } from "@/lib/reading/errors";
 import {
@@ -28,12 +34,12 @@ const OCR_SCALE = 1.4;
 
 export const READING_MAX_UPLOAD_BYTES = MAX_READING_FILE_SIZE_BYTES;
 
-function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
+function getOpenAIClient(timeoutMs = 120_000) {
+  try {
+    return requireOpenAiClient({ timeoutMs });
+  } catch {
     throw new ReadingError("OPENAI_NOT_CONFIGURED");
   }
-  return new OpenAI({ apiKey, timeout: 120_000 });
 }
 
 async function extractPdfText(buffer: Buffer): Promise<{
@@ -62,7 +68,7 @@ async function ocrPdfPage(
   const completion = await client.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: 0.1,
-    max_tokens: 4_000,
+    max_tokens: AI_OUTPUT_TOKENS.readingOcr,
     messages: [
       {
         role: "system",
@@ -111,27 +117,43 @@ async function extractPdfWithOcr(buffer: Buffer): Promise<string> {
     throw new ReadingError("SCANNED_PDF");
   }
 
+  const deadline = createAiDeadline(AI_DEADLINES_MS.readingOcr);
   let client: OpenAI;
   try {
-    client = getOpenAIClient();
+    client = getOpenAIClient(
+      Math.max(5_000, Math.min(120_000, deadline.remainingMs())),
+    );
   } catch {
+    deadline.clear();
     throw new ReadingError("SCANNED_PDF");
   }
 
   const parts: string[] = [];
-  for (let page = 1; page <= pageCount; page += 1) {
-    try {
-      const dataUrl = await renderPageAsImage(pdf, page, {
-        canvasImport: () => import("@napi-rs/canvas"),
-        scale: OCR_SCALE,
-        toDataURL: true,
-      });
-      const pageText = await ocrPdfPage(client, dataUrl, page);
-      if (pageText) parts.push(pageText);
-    } catch (error) {
-      if (error instanceof ReadingError) throw error;
-      // Continue other pages; fail only if nothing usable remains.
+  try {
+    for (let page = 1; page <= pageCount; page += 1) {
+      if (deadline.expired()) break;
+      try {
+        const dataUrl = await renderPageAsImage(pdf, page, {
+          canvasImport: () => import("@napi-rs/canvas"),
+          scale: OCR_SCALE,
+          toDataURL: true,
+        });
+        if (deadline.expired()) break;
+        // Refresh timeout to the remaining deadline budget when possible.
+        if (deadline.remainingMs() < 60_000) {
+          client = getOpenAIClient(
+            Math.max(5_000, deadline.remainingMs()),
+          );
+        }
+        const pageText = await ocrPdfPage(client, dataUrl, page);
+        if (pageText) parts.push(pageText);
+      } catch (error) {
+        if (error instanceof ReadingError) throw error;
+        // Continue other pages; fail only if nothing usable remains.
+      }
     }
+  } finally {
+    deadline.clear();
   }
 
   const merged = normalizePassageBody(parts.join("\n\n"));

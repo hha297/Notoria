@@ -1,5 +1,12 @@
 import type { JSONContent } from "@tiptap/react";
-import OpenAI from "openai";
+import {
+  AI_DEADLINES_MS,
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  clipForAi,
+  createAiDeadline,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import {
   vocabularyNotesFormatResultSchema,
@@ -15,12 +22,8 @@ import { PARADIGM_AI_RULES } from "@/lib/editor/format/paradigm-ai-rules";
 
 const PRESERVED_NODE_TYPES = new Set(["image", "horizontalRule"]);
 
-function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
-    throw new Error("OPENAI_NOT_CONFIGURED");
-  }
-  return new OpenAI({ apiKey, timeout: 60_000 });
+function getOpenAIClient(timeoutMs = 60_000) {
+  return requireOpenAiClient({ timeoutMs });
 }
 
 function parseJsonContent(content: string | null | undefined) {
@@ -81,59 +84,66 @@ export type FormatEditorDocumentAiInput = {
 export async function formatEditorDocumentWithAi(
   input: FormatEditorDocumentAiInput,
 ): Promise<JSONContent> {
-  const text = input.text.trim();
+  const text = clipForAi(input.text, AI_INPUT_LIMITS.editorFormat);
   if (!text) {
     throw new Error("EMPTY_CONTENT");
   }
 
-  const client = getOpenAIClient();
-  const languageHint = input.language
-    ? (getLanguageByCode(input.language)?.name ?? input.language)
-    : null;
-
-  const completion = await client.chat.completions.create({
-    model: "gpt-4o",
-    temperature: 0.1,
-    max_tokens: 8_000,
-    response_format: { type: "json_object" },
-    messages: [
-      {
-        role: "system",
-        content: await aiSystemPrompt(documentFormatSystemPrompt(), {
-          responseStyle: true,
-        }),
-      },
-      {
-        role: "user",
-        content: JSON.stringify({
-          studyLanguageHint: languageHint,
-          word: input.word?.trim() || null,
-          content: text,
-          reminder:
-            "Merge same-label rows with formA/formB. Strip person/possessive endings. First column = category labels only. Do not trust messy dump labels.",
-        }),
-      },
-    ],
-  });
-
-  const parsed = vocabularyNotesFormatResultSchema.safeParse(
-    parseJsonContent(completion.choices[0]?.message?.content),
-  );
-  if (!parsed.success) {
-    console.error(
-      "editor document format AI parse failed",
-      parsed.error.issues.map((issue) => issue.path.join(".") || "root"),
+  const deadline = createAiDeadline(AI_DEADLINES_MS.editorFormat);
+  try {
+    const client = getOpenAIClient(
+      Math.max(5_000, Math.min(60_000, deadline.remainingMs())),
     );
-    throw new Error("AI_INVALID_RESPONSE");
-  }
+    const languageHint = input.language
+      ? (getLanguageByCode(input.language)?.name ?? input.language)
+      : null;
 
-  const blocks: VocabularyNotesFormatBlock[] =
-    sanitizeVocabularyNotesFormatBlocks(parsed.data.blocks, input.word);
-  if (blocks.length === 0) {
-    throw new Error("AI_EMPTY_BLOCKS");
-  }
+    const completion = await client.chat.completions.create({
+      model: "gpt-4o",
+      temperature: 0.1,
+      max_tokens: AI_OUTPUT_TOKENS.editorFormat,
+      response_format: { type: "json_object" },
+      messages: [
+        {
+          role: "system",
+          content: await aiSystemPrompt(documentFormatSystemPrompt(), {
+            responseStyle: true,
+          }),
+        },
+        {
+          role: "user",
+          content: JSON.stringify({
+            studyLanguageHint: languageHint,
+            word: input.word?.trim() || null,
+            content: text,
+            reminder:
+              "Merge same-label rows with formA/formB. Strip person/possessive endings. First column = category labels only. Do not trust messy dump labels.",
+          }),
+        },
+      ],
+    });
 
-  return notesFormatBlocksToDoc(blocks);
+    const parsed = vocabularyNotesFormatResultSchema.safeParse(
+      parseJsonContent(completion.choices[0]?.message?.content),
+    );
+    if (!parsed.success) {
+      console.error(
+        "editor document format AI parse failed",
+        parsed.error.issues.map((issue) => issue.path.join(".") || "root"),
+      );
+      throw new Error("AI_INVALID_RESPONSE");
+    }
+
+    const blocks: VocabularyNotesFormatBlock[] =
+      sanitizeVocabularyNotesFormatBlocks(parsed.data.blocks, input.word);
+    if (blocks.length === 0) {
+      throw new Error("AI_EMPTY_BLOCKS");
+    }
+
+    return notesFormatBlocksToDoc(blocks);
+  } finally {
+    deadline.clear();
+  }
 }
 
 /** Collect image / HR nodes so Format does not drop them. */

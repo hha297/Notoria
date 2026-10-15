@@ -1,4 +1,12 @@
-import OpenAI from "openai";
+import {
+  AI_DEADLINES_MS,
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  afterProviderError,
+  clipForAi,
+  createAiDeadline,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import {
   mapAiDraftsToTheoryExercises,
@@ -14,12 +22,9 @@ import { theoryDocPlainText } from "@/lib/theory/content";
 import type { JSONContent } from "@tiptap/react";
 import { ensureSentenceMeanings } from "@/lib/exercises/sentence-meaning";
 import type { AppLocale } from "@/i18n/config";
+
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
-    throw new Error("OPENAI_NOT_CONFIGURED");
-  }
-  return new OpenAI({ apiKey, timeout: 90_000 });
+  return requireOpenAiClient({ timeoutMs: 90_000 });
 }
 
 function parseJsonContent(content: string | null | undefined) {
@@ -29,6 +34,10 @@ function parseJsonContent(content: string | null | undefined) {
   } catch {
     return null;
   }
+}
+
+function isDeadlineExceeded(error: unknown): boolean {
+  return error instanceof Error && error.message === "AI_DEADLINE_EXCEEDED";
 }
 
 const THEORY_EXERCISE_AI_PROMPT = `You generate practice exercises from a learner's free-form Theory notes.
@@ -150,7 +159,7 @@ Same full-form answer across different sentences is OK.
 10. Prefer putting sentence-final punctuation immediately after the blank (e.g. "… ________.") — do not leave a lone period as a separate awkward fragment.`;
 
 async function requestExerciseBatch(input: {
-  client: OpenAI;
+  client: ReturnType<typeof requireOpenAiClient>;
   title: string;
   theoryPlainText: string;
   vocabularyWords: string[];
@@ -159,40 +168,54 @@ async function requestExerciseBatch(input: {
   studyLanguage?: string;
   uiLanguage?: string;
   avoidSentences?: string[];
+  signal?: AbortSignal;
 }): Promise<TheoryAiExerciseDraft[]> {
-  const completion = await input.client.chat.completions.create({
-    model: "gpt-4o-mini",
-    temperature: 0.85,
-    max_tokens: 8_000,
-    response_format: { type: "json_object" },
-    messages: [
+  let completion;
+  try {
+    completion = await input.client.chat.completions.create(
       {
-        role: "system",
-        content: await aiSystemPrompt(THEORY_EXERCISE_AI_PROMPT, {
-          responseStyle: true,
-        }),
+        model: "gpt-4o-mini",
+        temperature: 0.85,
+        max_tokens: AI_OUTPUT_TOKENS.theoryBatch,
+        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: "system",
+            content: await aiSystemPrompt(THEORY_EXERCISE_AI_PROMPT, {
+              responseStyle: true,
+            }),
+          },
+          {
+            role: "user",
+            content: JSON.stringify({
+              title: input.title,
+              studyLanguage: input.studyLanguage ?? null,
+              uiLanguage: input.uiLanguage ?? "English",
+              maxExercises: input.maxExercises,
+              batch: input.batchIndex,
+              theoryPlainText: input.theoryPlainText,
+              vocabularyWords: input.vocabularyWords,
+              avoidReusingTheseSentences: (input.avoidSentences ?? []).slice(0, 40),
+              reminder:
+                "Practice sentence/answer/sourceWord MUST be in studyLanguage. ALWAYS include sourceWord (base form) for form practice so the UI can show: ________ (sourceWord). Never omit it for case/inflection drills. sourceWord must differ from answer. For every fill_blank include sentenceMeaning in uiLanguage (website language), not studyLanguage. Sentences must make the Theory grammar point necessary via natural context (e.g. comparatives need kuin/comparison; avoid vague frames like 'Tämä päivä on ________.').",
+            }),
+          },
+        ],
       },
-      {
-        role: "user",
-        content: JSON.stringify({
-          title: input.title,
-          studyLanguage: input.studyLanguage ?? null,
-          uiLanguage: input.uiLanguage ?? "English",
-          maxExercises: input.maxExercises,
-          batch: input.batchIndex,
-          theoryPlainText: input.theoryPlainText,
-          vocabularyWords: input.vocabularyWords,
-          avoidReusingTheseSentences: (input.avoidSentences ?? []).slice(0, 40),
-          reminder:
-            "Practice sentence/answer/sourceWord MUST be in studyLanguage. ALWAYS include sourceWord (base form) for form practice so the UI can show: ________ (sourceWord). Never omit it for case/inflection drills. sourceWord must differ from answer. For every fill_blank include sentenceMeaning in uiLanguage (website language), not studyLanguage. Sentences must make the Theory grammar point necessary via natural context (e.g. comparatives need kuin/comparison; avoid vague frames like 'Tämä päivä on ________.').",
-        }),
-      },
-    ],
-  });
+      input.signal ? { signal: input.signal } : undefined,
+    );
+  } catch (error) {
+    if (input.signal?.aborted || isDeadlineExceeded(error)) {
+      throw afterProviderError(new Error("AI_DEADLINE_EXCEEDED"));
+    }
+    throw afterProviderError(error);
+  }
 
   const raw = parseJsonContent(completion.choices[0]?.message?.content);
   const parsed = theoryAiResponseSchema.safeParse(raw);
-  if (!parsed.success) return [];
+  if (!parsed.success) {
+    throw new Error("AI_INVALID_RESPONSE");
+  }
   return parsed.data.exercises;
 }
 
@@ -214,81 +237,126 @@ export async function generateAiTheoryExercises(input: {
   if (!plainText.trim()) return [];
 
   const count = Math.min(Math.max(input.count ?? 24, 1), 30);
-  const client = getOpenAIClient();
-  const vocabularyWords = (input.vocabulary ?? []).slice(0, 60).map((w) => w.word);
-  const theoryPlainText = plainText.slice(0, 12_000);
-  const studyLanguage = input.studyLanguage?.trim() || undefined;
-  const uiLanguage = input.uiLanguage?.trim() || "English";
+  const deadline = createAiDeadline(AI_DEADLINES_MS.theoryGenerate);
 
-  const batchArgs = {
-    client,
-    title: input.theoryTitle,
-    theoryPlainText,
-    vocabularyWords,
-    studyLanguage,
-    uiLanguage,
-  };
+  try {
+    const client = getOpenAIClient();
+    const vocabularyWords = (input.vocabulary ?? [])
+      .slice(0, 60)
+      .map((w) => clipForAi(w.word, AI_INPUT_LIMITS.word))
+      .filter((word) => word.length > 0);
+    const theoryPlainText = clipForAi(plainText, AI_INPUT_LIMITS.theory);
+    const title = clipForAi(input.theoryTitle, AI_INPUT_LIMITS.title);
+    const studyLanguage = input.studyLanguage?.trim() || undefined;
+    const uiLanguage = input.uiLanguage?.trim() || "English";
 
-  const first = Math.ceil(count / 2) + 2;
-  const second = Math.ceil(count / 2) + 2;
-  const [batchA, batchB] = await Promise.all([
-    requestExerciseBatch({ ...batchArgs, maxExercises: first, batchIndex: 1 }),
-    requestExerciseBatch({ ...batchArgs, maxExercises: second, batchIndex: 2 }),
-  ]);
+    const batchArgs = {
+      client,
+      title,
+      theoryPlainText,
+      vocabularyWords,
+      studyLanguage,
+      uiLanguage,
+      signal: deadline.signal,
+    };
 
-  let drafts = [...batchA, ...batchB];
-  let items = mapAiDraftsToTheoryExercises(
-    input.theoryId,
-    drafts,
-    input.theoryTitle,
-    count,
-    studyLanguage,
-  );
+    const first = Math.ceil(count / 2) + 2;
+    const second = Math.ceil(count / 2) + 2;
+    const settled = await Promise.allSettled([
+      requestExerciseBatch({ ...batchArgs, maxExercises: first, batchIndex: 1 }),
+      requestExerciseBatch({ ...batchArgs, maxExercises: second, batchIndex: 2 }),
+    ]);
 
-  if (items.length < count) {
-    const avoid = drafts
-      .map((d) => d.sentence)
-      .filter((s): s is string => Boolean(s));
-    const need = count - items.length + 4;
-    const refill = await requestExerciseBatch({
-      ...batchArgs,
-      maxExercises: Math.min(need, 16),
-      batchIndex: 3,
-      avoidSentences: avoid,
-    });
-    drafts = [...drafts, ...refill];
-    items = mapAiDraftsToTheoryExercises(
+    const rejections = settled
+      .filter((result): result is PromiseRejectedResult => result.status === "rejected")
+      .map((result) => result.reason);
+    const deadlineHit =
+      deadline.expired() || rejections.some(isDeadlineExceeded);
+
+    let drafts: TheoryAiExerciseDraft[] = [];
+    for (const result of settled) {
+      if (result.status === "fulfilled") {
+        drafts = [...drafts, ...result.value];
+      }
+    }
+
+    let items = mapAiDraftsToTheoryExercises(
       input.theoryId,
       drafts,
       input.theoryTitle,
       count,
       studyLanguage,
     );
-  }
 
-  if (items.length === 0) {
-    throw new Error("AI_INVALID_RESPONSE");
-  }
+    if (items.length < count && !deadlineHit) {
+      const avoid = drafts
+        .map((d) => d.sentence)
+        .filter((s): s is string => Boolean(s));
+      const need = count - items.length + 4;
+      try {
+        deadline.throwIfExpired();
+        const refill = await requestExerciseBatch({
+          ...batchArgs,
+          maxExercises: Math.min(need, 16),
+          batchIndex: 3,
+          avoidSentences: avoid,
+        });
+        drafts = [...drafts, ...refill];
+        items = mapAiDraftsToTheoryExercises(
+          input.theoryId,
+          drafts,
+          input.theoryTitle,
+          count,
+          studyLanguage,
+        );
+      } catch (error) {
+        if (isDeadlineExceeded(error) || deadline.expired()) {
+          // Keep whatever drafts we already have.
+        } else if (items.length === 0) {
+          throw error instanceof Error && error.message === "AI_INVALID_RESPONSE"
+            ? error
+            : afterProviderError(error);
+        }
+      }
+    }
 
-  const uiLocale = resolveUiLocaleFromLanguageName(uiLanguage);
-  const ensured = await ensureSentenceMeanings(items, {
-    uiLocale,
-    getSentence: (item) => {
-      if (item.type !== "fill_blank") return "";
-      return (
-        item.completedSentence?.trim() ||
-        `${item.prefix ?? ""}${item.answer}${item.suffix ?? ""}`.replace(/\s+/g, " ").trim()
+    if (items.length === 0) {
+      const deadlineErr = rejections.find(isDeadlineExceeded);
+      if (deadlineErr || deadline.expired()) {
+        throw afterProviderError(new Error("AI_DEADLINE_EXCEEDED"));
+      }
+      const hard = rejections.find(
+        (error) =>
+          !(error instanceof Error && error.message === "AI_INVALID_RESPONSE"),
       );
-    },
-    getMeaning: (item) =>
-      item.type === "fill_blank" ? item.sentenceMeaning : undefined,
-    setMeaning: (item, sentenceMeaning) => {
-      if (item.type !== "fill_blank") return item;
-      return { ...item, sentenceMeaning } satisfies TheoryFillBlankExercise;
-    },
-  });
+      if (hard) throw afterProviderError(hard);
+      throw new Error("AI_INVALID_RESPONSE");
+    }
 
-  return ensured;
+    if (deadline.expired()) {
+      return items;
+    }
+
+    const uiLocale = resolveUiLocaleFromLanguageName(uiLanguage);
+    return ensureSentenceMeanings(items, {
+      uiLocale,
+      getSentence: (item) => {
+        if (item.type !== "fill_blank") return "";
+        return (
+          item.completedSentence?.trim() ||
+          `${item.prefix ?? ""}${item.answer}${item.suffix ?? ""}`.replace(/\s+/g, " ").trim()
+        );
+      },
+      getMeaning: (item) =>
+        item.type === "fill_blank" ? item.sentenceMeaning : undefined,
+      setMeaning: (item, sentenceMeaning) => {
+        if (item.type !== "fill_blank") return item;
+        return { ...item, sentenceMeaning } satisfies TheoryFillBlankExercise;
+      },
+    });
+  } finally {
+    deadline.clear();
+  }
 }
 
 function resolveUiLocaleFromLanguageName(languageName: string): AppLocale {

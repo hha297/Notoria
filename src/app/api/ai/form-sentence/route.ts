@@ -32,7 +32,7 @@ export async function POST(request: Request) {
     await settleMeteredAi(access, true);
     return NextResponse.json({ ok: true, ...result });
   } catch (error) {
-    await settleMeteredAi(access, false);
+    await settleMeteredAi(access, false, error);
     const message = error instanceof Error ? error.message : "";
     if (
       message === "OPENAI_NOT_CONFIGURED" ||

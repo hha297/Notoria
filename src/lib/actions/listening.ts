@@ -7,17 +7,22 @@ import {
   listeningExercises,
   listeningLessons,
 } from "@/db/schema";
+import {
+  AiCostError,
+  persistError,
+  shouldRefundUsage,
+} from "@/lib/ai/bounds";
 import { AI_JOBS, JobLockLostError, runExclusiveJob } from "@/lib/ai/job-lock";
 import { requireProAccess } from "@/lib/auth/pro-access";
 import { requireAiAssistanceEnabled } from "@/lib/ai/preferences-server";
 import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { getCurrentUserId } from "@/lib/auth/session";
 import { consumeUsage } from "@/lib/billing/entitlements";
-import { LISTENING_MAX_TRANSCRIPT_SECONDS } from "@/lib/billing/plans";
 import {
   finalizeUsageReservation,
   refundUsageReservation,
 } from "@/lib/billing/usage";
+import { assertListeningDurationAllowed } from "@/lib/listening/transcribe";
 import {
   configureCloudinary,
   getListeningFolder,
@@ -383,12 +388,7 @@ export async function transcribeListeningLesson(
     return { id: lesson.id, status: "COMPLETED" as const, inProgress: false };
   }
 
-  if (
-    typeof lesson.duration === "number" &&
-    lesson.duration > LISTENING_MAX_TRANSCRIPT_SECONDS
-  ) {
-    throw new ListeningError("AUDIO_TOO_LONG");
-  }
+  assertListeningDurationAllowed(lesson.duration);
 
   const outcome = await runExclusiveJob({
     operation: AI_JOBS.listeningTranscribe,
@@ -397,7 +397,12 @@ export async function transcribeListeningLesson(
     run: async ({ stillOwner }) => {
       const current = await db.query.listeningLessons.findFirst({
         where: eq(listeningLessons.id, id),
-        columns: { transcript: true, status: true, duration: true },
+        columns: {
+          transcript: true,
+          status: true,
+          duration: true,
+          transcriptionData: true,
+        },
       });
       if (
         !options?.regenerate &&
@@ -406,6 +411,31 @@ export async function transcribeListeningLesson(
       ) {
         return { id, status: "COMPLETED" as const, inProgress: false };
       }
+
+      // Provider already succeeded but a prior DB write failed — finish storage only.
+      const pendingData = parseTranscriptionData(current?.transcriptionData);
+      if (
+        !options?.regenerate &&
+        current?.transcript?.trim() &&
+        pendingData?.assemblyTranscriptId &&
+        current.status === "FAILED"
+      ) {
+        await db
+          .update(listeningLessons)
+          .set({
+            status: "COMPLETED",
+            errorCode: null,
+            updatedAt: new Date(),
+          })
+          .where(eq(listeningLessons.id, id));
+        revalidateListening(id);
+        return { id, status: "COMPLETED" as const, inProgress: false };
+      }
+
+      // Reuse AssemblyAI jobs after poll/crash; explicit regenerate always submits fresh.
+      const existingAssemblyId = options?.regenerate
+        ? null
+        : (pendingData?.assemblyTranscriptId ?? null);
 
       const reservation = await consumeUsage(
         user,
@@ -426,35 +456,85 @@ export async function transcribeListeningLesson(
         const result = await transcribeListeningMedia({
           audioUrl: lesson.cloudinaryUrl,
           languageHint: workspace.language,
+          durationSeconds: lesson.duration,
+          existingAssemblyId,
+          onJobSubmitted: async (assemblyTranscriptId) => {
+            const previous = parseTranscriptionData(current?.transcriptionData);
+            await db
+              .update(listeningLessons)
+              .set({
+                transcriptionData: toTranscriptionData({
+                  words: previous?.words,
+                  sentences: previous?.sentences,
+                  utterances: previous?.utterances,
+                  speakerMap: previous?.speakerMap,
+                  speakersResolved: previous?.speakersResolved,
+                  speakerAssignmentVersion: previous?.speakerAssignmentVersion,
+                  audioDuration: previous?.audioDuration ?? lesson.duration,
+                  assemblyTranscriptId,
+                }),
+                updatedAt: new Date(),
+              })
+              .where(eq(listeningLessons.id, id));
+          },
         });
 
-        if (
-          typeof result.duration === "number" &&
-          result.duration > LISTENING_MAX_TRANSCRIPT_SECONDS
-        ) {
-          throw new ListeningError("AUDIO_TOO_LONG");
-        }
         if (!(await stillOwner())) throw new JobLockLostError();
 
-        await db
-          .update(listeningLessons)
-          .set({
-            transcript: result.transcript,
-            transcriptionData: result.transcriptionData,
-            language: result.language ?? workspace.language,
-            duration: result.duration ?? lesson.duration,
-            status: "COMPLETED",
-            errorCode: null,
-            updatedAt: new Date(),
-          })
-          .where(eq(listeningLessons.id, id));
+        try {
+          await db
+            .update(listeningLessons)
+            .set({
+              transcript: result.transcript,
+              transcriptionData: result.transcriptionData,
+              language: result.language ?? workspace.language,
+              duration: result.duration ?? lesson.duration,
+              status: "COMPLETED",
+              errorCode: null,
+              updatedAt: new Date(),
+            })
+            .where(eq(listeningLessons.id, id));
+        } catch (error) {
+          // Stash provider result so a later retry can complete without regenerating.
+          try {
+            await db
+              .update(listeningLessons)
+              .set({
+                transcript: result.transcript,
+                transcriptionData: result.transcriptionData,
+                language: result.language ?? workspace.language,
+                duration: result.duration ?? lesson.duration,
+                status: "FAILED",
+                errorCode: "PROCESSING_FAILED",
+                updatedAt: new Date(),
+              })
+              .where(eq(listeningLessons.id, id));
+          } catch {
+            // Ignore secondary write failures; still classify as persist.
+          }
+          throw persistError(error, result);
+        }
 
         await finalizeUsageReservation(reservation.reservationId);
         revalidateListening(id);
-        return { id, status: "COMPLETED" as const, inProgress: false };
+        return {
+          id,
+          status: "COMPLETED" as const,
+          inProgress: false,
+          result,
+        };
       } catch (error) {
         if (error instanceof JobLockLostError) throw error;
-        await refundUsageReservation(reservation.reservationId);
+        if (error instanceof AiCostError && error.phase === "persist") {
+          await finalizeUsageReservation(reservation.reservationId);
+          revalidateListening(id);
+          throw toListeningError(error);
+        }
+        if (shouldRefundUsage(error)) {
+          await refundUsageReservation(reservation.reservationId);
+        } else {
+          await finalizeUsageReservation(reservation.reservationId);
+        }
         throw await markLessonFailed(id, error);
       }
     },

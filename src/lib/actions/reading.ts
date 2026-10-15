@@ -18,6 +18,7 @@ import {
 } from "@/lib/ai/preferences-server";
 import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { getCurrentUserId } from "@/lib/auth/session";
+import { shouldRefundUsage } from "@/lib/ai/bounds";
 import { consumeUsage } from "@/lib/billing/entitlements";
 import { QuotaExceededError } from "@/lib/billing/errors";
 import {
@@ -376,7 +377,11 @@ export async function generateReadingQuestionSet(input: {
     revalidateReading(passage.id, ready.id);
     return toReadingQuestionSetSummary(ready);
   } catch (error) {
-    await refundUsageReservation(reservationId);
+    if (shouldRefundUsage(error)) {
+      await refundUsageReservation(reservationId);
+    } else {
+      await finalizeUsageReservation(reservationId);
+    }
     const readingError = toReadingError(error);
     await db
       .update(readingQuestionSets)
@@ -818,7 +823,11 @@ export async function submitReadingAttempt(
             .where(eq(readingAttempts.id, attempt.id));
         } catch (error) {
           if (error instanceof JobLockLostError) throw error;
-          await refundUsageReservation(reservationId);
+          if (shouldRefundUsage(error)) {
+            await refundUsageReservation(reservationId);
+          } else {
+            await finalizeUsageReservation(reservationId);
+          }
           await db
             .update(readingAttempts)
             .set({ status: "grading_failed", updatedAt: new Date() })

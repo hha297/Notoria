@@ -1,3 +1,8 @@
+import {
+  AI_INPUT_LIMITS,
+  clipForAi,
+  vocabularyAiFields,
+} from "@/lib/ai/bounds";
 import { LEXICAL_SURFACE_EVALUATOR_GUIDANCE } from "@/lib/exercises/lexical-surface";
 
 export const FORM_SENTENCE_EVALUATOR_PROMPT = `You are a concise language-learning tutor.
@@ -45,16 +50,21 @@ export function formSentenceUserPayload(input: {
   partOfSpeech: string | null;
   sentence: string;
 }) {
+  const fields = vocabularyAiFields({
+    word: input.word,
+    meaning: input.meaning,
+    partOfSpeech: input.partOfSpeech,
+  });
   return {
     language: input.languageHint,
     languageCode: input.languageCode,
     vocabulary: {
-      lemma: input.word,
-      word: input.word,
-      meaning: input.meaning,
-      partOfSpeech: input.partOfSpeech,
+      lemma: fields.word,
+      word: fields.word,
+      meaning: fields.meaning,
+      partOfSpeech: fields.partOfSpeech,
     },
-    userSentence: input.sentence,
+    userSentence: clipForAi(input.sentence, AI_INPUT_LIMITS.sentenceText),
     instructions: {
       sentenceMeaningLanguage: "same language as vocabulary.meaning",
       savedFormIsLemma: true,

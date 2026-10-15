@@ -1,4 +1,5 @@
-import OpenAI from "openai";
+import { AI_OUTPUT_TOKENS, vocabularyAiFields } from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import {
   MEANING_GLOSS_PROMPT,
@@ -15,11 +16,7 @@ import {
 } from "@/lib/vocabulary/ai-types";
 
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
-    throw new Error("OPENAI_NOT_CONFIGURED");
-  }
-  return new OpenAI({ apiKey, timeout: 8_000 });
+  return requireOpenAiClient({ timeoutMs: 8_000 });
 }
 
 function parseJsonContent(content: string | null | undefined) {
@@ -38,11 +35,15 @@ export async function analyzeVocabularySpelling(input: {
 }): Promise<VocabularySpellingResult> {
   const client = getOpenAIClient();
   const languageHint = learningLanguageHint(input.language);
+  const fields = vocabularyAiFields({
+    word: input.word,
+    partOfSpeech: input.partOfSpeech,
+  });
 
   const completion = await client.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: 0.1,
-    max_tokens: 160,
+    max_tokens: AI_OUTPUT_TOKENS.vocabSpelling,
     response_format: { type: "json_object" },
     messages: [
       {
@@ -85,10 +86,10 @@ Rules:
       {
         role: "user",
         content: JSON.stringify({
-          word: input.word,
+          word: fields.word,
           learningLanguageCode: input.language,
           learningLanguageHint: languageHint,
-          partOfSpeech: input.partOfSpeech || null,
+          partOfSpeech: fields.partOfSpeech,
         }),
       },
     ],
@@ -114,7 +115,7 @@ async function completeMeaningJson(system: string, payload: unknown) {
   const completion = await client.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: 0.1,
-    max_tokens: 280,
+    max_tokens: AI_OUTPUT_TOKENS.vocabMeaning,
     response_format: { type: "json_object" },
     messages: [
       {
@@ -151,18 +152,20 @@ async function suggestMeaningGlosses(input: {
   wordLanguage?: string | null;
   meaningLanguage?: string | null;
 }): Promise<VocabularyMeaningResult["suggestions"]> {
-  const result = await completeMeaningJson(
-    MEANING_GLOSS_PROMPT,
-    {
-      word: input.word,
-      currentMeaning: input.meaning,
-      detectedWordLanguage: input.wordLanguage,
-      detectedMeaningLanguage: input.meaningLanguage,
-      learningLanguageCode: input.language,
-      learningLanguageHint: learningLanguageHint(input.language),
-      partOfSpeech: input.partOfSpeech || null,
-    },
-  );
+  const fields = vocabularyAiFields({
+    word: input.word,
+    meaning: input.meaning,
+    partOfSpeech: input.partOfSpeech,
+  });
+  const result = await completeMeaningJson(MEANING_GLOSS_PROMPT, {
+    word: fields.word,
+    currentMeaning: fields.meaning,
+    detectedWordLanguage: input.wordLanguage,
+    detectedMeaningLanguage: input.meaningLanguage,
+    learningLanguageCode: input.language,
+    learningLanguageHint: learningLanguageHint(input.language),
+    partOfSpeech: fields.partOfSpeech,
+  });
 
   return sanitizeMeaningSuggestions(
     input.word,
@@ -182,9 +185,19 @@ export async function analyzeVocabularyMeaning(input: {
   partOfSpeech?: string | null;
   examples?: string[];
 }): Promise<VocabularyMeaningResult> {
+  const fields = vocabularyAiFields({
+    word: input.word,
+    meaning: input.meaning,
+    partOfSpeech: input.partOfSpeech,
+  });
   const parsed = await completeMeaningJson(
     MEANING_VALIDATOR_PROMPT,
-    buildMeaningValidationPayload(input),
+    buildMeaningValidationPayload({
+      ...input,
+      word: fields.word ?? input.word,
+      meaning: fields.meaning ?? input.meaning,
+      partOfSpeech: fields.partOfSpeech,
+    }),
   );
 
   const languages = {
@@ -210,6 +223,9 @@ export async function analyzeVocabularyMeaning(input: {
     try {
       suggestions = await suggestMeaningGlosses({
         ...input,
+        word: fields.word ?? input.word,
+        meaning: fields.meaning ?? input.meaning,
+        partOfSpeech: fields.partOfSpeech,
         ...languages,
       });
     } catch {

@@ -2516,7 +2516,8 @@
       "EMPTY_TRANSCRIPT": "Inget tal hittades i den filen.",
       "DUPLICATE_FILENAME": "En fil med detta namn finns redan.",
       "FILENAME_REQUIRED": "Ange ett filnamn.",
-      "AUDIO_TOO_LONG": "Ljudet är längre än 45 minuter. Dela upp det eller använd ett kortare klipp för ett transkript."
+      "AUDIO_TOO_LONG": "Ljudet är längre än 45 minuter. Dela upp det eller använd ett kortare klipp för ett transkript.",
+      "AUDIO_DURATION_UNKNOWN": "Vi kunde inte bekräfta ljudlängden före transkription. Ladda upp filen igen och försök på nytt."
     }
   },
   "speaking": {

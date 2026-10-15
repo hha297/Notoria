@@ -1,4 +1,11 @@
-import OpenAI from "openai";
+import type OpenAI from "openai";
+import {
+  AI_DEADLINES_MS,
+  AI_OUTPUT_TOKENS,
+  createAiDeadline,
+  type AiDeadline,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { getLanguageByCode } from "@/lib/languages";
 import {
@@ -36,11 +43,7 @@ const SURFACE_RETRY_REASON =
   "Previous drafts were rejected or missing. Keep each assigned wordId as the target (do not swap words). Write a COMPLETE grammatical sentence that already contains the correctly inflected target token — no blank and no underscore placeholder. Return that exact in-sentence token as answerForm/answer/correctOption. Do not inflect again after writing the sentence. Use a distinct everyday context per word.";
 
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
-    throw new Error("OPENAI_NOT_CONFIGURED");
-  }
-  return new OpenAI({ apiKey, timeout: 45_000 });
+  return requireOpenAiClient({ timeoutMs: 45_000 });
 }
 
 function parseJsonContent(content: string | null | undefined) {
@@ -271,8 +274,10 @@ async function requestExercises(
   client: OpenAI,
   input: ContextualAiRequest,
   words: ContextualAiWordInput[],
-  options?: { simplifyRetry?: boolean },
+  options?: { simplifyRetry?: boolean; deadline?: AiDeadline },
 ): Promise<ContextualAiExercise[]> {
+  options?.deadline?.throwIfExpired();
+
   const system =
     input.exerciseType === "multiple-choice"
       ? CONTEXTUAL_MC_GENERATOR_PROMPT
@@ -288,23 +293,26 @@ async function requestExercises(
     regenerateReason: options?.simplifyRetry ? SURFACE_RETRY_REASON : undefined,
   });
 
-  const completion = await client.chat.completions.create({
-    model: "gpt-4o-mini",
-    temperature:
-      input.difficulty === "easy" ? 0.4 : options?.simplifyRetry ? 0.35 : 0.7,
-    max_tokens: 2500,
-    response_format: { type: "json_object" },
-    messages: [
-      {
-        role: "system",
-        content: await aiSystemPrompt(system, { responseStyle: true }),
-      },
-      {
-        role: "user",
-        content: JSON.stringify(payload),
-      },
-    ],
-  });
+  const completion = await client.chat.completions.create(
+    {
+      model: "gpt-4o-mini",
+      temperature:
+        input.difficulty === "easy" ? 0.4 : options?.simplifyRetry ? 0.35 : 0.7,
+      max_tokens: AI_OUTPUT_TOKENS.exerciseContextual,
+      response_format: { type: "json_object" },
+      messages: [
+        {
+          role: "system",
+          content: await aiSystemPrompt(system, { responseStyle: true }),
+        },
+        {
+          role: "user",
+          content: JSON.stringify(payload),
+        },
+      ],
+    },
+    options?.deadline ? { signal: options.deadline.signal } : undefined,
+  );
 
   const parsed = contextualAiResultSchema.safeParse(
     parseJsonContent(completion.choices[0]?.message?.content),
@@ -325,25 +333,33 @@ export async function generateContextualExercises(
   input: ContextualAiRequest,
 ): Promise<ContextualAiExercise[]> {
   const client = getOpenAIClient();
+  const deadline = createAiDeadline(AI_DEADLINES_MS.default);
 
-  const valid = await requestExercises(client, input, input.words);
-  const acceptedIds = new Set(valid.map((exercise) => exercise.wordId));
-  const missing = input.words.filter((word) => !acceptedIds.has(word.id));
-
-  if (missing.length > 0) {
-    const retry = await requestExercises(client, input, missing, {
-      simplifyRetry: true,
+  try {
+    const valid = await requestExercises(client, input, input.words, {
+      deadline,
     });
-    for (const exercise of retry) {
-      if (!acceptedIds.has(exercise.wordId)) {
-        valid.push(exercise);
-        acceptedIds.add(exercise.wordId);
+    const acceptedIds = new Set(valid.map((exercise) => exercise.wordId));
+    const missing = input.words.filter((word) => !acceptedIds.has(word.id));
+
+    if (missing.length > 0 && !deadline.expired()) {
+      const retry = await requestExercises(client, input, missing, {
+        simplifyRetry: true,
+        deadline,
+      });
+      for (const exercise of retry) {
+        if (!acceptedIds.has(exercise.wordId)) {
+          valid.push(exercise);
+          acceptedIds.add(exercise.wordId);
+        }
       }
     }
-  }
 
-  if (valid.length === 0) {
-    throw new Error("AI_INVALID_RESPONSE");
+    if (valid.length === 0) {
+      throw new Error("AI_INVALID_RESPONSE");
+    }
+    return valid;
+  } finally {
+    deadline.clear();
   }
-  return valid;
 }

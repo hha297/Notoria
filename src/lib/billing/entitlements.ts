@@ -20,6 +20,7 @@ import {
   type QuotaFeatureId,
   type QuotaStatus,
 } from "@/lib/billing/plans";
+import { shouldRefundUsage } from "@/lib/ai/bounds";
 import {
   finalizeUsageReservation,
   readUsageCounts,
@@ -195,7 +196,11 @@ export async function runWithUsage<T>(
     return result;
   } catch (error) {
     if (!reservation.reused) {
-      await refundUsageReservation(reservation.reservationId);
+      if (shouldRefundUsage(error)) {
+        await refundUsageReservation(reservation.reservationId);
+      } else {
+        await finalizeUsageReservation(reservation.reservationId);
+      }
     }
     throw error;
   }
@@ -220,7 +225,11 @@ export async function runSharedUsage<T>(
     }
     return result;
   } catch (error) {
-    await refundUsageReservation(reservation.reservationId);
+    if (shouldRefundUsage(error)) {
+      await refundUsageReservation(reservation.reservationId);
+    } else if (options?.finalize !== false) {
+      await finalizeUsageReservation(reservation.reservationId);
+    }
     throw error;
   }
 }

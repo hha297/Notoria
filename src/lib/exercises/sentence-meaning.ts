@@ -1,4 +1,9 @@
-import OpenAI from "openai";
+import {
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  clipForAi,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import type { AppLocale } from "@/i18n/config";
 
@@ -10,11 +15,7 @@ const UI_LANGUAGE_NAMES: Record<AppLocale, string> = {
 };
 
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
-    throw new Error("OPENAI_NOT_CONFIGURED");
-  }
-  return new OpenAI({ apiKey, timeout: 60_000 });
+  return requireOpenAiClient({ timeoutMs: 60_000 });
 }
 
 function parseJsonContent(content: string | null | undefined) {
@@ -33,7 +34,7 @@ export async function glossSentenceMeaning(input: {
   sentence: string;
   uiLocale: AppLocale;
 }): Promise<string> {
-  const sentence = input.sentence.trim();
+  const sentence = clipForAi(input.sentence, AI_INPUT_LIMITS.sentenceText);
   if (!sentence) throw new Error("AI_INVALID_REQUEST");
 
   const uiLanguage = UI_LANGUAGE_NAMES[input.uiLocale];
@@ -41,7 +42,7 @@ export async function glossSentenceMeaning(input: {
   const completion = await client.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: 0.2,
-    max_tokens: 200,
+    max_tokens: AI_OUTPUT_TOKENS.sentenceGloss,
     response_format: { type: "json_object" },
     messages: [
       {
@@ -150,10 +151,17 @@ async function glossSentenceMeaningsBatch(input: {
 
   const uiLanguage = UI_LANGUAGE_NAMES[input.uiLocale];
   const client = getOpenAIClient();
+  const sentences = input.sentences.map((item) => ({
+    index: item.index,
+    sentence: clipForAi(item.sentence, AI_INPUT_LIMITS.sentenceText),
+  }));
   const completion = await client.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: 0.2,
-    max_tokens: Math.min(400 + input.sentences.length * 80, 4_000),
+    max_tokens: Math.min(
+      400 + sentences.length * 80,
+      AI_OUTPUT_TOKENS.sentenceGlossBatch,
+    ),
     response_format: { type: "json_object" },
     messages: [
       {
@@ -167,7 +175,7 @@ async function glossSentenceMeaningsBatch(input: {
         role: "user",
         content: JSON.stringify({
           uiLanguage,
-          sentences: input.sentences,
+          sentences,
           reminder: `Write every sentenceMeaning in ${uiLanguage} only.`,
         }),
       },

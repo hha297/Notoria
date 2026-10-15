@@ -1,4 +1,5 @@
-import OpenAI from "openai";
+import { AI_OUTPUT_TOKENS } from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { getLanguageByCode } from "@/lib/languages";
 import {
@@ -12,11 +13,7 @@ import {
 } from "@/lib/exercises/form-sentence-ai-types";
 
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
-    throw new Error("OPENAI_NOT_CONFIGURED");
-  }
-  return new OpenAI({ apiKey, timeout: 40_000 });
+  return requireOpenAiClient({ timeoutMs: 40_000 });
 }
 
 function parseJsonContent(content: string | null | undefined) {
@@ -41,7 +38,7 @@ export async function evaluateFormSentence(
   const completion = await client.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: 0.2,
-    max_tokens: 650,
+    max_tokens: AI_OUTPUT_TOKENS.formSentence,
     response_format: { type: "json_object" },
     messages: [
       {
