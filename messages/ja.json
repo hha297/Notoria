@@ -1,0 +1,4998 @@
+{
+  "common": {
+    "save": "保存",
+    "cancel": "キャンセル",
+    "delete": "削除",
+    "edit": "編集",
+    "view": "表示",
+    "open": "開く",
+    "back": "戻る",
+    "create": "作成",
+    "loading": "読み込み中…",
+    "optional": "任意",
+    "required": "必須",
+    "selectedCount": "{count}件選択中",
+    "clearFilter": "クリア",
+    "filters": "フィルター",
+    "hideFilters": "フィルターを隠す",
+    "remove": "削除"
+  },
+  "contentImport": {
+    "title": {
+      "vocabulary": "語彙をインポート",
+      "writing": "ライティングをインポート",
+      "theory": "理論をインポート"
+    },
+    "description": {
+      "vocabulary": "CSV、PDF、またはDOCXをアップロードしてください。保存前に列の対応付けを行います。",
+      "writing": "ノートまたはドキュメントのCSVをアップロードしてください。まずプレビューしてから確定します。",
+      "theory": "理論ノートまたはCSVをアップロードしてください。まずプレビューしてから確定します。"
+    },
+    "guidance": "必要な形式がわからなくても大丈夫です。ファイルをアップロードしていただければ、インポート前に構造を読み取ります。",
+    "dropzone": "ここにファイルをドロップするか、クリックして選択",
+    "formats": "CSV、PDF、DOCX、またはTXT · 最大10 MB",
+    "downloadTemplate": "ひな形が必要ですか？テンプレートをダウンロード",
+    "quota": {
+      "free": "ファイルのインポートは Pro と Premium でご利用いただけます。",
+      "pro": "Pro と Premium：インポート無制限。",
+      "premium": "Premium：インポート無制限。"
+    },
+    "fields": {
+      "word": "単語",
+      "meaning": "意味",
+      "partOfSpeech": "品詞",
+      "example": "例文",
+      "tags": "タグ",
+      "notes": "メモ",
+      "title": "タイトル",
+      "content": "内容",
+      "category": "カテゴリ",
+      "ignore": "インポートしない"
+    },
+    "preview": {
+      "summary": "{ready}件インポート可能 · {issues}件要確認",
+      "mappingTitle": "列の対応付け",
+      "yourColumn": "元の列",
+      "notoriaField": "Notoriaのフィールド",
+      "missingRequired": "インポート前に必須フィールドを対応付けてください。",
+      "unmapped": "未使用：{columns}",
+      "issuesTitle": "{count}行に問題があります",
+      "issueRow": "{row}行目：",
+      "skipHint": "問題のある行はスキップされます。問題のない行はインポートされます。",
+      "sampleTitle": "作成される内容のサンプル"
+    },
+    "back": "別のファイルを選ぶ",
+    "importReady": "{count}件をインポート",
+    "close": "閉じる",
+    "progress": {
+      "reading": "ファイルを読み取り中…",
+      "analyzing": "構造を解析中…",
+      "mapping": "列の対応付けを更新中…",
+      "importing": "インポート中…",
+      "finishing": "完了処理中…",
+      "count": "{current} / {total}"
+    },
+    "done": {
+      "title": "{count}件をインポートしました",
+      "detail": "スキップ {skipped} · 失敗 {failed}",
+      "skippedExists": "{count}件をスキップ — すでに語彙にあります",
+      "skippedInvalid": "{count}件をスキップ — データ不足または行の問題",
+      "failed": "{count}件失敗 — 保存できませんでした（残りは続行しました）",
+      "allGood": "スキップや失敗はありませんでした。",
+      "detailsTitle": "詳細",
+      "reasonExists": "すでに語彙にあります",
+      "reasonFailed": "保存できませんでした — 残りは続行しました",
+      "moreDetails": "…ほか {count}件",
+      "toast": "{count}件をインポートしました",
+      "toastAllExist": "新規はありません — {count}件はすでに語彙にあります",
+      "toastNone": "インポートされた項目はありません"
+    },
+    "errors": {
+      "proRequired": "ファイルのインポートは Pro と Premium でご利用いただけます。",
+      "quotaExceeded": "本日のインポート上限に達しました。明日もう一度お試しいただくか、上位プランで上限を引き上げてください。",
+      "rateLimited": "インポートのリクエストが多すぎます。しばらくしてからもう一度お試しください。",
+      "busy": "すでにインポートが進行中です。完了してからもう一度お試しください。",
+      "fileTooLarge": "ファイルが大きすぎます。10 MB以下にしてください。",
+      "unsupportedFormat": "CSV、PDF、DOCX、またはプレーンテキストをご利用ください。",
+      "emptyFile": "このファイルから読み取れる内容が見つかりませんでした。",
+      "parseFailed": "このファイルを読み取れませんでした。再度エクスポートするか、CSVテンプレートをご利用ください。",
+      "generic": "問題が発生しました。もう一度お試しください。"
+    },
+    "button": "インポート"
+  },
+  "editor": {
+    "linkTitle": "リンクを挿入",
+    "linkEditTitle": "リンクを編集",
+    "linkDescription": "選択したテキストにURLを追加します。",
+    "linkUrl": "URL",
+    "linkUrlPlaceholder": "https://",
+    "linkInvalid": "有効な http または https のURLを入力してください。",
+    "linkInsert": "リンクを挿入",
+    "linkSave": "保存",
+    "linkRemove": "リンクを削除",
+    "imageTitle": "画像を挿入",
+    "imageDescription": "ファイルをアップロードするか、画像URLを貼り付けてください。",
+    "imageUpload": "画像をアップロード",
+    "imageUploadHint": "PNG、JPG、GIF、またはWebP。最大5 MB。",
+    "imageChooseFile": "ファイルを選択",
+    "imageUrl": "画像URL",
+    "imageUrlPlaceholder": "https://",
+    "imageInvalidUrl": "有効な画像URLを入力してください。",
+    "imageInsert": "画像を挿入",
+    "imageUploading": "アップロード中…",
+    "imageUploadFailed": "画像をアップロードできませんでした。もう一度お試しください。",
+    "imagePasteFailed": "貼り付けた画像を保存できませんでした。",
+    "imageTooLarge": "画像が大きすぎます（最大5 MB）。",
+    "imageInvalidType": "PNG、JPG、GIF、またはWebPの画像をご利用ください。",
+    "imageUnavailable": "画像アップロードが設定されていません。",
+    "or": "または",
+    "format": "整形",
+    "formatSuccess": "内容を整形しました",
+    "formatUnchanged": "すでに整形済みです",
+    "formatWorking": "整形中…",
+    "formatAiFallback": "AI整形は利用できません — 基本的な整列を適用しました",
+    "formatFailed": "内容を整形できませんでした。もう一度お試しください。",
+    "formatQuotaExceeded": "本日のAI整形の上限に達しました。UTCの午前0時にリセットされます。上位プランで上限を引き上げることもできます。",
+    "formatRateLimited": "整形のリクエストが多すぎます。しばらくしてからもう一度お試しください。",
+    "tableSelectionInvalid": "選択範囲を表に変換できませんでした",
+    "headingCollapse": "セクションを折りたたむ",
+    "headingExpand": "セクションを展開",
+    "paradigmHeaders": {
+      "case": "格",
+      "singular": "単数",
+      "plural": "複数"
+    },
+    "paradigmCases": {
+      "nominative": "主格",
+      "genitive": "属格",
+      "partitive": "部分格",
+      "accusative": "対格",
+      "inessive": "内格",
+      "elative": "出格",
+      "illative": "入格",
+      "adessive": "接格",
+      "ablative": "奪格",
+      "allative": "向格",
+      "essive": "様格",
+      "translative": "変格",
+      "instructive": "具格",
+      "abessive": "欠格",
+      "comitative": "共格"
+    }
+  },
+  "nav": {
+    "dashboard": "ダッシュボード",
+    "inbox": "キャプチャ",
+    "vocabulary": "語彙",
+    "writing": "ライティング",
+    "theory": "理論",
+    "exercises": "練習",
+    "reading": "リーディング",
+    "listening": "リスニング",
+    "speaking": "スピーキング",
+    "coach": "学習コーチ",
+    "account": "アカウント",
+    "settings": "設定",
+    "workspace": "ワークスペース",
+    "gettingStarted": "はじめに",
+    "groups": {
+      "main": "メインメニュー",
+      "skills": "スキル",
+      "listenSpeak": "聞く・話す",
+      "more": "その他"
+    }
+  },
+  "inbox": {
+    "eyebrow": "収集",
+    "title": "キャプチャ",
+    "description": "メモ、フレーズ、アイデアをここにすばやく保存し、あとで語彙・理論・ライティング・練習に振り分けられます。",
+    "disabledNoWorkspace": "キャプチャする前にワークスペースを作成してください。",
+    "capture": "キャプチャ",
+    "captureTitle": "何かキャプチャする",
+    "captureDescription": "あとで処理するために保存します。いま行き先を決める必要はありません。",
+    "captureSubmit": "キャプチャに保存",
+    "captured": "キャプチャに保存しました",
+    "edit": "編集",
+    "editTitle": "キャプチャを編集",
+    "editDescription": "内容を更新するか、別のフォルダへ移動します。",
+    "editSubmit": "変更を保存",
+    "updated": "キャプチャを更新しました",
+    "contentLabel": "内容",
+    "contentPlaceholder": "単語、フレーズ、アイデアなど、あとで見返したいもの…",
+    "contentRequired": "まず内容を入力してください",
+    "noteLabel": "メモ（任意）",
+    "notePlaceholder": "背景や、なぜ重要か…",
+    "sourceLabel": "出典（任意）",
+    "sourcePlaceholder": "本、ポッドキャスト、授業…",
+    "sourcePrefix": "{source}より",
+    "folderLabel": "フォルダ",
+    "foldersNav": "キャプチャフォルダ",
+    "scopeAll": "すべてのキャプチャ",
+    "unfiled": "未分類",
+    "filterUnprocessed": "未処理",
+    "filterProcessed": "処理済み",
+    "emptyTitle": "まだキャプチャがありません",
+    "emptyDescription": "会話で聞いた単語、文法の疑問、書きたいアイデアなどをすばやくキャプチャし、あとで整理できます。",
+    "emptyProcessedTitle": "処理済みの項目はまだありません",
+    "emptyProcessedDescription": "キャプチャから語彙・理論・ライティング・練習へ追加し終えると、ここに表示されます。",
+    "emptyFolderTitle": "このフォルダは空です",
+    "emptyFolderDescription": "ここにキャプチャを移動するか、このフォルダに新しくキャプチャしてください。",
+    "deleteFolderDescription": "「{name}」を削除しますか？フォルダは削除されますが、{count, plural, one {#件のキャプチャは} other {#件のキャプチャは}}未分類に残ります。",
+    "statusProcessed": "処理済み",
+    "processMenu": "キャプチャ操作",
+    "processed": "処理済みにしました",
+    "deleted": "キャプチャから削除しました",
+    "process": {
+      "vocabulary": "語彙",
+      "theory": "理論",
+      "writing": "ライティング",
+      "exercise": "練習",
+      "keep": "あとで残す",
+      "delete": "削除"
+    },
+    "searchPlaceholder": "キャプチャを検索…",
+    "searchInScope": "{scope}内を検索…",
+    "sortBy": "並べ替え",
+    "sortNewest": "新しい順",
+    "sortOldest": "古い順",
+    "sortNameAsc": "名前（A → Z）",
+    "sortNameDesc": "名前（Z → A）",
+    "noResultsTitle": "一致する項目がありません",
+    "noResultsDescription": "別のキーワードで検索するか、クリアしてこのフォルダとタブのすべてを表示してください。"
+  },
+  "reviewLater": {
+    "add": "あとで復習",
+    "remove": "あとで復習から削除"
+  },
+  "folders": {
+    "new": "新しいフォルダ",
+    "create": "フォルダを作成",
+    "createTitle": "新しいフォルダ",
+    "createDescription": "フォルダは任意です。ライティング、リスニング、理論の整理に使えます。",
+    "renameTitle": "フォルダ名を変更",
+    "renameDescription": "このフォルダの新しい名前を入力してください。",
+    "name": "名前",
+    "namePlaceholder": "フォルダ名",
+    "untitled": "無題のフォルダ",
+    "created": "フォルダを作成しました",
+    "renamed": "フォルダ名を変更しました",
+    "deleted": "フォルダを削除しました",
+    "moved": "移動しました",
+    "delete": "削除",
+    "deleteTitle": "このフォルダを削除しますか？",
+    "deleteDescription": "「{name}」とその中身すべて（{folderCount, plural, one {#フォルダ} other {#フォルダ}}、{itemCount, plural, one {#件} other {#件}}）が完全に削除されます。",
+    "deleteDescriptionEmpty": "「{name}」が完全に削除されます。",
+    "root": "すべてのファイル",
+    "unfiled": "未分類",
+    "open": "開く",
+    "rename": "名前を変更",
+    "move": "移動先…",
+    "moveTitle": "移動先",
+    "moveDescription": "フォルダを選ぶか、トップレベルに置いたままにします。",
+    "moveHere": "ここに移動",
+    "emptyFolder": "このフォルダは空です",
+    "emptyFolderDescription": "ここに追加するか、サブフォルダを作成してください。トップレベルに置いたままでも構いません — フォルダは整理のためのものです。",
+    "itemCount": "{count, plural, one {#件} other {#件}}",
+    "foldersHeading": "フォルダ",
+    "folderActions": "フォルダ操作",
+    "breadcrumbs": "フォルダパス",
+    "nameRequired": "フォルダ名を入力してください",
+    "invalidMove": "フォルダを自身の中には移動できません",
+    "tooDeep": "このフォルダのネストが深すぎます",
+    "notFound": "フォルダが見つかりません",
+    "nameTaken": "この名前のフォルダまたはライティングはすでにあります"
+  },
+  "theme": {
+    "toggle": "テーマを切り替え",
+    "light": "ライト",
+    "dark": "ダーク"
+  },
+  "header": {
+    "createWorkspace": "ワークスペースを作成",
+    "createWorkspaceHint": "別の言語のワークスペースを追加",
+    "switchWorkspace": "ワークスペースを切り替え",
+    "switchFailed": "ワークスペースを切り替えられませんでした"
+  },
+  "workspace": {
+    "title": "ワークスペース",
+    "emptyTitle": "最初のワークスペースを作成",
+    "emptyDescription": "ワークスペースは学習中の言語です。語彙、ライティング、練習、学習データはワークスペース内に保存されます。",
+    "createFirst": "ワークスペースを作成",
+    "name": "ワークスペース名",
+    "namePlaceholder": "任意 — 自動で名前を生成します",
+    "language": "ワークスペースの言語",
+    "languageHint": "言語ごとに1つのワークスペースです。重複は作成できません。",
+    "languageExists": "この言語のワークスペースはすでに存在します。",
+    "languageSearchPlaceholder": "言語を検索…",
+    "languageSearchEmpty": "言語が見つかりません",
+    "languageRegions": {
+      "europe": "ヨーロッパ",
+      "asia": "アジア",
+      "africa": "アフリカ",
+      "americas": "アメリカ大陸",
+      "oceania": "オセアニア"
+    },
+    "created": "ワークスペースを作成しました",
+    "updated": "ワークスペースを更新しました",
+    "deleted": "ワークスペースを削除しました",
+    "editTitle": "ワークスペースを編集",
+    "editDescription": "このワークスペースの名前と言語を更新します。",
+    "editAction": "ワークスペースを編集",
+    "deleteAction": "ワークスペースを削除",
+    "manage": "ワークスペース設定",
+    "manageNamed": "「{name}」を管理",
+    "nameRequired": "ワークスペース名を入力してください",
+    "deleteTitle": "ワークスペースを削除しますか？",
+    "deleteDescription": "「{name}」とその語彙、ライティング、理論、リスニング、練習がすべて完全に削除されます。この操作は元に戻せません。",
+    "deleteLastDescription": "これは唯一のワークスペースです。「{name}」を削除すると、すべての学習データが削除されます。この操作は元に戻せません。",
+    "switched": "ワークスペースを切り替えました",
+    "noActive": "アクティブなワークスペースがありません"
+  },
+  "vocabulary": {
+    "title": "語彙",
+    "bank": "バンク",
+    "description": "集めた単語はここに保存されます。検索・絞り込みし、練習・ライティング・復習で再利用できます。",
+    "library": "単語バンク",
+    "addWordHighlight": "バンク",
+    "newWord": "新しい単語",
+    "editWord": "単語を編集",
+    "edit": "編集",
+    "backToList": "語彙一覧に戻る",
+    "backToPreview": "プレビューに戻る",
+    "previewTitle": "単語プレビュー",
+    "previewDescription": "この単語の読み取り専用ビューです。変更するには編集を開いてください。",
+    "editDescription": "保存すると変更が残ります。キャンセルすると未保存の編集は破棄されます。",
+    "addWord": "単語を追加",
+    "saveWord": "単語を保存",
+    "savingWord": "保存中…",
+    "updateWord": "単語を更新",
+    "updatingWord": "更新中…",
+    "word": "単語",
+    "wordPlaceholder": "学習中の単語を入力…",
+    "partOfSpeech": "品詞",
+    "partOfSpeechPlaceholder": "品詞を選択",
+    "meanings": "意味",
+    "addMeaning": "意味を追加",
+    "meaningPlaceholder": "意味を入力",
+    "primaryMeaning": "主な意味",
+    "markAsPrimary": "主な意味にする",
+    "primaryMeaningHint": "練習用に主な意味を最大{max}件までスターで選べます。それ以外は参照用です。",
+    "primaryMeaningRequired": "主な意味を少なくとも1つ選んでください",
+    "primaryMeaningLimit": "主な意味は最大{max}件までです",
+    "primaryMeanings": "主な意味",
+    "otherMeanings": "その他の意味",
+    "usageLabels": {
+      "label": "用法ラベル",
+      "add": "用法",
+      "menuTitle": "用法ラベル",
+      "clear": "すべてクリア",
+      "remove": "{label}を削除",
+      "aria": "この意味の用法ラベル",
+      "count": "{count, plural, one {#件のラベル} other {#件のラベル}}"
+    },
+    "otherMeaningsPage": "{total}件の意味 · {totalPages}ページ中{page}ページ目",
+    "otherMeaningsPrev": "前へ",
+    "otherMeaningsNext": "次へ",
+    "examples": "例文",
+    "addExample": "例文を追加",
+    "removeExample": "例文を削除",
+    "examplePlaceholder": "例文を入力",
+    "exampleDetails": "追加の詳細",
+    "exampleDetailsFilled": "入力済み",
+    "exampleMeaning": "意味 / 訳",
+    "exampleMeaningPlaceholder": "この文を訳すか説明してください…",
+    "exampleNotes": "メモ / 説明",
+    "exampleNotesPlaceholder": "文法のポイント、使い方のメモ…",
+    "optional": "任意",
+    "tags": "タグ",
+    "selectTags": "タグを選択",
+    "searchOrCreateTags": "検索またはカスタムタグを作成…",
+    "createTag": "「{name}」を作成",
+    "noMatchingTags": "一致するタグがありません",
+    "createCustomTag": "カスタムタグを作成",
+    "addCustomTag": "追加",
+    "notes": "メモ",
+    "notesPlaceholder": "覚え方、文法のヒント、自分用のリマインダー…",
+    "formatNotes": "整形",
+    "formatNotesSuccess": "メモを整形しました",
+    "formatNotesUnchanged": "メモはすでに整形済みです",
+    "formatNotesAiFallback": "AI整形は利用できません — 基本的な整列を適用しました",
+    "synonyms": "類義語",
+    "synonymsSearch": "既存の単語を検索…",
+    "synonymsSelect": "別の類義語を追加…",
+    "synonymsNoResults": "一致する単語がありません",
+    "synonymsAddNew": "「{word}」を追加",
+    "synonymsCreateTitle": "類義語を追加",
+    "synonymsCreateDescription": "既存の単語をリンクするか、意味付きで新しい単語を作成します。それぞれの単語から相手を開けます。",
+    "synonymsMeaning": "意味",
+    "synonymsMeaningPlaceholder": "意味を入力",
+    "synonymsCreated": "単語を作成し、リンクできる状態です",
+    "synonymsAlreadyLinked": "すでに類義語として追加されています",
+    "synonymsCannotLinkSelf": "単語を自分自身の類義語にはできません",
+    "synonymsRemove": "{word}を削除",
+    "formDescription": "意味・例文・タグ付きで単語を追加します。ドラッグで並べ替えできます。",
+    "addingTo": "追加先",
+    "emptyTitle": "単語バンクはまだ空です",
+    "emptyDescription": "単語と意味を集め始めて、自分だけの言語ライブラリを作りましょう。",
+    "addFirst": "最初の単語を追加",
+    "disabledNoWorkspace": "語彙を追加する前にワークスペースを作成してください。",
+    "saved": "単語を保存しました",
+    "updated": "単語を更新しました",
+    "deleted": "単語を削除しました",
+    "meaningRequired": "意味を少なくとも1つ追加してください",
+    "columns": {
+      "word": "単語",
+      "partOfSpeech": "品詞",
+      "meaning": "意味",
+      "tags": "タグ",
+      "updated": "最終更新",
+      "actions": "操作"
+    },
+    "moreMeanings": "+あと{count}件",
+    "searchPlaceholder": "単語または意味を検索…",
+    "filterPartOfSpeech": "品詞",
+    "filterTag": "タグ",
+    "filterAll": "すべて",
+    "sortBy": "並べ替え",
+    "sortUpdated": "最終更新",
+    "sortWord": "単語",
+    "sortAsc": "A → Z",
+    "sortDesc": "Z → A",
+    "noResults": "単語が見つかりません",
+    "noResultsDescription": "検索条件またはフィルターを変更してみてください。",
+    "loadError": "語彙を読み込めませんでした",
+    "loadErrorDescription": "接続を確認してもう一度お試しください。",
+    "retry": "もう一度試す",
+    "viewList": "リスト",
+    "viewCards": "カード",
+    "viewMode": "表示モード",
+    "tagManager": {
+      "open": "タグを管理",
+      "title": "タグマネージャー",
+      "description": "タグを選び、単語に割り当てるか外します。割り当て済みとその他は別リストに分かれます。",
+      "groupsLabel": "標準タググループ",
+      "tagsHeading": "タグ",
+      "standardTagsHeading": "標準タグ",
+      "customTagsHeading": "カスタムタグ",
+      "customTagsHint": "整理用に自分で作るラベルです — 品詞ではありません。",
+      "emptyCustomTags": "カスタムタグはまだありません。単語の編集時に作成できます。",
+      "wordsHeading": "{tag}",
+      "kindStandard": "標準",
+      "kindCustom": "カスタム",
+      "assignedHeading": "このタグの単語",
+      "otherHeading": "その他の単語",
+      "sectionCount": "{count}",
+      "selectSection": "このセクションをすべて選択",
+      "searchPlaceholder": "単語または意味を検索…",
+      "wordCount": "{count}",
+      "loading": "語彙を読み込み中…",
+      "emptyBank": "単語バンクはまだ空です。",
+      "emptyAssigned": "このタグの単語はまだありません。",
+      "emptyAssignedSearch": "このタグで一致する単語がありません。",
+      "emptyOther": "すべての単語にすでにこのタグが付いています。",
+      "emptyOtherSearch": "割り当て可能な一致する単語がありません。",
+      "selected": "{count}件選択中",
+      "modeHintIdle": "どちらかのリストで単語を選択してください。最初の選択で追加または削除モードが決まります。",
+      "modeHintAdd": "このタグを追加中 — 「その他の単語」のみ選択を維持できます。",
+      "modeHintRemove": "このタグを削除中 — すでにタグ付きの単語のみ選択を維持できます。",
+      "addToTag": "タグに追加",
+      "removeFromTag": "タグから削除",
+      "applyAdd": "タグに追加（{count}）",
+      "applyRemove": "タグから削除（{count}）",
+      "added": "{tag}に{count}件の単語を追加しました",
+      "removed": "{tag}から{count}件の単語を削除しました",
+      "error": "タグの割り当てを更新できませんでした"
+    },
+    "moreTags": "+{count}",
+    "updatedAgo": "{time}に更新",
+    "shownOfTotal": "{total}件中{shown}件",
+    "stats": {
+      "total": "語彙の合計",
+      "recent": "今週追加"
+    },
+    "uncategorizedPos": "未分類",
+    "groupCount": "{count, plural, one {#語} other {#語}}",
+    "groupPageRange": "{count}件中{start}–{end}",
+    "pageOf": "{totalPages}ページ中{page}ページ目",
+    "previousPage": "前のページ",
+    "nextPage": "次のページ",
+    "goToPage": "{page}ページへ",
+    "deleteConfirmTitle": "この単語を削除しますか？",
+    "deleteConfirmDescription": "「{word}」は語彙から完全に削除されます。",
+    "wordExists": "この単語はすでに語彙にあります。",
+    "wordExistsCheckFailed": "この単語がすでに存在するかを確認できませんでした。もう一度試すか、そのまま保存できます。",
+    "wordExistsChecking": "確認中…",
+    "aiSuggestion": "AIの提案",
+    "aiChecking": "AIで確認中…",
+    "aiDisclaimer": "AIの提案は誤っている場合があります。",
+    "aiSkip": "スキップ",
+    "aiUseWord": "{word}を使う",
+    "aiDidYouMean": "「{word}」のことでしょうか？",
+    "aiPossibleMeaning": "考えられる意味",
+    "aiLikelyMeaning": "ありそうな意味は「{meaning}」です。",
+    "aiUseSuggestion": "提案を使う",
+    "aiMeaningMismatch": "「{meaning}」は「{word}」の意味ではないようです。",
+    "export": {
+      "button": "エクスポート",
+      "title": "語彙をエクスポート",
+      "kicker": "語彙をエクスポート",
+      "description": "現在表示中の単語をエクスポートします。",
+      "rowCount": "{count, plural, one {#語} other {#語}}",
+      "summaryWithNote": "{count, plural, one {#語} other {#語}} · メモを含む",
+      "format": "形式",
+      "formatPdf": "PDF",
+      "formatCsv": "CSV",
+      "formatDocx": "Word",
+      "formatPdfHint": "印刷用ページ",
+      "formatDocxHint": "編集可能なファイル",
+      "formatCsvHint": "スプレッドシート",
+      "options": "含める項目",
+      "content": "内容",
+      "includePartOfSpeech": "品詞",
+      "includeTags": "タグ",
+      "includeLastUpdated": "最終更新",
+      "includeNotes": "メモ",
+      "preparing": "メモを準備中…",
+      "generating": "ドキュメント作成中…",
+      "writingFile": "ファイルを保存中…",
+      "progressCount": "{current} / {total}",
+      "confirm": "エクスポート",
+      "success": "ダウンロードを開始しました",
+      "failed": "エクスポートに失敗しました",
+      "empty": "エクスポートする単語がありません",
+      "documentHeading": "語彙",
+      "workspaceLabel": "ワークスペース",
+      "columns": {
+        "word": "単語",
+        "partOfSpeech": "品詞",
+        "meanings": "意味",
+        "tags": "タグ",
+        "notes": "メモ",
+        "updated": "最終更新"
+      }
+    }
+  },
+  "tags": {
+    "groups": {
+      "difficulty": "レベル",
+      "topic": "トピック",
+      "grammar": "用法",
+      "learningStatus": "学習状況",
+      "custom": "カスタムタグ"
+    },
+    "difficulty": {
+      "a1": "A1",
+      "a2": "A2",
+      "b1": "B1",
+      "b2": "B2",
+      "c1": "C1",
+      "c2": "C2"
+    },
+    "topic": {
+      "everyday_life": "日常生活",
+      "home_housing": "住まいと住居",
+      "food_drink": "食事と飲み物",
+      "travel": "旅行",
+      "transport_mobility": "交通と移動",
+      "work_working_life": "仕事と職業生活",
+      "education_studying": "教育と学習",
+      "health_wellbeing": "健康とウェルビーイング",
+      "services_shopping": "サービスと買い物",
+      "people_family_relationships": "人・家族・人間関係",
+      "feelings_opinions_experiences": "感情・意見・経験",
+      "culture_leisure": "文化と余暇",
+      "nature_environment": "自然と環境",
+      "society_community": "社会とコミュニティ"
+    },
+    "grammar": {
+      "formal": "フォーマル",
+      "informal": "インフォーマル",
+      "spoken": "口語 / 話し言葉",
+      "slang": "スラング",
+      "academic": "学術的",
+      "idiom": "慣用句",
+      "grammar": "文法",
+      "expression": "表現"
+    },
+    "meaningUsage": {
+      "literary": "文語的",
+      "technical": "専門的",
+      "archaic": "古語的",
+      "regional": "地域的",
+      "figurative": "比喩的"
+    },
+    "learningStatus": {
+      "new": "新規",
+      "learning": "学習中",
+      "review": "復習",
+      "mastered": "習得済み"
+    },
+    "pos": {
+      "noun": "名詞",
+      "verb": "動詞",
+      "adjective": "形容詞",
+      "adverb": "副詞",
+      "pronoun": "代名詞",
+      "preposition": "前置詞",
+      "conjunction": "接続詞",
+      "interjection": "間投詞",
+      "article": "冠詞",
+      "determiner": "限定詞"
+    }
+  },
+  "exercises": {
+    "title": "演習",
+    "studio": "スタジオ",
+    "description": "語彙を練習する学習モードを選びます。",
+    "studioDescription": "語彙、理論ノート、またはインポートした教材から練習します — ソースを選んで、集中セッションを始めましょう。",
+    "startActivity": "開始",
+    "unlockActivity": "解除",
+    "practice": "練習",
+    "editor": "エディタ",
+    "edit": "編集",
+    "editDescription": "最初の保存のあと、変更は自動保存されます。",
+    "noWorkspace": "演習を始める前に、ワークスペースを作成してください。",
+    "updated": "更新済み",
+    "backToStudio": "演習に戻る",
+    "studyMode": "学習モード",
+    "difficulty": {
+      "label": "難易度",
+      "easy": "易しい",
+      "medium": "普通",
+      "hard": "難しい",
+      "intensive": "集中",
+      "easyHint": "明確な手がかりと、あなたの単語でのシンプルな練習。",
+      "mediumHint": "語彙を使った直接的な質問と文脈問題のミックス。",
+      "hardHint": "より多くの文脈と、わかりにくい手がかり — それでもあなたの単語です。",
+      "intensiveHint": "細やかな文脈とより強い推論 — それでもあなたの単語です。"
+    },
+    "sources": {
+      "label": "演習ソース",
+      "heading": "ソース",
+      "vocabulary": "語彙",
+      "theory": "理論",
+      "import": "インポート",
+      "imported": "インポート済み",
+      "lastUsed": "最終使用",
+      "selected": "選択中",
+      "vocabularyHint": "アクティブなワークスペース内の単語から作られるモード。",
+      "theoryHint": "AIが理論ノートを穴埋め練習に変えます。",
+      "importHint": "ワークシートやノートをインポート — 元の手がかりを保ち、練習カードにします。",
+      "vocabularyCount": "{count, plural, other {# 語}}",
+      "theoryCount": "{count, plural, other {# 件のノート}}",
+      "importCount": "{count, plural, other {# 件のインポート}}"
+    },
+    "processing": {
+      "workingTitle": "演習を準備中",
+      "readyTitle": "演習の準備完了",
+      "errorTitle": "問題が発生しました",
+      "cancel": "キャンセル",
+      "retry": "再試行",
+      "dismiss": "閉じる",
+      "stages": {
+        "uploading": "アップロード中…",
+        "extracting": "内容を抽出中…",
+        "analyzing": "内容を分析中…",
+        "generating": "演習を生成中…",
+        "saving": "演習を保存中…",
+        "completed": "演習の準備完了",
+        "error": "生成に失敗しました"
+      }
+    },
+    "import": {
+      "eyebrow": "インポートした練習",
+      "hubTitle": "ページから練習へ",
+      "practiceTitle": "インポートした演習",
+      "practiceDescription": "インポートした教材から作られた練習カード — 同じ手がかりと順序で、でっち上げのドリルはありません。",
+      "formTitle": "学習教材をインポート",
+      "formDescription": "ソースを指定してください。構造を抽出し、その手がかりだけから練習を作ります。",
+      "chooseSource": "何をインポートできますか？",
+      "dropActive": "ドロップしてインポート",
+      "modes": {
+        "image": "画像",
+        "file": "ファイル",
+        "url": "URL",
+        "text": "テキスト"
+      },
+      "titleLabel": "タイトル",
+      "titlePlaceholder": "任意 — ソースから既定値を使用",
+      "urlLabel": "URL",
+      "urlPlaceholder": "https://…",
+      "textLabel": "学習テキスト",
+      "textPlaceholder": "学習教材を貼り付けるか入力…",
+      "dropImageTitle": "ここに画像をドロップ",
+      "dropFileTitle": "ここにファイルをドロップ",
+      "dropDescription": "またはクリックしてアップロード",
+      "pasteHint": "Ctrl + V で画像を貼り付けることもできます",
+      "pasteAlwaysHint": "ヒント: どのインポートモードでも Ctrl + V でクリップボードの画像を貼り付けられます。",
+      "supportedFiles": "PDF、DOCX、画像、プレーンテキスト（.txt、.md）",
+      "pastedImageTitle": "貼り付けた画像",
+      "importAction": "インポートして生成",
+      "unlockPro": "Proで解除",
+      "lockedDescription": "Proにアップグレードすると、ワークシートやノートをAI練習カードに変えられます。",
+      "myImports": "自分のインポート",
+      "searchPlaceholder": "タイトルで検索…",
+      "noResults": "そのタイトルに一致するインポートはありません",
+      "practice": "練習",
+      "retry": "再試行",
+      "delete": "削除",
+      "deleteConfirmTitle": "このインポートを削除しますか？",
+      "deleteConfirmDescription": "「{title}」と生成された演習は完全に削除されます。",
+      "ready": "演習の準備完了",
+      "deleted": "インポートを削除しました",
+      "exerciseCount": "{count, plural, other {# 件の演習}}",
+      "importedAgo": "{time}にインポート",
+      "processingHint": "内容を抽出し、演習を生成中…",
+      "extractingHint": "教材を読み取り、分析中…",
+      "generatingHint": "内容から練習演習を作成中…",
+      "uploadBytes": "{loaded} / {total}",
+      "cancelUpload": "キャンセル",
+      "uploadCancelled": "アップロードをキャンセルしました",
+      "sourceTypes": {
+        "image": "画像",
+        "file": "ファイル",
+        "url": "URL"
+      },
+      "status": {
+        "UPLOADING": "アップロード中",
+        "EXTRACTING": "抽出中",
+        "ANALYZING": "処理中",
+        "GENERATING": "生成中",
+        "COMPLETED": "準備完了",
+        "FAILED": "失敗"
+      },
+      "steps": {
+        "uploading": "アップロード中…",
+        "extracting": "内容を分析中…",
+        "generating": "演習を生成中…",
+        "complete": "完了",
+        "processing": "処理中…"
+      },
+      "errors": {
+        "CLOUDINARY_NOT_CONFIGURED": "ファイルストレージが設定されていません。",
+        "OPENAI_NOT_CONFIGURED": "AI処理が設定されていません。",
+        "INVALID_FILE": "インポートするファイルを選んでください。",
+        "INVALID_FILE_TYPE": "そのファイル形式はサポートされていません。画像、PDF、DOCX、またはプレーンテキストを使用してください。",
+        "FILE_TOO_LARGE": "ファイルが大きすぎます。10 MB未満のファイルを使用してください。",
+        "INVALID_URL": "有効な http(s) URLを入力してください。",
+        "URL_FETCH_FAILED": "そのURLを取得できませんでした。別のリンクを試してください。",
+        "UNSUPPORTED_PARSE": "その文書を読み取れませんでした。PDFまたはDOCXを使用してください（旧形式の.docは不可）。",
+        "EMPTY_CONTENT": "利用可能な学習コンテンツが見つかりませんでした。",
+        "ANALYSIS_FAILED": "その教材を処理できませんでした。もう一度お試しください。",
+        "GENERATION_FAILED": "その教材から演習を生成できませんでした。",
+        "GENERATION_UNAVAILABLE": "現在、演習生成は利用できません。後でもう一度お試しください。",
+        "IMPORT_NOT_FOUND": "インポートが見つかりません。",
+        "PROCESSING_FAILED": "このインポートの処理中に問題が発生しました。",
+        "ALREADY_PROCESSING": "このインポートはすでに処理中です。"
+      }
+    },
+    "theory": {
+      "eyebrow": "理論練習",
+      "hubTitle": "言語の背後にある考え方を学ぶ",
+      "hubDescription": "インタラクティブなレッスンで文法、パターン、概念を探索します。",
+      "practiceTitle": "理論演習",
+      "practiceDescription": "AIがこのノートを穴埋め練習に変えます — ヒントと説明付き。",
+      "openLibrary": "理論ライブラリを開く",
+      "practice": "練習",
+      "view": "表示",
+      "emptyTitle": "まだ理論ノートがありません",
+      "emptyDescription": "理論ノートを書いてから、ここでAI生成の演習で練習しましょう。",
+      "emptyCta": "理論ノートを作成",
+      "searchPlaceholder": "タイトルまたは内容で検索…",
+      "filterCategory": "カテゴリ",
+      "viewMode": "表示モード",
+      "viewList": "リスト",
+      "viewCards": "カード",
+      "pageOf": "{totalPages} ページ中 {page} ページ",
+      "previousPage": "前のページ",
+      "nextPage": "次のページ",
+      "goToPage": "{page} ページへ",
+      "noResults": "一致する理論ノートはありません",
+      "noResultsDescription": "別の検索またはカテゴリを試してください。",
+      "clearFilters": "フィルタをクリア",
+      "sections": "{count, plural, other {# セクション}}",
+      "estimatedExercises": "約 {count} 件の演習",
+      "limitedExercises": "より充実した練習のために内容を追加してください",
+      "practicing": "練習中",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} 正解",
+      "next": "次へ",
+      "check": "チェック",
+      "true": "正しい",
+      "false": "誤り",
+      "fillPlaceholder": "欠けている部分を入力…",
+      "sourceWordLabel": "変化させる単語: {word}",
+      "hint": "ヒント: {hint}",
+      "endingHint": "ヒント: {hint}",
+      "matchHint": "各基本形を正しい形とマッチさせてください。",
+      "matchBase": "基本形",
+      "matchForm": "形",
+      "reshuffle": "再シャッフル",
+      "backToStudio": "演習に戻る",
+      "editTheory": "理論を編集",
+      "needAiTitle": "AI練習を生成",
+      "needAiDescription": "AIがこの理論を読み、新しい文脈の穴埋め演習を作成します。",
+      "needAiProDescription": "Proにアップグレードすると、理論ノートをAI生成の練習演習に変えられます。",
+      "generatingTitle": "練習を作成中…",
+      "generatingDescription": "AIが理論を読み、穴埋め演習を書いています。",
+      "generateAi": "演習を生成",
+      "generateMore": "新しいセットを生成",
+      "regenerate": "新しいセット",
+      "unlockAi": "Proで解除",
+      "aiReady": "練習の準備完了",
+      "aiUnavailable": "現在、AI問題を生成できませんでした。",
+      "aiForbidden": "AI理論演習はProでご利用いただけます。",
+      "aiDisabled": "設定でAI支援がオフになっています。",
+      "feedback": {
+        "correct": "正解！",
+        "incorrect": "惜しいです。",
+        "incorrectWithAnswer": "正解: {answer}"
+      },
+      "sentenceMeaningLoading": "意味を読み込み中…",
+      "types": {
+        "multiple_choice": "選択式",
+        "true_false": "正誤",
+        "match_pairs": "ペアマッチ",
+        "fill_blank": "穴埋め",
+        "transformation": "形の練習",
+        "theory_question": "理論チェック"
+      },
+      "instructions": {
+        "applyRule": "形を完成させてください。",
+        "chooseForm": "正しい形を選んでください。",
+        "chooseInContext": "この文脈に合う形を選んでください。",
+        "fillBlank": "空欄を埋めてください。",
+        "completeConstruction": "構文を完成させてください。",
+        "completeRule": "ルールを完成させてください。",
+        "completeExercise": "演習を完了してください。",
+        "theoryCheck": "理論チェック"
+      },
+      "trueFalseLabel": "正誤",
+      "lesson": {
+        "label": "レッスン",
+        "concept": "概念",
+        "theIdea": "考え方",
+        "seeIt": "見てみよう",
+        "notice": "注目",
+        "example": "例",
+        "revealNote": "メモを表示",
+        "hideNote": "メモを隠す",
+        "continue": "続ける",
+        "quickReview": "クイック復習",
+        "skipReview": "復習をスキップ",
+        "startPractice": "練習を開始",
+        "openTheory": "理論全文を開く",
+        "tryIt": "やってみよう",
+        "outline": "このレッスンでは",
+        "keyIdea": "要点",
+        "nowPractice": "さあ練習",
+        "learnThis": "この概念を学ぶ",
+        "applyNow": "今学んだことを使ってみましょう。",
+        "preparing": "練習を準備中…",
+        "yourAnswer": "あなたの答え",
+        "correctForm": "正しい形",
+        "theRule": "ルール",
+        "why": "なぜ",
+        "complete": "理解しました",
+        "completeHint": "準備ができたら進めます。"
+      }
+    },
+    "types": {
+      "flashcard": {
+        "label": "フラッシュカード",
+        "description": "カードをめくって単語と意味を学習し、間隔反復で評価します。",
+        "preview": "めくる · 評価 · 復習",
+        "previewHint": "Finnish word",
+        "previewWord": "suomalainen",
+        "previewFlow": "FLIP → RATE → REVIEW"
+      },
+      "fill-in-blank": {
+        "label": "穴埋め",
+        "description": "欠けている語彙を入れて例文を完成させます。",
+        "preview": "Minulla on uusi ______."
+      },
+      "multiple-choice": {
+        "label": "選択式",
+        "description": "正しい意味または単語を選びます — 誤答選択肢はあなたの語彙から来ます。",
+        "preview": "どの意味が合いますか？",
+        "previewPrompt": "どの意味が合いますか？",
+        "previewA": "Finnish person",
+        "previewB": "weather",
+        "previewC": "building"
+      },
+      "match-pairs": {
+        "label": "ペアマッチ",
+        "description": "Quizlet風のグリッドで、各単語を意味とマッチさせます。",
+        "preview": "単語 ↔ 意味",
+        "previewLeft": "talo",
+        "previewRight": "house",
+        "previewLeftB": "koti",
+        "previewRightB": "home"
+      },
+      "type-answer": {
+        "label": "答えを入力",
+        "description": "欠けている単語または意味を入力し、すぐにフィードバックを受けます。",
+        "preview": "答えを入力…"
+      },
+      "form-sentence": {
+        "label": "文を作る",
+        "description": "保存した語彙で完全な文を書き、AIの文法フィードバックを受けます。",
+        "preview": "次を使って文を書いてください…",
+        "previewChipA": "Minä",
+        "previewChipB": "asun",
+        "previewChipC": "Helsingissä"
+      }
+    },
+    "timedHint": {
+      "availableIn": "💡 ヒントは {seconds} 秒後に利用できます",
+      "showNow": "今すぐヒントを表示",
+      "answerAvailableIn": "💡 答えは {seconds} 秒後に利用できます",
+      "showAnswerNow": "今すぐ答えを表示",
+      "label": "ヒント",
+      "startsWith": "「{letter}」で始まります",
+      "revealPrompt": "まだわかりませんか？答え全体を表示できます。",
+      "revealAnswer": "答えを表示"
+    },
+    "empty": {
+      "noWordsTitle": "まだ語彙がありません",
+      "noWordsDescription": "先にワークスペースへ単語を追加してから、練習に戻ってきましょう。",
+      "addWords": "単語を追加",
+      "noMeaningsTitle": "練習できる意味がありません",
+      "noMeaningsDescription": "この演習を使うには、語彙に少なくとも1つの意味を追加してください。",
+      "noExamplesTitle": "まだ例文がありません",
+      "noExamplesDescription": "穴埋め問題を生成するには、語彙を含む例文を追加してください。",
+      "editVocabulary": "語彙を編集",
+      "needMoreWordsTitle": "語彙がもっと必要です",
+      "needMoreWordsDescription": "この演習を使うには、このワークスペースに意味付きの単語を少なくとも {count} 語追加してください。",
+      "noFiltered": "フィルタに一致する単語がありません。条件を調整して続けてください。"
+    },
+    "fillInBlank": {
+      "prompt": "空欄を埋める",
+      "placeholder": "答えを入力…",
+      "instruction": "正しい単語の形で空欄を埋めてください。",
+      "hint": "ヒント",
+      "hintExplainWord": "この文で欠けている単語の意味を考えてください。",
+      "correct": "正解！",
+      "incorrect": "答えは {answer} です",
+      "sentenceMeaningLoading": "意味を読み込み中…",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} 正解",
+      "keyboardHint": "Enterでチェック · もう一度Enterで次へ",
+      "previous": "前へ",
+      "next": "次へ",
+      "check": "チェック",
+      "shuffle": "シャッフル",
+      "finish": "ラウンドを終了"
+    },
+    "ai": {
+      "generate": "AIで生成",
+      "generateMore": "さらに10問生成",
+      "generating": "問題を生成中…",
+      "levelLabel": "CEFRレベル",
+      "emptyTitle": "穴埋め問題を生成",
+      "emptyDescription": "語彙から新しい文を10個作成します。すべての文は一から書かれ、既存の例文は再利用されません。",
+      "generated": "AI生成",
+      "enriching": "これからのカードにAI問題を混ぜています…",
+      "unavailable": "現在、問題を生成できませんでした。後でもう一度お試しください。",
+      "forbidden": "AI演習生成はProでご利用いただけます。",
+      "disabled": "設定でAI支援がオフになっています。",
+      "upgradeHint": "Freeでは毎日数回のAI演習生成が含まれます。Proでは上限がなくなります。",
+      "emptyWords": "問題を生成する前に語彙を追加してください。",
+      "noneValid": "AIはこれらの単語に対して有効な問題を作成できませんでした。もう一度お試しください。"
+    },
+    "session": {
+      "complete": "セッション完了",
+      "score": "{correct} / {total} 正解",
+      "pairsMatched": "{count} ペアをマッチしました",
+      "tryAgain": "もう一度",
+      "questionsLabel": "問題",
+      "correctLabel": "正解",
+      "reviewLabel": "見直し",
+      "answeredProgress": "{answered} / {total} 回答済み",
+      "submitSet": "回答を提出",
+      "submitting": "チェック中…",
+      "unansweredWarnTitle": "未回答の問題",
+      "unansweredWarn": "まだ {count, plural, other {# 問の未回答}} があります。このまま提出しますか？",
+      "submitAnyway": "このまま提出",
+      "partialHint": "ヒント: {mask}",
+      "jumpToUnanswered": "未回答へ移動",
+      "retryIncorrect": "不正解を再試行",
+      "retryUnanswered": "未回答を再試行",
+      "restartSet": "セットを再開",
+      "resultsTitle": "結果",
+      "unanswered": "未回答",
+      "yourAnswer": "あなたの答え",
+      "correctAnswer": "正解"
+    },
+    "multipleChoice": {
+      "questionWord": "この単語の意味は何ですか？",
+      "questionMeaning": "この意味に合う単語はどれですか？",
+      "questionContext": "合う単語を選んでください",
+      "modes": {
+        "contextual": "文脈"
+      },
+      "contextualLanguageHint": "問題は {language}（ワークスペースの言語）で生成されます。",
+      "contextualEmptyTitle": "文脈問題を生成",
+      "contextualEmptyDescription": "語彙から穴埋めの選択式問題を作成します。",
+      "contextualProDescription": "文脈AI問題はProでご利用いただけます。",
+      "unlockContextual": "Proで解除",
+      "correct": "正解！",
+      "incorrect": "正解: {answer}",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} 正解",
+      "previous": "前へ",
+      "next": "次へ",
+      "shuffle": "問題をシャッフル",
+      "finish": "ラウンドを終了",
+      "keyboardHint": "1–4で選択 · Enterで次へ"
+    },
+    "matchPairs": {
+      "words": "単語",
+      "meanings": "意味",
+      "roundProgress": "ラウンド {current} / {total}",
+      "progress": "{matched} / {total} マッチ済み",
+      "hint": "単語を選んでから、その意味をタップします",
+      "complete": "すべてのペアをマッチしました — よくできました！",
+      "shuffle": "列をシャッフル"
+    },
+    "typeAnswer": {
+      "questionWord": "意味は何ですか？",
+      "questionMeaning": "この意味に合う単語はどれですか？",
+      "questionContext": "正しい単語で完成させてください",
+      "modes": {
+        "contextual": "文脈"
+      },
+      "contextualEmptyTitle": "文脈問題を生成",
+      "contextualEmptyDescription": "語彙から穴埋めの入力プロンプトを作成します。",
+      "contextualProDescription": "文脈AI問題はProでご利用いただけます。",
+      "unlockContextual": "Proで解除",
+      "placeholder": "答えを入力…",
+      "yourAnswer": "あなたの答え",
+      "correctAnswer": "正解",
+      "correct": "正解！",
+      "incorrect": "惜しいです — 上の正解を確認してください",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} 正解",
+      "keyboardHint": "Enterでチェック · もう一度Enterで次へ",
+      "previous": "前へ",
+      "next": "次へ",
+      "check": "チェック",
+      "shuffle": "シャッフル",
+      "finish": "ラウンドを終了"
+    },
+    "formSentence": {
+      "vocabularyLabel": "語彙",
+      "meaningLabel": "意味",
+      "prompt": "この語彙を使って完全な文を書いてください。",
+      "placeholder": "完全な文を書いてください…",
+      "insertWord": "文に追加",
+      "yourSentence": "あなたの文",
+      "corrected": "修正済み",
+      "betterSuggestion": "より自然",
+      "sentenceMeaning": "意味 / 翻訳",
+      "correct": "正解 — 語彙の自然な使い方です",
+      "incorrect": "改善が必要です",
+      "evaluating": "文を評価中…",
+      "submit": "提出",
+      "unlockSubmit": "AIフィードバックを解除",
+      "saveExample": "例として保存",
+      "saved": "保存済み",
+      "savedExample": "文を例として保存しました",
+      "alreadySaved": "この例はすでに保存されています",
+      "continue": "続ける",
+      "finish": "ラウンドを終了",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} 正解",
+      "keyboardHint": "⌘/Ctrl+Enterで提出 · もう一度で続ける",
+      "errors": {
+        "empty": "提出する前に文を書いてください。",
+        "tooLong": "文は500文字以内にしてください。",
+        "unavailable": "現在、文を評価できませんでした。もう一度お試しください。",
+        "forbidden": "AI文フィードバックはProでご利用いただけます。",
+        "disabled": "設定でAI支援がオフになっています。",
+        "wordMissing": "この語彙はもう存在しません。",
+        "saveFailed": "例を保存できませんでした。もう一度お試しください。"
+      }
+    }
+  },
+  "writing": {
+    "title": "ライティング",
+    "studio": "スタジオ",
+    "description": "学習中の言語向けのワークシートとプロンプトを作成します。",
+    "disabledNoWorkspace": "ライティング文書を追加する前に、ワークスペースを作成してください。",
+    "create": "ライティングを作成",
+    "createFirst": "最初のライティングを作成",
+    "learningNote": {
+      "create": "学習メモ",
+      "filter": "学習メモ",
+      "filterLabel": "種類",
+      "badge": "学習メモ"
+    },
+    "onTheDesk": "デスク上",
+    "library": "ライブラリ",
+    "allWritings": "すべてのライティング",
+    "collections": "コレクション",
+    "refine": "絞り込み",
+    "openWriting": "開く",
+    "emptyTitle": "まだライティングがありません",
+    "emptyDescription": "最初のライティングワークシートを作成して練習を始めましょう。",
+    "searchPlaceholder": "ライティングを検索…",
+    "noResults": "検索に一致するライティングはありません",
+    "groupCount": "{count, plural, other {# 件の文書}}",
+    "filterAll": "すべて",
+    "filterCefr": "CEFR",
+    "filterTopic": "トピック",
+    "filterFormality": "丁寧さ",
+    "groupBy": "グループ化",
+    "groupByMode": "文書タイプ",
+    "groupByWeek": "週",
+    "groupByMonth": "月",
+    "weekOf": "{date}の週",
+    "sortBy": "並び替え",
+    "sortUpdatedDesc": "最終更新",
+    "sortUpdatedAsc": "最も古い更新",
+    "sortCreatedDesc": "新しく作成",
+    "sortCreatedAsc": "最も古い作成",
+    "sortTitleAsc": "タイトル（A → Z）",
+    "sortTitleDesc": "タイトル（Z → A）",
+    "sortCefrAsc": "CEFR（A1 → C2）",
+    "sortCefrDesc": "CEFR（C2 → A1）",
+    "meta": {
+      "none": "未設定",
+      "cefrLabel": "CEFRレベル",
+      "cefrPlaceholder": "レベルを選択",
+      "topicLabel": "トピック",
+      "topicPlaceholder": "トピックを選択",
+      "formalityLabel": "丁寧さ",
+      "formalityPlaceholder": "丁寧さを選択",
+      "cefr": {
+        "a1": "A1",
+        "a2": "A2",
+        "b1": "B1",
+        "b2": "B2",
+        "c1": "C1",
+        "c2": "C2"
+      },
+      "formality": {
+        "formal": "フォーマル",
+        "informal": "インフォーマル",
+        "neutral": "ニュートラル"
+      }
+    },
+    "columns": {
+      "title": "タイトル",
+      "sections": "セクション",
+      "questions": "問題",
+      "updated": "最終更新",
+      "actions": "操作"
+    },
+    "sectionCount": "{count, plural, other {# セクション}}",
+    "questionCount": "{count, plural, other {# 問}}",
+    "backToList": "ライティングに戻る",
+    "backToPreview": "プレビューに戻る",
+    "previewTitle": "ライティングプレビュー",
+    "previewDescription": "ライティングの読み取り専用ビューです。変更するには編集を開いてください。",
+    "edit": "編集",
+    "editDescription": "保存すると変更が保持されます。キャンセルすると未保存の編集は破棄されます。",
+    "editSaveHint": "保存するとプレビューが更新されます。キャンセルすると未保存の編集は破棄されます。",
+    "deleted": "ライティングを削除しました",
+    "deleteConfirmTitle": "このライティングを削除しますか？",
+    "deleteConfirmDescription": "「{title}」は完全に削除されます。",
+    "newTitle": "新しいライティング",
+    "editTitle": "ライティングを編集",
+    "formDescription": "タイトルを付け、タイプを選び、書き始めましょう。",
+    "documentTitle": "タイトル",
+    "titlePlaceholder": "例: 私の人生の物語",
+    "documentDescription": "説明",
+    "descriptionPlaceholder": "このライティングの短い要約やプロンプト…",
+    "titleRequired": "タイトルは必須です",
+    "titleTaken": "このタイトルはすでにライティングまたはフォルダで使われています",
+    "promptRequired": "問題プロンプトを少なくとも1つ追加してください",
+    "mode": "モード",
+    "modes": {
+      "richDocument": "リッチ文書",
+      "questionSet": "問題セット",
+      "richDocumentHint": "リッチテキストエディタでの自由な執筆。",
+      "questionSetHint": "教科書のワークシートのような、構造化されたセクションと問題。",
+      "learningNoteHint": "あとから見つけやすいようタグ付けされた個人の学習メモ。"
+    },
+    "content": "内容",
+    "contentPlaceholder": "ここに内容を書き始めてください…",
+    "ai": {
+      "check": "AIでチェック",
+      "improve": "文を改善",
+      "grammar": "文法をチェック",
+      "checking": "AIでチェック中…",
+      "checkingImprove": "文を改善中…",
+      "checkingGrammar": "文法をチェック中…",
+      "suggestion": "AIの提案",
+      "apply": "使う",
+      "skip": "スキップ",
+      "disclaimer": "AIの提案は誤っている場合があります。",
+      "empty": "AIでチェックする前に何か書いてください。",
+      "unavailable": "AIの提案は一時的に利用できません。後でもう一度お試しください。",
+      "forbidden": "AIライティング支援はProでご利用いただけます。",
+      "disabled": "設定でAI支援がオフになっています。",
+      "noIssues": "問題は見つかりませんでした。",
+      "noImprove": "この文はすでに自然です。",
+      "noGrammar": "文法の問題は見つかりませんでした。",
+      "applyFailed": "その提案を自動で適用できませんでした。",
+      "upgradeHint": "AIライティング支援はProでご利用いただけます。",
+      "types": {
+        "grammar": "文法",
+        "spelling": "スペル",
+        "vocabulary": "語彙",
+        "style": "スタイル",
+        "clarity": "明瞭さ"
+      },
+      "severities": {
+        "error": "誤り",
+        "suggestion": "任意"
+      }
+    },
+    "sections": "セクション",
+    "section": "セクション",
+    "sectionTitlePlaceholder": "セクションタイトル（任意）",
+    "question": "問題",
+    "prompt": "プロンプト",
+    "promptPlaceholder": "どこで生まれましたか？",
+    "exampleAnswer": "例の答え",
+    "exampleAnswerPlaceholder": "任意の模範解答…",
+    "notes": "メモ / ヒント",
+    "notesPlaceholder": "任意の指導メモやヒント…",
+    "optional": "任意",
+    "addQuestion": "問題を追加",
+    "addSection": "セクションを追加",
+    "deleteQuestion": "問題を削除",
+    "duplicateQuestion": "問題を複製",
+    "deleteSection": "セクションを削除",
+    "dragQuestion": "ドラッグして問題を並べ替え",
+    "dragSection": "ドラッグしてセクションを並べ替え",
+    "collapseSection": "セクションを折りたたむ",
+    "expandSection": "セクションを展開",
+    "save": "保存",
+    "saved": "ライティングを保存しました",
+    "created": "ライティングを作成しました",
+    "saveFailed": "ライティングの保存に失敗しました",
+    "autosaving": "自動保存中…",
+    "autosaveReady": "変更は自動保存されます",
+    "autosavePending": "保存すると自動保存が有効になります",
+    "export": {
+      "button": "エクスポート",
+      "title": "ライティングをエクスポート",
+      "kicker": "ライティングをエクスポート",
+      "untitled": "無題のライティング",
+      "description": "印刷可能なワークシートの形式を選んでください。",
+      "descriptionDocument": "この作品を印刷可能なページまたは編集可能なファイルとしてダウンロードします。",
+      "descriptionQuestionSet": "これらの問題からワークシートをダウンロードします。",
+      "format": "形式",
+      "formatPdf": "PDF",
+      "formatDocx": "Word",
+      "formatPdfHint": "印刷可能なページ",
+      "formatDocxHint": "編集可能なファイル",
+      "options": "含める",
+      "includeExamples": "例の答え",
+      "includeNotes": "メモ / ヒント",
+      "leaveBlankSpace": "白紙の記入スペース",
+      "confirm": "エクスポート",
+      "success": "ダウンロードを開始しました",
+      "failed": "エクスポートに失敗しました",
+      "empty": "エクスポートする前に、問題を少なくとも1つ、または文書の内容を追加してください",
+      "preparing": "エクスポートを準備中…",
+      "writingFile": "ファイルを保存中…",
+      "progressCount": "{current} / {total}",
+      "documentHeading": "ライティング",
+      "titleLabel": "タイトル",
+      "descriptionLabel": "説明",
+      "sectionLabel": "セクション",
+      "questionLabel": "問題",
+      "exampleAnswerLabel": "例の答え",
+      "notesLabel": "メモ"
+    }
+  },
+  "flashcards": {
+    "title": "フラッシュカード",
+    "weakTitle": "苦手な単語を練習する",
+    "mode": "モード",
+    "description": "なめらかなめくりカード、キーボードショートカット、間隔反復の評価で語彙を学習します。",
+    "noWorkspace": "フラッシュカードセッションを始める前に、ワークスペースを作成してください。",
+    "emptyTitle": "まだ語彙がありません",
+    "emptyDescription": "先にワークスペースへ単語を追加してから、フラッシュカードで学習しましょう。",
+    "addWords": "単語を追加",
+    "noFilteredCards": "フィルタに一致するカードがありません。条件を調整して続けてください。",
+    "studyMode": "学習モード",
+    "modes": {
+      "wordToMeaning": "単語 → 意味",
+      "meaningToWord": "意味 → 単語",
+      "mixed": "ミックス"
+    },
+    "filterStatus": "学習ステータス",
+    "status": {
+      "NEW": "新規",
+      "LEARNING": "学習中",
+      "REVIEW": "復習",
+      "MASTERED": "習得済み"
+    },
+    "questionWord": "意味は何ですか？",
+    "questionMeaning": "この意味に合う単語はどれですか？",
+    "answer": "答え",
+    "tapToFlip": "カードをタップするか、Spaceキーで答えを表示",
+    "showAnswer": "答えを表示",
+    "hideAnswer": "答えを隠す",
+    "flip": "めくる",
+    "previous": "前へ",
+    "next": "次へ",
+    "shuffle": "シャッフル",
+    "restart": "セッションを再開",
+    "progress": "{current} / {total}",
+    "keyboardHint": "Spaceで表示 · ← →で移動 · 1–4で評価",
+    "meanings": "意味",
+    "examples": "例文",
+    "synonyms": "類義語",
+    "notes": "メモ",
+    "noMeaning": "まだ意味がありません",
+    "ratePrompt": "どれくらい覚えていましたか？",
+    "ratings": {
+      "AGAIN": "もう一度",
+      "HARD": "難しい",
+      "GOOD": "良い",
+      "EASY": "簡単"
+    },
+    "ratingHints": {
+      "AGAIN": "1分未満",
+      "HARD": "すぐ",
+      "GOOD": "良い",
+      "EASY": "簡単"
+    },
+    "sessionComplete": "セッション完了！",
+    "tryAgain": "もう一度",
+    "ratingFailed": "評価を保存できませんでした"
+  },
+  "dashboard": {
+    "overview": "概要",
+    "your": "あなたの",
+    "workspaceLabel": "ワークスペース",
+    "description": "大切にしている言語のためのプライベートな学習ワークスペース — 単語を集め、理論を手元に置き、自分の言葉で練習し、書く・聞く・話すを繰り返して自分のものにしていきましょう。",
+    "wordsSaved": "保存した単語",
+    "wordsReadyToPractice": "練習できる単語",
+    "theoryNotes": "理論ノート",
+    "writingPieces": "ライティング作品",
+    "activeWorkspace": "アクティブなワークスペース",
+    "guideEyebrow": "はじめに",
+    "guideTitle": "Notoriaの使い方",
+    "guideTagline": "あなたの言語。あなたの知識。あなたの学習日記。",
+    "guideSubtitle": "Notoriaはプライベートで個人的なワークスペースです — 何を学ぶか指示する従来型のコースではありません。言語、単語、文法ノート、例文、練習したい教材は、すべてあなたが選びます。",
+    "guideSubtitleSecondary": "ワークスペースは学習の旅とともに成長します。まずはCaptureでさっとメモし、次に語彙と理論へ — 集めたものを演習、ライティング、リスニング、スピーキングに変えていきましょう。",
+    "guideFullCtaPrompt": "Notoriaの仕組みをもっと知りたいですか？",
+    "guideFullCta": "完全ガイドを読む",
+    "modulesTitle": "ワークスペースを探索",
+    "modulesSubtitle": "セクションに進むか、先にチュートリアルを開いてください。",
+    "startHere": "ここから始める",
+    "pro": "Pro",
+    "unlock": "Proを解除",
+    "open": "開く",
+    "steps": {
+      "inbox": {
+        "title": "Capture",
+        "body": "単語、フレーズ、文法の疑問、ライティングのアイデアを数秒で残せます — まだどこに置くか決めなくて大丈夫です。任意のメモや出典を追加し、「処理待ち」に置いたまま、時間があるときにCaptureを語彙、理論、ライティング、演習に変えます。リンク先の作成を完了したときだけ「処理済み」になります。"
+      },
+      "vocabulary": {
+        "title": "語彙",
+        "body": "意味、例文、発音、タグ付きで、自分の単語やフレーズを追加します。トピック、レベル、場面で整理し、演習や復習で再利用しましょう。日常、授業、本、メディアから始めた単語が、練習の土台になります。"
+      },
+      "theory": {
+        "title": "理論",
+        "body": "文法ルール、発音メモ、使い方の説明、自分の例を自分の言葉で保存します。理論は、忘れたときに見返す参考ノートです。記録するほど、個人の知識ベースが強くなります。"
+      },
+      "exercises": {
+        "title": "演習",
+        "body": "フラッシュカード、クイズ、穴埋めなど — あなたの語彙と理論から作られた練習です。演習は追加した知識とともに成長します。保存する教材が多いほど、練習はより役立ち、よりパーソナルになります。"
+      },
+      "writing": {
+        "title": "ライティング",
+        "body": "自分のトピックと語彙でテキストを下書きしたり、問題セットを作成したりします。ライティングは暗記だけでなく、学んだことを能動的に使うための場です。ProではAIがチェックと改善を支援し、必要に応じて教材をエクスポートできます。"
+      },
+      "listening": {
+        "title": "リスニング",
+        "body": "音声や動画をアップロードし、文字起こしを取得してレッスンにします。文字起こしで未知の単語や表現を拾い、自分で選んだ本物のコンテンツで練習しましょう。あらかじめ用意された教材に縛られず、自分のリスニング素材を持ち込めます。"
+      },
+      "speaking": {
+        "title": "スピーキング",
+        "body": "AIチューターとビデオ通話で、自分の学習知識を使って自然に話す練習をします。セッション後は文字起こしとフィードバックで改善点を確認できます。学ぶ → 練習する → 使う → 見直す → 改善する、というループが完成します。"
+      },
+      "reading": {
+        "title": "リーディング",
+        "body": "文章をインポートまたは貼り付けて、理解練習を生成します — 選択式、記述、正誤／記載なし。Freeは毎日のAI生成と採点に上限があります。Proは上限が上がり、Premiumは無制限です。"
+      }
+    },
+    "modules": {
+      "vocabulary": {
+        "title": "語彙",
+        "description": "この言語のための個人単語帳。",
+        "how": "単語を追加し、主要な意味に印を付け、例文を添えます。タグと検索で後から見つけられます。",
+        "cta": "語彙を開く"
+      },
+      "theory": {
+        "title": "理論",
+        "description": "言語の仕組みのためのノート — ライティング練習ではありません。",
+        "how": "ノートを作成し、カテゴリを選び、復習が必要なときに戻ってきましょう。",
+        "cta": "理論を開く"
+      },
+      "exercises": {
+        "title": "演習",
+        "description": "すでに保存した単語から作る短いセッション。",
+        "how": "まずいくつか単語を追加してからモードを選びます。何度でも戻ってきてください — 数分でも立派な練習です。",
+        "cta": "演習を開く"
+      },
+      "writing": {
+        "title": "ライティング",
+        "description": "見返したりエクスポートしたりできるリッチ文書と問題セット。",
+        "how": "下書きを始め、フォルダで整理し、ProのAIでテキストのチェックや改善ができます。",
+        "cta": "ライティングを開く"
+      },
+      "listening": {
+        "title": "リスニング",
+        "description": "本物の音声や動画をレッスンに変えます。",
+        "how": "Freeでクリップをアップロードして文字起こしを生成できます。生成されたリスニング練習はProの機能です。",
+        "cta": "リスニングを開く"
+      },
+      "speaking": {
+        "title": "スピーキング",
+        "description": "AIチューターとのライブビデオ会話。",
+        "how": "セッションを作成して通話に参加します。Freeには1日1回のAIミーティング（チューター込み）が含まれます。",
+        "cta": "スピーキングを開く"
+      },
+      "reading": {
+        "title": "リーディング",
+        "description": "AI理解練習付きの文章。",
+        "how": "テキストをインポートまたは貼り付け、問題を生成してから練習と復習をします。Freeは毎日のAI上限があり、Proは1日10回、Premiumは無制限です。",
+        "cta": "リーディングを開く"
+      }
+    },
+    "counts": {
+      "words": "{count, plural, other {# 語}}",
+      "notes": "{count, plural, other {# 件のノート}}",
+      "writings": "{count, plural, other {# 件}}",
+      "practiceReady": "{count, plural, other {# 語が準備完了}}"
+    },
+    "sidebarFooter": "プライベートな言語学習ワークスペース",
+    "practiceNowEyebrow": "今日",
+    "practiceNowTitle": "今すぐ練習",
+    "practiceNowReady": "{count, plural, other {# 語が演習の準備ができています。}}",
+    "practiceNowNeedsMeaning": "演習に表示できるように、単語に主要な意味を付けてください。",
+    "practiceNowCta": "演習を始める",
+    "practiceNowVocabCta": "語彙を開く",
+    "continueTitle": "続ける",
+    "continueSubtitle": "最後に取り組んでいたところから再開しましょう。",
+    "helloTitle": "こんにちは、{name}さん",
+    "continueLearning": "学習を続ける",
+    "continueLearningSubtitle": "ワークスペースのセクションへ進みます。",
+    "snapshotTitle": "ひと目で確認",
+    "quickActions": "クイックアクション",
+    "quickAddWord": "単語を追加",
+    "quickStartExercise": "演習を始める",
+    "quickOpenWriting": "ライティングを開く",
+    "quickOpenTheory": "理論を開く",
+    "quickOpenListening": "リスニングを開く",
+    "quickOpenSpeaking": "スピーキングを開く",
+    "nextStepTitle": "次のステップ",
+    "continueEmpty": "まだ再開できるものはありません — 理論ノート、ライティング、リスニングレッスン、スピーキングセッションを追加すると、ここに表示されます。",
+    "inbox": {
+      "title": "Capture",
+      "subtitle": "ライブラリへ整理待ちのクイックメモ。",
+      "count": "{count, plural, =0 {待機中の項目はありません} other {# 件の処理待ち}}",
+      "cta": "Captureを開く"
+    },
+    "reviewLater": {
+      "title": "あとで見直す",
+      "subtitle": "もう一度見るためにブックマークした項目。",
+      "empty": "語彙、理論、ライティングからブックマークすると、ここに表示されます。"
+    },
+    "recentActivity": {
+      "title": "最近のアクティビティ",
+      "subtitle": "最近作成または処理したもの。",
+      "empty": "学習教材を追加・処理すると、ここにアクティビティが表示されます。",
+      "untitled": "無題",
+      "verbs": {
+        "created": "{entity}を作成しました: {title}",
+        "updated": "{entity}を更新しました: {title}",
+        "completed": "{entity}を完了しました: {title}",
+        "processed": "受信箱を処理しました: {title}",
+        "review_later_added": "見直し用にマークしました: {title}",
+        "review_later_removed": "見直しから外しました: {title}"
+      },
+      "verbLabels": {
+        "created": "作成済み",
+        "updated": "更新済み",
+        "completed": "完了",
+        "processed": "処理済み",
+        "review_later_added": "あとで見直す",
+        "review_later_removed": "マーク解除"
+      }
+    },
+    "learningNote": {
+      "label": "最新の学習メモ"
+    },
+    "loopEyebrow": "ループ",
+    "loopTitle": "集めて、練習して、使う",
+    "loopSubtitle": "Notoriaはサイクルとして最も効果を発揮します: 出会ったものを保存し、短くドリルし、本物のライティング、リスニング、スピーキングに戻します。",
+    "loop": {
+      "collect": {
+        "title": "集める",
+        "body": "単語と理論を自分の言葉で保存しましょう — 実際に見返す例文、タグ、メモ付きで。"
+      },
+      "practice": {
+        "title": "練習する",
+        "body": "ライブラリから短い演習を行います。数分でも確実に前進します。"
+      },
+      "use": {
+        "title": "使う",
+        "body": "保存した教材で書き、聞き、話すことで、フラッシュカードを超えて定着させます。"
+      }
+    }
+  },
+  "search": {
+    "placeholder": "何でも検索…",
+    "emptyHint": "このワークスペース内の語彙、理論、ライティングなどを検索します。",
+    "noResults": "「{query}」に一致する結果はありません",
+    "failed": "検索に失敗しました。もう一度お試しください。",
+    "clear": "検索をクリア",
+    "shortcut": "Ctrl K",
+    "resultsLabel": "検索結果",
+    "types": {
+      "folder": "フォルダ"
+    },
+    "posGroups": {
+      "noun": "名詞",
+      "verb": "動詞",
+      "adjective": "形容詞",
+      "adverb": "副詞",
+      "pronoun": "代名詞",
+      "preposition": "前置詞",
+      "conjunction": "接続詞",
+      "interjection": "間投詞",
+      "article": "冠詞",
+      "determiner": "限定詞"
+    }
+  },
+  "prompts": {
+    "skip": "スキップ",
+    "gotIt": "了解",
+    "titles": {
+      "greeting": "おかえりなさい！👋",
+      "motivation": "ちょっとしたひと押し",
+      "language": "今日の言語",
+      "activity": "ご提案"
+    },
+    "greeting": {
+      "morning": {
+        "title": "おはようございます！☀️",
+        "message": "何か新しいことを学ぶ準備はできましたか？"
+      },
+      "afternoon": {
+        "title": "こんにちは！",
+        "message": "今日は何を学びたいですか？"
+      },
+      "evening": {
+        "title": "こんばんは！",
+        "message": "一日の終わりに、少し練習してみませんか？"
+      },
+      "welcomeBack": {
+        "title": "おかえりなさい！👋",
+        "message": "今日は何を学びたいですか？"
+      },
+      "hello": {
+        "title": "こんにちは！",
+        "message": "今日も少し進めましょう — 数分でも効果があります。"
+      }
+    },
+    "motivation": {
+      "whatToPractice": {
+        "title": "いつでも準備OK",
+        "message": "今日は何を練習したいですか？"
+      },
+      "fewMinutes": {
+        "title": "数分でも大きな違いになります",
+        "message": "短いセッションでも効果があります。今日は何に取り組みますか？"
+      },
+      "oneStep": {
+        "title": "続ける習慣を大切に",
+        "message": "今日の小さな一歩も、ちゃんと前進です。"
+      },
+      "curious": {
+        "title": "好奇心に従ってみましょう",
+        "message": "トピックを選んで飛び込んでください — 始めたことすべてが積み上がります。"
+      }
+    },
+    "language": {
+      "practiceToday": {
+        "title": "今日の言語",
+        "message": "今日は<lang></lang>の練習をしてみませんか？"
+      },
+      "learnWords": {
+        "title": "語彙を増やしましょう",
+        "message": "新しい<lang></lang>の単語をいくつか学びませんか？"
+      },
+      "whatToLearn": {
+        "title": "フォーカスを選びましょう",
+        "message": "今日は<lang></lang>で何を学びたいですか？"
+      },
+      "keepGoing": {
+        "title": "習慣が身についてきています",
+        "message": "<lang></lang>を続けましょう — 少しずつの練習が積み重なります。"
+      }
+    },
+    "activity": {
+      "vocabulary": {
+        "title": "ご提案",
+        "message": "今日は語彙を復習してみませんか？"
+      },
+      "writing": {
+        "title": "ご提案",
+        "message": "ライティングを練習してみませんか？"
+      },
+      "theoryOrExercise": {
+        "title": "ご提案",
+        "message": "理論トピックを見直すか、演習を試してみてはどうでしょうか。"
+      },
+      "exercise": {
+        "title": "ご提案",
+        "message": "さっと演習をしてみませんか？"
+      },
+      "theory": {
+        "title": "ご提案",
+        "message": "理論ノートを読んで記憶をリフレッシュしてみませんか？"
+      }
+    }
+  },
+  "onboarding": {
+    "skip": "スキップ",
+    "skipForNow": "今はスキップ",
+    "getStarted": "はじめる",
+    "close": "閉じる",
+    "welcome": {
+      "title": "Notoriaへようこそ！👋",
+      "message": "ワークスペースの準備ができました。簡単なステップで始めましょう。",
+      "features": {
+        "vocabulary": "語彙を増やす",
+        "writing": "ライティングを練習する",
+        "exercises": "演習で学ぶ",
+        "theory": "理論と学習教材を見直す"
+      }
+    },
+    "firstAction": {
+      "title": "学習を始めましょう！",
+      "message": "まずは語彙を追加してから、演習やほかの学習機能を試してみてください。"
+    },
+    "actions": {
+      "addVocabulary": {
+        "empty": {
+          "title": "最初の単語から始めましょう",
+          "description": "語彙を追加して、学習の土台を作りましょう。"
+        },
+        "starting": {
+          "title": "語彙を増やし続けましょう",
+          "description": "演習を試す前に、もう少し単語を追加してください。"
+        },
+        "almost": {
+          "title": "もうすぐ準備完了です！",
+          "description": "より良い演習のために、もう少し単語を追加しましょう。"
+        }
+      },
+      "tryExercise": {
+        "title": "練習の準備はできましたか？",
+        "description": "最初の演習を始めるのに十分な語彙があります。"
+      },
+      "startWriting": {
+        "title": "ライティングを始める",
+        "description": "最初のライティング練習を作成しましょう。"
+      },
+      "exploreTheory": {
+        "title": "理論を見る",
+        "description": "文法、使い方、言語の仕組みについてのメモを保存しましょう。"
+      },
+      "exploreWorkspace": {
+        "title": "ワークスペースを探索する",
+        "description": "周りを見ながら、自分のペースで学習を続けましょう。"
+      }
+    }
+  },
+  "tutorials": {
+    "show": "チュートリアルを表示",
+    "showShort": "チュートリアル",
+    "guideLabel": "ガイド",
+    "next": "次へ",
+    "skip": "チュートリアルをスキップ",
+    "done": "了解",
+    "stepProgress": "{current} / {total}",
+    "vocabulary": {
+      "title": "語彙",
+      "description": "大切な単語を追加し、検索・整理して、Notoria全体で再利用しましょう。",
+      "cta": "単語を追加",
+      "steps": {
+        "addWord": {
+          "title": "1. 単語を追加",
+          "body": "個人の語彙を作り始めましょう。本当に覚えたい単語やフレーズを追加し、次の画面で意味、例文、タグを入力します。"
+        },
+        "search": {
+          "title": "2. ライブラリを検索",
+          "body": "すべてをスクロールする代わりに語彙を検索します。単語、意味、タグで試してみてください。"
+        },
+        "filters": {
+          "title": "3. フィルタと整理",
+          "body": "品詞、タグ、並び順で絞り込みます。タグでトピック、レベル、場面ごとに単語をグループ化できます。"
+        },
+        "library": {
+          "title": "4. 単語ライブラリ",
+          "body": "保存した単語はここにあります。エントリを開いて編集したり、演習やあとで見直すために使ったりできます。"
+        }
+      }
+    },
+    "vocabularyAdd": {
+      "title": "単語を追加",
+      "description": "このフォームはNotoriaの中心です — 各フィールドが、あとで単語を覚え、再利用する助けになります。",
+      "cta": "了解",
+      "steps": {
+        "word": {
+          "title": "1. 単語を入力",
+          "body": "学習中の単語やフレーズを入力します。これが語彙バンクのメインエントリになります。"
+        },
+        "partOfSpeech": {
+          "title": "2. 品詞",
+          "body": "名詞、動詞、形容詞などを選びます。フィルタとAI提案の精度に役立ちます。"
+        },
+        "meanings": {
+          "title": "3. 意味",
+          "body": "1つ以上の意味を追加します。演習用に最大5つの主要な意味に星を付けられます — それ以外は参照用に残ります。ドラッグで並べ替えできます。"
+        },
+        "examples": {
+          "title": "4. 例文",
+          "body": "単語の使われ方を示す文を追加します。必要なら「追加の詳細」で翻訳やメモを開けます。"
+        },
+        "tags": {
+          "title": "5. タグ",
+          "body": "レベル、トピック、場面でタグ付けすると、あとで関連する単語を見つけて練習しやすくなります。"
+        },
+        "synonyms": {
+          "title": "6. 類義語",
+          "body": "バンク内の関連語をリンクして、エントリをつなぎ、記憶を深めます。"
+        },
+        "notes": {
+          "title": "7. メモ",
+          "body": "任意の自由形式メモ — 発音のコツ、使い方のクセ、覚えておきたいことなど。"
+        },
+        "save": {
+          "title": "8. 保存",
+          "body": "準備ができたら単語を保存します。語彙ライブラリからいつでも編集できます。"
+        }
+      }
+    },
+    "writing": {
+      "title": "ライティング",
+      "description": "学んだことを自分の文で使いましょう — 下書き、問題セット、見返せる作品。",
+      "cta": "ライティングを始める",
+      "steps": {
+        "create": {
+          "title": "1. 書き始める",
+          "body": "練習したいことに基づいてテキストやライティング演習を作成します。完璧である必要はありません — 試し、まだ学ぶべきことに気づくために使いましょう。"
+        },
+        "search": {
+          "title": "2. 検索",
+          "body": "すべてを手作業で探す代わりに、タイトルや内容で作品をすばやく見つけます。"
+        },
+        "filters": {
+          "title": "3. フィルタ",
+          "body": "レベル、トピック、丁寧さ、並び順で絞り込み、ライティングライブラリを整理します。"
+        },
+        "library": {
+          "title": "4. ライティングライブラリ",
+          "body": "作品を開いて書き続けます。ProではAIでチェックと改善ができ、必要ならエクスポートもできます。"
+        },
+        "newFolder": {
+          "title": "5. フォルダを作成",
+          "body": "「新しいフォルダ」をクリックして、トピック、レベル、プロジェクト別にライティングをグループ化します。フォルダは任意です — すべてをトップレベルに置くこともできます。"
+        },
+        "nameFolder": {
+          "title": "6. フォルダに名前を付ける",
+          "body": "あとで見つけやすい名前を入力します（例: エッセイ下書き、B1ワークシート）。フォルダは、表示中の場所の中に作成されます。"
+        },
+        "organize": {
+          "title": "7. フォルダとファイル",
+          "body": "フォルダはライティング一覧の上にあります。フォルダを開いてその中で作業すると、そこで作成した新しい作品は自動的にそのフォルダに保存されます。"
+        },
+        "moveItem": {
+          "title": "8. フォルダ間で移動",
+          "body": "作品の移動アイコンを使うか、フォルダカードへドラッグします。フォルダを別のフォルダにドラッグしてネストすることもできます。"
+        }
+      }
+    },
+    "theory": {
+      "title": "理論",
+      "description": "覚えておきたい説明を残しましょう — 文法、発音、使い方、個人メモ。",
+      "cta": "理論を追加",
+      "steps": {
+        "add": {
+          "title": "1. ノートを追加",
+          "body": "覚えておきたい内容の理論ノートを作成します。書くときにカテゴリを選ぶと、関連トピックがまとまります。"
+        },
+        "category": {
+          "title": "2. カテゴリで閲覧",
+          "body": "カテゴリでノートを絞り込み、文法、発音、使い方など、保存したトピックにすばやく戻れます。"
+        },
+        "search": {
+          "title": "3. 検索",
+          "body": "理論ライブラリを検索して、すべてを探し回らずにノートをすばやく見つけます。"
+        },
+        "read": {
+          "title": "4. 読んで見返す",
+          "body": "復習が必要なときにノートを開きます。何度でも戻ってきてください — これはあなたの参考ノートです。"
+        },
+        "newFolder": {
+          "title": "5. フォルダを作成",
+          "body": "「新しいフォルダ」をクリックして、トピック、単元、試験別に理論ノートをグループ化します。フォルダは任意です — ノートをトップレベルに置くこともできます。"
+        },
+        "nameFolder": {
+          "title": "6. フォルダに名前を付ける",
+          "body": "わかりやすい名前を入力します（例: 文法 B1、発音）。フォルダは、表示中の場所の中に作成されます。"
+        },
+        "organize": {
+          "title": "7. フォルダとファイル",
+          "body": "フォルダはノートの上に表示されます。フォルダを開くとその中だけが表示され、そこで作成した新しいノートはそのフォルダに保存されます。"
+        },
+        "moveItem": {
+          "title": "8. ノートをフォルダ間で移動",
+          "body": "ノートの移動アイコンを使うか、フォルダへドラッグします。フォルダをネストしてトピック別に整理することもできます。"
+        }
+      }
+    },
+    "exercise": {
+      "title": "演習",
+      "description": "知識を練習に変えましょう — フラッシュカード、クイズ、穴埋めなど。",
+      "cta": "演習を試す",
+      "steps": {
+        "sources": {
+          "title": "1. ソースを選ぶ",
+          "body": "保存した語彙、理論ノート、またはインポートした教材から練習します。追加するほど、練習はより役立ちます。"
+        },
+        "types": {
+          "title": "2. 演習タイプを選ぶ",
+          "body": "フラッシュカード、選択式、ペアマッチ、穴埋め、答えを入力、文を作る、から選んで、自分の知識で短いセッションを始めます。"
+        }
+      }
+    },
+    "listening": {
+      "title": "リスニング",
+      "description": "理解したい本物のコンテンツを持ち込みましょう — 音声や動画をアップロードし、文字起こしを読んで学習します。",
+      "cta": "リスニングを開く",
+      "steps": {
+        "upload": {
+          "title": "1. 教材をアップロード",
+          "body": "本当に理解したいものを持ち込みます — ポッドキャスト、動画、レッスン、自分の録音など。"
+        },
+        "uploadArea": {
+          "title": "2. ファイルを選ぶ",
+          "body": "音声または動画ファイルを選択するかドロップします。Notoriaがアップロードし、対応している場合は文字起こしを生成します。"
+        },
+        "lessons": {
+          "title": "3. レッスンを学習",
+          "body": "レッスンを開いて文字起こしを読み、新しい単語や表現を拾い、選んだ教材で練習します。"
+        },
+        "newFolder": {
+          "title": "4. フォルダを作成",
+          "body": "「新しいフォルダ」をクリックして、トピック、コース、スキルレベル別にレッスンをグループ化します。フォルダは任意です — すべてをトップレベルに置くこともできます。"
+        },
+        "nameFolder": {
+          "title": "5. フォルダに名前を付ける",
+          "body": "自分にとって意味のある名前を入力します（例: ポッドキャスト、試験対策）。フォルダは、表示中の場所の中に作成されます。"
+        },
+        "organize": {
+          "title": "6. フォルダとファイル",
+          "body": "フォルダはレッスンの上に表示されます。フォルダを開くとそのグループだけを閲覧でき、フォルダ内で追加したアップロードはその場所に保存されます。"
+        },
+        "moveItem": {
+          "title": "7. レッスンをフォルダ間で移動",
+          "body": "レッスンの移動アイコンを使うか、フォルダカードへドラッグします。フォルダをネストして大きなコレクションも整理できます。"
+        }
+      }
+    },
+    "speaking": {
+      "title": "スピーキング",
+      "description": "会話で言語を使う練習をし、文字起こしとフィードバックを見直します。",
+      "cta": "通話を開始",
+      "steps": {
+        "start": {
+          "title": "1. セッションを開始",
+          "body": "スピーキングセッションを作成し、準備ができたら参加します。勉強するだけでなく、実際の会話で言語を使う練習をします。"
+        },
+        "sessions": {
+          "title": "2. あとで見直す",
+          "body": "セッションを開いて文字起こしとフィードバックを読みます。ミスに気づき、役立つフレーズを再利用し、次に日記へ何を追加するかを決めましょう。"
+        }
+      }
+    },
+    "reading": {
+      "title": "リーディング",
+      "description": "文章をインポートまたは貼り付け、理解練習を生成し、結果を見直します。",
+      "cta": "リーディングを開く",
+      "steps": {
+        "import": {
+          "title": "1. 文章を追加",
+          "body": "テキストを貼り付けるか、PDF/DOCXをアップロードして、練習用のリーディング文章を作成します。"
+        },
+        "importForm": {
+          "title": "2. テキストを確認",
+          "body": "保存前にタイトル、言語、本文を確認します。抽出されたテキストは必要に応じて編集できます。"
+        },
+        "search": {
+          "title": "3. 文章を探す",
+          "body": "リストが増えたら、タイトルや元ファイル名でリーディングライブラリを検索します。"
+        },
+        "passages": {
+          "title": "4. ライブラリから練習",
+          "body": "文章を開いて問題を生成し、回答して結果を見直します — 必要に応じて記述の採点も含みます。"
+        },
+        "newFolder": {
+          "title": "5. フォルダを作成",
+          "body": "「新しいフォルダ」をクリックして、トピック、試験、レベル別に文章をグループ化します。フォルダは任意です — すべてをトップレベルに置くこともできます。"
+        },
+        "nameFolder": {
+          "title": "6. フォルダに名前を付ける",
+          "body": "わかりやすい名前を入力します（例: ニュース記事、試験対策）。フォルダは、表示中の場所の中に作成されます。"
+        },
+        "organize": {
+          "title": "7. フォルダと文章",
+          "body": "フォルダは文章の上に表示されます。フォルダを開くとそのグループだけを閲覧でき、フォルダ内での新しいインポートはその場所に保存されます。"
+        },
+        "moveItem": {
+          "title": "8. 文章をフォルダ間で移動",
+          "body": "文章の移動アイコンを使うか、フォルダカードへドラッグします。フォルダをネストして大きなコレクションも整理できます。"
+        }
+      }
+    },
+    "inbox": {
+      "title": "Capture",
+      "description": "断片をすばやく保存 — 単語、疑問、アイデア — 時間があるときに本物の学習項目へ変換します。",
+      "cta": "了解",
+      "steps": {
+        "capture": {
+          "title": "1. 何かをCapture",
+          "body": "Captureを使って、まだ置き場所を決めずに単語、フレーズ、文法の疑問、ライティングのアイデアを保存します。ここでは完璧な構造より速さが大切です。"
+        },
+        "list": {
+          "title": "2. Captureリスト",
+          "body": "各カードには内容、任意のメモ/出典、保存した日時が表示されます。探すときはリスト上のフォルダ、「処理待ち / 処理済み」、検索、並び替えを使います。カードの···メニューから処理できます。"
+        },
+        "process": {
+          "title": "3. Notoriaへ処理",
+          "body": "Captureを語彙、理論、ライティング、演習へ送ります。「処理済み」になるのは、そこで保存を完了したあとだけです — 作成フォームをキャンセルすると待機のままです。"
+        }
+      }
+    }
+  },
+  "settings": {
+    "eyebrow": "設定",
+    "title": "アプリ",
+    "highlight": "設定",
+    "description": "Notoriaの見た目と動作に関する設定です — ワークスペースやアカウントの設定ではありません。",
+    "appearance": "外観",
+    "appearanceDescription": "アプリ全体の表示に関する設定です。",
+    "theme": "テーマ",
+    "themeDescription": "ライト、ダーク、またはシステムに合わせるを選べます。",
+    "themeLight": "ライト",
+    "themeDark": "ダーク",
+    "themeSystem": "システム",
+    "accessibility": "アクセシビリティ",
+    "accessibilityDescription": "Notoria全体のモーションや操作感を変えるオプションです。",
+    "motion": "モーションを減らす",
+    "motionDescription": "アニメーションを制限します。システムはデバイスの設定に従います。",
+    "motionSystem": "システム",
+    "motionReduce": "減らす",
+    "motionFull": "フルモーション",
+    "learning": "学習",
+    "learningDescription": "各セクションに共通するガイダンス設定です。",
+    "ai": {
+      "title": "AIアシスタンス",
+      "description": "Notoria全体でのAI機能の動作を制御します。",
+      "enabled": "AIアシスタンス",
+      "enabledDescription": "NotoriaがAI機能を使用することを許可します。",
+      "on": "オン",
+      "off": "オフ",
+      "responseStyle": "回答スタイル",
+      "responseStyleDescription": "AIで回答するときの詳細度を制御します。",
+      "responseConcise": "簡潔",
+      "responseBalanced": "バランス",
+      "responseDetailed": "詳細",
+      "correctionStyle": "訂正スタイル",
+      "correctionStyleDescription": "言語フィードバックでAIがミスをどう説明するか？",
+      "correctionMinimal": "最小限",
+      "correctionExplain": "ミスを説明",
+      "correctionDetailed": "詳細",
+      "suggestions": "AIサジェスト",
+      "suggestionsDescription": "利用可能な場合、語彙の編集中にプロアクティブなAIサジェストを表示します。",
+      "confirmActions": "AI操作の確認",
+      "confirmActionsDescription": "AIがコンテンツを変更する前に確認します。",
+      "confirmAlways": "常に",
+      "confirmContentChange": "コンテンツ変更時のみ",
+      "confirmNever": "しない",
+      "saveFailed": "AI設定を保存できませんでした",
+      "disabledToast": "設定でAIアシスタンスがオフになっています"
+    },
+    "tutorials": "セクションチュートリアル",
+    "tutorialsDescription": "完了したセクションのウォークスルーをリセットし、「チュートリアルを表示」を最初から始められるようにします。",
+    "tutorialsReset": "チュートリアルをリセット",
+    "tutorialsResetDone": "セクションチュートリアルをリセットしました",
+    "shortcuts": {
+      "title": "キーボードショートカット",
+      "description": "Notoriaウェブアプリのグローバルショートカットです。機能固有のキーは各アクティビティ内にあります。",
+      "enabled": "ショートカットを有効にする",
+      "enabledDescription": "カスタム割り当てを失わずに、すべてのグローバルショートカットをオン／オフできます。",
+      "on": "オン",
+      "off": "オフ",
+      "action": "アクション",
+      "keys": "ショートカット",
+      "edit": "編集",
+      "add": "ショートカットを追加",
+      "addTitle": "ショートカットを追加",
+      "addDescription": "すばやくアクセスしたいアクションを選び、使用したいキーの組み合わせを押してください。",
+      "chooseAction": "アクションを選択",
+      "customized": "カスタム",
+      "defaultBadge": "デフォルト",
+      "defaultWas": "デフォルトは {keys}",
+      "extraBadge": "追加",
+      "remove": "削除",
+      "removed": "ショートカットを削除しました",
+      "replace": "置き換え",
+      "resetOne": "デフォルトに戻す",
+      "resetOneDone": "ショートカットをデフォルトに戻しました",
+      "resetAll": "すべてのショートカットをリセット",
+      "resetAllDescription": "すべてのグローバルショートカットをデフォルトのキー組み合わせに戻します。",
+      "resetAllConfirmTitle": "すべてのキーボードショートカットをデフォルト設定にリセットしますか？",
+      "resetAllConfirmDescription": "カスタムのグローバルショートカットはクリアされます。機能固有のショートカットには影響しません。",
+      "resetAllDone": "すべてのショートカットをリセットしました",
+      "editTitle": "編集: {action}",
+      "editDescription": "キーの組み合わせを押してください。ブラウザ予約のショートカットはNotoriaでは使用できません。",
+      "pressKeys": "キーの組み合わせを押してください",
+      "pickActionFirst": "アクションを選び、キーの組み合わせを押してください",
+      "saved": "ショートカットを保存しました",
+      "conflict": "このショートカットはすでに「{action}」に割り当てられています。",
+      "reserved": "ブラウザにより予約されており、Notoriaでは使用できません。",
+      "statusAvailable": "✓ {keys}",
+      "statusConflict": "⚠ {keys} — すでに {action} に割り当てられています。",
+      "statusReserved": "⚠ {keys} — ブラウザにより予約されており、Notoriaでは使用できません。",
+      "reservedTitle": "使用できないショートカットがあります",
+      "reservedDescription": "ブラウザとWindowsは、Ctrl + N、Ctrl + Shift + T、Win + E などのキーを予約しています。Notoriaで上書きすることはできません。",
+      "reservedGroups": {
+        "ctrl": "Ctrl",
+        "ctrlShift": "Ctrl + Shift",
+        "alt": "Alt",
+        "win": "Windows"
+      },
+      "reservedPurposes": {
+        "newWindow": "新しいウィンドウ",
+        "newTab": "新しいタブ",
+        "closeTab": "タブを閉じる",
+        "reopenTab": "閉じたタブを再度開く",
+        "closeWindow": "ウィンドウを閉じる",
+        "newIncognito": "新しいプライベートウィンドウ",
+        "addressBar": "アドレスバー",
+        "reload": "再読み込み",
+        "hardReload": "強制再読み込み",
+        "nextTab": "次のタブ",
+        "prevTab": "前のタブ",
+        "print": "印刷",
+        "openFile": "ファイルを開く",
+        "browserSave": "ブラウザでページを保存",
+        "bookmark": "ページをブックマーク",
+        "history": "履歴",
+        "downloads": "ダウンロード",
+        "viewSource": "ソースを表示",
+        "findInPage": "ページ内検索",
+        "findNext": "次を検索",
+        "findPrev": "前を検索",
+        "devtools": "デベロッパーツール",
+        "console": "JavaScriptコンソール",
+        "inspect": "要素を検証",
+        "clearData": "閲覧データを削除",
+        "taskManager": "ブラウザのタスクマネージャー",
+        "altClose": "ウィンドウを閉じる",
+        "altTab": "アプリを切り替え",
+        "winExplorer": "エクスプローラー",
+        "winDesktop": "デスクトップを表示",
+        "winLock": "PCをロック",
+        "winRun": "ファイル名を指定して実行",
+        "winSettings": "Windowsの設定",
+        "winTaskView": "タスクビュー",
+        "winClipboard": "クリップボードの履歴"
+      },
+      "actions": {
+        "openSearch": "検索",
+        "toggleTheme": "テーマを切り替え",
+        "quickSave": "クイック保存",
+        "quickEdit": "クイック編集",
+        "quickView": "クイック表示",
+        "download": "ダウンロード",
+        "deleteItem": "削除",
+        "createNew": "新規作成",
+        "goBack": "戻る",
+        "goForward": "進む"
+      },
+      "actionDescriptions": {
+        "openSearch": "ワークスペース全体を検索",
+        "toggleTheme": "ライトモードとダークモードを切り替え",
+        "quickSave": "現在の項目を保存",
+        "quickEdit": "現在の項目の編集を開始",
+        "quickView": "現在の項目を表示モードで開く",
+        "download": "現在の項目をダウンロード",
+        "deleteItem": "選択した項目を削除",
+        "createNew": "このセクションで新しい項目を作成",
+        "goBack": "前のページに戻る",
+        "goForward": "閲覧履歴で進む"
+      }
+    },
+    "data": {
+      "title": "データとプライバシー",
+      "description": "このブラウザに保存されているローカル設定データです。アカウントとワークスペースのコンテンツは別の場所で管理されます。",
+      "clear": "ローカル設定をクリア",
+      "clearDescription": "このデバイスに保存されているテーマ非依存のアプリ設定（モーション、ショートカット、チュートリアルなど）を削除します。アカウントやワークスペースのデータは削除されません。",
+      "clearConfirmTitle": "ローカル設定をクリアしますか？",
+      "clearConfirmDescription": "このブラウザ内の設定のみがクリアされます。アカウント、課金、学習コンテンツは削除されません。",
+      "clearDone": "ローカル設定をクリアしました",
+      "policiesTitle": "法的ポリシー",
+      "policiesDescription": "Notoriaのプライバシーポリシーと利用規約です。",
+      "privacyLink": "プライバシーポリシー",
+      "termsLink": "利用規約",
+      "helpLink": "サポート"
+    },
+    "tagManager": {
+      "sectionTitle": "語彙",
+      "sectionDescription": "単語帳全体での語彙タグの適用方法を整理します。",
+      "title": "タグマネージャー",
+      "description": "語彙の整理に使うタグを管理します。",
+      "open": "タグを管理"
+    },
+    "customTags": "カスタムタグ",
+    "customTagsDescription": "語彙用のワークスペース固有タグを作成します。組み込みタグは常に利用できます。",
+    "tagName": "タグ名",
+    "tagNamePlaceholder": "例：YKI、JLPT N5、IELTS",
+    "tagNameRequired": "タグ名を入力してください。",
+    "addTag": "タグを追加",
+    "renameTag": "名前を変更",
+    "editTagTitle": "タグ名を変更",
+    "editTagDescription": "新しい名前は、このタグを使うすべての単語に適用されます。",
+    "tagCreated": "タグを作成しました",
+    "tagUpdated": "タグ名を変更しました",
+    "tagDeleted": "タグを削除しました",
+    "tagExists": "この名前のタグはすでに存在します",
+    "noCustomTags": "カスタムタグはまだありません",
+    "deleteTagTitle": "このタグを削除しますか？",
+    "deleteTagConfirm": "このタグを削除しますか？すべての単語から削除されます。",
+    "deleteTagDescription": "「{name}」はすべての単語から削除されます。単語自体は削除されません。"
+  },
+  "theory": {
+    "eyebrow": "理論",
+    "title": "理論",
+    "highlight": "学ぶ",
+    "description": "文法、発音、会話、言語の仕組みに関するノートです — ライティング練習ではありません。",
+    "library": "ライブラリ",
+    "collections": "コレクション",
+    "disabledNoWorkspace": "理論ノートを追加する前に、ワークスペースを作成してください。",
+    "create": "理論を追加",
+    "createFirst": "最初のノートを追加",
+    "emptyTitle": "理論ノートはまだありません",
+    "emptyDescription": "格変化、発音、リスニング、スピーキング、用法などの説明をここに保存します。実際のライティング練習は「ライティング」をご利用ください。",
+    "searchPlaceholder": "トピックを検索…",
+    "filterAll": "すべて",
+    "noResults": "一致するトピックがありません",
+    "noResultsDescription": "別の検索語またはカテゴリをお試しください。",
+    "readingTime": "{minutes, plural, one {# 分で読める} other {# 分で読める}}",
+    "backToList": "理論に戻る",
+    "backToPreview": "ノートに戻る",
+    "previewTitle": "理論ノート",
+    "previewDescription": "このノートを読みます。変更するには「編集」を開いてください。",
+    "edit": "編集",
+    "editTitle": "理論を編集",
+    "editDescription": "変更を残すには保存してください。キャンセルすると未保存の編集は破棄されます。",
+    "editSaveHint": "ノートを更新するには保存してください。キャンセルすると未保存の編集は破棄されます。",
+    "newTitle": "新しい理論",
+    "formDescription": "ルールに名前を付け、カテゴリを選び、自分の言葉で説明してください。",
+    "documentTitle": "タイトル",
+    "titlePlaceholder": "例：フィンランド語の部分格の仕組み",
+    "categoryLabel": "カテゴリ",
+    "summaryLabel": "短い説明",
+    "summaryPlaceholder": "ライブラリカード用に1〜2文…",
+    "content": "説明",
+    "contentPlaceholder": "ルール、パターン、用法を説明します。必要に応じて例を追加…",
+    "titleRequired": "タイトルは必須です",
+    "descriptionTooLong": "短い説明は{max}文字以内にしてください。",
+    "categoryInvalid": "有効なカテゴリを選んでください。",
+    "notFound": "理論ノートが見つかりません。",
+    "saved": "理論ノートを保存しました",
+    "created": "理論ノートを作成しました",
+    "saveFailed": "理論ノートの保存に失敗しました",
+    "deleted": "理論ノートを削除しました",
+    "deleteConfirmTitle": "この理論ノートを削除しますか？",
+    "deleteConfirmDescription": "「{title}」は完全に削除されます。",
+    "autosaving": "自動保存中...",
+    "autosaveReady": "変更は自動保存されます",
+    "autosavePending": "自動保存を有効にするには保存してください",
+    "categories": {
+      "grammar": "文法",
+      "vocabulary": "語彙",
+      "pronunciation": "発音",
+      "writing": "ライティング",
+      "communication": "コミュニケーション",
+      "usage": "用法",
+      "culture": "文化と文脈"
+    },
+    "export": {
+      "button": "エクスポート",
+      "title": "理論をエクスポート",
+      "kicker": "理論をエクスポート",
+      "untitled": "無題のノート",
+      "description": "このノートを印刷用ページまたは編集可能なファイルとしてダウンロードします。",
+      "format": "形式",
+      "formatPdf": "PDF",
+      "formatDocx": "Word",
+      "formatPdfHint": "印刷用ページ",
+      "formatDocxHint": "編集可能なファイル",
+      "confirm": "エクスポート",
+      "success": "ダウンロードを開始しました",
+      "failed": "エクスポートに失敗しました",
+      "empty": "エクスポートする前に内容を追加してください",
+      "preparing": "エクスポートを準備中…",
+      "writingFile": "ファイルを保存中…",
+      "progressCount": "{current} / {total}",
+      "documentHeading": "理論",
+      "titleLabel": "タイトル",
+      "descriptionLabel": "説明"
+    }
+  },
+  "reading": {
+    "eyebrow": "リーディング",
+    "title": "リーディング",
+    "description": "文章を貼り付けまたはインポートし、読解演習を生成して、保存した結果で練習します。",
+    "disabledNoWorkspace": "リーディングの文章を追加する前に、ワークスペースを作成してください。",
+    "import": "文章を追加",
+    "importFirst": "最初の文章を追加",
+    "importTitle": "リーディング文章を追加",
+    "importDescription": "テキストを貼り付けるかPDF/DOCXをアップロードし、プレビューを編集してから、任意で演習を生成します。",
+    "importTabsAria": "文章ソース",
+    "tabPaste": "貼り付け",
+    "tabUpload": "アップロード",
+    "bodyLabel": "文章テキスト",
+    "bodyPlaceholder": "ここにリーディング文章を貼り付けるか入力…",
+    "titleLabel": "タイトル",
+    "titlePlaceholder": "任意のタイトル",
+    "languageLabel": "文章の言語",
+    "wordCount": "{count, plural, one {# 語} other {# 語}}",
+    "continuePreview": "プレビューへ進む",
+    "dropTitle": "ここにPDFまたはDOCXをドロップ",
+    "dropDescription": "またはクリックして参照。スキャンPDFは必要に応じてOCRを使用します。",
+    "extractSuccess": "テキストを抽出しました — 保存前に確認・編集してください。",
+    "sourcePaste": "貼り付けたテキスト",
+    "back": "戻る",
+    "savePassage": "文章を保存",
+    "saveAndGenerate": "保存して演習を生成",
+    "generateHint": "{language}で読解問題を生成します。AI演習の利用枠を使用します。",
+    "modeLabel": "演習タイプ",
+    "questionCountLabel": "問題数",
+    "difficultyLabel": "難易度",
+    "difficultyNone": "自動",
+    "questionLanguageLabel": "問題の言語",
+    "skipGenerate": "今はスキップ",
+    "generateExercises": "演習を生成",
+    "generateTitle": "演習を生成",
+    "generateDescription": "この文章から読解問題を作成します。生成は1回実行され、保存されます。",
+    "exercisesGenerated": "演習の準備ができました。",
+    "created": "文章を保存しました",
+    "deleted": "文章を削除しました",
+    "submitted": "回答を提出しました",
+    "emptyTitle": "リーディング文章はまだありません",
+    "emptyDescription": "テキストを貼り付けるかPDF/DOCXをアップロードして、リーディング練習を始めましょう。",
+    "myPassages": "マイ文章",
+    "passageHint": "文章を開いて演習を生成するか、練習を続けます。",
+    "open": "開く",
+    "practice": {
+      "submit": "回答を提出",
+      "loading": "問題を読み込み中…",
+      "questionLabel": "Q{number}.",
+      "writtenPlaceholder": "回答を書いてください…",
+      "correct": "正解",
+      "incorrect": "もう少し",
+      "expected": "正解",
+      "objectiveScore": "客観問題 {correct} / {total} 正解",
+      "mobileTabsAria": "練習パネル",
+      "unansweredWarnTitle": "未回答の問題があります",
+      "unansweredWarn": "未回答の問題があります。このまま提出しますか？",
+      "submitAnyway": "このまま提出",
+      "gradingPending": "記述回答の採点はまだできませんでした。回答は保存されています — 採点を再試行できます。",
+      "retryGrading": "採点を再試行",
+      "retryAttempt": "もう一度",
+      "progress": "問題 {current} / {total}",
+      "aiFeedbackLabel": "AIフィードバック",
+      "understood": "理解済み",
+      "missing": "不足"
+    },
+    "startPractice": "練習を開始",
+    "practiceTitle": "リーディング練習",
+    "backToList": "リーディングに戻る",
+    "backToPassage": "文章に戻る",
+    "passagePanel": "文章",
+    "questionsPanel": "問題",
+    "questionSets": "演習セット",
+    "noSetsYet": "演習はまだありません",
+    "noSetsDescription": "演習は1回生成すると保存されるため、更新しても再生成されません。",
+    "setCount": "{count, plural, one {# 件の演習セット} other {# 件の演習セット}}",
+    "questionCountValue": "{count, plural, one {# 問} other {# 問}}",
+    "staleSet": "このセット以降に文章が更新されています",
+    "vocabHint": "文章内の単語や短いフレーズを選択して語彙に追加します。",
+    "addToVocabulary": "語彙に追加",
+    "deleteConfirmTitle": "この文章を削除しますか？",
+    "deleteConfirmDescription": "「{title}」とそのすべての演習・挑戦記録は完全に削除されます。",
+    "modes": {
+      "multiple_choice": "選択式",
+      "written": "記述式",
+      "true_false_not_stated": "正しい / 誤り / 書かれていない",
+      "mixed": "ミックス"
+    },
+    "sources": {
+      "paste": "貼り付け",
+      "pdf": "PDF",
+      "docx": "DOCX"
+    },
+    "setStatus": {
+      "generating": "生成中",
+      "ready": "準備完了",
+      "failed": "失敗"
+    },
+    "tfns": {
+      "true": "正しい",
+      "false": "誤り",
+      "not_stated": "書かれていない"
+    },
+    "errors": {
+      "UNAUTHORIZED": "続けるにはサインインしてください。",
+      "OPENAI_NOT_CONFIGURED": "AIが設定されていません。",
+      "INVALID_INPUT": "入力内容を確認して、もう一度お試しください。",
+      "INVALID_FILE": "PDFまたはDOCXファイルを選んでください。",
+      "EMPTY_FILE": "そのファイルは空です。内容のあるPDFまたはDOCXを選んでください。",
+      "INVALID_FILE_TYPE": "PDFとDOCXファイルのみ対応しています。",
+      "FILE_TOO_LARGE": "ファイルが大きすぎます。100 MB未満のファイルを使用してください。",
+      "EMPTY_CONTENT": "もう少し長い文章を追加してください（少なくとも数文）。",
+      "SCANNED_PDF": "このPDFはスキャンされたもののようです。OCRで十分なテキストを復元できませんでした — 代わりに文章を貼り付けてください。",
+      "UNSUPPORTED_PARSE": "そのファイルを読み取れませんでした。.docxまたはテキストベースのPDFをお試しください。",
+      "EXTRACT_TRUNCATED": "ドキュメントの一部のみを練習に使用できます。元のファイルは保存されています。",
+      "EXTRACT_UNAVAILABLE": "ファイルはアップロードされましたが、テキストを抽出できませんでした。元のファイルをダウンロードするか、手動でテキストを貼り付けてください。",
+      "UPLOAD_FAILED": "アップロードに失敗しました。接続を確認して、もう一度お試しください。",
+      "UPLOAD_CANCELLED": "アップロードをキャンセルしました。",
+      "STORAGE_FAILED": "アップロードを保存できませんでした。もう一度お試しください。",
+      "NETWORK_FAILED": "アップロード中にネットワークエラーが発生しました。もう一度お試しください。",
+      "PASSAGE_NOT_FOUND": "リーディング文章が見つかりません。",
+      "SET_NOT_FOUND": "演習セットが見つかりません。",
+      "ATTEMPT_NOT_FOUND": "練習の挑戦記録が見つかりません。",
+      "SET_NOT_READY": "演習はまだ準備できていません。",
+      "GENERATION_FAILED": "演習を生成できませんでした。もう一度お試しください。",
+      "GENERATION_UNAVAILABLE": "現在、演習生成を利用できません。",
+      "VALIDATION_FAILED": "生成された演習を使用できませんでした。もう一度お試しください。",
+      "GRADING_FAILED": "記述回答を採点できませんでした。もう一度お試しください。",
+      "ATTEMPT_NOT_EDITABLE": "この挑戦記録はもう編集できません。",
+      "PROCESSING_FAILED": "問題が発生しました。もう一度お試しください。",
+      "AI_DISABLED": "設定でAIアシスタンスがオフになっています。",
+      "AI_QUOTA_EXCEEDED": "この期間のAIリーディング上限に達しました。",
+      "RATE_LIMITED": "リクエストが多すぎます。しばらく待ってからもう一度お試しください。",
+      "AI_BUSY": "リーディングAIはすでに処理中です。完了を待ってからもう一度お試しください。",
+      "generic": "問題が発生しました。もう一度お試しください。"
+    },
+    "newPassage": "文章を追加",
+    "saving": "保存中…",
+    "saved": "文章を保存しました",
+    "openPassage": "開く",
+    "searchPlaceholder": "文章を検索…",
+    "noResults": "検索に一致する文章がありません",
+    "generateNew": "演習を生成",
+    "generate": "生成",
+    "generating": "生成中…",
+    "generated": "演習の準備ができました。",
+    "exerciseMode": "演習タイプ",
+    "modeMultipleChoice": "選択式",
+    "modeWritten": "記述式",
+    "modeTfns": "正しい / 誤り / 書かれていない",
+    "modeMixed": "ミックス",
+    "questionCount": "問題数",
+    "questionLanguage": "問題の言語",
+    "difficulty": "難易度",
+    "setsHeading": "演習セット",
+    "noSets": "演習セットはまだありません。1回生成すると、更新しても再生成されません。",
+    "resumePractice": "再開",
+    "retryAttempt": "もう一度",
+    "deleteSet": "この演習セットを削除しますか？",
+    "setFailed": "生成に失敗しました",
+    "setGenerating": "生成中…",
+    "passageTab": "文章",
+    "questionsTab": "問題",
+    "progress": "{current} / {total}",
+    "submit": "回答を提出",
+    "submitting": "提出中…",
+    "resultsTitle": "結果の準備ができました",
+    "objectiveScore": "客観問題 {correct} / {total} 正解",
+    "aiFeedbackLabel": "AIフィードバック",
+    "explanation": "解説",
+    "excerpt": "抜粋",
+    "correctAnswer": "正解",
+    "yourAnswer": "あなたの回答",
+    "unansweredWarn": "まだ空欄の問題があります。このまま提出しますか？",
+    "gradingPending": "記述回答を採点できませんでした。採点を再試行できます。",
+    "retryGrading": "採点を再試行",
+    "selectWordHint": "単語や短いフレーズを選択して語彙に追加します。",
+    "uploadHint": "PDFまたはDOCXをアップロードします。スキャンされた画像のみのPDFにはまだ対応していません。",
+    "uploadChoose": "ファイルを選択",
+    "uploading": "アップロード中… {percent}%",
+    "extracting": "テキストを抽出中…",
+    "uploadInProgress": "このファイルはすでに処理中です。",
+    "cancelUpload": "アップロードをキャンセル",
+    "retryUpload": "アップロードを再試行",
+    "downloadOriginal": "元のファイルをダウンロード",
+    "status": {
+      "generating": "生成中",
+      "ready": "準備完了",
+      "failed": "失敗"
+    },
+    "deleteSetDescription": "この演習セットとその挑戦記録は完全に削除されます。文章自体は残ります。",
+    "dropActive": "ドロップしてテキストを抽出",
+    "supportedFiles": "ファイルはPDFまたはDOCXで、100 MB以下である必要があります。",
+    "replaceFile": "クリックして別のファイルを選ぶ",
+    "emptyFolder": "このフォルダは空です"
+  },
+  "listening": {
+    "eyebrow": "リスニング",
+    "title": "リスニング",
+    "highlight": "練習",
+    "description": "MP3またはMP4をアップロードし、インタラクティブなリスニングレッスンに変換します。",
+    "disabledNoWorkspace": "リスニングレッスンを追加する前に、ワークスペースを作成してください。",
+    "upload": "リスニングをアップロード",
+    "uploadFirst": "最初のリスニングをアップロード",
+    "uploadTitle": "リスニングをアップロード",
+    "uploadDescription": "MP3またはMP4ファイルをドロップしてください。文字起こししてリスニング練習ができます。",
+    "dropTitle": "ここにMP3またはMP4ファイルをドロップ",
+    "dropDescription": "またはパソコンから選択",
+    "replaceFile": "クリックして別のファイルを選ぶ",
+    "uploadAction": "アップロード",
+    "titleLabel": "タイトル",
+    "titlePlaceholder": "任意 — 音声から自動生成",
+    "emptyTitle": "リスニングレッスンはまだありません",
+    "emptyDescription": "音声または動画ファイルをアップロードして、最初のリスニングレッスンを作成しましょう。",
+    "myLessons": "マイリスニングレッスン",
+    "collections": "コレクション",
+    "searchPlaceholder": "タイトルまたはファイル名で検索…",
+    "filterAll": "すべて",
+    "filterCefr": "CEFR",
+    "filterTopic": "トピック",
+    "filterFormality": "フォーマリティ",
+    "filterStatus": "ステータス",
+    "sortNewest": "新しい順",
+    "sortOldest": "古い順",
+    "sortTitleAsc": "タイトル（A → Z）",
+    "sortTitleDesc": "タイトル（Z → A）",
+    "clearFilters": "フィルターをクリア",
+    "sortBy": "並び替え",
+    "noResults": "検索に一致するリスニングレッスンがありません",
+    "noResultsDescription": "別の検索語を試すか、フィルターをクリアしてください。",
+    "continue": "続ける",
+    "open": "開く",
+    "viewProgress": "表示",
+    "retry": "再試行",
+    "created": "リスニングレッスンを作成しました。",
+    "deleted": "リスニングレッスンを削除しました",
+    "renameFile": "ファイル名を変更",
+    "renameFileTitle": "ファイル名を変更",
+    "renameFileDescription": "ファイル名を変更します。音声自体は再アップロードされません。",
+    "fileNameLabel": "ファイル名",
+    "renamed": "ファイル名を更新しました",
+    "deleteConfirmTitle": "このリスニングレッスンを削除しますか？",
+    "deleteConfirmDescription": "「{title}」とその演習は完全に削除されます。",
+    "backToList": "リスニングに戻る",
+    "backToLesson": "レッスンに戻る",
+    "lessonDescription": "聴き、演習タイプを選び、1ページですべての問題に答えます。",
+    "practiceDescription": "音声を再生し、回答してリスニングを確認します。",
+    "startPractice": "練習を開始",
+    "transcript": "トランスクリプト",
+    "showTranscript": "トランスクリプトを表示",
+    "hideTranscript": "トランスクリプトを非表示",
+    "speakerLabel": "話者 {id}",
+    "identifyingSpeakers": "話者を識別中...",
+    "exerciseTitle": "リスニング演習",
+    "chooseExerciseType": "演習タイプを選択：",
+    "chooseTypeHint": "穴埋めまたは選択式を選んで問題を生成します。",
+    "exercisesGenerated": "演習を生成しました。",
+    "generationInProgress": "演習はすでに生成中です。",
+    "exercisesTitle": "演習",
+    "exerciseCount": "{count, plural, one {# 件の演習} other {# 件の演習}}",
+    "status": {
+      "UPLOADING": "アップロード中",
+      "TRANSCRIBING": "文字起こし中",
+      "GENERATING": "演習を生成中",
+      "COMPLETED": "完了",
+      "FAILED": "失敗"
+    },
+    "steps": {
+      "uploading": "アップロード中...",
+      "transcribing": "文字起こし中...",
+      "generating": "演習を生成中...",
+      "wait": "1分ほどかかることがあります。このウィンドウを開いたままにしてください。"
+    },
+    "types": {
+      "FILL_BLANK": "穴埋め",
+      "MULTIPLE_CHOICE": "選択式",
+      "DICTATION": "ディクテーション",
+      "WORD_ORDERING": "語順並べ替え"
+    },
+    "player": {
+      "play": "再生",
+      "pause": "一時停止",
+      "replay": "もう一度再生",
+      "seek": "シーク",
+      "playSegment": "この部分を再生",
+      "mute": "ミュート",
+      "unmute": "ミュート解除",
+      "volume": "音量",
+      "loadError": "音声を読み込めませんでした。接続を確認して、もう一度お試しください。"
+    },
+    "meta": {
+      "none": "未設定",
+      "cefrLabel": "CEFRレベル",
+      "topicLabel": "トピック",
+      "formalityLabel": "フォーマリティ",
+      "cefr": {
+        "a1": "A1",
+        "a2": "A2",
+        "b1": "B1",
+        "b2": "B2",
+        "c1": "C1",
+        "c2": "C2"
+      },
+      "formality": {
+        "formal": "フォーマル",
+        "informal": "インフォーマル",
+        "neutral": "ニュートラル"
+      }
+    },
+    "fillBlankOverview": "欠けている単語を埋めて文章を完成させます。",
+    "practice": {
+      "progress": "{current} / {total}",
+      "answeredProgress": "{answered} / {total} 回答済み",
+      "score": "{correct} 問正解",
+      "check": "確認",
+      "checkAnswers": "回答を確認",
+      "submitSet": "回答を提出",
+      "questionLabel": "問題 {number}",
+      "blankLabel": "空欄 {number}",
+      "listenPrompt": "この部分の音声を聴いてください。",
+      "next": "次へ",
+      "previous": "前へ",
+      "finish": "終了",
+      "correct": "正解",
+      "incorrect": "もう少し",
+      "expected": "正解",
+      "completeTitle": "リスニング完了",
+      "completeScore": "{correct} / {total} 正解",
+      "completePercent": "{percent}%",
+      "review": "回答を確認",
+      "tryAgain": "もう一度",
+      "back": "リスニングに戻る",
+      "backToResults": "結果に戻る",
+      "yourAnswer": "あなたの回答",
+      "blanksProgress": "{filled} / {total} 空欄",
+      "changeType": "タイプを変更",
+      "hideReview": "確認を非表示",
+      "jumpToUnanswered": "未回答へ移動",
+      "unansweredWarnTitle": "未回答の問題があります",
+      "unansweredWarn": "まだ未回答の問題があります。このまま提出しますか？",
+      "submitAnyway": "このまま提出",
+      "typeHintMc": "聴いてから、このページの各問題で最適な答えを選んでください。"
+    },
+    "errors": {
+      "CLOUDINARY_NOT_CONFIGURED": "メディアストレージが設定されていません。",
+      "ASSEMBLYAI_NOT_CONFIGURED": "音声認識が設定されていません。",
+      "OPENAI_NOT_CONFIGURED": "演習生成が設定されていません。",
+      "INVALID_FILE": "MP3またはMP4ファイルを選んでください。",
+      "INVALID_FILE_TYPE": "MP3とMP4ファイルのみ対応しています。",
+      "FILE_TOO_LARGE": "ファイルが大きすぎます。25 MB未満のファイルを使用してください。",
+      "AUDIO_TOO_LONG": "その音声は45分を超えています。分割するか、短いクリップを1つの文字起こしに使用してください。",
+      "AUDIO_DURATION_UNKNOWN": "文字起こし前に音声の長さを確認できませんでした。ファイルを再アップロードしてもう一度お試しください。",
+      "TRANSCRIPTION_FAILED": "その音声を文字起こしできませんでした。もう一度お試しください。",
+      "GENERATION_FAILED": "演習を生成できませんでした。もう一度お試しください。",
+      "GENERATION_UNAVAILABLE": "現在、演習生成を利用できません。しばらくしてからもう一度お試しください。",
+      "VALIDATION_FAILED": "生成された演習を使用できませんでした。もう一度お試しください。",
+      "LESSON_NOT_FOUND": "リスニングレッスンが見つかりません。",
+      "PROCESSING_FAILED": "このレッスンの作成中に問題が発生しました。もう一度お試しください。",
+      "EMPTY_TRANSCRIPT": "そのファイルから発話が見つかりませんでした。",
+      "DUPLICATE_FILENAME": "この名前のファイルはすでに存在します。",
+      "FILENAME_REQUIRED": "ファイル名を入力してください。"
+    }
+  },
+  "speaking": {
+    "eyebrow": "スピーキング",
+    "title": "スピーキング",
+    "highlight": "練習",
+    "description": "AIチューターとのライブビデオ通話に参加し、ワークスペースの言語で会話を練習します。",
+    "disabledNoWorkspace": "スピーキングセッションを開始する前に、ワークスペースを作成してください。",
+    "newCall": "新しい通話",
+    "newCallFirst": "最初の通話を開始",
+    "newTitle": "新しいスピーキング通話",
+    "newDescription": "レベルとトピックを選びます。AIチューターが通話に参加し、会話します。",
+    "modalTip": "会話の難易度を選び、チューターが何を練習すべきか分かるよう短いメモを残してください。",
+    "create": "通話を作成",
+    "created": "スピーキング通話を作成しました",
+    "titleLabel": "タイトル",
+    "titlePlaceholder": "任意 — トピックから自動生成",
+    "notesLabel": "チューターへのメモ",
+    "notesPlaceholder": "練習したいこと、よく混同する単語など…",
+    "emptyTitle": "スピーキングセッションはまだありません",
+    "emptyDescription": "AIチューターとのビデオ通話を開始して、スピーキングを練習しましょう。",
+    "mySessions": "マイスピーキングセッション",
+    "sessionHint": "終了した通話を開くと、フィードバックとトランスクリプトを確認できます。",
+    "stats": {
+      "aria": "スピーキングセッションの統計",
+      "total": "セッション",
+      "completed": "完了",
+      "ready": "準備完了",
+      "topics": "トピック"
+    },
+    "guide": {
+      "aria": "スピーキング練習の流れ",
+      "pick": {
+        "title": "焦点を決める",
+        "body": "CEFRとトピックを選ぶと、チューターが必要な内容に会話を導きます。"
+      },
+      "call": {
+        "title": "ライブで話す",
+        "body": "ビデオ通話に参加し、自然に話し、分からないときは繰り返しを依頼しましょう。"
+      },
+      "review": {
+        "title": "あとで振り返る",
+        "body": "フィードバックとトランスクリプトを確認し、語彙やライティングに再利用できます。"
+      }
+    },
+    "join": "通話に参加",
+    "open": "開く",
+    "viewProgress": "進捗を見る",
+    "backToList": "スピーキングに戻る",
+    "sessionDescription": "通話に参加し、その後ここに戻ってフィードバックとトランスクリプトを確認します。",
+    "deleted": "スピーキングセッションを削除しました",
+    "ended": "通話が終了しました",
+    "endSession": "セッションを終了",
+    "deleteConfirmTitle": "このセッションを削除しますか？",
+    "deleteConfirmDescription": "「{title}」とそのトランスクリプトが削除されます。",
+    "processingTitle": "フィードバックを準備中",
+    "processingDescription": "チューターがまとめ中です。まもなくここにフィードバックが表示されます。",
+    "feedbackTitle": "チューターのフィードバック",
+    "feedbackDescription": "会話の短いまとめです。",
+    "transcriptTitle": "トランスクリプト",
+    "transcriptFinalizing": "トランスクリプトを確定中",
+    "transcriptLoadingTitle": "トランスクリプトを収集中",
+    "transcriptLoadingDescription": "通話の発話がまもなくここに表示されます。",
+    "transcriptEmpty": "このセッションのトランスクリプトは取得されませんでした。",
+    "transcriptError": "トランスクリプトが不完全です",
+    "status": {
+      "upcoming": "準備完了",
+      "active": "通話中",
+      "processing": "処理中",
+      "completed": "完了",
+      "cancelled": "キャンセル済み"
+    },
+    "meta": {
+      "cefrLabel": "CEFRレベル",
+      "topicLabel": "トピック",
+      "cefr": {
+        "a1": "A1",
+        "a2": "A2",
+        "b1": "B1",
+        "b2": "B2",
+        "c1": "C1",
+        "c2": "C2"
+      }
+    },
+    "call": {
+      "lobbyTitle": "話す準備はできましたか？",
+      "lobbyDescription": "カメラとマイクを確認してから参加してください。AIチューターはまもなく入室します。",
+      "permissions": "通話に参加するには、ブラウザでマイクへのアクセスを許可してください。カメラは任意です。",
+      "cancel": "キャンセル",
+      "join": "通話に参加",
+      "joining": "参加中…",
+      "tutorFailed": "通話には入れましたが、AIチューターが参加できませんでした。退出してから再度参加してみてください。",
+      "tutorSetupTimeout": "AIチューターの参加に時間がかかりすぎたため、通話を終了しました。新しいセッションを開始してもう一度お試しください。",
+      "endedTitle": "通話が終了しました",
+      "endedDescription": "フィードバックはまもなくセッションページに表示されます。",
+      "back": "セッションに戻る",
+      "notConfigured": "ビデオ通話はまだ設定されていません。通話を開始するには Stream Video API キーを追加してください。",
+      "sessionLimitReached": "このスピーキングセッションは公平利用の30分制限に達したため終了しました。",
+      "elapsedTitle": "通話時間",
+      "inactivityWarning": "しばらく誰も話していません。まもなく通話が終了します。",
+      "inactivityCountdown": "{seconds}秒後に終了…",
+      "inactivityEnded": "一定時間操作がなかったため、通話が終了しました。",
+      "continueCall": "通話を続ける"
+    },
+    "errors": {
+      "STREAM_NOT_CONFIGURED": "ビデオ通話が設定されていません。",
+      "OPENAI_NOT_CONFIGURED": "AIチューターが設定されていません。",
+      "INVALID_INPUT": "トピックとレベルを確認して、もう一度お試しください。",
+      "SESSION_NOT_FOUND": "スピーキングセッションが見つかりません。",
+      "SESSION_NOT_JOINABLE": "この通話にはもう参加できません。",
+      "SESSION_EXPIRED": "このスピーキングセッションは時間制限に達したため、参加できなくなりました。",
+      "ACTIVE_SESSION_EXISTS": "すでにアクティブなスピーキングセッションがあります。別のセッションを開始する前に終了してください。",
+      "STREAM_CALL_FAILED": "ビデオ通話を開始できませんでした。もう一度お試しください。",
+      "UNAUTHORIZED": "スピーキング通話に参加するにはサインインしてください。",
+      "AI_QUOTA_EXCEEDED": "本日のAIスピーキング枠を使い切りました。UTC午前0時にリセットされます — またはアップグレードでセッションを増やせます。"
+    },
+    "quotaLockedTitle": "1日のスピーキング上限に達しました",
+    "quotaLockedBody": "本日のAIスピーキングセッションを使い切りました。既存のセッションはそのまま利用できます — アップグレードするか、枠がリセットされるまでお待ちください。"
+  },
+  "errors": {
+    "generic": "問題が発生しました",
+    "noWorkspace": "アクティブなワークスペースがありません",
+    "notFound": "ページが見つかりません",
+    "unauthorized": "サインインが必要です",
+    "forbidden": "アクセスが拒否されました",
+    "rateLimit": "リクエストが多すぎます",
+    "network": "接続に問題があります",
+    "offline": "オフラインです",
+    "timeout": "リクエストがタイムアウトしました",
+    "server": "サーバー側で問題が発生しました。もう一度お試しください。問題が続く場合は、サポートにお問い合わせください。"
+  },
+  "learningOnboarding": {
+    "step": "はじめに",
+    "title": "何を学びたいですか？",
+    "description": "学習を始める最初の言語を選んでください。",
+    "searchPlaceholder": "言語を検索…",
+    "noResults": "該当する言語が見つかりません。",
+    "continue": "続ける",
+    "continuing": "処理中…",
+    "error": "問題が発生しました。もう一度お試しください。",
+    "invalidLanguage": "その言語は利用できません。別の言語を選んでください。"
+  },
+  "auth": {
+    "welcomeBack": "おかえりなさい",
+    "signInDescription": "Notoriaアカウントにサインイン",
+    "signInEyebrow": "サインイン",
+    "signUpEyebrow": "新規登録",
+    "createAccountTitle": "アカウントを作成",
+    "registerDescription": "アカウントを作成し、学びたい内容を選びましょう。",
+    "email": "メールアドレス",
+    "password": "パスワード",
+    "name": "名前",
+    "signIn": "サインイン",
+    "signingIn": "サインイン中…",
+    "signOut": "ログアウト",
+    "createAccount": "アカウントを作成",
+    "creatingAccount": "アカウント作成中…",
+    "noAccount": "アカウントをお持ちでないですか？",
+    "hasAccount": "すでにアカウントをお持ちですか？",
+    "invalidCredentials": "メールアドレスまたはパスワードが正しくありません",
+    "emailExists": "このメールアドレスのアカウントはすでに存在します",
+    "emailInvalid": "有効なメールアドレスを入力してください",
+    "registerFailed": "アカウントを作成できませんでした。もう一度お試しください。",
+    "signInAfterRegisterFailed": "アカウントを作成しました。サインインしてください。",
+    "passwordHint": "8文字以上",
+    "passwordTooShort": "パスワードは8文字以上にしてください",
+    "passwordInvalid": "パスワードが要件をすべて満たしていません",
+    "passwordRequirements": {
+      "label": "パスワードの要件",
+      "met": "満たしています",
+      "unmet": "未充足",
+      "minLength": "8文字以上。",
+      "uppercase": "大文字を1文字以上。",
+      "lowercase": "小文字を1文字以上。",
+      "number": "数字を1文字以上。",
+      "special": "記号を1文字以上。"
+    },
+    "showPassword": "パスワードを表示",
+    "hidePassword": "パスワードを非表示",
+    "forgotPassword": "パスワードをお忘れですか？",
+    "forgotPasswordEyebrow": "アカウント復旧",
+    "forgotPasswordTitle": "パスワードをお忘れですか？",
+    "forgotPasswordDescription": "メールアドレスを入力してください。アカウントがある場合、リセット用のリンクをお送りします。",
+    "sendResetLink": "リセットリンクを送信",
+    "sendingResetLink": "送信中…",
+    "forgotPasswordSentTitle": "メールをご確認ください",
+    "forgotPasswordSent": "このメールアドレスのアカウントがある場合、パスワードリセット用のリンクをお送りしました。",
+    "forgotPasswordFailed": "リセットリンクを送信できませんでした。もう一度お試しください。",
+    "backToSignIn": "サインインに戻る",
+    "resetPasswordEyebrow": "アカウント復旧",
+    "resetPasswordTitle": "新しいパスワードを設定",
+    "resetPasswordDescription": "Notoriaアカウント用の新しいパスワードを入力してください。",
+    "resetPassword": "パスワードをリセット",
+    "resettingPassword": "リセット中…",
+    "resetPasswordSuccessTitle": "パスワードを更新しました",
+    "resetPasswordSuccess": "パスワードをリセットしました。サインインできます。",
+    "resetPasswordFailed": "パスワードをリセットできませんでした。もう一度お試しください。",
+    "resetTokenInvalid": "このリセットリンクは無効か、有効期限が切れています。新しいリンクをリクエストしてください。",
+    "resetTokenMissing": "このリセットリンクが不足しているか不完全です。新しいリンクをリクエストしてください。",
+    "account": "アカウント",
+    "accountSettings": "アカウント設定",
+    "accountDescription": "プロフィール写真とパスワードを更新します。",
+    "profile": "プロフィール",
+    "avatar": "プロフィール写真",
+    "avatarDescription": "アカウント用の写真をアップロードします。JPG、PNG、WebP、GIF（最大5 MB）に対応 — アップロード前に圧縮します。",
+    "changeAvatar": "写真をアップロード",
+    "removeAvatar": "写真を削除",
+    "avatarUpdated": "プロフィール写真を更新しました",
+    "avatarRemoved": "プロフィール写真を削除しました",
+    "avatarUploadFailed": "プロフィール写真をアップロードできませんでした",
+    "avatarInvalidType": "JPG、PNG、WebP、またはGIF画像を選んでください",
+    "avatarTooLarge": "画像は5 MB以下にしてください（圧縮後は約900 KB未満）。",
+    "avatarNotConfigured": "画像のアップロードはまだ設定されていません",
+    "changePassword": "パスワードを変更",
+    "currentPassword": "現在のパスワード",
+    "newPassword": "新しいパスワード",
+    "confirmPassword": "新しいパスワード（確認）",
+    "updatePassword": "パスワードを更新",
+    "passwordUpdated": "パスワードを更新しました",
+    "passwordUpdateFailed": "パスワードを更新できませんでした",
+    "invalidCurrentPassword": "現在のパスワードが正しくありません",
+    "passwordMismatch": "パスワードが一致しません",
+    "retypePassword": "パスワードを再入力",
+    "passwordSameAsCurrent": "新しいパスワードは現在のパスワードと異なるものにしてください",
+    "verifyingPassword": "現在のパスワードを確認中…",
+    "saveName": "名前を保存",
+    "nameUpdated": "名前を更新しました",
+    "nameUpdateFailed": "名前を更新できませんでした",
+    "nameTooShort": "名前は2文字以上にしてください",
+    "continueWithGoogle": "Googleで続ける",
+    "continuingWithGoogle": "Googleに接続中…",
+    "orContinueWith": "またはメールで続ける",
+    "oauthCancelled": "Googleサインインがキャンセルされました。もう一度お試しいただけます。",
+    "oauthFailed": "Googleサインインに失敗しました。もう一度お試しください。",
+    "oauthAccountNotLinked": "このメールアドレスは別のサインイン方法ですでに使用されています。",
+    "oauthNotConfigured": "Googleサインインはまだ設定されていません。",
+    "legalPrivacy": "プライバシー",
+    "legalTerms": "利用規約",
+    "registerAgreement": "アカウントを作成すると、<terms>利用規約</terms>および<privacy>プライバシーポリシー</privacy>に同意したものとみなされます。",
+    "avatarRequestTooLarge": "その写真は送信するには大きすぎます。より小さい画像をお試しください。",
+    "requestTooLarge": "リクエストが大きすぎました。変更内容は保持されています — もう一度お試しください。"
+  },
+  "account": {
+    "eyebrow": "アカウント",
+    "title": "あなたの",
+    "highlight": "アカウント",
+    "description": "プロフィール、サブスクリプション、データのエクスポートとインポート、アカウントのセキュリティ（アカウントの完全な閉鎖を含む）を管理します。",
+    "pro": {
+      "freeLede": "無料プランにはコア学習と少量の1日あたりAI枠が含まれます。Proではそれらの制限がなくなります。",
+      "activeLede": "Proが有効です。サブスクリプションが更新されている間、現在のAIツールは無制限のままです。",
+      "premiumLede": "Premiumが有効です。コーチはNotoriaにすでに保存されている学習アクティビティを使用します。",
+      "premiumIncluded": "Premiumに含まれます",
+      "unlockLabel": "Proで解除",
+      "includedLabel": "Proプランに含まれます",
+      "features": {
+        "aiPractice": "自分の教材からの穴埋め、文脈ドリル、文づくり",
+        "writingAi": "書いたテキストへの訂正と提案",
+        "export": "ワークシートをPDFまたはWordで共有・印刷",
+        "listening": "自分の音声や動画を練習レッスンに変換",
+        "speaking": "トランスクリプトとフィードバック付きのライブAIチューター通話"
+      }
+    },
+    "profile": {
+      "title": "プロフィール",
+      "description": "Notoria全体での表示名です。メールアドレスはサインインに紐づいたままです。",
+      "emailHint": "メールアドレスはここでは変更できません。別のアドレスに移す必要がある場合は contact@notoria.fi までご連絡ください。"
+    },
+    "security": {
+      "title": "パスワード",
+      "description": "他で使い回さない強力なパスワードを選んでください。"
+    },
+    "data": {
+      "title": "あなたのデータ",
+      "description": "必要なときに学習データのコピーをダウンロードするか、以前のバックアップから復元します。",
+      "exportTitle": "アカウントバックアップをエクスポート",
+      "exportHint": "ワークスペースと学習コンテンツを含むJSONファイルをダウンロードします。メディアファイルは埋め込まれず、URLでリンクされます。",
+      "exportAction": "バックアップをダウンロード",
+      "exportDone": "バックアップをダウンロードしました",
+      "exportFailed": "バックアップを準備できませんでした。もう一度お試しください。",
+      "importTitle": "アカウントバックアップをインポート",
+      "importHint": "以前のアカウントバックアップからNotoriaの学習データを復元します。アカウント、ログイン、サブスクリプション情報は変更されません。",
+      "importAction": "バックアップをインポート",
+      "clearTitle": "すべてのアカウントデータを削除",
+      "clearHint": "ログインとサブスクリプションは残したまま、すべてのワークスペースと学習コンテンツを削除します。アカウントは閉鎖されません。",
+      "clearAction": "すべてのデータを削除"
+    },
+    "clearData": {
+      "kicker": "アカウントは残す",
+      "title": "すべてのアカウントデータを削除しますか？",
+      "description": "{email} の学習データは完全に削除されますが、アカウントへのサインインとサブスクリプションはそのままです。",
+      "warningTitle": "続行する前に",
+      "warnings": {
+        "workspaces": "すべてのワークスペースと、語彙、理論、ライティング、リーディング、リスニング、スピーキング、演習、受信トレイの項目が削除されます。",
+        "media": "アップロードしたメディア（リスニングファイル、リーディング文書、インポート、プロフィール写真）が削除されます。",
+        "kept": "ログイン、メール、サブスクリプションは有効のままです。その後、新しいワークスペースを作成できます。",
+        "permanent": "確認後の復元期間はありません。"
+      },
+      "backupTitle": "まずバックアップをダウンロード",
+      "backupHint": "保管用に学習データをJSONファイルとしてエクスポートします。メディアファイルは埋め込まれず、URLでリンクされます。",
+      "backup": "バックアップをダウンロード",
+      "backupDone": "バックアップをダウンロードしました",
+      "backupFailed": "バックアップを準備できませんでした。もう一度お試しください。",
+      "confirmLabel": "確認のため {phrase} と入力してください",
+      "confirm": "すべてのデータを削除",
+      "deleted": "すべての学習データを削除しました",
+      "failed": "データを削除できませんでした。もう一度お試しください。"
+    },
+    "backupImport": {
+      "title": "Notoriaの学習データを復元",
+      "description": "NotoriaからエクスポートしたJSONバックアップをインポートします。復元されるのは学習データのみで、アカウントの身元やサブスクリプションは含まれません。",
+      "uploadHint": "「アカウントバックアップをエクスポート」から取得したJSONファイルを選んでください。",
+      "chooseFile": "バックアップファイルを選択",
+      "uploading": "アップロード中… {percent}%",
+      "uploadBytes": "{loaded} / {total}",
+      "analyzing": "バックアップを確認中…",
+      "importing": "学習データをインポート中…",
+      "detectedTitle": "Notoriaアカウントバックアップを検出しました",
+      "strategyTitle": "このバックアップをどのようにインポートしますか？",
+      "strategyAddAsNew": "新規データとして追加 — 既存の学習データを置き換えずに新しいコピーを作成します。同じ言語ですでに存在するワークスペースには、重複作成ではなくバックアップ内容が追加されます。",
+      "readyTitle": "インポートの準備ができました",
+      "nothingToImport": "このバックアップからインポートする新しいものはありません。",
+      "notImportedTitle": "一部のアカウント情報はインポートされません",
+      "notImportedHint": "名前、メール、ログイン情報、サブスクリプションは現在のアカウントで管理されており、バックアップのインポートでは変更できません。学習データは引き続きインポートできます。",
+      "notImportedFields": {
+        "name": "アカウント名",
+        "email": "メールアドレス",
+        "subscription": "サブスクリプション",
+        "auth": "認証情報"
+      },
+      "skippedTitle": "スキップされる可能性があります",
+      "warnings": {
+        "workspace_language_reuse": "同じ言語のワークスペースがすでに存在します。重複作成ではなく、既存のワークスペースにコンテンツが追加されます。",
+        "empty_backup": "このバックアップにはインポート可能な学習データが含まれていません。"
+      },
+      "cancel": "キャンセル",
+      "confirm": "学習データをインポート",
+      "close": "閉じる",
+      "doneTitle": "学習データをインポートしました",
+      "doneDescription": "バックアップの学習データをこのアカウントに追加しました。",
+      "doneToast": "学習データをインポートしました",
+      "importedTitle": "インポート済み",
+      "counts": {
+        "workspaces": "{count, plural, one {# 件のワークスペース} other {# 件のワークスペース}}",
+        "folders": "{count, plural, one {# 件のフォルダ} other {# 件のフォルダ}}",
+        "tags": "{count, plural, one {# 件のタグ} other {# 件のタグ}}",
+        "vocabulary": "{count, plural, one {# 件の語彙} other {# 件の語彙}}",
+        "theory": "{count, plural, one {# 件の理論ページ} other {# 件の理論ページ}}",
+        "writing": "{count, plural, one {# 件のライティング文書} other {# 件のライティング文書}}",
+        "exercises": "{count, plural, one {# 件の演習} other {# 件の演習}}",
+        "listening": "{count, plural, one {# 件のリスニングレッスン} other {# 件のリスニングレッスン}}",
+        "speaking": "{count, plural, one {# 件のスピーキングセッション} other {# 件のスピーキングセッション}}"
+      },
+      "skips": {
+        "workspace_language_exists": "{count, plural, one {# 件のワークスペースはその言語ですでに存在します} other {# 件のワークスペースはその言語ですでに存在します}}",
+        "vocabulary_duplicate": "{count, plural, one {# 件の語彙はすでに存在します} other {# 件の語彙はすでに存在します}}",
+        "listening_missing_media": "{count, plural, one {# 件のリスニングレッスンにメディアURLがありません} other {# 件のリスニングレッスンにメディアURLがありません}}",
+        "listening_duplicate_filename": "{count, plural, one {# 件のリスニングレッスンをスキップ（ファイル名の重複）} other {# 件のリスニングレッスンをスキップ（ファイル名の重複）}}",
+        "invalid_workspace_ref": "{count, plural, one {# 件の項目にワークスペースがありません} other {# 件の項目にワークスペースがありません}}",
+        "invalid_record": "{count, plural, one {# 件の無効なレコード} other {# 件の無効なレコード}}",
+        "unsupported_account_field": "アカウントの身元フィールドはインポートされません"
+      },
+      "errors": {
+        "fileTooLarge": "そのバックアップファイルは大きすぎます。再度エクスポートするか、サポートにお問い合わせください。",
+        "invalidBackup": "有効なNotoriaバックアップではないようです。Notoriaの「アカウントバックアップをエクスポート」からエクスポートしたJSONファイルを使用してください。",
+        "unauthorized": "バックアップをインポートするには、もう一度サインインしてください。",
+        "invalidInput": "JSONバックアップファイルを選んでください。",
+        "importFailed": "このバックアップをインポートできませんでした。もう一度お試しください。",
+        "requestTooLarge": "そのバックアップはこのページで処理するには大きすぎます。より小さいエクスポートを試すか、サポートにお問い合わせください。",
+        "notConfigured": "バックアップインポート用のファイルストレージはまだ設定されていません。"
+      }
+    },
+    "danger": {
+      "title": "アカウントを閉鎖",
+      "description": "Notoriaアカウントとその中のすべてを完全に削除します。",
+      "deleteTitle": "アカウントを削除",
+      "deleteHint": "このアカウントのすべてのワークスペース、学習コンテンツ、課金情報が削除されます。コピーを残したい場合は、先に上記の「アカウントバックアップをエクスポート」をご利用ください。",
+      "deleteAction": "アカウントを削除"
+    },
+    "delete": {
+      "kicker": "元に戻せません",
+      "title": "アカウントを削除しますか？",
+      "description": "{email} を完全に閉鎖しようとしています。この操作は取り消せません。",
+      "warningTitle": "続行する前に",
+      "warnings": {
+        "workspaces": "すべてのワークスペースと、語彙、理論、ライティング、リスニング、スピーキングのデータが削除されます。",
+        "billing": "有効なNotoria Proサブスクリプションはただちにキャンセルされます。",
+        "media": "アップロードしたメディアとプロフィール写真が削除されます。",
+        "permanent": "確認後の復元期間はありません。"
+      },
+      "backupTitle": "まずバックアップをダウンロード",
+      "backupHint": "保管用に学習データをJSONファイルとしてエクスポートします。メディアファイルは埋め込まれず、URLでリンクされます。",
+      "backup": "バックアップをダウンロード",
+      "backupDone": "バックアップをダウンロードしました",
+      "backupFailed": "バックアップを準備できませんでした。もう一度お試しください。",
+      "confirmLabel": "確認のため {phrase} と入力してください",
+      "confirm": "アカウントを完全に削除",
+      "deleted": "アカウントを削除しました",
+      "failed": "アカウントを削除できませんでした。もう一度お試しください。"
+    }
+  },
+  "billing": {
+    "title": "サブスクリプション",
+    "description": "コア学習、1日あたりの AI 利用枠、有料プラン。",
+    "proDescription": "現在 Notoria Pro をご利用中です。",
+    "tagline": "コア学習に加え、1日あたりの AI 利用枠。",
+    "price": "€9.99 / 月",
+    "priceAmount": "€9.99",
+    "pricePeriod": "/月",
+    "introFirstMonthOnly": "初月のみ · その後 {price}/月",
+    "introCheckoutHint": "初月 {intro}、その後 {price}/月。いつでも解約できます。",
+    "freePrice": "€0",
+    "mostPopular": "一番人気",
+    "currentPlan": "現在のプラン",
+    "choosePro": "Pro を選ぶ",
+    "freePlanDescription": "基本機能で学習を始めましょう。",
+    "proPlanDescription": "Notoria の完全なツールキット。",
+    "premiumPlanDescription": "パーソナライズされた AI 学習インテリジェンス。",
+    "distinction": "Pro はツールを提供します。Premium はそれらを賢く使うお手伝いをします。",
+    "modalTitle": "Notoria プランをアップグレード",
+    "modalSubtitle": "Free は基本をカバーします。Pro は完全なツールキットを解放します。Premium はパーソナライズされた学習インテリジェンスを追加します。",
+    "modalTitlePro": "Pro をご利用中です",
+    "modalSubtitlePro": "すでに Notoria の完全なツールキットをお持ちです。Premium はパーソナライズされた学習インテリジェンスを追加します。",
+    "modalTitlePremium": "Premium をご利用中です",
+    "modalSubtitlePremium": "パーソナライズされた学習インテリジェンスが有効です。",
+    "premiumActiveCopy": "コーチは、このワークスペースの実際の学習活動から、次に何をすべきかを提案します。",
+    "premiumActiveFineprint": "請求はいつでも Stripe で管理できます。",
+    "lockedTitle": "これは Pro 機能です",
+    "lockedDescription": "Pro にアップグレードすると、Notoria のコア AI ツールキット、ファイルインポート、フルのリスニング練習、ライティングサポート、PDF/Word エクスポートがご利用いただけます。",
+    "planName": "Notoria",
+    "cancelAnytime": "いつでも解約可能",
+    "upgrade": "Pro にアップグレード",
+    "manage": "サブスクリプションを管理",
+    "proBadge": "Pro",
+    "freeBadge": "Free",
+    "premiumBadge": "Premium",
+    "renewsOn": "{date} に更新",
+    "status": "ステータス: {status}",
+    "monthlyPrice": "{price} / 月",
+    "usageToday": "本日の AI 利用",
+    "quotaCount": "{used} / {limit}",
+    "unlimitedAi": "コア AI ツールキット",
+    "quotaUnlimitedHint": "このプランでは通常利用に制限はありません。",
+    "quotaRemainingHint": "本日残り {remaining} · {reset} にリセット",
+    "quotaExhaustedHint": "枠を使い切りました · {reset} にリセット",
+    "quotaResetUtcMidnight": "UTC 午前0時",
+    "quotaExceeded": "本日のこの AI 機能の利用枠を使い切りました。UTC 午前0時にリセットされます — またはアップグレードで上限を増やせます。",
+    "quotaExceededNoUpgrade": "本日のこの AI 機能の利用枠を使い切りました。{reset} にリセットされます。",
+    "quotaMessages": {
+      "ai_meeting": {
+        "free": "本日の AI スピーキングセッションを使い切りました。アップグレードでセッションを増やすか、枠のリセット後（{reset}）にお戻りください。",
+        "pro": "本日の AI スピーキング上限に達しました。Premium にアップグレードして枠を増やすか、リセット後（{reset}）にお戻りください。",
+        "premium": "本日の AI スピーキング上限に達しました。{reset} にリセットされます。"
+      },
+      "ai_reading": {
+        "free": "本日の AI 読解枠を使い切りました。アップグレードで練習を増やすか、リセット後（{reset}）にお戻りください。",
+        "pro": "本日の AI 読解上限に達しました。Premium にアップグレードして枠を増やすか、リセット後（{reset}）にお戻りください。",
+        "premium": "本日の AI 読解上限に達しました。{reset} にリセットされます。"
+      },
+      "ai_listening_transcript": {
+        "free": "本日の AI リスニングトランスクリプトを使い切りました。アップグレードで増やすか、リセット後（{reset}）にお戻りください。",
+        "pro": "本日のリスニングトランスクリプト上限に達しました。Premium にアップグレードして増やすか、リセット後（{reset}）にお戻りください。",
+        "premium": "本日のリスニングトランスクリプト上限に達しました。{reset} にリセットされます。"
+      },
+      "ai_vocabulary": {
+        "free": "本日の AI 語彙アクションを使い切りました。アップグレードで増やすか、リセット後（{reset}）にお戻りください。",
+        "pro": "本日の AI 語彙上限に達しました。{reset} にリセットされます。",
+        "premium": "本日の AI 語彙上限に達しました。{reset} にリセットされます。"
+      },
+      "ai_writing": {
+        "free": "本日の AI ライティングサポートを使い切りました。アップグレードで増やすか、リセット後（{reset}）にお戻りください。",
+        "pro": "本日の AI ライティング上限に達しました。{reset} にリセットされます。",
+        "premium": "本日の AI ライティング上限に達しました。{reset} にリセットされます。"
+      },
+      "ai_exercise": {
+        "free": "本日の AI 演習生成を使い切りました。アップグレードで増やすか、リセット後（{reset}）にお戻りください。",
+        "pro": "本日の AI 演習上限に達しました。{reset} にリセットされます。",
+        "premium": "本日の AI 演習上限に達しました。{reset} にリセットされます。"
+      },
+      "ai_exercise_import": {
+        "free": "演習インポートは Free には含まれません。ワークシートをインポートするには Pro にアップグレードしてください。",
+        "pro": "本日の演習インポート上限に達しました。Premium にアップグレードして増やすか、リセット後（{reset}）にお戻りください。",
+        "premium": "本日の演習インポート上限に達しました。{reset} にリセットされます。"
+      },
+      "ai_learning_coach_chat": {
+        "free": "学習コーチのチャットは Premium 機能です。",
+        "pro": "学習コーチのチャットは Premium 機能です。",
+        "premium": "本日の学習コーチチャット上限に達しました。{reset} にリセットされます。"
+      },
+      "content_import": {
+        "free": "コンテンツインポートは Free には含まれません。学習教材をインポートするには Pro にアップグレードしてください。",
+        "pro": "本日のコンテンツインポート上限に達しました。{reset} にリセットされます。",
+        "premium": "本日のコンテンツインポート上限に達しました。{reset} にリセットされます。"
+      }
+    },
+    "explorePremium": "Premium を見る",
+    "switchTo": "{plan} に切り替える",
+    "switchToFreeHint": "更新日まではこのプランが続き、その後 Free に移ります。",
+    "switchScheduled": "この請求期間の終了時に Free に移ります。",
+    "downgradeScheduled": "Pro への切り替えを予約済み",
+    "planUpdated": "プランが更新されました。",
+    "continueToStripe": "Stripe へ進む",
+    "upgradeToPremium": "Premium にアップグレード",
+    "switchToPro": "Pro に切り替える",
+    "switchToFree": "Free に切り替える",
+    "cancelPro": "Pro を解約",
+    "cancelPremium": "Premium を解約",
+    "keepPro": "Pro を続ける",
+    "keepPremium": "Premium を続ける",
+    "changePlan": "プランを変更",
+    "manageBilling": "請求を管理",
+    "cancellationScheduled": "解約を予約済み",
+    "accessUntil": "{plan} へのアクセスは {date} まで有効です。",
+    "thenFree": "その後、アカウントは Free に切り替わります。",
+    "endsOn": "{date} に終了",
+    "startsOn": "{date} に開始",
+    "periodEndFallback": "この請求期間の終了時",
+    "confirming": "お支払いを受け付けました。サブスクリプションを確認しています…",
+    "confirmingChange": "サブスクリプションを確認しています…",
+    "stillConfirming": "Stripe がまだこの変更を確認中です。Stripe の確認後にプランが更新されます。",
+    "nowOnPro": "現在 Pro です。",
+    "nowOnPremium": "現在 Premium です。",
+    "keptPlan": "{plan} プランは更新を続けます。",
+    "paymentFailed": "お支払いが完了しませんでした。プランは変更されていません。",
+    "priceMissing": "このプランの価格は、この Stripe アカウントに存在しません。価格 ID がシークレットキーのモードと一致しているか確認してください。",
+    "priceModeMismatch": "この Stripe 価格は、シークレットキーとは別のモードに属しています。",
+    "priceInactive": "この Stripe 価格は有効ではありません。",
+    "priceCurrency": "この Stripe 価格は EUR で請求される必要があります。",
+    "priceInterval": "この Stripe 価格は月額サブスクリプションである必要があります。",
+    "prorationHint": "価格はすぐに変わります。Stripe は日割り差額をすぐに請求またはクレジットします。",
+    "confirmUpgradeTitle": "Premium に切り替えますか？",
+    "confirmUpgradeBody": "Premium は、現在のサブスクリプション上ですぐに Pro を置き換えます。Stripe は日割り差額をすぐ請求します。別のサブスクリプションは開始されません。予約済みの解約は解除されます。",
+    "confirmDowngradeTitle": "Pro に切り替えますか？",
+    "confirmDowngradeBody": "{date} まではすべての Premium 機能を利用できます。その後、サブスクリプションは €9.99/月の Pro として続きます。それまでは現在のプランは Premium のままです。",
+    "downgradeScheduleHint": "Premium は {date} まで有効です。その後 Pro が始まります — すぐには何も変わりません。",
+    "switchingToProOn": "{date} に Pro へ切り替えます。それまで Premium アクセスは有効です。",
+    "confirmCancelTitle": "{plan} を解約しますか？",
+    "confirmCancelBody": "{plan} へのアクセスは {date} まで有効です。その後、アカウントは Free に移ります。以降の請求はありません。",
+    "cancelFeedbackLabel": "解約の理由は何ですか？",
+    "cancelFeedbackOptional": "任意 — スキップしても解約できます。",
+    "cancelCommentLabel": "ほかに伝えたいことはありますか？",
+    "cancelCommentPlaceholder": "任意のコメント",
+    "cancelCommentCount": "{count} / {max}",
+    "cancelReasons": {
+      "too_expensive": "高すぎる",
+      "missing_features": "もっと機能が必要",
+      "switched_service": "別のサービスを見つけた",
+      "unused": "もう必要ない",
+      "too_complex": "使うのが複雑すぎた",
+      "low_quality": "品質が足りなかった",
+      "other": "その他の理由"
+    },
+    "invalidCancellationFeedback": "解約フィードバックが無効です。一覧の理由を選ぶか、コメントを短くしてください。",
+    "confirmKeepTitle": "{plan} を続けますか？",
+    "confirmKeepBody": "予約済みの解約は解除されます。{plan} は更新を続け、次の請求は {date} です。",
+    "back": "戻る",
+    "choosePremium": "Premium を選ぶ",
+    "openCoach": "学習コーチを開く",
+    "alreadySubscribed": "すでにこのプランをご利用中です。",
+    "activating": "サブスクリプションを確認しています…",
+    "checkoutSuccess": "お支払いを受け付けました。まもなくプランが有効になります。",
+    "checkoutCanceled": "チェックアウトはキャンセルされました。請求は発生していません。",
+    "checkoutFailed": "チェックアウトを開始できませんでした。もう一度お試しください。",
+    "portalFailed": "請求管理を開けませんでした。もう一度お試しください。",
+    "alreadyPro": "すでに有効な Pro サブスクリプションがあります。",
+    "notConfigured": "請求はまだ設定されていません。",
+    "noCustomer": "このアカウントにはまだ請求カスタマーが紐づいていません。",
+    "points": {
+      "core": "フラッシュカード、ライティング、理論ノート、CSV エクスポート",
+      "meeting": "スピーキングチューター通話 1 回/日",
+      "transcript": "リスニングトランスクリプト 1 回/日",
+      "exercises": "AI 演習生成 3 回/日",
+      "vocabulary": "語彙 AI アクション 5 回/日",
+      "unlimited": "演習生成・語彙 AI・ライティングサポート無制限",
+      "import": "学習教材のインポート",
+      "practiceFromMaterial": "ワークシートからの AI 練習",
+      "listening": "リスニングトランスクリプト 10 回/日",
+      "speaking": "スピーキングチューター通話 10 回/日",
+      "writing": "AI ライティングサポート",
+      "export": "PDF および DOCX エクスポート",
+      "coach": "活動に基づく AI 学習コーチ",
+      "askCoach": "AI 学習コーチに聞く — 進捗、語彙、文法、理論、翻訳、次に練習すること",
+      "profile": "個人の学習プロフィール",
+      "daily": "今日向けの適応型練習",
+      "weekly": "週間学習レビュー",
+      "mistakes": "フラッシュカードのミスから練習"
+    },
+    "quotaLabels": {
+      "ai_meeting": "AI スピーキングチューター",
+      "ai_listening_transcript": "AI リスニングトランスクリプト",
+      "ai_reading": "AI 読解練習",
+      "ai_exercise": "AI 演習生成",
+      "ai_exercise_import": "ワークシートからの AI 練習",
+      "ai_vocabulary": "AI 語彙アクション",
+      "ai_writing": "AI ライティングサポート",
+      "ai_learning_coach_chat": "AI 学習コーチ",
+      "content_import": "学習教材のインポート"
+    },
+    "cell": {
+      "unlimited": "無制限",
+      "limited": "制限あり",
+      "perDay": "{count}/日",
+      "quotaPerDay": {
+        "ai_meeting": "{count, plural, one {# 通話/日} other {# 通話/日}}",
+        "ai_listening_transcript": "{count, plural, one {# トランスクリプト/日} other {# トランスクリプト/日}}",
+        "ai_reading": "{count, plural, one {# 読解 AI 利用/日} other {# 読解 AI 利用/日}}",
+        "ai_exercise": "{count, plural, one {# 生成/日} other {# 生成/日}}",
+        "ai_exercise_import": "{count, plural, one {# 生成/日} other {# 生成/日}}",
+        "ai_vocabulary": "{count, plural, one {# アクション/日} other {# アクション/日}}",
+        "ai_writing": "{count, plural, one {# アクション/日} other {# アクション/日}}",
+        "content_import": "{count, plural, one {# インポート/日} other {# インポート/日}}",
+        "ask_learning_coach": "{count, plural, one {# メッセージ/日} other {# メッセージ/日}}"
+      },
+      "includedSr": "含まれます",
+      "unavailableSr": "利用できません"
+    },
+    "features": {
+      "vocabulary": "語彙",
+      "exercises": "演習",
+      "theory": "理論",
+      "workspace": "ワークスペース",
+      "aiMeeting": "AI ミーティング",
+      "aiListeningTranscript": "AI リスニングトランスクリプト",
+      "aiReading": "AI 読解練習",
+      "aiExercise": "AI 演習生成",
+      "aiVocabulary": "AI 語彙アクション",
+      "aiSpeakingTutor": "AI スピーキングチューター",
+      "aiWriting": "AI ライティング",
+      "aiWritingSupport": "AI ライティングサポート",
+      "importLearningMaterial": "学習教材のインポート",
+      "exportLearningMaterial": "学習教材のエクスポート",
+      "importExportLearningMaterial": "教材のインポート＆エクスポート",
+      "importAccountBackup": "アカウントバックアップのインポート",
+      "importExportAccountBackup": "アカウントバックアップのインポート＆エクスポート",
+      "aiPracticeFromMaterial": "ワークシートからの AI 練習",
+      "practiceFromMaterial": "ワークシートからの AI 練習",
+      "listening": "リスニング",
+      "speaking": "スピーキング",
+      "reading": "読解",
+      "pdfDocxExport": "学習教材のエクスポート",
+      "learningCoach": "学習コーチ",
+      "askLearningCoach": "AI 学習コーチに聞く",
+      "learningProfile": "個人の学習プロフィール",
+      "adaptiveDailyPractice": "適応型デイリー練習",
+      "practiceFromMistakes": "ミスから練習",
+      "weeklyLearningReview": "週間学習レビュー",
+      "learningTrends": "学習トレンド",
+      "personalLearningPath": "個人の学習パス",
+      "personalizedRecommendations": "パーソナライズされたおすすめ",
+      "crossModuleIntelligence": "モジュール横断のパーソナライズ"
+    },
+    "compare": {
+      "heading": "プランを比較",
+      "premiumDelta": "Premium はパーソナライズされた学習インテリジェンスを追加します",
+      "tableCaption": "Free・Pro・Premium の機能比較",
+      "feature": "機能",
+      "current": "現在",
+      "capability": "得られるもの",
+      "free": "Free",
+      "pro": "Pro",
+      "premium": "Premium",
+      "freeIncludes": "Free に含まれるもの",
+      "proUnlocks": "Pro が追加するもの",
+      "premiumAdds": "Premium が追加するもの",
+      "impact": "なぜ重要か",
+      "yes": "はい",
+      "locked": "ロック中",
+      "categories": {
+        "core": "コア学習",
+        "ai": "AI ツール",
+        "export": "インポート＆エクスポート",
+        "personalized": "パーソナライズ学習"
+      },
+      "rows": {
+        "practice": {
+          "capability": "フラッシュカード、ペアマッチ、クイズ＆タイプ解答",
+          "impact": "自分の単語からのコアドリル"
+        },
+        "vocabAi": {
+          "capability": "単語追加時の AI スペル＆意味",
+          "impact": "無料の AI ヘルプで単語をすばやく追加"
+        },
+        "studio": {
+          "capability": "ライティングエディター＆理論ノート",
+          "impact": "文章の下書きと文法ノートの保存"
+        },
+        "csv": {
+          "capability": "CSV エクスポート",
+          "impact": "単語をスプレッドシートにバックアップ"
+        },
+        "aiPractice": {
+          "capability": "語彙・理論・インポートからの AI 演習",
+          "impact": "穴埋め、文脈ドリル、文づくり"
+        },
+        "writingAi": {
+          "capability": "ライティング AI（チェック＆改善）",
+          "impact": "自分の文章への添削"
+        },
+        "export": {
+          "capability": "PDF & Word エクスポート",
+          "impact": "ワークシートの印刷やファイル共有"
+        },
+        "listening": {
+          "capability": "リスニングレッスン",
+          "impact": "音声や動画を練習に変える"
+        },
+        "speaking": {
+          "capability": "AI とのスピーキング通話",
+          "impact": "ライブチューター通話、その後トランスクリプト"
+        }
+      }
+    },
+    "benefits": {
+      "vocab": {
+        "title": "AI 搭載の語彙アシスタンス",
+        "body": "語彙のアイデア生成、説明、例文、パーソナライズされた学習ヘルプを語彙内で直接利用できます。"
+      },
+      "writing": {
+        "title": "AI ライティングアシスタンス",
+        "body": "AI による添削、提案、説明、フィードバックでライティングを改善できます。"
+      },
+      "exercises": {
+        "title": "AI 搭載の演習",
+        "body": "学習ニーズに基づき、AI でパーソナライズされた演習を作成・練習できます。"
+      },
+      "theoryAi": {
+        "title": "AI 理論演習",
+        "body": "個人の理論ノートを、新しい文脈・ヒント・説明付きのインタラクティブな穴埋め練習に変えます。"
+      },
+      "importAi": {
+        "title": "AI インポート演習",
+        "body": "ワークシート、画像、PDF、URL をインポートして練習カードに変換 — 演習スタジオの語彙・理論 AI と合わせて。"
+      },
+      "listening": {
+        "title": "強化されたリスニング体験",
+        "body": "リスニングコンテンツの練習と作業のための、より強力なツールを利用できます。"
+      },
+      "speaking": {
+        "title": "AI スピーキング通話",
+        "body": "ビデオ通話で AI チューターとライブ会話を練習し、フィードバックとトランスクリプトを受け取れます。"
+      },
+      "files": {
+        "title": "PDF & Word (DOCX) サポート",
+        "body": "語彙・ライティング・理論ノートを PDF または DOCX にエクスポートし、教材を共有しやすく保てます。"
+      },
+      "personal": {
+        "title": "よりパーソナライズされた学習体験",
+        "body": "AI 搭載ツールで、語彙・ライティング・練習セッションをより役立ち、あなた向けにできます。"
+      }
+    }
+  },
+  "coach": {
+    "eyebrow": "Premium",
+    "title": "学習",
+    "highlight": "コーチ",
+    "description": "学習の進み方と、次に集中すべきポイントのパーソナライズされたビューです。",
+    "descriptionIntelligence": "次に何をすべきか、なぜ重要か、学習がどう変化しているか。",
+    "lockedTitle": "この機能は Notoria Premium の一部です。",
+    "lockedBody": "Premium は、語彙・復習・リスニング・スピーキング・ライティング・理論の活動を、集中できる練習プランに変えます。",
+    "distinction": "Pro はツールを提供します。Premium はそれらを賢く使うお手伝いをします。",
+    "upgrade": "Premium にアップグレード",
+    "noteLabel": "コーチメモ",
+    "focusLabel": "学習のフォーカス",
+    "focusCta": "ここから始める",
+    "profile": "学習プロフィール",
+    "profileTitle": "現在の位置",
+    "today": "今日のフォーカス",
+    "todayTitle": "次にやること",
+    "plan": "適応型練習",
+    "planTitle": "今日の {minutes} 分プラン",
+    "planMinutes": "約 {count} 分",
+    "startStep": "開始",
+    "startPlan": "今日の練習を始める",
+    "mistakes": "ミスから練習する",
+    "mistakesTitle": "注意が必要な単語",
+    "practiceMistakes": "これらの単語を練習する",
+    "path": "学習パス",
+    "pathTitle": "あなたの学習パス",
+    "pathCurrent": "現在のフォーカス",
+    "pathNext": "次",
+    "pathThen": "その次",
+    "pathLater": "あとで",
+    "cross": "つながり",
+    "crossTitle": "モジュール横断",
+    "crossHints": {
+      "theory_to_practice": "学んだばかりの内容を練習する",
+      "vocab_to_speaking": "弱い単語をスピーキングで使う"
+    },
+    "week": "あなたの週",
+    "weekTitle": "直近 7 日",
+    "trends": "学習トレンド",
+    "trendsTitle": "先週から",
+    "trendsEmpty": "活動が増えると、ここに学習トレンドが表示されます。",
+    "language": "ワークスペースの言語",
+    "speakingLevel": "スピーキング",
+    "vocabulary": "語彙",
+    "vocabularyEmpty": "まだ語彙がありません",
+    "reviews": "フラッシュカード復習",
+    "misses": "Again / Hard",
+    "listening": "リスニング",
+    "speaking": "スピーキング",
+    "writing": "ライティング",
+    "theory": "理論",
+    "due": "復習予定のカード: {count} 枚",
+    "weak": "Again または Hard とマークされた単語: {words}",
+    "weakShort": "{words}",
+    "noWeak": "Again または Hard の評価はまだありません。",
+    "empty": "学習コーチはあなたを理解し始めています。Notoria 全体で学習を続けると、ここにパターンやおすすめが表示されます。",
+    "hintSpeaking": "直近 7 日にスピーキングセッションがありません",
+    "hintListening": "最近更新されたリスニングレッスンがありません",
+    "hintWriting": "最近更新されたライティング文書がありません",
+    "hintTheory": "最近更新された理論ノートがありません",
+    "refresh": "コーチを更新",
+    "refreshed": "最新の活動からコーチを更新しました。",
+    "refreshFailed": "コーチを更新できませんでした。もう一度お試しください。",
+    "refreshRateLimited": "つい最近更新しました。1 分ほど待ってからもう一度お試しください。",
+    "refreshBusy": "コーチはすでに更新中です。しばらくお待ちください。",
+    "ask": {
+      "label": "コーチに聞く",
+      "title": "学習コーチに聞く",
+      "description": "学習について何でも聞いてください — 進捗、次に練習すること、語彙、文法、理論、翻訳、貼り付けた学習内容など。回答は質問の言語に合わせます。",
+      "emptyReady": "コーチの準備ができました。学習習慣はまだ把握していないので、単語・文法ポイント・最初に練習することなどについて聞いてみてください。",
+      "placeholder": "学習コーチに質問する…",
+      "inputHint": "Enter で送信。Shift+Enter で改行。",
+      "send": "メッセージを送信",
+      "thinking": "コーチが考えています…",
+      "you": "あなた",
+      "coach": "コーチ",
+      "promptsLabel": "おすすめの質問",
+      "retry": "もう一度試す",
+      "upgrade": "Premium にアップグレード",
+      "errorQuota": "本日の学習コーチ上限に達しました。コーチは明日から再びご利用いただけます。",
+      "errorPremium": "学習コーチは Premium 機能です。学習活動に基づくパーソナライズされたおすすめを受け取れます。",
+      "errorUnavailable": "コーチは今応答できませんでした。メッセージはカウントされていません。もう一度お試しください。",
+      "prompts": {
+        "practice_today": "今日は何に集中すべきですか？",
+        "struggling_words": "なぜこれらの単語で苦戦しているのですか？",
+        "practice_weak": "弱い単語の練習を手伝ってください。",
+        "review_first": "最初に何を復習すべきですか？",
+        "neglecting": "何を後回しにしていますか？",
+        "improve_speaking": "なぜスピーキングが上達していないのですか？",
+        "study_20": "今日の 20 分はどう使えばよいですか？",
+        "getting_started": "最初に何を練習すべきですか？",
+        "am_i_improving": "実際に上達していますか？",
+        "what_changed": "今週の学習で何が変わりましたか？"
+      }
+    },
+    "next": {
+      "label": "決める",
+      "title": "次の一手",
+      "planTitle": "今日のおすすめ練習",
+      "whyOrder": "この順番の理由は？復習期限と難しい語彙を先に、そのあと後回しにしているモジュールです。",
+      "cta": "今日の練習を始める"
+    },
+    "why": {
+      "title": "なぜこれ？",
+      "due": "復習期限の語彙カードが {count} 枚あります",
+      "weak": "繰り返し難しい単語が {count} 語あります",
+      "reviews": "直近 7 日のフラッシュカード復習: {count} 回",
+      "speakingIdle": "直近 7 日にスピーキングセッションがありません",
+      "listeningIdle": "直近 7 日にリスニング活動がありません",
+      "writingIdle": "直近 7 日にライティングの更新がありません",
+      "theoryIdle": "直近 7 日に理論ノートの更新がありません",
+      "focus": "現在のフォーカス: {focus}"
+    },
+    "chips": {
+      "due": "期限のカード {count} 枚",
+      "weak": "難しい単語 {count} 語",
+      "speakingIdle": "7 日間スピーキングなし",
+      "mastered": "いま習得済み {count}",
+      "dueLabel": "期限のカード",
+      "weakLabel": "難しい単語"
+    },
+    "quick": {
+      "label": "コンテキスト",
+      "title": "クイックコンテキスト"
+    },
+    "progress": {
+      "label": "測る",
+      "title": "あなたの進捗",
+      "description": "学習で何が変わったか — コーチが気づいたことをご覧ください。",
+      "empty": "まだ始めたばかりです。学習を続けると、コーチが意味のある進捗を表示し始めます。",
+      "chartEmpty": "このチャートに十分なイベント履歴がまだありません。復習やスピーキングを続けるとトレンドが現れます。",
+      "chartSr": "直近 {days} 日間の {metric}。最新バケットで {from} から {to}。",
+      "activityTitle": "学習アクティビティ — 直近 {days} 日",
+      "activityNote": "アクティビティは時間の使い方を示します — その時間がスキル向上につながったかは示しません。",
+      "compareLabel": "期間比較",
+      "noticesTitle": "コーチが気づいたこと",
+      "askAbout": "これについてコーチに聞く",
+      "periodLabel": "進捗の期間",
+      "metricLabel": "チャートの指標",
+      "period": {
+        "7": "7 日",
+        "30": "30 日",
+        "90": "90 日"
+      },
+      "metrics": {
+        "flashcardReviews": "復習",
+        "againOrHard": "難しい評価",
+        "speakingSessions": "スピーキングセッション"
+      },
+      "tooltip": {
+        "weekOf": "{date} の週",
+        "firstAt": "最初の活動 {time}",
+        "reviews": "{count, plural, one {フラッシュカード復習 # 回} other {フラッシュカード復習 # 回}}",
+        "againOrHard": "{count, plural, one {Again/Hard 評価 # 回} other {Again/Hard 評価 # 回}}",
+        "speaking": "{count, plural, one {スピーキングセッション # 回} other {スピーキングセッション # 回}}",
+        "none": "この期間に活動はありません",
+        "words": "単語: {list}",
+        "topics": "トピック: {list}"
+      },
+      "streak": {
+        "label": "連続記録",
+        "days": "{count, plural, one {日連続} other {日連続}}",
+        "practicedToday": "今日練習しました — 連続記録は安全です。",
+        "keepGoing": "連続記録を続けるには、今日練習してください。",
+        "start": "今日何か学んで連続記録を始めましょう。",
+        "weekLabel": "直近 7 日",
+        "best": "最長連続: {count, plural, one {# 日} other {# 日}}",
+        "dayEmpty": "この日に学習活動はありません",
+        "dayActive": "学習活動が記録されました",
+        "dayReviews": "{count, plural, one {フラッシュカード復習 # 回} other {フラッシュカード復習 # 回}}",
+        "daySpeaking": "{count, plural, one {スピーキングセッション # 回} other {スピーキングセッション # 回}}",
+        "dayListening": "{count, plural, one {リスニング更新 # 回} other {リスニング更新 # 回}}",
+        "dayWriting": "{count, plural, one {ライティング更新 # 回} other {ライティング更新 # 回}}",
+        "dayTheory": "{count, plural, one {理論更新 # 回} other {理論更新 # 回}}"
+      }
+    },
+    "notices": {
+      "reviews_up": "フラッシュカード復習の活動は、前の期間より増えています。",
+      "reviews_down": "フラッシュカード復習の活動は、前の期間より減っています。",
+      "misses_down": "Again/Hard 評価は、前の期間より減りました。",
+      "misses_up": "Again/Hard 評価は、前の期間より増えました。",
+      "speaking_quiet": "スピーキングセッションは、語彙の活動に対してまだ少なめです。",
+      "speaking_up": "スピーキングセッションは、前の期間より増えました。",
+      "due_open": "まだ復習期限のカードがあります。",
+      "weak_open": "繰り返し難しい単語が残っています。",
+      "getting_started": "しっかりした進捗の読み取りには、まだ履歴が足りません。"
+    },
+    "attention": {
+      "label": "行動する",
+      "title": "注意が必要なこと",
+      "dueTitle": "期限のカード {count} 枚",
+      "dueBody": "期限切れのカードが積み上がらないよう、期限の語彙を復習しましょう。",
+      "weakTitle": "繰り返し難しい単語 {count} 語",
+      "weakBody": "これらの単語を練習しましょう: {words}",
+      "review": "復習",
+      "practice": "練習"
+    },
+    "rating": {
+      "AGAIN": "Again",
+      "HARD": "Hard"
+    },
+    "status": {
+      "MASTERED": "習得済み",
+      "REVIEW": "復習",
+      "LEARNING": "学習中",
+      "NEW": "新規"
+    },
+    "focus": {
+      "review-due": "期限の語彙を復習する",
+      "weak-words": "難しい単語を練習する",
+      "listening": "リスニングレッスンを追加または見直す",
+      "speaking": "スピーキング練習を始める",
+      "writing": "ライティングスタジオを開く",
+      "theory": "理論ノートを開く",
+      "keep-going": "すでに持っているリズムを続ける"
+    }
+  },
+  "gettingStarted": {
+    "backToWorkspace": "ワークスペースに戻る",
+    "meta": {
+      "eyebrow": "ガイド",
+      "title": "Notoria へようこそ",
+      "description": "個人の言語学習日記を作り、知識を練習に変えるために知っておきたいことのすべてです。"
+    },
+    "toc": {
+      "title": "このページの内容",
+      "welcome": "Notoria とは？",
+      "howItWorks": "仕組み",
+      "vocabulary": "語彙",
+      "theory": "理論",
+      "exercise": "演習",
+      "writing": "ライティング",
+      "listening": "リスニング",
+      "speaking": "スピーキング",
+      "reading": "読解",
+      "connections": "知識が練習になる",
+      "philosophy": "あなたの学習日記",
+      "startHere": "ここから始める",
+      "inbox": "キャプチャ"
+    },
+    "welcome": {
+      "title": "Notoria とは？",
+      "lead": "Notoria は、あなた専用の学習日記です。",
+      "paragraphs": [
+        "言語の旅のためのノートだと思ってください — ただし書き留めたものはすべて、練習の一部になれます。",
+        "従わなければならない決められたカリキュラムはありません。「正しい」使い方もありません。肩越しに見ている先生もいません。ノートを採点する人もいません。"
+      ],
+      "examplesIntro": "Notoria に何を入れるかはあなたが決めます。たとえば次のようなことができます:",
+      "examples": [
+        "今日聞いた単語を書き留める",
+        "やっと理解できた文法ルールを保存する",
+        "自分にとって意味のある例文を追加する",
+        "勉強したい動画をアップロードする",
+        "練習して言いたいことについて書く"
+      ],
+      "overTime": "時間が経つにつれ、これらの小さな断片が、あなた専用の言語知識ベースになります。",
+      "noWrongWay": {
+        "title": "日記の作り方に正しいも間違いもありません。",
+        "paragraphs": [
+          "学習日記はあなたのものです。すべてを完璧に整理する必要はありません。すべての機能を使う必要もありません。特定の学習法に従う必要もありません。",
+          "学習がより簡単で意味のあるものになるやり方で Notoria を使ってください。目標は完璧なデータベースを作ることではなく、本当に自分のものになる学習スペースを作ることです。"
+        ]
+      }
+    },
+    "howItWorks": {
+      "title": "Notoria の仕組み",
+      "intro": "Notoria は学習の各領域をひとつの旅につなげます:",
+      "flow": {
+        "collect": "集める",
+        "understand": "理解する",
+        "practice": "練習する",
+        "create": "作る",
+        "listen": "聞く",
+        "speak": "話す",
+        "review": "復習する"
+      },
+      "anywhereNote": "どこから始めてもかまいませんが、多くの人は次のような道をたどります:",
+      "steps": {
+        "collect": {
+          "title": "1. 知識を集める",
+          "body": "すばやいメモにはキャプチャを使い、レッスン・会話・本・メディアなど、言語に出会うところから語彙と理論を追加します。"
+        },
+        "understand": {
+          "title": "2. 理解する",
+          "body": "自分にとって意味のある形で、説明・例・文法ノート・発音ノートを残します。"
+        },
+        "practice": {
+          "title": "3. 練習する",
+          "body": "集めたものを、自分の単語と知識から作った演習に変えます。"
+        },
+        "use": {
+          "title": "4. 使う",
+          "body": "積み上げてきた言語で、ライティング・リスニング・スピーキングを練習します。"
+        },
+        "review": {
+          "title": "5. 振り返る",
+          "body": "苦戦したことを見直し、学んだことを追加し、日記を育て続けます。"
+        }
+      },
+      "connectedNote": "これらの領域は別々のアプリではなく、連動して動きます。語彙と理論に追加したものが、演習・ライティング・リスニング・スピーキングを支えます。"
+    },
+    "sections": {
+      "vocabulary": {
+        "title": "語彙",
+        "intro": "語彙は、あなた専用の単語ライブラリ — Notoria のほかのすべてを支える土台です。",
+        "bullets": [
+          "実際に出会った単語やフレーズを追加する",
+          "意味・翻訳・例文を含める",
+          "役立つときは発音メモを追加する",
+          "トピック・レベル・場面など、あとで見つけやすいタグで整理する",
+          "演習や復習セッションで語彙を再利用する"
+        ],
+        "body": "一般的な単語リストの暗記ではなく、実際の学習の旅を反映したライブラリを作ります。",
+        "exampleIntro": "たとえば、今日フィンランド語の「varata」を聞いたとします:",
+        "examples": [
+          "単語: varata",
+          "意味: 予約する",
+          "例文: Haluan varata ajan.",
+          "タグ: 日常生活"
+        ],
+        "exampleNote": "その単語は、あなた専用の Notoria 知識の一部になり、復習と練習の準備ができています。",
+        "emphasis": "見た単語をすべて追加しないでください。あなたにとって意味のある単語を追加してください。"
+      },
+      "theory": {
+        "title": "理論",
+        "intro": "理論は、覚えておきたい知識を保存する、あなた専用の言語リファレンスです。",
+        "bullets": [
+          "文法ルールとパターン",
+          "発音メモ",
+          "使い方の説明",
+          "例と個人的なノート",
+          "何度も忘れてしまうこと"
+        ],
+        "body": "説明は自分の言葉で書いてください。文法ノートは教科書のように聞こえる必要はありません。シンプルな説明があなたにとって意味があるなら、日記にはそれで十分です。",
+        "emphasis": "理論は、忘れたときに戻るリファレンスノートのようなものです。"
+      },
+      "exercise": {
+        "title": "演習",
+        "intro": "演習では、集めた知識を能動的に練習できます。",
+        "bullets": [
+          "フラッシュカード",
+          "クイズと多肢選択",
+          "穴埋め演習",
+          "保存した単語からの語彙練習",
+          "理論ノートからの文法練習",
+          "自分の教材に基づくその他の形式"
+        ],
+        "emphasis": "価値は、あなたの知識を練習することにあります — 一般コースのランダムな語彙ではなく、あなた自身が重要だと決めた単語と概念です。"
+      },
+      "writing": {
+        "title": "ライティング",
+        "intro": "ライティングは、受け身の知識が能動的な言語使用になる場所です。",
+        "bullets": [
+          "関心のあるトピックで文章を下書きする",
+          "自分用の問題セットを作る",
+          "学んだ語彙を使って練習する",
+          "新しい文法を試す",
+          "時間をかけて文章を見直し、改善する",
+          "Pro では: AI でチェックと改善ができる",
+          "必要なときに文章をエクスポートする"
+        ],
+        "emphasis": "文章は完璧である必要はありません。ポイントは言語を使い、間違い、まだ知らないことに気づき、時間をかけて上達することです。"
+      },
+      "listening": {
+        "title": "リスニング",
+        "intro": "リスニングでは、決められたレッスンだけでなく、あなたが選んだ実際のコンテンツを学べます。",
+        "bullets": [
+          "音声または動画をアップロードする",
+          "トランスクリプトを生成する",
+          "トランスクリプトを一行ずつ学ぶ",
+          "教材をレッスンに変える",
+          "実際のコンテンツから語彙や表現を見つける"
+        ],
+        "body": "本当に理解したいものを Notoria に持ち込んでください:",
+        "examples": [
+          "YouTube の動画",
+          "会話の録音",
+          "ポッドキャストのエピソード",
+          "講義",
+          "その他の学習教材"
+        ],
+        "emphasis": "コンテンツはあなたがコントロールします。Notoria は理解と学習を助けます。"
+      },
+      "speaking": {
+        "title": "スピーキング",
+        "intro": "スピーキングは、学習の旅のなかの能動的な会話の部分です。",
+        "bullets": [
+          "動画で AI チューターと話す",
+          "自然に話す練習をする",
+          "集めた語彙と知識を使う",
+          "あとで会話のトランスクリプトを見直す",
+          "フィードバックを読み、改善点を見つける"
+        ],
+        "emphasis": "スピーキングは完璧である必要はありません。目的は、現実的な状況で言語を使い、起きたことから学ぶことです。"
+      },
+      "reading": {
+        "title": "読解",
+        "intro": "読解は、あなたが選んだテキストを理解練習に変えます。",
+        "bullets": [
+          "テキストを貼り付けるか、PDF/DOCX のパッセージをアップロードする",
+          "多肢選択・記述・正誤／未記載の問題を生成する",
+          "記述回答は AI 採点で練習・見直しする",
+          "パッセージから役立つ単語を語彙に保存する",
+          "フォルダでパッセージを整理する"
+        ],
+        "emphasis": "本当に理解したい教材 — ニュース、物語、ワークシート — を持ち込み、日記に属する練習に変えましょう。"
+      },
+      "inbox": {
+        "title": "キャプチャ",
+        "intro": "キャプチャはすばやいドロップゾーンです — 出会った瞬間に保存し、あとでどこに置くか決めます。",
+        "bullets": [
+          "単語・フレーズ・文法の疑問・ライティングのアイデアを数秒で保存する",
+          "任意でメモや出典を追加して文脈を残す",
+          "準備ができるまで「処理待ち」に置いておく",
+          "時間があるときにキャプチャを語彙・理論・ライティング・演習に変える",
+          "項目は、リンク先のエントリを作り終えたときだけ「処理済み」になります"
+        ],
+        "body": "キャプチャはループの始まりにあります: まず集め、次に整理する。その瞬間に完璧なカテゴリは不要です — 必要なのは思考を保存することです。",
+        "emphasis": "10 秒しかないなら、キャプチャで十分です。整理は後回しで構いません。",
+        "exampleIntro": "たとえば、バスでフレーズを耳にし、ほんの一瞬しかないとします:",
+        "examples": [
+          "内容: varata aika",
+          "メモ: バスで聞いた — 予約の話",
+          "出典: 日常生活",
+          "あとで: 意味と例文付きで語彙に処理する"
+        ],
+        "exampleNote": "スクラップはキャプチャに安全に残ります。静かな 5 分ができたら、語彙（または理論／ライティング）に送り、エントリを仕上げます — そのとき初めて処理済みになります。"
+      }
+    },
+    "connections": {
+      "title": "知識があなたの練習になる",
+      "intro": "学習にとって大事なものを追加し続けるほど、Notoria は役に立ちます:",
+      "flow": {
+        "vocabTheory": "語彙 + 理論",
+        "exercise": "演習",
+        "writingListening": "ライティング + リスニング",
+        "speaking": "スピーキング",
+        "review": "復習",
+        "addMore": "知識をさらに追加"
+      },
+      "paragraphs": [
+        "キャプチャは、置く準備ができるまでスクラップを保持します。",
+        "語彙と理論に集めたものが、演習のソースになります。",
+        "ライティングとリスニングは、新しい文脈で言語を使い、理解する助けになります。",
+        "スピーキングは、すべてを能動的な会話にします。",
+        "復習がループを閉じます — そして各復習は、しばしば新しい単語やノートの追加につながります。"
+      ],
+      "highlight": "あなたにとって大事な知識を増やすほど、練習はより役立ち、より個人的になります。"
+    },
+    "philosophy": {
+      "title": "これはあなたの日記です。",
+      "lead": "Notoria は学習プロセスのためのツールであり — どれだけうまく学べているかのテストではありません。",
+      "dontNeed": [
+        "ノートを完璧にする必要はありません",
+        "タグが「正しい」かどうか心配する必要はありません",
+        "教科書品質の説明を書く必要はありません",
+        "すべての演習を終える必要はありません",
+        "すべての機能を使う必要はありません"
+      ],
+      "canDo": [
+        "考えを変えて構いません。",
+        "再整理して構いません。",
+        "間違えて構いません。",
+        "自分のペースで学べます。"
+      ],
+      "quote": "日記を採点する人はいません。自分のために作っているのです。"
+    },
+    "startHere": {
+      "title": "初めての始め方",
+      "intro": "始める前にすべてを整える必要はありません。覚えたいものから始めましょう。",
+      "firstTen": {
+        "title": "最初の 10 分",
+        "steps": {
+          "language": "学びたい言語を選びます。",
+          "words": "本当に覚えたい単語を 5〜10 語追加します。",
+          "theory": "理論または文法ノートを 1〜2 つ追加します。",
+          "exercise": "知識から演習を作ります。",
+          "writing": "数文書いてみます。",
+          "listeningSpeaking": "準備ができたら、リスニングやスピーキングを試します。",
+          "return": "翌日また来て、新しいものを追加します。",
+          "capture": "キャプチャを開き、あとで戻りたい短いメモやフレーズを 1 つ保存します。"
+        }
+      },
+      "closing": "覚えたいものから始めましょう。日記はそこから自然に育ちます。"
+    }
+  },
+  "legal": {
+    "eyebrow": "法的情報",
+    "navLabel": "法的ページ",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "privacyTitle": "プライバシーポリシー",
+    "termsTitle": "利用規約",
+    "privacyDescription": "Notoria がプライベートな言語学習ワークスペースのために、個人データと学習コンテンツをどのように収集・利用・削除するか。",
+    "termsDescription": "Notoria のプライベートな言語学習ワークスペース、アカウント、AI 機能、Notoria Pro の請求に関する利用条件。",
+    "updated": "最終更新 {date}",
+    "updatedDate": "2026年9月23日",
+    "backToSignIn": "サインインに戻る",
+    "backHome": "Notoria に戻る",
+    "authFooter": "プライバシー · 利用規約",
+    "privacyShort": "プライバシー",
+    "termsShort": "利用規約",
+    "registerAgreement": "アカウントを作成すると、<terms>利用規約</terms> および <privacy>プライバシーポリシー</privacy> に同意したものとみなされます。",
+    "settingsLinksTitle": "ポリシー",
+    "settingsLinksDescription": "Notoria がデータをどう扱うか、およびサービスの利用ルールをご確認ください。",
+    "contactEmail": "contact@notoria.fi",
+    "privacyPolicy": {
+      "intro": "本プライバシーポリシーは、Notoria（<site>www.notoria.fi</site>）がプライベートな言語学習ウェブアプリのために個人データをどのように扱うかを説明します。現在の製品の動きに合わせて書かれています。ここに記載のない慣行は、行っていると主張しません。",
+      "tocTitle": "このページの内容",
+      "tocAria": "このページの内容",
+      "toc": {
+        "controller": "責任者",
+        "scope": "本ポリシーの対象",
+        "data": "処理するデータ",
+        "purposes": "データを処理する理由",
+        "auth": "アカウントとサインイン",
+        "ai": "AI 機能",
+        "payments": "お支払い（Notoria Pro）",
+        "processors": "サービス提供者",
+        "cookies": "Cookie と端末ストレージ",
+        "transfers": "国際転送",
+        "retention": "データの保存期間",
+        "deletion": "エクスポートとアカウント削除",
+        "rights": "あなたの権利（GDPR）",
+        "children": "子ども",
+        "changes": "変更",
+        "contact": "お問い合わせ"
+      },
+      "sections": {
+        "controller": {
+          "title": "1. 責任者",
+          "p1": "Notoria は <site>www.notoria.fi</site> の言語学習サービスであり、フィンランドおよびより広い EU/EEA のユーザー向けに提供されています。",
+          "p2": "プライバシーに関するご質問、データ主体の請求、その他のユーザー連絡は <contact>contact@notoria.fi</contact> までメールしてください。",
+          "p3": "データ管理者としての登録会社名および郵便住所は、現行製品では公開されていません。GDPR 請求のために正式な管理者の特定が必要な場合は、<contact>contact@notoria.fi</contact> にメールしていただければご提供します。"
+        },
+        "scope": {
+          "title": "2. 本ポリシーの対象",
+          "p1": "次のときに処理される個人データおよび学習コンテンツを対象とします:",
+          "list": [
+            "アカウントの作成または利用",
+            "プライベートワークスペースへの教材の保存",
+            "Notoria Pro への登録",
+            "任意の AI 支援ツールの利用",
+            "リスニングまたはプロフィール用のメディアのアップロード",
+            "スピーキング練習の利用",
+            "フィードバックの送信またはお問い合わせ"
+          ],
+          "p2": "現行のアプリケーションコードには、サードパーティのマーケティング分析または広告 SDK は含まれていません。製品に存在しないトラッカーを使っているとは主張しません。"
+        },
+        "data": {
+          "title": "3. 処理するデータ",
+          "p1": "Notoria は、理由ごとに異なる種類のデータを処理します。主なカテゴリは次のとおりです:",
+          "accountAuth": {
+            "title": "アカウントと認証",
+            "list": [
+              "氏名とメールアドレス",
+              "メール／パスワードアカウント用のパスワードハッシュ（パスワードは平文では保存されません）",
+              "Google でサインインする場合の Google アカウント識別子と OAuth トークン",
+              "任意のプロフィール写真（アバター）",
+              "アカウントの役割と作成／更新タイムスタンプ"
+            ]
+          },
+          "learningContent": {
+            "title": "あなたが作成する学習コンテンツ",
+            "p1": "プライベートワークスペースに追加するコンテンツ。例: 語彙、理論ノート、ライティング文書、演習およびインポートした練習教材、リスニングレッスン（メディア参照とトランスクリプトを含む）、スピーキングセッションのトランスクリプトおよび関連セッション項目、フォルダ、タグ、フラッシュカード復習などの学習進捗。",
+            "p2": "これはあなたの学習教材です。Notoria は、戻って練習できるように保存します。"
+          },
+          "subscription": {
+            "title": "サブスクリプションと支払いメタデータ",
+            "list": [
+              "プラン（Free または Pro）とサブスクリプションステータス",
+              "Stripe の顧客およびサブスクリプション識別子、および該当する場合の現在の期間終了日"
+            ],
+            "p1": "カード番号と支払い方法の秘密情報は Stripe に留まります。Notoria は Pro ステータスを反映するために必要な請求メタデータのみを保持します。"
+          },
+          "device": {
+            "title": "端末と設定データ",
+            "p1": "サインイン、ロケール、アクティブなワークスペース、AI アシスタンス設定、テーマ、同様の製品設定に使う Cookie とブラウザストレージ。<cookies>Cookie と端末ストレージ</cookies> をご覧ください。"
+          },
+          "support": {
+            "title": "サポートとフィードバック",
+            "list0": "<contact>contact@notoria.fi</contact> に送るメール",
+            "list1": "サポートからのアプリ内フィードバック（メッセージ、フィードバック種類、メール、サインインの有無、任意のアカウント ID、ページパス、ユーザーエージェント、最大 3 枚の任意の画像添付）",
+            "p1": "フィードバックは Notoria の技術用受信箱（<technical></technical>）にメールで届けられます。Notoria 内に別のチケットデータベースとしては保存されません。"
+          }
+        },
+        "purposes": {
+          "title": "4. データを処理する理由",
+          "headers": {
+            "purpose": "目的",
+            "basis": "典型的な GDPR 根拠"
+          },
+          "rows": [
+            {
+              "purpose": "アカウント、ワークスペース、保存した学習教材の提供",
+              "basis": "契約（第 6 条(1)(b)）"
+            },
+            {
+              "purpose": "認証（メール／パスワードまたは Google）とパスワードリセット",
+              "basis": "契約（第 6 条(1)(b)）"
+            },
+            {
+              "purpose": "Stripe 経由の Notoria Pro 請求とサブスクリプションステータスの運用",
+              "basis": "契約（第 6 条(1)(b)）"
+            },
+            {
+              "purpose": "任意の AI ヘルプ、リスニング文字起こし、スピーキング練習（該当機能を使う場合）",
+              "basis": "契約（第 6 条(1)(b)）；利用可能な場合は設定による制御"
+            },
+            {
+              "purpose": "サービスの安全と信頼性の維持（不正防止、デバッグ）",
+              "basis": "正当な利益（第 6 条(1)(f)）"
+            },
+            {
+              "purpose": "サポートおよびフィードバックへの対応",
+              "basis": "正当な利益／契約（請求内容による）"
+            },
+            {
+              "purpose": "法的義務の遵守",
+              "basis": "法的義務（第 6 条(1)(c)）"
+            }
+          ],
+          "p1": "特定の活動についての正式な法的根拠の説明が必要な場合は、<contact>contact@notoria.fi</contact> までメールしてください。"
+        },
+        "auth": {
+          "title": "5. アカウントとサインイン",
+          "p1": "Notoria は Auth.js（NextAuth）を JWT セッションで使用します。メールとパスワード、または Google サインインが設定されている場合は Google OAuth でサインインできます。",
+          "p2": "パスワードリセットメールは、パスワードを持つアカウントにのみ送信されます。リセットトークンはハッシュして保存され、30 分で期限切れとなり、新しいパスワードを設定するためだけに使用されます。"
+        },
+        "ai": {
+          "title": "6. AI 機能",
+          "p1": "現行製品の任意の AI 機能は <strong>OpenAI</strong> を使用します。使うツールに応じて、Notoria は関連する学習コンテンツ — たとえば語彙項目、ライティング本文または選択範囲、演習または理論の文脈、リスニングトランスクリプト、スピーキングトランスクリプト、スピーキングチューター用のライブ音声 — を送信する場合があります。",
+          "p2": "AI アシスタンスの設定（アシスタンスが有効かどうか含む）は、製品が設定を尊重できるようブラウザ Cookie に保存されます。モデルを呼び出す多くのサーバーアクションは、まずアシスタンスが有効か確認します。<settings>設定</settings> でアシスタンスをオフにすると、それを必要とする AI ツールはブロックされます。",
+          "p3": "AssemblyAI 経由のリスニング文字起こしは、トランスクリプトが必要なリスニング機能を使う場合は、任意の「AI アシスタンス」設定だけに依存せず、そのメディアワークフローの一部として実行できます。",
+          "p4": "現行コードベースは、OpenAI 以外の大規模言語モデル提供者を使用していません。OpenAI は、これらの機能の処理者として、独自の利用規約およびプライバシーポリシーの下でデータを処理します。"
+        },
+        "payments": {
+          "title": "7. お支払い（Notoria Pro）",
+          "p1": "有料サブスクリプションは <strong>Stripe</strong> が扱います。チェックアウト、請求書、支払い方法、解約は Stripe Checkout と Stripe Customer Portal を通じて行われます。Stripe のウェブフックが Notoria 内のプランとステータスを更新します。",
+          "p2": "Stripe は支払い提供者として支払いデータを処理します。カードの取り扱いについては Stripe 自身のプライバシー文書をご覧ください。"
+        },
+        "processors": {
+          "title": "8. サービス提供者",
+          "p1": "使う機能に応じて、個人データまたは学習コンテンツは次の提供者で処理される場合があります:",
+          "headers": {
+            "provider": "提供者",
+            "role": "Notoria での役割"
+          },
+          "rows": [
+            {
+              "provider": "PostgreSQL データベース（本番は Neon として文書化）",
+              "role": "アカウントと学習データ"
+            },
+            {
+              "provider": "Vercel",
+              "role": "アプリケーションホスティング（設定リージョンには Frankfurt / fra1 を含む）"
+            },
+            {
+              "provider": "Cloudinary",
+              "role": "アバター、リスニングメディア、エディター画像、演習インポートファイル"
+            },
+            {
+              "provider": "AssemblyAI",
+              "role": "リスニング音声の文字起こし"
+            },
+            {
+              "provider": "Stream Video",
+              "role": "ライブスピーキング通話の音声／動画転送；後に録音イベントを受け取った場合のみ録音 URL などのセッション項目。新規通話では Stream の文字起こしは使用しません。"
+            },
+            {
+              "provider": "OpenAI",
+              "role": "任意の AI アシスタンス、スピーキングチューターのリアルタイム音声、スピーキング通話の文字起こし（gpt-4o-transcribe）"
+            },
+            {
+              "provider": "Resend",
+              "role": "パスワードリセットメールとサポートフィードバックの配信"
+            },
+            {
+              "provider": "Stripe",
+              "role": "Notoria Pro のチェックアウト、ポータル、サブスクリプションステータス"
+            },
+            {
+              "provider": "Google",
+              "role": "Google を選んだ場合の OAuth サインイン；UI 用のウェブフォント"
+            },
+            {
+              "provider": "Dicebear",
+              "role": "スピーキングセッションで使う生成アバター画像（名前シードから；アカウントパスワードは送信されません）"
+            }
+          ],
+          "p2": "スピーキング通話のトランスクリプトは、セッション中に OpenAI Realtime（gpt-4o-transcribe）で取得され、サーバー側に保存されます。新規通話では Stream の文字起こしとキャプションは無効です。通話作成時に録音は無効です。録音 URL は、製品が後から Stream から録音準備完了イベントを受け取った場合にのみ保存されます。"
+        },
+        "cookies": {
+          "title": "9. Cookie と端末ストレージ",
+          "p1": "Notoria は、必要な製品機能のために Cookie および類似ストレージを使用します。現行実装には、別途 Cookie ポリシーを要する広告・分析 Cookie プログラムが含まれないため、別の Cookie ポリシーはありません。",
+          "cookiesTitle": "アプリが使用する Cookie",
+          "headers": {
+            "cookie": "Cookie",
+            "purpose": "目的"
+          },
+          "rows": [
+            {
+              "cookie": "Auth.js セッション Cookie",
+              "purpose": "サインイン状態の維持（JWT セッション；ライブラリ既定の命名）",
+              "code": false
+            },
+            {
+              "cookie": "notoria-locale",
+              "purpose": "UI 言語",
+              "code": true
+            },
+            {
+              "cookie": "notoria-workspace",
+              "purpose": "アクティブなワークスペース",
+              "code": true
+            },
+            {
+              "cookie": "notoria-ai-preferences",
+              "purpose": "AI アシスタンス設定",
+              "code": true
+            },
+            {
+              "cookie": "sidebar_state",
+              "purpose": "サイドバー開閉の設定",
+              "code": true
+            }
+          ],
+          "storageTitle": "ローカルストレージとセッションストレージ",
+          "p2": "ブラウザは、テーマ設定（next-themes 経由）、オンボーディング／チュートリアルフラグ、キーボードおよびモーション設定、表示モードの選択、一時的な演習またはフラッシュカードのセッション状態、同様のクライアントのみの設定も保存する場合があります。",
+          "p3": "設定でローカル設定をクリアすると、それらの端末設定は削除されます。サーバー上のアカウントやワークスペースコンテンツは削除されません。"
+        },
+        "transfers": {
+          "title": "10. 国際転送",
+          "p1": "上記の一部の提供者は EEA 外（たとえば米国）に拠点があるか、複数リージョンでデータを処理する場合があります。個人データが EEA／英国を離れる場合、転送は適用法の下でそれらの提供者が提供する保護措置 — 該当する場合の標準契約条項など — および公開されているプライバシー条件に依拠します。",
+          "p2": "Notoria のアプリケーションホスティングは Frankfurt リージョン（fra1）向けに設定されています。特定機能の関連提供者ドキュメントの探し方について助けが必要な場合は <contact>contact@notoria.fi</contact> にお問い合わせください。"
+        },
+        "retention": {
+          "title": "11. データの保存期間",
+          "list": [
+            "アカウントと学習データは、サービスを利用できるようアカウントが開いている間保持されます",
+            "パスワードリセットトークンは 30 分で期限切れになります",
+            "サブスクリプションメタデータは、現在の Pro ステータスと Stripe の請求関係を反映するために必要な範囲で保持されます",
+            "サポートおよびフィードバックメールは、ご依頼と関連フォローアップへの対応に必要な期間保持されます"
+          ],
+          "p1": "インフラ提供者のバックアップ保持期間の正確な窓は、アプリケーションにハードコードされておらず、それらの提供者の運用慣行に従う場合があります。削除請求の明確化が必要な場合はご連絡ください。"
+        },
+        "deletion": {
+          "title": "12. エクスポートとアカウント削除",
+          "exportTitle": "エクスポート",
+          "exportP1": "<account>アカウント</account> から、ワークスペースと学習コンテンツ（語彙、理論ノート、演習／ライティング、リスニングレッスン、スピーキングセッションを含む）の JSON バックアップをダウンロードできます。メディアファイルはバイナリとして埋め込まれず、URL で参照されます。",
+          "exportP2": "現行のエクスポートには、アカウント関連のすべてのレコードは含まれません。たとえば、フラッシュカードの進捗／復習と演習インポートのソースレコードは JSON バックアップの一部ではありません。OAuth トークン、パスワードハッシュ、Stripe 識別子はエクスポートされません。",
+          "deleteTitle": "アカウントの削除",
+          "deleteP1": "<account>アカウント</account> からアカウントを完全に削除できます。削除が成功すると、Notoria は:",
+          "deleteList": [
+            "Notoria のデータベースからユーザーレコードとカスケードされた学習データを削除します",
+            "Stripe が設定されている場合、関連する Stripe 顧客データをキャンセル・削除します（ベストエフォート）",
+            "削除フローが Cloudinary から削除するよう実装されているアバターメディアとリスニングレッスンメディアを破棄します"
+          ],
+          "deleteP2": "現行の削除フローは、すべてのサードパーティ成果物を自動的に消去すると主張しません。特に、一部の Cloudinary アセット（エディター画像や演習インポートファイルなど）および Stream のスピーキング通話成果物は、別途クリーンアップされるか、提供者自身のスケジュールで消去されるまで、それらの提供者の対象として残る場合があります。",
+          "deleteP3": "削除後も、暗号化バックアップやログに限定的な残存コピーが、それらのシステムがローテーションするまで短期間残る場合があります。アカウント削除後に特定のものが残っている場合は、<contact>contact@notoria.fi</contact> までメールしてください。"
+        },
+        "rights": {
+          "title": "13. あなたの権利（GDPR）",
+          "p1": "EU／EEA にいる場合、またはその他の形で GDPR の保護を受ける場合、次の権利を有する場合があります:",
+          "list": [
+            "個人データへのアクセス",
+            "不正確なデータの訂正",
+            "データの消去（アカウント削除を含む）",
+            "特定の処理の制限または異議",
+            "提供したデータのポータブルなコピーの受領（上記のエクスポートを参照）",
+            "処理が同意に基づく場合の同意の撤回"
+          ],
+          "listComplaint": "監督当局への苦情の申立て — フィンランドではデータ保護オンブズマン事務所（<ombudsman>tietosuoja.fi</ombudsman>）",
+          "p2": "これらの権利を行使するには、<contact>contact@notoria.fi</contact> までメールしてください。請求がアカウント保有者からのものであることを確認する場合があります。"
+        },
+        "children": {
+          "title": "14. 子ども",
+          "p1": "Notoria はアカウントを必要とし、個人の学習ワークスペースとして構築されています。製品は専用の年齢ゲートを実装していません。子ども向けではありません。適切な権限なく子どものデータが提出されたと思われる場合は、<contact>contact@notoria.fi</contact> にご連絡ください。"
+        },
+        "changes": {
+          "title": "15. 変更",
+          "p1": "製品または法的要件の変更に伴い、本プライバシーポリシーを更新する場合があります。ページ上部の「最終更新」日付は、改訂が公開されたときに変わります。",
+          "p2": "変更が重要である場合、その時点で合理的な方法で伝えます — たとえばこのページの更新、および適切な場合はアプリ内通知またはメール。"
+        },
+        "contact": {
+          "title": "16. お問い合わせ",
+          "p1": "プライバシーおよび一般連絡: <contact>contact@notoria.fi</contact>",
+          "p2": "製品フィードバックの技術用受信箱（<contactPage>お問い合わせ</contactPage> にも掲載）: <technical></technical>",
+          "p3": "ウェブサイト: <site>www.notoria.fi</site>"
+        }
+      }
+    },
+    "termsOfUse": {
+      "intro": "本利用規約は、<site>www.notoria.fi</site> での Notoria の利用ルールを説明します。現行製品の動き — プライベートな学習ワークスペース、Stripe 経由の任意の Notoria Pro 請求、AI 支援機能 — を記述します。特定の状況についての弁護士の助言の代わりにはなりません。",
+      "tocTitle": "このページの内容",
+      "tocAria": "このページの内容",
+      "toc": {
+        "agreement": "合意",
+        "service": "サービス",
+        "accounts": "アカウント",
+        "content": "あなたのコンテンツ",
+        "acceptable-use": "利用に関する約束",
+        "ip": "知的財産",
+        "ai": "AI 生成アウトプット",
+        "plans": "Free プランと Notoria Pro",
+        "billing": "サブスクリプションと請求",
+        "refunds": "返金と消費者の権利",
+        "availability": "可用性",
+        "termination": "停止と終了",
+        "liability": "免責と責任",
+        "changes": "変更",
+        "law": "準拠法",
+        "contact": "お問い合わせ"
+      },
+      "sections": {
+        "agreement": {
+          "title": "1. 合意",
+          "p1": "アカウントを作成するか Notoria を利用することで、本規約および <privacy>プライバシーポリシー</privacy> に同意したものとみなされます。同意しない場合は、サービスを利用しないでください。",
+          "p2": "本規約に関するご質問: <contact>contact@notoria.fi</contact>。"
+        },
+        "service": {
+          "title": "2. サービス",
+          "p1": "Notoria はプライベートな言語学習ウェブアプリです。ワークスペースを作成し、語彙、理論ノート、ライティング、演習、リスニングレッスン、スピーキングセッションなどの学習教材を保持できます。",
+          "p2": "一部の機能は Free プランで利用できます。Notoria Pro は、製品および <account>アカウント</account> ページに示される追加機能 — リスニング、スピーキング、特定の AI 学習ツール、演習インポート、有料の文書エクスポート形式を含む — を解放します。機能の可用性は製品の進化に伴い変わる場合があります。",
+          "p3": "Notoria は個人の言語学習向けです。学校、試験機関、専門的助言サービスではありません。"
+        },
+        "accounts": {
+          "title": "3. アカウント",
+          "list": [
+            "正確なアカウント情報を提供してください",
+            "パスワードとアカウントアクセスを安全に保ってください",
+            "メールとパスワード、または Google サインインが利用可能な場合は Google でサインインしてください",
+            "適用法の下で拘束力のある契約を結べる場合にのみ Notoria を利用してください"
+          ],
+          "p1": "製品は別途の年齢ゲートを実装していません。適切な権限なくアカウントが作成されたと思われる場合は、<contact>contact@notoria.fi</contact> にご連絡ください。",
+          "p2": "アカウントが侵害されたと思われる場合は、<contact>contact@notoria.fi</contact> まで通知してください。"
+        },
+        "content": {
+          "title": "4. あなたのコンテンツ",
+          "p1": "Notoria で作成またはアップロードした学習コンテンツの所有権はあなたに残ります。",
+          "p2": "サービスが機能できるよう、そのコンテンツをホスト・処理・表示・バックアップする限定的なライセンスを Notoria に付与します — 該当機能を使う場合、関連教材を AI・文字起こし・メディア・支払い提供者に送ることを含みます。そのライセンスは、あなたのために Notoria を運用するためだけに存在します。コンテンツの所有権を私たちに移転するものではありません。",
+          "p3": "保存する内容に責任を負います。使用権のない教材をアップロードせず、Notoria を違法コンテンツの保管に使わないでください。"
+        },
+        "acceptableUse": {
+          "title": "5. 利用に関する約束",
+          "p1": "次の行為をしないことに同意します:",
+          "list": [
+            "法令違反または他者の権利侵害",
+            "他のユーザーのプライベートワークスペースまたはアカウントへのアクセス試行",
+            "サービス、API、関連インフラの探査・過負荷・妨害",
+            "他者を害する、または詐欺によってプラン上限を回避する形での AI・文字起こし・リスニング・スピーキング機能の濫用",
+            "強制的な現地法が許す場合を除くサービスのリバースエンジニアリング",
+            "Stripe、Google、または Notoria サポートに対する身元の偽称"
+          ]
+        },
+        "ip": {
+          "title": "6. 知的財産",
+          "p1": "Notoria の名称、ブランディング、ソフトウェア、製品デザインは、Notoria またはそのライセンサーが所有します。本規約は製品の所有権をあなたに移転しません。",
+          "p2": "学習コンテンツは、第 4 条の限定ライセンスに従い、あなたのものであり続けます。"
+        },
+        "ai": {
+          "title": "7. AI 生成アウトプット",
+          "p1": "一部の機能は、あなたの教材に基づきチェック、提案、生成、文字起こし、要約、チューターを行うことがあります。アウトプットは不完全・不正確・目的に不適切な場合があります。学習・試験・専門利用・公開のために依拠する前に、AI 結果を確認する責任はあなたに残ります。",
+          "p2": "AI 機能は、<settings>設定</settings> でアシスタンスがオフの場合、プランに特定ツールが含まれない場合、または提供者が一時的に到達できない場合、利用できないことがあります。",
+          "p3": "すべての AI ヘルパーが Notoria Pro を必要とするわけではありません。製品は、無料のツールと Pro が必要なツールを示します。"
+        },
+        "plans": {
+          "title": "8. Free プランと Notoria Pro",
+          "p1": "Free プランは、製品に示されるとおり、自分の語彙と関連する学習ツールによるコア練習をカバーします。",
+          "p2": "Notoria Pro は、追加機能を解放する有料サブスクリプションです。現行製品では、通常リスニング、スピーキング、演習インポート、文づくり練習、多くの AI 支援学習ツール、PDF/DOCX 文書エクスポートが含まれます。一部の軽い AI ヘルパー（特定の語彙やエディターの書式援助など）は、AI アシスタンスが有効な場合、Free プランでも利用できることがあります。",
+          "p3": "Pro アクセスはユーザーアカウントに紐づくため、そのアカウント下のワークスペース全体に適用されます。管理者役割のアカウントは、個人の Stripe サブスクリプションなしで Pro レベルのアクセスを持つ場合があります。",
+          "p4": "購入に適用される価格は、現行 Pro プランの Stripe Checkout で示される価格です。製品内の他の場所（たとえばアカウント）に示される価格は目安にすぎず、有効な Stripe 価格設定と一致している必要があります。"
+        },
+        "billing": {
+          "title": "9. サブスクリプション、請求、解約",
+          "list0": "Pro サブスクリプションは <strong>Stripe</strong> 経由で請求されます",
+          "list1": "チェックアウトは <account>アカウント</account>、またはアプリ内のロックされた Pro コントロールから開始できます",
+          "list2": "アカウントから Stripe Customer Portal を開き、請求書の確認、支払い方法の更新、サブスクリプションの解約ができます",
+          "list3": "解約は、サブスクリプションに対する Stripe Customer Portal の挙動に従います",
+          "p1": "解約後、Pro アクセスは、Stripe のサブスクリプションステータスが製品内で引き続き Pro を付与している間だけ続きます。現行実装では、Pro として扱われるステータスには <code>active</code>、<code>trialing</code>、<code>past_due</code> が含まれます。ステータスが資格を失うと、アカウントは Free プランに戻ります。",
+          "p2": "支払いが失敗すると、Stripe はサブスクリプションを <code>past_due</code> または他のステータスに移す場合があります。Notoria はそのステータスを Stripe ウェブフックから同期します。ステータスが <code>past_due</code> の間は、現行のアクセスルールの下で Pro 機能は利用可能です。サブスクリプションが後にキャンセルまたはその他資格なしになると、Pro アクセスは終了します。",
+          "p3": "Notoria アカウントの削除は、アカウント削除の一部として Stripe サブスクリプションを即時キャンセルします（ベストエフォート）。これは、アカウントを残したまま Customer Portal で更新を解約することとは異なります。"
+        },
+        "refunds": {
+          "title": "10. 返金と消費者の権利",
+          "p1": "Notoria は自動のアプリ内返金ボタンを実装していません。解約は Stripe Customer Portal から利用できます。",
+          "p2": "返金の検討を希望する場合、またはデジタルコンテンツや通信契約に関する EU／EEA 消費者ルールが購入に適用される権利を与える場合は、アカウントのメールと Stripe の領収詳細を添えて <contact>contact@notoria.fi</contact> までメールしてください。適用法および Stripe のツールに沿って請求を扱います。",
+          "p3": "本規約のいかなる条項も、フィンランド法または EU 法の下で放棄できない強制的な消費者の権利を制限することを意図していません。"
+        },
+        "availability": {
+          "title": "11. 可用性",
+          "p1": "Notoria の可用性を保つよう努めますが、中断のない、またはエラーのないサービスを約束するものではありません。メンテナンス、提供者の障害、またはサードパーティの AI・メディア・メール・支払いサービスの変更が機能に影響する場合があります。"
+        },
+        "termination": {
+          "title": "12. 停止と終了",
+          "p1": "<account>アカウント</account> からいつでもアカウントを削除できます。削除は、<privacy>プライバシーポリシー</privacy> の詳細および残存処理者に関する注記に従い、Notoria のデータベースからアカウントと関連学習データを永続的に削除します。削除前にアカウントから JSON バックアップをエクスポートできます。",
+          "p2": "本規約に重大または繰り返し違反する場合、サービスを濫用する場合、またはセキュリティもしくは法的リスクを生じさせる場合、アクセスを停止または終了する場合があります。合理的かつ合法な範囲で、アカウントのメールで通知するよう努めます。"
+        },
+        "liability": {
+          "title": "13. 免責と責任",
+          "p1": "Notoria は、個人の言語学習向けに「利用可能な現状」で提供されます。適用法で認められる最大限の範囲で、法律で求められない保証を否認します。",
+          "p2": "適用法で認められる最大限の範囲で、Notoria は、サービスの利用または AI アウトプットへの依拠から生じる間接的・付随的・特別・結果的損害、またはデータ損失について責任を負いません。責任を排除できない場合、請求前 3 か月間に Notoria Pro に支払った金額、または強制法が求めるそれ以上の金額に限定されます。",
+          "p3": "これらの制限は、フィンランド法または EU 法が制限を許さない責任 — 消費者が放棄できない責任、およびそのようなルールが適用される場合の過失による死亡または人身傷害に対する責任を含む — を排除しません。"
+        },
+        "changes": {
+          "title": "14. サービスと規約の変更",
+          "p1": "機能、プラン、本規約を更新する場合があります。本ページの「最終更新」日付は、新しい版が公開されたときに変わります。",
+          "p2": "変更が重要である場合、実務上可能な範囲で合理的な通知を行います — たとえばこのページの更新、および適切な場合はアプリ内通知またはメール。効力発生日以降の継続利用は、強制法が別の手続きを求める場合を除き、更新された規約の受諾を意味します。"
+        },
+        "law": {
+          "title": "15. 準拠法",
+          "p1": "本規約は、他の法域の法を要求する抵触法ルールにかかわらず、フィンランド法に準拠します。",
+          "p2": "フィンランドの裁判所が管轄権を有します。ただし、EU／EEA 内の居住国で訴訟を提起できる強制的な消費者保護を害しません。",
+          "p3": "Notoria サービスおよび連絡用メールを超える正式な運営者の身元は、現行製品では公開されていません。契約上または規制上の通信には <contact>contact@notoria.fi</contact> をご利用ください。"
+        },
+        "contact": {
+          "title": "16. お問い合わせ",
+          "p1": "請求に関するご質問、規約に関するご質問、関連する法的通知: <contact>contact@notoria.fi</contact>",
+          "p2": "ウェブサイト: <site>www.notoria.fi</site>",
+          "p3": "一般サポートの選択肢と技術フィードバック受信箱については、<contactPage>お問い合わせ</contactPage> および <support>サポート</support> をご覧ください。"
+        }
+      }
+    }
+  },
+  "footer": {
+    "navLabel": "サイトリンク",
+    "explore": "探す",
+    "support": "サポート",
+    "legal": "法的情報",
+    "howToUse": "使い方",
+    "about": "私たちについて",
+    "ourStory": "私たちのストーリー",
+    "supportLink": "サポート",
+    "contactUs": "お問い合わせ",
+    "privacy": "プライバシーポリシー",
+    "terms": "利用規約",
+    "copyright": "© 2026 Notoria",
+    "tagline": "言語学習者のために作られました。"
+  },
+  "sitePages": {
+    "about": {
+      "eyebrow": "About",
+      "title": "Notoria について",
+      "lede": "どんな言語でも自習できるプライベートなワークスペース — スクロールするカタログではなく、あなたが持ち込む教材を中心に作られています。",
+      "what": {
+        "title": "どのようなものか",
+        "p1": "Notoria は、言語を自習するためのプライベートなワークスペースです。語彙・ノート・理論・演習・ライティング・リスニング・スピーキングを、学んでいる言語ごとにひとつの場所にまとめます。",
+        "p2": "学校のプラットフォームでも、出来合いのコースライブラリでもありません。自分で集め、自分で作る教材のためのホームです — 残す価値のある単語、やっと定着した説明、実際の進捗に属する練習。",
+        "beat": "あなたの教材。あなたの言語。ひとつの場所。"
+      },
+      "why": {
+        "title": "なぜ Notoria か",
+        "p1": "言語学習は、断片がつながったままのときほど役に立ちます。",
+        "p2": "先週保存した単語は、また練習しやすいはずです。自分の言葉で書いたノートは、同じパターンで迷ったときにもそこにあるべきです。ライティング・リスニング・スピーキングは、同じ教材を使えるべきです — スマホとデスクトップの別々の隅に散らばるのではなく。",
+        "p3": "Notoria はそれらの糸をつなぎ、練習が散らばらず、連続して感じられるようにします。"
+      },
+      "who": {
+        "title": "誰のためのものか",
+        "p1": "独学する人 — そして自分の教材をプロセスの中心に置きたい人。",
+        "p2": "誰かの固定シラバスに従うより、自分にとって大事なものを集める方が好きなら、Notoria はそのリズムのためにあります。真剣な学習に十分な落ち着き。日常的に戻ってくるのに十分な実用性。"
+      },
+      "yourWay": {
+        "title": "あなたの教材を、あなたのやり方で",
+        "p1": "本、先生、コース、ポッドキャスト、会話、すでに使っているものすべてが、引き続き大事です。Notoria はそれらを置き換えようとしません。",
+        "p2": "代わりに提供するのは、それらの教材をまとめる場所です。気づいたことを保存し、言語ごとに整理し、自分の言葉で説明し、そこから練習し続ける。",
+        "beat": "Notoria は学習生活のそばにいます。学習生活そのものになろうとはしません。"
+      },
+      "provides": {
+        "title": "できること",
+        "intro": "ワークスペースの中で、主な要素はこうつながります:",
+        "items": {
+          "vocab": "意味・例・タグ付きの個人語彙バンクを作る",
+          "practice": "自分の単語とノートから作った演習で練習する",
+          "create": "あとで見直せる理論ノートとライティングを書く",
+          "listenSpeak": "メディアをリスニング練習にし、Pro では AI チューターと話す"
+        },
+        "note": "一部の AI・リスニング・スピーキング・エクスポートツールは Notoria Pro の一部です。Free プランでも日常の語彙練習とコア学習ループはカバーします。"
+      },
+      "ai": {
+        "title": "役立つところの AI",
+        "p1": "AI が使えるとき、それは支えるツールであり — 製品の中心ではありません。",
+        "p2": "練習の形づくり、ライティングのチェック、リスニングやスピーキングのサポートができます。何を学ぶべきかを決めることはなく、気づく・覚える・戻るという仕事を置き換えることもありません。",
+        "p3": "ワークスペースに何を入れ、何に戻るかは、あなたが決めたままです。"
+      }
+    },
+    "ourStory": {
+      "eyebrow": "Story",
+      "title": "私たちのストーリー",
+      "lede": "言語学習ツールはどこにでもありました。でも本当に大事な教材は、練習のときにどこにもありませんでした。",
+      "frustration": {
+        "title": "なじみのある散らばり",
+        "p1": "自分で本気で言語を学ぼうとしたことがあるなら、その形は知っているはずです。",
+        "p2": "単語はひとつのアプリ。文法ノートはドキュメント。例文はもう開かないフォルダへのスクリーンショット。リスニングはスマホ。ライティングは別の場所。スピーキングはほとんどどれともつながっていない。",
+        "p3": "たくさん集めることはできます。そこは簡単です。",
+        "p4": "難しいのはそのあと — 練習しようと座って、何も場所を共有していないことに気づくときです。各ツールは断片を覚えている。どれも、あなたが実際に築いている言語は覚えていません。",
+        "beat": "役立つ教材は散らばる。練習は毎回ゼロから。"
+      },
+      "realisation": {
+        "title": "当たり前であるべきこと",
+        "p1": "ある時点で、不満は「もっと機能」から「重心」の話になります。",
+        "p2": "学習者自身の教材 — 残す価値のある単語、自分の言葉で書いたノート、やっと納得できた例 — は、練習に使うツールの外に置かれるべきではありません。それがループであるべきです。",
+        "p3": "すでに集めたものを無視する練習は、ブランディングが良いだけの忙しい作業です。",
+        "beat": "あなたの教材は中心に属する。"
+      },
+      "exists": {
+        "title": "なぜ Notoria があるのか",
+        "p1": "Notoria は、その教材にプライベートなホームを与え — 語彙・ノート・理論・演習・ライティング・リスニング・スピーキングを、それを中心に作られたひとつのワークスペースに保つためにあります。",
+        "p2": "ログインを共有しただけのバラバラなモジュールの山ではなく。保存したものが練習になり、練習が残すものを深められる場所として。",
+        "p3": "言語はあなたが持ち込みます。Notoria はそれに寄り添うのを助けます — 見直し、ドリルし、書き、聞き、話す — ツールを切り替えるたびに糸を失うことなく。",
+        "p4": "それが、率直に言った全体のアイデアです。"
+      },
+      "believes": {
+        "title": "私たちが信じること",
+        "p1": "自習は個人的で、実用的で、つながっているべきです。見せびらかすものではない。頼んでいないコンテンツカタログに絶えず邪魔されない。",
+        "p2": "Notoria は学校ではありません。コースのマーケットプレイスでもありません。先生や教科書、注意を向ける静かな仕事を置き換えようともしません。",
+        "p3": "それは、学んでいる言語のためのワークスペースです — 自分のものになるほどプライベートで、役立つほど構造的で、製品が学習の邪魔をしないほど軽い。",
+        "beat": "ノイズを減らし、連続性を増やす。"
+      },
+      "going": {
+        "title": "これから向かう先",
+        "p1": "方向は劇的ではありません。プライベートのまま。実用的のまま。ソフトウェアにできること・できないことに正直のまま。",
+        "p2": "自分の教材を中心にした学習ループ — 覚える・理解する・産出する・聞く・話すのつながり — を改善し続ける。",
+        "p3": "本当に役立つところで AI を使う: 練習の形づくり、ライティング・リスニング・スピーキングのサポート。ギミックとしてではない。学習者自身の仕事の代替としてではない。製品をノイズで埋める言い訳としてでもない。",
+        "closing": "Notoria は、つながりのなさに飽きた誰かが — 自分の学習教材のためのより良い場所を求めて — 作られました。その理由は今も変わりません。"
+      }
+    },
+    "howToUse": {
+      "eyebrow": "Guide",
+      "title": "Notoria の使い方",
+      "lede": "学習ループの実用的な地図 — いくつかの単語から始め、準備ができたら練習・ライティング・リスニング・スピーキングを広げます。",
+      "intro": {
+        "title": "コースではなくワークスペース",
+        "p1": "Notoria は、すでに学んでいる言語のためのプライベートな場所です。教材を持ち込み、整理し、そこから練習します — 自分で選んでいないレッスンカタログから始めるのではなく。",
+        "p2": "各ワークスペースはひとつの言語です。キャプチャ、語彙、理論、演習、ライティング、リスニング、スピーキングがそこに一緒にあり、保存したものが練習になれます。",
+        "beat": "Notoria を一度に全部覚える必要はありません。言語と一緒に育てます。"
+      },
+      "loop": {
+        "title": "学習ループ",
+        "p1": "製品のほとんどは、ひとつのシンプルなループの上にあります:",
+        "stages": {
+          "bring": {
+            "label": "持ち込む",
+            "body": "単語・フレーズ・ノートを保存 — すばやいスクラップにはキャプチャを使い、レッスン・本・メディア・会話から語彙と理論に直接追加もできます。"
+          },
+          "organise": {
+            "label": "整理する",
+            "body": "その言語のすべてをひとつのワークスペースに保ち、意味・例・また見つけやすくするタグを付けます。"
+          },
+          "understand": {
+            "label": "理解する",
+            "body": "パターンの説明が必要なとき — 文法、使い方、何度も忘れること — 理論ノートを自分の言葉で書きます。"
+          },
+          "practise": {
+            "label": "練習する",
+            "body": "保存したものを演習と復習に変え、記憶の作業が自分の教材から来るようにします。"
+          },
+          "use": {
+            "label": "使う",
+            "body": "それで書き、聞き、話す — 言語が認識を超えて能動的な使用に移るように。"
+          },
+          "review": {
+            "label": "戻る",
+            "body": "あとで戻り、新しいものを追加し、難しかったものを見直し、ゼロから始めるのではなくループを続けます。"
+          }
+        },
+        "beat": "持ち込む → 整理する → 理解する → 練習する → 使う → 戻る。"
+      },
+      "startSmall": {
+        "title": "小さく始める",
+        "p1": "Notoria は「完了」するものではありません。製品を使い切ったことを意味するチェックリストはありません。",
+        "p2": "良い初日は、ワークスペース、キャプチャのメモ数件、本当に気になる単語 5 語で十分です。ノート、長い練習、ライティング、リスニング、スピーキングは、ループの中で場所を稼ぐまで待てます。"
+      },
+      "firstSession": {
+        "title": "最初のセッション",
+        "intro": "具体的な始め方をしたいなら、一度これを試してください:",
+        "steps": {
+          "workspace": {
+            "title": "ワークスペースを作成する",
+            "body": "学んでいる言語用にひとつ作り、あとでわかる名前を付けます。"
+          },
+          "words": {
+            "title": "単語をいくつか追加する",
+            "body": "語彙を開き、覚えたい単語やフレーズを、役立つなら意味や例付きで保存します。または先にキャプチャにすばやく落とし、あとで処理します。"
+          },
+          "notes": {
+            "title": "必要なら短いノートを書く",
+            "body": "理論で、説明が必要なときだけ、文法や使い方のポイントを自分の言葉で残します。"
+          },
+          "practice": {
+            "title": "短い練習をする",
+            "body": "演習を開き、ちょうど追加した教材から練習します — 自分の単語から作ったフラッシュカードやドリル。"
+          },
+          "return": {
+            "title": "明日また来る",
+            "body": "少し追加し、ノートを見直し、またはまた練習します。初日に全領域をカバーすることより、連続性の方が大事です。"
+          }
+        }
+      },
+      "connect": {
+        "title": "領域のつながり方",
+        "p1": "キャプチャはすばやい入口です。語彙と理論は教材が落ち着く場所です。演習はその教材を練習に変えます。ライティング・リスニング・スピーキングは、言語をより能動的に使う助けになります。",
+        "p2": "すべての領域を順番に通る必要はありません。しばらく単語と短い練習にとどまる人も多いです。",
+        "p3": "自然な次の一歩は、自分の条件で言語を産出したいときのライティング、同じ教材を耳と声で動かしたいときのリスニングとスピーキングです — リスニングとスピーキングは Notoria Pro の一部です。",
+        "beat": "まず集め、理解する。教材がページを離れる準備ができたら、使い、話す。"
+      },
+      "areas": {
+        "title": "主な領域",
+        "intro": "各領域の短い地図:",
+        "vocab": {
+          "label": "語彙",
+          "body": "あなた専用の単語バンク — 意味、例、タグ、フラッシュカードの進捗。ほかのすべてが引き出す土台になることが多いです。"
+        },
+        "theory": {
+          "label": "理論",
+          "body": "自分の言葉で書いた文法・使い方ノート。同じパターンが再登場したときに戻れるように。"
+        },
+        "exercises": {
+          "label": "演習",
+          "body": "語彙・理論ノート・インポートした教材からの練習セッション — ドリルが実際に保存したものと結びつくように。"
+        },
+        "writing": {
+          "label": "ライティング",
+          "body": "言語を認識するだけでなく能動的に使うための文書と問題セット。"
+        },
+        "listening": {
+          "label": "リスニング",
+          "body": "メディアをワークスペース内のリスニング練習に変えます。Notoria Pro で利用可能です。"
+        },
+        "speaking": {
+          "label": "スピーキング",
+          "body": "学んでいる言語に根ざした AI チューターとのライブ練習。Notoria Pro で利用可能です。"
+        },
+        "reading": {
+          "label": "読解",
+          "body": "パッセージをインポートまたは貼り付け、理解練習を生成し、結果を見直します。Free には 1 日の AI 上限があり、Pro と Premium はその上限を上げるか解除します。"
+        },
+        "capture": {
+          "label": "キャプチャ",
+          "body": "スクラップ — 単語、疑問、アイデア — のすばやいドロップゾーン。あとで語彙・理論・ライティング・演習に処理します。一瞬しかないときはまずキャプチャ。リンク先のエントリを作り終えるまで未処理のままです。"
+        }
+      },
+      "notEverything": {
+        "title": "すべてを使う必要はありません",
+        "p1": "今すぐ役立たない領域は飛ばしてください。静かな語彙バンクと数件のノートだけで、すでに強いシステムになれます。",
+        "p2": "構造化された復習が欲しいときに演習を。産出したいときにライティングを。言語を聞いて言うことが次の有用な一歩のときにリスニングとスピーキングを。"
+      },
+      "cta": {
+        "title": "始める準備はできましたか？",
+        "body": "ワークスペースを作り、単語をいくつか追加し、そこからループを育てましょう。",
+        "createAccount": "アカウントを作成",
+        "signIn": "サインイン",
+        "openWorkspace": "ワークスペースを開く",
+        "inAppGuide": "はじめにを開く",
+        "signedInNote": "アプリ内のボタン単位のウォークスルーは、<link>はじめに</link> を開いてください。",
+        "signedOutNote": "すでにアカウントがありますか？ <link>サインイン</link> してワークスペースを開いてください。アプリ内の「はじめに」ガイドは、サインイン後に詳しい UI ウォークスルーをカバーします。"
+      }
+    },
+    "support": {
+      "eyebrow": "Support",
+      "title": "サポート",
+      "lede": "よくある質問へのすばやい回答と、必要なときにフィードバックを送るシンプルな方法です。",
+      "faq": {
+        "title": "よくある質問",
+        "lede": "ここから始めてください — ほとんどの回答は読むのに 1 分もかかりません。",
+        "groups": {
+          "gettingStarted": "はじめに",
+          "accountBilling": "アカウント＆請求",
+          "learningAi": "学習＆AI",
+          "dataPrivacy": "データ＆プライバシー"
+        },
+        "workspace": {
+          "q": "ワークスペースとは何ですか？言語の切り替え方は？",
+          "a": "各ワークスペースは、学んでいるひとつの言語です。語彙・理論・ライティング・演習・リスニング・スピーキングはそのワークスペース内にあります。ワークスペースの作成や切り替えは、アプリ内のワークスペースメニューから行えます。"
+        },
+        "start": {
+          "q": "どう始めればよいですか？",
+          "a": "学んでいる言語のワークスペースを作り、<vocabulary>語彙</vocabulary> に単語をいくつか追加し、短い演習を試してください。学習の考え方は <howToUse>使い方</howToUse> をご覧ください。サインイン済みですか？ UI ウォークスルーにはアプリ内の <gettingStarted>はじめに</gettingStarted> ガイドを開いてください。"
+        },
+        "account": {
+          "q": "パスワードの変更やアカウントの閉鎖はどうしますか？",
+          "a": "<account>アカウント</account> を開いてください。メールサインインの場合はそこでパスワードを更新し、Notoria Pro の管理、バックアップのエクスポート、アカウントの完全削除ができます。"
+        },
+        "pro": {
+          "q": "請求と解約はどう動きますか？",
+          "a": "Notoria Pro は Stripe 経由で請求されます。<account>アカウント</account> からアップグレードしたり、Stripe カスタマーポータルで支払い方法と請求書を管理したり、更新を解約したりできます。"
+        },
+        "proFeatures": {
+          "q": "無料で使えるものと、Notoria Pro が必要なものは？",
+          "a": "日常の語彙練習と関連する学習ツールは Free プランで利用できます。一部の AI ツール、リスニング、スピーキング、文書エクスポート機能は Notoria Pro の一部です。比較とアップグレードは <account>アカウント</account> から行えます。"
+        },
+        "learning": {
+          "q": "Notoria の学習機能はどう動きますか？",
+          "a": "Notoria は語彙・理論・演習・ライティング・リスニング・スピーキングをひとつのワークスペースに保ち、保存した教材を練習に使えるようにします。単語とノートから始め、準備ができたら練習と能動的な使用を加えます。<about>About</about> は製品を説明し、<howToUse>使い方</howToUse> は学習ループを地図にします。"
+        },
+        "ai": {
+          "q": "AI ヘルプをオフにできますか？",
+          "a": "はい。AI アシスタンスの設定は <settings>設定</settings> にあります。アシスタンスがオフのとき、それを必要とする AI ツールはブロックされたままです。"
+        },
+        "data": {
+          "q": "学習コンテンツはどこに保存されますか？",
+          "a": "アカウントと学習データは Notoria のデータベースにあります。アバターやリスニングファイルなどのメディアは、メディアホストに保存されます。処理者と削除の詳細は <privacy>プライバシーポリシー</privacy> をご覧ください。"
+        },
+        "backup": {
+          "q": "データをエクスポートまたはバックアップできますか？",
+          "a": "はい。<account>アカウント</account> から、ワークスペースと学習コンテンツの JSON バックアップをダウンロードできます。メディアファイルは埋め込まれず、URL でリンクされます。プライバシーと削除の詳細は <privacy>プライバシーポリシー</privacy> をご覧ください。"
+        }
+      },
+      "feedback": {
+        "title": "フィードバックを送る",
+        "lede": "バグの報告、機能の提案、感想の共有。短く明確に — それが一番役立ちます。",
+        "typeLabel": "フィードバックの種類",
+        "types": {
+          "bug": "バグ",
+          "feature": "機能リクエスト",
+          "general": "一般的なフィードバック"
+        },
+        "emailLabel": "メールアドレス",
+        "emailHint": "返信が必要な場合に使用します。",
+        "accountEmailNote": "詳細が必要な場合は <email></email> に返信します。",
+        "messageLabel": "メッセージ",
+        "placeholders": {
+          "bug": "何が起きたか、どこで、何を期待していたか…",
+          "feature": "Notoria に何をしてほしいか、なぜ役立つか…",
+          "general": "感想、提案、その他何でも…"
+        },
+        "messageHint": "10 文字以上。パスワードや非公開の学習コンテンツは貼り付けないでください。",
+        "imagesLabel": "スクリーンショット（任意）",
+        "addImages": "画像を追加",
+        "removeImage": "{name} を削除",
+        "imagesHint": "最大 3 枚、JPG/PNG/WebP/GIF、各最大 3 MB。",
+        "submit": "フィードバックを送信",
+        "sending": "送信中…",
+        "successTitle": "ありがとうございます — フィードバックを送信しました。",
+        "successBody": "Notoria チームが読みます。詳細が必要な場合はメールで返信します。",
+        "successToast": "フィードバックを送信しました",
+        "sendAnother": "別のメッセージを送る",
+        "errors": {
+          "tooShort": "内容を理解できるよう、もう少し書いてください。",
+          "tooLong": "メッセージは 5,000 文字以内にしてください。",
+          "emailRequired": "返信できるようメールアドレスを入力してください。",
+          "invalid": "フォームを確認してもう一度お試しください。",
+          "invalidImage": "JPG、PNG、WebP、GIF 画像のみご利用ください。",
+          "imageTooLarge": "各画像は 3 MB 以下にしてください。",
+          "tooManyImages": "添付できる画像は最大 3 枚です。",
+          "rateLimited": "最近いくつかのメッセージを送信しました。しばらく待ってからもう一度お試しください。",
+          "notConfigured": "フィードバックメールは現在利用できません。contact@notoria.fi に直接メールしてください。",
+          "sendFailed": "フィードバックを送信できませんでした。もう一度試すか、contact@notoria.fi にメールしてください。"
+        }
+      },
+      "contactCta": {
+        "prompt": "直接連絡が必要ですか？",
+        "link": "お問い合わせ"
+      }
+    },
+    "contact": {
+      "eyebrow": "Contact",
+      "title": "お問い合わせ",
+      "lede": "メールまたは電話 — 必要な内容に合った連絡先をご利用ください。",
+      "routing": "技術的な問題は開発連絡先へ。アカウント・請求・プライバシー・一般的なご質問はメインサポートメールへ。",
+      "general": {
+        "title": "一般＆アカウントサポート",
+        "body": "Notoria、アカウント、請求、プライバシー、技術バグ以外の日常的なご質問はこちらです。",
+        "topics": {
+          "questions": "一般的なご質問",
+          "account": "アカウント",
+          "billing": "請求",
+          "privacy": "プライバシー",
+          "other": "その他"
+        }
+      },
+      "technical": {
+        "title": "技術的な問題",
+        "body": "アプリが壊れているように見えるとき — バグ、予期しないエラー、開発関連の問題 — はこちらへ。"
+      },
+      "phone": {
+        "title": "電話",
+        "body": "話して解決したい場合は、妥当な時間帯にお電話でご連絡いただけます。"
+      },
+      "supportCta": {
+        "prompt": "回答を探すか、フィードバックを送りたいですか？",
+        "link": "サポート"
+      }
+    }
+  },
+  "errorPages": {
+    "statusUnavailable": "利用できません",
+    "reference": "参照番号: {id}",
+    "referenceLabel": "参照番号",
+    "actions": {
+      "dashboard": "ダッシュボードへ",
+      "home": "ホームに戻る",
+      "back": "戻る",
+      "tryAgain": "もう一度試す",
+      "support": "問題を報告する",
+      "report": "問題を報告する"
+    },
+    "notFound": {
+      "title": "ページが見つかりません",
+      "description": "このページは存在しないか、リンクが古い可能性があります。アドレスをご確認いただくか、ダッシュボードへお進みください。"
+    },
+    "unauthorized": {
+      "title": "サインインが必要です",
+      "description": "セッションの期限が切れているか、このページを続けるにはサインインが必要です。",
+      "primary": "サインイン"
+    },
+    "forbidden": {
+      "title": "アクセスが拒否されました",
+      "description": "このアカウントには表示する権限がありません。誤りだと思われる場合は、サポートまでご連絡ください。"
+    },
+    "rateLimit": {
+      "title": "リクエストが多すぎます",
+      "description": "短時間にリクエストを送りすぎました。しばらくお待ちのうえ、もう一度お試しください。",
+      "retryIn": "{time}後に再試行"
+    },
+    "server": {
+      "title": "問題が発生しました",
+      "description": "サーバー側で問題が発生しました。もう一度お試しください。続く場合はサポートまでご連絡ください。"
+    },
+    "network": {
+      "title": "接続に問題があります",
+      "description": "Notoria に接続できませんでした。接続をご確認のうえ、もう一度お試しください。直前の操作は保存されていない可能性があります。"
+    },
+    "offline": {
+      "title": "オフラインです",
+      "description": "インターネット接続がないようです。再接続してからお試しください。未保存の変更はフォームに残っている場合があります。"
+    },
+    "timeout": {
+      "title": "リクエストがタイムアウトしました",
+      "description": "完了までに時間がかかりすぎました。もう一度お試しください。操作が完了していない可能性があります。"
+    },
+    "resources": {
+      "exercise": {
+        "title": "この演習が見つかりませんでした",
+        "description": "削除されたか、リンクが古い可能性があります。",
+        "primary": "演習に戻る"
+      },
+      "vocabulary": {
+        "title": "この語彙項目が見つかりませんでした",
+        "description": "削除されたか、リンクが古い可能性があります。",
+        "primary": "語彙に戻る"
+      },
+      "reading": {
+        "title": "この読解パッセージが見つかりませんでした",
+        "description": "削除されたか、リンクが古い可能性があります。",
+        "primary": "読解に戻る"
+      },
+      "writing": {
+        "title": "このライティング文書が見つかりませんでした",
+        "description": "削除されたか、リンクが古い可能性があります。",
+        "primary": "ライティングに戻る"
+      },
+      "theory": {
+        "title": "この理論ノートが見つかりませんでした",
+        "description": "削除されたか、リンクが古い可能性があります。",
+        "primary": "理論に戻る"
+      },
+      "listening": {
+        "title": "このリスニングレッスンが見つかりませんでした",
+        "description": "削除されたか、リンクが古い可能性があります。",
+        "primary": "リスニングに戻る"
+      },
+      "speaking": {
+        "title": "このスピーキングセッションが見つかりませんでした",
+        "description": "削除されたか、リンクが古い可能性があります。",
+        "primary": "スピーキングに戻る"
+      },
+      "folder": {
+        "title": "このフォルダが見つかりませんでした",
+        "description": "削除されたか、リンクが古い可能性があります。",
+        "primary": "ダッシュボードへ"
+      },
+      "generic": {
+        "title": "この項目が見つかりませんでした",
+        "description": "削除されたか、リンクが古い可能性があります。",
+        "primary": "ダッシュボードへ"
+      }
+    }
+  },
+  "admin": {
+    "nav": {
+      "admin": "管理",
+      "manage": "管理",
+      "overview": "概要",
+      "users": "ユーザー",
+      "workspaces": "ワークスペース",
+      "jobs": "ジョブ",
+      "audit": "監査",
+      "content": "コンテンツ",
+      "contentLibrary": "コンテンツライブラリ",
+      "backToApp": "アプリに戻る",
+      "openMenu": "管理メニューを開く",
+      "openAdmin": "管理ダッシュボード"
+    },
+    "modules": {
+      "vocabulary": "語彙",
+      "theory": "理論",
+      "writing": "ライティング",
+      "exercises": "演習",
+      "listening": "リスニング",
+      "reading": "読解",
+      "speaking": "スピーキング",
+      "inbox": "キャプチャ",
+      "folders": "フォルダ"
+    },
+    "common": {
+      "search": "検索",
+      "clear": "クリア",
+      "filter": "フィルター",
+      "previous": "前へ",
+      "next": "次へ",
+      "pageOf": "{totalPages} ページ中 {page} ページ",
+      "results": "{total} 件の結果",
+      "backToList": "一覧に戻る",
+      "empty": "結果がありません"
+    },
+    "overview": {
+      "title": "概要",
+      "description": "アプリデータからのライブ件数です。期間は UTC の暦日を使用します。アクティブ学習者は、ログインではなく学習アクティビティイベントのあるユニークユーザー数です。",
+      "metrics": "指標",
+      "recentAudit": "最近の管理操作",
+      "recentAuditLede": "監査ログからの最新の変更です。",
+      "viewAllAudit": "監査ログを表示",
+      "cards": {
+        "users": "ユーザー総数",
+        "newUsers7d": "新規ユーザー（7日）",
+        "newUsers30d": "新規ユーザー（30日）",
+        "activeUsers7d": "アクティブ学習者（7日）",
+        "workspaces": "ワークスペース",
+        "vocabulary": "語彙",
+        "theory": "理論",
+        "writing": "ライティング",
+        "exercises": "演習",
+        "listening": "リスニング",
+        "reading": "読解",
+        "speaking": "スピーキング",
+        "inbox": "キャプチャ",
+        "failedListening": "失敗したリスニング",
+        "failedImports": "失敗したインポート",
+        "runningJobs": "実行中のジョブロック",
+        "recentAudits7d": "監査エントリ（7日）"
+      }
+    },
+    "users": {
+      "title": "ユーザー",
+      "description": "アカウントの検索、役割の変更、アクセスの停止、確認付き削除ができます。",
+      "searchPlaceholder": "名前またはメールで検索…",
+      "empty": "この条件に一致するユーザーはいません。",
+      "selfGuard": "ご自身の管理者アカウントの変更や削除は、ここではできません。",
+      "columns": {
+        "user": "ユーザー",
+        "role": "役割",
+        "status": "ステータス",
+        "plan": "プラン",
+        "workspaces": "ワークスペース",
+        "created": "登録日"
+      },
+      "filters": {
+        "role": "役割",
+        "status": "ステータス",
+        "allRoles": "すべての役割",
+        "allStatuses": "すべてのステータス"
+      },
+      "status": {
+        "active": "有効",
+        "suspended": "停止中"
+      },
+      "fields": {
+        "id": "ユーザー ID",
+        "name": "名前",
+        "role": "役割",
+        "status": "ステータス",
+        "plan": "プラン",
+        "created": "登録日",
+        "updated": "更新日",
+        "emailVerified": "メール確認済み"
+      },
+      "detail": {
+        "account": "アカウント",
+        "usage": "コンテンツ件数",
+        "usageLede": "学習モジュール全体の所有レコードです。",
+        "actions": "アカウント操作",
+        "workspaces": "ワークスペース",
+        "workspacesLede": "このユーザーが所有する言語ワークスペースです。"
+      },
+      "actions": {
+        "saveProfile": "名前を保存",
+        "grantAdmin": "管理者を付与",
+        "revokeAdmin": "管理者を取り消し",
+        "suspend": "停止",
+        "restore": "復元",
+        "delete": "アカウントを削除"
+      },
+      "confirm": {
+        "grantAdmin": "このアカウントに管理者権限を付与しますか？",
+        "revokeAdmin": "管理者権限を取り消しますか？最後の有効な管理者である場合は失敗します。",
+        "suspend": "このアカウントを停止しますか？次の保護されたリクエストからアクセスできなくなります。",
+        "restore": "このアカウントを復元しますか？",
+        "delete": "このアカウントと関連する学習データを完全に削除しますか？この操作は取り消せません。"
+      }
+    },
+    "workspaces": {
+      "title": "ワークスペース",
+      "description": "言語ワークスペースの確認と管理を行います。",
+      "searchPlaceholder": "名前、言語、または所有者のメールで検索…",
+      "empty": "この条件に一致するワークスペースはありません。",
+      "createForUser": "このユーザーのワークスペースを作成",
+      "columns": {
+        "name": "名前",
+        "language": "言語",
+        "owner": "所有者",
+        "updated": "更新日"
+      },
+      "fields": {
+        "id": "ワークスペース ID",
+        "name": "名前",
+        "nameOptional": "任意の表示名",
+        "language": "言語",
+        "owner": "所有者",
+        "created": "作成日",
+        "updated": "更新日"
+      },
+      "detail": {
+        "description": "言語: {language}",
+        "meta": "ワークスペース",
+        "actions": "ワークスペース操作",
+        "actionsLede": "言語の編集は所有者ごとに一意である必要があります。削除すると、このワークスペース内の学習コンテンツがカスケード削除されます。"
+      },
+      "actions": {
+        "create": "ワークスペースを作成",
+        "save": "保存",
+        "delete": "ワークスペースを削除"
+      },
+      "confirm": {
+        "delete": "このワークスペースと中の学習コンテンツを、データベースのカスケードで削除しますか？"
+      }
+    },
+    "content": {
+      "description": "一覧にはメタデータのみが表示されます。識別子とステータスは行を開いて確認してください。トランスクリプトやノートなどの非公開本文は、既定では読み込まれません。",
+      "searchPlaceholder": "タイトルを検索…",
+      "empty": "この条件に一致するレコードはありません。",
+      "listeningMediaNote": "リスニングレッスンを削除するとデータベース行が削除されます。外部メディアのクリーンアップはベストエフォートであり、この管理操作では実行されません。",
+      "columns": {
+        "title": "タイトル",
+        "status": "ステータス",
+        "owner": "所有者",
+        "workspace": "ワークスペース",
+        "updated": "更新日"
+      },
+      "fields": {
+        "id": "ID",
+        "status": "ステータス",
+        "errorCode": "エラーコード",
+        "owner": "所有者",
+        "workspace": "ワークスペース",
+        "created": "作成日",
+        "updated": "更新日"
+      },
+      "detail": {
+        "description": "メタデータの確認です。非公開本文は自動では読み込まれません。",
+        "meta": "レコード",
+        "metaLede": "識別子とステータスのみです。",
+        "actions": "操作"
+      },
+      "actions": {
+        "delete": "レコードを削除"
+      },
+      "confirm": {
+        "delete": "このレコードを削除しますか？関連する子行はデータベースのカスケード／null 設定ルールに従います。"
+      }
+    },
+    "jobs": {
+      "title": "ジョブ",
+      "description": "実行中のロックと失敗した処理レコードです。ステータスは読み取り専用です。失敗したジョブを成功と見せかけないでください。",
+      "searchPlaceholder": "タイトルで絞り込み…",
+      "empty": "この条件に一致するジョブはありません。",
+      "buckets": {
+        "attention": "要対応",
+        "running": "実行中",
+        "failed": "失敗",
+        "all": "すべて",
+        "runningLocks": "実行中のロック",
+        "failedLocks": "失敗したロック",
+        "failedListening": "失敗したリスニング",
+        "failedImports": "失敗したインポート"
+      },
+      "filters": {
+        "kind": "種類",
+        "allKinds": "すべての種類"
+      },
+      "kinds": {
+        "ai_lock": "AI ロック",
+        "listening": "リスニング",
+        "exercise_import": "演習インポート",
+        "lock": "AI ロック",
+        "import": "演習インポート"
+      },
+      "columns": {
+        "kind": "種類",
+        "title": "タイトル",
+        "status": "ステータス",
+        "error": "エラー",
+        "owner": "所有者",
+        "updated": "更新日"
+      }
+    },
+    "audit": {
+      "title": "監査ログ",
+      "description": "管理操作の読み取り専用履歴です。認証情報や非公開本文はここに保存されません。",
+      "searchPlaceholder": "操作、エンティティ、または実行者のメールで検索…",
+      "empty": "監査エントリはまだありません。",
+      "columns": {
+        "when": "日時",
+        "actor": "実行者",
+        "action": "操作",
+        "entity": "エンティティ",
+        "success": "結果"
+      },
+      "success": {
+        "yes": "OK",
+        "no": "失敗"
+      }
+    },
+    "errors": {
+      "UNKNOWN": "問題が発生しました。もう一度お試しください。",
+      "LAST_ADMIN": "最後の有効な管理者は変更できません。",
+      "CANNOT_DEMOTE_SELF": "ご自身の管理者アカウントを降格することはできません。",
+      "CANNOT_SUSPEND_SELF": "ご自身のアカウントを停止することはできません。",
+      "CANNOT_DELETE_SELF": "ご自身のアカウントを削除することはできません。",
+      "USER_NOT_FOUND": "ユーザーが見つかりません。",
+      "WORKSPACE_NOT_FOUND": "ワークスペースが見つかりません。",
+      "WORKSPACE_LANGUAGE_EXISTS": "このユーザーには、その言語のワークスペースがすでにあります。",
+      "INVALID_LANGUAGE": "無効な言語コードです。",
+      "CONTENT_NOT_FOUND": "レコードが見つかりません。",
+      "INVALID_CONTENT_MODULE": "不明なコンテンツモジュールです。"
+    }
+  }
+}

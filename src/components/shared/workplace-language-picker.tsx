@@ -82,6 +82,7 @@ export function WorkplaceLanguagePicker({
   const groups = useMemo(() => groupLanguagesByRegion(filtered), [filtered]);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     if (!open) setQuery("");
   }, [open]);
 

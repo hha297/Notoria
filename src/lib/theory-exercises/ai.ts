@@ -399,9 +399,216 @@ export async function generateAiTheoryExercises(input: {
 
 function resolveUiLocaleFromLanguageName(languageName: string): AppLocale {
   const normalized = languageName.trim().toLowerCase();
+  if (
+    normalized.startsWith("ar") ||
+    normalized.includes("arabic") ||
+    normalized.includes("عربي")
+  ) {
+    return "ar";
+  }
+  if (
+    normalized.startsWith("be") ||
+    normalized.includes("belarusian") ||
+    normalized.includes("belarusan") ||
+    normalized.includes("беларуск")
+  ) {
+    return "be";
+  }
+  if (
+    normalized.startsWith("bg") ||
+    normalized.includes("bulgarian") ||
+    normalized.includes("българ")
+  ) {
+    return "bg";
+  }
+  if (
+    normalized.startsWith("bs") ||
+    normalized.includes("bosnian") ||
+    normalized.includes("bosanski")
+  ) {
+    return "bs";
+  }
+  if (
+    normalized.startsWith("cs") ||
+    normalized.includes("czech") ||
+    normalized.includes("čeština") ||
+    normalized.includes("cestina")
+  ) {
+    return "cs";
+  }
+  if (
+    normalized.startsWith("da") ||
+    normalized.includes("danish") ||
+    normalized.includes("dansk")
+  ) {
+    return "da";
+  }
+  if (normalized.startsWith("de") || normalized.includes("german") || normalized.includes("deutsch")) {
+    return "de";
+  }
+  if (
+    normalized.startsWith("el") ||
+    normalized.includes("greek") ||
+    normalized.includes("ελλην")
+  ) {
+    return "el";
+  }
   if (normalized.startsWith("fi")) return "fi";
+  if (
+    normalized.startsWith("hi") ||
+    normalized.includes("hindi") ||
+    normalized.includes("हिन्दी") ||
+    normalized.includes("हिंदी")
+  ) {
+    return "hi";
+  }
+  if (
+    normalized.startsWith("hu") ||
+    normalized.includes("hungarian") ||
+    normalized.includes("magyar")
+  ) {
+    return "hu";
+  }
+  if (
+    normalized.startsWith("hy") ||
+    normalized.includes("armenian") ||
+    normalized.includes("հայերեն") ||
+    normalized.includes("hayeren")
+  ) {
+    return "hy";
+  }
+  if (
+    normalized === "id" ||
+    normalized.startsWith("id ") ||
+    normalized.includes("indonesian") ||
+    normalized.includes("bahasa indonesia")
+  ) {
+    return "id";
+  }
+  if (
+    normalized.startsWith("es") ||
+    normalized.includes("spanish") ||
+    normalized.includes("español") ||
+    normalized.includes("espanol")
+  ) {
+    return "es";
+  }
+  if (
+    normalized.startsWith("fr") ||
+    normalized.includes("french") ||
+    normalized.includes("français") ||
+    normalized.includes("francais")
+  ) {
+    return "fr";
+  }
+  if (
+    normalized.startsWith("it") ||
+    normalized.includes("italian") ||
+    normalized.includes("italiano")
+  ) {
+    return "it";
+  }
+  if (
+    normalized.startsWith("ja") ||
+    normalized.includes("japanese") ||
+    normalized.includes("日本語")
+  ) {
+    return "ja";
+  }
+  if (
+    normalized.startsWith("ko") ||
+    normalized.includes("korean") ||
+    normalized.includes("한국")
+  ) {
+    return "ko";
+  }
+  if (
+    normalized.startsWith("nl") ||
+    normalized.includes("dutch") ||
+    normalized.includes("nederlands")
+  ) {
+    return "nl";
+  }
+  if (
+    normalized.startsWith("no") ||
+    normalized.includes("norwegian") ||
+    normalized.includes("norsk") ||
+    normalized.includes("bokmål") ||
+    normalized.includes("bokmal")
+  ) {
+    return "no";
+  }
+  if (
+    normalized.startsWith("pl") ||
+    normalized.includes("polish") ||
+    normalized.includes("polski")
+  ) {
+    return "pl";
+  }
+  if (
+    normalized.startsWith("pt") ||
+    normalized.includes("portuguese") ||
+    normalized.includes("português") ||
+    normalized.includes("portugues")
+  ) {
+    return "pt";
+  }
+  if (
+    normalized.startsWith("ro") ||
+    normalized.includes("romanian") ||
+    normalized.includes("română") ||
+    normalized.includes("romana")
+  ) {
+    return "ro";
+  }
+  if (
+    normalized.startsWith("ru") ||
+    normalized.includes("russian") ||
+    normalized.includes("русский") ||
+    normalized.includes("russkiy")
+  ) {
+    return "ru";
+  }
+  if (
+    normalized.startsWith("sq") ||
+    normalized.includes("albanian") ||
+    normalized.includes("shqip")
+  ) {
+    return "sq";
+  }
   if (normalized.startsWith("sv") || normalized.includes("swedish")) return "sv";
+  if (
+    normalized.startsWith("th") ||
+    normalized.includes("thai") ||
+    normalized.includes("ไทย")
+  ) {
+    return "th";
+  }
+  if (
+    normalized.startsWith("tr") ||
+    normalized.includes("turkish") ||
+    normalized.includes("türk") ||
+    normalized.includes("turk")
+  ) {
+    return "tr";
+  }
+  if (
+    normalized.startsWith("uk") ||
+    normalized.includes("ukrainian") ||
+    normalized.includes("україн")
+  ) {
+    return "uk";
+  }
   if (normalized.startsWith("vi") || normalized.includes("vietnam")) return "vi";
+  if (
+    normalized.startsWith("zh") ||
+    normalized.includes("chinese") ||
+    normalized.includes("中文") ||
+    normalized.includes("汉语") ||
+    normalized.includes("漢語")
+  ) {
+    return "zh";
+  }
   return "en";
 }
 
