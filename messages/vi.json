@@ -2428,7 +2428,6 @@
     "transcriptLoadingDescription": "Các lượt hội thoại sẽ sớm xuất hiện tại đây.",
     "transcriptEmpty": "Không có bản ghi cho buổi nói này.",
     "transcriptError": "Bản ghi chưa đầy đủ",
-
     "status": {
       "upcoming": "Sẵn sàng",
       "active": "Đang gọi",
@@ -4685,6 +4684,264 @@
         "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
         "primary": "Về trang chính"
       }
+    }
+  },
+  "admin": {
+    "nav": {
+      "admin": "Admin",
+      "manage": "Manage",
+      "overview": "Overview",
+      "users": "Users",
+      "workspaces": "Workspaces",
+      "jobs": "Jobs",
+      "audit": "Audit",
+      "content": "Content",
+      "contentLibrary": "Content library",
+      "backToApp": "Back to app",
+      "openMenu": "Open admin menu",
+      "openAdmin": "Admin dashboard"
+    },
+    "modules": {
+      "vocabulary": "Vocabulary",
+      "theory": "Theory",
+      "writing": "Writing",
+      "exercises": "Exercises",
+      "listening": "Listening",
+      "reading": "Reading",
+      "speaking": "Speaking",
+      "inbox": "Capture",
+      "folders": "Folders"
+    },
+    "common": {
+      "search": "Search",
+      "clear": "Clear",
+      "filter": "Filter",
+      "previous": "Previous",
+      "next": "Next",
+      "pageOf": "Page {page} of {totalPages}",
+      "results": "{total} results",
+      "backToList": "Back to list",
+      "empty": "No results"
+    },
+    "overview": {
+      "title": "Overview",
+      "description": "Live counts from application data. Time ranges use UTC calendar days. Active learners count distinct users with learning activity events — not logins.",
+      "metrics": "Metrics",
+      "recentAudit": "Recent admin actions",
+      "recentAuditLede": "Latest mutations from the audit trail.",
+      "viewAllAudit": "View audit log",
+      "cards": {
+        "users": "Total users",
+        "newUsers7d": "New users (7d)",
+        "newUsers30d": "New users (30d)",
+        "activeUsers7d": "Active learners (7d)",
+        "workspaces": "Workspaces",
+        "vocabulary": "Vocabulary",
+        "theory": "Theory",
+        "writing": "Writing",
+        "exercises": "Exercises",
+        "listening": "Listening",
+        "reading": "Reading",
+        "speaking": "Speaking",
+        "inbox": "Capture",
+        "failedListening": "Failed listening",
+        "failedImports": "Failed imports",
+        "runningJobs": "Running job locks",
+        "recentAudits7d": "Audit entries (7d)"
+      }
+    },
+    "users": {
+      "title": "Users",
+      "description": "Search accounts, change roles, suspend access, or delete with confirmation.",
+      "searchPlaceholder": "Search name or email…",
+      "empty": "No users match these filters.",
+      "selfGuard": "Safeguards prevent changing or deleting your own admin account here.",
+      "columns": {
+        "user": "User",
+        "role": "Role",
+        "status": "Status",
+        "plan": "Plan",
+        "workspaces": "Workspaces",
+        "created": "Registered"
+      },
+      "filters": {
+        "role": "Role",
+        "status": "Status",
+        "allRoles": "Any role",
+        "allStatuses": "Any status"
+      },
+      "status": {
+        "active": "Active",
+        "suspended": "Suspended"
+      },
+      "fields": {
+        "id": "User id",
+        "name": "Name",
+        "role": "Role",
+        "status": "Status",
+        "plan": "Plan",
+        "created": "Registered",
+        "updated": "Updated",
+        "emailVerified": "Email verified"
+      },
+      "detail": {
+        "account": "Account",
+        "usage": "Content counts",
+        "usageLede": "Owned records across learning modules.",
+        "actions": "Account actions",
+        "workspaces": "Workspaces",
+        "workspacesLede": "Language workspaces owned by this user."
+      },
+      "actions": {
+        "saveProfile": "Save name",
+        "grantAdmin": "Grant admin",
+        "revokeAdmin": "Revoke admin",
+        "suspend": "Suspend",
+        "restore": "Restore",
+        "delete": "Delete account"
+      },
+      "confirm": {
+        "grantAdmin": "Grant admin access to this account?",
+        "revokeAdmin": "Revoke admin access? This fails if they are the last active admin.",
+        "suspend": "Suspend this account? They lose access on the next protected request.",
+        "restore": "Restore this account?",
+        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone."
+      }
+    },
+    "workspaces": {
+      "title": "Workspaces",
+      "description": "Inspect and manage language workspaces.",
+      "searchPlaceholder": "Search name, language, or owner email…",
+      "empty": "No workspaces match these filters.",
+      "createForUser": "Create workspace for this user",
+      "columns": {
+        "name": "Name",
+        "language": "Language",
+        "owner": "Owner",
+        "updated": "Updated"
+      },
+      "fields": {
+        "id": "Workspace id",
+        "name": "Name",
+        "nameOptional": "Optional display name",
+        "language": "Language",
+        "owner": "Owner",
+        "created": "Created",
+        "updated": "Updated"
+      },
+      "detail": {
+        "description": "Language: {language}",
+        "meta": "Workspace",
+        "actions": "Workspace actions",
+        "actionsLede": "Editing language must stay unique per owner. Deletion cascades learning content in this workspace."
+      },
+      "actions": {
+        "create": "Create workspace",
+        "save": "Save",
+        "delete": "Delete workspace"
+      },
+      "confirm": {
+        "delete": "Delete this workspace and all learning content inside it via database cascades?"
+      }
+    },
+    "content": {
+      "description": "Lists show metadata only. Open a row for identifiers and status. Private bodies (transcripts, notes) are not loaded here by default.",
+      "searchPlaceholder": "Search titles…",
+      "empty": "No records match these filters.",
+      "listeningMediaNote": "Deleting a listening lesson removes the database row. External media cleanup is best-effort and is not performed by this admin action.",
+      "columns": {
+        "title": "Title",
+        "status": "Status",
+        "owner": "Owner",
+        "workspace": "Workspace",
+        "updated": "Updated"
+      },
+      "fields": {
+        "id": "Id",
+        "status": "Status",
+        "errorCode": "Error code",
+        "owner": "Owner",
+        "workspace": "Workspace",
+        "created": "Created",
+        "updated": "Updated"
+      },
+      "detail": {
+        "description": "Metadata inspection. Private bodies are not auto-loaded.",
+        "meta": "Record",
+        "metaLede": "Identifiers and status only.",
+        "actions": "Actions"
+      },
+      "actions": {
+        "delete": "Delete record"
+      },
+      "confirm": {
+        "delete": "Delete this record? Related child rows follow database cascade / set-null rules."
+      }
+    },
+    "jobs": {
+      "title": "Jobs",
+      "description": "Running locks and failed processing records. Statuses are read-only — do not force a failed job to appear successful.",
+      "searchPlaceholder": "Filter by title…",
+      "empty": "No jobs match these filters.",
+      "buckets": {
+        "attention": "Needs attention",
+        "running": "Running",
+        "failed": "Failed",
+        "all": "All",
+        "runningLocks": "Running locks",
+        "failedLocks": "Failed locks",
+        "failedListening": "Failed listening",
+        "failedImports": "Failed imports"
+      },
+      "filters": {
+        "kind": "Kind",
+        "allKinds": "All kinds"
+      },
+      "kinds": {
+        "ai_lock": "AI lock",
+        "listening": "Listening",
+        "exercise_import": "Exercise import",
+        "lock": "AI lock",
+        "import": "Exercise import"
+      },
+      "columns": {
+        "kind": "Kind",
+        "title": "Title",
+        "status": "Status",
+        "error": "Error",
+        "owner": "Owner",
+        "updated": "Updated"
+      }
+    },
+    "audit": {
+      "title": "Audit log",
+      "description": "Read-only history of administrative mutations. Credentials and private bodies are never stored here.",
+      "searchPlaceholder": "Search action, entity, or actor email…",
+      "empty": "No audit entries yet.",
+      "columns": {
+        "when": "When",
+        "actor": "Actor",
+        "action": "Action",
+        "entity": "Entity",
+        "success": "Result"
+      },
+      "success": {
+        "yes": "OK",
+        "no": "Failed"
+      }
+    },
+    "errors": {
+      "UNKNOWN": "Something went wrong. Try again.",
+      "LAST_ADMIN": "Cannot change the last active admin.",
+      "CANNOT_DEMOTE_SELF": "You cannot demote your own admin account.",
+      "CANNOT_SUSPEND_SELF": "You cannot suspend your own account.",
+      "CANNOT_DELETE_SELF": "You cannot delete your own account.",
+      "USER_NOT_FOUND": "User not found.",
+      "WORKSPACE_NOT_FOUND": "Workspace not found.",
+      "WORKSPACE_LANGUAGE_EXISTS": "This user already has a workspace for that language.",
+      "INVALID_LANGUAGE": "Invalid language code.",
+      "CONTENT_NOT_FOUND": "Record not found.",
+      "INVALID_CONTENT_MODULE": "Unknown content module."
     }
   }
 }

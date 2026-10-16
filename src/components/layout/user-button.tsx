@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { LogOut, User } from "lucide-react";
+import { LogOut, Shield, User } from "lucide-react";
 import { signOut } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { UserAvatar } from "@/components/account/user-avatar";
@@ -26,6 +26,7 @@ type UserButtonProps = {
   image?: string | null;
   isPro?: boolean;
   plan?: "free" | "pro" | "premium";
+  isAdmin?: boolean;
   onNavigate?: () => void;
   active?: boolean;
 };
@@ -36,12 +37,14 @@ export function UserButton({
   image,
   isPro = false,
   plan = "free",
+  isAdmin = false,
   onNavigate,
   active = false,
 }: UserButtonProps) {
   const router = useRouter();
   const t = useTranslations("auth");
   const tb = useTranslations("billing");
+  const ta = useTranslations("admin.nav");
 
   const planBadge =
     plan === "premium"
@@ -113,6 +116,14 @@ export function UserButton({
             <User className="size-4" />
             {t("accountSettings")}
           </DropdownMenuItem>
+          {isAdmin ? (
+            <DropdownMenuItem
+              render={<Link href="/admin" onClick={onNavigate} />}
+            >
+              <Shield className="size-4" />
+              {ta("openAdmin")}
+            </DropdownMenuItem>
+          ) : null}
           <DropdownMenuItem onClick={handleSignOut}>
             <LogOut className="size-4" />
             {t("signOut")}

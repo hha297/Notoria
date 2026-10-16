@@ -38,6 +38,7 @@ type SidebarUser = {
   userImage?: string | null;
   isPro: boolean;
   plan: PlanId;
+  isAdmin?: boolean;
 };
 
 type NavMatch = "exact" | "prefix";
@@ -210,6 +211,7 @@ export function SidebarNav({
   userImage,
   isPro,
   plan,
+  isAdmin = false,
   layout = "panel",
 }: SidebarNavProps) {
   const pathname = usePathname();
@@ -331,6 +333,7 @@ export function SidebarNav({
             image={userImage}
             isPro={isPro}
             plan={plan}
+            isAdmin={isAdmin}
             onNavigate={onNavigate}
             active={pathname.startsWith("/account")}
           />

@@ -5,6 +5,8 @@ export default auth((request) => {
   const started = performance.now();
   const isLoggedIn = !!request.auth;
   const { pathname } = request.nextUrl;
+  const role = request.auth?.user?.role;
+  const suspended = Boolean(request.auth?.user?.suspendedAt);
 
   const isAuthRoute =
     pathname.startsWith("/sign-in") || pathname.startsWith("/sign-up");
@@ -28,6 +30,7 @@ export default auth((request) => {
     pathname.startsWith("/api/auth") ||
     pathname.startsWith("/api/stripe/webhook") ||
     pathname.startsWith("/api/stream/webhook");
+  const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
 
   try {
     if (!isLoggedIn && !isPublicRoute) {
@@ -36,7 +39,18 @@ export default auth((request) => {
       return Response.redirect(loginUrl);
     }
 
-    if (isLoggedIn && isAuthRoute) {
+    if (isLoggedIn && suspended && !isAuthRoute && !isPublicRoute) {
+      const loginUrl = new URL("/sign-in", request.nextUrl.origin);
+      loginUrl.searchParams.set("error", "AccountSuspended");
+      return Response.redirect(loginUrl);
+    }
+
+    if (isLoggedIn && isAuthRoute && !suspended) {
+      return Response.redirect(new URL("/", request.nextUrl.origin));
+    }
+
+    // First gate only — pages/actions still call requireAdmin().
+    if (isAdminRoute && isLoggedIn && role !== "ADMIN") {
       return Response.redirect(new URL("/", request.nextUrl.origin));
     }
   } finally {

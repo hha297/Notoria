@@ -48,6 +48,7 @@ type DashboardStudioProps = {
   userImage?: string | null;
   isPro: boolean;
   plan: PlanId;
+  isAdmin?: boolean;
 };
 
 export function DashboardStudio({
@@ -61,13 +62,14 @@ export function DashboardStudio({
   userImage,
   isPro,
   plan,
+  isAdmin = false,
 }: DashboardStudioProps) {
   const [navOpen, setNavOpen] = useState(false);
   const pathname = usePathname();
   const studioScene = studioSceneFromPath(pathname);
   const exerciseDetailSlug = exerciseDetailSlugFromPath(pathname);
   const t = useTranslations("nav");
-  const sidebarUser = { userName, userEmail, userImage, isPro, plan };
+  const sidebarUser = { userName, userEmail, userImage, isPro, plan, isAdmin };
   const stackRef = useRef<HTMLDivElement>(null);
   const chromeRef = useRef<HTMLElement>(null);
 

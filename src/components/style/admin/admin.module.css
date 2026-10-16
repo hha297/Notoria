@@ -1,0 +1,557 @@
+/* --- Admin chrome --- */
+.admin-shell {
+  display: flex;
+  min-height: 100svh;
+  background:
+    radial-gradient(
+      90% 55% at 0% -10%,
+      color-mix(in oklab, var(--module-home-fg) 14%, transparent),
+      transparent 58%
+    ),
+    radial-gradient(
+      70% 45% at 100% 0%,
+      color-mix(in oklab, var(--module-home-bg) 55%, transparent),
+      transparent 50%
+    ),
+    var(--background);
+  color: var(--ink);
+}
+
+.admin-sidebar {
+  position: sticky;
+  top: 0;
+  display: none;
+  width: 14.75rem;
+  height: 100svh;
+  flex-shrink: 0;
+  flex-direction: column;
+  gap: 0.85rem;
+  padding: 1rem 0.75rem 1.1rem;
+  border-right: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 88%, var(--ink));
+  background: color-mix(in oklab, var(--surface-elevated) 82%, transparent);
+  backdrop-filter: blur(10px);
+  overflow-y: auto;
+}
+
+@media (min-width: 1024px) {
+  .admin-sidebar {
+    display: flex;
+  }
+}
+
+.admin-brand {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.4rem 0.55rem 0.55rem;
+  color: var(--ink);
+  text-decoration: none;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 80%, transparent);
+}
+
+.admin-brand:hover {
+  opacity: 0.92;
+}
+
+.admin-brand-label {
+  font-family: var(--font-heading);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.admin-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  flex: 1;
+}
+
+.admin-nav-group {
+  margin-top: 0.55rem;
+}
+
+.admin-nav-group:first-child {
+  margin-top: 0;
+}
+
+.admin-nav-sub {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 0.25rem;
+  padding-left: 0.5rem;
+  border-left: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+}
+
+.admin-nav-sub .admin-nav-link {
+  min-height: 1.85rem;
+  padding-block: 0.25rem;
+  font-size: 0.8rem;
+  font-weight: 550;
+}
+
+.admin-nav-label {
+  margin: 0 0 0.3rem;
+  padding: 0 0.55rem;
+  font-family: var(--font-heading);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+.admin-nav-link {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  min-height: 2.05rem;
+  padding: 0.35rem 0.55rem;
+  border-radius: 0.55rem;
+  border: 1px solid transparent;
+  color: color-mix(in oklab, var(--ink) 78%, var(--muted-foreground));
+  font-size: 0.84rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition:
+    background-color 0.14s ease,
+    border-color 0.14s ease,
+    color 0.14s ease,
+    transform 0.14s ease;
+}
+
+.admin-nav-link:hover {
+  background: color-mix(in oklab, var(--module-home-fg) 9%, transparent);
+  color: var(--ink);
+}
+
+.admin-nav-link.is-active {
+  border-color: color-mix(in oklab, var(--module-home-fg) 28%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-home-fg) 14%, var(--surface-elevated));
+  color: var(--module-home-fg);
+  box-shadow: inset 2px 0 0 var(--module-home-fg);
+}
+
+.admin-main {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+}
+
+.admin-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 90%, var(--ink));
+  background: color-mix(in oklab, var(--surface-elevated) 70%, transparent);
+}
+
+@media (min-width: 1024px) {
+  .admin-topbar {
+    display: none;
+  }
+}
+
+.admin-content {
+  flex: 1;
+  padding: 1rem 0.9rem 1.75rem;
+}
+
+@media (min-width: 640px) {
+  .admin-content {
+    padding: 1.15rem 1.25rem 2rem;
+  }
+}
+
+.admin-page {
+  width: min(100%, 78rem);
+  margin-inline: auto;
+  display: grid;
+  gap: 0.85rem;
+}
+
+.admin-page-header {
+  display: grid;
+  gap: 0.55rem;
+  padding: 0.85rem 1rem;
+  border-radius: 0.9rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 16%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      120deg,
+      color-mix(in oklab, var(--module-home-fg) 10%, transparent),
+      transparent 55%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 78%, transparent);
+}
+
+@media (min-width: 720px) {
+  .admin-page-header {
+    grid-template-columns: 1fr auto;
+    align-items: end;
+  }
+}
+
+.admin-page-kicker {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: color-mix(in oklab, var(--module-home-fg) 75%, var(--muted-foreground));
+}
+
+.admin-page-title {
+  margin: 0.15rem 0 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.35rem, 2.1vw, 1.7rem);
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1.15;
+}
+
+.admin-page-lede {
+  margin: 0.35rem 0 0;
+  max-width: 42rem;
+  font-size: 0.88rem;
+  line-height: 1.45;
+  color: var(--muted-foreground);
+}
+
+.admin-page-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.admin-metrics {
+  display: grid;
+  gap: 0.55rem;
+  grid-template-columns: repeat(auto-fill, minmax(9.75rem, 1fr));
+}
+
+.admin-metric {
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+  min-height: 5.4rem;
+  padding: 0.8rem 0.85rem;
+  border-radius: 0.8rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 18%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      160deg,
+      color-mix(in oklab, var(--module-home-fg) 11%, transparent),
+      transparent 68%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 88%, transparent);
+  text-decoration: none;
+  color: inherit;
+  transition:
+    border-color 0.15s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.admin-metric:hover {
+  border-color: color-mix(in oklab, var(--module-home-fg) 38%, var(--hairline-cloud));
+  transform: translateY(-1px);
+  box-shadow: 0 8px 20px -16px color-mix(in oklab, var(--ink) 45%, transparent);
+}
+
+.admin-metric-label {
+  margin: 0;
+  font-size: 0.72rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  color: var(--muted-foreground);
+}
+
+.admin-metric-value {
+  margin: 0.15rem 0 0;
+  font-family: var(--font-heading);
+  font-size: 1.45rem;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+.admin-metric-hint {
+  margin-top: auto;
+  padding-top: 0.25rem;
+  font-size: 0.68rem;
+  line-height: 1.3;
+  color: var(--muted-foreground);
+}
+
+.admin-panel {
+  border-radius: 0.85rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 14%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--surface-elevated) 86%, transparent);
+  overflow: hidden;
+}
+
+.admin-panel-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 0.65rem;
+  padding: 0.75rem 0.9rem;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+  background: color-mix(in oklab, var(--module-home-bg) 18%, transparent);
+}
+
+.admin-panel-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: 0.98rem;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+}
+
+.admin-panel-lede {
+  margin: 0.2rem 0 0;
+  font-size: 0.8rem;
+  color: var(--muted-foreground);
+}
+
+.admin-panel-body {
+  padding: 0.55rem 0.7rem 0.75rem;
+}
+
+.admin-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+  width: 100%;
+}
+
+.admin-search {
+  display: flex;
+  flex: 1;
+  min-width: min(100%, 14rem);
+  gap: 0.4rem;
+}
+
+.admin-search input {
+  flex: 1;
+  height: 2.15rem;
+}
+
+.admin-table-wrap {
+  overflow-x: auto;
+  border-radius: 0.55rem;
+  border: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 85%, transparent);
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.84rem;
+}
+
+.admin-table th {
+  padding: 0.55rem 0.7rem;
+  text-align: left;
+  font-family: var(--font-heading);
+  font-size: 0.66rem;
+  font-weight: 700;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+  background: color-mix(in oklab, var(--module-home-bg) 22%, var(--surface-elevated));
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 90%, transparent);
+  white-space: nowrap;
+}
+
+.admin-table td {
+  padding: 0.58rem 0.7rem;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 78%, transparent);
+  color: var(--ink);
+  vertical-align: middle;
+}
+
+.admin-table tbody tr:nth-child(even) td {
+  background: color-mix(in oklab, var(--module-home-bg) 10%, transparent);
+}
+
+.admin-table tbody tr:hover td {
+  background: color-mix(in oklab, var(--module-home-fg) 7%, transparent);
+}
+
+.admin-table tr:last-child td {
+  border-bottom: 0;
+}
+
+.admin-table a {
+  color: var(--module-home-fg);
+  font-weight: 650;
+  text-decoration: none;
+}
+
+.admin-table a:hover {
+  text-decoration: underline;
+}
+
+.admin-empty {
+  padding: 1.25rem 0.75rem;
+  text-align: left;
+  color: var(--muted-foreground);
+  font-size: 0.88rem;
+}
+
+.admin-pagination {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.55rem;
+  margin-top: 0.55rem;
+  padding-top: 0.55rem;
+  border-top: 1px solid
+    color-mix(in oklab, var(--hairline-cloud) 80%, transparent);
+}
+
+.admin-pagination-meta {
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+}
+
+.admin-pagination-controls {
+  display: flex;
+  gap: 0.35rem;
+}
+
+.admin-dl {
+  display: grid;
+  gap: 0.55rem;
+}
+
+@media (min-width: 640px) {
+  .admin-dl {
+    grid-template-columns: 8.5rem 1fr;
+    gap: 0.4rem 0.85rem;
+  }
+}
+
+.admin-dl dt {
+  margin: 0;
+  font-size: 0.76rem;
+  font-weight: 650;
+  color: var(--muted-foreground);
+}
+
+.admin-dl dd {
+  margin: 0;
+  font-size: 0.88rem;
+  color: var(--ink);
+  word-break: break-word;
+}
+
+.admin-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+}
+
+.admin-mobile-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0.5rem;
+}
+
+.admin-muted {
+  color: var(--muted-foreground);
+  font-size: 0.84rem;
+}
+
+.admin-mono {
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  font-size: 0.78rem;
+}
+
+.admin-badge-warn {
+  color: color-mix(in oklab, var(--destructive) 80%, var(--ink));
+}
+
+.admin-form-grid {
+  display: grid;
+  gap: 0.65rem;
+}
+
+@media (min-width: 640px) {
+  .admin-form-grid.cols-2 {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.admin-field {
+  display: grid;
+  gap: 0.3rem;
+}
+
+.admin-field label {
+  font-size: 0.78rem;
+  font-weight: 650;
+  color: var(--muted-foreground);
+}
+
+.admin-content-modules {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+}
+
+.admin-content-module {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 2rem;
+  padding: 0.3rem 0.7rem;
+  border-radius: 999px;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 18%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--surface-elevated) 88%, transparent);
+  color: var(--ink);
+  font-size: 0.78rem;
+  font-weight: 650;
+  text-decoration: none;
+  transition:
+    background-color 0.14s ease,
+    border-color 0.14s ease,
+    color 0.14s ease;
+}
+
+.admin-content-module:hover {
+  border-color: color-mix(in oklab, var(--module-home-fg) 34%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-home-fg) 10%, var(--surface-elevated));
+}
+
+.admin-content-module.is-active {
+  border-color: color-mix(in oklab, var(--module-home-fg) 42%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-home-fg) 16%, var(--surface-elevated));
+  color: var(--module-home-fg);
+}
