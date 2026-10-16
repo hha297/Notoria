@@ -7,7 +7,7 @@ import { z } from "zod";
 import { db } from "@/db";
 import { workspaces } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
-import { isValidLanguageCode } from "@/lib/languages";
+import { isSelectableLanguageCode } from "@/lib/languages";
 import { getWorkspaceActivitySnapshot } from "@/lib/onboarding/snapshot";
 import type { WorkspaceActivitySnapshot } from "@/lib/onboarding/requirements";
 import { resolveWorkspaceName } from "@/lib/workspace-names";
@@ -41,7 +41,7 @@ export async function completeFirstLanguageOnboarding(
 ): Promise<CompleteFirstLanguageResult> {
   const parsed = completeSchema.parse(data);
 
-  if (!isValidLanguageCode(parsed.language)) {
+  if (!isSelectableLanguageCode(parsed.language)) {
     throw new Error("INVALID_LANGUAGE");
   }
 

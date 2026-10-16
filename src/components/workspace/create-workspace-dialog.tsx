@@ -6,6 +6,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { CountryFlag } from "@/components/layout/country-flag";
+import { LanguageSelect } from "@/components/shared/language-select";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,15 +17,6 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import { createWorkspace } from "@/lib/actions/workspaces";
 import styles from "@/components/style/workspace/sheet.module.css";
 import { mx } from "@/lib/css-module";
@@ -47,7 +39,7 @@ export function CreateWorkspaceDialog({
   const tc = useTranslations("common");
   const te = useTranslations("errors");
   const [name, setName] = useState("");
-  const [language, setLanguage] = useState(
+  const [language, setLanguage] = useState<string>(
     () =>
       WORKPLACE_LANGUAGES.find((item) => !existingLanguages.includes(item.code))
         ?.code ?? "en",
@@ -151,41 +143,14 @@ export function CreateWorkspaceDialog({
 
           <div className={mx(styles, "workspace-sheet-field")}>
             <Label className={mx(styles, "workspace-sheet-label")}>{t("language")}</Label>
-            <Select
-              value={selectedCode}
-              onValueChange={(value) => value && setLanguage(value)}
+            <LanguageSelect
+              value={selectedCode ?? ""}
+              onValueChange={setLanguage}
+              languages={availableLanguages}
               disabled={isPending || availableLanguages.length === 0}
-            >
-              <SelectTrigger className={mx(styles, "workspace-sheet-input w-full")}>
-                <SelectValue>
-                  {selectedLanguage ? (
-                    <span className="flex items-center gap-2.5">
-                      <CountryFlag
-                        code={selectedLanguage.flagCode}
-                        className="h-3.5 w-5 shrink-0"
-                      />
-                      <span className="text-ink">{selectedLanguage.name}</span>
-                    </span>
-                  ) : null}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent className="max-h-72">
-                <SelectGroup>
-                  <SelectLabel>{t("language")}</SelectLabel>
-                  {availableLanguages.map((item) => (
-                    <SelectItem key={item.code} value={item.code}>
-                      <span className="flex items-center gap-2.5">
-                        <CountryFlag
-                          code={item.flagCode}
-                          className="h-3.5 w-5 shrink-0"
-                        />
-                        {item.name}
-                      </span>
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+              className={mx(styles, "workspace-sheet-input w-full")}
+              aria-label={t("language")}
+            />
             {selectedLanguage ? (
               <p className={mx(styles, "workspace-sheet-hint")}>
                 <CountryFlag

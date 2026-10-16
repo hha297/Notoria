@@ -9,7 +9,12 @@ import { Logo, LogoWordmark } from "@/components/ui/logo";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { completeFirstLanguageOnboarding } from "@/lib/actions/onboarding";
-import { WORKPLACE_LANGUAGES, type WorkplaceLanguage } from "@/lib/languages";
+import {
+  filterLanguagesByQuery,
+  groupLanguagesByRegion,
+  WORKPLACE_LANGUAGES,
+  type WorkplaceLanguage,
+} from "@/lib/languages";
 import {
   requestFirstEntryOnboarding,
   requestWorkspaceOnboarding,
@@ -25,23 +30,20 @@ import { cn } from "@/lib/utils";
 export function LearningLanguageOnboarding() {
   const router = useRouter();
   const t = useTranslations("learningOnboarding");
+  const tWorkspace = useTranslations("workspace");
   const [query, setQuery] = useState("");
   const [selected, setSelected] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [isPending, startTransition] = useTransition();
 
-  const languages = useMemo(() => {
-    const normalized = query.trim().toLowerCase();
-    if (!normalized) {
-      return WORKPLACE_LANGUAGES;
-    }
-
-    return WORKPLACE_LANGUAGES.filter(
-      (language) =>
-        language.name.toLowerCase().includes(normalized) ||
-        language.code.toLowerCase().includes(normalized),
-    );
-  }, [query]);
+  const languageGroups = useMemo(
+    () => groupLanguagesByRegion(filterLanguagesByQuery(WORKPLACE_LANGUAGES, query)),
+    [query],
+  );
+  const resultCount = languageGroups.reduce(
+    (count, group) => count + group.languages.length,
+    0,
+  );
 
   const selectedLanguage = selected
     ? WORKPLACE_LANGUAGES.find((language) => language.code === selected)
@@ -123,27 +125,38 @@ export function LearningLanguageOnboarding() {
           </div>
 
           <div
-            className={mx(styles, "learning-onboarding-list grid max-h-[min(42svh,22rem)] grid-cols-1 gap-2 overflow-y-auto overflow-x-hidden [scrollbar-gutter:stable] py-0.5 sm:max-h-[min(48svh,26rem)] sm:grid-cols-2")}
+            className={mx(styles, "learning-onboarding-list max-h-[min(42svh,22rem)] overflow-y-auto overflow-x-hidden [scrollbar-gutter:stable] py-0.5 sm:max-h-[min(48svh,26rem)]")}
             role="radiogroup"
             aria-label={t("title")}
           >
-            {languages.length === 0 ? (
-              <p className="col-span-full py-8 text-center text-sm text-muted-foreground">
+            {resultCount === 0 ? (
+              <p className="py-8 text-center text-sm text-muted-foreground">
                 {t("noResults")}
               </p>
             ) : (
-              languages.map((language) => (
-                <LanguageOption
-                  key={language.code}
-                  language={language}
-                  selected={selected === language.code}
-                  disabled={isPending}
-                  onSelect={() => {
-                    setSelected(language.code);
-                    setError(null);
-                  }}
-                />
-              ))
+              <div className="flex flex-col gap-4">
+                {languageGroups.map((group) => (
+                  <section key={group.region} className="flex flex-col gap-2">
+                    <h3 className="sticky top-0 z-[1] bg-background/95 px-0.5 py-1 text-[0.72rem] font-bold tracking-[0.08em] text-muted-foreground uppercase backdrop-blur-sm">
+                      {tWorkspace(`languageRegions.${group.region}`)}
+                    </h3>
+                    <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
+                      {group.languages.map((language) => (
+                        <LanguageOption
+                          key={language.code}
+                          language={language}
+                          selected={selected === language.code}
+                          disabled={isPending}
+                          onSelect={() => {
+                            setSelected(language.code);
+                            setError(null);
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </section>
+                ))}
+              </div>
             )}
           </div>
 

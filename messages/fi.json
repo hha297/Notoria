@@ -303,6 +303,15 @@
     "language": "Työtilan kieli",
     "languageHint": "Yksi työtila per kieli.",
     "languageExists": "Tälle kielelle on jo työtila.",
+    "languageSearchPlaceholder": "Hae kieliä…",
+    "languageSearchEmpty": "Kieliä ei löytynyt",
+    "languageRegions": {
+      "europe": "Eurooppa",
+      "asia": "Aasia",
+      "africa": "Afrikka",
+      "americas": "Amerikka",
+      "oceania": "Oseania"
+    },
     "created": "Työtila luotu",
     "updated": "Työtila päivitetty",
     "deleted": "Työtila poistettu",

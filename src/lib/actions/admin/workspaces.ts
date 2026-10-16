@@ -7,7 +7,10 @@ import { db } from "@/db";
 import { users, workspaces } from "@/db/schema";
 import { sanitizeAdminMeta, writeAdminAudit } from "@/lib/admin/audit";
 import { requireAdmin } from "@/lib/auth/require-admin";
-import { isValidLanguageCode } from "@/lib/languages";
+import {
+  isLegacyLanguageCode,
+  isSelectableLanguageCode,
+} from "@/lib/languages";
 import { resolveWorkspaceName } from "@/lib/workspace-names";
 
 const createSchema = z.object({
@@ -32,7 +35,7 @@ function revalidateWorkspace(id?: string) {
 export async function adminCreateWorkspace(input: z.infer<typeof createSchema>) {
   const admin = await requireAdmin();
   const parsed = createSchema.parse(input);
-  if (!isValidLanguageCode(parsed.language)) {
+  if (!isSelectableLanguageCode(parsed.language)) {
     throw new Error("INVALID_LANGUAGE");
   }
 
@@ -84,14 +87,17 @@ export async function adminCreateWorkspace(input: z.infer<typeof createSchema>) 
 export async function adminUpdateWorkspace(input: z.infer<typeof updateSchema>) {
   const admin = await requireAdmin();
   const parsed = updateSchema.parse(input);
-  if (!isValidLanguageCode(parsed.language)) {
-    throw new Error("INVALID_LANGUAGE");
-  }
 
   const before = await db.query.workspaces.findFirst({
     where: eq(workspaces.id, parsed.workspaceId),
   });
   if (!before) throw new Error("WORKSPACE_NOT_FOUND");
+
+  const keepingLegacy =
+    parsed.language === before.language && isLegacyLanguageCode(parsed.language);
+  if (!isSelectableLanguageCode(parsed.language) && !keepingLegacy) {
+    throw new Error("INVALID_LANGUAGE");
+  }
 
   const conflict = await db.query.workspaces.findFirst({
     where: and(

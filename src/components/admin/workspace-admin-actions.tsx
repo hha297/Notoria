@@ -3,6 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
+import { LanguageSelect } from "@/components/shared/language-select";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -84,19 +85,13 @@ export function WorkspaceAdminActions(props: WorkspaceAdminActionsProps) {
         </div>
         <div className={mx(styles, "admin-field")}>
           <Label htmlFor="admin-ws-lang">{t("workspaces.fields.language")}</Label>
-          <select
+          <LanguageSelect
             id="admin-ws-lang"
-            className="flex h-10 w-full rounded-md border border-page-accent-border control-surface px-3 text-sm"
             value={language}
-            onChange={(e) => setLanguage(e.target.value)}
+            onValueChange={setLanguage}
             disabled={pending}
-          >
-            {WORKPLACE_LANGUAGES.map((lang) => (
-              <option key={lang.code} value={lang.code}>
-                {lang.name}
-              </option>
-            ))}
-          </select>
+            aria-label={t("workspaces.fields.language")}
+          />
         </div>
       </div>
 

@@ -226,6 +226,7 @@ function isInventedParadigmHeading(text: string, word?: string | null) {
   const languageLabels = new Set(
     WORKPLACE_LANGUAGES.flatMap((language) => [
       language.name.trim().toLowerCase(),
+      language.englishName.trim().toLowerCase(),
       language.code.trim().toLowerCase(),
     ]),
   );

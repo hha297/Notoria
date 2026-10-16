@@ -303,6 +303,15 @@
     "language": "Arbetsytans språk",
     "languageHint": "En arbetsyta per språk. Du kan inte skapa dubbletter.",
     "languageExists": "En arbetsyta för detta språk finns redan.",
+    "languageSearchPlaceholder": "Sök språk…",
+    "languageSearchEmpty": "Inga språk hittades",
+    "languageRegions": {
+      "europe": "Europa",
+      "asia": "Asien",
+      "africa": "Afrika",
+      "americas": "Amerika",
+      "oceania": "Oceanien"
+    },
     "created": "Arbetsyta skapad",
     "updated": "Arbetsyta uppdaterad",
     "deleted": "Arbetsyta raderad",

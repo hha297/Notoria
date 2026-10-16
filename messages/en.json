@@ -303,6 +303,15 @@
     "language": "Workspace language",
     "languageHint": "One workspace per language. You cannot create duplicates.",
     "languageExists": "A workspace for this language already exists.",
+    "languageSearchPlaceholder": "Search languages…",
+    "languageSearchEmpty": "No languages found",
+    "languageRegions": {
+      "europe": "Europe",
+      "asia": "Asia",
+      "africa": "Africa",
+      "americas": "Americas",
+      "oceania": "Oceania"
+    },
     "created": "Workspace created",
     "updated": "Workspace updated",
     "deleted": "Workspace deleted",

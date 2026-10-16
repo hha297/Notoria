@@ -1,6 +1,7 @@
 import { describe, expect, it } from "vitest";
 import {
-  isValidLanguageCode,
+  filterLanguagesByQuery,
+  isSelectableLanguageCode,
   WORKPLACE_LANGUAGES,
 } from "@/lib/languages";
 
@@ -11,12 +12,18 @@ describe("learning language onboarding source", () => {
       expect(language.code).toBeTruthy();
       expect(language.name).toBeTruthy();
       expect(language.flagCode).toBeTruthy();
-      expect(isValidLanguageCode(language.code)).toBe(true);
+      expect(isSelectableLanguageCode(language.code)).toBe(true);
     }
   });
 
-  it("rejects unsupported language codes", () => {
-    expect(isValidLanguageCode("xx")).toBe(false);
-    expect(isValidLanguageCode("")).toBe(false);
+  it("supports alias and English-name search used by onboarding", () => {
+    const matches = filterLanguagesByQuery(WORKPLACE_LANGUAGES, "gilbertese");
+    expect(matches.some((language) => language.code === "gil")).toBe(true);
+  });
+
+  it("rejects unsupported language codes for new selection", () => {
+    expect(isSelectableLanguageCode("xx")).toBe(false);
+    expect(isSelectableLanguageCode("aro")).toBe(false);
+    expect(isSelectableLanguageCode("")).toBe(false);
   });
 });
