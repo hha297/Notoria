@@ -25,7 +25,9 @@ describe("content-import csv", () => {
     expect(drafts).toHaveLength(2);
     expect(drafts[0]?.status).toBe("ready");
     expect(drafts[0]?.word).toBe("talo");
-    expect(drafts[0]?.meanings).toEqual(["house"]);
+    expect(drafts[0]?.meanings).toEqual([
+      { meaning: "house", usageLabels: [] },
+    ]);
   });
 
   it("skips a Notoria-style meta first line", () => {

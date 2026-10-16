@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { keepPreviousData, useQuery } from "@tanstack/react-query";
 import {
   BookOpen,
@@ -17,7 +17,14 @@ import {
   X,
   type LucideIcon,
 } from "lucide-react";
-import { useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from "react";
+import {
+  useEffect,
+  useId,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent,
+} from "react";
 import { useTranslations } from "next-intl";
 import { HighlightedText } from "@/components/search/highlighted-text";
 import { Input } from "@/components/ui/input";
@@ -29,6 +36,10 @@ import {
   subscribeShortcutsChanged,
 } from "@/lib/preferences/shortcuts";
 import { queryKeys } from "@/lib/query/keys";
+import {
+  dismissSearchPanel,
+  shouldApplyPendingEnterNavigation,
+} from "@/lib/search/panel-state";
 import type { SearchResult, SearchResultType } from "@/lib/search/types";
 import { cn } from "@/lib/utils";
 
@@ -53,6 +64,8 @@ type WorkspaceSearchProps = {
 export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearchProps) {
   const t = useTranslations("search");
   const router = useRouter();
+  const pathname = usePathname();
+  const rootRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
   const listId = useId();
   const [value, setValue] = useState("");
@@ -61,6 +74,9 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMac, setIsMac] = useState(false);
   const [searchShortcutLabel, setSearchShortcutLabel] = useState("Ctrl + K");
+  const pendingEnter = useRef(false);
+  const openRef = useRef(open);
+  openRef.current = open;
 
   useEffect(() => {
     setIsMac(/mac/i.test(navigator.platform));
@@ -97,18 +113,62 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
     [data, query],
   );
 
-  const pendingEnter = useRef(false);
-
   useEffect(() => {
     setActiveIndex(0);
   }, [query, results.length]);
 
+  function closeSearch() {
+    const next = dismissSearchPanel({
+      open: openRef.current,
+      pendingEnter: pendingEnter.current,
+    });
+    pendingEnter.current = next.pendingEnter;
+    setOpen(next.open);
+    if (document.activeElement === inputRef.current) {
+      inputRef.current?.blur();
+    }
+  }
+
+  function openResult(result: SearchResult) {
+    closeSearch();
+    router.push(result.href);
+  }
+
   useEffect(() => {
     if (!pendingEnter.current || isFetching || results.length === 0) return;
+    if (!shouldApplyPendingEnterNavigation(openRef.current)) {
+      pendingEnter.current = false;
+      return;
+    }
     const selected = results[activeIndex] ?? results[0];
     pendingEnter.current = false;
-    if (selected) router.push(selected.href);
-  }, [activeIndex, isFetching, results, router]);
+    if (selected) openResult(selected);
+    // openResult closes via controlled state; omit from deps to avoid loops
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional
+  }, [activeIndex, isFetching, results]);
+
+  // Belt-and-suspenders: close the panel after client navigations.
+  useEffect(() => {
+    if (openRef.current) {
+      closeSearch();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- pathname-driven dismiss
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!open) return;
+
+    function onPointerDown(event: PointerEvent) {
+      const root = rootRef.current;
+      if (!root || !(event.target instanceof Node)) return;
+      if (!root.contains(event.target)) {
+        closeSearch();
+      }
+    }
+
+    document.addEventListener("pointerdown", onPointerDown);
+    return () => document.removeEventListener("pointerdown", onPointerDown);
+  }, [open]);
 
   useAppShortcut(
     "openSearch",
@@ -127,10 +187,6 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
   const activeId =
     results[activeIndex] != null ? `${listId}-${results[activeIndex]!.id}` : undefined;
 
-  function openResult(result: SearchResult) {
-    router.push(result.href);
-  }
-
   function onKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Escape") {
       pendingEnter.current = false;
@@ -140,8 +196,7 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
         setDebounced("");
         return;
       }
-      inputRef.current?.blur();
-      setOpen(false);
+      closeSearch();
       return;
     }
 
@@ -174,7 +229,7 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
   }
 
   return (
-    <div className="relative w-full">
+    <div ref={rootRef} className="relative w-full">
       <div className="relative">
         <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
@@ -186,9 +241,6 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
             setOpen(true);
           }}
           onFocus={() => setOpen(true)}
-          onBlur={() => {
-            window.setTimeout(() => setOpen(false), 150);
-          }}
           onKeyDown={onKeyDown}
           placeholder={t("placeholder")}
           autoComplete="off"
@@ -282,6 +334,7 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
                           : "hover:bg-[image:var(--menu-item-hover)]",
                       )}
                       onMouseEnter={() => setActiveIndex(index)}
+                      onClick={() => closeSearch()}
                     >
                       <span className="control-surface mt-0.5 flex size-8 shrink-0 items-center justify-center rounded-lg text-ink">
                         <Icon className="size-4" />

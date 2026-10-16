@@ -412,17 +412,22 @@
 
 .account-delete-sheet {
   gap: 0;
+  /* Kill DialogContent default padding so the hero can bleed edge-to-edge. */
+  padding: 0 !important;
 }
 
 .account-delete-hero {
-  padding: 1.25rem 1.3rem 1rem;
+  margin: 0;
+  width: 100%;
+  padding: 1.25rem 1.3rem 1.15rem;
   border-bottom: 1px solid
-    color-mix(in oklab, var(--destructive) 22%, var(--hairline-cloud));
+    color-mix(in oklab, var(--destructive) 34%, var(--hairline-cloud));
   background:
     linear-gradient(
       165deg,
-      color-mix(in oklab, var(--destructive) 12%, transparent),
-      transparent 78%
+      color-mix(in oklab, var(--destructive) 28%, var(--surface-elevated)),
+      color-mix(in oklab, var(--destructive) 16%, var(--surface-elevated)) 55%,
+      color-mix(in oklab, var(--destructive) 12%, var(--surface-elevated))
     );
 }
 
@@ -432,7 +437,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: color-mix(in oklab, var(--destructive) 78%, var(--muted-foreground));
+  color: color-mix(in oklab, var(--destructive) 88%, var(--ink));
 }
 
 .account-delete-title {
@@ -440,12 +445,14 @@
   font-size: 1.35rem;
   font-weight: 700;
   letter-spacing: -0.03em;
+  color: var(--ink);
 }
 
 .account-delete-lede {
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.45;
+  color: color-mix(in oklab, var(--ink) 78%, var(--muted-foreground));
 }
 
 .account-delete-body {

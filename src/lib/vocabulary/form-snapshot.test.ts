@@ -81,4 +81,37 @@ describe("vocabulary form snapshot", () => {
 
     expect(vocabularyFormSnapshotsEqual(original, edited)).toBe(false);
   });
+
+  it("marks meaning usage label edits as dirty", () => {
+    const original = buildVocabularyFormSnapshot({
+      word: "loppua",
+      partOfSpeech: "verb",
+      notesDoc: structuredClone(EMPTY_NOTES_DOC),
+      meanings: [
+        { meaning: "End", isPrimary: true, usageLabels: [] },
+        { meaning: "Run out", isPrimary: false, usageLabels: ["slang"] },
+      ],
+      examples: [],
+      tags: [],
+      synonymIds: [],
+    });
+    const edited = buildVocabularyFormSnapshot({
+      word: "loppua",
+      partOfSpeech: "verb",
+      notesDoc: structuredClone(EMPTY_NOTES_DOC),
+      meanings: [
+        { meaning: "End", isPrimary: true, usageLabels: [] },
+        {
+          meaning: "Run out",
+          isPrimary: false,
+          usageLabels: ["slang", "figurative"],
+        },
+      ],
+      examples: [],
+      tags: [],
+      synonymIds: [],
+    });
+
+    expect(vocabularyFormSnapshotsEqual(original, edited)).toBe(false);
+  });
 });

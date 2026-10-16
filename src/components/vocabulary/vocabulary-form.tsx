@@ -68,6 +68,7 @@ import {
   normalizeWordTags,
   uniqueCustomTagNames,
 } from "@/lib/vocabulary-tags";
+import { normalizeMeaningUsageLabels } from "@/lib/vocabulary/meaning-usage";
 import {
   vocabularyFormClientSchema,
   type VocabularyFormValues,
@@ -90,6 +91,7 @@ export type VocabularyFormInitialData = {
     meaning: string;
     isPrimary?: boolean;
     sortOrder: number;
+    usageLabels?: string[];
   }>;
   examples: Array<{
     id: string;
@@ -140,6 +142,7 @@ function createDefaultMeanings(): MeaningItem[] {
       meaning: "",
       isPrimary: true,
       sortOrder: 0,
+      usageLabels: [],
     },
   ];
 }
@@ -221,6 +224,7 @@ export function VocabularyForm({
       meaning: meaning.meaning,
       isPrimary: meaning.isPrimary ?? true,
       sortOrder: meaning.sortOrder,
+      usageLabels: normalizeMeaningUsageLabels(meaning.usageLabels),
     })) ?? createDefaultMeanings(),
   );
   const [examples, setExamples] = useState<ExampleItem[]>(() => {
@@ -323,6 +327,7 @@ export function VocabularyForm({
         initialData?.meanings.map((meaning) => ({
           meaning: meaning.meaning,
           isPrimary: meaning.isPrimary ?? true,
+          usageLabels: normalizeMeaningUsageLabels(meaning.usageLabels),
         })) ?? createDefaultMeanings(),
       examples: getInitialExamples(initialData?.examples),
       tags: initialData?.tags.map((tag) => tag.tag) ?? [],
@@ -441,6 +446,7 @@ export function VocabularyForm({
         meaning: item.meaning.trim(),
         isPrimary: item.isPrimary,
         sortOrder: index,
+        usageLabels: normalizeMeaningUsageLabels(item.usageLabels),
       }))
       .filter((item) => item.meaning.length > 0);
 

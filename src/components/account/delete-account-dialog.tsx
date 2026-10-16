@@ -82,7 +82,7 @@ export function DeleteAccountDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         showCloseButton={!isDeletePending}
-        className={mx(styles, "account-delete-sheet flex max-h-[min(92dvh,720px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-xl")}
+        className={mx(styles, "account-delete-sheet flex max-h-[min(92dvh,720px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-xl sm:p-0")}
       >
         <div className={mx(styles, "account-delete-hero shrink-0")}>
           <DialogHeader className="gap-2 space-y-0 pr-8 text-left">

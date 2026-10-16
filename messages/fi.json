@@ -136,7 +136,29 @@
     "formatRateLimited": "Liian monta muotoilupyyntöä. Odota hetki ja yritä uudelleen.",
     "tableSelectionInvalid": "Valintaa ei voitu muuntaa taulukoksi",
     "headingCollapse": "Tiivistä osio",
-    "headingExpand": "Laajenna osio"
+    "headingExpand": "Laajenna osio",
+    "paradigmHeaders": {
+      "case": "Sijamuoto",
+      "singular": "Yksikkö",
+      "plural": "Monikko"
+    },
+    "paradigmCases": {
+      "nominative": "Nominatiivi",
+      "genitive": "Genetiivi",
+      "partitive": "Partitiivi",
+      "accusative": "Akkusatiivi",
+      "inessive": "Inessiivi",
+      "elative": "Elatiivi",
+      "illative": "Illatiivi",
+      "adessive": "Adessiivi",
+      "ablative": "Ablatiivi",
+      "allative": "Allatiivi",
+      "essive": "Essiivi",
+      "translative": "Translatiivi",
+      "instructive": "Instruktiivi",
+      "abessive": "Abessiivi",
+      "comitative": "Komitatiivi"
+    }
   },
   "nav": {
     "dashboard": "Etusivu",
@@ -330,6 +352,15 @@
     "primaryMeaningLimit": "Voit merkitä enintään {max} päämerkitystä",
     "primaryMeanings": "Päämerkitykset",
     "otherMeanings": "Muut merkitykset",
+    "usageLabels": {
+      "label": "Käyttötavat",
+      "add": "Käyttö",
+      "menuTitle": "Käyttötavat",
+      "clear": "Tyhjennä kaikki",
+      "remove": "Poista {label}",
+      "aria": "Tämän merkityksen käyttötavat",
+      "count": "{count, plural, one {# merkintä} other {# merkintää}}"
+    },
     "examples": "Esimerkkilauseet",
     "addExample": "Lisää esimerkki",
     "removeExample": "Poista esimerkki",
@@ -507,7 +538,10 @@
         "notes": "Muistiinpanot",
         "updated": "Päivitetty"
       }
-    }
+    },
+    "otherMeaningsPage": "{total} merkitystä · sivu {page}/{totalPages}",
+    "otherMeaningsPrev": "Edellinen",
+    "otherMeaningsNext": "Seuraava"
   },
   "tags": {
     "groups": {
@@ -550,6 +584,13 @@
       "idiom": "Idiomi",
       "grammar": "Kielioppi",
       "expression": "Ilmaisu"
+    },
+    "meaningUsage": {
+      "literary": "Kirjallinen",
+      "technical": "Tekninen",
+      "archaic": "Vanhentunut",
+      "regional": "Alueellinen",
+      "figurative": "Kuvaannollinen"
     },
     "learningStatus": {
       "new": "Uusi",
@@ -4595,6 +4636,7 @@
   "errorPages": {
     "statusUnavailable": "Ei saatavilla",
     "reference": "Viite: {id}",
+    "referenceLabel": "Viitetunnus",
     "actions": {
       "dashboard": "Siirry kojelautaan",
       "home": "Palaa etusivulle",
@@ -4605,7 +4647,7 @@
     },
     "notFound": {
       "title": "Sivua ei löytynyt",
-      "description": "Tätä sivua ei ole olemassa, tai linkki voi olla vanhentunut. Tarkista osoite tai palaa tuttuun paikkaan."
+      "description": "Tätä sivua ei ole olemassa, tai linkki voi olla vanhentunut. Tarkista osoite tai siirry kojelaudalle."
     },
     "unauthorized": {
       "title": "Kirjautuminen vaaditaan",

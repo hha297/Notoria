@@ -521,7 +521,13 @@ export function ContentImportDialog({
                       <li key={item.rowIndex}>
                         <span className="font-medium text-ink">{item.word}</span>
                         {" — "}
-                        {item.meanings.join("; ")}
+                        {item.meanings
+                          .map((meaning) =>
+                            meaning.usageLabels.length > 0
+                              ? `${meaning.meaning} [${meaning.usageLabels.join(", ")}]`
+                              : meaning.meaning,
+                          )
+                          .join("; ")}
                       </li>
                     ))}
                 </ul>

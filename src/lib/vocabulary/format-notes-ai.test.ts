@@ -65,6 +65,32 @@ describe("sanitizeVocabularyNotesFormatBlocks", () => {
       },
     ]);
   });
+
+  it("canonicalizes case×number paradigm headers and case labels to English tokens", () => {
+    const blocks = sanitizeVocabularyNotesFormatBlocks([
+      {
+        type: "table",
+        headers: ["Sijamuoto", "Yksikkö", "Monikko"],
+        rows: [
+          ["Nominatiivi", "tavallinen", "tavalliset"],
+          ["Inessiivi", "tavallisessa", "tavallisissa"],
+        ],
+        boldFirstColumn: true,
+      },
+    ]);
+
+    expect(blocks).toEqual([
+      {
+        type: "table",
+        headers: ["Case", "Singular", "Plural"],
+        rows: [
+          ["Nominative", "tavallinen", "tavalliset"],
+          ["Inessive", "tavallisessa", "tavallisissa"],
+        ],
+        boldFirstColumn: true,
+      },
+    ]);
+  });
 });
 
 describe("mergeTableRowsByLabel", () => {

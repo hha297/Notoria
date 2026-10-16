@@ -1,12 +1,22 @@
 import { z } from "zod";
 import { PARTS_OF_SPEECH } from "@/lib/vocabulary-tags";
+import {
+  MEANING_USAGE_IDS,
+  normalizeMeaningUsageLabels,
+} from "@/lib/vocabulary/meaning-usage";
 import { MAX_PRIMARY_MEANINGS } from "@/lib/vocabulary/primary-meanings";
+
+export const meaningUsageIdSchema = z.enum(MEANING_USAGE_IDS);
 
 export const meaningSchema = z.object({
   id: z.string().optional(),
   meaning: z.string().min(1, "Meaning is required"),
   isPrimary: z.boolean().default(true),
   sortOrder: z.number().int().nonnegative(),
+  usageLabels: z
+    .array(z.string())
+    .default([])
+    .transform((labels) => normalizeMeaningUsageLabels(labels)),
 });
 
 export const exampleSchema = z.object({

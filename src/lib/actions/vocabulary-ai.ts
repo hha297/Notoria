@@ -44,7 +44,9 @@ export type VocabularyNotesFormatActionResult =
   | { ok: true; doc: JSONContent }
   | VocabularyAiFailure;
 
-function toFailure(code: VocabularyAiFailure["code"] = "AI_UNAVAILABLE"): VocabularyAiFailure {
+function toFailure(
+  code: VocabularyAiFailure["code"] = "AI_UNAVAILABLE",
+): VocabularyAiFailure {
   return { ok: false, code };
 }
 

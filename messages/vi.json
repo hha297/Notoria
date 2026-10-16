@@ -136,7 +136,29 @@
     "formatRateLimited": "Quá nhiều yêu cầu định dạng. Đợi một chút rồi thử lại.",
     "tableSelectionInvalid": "Không thể chuyển vùng chọn thành bảng",
     "headingCollapse": "Thu gọn mục",
-    "headingExpand": "Mở rộng mục"
+    "headingExpand": "Mở rộng mục",
+    "paradigmHeaders": {
+      "case": "Cách",
+      "singular": "Số ít",
+      "plural": "Số nhiều"
+    },
+    "paradigmCases": {
+      "nominative": "Chủ cách",
+      "genitive": "Sở hữu cách",
+      "partitive": "Phân cách",
+      "accusative": "Đối cách",
+      "inessive": "Nội cách",
+      "elative": "Xuất cách",
+      "illative": "Nhập cách",
+      "adessive": "Tiếp cận cách",
+      "ablative": "Ly cách",
+      "allative": "Hướng cách",
+      "essive": "Bản chất cách",
+      "translative": "Chuyển hóa cách",
+      "instructive": "Công cụ cách",
+      "abessive": "Thiếu cách",
+      "comitative": "Đồng hành cách"
+    }
   },
   "nav": {
     "dashboard": "Tổng quan",
@@ -330,6 +352,15 @@
     "primaryMeaningLimit": "Chỉ được đánh dấu tối đa {max} nghĩa chính",
     "primaryMeanings": "Nghĩa chính",
     "otherMeanings": "Nghĩa khác",
+    "usageLabels": {
+      "label": "Nhãn cách dùng",
+      "add": "Cách dùng",
+      "menuTitle": "Nhãn cách dùng",
+      "clear": "Xóa tất cả",
+      "remove": "Gỡ {label}",
+      "aria": "Nhãn cách dùng cho nghĩa này",
+      "count": "{count, plural, one {# nhãn} other {# nhãn}}"
+    },
     "examples": "Câu ví dụ",
     "addExample": "Thêm câu ví dụ",
     "removeExample": "Xóa câu ví dụ",
@@ -507,7 +538,10 @@
         "notes": "Ghi chú",
         "updated": "Cập nhật"
       }
-    }
+    },
+    "otherMeaningsPage": "{total} nghĩa · trang {page}/{totalPages}",
+    "otherMeaningsPrev": "Trước",
+    "otherMeaningsNext": "Sau"
   },
   "tags": {
     "groups": {
@@ -550,6 +584,13 @@
       "idiom": "Thành ngữ",
       "grammar": "Ngữ pháp",
       "expression": "Cụm từ"
+    },
+    "meaningUsage": {
+      "literary": "Văn chương",
+      "technical": "Kỹ thuật",
+      "archaic": "Cổ",
+      "regional": "Địa phương",
+      "figurative": "Nghĩa bóng"
     },
     "learningStatus": {
       "new": "Mới",
@@ -4596,6 +4637,7 @@
   "errorPages": {
     "statusUnavailable": "Không khả dụng",
     "reference": "Mã tham chiếu: {id}",
+    "referenceLabel": "Mã tham chiếu",
     "actions": {
       "dashboard": "Về trang chính",
       "home": "Về trang chủ",
@@ -4606,7 +4648,7 @@
     },
     "notFound": {
       "title": "Không tìm thấy trang",
-      "description": "Trang này không tồn tại hoặc liên kết có thể đã cũ. Kiểm tra địa chỉ hoặc quay lại nơi bạn biết."
+      "description": "Trang này không tồn tại hoặc liên kết có thể đã cũ. Kiểm tra địa chỉ hoặc về trang chính."
     },
     "unauthorized": {
       "title": "Cần đăng nhập",

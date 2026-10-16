@@ -185,8 +185,12 @@ export function DashboardStudio({
                   className={cn(
                     /* No overflow-x-clip here: with overflow-y:visible it computes to
                        a scrollport and fights document scroll / sticky docking. */
-                    "min-h-0 min-w-0 px-4 pt-6 sm:flex-1 sm:px-6 sm:pt-8",
-                    "[--studio-main-pad:1rem] sm:[--studio-main-pad:1.5rem]",
+                    "min-h-0 min-w-0 sm:flex-1 sm:px-6 sm:pt-8",
+                    /* Theory/writing TipTap sheets: tighter mobile inset so content isn't squeezed. */
+                    pathname.startsWith("/writing/") ||
+                      pathname.startsWith("/theory/")
+                      ? "px-2.5 pt-4 [--studio-main-pad:0.625rem] sm:[--studio-main-pad:1.5rem]"
+                      : "px-4 pt-6 [--studio-main-pad:1rem] sm:[--studio-main-pad:1.5rem]",
                     pathname === "/writing" ||
                       pathname.startsWith("/writing/folders") ||
                       pathname === "/theory" ||

@@ -38,6 +38,7 @@ import {
 import { displayPlan, entitlementPlan } from "@/lib/billing/plans";
 import { contentImportUsageSubject } from "@/lib/content-import/usage-subject";
 import { createVocabularyWord } from "@/lib/actions/vocabulary";
+import { normalizeMeaningUsageLabels } from "@/lib/vocabulary/meaning-usage";
 import { createWritingDocument } from "@/lib/actions/writing";
 import { createTheoryNote } from "@/lib/actions/theory";
 import {
@@ -287,9 +288,10 @@ async function saveVocabItems(
         partOfSpeech,
         notes: item.notes,
         meanings: item.meanings.map((meaning, index) => ({
-          meaning,
+          meaning: meaning.meaning,
           isPrimary: index === 0,
           sortOrder: index,
+          usageLabels: normalizeMeaningUsageLabels(meaning.usageLabels),
         })),
         examples: item.examples.map((sentence, index) => ({
           sentence,

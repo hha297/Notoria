@@ -56,9 +56,15 @@ export type ImportIssue = {
   snippet?: string;
 };
 
+export type VocabImportMeaning = {
+  meaning: string;
+  /** Stable meaning-level usage ids; empty when unspecified. */
+  usageLabels: string[];
+};
+
 export type VocabImportDraft = {
   word: string;
-  meanings: string[];
+  meanings: VocabImportMeaning[];
   partOfSpeech?: string;
   examples: string[];
   tags: string[];

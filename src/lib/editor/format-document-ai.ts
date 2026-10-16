@@ -43,7 +43,7 @@ Goal: turn messy pasted text into clean structured content. Decide headings, lis
 Rules:
 1. Preserve the learner's information. Do not invent facts, forms, titles, or rows that are not supported by the source. You MAY normalize morphology; that is analysis, not invention.
 2. Promote clear section titles to headings (level 1–3). For numbered outlines like "1.", "1.1", "1.1.1", set level from the numbering depth (1 → 1, 1.1 → 2, 1.1.1 → 3). Keep the numbering text in the heading.
-3. Convert tabular / paradigm content into tables when the text clearly has columns/rows (pipes, tabs, aligned columns, or repeated label+value paradigms). Headers and columns must match the study language and the notes — never force a fixed header set from another language.
+3. Convert tabular / paradigm content into tables when the text clearly has columns/rows (pipes, tabs, aligned columns, or repeated label+value paradigms). For case×number paradigms use EXACTLY these English header tokens (do not translate): "Case", "Singular", "Plural". First-column case labels must also be English tokens only (Nominative, Genitive, Partitive, Inessive, …). Do not invent other fixed header sets.
 4. Put category/label columns first when that matches the source. Set boldFirstColumn true for label columns.
 5. Use bulletList / orderedList for list-like lines. Keep normal prose as paragraphs.
 6. Do NOT invent decorative titles (e.g. "Noun Paradigm", lone language names, or summaries of a table).

@@ -15,6 +15,7 @@ import {
   workspaceTags,
   type FolderSection,
 } from "@/db/schema";
+import { normalizeMeaningUsageLabels } from "@/lib/vocabulary/meaning-usage";
 import { buildBackupPreview, type ExistingVocabKey } from "./preview";
 import type {
   AccountBackupDocument,
@@ -339,6 +340,7 @@ export async function importAccountBackupLearningData(options: {
               meaning: meaning.meaning,
               isPrimary: meaning.isPrimary,
               sortOrder: meaning.sortOrder ?? index,
+              usageLabels: normalizeMeaningUsageLabels(meaning.usageLabels),
             })),
           );
         }

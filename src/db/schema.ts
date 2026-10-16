@@ -458,6 +458,14 @@ export const wordMeanings = pgTable(
     /** Used by exercises; secondary meanings stay on the word for reference. */
     isPrimary: boolean("is_primary").notNull().default(true),
     sortOrder: integer("sort_order").notNull().default(0),
+    /**
+     * Optional register/style labels for this sense only (stable ids).
+     * Empty = unspecified usage — not “standard language”.
+     */
+    usageLabels: text("usage_labels")
+      .array()
+      .notNull()
+      .default(sql`'{}'::text[]`),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),

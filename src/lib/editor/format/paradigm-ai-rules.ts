@@ -25,7 +25,9 @@ C. STRIP PERSON / POSSESSIVE / AGREEMENT ENDINGS
 D. COMPACT OUTPUT
 - Prefer ONE paradigm table.
 - One row per distinct category.
-- Fill singular/plural (or equivalent) columns; leave "—" only when truly missing.
+- For case×number tables the header row MUST be exactly: ["Case","Singular","Plural"] (English tokens only — never translate headers).
+- First-column case labels MUST use English tokens only (never translate): Nominative, Genitive, Partitive, Accusative, Inessive, Elative, Illative, Adessive, Ablative, Allative, Essive, Translative, Instructive, Abessive, Comitative.
+- Fill singular/plural columns; leave "—" only when truly missing.
 - Drop empty and redundant rows.
 
 E. EXAMPLES OF SHAPE (generic — adapt labels/forms to the study language)

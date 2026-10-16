@@ -91,7 +91,7 @@ export function DeleteAllDataDialog({
         showCloseButton={!isDeletePending}
         className={mx(
           styles,
-          "account-delete-sheet flex max-h-[min(92dvh,720px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-xl",
+          "account-delete-sheet flex max-h-[min(92dvh,720px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-xl sm:p-0",
         )}
       >
         <div className={mx(styles, "account-delete-hero shrink-0")}>

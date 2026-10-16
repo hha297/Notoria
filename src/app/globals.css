@@ -3290,6 +3290,16 @@
     box-shadow: none;
   }
 
+  /* Narrow viewports: tighten TipTap sheet chrome so content keeps width */
+  @media (max-width: 767px) {
+    .writing-sheet[data-writing-kind="rich_document"] .writing-sheet-surface,
+    .writing-sheet[data-writing-kind="question_set"] .writing-sheet-surface,
+    .writing-sheet[data-writing-kind="learning_note"] .writing-sheet-surface,
+    .theory-sheet-surface {
+      padding: 0.75rem 0.65rem 0.85rem;
+    }
+  }
+
   /* Mobile only: no outer Content frame; section blend on TipTap chrome only */
   @media (max-width: 639px) {
     .writing-sheet[data-writing-kind="rich_document"] .writing-sheet-surface,

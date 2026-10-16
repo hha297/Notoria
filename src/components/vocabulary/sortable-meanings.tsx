@@ -27,6 +27,10 @@ import {
 } from "@/components/vocabulary/ai-suggestion-card";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { Button } from "@/components/ui/button";
+import {
+  MeaningUsageChips,
+  MeaningUsageTrigger,
+} from "@/components/vocabulary/meaning-usage-select";
 import { useFocusNewItem } from "@/hooks/use-focus-new-item";
 import { useMounted } from "@/hooks/use-mounted";
 import {
@@ -41,6 +45,7 @@ import {
   isPartialMeaningInput,
   meaningCheckDebounceMs,
 } from "@/lib/vocabulary/meaning-ready";
+import type { MeaningUsageId } from "@/lib/vocabulary/meaning-usage";
 import { cn } from "@/lib/utils";
 
 const MEANING_DEBOUNCE_MS = 500;
@@ -51,6 +56,7 @@ export type MeaningItem = {
   meaning: string;
   isPrimary: boolean;
   sortOrder: number;
+  usageLabels: MeaningUsageId[];
 };
 
 type SortableMeaningsProps = {
@@ -73,6 +79,7 @@ function MeaningRowShell({
   item,
   index,
   onUpdate,
+  onUpdateUsageLabels,
   onBlur,
   onTogglePrimary,
   onRemove,
@@ -88,6 +95,7 @@ function MeaningRowShell({
   item: MeaningItem;
   index: number;
   onUpdate: (id: string, meaning: string) => void;
+  onUpdateUsageLabels: (id: string, usageLabels: MeaningUsageId[]) => void;
   onBlur?: (id: string) => void;
   onTogglePrimary: (id: string) => void;
   onRemove: (id: string) => void;
@@ -105,41 +113,65 @@ function MeaningRowShell({
       <div
         className={mx(
           composerStyles,
-          "vocab-composer-item flex min-w-0 items-center gap-2.5 p-3.5 sm:gap-3 sm:p-4",
+          "vocab-composer-item flex min-w-0 items-start gap-2.5 p-3.5 sm:gap-3 sm:p-4",
           item.isPrimary ? "vocab-composer-item-primary" : null,
         )}
       >
-        {dragHandle}
-        <span className={mx(composerStyles, "vocab-composer-index")} aria-hidden>
-          {index + 1}
-        </span>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon-sm"
-          onClick={() => onTogglePrimary(item.id)}
-          disabled={!item.isPrimary && !canMarkPrimary}
-          aria-pressed={item.isPrimary}
-          aria-label={item.isPrimary ? primaryLabel : secondaryLabel}
-          title={item.isPrimary ? primaryLabel : secondaryLabel}
-          className={cn(
-            mx(composerStyles, "vocab-composer-icon-btn"),
-            "shrink-0",
-            item.isPrimary && mx(composerStyles, "vocab-composer-star-primary"),
-          )}
-        >
-          <Star
-            className={cn("size-4", item.isPrimary && "fill-current")}
+        <div className="flex shrink-0 items-center gap-2.5 pt-0.5 sm:gap-3">
+          {dragHandle}
+          <span
+            className={mx(composerStyles, "vocab-composer-index")}
+            aria-hidden
+          >
+            {index + 1}
+          </span>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => onTogglePrimary(item.id)}
+            disabled={!item.isPrimary && !canMarkPrimary}
+            aria-pressed={item.isPrimary}
+            aria-label={item.isPrimary ? primaryLabel : secondaryLabel}
+            title={item.isPrimary ? primaryLabel : secondaryLabel}
+            className={cn(
+              mx(composerStyles, "vocab-composer-icon-btn"),
+              "shrink-0 cursor-pointer",
+              item.isPrimary && mx(composerStyles, "vocab-composer-star-primary"),
+            )}
+          >
+            <Star
+              className={cn("size-4", item.isPrimary && "fill-current")}
+            />
+          </Button>
+        </div>
+        <div className="flex min-w-0 flex-1 flex-col gap-2">
+          <div className="flex min-w-0 items-center gap-2">
+            <CapitalizedInput
+              ref={inputRef}
+              value={item.meaning}
+              onChange={(event) => onUpdate(item.id, event.target.value)}
+              onBlur={() => onBlur?.(item.id)}
+              placeholder={placeholder}
+              className={mx(
+                composerStyles,
+                "vocab-composer-field min-w-0 flex-1",
+              )}
+            />
+            <MeaningUsageTrigger
+              value={item.usageLabels}
+              onChange={(usageLabels) =>
+                onUpdateUsageLabels(item.id, usageLabels)
+              }
+            />
+          </div>
+          <MeaningUsageChips
+            value={item.usageLabels}
+            onChange={(usageLabels) =>
+              onUpdateUsageLabels(item.id, usageLabels)
+            }
           />
-        </Button>
-        <CapitalizedInput
-          ref={inputRef}
-          value={item.meaning}
-          onChange={(event) => onUpdate(item.id, event.target.value)}
-          onBlur={() => onBlur?.(item.id)}
-          placeholder={placeholder}
-          className={mx(composerStyles, "vocab-composer-field min-w-0 flex-1")}
-        />
+        </div>
         <Button
           type="button"
           variant="ghost"
@@ -149,7 +181,7 @@ function MeaningRowShell({
           aria-label="Remove meaning"
           className={mx(
             composerStyles,
-            "vocab-composer-icon-btn vocab-composer-icon-btn-danger shrink-0",
+            "vocab-composer-icon-btn vocab-composer-icon-btn-danger shrink-0 cursor-pointer",
           )}
         >
           <Trash2 className="size-4" />
@@ -164,6 +196,7 @@ function SortableMeaningRow({
   item,
   index,
   onUpdate,
+  onUpdateUsageLabels,
   onBlur,
   onTogglePrimary,
   onRemove,
@@ -178,6 +211,7 @@ function SortableMeaningRow({
   item: MeaningItem;
   index: number;
   onUpdate: (id: string, meaning: string) => void;
+  onUpdateUsageLabels: (id: string, usageLabels: MeaningUsageId[]) => void;
   onBlur?: (id: string) => void;
   onTogglePrimary: (id: string) => void;
   onRemove: (id: string) => void;
@@ -211,6 +245,7 @@ function SortableMeaningRow({
         item={item}
         index={index}
         onUpdate={onUpdate}
+        onUpdateUsageLabels={onUpdateUsageLabels}
         onBlur={onBlur}
         onTogglePrimary={onTogglePrimary}
         onRemove={onRemove}
@@ -518,6 +553,14 @@ export function SortableMeanings({
     scheduleMeaningCheck(id);
   }
 
+  function updateUsageLabels(id: string, usageLabels: MeaningUsageId[]) {
+    onChange(
+      meanings.map((item) =>
+        item.id === id ? { ...item, usageLabels } : item,
+      ),
+    );
+  }
+
   function handleMeaningBlur(id: string) {
     scheduleMeaningCheck(id, 150, { force: true });
   }
@@ -618,6 +661,7 @@ export function SortableMeanings({
         meaning: "",
         isPrimary: primaryCount === 0,
         sortOrder: meanings.length,
+        usageLabels: [],
       },
     ]);
   }
@@ -674,6 +718,7 @@ export function SortableMeanings({
             item={item}
             index={index}
             onUpdate={updateMeaning}
+            onUpdateUsageLabels={updateUsageLabels}
             onBlur={handleMeaningBlur}
             onTogglePrimary={togglePrimary}
             onRemove={removeMeaning}
@@ -691,6 +736,7 @@ export function SortableMeanings({
             item={item}
             index={index}
             onUpdate={updateMeaning}
+            onUpdateUsageLabels={updateUsageLabels}
             onBlur={handleMeaningBlur}
             onTogglePrimary={togglePrimary}
             onRemove={removeMeaning}

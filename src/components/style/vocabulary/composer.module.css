@@ -738,6 +738,84 @@
   letter-spacing: -0.02em;
 }
 
+/* Meaning-row usage trigger (stays beside input) + selected chips (below). */
+.vocab-usage-trigger {
+  border: 1px solid
+    color-mix(in oklab, var(--composer-accent) 34%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--surface-elevated) 78%, transparent);
+  color: color-mix(in oklab, var(--composer-accent) 72%, var(--muted-foreground));
+  transition:
+    border-color 0.15s ease,
+    background-color 0.15s ease,
+    color 0.15s ease;
+}
+
+.vocab-usage-trigger:hover {
+  border-color: color-mix(in oklab, var(--composer-accent) 58%, transparent);
+  background: color-mix(in oklab, var(--composer-accent) 18%, var(--surface-elevated));
+  color: var(--ink);
+}
+
+.vocab-usage-trigger:focus-visible {
+  outline: none;
+  border-color: color-mix(in oklab, var(--composer-accent) 68%, transparent);
+  box-shadow: 0 0 0 2px
+    color-mix(in oklab, var(--composer-accent) 22%, transparent);
+}
+
+.vocab-usage-chip {
+  display: inline-flex;
+  max-width: 100%;
+  align-items: center;
+  gap: 0.3rem;
+  min-height: 1.45rem;
+  padding: 0.15rem 0.3rem 0.15rem 0.55rem;
+  border-radius: 0.45rem;
+  border: 1px solid
+    color-mix(in oklab, var(--composer-accent) 52%, transparent);
+  background: color-mix(
+    in oklab,
+    var(--composer-accent) 28%,
+    var(--surface-elevated)
+  );
+  color: color-mix(in oklab, var(--composer-accent) 88%, var(--ink));
+  font-size: 0.7rem;
+  font-weight: 650;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+}
+
+.vocab-usage-chip-remove {
+  display: inline-flex;
+  width: 1.05rem;
+  height: 1.05rem;
+  flex-shrink: 0;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 0.3rem;
+  background: color-mix(in oklab, var(--composer-accent) 16%, transparent);
+  color: inherit;
+  opacity: 0.85;
+  transition:
+    background-color 0.12s ease,
+    opacity 0.12s ease,
+    color 0.12s ease;
+}
+
+.vocab-usage-chip-remove:hover {
+  background: color-mix(in oklab, var(--composer-accent) 36%, transparent);
+  color: var(--ink);
+  opacity: 1;
+}
+
+.vocab-usage-chip-remove:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px
+    color-mix(in oklab, var(--composer-accent) 35%, transparent);
+}
+
 .vocab-composer-icon-btn {
   color: var(--muted-foreground) !important;
   border-radius: 0.55rem !important;

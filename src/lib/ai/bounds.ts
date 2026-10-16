@@ -191,12 +191,18 @@ export type AiDeadline = {
   clear: () => void;
 };
 
-export function createAiDeadline(totalMs: number, now = Date.now()): AiDeadline {
+export function createAiDeadline(
+  totalMs: number,
+  now = Date.now(),
+): AiDeadline {
   const controller = new AbortController();
   const expiresAt = now + Math.max(1, totalMs);
-  const timer = setTimeout(() => {
-    controller.abort();
-  }, Math.max(1, totalMs));
+  const timer = setTimeout(
+    () => {
+      controller.abort();
+    },
+    Math.max(1, totalMs),
+  );
   timer.unref?.();
 
   return {
@@ -259,21 +265,25 @@ export function isRetryableModelError(error: unknown): boolean {
 export function listeningPromptSource(input: {
   transcript: string;
   sentences?: Array<{ text: string }>;
-  dialogue?: Array<{ speaker: string; displayName: string | null; text: string }>;
+  dialogue?: Array<{
+    speaker: string;
+    displayName: string | null;
+    text: string;
+  }>;
 }) {
-  const dialogue = (input.dialogue ?? [])
-    .slice(0, 200)
-    .map((turn) => ({
-      speaker: turn.speaker,
-      displayName: turn.displayName,
-      text: clipForAi(turn.text, AI_INPUT_LIMITS.utteranceText),
-    }));
+  const dialogue = (input.dialogue ?? []).slice(0, 200).map((turn) => ({
+    speaker: turn.speaker,
+    displayName: turn.displayName,
+    text: clipForAi(turn.text, AI_INPUT_LIMITS.utteranceText),
+  }));
 
   if (dialogue.length > 0) {
     return {
       dialogue,
       transcript: undefined as string | undefined,
-      sentences: undefined as Array<{ index: number; text: string }> | undefined,
+      sentences: undefined as
+        | Array<{ index: number; text: string }>
+        | undefined,
     };
   }
 
@@ -309,7 +319,10 @@ export function vocabularyAiFields(input: {
   return {
     word: clipOptional(input.word, AI_INPUT_LIMITS.word),
     meaning: clipOptional(input.meaning, AI_INPUT_LIMITS.meaning),
-    partOfSpeech: clipOptional(input.partOfSpeech, AI_INPUT_LIMITS.partOfSpeech),
+    partOfSpeech: clipOptional(
+      input.partOfSpeech,
+      AI_INPUT_LIMITS.partOfSpeech,
+    ),
     topic: clipOptional(input.topic, AI_INPUT_LIMITS.topic),
   };
 }

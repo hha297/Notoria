@@ -136,7 +136,29 @@
     "formatRateLimited": "För många formateringsförfrågningar. Vänta en stund och försök igen.",
     "tableSelectionInvalid": "Kunde inte konvertera urvalet till en tabell",
     "headingCollapse": "Kollapsa avsnitt",
-    "headingExpand": "Expandera avsnitt"
+    "headingExpand": "Expandera avsnitt",
+    "paradigmHeaders": {
+      "case": "Kasus",
+      "singular": "Singular",
+      "plural": "Plural"
+    },
+    "paradigmCases": {
+      "nominative": "Nominativ",
+      "genitive": "Genitiv",
+      "partitive": "Partitiv",
+      "accusative": "Ackusativ",
+      "inessive": "Inessiv",
+      "elative": "Elativ",
+      "illative": "Illativ",
+      "adessive": "Adessiv",
+      "ablative": "Ablativ",
+      "allative": "Allativ",
+      "essive": "Essiv",
+      "translative": "Translativ",
+      "instructive": "Instruktiv",
+      "abessive": "Abessiv",
+      "comitative": "Komitativ"
+    }
   },
   "nav": {
     "dashboard": "Instrumentpanel",
@@ -330,6 +352,15 @@
     "primaryMeaningLimit": "Du kan markera högst {max} primära betydelser",
     "primaryMeanings": "Primära betydelser",
     "otherMeanings": "Andra betydelser",
+    "usageLabels": {
+      "label": "Användningsetiketter",
+      "add": "Användning",
+      "menuTitle": "Användningsetiketter",
+      "clear": "Rensa alla",
+      "remove": "Ta bort {label}",
+      "aria": "Användningsetiketter för denna betydelse",
+      "count": "{count, plural, one {# etikett} other {# etiketter}}"
+    },
     "examples": "Exempelmeningar",
     "addExample": "Lägg till exempel",
     "removeExample": "Ta bort exempel",
@@ -507,7 +538,10 @@
         "notes": "Anteckningar",
         "updated": "Senast uppdaterad"
       }
-    }
+    },
+    "otherMeaningsPage": "{total} betydelser · sida {page} av {totalPages}",
+    "otherMeaningsPrev": "Föregående",
+    "otherMeaningsNext": "Nästa"
   },
   "tags": {
     "groups": {
@@ -550,6 +584,13 @@
       "idiom": "Idiom",
       "grammar": "Grammatik",
       "expression": "Uttryck"
+    },
+    "meaningUsage": {
+      "literary": "Litterär",
+      "technical": "Teknisk",
+      "archaic": "Ålderdomlig",
+      "regional": "Regional",
+      "figurative": "Bildlig"
     },
     "learningStatus": {
       "new": "Ny",
@@ -4596,6 +4637,7 @@
   "errorPages": {
     "statusUnavailable": "Otillgänglig",
     "reference": "Referens: {id}",
+    "referenceLabel": "Referens-ID",
     "actions": {
       "dashboard": "Gå till instrumentpanelen",
       "home": "Till startsidan",
@@ -4606,7 +4648,7 @@
     },
     "notFound": {
       "title": "Sidan hittades inte",
-      "description": "Sidan finns inte, eller så är länken inaktuell. Kontrollera adressen eller gå tillbaka."
+      "description": "Sidan finns inte, eller så är länken inaktuell. Kontrollera adressen eller gå till instrumentpanelen."
     },
     "unauthorized": {
       "title": "Inloggning krävs",

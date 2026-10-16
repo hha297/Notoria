@@ -136,7 +136,29 @@
     "formatRateLimited": "Too many format requests. Wait a moment, then try again.",
     "tableSelectionInvalid": "Couldn't convert the selection into a table",
     "headingCollapse": "Collapse section",
-    "headingExpand": "Expand section"
+    "headingExpand": "Expand section",
+    "paradigmHeaders": {
+      "case": "Case",
+      "singular": "Singular",
+      "plural": "Plural"
+    },
+    "paradigmCases": {
+      "nominative": "Nominative",
+      "genitive": "Genitive",
+      "partitive": "Partitive",
+      "accusative": "Accusative",
+      "inessive": "Inessive",
+      "elative": "Elative",
+      "illative": "Illative",
+      "adessive": "Adessive",
+      "ablative": "Ablative",
+      "allative": "Allative",
+      "essive": "Essive",
+      "translative": "Translative",
+      "instructive": "Instructive",
+      "abessive": "Abessive",
+      "comitative": "Comitative"
+    }
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -330,6 +352,18 @@
     "primaryMeaningLimit": "You can mark at most {max} primary meanings",
     "primaryMeanings": "Primary meanings",
     "otherMeanings": "Other meanings",
+    "usageLabels": {
+      "label": "Usage labels",
+      "add": "Usage",
+      "menuTitle": "Usage labels",
+      "clear": "Clear all",
+      "remove": "Remove {label}",
+      "aria": "Usage labels for this meaning",
+      "count": "{count, plural, one {# label} other {# labels}}"
+    },
+    "otherMeaningsPage": "{total} meanings · page {page} of {totalPages}",
+    "otherMeaningsPrev": "Previous",
+    "otherMeaningsNext": "Next",
     "examples": "Example sentences",
     "addExample": "Add example",
     "removeExample": "Remove example",
@@ -550,6 +584,13 @@
       "idiom": "Idiom",
       "grammar": "Grammar",
       "expression": "Expression"
+    },
+    "meaningUsage": {
+      "literary": "Literary",
+      "technical": "Technical",
+      "archaic": "Archaic",
+      "regional": "Regional",
+      "figurative": "Figurative"
     },
     "learningStatus": {
       "new": "New",
@@ -4596,6 +4637,7 @@
   "errorPages": {
     "statusUnavailable": "Unavailable",
     "reference": "Reference: {id}",
+    "referenceLabel": "Reference ID",
     "actions": {
       "dashboard": "Go to Dashboard",
       "home": "Return to Home",
@@ -4606,7 +4648,7 @@
     },
     "notFound": {
       "title": "Page not found",
-      "description": "This page doesn’t exist, or the link may be outdated. Check the address or head back to a place you know."
+      "description": "This page doesn’t exist, or the link may be outdated. Check the address or go to the dashboard."
     },
     "unauthorized": {
       "title": "Sign in required",

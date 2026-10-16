@@ -151,11 +151,16 @@ export function clearSessionState(workspaceId: string) {
   sessionStorage.removeItem(getSessionStorageKey(workspaceId));
 }
 
+/**
+ * Restore when workspace + filters match. Card IDs are frozen for the session —
+ * do not require every ID to still pass the live filtered word list (rating can
+ * change status / due order without restarting the deck).
+ */
 export function canRestoreSession(
   saved: FlashcardSessionState | null,
   workspaceId: string,
   filtersKey: string,
-  availableIds: Set<string>,
+  _availableIds?: Set<string>,
 ) {
   if (!saved || saved.workspaceId !== workspaceId || saved.filtersKey !== filtersKey) {
     return false;
@@ -165,5 +170,54 @@ export function canRestoreSession(
     return false;
   }
 
-  return saved.cardIds.every((id) => availableIds.has(id));
+  const maxIndex = saved.cardIds.length - 1;
+  if (
+    !Number.isFinite(saved.currentIndex) ||
+    saved.currentIndex < 0 ||
+    saved.currentIndex > maxIndex
+  ) {
+    return false;
+  }
+
+  return true;
+}
+
+/** Keep an in-memory session across word refreshes when filters are unchanged. */
+export function shouldKeepActiveSession(
+  session: FlashcardSessionState | null,
+  workspaceId: string,
+  filtersKey: string,
+) {
+  return Boolean(
+    session &&
+      session.workspaceId === workspaceId &&
+      session.filtersKey === filtersKey &&
+      session.cardIds.length > 0,
+  );
+}
+
+/**
+ * If the current card left the loaded word map, advance to the next resolvable
+ * card without resetting completed progress. Returns null when the session is done.
+ */
+export function reconcileSessionCursor(
+  session: FlashcardSessionState,
+  hasWord: (id: string) => boolean,
+): FlashcardSessionState | null {
+  const { cardIds, currentIndex } = session;
+  if (cardIds.length === 0) return null;
+
+  const clampedIndex = Math.min(Math.max(0, currentIndex), cardIds.length - 1);
+  if (hasWord(cardIds[clampedIndex]!)) {
+    if (clampedIndex === currentIndex) return session;
+    return { ...session, currentIndex: clampedIndex, isFlipped: false };
+  }
+
+  for (let i = clampedIndex + 1; i < cardIds.length; i++) {
+    if (hasWord(cardIds[i]!)) {
+      return { ...session, currentIndex: i, isFlipped: false };
+    }
+  }
+
+  return null;
 }

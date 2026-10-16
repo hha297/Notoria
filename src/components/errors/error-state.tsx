@@ -14,6 +14,8 @@ import {
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
+import errorStyles from "@/components/style/errors/error.module.css";
+import { mx } from "@/lib/css-module";
 import {
   formatRetryAfter,
   toErrorViewModel,
@@ -163,34 +165,36 @@ export function ErrorState({
   const Icon = iconFor(model.kind);
   const title = t(model.titleKey as Parameters<typeof t>[0]);
   const description = t(model.descriptionKey as Parameters<typeof t>[0]);
+  const statusLabel =
+    model.statusCode > 0
+      ? String(model.statusCode)
+      : t("statusUnavailable");
 
   return (
     <div
       role="alert"
-      className={cn(
-        "elevated-surface flex w-full flex-col items-center rounded-md border border-hairline-cloud text-center",
-        compact
-          ? "gap-3 px-4 py-8 sm:px-6"
-          : "mx-auto max-w-lg gap-4 px-5 py-10 sm:px-8 sm:py-12",
-        className,
-      )}
+      aria-labelledby="error-state-title"
+      aria-describedby="error-state-description"
+      data-compact={compact ? "true" : undefined}
+      className={cn(mx(errorStyles, "error-panel"), className)}
     >
-      <div className="flex size-14 items-center justify-center rounded-2xl border border-hairline-cloud bg-muted/40">
-        <Icon className="size-6 text-muted-foreground" aria-hidden />
+      <div className={mx(errorStyles, "error-icon-well")} aria-hidden>
+        <Icon className="size-6" />
       </div>
 
-      <div className="space-y-2">
-        <p className="text-[0.68rem] font-bold uppercase tracking-[0.12em] text-muted-foreground">
-          {model.statusCode > 0 ? model.statusCode : t("statusUnavailable")}
-        </p>
-        <h1 className="font-heading text-xl font-bold tracking-tight text-ink sm:text-2xl">
+      <div className={mx(errorStyles, "error-copy")}>
+        <p className={mx(errorStyles, "error-code")}>{statusLabel}</p>
+        <h1 id="error-state-title" className={mx(errorStyles, "error-title")}>
           {title}
         </h1>
-        <p className="mx-auto max-w-md text-sm leading-relaxed text-muted-foreground sm:text-base">
+        <p
+          id="error-state-description"
+          className={mx(errorStyles, "error-description")}
+        >
           {description}
         </p>
         {model.kind === "rateLimit" && model.retryAfterSeconds ? (
-          <p className="text-sm text-muted-foreground">
+          <p className={mx(errorStyles, "error-description")}>
             {t("rateLimit.retryIn", {
               time: formatRetryAfter(model.retryAfterSeconds),
             })}
@@ -198,7 +202,7 @@ export function ErrorState({
         ) : null}
       </div>
 
-      <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+      <div className={mx(errorStyles, "error-actions")}>
         <ActionButton action={model.primaryAction} onReset={onReset} t={t} />
         {model.secondaryAction ? (
           <ActionButton
@@ -217,8 +221,13 @@ export function ErrorState({
       </div>
 
       {model.referenceId ? (
-        <p className="pt-2 font-mono text-[0.7rem] text-muted-foreground/80">
-          {t("reference", { id: model.referenceId })}
+        <p className={mx(errorStyles, "error-reference")}>
+          <span className={mx(errorStyles, "error-reference-label")}>
+            {t("referenceLabel")}
+          </span>
+          <span className={mx(errorStyles, "error-reference-id")}>
+            {model.referenceId}
+          </span>
         </p>
       ) : null}
     </div>

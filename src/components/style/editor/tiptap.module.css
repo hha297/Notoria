@@ -61,17 +61,22 @@
   background: color-mix(in oklab, var(--foreground) 8%, transparent);
 }
 
-:global(.tiptap table) {
+:global(.tiptap table),
+:global(.prose table) {
   border-collapse: collapse;
   margin: 1rem 0;
   width: 100%;
+  table-layout: fixed;
 }
 
 :global(.tiptap th),
-:global(.tiptap td) {
+:global(.tiptap td),
+:global(.prose th),
+:global(.prose td) {
   border: 1px solid var(--hairline-cloud);
-  min-width: 80px;
+  min-width: 0;
   padding: 0.45rem 0.7rem;
+  word-break: break-word;
 }
 
 :global(.tiptap th) {

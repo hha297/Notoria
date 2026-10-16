@@ -94,10 +94,17 @@ function parseMeaning(raw: unknown, index: number): BackupWordMeaning | null {
   if (!isRecord(raw)) return null;
   const meaning = asString(raw.meaning).trim();
   if (!meaning) return null;
+  const usageLabels = Array.isArray(raw.usageLabels)
+    ? raw.usageLabels
+        .filter((item): item is string => typeof item === "string")
+        .map((item) => item.trim())
+        .filter(Boolean)
+    : undefined;
   return {
     meaning,
     isPrimary: asBoolean(raw.isPrimary, index === 0),
     sortOrder: asNumber(raw.sortOrder, index),
+    ...(usageLabels && usageLabels.length > 0 ? { usageLabels } : {}),
   };
 }
 
