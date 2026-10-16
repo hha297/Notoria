@@ -93,7 +93,7 @@ export function LocaleSelector({
             "control-surface w-auto shrink-0",
             compact
               ? "h-9 gap-1.5 px-2.5 text-sm [&_svg]:size-3.5"
-              : "h-10 px-2 sm:min-w-[148px] sm:px-2.5",
+              : "h-10 px-2 sm:min-w-[200px] sm:px-2.5",
           )}
         >
           <SelectValue>

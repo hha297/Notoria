@@ -1,8 +1,4 @@
-import {
-  AI_INPUT_LIMITS,
-  AI_OUTPUT_TOKENS,
-  clipForAi,
-} from "@/lib/ai/bounds";
+import { AI_INPUT_LIMITS, AI_OUTPUT_TOKENS, clipForAi } from "@/lib/ai/bounds";
 import { throwIfAborted } from "@/lib/ai/cancellation";
 import { runChatCompletion } from "@/lib/ai/provider-call";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
@@ -13,6 +9,34 @@ const UI_LANGUAGE_NAMES: Record<AppLocale, string> = {
   fi: "Finnish",
   sv: "Swedish",
   vi: "Vietnamese",
+  id: "Indonesian",
+  de: "German",
+  fr: "French",
+  es: "Spanish",
+  it: "Italian",
+  pt: "Portuguese",
+  nl: "Dutch",
+  no: "Norwegian",
+  da: "Danish",
+  pl: "Polish",
+  ru: "Russian",
+  uk: "Ukrainian",
+  ja: "Japanese",
+  ko: "Korean",
+  zh: "Chinese",
+  ar: "Arabic",
+  hi: "Hindi",
+  th: "Thai",
+  tr: "Turkish",
+  el: "Greek",
+  cs: "Czech",
+  hu: "Hungarian",
+  ro: "Romanian",
+  be: "Belarusian",
+  bs: "Bosnian",
+  hy: "Armenian",
+  sq: "Albanian",
+  bg: "Bulgarian",
 };
 
 function parseJsonContent(content: string | null | undefined) {
@@ -114,7 +138,9 @@ export async function ensureSentenceMeanings<T>(
     };
   });
 
-  const missing = slots.filter((slot) => !slot.sentenceMeaning && slot.sentence);
+  const missing = slots.filter(
+    (slot) => !slot.sentenceMeaning && slot.sentence,
+  );
   if (missing.length > 0) {
     throwIfAborted(options.signal);
     try {
@@ -214,8 +240,10 @@ async function glossSentenceMeaningsBatch(input: {
   for (const entry of meanings) {
     if (!entry || typeof entry !== "object") continue;
     const index = (entry as { index?: unknown }).index;
-    const sentenceMeaning = (entry as { sentenceMeaning?: unknown }).sentenceMeaning;
-    if (typeof index !== "number" || typeof sentenceMeaning !== "string") continue;
+    const sentenceMeaning = (entry as { sentenceMeaning?: unknown })
+      .sentenceMeaning;
+    if (typeof index !== "number" || typeof sentenceMeaning !== "string")
+      continue;
     const trimmed = sentenceMeaning.trim();
     if (!trimmed) continue;
     result.set(index, trimmed.slice(0, 400));
