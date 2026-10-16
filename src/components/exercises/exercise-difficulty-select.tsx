@@ -53,6 +53,7 @@ export function ExerciseDifficultySelect({
           <ToggleGroupItem
             key={level}
             value={level}
+            variant="outline"
             className="min-w-0 flex-1 cursor-pointer px-2 text-xs sm:flex-none sm:px-3.5 sm:text-sm"
             aria-label={t(level)}
           >

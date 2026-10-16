@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useState, useTransition } from "react";
+import { useEffect, useId, useRef, useState, useTransition } from "react";
 import { format } from "date-fns";
 import { ArrowLeft, ArrowLeftRight, CreditCard, Loader2, ShieldCheck, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
@@ -15,10 +15,17 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
+import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import styles from "@/components/style/billing/pro-upgrade.module.css";
 import { mx } from "@/lib/css-module";
 import { planIntroMonthlyPrice, planMonthlyPrice, type PlanId } from "@/lib/billing/plans";
-import { planDialogCta } from "@/lib/stripe/lifecycle";
+import {
+  CANCELLATION_COMMENT_MAX_LENGTH,
+  CANCELLATION_FEEDBACK_REASONS,
+  planDialogCta,
+  type CancellationFeedbackReason,
+} from "@/lib/stripe/lifecycle";
 import {
   billingErrorKey,
   requestPlanChange,
@@ -51,9 +58,15 @@ export function ProUpgradeDialog({
   const [pending, setPending] = useState(false);
   const [selected, setSelected] = useState<PlanId>(plan);
   const [confirm, setConfirm] = useState<ConfirmKind | null>(null);
+  const [cancelReason, setCancelReason] = useState<CancellationFeedbackReason | null>(
+    null,
+  );
+  const [cancelComment, setCancelComment] = useState("");
   const wasOpen = useRef(false);
   const isLocked = variant === "locked";
   const [, startTransition] = useTransition();
+  const cancelReasonLabelId = useId();
+  const cancelCommentId = useId();
   const showIntro = introOfferEligible && plan === "free";
   const cta = planDialogCta({
     current: plan,
@@ -67,25 +80,50 @@ export function ProUpgradeDialog({
   const currentPlanLabel = plan === "premium" ? t("premiumBadge") : t("proBadge");
   const pendingChange = Boolean(cancelAtPeriodEnd || scheduledPlan);
 
-  if (open && !wasOpen.current) {
-    wasOpen.current = true;
-    if (selected !== plan) setSelected(plan);
-    const nextConfirm = openOnResume && plan !== "free" && pendingChange ? "keep" : null;
-    if (confirm !== nextConfirm) setConfirm(nextConfirm);
-  } else if (!open && wasOpen.current) {
-    wasOpen.current = false;
-    if (confirm) setConfirm(null);
+  function resetCancellationFeedback() {
+    setCancelReason(null);
+    setCancelComment("");
   }
+
+  function openConfirm(kind: ConfirmKind) {
+    if (kind === "cancel") {
+      resetCancellationFeedback();
+    }
+    setConfirm(kind);
+  }
+
+  useEffect(() => {
+    if (open && !wasOpen.current) {
+      wasOpen.current = true;
+      setSelected(plan);
+      setConfirm(
+        openOnResume && plan !== "free" && pendingChange ? "keep" : null,
+      );
+      return;
+    }
+    if (!open && wasOpen.current) {
+      wasOpen.current = false;
+      setConfirm(null);
+      setCancelReason(null);
+      setCancelComment("");
+    }
+  }, [open, openOnResume, plan, pendingChange]);
 
   function handleOpenChange(next: boolean) {
     if (pending && !next) return;
-    if (!next) setConfirm(null);
+    if (!next) {
+      setConfirm(null);
+      resetCancellationFeedback();
+    }
     onOpenChange(next);
   }
 
   function handleConfirmOpenChange(next: boolean) {
     if (pending && !next) return;
-    if (!next) setConfirm(null);
+    if (!next) {
+      setConfirm(null);
+      resetCancellationFeedback();
+    }
   }
 
   function submit(target: PlanId | "resume") {
@@ -94,7 +132,14 @@ export function ProUpgradeDialog({
     startTransition(async () => {
       try {
         const result =
-          target === "resume" ? await requestResumePlan() : await requestPlanChange(target);
+          target === "resume"
+            ? await requestResumePlan()
+            : target === "free"
+              ? await requestPlanChange("free", {
+                  feedback: cancelReason,
+                  comment: cancelComment,
+                })
+              : await requestPlanChange(target);
         if (!result.ok || !result.url) {
           toast.error(t(billingErrorKey(result.code)));
           setPending(false);
@@ -114,7 +159,7 @@ export function ProUpgradeDialog({
       submit(selected);
       return;
     }
-    setConfirm(cta.kind);
+    openConfirm(cta.kind);
   }
 
   function confirmChange() {
@@ -123,6 +168,10 @@ export function ProUpgradeDialog({
       return;
     }
     if (confirm === "cancel") {
+      if (cancelComment.length > CANCELLATION_COMMENT_MAX_LENGTH) {
+        toast.error(t("invalidCancellationFeedback"));
+        return;
+      }
       submit("free");
       return;
     }
@@ -386,7 +435,9 @@ export function ProUpgradeDialog({
           showCloseButton={!pending}
           className={mx(
             styles,
-            "pro-upgrade-confirm-sheet gap-0 overflow-hidden p-0 sm:max-w-md sm:p-0",
+            confirm === "cancel"
+              ? "pro-upgrade-confirm-sheet gap-0 overflow-hidden p-0 sm:max-w-lg sm:p-0"
+              : "pro-upgrade-confirm-sheet gap-0 overflow-hidden p-0 sm:max-w-md sm:p-0",
           )}
         >
           <div className={mx(styles, "pro-upgrade-confirm")}>
@@ -410,6 +461,83 @@ export function ProUpgradeDialog({
                       : t("confirmKeepBody", { plan: currentPlanLabel, date: periodLabel })}
               </DialogDescription>
             </DialogHeader>
+
+            {confirm === "cancel" ? (
+              <div className={mx(styles, "pro-upgrade-cancel-feedback")}>
+                <p
+                  id={cancelReasonLabelId}
+                  className={mx(styles, "pro-upgrade-cancel-feedback-label")}
+                >
+                  {t("cancelFeedbackLabel")}
+                </p>
+                <p className={mx(styles, "pro-upgrade-cancel-feedback-hint")}>
+                  {t("cancelFeedbackOptional")}
+                </p>
+                <div
+                  className={mx(styles, "pro-upgrade-cancel-reasons")}
+                  role="radiogroup"
+                  aria-labelledby={cancelReasonLabelId}
+                >
+                  {CANCELLATION_FEEDBACK_REASONS.map((reason) => {
+                    const selectedReason = cancelReason === reason;
+                    return (
+                      <label
+                        key={reason}
+                        className={mx(
+                          styles,
+                          selectedReason
+                            ? "pro-upgrade-cancel-reason is-active"
+                            : "pro-upgrade-cancel-reason",
+                        )}
+                      >
+                        <input
+                          type="radio"
+                          name="cancellation-reason"
+                          value={reason}
+                          checked={selectedReason}
+                          disabled={pending}
+                          className={mx(styles, "pro-upgrade-cancel-reason-input")}
+                          onChange={() => setCancelReason(reason)}
+                          onClick={() => {
+                            // Allow deselecting the current reason (optional feedback).
+                            if (selectedReason) setCancelReason(null);
+                          }}
+                        />
+                        <span className={mx(styles, "pro-upgrade-cancel-reason-box")} aria-hidden />
+                        <span className={mx(styles, "pro-upgrade-cancel-reason-text")}>
+                          {t(`cancelReasons.${reason}`)}
+                        </span>
+                      </label>
+                    );
+                  })}
+                </div>
+                <div className={mx(styles, "pro-upgrade-cancel-comment")}>
+                  <Label
+                    htmlFor={cancelCommentId}
+                    className={mx(styles, "pro-upgrade-cancel-feedback-label")}
+                  >
+                    {t("cancelCommentLabel")}
+                  </Label>
+                  <Textarea
+                    id={cancelCommentId}
+                    value={cancelComment}
+                    maxLength={CANCELLATION_COMMENT_MAX_LENGTH}
+                    rows={3}
+                    disabled={pending}
+                    placeholder={t("cancelCommentPlaceholder")}
+                    className={mx(styles, "pro-upgrade-cancel-textarea")}
+                    onChange={(event) => setCancelComment(event.target.value)}
+                  />
+                  <p className={mx(styles, "pro-upgrade-cancel-feedback-hint")}>
+                    {t("cancelCommentCount", {
+                      count: cancelComment.length,
+                      max: CANCELLATION_COMMENT_MAX_LENGTH,
+                    })}
+                  </p>
+                </div>
+              </div>
+            ) : null}
+
             <Button
               type="button"
               variant="default"
@@ -441,7 +569,10 @@ export function ProUpgradeDialog({
               variant="ghost"
               className={mx(styles, "pro-upgrade-cancel")}
               disabled={pending}
-              onClick={() => setConfirm(null)}
+              onClick={() => {
+                setConfirm(null);
+                resetCancellationFeedback();
+              }}
             >
               <ArrowLeft className="size-4" aria-hidden />
               {t("back")}

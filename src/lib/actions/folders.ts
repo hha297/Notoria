@@ -8,6 +8,7 @@ import {
   grammarNotes,
   listeningLessons,
   readingPassages,
+  studyInboxItems,
   workspaceFolders,
   type FolderSection,
 } from "@/db/schema";
@@ -100,6 +101,11 @@ function toFolderListItem(
 }
 
 function revalidateSection(section: FolderSection) {
+  if (section === "inbox") {
+    revalidatePath("/");
+    revalidatePath("/inbox");
+    return;
+  }
   revalidatePath(`/${section}`, "layout");
 }
 
@@ -190,7 +196,13 @@ export async function createFolder(input: {
   const parsed = createFolderSchema.parse(input);
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
-  const parentId = parsed.parentId ?? null;
+  // Capture folders stay flat — never nest under another folder.
+  const parentId =
+    parsed.section === "inbox" ? null : (parsed.parentId ?? null);
+
+  if (parsed.section === "inbox" && parsed.parentId) {
+    throw new Error("FOLDER_TOO_DEEP");
+  }
 
   const existing = await db.query.workspaceFolders.findMany({
     where: and(
@@ -289,6 +301,10 @@ export async function moveIntoFolder(input: {
 
   if (parsed.itemType === "folder") {
     const { folder } = await requireOwnedFolder(parsed.id);
+    // Capture stays flat — folders cannot be nested under other folders.
+    if (folder.section === "inbox" && parsed.folderId) {
+      throw new Error("FOLDER_TOO_DEEP");
+    }
     const destination = await requireOwnedDestination(
       parsed.folderId,
       folder.section,
@@ -399,6 +415,28 @@ export async function moveIntoFolder(input: {
       .where(eq(readingPassages.id, parsed.id));
     revalidateSection("reading");
     return { id: passage.id };
+  }
+
+  if (parsed.itemType === "inbox") {
+    const item = await db.query.studyInboxItems.findFirst({
+      where: eq(studyInboxItems.id, parsed.id),
+    });
+    if (
+      !item ||
+      item.userId !== userId ||
+      item.workspaceId !== workspace.id
+    ) {
+      throw new Error("ITEM_NOT_FOUND");
+    }
+    if ((item.folderId ?? null) === nextFolderId) {
+      return { id: item.id };
+    }
+    await db
+      .update(studyInboxItems)
+      .set({ folderId: nextFolderId, updatedAt: new Date() })
+      .where(eq(studyInboxItems.id, parsed.id));
+    revalidateSection("inbox");
+    return { id: item.id };
   }
 
   const note = await db.query.grammarNotes.findFirst({

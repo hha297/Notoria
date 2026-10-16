@@ -4,10 +4,13 @@ import {
   filterWordsForTagManager,
   isTagManagerTagId,
   isWordSelectableForTagOperation,
+  listTagManagerCustomTagIds,
   partitionSelectedForTag,
+  partitionWordsByTagMembership,
   selectionOperationForTag,
   storedTagMatchesManagerTag,
   tagManagerGroupForId,
+  tagManagerKindForId,
   wordHasTag,
 } from "@/lib/vocabulary/tag-manager";
 import type { VocabularyWordRow } from "@/lib/vocabulary/types";
@@ -33,24 +36,40 @@ function word(
 }
 
 describe("tag manager helpers", () => {
-  it("accepts only Aihe and Käyttö taxonomy ids", () => {
+  it("accepts standard topic/usage ids and custom tags, not difficulty", () => {
     expect(isTagManagerTagId("travel")).toBe(true);
     expect(isTagManagerTagId("formal")).toBe(true);
+    expect(isTagManagerTagId("custom:YKI")).toBe(true);
     expect(isTagManagerTagId("a1")).toBe(false);
-    expect(isTagManagerTagId("custom:YKI")).toBe(false);
+    expect(isTagManagerTagId("custom:")).toBe(false);
     expect(tagManagerGroupForId("travel")).toBe("topic");
     expect(tagManagerGroupForId("formal")).toBe("grammar");
+    expect(tagManagerKindForId("travel")).toBe("standard");
+    expect(tagManagerKindForId("custom:YKI")).toBe("custom");
+    expect(tagManagerKindForId("a1")).toBeNull();
   });
 
-  it("counts and detects membership", () => {
+  it("lists custom tags from workspace names and word membership", () => {
+    const words = [
+      word("1", "koe", ["custom:YKI", "travel"]),
+      word("2", "test", ["custom:jlpt"]),
+    ];
+    expect(listTagManagerCustomTagIds(["IELTS"], words).sort()).toEqual(
+      ["custom:IELTS", "custom:YKI", "custom:jlpt"].sort(),
+    );
+  });
+
+  it("counts and detects membership including custom case fold", () => {
     const words = [
       word("1", "matka", ["travel"]),
       word("2", "koti", ["home_housing"]),
       word("3", "bussi", ["travel", "formal"]),
+      word("4", "koe", ["custom:YKI"]),
     ];
     expect(countWordsWithTag(words, "travel")).toBe(2);
     expect(wordHasTag(words[0]!, "travel")).toBe(true);
     expect(wordHasTag(words[1]!, "travel")).toBe(false);
+    expect(wordHasTag(words[3]!, "custom:yki")).toBe(true);
   });
 
   it("filters by search only", () => {
@@ -82,6 +101,22 @@ describe("tag manager helpers", () => {
     ).toEqual(["3"]);
   });
 
+  it("partitions filtered words into assigned vs other without overlap", () => {
+    const words = [
+      word("1", "matka", ["travel"]),
+      word("2", "koti", []),
+      word("3", "bussi", ["travel"]),
+    ];
+    const { assigned, other } = partitionWordsByTagMembership(words, "travel");
+    expect(assigned.map((item) => item.id)).toEqual(["1", "3"]);
+    expect(other.map((item) => item.id)).toEqual(["2"]);
+    const ids = new Set([
+      ...assigned.map((item) => item.id),
+      ...other.map((item) => item.id),
+    ]);
+    expect(ids.size).toBe(assigned.length + other.length);
+  });
+
   it("matches legacy stored aliases to the current Tag Manager tag", () => {
     expect(storedTagMatchesManagerTag("daily", "everyday_life")).toBe(true);
     expect(storedTagMatchesManagerTag("Everyday life", "everyday_life")).toBe(
@@ -92,6 +127,7 @@ describe("tag manager helpers", () => {
     );
     expect(storedTagMatchesManagerTag("travel", "everyday_life")).toBe(false);
     expect(storedTagMatchesManagerTag("puhekieli", "spoken")).toBe(true);
+    expect(storedTagMatchesManagerTag("custom:YKI", "custom:yki")).toBe(true);
   });
 
   it("locks Add/Remove from the first selected word", () => {

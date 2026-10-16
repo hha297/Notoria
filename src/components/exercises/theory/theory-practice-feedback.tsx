@@ -14,18 +14,21 @@ type TheoryPracticeFeedbackProps = {
   checked: boolean;
   correct: boolean;
   peeked?: boolean;
+  unanswered?: boolean;
   userValue?: string;
   revealDisplay: string;
   explanation?: string;
   learningObjective?: string;
   sentenceMeaning?: string;
-  onNext: () => void;
+  /** Omit in set-review mode (no per-question Next). */
+  onNext?: () => void;
 };
 
 export function TheoryPracticeFeedback({
   checked,
   correct,
   peeked = false,
+  unanswered = false,
   userValue,
   revealDisplay,
   explanation,
@@ -34,9 +37,14 @@ export function TheoryPracticeFeedback({
   onNext,
 }: TheoryPracticeFeedbackProps) {
   const t = useTranslations("exercises.theory");
+  const tSession = useTranslations("exercises.session");
   const reduceMotion = useReducedMotion();
   const showAttempt =
-    checked && !peeked && !correct && Boolean(userValue?.trim());
+    checked &&
+    !peeked &&
+    !correct &&
+    !unanswered &&
+    Boolean(userValue?.trim());
 
   return (
     <AnimatePresence>
@@ -52,16 +60,18 @@ export function TheoryPracticeFeedback({
           <p
             className={cn(
               "text-sm font-medium tracking-wide",
-              peeked
+              peeked || unanswered
                 ? "text-muted-foreground"
                 : correct
                   ? "text-success"
                   : "text-error",
             )}
           >
-            {peeked || !correct
-              ? t("feedback.incorrect")
-              : t("feedback.correct")}
+            {unanswered
+              ? tSession("unanswered")
+              : peeked || !correct
+                ? t("feedback.incorrect")
+                : t("feedback.correct")}
           </p>
 
           <dl className="space-y-3 text-sm leading-relaxed sm:text-[0.9375rem]">
@@ -121,10 +131,12 @@ export function TheoryPracticeFeedback({
             ) : null}
           </dl>
 
-          <Button type="button" onClick={onNext} className="h-11 w-full sm:h-9 sm:w-auto">
-            {t("next")}
-            <ChevronRight className="size-4" />
-          </Button>
+          {onNext ? (
+            <Button type="button" onClick={onNext} className="h-11 w-full sm:h-9 sm:w-auto">
+              {t("next")}
+              <ChevronRight className="size-4" />
+            </Button>
+          ) : null}
         </motion.div>
       ) : null}
     </AnimatePresence>

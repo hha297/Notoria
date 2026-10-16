@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { ArrowLeft, Pencil, Star } from "lucide-react";
 import { useRouter } from "next/navigation";
@@ -7,6 +8,7 @@ import { useTranslations } from "next-intl";
 import { ReviewLaterButton } from "@/components/review-later/review-later-button";
 import { Button } from "@/components/ui/button";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
+import { MeaningUsageBadges } from "@/components/vocabulary/meaning-usage-badges";
 import { SynonymLinks } from "@/components/vocabulary/synonym-links";
 import { VocabularyNotesContent } from "@/components/vocabulary/vocabulary-notes-content";
 import detailStyles from "@/components/style/workspace/detail.module.css";
@@ -20,6 +22,8 @@ import { getTagLabel, PARTS_OF_SPEECH } from "@/lib/vocabulary-tags";
 import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
 import { cn } from "@/lib/utils";
 
+const OTHER_MEANINGS_PAGE_SIZE = 5;
+
 type VocabularyPreviewProps = {
   id: string;
   word: string;
@@ -32,6 +36,7 @@ type VocabularyPreviewProps = {
     meaning: string;
     isPrimary?: boolean;
     sortOrder: number;
+    usageLabels?: string[];
   }>;
   examples: Array<{
     id: string;
@@ -65,12 +70,24 @@ export function VocabularyPreview({
     router.push(`/vocabulary/${id}/edit`);
   });
 
+  const [otherPage, setOtherPage] = useState(1);
+
   const sortedMeanings = [...meanings].sort((a, b) => a.sortOrder - b.sortOrder);
   const primaryMeanings = sortedMeanings.filter(
     (meaning) => meaning.isPrimary !== false,
   );
   const otherMeanings = sortedMeanings.filter(
     (meaning) => meaning.isPrimary === false,
+  );
+  const otherTotalPages = Math.max(
+    1,
+    Math.ceil(otherMeanings.length / OTHER_MEANINGS_PAGE_SIZE),
+  );
+  const safeOtherPage = Math.min(otherPage, otherTotalPages);
+  const otherPageStart = (safeOtherPage - 1) * OTHER_MEANINGS_PAGE_SIZE;
+  const pagedOtherMeanings = otherMeanings.slice(
+    otherPageStart,
+    otherPageStart + OTHER_MEANINGS_PAGE_SIZE,
   );
   const sortedExamples = [...examples].sort((a, b) => a.sortOrder - b.sortOrder);
 
@@ -86,8 +103,9 @@ export function VocabularyPreview({
 
   function renderMeaningList(
     items: typeof sortedMeanings,
-    opts?: { muted?: boolean; showStar?: boolean },
+    opts?: { muted?: boolean; showStar?: boolean; indexOffset?: number },
   ) {
+    const indexOffset = opts?.indexOffset ?? 0;
     return (
       <ol className={mx(lexiconStyles, "vocab-preview-list")}>
         {items.map((meaning, index) => (
@@ -99,7 +117,7 @@ export function VocabularyPreview({
             )}
           >
             <span className={mx(lexiconStyles, "vocab-preview-index")} aria-hidden>
-              {String(index + 1).padStart(2, "0")}
+              {String(indexOffset + index + 1).padStart(2, "0")}
             </span>
             {opts?.showStar ? (
               <Star
@@ -108,7 +126,10 @@ export function VocabularyPreview({
               />
             ) : null}
             <span className={mx(lexiconStyles, "vocab-preview-copy")}>
-              {meaning.meaning}
+              <span className="inline-flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
+                <span>{meaning.meaning}</span>
+                <MeaningUsageBadges labels={meaning.usageLabels} />
+              </span>
             </span>
           </li>
         ))}
@@ -166,7 +187,11 @@ export function VocabularyPreview({
               <span className={mx(detailStyles, "tag")}>{partOfSpeechLabel}</span>
             ) : null}
             {tags.map((item) => (
-              <span key={item.tag} className={mx(detailStyles, "tag")}>
+              <span
+                key={item.tag}
+                data-tag-tone="card"
+                className={mx(detailStyles, "tag")}
+              >
                 {getTagLabel(item.tag, (key) => tTags(key))}
               </span>
             ))}
@@ -195,7 +220,47 @@ export function VocabularyPreview({
               <p className="writing-kicker writing-stage-kicker">
                 {t("otherMeanings")}
               </p>
-              {renderMeaningList(otherMeanings, { muted: true })}
+              {renderMeaningList(pagedOtherMeanings, {
+                muted: true,
+                indexOffset: (safeOtherPage - 1) * OTHER_MEANINGS_PAGE_SIZE,
+              })}
+              {otherMeanings.length > OTHER_MEANINGS_PAGE_SIZE ? (
+                <div className={mx(lexiconStyles, "vocab-preview-pager")}>
+                  <p className={mx(lexiconStyles, "vocab-preview-pager-meta")}>
+                    {t("otherMeaningsPage", {
+                      page: safeOtherPage,
+                      totalPages: otherTotalPages,
+                      total: otherMeanings.length,
+                    })}
+                  </p>
+                  <div className={mx(lexiconStyles, "vocab-preview-pager-controls")}>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      disabled={safeOtherPage <= 1}
+                      onClick={() =>
+                        setOtherPage((page) => Math.max(1, page - 1))
+                      }
+                    >
+                      {t("otherMeaningsPrev")}
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="outline"
+                      size="sm"
+                      disabled={safeOtherPage >= otherTotalPages}
+                      onClick={() =>
+                        setOtherPage((page) =>
+                          Math.min(otherTotalPages, page + 1),
+                        )
+                      }
+                    >
+                      {t("otherMeaningsNext")}
+                    </Button>
+                  </div>
+                </div>
+              ) : null}
             </section>
           ) : null}
 

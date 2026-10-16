@@ -10,6 +10,7 @@ const USER_COLUMNS = {
   name: true,
   email: true,
   role: true,
+  suspendedAt: true,
   subscriptionPlan: true,
   subscriptionStatus: true,
   stripeCustomerId: true,
@@ -19,10 +20,11 @@ const USER_COLUMNS = {
   scheduledSubscriptionPlan: true,
   stripeScheduleId: true,
   introOfferUsedAt: true,
+  createdAt: true,
 } as const;
 
 /**
- * Single request-scoped user row for subscription + pro-access checks.
+ * Single request-scoped user row for subscription + pro-access + admin checks.
  * Isolated by React cache() — never shared across requests/users.
  */
 export const getCurrentUserRecord = cache(async () => {

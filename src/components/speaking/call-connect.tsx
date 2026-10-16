@@ -17,6 +17,7 @@ import { speakingAvatarUri } from "@/lib/speaking/stream";
 type CallConnectProps = {
   sessionId: string;
   title: string;
+  startedAt?: string | null;
   userId: string;
   userName: string;
   userImage?: string | null;
@@ -25,6 +26,7 @@ type CallConnectProps = {
 export function CallConnect({
   sessionId,
   title,
+  startedAt = null,
   userId,
   userName,
   userImage,
@@ -44,7 +46,7 @@ export function CallConnect({
         name: userName,
         image: userImage || speakingAvatarUri(userName, "initials"),
       },
-      tokenProvider: generateSpeakingToken,
+      tokenProvider: () => generateSpeakingToken(sessionId),
     });
 
     setClient(videoClient);
@@ -53,7 +55,7 @@ export function CallConnect({
       void videoClient.disconnectUser();
       setClient(undefined);
     };
-  }, [apiKey, userId, userImage, userName]);
+  }, [apiKey, sessionId, userId, userImage, userName]);
 
   useEffect(() => {
     if (!client) return;
@@ -92,6 +94,7 @@ export function CallConnect({
         <CallUI
           sessionId={sessionId}
           title={title}
+          startedAt={startedAt}
           userName={userName}
           userImage={userImage}
         />

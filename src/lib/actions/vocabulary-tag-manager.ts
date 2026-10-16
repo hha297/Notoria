@@ -60,7 +60,7 @@ async function findMembershipRows(wordIds: string[], tagId: string) {
 }
 
 /**
- * Add a fixed Aihe/Käyttö tag to selected words.
+ * Add a Tag Manager tag (standard topic/usage or custom) to selected words.
  * Only touches vocabulary_word_tags membership.
  * Treats legacy aliases (e.g. `daily` → `everyday_life`) as already present.
  */
@@ -103,9 +103,9 @@ export async function addTagToVocabularyWords(
 }
 
 /**
- * Remove a fixed Aihe/Käyttö tag from selected words.
- * Deletes any stored form that canonicalizes to the selected tag
- * (canonical id or legacy aliases), not only an exact string match.
+ * Remove a Tag Manager tag (standard or custom) from selected words.
+ * Deletes any stored form that matches the selected tag
+ * (canonical id, legacy aliases, or case-insensitive custom keys).
  */
 export async function removeTagFromVocabularyWords(
   input: unknown,

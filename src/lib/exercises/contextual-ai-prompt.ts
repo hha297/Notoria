@@ -1,3 +1,4 @@
+import { vocabularyAiFields } from "@/lib/ai/bounds";
 import {
   CONTEXTUAL_BLANK,
   CONTEXTUAL_DISTRACTOR_POOL_MAX,
@@ -157,14 +158,21 @@ export function contextualAiUserPayload(input: {
         ? "Write completeSentence in studyLanguage with the correctly inflected target already in the sentence — no blank. Return that exact token as answerForm and correctOption. baseWord stays the lemma. options must be exactly 4 contextual forms for that same slot. One exercise per wordId. Difficulty changes construction only — never swap targets."
         : "Write completeSentence in studyLanguage with the correctly inflected target already in the sentence — no blank. answer is that exact in-sentence token, not automatically the saved lemma. One exercise per wordId. Difficulty changes construction only — never swap targets.",
     regenerateReason: input.regenerateReason,
-    words: input.words.map((word) => ({
-      wordId: word.id,
-      lemma: word.word,
-      word: word.word,
-      meaning: word.meaning,
-      partOfSpeech: word.partOfSpeech,
-      distractorPool:
-        word.distractorPool?.slice(0, CONTEXTUAL_DISTRACTOR_POOL_MAX) ?? [],
-    })),
+    words: input.words.map((word) => {
+      const fields = vocabularyAiFields({
+        word: word.word,
+        meaning: word.meaning,
+        partOfSpeech: word.partOfSpeech,
+      });
+      return {
+        wordId: word.id,
+        lemma: fields.word,
+        word: fields.word,
+        meaning: fields.meaning,
+        partOfSpeech: fields.partOfSpeech,
+        distractorPool:
+          word.distractorPool?.slice(0, CONTEXTUAL_DISTRACTOR_POOL_MAX) ?? [],
+      };
+    }),
   };
 }

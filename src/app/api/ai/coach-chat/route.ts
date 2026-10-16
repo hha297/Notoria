@@ -38,7 +38,7 @@ export async function POST(request: Request) {
 
   const workspace = await getActiveWorkspace();
   if (!workspace) {
-    await settleMeteredAi(access, false);
+    await settleMeteredAi(access, false, new Error("AI_FORBIDDEN"));
     return NextResponse.json(
       { ok: false, code: "AI_FORBIDDEN" },
       { status: 401 },
@@ -82,7 +82,7 @@ export async function POST(request: Request) {
       emptyContext: snapshot.empty,
     });
   } catch (error) {
-    await settleMeteredAi(access, false);
+    await settleMeteredAi(access, false, error);
     const message = error instanceof Error ? error.message : "";
     if (message === "OPENAI_NOT_CONFIGURED" || message === "AI_INVALID_RESPONSE") {
       console.error("coach chat AI failed", message);

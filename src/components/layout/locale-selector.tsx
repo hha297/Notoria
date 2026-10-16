@@ -18,10 +18,38 @@ import { cn } from "@/lib/utils";
 
 /** Display labels; options are sorted alphabetically by label. */
 const LOCALE_META: Record<AppLocale, { label: string; flag: string }> = {
+  ar: { label: "العربية", flag: "SA" },
+  be: { label: "Беларуская", flag: "BY" },
+  bg: { label: "Български", flag: "BG" },
+  bs: { label: "Bosanski", flag: "BA" },
+  cs: { label: "Čeština", flag: "CZ" },
+  da: { label: "Dansk", flag: "DK" },
+  de: { label: "Deutsch", flag: "DE" },
+  el: { label: "Ελληνικά", flag: "GR" },
   en: { label: "English", flag: "GB" },
+  es: { label: "Español", flag: "ES" },
   fi: { label: "Suomi", flag: "FI" },
+  fr: { label: "Français", flag: "FR" },
+  hi: { label: "हिन्दी", flag: "IN" },
+  hu: { label: "Magyar", flag: "HU" },
+  hy: { label: "Հայերեն", flag: "AM" },
+  id: { label: "Bahasa Indonesia", flag: "ID" },
+  it: { label: "Italiano", flag: "IT" },
+  ja: { label: "日本語", flag: "JP" },
+  ko: { label: "한국어", flag: "KR" },
+  nl: { label: "Nederlands", flag: "NL" },
+  no: { label: "Norsk", flag: "NO" },
+  pl: { label: "Polski", flag: "PL" },
+  pt: { label: "Português", flag: "PT" },
+  ro: { label: "Română", flag: "RO" },
+  ru: { label: "Русский", flag: "RU" },
+  sq: { label: "Shqip", flag: "AL" },
   sv: { label: "Svenska", flag: "SE" },
+  th: { label: "ไทย", flag: "TH" },
+  tr: { label: "Türkçe", flag: "TR" },
+  uk: { label: "Українська", flag: "UA" },
   vi: { label: "Tiếng Việt", flag: "VN" },
+  zh: { label: "中文", flag: "CN" },
 };
 
 const SORTED_LOCALES = [...locales].sort((a, b) =>
@@ -65,7 +93,7 @@ export function LocaleSelector({
             "control-surface w-auto shrink-0",
             compact
               ? "h-9 gap-1.5 px-2.5 text-sm [&_svg]:size-3.5"
-              : "h-10 px-2 sm:min-w-[148px] sm:px-2.5",
+              : "h-10 px-2 sm:min-w-[200px] sm:px-2.5",
           )}
         >
           <SelectValue>

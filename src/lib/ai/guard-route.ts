@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
 import {
+  beginAiAbuseControl,
+  isAiBusyError,
+  isRateLimitedError,
+  type AiAbuseOperation,
+} from "@/lib/ai/abuse-control";
+import {
   AiAssistanceDisabledError,
   requireAiAssistanceEnabled,
 } from "@/lib/ai/preferences-server";
@@ -10,11 +16,15 @@ import {
   requireFeature,
 } from "@/lib/billing/entitlements";
 import {
+  aiBusyBody,
   PremiumRequiredError,
   ProRequiredError,
   QuotaExceededError,
+  rateLimitedBody,
 } from "@/lib/billing/errors";
 import type { FeatureId, QuotaFeatureId } from "@/lib/billing/plans";
+import { shouldRefundUsage } from "@/lib/ai/bounds";
+import { isPaidOpsStopped } from "@/lib/ai/paid-ops";
 import {
   finalizeUsageReservation,
   refundUsageReservation,
@@ -24,6 +34,8 @@ export type MeteredAiAccess = {
   ok: true;
   preferences: AiPreferences;
   reservationId: string | null;
+  /** Release abuse concurrency slot (always call in finally). */
+  releaseAbuse?: () => void;
 };
 
 export type MeteredAiAccessWithUser = MeteredAiAccess & {
@@ -44,6 +56,15 @@ async function preferencesOrResponse(): Promise<
   const user = await getCurrentUserRecord();
   if (!user) {
     return { ok: false, response: await unauthorized() };
+  }
+  if (isPaidOpsStopped()) {
+    return {
+      ok: false,
+      response: NextResponse.json(
+        { ok: false, code: "AI_PAID_OPS_STOPPED" },
+        { status: 503 },
+      ),
+    };
   }
   try {
     const preferences = await requireAiAssistanceEnabled();
@@ -118,20 +139,43 @@ export async function guardProFeature(feature: FeatureId): Promise<
   }
 }
 
+function abuseFailureResponse(error: unknown): NextResponse | null {
+  if (isRateLimitedError(error)) {
+    return NextResponse.json(rateLimitedBody(error.retryAfterSeconds), {
+      status: 429,
+    });
+  }
+  if (isAiBusyError(error)) {
+    return NextResponse.json(aiBusyBody(), { status: 429 });
+  }
+  return null;
+}
+
 /** Reserves one Free quota unit. Pro and Premium skip the write. */
 export async function guardMeteredAi(
   feature: QuotaFeatureId,
+  options?: { abuse?: AiAbuseOperation },
 ): Promise<MeteredAiAccess | { ok: false; response: NextResponse }> {
   const access = await preferencesOrResponse();
   if (!access.ok) return access;
+
+  let releaseAbuse: (() => void) | undefined;
   try {
+    if (options?.abuse) {
+      const gate = beginAiAbuseControl(access.user.id, options.abuse);
+      releaseAbuse = gate.release;
+    }
     const reservation = await consumeUsage(access.user, feature);
     return {
       ok: true,
       preferences: access.preferences,
       reservationId: reservation.reservationId,
+      releaseAbuse,
     };
   } catch (error) {
+    releaseAbuse?.();
+    const abuseResponse = abuseFailureResponse(error);
+    if (abuseResponse) return { ok: false, response: abuseResponse };
     if (error instanceof QuotaExceededError) {
       return {
         ok: false,
@@ -195,11 +239,18 @@ export async function guardPremiumCoachChat(): Promise<
 export async function settleMeteredAi(
   access: { reservationId: string | null },
   succeeded: boolean,
+  error?: unknown,
 ) {
   if (!access.reservationId) return;
   if (succeeded) {
     await finalizeUsageReservation(access.reservationId);
-  } else {
+    return;
+  }
+  // After a billable provider call, keep the charge so automatic retries
+  // cannot burn unlimited quota via refunds.
+  if (shouldRefundUsage(error)) {
     await refundUsageReservation(access.reservationId);
+  } else {
+    await finalizeUsageReservation(access.reservationId);
   }
 }

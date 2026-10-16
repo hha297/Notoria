@@ -12,6 +12,13 @@ import {
   headingTagForLevel,
   normalizeTipTapHeadingLevels,
 } from "@/lib/editor/heading-level";
+import {
+  canonicalizeParadigmHeadersInDoc,
+  localizeParadigmHeadersInDoc,
+  PARADIGM_CASE_KEYS,
+  type ParadigmCaseLabels,
+  type ParadigmUiLabels,
+} from "@/lib/editor/paradigm-headers";
 import { renderBlock } from "@/lib/editor/render-document";
 import "@/components/style/editor/tiptap.module.css";
 import { cn } from "@/lib/utils";
@@ -37,7 +44,7 @@ const PROSE_CLASSES =
   "prose-h3:text-[1.05rem] prose-h3:leading-snug " +
   "[&_img]:h-auto [&_img]:max-h-80 [&_img]:max-w-full [&_img]:rounded-sm " +
   "[&_pre]:max-w-full [&_pre]:overflow-x-auto " +
-  "[&_table]:block [&_table]:w-max [&_table]:max-w-full [&_table]:overflow-x-auto";
+  "[&_table]:w-full [&_table]:max-w-full [&_table]:table-fixed [&_table]:overflow-x-auto";
 
 function blockStableKey(block: JSONContent, index: number): string {
   if (block.type !== "heading") return `b:${index}`;
@@ -83,10 +90,27 @@ export function RichTextContent({
   collapseStorageKey = null,
 }: RichTextContentProps) {
   const tEditor = useTranslations("editor");
-  const normalized = useMemo(
-    () => normalizeTipTapHeadingLevels(content),
-    [content],
-  );
+  const paradigmLabels = useMemo<ParadigmUiLabels>(() => {
+    const cases = {} as ParadigmCaseLabels;
+    for (const key of PARADIGM_CASE_KEYS) {
+      cases[key] = tEditor(`paradigmCases.${key}`);
+    }
+    return {
+      headers: {
+        case: tEditor("paradigmHeaders.case"),
+        singular: tEditor("paradigmHeaders.singular"),
+        plural: tEditor("paradigmHeaders.plural"),
+      },
+      cases,
+    };
+  }, [tEditor]);
+  const normalized = useMemo(() => {
+    const base = normalizeTipTapHeadingLevels(content);
+    return localizeParadigmHeadersInDoc(
+      canonicalizeParadigmHeadersInDoc(base, paradigmLabels),
+      paradigmLabels,
+    );
+  }, [content, paradigmLabels]);
   const blocks = normalized.content ?? [];
 
   const [collapsedKeys, setCollapsedKeys] = useState<Set<string>>(
@@ -136,7 +160,7 @@ export function RichTextContent({
         className={cn(
           PROSE_CLASSES,
           "tiptap",
-          variant === "notes" ? "px-0 py-0" : "px-4 py-3",
+          variant === "notes" ? "px-0 py-0" : "px-3 py-3 sm:px-4",
         )}
       >
         {blocks.map((block, index) => {

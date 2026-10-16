@@ -178,7 +178,7 @@ Two different flows — keep them separate:
 | Editor           | TipTap                                                        |
 | Export / import  | `@react-pdf/renderer`, `docx`, `unpdf`, `mammoth`             |
 | AI               | OpenAI (+ Realtime for speaking tutor)                        |
-| Speech           | AssemblyAI (listening); Stream Video transcription (speaking) |
+| Speech           | AssemblyAI (listening); OpenAI Realtime transcription (speaking) |
 | Media / realtime | Cloudinary (images/audio); private Vercel Blob (Reading PDF/DOCX); Stream Video |
 | Tests            | Vitest                                                        |
 | Deploy           | Vercel + Docker Compose (local Postgres)                      |

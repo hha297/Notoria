@@ -20,6 +20,8 @@ import {
   type QuotaFeatureId,
   type QuotaStatus,
 } from "@/lib/billing/plans";
+import { shouldRefundUsage } from "@/lib/ai/bounds";
+import { assertPaidOpsAllowed } from "@/lib/ai/paid-ops";
 import {
   finalizeUsageReservation,
   readUsageCounts,
@@ -131,6 +133,9 @@ export async function consumeUsage(
   feature: QuotaFeatureId,
   subjectId?: string | null,
 ) {
+  // Stops new paid reservations (including unlimited plans) without blocking
+  // cleanup/finalize that never calls consumeUsage.
+  assertPaidOpsAllowed();
   const plan = entitlementPlan(user);
   const access = getFeatureAccess(plan, feature);
   if (access.kind !== "quota") {
@@ -195,7 +200,11 @@ export async function runWithUsage<T>(
     return result;
   } catch (error) {
     if (!reservation.reused) {
-      await refundUsageReservation(reservation.reservationId);
+      if (shouldRefundUsage(error)) {
+        await refundUsageReservation(reservation.reservationId);
+      } else {
+        await finalizeUsageReservation(reservation.reservationId);
+      }
     }
     throw error;
   }
@@ -220,7 +229,11 @@ export async function runSharedUsage<T>(
     }
     return result;
   } catch (error) {
-    await refundUsageReservation(reservation.reservationId);
+    if (shouldRefundUsage(error)) {
+      await refundUsageReservation(reservation.reservationId);
+    } else if (options?.finalize !== false) {
+      await finalizeUsageReservation(reservation.reservationId);
+    }
     throw error;
   }
 }

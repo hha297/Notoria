@@ -1,22 +1,23 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { useHotkeys } from "react-hotkeys-hook";
 import { useLocale, useTranslations } from "next-intl";
 import { Sparkles } from "lucide-react";
+import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseDifficultySelect } from "@/components/exercises/exercise-difficulty-select";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
+import { ExerciseSetSubmitBar } from "@/components/exercises/exercise-set-submit-bar";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
-import { TypeAnswerActions } from "@/components/exercises/type-answer-actions";
 import { TypeAnswerStage } from "@/components/exercises/type-answer-stage";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { Button } from "@/components/ui/button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
+import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { useExerciseDifficulty } from "@/hooks/use-exercise-difficulty";
-import { useExerciseSessionController } from "@/hooks/use-exercise-session-controller";
+import { useExerciseSetAttempt } from "@/hooks/use-exercise-set-attempt";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import { isValidLocale } from "@/i18n/config";
 import { requestContextualExerciseAi } from "@/lib/exercises/contextual-ai-client";
@@ -29,6 +30,7 @@ import {
   type TypeAnswerItem,
   type TypeAnswerStudyMode,
 } from "@/lib/exercises/type-answer";
+import { isNonEmptyAnswer, type SetQuestionResult } from "@/lib/exercises/set-attempt";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { answersMatchAny } from "@/lib/exercises/utils";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
@@ -41,6 +43,15 @@ type TypeAnswerSessionProps = {
   language?: string;
 };
 
+function promptLabelFor(
+  item: TypeAnswerItem,
+  t: ReturnType<typeof useTranslations<"exercises.typeAnswer">>,
+) {
+  if (item.direction === "CONTEXTUAL") return t("questionContext");
+  if (item.direction === "WORD_TO_MEANING") return t("questionWord");
+  return t("questionMeaning");
+}
+
 export function TypeAnswerSession({
   workspaceId,
   words,
@@ -49,26 +60,14 @@ export function TypeAnswerSession({
   const t = useTranslations("exercises.typeAnswer");
   const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
-  const tBilling = useTranslations("billing");
   const uiLocale = useLocale();
   const { openUpgrade } = useProAccess();
+  const exerciseQuota = useQuotaLockMessage("ai_exercise");
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [studyMode, setStudyMode] =
     useState<TypeAnswerStudyMode>("word-to-meaning");
   const [items, setItems] = useState<TypeAnswerItem[]>([]);
-  const [input, setInput] = useState("");
-  const {
-    currentIndex,
-    score,
-    answered,
-    peeked,
-    complete: sessionComplete,
-    restart,
-    next,
-    goPrev,
-    recordAnswer,
-    peek,
-  } = useExerciseSessionController();
+  const [activeIds, setActiveIds] = useState<string[] | null>(null);
   const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
   const { difficulty, setDifficulty } = useExerciseDifficulty("type_answer");
   const {
@@ -90,6 +89,36 @@ export function TypeAnswerSession({
   );
   const isContextual = studyMode === "contextual";
 
+  const practiceItems = useMemo(() => {
+    if (!activeIds) return items;
+    const byId = new Map(items.map((item) => [item.id, item]));
+    return activeIds
+      .map((id) => byId.get(id))
+      .filter((item): item is TypeAnswerItem => Boolean(item));
+  }, [activeIds, items]);
+
+  const questionIds = useMemo(
+    () => practiceItems.map((item) => item.id),
+    [practiceItems],
+  );
+
+  const {
+    answers,
+    phase: attemptPhase,
+    results,
+    submitting,
+    attemptKey,
+    answeredCount,
+    totalQuestionCount,
+    unansweredIds,
+    score,
+    setAnswer,
+    resetAttempt,
+    submit,
+  } = useExerciseSetAttempt({ questionIds });
+
+  const submitted = attemptPhase === "submitted";
+
   const startDeterministicSession = useCallback(() => {
     const prefs = commitAndBeginNext();
     const built = sampleSessionItems(
@@ -106,15 +135,15 @@ export function TypeAnswerSession({
       },
     );
     setItems(built);
-    setInput("");
-    restart();
+    setActiveIds(null);
+    resetAttempt();
     resetProcessing();
   }, [
     commitAndBeginNext,
     createdAtByWordId,
     filteredWords,
+    resetAttempt,
     resetProcessing,
-    restart,
     studyMode,
   ]);
 
@@ -140,8 +169,8 @@ export function TypeAnswerSession({
     );
 
     setItems([]);
-    setInput("");
-    restart();
+    setActiveIds(null);
+    resetAttempt();
     setStage("generating");
 
     try {
@@ -165,7 +194,8 @@ export function TypeAnswerSession({
 
       if (!result.ok) {
         if (result.code === "AI_QUOTA_EXCEEDED") {
-          fail(tBilling("quotaExceeded"));
+          fail(exerciseQuota.message);
+          await exerciseQuota.refreshQuotas();
           return;
         }
         if (result.code === "AI_FORBIDDEN") {
@@ -212,11 +242,12 @@ export function TypeAnswerSession({
     filteredWords,
     language,
     openUpgrade,
+    resetAttempt,
     resetProcessing,
-    restart,
     setStage,
     tAi,
-    tBilling,
+    exerciseQuota.message,
+    exerciseQuota.refreshQuotas,
     uiLocale,
   ]);
 
@@ -228,15 +259,24 @@ export function TypeAnswerSession({
     startDeterministicSession();
   }, [isContextual, startContextualSession, startDeterministicSession]);
 
+  // Restart only when the practice source changes — not when callback identities
+  // shift (e.g. quota message object rebuilt every render).
   useEffect(() => {
     let cancelled = false;
     void Promise.resolve().then(() => {
-      if (!cancelled) startSession();
+      if (cancelled) return;
+      if (isContextual) {
+        void startContextualSession();
+      } else {
+        startDeterministicSession();
+      }
     });
     return () => {
       cancelled = true;
     };
-  }, [startSession, workspaceId]);
+    // intentionally omit session starters from deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- avoid infinite reshuffle
+  }, [workspaceId, studyMode, filters, isContextual, difficulty]);
 
   const handleStudyModeChange = (mode: string) => {
     if (
@@ -248,40 +288,29 @@ export function TypeAnswerSession({
     }
   };
 
-  const current = items[currentIndex];
-  const total = items.length;
-  const revealed = answered || peeked;
-  const isCorrect = current
-    ? !peeked && answersMatchAny(input, current.acceptableAnswers)
-    : false;
-
-  const check = () => {
-    if (!current || revealed || !input.trim()) return;
-    const correct = answersMatchAny(input, current.acceptableAnswers);
-    recordAnswer(correct);
-    recordOutcome({ wordId: current.wordId, correct });
-  };
-
-  const revealAnswer = () => {
-    if (!current || revealed) return;
-    peek();
-    recordOutcome({ wordId: current.wordId, correct: false });
-  };
-
-  useHotkeys(
-    "enter",
-    (e) => {
-      e.preventDefault();
-      if (sessionComplete) return;
-      if (!revealed) check();
-      else {
-        setInput("");
-        next(total);
+  const handleSubmit = () => {
+    void submit((currentAnswers) => {
+      const graded: Record<string, SetQuestionResult> = {};
+      for (const item of practiceItems) {
+        const raw = currentAnswers[item.id];
+        const value = typeof raw === "string" ? raw : "";
+        const unanswered = !isNonEmptyAnswer(value);
+        const correct =
+          !unanswered && answersMatchAny(value, item.acceptableAnswers);
+        graded[item.id] = { correct, unanswered };
+        recordOutcome({ wordId: item.wordId, correct });
       }
-    },
-    { enableOnFormTags: true },
-    [revealed, sessionComplete, input, current, total, next],
-  );
+      return graded;
+    });
+  };
+
+  const jumpToUnanswered = () => {
+    const first = unansweredIds[0];
+    if (!first) return;
+    document
+      .getElementById(`ta-q-${first}`)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
 
@@ -339,7 +368,7 @@ export function TypeAnswerSession({
     );
   }
 
-  if (items.length === 0 && !sessionComplete && !isContextual) {
+  if (items.length === 0 && !isContextual) {
     return (
       <div className="space-y-6">
         {filtersBar}
@@ -348,12 +377,42 @@ export function TypeAnswerSession({
     );
   }
 
-  const promptLabel =
-    current?.direction === "CONTEXTUAL"
-      ? t("questionContext")
-      : current?.direction === "WORD_TO_MEANING"
-        ? t("questionWord")
-        : t("questionMeaning");
+  if (items.length === 0 && isContextual) {
+    return (
+      <div className="space-y-6">
+        {filtersBar}
+        <div className="relative mx-auto max-w-lg overflow-hidden px-4 py-10 text-center sm:px-8 sm:py-14">
+          <div
+            aria-hidden
+            className="pointer-events-none absolute inset-x-0 top-0 h-36 bg-[radial-gradient(ellipse_at_top,var(--exercise-accent-soft),transparent_70%)]"
+          />
+          <div className="relative">
+            <div className="mx-auto mb-5 flex size-12 items-center justify-center border border-(--exercise-accent)/25 bg-(--exercise-accent-soft) text-(--exercise-accent)">
+              <Sparkles className="size-5" />
+            </div>
+            <p className="font-heading text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+              {t("contextualEmptyTitle")}
+            </p>
+            <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
+              {t("contextualEmptyDescription")}
+            </p>
+            <QuotaLockButton
+              type="button"
+              size="lg"
+              className="mt-7 h-12 sm:h-11"
+              locked={exerciseQuota.locked}
+              lockMessage={exerciseQuota.message}
+              pending={generating}
+              icon={<Sparkles className="size-4" />}
+              onClick={() => void startContextualSession()}
+            >
+              {tAi("generate")}
+            </QuotaLockButton>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="space-y-6">
@@ -363,81 +422,128 @@ export function TypeAnswerSession({
         <ExerciseDifficultySelect
           value={difficulty}
           onChange={setDifficulty}
-          disabled={generating}
+          disabled={generating || submitted}
           compact
         />
       ) : null}
 
-      {sessionComplete ? (
-        <SessionCompleteCard
-          title={tSession("complete")}
-          questions={total}
-          correct={score.correct}
-          tryAgainLabel={tSession("tryAgain")}
-          onTryAgain={startSession}
+      <ExerciseProgressHeader
+        current={submitted ? score.correct : answeredCount}
+        total={submitted ? score.total : totalQuestionCount}
+        progressLabel={
+          submitted
+            ? tSession("score", {
+                correct: score.correct,
+                total: score.total,
+              })
+            : tSession("answeredProgress", {
+                answered: answeredCount,
+                total: totalQuestionCount,
+              })
+        }
+        scoreLabel={
+          submitted
+            ? t("score", {
+                correct: score.correct,
+                answered: score.total,
+              })
+            : undefined
+        }
+        progressValue={
+          submitted
+            ? score.total
+              ? (score.correct / score.total) * 100
+              : 0
+            : totalQuestionCount
+              ? (answeredCount / totalQuestionCount) * 100
+              : 0
+        }
+      />
+
+      <div className="space-y-4" key={attemptKey}>
+        {practiceItems.map((item, index) => {
+          const input =
+            typeof answers[item.id] === "string" ? String(answers[item.id]) : "";
+          const result = results[item.id];
+          const unanswered = Boolean(result?.unanswered);
+          const isCorrect = Boolean(result?.correct);
+          return (
+            <TypeAnswerStage
+              key={item.id}
+              item={item}
+              number={index + 1}
+              promptLabel={promptLabelFor(item, t)}
+              input={input}
+              revealed={submitted}
+              peeked={false}
+              isCorrect={isCorrect}
+              unanswered={unanswered}
+              onInputChange={(value) => setAnswer(item.id, value)}
+            />
+          );
+        })}
+      </div>
+
+      {!submitted ? (
+        <ExerciseSetSubmitBar
+          answeredCount={answeredCount}
+          totalQuestionCount={totalQuestionCount}
+          unansweredCount={unansweredIds.length}
+          submitting={submitting}
+          onSubmit={handleSubmit}
+          onJumpToUnanswered={jumpToUnanswered}
         />
-      ) : current ? (
-        <>
-          <ExerciseProgressHeader
-            current={currentIndex + 1}
-            total={total}
-            progressLabel={t("progress", { current: currentIndex + 1, total })}
-            scoreLabel={t("score", {
-              correct: score.correct,
-              answered: score.answered,
-            })}
-            hint={t("keyboardHint")}
-            progressValue={total ? ((currentIndex + 1) / total) * 100 : 0}
-          />
-          <TypeAnswerStage
-            key={current.id}
-            item={current}
-            promptLabel={promptLabel}
-            input={input}
-            revealed={revealed}
-            peeked={peeked}
-            isCorrect={isCorrect}
-            onInputChange={setInput}
-            onCheck={check}
-            onRevealAnswer={revealAnswer}
-          />
-          <TypeAnswerActions
-            canPrev={currentIndex > 0}
-            revealed={revealed}
-            canCheck={Boolean(input.trim())}
-            isLast={currentIndex >= total - 1}
-            tryAgainLabel={tSession("tryAgain")}
-            onPrev={() => {
-              setInput("");
-              goPrev();
-            }}
-            onNext={() => {
-              setInput("");
-              next(total);
-            }}
-            onCheck={check}
+      ) : (
+        <div className="space-y-4">
+          <SessionCompleteCard
+            title={tSession("complete")}
+            questions={score.total}
+            correct={score.correct}
+            tryAgainLabel={tSession("restartSet")}
             onTryAgain={startSession}
           />
-        </>
-      ) : isContextual ? (
-        <div className="border border-hairline-cloud bg-background p-8 text-center">
-          <p className="font-heading text-lg font-medium text-ink">
-            {t("contextualEmptyTitle")}
-          </p>
-          <p className="mx-auto mt-2 max-w-md text-sm text-muted-foreground">
-            {t("contextualEmptyDescription")}
-          </p>
-          <Button
-            type="button"
-            className="mt-6"
-            onClick={() => void startContextualSession()}
-            disabled={generating}
-          >
-            <Sparkles className="size-4" />
-            {tAi("generate")}
-          </Button>
+          <div className="mx-auto flex w-full max-w-md flex-wrap justify-center gap-2">
+            {practiceItems.some(
+              (item) =>
+                results[item.id] &&
+                !results[item.id]!.correct &&
+                !results[item.id]!.unanswered,
+            ) ? (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  const ids = practiceItems
+                    .filter((item) => {
+                      const row = results[item.id];
+                      return row && !row.correct && !row.unanswered;
+                    })
+                    .map((item) => item.id);
+                  setActiveIds(ids.length > 0 ? ids : null);
+                  resetAttempt();
+                }}
+              >
+                {tSession("retryIncorrect")}
+              </Button>
+            ) : null}
+            {Object.values(results).some((row) => row.unanswered) ? (
+              <Button
+                type="button"
+                variant="outline"
+                onClick={() => {
+                  const ids = practiceItems
+                    .filter((item) => results[item.id]?.unanswered)
+                    .map((item) => item.id);
+                  setActiveIds(ids.length > 0 ? ids : null);
+                  resetAttempt();
+                }}
+              >
+                {tSession("retryUnanswered")}
+              </Button>
+            ) : null}
+          </div>
         </div>
-      ) : null}
+      )}
     </div>
   );
 }

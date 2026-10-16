@@ -123,6 +123,7 @@ async function replaceWordRelations(
         meaning: meaning.meaning,
         isPrimary: meaning.isPrimary,
         sortOrder: meaning.sortOrder ?? index,
+        usageLabels: meaning.usageLabels ?? [],
       })),
     );
   }
@@ -389,6 +390,7 @@ export async function getVocabularyListWords() {
             meaning: true,
             isPrimary: true,
             sortOrder: true,
+            usageLabels: true,
           },
           orderBy: [asc(wordMeanings.sortOrder)],
         },

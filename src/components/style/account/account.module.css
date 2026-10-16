@@ -280,9 +280,127 @@
   color: var(--muted-foreground);
 }
 
+/*
+  Account inputs + outline actions: slate route tint.
+  Primary CTAs (Change plan, Save name, …) keep brand gold via .btn-blend-primary.
+  Open learning coach uses .account-coach-cta (lime).
+*/
+.account-stack {
+  --account-control-fill: color-mix(
+    in oklab,
+    var(--module-account-bg) 64%,
+    var(--surface-elevated)
+  );
+  --account-control-fill-hover: color-mix(
+    in oklab,
+    var(--module-account-bg) 78%,
+    var(--module-account-fg) 10%
+  );
+  --account-control-border: color-mix(
+    in oklab,
+    var(--module-account-fg) 38%,
+    var(--hairline-cloud)
+  );
+  --account-control-border-hover: color-mix(
+    in oklab,
+    var(--module-account-fg) 55%,
+    var(--hairline-cloud)
+  );
+}
+
 .account-input {
   min-height: 2.65rem;
   border-radius: 0.75rem;
+  border-color: var(--account-control-border) !important;
+  background-color: var(--account-control-fill) !important;
+  background-image: linear-gradient(
+    155deg,
+    color-mix(in oklab, var(--module-account-fg) 10%, var(--account-control-fill)),
+    var(--account-control-fill) 58%
+  ) !important;
+  box-shadow: none !important;
+}
+
+.account-input:hover:not(:disabled) {
+  border-color: var(--account-control-border-hover) !important;
+  background-color: var(--account-control-fill-hover) !important;
+  background-image: linear-gradient(
+    155deg,
+    color-mix(in oklab, var(--module-account-fg) 14%, var(--account-control-fill-hover)),
+    var(--account-control-fill-hover) 58%
+  ) !important;
+}
+
+.account-input:focus-visible {
+  border-color: var(--module-account-fg) !important;
+  background-color: var(--account-control-fill-hover) !important;
+  background-image: linear-gradient(
+    155deg,
+    color-mix(in oklab, var(--module-account-fg) 14%, var(--account-control-fill-hover)),
+    var(--account-control-fill-hover) 58%
+  ) !important;
+}
+
+/* Outline: Manage billing, Upload photo, etc. (not coach — that uses .account-coach-cta) */
+.account-stack :global(button.control-surface:not(.account-coach-cta)),
+.account-panel :global(button.control-surface:not(.account-coach-cta)) {
+  border-color: var(--account-control-border) !important;
+  background-color: var(--account-control-fill) !important;
+  background-image: linear-gradient(
+    155deg,
+    color-mix(in oklab, var(--module-account-fg) 10%, var(--account-control-fill)),
+    var(--account-control-fill) 58%
+  ) !important;
+  color: var(--ink) !important;
+  box-shadow: none !important;
+}
+
+.account-stack :global(button.control-surface:not(.account-coach-cta):hover:not(:disabled)),
+.account-panel :global(button.control-surface:not(.account-coach-cta):hover:not(:disabled)) {
+  border-color: var(--account-control-border-hover) !important;
+  background-color: var(--account-control-fill-hover) !important;
+  background-image: linear-gradient(
+    155deg,
+    color-mix(in oklab, var(--module-account-fg) 16%, var(--account-control-fill-hover)),
+    var(--account-control-fill-hover) 58%
+  ) !important;
+  color: var(--module-account-fg) !important;
+}
+
+/* Open learning coach → coach lime accent (Change plan stays brand gold primary) */
+.account-coach-cta {
+  border-color: color-mix(
+    in oklab,
+    var(--accent-lime) 48%,
+    var(--hairline-cloud)
+  ) !important;
+  background-color: color-mix(
+    in oklab,
+    var(--accent-lime) 16%,
+    var(--surface-elevated)
+  ) !important;
+  background-image: linear-gradient(
+    155deg,
+    color-mix(in oklab, var(--accent-lime) 22%, var(--surface-elevated)),
+    color-mix(in oklab, var(--accent-lime) 10%, var(--surface-elevated)) 60%
+  ) !important;
+  color: color-mix(in oklab, var(--accent-lime) 55%, var(--ink)) !important;
+  box-shadow: none !important;
+}
+
+.account-coach-cta:hover:not(:disabled) {
+  border-color: color-mix(in oklab, var(--accent-lime) 62%, transparent) !important;
+  background-color: color-mix(
+    in oklab,
+    var(--accent-lime) 24%,
+    var(--surface-elevated)
+  ) !important;
+  background-image: linear-gradient(
+    155deg,
+    color-mix(in oklab, var(--accent-lime) 30%, var(--surface-elevated)),
+    color-mix(in oklab, var(--accent-lime) 14%, var(--surface-elevated)) 60%
+  ) !important;
+  color: color-mix(in oklab, var(--accent-lime) 42%, var(--ink)) !important;
 }
 
 .account-email {
@@ -294,17 +412,22 @@
 
 .account-delete-sheet {
   gap: 0;
+  /* Kill DialogContent default padding so the hero can bleed edge-to-edge. */
+  padding: 0 !important;
 }
 
 .account-delete-hero {
-  padding: 1.25rem 1.3rem 1rem;
+  margin: 0;
+  width: 100%;
+  padding: 1.25rem 1.3rem 1.15rem;
   border-bottom: 1px solid
-    color-mix(in oklab, var(--destructive) 22%, var(--hairline-cloud));
+    color-mix(in oklab, var(--destructive) 34%, var(--hairline-cloud));
   background:
     linear-gradient(
       165deg,
-      color-mix(in oklab, var(--destructive) 12%, transparent),
-      transparent 78%
+      color-mix(in oklab, var(--destructive) 28%, var(--surface-elevated)),
+      color-mix(in oklab, var(--destructive) 16%, var(--surface-elevated)) 55%,
+      color-mix(in oklab, var(--destructive) 12%, var(--surface-elevated))
     );
 }
 
@@ -314,7 +437,7 @@
   font-weight: 700;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: color-mix(in oklab, var(--destructive) 78%, var(--muted-foreground));
+  color: color-mix(in oklab, var(--destructive) 88%, var(--ink));
 }
 
 .account-delete-title {
@@ -322,12 +445,14 @@
   font-size: 1.35rem;
   font-weight: 700;
   letter-spacing: -0.03em;
+  color: var(--ink);
 }
 
 .account-delete-lede {
   margin: 0;
   font-size: 0.92rem;
   line-height: 1.45;
+  color: color-mix(in oklab, var(--ink) 78%, var(--muted-foreground));
 }
 
 .account-delete-body {

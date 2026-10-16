@@ -53,7 +53,7 @@ export function VocabularyEmpty({ variant, minWords = 2 }: VocabularyEmptyProps)
 
   return (
     <div className="empty-state">
-      <div className="mb-5 flex size-12 items-center justify-center rounded-full bg-accent-lime/20 text-ink">
+      <div className="mb-5 flex size-12 items-center justify-center rounded-full bg-page-accent-soft text-page-accent">
         <BookOpen className="size-5" strokeWidth={2} />
       </div>
       <p className="text-lg font-medium text-ink">{content.title}</p>

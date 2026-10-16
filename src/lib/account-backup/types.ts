@@ -26,6 +26,8 @@ export type BackupWordMeaning = {
   meaning: string;
   isPrimary: boolean;
   sortOrder: number;
+  /** Stable meaning-level usage ids; omitted/empty on older backups. */
+  usageLabels?: string[];
 };
 
 export type BackupWordExample = {

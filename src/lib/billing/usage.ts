@@ -29,6 +29,9 @@ function rowsOf(result: unknown): Array<Record<string, unknown>> {
  * Increments today's counter only when it is still below the limit.
  * The WHERE clause is evaluated as part of the upsert, so two concurrent
  * requests cannot both consume the last remaining unit.
+ *
+ * Reservations dedupe quota for a subject. They do not stop a second
+ * provider call; callers claim an execution lock in `@/lib/ai/job-lock`.
  */
 async function incrementIfAllowed(
   tx: Parameters<Parameters<typeof db.transaction>[0]>[0],

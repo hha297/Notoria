@@ -90,6 +90,8 @@
     "errors": {
       "proRequired": "Tiedostotuonti on Pro- ja Premium-ominaisuus.",
       "quotaExceeded": "Päivän tuontiraja on täynnä. Yritä huomenna tai päivitä suurempaan rajaan.",
+      "rateLimited": "Liian monta tuontipyyntöä. Odota hetki ja yritä uudelleen.",
+      "busy": "Tuonti on jo käynnissä. Odota sen valmistumista ja yritä uudelleen.",
       "fileTooLarge": "Tiedosto on liian suuri. Pidä alle 10 MB.",
       "unsupportedFormat": "Käytä CSV-, PDF-, DOCX- tai tekstitiedostoa.",
       "emptyFile": "Tiedostosta ei löytynyt luettavaa sisältöä.",
@@ -130,9 +132,33 @@
     "formatWorking": "Muotoillaan…",
     "formatAiFallback": "Tekoälymuotoilu ei onnistunut — tehtiin perussiistiminen",
     "formatFailed": "Sisältöä ei voitu muotoilla. Yritä uudelleen.",
+    "formatQuotaExceeded": "Päivän tekoälymuotoilun kiintiö on käytetty. Se nollautuu UTC-keskiyöllä — tai päivitä suurempaan rajaan.",
+    "formatRateLimited": "Liian monta muotoilupyyntöä. Odota hetki ja yritä uudelleen.",
     "tableSelectionInvalid": "Valintaa ei voitu muuntaa taulukoksi",
     "headingCollapse": "Tiivistä osio",
-    "headingExpand": "Laajenna osio"
+    "headingExpand": "Laajenna osio",
+    "paradigmHeaders": {
+      "case": "Sijamuoto",
+      "singular": "Yksikkö",
+      "plural": "Monikko"
+    },
+    "paradigmCases": {
+      "nominative": "Nominatiivi",
+      "genitive": "Genetiivi",
+      "partitive": "Partitiivi",
+      "accusative": "Akkusatiivi",
+      "inessive": "Inessiivi",
+      "elative": "Elatiivi",
+      "illative": "Illatiivi",
+      "adessive": "Adessiivi",
+      "ablative": "Ablatiivi",
+      "allative": "Allatiivi",
+      "essive": "Essiivi",
+      "translative": "Translatiivi",
+      "instructive": "Instruktiivi",
+      "abessive": "Abessiivi",
+      "comitative": "Komitatiivi"
+    }
   },
   "nav": {
     "dashboard": "Etusivu",
@@ -166,6 +192,11 @@
     "captureDescription": "Säilytä jotain käsiteltäväksi myöhemmin. Sinun ei tarvitse vielä päättää, mihin se kuuluu.",
     "captureSubmit": "Tallenna Keräykseen",
     "captured": "Tallennettu Keräykseen",
+    "edit": "Muokkaa",
+    "editTitle": "Muokkaa tallennetta",
+    "editDescription": "Päivitä sisältö tai siirrä se toiseen kansioon.",
+    "editSubmit": "Tallenna muutokset",
+    "updated": "Tallenne päivitetty",
     "contentLabel": "Sisältö",
     "contentPlaceholder": "Sana, fraasi, idea tai mitä tahansa, johon haluat palata…",
     "contentRequired": "Lisää ensin sisältöä",
@@ -174,14 +205,21 @@
     "sourceLabel": "Lähde (valinnainen)",
     "sourcePlaceholder": "Kirja, podcast, tunti…",
     "sourcePrefix": "Lähde: {source}",
+    "folderLabel": "Kansio",
+    "foldersNav": "Keräyksen kansiot",
+    "scopeAll": "Kaikki tallenteet",
+    "unfiled": "Ilman kansiota",
     "filterUnprocessed": "Käsittelemättä",
     "filterProcessed": "Käsitelty",
     "emptyTitle": "Keräys on tyhjä",
     "emptyDescription": "Tallenna jotain nopeasti — sana keskustelusta, kielioppi-epäilys, kirjoitusidea — ja järjestä se myöhemmin.",
     "emptyProcessedTitle": "Ei vielä käsiteltyjä kohteita",
     "emptyProcessedDescription": "Kun olet tallentanut Keräyksestä sanaston, teorian, kirjoituksen tai harjoituksen, kohde näkyy täällä.",
+    "emptyFolderTitle": "Tämä kansio on tyhjä",
+    "emptyFolderDescription": "Siirrä tallenteita tänne tai tallenna jotain uutta tähän kansioon.",
+    "deleteFolderDescription": "Poistetaanko “{name}”? Kansio poistetaan, mutta sen {count, plural, one {# tallenne jää} other {# tallennetta jää}} Ilman kansiota -näkymään.",
     "statusProcessed": "Käsitelty",
-    "processMenu": "Käsittele",
+    "processMenu": "Tallenteen toiminnot",
     "processed": "Merkitty käsitellyksi",
     "deleted": "Poistettu Keräyksestä",
     "process": {
@@ -193,13 +231,14 @@
       "delete": "Poista"
     },
     "searchPlaceholder": "Hae keräyksiä…",
+    "searchInScope": "Hae kohteesta {scope}…",
     "sortBy": "Järjestä",
     "sortNewest": "Uusimmat ensin",
     "sortOldest": "Vanhimmat ensin",
     "sortNameAsc": "Nimi (A → Ö)",
     "sortNameDesc": "Nimi (Ö → A)",
     "noResultsTitle": "Ei osumia",
-    "noResultsDescription": "Kokeile toista hakua tai tyhjennä haku nähdäksesi kaiken tällä välilehdellä."
+    "noResultsDescription": "Kokeile toista hakua tai tyhjennä haku nähdäksesi kaiken tässä kansiossa ja välilehdellä."
   },
   "reviewLater": {
     "add": "Tarkista myöhemmin",
@@ -224,6 +263,7 @@
     "deleteDescription": "“{name}” ja sen sisältö ({folderCount, plural, one {# kansio} other {# kansiota}}, {itemCount, plural, one {# kohde} other {# kohdetta}}) poistetaan pysyvästi.",
     "deleteDescriptionEmpty": "“{name}” poistetaan pysyvästi.",
     "root": "Kaikki tiedostot",
+    "unfiled": "Ilman kansiota",
     "open": "Avaa",
     "rename": "Nimeä uudelleen",
     "move": "Siirrä…",
@@ -263,6 +303,15 @@
     "language": "Työtilan kieli",
     "languageHint": "Yksi työtila per kieli.",
     "languageExists": "Tälle kielelle on jo työtila.",
+    "languageSearchPlaceholder": "Hae kieliä…",
+    "languageSearchEmpty": "Kieliä ei löytynyt",
+    "languageRegions": {
+      "europe": "Eurooppa",
+      "asia": "Aasia",
+      "africa": "Afrikka",
+      "americas": "Amerikka",
+      "oceania": "Oseania"
+    },
     "created": "Työtila luotu",
     "updated": "Työtila päivitetty",
     "deleted": "Työtila poistettu",
@@ -312,6 +361,15 @@
     "primaryMeaningLimit": "Voit merkitä enintään {max} päämerkitystä",
     "primaryMeanings": "Päämerkitykset",
     "otherMeanings": "Muut merkitykset",
+    "usageLabels": {
+      "label": "Käyttötavat",
+      "add": "Käyttö",
+      "menuTitle": "Käyttötavat",
+      "clear": "Tyhjennä kaikki",
+      "remove": "Poista {label}",
+      "aria": "Tämän merkityksen käyttötavat",
+      "count": "{count, plural, one {# merkintä} other {# merkintää}}"
+    },
     "examples": "Esimerkkilauseet",
     "addExample": "Lisää esimerkki",
     "removeExample": "Poista esimerkki",
@@ -388,22 +446,32 @@
     "tagManager": {
       "open": "Hallitse tunnisteita",
       "title": "Tunnisteiden hallinta",
-      "description": "Valitse ensin sana — Lisää tai Poista määräytyy sen mukaan, onko sanalla jo tunniste.",
-      "groupsLabel": "Tunnisteryhmät",
+      "description": "Valitse tunniste ja lisää tai poista se sanoilta. Jäsenet ja muut sanat näkyvät erillisissä listoissa.",
+      "groupsLabel": "Vakiotunnisteiden ryhmät",
       "tagsHeading": "Tunnisteet",
-      "wordsHeading": "Sanat · {tag}",
+      "standardTagsHeading": "Vakiotunnisteet",
+      "customTagsHeading": "Omat tunnisteet",
+      "customTagsHint": "Itse luomasi järjestelytunnisteet — eivät sanaluokkia.",
+      "emptyCustomTags": "Ei omia tunnisteita vielä. Luo niitä sanan muokkauksessa.",
+      "wordsHeading": "{tag}",
+      "kindStandard": "Vakio",
+      "kindCustom": "Oma",
+      "assignedHeading": "Sanat tällä tunnisteella",
+      "otherHeading": "Muut sanat",
+      "sectionCount": "{count}",
+      "selectSection": "Valitse kaikki osiosta",
       "searchPlaceholder": "Hae sanoja tai merkityksiä…",
       "wordCount": "{count}",
       "loading": "Ladataan sanastoa…",
       "emptyBank": "Sanastosi on tyhjä.",
-      "emptyFilter": "Ei sanoja tällä haulla.",
-      "selectVisible": "Valitse näkyvät",
-      "showing": "{count} näkyvissä",
-      "showingSelectable": "{selectable} valittavissa · {count} näkyvissä",
+      "emptyAssigned": "Yhdelläkään sanalla ei ole tätä tunnistetta vielä.",
+      "emptyAssignedSearch": "Ei vastaavia sanoja tällä tunnisteella.",
+      "emptyOther": "Kaikilla sanoilla on jo tämä tunniste.",
+      "emptyOtherSearch": "Ei vastaavia sanoja lisättäväksi.",
       "selected": "{count} valittu",
-      "modeHintIdle": "Valitse sana aloittaaksesi. Se lukitsee Lisää- tai Poista-tilan.",
-      "modeHintAdd": "Ensimmäisellä valinnalla ei ole tunnistetta — vain ilman tunnistetta olevat sanat voi valita.",
-      "modeHintRemove": "Ensimmäisellä valinnalla on jo tunniste — vain tunnisteelliset sanat voi valita.",
+      "modeHintIdle": "Valitse sanoja jommastakummasta listasta. Ensimmäinen valinta lukitsee Lisää- tai Poista-tilan.",
+      "modeHintAdd": "Lisätään tunnistetta — vain Muut sanat -listan sanoja voi pitää valittuina.",
+      "modeHintRemove": "Poistetaan tunnistetta — vain tunnisteellisia sanoja voi pitää valittuina.",
       "addToTag": "Lisää tunnisteeseen",
       "removeFromTag": "Poista tunnisteesta",
       "applyAdd": "Lisää tunnisteeseen ({count})",
@@ -479,7 +547,10 @@
         "notes": "Muistiinpanot",
         "updated": "Päivitetty"
       }
-    }
+    },
+    "otherMeaningsPage": "{total} merkitystä · sivu {page}/{totalPages}",
+    "otherMeaningsPrev": "Edellinen",
+    "otherMeaningsNext": "Seuraava"
   },
   "tags": {
     "groups": {
@@ -522,6 +593,13 @@
       "idiom": "Idiomi",
       "grammar": "Kielioppi",
       "expression": "Ilmaisu"
+    },
+    "meaningUsage": {
+      "literary": "Kirjallinen",
+      "technical": "Tekninen",
+      "archaic": "Vanhentunut",
+      "regional": "Alueellinen",
+      "figurative": "Kuvaannollinen"
     },
     "learningStatus": {
       "new": "Uusi",
@@ -909,7 +987,22 @@
       "tryAgain": "Yritä uudelleen",
       "questionsLabel": "Kysymykset",
       "correctLabel": "Oikein",
-      "reviewLabel": "Kertaa"
+      "reviewLabel": "Kertaa",
+      "answeredProgress": "{answered} / {total} vastattu",
+      "submitSet": "Lähetä vastaukset",
+      "submitting": "Tarkistetaan…",
+      "unansweredWarnTitle": "Vastaamattomia kysymyksiä",
+      "unansweredWarn": "Sinulla on vielä {count, plural, one {# vastaamaton kysymys} other {# vastaamatonta kysymystä}}. Lähetä silti?",
+      "submitAnyway": "Lähetä silti",
+      "partialHint": "Vihje: {mask}",
+      "jumpToUnanswered": "Siirry vastaamattomiin",
+      "retryIncorrect": "Yritä väärät uudelleen",
+      "retryUnanswered": "Yritä vastaamattomat uudelleen",
+      "restartSet": "Aloita alusta",
+      "resultsTitle": "Tulokset",
+      "unanswered": "Ei vastausta",
+      "yourAnswer": "Vastauksesi",
+      "correctAnswer": "Oikea vastaus"
     },
     "multipleChoice": {
       "questionWord": "Mikä on tämän sanan merkitys?",
@@ -1631,24 +1724,12 @@
           "title": "1. Kerää jotain",
           "body": "Käytä Keräystä tallentaaksesi sanan, fraasin, kielioppiepäyksen tai kirjoitusidean ilman että päätät vielä, mihin se kuuluu. Nopeus on tärkeämpää kuin täydellinen rakenne."
         },
-        "filters": {
-          "title": "2. Käsittelemättä vs käsitelty",
-          "body": "Käsittelemättä sisältää odottavat kohteet. Käsitelty näyttää keräykset, jotka olet jo muuttanut sanastoksi, teoriaksi, kirjoitukseksi tai harjoitukseksi."
-        },
-        "search": {
-          "title": "3. Haku",
-          "body": "Suodata nykyistä välilehteä sisällön, muistiinpanon tai lähteen mukaan."
-        },
-        "sort": {
-          "title": "4. Järjestys",
-          "body": "Järjestä uusimman, vanhimman tai nimen mukaan, jotta lista sopii tapaasi työskennellä."
-        },
         "list": {
-          "title": "5. Keräyslista",
-          "body": "Jokainen kortti näyttää sisällön, valinnaisen muistiinpanon/lähteen ja milloin tallensit sen. Avaa ···-valikko käsitelläksesi kohteen."
+          "title": "2. Keräyslista",
+          "body": "Jokainen kortti näyttää sisällön, valinnaisen muistiinpanon/lähteen ja milloin tallensit sen. Käytä kansioita, Käsittelemättä / Käsitelty -välilehtiä, hakua ja järjestystä listan yläpuolella tarvittaessa. Avaa ···-valikko käsitelläksesi kohteen."
         },
         "process": {
-          "title": "6. Muuta Notoriaan",
+          "title": "3. Muuta Notoriaan",
           "body": "Lähetä keräys Sanastoon, Teoriaan, Kirjoitukseen tai Harjoitukseen. Se merkitään käsitellyksi vasta, kun tallennus on valmis — jos peruutat luonnin, kohde jää odottamaan."
         }
       }
@@ -1739,8 +1820,7 @@
       "confirmContentChange": "Vain sisältöä muuttaessa",
       "confirmNever": "Ei koskaan",
       "saveFailed": "AI-asetuksia ei voitu tallentaa",
-      "disabledToast": "AI-avustus on pois päältä Asetuksissa",
-      "formatConfirm": "AI kirjoittaa tämän sisällön uudelleen. Jatketaanko?"
+      "disabledToast": "AI-avustus on pois päältä Asetuksissa"
     },
     "tutorials": "Osioiden oppaat",
     "tutorialsDescription": "Nollaa suoritetut osio-oppaat, jotta “Show tutorial” alkaa alusta.",
@@ -2027,7 +2107,9 @@
       "expected": "Oikea vastaus",
       "objectiveScore": "{correct} / {total} objektiivista oikein",
       "mobileTabsAria": "Harjoitusnäkymät",
+      "unansweredWarnTitle": "Vastaamattomia kysymyksiä",
       "unansweredWarn": "Joitakin kysymyksiä ei ole vastattu. Lähetetäänkö silti?",
+      "submitAnyway": "Lähetä silti",
       "gradingPending": "Vapaamuotoisia vastauksia ei voitu vielä arvioida. Vastauksesi on tallennettu — voit yrittää arviointia uudelleen.",
       "retryGrading": "Yritä arviointia uudelleen",
       "retryAttempt": "Yritä uudelleen",
@@ -2101,7 +2183,9 @@
       "ATTEMPT_NOT_EDITABLE": "Tätä yritystä ei voi enää muokata.",
       "PROCESSING_FAILED": "Jokin meni pieleen. Yritä uudelleen.",
       "AI_DISABLED": "Tekoälyapu on pois päältä asetuksissasi.",
-      "AI_QUOTA_EXCEEDED": "Tekoälytehtävien kiintiö tälle jaksolle on täynnä.",
+      "AI_QUOTA_EXCEEDED": "Lukemisen tekoälykiintiö tälle jaksolle on täynnä.",
+      "RATE_LIMITED": "Liian monta pyyntöä. Odota hetki ja yritä uudelleen.",
+      "AI_BUSY": "Lukemisen tekoäly on jo varattu. Odota sen valmistumista ja yritä uudelleen.",
       "generic": "Jokin meni pieleen. Yritä uudelleen."
     },
     "newPassage": "Lisää teksti",
@@ -2149,6 +2233,7 @@
     "uploadChoose": "Valitse tiedosto",
     "uploading": "Ladataan… {percent} %",
     "extracting": "Poimitaan tekstiä…",
+    "uploadInProgress": "Tätä tiedostoa käsitellään jo.",
     "cancelUpload": "Peruuta lataus",
     "retryUpload": "Yritä latausta uudelleen",
     "downloadOriginal": "Lataa alkuperäinen",
@@ -2224,6 +2309,7 @@
     "chooseExerciseType": "Valitse harjoitustyyppi:",
     "chooseTypeHint": "Valitse Täydennä aukot tai Monivalinta luodaksesi kysymykset.",
     "exercisesGenerated": "Harjoitukset luotu.",
+    "generationInProgress": "Harjoituksia luodaan jo.",
     "exercisesTitle": "Harjoitukset",
     "exerciseCount": "{count, plural, one {# harjoitus} other {# harjoitusta}}",
     "status": {
@@ -2278,9 +2364,11 @@
     "fillBlankOverview": "Täydennä koko teksti täyttämällä puuttuvat sanat.",
     "practice": {
       "progress": "{current} / {total}",
+      "answeredProgress": "{answered} / {total} vastattu",
       "score": "{correct} oikein",
       "check": "Tarkista",
       "checkAnswers": "Tarkista vastaukset",
+      "submitSet": "Lähetä vastaukset",
       "questionLabel": "Kysymys {number}",
       "blankLabel": "Aukko {number}",
       "listenPrompt": "Kuuntele tämä kohta äänitteestä.",
@@ -2301,7 +2389,11 @@
       "blanksProgress": "{filled} / {total} aukkoa",
       "changeType": "Vaihda tyyppiä",
       "hideReview": "Piilota tarkistus",
-      "typeHintMc": "Kuuntele ja valitse paras vastaus jokaiseen kysymykseen."
+      "jumpToUnanswered": "Siirry vastaamattomiin",
+      "unansweredWarnTitle": "Vastaamattomia kysymyksiä",
+      "unansweredWarn": "Sinulla on vielä vastaamattomia kysymyksiä. Lähetä silti?",
+      "submitAnyway": "Lähetä silti",
+      "typeHintMc": "Kuuntele ja valitse paras vastaus jokaiseen kysymykseen tällä sivulla."
     },
     "errors": {
       "CLOUDINARY_NOT_CONFIGURED": "Mediatallennusta ei ole määritetty.",
@@ -2311,6 +2403,7 @@
       "INVALID_FILE_TYPE": "Vain MP3- ja MP4-tiedostot ovat tuettuja.",
       "FILE_TOO_LARGE": "Tiedosto on liian suuri. Käytä alle 25 Mt:n tiedostoa.",
       "AUDIO_TOO_LONG": "Ääni on pidempi kuin 45 minuuttia. Jaa se osiin tai käytä lyhyempää klippiä yhtä transkriptiota varten.",
+      "AUDIO_DURATION_UNKNOWN": "Äänen pituutta ei voitu varmistaa ennen litterointia. Lataa tiedosto uudelleen ja yritä uudelleen.",
       "TRANSCRIPTION_FAILED": "Ääntä ei voitu litteroida. Yritä uudelleen.",
       "GENERATION_FAILED": "Harjoituksia ei voitu luoda. Yritä uudelleen.",
       "GENERATION_UNAVAILABLE": "Harjoitusten luonti ei ole juuri nyt käytettävissä. Yritä myöhemmin uudelleen.",
@@ -2380,6 +2473,11 @@
     "feedbackTitle": "Ohjaajan palaute",
     "feedbackDescription": "Lyhyt yhteenveto keskustelusta.",
     "transcriptTitle": "Litterointi",
+    "transcriptFinalizing": "Litterointia viimeistellään",
+    "transcriptLoadingTitle": "Kerätään litterointia",
+    "transcriptLoadingDescription": "Puhelun vuorot näkyvät tässä pian.",
+    "transcriptEmpty": "Tästä sessiosta ei tallentunut litterointia.",
+    "transcriptError": "Litterointi on epätäydellinen",
     "status": {
       "upcoming": "Valmis",
       "active": "Puhelussa",
@@ -2411,7 +2509,13 @@
       "endedDescription": "Palaute ilmestyy sessiosivulle hetken kuluttua.",
       "back": "Takaisin sessioon",
       "notConfigured": "Videopuhelua ei ole vielä määritetty. Lisää Stream Videon API-avaimet aloittaaksesi.",
-      "sessionLimitReached": "Tämä puhesessio saavutti 30 minuutin fair use -rajan ja päättyi."
+      "sessionLimitReached": "Tämä puhesessio saavutti 30 minuutin fair use -rajan ja päättyi.",
+      "tutorSetupTimeout": "Tekoälyohjaajan liittyminen kesti liian kauan, joten puhelu päätettiin. Aloita uusi sessio.",
+      "elapsedTitle": "Puhelun kesto",
+      "inactivityWarning": "Kukaan ei ole puhunut vähään aikaan. Puhelu päättyy pian.",
+      "inactivityCountdown": "Päättyy {seconds} s kuluttua…",
+      "inactivityEnded": "Puhelu päättyi käyttämättömyyden vuoksi.",
+      "continueCall": "Jatka puhelua"
     },
     "errors": {
       "STREAM_NOT_CONFIGURED": "Videopuhelua ei ole määritetty.",
@@ -2419,9 +2523,14 @@
       "INVALID_INPUT": "Tarkista aihe ja taso, ja yritä uudelleen.",
       "SESSION_NOT_FOUND": "Puhumissessiota ei löytynyt.",
       "SESSION_NOT_JOINABLE": "Tähän puheluun ei voi enää liittyä.",
+      "SESSION_EXPIRED": "Tämä puhesessio saavutti aikarajan, eikä siihen voi enää liittyä.",
+      "ACTIVE_SESSION_EXISTS": "Sinulla on jo aktiivinen puhesessio. Lopeta se ennen uuden aloittamista.",
       "STREAM_CALL_FAILED": "Videopuhelua ei voitu aloittaa. Yritä uudelleen.",
-      "UNAUTHORIZED": "Kirjaudu sisään liittyäksesi puhumispuheluun."
-    }
+      "UNAUTHORIZED": "Kirjaudu sisään liittyäksesi puhumispuheluun.",
+      "AI_QUOTA_EXCEEDED": "Olet käyttänyt tämän päivän tekoälypuhekiintiön. Se nollautuu UTC-keskiyöllä — tai päivitä saadaksesi lisää sessioita."
+    },
+    "quotaLockedTitle": "Päivittäinen puhekiintiö täynnä",
+    "quotaLockedBody": "Olet käyttänyt tämän päivän tekoälypuhesession. Vanhat sessiot säilyvät — päivitä saadaksesi lisää, tai palaa kiintiön nollautumisen jälkeen."
   },
   "errors": {
     "generic": "Jotain meni pieleen",
@@ -2779,6 +2888,21 @@
     "switchingToProOn": "Siirtyminen Prohon {date}. Premium-käyttöoikeus säilyy siihen asti.",
     "confirmCancelTitle": "Perutaanko {plan}?",
     "confirmCancelBody": "{plan}-käyttöoikeus säilyy {date} asti. Sen jälkeen tili siirtyy ilmaiseen. Uutta veloitusta ei tule.",
+    "cancelFeedbackLabel": "Miksi peruutat?",
+    "cancelFeedbackOptional": "Valinnainen — voit ohittaa tämän ja silti peruuttaa.",
+    "cancelCommentLabel": "Haluatko kertoa lisää?",
+    "cancelCommentPlaceholder": "Valinnainen kommentti",
+    "cancelCommentCount": "{count} / {max}",
+    "cancelReasons": {
+      "too_expensive": "Se on liian kallis",
+      "missing_features": "Tarvitsen lisää ominaisuuksia",
+      "switched_service": "Löysin vaihtoehtoisen palvelun",
+      "unused": "En tarvitse sitä enää",
+      "too_complex": "Se oli liian monimutkainen käyttää",
+      "low_quality": "Laatu ei riittänyt",
+      "other": "Muu syy"
+    },
+    "invalidCancellationFeedback": "Peruutuksen palaute ei kelpaa. Valitse listattu syy tai lyhennä kommenttia.",
     "confirmKeepTitle": "Pidä {plan}?",
     "confirmKeepBody": "Ajastettu peruutus poistetaan. {plan} uusiutuu, ja seuraava veloitus on {date}.",
     "back": "Takaisin",
@@ -2787,7 +2911,59 @@
     "usageToday": "Tekoälyn käyttö tänään",
     "quotaCount": "{used} / {limit}",
     "unlimitedAi": "Keskeiset tekoälytyökalut",
+    "quotaUnlimitedHint": "Rajoittamaton tavallisessa käytössä tällä suunnitelmalla.",
+    "quotaRemainingHint": "{remaining} jäljellä tänään · nollautuu {reset}",
+    "quotaExhaustedHint": "Kiintiö käytetty · nollautuu {reset}",
+    "quotaResetUtcMidnight": "UTC-keskiyöllä",
     "quotaExceeded": "Tämän tekoälyominaisuuden päiväkiintiö on käytetty. Se nollautuu UTC-keskiyöllä — tai päivitä suurempaan rajaan.",
+    "quotaExceededNoUpgrade": "Tämän tekoälyominaisuuden päiväkiintiö on käytetty. Nollautuu {reset}.",
+    "quotaMessages": {
+      "ai_meeting": {
+        "free": "Olet käyttänyt tämän päivän tekoälypuhesession. Päivitä saadaksesi lisää, tai palaa kiintiön nollautumisen jälkeen ({reset}).",
+        "pro": "Olet saavuttanut päivittäisen tekoälypuherajan. Päivitä Premiumiin suurempaa kiintiötä varten, tai palaa nollautumisen jälkeen ({reset}).",
+        "premium": "Olet saavuttanut tämän päivän tekoälypuherajan. Nollautuu {reset}."
+      },
+      "ai_reading": {
+        "free": "Olet käyttänyt tämän päivän tekoälylukukiintiön. Päivitä harjoitellaksesi enemmän, tai palaa nollautumisen jälkeen ({reset}).",
+        "pro": "Olet saavuttanut päivittäisen tekoälylukurajan. Päivitä Premiumiin, tai palaa nollautumisen jälkeen ({reset}).",
+        "premium": "Olet saavuttanut tämän päivän tekoälylukurajan. Nollautuu {reset}."
+      },
+      "ai_listening_transcript": {
+        "free": "Olet käyttänyt tämän päivän kuuntelutranskriptin. Päivitä saadaksesi lisää, tai palaa nollautumisen jälkeen ({reset}).",
+        "pro": "Olet saavuttanut päivittäisen kuuntelutranskriptirajan. Päivitä Premiumiin, tai palaa nollautumisen jälkeen ({reset}).",
+        "premium": "Olet saavuttanut tämän päivän kuuntelutranskriptirajan. Nollautuu {reset}."
+      },
+      "ai_vocabulary": {
+        "free": "Olet käyttänyt tämän päivän tekoälysanastotoiminnot. Päivitä saadaksesi lisää, tai palaa nollautumisen jälkeen ({reset}).",
+        "pro": "Olet saavuttanut tämän päivän tekoälysanastorajan. Nollautuu {reset}.",
+        "premium": "Olet saavuttanut tämän päivän tekoälysanastorajan. Nollautuu {reset}."
+      },
+      "ai_writing": {
+        "free": "Olet käyttänyt tämän päivän tekoälykirjoitustuen. Päivitä saadaksesi lisää, tai palaa nollautumisen jälkeen ({reset}).",
+        "pro": "Olet saavuttanut tämän päivän tekoälykirjoitusrajan. Nollautuu {reset}.",
+        "premium": "Olet saavuttanut tämän päivän tekoälykirjoitusrajan. Nollautuu {reset}."
+      },
+      "ai_exercise": {
+        "free": "Olet käyttänyt tämän päivän tekoälytehtävägeneroinnin. Päivitä saadaksesi lisää, tai palaa nollautumisen jälkeen ({reset}).",
+        "pro": "Olet saavuttanut tämän päivän tekoälytehtävärajan. Nollautuu {reset}.",
+        "premium": "Olet saavuttanut tämän päivän tekoälytehtävärajan. Nollautuu {reset}."
+      },
+      "ai_exercise_import": {
+        "free": "Tehtävien tuonti ei kuulu Free-suunnitelmaan. Päivitä Prohon tuodaksesi työarkkeja.",
+        "pro": "Olet saavuttanut tämän päivän tehtäväntuontirajan. Päivitä Premiumiin, tai palaa nollautumisen jälkeen ({reset}).",
+        "premium": "Olet saavuttanut tämän päivän tehtäväntuontirajan. Nollautuu {reset}."
+      },
+      "ai_learning_coach_chat": {
+        "free": "Oppimisvalmentajan chat on Premium-ominaisuus.",
+        "pro": "Oppimisvalmentajan chat on Premium-ominaisuus.",
+        "premium": "Olet saavuttanut tämän päivän oppimisvalmentajan chat-rajan. Nollautuu {reset}."
+      },
+      "content_import": {
+        "free": "Sisällön tuonti ei kuulu Free-suunnitelmaan. Päivitä Prohon tuodaksesi oppimateriaalia.",
+        "pro": "Olet saavuttanut tämän päivän sisällöntuontirajan. Nollautuu {reset}.",
+        "premium": "Olet saavuttanut tämän päivän sisällöntuontirajan. Nollautuu {reset}."
+      }
+    },
     "alreadySubscribed": "Sinulla on jo tämä tilaus.",
     "status": "Tila: {status}",
     "renewsOn": "Uusiutuu {date}",
@@ -3246,6 +3422,8 @@
     "refresh": "Päivitä valmentaja",
     "refreshed": "Valmentaja päivitettiin viimeisimmän opiskelun mukaan.",
     "refreshFailed": "Valmentajaa ei voitu päivittää. Yritä uudelleen.",
+    "refreshRateLimited": "Päivitit äskettäin. Odota minuutti ja yritä uudelleen.",
+    "refreshBusy": "Valmentaja päivittyy jo. Odota hetki.",
     "ask": {
       "label": "Kysy valmentajalta",
       "title": "Kysy oppimisvalmentajaltasi",
@@ -3847,11 +4025,11 @@
             },
             {
               "provider": "Stream Video",
-              "role": "Live-puhepuhelut; automaattinen litterointi; istuntokentät kuten litteraatti-URL:t (ja tallenne-URL:t vain jos tallenne-tapahtuma vastaanotetaan myöhemmin)"
+              "role": "Live-puhepuhelujen ääni/video; tallenne-URL:t vain jos tallenne-tapahtuma vastaanotetaan myöhemmin. Uudet puhelut eivät käytä Stream-litterointia."
             },
             {
               "provider": "OpenAI",
-              "role": "Valinnainen tekoälyapu ja puheohjaajan reaaliaikainen ääni"
+              "role": "Valinnainen tekoälyapu, puheohjaajan reaaliaikainen ääni ja puhepuhelun litterointi (gpt-4o-transcribe)"
             },
             {
               "provider": "Resend",
@@ -3870,7 +4048,7 @@
               "role": "Puheistunnoissa käytettävät generoidut avatar-kuvat (nimisiemenestä; tilin salasanaa ei lähetetä)"
             }
           ],
-          "p2": "Puhepuhelut luodaan litterointi päällä. Tallennus on pois päältä puhelun luonnissa nykyisessä toteutuksessa; tallenne-URL tallennetaan vain, jos tuote myöhemmin vastaanottaa Streamilta recording-ready -tapahtuman."
+          "p2": "Puhepuhelujen litterointi kerätään OpenAI Realtime -yhteydellä (gpt-4o-transcribe) istunnon aikana ja tallennetaan palvelimelle. Stream-litterointi ja tekstitykset on pois päältä uusissa puheluissa. Tallennus on pois päältä puhelun luonnissa; tallenne-URL tallennetaan vain, jos tuote myöhemmin vastaanottaa Streamilta recording-ready -tapahtuman."
         },
         "cookies": {
           "title": "9. Evästeet ja laitteen tallennus",
@@ -4467,6 +4645,7 @@
   "errorPages": {
     "statusUnavailable": "Ei saatavilla",
     "reference": "Viite: {id}",
+    "referenceLabel": "Viitetunnus",
     "actions": {
       "dashboard": "Siirry kojelautaan",
       "home": "Palaa etusivulle",
@@ -4477,7 +4656,7 @@
     },
     "notFound": {
       "title": "Sivua ei löytynyt",
-      "description": "Tätä sivua ei ole olemassa, tai linkki voi olla vanhentunut. Tarkista osoite tai palaa tuttuun paikkaan."
+      "description": "Tätä sivua ei ole olemassa, tai linkki voi olla vanhentunut. Tarkista osoite tai siirry kojelaudalle."
     },
     "unauthorized": {
       "title": "Kirjautuminen vaaditaan",
@@ -4555,6 +4734,264 @@
         "description": "Se on ehkä poistettu, tai linkki voi olla vanhentunut.",
         "primary": "Siirry kojelautaan"
       }
+    }
+  },
+  "admin": {
+    "nav": {
+      "admin": "Admin",
+      "manage": "Manage",
+      "overview": "Overview",
+      "users": "Users",
+      "workspaces": "Workspaces",
+      "jobs": "Jobs",
+      "audit": "Audit",
+      "content": "Content",
+      "contentLibrary": "Content library",
+      "backToApp": "Back to app",
+      "openMenu": "Open admin menu",
+      "openAdmin": "Admin dashboard"
+    },
+    "modules": {
+      "vocabulary": "Vocabulary",
+      "theory": "Theory",
+      "writing": "Writing",
+      "exercises": "Exercises",
+      "listening": "Listening",
+      "reading": "Reading",
+      "speaking": "Speaking",
+      "inbox": "Capture",
+      "folders": "Folders"
+    },
+    "common": {
+      "search": "Search",
+      "clear": "Clear",
+      "filter": "Filter",
+      "previous": "Previous",
+      "next": "Next",
+      "pageOf": "Page {page} of {totalPages}",
+      "results": "{total} results",
+      "backToList": "Back to list",
+      "empty": "No results"
+    },
+    "overview": {
+      "title": "Overview",
+      "description": "Live counts from application data. Time ranges use UTC calendar days. Active learners count distinct users with learning activity events — not logins.",
+      "metrics": "Metrics",
+      "recentAudit": "Recent admin actions",
+      "recentAuditLede": "Latest mutations from the audit trail.",
+      "viewAllAudit": "View audit log",
+      "cards": {
+        "users": "Total users",
+        "newUsers7d": "New users (7d)",
+        "newUsers30d": "New users (30d)",
+        "activeUsers7d": "Active learners (7d)",
+        "workspaces": "Workspaces",
+        "vocabulary": "Vocabulary",
+        "theory": "Theory",
+        "writing": "Writing",
+        "exercises": "Exercises",
+        "listening": "Listening",
+        "reading": "Reading",
+        "speaking": "Speaking",
+        "inbox": "Capture",
+        "failedListening": "Failed listening",
+        "failedImports": "Failed imports",
+        "runningJobs": "Running job locks",
+        "recentAudits7d": "Audit entries (7d)"
+      }
+    },
+    "users": {
+      "title": "Users",
+      "description": "Search accounts, change roles, suspend access, or delete with confirmation.",
+      "searchPlaceholder": "Search name or email…",
+      "empty": "No users match these filters.",
+      "selfGuard": "Safeguards prevent changing or deleting your own admin account here.",
+      "columns": {
+        "user": "User",
+        "role": "Role",
+        "status": "Status",
+        "plan": "Plan",
+        "workspaces": "Workspaces",
+        "created": "Registered"
+      },
+      "filters": {
+        "role": "Role",
+        "status": "Status",
+        "allRoles": "Any role",
+        "allStatuses": "Any status"
+      },
+      "status": {
+        "active": "Active",
+        "suspended": "Suspended"
+      },
+      "fields": {
+        "id": "User id",
+        "name": "Name",
+        "role": "Role",
+        "status": "Status",
+        "plan": "Plan",
+        "created": "Registered",
+        "updated": "Updated",
+        "emailVerified": "Email verified"
+      },
+      "detail": {
+        "account": "Account",
+        "usage": "Content counts",
+        "usageLede": "Owned records across learning modules.",
+        "actions": "Account actions",
+        "workspaces": "Workspaces",
+        "workspacesLede": "Language workspaces owned by this user."
+      },
+      "actions": {
+        "saveProfile": "Save name",
+        "grantAdmin": "Grant admin",
+        "revokeAdmin": "Revoke admin",
+        "suspend": "Suspend",
+        "restore": "Restore",
+        "delete": "Delete account"
+      },
+      "confirm": {
+        "grantAdmin": "Grant admin access to this account?",
+        "revokeAdmin": "Revoke admin access? This fails if they are the last active admin.",
+        "suspend": "Suspend this account? They lose access on the next protected request.",
+        "restore": "Restore this account?",
+        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone."
+      }
+    },
+    "workspaces": {
+      "title": "Workspaces",
+      "description": "Inspect and manage language workspaces.",
+      "searchPlaceholder": "Search name, language, or owner email…",
+      "empty": "No workspaces match these filters.",
+      "createForUser": "Create workspace for this user",
+      "columns": {
+        "name": "Name",
+        "language": "Language",
+        "owner": "Owner",
+        "updated": "Updated"
+      },
+      "fields": {
+        "id": "Workspace id",
+        "name": "Name",
+        "nameOptional": "Optional display name",
+        "language": "Language",
+        "owner": "Owner",
+        "created": "Created",
+        "updated": "Updated"
+      },
+      "detail": {
+        "description": "Language: {language}",
+        "meta": "Workspace",
+        "actions": "Workspace actions",
+        "actionsLede": "Editing language must stay unique per owner. Deletion cascades learning content in this workspace."
+      },
+      "actions": {
+        "create": "Create workspace",
+        "save": "Save",
+        "delete": "Delete workspace"
+      },
+      "confirm": {
+        "delete": "Delete this workspace and all learning content inside it via database cascades?"
+      }
+    },
+    "content": {
+      "description": "Lists show metadata only. Open a row for identifiers and status. Private bodies (transcripts, notes) are not loaded here by default.",
+      "searchPlaceholder": "Search titles…",
+      "empty": "No records match these filters.",
+      "listeningMediaNote": "Deleting a listening lesson removes the database row. External media cleanup is best-effort and is not performed by this admin action.",
+      "columns": {
+        "title": "Title",
+        "status": "Status",
+        "owner": "Owner",
+        "workspace": "Workspace",
+        "updated": "Updated"
+      },
+      "fields": {
+        "id": "Id",
+        "status": "Status",
+        "errorCode": "Error code",
+        "owner": "Owner",
+        "workspace": "Workspace",
+        "created": "Created",
+        "updated": "Updated"
+      },
+      "detail": {
+        "description": "Metadata inspection. Private bodies are not auto-loaded.",
+        "meta": "Record",
+        "metaLede": "Identifiers and status only.",
+        "actions": "Actions"
+      },
+      "actions": {
+        "delete": "Delete record"
+      },
+      "confirm": {
+        "delete": "Delete this record? Related child rows follow database cascade / set-null rules."
+      }
+    },
+    "jobs": {
+      "title": "Jobs",
+      "description": "Running locks and failed processing records. Statuses are read-only — do not force a failed job to appear successful.",
+      "searchPlaceholder": "Filter by title…",
+      "empty": "No jobs match these filters.",
+      "buckets": {
+        "attention": "Needs attention",
+        "running": "Running",
+        "failed": "Failed",
+        "all": "All",
+        "runningLocks": "Running locks",
+        "failedLocks": "Failed locks",
+        "failedListening": "Failed listening",
+        "failedImports": "Failed imports"
+      },
+      "filters": {
+        "kind": "Kind",
+        "allKinds": "All kinds"
+      },
+      "kinds": {
+        "ai_lock": "AI lock",
+        "listening": "Listening",
+        "exercise_import": "Exercise import",
+        "lock": "AI lock",
+        "import": "Exercise import"
+      },
+      "columns": {
+        "kind": "Kind",
+        "title": "Title",
+        "status": "Status",
+        "error": "Error",
+        "owner": "Owner",
+        "updated": "Updated"
+      }
+    },
+    "audit": {
+      "title": "Audit log",
+      "description": "Read-only history of administrative mutations. Credentials and private bodies are never stored here.",
+      "searchPlaceholder": "Search action, entity, or actor email…",
+      "empty": "No audit entries yet.",
+      "columns": {
+        "when": "When",
+        "actor": "Actor",
+        "action": "Action",
+        "entity": "Entity",
+        "success": "Result"
+      },
+      "success": {
+        "yes": "OK",
+        "no": "Failed"
+      }
+    },
+    "errors": {
+      "UNKNOWN": "Something went wrong. Try again.",
+      "LAST_ADMIN": "Cannot change the last active admin.",
+      "CANNOT_DEMOTE_SELF": "You cannot demote your own admin account.",
+      "CANNOT_SUSPEND_SELF": "You cannot suspend your own account.",
+      "CANNOT_DELETE_SELF": "You cannot delete your own account.",
+      "USER_NOT_FOUND": "User not found.",
+      "WORKSPACE_NOT_FOUND": "Workspace not found.",
+      "WORKSPACE_LANGUAGE_EXISTS": "This user already has a workspace for that language.",
+      "INVALID_LANGUAGE": "Invalid language code.",
+      "CONTENT_NOT_FOUND": "Record not found.",
+      "INVALID_CONTENT_MODULE": "Unknown content module."
     }
   }
 }

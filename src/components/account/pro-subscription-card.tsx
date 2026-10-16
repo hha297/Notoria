@@ -6,18 +6,15 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { format } from "date-fns";
-import { Check, Loader2, Sparkles } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { ProUpgradeDialog } from "@/components/billing/pro-upgrade-dialog";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import {
-  planMonthlyPrice,
-  FREE_USAGE_QUOTA_FEATURES,
-  PLAN_DAILY_QUOTAS,
-  type QuotaFeatureId,
-} from "@/lib/billing/plans";
+import { QuotaUsageRow } from "@/components/billing/quota-usage-row";
+import { planMonthlyPrice } from "@/lib/billing/plans";
+import { usageFeaturesForPlan } from "@/lib/billing/quota-ui";
 import {
   accountBillingActions,
   isBillingExpect,
@@ -241,125 +238,44 @@ export function ProSubscriptionCard({
                 </Button>
               ) : null}
               {actions.includes("openCoach") ? (
-                <Button type="button" variant="outline" render={<Link href="/coach" />}>
+                <Button
+                  type="button"
+                  variant="outline"
+                  className={mx(styles, "account-coach-cta")}
+                  render={<Link href="/coach" />}
+                >
                   {t("openCoach")}
                 </Button>
               ) : null}
             </div>
           </div>
 
-          {billing.plan === "free" ? (
-            <div className={mx(styles, "account-pro-features")}>
-              <p className={mx(styles, "account-pro-features-label")}>
-                {t("usageToday")}
+          <div className={mx(styles, "account-pro-features")}>
+            <p className={mx(styles, "account-pro-features-label")}>
+              {billing.plan === "premium"
+                ? tAccount("premiumIncluded")
+                : t("usageToday")}
+            </p>
+            <ul className={mx(styles, "account-pro-feature-list")}>
+              {usageFeaturesForPlan(billing.plan).map((feature) => {
+                const quota = billing.quotas.find(
+                  (item) => item.feature === feature,
+                );
+                return (
+                  <QuotaUsageRow
+                    key={feature}
+                    feature={feature}
+                    quota={quota}
+                  />
+                );
+              })}
+            </ul>
+            {billing.plan === "free" ? (
+              <p className={mx(styles, "account-pro-fineprint")}>
+                {t("cancelAnytime")}
               </p>
-              <ul className={mx(styles, "account-pro-feature-list")}>
-                {FREE_USAGE_QUOTA_FEATURES.map((feature) => {
-                  const quota = billing.quotas.find((item) => item.feature === feature);
-                  const used = quota?.used ?? 0;
-                  const limit = quota?.limit ?? 0;
-                  return (
-                    <li key={feature} className={mx(styles, "account-pro-feature")}>
-                      <span className={mx(styles, "account-pro-feature-mark")} aria-hidden>
-                        <Check className="size-3.5" strokeWidth={2.5} />
-                      </span>
-                      <div>
-                        <p className={mx(styles, "account-pro-feature-title")}>
-                          {t(`quotaLabels.${feature}`)}
-                        </p>
-                        <p className={mx(styles, "account-pro-feature-impact")}>
-                          {t("quotaCount", { used, limit })}
-                        </p>
-                      </div>
-                    </li>
-                  );
-                })}
-              </ul>
-              <p className={mx(styles, "account-pro-fineprint")}>{t("cancelAnytime")}</p>
-            </div>
-          ) : (
-            <div className={mx(styles, "account-pro-features")}>
-              <p className={mx(styles, "account-pro-features-label")}>
-                {billing.plan === "premium"
-                  ? tAccount("premiumIncluded")
-                  : t("usageToday")}
-              </p>
-              {billing.plan === "pro" ? (
-                <ul className={mx(styles, "account-pro-feature-list")}>
-                  {(
-                    [
-                      "ai_meeting",
-                      "ai_listening_transcript",
-                      "ai_reading",
-                    ] as const satisfies readonly QuotaFeatureId[]
-                  ).map((feature) => {
-                    const quota = billing.quotas.find(
-                      (item) => item.feature === feature,
-                    );
-                    const used = quota?.used ?? 0;
-                    const limit =
-                      quota?.limit ?? PLAN_DAILY_QUOTAS.pro[feature] ?? 0;
-                    return (
-                      <li key={feature} className={mx(styles, "account-pro-feature")}>
-                        <span
-                          className={mx(styles, "account-pro-feature-mark")}
-                          aria-hidden
-                        >
-                          <Check className="size-3.5" strokeWidth={2.5} />
-                        </span>
-                        <div>
-                          <p className={mx(styles, "account-pro-feature-title")}>
-                            {t(`quotaLabels.${feature}`)}
-                          </p>
-                          <p className={mx(styles, "account-pro-feature-impact")}>
-                            {t("quotaCount", { used, limit })}
-                          </p>
-                        </div>
-                      </li>
-                    );
-                  })}
-                  {(["unlimited", "writing", "export"] as const).map((id) => (
-                    <li key={id} className={mx(styles, "account-pro-feature")}>
-                      <span
-                        className={mx(styles, "account-pro-feature-mark")}
-                        aria-hidden
-                      >
-                        <Check className="size-3.5" strokeWidth={2.5} />
-                      </span>
-                      <p className={mx(styles, "account-pro-feature-title")}>
-                        {t(`points.${id}`)}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <ul className={mx(styles, "account-pro-feature-list")}>
-                  {(
-                    [
-                      "coach",
-                      "askCoach",
-                      "profile",
-                      "daily",
-                      "weekly",
-                      "mistakes",
-                    ] as const
-                  ).map((id) => (
-                    <li key={id} className={mx(styles, "account-pro-feature")}>
-                      <span
-                        className={mx(styles, "account-pro-feature-mark")}
-                        aria-hidden
-                      >
-                        <Check className="size-3.5" strokeWidth={2.5} />
-                      </span>
-                      <p className={mx(styles, "account-pro-feature-title")}>
-                        {t(`points.${id}`)}
-                      </p>
-                    </li>
-                  ))}
-                </ul>
-              )}
-            </div>
-          )}
+            ) : null}
+          </div>
         </div>
       </section>
       <ProUpgradeDialog

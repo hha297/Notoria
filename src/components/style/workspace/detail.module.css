@@ -157,6 +157,8 @@
 }
 
 .tag {
+  --tag-fg: var(--detail-fg);
+  --tag-bg: var(--detail-bg);
   display: inline-flex;
   align-items: center;
   gap: 0.3rem;
@@ -164,16 +166,34 @@
   padding: 0.15rem 0.55rem;
   border-radius: 0.4rem;
   border: 1px solid
-    color-mix(in oklab, var(--detail-fg) 38%, var(--detail-bg));
-  background: color-mix(in oklab, var(--detail-bg) 88%, transparent);
+    color-mix(in oklab, var(--tag-fg) 38%, var(--tag-bg));
+  background: color-mix(in oklab, var(--tag-bg) 72%, transparent);
   font-family: var(--font-heading);
   font-size: 0.7rem;
   font-weight: 600;
   letter-spacing: 0.02em;
-  color: var(--ink);
+  color: color-mix(in oklab, var(--tag-fg) 82%, var(--ink));
+}
+
+/* Vocab detail tags — blend of POS accent, not elevated slate */
+.tag[data-tag-tone="card"] {
+  --tag-fg: var(--vocab-pos-accent, var(--detail-fg));
+  border-color: color-mix(
+    in oklab,
+    var(--vocab-pos-accent, var(--detail-fg)) 36%,
+    transparent
+  );
+  background: color-mix(
+    in oklab,
+    var(--vocab-pos-accent, var(--detail-bg)) 16%,
+    transparent
+  );
+  color: var(--vocab-pos-accent, var(--detail-fg));
 }
 
 .tag[data-tone="danger"] {
+  --tag-fg: var(--destructive);
+  --tag-bg: color-mix(in oklab, var(--destructive) 18%, transparent);
   border-color: color-mix(in oklab, var(--destructive) 40%, transparent);
   background: color-mix(in oklab, var(--destructive) 12%, transparent);
   color: var(--destructive);

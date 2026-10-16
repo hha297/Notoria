@@ -1,5 +1,16 @@
 import { AssemblyAI } from "assemblyai";
-import { inferSpeakerDisplayNames, assignDialogueSpeakers } from "@/lib/listening/infer-speakers";
+import {
+  AI_DEADLINES_MS,
+  afterProviderError,
+  beforeProviderError,
+  createAiDeadline,
+  type AiDeadline,
+} from "@/lib/ai/bounds";
+import { LISTENING_MAX_TRANSCRIPT_SECONDS } from "@/lib/billing/plans";
+import {
+  inferSpeakerDisplayNames,
+  assignDialogueSpeakers,
+} from "@/lib/listening/infer-speakers";
 import { ListeningError } from "@/lib/listening/errors";
 import {
   isMultiSpeakerTranscript,
@@ -7,9 +18,7 @@ import {
   SPEAKER_ASSIGNMENT_VERSION,
   utterancesFromWords,
 } from "@/lib/listening/speakers";
-import {
-  toTranscriptionData,
-} from "@/lib/listening/utils";
+import { toTranscriptionData } from "@/lib/listening/utils";
 import type {
   ListeningTranscriptionData,
   ListeningUtterance,
@@ -19,7 +28,7 @@ import type {
 function getAssemblyClient() {
   const apiKey = process.env.ASSEMBLYAI_API_KEY;
   if (!apiKey) {
-    throw new ListeningError("ASSEMBLYAI_NOT_CONFIGURED");
+    throw beforeProviderError(new ListeningError("ASSEMBLYAI_NOT_CONFIGURED"));
   }
 
   return new AssemblyAI({ apiKey });
@@ -68,7 +77,11 @@ function utterancesFromAssembly(
   if (!raw?.length) return [];
 
   return raw.flatMap((utterance, index) => {
-    if (!utterance.text?.trim() || utterance.start == null || utterance.end == null) {
+    if (
+      !utterance.text?.trim() ||
+      utterance.start == null ||
+      utterance.end == null
+    ) {
       return [];
     }
 
@@ -90,7 +103,28 @@ type TranscribeAttempt = {
   speakerLabels: boolean;
 };
 
-async function transcribeOnce(
+type AssemblyTranscript = Awaited<
+  ReturnType<AssemblyAI["transcripts"]["get"]>
+>;
+
+async function waitForTranscript(
+  client: AssemblyAI,
+  id: string,
+  deadline: AiDeadline,
+) {
+  deadline.throwIfExpired();
+  const remaining = Math.max(5_000, deadline.remainingMs());
+  try {
+    return await client.transcripts.waitUntilReady(id, {
+      pollingInterval: 3_000,
+      pollingTimeout: remaining,
+    });
+  } catch (error) {
+    throw afterProviderError(error, "TRANSCRIPTION_FAILED");
+  }
+}
+
+async function submitTranscript(
   client: AssemblyAI,
   audioUrl: string,
   attempt: TranscribeAttempt,
@@ -105,54 +139,61 @@ async function transcribeOnce(
       : { language_detection: true }),
   };
 
-  return client.transcripts.transcribe(params, {
-    pollingInterval: 3000,
-    pollingTimeout: 240_000,
-  });
+  try {
+    return await client.transcripts.submit(params);
+  } catch (error) {
+    // Submit itself may still bill on some failures; treat as after_provider.
+    throw afterProviderError(error, "TRANSCRIPTION_FAILED");
+  }
 }
 
-export async function transcribeListeningMedia(input: {
-  audioUrl: string;
-  languageHint?: string | null;
-}): Promise<{
-  transcript: string;
-  language: string | null;
-  duration: number | null;
-  transcriptionData: ListeningTranscriptionData;
-}> {
-  const client = getAssemblyClient();
-  const attempts: TranscribeAttempt[] = [
-    { languageHint: input.languageHint, speakerLabels: true },
-    ...(input.languageHint
-      ? [{ languageHint: null, speakerLabels: true }]
-      : []),
-    { languageHint: input.languageHint ?? null, speakerLabels: false },
-  ];
+/**
+ * Require a known duration before paid transcription.
+ * Unknown duration is rejected so we never start an unbounded AssemblyAI job.
+ */
+export function assertListeningDurationAllowed(
+  durationSeconds: number | null | undefined,
+) {
+  if (typeof durationSeconds !== "number" || !Number.isFinite(durationSeconds)) {
+    throw beforeProviderError(new ListeningError("AUDIO_DURATION_UNKNOWN"));
+  }
+  if (durationSeconds <= 0) {
+    throw beforeProviderError(new ListeningError("AUDIO_DURATION_UNKNOWN"));
+  }
+  if (durationSeconds > LISTENING_MAX_TRANSCRIPT_SECONDS) {
+    throw beforeProviderError(new ListeningError("AUDIO_TOO_LONG"));
+  }
+}
 
-  let result: Awaited<ReturnType<typeof transcribeOnce>> | null = null;
-
-  for (const [index, attempt] of attempts.entries()) {
-    const next = await transcribeOnce(client, input.audioUrl, attempt);
-    if (next.status !== "error" && next.text?.trim()) {
-      result = next;
-      break;
-    }
-
-    const isLast = index === attempts.length - 1;
-    if (isLast) {
-      throw new ListeningError(
-        next.status === "error" ? "TRANSCRIPTION_FAILED" : "EMPTY_TRANSCRIPT",
-      );
-    }
+async function buildResultFromAssembly(
+  client: AssemblyAI,
+  result: AssemblyTranscript,
+  languageHint: string | null | undefined,
+  deadline: AiDeadline,
+) {
+  if (result.status === "error" || !result.text?.trim()) {
+    throw afterProviderError(
+      new ListeningError(
+        result.status === "error" ? "TRANSCRIPTION_FAILED" : "EMPTY_TRANSCRIPT",
+      ),
+    );
   }
 
-  if (!result?.text?.trim()) {
-    throw new ListeningError("EMPTY_TRANSCRIPT");
+  const duration =
+    typeof result.audio_duration === "number"
+      ? Math.round(result.audio_duration)
+      : null;
+  if (
+    typeof duration === "number" &&
+    duration > LISTENING_MAX_TRANSCRIPT_SECONDS
+  ) {
+    throw afterProviderError(new ListeningError("AUDIO_TOO_LONG"));
   }
 
   const words = toWordTimestamps(result.words);
   let sentences = toTranscriptionData({ words }).sentences;
 
+  deadline.throwIfExpired();
   try {
     const sentenceResponse = await client.transcripts.sentences(result.id);
     if (sentenceResponse.sentences?.length) {
@@ -173,19 +214,18 @@ export async function transcribeListeningMedia(input: {
     // Word-derived sentences are enough for later playback mapping.
   }
 
-  const duration =
-    typeof result.audio_duration === "number"
-      ? Math.round(result.audio_duration)
-      : null;
-
   const transcript = result.text.trim();
   let utterances = utterancesFromAssembly(
-    (result as { utterances?: Array<{
-      speaker?: string | number | null;
-      text?: string | null;
-      start?: number | null;
-      end?: number | null;
-    }> }).utterances,
+    (
+      result as {
+        utterances?: Array<{
+          speaker?: string | number | null;
+          text?: string | null;
+          start?: number | null;
+          end?: number | null;
+        }>;
+      }
+    ).utterances,
   );
 
   if (utterances.length === 0) {
@@ -193,14 +233,20 @@ export async function transcribeListeningMedia(input: {
   }
 
   let speakerMap: Record<string, string> = {};
+  deadline.throwIfExpired();
   if (isMultiSpeakerTranscript(utterances)) {
-    const inferred = await inferSpeakerDisplayNames({ transcript, utterances });
+    const inferred = await inferSpeakerDisplayNames({
+      transcript,
+      utterances,
+      deadline,
+    });
     utterances = inferred.utterances;
     speakerMap = inferred.speakerMap;
   } else {
     const assigned = await assignDialogueSpeakers({
       transcript,
       sentences,
+      deadline,
     });
     if (isMultiSpeakerTranscript(assigned.utterances)) {
       utterances = assigned.utterances;
@@ -210,7 +256,7 @@ export async function transcribeListeningMedia(input: {
 
   return {
     transcript,
-    language: result.language_code ?? input.languageHint ?? null,
+    language: result.language_code ?? languageHint ?? null,
     duration,
     transcriptionData: toTranscriptionData({
       words,
@@ -220,6 +266,104 @@ export async function transcribeListeningMedia(input: {
       speakersResolved: true,
       speakerAssignmentVersion: SPEAKER_ASSIGNMENT_VERSION,
       audioDuration: duration,
+      assemblyTranscriptId: result.id,
     }),
   };
+}
+
+export async function transcribeListeningMedia(input: {
+  audioUrl: string;
+  languageHint?: string | null;
+  /** Known media duration in seconds. Required before paid work. */
+  durationSeconds?: number | null;
+  /** Reuse a previously submitted AssemblyAI job after a poll/crash. */
+  existingAssemblyId?: string | null;
+  onJobSubmitted?: (assemblyTranscriptId: string) => Promise<void>;
+  deadlineMs?: number;
+}): Promise<{
+  transcript: string;
+  language: string | null;
+  duration: number | null;
+  transcriptionData: ListeningTranscriptionData;
+}> {
+  assertListeningDurationAllowed(input.durationSeconds);
+
+  const client = getAssemblyClient();
+  const deadline = createAiDeadline(
+    input.deadlineMs ?? AI_DEADLINES_MS.listeningTranscribe,
+  );
+
+  try {
+    if (input.existingAssemblyId) {
+      const existing = await waitForTranscript(
+        client,
+        input.existingAssemblyId,
+        deadline,
+      );
+      return buildResultFromAssembly(
+        client,
+        existing,
+        input.languageHint,
+        deadline,
+      );
+    }
+
+    // Language fallback once, then drop speaker labels — never unbounded.
+    const attempts: TranscribeAttempt[] = [
+      { languageHint: input.languageHint, speakerLabels: true },
+      ...(input.languageHint
+        ? [{ languageHint: null, speakerLabels: true } satisfies TranscribeAttempt]
+        : []),
+    ];
+
+    let lastError: unknown = new ListeningError("TRANSCRIPTION_FAILED");
+    let submitted = false;
+
+    for (const [index, attempt] of attempts.entries()) {
+      deadline.throwIfExpired();
+      const created = await submitTranscript(client, input.audioUrl, attempt);
+      submitted = true;
+      if (created.id) {
+        await input.onJobSubmitted?.(created.id);
+      }
+
+      try {
+        const ready = await waitForTranscript(client, created.id, deadline);
+        if (ready.status !== "error" && ready.text?.trim()) {
+          return buildResultFromAssembly(
+            client,
+            ready,
+            input.languageHint,
+            deadline,
+          );
+        }
+        lastError = new ListeningError(
+          ready.status === "error" ? "TRANSCRIPTION_FAILED" : "EMPTY_TRANSCRIPT",
+        );
+      } catch (error) {
+        lastError = error;
+        // After the first submit, do not start a second paid job on poll timeout.
+        if (index === 0 && error instanceof Error) {
+          const message = error.message;
+          if (
+            message.includes("timeout") ||
+            message.includes("DEADLINE") ||
+            message === "TRANSCRIPTION_FAILED"
+          ) {
+            throw afterProviderError(error);
+          }
+        }
+      }
+
+      const isLast = index === attempts.length - 1;
+      if (isLast) {
+        throw afterProviderError(lastError);
+      }
+    }
+
+    if (submitted) throw afterProviderError(lastError);
+    throw beforeProviderError(lastError);
+  } finally {
+    deadline.clear();
+  }
 }

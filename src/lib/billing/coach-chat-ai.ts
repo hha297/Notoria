@@ -1,4 +1,6 @@
-import OpenAI from "openai";
+import type OpenAI from "openai";
+import { AI_INPUT_LIMITS, AI_OUTPUT_TOKENS, clipForAi } from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import {
   COACH_CHAT_SYSTEM_PROMPT,
@@ -13,12 +15,7 @@ export async function generateCoachChatReply(input: {
   message: string;
   history: CoachChatHistoryMessage[];
 }): Promise<CoachChatAiResponse> {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
-    throw new Error("OPENAI_NOT_CONFIGURED");
-  }
-
-  const client = new OpenAI({ apiKey, timeout: 45_000 });
+  const client = requireOpenAiClient({ timeoutMs: 45_000 });
   const system = await aiSystemPrompt(COACH_CHAT_SYSTEM_PROMPT);
 
   const messages: OpenAI.Chat.ChatCompletionMessageParam[] = [
@@ -32,15 +29,19 @@ export async function generateCoachChatReply(input: {
   for (const turn of input.history) {
     messages.push({
       role: turn.role,
-      content: turn.content,
+      content: clipForAi(turn.content, AI_INPUT_LIMITS.meaning * 4),
     });
   }
 
-  messages.push({ role: "user", content: input.message });
+  messages.push({
+    role: "user",
+    content: clipForAi(input.message, AI_INPUT_LIMITS.meaning * 4),
+  });
 
   const response = await client.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: 0.35,
+    max_tokens: AI_OUTPUT_TOKENS.coachChat,
     response_format: { type: "json_object" },
     messages,
   });

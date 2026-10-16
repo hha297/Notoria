@@ -96,6 +96,10 @@ function friendlyError(
       return t("errors.proRequired");
     case "QUOTA_EXCEEDED":
       return t("errors.quotaExceeded");
+    case "RATE_LIMITED":
+      return t("errors.rateLimited");
+    case "AI_BUSY":
+      return t("errors.busy");
     case "FILE_TOO_LARGE":
       return t("errors.fileTooLarge");
     case "UNSUPPORTED_FORMAT":
@@ -271,6 +275,7 @@ export function ContentImportDialog({
         vocabItems: analysis.vocabItems,
         documents: analysis.documents,
         skipIssueRows: true,
+        usageSubjectId: analysis.usageSubjectId,
       });
       clearTicker();
 
@@ -516,7 +521,13 @@ export function ContentImportDialog({
                       <li key={item.rowIndex}>
                         <span className="font-medium text-ink">{item.word}</span>
                         {" — "}
-                        {item.meanings.join("; ")}
+                        {item.meanings
+                          .map((meaning) =>
+                            meaning.usageLabels.length > 0
+                              ? `${meaning.meaning} [${meaning.usageLabels.join(", ")}]`
+                              : meaning.meaning,
+                          )
+                          .join("; ")}
                       </li>
                     ))}
                 </ul>

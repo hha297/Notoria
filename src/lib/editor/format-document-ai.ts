@@ -1,5 +1,12 @@
 import type { JSONContent } from "@tiptap/react";
-import OpenAI from "openai";
+import {
+  AI_DEADLINES_MS,
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  clipForAi,
+  createAiDeadline,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import {
   vocabularyNotesFormatResultSchema,
@@ -15,12 +22,8 @@ import { PARADIGM_AI_RULES } from "@/lib/editor/format/paradigm-ai-rules";
 
 const PRESERVED_NODE_TYPES = new Set(["image", "horizontalRule"]);
 
-function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
-    throw new Error("OPENAI_NOT_CONFIGURED");
-  }
-  return new OpenAI({ apiKey, timeout: 60_000 });
+function getOpenAIClient(timeoutMs = 60_000) {
+  return requireOpenAiClient({ timeoutMs });
 }
 
 function parseJsonContent(content: string | null | undefined) {
@@ -40,7 +43,7 @@ Goal: turn messy pasted text into clean structured content. Decide headings, lis
 Rules:
 1. Preserve the learner's information. Do not invent facts, forms, titles, or rows that are not supported by the source. You MAY normalize morphology; that is analysis, not invention.
 2. Promote clear section titles to headings (level 1–3). For numbered outlines like "1.", "1.1", "1.1.1", set level from the numbering depth (1 → 1, 1.1 → 2, 1.1.1 → 3). Keep the numbering text in the heading.
-3. Convert tabular / paradigm content into tables when the text clearly has columns/rows (pipes, tabs, aligned columns, or repeated label+value paradigms). Headers and columns must match the study language and the notes — never force a fixed header set from another language.
+3. Convert tabular / paradigm content into tables when the text clearly has columns/rows (pipes, tabs, aligned columns, or repeated label+value paradigms). For case×number paradigms use EXACTLY these English header tokens (do not translate): "Case", "Singular", "Plural". First-column case labels must also be English tokens only (Nominative, Genitive, Partitive, Inessive, …). Do not invent other fixed header sets.
 4. Put category/label columns first when that matches the source. Set boldFirstColumn true for label columns.
 5. Use bulletList / orderedList for list-like lines. Keep normal prose as paragraphs.
 6. Do NOT invent decorative titles (e.g. "Noun Paradigm", lone language names, or summaries of a table).
@@ -81,59 +84,66 @@ export type FormatEditorDocumentAiInput = {
 export async function formatEditorDocumentWithAi(
   input: FormatEditorDocumentAiInput,
 ): Promise<JSONContent> {
-  const text = input.text.trim();
+  const text = clipForAi(input.text, AI_INPUT_LIMITS.editorFormat);
   if (!text) {
     throw new Error("EMPTY_CONTENT");
   }
 
-  const client = getOpenAIClient();
-  const languageHint = input.language
-    ? (getLanguageByCode(input.language)?.name ?? input.language)
-    : null;
-
-  const completion = await client.chat.completions.create({
-    model: "gpt-4o",
-    temperature: 0.1,
-    max_tokens: 8_000,
-    response_format: { type: "json_object" },
-    messages: [
-      {
-        role: "system",
-        content: await aiSystemPrompt(documentFormatSystemPrompt(), {
-          responseStyle: true,
-        }),
-      },
-      {
-        role: "user",
-        content: JSON.stringify({
-          studyLanguageHint: languageHint,
-          word: input.word?.trim() || null,
-          content: text,
-          reminder:
-            "Merge same-label rows with formA/formB. Strip person/possessive endings. First column = category labels only. Do not trust messy dump labels.",
-        }),
-      },
-    ],
-  });
-
-  const parsed = vocabularyNotesFormatResultSchema.safeParse(
-    parseJsonContent(completion.choices[0]?.message?.content),
-  );
-  if (!parsed.success) {
-    console.error(
-      "editor document format AI parse failed",
-      parsed.error.issues.map((issue) => issue.path.join(".") || "root"),
+  const deadline = createAiDeadline(AI_DEADLINES_MS.editorFormat);
+  try {
+    const client = getOpenAIClient(
+      Math.max(5_000, Math.min(60_000, deadline.remainingMs())),
     );
-    throw new Error("AI_INVALID_RESPONSE");
-  }
+    const languageHint = input.language
+      ? (getLanguageByCode(input.language)?.name ?? input.language)
+      : null;
 
-  const blocks: VocabularyNotesFormatBlock[] =
-    sanitizeVocabularyNotesFormatBlocks(parsed.data.blocks, input.word);
-  if (blocks.length === 0) {
-    throw new Error("AI_EMPTY_BLOCKS");
-  }
+    const completion = await client.chat.completions.create({
+      model: "gpt-4o",
+      temperature: 0.1,
+      max_tokens: AI_OUTPUT_TOKENS.editorFormat,
+      response_format: { type: "json_object" },
+      messages: [
+        {
+          role: "system",
+          content: await aiSystemPrompt(documentFormatSystemPrompt(), {
+            responseStyle: true,
+          }),
+        },
+        {
+          role: "user",
+          content: JSON.stringify({
+            studyLanguageHint: languageHint,
+            word: input.word?.trim() || null,
+            content: text,
+            reminder:
+              "Merge same-label rows with formA/formB. Strip person/possessive endings. First column = category labels only. Do not trust messy dump labels.",
+          }),
+        },
+      ],
+    });
 
-  return notesFormatBlocksToDoc(blocks);
+    const parsed = vocabularyNotesFormatResultSchema.safeParse(
+      parseJsonContent(completion.choices[0]?.message?.content),
+    );
+    if (!parsed.success) {
+      console.error(
+        "editor document format AI parse failed",
+        parsed.error.issues.map((issue) => issue.path.join(".") || "root"),
+      );
+      throw new Error("AI_INVALID_RESPONSE");
+    }
+
+    const blocks: VocabularyNotesFormatBlock[] =
+      sanitizeVocabularyNotesFormatBlocks(parsed.data.blocks, input.word);
+    if (blocks.length === 0) {
+      throw new Error("AI_EMPTY_BLOCKS");
+    }
+
+    return notesFormatBlocksToDoc(blocks);
+  } finally {
+    deadline.clear();
+  }
 }
 
 /** Collect image / HR nodes so Format does not drop them. */

@@ -56,6 +56,11 @@ export function clearAppLocalPreferences() {
   const keys = [
     "notoria.tutorials.completed",
     "notoria.vocabulary.viewMode",
+    "notoria.inbox.viewMode",
+    "notoria.writing.viewMode",
+    "notoria.listening.viewMode",
+    "notoria.speaking.viewMode",
+    "notoria.reading.viewMode",
     "notoria.exercise.studioSource",
   ];
   for (const key of keys) {

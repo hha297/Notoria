@@ -27,6 +27,10 @@ import {
 } from "@/components/vocabulary/ai-suggestion-card";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { Button } from "@/components/ui/button";
+import {
+  MeaningUsageChips,
+  MeaningUsageTrigger,
+} from "@/components/vocabulary/meaning-usage-select";
 import { useFocusNewItem } from "@/hooks/use-focus-new-item";
 import { useMounted } from "@/hooks/use-mounted";
 import {
@@ -34,19 +38,25 @@ import {
   MAX_PRIMARY_MEANINGS,
 } from "@/lib/vocabulary/primary-meanings";
 import { composerStyles } from "@/components/vocabulary/vocabulary-composer";
-import { validateVocabularyMeaning } from "@/lib/actions/vocabulary-ai";
 import { mx } from "@/lib/css-module";
 import { sanitizeMeaningSuggestions } from "@/lib/vocabulary/ai-sanitize";
 import type { VocabularyMeaningResult } from "@/lib/vocabulary/ai-types";
+import {
+  isPartialMeaningInput,
+  meaningCheckDebounceMs,
+} from "@/lib/vocabulary/meaning-ready";
+import type { MeaningUsageId } from "@/lib/vocabulary/meaning-usage";
 import { cn } from "@/lib/utils";
 
-const MEANING_DEBOUNCE_MS = 400;
+const MEANING_DEBOUNCE_MS = 500;
+const MEANING_PARTIAL_DEBOUNCE_MS = 1_200;
 
 export type MeaningItem = {
   id: string;
   meaning: string;
   isPrimary: boolean;
   sortOrder: number;
+  usageLabels: MeaningUsageId[];
 };
 
 type SortableMeaningsProps = {
@@ -60,6 +70,8 @@ type SortableMeaningsProps = {
     examples: string[];
     /** When true, apply the first suggestion without an Accept click. */
     autoApply?: boolean;
+    /** When true, skip auto meaning checks (quota exhausted). */
+    quotaLocked?: boolean;
   };
 };
 
@@ -67,6 +79,7 @@ function MeaningRowShell({
   item,
   index,
   onUpdate,
+  onUpdateUsageLabels,
   onBlur,
   onTogglePrimary,
   onRemove,
@@ -82,6 +95,7 @@ function MeaningRowShell({
   item: MeaningItem;
   index: number;
   onUpdate: (id: string, meaning: string) => void;
+  onUpdateUsageLabels: (id: string, usageLabels: MeaningUsageId[]) => void;
   onBlur?: (id: string) => void;
   onTogglePrimary: (id: string) => void;
   onRemove: (id: string) => void;
@@ -99,41 +113,65 @@ function MeaningRowShell({
       <div
         className={mx(
           composerStyles,
-          "vocab-composer-item flex min-w-0 items-center gap-2.5 p-3.5 sm:gap-3 sm:p-4",
+          "vocab-composer-item flex min-w-0 items-start gap-2.5 p-3.5 sm:gap-3 sm:p-4",
           item.isPrimary ? "vocab-composer-item-primary" : null,
         )}
       >
-        {dragHandle}
-        <span className={mx(composerStyles, "vocab-composer-index")} aria-hidden>
-          {index + 1}
-        </span>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon-sm"
-          onClick={() => onTogglePrimary(item.id)}
-          disabled={!item.isPrimary && !canMarkPrimary}
-          aria-pressed={item.isPrimary}
-          aria-label={item.isPrimary ? primaryLabel : secondaryLabel}
-          title={item.isPrimary ? primaryLabel : secondaryLabel}
-          className={cn(
-            mx(composerStyles, "vocab-composer-icon-btn"),
-            "shrink-0",
-            item.isPrimary && mx(composerStyles, "vocab-composer-star-primary"),
-          )}
-        >
-          <Star
-            className={cn("size-4", item.isPrimary && "fill-current")}
+        <div className="flex shrink-0 items-center gap-2.5 pt-0.5 sm:gap-3">
+          {dragHandle}
+          <span
+            className={mx(composerStyles, "vocab-composer-index")}
+            aria-hidden
+          >
+            {index + 1}
+          </span>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => onTogglePrimary(item.id)}
+            disabled={!item.isPrimary && !canMarkPrimary}
+            aria-pressed={item.isPrimary}
+            aria-label={item.isPrimary ? primaryLabel : secondaryLabel}
+            title={item.isPrimary ? primaryLabel : secondaryLabel}
+            className={cn(
+              mx(composerStyles, "vocab-composer-icon-btn"),
+              "shrink-0 cursor-pointer",
+              item.isPrimary && mx(composerStyles, "vocab-composer-star-primary"),
+            )}
+          >
+            <Star
+              className={cn("size-4", item.isPrimary && "fill-current")}
+            />
+          </Button>
+        </div>
+        <div className="flex min-w-0 flex-1 flex-col gap-2">
+          <div className="flex min-w-0 items-center gap-2">
+            <CapitalizedInput
+              ref={inputRef}
+              value={item.meaning}
+              onChange={(event) => onUpdate(item.id, event.target.value)}
+              onBlur={() => onBlur?.(item.id)}
+              placeholder={placeholder}
+              className={mx(
+                composerStyles,
+                "vocab-composer-field min-w-0 flex-1",
+              )}
+            />
+            <MeaningUsageTrigger
+              value={item.usageLabels}
+              onChange={(usageLabels) =>
+                onUpdateUsageLabels(item.id, usageLabels)
+              }
+            />
+          </div>
+          <MeaningUsageChips
+            value={item.usageLabels}
+            onChange={(usageLabels) =>
+              onUpdateUsageLabels(item.id, usageLabels)
+            }
           />
-        </Button>
-        <CapitalizedInput
-          ref={inputRef}
-          value={item.meaning}
-          onChange={(event) => onUpdate(item.id, event.target.value)}
-          onBlur={() => onBlur?.(item.id)}
-          placeholder={placeholder}
-          className={mx(composerStyles, "vocab-composer-field min-w-0 flex-1")}
-        />
+        </div>
         <Button
           type="button"
           variant="ghost"
@@ -143,7 +181,7 @@ function MeaningRowShell({
           aria-label="Remove meaning"
           className={mx(
             composerStyles,
-            "vocab-composer-icon-btn vocab-composer-icon-btn-danger shrink-0",
+            "vocab-composer-icon-btn vocab-composer-icon-btn-danger shrink-0 cursor-pointer",
           )}
         >
           <Trash2 className="size-4" />
@@ -158,6 +196,7 @@ function SortableMeaningRow({
   item,
   index,
   onUpdate,
+  onUpdateUsageLabels,
   onBlur,
   onTogglePrimary,
   onRemove,
@@ -172,6 +211,7 @@ function SortableMeaningRow({
   item: MeaningItem;
   index: number;
   onUpdate: (id: string, meaning: string) => void;
+  onUpdateUsageLabels: (id: string, usageLabels: MeaningUsageId[]) => void;
   onBlur?: (id: string) => void;
   onTogglePrimary: (id: string) => void;
   onRemove: (id: string) => void;
@@ -205,6 +245,7 @@ function SortableMeaningRow({
         item={item}
         index={index}
         onUpdate={onUpdate}
+        onUpdateUsageLabels={onUpdateUsageLabels}
         onBlur={onBlur}
         onTogglePrimary={onTogglePrimary}
         onRemove={onRemove}
@@ -261,6 +302,7 @@ export function SortableMeanings({
   const lastSeenText = useRef<Record<string, string>>({});
   const checkQueue = useRef<string[]>([]);
   const drainingQueue = useRef(false);
+  const abortById = useRef<Record<string, AbortController>>({});
   meaningsRef.current = meanings;
   aiRef.current = ai;
 
@@ -287,6 +329,8 @@ export function SortableMeanings({
     checkGeneration.current[id] = (checkGeneration.current[id] ?? 0) + 1;
     delete inFlightKey.current[id];
     checkQueue.current = checkQueue.current.filter((queuedId) => queuedId !== id);
+    abortById.current[id]?.abort();
+    delete abortById.current[id];
   }
 
   async function runMeaningCheck(id: string) {
@@ -312,46 +356,61 @@ export function SortableMeanings({
 
     const generation = checkGeneration.current[id] ?? 0;
     inFlightKey.current[id] = key;
+    abortById.current[id]?.abort();
+    const controller = new AbortController();
+    abortById.current[id] = controller;
     setAiState((current) => ({
       ...current,
       [id]: { checking: true, result: null },
     }));
 
     try {
-      const result = await validateVocabularyMeaning({
-        word,
-        meaning,
-        language: aiNow.language,
-        partOfSpeech: aiNow.partOfSpeech ?? null,
-        examples: aiNow.examples,
+      const response = await fetch("/api/ai/vocabulary/meaning", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          word,
+          meaning,
+          language: aiNow.language,
+          partOfSpeech: aiNow.partOfSpeech ?? null,
+          examples: aiNow.examples,
+        }),
+        signal: controller.signal,
       });
 
       if (checkGeneration.current[id] !== generation) return;
 
-      if (!result.ok) {
+      const payload = (await response.json()) as {
+        ok: boolean;
+        result?: VocabularyMeaningResult;
+        code?: string;
+      };
+
+      if (!payload.ok || !payload.result) {
+        if (payload.code === "AI_CANCELLED") return;
         clearAi(id);
         return;
       }
 
       lastChecked.current.add(key);
 
-      if (result.result.isLikelyCorrect === true) {
+      if (payload.result.isLikelyCorrect === true) {
         clearAi(id);
         return;
       }
 
-      if (result.result.isLikelyCorrect !== false) {
+      if (payload.result.isLikelyCorrect !== false) {
         clearAi(id);
         return;
       }
 
-      const firstSuggestion = result.result.suggestions[0]?.meaning?.trim();
+      const firstSuggestion = payload.result.suggestions[0]?.meaning?.trim();
       if (aiNow.autoApply && firstSuggestion) {
         lastChecked.current.add(key);
         skipped.current.add(key);
         onChange(
-          meaningsRef.current.map((meaning) =>
-            meaning.id === id ? { ...meaning, meaning: firstSuggestion } : meaning,
+          meaningsRef.current.map((row) =>
+            row.id === id ? { ...row, meaning: firstSuggestion } : row,
           ),
         );
         clearAi(id);
@@ -360,12 +419,16 @@ export function SortableMeanings({
 
       setAiState((current) => ({
         ...current,
-        [id]: { checking: false, result: result.result },
+        [id]: { checking: false, result: payload.result ?? null },
       }));
-    } catch {
+    } catch (error) {
       if (checkGeneration.current[id] !== generation) return;
+      if (error instanceof DOMException && error.name === "AbortError") return;
       clearAi(id);
     } finally {
+      if (abortById.current[id] === controller) {
+        delete abortById.current[id];
+      }
       if (
         checkGeneration.current[id] === generation &&
         inFlightKey.current[id] === key
@@ -406,10 +469,35 @@ export function SortableMeanings({
     void drainCheckQueue();
   }
 
-  function scheduleMeaningCheck(id: string, delay = MEANING_DEBOUNCE_MS) {
+  function scheduleMeaningCheck(
+    id: string,
+    delay?: number,
+    options?: { force?: boolean },
+  ) {
     if (!aiRef.current?.enabled) return;
+    if (aiRef.current?.quotaLocked) return;
+    const item = meaningsRef.current.find((row) => row.id === id);
+    const text = item?.meaning.trim() ?? "";
+    if (!options?.force && isPartialMeaningInput(text)) {
+      // Keep waiting while the learner types a partial token; blur forces check.
+      delay =
+        delay ??
+        meaningCheckDebounceMs(
+          text,
+          MEANING_DEBOUNCE_MS,
+          MEANING_PARTIAL_DEBOUNCE_MS,
+        );
+    } else {
+      delay = delay ?? MEANING_DEBOUNCE_MS;
+    }
     window.clearTimeout(debounceTimers.current[id]);
     debounceTimers.current[id] = window.setTimeout(() => {
+      const latest =
+        meaningsRef.current.find((row) => row.id === id)?.meaning.trim() ?? "";
+      if (!options?.force && isPartialMeaningInput(latest)) {
+        scheduleMeaningCheck(id);
+        return;
+      }
       enqueueMeaningCheck(id);
     }, delay);
   }
@@ -425,11 +513,17 @@ export function SortableMeanings({
 
       if (text.length < 2) {
         window.clearTimeout(debounceTimers.current[item.id]);
+        cancelMeaningCheck(item.id);
         continue;
       }
 
       const key = checkKey(item.id, text, ai.word);
       if (skipped.current.has(key) || lastChecked.current.has(key)) continue;
+      // Superseded input: abort in-flight provider call for this row only.
+      abortById.current[item.id]?.abort();
+      delete abortById.current[item.id];
+      checkGeneration.current[item.id] =
+        (checkGeneration.current[item.id] ?? 0) + 1;
       scheduleMeaningCheck(item.id);
     }
   }, [meanings, ai?.enabled, ai?.word, ai?.language, ai?.partOfSpeech]);
@@ -459,9 +553,26 @@ export function SortableMeanings({
     scheduleMeaningCheck(id);
   }
 
-  function handleMeaningBlur(id: string) {
-    scheduleMeaningCheck(id, 150);
+  function updateUsageLabels(id: string, usageLabels: MeaningUsageId[]) {
+    onChange(
+      meanings.map((item) =>
+        item.id === id ? { ...item, usageLabels } : item,
+      ),
+    );
   }
+
+  function handleMeaningBlur(id: string) {
+    scheduleMeaningCheck(id, 150, { force: true });
+  }
+
+  useEffect(() => {
+    return () => {
+      for (const id of Object.keys(abortById.current)) {
+        abortById.current[id]?.abort();
+      }
+      abortById.current = {};
+    };
+  }, []);
 
   function skipAi(id: string, meaning: string) {
     skipped.current.add(checkKey(id, meaning, ai?.word ?? ""));
@@ -550,6 +661,7 @@ export function SortableMeanings({
         meaning: "",
         isPrimary: primaryCount === 0,
         sortOrder: meanings.length,
+        usageLabels: [],
       },
     ]);
   }
@@ -606,6 +718,7 @@ export function SortableMeanings({
             item={item}
             index={index}
             onUpdate={updateMeaning}
+            onUpdateUsageLabels={updateUsageLabels}
             onBlur={handleMeaningBlur}
             onTogglePrimary={togglePrimary}
             onRemove={removeMeaning}
@@ -623,6 +736,7 @@ export function SortableMeanings({
             item={item}
             index={index}
             onUpdate={updateMeaning}
+            onUpdateUsageLabels={updateUsageLabels}
             onBlur={handleMeaningBlur}
             onTogglePrimary={togglePrimary}
             onRemove={removeMeaning}

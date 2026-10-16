@@ -62,6 +62,7 @@ type AppSidebarProps = {
   userImage?: string | null;
   isPro?: boolean;
   plan?: PlanId;
+  isAdmin?: boolean;
   workspaceId?: string | null;
 };
 
@@ -71,6 +72,7 @@ export function AppSidebar({
   userImage,
   isPro = false,
   plan = "free",
+  isAdmin = false,
   workspaceId = null,
 }: AppSidebarProps) {
   const pathname = usePathname();
@@ -193,6 +195,7 @@ export function AppSidebar({
             image={userImage}
             isPro={isPro}
             plan={plan}
+            isAdmin={isAdmin}
           />
         </div>
       </SidebarFooter>

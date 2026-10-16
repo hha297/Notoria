@@ -15,6 +15,7 @@ import {
 import {
   checkoutSessionParams,
   resolveBillingCommand,
+  stripeCancellationDetails,
   stripeKeyMode,
   switchUpdateParams,
   validateConfiguredPrice,
@@ -345,8 +346,13 @@ export async function requestBillingChange(input: {
 
   if (resolved.action === "cancel") {
     await releaseSubscriptionSchedule(stripe, entitled);
+    const cancellation =
+      input.command.intent === "change"
+        ? stripeCancellationDetails(input.command.cancellation)
+        : undefined;
     await stripe.subscriptions.update(entitled.id, {
       cancel_at_period_end: true,
+      ...(cancellation ? { cancellation_details: cancellation } : {}),
       metadata: {
         ...entitled.metadata,
         userId: input.userId,

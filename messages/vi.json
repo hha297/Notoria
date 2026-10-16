@@ -90,6 +90,8 @@
     "errors": {
       "proRequired": "Nhập file dành cho Pro và Premium.",
       "quotaExceeded": "Bạn đã hết hạn mức nhập hôm nay. Thử lại ngày mai, hoặc nâng cấp để tăng hạn mức.",
+      "rateLimited": "Quá nhiều yêu cầu nhập. Đợi một chút rồi thử lại.",
+      "busy": "Đang có bản nhập khác chạy. Đợi hoàn tất rồi thử lại.",
       "fileTooLarge": "File quá lớn. Giữ dưới 10 MB.",
       "unsupportedFormat": "Dùng CSV, PDF, DOCX hoặc TXT.",
       "emptyFile": "Không tìm thấy nội dung đọc được trong file.",
@@ -130,9 +132,33 @@
     "formatWorking": "Đang định dạng…",
     "formatAiFallback": "Không dùng được AI — đã làm sạch cơ bản thay thế",
     "formatFailed": "Không định dạng được nội dung. Thử lại.",
+    "formatQuotaExceeded": "Bạn đã hết hạn mức định dạng AI hôm nay. Hạn mức reset lúc nửa đêm UTC — hoặc nâng cấp để tăng hạn mức.",
+    "formatRateLimited": "Quá nhiều yêu cầu định dạng. Đợi một chút rồi thử lại.",
     "tableSelectionInvalid": "Không thể chuyển vùng chọn thành bảng",
     "headingCollapse": "Thu gọn mục",
-    "headingExpand": "Mở rộng mục"
+    "headingExpand": "Mở rộng mục",
+    "paradigmHeaders": {
+      "case": "Cách",
+      "singular": "Số ít",
+      "plural": "Số nhiều"
+    },
+    "paradigmCases": {
+      "nominative": "Chủ cách",
+      "genitive": "Sở hữu cách",
+      "partitive": "Phân cách",
+      "accusative": "Đối cách",
+      "inessive": "Nội cách",
+      "elative": "Xuất cách",
+      "illative": "Nhập cách",
+      "adessive": "Tiếp cận cách",
+      "ablative": "Ly cách",
+      "allative": "Hướng cách",
+      "essive": "Bản chất cách",
+      "translative": "Chuyển hóa cách",
+      "instructive": "Công cụ cách",
+      "abessive": "Thiếu cách",
+      "comitative": "Đồng hành cách"
+    }
   },
   "nav": {
     "dashboard": "Tổng quan",
@@ -166,6 +192,11 @@
     "captureDescription": "Lưu lại để xử lý sau. Bạn chưa cần quyết định nó thuộc phần nào.",
     "captureSubmit": "Lưu vào Ghi nhanh",
     "captured": "Đã lưu vào Ghi nhanh",
+    "edit": "Sửa",
+    "editTitle": "Sửa ghi nhanh",
+    "editDescription": "Cập nhật nội dung hoặc chuyển sang thư mục khác.",
+    "editSubmit": "Lưu thay đổi",
+    "updated": "Đã cập nhật ghi nhanh",
     "contentLabel": "Nội dung",
     "contentPlaceholder": "Một từ, cụm từ, ý tưởng hoặc bất cứ điều gì bạn muốn quay lại…",
     "contentRequired": "Hãy thêm nội dung trước",
@@ -174,14 +205,21 @@
     "sourceLabel": "Nguồn (tuỳ chọn)",
     "sourcePlaceholder": "Sách, podcast, lớp học…",
     "sourcePrefix": "Từ {source}",
+    "folderLabel": "Thư mục",
+    "foldersNav": "Thư mục Ghi nhanh",
+    "scopeAll": "Tất cả ghi nhanh",
+    "unfiled": "Chưa xếp thư mục",
     "filterUnprocessed": "Chưa xử lý",
     "filterProcessed": "Đã xử lý",
     "emptyTitle": "Ghi nhanh trống",
     "emptyDescription": "Ghi nhanh một điều gì đó — từ trong hội thoại, thắc mắc ngữ pháp, ý tưởng viết — rồi sắp xếp sau.",
     "emptyProcessedTitle": "Chưa có mục đã xử lý",
     "emptyProcessedDescription": "Khi bạn hoàn tất thêm mục từ Ghi nhanh vào từ vựng, lý thuyết, viết hoặc bài tập, nó sẽ hiện ở đây.",
+    "emptyFolderTitle": "Thư mục này trống",
+    "emptyFolderDescription": "Chuyển ghi nhanh vào đây, hoặc tạo mục mới trong thư mục này.",
+    "deleteFolderDescription": "Xóa “{name}”? Thư mục sẽ bị xóa, nhưng {count, plural, other {# ghi nhanh}} sẽ được giữ lại trong Chưa xếp thư mục.",
     "statusProcessed": "Đã xử lý",
-    "processMenu": "Xử lý mục",
+    "processMenu": "Thao tác ghi nhanh",
     "processed": "Đã đánh dấu xử lý",
     "deleted": "Đã xóa khỏi Ghi nhanh",
     "process": {
@@ -193,13 +231,14 @@
       "delete": "Xoá"
     },
     "searchPlaceholder": "Tìm ghi nhanh…",
+    "searchInScope": "Tìm trong {scope}…",
     "sortBy": "Sắp xếp",
     "sortNewest": "Mới nhất trước",
     "sortOldest": "Cũ nhất trước",
     "sortNameAsc": "Tên (A → Z)",
     "sortNameDesc": "Tên (Z → A)",
     "noResultsTitle": "Không có kết quả",
-    "noResultsDescription": "Thử tìm khác, hoặc xóa tìm kiếm để xem mọi mục trong tab này."
+    "noResultsDescription": "Thử tìm khác, hoặc xóa tìm kiếm để xem mọi mục trong thư mục và tab này."
   },
   "reviewLater": {
     "add": "Xem lại sau",
@@ -224,6 +263,7 @@
     "deleteDescription": "“{name}” và toàn bộ nội dung bên trong ({folderCount, plural, other {# thư mục}}, {itemCount, plural, other {# mục}}) sẽ bị xóa vĩnh viễn.",
     "deleteDescriptionEmpty": "“{name}” sẽ bị xóa vĩnh viễn.",
     "root": "Tất cả tệp",
+    "unfiled": "Chưa xếp thư mục",
     "open": "Mở",
     "rename": "Đổi tên",
     "move": "Chuyển đến…",
@@ -263,6 +303,15 @@
     "language": "Ngôn ngữ đang học",
     "languageHint": "Mỗi ngôn ngữ chỉ có một không gian học.",
     "languageExists": "Bạn đã có không gian học cho ngôn ngữ này rồi.",
+    "languageSearchPlaceholder": "Tìm ngôn ngữ…",
+    "languageSearchEmpty": "Không tìm thấy ngôn ngữ",
+    "languageRegions": {
+      "europe": "Châu Âu",
+      "asia": "Châu Á",
+      "africa": "Châu Phi",
+      "americas": "Châu Mỹ",
+      "oceania": "Châu Đại Dương"
+    },
     "created": "Đã tạo không gian học",
     "updated": "Đã cập nhật không gian học",
     "deleted": "Đã xóa không gian học",
@@ -312,6 +361,15 @@
     "primaryMeaningLimit": "Chỉ được đánh dấu tối đa {max} nghĩa chính",
     "primaryMeanings": "Nghĩa chính",
     "otherMeanings": "Nghĩa khác",
+    "usageLabels": {
+      "label": "Nhãn cách dùng",
+      "add": "Cách dùng",
+      "menuTitle": "Nhãn cách dùng",
+      "clear": "Xóa tất cả",
+      "remove": "Gỡ {label}",
+      "aria": "Nhãn cách dùng cho nghĩa này",
+      "count": "{count, plural, one {# nhãn} other {# nhãn}}"
+    },
     "examples": "Câu ví dụ",
     "addExample": "Thêm câu ví dụ",
     "removeExample": "Xóa câu ví dụ",
@@ -388,22 +446,32 @@
     "tagManager": {
       "open": "Quản lý thẻ",
       "title": "Quản lý thẻ",
-      "description": "Chọn một từ trước — Thêm hoặc Gỡ phụ thuộc từ đó đã có thẻ hay chưa.",
-      "groupsLabel": "Nhóm thẻ",
+      "description": "Chọn thẻ rồi thêm hoặc gỡ khỏi từ. Từ đã gắn và từ còn lại nằm ở hai danh sách riêng.",
+      "groupsLabel": "Nhóm thẻ chuẩn",
       "tagsHeading": "Thẻ",
-      "wordsHeading": "Từ · {tag}",
+      "standardTagsHeading": "Thẻ chuẩn",
+      "customTagsHeading": "Thẻ tùy chỉnh",
+      "customTagsHint": "Nhãn bạn tự tạo để tổ chức — không phải từ loại.",
+      "emptyCustomTags": "Chưa có thẻ tùy chỉnh. Tạo khi chỉnh sửa từ.",
+      "wordsHeading": "{tag}",
+      "kindStandard": "Chuẩn",
+      "kindCustom": "Tùy chỉnh",
+      "assignedHeading": "Từ đã có thẻ này",
+      "otherHeading": "Từ khác",
+      "sectionCount": "{count}",
+      "selectSection": "Chọn tất cả trong mục",
       "searchPlaceholder": "Tìm từ hoặc nghĩa…",
       "wordCount": "{count}",
       "loading": "Đang tải từ vựng…",
       "emptyBank": "Ngân hàng từ còn trống.",
-      "emptyFilter": "Không có từ khớp tìm kiếm này.",
-      "selectVisible": "Chọn các mục đang hiện",
-      "showing": "{count} đang hiện",
-      "showingSelectable": "{selectable} có thể chọn · {count} đang hiện",
+      "emptyAssigned": "Chưa có từ nào mang thẻ này.",
+      "emptyAssignedSearch": "Không có từ khớp đã mang thẻ này.",
+      "emptyOther": "Mọi từ đã có thẻ này.",
+      "emptyOtherSearch": "Không có từ khớp để gắn thẻ.",
       "selected": "Đã chọn {count}",
-      "modeHintIdle": "Chọn một từ để bắt đầu. Lựa chọn đó khóa chế độ Thêm hoặc Gỡ.",
-      "modeHintAdd": "Từ đầu chưa có thẻ — chỉ chọn được các từ chưa có thẻ này.",
-      "modeHintRemove": "Từ đầu đã có thẻ — chỉ chọn được các từ đã có thẻ này.",
+      "modeHintIdle": "Chọn từ ở một trong hai danh sách. Lựa chọn đầu khóa chế độ Thêm hoặc Gỡ.",
+      "modeHintAdd": "Đang thêm thẻ — chỉ giữ chọn các từ trong Từ khác.",
+      "modeHintRemove": "Đang gỡ thẻ — chỉ giữ chọn các từ đã có thẻ.",
       "addToTag": "Thêm vào thẻ",
       "removeFromTag": "Gỡ khỏi thẻ",
       "applyAdd": "Thêm vào thẻ ({count})",
@@ -479,7 +547,10 @@
         "notes": "Ghi chú",
         "updated": "Cập nhật"
       }
-    }
+    },
+    "otherMeaningsPage": "{total} nghĩa · trang {page}/{totalPages}",
+    "otherMeaningsPrev": "Trước",
+    "otherMeaningsNext": "Sau"
   },
   "tags": {
     "groups": {
@@ -522,6 +593,13 @@
       "idiom": "Thành ngữ",
       "grammar": "Ngữ pháp",
       "expression": "Cụm từ"
+    },
+    "meaningUsage": {
+      "literary": "Văn chương",
+      "technical": "Kỹ thuật",
+      "archaic": "Cổ",
+      "regional": "Địa phương",
+      "figurative": "Nghĩa bóng"
     },
     "learningStatus": {
       "new": "Mới",
@@ -909,7 +987,22 @@
       "tryAgain": "Làm lại",
       "questionsLabel": "Câu hỏi",
       "correctLabel": "Đúng",
-      "reviewLabel": "Cần ôn"
+      "reviewLabel": "Cần ôn",
+      "answeredProgress": "{answered} / {total} đã trả lời",
+      "submitSet": "Nộp bài",
+      "submitting": "Đang chấm…",
+      "unansweredWarnTitle": "Còn câu chưa trả lời",
+      "unansweredWarn": "Bạn còn {count, plural, one {# câu chưa trả lời} other {# câu chưa trả lời}}. Vẫn nộp?",
+      "submitAnyway": "Vẫn nộp",
+      "partialHint": "Gợi ý: {mask}",
+      "jumpToUnanswered": "Đến câu chưa làm",
+      "retryIncorrect": "Làm lại câu sai",
+      "retryUnanswered": "Làm lại câu trống",
+      "restartSet": "Làm lại cả bộ",
+      "resultsTitle": "Kết quả",
+      "unanswered": "Chưa trả lời",
+      "yourAnswer": "Câu trả lời của bạn",
+      "correctAnswer": "Đáp án đúng"
     },
     "multipleChoice": {
       "questionWord": "Từ này nghĩa là gì?",
@@ -1631,24 +1724,12 @@
           "title": "1. Ghi lại điều gì đó",
           "body": "Dùng Ghi nhanh để lưu từ, cụm từ, thắc mắc ngữ pháp hoặc ý viết mà chưa cần quyết định chỗ thuộc về. Nhanh quan trọng hơn cấu trúc hoàn hảo."
         },
-        "filters": {
-          "title": "2. Cần xử lý và Đã xử lý",
-          "body": "Cần xử lý giữ các mục còn chờ. Đã xử lý hiện những ghi nhanh bạn đã chuyển thành từ vựng, lý thuyết, viết hoặc bài tập."
-        },
-        "search": {
-          "title": "3. Tìm kiếm",
-          "body": "Lọc tab hiện tại theo nội dung, ghi chú hoặc nguồn để tìm nhanh một mục."
-        },
-        "sort": {
-          "title": "4. Sắp xếp",
-          "body": "Sắp theo mới nhất, cũ nhất hoặc tên để danh sách khớp cách bạn muốn làm việc."
-        },
         "list": {
-          "title": "5. Danh sách ghi nhanh",
-          "body": "Mỗi thẻ hiện nội dung, ghi chú/nguồn tùy chọn và thời điểm lưu. Mở menu ··· trên thẻ để xử lý."
+          "title": "2. Danh sách ghi nhanh",
+          "body": "Mỗi thẻ hiện nội dung, ghi chú/nguồn tùy chọn và thời điểm lưu. Dùng thư mục, tab Chưa xử lý / Đã xử lý, tìm kiếm và sắp xếp phía trên danh sách khi cần. Mở menu ··· trên thẻ để xử lý."
         },
         "process": {
-          "title": "6. Đưa vào Notoria",
+          "title": "3. Đưa vào Notoria",
           "body": "Gửi ghi nhanh sang Từ vựng, Lý thuyết, Viết hoặc Bài tập. Chỉ đánh dấu Đã xử lý sau khi bạn lưu xong — hủy form tạo thì mục vẫn chờ."
         }
       }
@@ -1739,8 +1820,7 @@
       "confirmContentChange": "Chỉ khi đổi nội dung",
       "confirmNever": "Không hỏi",
       "saveFailed": "Không lưu được tuỳ chọn AI",
-      "disabledToast": "Hỗ trợ AI đang tắt trong Cài đặt",
-      "formatConfirm": "AI sẽ viết lại nội dung này. Tiếp tục?"
+      "disabledToast": "Hỗ trợ AI đang tắt trong Cài đặt"
     },
     "tutorials": "Tutorial từng mục",
     "tutorialsDescription": "Đặt lại các tutorial đã xem để “Show tutorial” bắt đầu lại từ đầu.",
@@ -2027,7 +2107,9 @@
       "expected": "Đáp án đúng",
       "objectiveScore": "{correct} / {total} câu khách quan đúng",
       "mobileTabsAria": "Bảng luyện tập",
+      "unansweredWarnTitle": "Còn câu chưa trả lời",
       "unansweredWarn": "Một số câu chưa trả lời. Vẫn nộp?",
+      "submitAnyway": "Vẫn nộp",
       "gradingPending": "Câu trả lời tự luận chưa chấm được. Câu trả lời đã lưu — bạn có thể thử chấm lại.",
       "retryGrading": "Thử chấm lại",
       "retryAttempt": "Làm lại",
@@ -2101,7 +2183,9 @@
       "ATTEMPT_NOT_EDITABLE": "Lượt này không còn chỉnh sửa được.",
       "PROCESSING_FAILED": "Đã xảy ra lỗi. Thử lại.",
       "AI_DISABLED": "Trợ lý AI đang tắt trong cài đặt của bạn.",
-      "AI_QUOTA_EXCEEDED": "Bạn đã hết hạn mức bài tập AI trong kỳ này.",
+      "AI_QUOTA_EXCEEDED": "Bạn đã hết hạn mức AI đọc trong kỳ này.",
+      "RATE_LIMITED": "Quá nhiều yêu cầu. Đợi một chút rồi thử lại.",
+      "AI_BUSY": "AI đọc đang bận. Đợi hoàn tất rồi thử lại.",
       "generic": "Đã xảy ra lỗi. Thử lại."
     },
     "newPassage": "Thêm đoạn văn",
@@ -2149,6 +2233,7 @@
     "uploadChoose": "Chọn tệp",
     "uploading": "Đang tải lên… {percent}%",
     "extracting": "Đang trích xuất văn bản…",
+    "uploadInProgress": "Tệp này đang được xử lý.",
     "cancelUpload": "Hủy tải lên",
     "retryUpload": "Thử tải lại",
     "downloadOriginal": "Tải bản gốc",
@@ -2224,6 +2309,7 @@
     "chooseExerciseType": "Chọn dạng bài tập:",
     "chooseTypeHint": "Chọn Điền vào chỗ trống hoặc Trắc nghiệm để tạo câu hỏi.",
     "exercisesGenerated": "Đã tạo bài tập.",
+    "generationInProgress": "Bài tập đang được tạo.",
     "exercisesTitle": "Bài tập",
     "exerciseCount": "{count, plural, one {# bài tập} other {# bài tập}}",
     "status": {
@@ -2278,9 +2364,11 @@
     "fillBlankOverview": "Hoàn thành đoạn văn bằng cách điền các từ còn thiếu.",
     "practice": {
       "progress": "{current} / {total}",
+      "answeredProgress": "{answered} / {total} đã trả lời",
       "score": "{correct} đúng",
       "check": "Kiểm tra",
       "checkAnswers": "Kiểm tra đáp án",
+      "submitSet": "Nộp bài",
       "questionLabel": "Câu {number}",
       "blankLabel": "Chỗ trống {number}",
       "listenPrompt": "Nghe phần này của audio.",
@@ -2301,7 +2389,11 @@
       "blanksProgress": "{filled} / {total} chỗ trống",
       "changeType": "Đổi dạng bài",
       "hideReview": "Ẩn phần xem lại",
-      "typeHintMc": "Nghe rồi chọn đáp án phù hợp nhất cho từng câu."
+      "jumpToUnanswered": "Đến câu chưa làm",
+      "unansweredWarnTitle": "Còn câu chưa trả lời",
+      "unansweredWarn": "Bạn còn câu chưa trả lời. Vẫn nộp?",
+      "submitAnyway": "Vẫn nộp",
+      "typeHintMc": "Nghe rồi chọn đáp án phù hợp nhất cho từng câu trên trang này."
     },
     "errors": {
       "CLOUDINARY_NOT_CONFIGURED": "Chưa cấu hình lưu trữ media.",
@@ -2319,7 +2411,8 @@
       "EMPTY_TRANSCRIPT": "Không tìm thấy lời nói trong file này.",
       "DUPLICATE_FILENAME": "Đã có file với tên này.",
       "FILENAME_REQUIRED": "Hãy nhập tên file.",
-      "AUDIO_TOO_LONG": "Âm thanh dài hơn 45 phút. Hãy tách nhỏ hoặc dùng đoạn ngắn hơn cho một bản ghi."
+      "AUDIO_TOO_LONG": "Âm thanh dài hơn 45 phút. Hãy tách nhỏ hoặc dùng đoạn ngắn hơn cho một bản ghi.",
+      "AUDIO_DURATION_UNKNOWN": "Không xác nhận được độ dài âm thanh trước khi phiên âm. Hãy tải lại tệp và thử lại."
     }
   },
   "speaking": {
@@ -2380,6 +2473,11 @@
     "feedbackTitle": "Nhận xét của gia sư",
     "feedbackDescription": "Tóm tắt ngắn về buổi hội thoại.",
     "transcriptTitle": "Bản ghi",
+    "transcriptFinalizing": "Đang hoàn tất bản ghi",
+    "transcriptLoadingTitle": "Đang thu thập bản ghi",
+    "transcriptLoadingDescription": "Các lượt hội thoại sẽ sớm xuất hiện tại đây.",
+    "transcriptEmpty": "Không có bản ghi cho buổi nói này.",
+    "transcriptError": "Bản ghi chưa đầy đủ",
     "status": {
       "upcoming": "Sẵn sàng",
       "active": "Đang gọi",
@@ -2407,11 +2505,17 @@
       "join": "Vào cuộc gọi",
       "joining": "Đang vào…",
       "tutorFailed": "Bạn đã vào cuộc gọi, nhưng gia sư AI chưa vào được. Hãy thoát rồi thử lại.",
+      "tutorSetupTimeout": "Gia sư AI vào quá lâu nên cuộc gọi đã kết thúc. Hãy tạo buổi mới để thử lại.",
       "endedTitle": "Đã kết thúc cuộc gọi",
       "endedDescription": "Nhận xét sẽ xuất hiện trên trang buổi nói trong giây lát.",
       "back": "Quay lại buổi nói",
       "notConfigured": "Cuộc gọi video chưa được cấu hình. Thêm khóa Stream Video để bắt đầu.",
-      "sessionLimitReached": "Buổi nói này đã đạt giới hạn sử dụng hợp lý 30 phút và đã kết thúc."
+      "sessionLimitReached": "Buổi nói này đã đạt giới hạn sử dụng hợp lý 30 phút và đã kết thúc.",
+      "elapsedTitle": "Thời gian trong cuộc gọi",
+      "inactivityWarning": "Đã im lặng khá lâu. Cuộc gọi sẽ sớm kết thúc.",
+      "inactivityCountdown": "Kết thúc sau {seconds} giây…",
+      "inactivityEnded": "Cuộc gọi đã kết thúc vì không có ai nói chuyện.",
+      "continueCall": "Tiếp tục cuộc gọi"
     },
     "errors": {
       "STREAM_NOT_CONFIGURED": "Cuộc gọi video chưa được cấu hình.",
@@ -2419,9 +2523,14 @@
       "INVALID_INPUT": "Kiểm tra chủ đề và trình độ, rồi thử lại.",
       "SESSION_NOT_FOUND": "Không tìm thấy buổi nói.",
       "SESSION_NOT_JOINABLE": "Cuộc gọi này không còn thể tham gia.",
+      "SESSION_EXPIRED": "Buổi nói đã hết thời gian và không thể tham gia lại.",
+      "ACTIVE_SESSION_EXISTS": "Bạn đang có một buổi nói đang mở. Hãy kết thúc trước khi tạo buổi mới.",
       "STREAM_CALL_FAILED": "Không thể bắt đầu cuộc gọi. Hãy thử lại.",
-      "UNAUTHORIZED": "Đăng nhập để tham gia cuộc gọi nói."
-    }
+      "UNAUTHORIZED": "Đăng nhập để tham gia cuộc gọi nói.",
+      "AI_QUOTA_EXCEEDED": "Bạn đã dùng hết hạn mức nói với AI hôm nay. Hạn mức đặt lại lúc nửa đêm UTC — hoặc nâng cấp để có thêm buổi."
+    },
+    "quotaLockedTitle": "Đã hết hạn mức nói hôm nay",
+    "quotaLockedBody": "Bạn đã dùng buổi nói AI hôm nay. Các buổi cũ vẫn xem được — nâng cấp để có thêm, hoặc quay lại sau khi hạn mức đặt lại."
   },
   "errors": {
     "generic": "Đã xảy ra lỗi",
@@ -2766,6 +2875,21 @@
     "confirmDowngradeBody": "Pro thay Premium ngay. Stripe hoàn phần chênh lệch theo tỷ lệ ngay lập tức. Tính năng Premium kết thúc khi Stripe xác nhận giá mới. Lịch hủy đang có sẽ được gỡ.",
     "confirmCancelTitle": "Hủy {plan}?",
     "confirmCancelBody": "Quyền {plan} vẫn còn đến {date}. Sau đó tài khoản chuyển sang Free. Bạn sẽ không bị tính phí thêm.",
+    "cancelFeedbackLabel": "Vì sao bạn hủy?",
+    "cancelFeedbackOptional": "Tùy chọn — bạn có thể bỏ qua và vẫn hủy.",
+    "cancelCommentLabel": "Bạn muốn chia sẻ thêm?",
+    "cancelCommentPlaceholder": "Nhận xét tùy chọn",
+    "cancelCommentCount": "{count} / {max}",
+    "cancelReasons": {
+      "too_expensive": "Quá đắt",
+      "missing_features": "Tôi cần thêm tính năng",
+      "switched_service": "Tôi tìm thấy lựa chọn khác",
+      "unused": "Tôi không còn cần nữa",
+      "too_complex": "Khó sử dụng quá",
+      "low_quality": "Chất lượng chưa đạt",
+      "other": "Lý do khác"
+    },
+    "invalidCancellationFeedback": "Phản hồi hủy không hợp lệ. Hãy chọn lý do trong danh sách hoặc rút ngắn nhận xét.",
     "confirmKeepTitle": "Giữ {plan}?",
     "confirmKeepBody": "Lịch hủy sẽ được gỡ. {plan} tiếp tục gia hạn, và lần tính phí tiếp theo là {date}.",
     "back": "Quay lại",
@@ -2774,7 +2898,59 @@
     "usageToday": "Mức dùng AI hôm nay",
     "quotaCount": "{used} / {limit}",
     "unlimitedAi": "AI không giới hạn",
-    "quotaExceeded": "Bạn đã dùng hết hạn mức miễn phí hôm nay. Nâng cấp Pro để dùng AI không giới hạn.",
+    "quotaUnlimitedHint": "Không giới hạn cho mức dùng thông thường trên gói này.",
+    "quotaRemainingHint": "Còn {remaining} hôm nay · đặt lại {reset}",
+    "quotaExhaustedHint": "Đã hết hạn mức · đặt lại {reset}",
+    "quotaResetUtcMidnight": "lúc nửa đêm UTC",
+    "quotaExceeded": "Bạn đã dùng hết hạn mức AI hôm nay. Hạn mức đặt lại lúc nửa đêm UTC — hoặc nâng cấp để tăng hạn mức.",
+    "quotaExceededNoUpgrade": "Bạn đã dùng hết hạn mức AI hôm nay. Đặt lại {reset}.",
+    "quotaMessages": {
+      "ai_meeting": {
+        "free": "Bạn đã dùng buổi nói AI hôm nay. Nâng cấp để có thêm buổi, hoặc quay lại sau khi hạn mức đặt lại ({reset}).",
+        "pro": "Bạn đã đạt hạn mức nói AI trong ngày. Nâng lên Premium để tăng hạn mức, hoặc quay lại sau khi đặt lại ({reset}).",
+        "premium": "Bạn đã đạt hạn mức nói AI hôm nay. Đặt lại {reset}."
+      },
+      "ai_reading": {
+        "free": "Bạn đã dùng hết hạn mức đọc AI hôm nay. Nâng cấp để luyện thêm, hoặc quay lại sau khi đặt lại ({reset}).",
+        "pro": "Bạn đã đạt hạn mức đọc AI trong ngày. Nâng Premium để tăng hạn mức, hoặc quay lại sau ({reset}).",
+        "premium": "Bạn đã đạt hạn mức đọc AI hôm nay. Đặt lại {reset}."
+      },
+      "ai_listening_transcript": {
+        "free": "Bạn đã dùng hết transcript nghe AI hôm nay. Nâng cấp để có thêm, hoặc quay lại sau ({reset}).",
+        "pro": "Bạn đã đạt hạn mức transcript nghe trong ngày. Nâng Premium để có thêm, hoặc quay lại sau ({reset}).",
+        "premium": "Bạn đã đạt hạn mức transcript nghe hôm nay. Đặt lại {reset}."
+      },
+      "ai_vocabulary": {
+        "free": "Bạn đã dùng hết hành động từ vựng AI hôm nay. Nâng cấp để có thêm, hoặc quay lại sau ({reset}).",
+        "pro": "Bạn đã đạt hạn mức từ vựng AI hôm nay. Đặt lại {reset}.",
+        "premium": "Bạn đã đạt hạn mức từ vựng AI hôm nay. Đặt lại {reset}."
+      },
+      "ai_writing": {
+        "free": "Bạn đã dùng hết hỗ trợ viết AI hôm nay. Nâng cấp để có thêm, hoặc quay lại sau ({reset}).",
+        "pro": "Bạn đã đạt hạn mức viết AI hôm nay. Đặt lại {reset}.",
+        "premium": "Bạn đã đạt hạn mức viết AI hôm nay. Đặt lại {reset}."
+      },
+      "ai_exercise": {
+        "free": "Bạn đã dùng hết tạo bài tập AI hôm nay. Nâng cấp để có thêm, hoặc quay lại sau ({reset}).",
+        "pro": "Bạn đã đạt hạn mức bài tập AI hôm nay. Đặt lại {reset}.",
+        "premium": "Bạn đã đạt hạn mức bài tập AI hôm nay. Đặt lại {reset}."
+      },
+      "ai_exercise_import": {
+        "free": "Nhập bài tập không có trên Free. Nâng Pro để nhập worksheet.",
+        "pro": "Bạn đã đạt hạn mức nhập bài tập hôm nay. Nâng Premium để có thêm, hoặc quay lại sau ({reset}).",
+        "premium": "Bạn đã đạt hạn mức nhập bài tập hôm nay. Đặt lại {reset}."
+      },
+      "ai_learning_coach_chat": {
+        "free": "Chat Learning Coach là tính năng Premium.",
+        "pro": "Chat Learning Coach là tính năng Premium.",
+        "premium": "Bạn đã đạt hạn mức chat Learning Coach hôm nay. Đặt lại {reset}."
+      },
+      "content_import": {
+        "free": "Nhập tài liệu không có trên Free. Nâng Pro để nhập tài liệu học.",
+        "pro": "Bạn đã đạt hạn mức nhập tài liệu hôm nay. Đặt lại {reset}.",
+        "premium": "Bạn đã đạt hạn mức nhập tài liệu hôm nay. Đặt lại {reset}."
+      }
+    },
     "alreadySubscribed": "Bạn đã có gói này.",
     "status": "Trạng thái: {status}",
     "renewsOn": "Gia hạn vào {date}",
@@ -3218,6 +3394,8 @@
     "refresh": "Cập nhật huấn luyện viên",
     "refreshed": "Đã cập nhật từ hoạt động học mới nhất.",
     "refreshFailed": "Không cập nhật được. Thử lại.",
+    "refreshRateLimited": "Bạn vừa cập nhật. Đợi một phút rồi thử lại.",
+    "refreshBusy": "Coach đang cập nhật. Đợi một chút.",
     "status": {
       "MASTERED": "Đã thuộc",
       "REVIEW": "Ôn tập",
@@ -3848,11 +4026,11 @@
             },
             {
               "provider": "Stream Video",
-              "role": "Cuộc gọi luyện nói trực tiếp; chép lời tự động; các trường của phiên như URL bản chép lời (và URL bản ghi chỉ khi sau đó nhận được sự kiện ghi âm)"
+              "role": "Truyền tải âm thanh/video cuộc gọi luyện nói; URL bản ghi chỉ khi sau đó nhận được sự kiện ghi âm. Cuộc gọi mới không dùng chép lời của Stream."
             },
             {
               "provider": "OpenAI",
-              "role": "Hỗ trợ AI tùy chọn và âm thanh thời gian thực cho gia sư luyện nói"
+              "role": "Hỗ trợ AI tùy chọn, âm thanh thời gian thực cho gia sư luyện nói, và chép lời cuộc gọi (gpt-4o-transcribe)"
             },
             {
               "provider": "Resend",
@@ -3871,7 +4049,7 @@
               "role": "Ảnh đại diện được tạo tự động dùng trong phiên luyện nói (từ một seed là tên; không gửi mật khẩu tài khoản)"
             }
           ],
-          "p2": "Các cuộc gọi luyện nói được tạo với chức năng chép lời bật sẵn. Việc ghi âm bị tắt khi tạo cuộc gọi trong cách triển khai hiện tại; URL bản ghi chỉ được lưu nếu sau đó sản phẩm nhận được sự kiện bản ghi đã sẵn sàng từ Stream."
+          "p2": "Bản ghi cuộc gọi luyện nói được thu thập qua OpenAI Realtime (gpt-4o-transcribe) trong phiên và lưu phía máy chủ. Chép lời và phụ đề của Stream bị tắt với cuộc gọi mới. Ghi âm bị tắt khi tạo cuộc gọi; URL bản ghi chỉ được lưu nếu sau đó sản phẩm nhận được sự kiện bản ghi đã sẵn sàng từ Stream."
         },
         "cookies": {
           "title": "9. Cookie và bộ nhớ trên thiết bị",
@@ -4468,6 +4646,7 @@
   "errorPages": {
     "statusUnavailable": "Không khả dụng",
     "reference": "Mã tham chiếu: {id}",
+    "referenceLabel": "Mã tham chiếu",
     "actions": {
       "dashboard": "Về trang chính",
       "home": "Về trang chủ",
@@ -4478,7 +4657,7 @@
     },
     "notFound": {
       "title": "Không tìm thấy trang",
-      "description": "Trang này không tồn tại hoặc liên kết có thể đã cũ. Kiểm tra địa chỉ hoặc quay lại nơi bạn biết."
+      "description": "Trang này không tồn tại hoặc liên kết có thể đã cũ. Kiểm tra địa chỉ hoặc về trang chính."
     },
     "unauthorized": {
       "title": "Cần đăng nhập",
@@ -4556,6 +4735,264 @@
         "description": "Nó có thể đã bị xóa, hoặc liên kết đã lỗi thời.",
         "primary": "Về trang chính"
       }
+    }
+  },
+  "admin": {
+    "nav": {
+      "admin": "Admin",
+      "manage": "Manage",
+      "overview": "Overview",
+      "users": "Users",
+      "workspaces": "Workspaces",
+      "jobs": "Jobs",
+      "audit": "Audit",
+      "content": "Content",
+      "contentLibrary": "Content library",
+      "backToApp": "Back to app",
+      "openMenu": "Open admin menu",
+      "openAdmin": "Admin dashboard"
+    },
+    "modules": {
+      "vocabulary": "Vocabulary",
+      "theory": "Theory",
+      "writing": "Writing",
+      "exercises": "Exercises",
+      "listening": "Listening",
+      "reading": "Reading",
+      "speaking": "Speaking",
+      "inbox": "Capture",
+      "folders": "Folders"
+    },
+    "common": {
+      "search": "Search",
+      "clear": "Clear",
+      "filter": "Filter",
+      "previous": "Previous",
+      "next": "Next",
+      "pageOf": "Page {page} of {totalPages}",
+      "results": "{total} results",
+      "backToList": "Back to list",
+      "empty": "No results"
+    },
+    "overview": {
+      "title": "Overview",
+      "description": "Live counts from application data. Time ranges use UTC calendar days. Active learners count distinct users with learning activity events — not logins.",
+      "metrics": "Metrics",
+      "recentAudit": "Recent admin actions",
+      "recentAuditLede": "Latest mutations from the audit trail.",
+      "viewAllAudit": "View audit log",
+      "cards": {
+        "users": "Total users",
+        "newUsers7d": "New users (7d)",
+        "newUsers30d": "New users (30d)",
+        "activeUsers7d": "Active learners (7d)",
+        "workspaces": "Workspaces",
+        "vocabulary": "Vocabulary",
+        "theory": "Theory",
+        "writing": "Writing",
+        "exercises": "Exercises",
+        "listening": "Listening",
+        "reading": "Reading",
+        "speaking": "Speaking",
+        "inbox": "Capture",
+        "failedListening": "Failed listening",
+        "failedImports": "Failed imports",
+        "runningJobs": "Running job locks",
+        "recentAudits7d": "Audit entries (7d)"
+      }
+    },
+    "users": {
+      "title": "Users",
+      "description": "Search accounts, change roles, suspend access, or delete with confirmation.",
+      "searchPlaceholder": "Search name or email…",
+      "empty": "No users match these filters.",
+      "selfGuard": "Safeguards prevent changing or deleting your own admin account here.",
+      "columns": {
+        "user": "User",
+        "role": "Role",
+        "status": "Status",
+        "plan": "Plan",
+        "workspaces": "Workspaces",
+        "created": "Registered"
+      },
+      "filters": {
+        "role": "Role",
+        "status": "Status",
+        "allRoles": "Any role",
+        "allStatuses": "Any status"
+      },
+      "status": {
+        "active": "Active",
+        "suspended": "Suspended"
+      },
+      "fields": {
+        "id": "User id",
+        "name": "Name",
+        "role": "Role",
+        "status": "Status",
+        "plan": "Plan",
+        "created": "Registered",
+        "updated": "Updated",
+        "emailVerified": "Email verified"
+      },
+      "detail": {
+        "account": "Account",
+        "usage": "Content counts",
+        "usageLede": "Owned records across learning modules.",
+        "actions": "Account actions",
+        "workspaces": "Workspaces",
+        "workspacesLede": "Language workspaces owned by this user."
+      },
+      "actions": {
+        "saveProfile": "Save name",
+        "grantAdmin": "Grant admin",
+        "revokeAdmin": "Revoke admin",
+        "suspend": "Suspend",
+        "restore": "Restore",
+        "delete": "Delete account"
+      },
+      "confirm": {
+        "grantAdmin": "Grant admin access to this account?",
+        "revokeAdmin": "Revoke admin access? This fails if they are the last active admin.",
+        "suspend": "Suspend this account? They lose access on the next protected request.",
+        "restore": "Restore this account?",
+        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone."
+      }
+    },
+    "workspaces": {
+      "title": "Workspaces",
+      "description": "Inspect and manage language workspaces.",
+      "searchPlaceholder": "Search name, language, or owner email…",
+      "empty": "No workspaces match these filters.",
+      "createForUser": "Create workspace for this user",
+      "columns": {
+        "name": "Name",
+        "language": "Language",
+        "owner": "Owner",
+        "updated": "Updated"
+      },
+      "fields": {
+        "id": "Workspace id",
+        "name": "Name",
+        "nameOptional": "Optional display name",
+        "language": "Language",
+        "owner": "Owner",
+        "created": "Created",
+        "updated": "Updated"
+      },
+      "detail": {
+        "description": "Language: {language}",
+        "meta": "Workspace",
+        "actions": "Workspace actions",
+        "actionsLede": "Editing language must stay unique per owner. Deletion cascades learning content in this workspace."
+      },
+      "actions": {
+        "create": "Create workspace",
+        "save": "Save",
+        "delete": "Delete workspace"
+      },
+      "confirm": {
+        "delete": "Delete this workspace and all learning content inside it via database cascades?"
+      }
+    },
+    "content": {
+      "description": "Lists show metadata only. Open a row for identifiers and status. Private bodies (transcripts, notes) are not loaded here by default.",
+      "searchPlaceholder": "Search titles…",
+      "empty": "No records match these filters.",
+      "listeningMediaNote": "Deleting a listening lesson removes the database row. External media cleanup is best-effort and is not performed by this admin action.",
+      "columns": {
+        "title": "Title",
+        "status": "Status",
+        "owner": "Owner",
+        "workspace": "Workspace",
+        "updated": "Updated"
+      },
+      "fields": {
+        "id": "Id",
+        "status": "Status",
+        "errorCode": "Error code",
+        "owner": "Owner",
+        "workspace": "Workspace",
+        "created": "Created",
+        "updated": "Updated"
+      },
+      "detail": {
+        "description": "Metadata inspection. Private bodies are not auto-loaded.",
+        "meta": "Record",
+        "metaLede": "Identifiers and status only.",
+        "actions": "Actions"
+      },
+      "actions": {
+        "delete": "Delete record"
+      },
+      "confirm": {
+        "delete": "Delete this record? Related child rows follow database cascade / set-null rules."
+      }
+    },
+    "jobs": {
+      "title": "Jobs",
+      "description": "Running locks and failed processing records. Statuses are read-only — do not force a failed job to appear successful.",
+      "searchPlaceholder": "Filter by title…",
+      "empty": "No jobs match these filters.",
+      "buckets": {
+        "attention": "Needs attention",
+        "running": "Running",
+        "failed": "Failed",
+        "all": "All",
+        "runningLocks": "Running locks",
+        "failedLocks": "Failed locks",
+        "failedListening": "Failed listening",
+        "failedImports": "Failed imports"
+      },
+      "filters": {
+        "kind": "Kind",
+        "allKinds": "All kinds"
+      },
+      "kinds": {
+        "ai_lock": "AI lock",
+        "listening": "Listening",
+        "exercise_import": "Exercise import",
+        "lock": "AI lock",
+        "import": "Exercise import"
+      },
+      "columns": {
+        "kind": "Kind",
+        "title": "Title",
+        "status": "Status",
+        "error": "Error",
+        "owner": "Owner",
+        "updated": "Updated"
+      }
+    },
+    "audit": {
+      "title": "Audit log",
+      "description": "Read-only history of administrative mutations. Credentials and private bodies are never stored here.",
+      "searchPlaceholder": "Search action, entity, or actor email…",
+      "empty": "No audit entries yet.",
+      "columns": {
+        "when": "When",
+        "actor": "Actor",
+        "action": "Action",
+        "entity": "Entity",
+        "success": "Result"
+      },
+      "success": {
+        "yes": "OK",
+        "no": "Failed"
+      }
+    },
+    "errors": {
+      "UNKNOWN": "Something went wrong. Try again.",
+      "LAST_ADMIN": "Cannot change the last active admin.",
+      "CANNOT_DEMOTE_SELF": "You cannot demote your own admin account.",
+      "CANNOT_SUSPEND_SELF": "You cannot suspend your own account.",
+      "CANNOT_DELETE_SELF": "You cannot delete your own account.",
+      "USER_NOT_FOUND": "User not found.",
+      "WORKSPACE_NOT_FOUND": "Workspace not found.",
+      "WORKSPACE_LANGUAGE_EXISTS": "This user already has a workspace for that language.",
+      "INVALID_LANGUAGE": "Invalid language code.",
+      "CONTENT_NOT_FOUND": "Record not found.",
+      "INVALID_CONTENT_MODULE": "Unknown content module."
     }
   }
 }

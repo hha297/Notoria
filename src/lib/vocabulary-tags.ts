@@ -213,6 +213,52 @@ export function getTagGroupForId(tagId: string): TagGroupKey | "learningStatus" 
   return LEGACY_TAG_GROUPS[tagId] ?? "topic";
 }
 
+/**
+ * Presentation tone for card/detail tag chips.
+ * Maps to shared `--tag-*` CSS via `data-tag-tone` (module token pairs).
+ * Unknown / unassigned tags stay `"neutral"` — do not invent hues.
+ */
+export type TagTone =
+  | "difficulty"
+  | "topic"
+  | "grammar"
+  | "learningStatus"
+  | "custom"
+  | "formality"
+  | "neutral";
+
+export function getTagTone(tag: string): TagTone {
+  if (typeof tag !== "string") return "neutral";
+  const trimmed = tag.trim();
+  if (!trimmed) return "neutral";
+
+  if (isCustomTagKey(trimmed)) {
+    return isValidCustomTagName(getCustomTagName(trimmed))
+      ? "custom"
+      : "neutral";
+  }
+
+  const canonical = canonicalizeTagId(trimmed);
+  if (!canonical) return "neutral";
+
+  if (DIFFICULTY_IDS.has(canonical)) return "difficulty";
+  if (LEARNING_STATUS_IDS.has(canonical)) return "learningStatus";
+  if (isKnownTopicId(canonical) || canonicalizeTopicId(canonical)) {
+    return "topic";
+  }
+  if (isKnownUsageId(canonical) || canonicalizeUsageId(canonical)) {
+    return "grammar";
+  }
+
+  const legacy = LEGACY_TAG_GROUPS[canonical];
+  if (legacy === "learningStatus") return "learningStatus";
+  if (legacy === "grammar") return "grammar";
+  if (legacy === "difficulty") return "difficulty";
+  if (legacy === "topic") return "topic";
+
+  return "neutral";
+}
+
 export function getTagLabel(
   tag: string,
   translate: (key: string) => string,

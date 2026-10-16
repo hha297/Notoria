@@ -31,6 +31,129 @@
   color: var(--module-home-fg) !important;
 }
 
+.inbox-folder-rail {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+}
+
+.inbox-folder-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  align-items: center;
+}
+
+.inbox-folder-chip-wrap {
+  display: inline-flex;
+  align-items: stretch;
+  max-width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 20%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-home-bg) 42%, var(--surface-elevated));
+  overflow: hidden;
+}
+
+.inbox-folder-chip-wrap[data-active] {
+  border-color: color-mix(in oklab, var(--module-home-fg) 40%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-home-bg) 78%, var(--surface-elevated)),
+      color-mix(in oklab, var(--module-home-bg) 42%, var(--surface-elevated))
+    );
+}
+
+.inbox-folder-chip-wrap .inbox-folder-chip {
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+
+.inbox-folder-chip-wrap[data-active] .inbox-folder-chip {
+  color: var(--module-home-fg);
+}
+
+.inbox-folder-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  min-height: 2.2rem;
+  max-width: min(100%, 16rem);
+  padding: 0.35rem 0.75rem;
+  border-radius: 0.75rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 18%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--module-home-bg) 38%, var(--surface-elevated));
+  color: var(--muted-foreground);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition:
+    border-color 140ms ease,
+    background 140ms ease,
+    color 140ms ease;
+}
+
+.inbox-folder-chip:hover {
+  color: var(--ink);
+  border-color: color-mix(in oklab, var(--module-home-fg) 32%, var(--hairline-cloud));
+}
+
+.inbox-folder-chip[data-active] {
+  border-color: color-mix(in oklab, var(--module-home-fg) 40%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      155deg,
+      color-mix(in oklab, var(--module-home-bg) 78%, var(--surface-elevated)),
+      color-mix(in oklab, var(--module-home-bg) 42%, var(--surface-elevated))
+    );
+  color: var(--module-home-fg);
+}
+
+.inbox-folder-chip-label {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.inbox-folder-chip-count {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.25rem;
+  height: 1.15rem;
+  padding: 0 0.3rem;
+  border-radius: 999px;
+  font-size: 0.7rem;
+  font-weight: 700;
+  background: color-mix(in oklab, var(--module-home-fg) 14%, var(--surface-elevated));
+  color: inherit;
+  flex-shrink: 0;
+}
+
+.inbox-folder-more {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  border: 0;
+  border-left: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 18%, var(--hairline-cloud));
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+
+.inbox-folder-more:hover,
+.inbox-folder-more[data-popup-open],
+.inbox-folder-more[data-state="open"] {
+  color: var(--ink);
+  background: color-mix(in oklab, var(--module-home-bg) 55%, var(--surface-elevated));
+}
+
 .inbox-toolbar {
   display: flex;
   flex-direction: column;
@@ -223,7 +346,17 @@
   list-style: none;
 }
 
-.inbox-card {
+.inbox-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr));
+  gap: 0.9rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.inbox-card,
+.inbox-grid-card {
   --inbox-accent: var(--module-home-fg);
   --inbox-wash: var(--module-home-bg);
   border-radius: 1rem;
@@ -237,12 +370,23 @@
     ),
     var(--surface-elevated);
   padding: 1.15rem 1.2rem;
+  min-width: 0;
   transition:
     border-color 160ms ease,
     background 160ms ease;
 }
 
-.inbox-card:hover {
+.inbox-grid-card {
+  height: 100%;
+  padding: 1rem 1.05rem;
+}
+
+.inbox-grid-card .inbox-card-row {
+  height: 100%;
+}
+
+.inbox-card:hover,
+.inbox-grid-card:hover {
   border-color: color-mix(in oklab, var(--inbox-accent) 40%, var(--hairline-cloud));
   background:
     linear-gradient(
@@ -253,7 +397,8 @@
     var(--surface-elevated);
 }
 
-.inbox-card[data-status="processed"] {
+.inbox-card[data-status="processed"],
+.inbox-grid-card[data-status="processed"] {
   --inbox-accent: color-mix(in oklab, var(--muted-foreground) 70%, var(--module-home-fg));
   --inbox-wash: color-mix(in oklab, var(--surface-muted) 55%, var(--module-home-bg));
 }
@@ -272,7 +417,12 @@
   gap: 0.45rem;
 }
 
-.inbox-card-title {
+.inbox-grid-card .inbox-card-body {
+  min-height: 8.5rem;
+}
+
+.inbox-card-title,
+.inbox-grid-title {
   margin: 0;
   font-size: 1.0625rem;
   font-weight: 650;
@@ -280,16 +430,39 @@
   letter-spacing: -0.015em;
   color: var(--ink);
   white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
-.inbox-card-note {
+.inbox-grid-title {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+  white-space: normal;
+  min-height: 0;
+}
+
+.inbox-card-note,
+.inbox-grid-note {
   margin: 0;
   font-size: 0.9375rem;
   line-height: 1.55;
   color: color-mix(in oklab, var(--muted-foreground) 88%, var(--ink));
+  overflow-wrap: anywhere;
+  word-break: break-word;
 }
 
-.inbox-card-meta {
+.inbox-grid-note {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  font-size: 0.875rem;
+}
+
+.inbox-card-meta,
+.inbox-card-meta-compact {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
@@ -298,6 +471,12 @@
   font-size: 0.8125rem;
   line-height: 1.4;
   color: var(--muted-foreground);
+}
+
+.inbox-card-meta-compact {
+  margin-top: auto;
+  padding-top: 0.35rem;
+  font-size: 0.75rem;
 }
 
 .inbox-card-badge {

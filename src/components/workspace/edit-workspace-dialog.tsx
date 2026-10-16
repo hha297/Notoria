@@ -4,7 +4,7 @@ import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { CountryFlag } from "@/components/layout/country-flag";
+import { LanguageSelect } from "@/components/shared/language-select";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -16,18 +16,9 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectLabel,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
 import type { Workspace } from "@/db/schema";
 import { updateWorkspace } from "@/lib/actions/workspaces";
-import { getLanguageByCode, WORKPLACE_LANGUAGES } from "@/lib/languages";
+import { getSelectableLanguages } from "@/lib/languages";
 
 type EditWorkspaceDialogProps = {
   open: boolean;
@@ -50,12 +41,12 @@ export function EditWorkspaceDialog({
   const [language, setLanguage] = useState(workspace.language);
   const [isPending, startTransition] = useTransition();
 
-  const availableLanguages = WORKPLACE_LANGUAGES.filter(
+  const availableLanguages = getSelectableLanguages({
+    includeCode: workspace.language,
+  }).filter(
     (item) =>
       item.code === workspace.language || !occupiedLanguages.includes(item.code),
   );
-
-  const selectedLanguage = getLanguageByCode(language);
 
   useEffect(() => {
     if (!open) return;
@@ -111,40 +102,12 @@ export function EditWorkspaceDialog({
 
           <div className="space-y-2">
             <Label>{t("language")}</Label>
-            <Select
+            <LanguageSelect
               value={language}
-              onValueChange={(value) => value && setLanguage(value)}
-            >
-              <SelectTrigger className="w-full">
-                <SelectValue>
-                  {selectedLanguage && (
-                    <span className="flex items-center gap-2">
-                      <CountryFlag
-                        code={selectedLanguage.flagCode}
-                        className="h-3.5 w-5"
-                      />
-                      {selectedLanguage.name}
-                    </span>
-                  )}
-                </SelectValue>
-              </SelectTrigger>
-              <SelectContent className="max-h-72">
-                <SelectGroup>
-                  <SelectLabel>{t("language")}</SelectLabel>
-                  {availableLanguages.map((item) => (
-                    <SelectItem key={item.code} value={item.code}>
-                      <span className="flex items-center gap-2">
-                        <CountryFlag
-                          code={item.flagCode}
-                          className="h-3.5 w-5"
-                        />
-                        {item.name}
-                      </span>
-                    </SelectItem>
-                  ))}
-                </SelectGroup>
-              </SelectContent>
-            </Select>
+              onValueChange={setLanguage}
+              languages={availableLanguages}
+              aria-label={t("language")}
+            />
             <p className="text-xs text-muted-foreground">{t("languageHint")}</p>
           </div>
         </div>

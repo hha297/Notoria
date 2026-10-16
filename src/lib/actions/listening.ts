@@ -7,16 +7,22 @@ import {
   listeningExercises,
   listeningLessons,
 } from "@/db/schema";
+import {
+  AiCostError,
+  persistError,
+  shouldRefundUsage,
+} from "@/lib/ai/bounds";
+import { AI_JOBS, JobLockLostError, runExclusiveJob } from "@/lib/ai/job-lock";
 import { requireProAccess } from "@/lib/auth/pro-access";
 import { requireAiAssistanceEnabled } from "@/lib/ai/preferences-server";
 import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { getCurrentUserId } from "@/lib/auth/session";
 import { consumeUsage } from "@/lib/billing/entitlements";
-import { LISTENING_MAX_TRANSCRIPT_SECONDS } from "@/lib/billing/plans";
 import {
   finalizeUsageReservation,
   refundUsageReservation,
 } from "@/lib/billing/usage";
+import { assertListeningDurationAllowed } from "@/lib/listening/transcribe";
 import {
   configureCloudinary,
   getListeningFolder,
@@ -24,6 +30,7 @@ import {
 } from "@/lib/cloudinary";
 import { ListeningError, toListeningError } from "@/lib/listening/errors";
 import { generateListeningExercisesFromTranscript } from "@/lib/listening/generate";
+import { isSparseExerciseSet } from "@/lib/listening/practice-session";
 import { assignDialogueSpeakers } from "@/lib/listening/infer-speakers";
 import {
   isMultiSpeakerTranscript,
@@ -35,7 +42,10 @@ import {
   toListeningListItem,
 } from "@/lib/listening/serialize";
 import { transcribeListeningMedia } from "@/lib/listening/transcribe";
-import type { ListeningLessonDetail, ListeningLessonListItem } from "@/lib/listening/types";
+import type {
+  ListeningLessonDetail,
+  ListeningLessonListItem,
+} from "@/lib/listening/types";
 import {
   applyListeningFilenameRename,
   fallbackListeningFilename,
@@ -360,72 +370,191 @@ export async function createListeningLesson(formData: FormData) {
   }
 }
 
-export async function transcribeListeningLesson(id: string) {
+export async function transcribeListeningLesson(
+  id: string,
+  options?: { regenerate?: boolean },
+) {
   const { lesson, workspace } = await requireOwnedLesson(id);
   const user = await getCurrentUserRecord();
   if (!user) {
     throw new Error("Unauthorized");
   }
-  const reservation = await consumeUsage(user, "ai_listening_transcript");
 
   if (
-    typeof lesson.duration === "number" &&
-    lesson.duration > LISTENING_MAX_TRANSCRIPT_SECONDS
+    !options?.regenerate &&
+    lesson.status === "COMPLETED" &&
+    lesson.transcript?.trim()
   ) {
-    await refundUsageReservation(reservation.reservationId);
-    throw new ListeningError("AUDIO_TOO_LONG");
+    return { id: lesson.id, status: "COMPLETED" as const, inProgress: false };
   }
 
-  await db
-    .update(listeningLessons)
-    .set({
-      status: "TRANSCRIBING",
-      errorCode: null,
-      updatedAt: new Date(),
-    })
-    .where(eq(listeningLessons.id, id));
-  revalidateListening(id);
+  assertListeningDurationAllowed(lesson.duration);
 
-  try {
-    const result = await transcribeListeningMedia({
-      audioUrl: lesson.cloudinaryUrl,
-      languageHint: workspace.language,
-    });
+  const outcome = await runExclusiveJob({
+    operation: AI_JOBS.listeningTranscribe,
+    subjectId: id,
+    regenerate: options?.regenerate === true,
+    run: async ({ stillOwner }) => {
+      const current = await db.query.listeningLessons.findFirst({
+        where: eq(listeningLessons.id, id),
+        columns: {
+          transcript: true,
+          status: true,
+          duration: true,
+          transcriptionData: true,
+        },
+      });
+      if (
+        !options?.regenerate &&
+        current?.status === "COMPLETED" &&
+        current.transcript?.trim()
+      ) {
+        return { id, status: "COMPLETED" as const, inProgress: false };
+      }
 
-    if (
-      typeof result.duration === "number" &&
-      result.duration > LISTENING_MAX_TRANSCRIPT_SECONDS
-    ) {
-      throw new ListeningError("AUDIO_TOO_LONG");
-    }
+      // Provider already succeeded but a prior DB write failed — finish storage only.
+      const pendingData = parseTranscriptionData(current?.transcriptionData);
+      if (
+        !options?.regenerate &&
+        current?.transcript?.trim() &&
+        pendingData?.assemblyTranscriptId &&
+        current.status === "FAILED"
+      ) {
+        await db
+          .update(listeningLessons)
+          .set({
+            status: "COMPLETED",
+            errorCode: null,
+            updatedAt: new Date(),
+          })
+          .where(eq(listeningLessons.id, id));
+        revalidateListening(id);
+        return { id, status: "COMPLETED" as const, inProgress: false };
+      }
 
-    const [updated] = await db
-      .update(listeningLessons)
-      .set({
-        transcript: result.transcript,
-        transcriptionData: result.transcriptionData,
-        language: result.language ?? workspace.language,
-        duration: result.duration ?? lesson.duration,
-        status: "COMPLETED",
-        errorCode: null,
-        updatedAt: new Date(),
-      })
-      .where(eq(listeningLessons.id, id))
-      .returning();
+      // Reuse AssemblyAI jobs after poll/crash; explicit regenerate always submits fresh.
+      const existingAssemblyId = options?.regenerate
+        ? null
+        : (pendingData?.assemblyTranscriptId ?? null);
 
-    await finalizeUsageReservation(reservation.reservationId);
-    revalidateListening(id);
-    return { id: updated.id };
-  } catch (error) {
-    await refundUsageReservation(reservation.reservationId);
-    const listeningError = await markLessonFailed(id, error);
-    throw listeningError;
+      const reservation = await consumeUsage(
+        user,
+        "ai_listening_transcript",
+        `listening-transcript:${id}`,
+      );
+      await db
+        .update(listeningLessons)
+        .set({
+          status: "TRANSCRIBING",
+          errorCode: null,
+          updatedAt: new Date(),
+        })
+        .where(eq(listeningLessons.id, id));
+      revalidateListening(id);
+
+      try {
+        const result = await transcribeListeningMedia({
+          audioUrl: lesson.cloudinaryUrl,
+          languageHint: workspace.language,
+          durationSeconds: lesson.duration,
+          existingAssemblyId,
+          onJobSubmitted: async (assemblyTranscriptId) => {
+            const previous = parseTranscriptionData(current?.transcriptionData);
+            await db
+              .update(listeningLessons)
+              .set({
+                transcriptionData: toTranscriptionData({
+                  words: previous?.words,
+                  sentences: previous?.sentences,
+                  utterances: previous?.utterances,
+                  speakerMap: previous?.speakerMap,
+                  speakersResolved: previous?.speakersResolved,
+                  speakerAssignmentVersion: previous?.speakerAssignmentVersion,
+                  audioDuration: previous?.audioDuration ?? lesson.duration,
+                  assemblyTranscriptId,
+                }),
+                updatedAt: new Date(),
+              })
+              .where(eq(listeningLessons.id, id));
+          },
+        });
+
+        if (!(await stillOwner())) throw new JobLockLostError();
+
+        try {
+          await db
+            .update(listeningLessons)
+            .set({
+              transcript: result.transcript,
+              transcriptionData: result.transcriptionData,
+              language: result.language ?? workspace.language,
+              duration: result.duration ?? lesson.duration,
+              status: "COMPLETED",
+              errorCode: null,
+              updatedAt: new Date(),
+            })
+            .where(eq(listeningLessons.id, id));
+        } catch (error) {
+          // Stash provider result so a later retry can complete without regenerating.
+          try {
+            await db
+              .update(listeningLessons)
+              .set({
+                transcript: result.transcript,
+                transcriptionData: result.transcriptionData,
+                language: result.language ?? workspace.language,
+                duration: result.duration ?? lesson.duration,
+                status: "FAILED",
+                errorCode: "PROCESSING_FAILED",
+                updatedAt: new Date(),
+              })
+              .where(eq(listeningLessons.id, id));
+          } catch {
+            // Ignore secondary write failures; still classify as persist.
+          }
+          throw persistError(error, result);
+        }
+
+        await finalizeUsageReservation(reservation.reservationId);
+        revalidateListening(id);
+        return {
+          id,
+          status: "COMPLETED" as const,
+          inProgress: false,
+          result,
+        };
+      } catch (error) {
+        if (error instanceof JobLockLostError) throw error;
+        if (error instanceof AiCostError && error.phase === "persist") {
+          await finalizeUsageReservation(reservation.reservationId);
+          revalidateListening(id);
+          throw toListeningError(error);
+        }
+        if (shouldRefundUsage(error)) {
+          await refundUsageReservation(reservation.reservationId);
+        } else {
+          await finalizeUsageReservation(reservation.reservationId);
+        }
+        throw await markLessonFailed(id, error);
+      }
+    },
+  });
+
+  if (outcome.status === "in_progress") {
+    return { id, status: "TRANSCRIBING" as const, inProgress: true };
   }
+  return outcome.result;
+}
+
+/** Explicit re-transcription. Duplicate calls do not use this path. */
+export async function retranscribeListeningLesson(id: string) {
+  return transcribeListeningLesson(id, { regenerate: true });
 }
 
 export async function generateListeningExercises(
   id: string,
   type: ListeningPracticeType,
+  options?: { regenerate?: boolean },
 ) {
   await requireProAccess();
   await requireAiAssistanceEnabled();
@@ -436,62 +565,127 @@ export async function generateListeningExercises(
     throw new ListeningError("EMPTY_TRANSCRIPT");
   }
 
-  try {
-    const generated = await generateListeningExercisesFromTranscript({
-      transcript: lesson.transcript,
+  const explicit = options?.regenerate === true;
+  const existingCount = lesson.exercises.filter(
+    (exercise) => exercise.type === exerciseType,
+  ).length;
+  const sparse = isSparseExerciseSet(
+    lesson as unknown as ListeningLessonDetail,
+    exerciseType,
+    existingCount,
+  );
+  if (!explicit && existingCount > 0 && !sparse) {
+    return {
+      id,
       exerciseType,
-      durationSeconds: lesson.duration,
-      utterances: parseTranscriptionData(lesson.transcriptionData)?.utterances,
-      language: lesson.language,
-      cefrLevel: (lesson.cefrLevel as WritingCefr | null) ?? null,
-      topic: lesson.topic,
-      formality: (lesson.formality as WritingFormality | null) ?? null,
-      fallbackTitle: lesson.title,
+      count: existingCount,
+      inProgress: false,
+    };
+  }
+
+  try {
+    const outcome = await runExclusiveJob({
+      operation: AI_JOBS.listeningGenerate,
+      subjectId: `${id}:${exerciseType}`,
+      regenerate: explicit || sparse,
+      run: async ({ stillOwner }) => {
+        const fresh = await db.query.listeningLessons.findFirst({
+          where: eq(listeningLessons.id, id),
+          with: { exercises: true },
+        });
+        const freshCount =
+          fresh?.exercises.filter((exercise) => exercise.type === exerciseType)
+            .length ?? 0;
+        const stillSparse = fresh
+          ? isSparseExerciseSet(
+              fresh as unknown as ListeningLessonDetail,
+              exerciseType,
+              freshCount,
+            )
+          : true;
+        if (!explicit && freshCount > 0 && !stillSparse) {
+          return { id, exerciseType, count: freshCount, inProgress: false };
+        }
+
+        const generated = await generateListeningExercisesFromTranscript({
+          transcript: lesson.transcript!,
+          exerciseType,
+          durationSeconds: lesson.duration,
+          utterances: parseTranscriptionData(lesson.transcriptionData)?.utterances,
+          language: lesson.language,
+          cefrLevel: (lesson.cefrLevel as WritingCefr | null) ?? null,
+          topic: lesson.topic,
+          formality: (lesson.formality as WritingFormality | null) ?? null,
+          fallbackTitle: lesson.title,
+        });
+        if (!(await stillOwner())) throw new JobLockLostError();
+
+        await db.transaction(async (tx) => {
+          await tx
+            .delete(listeningExercises)
+            .where(
+              and(
+                eq(listeningExercises.lessonId, id),
+                eq(listeningExercises.type, exerciseType),
+              ),
+            );
+
+          if (generated.exercises.length > 0) {
+            await tx.insert(listeningExercises).values(
+              generated.exercises.map((exercise, index) => ({
+                lessonId: id,
+                type: exercise.type,
+                question: exercise.question,
+                data: exercise.data,
+                correctAnswer: exercise.correctAnswer,
+                sortOrder: index,
+              })),
+            );
+          }
+
+          await tx
+            .update(listeningLessons)
+            .set({
+              title: generated.title || lesson.title,
+              cefrLevel: generated.cefrLevel ?? lesson.cefrLevel,
+              topic: generated.topic ?? lesson.topic,
+              formality: generated.formality ?? lesson.formality,
+              exerciseType: generated.exerciseType,
+              status: "COMPLETED",
+              errorCode: null,
+              updatedAt: new Date(),
+            })
+            .where(eq(listeningLessons.id, id));
+        });
+
+        revalidateListening(id);
+        return {
+          id,
+          exerciseType,
+          count: generated.exercises.length,
+          inProgress: false,
+        };
+      },
     });
 
-    await db.transaction(async (tx) => {
-      await tx
-        .delete(listeningExercises)
-        .where(
-          and(
-            eq(listeningExercises.lessonId, id),
-            eq(listeningExercises.type, exerciseType),
-          ),
-        );
-
-      if (generated.exercises.length > 0) {
-        await tx.insert(listeningExercises).values(
-          generated.exercises.map((exercise, index) => ({
-            lessonId: id,
-            type: exercise.type,
-            question: exercise.question,
-            data: exercise.data,
-            correctAnswer: exercise.correctAnswer,
-            sortOrder: index,
-          })),
-        );
-      }
-
-      await tx
-        .update(listeningLessons)
-        .set({
-          title: generated.title || lesson.title,
-          cefrLevel: generated.cefrLevel ?? lesson.cefrLevel,
-          topic: generated.topic ?? lesson.topic,
-          formality: generated.formality ?? lesson.formality,
-          exerciseType: generated.exerciseType,
-          status: "COMPLETED",
-          errorCode: null,
-          updatedAt: new Date(),
-        })
-        .where(eq(listeningLessons.id, id));
-    });
-
-    revalidateListening(id);
-    return { id, exerciseType, count: generated.exercises.length };
+    if (outcome.status === "in_progress") {
+      return { id, exerciseType, count: existingCount, inProgress: true };
+    }
+    return outcome.result;
   } catch (error) {
+    if (error instanceof JobLockLostError) {
+      return { id, exerciseType, count: existingCount, inProgress: true };
+    }
     throw toListeningError(error);
   }
+}
+
+/** Replaces an existing exercise set. Concurrent duplicates still share one job. */
+export async function regenerateListeningExercises(
+  id: string,
+  type: ListeningPracticeType,
+) {
+  return generateListeningExercises(id, type, { regenerate: true });
 }
 
 export async function ensureListeningSpeakers(id: string) {
@@ -546,8 +740,8 @@ export async function processListeningLesson(id: string) {
 
   try {
     if (!lesson.transcript?.trim()) {
-      await transcribeListeningLesson(id);
-      return { id };
+      const transcribed = await transcribeListeningLesson(id);
+      return { id, inProgress: transcribed.inProgress };
     }
 
     if (lesson.status !== "COMPLETED") {

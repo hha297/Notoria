@@ -7,11 +7,13 @@ import { ArrowLeft, Download, Loader2, Sparkles, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { PageShell } from "@/components/layout/page-shell";
 import { DetailPageLoading } from "@/components/layout/page-loading";
 import { GenerateReadingDialog } from "@/components/reading/generate-reading-dialog";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
+import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import {
   deleteReadingPassage,
   deleteReadingQuestionSet,
@@ -34,6 +36,7 @@ export function ReadingPassageView({
 }: ReadingPassageViewProps) {
   const t = useTranslations("reading");
   const tc = useTranslations("common");
+  const readingQuota = useQuotaLockMessage("ai_reading");
   const router = useRouter();
   const queryClient = useQueryClient();
   const [generateOpen, setGenerateOpen] = useState(false);
@@ -94,10 +97,16 @@ export function ReadingPassageView({
             {t("backToList")}
           </Link>
           <div className="flex flex-wrap gap-2">
-            <Button type="button" className="route-primary-cta" onClick={() => setGenerateOpen(true)}>
-              <Sparkles className="size-4" aria-hidden />
+            <QuotaLockButton
+              type="button"
+              className="route-primary-cta"
+              locked={readingQuota.locked}
+              lockMessage={readingQuota.message}
+              icon={<Sparkles className="size-4" aria-hidden />}
+              onClick={() => setGenerateOpen(true)}
+            >
               {t("generateExercises")}
-            </Button>
+            </QuotaLockButton>
             {data.hasOriginalFile ? (
               <a
                 href={`/api/reading/documents/${passageId}/download`}

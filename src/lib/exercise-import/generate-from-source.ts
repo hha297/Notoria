@@ -1,4 +1,9 @@
-import OpenAI from "openai";
+import {
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  clipForAi,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { ExerciseImportError } from "@/lib/exercise-import/errors";
 import {
@@ -21,11 +26,11 @@ import { plainTextToTheoryDoc } from "@/lib/theory/content";
 const IMPORT_MAX_EXERCISES = 60;
 
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
+  try {
+    return requireOpenAiClient({ timeoutMs: 90_000 });
+  } catch {
     throw new ExerciseImportError("OPENAI_NOT_CONFIGURED");
   }
-  return new OpenAI({ apiKey, timeout: 90_000 });
 }
 
 function parseJsonContent(content: string | null | undefined) {
@@ -155,7 +160,7 @@ The source text IS the exercise material. You must NOT invent new practice conte
 
 ## Absolute fidelity rules
 1. Only use cues, prompts, instructions, column headers, and sentences that appear in the source.
-2. NEVER invent a new sentence frame (e.g. do not create "Kuulin ________ eilen." if that sentence is not in the source).
+2. NEVER invent a new sentence frame that does not already appear in the source.
 3. NEVER invent new vocabulary / paradigm rows. Do not mix cues from different rows.
 4. Keep source order (tables top→bottom, lists a→n).
 5. Do NOT pad the set to a target count. Output one card per blank/task found in the source (up to ~60). If the source has few items, return few exercises.
@@ -174,7 +179,7 @@ The source text IS the exercise material. You must NOT invent new practice conte
       (1) Copy the original explicit worksheet instruction from the source (same language).
       (2) If none, use a clearly present column header / task line from the source.
       (3) If still insufficient, use the neutral fallback exactly: "Complete the exercise."
-    NEVER invent a specific grammar/topic instruction (e.g. do not invent "Write the adjective in plural partitive") unless those words appear in the source.
+    NEVER invent a specific grammar/topic instruction unless those words appear in the source.
     skillLabel = short title/heading from the source when present (same language). Do not invent a fancy title.
 15. Keep instruction in the source language. Do not translate unless the source itself is translated.
 16. JSON only:
@@ -450,11 +455,12 @@ export async function generateExercisesFromSourceText(input: {
   }
 
   const client = getOpenAIClient();
+  const sourceText = clipForAi(extractedText, AI_INPUT_LIMITS.importText);
 
   const completion = await client.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: 0.2,
-    max_tokens: 8_000,
+    max_tokens: AI_OUTPUT_TOKENS.importGenerate,
     response_format: { type: "json_object" },
     messages: [
       {
@@ -466,11 +472,11 @@ export async function generateExercisesFromSourceText(input: {
       {
         role: "user",
         content: JSON.stringify({
-          title: input.title,
+          title: clipForAi(input.title, AI_INPUT_LIMITS.title),
           studyLanguage: studyLanguage ?? null,
           reminder:
             "Do NOT invent sentences or new words. Cards must reuse source cues/instructions only. Do not pad count.",
-          sourceText: extractedText.slice(0, 20_000),
+          sourceText,
         }),
       },
     ],

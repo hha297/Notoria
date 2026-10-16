@@ -7,6 +7,7 @@ export const FOLDER_SECTIONS = [
   "listening",
   "theory",
   "reading",
+  "inbox",
 ] as const;
 
 export const MAX_FOLDER_NAME_LENGTH = 80;

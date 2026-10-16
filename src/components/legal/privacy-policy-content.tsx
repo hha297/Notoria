@@ -18,8 +18,10 @@ import {
  *   rows; it does not currently purge exercise-import/editor Cloudinary assets or
  *   Stream call artefacts (stated carefully below).
  * - Feedback is emailed to NOTORIA_TECHNICAL_EMAIL, not contact@.
- * - Speaking calls create with transcription auto-on and recording mode disabled;
- *   recordingUrl is only stored if a recording-ready webhook later arrives.
+ * - Speaking calls disable Stream transcription/captions; learner/tutor text is
+ *   captured via OpenAI Realtime (gpt-4o-transcribe) and stored server-side.
+ *   Recording mode remains disabled; recordingUrl is only stored if a
+ *   recording-ready webhook later arrives.
  * - No in-product “policy changed” notice or automated policy-update email exists.
  * - Exact infrastructure backup retention is not configured in application code.
  */

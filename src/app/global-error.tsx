@@ -1,16 +1,23 @@
 "use client";
 
 import { useEffect } from "react";
-import { IBM_Plex_Sans } from "next/font/google";
+import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ErrorPageFrame } from "@/components/errors/error-page-frame";
 import en from "../../messages/en.json";
+import "./globals.css";
 
 const ibmPlexSans = IBM_Plex_Sans({
   variable: "--font-ibm-plex-sans",
   subsets: ["latin", "latin-ext", "vietnamese"],
   weight: ["400", "500", "600", "700"],
+});
+
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
+  subsets: ["latin", "latin-ext"],
+  weight: ["400", "500", "700"],
 });
 
 type GlobalErrorProps = {
@@ -31,8 +38,15 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
   }, [error]);
 
   return (
-    <html lang="en" suppressHydrationWarning className={`${ibmPlexSans.variable} h-full antialiased`}>
-      <body className={`${ibmPlexSans.className} min-h-full font-sans`} suppressHydrationWarning>
+    <html
+      lang="en"
+      suppressHydrationWarning
+      className={`${ibmPlexSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
+    >
+      <body
+        className={`${ibmPlexSans.className} min-h-full font-sans`}
+        suppressHydrationWarning
+      >
         <NextIntlClientProvider locale="en" messages={en}>
           <ThemeProvider>
             <ErrorPageFrame

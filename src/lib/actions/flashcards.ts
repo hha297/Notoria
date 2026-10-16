@@ -253,6 +253,9 @@ export async function getFlashcardWords(params?: {
       meanings: word.meanings
         .filter((meaning) => meaning.isPrimary)
         .map((meaning) => meaning.meaning),
+      meaningUsageLabels: word.meanings
+        .filter((meaning) => meaning.isPrimary)
+        .map((meaning) => meaning.usageLabels ?? []),
       examples: word.examples.map((example) => example.sentence),
       tags: [
         ...new Set(

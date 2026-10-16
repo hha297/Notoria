@@ -14,6 +14,7 @@ type VocabularyListWord = {
     meaning: string;
     isPrimary?: boolean;
     sortOrder: number;
+    usageLabels?: string[] | null;
   }>;
   examples?: Array<{
     id: string;
@@ -63,6 +64,7 @@ export function serializeVocabularyListWords(
       meaning: meaning.meaning,
       isPrimary: meaning.isPrimary,
       sortOrder: meaning.sortOrder,
+      usageLabels: meaning.usageLabels ?? [],
     })),
     examples: (word.examples ?? []).map((example) => ({
       id: example.id,

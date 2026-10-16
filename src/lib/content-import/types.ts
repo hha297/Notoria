@@ -56,9 +56,15 @@ export type ImportIssue = {
   snippet?: string;
 };
 
+export type VocabImportMeaning = {
+  meaning: string;
+  /** Stable meaning-level usage ids; empty when unspecified. */
+  usageLabels: string[];
+};
+
 export type VocabImportDraft = {
   word: string;
-  meanings: string[];
+  meanings: VocabImportMeaning[];
   partOfSpeech?: string;
   examples: string[];
   tags: string[];
@@ -113,6 +119,11 @@ export type AnalyzeContentImportResult = {
   sampleRows: string[][];
   /** Full tabular rows (CSV) so the client can remapping without re-upload. */
   rows: string[][];
+  /**
+   * Shared with confirm when analyze already reserved `content_import`
+   * (AI structuring). Prevents a second charge for the same file.
+   */
+  usageSubjectId?: string;
 };
 
 export type ConfirmContentImportInput = {

@@ -1,11 +1,10 @@
 "use client";
 
-import { Loader2, Lock, RotateCcw, Sparkles } from "lucide-react";
+import { RotateCcw, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { lockedFeatureClassName } from "@/components/billing/locked-styles";
+import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
-import { cn } from "@/lib/utils";
 
 type SessionCompleteCardProps = {
   title: string;
@@ -21,6 +20,7 @@ type SessionCompleteCardProps = {
     loading?: boolean;
     disabled?: boolean;
     locked?: boolean;
+    lockMessage?: string;
   };
 };
 
@@ -76,25 +76,18 @@ export function SessionCompleteCard({
           {tryAgainLabel}
         </Button>
         {extraAction ? (
-          <Button
+          <QuotaLockButton
             type="button"
             variant="outline"
-            aria-disabled={extraAction.locked || undefined}
+            locked={Boolean(extraAction.locked)}
+            lockMessage={extraAction.lockMessage ?? extraAction.label}
+            pending={extraAction.loading}
+            disabled={extraAction.disabled}
+            icon={<Sparkles className="size-4" />}
             onClick={extraAction.onClick}
-            disabled={
-              !extraAction.locked && (extraAction.disabled || extraAction.loading)
-            }
-            className={cn(extraAction.locked && lockedFeatureClassName)}
           >
-            {extraAction.loading ? (
-              <Loader2 className="size-4 animate-spin" />
-            ) : extraAction.locked ? (
-              <Lock className="size-4" />
-            ) : (
-              <Sparkles className="size-4" />
-            )}
             {extraAction.label}
-          </Button>
+          </QuotaLockButton>
         ) : null}
         <LinkButton href={backHref} variant="ghost">
           {tExercises("backToStudio")}

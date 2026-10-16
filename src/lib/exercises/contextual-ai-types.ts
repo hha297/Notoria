@@ -16,8 +16,20 @@ const optionalTextSchema = z
 export const contextualAiWordSchema = z.object({
   id: z.string().trim().min(1).max(80),
   word: z.string().trim().min(1).max(120),
-  meaning: optionalTextSchema,
-  partOfSpeech: optionalTextSchema,
+  meaning: z
+    .string()
+    .trim()
+    .max(500)
+    .optional()
+    .nullable()
+    .transform((value) => value?.trim() || null),
+  partOfSpeech: z
+    .string()
+    .trim()
+    .max(64)
+    .optional()
+    .nullable()
+    .transform((value) => value?.trim() || null),
   /** Other learner words usable as MC distractors. */
   distractorPool: z
     .array(z.string().trim().min(1).max(120))

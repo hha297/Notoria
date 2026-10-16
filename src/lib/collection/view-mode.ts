@@ -5,7 +5,8 @@ export type CollectionViewSection =
   | "writing"
   | "listening"
   | "speaking"
-  | "reading";
+  | "reading"
+  | "inbox";
 
 export function isCollectionViewMode(
   value: string | null | undefined,

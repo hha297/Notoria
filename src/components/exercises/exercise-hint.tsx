@@ -54,8 +54,8 @@ function ExerciseHintInner({
   if (answered) return null;
 
   return (
-    <div className="flex items-start gap-3 rounded-xl border border-hairline-cloud bg-muted/25 px-4 py-3 sm:px-5 sm:py-4">
-      <Lightbulb className="mt-0.5 size-5 shrink-0 text-accent-violet-mid" />
+    <div className="exercise-panel flex items-start gap-3 rounded-xl border px-4 py-3 sm:px-5 sm:py-4">
+      <Lightbulb className="mt-0.5 size-5 shrink-0 text-muted-foreground" />
       <div className="min-w-0 flex-1 space-y-3">
         {hintVisible ? (
           hasHintContent ? (
@@ -78,7 +78,7 @@ function ExerciseHintInner({
               variant="ghost"
               size="sm"
               onClick={showNow}
-              className="h-auto shrink-0 justify-start px-0 text-accent-violet-mid hover:bg-transparent hover:text-accent-violet-mid sm:justify-center"
+              className="h-auto shrink-0 justify-start px-0 text-muted-foreground hover:bg-transparent hover:text-ink sm:justify-center"
             >
               {hasHintContent ? t("showNow") : t("showAnswerNow")}
             </Button>

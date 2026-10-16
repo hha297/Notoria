@@ -5,9 +5,11 @@ import { useEffect, useId, useRef, useState } from "react";
 import Link from "next/link";
 import { ArrowUp, Loader2, RotateCcw } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { Button, buttonVariants } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import styles from "@/components/style/coach/coach.module.css";
+import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import {
   MAX_COACH_CHAT_HISTORY,
   type CoachChatAction,
@@ -53,6 +55,7 @@ export function CoachAskPanel({
   seedQuestion = null,
 }: CoachAskPanelProps) {
   const t = useTranslations("coach.ask");
+  const coachQuota = useQuotaLockMessage("ai_learning_coach_chat");
   const inputId = useId();
   const listRef = useRef<HTMLDivElement>(null);
   const seededRef = useRef(false);
@@ -68,7 +71,7 @@ export function CoachAskPanel({
 
   async function sendMessage(raw: string) {
     const message = raw.trim();
-    if (!message || sending) return;
+    if (!message || sending || coachQuota.locked) return;
 
     setErrorKind(null);
     setLastFailedMessage(null);
@@ -100,6 +103,7 @@ export function CoachAskPanel({
         const code = !data.ok ? data.code : undefined;
         if (code === "AI_QUOTA_EXCEEDED") {
           setErrorKind("quota");
+          void coachQuota.refreshQuotas();
         } else if (code === "PREMIUM_REQUIRED") {
           setErrorKind("premium");
         } else {
@@ -196,7 +200,7 @@ export function CoachAskPanel({
               key={prompt.id}
               type="button"
               className={mx(styles, "coach-ask-prompt")}
-              disabled={sending}
+              disabled={sending || coachQuota.locked}
               onClick={() => void sendMessage(promptLabels[prompt.messageKey] ?? "")}
             >
               {promptLabels[prompt.messageKey]}
@@ -256,16 +260,12 @@ export function CoachAskPanel({
         </div>
       ) : null}
 
-      {errorKind ? (
+      {errorKind && errorKind !== "quota" ? (
         <div className={mx(styles, "coach-ask-error")} role="alert">
           <p>
-            {errorKind === "quota"
-              ? t("errorQuota")
-              : errorKind === "premium"
-                ? t("errorPremium")
-                : t("errorUnavailable")}
+            {errorKind === "premium" ? t("errorPremium") : t("errorUnavailable")}
           </p>
-          {lastFailedMessage && errorKind !== "quota" && errorKind !== "premium" ? (
+          {lastFailedMessage && errorKind !== "premium" ? (
             <Button
               type="button"
               variant="outline"
@@ -305,26 +305,26 @@ export function CoachAskPanel({
           onKeyDown={onKeyDown}
           placeholder={t("placeholder")}
           rows={2}
-          disabled={sending}
+          disabled={sending || coachQuota.locked}
           className={mx(styles, "coach-ask-input")}
           aria-describedby={`${inputId}-hint`}
         />
         <p id={`${inputId}-hint`} className="sr-only">
           {t("inputHint")}
         </p>
-        <Button
+        <QuotaLockButton
           type="submit"
           size="icon"
-          disabled={sending || !draft.trim()}
+          locked={coachQuota.locked}
+          lockMessage={coachQuota.message}
+          pending={sending}
+          disabled={!draft.trim()}
           aria-label={t("send")}
           className={mx(styles, "coach-ask-send")}
+          icon={<ArrowUp className="size-4" aria-hidden />}
         >
-          {sending ? (
-            <Loader2 className="size-4 animate-spin" aria-hidden />
-          ) : (
-            <ArrowUp className="size-4" aria-hidden />
-          )}
-        </Button>
+          <span className="sr-only">{t("send")}</span>
+        </QuotaLockButton>
       </form>
     </section>
   );

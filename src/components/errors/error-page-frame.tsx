@@ -1,9 +1,13 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { useLocale } from "next-intl";
 import { usePathname } from "next/navigation";
 import { ErrorState } from "@/components/errors/error-state";
 import { LocaleThemeControls } from "@/components/layout/locale-theme-controls";
+import errorStyles from "@/components/style/errors/error.module.css";
+import { mx } from "@/lib/css-module";
 import type { AppLocale } from "@/i18n/config";
 import type { ErrorKind, ErrorResource } from "@/lib/errors";
 import { cn } from "@/lib/utils";
@@ -21,8 +25,8 @@ type ErrorPageFrameProps = {
 };
 
 /**
- * Centers ErrorState in the middle of the viewport.
- * Locale + theme controls sit in the top-end corner (same as auth chrome).
+ * Full-viewport error takeover. Portaled to document.body so studio sidebar /
+ * navbar stacking contexts (isolation) cannot keep chrome visible underneath.
  */
 export function ErrorPageFrame({
   kind,
@@ -36,15 +40,18 @@ export function ErrorPageFrame({
 }: ErrorPageFrameProps) {
   const pathname = usePathname();
   const locale = useLocale() as AppLocale;
+  const [mounted, setMounted] = useState(false);
 
-  return (
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  const frame = (
     <div
-      className={cn(
-        "fixed inset-0 z-40 grid place-items-center bg-background px-4 py-16",
-        className,
-      )}
+      className={cn(mx(errorStyles, "error-frame"), className)}
+      data-error-page-frame=""
     >
-      <div className="absolute end-4 top-4 z-10 sm:end-6 sm:top-6">
+      <div className={mx(errorStyles, "error-frame-chrome")}>
         <LocaleThemeControls locale={locale} compact />
       </div>
 
@@ -59,4 +66,10 @@ export function ErrorPageFrame({
       />
     </div>
   );
+
+  if (!mounted || typeof document === "undefined") {
+    return frame;
+  }
+
+  return createPortal(frame, document.body);
 }

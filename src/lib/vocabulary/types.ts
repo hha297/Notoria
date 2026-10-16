@@ -12,6 +12,7 @@ export type VocabularyWordRow = {
     meaning: string;
     isPrimary?: boolean;
     sortOrder: number;
+    usageLabels?: string[];
   }>;
   examples: Array<{
     id: string;

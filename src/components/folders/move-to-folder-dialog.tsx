@@ -145,7 +145,9 @@ export function MoveToFolderDialog({
                 className={mx(moveStyles, "optionIcon size-4")}
                 aria-hidden
               />
-              <span className={mx(moveStyles, "optionLabel")}>{t("root")}</span>
+              <span className={mx(moveStyles, "optionLabel")}>
+                {section === "inbox" ? t("unfiled") : t("root")}
+              </span>
             </button>
             {roots.map((folder) => (
               <FolderOption

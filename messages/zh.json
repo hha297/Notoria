@@ -1,0 +1,4998 @@
+{
+  "common": {
+    "save": "保存",
+    "cancel": "取消",
+    "delete": "删除",
+    "edit": "编辑",
+    "view": "查看",
+    "open": "打开",
+    "back": "返回",
+    "create": "创建",
+    "loading": "加载中…",
+    "optional": "可选",
+    "required": "必填",
+    "selectedCount": "已选 {count} 项",
+    "clearFilter": "清除",
+    "filters": "筛选",
+    "hideFilters": "隐藏筛选",
+    "remove": "移除"
+  },
+  "contentImport": {
+    "title": {
+      "vocabulary": "导入词汇",
+      "writing": "导入写作",
+      "theory": "导入理论"
+    },
+    "description": {
+      "vocabulary": "上传 CSV、PDF 或 DOCX。保存前我们会先完成列映射。",
+      "writing": "上传笔记或文档 CSV。先预览，再确认。",
+      "theory": "上传理论笔记或 CSV。先预览，再确认。"
+    },
+    "guidance": "不确定所需格式也没关系。上传文件后，我们会在导入前尝试识别其结构。",
+    "dropzone": "将文件拖到此处，或点击浏览",
+    "formats": "CSV、PDF、DOCX 或 TXT · 最大 10 MB",
+    "downloadTemplate": "需要起点？下载模板",
+    "quota": {
+      "free": "文件导入适用于 Pro 和 Premium。",
+      "pro": "Pro 和 Premium：无限次导入。",
+      "premium": "Premium：无限次导入。"
+    },
+    "fields": {
+      "word": "单词",
+      "meaning": "释义",
+      "partOfSpeech": "词性",
+      "example": "例句",
+      "tags": "标签",
+      "notes": "备注",
+      "title": "标题",
+      "content": "内容",
+      "category": "分类",
+      "ignore": "不导入"
+    },
+    "preview": {
+      "summary": "{ready} 条可导入 · {issues} 条需处理",
+      "mappingTitle": "列映射",
+      "yourColumn": "您的列",
+      "notoriaField": "Notoria 字段",
+      "missingRequired": "导入前请先映射必填字段。",
+      "unmapped": "未使用：{columns}",
+      "issuesTitle": "{count} 行需要关注",
+      "issueRow": "第 {row} 行：",
+      "skipHint": "有问题的行将被跳过。正常的行仍会导入。",
+      "sampleTitle": "将创建内容的示例"
+    },
+    "back": "选择其他文件",
+    "importReady": "导入 {count}",
+    "close": "关闭",
+    "progress": {
+      "reading": "正在读取文件…",
+      "analyzing": "正在识别结构…",
+      "mapping": "正在更新列映射…",
+      "importing": "正在导入…",
+      "finishing": "即将完成…",
+      "count": "{current} / {total}"
+    },
+    "done": {
+      "title": "已导入 {count}",
+      "detail": "跳过 {skipped} · 失败 {failed}",
+      "skippedExists": "已跳过 {count} — 词汇中已存在",
+      "skippedInvalid": "已跳过 {count} — 数据缺失或行有问题",
+      "failed": "失败 {count} — 无法保存（其余已继续导入）",
+      "allGood": "没有跳过或失败的项目。",
+      "detailsTitle": "处理详情",
+      "reasonExists": "词汇中已存在",
+      "reasonFailed": "无法保存 — 其余已继续导入",
+      "moreDetails": "…还有 {count} 条",
+      "toast": "已导入 {count} 项",
+      "toastAllExist": "没有新内容 — {count} 项已在词汇中",
+      "toastNone": "未导入任何内容"
+    },
+    "errors": {
+      "proRequired": "文件导入适用于 Pro 和 Premium。",
+      "quotaExceeded": "您已用完今日导入额度。请明天再试，或升级以获得更高额度。",
+      "rateLimited": "导入请求过于频繁。请稍候再试。",
+      "busy": "已有导入正在进行。请等待完成后再试。",
+      "fileTooLarge": "文件过大。请保持在 10 MB 以内。",
+      "unsupportedFormat": "请使用 CSV、PDF、DOCX 或纯文本文件。",
+      "emptyFile": "未能在此文件中找到可读内容。",
+      "parseFailed": "无法读取此文件。请尝试重新导出，或使用 CSV 模板。",
+      "generic": "出了点问题。请重试。"
+    },
+    "button": "导入"
+  },
+  "editor": {
+    "linkTitle": "插入链接",
+    "linkEditTitle": "编辑链接",
+    "linkDescription": "为所选文本添加 URL。",
+    "linkUrl": "URL",
+    "linkUrlPlaceholder": "https://",
+    "linkInvalid": "请输入有效的 http 或 https URL。",
+    "linkInsert": "插入链接",
+    "linkSave": "保存",
+    "linkRemove": "移除链接",
+    "imageTitle": "插入图片",
+    "imageDescription": "上传文件或粘贴图片 URL。",
+    "imageUpload": "上传图片",
+    "imageUploadHint": "PNG、JPG、GIF 或 WebP。最大 5 MB。",
+    "imageChooseFile": "选择文件",
+    "imageUrl": "图片 URL",
+    "imageUrlPlaceholder": "https://",
+    "imageInvalidUrl": "请输入有效的图片 URL。",
+    "imageInsert": "插入图片",
+    "imageUploading": "正在上传…",
+    "imageUploadFailed": "无法上传图片。请重试。",
+    "imagePasteFailed": "无法保存粘贴的图片。",
+    "imageTooLarge": "图片过大（最大 5 MB）。",
+    "imageInvalidType": "请使用 PNG、JPG、GIF 或 WebP 图片。",
+    "imageUnavailable": "图片上传尚未配置。",
+    "or": "或",
+    "format": "格式化",
+    "formatSuccess": "内容已格式化",
+    "formatUnchanged": "已是格式化状态",
+    "formatWorking": "正在格式化…",
+    "formatAiFallback": "AI 格式化不可用 — 已改用基础整理",
+    "formatFailed": "无法格式化内容。请重试。",
+    "formatQuotaExceeded": "您已用完今日 AI 格式化额度。将在 UTC 午夜重置 — 也可升级以获得更高额度。",
+    "formatRateLimited": "格式化请求过于频繁。请稍候再试。",
+    "tableSelectionInvalid": "无法将所选内容转换为表格",
+    "headingCollapse": "折叠章节",
+    "headingExpand": "展开章节",
+    "paradigmHeaders": {
+      "case": "格",
+      "singular": "单数",
+      "plural": "复数"
+    },
+    "paradigmCases": {
+      "nominative": "主格",
+      "genitive": "属格",
+      "partitive": "部分格",
+      "accusative": "宾格",
+      "inessive": "内格",
+      "elative": "出格",
+      "illative": "入格",
+      "adessive": "接格",
+      "ablative": "离格",
+      "allative": "向格",
+      "essive": "样格",
+      "translative": "变格",
+      "instructive": "具格",
+      "abessive": "缺格",
+      "comitative": "共格"
+    }
+  },
+  "nav": {
+    "dashboard": "仪表盘",
+    "inbox": "速记",
+    "vocabulary": "词汇",
+    "writing": "写作",
+    "theory": "理论",
+    "exercises": "练习",
+    "reading": "阅读",
+    "listening": "听力",
+    "speaking": "口语",
+    "coach": "学习教练",
+    "account": "账户",
+    "settings": "设置",
+    "workspace": "工作区",
+    "gettingStarted": "新手入门",
+    "groups": {
+      "main": "主菜单",
+      "skills": "技能",
+      "listenSpeak": "听与说",
+      "more": "更多"
+    }
+  },
+  "inbox": {
+    "eyebrow": "收集",
+    "title": "速记",
+    "description": "在此快速记下笔记、短语和想法 — 有空时再整理为词汇、理论、写作或练习。",
+    "disabledNoWorkspace": "请先创建工作区，再开始速记。",
+    "capture": "速记",
+    "captureTitle": "速记内容",
+    "captureDescription": "先保存，稍后再处理。现在不必决定它属于哪里。",
+    "captureSubmit": "保存到速记",
+    "captured": "已保存到速记",
+    "edit": "编辑",
+    "editTitle": "编辑速记",
+    "editDescription": "更新内容，或移动到其他文件夹。",
+    "editSubmit": "保存更改",
+    "updated": "速记已更新",
+    "contentLabel": "内容",
+    "contentPlaceholder": "一个词、短语、想法，或任何想稍后再看的内容…",
+    "contentRequired": "请先填写内容",
+    "noteLabel": "备注（可选）",
+    "notePlaceholder": "背景或重要原因…",
+    "sourceLabel": "来源（可选）",
+    "sourcePlaceholder": "书籍、播客、课程…",
+    "sourcePrefix": "来自 {source}",
+    "folderLabel": "文件夹",
+    "foldersNav": "速记文件夹",
+    "scopeAll": "全部速记",
+    "unfiled": "未归类",
+    "filterUnprocessed": "待处理",
+    "filterProcessed": "已处理",
+    "emptyTitle": "还没有速记内容",
+    "emptyDescription": "快速记下对话中的词、语法疑问或写作灵感 — 稍后再整理。",
+    "emptyProcessedTitle": "还没有已处理项目",
+    "emptyProcessedDescription": "当您从速记添加到词汇、理论、写作或练习后，会显示在这里。",
+    "emptyFolderTitle": "此文件夹为空",
+    "emptyFolderDescription": "将速记移到此处，或在此文件夹中新建速记。",
+    "deleteFolderDescription": "确定删除「{name}」？文件夹将被移除，其中的 {count, plural, one {# 条速记} other {# 条速记}} 将保留在「未归类」中。",
+    "statusProcessed": "已处理",
+    "processMenu": "速记操作",
+    "processed": "已标记为已处理",
+    "deleted": "已从速记中删除",
+    "process": {
+      "vocabulary": "词汇",
+      "theory": "理论",
+      "writing": "写作",
+      "exercise": "练习",
+      "keep": "稍后处理",
+      "delete": "删除"
+    },
+    "searchPlaceholder": "搜索速记…",
+    "searchInScope": "在 {scope} 中搜索…",
+    "sortBy": "排序方式",
+    "sortNewest": "最新优先",
+    "sortOldest": "最早优先",
+    "sortNameAsc": "名称（A → Z）",
+    "sortNameDesc": "名称（Z → A）",
+    "noResultsTitle": "无匹配结果",
+    "noResultsDescription": "请尝试其他搜索，或清除搜索以查看此文件夹和标签页中的全部内容。"
+  },
+  "reviewLater": {
+    "add": "稍后复习",
+    "remove": "从稍后复习中移除"
+  },
+  "folders": {
+    "new": "新建文件夹",
+    "create": "创建文件夹",
+    "createTitle": "新建文件夹",
+    "createDescription": "文件夹为可选项。可用于整理写作、听力或理论内容。",
+    "renameTitle": "重命名文件夹",
+    "renameDescription": "为此文件夹选择一个新名称。",
+    "name": "名称",
+    "namePlaceholder": "文件夹名称",
+    "untitled": "未命名文件夹",
+    "created": "文件夹已创建",
+    "renamed": "文件夹已重命名",
+    "deleted": "文件夹已删除",
+    "moved": "已移动",
+    "delete": "删除",
+    "deleteTitle": "删除此文件夹？",
+    "deleteDescription": "「{name}」及其内部全部内容（{folderCount, plural, one {# 个文件夹} other {# 个文件夹}}、{itemCount, plural, one {# 个项目} other {# 个项目}}）将被永久删除。",
+    "deleteDescriptionEmpty": "「{name}」将被永久删除。",
+    "root": "全部文件",
+    "unfiled": "未归类",
+    "open": "打开",
+    "rename": "重命名",
+    "move": "移动到…",
+    "moveTitle": "移动到",
+    "moveDescription": "选择一个文件夹，或保留在顶层。",
+    "moveHere": "移到此处",
+    "emptyFolder": "此文件夹为空",
+    "emptyFolderDescription": "在此添加内容，或创建子文件夹。也可将文件保留在顶层 — 文件夹仅用于整理。",
+    "itemCount": "{count, plural, one {# 个项目} other {# 个项目}}",
+    "foldersHeading": "文件夹",
+    "folderActions": "文件夹操作",
+    "breadcrumbs": "文件夹路径",
+    "nameRequired": "请输入文件夹名称",
+    "invalidMove": "无法将文件夹移动到自身内部",
+    "tooDeep": "此文件夹嵌套层级过深",
+    "notFound": "未找到文件夹",
+    "nameTaken": "已有文件夹或写作使用此名称"
+  },
+  "theme": {
+    "toggle": "切换主题",
+    "light": "浅色",
+    "dark": "深色"
+  },
+  "header": {
+    "createWorkspace": "创建工作区",
+    "createWorkspaceHint": "添加另一个语言工作区",
+    "switchWorkspace": "切换工作区",
+    "switchFailed": "无法切换工作区"
+  },
+  "workspace": {
+    "title": "工作区",
+    "emptyTitle": "创建您的第一个工作区",
+    "emptyDescription": "工作区对应您正在学习的语言。词汇、写作、练习和学习数据都保存在工作区中。",
+    "createFirst": "创建工作区",
+    "name": "工作区名称",
+    "namePlaceholder": "可选 — 我们将为您自动生成",
+    "language": "工作区语言",
+    "languageHint": "每种语言一个工作区。无法创建重复项。",
+    "languageExists": "该语言的工作区已存在。",
+    "languageSearchPlaceholder": "搜索语言…",
+    "languageSearchEmpty": "未找到语言",
+    "languageRegions": {
+      "europe": "欧洲",
+      "asia": "亚洲",
+      "africa": "非洲",
+      "americas": "美洲",
+      "oceania": "大洋洲"
+    },
+    "created": "工作区已创建",
+    "updated": "工作区已更新",
+    "deleted": "工作区已删除",
+    "editTitle": "编辑工作区",
+    "editDescription": "更新此工作区的名称和语言。",
+    "editAction": "编辑工作区",
+    "deleteAction": "删除工作区",
+    "manage": "工作区设置",
+    "manageNamed": "管理「{name}」",
+    "nameRequired": "请输入工作区名称",
+    "deleteTitle": "删除工作区？",
+    "deleteDescription": "这将永久删除「{name}」及其全部词汇、写作、理论、听力和练习。此操作无法撤销。",
+    "deleteLastDescription": "这是您唯一的工作区。删除「{name}」将清除全部学习数据。此操作无法撤销。",
+    "switched": "已切换工作区",
+    "noActive": "无活动工作区"
+  },
+  "vocabulary": {
+    "title": "词汇",
+    "bank": "词库",
+    "description": "您收集的单词都在这里 — 可搜索、筛选，并在练习、写作和复习中复用。",
+    "library": "词库",
+    "addWordHighlight": "词库",
+    "newWord": "新词",
+    "editWord": "编辑单词",
+    "edit": "编辑",
+    "backToList": "返回词汇",
+    "backToPreview": "返回预览",
+    "previewTitle": "单词预览",
+    "previewDescription": "此单词的只读视图。打开「编辑」以进行修改。",
+    "editDescription": "保存以保留更改。取消将丢弃未保存的编辑。",
+    "addWord": "添加单词",
+    "saveWord": "保存单词",
+    "savingWord": "正在保存…",
+    "updateWord": "更新单词",
+    "updatingWord": "正在更新…",
+    "word": "单词",
+    "wordPlaceholder": "输入您正在学习的单词…",
+    "partOfSpeech": "词性",
+    "partOfSpeechPlaceholder": "选择词性",
+    "meanings": "释义",
+    "addMeaning": "添加释义",
+    "meaningPlaceholder": "输入释义",
+    "primaryMeaning": "主要释义",
+    "markAsPrimary": "标为主要",
+    "primaryMeaningHint": "最多为练习标出 {max} 个主要释义。其余仅作参考。",
+    "primaryMeaningRequired": "请至少标记一个主要释义",
+    "primaryMeaningLimit": "最多可标记 {max} 个主要释义",
+    "primaryMeanings": "主要释义",
+    "otherMeanings": "其他释义",
+    "usageLabels": {
+      "label": "用法标签",
+      "add": "用法",
+      "menuTitle": "用法标签",
+      "clear": "全部清除",
+      "remove": "移除 {label}",
+      "aria": "此释义的用法标签",
+      "count": "{count, plural, one {# 个标签} other {# 个标签}}"
+    },
+    "otherMeaningsPage": "{total} 个释义 · 第 {page} / {totalPages} 页",
+    "otherMeaningsPrev": "上一页",
+    "otherMeaningsNext": "下一页",
+    "examples": "例句",
+    "addExample": "添加例句",
+    "removeExample": "移除例句",
+    "examplePlaceholder": "输入例句",
+    "exampleDetails": "更多详情",
+    "exampleDetailsFilled": "已填写",
+    "exampleMeaning": "释义 / 翻译",
+    "exampleMeaningPlaceholder": "翻译或解释此句…",
+    "exampleNotes": "备注 / 说明",
+    "exampleNotesPlaceholder": "语法提示、用法说明…",
+    "optional": "可选",
+    "tags": "标签",
+    "selectTags": "选择标签",
+    "searchOrCreateTags": "搜索或创建自定义标签…",
+    "createTag": "创建「{name}」",
+    "noMatchingTags": "无匹配标签",
+    "createCustomTag": "创建自定义标签",
+    "addCustomTag": "添加",
+    "notes": "备注",
+    "notesPlaceholder": "助记、语法提示、个人提醒…",
+    "formatNotes": "格式化",
+    "formatNotesSuccess": "备注已格式化",
+    "formatNotesUnchanged": "备注已是格式化状态",
+    "formatNotesAiFallback": "AI 格式化不可用 — 已改用基础整理",
+    "synonyms": "同义词",
+    "synonymsSearch": "搜索已有单词…",
+    "synonymsSelect": "添加另一个同义词…",
+    "synonymsNoResults": "无匹配单词",
+    "synonymsAddNew": "添加「{word}」",
+    "synonymsCreateTitle": "添加同义词",
+    "synonymsCreateDescription": "关联已有单词，或新建带释义的单词。之后可从任一单词打开另一个。",
+    "synonymsMeaning": "释义",
+    "synonymsMeaningPlaceholder": "输入释义",
+    "synonymsCreated": "单词已创建，可关联",
+    "synonymsAlreadyLinked": "已添加为同义词",
+    "synonymsCannotLinkSelf": "单词不能作为自己的同义词",
+    "synonymsRemove": "移除 {word}",
+    "formDescription": "添加带释义、例句和标签的单词。可拖动排序。",
+    "addingTo": "正在添加到",
+    "emptyTitle": "您的词库为空",
+    "emptyDescription": "开始收集单词和释义，建立您的个人语言库。",
+    "addFirst": "添加第一个单词",
+    "disabledNoWorkspace": "请先创建工作区，再添加词汇。",
+    "saved": "单词已保存",
+    "updated": "单词已更新",
+    "deleted": "单词已删除",
+    "meaningRequired": "请至少添加一个释义",
+    "columns": {
+      "word": "单词",
+      "partOfSpeech": "词性",
+      "meaning": "释义",
+      "tags": "标签",
+      "updated": "最近更新",
+      "actions": "操作"
+    },
+    "moreMeanings": "+{count} 更多",
+    "searchPlaceholder": "搜索单词或释义…",
+    "filterPartOfSpeech": "词性",
+    "filterTag": "标签",
+    "filterAll": "全部",
+    "sortBy": "排序方式",
+    "sortUpdated": "最近更新",
+    "sortWord": "单词",
+    "sortAsc": "A → Z",
+    "sortDesc": "Z → A",
+    "noResults": "未找到单词",
+    "noResultsDescription": "请尝试更改搜索或筛选条件。",
+    "loadError": "无法加载词汇",
+    "loadErrorDescription": "请检查网络连接后重试。",
+    "retry": "重试",
+    "viewList": "列表",
+    "viewCards": "卡片",
+    "viewMode": "显示模式",
+    "tagManager": {
+      "open": "管理标签",
+      "title": "标签管理",
+      "description": "选择标签，然后为单词添加或移除。已标注与其他单词分列显示。",
+      "groupsLabel": "标准标签组",
+      "tagsHeading": "标签",
+      "standardTagsHeading": "标准标签",
+      "customTagsHeading": "自定义标签",
+      "customTagsHint": "您创建的个人分类标签 — 不是词性。",
+      "emptyCustomTags": "还没有自定义标签。编辑单词时可创建。",
+      "wordsHeading": "{tag}",
+      "kindStandard": "标准",
+      "kindCustom": "自定义",
+      "assignedHeading": "带此标签的单词",
+      "otherHeading": "其他单词",
+      "sectionCount": "{count}",
+      "selectSection": "全选本节",
+      "searchPlaceholder": "搜索单词或释义…",
+      "wordCount": "{count}",
+      "loading": "正在加载词汇…",
+      "emptyBank": "您的词库为空。",
+      "emptyAssigned": "还没有单词带此标签。",
+      "emptyAssignedSearch": "此标签下无匹配单词。",
+      "emptyOther": "所有单词都已带有此标签。",
+      "emptyOtherSearch": "没有可添加的匹配单词。",
+      "selected": "已选 {count} 项",
+      "modeHintIdle": "在任一列表中选择单词。首次选择将锁定本次操作为添加或移除。",
+      "modeHintAdd": "正在添加此标签 — 仅「其他单词」中的项可保持选中。",
+      "modeHintRemove": "正在移除此标签 — 仅已带标签的单词可保持选中。",
+      "addToTag": "添加到标签",
+      "removeFromTag": "从标签移除",
+      "applyAdd": "添加到标签（{count}）",
+      "applyRemove": "从标签移除（{count}）",
+      "added": "已将 {count} 个单词添加到 {tag}",
+      "removed": "已从 {tag} 移除 {count} 个单词",
+      "error": "无法更新标签成员"
+    },
+    "moreTags": "+{count}",
+    "updatedAgo": "更新于 {time}",
+    "shownOfTotal": "{shown} / {total}",
+    "stats": {
+      "total": "词汇总量",
+      "recent": "本周新增"
+    },
+    "uncategorizedPos": "未分类",
+    "groupCount": "{count, plural, one {# 个单词} other {# 个单词}}",
+    "groupPageRange": "{start}–{end} / {count}",
+    "pageOf": "第 {page} / {totalPages} 页",
+    "previousPage": "上一页",
+    "nextPage": "下一页",
+    "goToPage": "前往第 {page} 页",
+    "deleteConfirmTitle": "删除此单词？",
+    "deleteConfirmDescription": "「{word}」将从您的词汇中永久移除。",
+    "wordExists": "此单词已存在于您的词汇中。",
+    "wordExistsCheckFailed": "无法验证此单词是否已存在。您可以重试，或直接保存。",
+    "wordExistsChecking": "正在检查…",
+    "aiSuggestion": "AI 建议",
+    "aiChecking": "正在通过 AI 检查…",
+    "aiDisclaimer": "AI 建议可能不准确。",
+    "aiSkip": "跳过",
+    "aiUseWord": "使用 {word}",
+    "aiDidYouMean": "您是不是指「{word}」？",
+    "aiPossibleMeaning": "可能的释义",
+    "aiLikelyMeaning": "可能的释义是「{meaning}」。",
+    "aiUseSuggestion": "使用建议",
+    "aiMeaningMismatch": "「{meaning}」似乎不是「{word}」的释义。",
+    "export": {
+      "button": "导出",
+      "title": "导出词汇",
+      "kicker": "导出词汇",
+      "description": "导出当前显示的单词。",
+      "rowCount": "{count, plural, one {# 个单词} other {# 个单词}}",
+      "summaryWithNote": "{count, plural, one {# 个单词} other {# 个单词}} · 含备注",
+      "format": "格式",
+      "formatPdf": "PDF",
+      "formatCsv": "CSV",
+      "formatDocx": "Word",
+      "formatPdfHint": "可打印页面",
+      "formatDocxHint": "可编辑文件",
+      "formatCsvHint": "电子表格",
+      "options": "包含",
+      "content": "内容",
+      "includePartOfSpeech": "词性",
+      "includeTags": "标签",
+      "includeLastUpdated": "最近更新",
+      "includeNotes": "备注",
+      "preparing": "正在准备备注…",
+      "generating": "正在生成文档…",
+      "writingFile": "正在保存文件…",
+      "progressCount": "{current} / {total}",
+      "confirm": "导出",
+      "success": "已开始下载",
+      "failed": "导出失败",
+      "empty": "没有可导出的单词",
+      "documentHeading": "词汇",
+      "workspaceLabel": "工作区",
+      "columns": {
+        "word": "单词",
+        "partOfSpeech": "词性",
+        "meanings": "释义",
+        "tags": "标签",
+        "notes": "备注",
+        "updated": "最近更新"
+      }
+    }
+  },
+  "tags": {
+    "groups": {
+      "difficulty": "级别",
+      "topic": "主题",
+      "grammar": "用法",
+      "learningStatus": "学习状态",
+      "custom": "自定义标签"
+    },
+    "difficulty": {
+      "a1": "A1",
+      "a2": "A2",
+      "b1": "B1",
+      "b2": "B2",
+      "c1": "C1",
+      "c2": "C2"
+    },
+    "topic": {
+      "everyday_life": "日常生活",
+      "home_housing": "居住与住房",
+      "food_drink": "饮食",
+      "travel": "旅行",
+      "transport_mobility": "交通与出行",
+      "work_working_life": "工作与职场",
+      "education_studying": "教育与学习",
+      "health_wellbeing": "健康与身心",
+      "services_shopping": "服务与购物",
+      "people_family_relationships": "人物、家庭与关系",
+      "feelings_opinions_experiences": "感受、观点与经历",
+      "culture_leisure": "文化与闲暇",
+      "nature_environment": "自然与环境",
+      "society_community": "社会与社区"
+    },
+    "grammar": {
+      "formal": "正式",
+      "informal": "非正式",
+      "spoken": "口语 / 日常",
+      "slang": "俚语",
+      "academic": "学术",
+      "idiom": "习语",
+      "grammar": "语法",
+      "expression": "表达"
+    },
+    "meaningUsage": {
+      "literary": "文学",
+      "technical": "专业/技术",
+      "archaic": "古语",
+      "regional": "地域",
+      "figurative": "比喻"
+    },
+    "learningStatus": {
+      "new": "新词",
+      "learning": "学习中",
+      "review": "复习",
+      "mastered": "已掌握"
+    },
+    "pos": {
+      "noun": "名词",
+      "verb": "动词",
+      "adjective": "形容词",
+      "adverb": "副词",
+      "pronoun": "代词",
+      "preposition": "介词",
+      "conjunction": "连词",
+      "interjection": "感叹词",
+      "article": "冠词",
+      "determiner": "限定词"
+    }
+  },
+  "exercises": {
+    "title": "练习",
+    "studio": "工作室",
+    "description": "选择学习模式来练习词汇。",
+    "studioDescription": "从词汇、理论笔记或导入材料练习——选择来源，然后开始专注会话。",
+    "startActivity": "开始",
+    "unlockActivity": "解锁",
+    "practice": "练习",
+    "editor": "编辑器",
+    "edit": "编辑",
+    "editDescription": "首次保存后会自动保存更改。",
+    "noWorkspace": "开始练习前，请先创建工作区。",
+    "updated": "已更新",
+    "backToStudio": "返回练习",
+    "studyMode": "学习模式",
+    "difficulty": {
+      "label": "难度",
+      "easy": "简单",
+      "medium": "中等",
+      "hard": "困难",
+      "intensive": "强化",
+      "easyHint": "线索清晰，直接用你的单词练习。",
+      "mediumHint": "结合直接与情境问题，使用你的词汇。",
+      "hardHint": "更多情境、更不明显的线索——仍是你的单词。",
+      "intensiveHint": "细微情境与更强推理——仍是你的单词。"
+    },
+    "sources": {
+      "label": "练习来源",
+      "heading": "来源",
+      "vocabulary": "词汇",
+      "theory": "理论",
+      "import": "导入",
+      "imported": "已导入",
+      "lastUsed": "最近使用",
+      "selected": "已选",
+      "vocabularyHint": "基于当前工作区单词的模式。",
+      "theoryHint": "AI 将理论笔记变成填空练习。",
+      "importHint": "导入练习单或笔记——我们保留来源线索，并变成练习卡。",
+      "vocabularyCount": "{count, plural, one {# 个单词} other {# 个单词}}",
+      "theoryCount": "{count, plural, one {# 篇笔记} other {# 篇笔记}}",
+      "importCount": "{count, plural, one {# 项导入} other {# 项导入}}"
+    },
+    "processing": {
+      "workingTitle": "正在处理练习",
+      "readyTitle": "练习已就绪",
+      "errorTitle": "出了点问题",
+      "cancel": "取消",
+      "retry": "重试",
+      "dismiss": "关闭",
+      "stages": {
+        "uploading": "正在上传…",
+        "extracting": "正在提取内容…",
+        "analyzing": "正在分析内容…",
+        "generating": "正在生成练习…",
+        "saving": "正在保存练习…",
+        "completed": "练习已就绪",
+        "error": "生成失败"
+      }
+    },
+    "import": {
+      "eyebrow": "导入练习",
+      "hubTitle": "从页面到练习",
+      "practiceTitle": "导入的练习",
+      "practiceDescription": "根据导入材料生成的练习卡——保留相同线索与顺序，不编造题目。",
+      "formTitle": "导入学习材料",
+      "formDescription": "提供来源。我们提取其结构，并仅根据这些线索构建练习。",
+      "chooseSource": "可以导入什么？",
+      "dropActive": "松开以导入",
+      "modes": {
+        "image": "图片",
+        "file": "文件",
+        "url": "URL",
+        "text": "文本"
+      },
+      "titleLabel": "标题",
+      "titlePlaceholder": "可选——默认取自来源",
+      "urlLabel": "URL",
+      "urlPlaceholder": "https://…",
+      "textLabel": "学习文本",
+      "textPlaceholder": "粘贴或输入学习材料…",
+      "dropImageTitle": "将图片拖到此处",
+      "dropFileTitle": "将文件拖到此处",
+      "dropDescription": "或点击上传",
+      "pasteHint": "也可以用 Ctrl + V 粘贴图片",
+      "pasteAlwaysHint": "提示：在任意导入模式下，Ctrl + V 都可粘贴剪贴板图片。",
+      "supportedFiles": "PDF、DOCX、图片和纯文本（.txt、.md）",
+      "pastedImageTitle": "已粘贴图片",
+      "importAction": "导入并生成",
+      "unlockPro": "用 Pro 解锁",
+      "lockedDescription": "升级到 Pro，将练习单和笔记变成 AI 练习卡。",
+      "myImports": "我的导入",
+      "searchPlaceholder": "按标题搜索…",
+      "noResults": "没有匹配该标题的导入",
+      "practice": "练习",
+      "retry": "重试",
+      "delete": "删除",
+      "deleteConfirmTitle": "删除此导入？",
+      "deleteConfirmDescription": "「{title}」及其生成的练习将被永久删除。",
+      "ready": "练习已就绪",
+      "deleted": "导入已删除",
+      "exerciseCount": "{count, plural, one {# 项练习} other {# 项练习}}",
+      "importedAgo": "导入于 {time}",
+      "processingHint": "正在提取内容并生成练习…",
+      "extractingHint": "正在读取并分析你的材料…",
+      "generatingHint": "正在根据内容创建练习…",
+      "uploadBytes": "{loaded} / {total}",
+      "cancelUpload": "取消",
+      "uploadCancelled": "上传已取消",
+      "sourceTypes": {
+        "image": "图片",
+        "file": "文件",
+        "url": "URL"
+      },
+      "status": {
+        "UPLOADING": "上传中",
+        "EXTRACTING": "提取中",
+        "ANALYZING": "处理中",
+        "GENERATING": "生成中",
+        "COMPLETED": "就绪",
+        "FAILED": "失败"
+      },
+      "steps": {
+        "uploading": "正在上传…",
+        "extracting": "正在分析内容…",
+        "generating": "正在生成练习…",
+        "complete": "完成",
+        "processing": "处理中…"
+      },
+      "errors": {
+        "CLOUDINARY_NOT_CONFIGURED": "文件存储未配置。",
+        "OPENAI_NOT_CONFIGURED": "AI 处理未配置。",
+        "INVALID_FILE": "请选择要导入的文件。",
+        "INVALID_FILE_TYPE": "不支持该文件类型。请使用图片、PDF、DOCX 或纯文本。",
+        "FILE_TOO_LARGE": "文件过大。请使用小于 10 MB 的文件。",
+        "INVALID_URL": "请输入有效的 http(s) URL。",
+        "URL_FETCH_FAILED": "无法获取该 URL。请尝试其他链接。",
+        "UNSUPPORTED_PARSE": "无法读取该文档。请使用 PDF 或 DOCX（不支持旧版 .doc）。",
+        "EMPTY_CONTENT": "未找到可用的学习内容。",
+        "ANALYSIS_FAILED": "无法处理该材料。请重试。",
+        "GENERATION_FAILED": "无法根据该材料生成练习。",
+        "GENERATION_UNAVAILABLE": "练习生成暂时不可用。请稍后再试。",
+        "IMPORT_NOT_FOUND": "未找到导入。",
+        "PROCESSING_FAILED": "处理此导入时出了点问题。",
+        "ALREADY_PROCESSING": "此导入正在处理中。"
+      }
+    },
+    "theory": {
+      "eyebrow": "理论练习",
+      "hubTitle": "学习语言背后的概念",
+      "hubDescription": "通过互动课程探索语法、句式与概念。",
+      "practiceTitle": "理论练习",
+      "practiceDescription": "AI 将此笔记变成填空练习——含提示与讲解。",
+      "openLibrary": "打开理论资料库",
+      "practice": "练习",
+      "view": "查看",
+      "emptyTitle": "还没有理论笔记",
+      "emptyDescription": "写一篇理论笔记——然后在这里用 AI 生成的练习进行练习。",
+      "emptyCta": "创建理论笔记",
+      "searchPlaceholder": "按标题或内容搜索…",
+      "filterCategory": "分类",
+      "viewMode": "显示模式",
+      "viewList": "列表",
+      "viewCards": "卡片",
+      "pageOf": "第 {page} 页，共 {totalPages} 页",
+      "previousPage": "上一页",
+      "nextPage": "下一页",
+      "goToPage": "转到第 {page} 页",
+      "noResults": "没有匹配的理论笔记",
+      "noResultsDescription": "请尝试其他搜索或分类。",
+      "clearFilters": "清除筛选",
+      "sections": "{count, plural, one {# 个章节} other {# 个章节}}",
+      "estimatedExercises": "约 {count} 项练习",
+      "limitedExercises": "添加更多内容以获得更丰富的练习",
+      "practicing": "练习中",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} 正确",
+      "next": "下一题",
+      "check": "检查",
+      "true": "正确",
+      "false": "错误",
+      "fillPlaceholder": "输入缺失部分…",
+      "sourceWordLabel": "待变形的词：{word}",
+      "hint": "提示：{hint}",
+      "endingHint": "提示：{hint}",
+      "matchHint": "将每个原形词与正确形式配对。",
+      "matchBase": "原形词",
+      "matchForm": "形式",
+      "reshuffle": "重新打乱",
+      "backToStudio": "返回练习",
+      "editTheory": "编辑理论",
+      "needAiTitle": "生成 AI 练习",
+      "needAiDescription": "AI 将阅读此理论，并创建带有全新语境的填空练习。",
+      "needAiProDescription": "升级到 Pro，将理论笔记变成 AI 生成的练习。",
+      "generatingTitle": "正在创建练习…",
+      "generatingDescription": "AI 正在阅读你的理论并编写填空练习。",
+      "generateAi": "生成练习",
+      "generateMore": "生成新一组",
+      "regenerate": "新一组",
+      "unlockAi": "用 Pro 解锁",
+      "aiReady": "练习已就绪",
+      "aiUnavailable": "暂时无法生成 AI 问题。",
+      "aiForbidden": "AI 理论练习适用于 Pro。",
+      "aiDisabled": "设置中已关闭 AI 辅助。",
+      "feedback": {
+        "correct": "正确！",
+        "incorrect": "不太对。",
+        "incorrectWithAnswer": "正确答案：{answer}"
+      },
+      "sentenceMeaningLoading": "正在加载释义…",
+      "types": {
+        "multiple_choice": "选择题",
+        "true_false": "判断题",
+        "match_pairs": "配对",
+        "fill_blank": "填空",
+        "transformation": "变形练习",
+        "theory_question": "理论检查"
+      },
+      "instructions": {
+        "applyRule": "完成该形式。",
+        "chooseForm": "选择正确形式。",
+        "chooseInContext": "选择适合此语境的形式。",
+        "fillBlank": "填空。",
+        "completeConstruction": "完成该结构。",
+        "completeRule": "完成该规则。",
+        "completeExercise": "完成练习。",
+        "theoryCheck": "理论检查"
+      },
+      "trueFalseLabel": "正确或错误",
+      "lesson": {
+        "label": "课程",
+        "concept": "概念",
+        "theIdea": "核心想法",
+        "seeIt": "看例子",
+        "notice": "注意",
+        "example": "例句",
+        "revealNote": "显示备注",
+        "hideNote": "隐藏备注",
+        "continue": "继续",
+        "quickReview": "快速复习",
+        "skipReview": "跳过复习",
+        "startPractice": "开始练习",
+        "openTheory": "打开完整理论",
+        "tryIt": "试一试",
+        "outline": "本课内容",
+        "keyIdea": "关键想法",
+        "nowPractice": "现在练习",
+        "learnThis": "学习这个概念",
+        "applyNow": "现在来运用刚才学到的内容。",
+        "preparing": "正在准备练习…",
+        "yourAnswer": "你的答案",
+        "correctForm": "该形式",
+        "theRule": "规则",
+        "why": "原因",
+        "complete": "已理解",
+        "completeHint": "准备好就可以继续。"
+      }
+    },
+    "types": {
+      "flashcard": {
+        "label": "闪卡",
+        "description": "翻卡学习单词与释义，并用间隔重复评分。",
+        "preview": "翻转 · 评分 · 复习",
+        "previewHint": "Finnish word",
+        "previewWord": "suomalainen",
+        "previewFlow": "FLIP → RATE → REVIEW"
+      },
+      "fill-in-blank": {
+        "label": "填空",
+        "description": "在例句中填入缺失的词汇。",
+        "preview": "Minulla on uusi ______."
+      },
+      "multiple-choice": {
+        "label": "选择题",
+        "description": "选择正确的释义或单词——干扰项来自你的词汇。",
+        "preview": "哪个释义合适？",
+        "previewPrompt": "哪个释义合适？",
+        "previewA": "Finnish person",
+        "previewB": "weather",
+        "previewC": "building"
+      },
+      "match-pairs": {
+        "label": "配对",
+        "description": "在类似 Quizlet 的网格中将每个词与释义配对。",
+        "preview": "单词 ↔ 释义",
+        "previewLeft": "talo",
+        "previewRight": "house",
+        "previewLeftB": "koti",
+        "previewRightB": "home"
+      },
+      "type-answer": {
+        "label": "输入答案",
+        "description": "输入缺失的单词或释义，并获得即时反馈。",
+        "preview": "输入你的答案…"
+      },
+      "form-sentence": {
+        "label": "造句",
+        "description": "用已保存的词汇写完整句子，并获得 AI 语法反馈。",
+        "preview": "用…写一个句子",
+        "previewChipA": "Minä",
+        "previewChipB": "asun",
+        "previewChipC": "Helsingissä"
+      }
+    },
+    "timedHint": {
+      "availableIn": "💡 {seconds} 秒后可显示提示",
+      "showNow": "立即显示提示",
+      "answerAvailableIn": "💡 {seconds} 秒后可显示答案",
+      "showAnswerNow": "立即显示答案",
+      "label": "提示",
+      "startsWith": "以「{letter}」开头",
+      "revealPrompt": "还是卡住了？可以显示完整答案。",
+      "revealAnswer": "显示答案"
+    },
+    "empty": {
+      "noWordsTitle": "还没有词汇",
+      "noWordsDescription": "请先在工作区中添加单词，再回来练习。",
+      "addWords": "添加单词",
+      "noMeaningsTitle": "没有可练习的释义",
+      "noMeaningsDescription": "请为词汇至少添加一个释义，才能使用此练习。",
+      "noExamplesTitle": "还没有例句",
+      "noExamplesDescription": "请添加包含该词汇的例句，以生成填空题。",
+      "editVocabulary": "编辑词汇",
+      "needMoreWordsTitle": "需要更多词汇",
+      "needMoreWordsDescription": "请在此工作区至少添加 {count} 个带释义的单词，才能使用此练习。",
+      "noFiltered": "没有符合筛选条件的单词。请调整筛选后继续。"
+    },
+    "fillInBlank": {
+      "prompt": "填空",
+      "placeholder": "输入你的答案…",
+      "instruction": "用正确的词形填空。",
+      "hint": "提示",
+      "hintExplainWord": "想想句中缺失单词的含义。",
+      "correct": "正确！",
+      "incorrect": "答案是 {answer}",
+      "sentenceMeaningLoading": "正在加载释义…",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} 正确",
+      "keyboardHint": "Enter 检查 · 再按 Enter 下一题",
+      "previous": "上一题",
+      "next": "下一题",
+      "check": "检查",
+      "shuffle": "打乱",
+      "finish": "结束本轮"
+    },
+    "ai": {
+      "generate": "用 AI 生成",
+      "generateMore": "再生成 10 题",
+      "generating": "正在生成问题…",
+      "levelLabel": "CEFR 等级",
+      "emptyTitle": "生成填空题",
+      "emptyDescription": "根据你的词汇创建 10 个新句子。每个句子都是全新编写的——不会复用已有例句。",
+      "generated": "AI 生成",
+      "enriching": "正在将 AI 问题混入后续卡片…",
+      "unavailable": "暂时无法生成问题。请稍后再试。",
+      "forbidden": "AI 练习生成适用于 Pro。",
+      "disabled": "设置中已关闭 AI 辅助。",
+      "upgradeHint": "免费版每天包含几次 AI 练习生成。Pro 取消上限。",
+      "emptyWords": "生成问题前请先添加词汇。",
+      "noneValid": "AI 无法为这些词创建有效问题。请重试。"
+    },
+    "session": {
+      "complete": "本轮完成",
+      "score": "{correct} / {total} 正确",
+      "pairsMatched": "已配对 {count} 组",
+      "tryAgain": "再试一次",
+      "questionsLabel": "题目",
+      "correctLabel": "正确",
+      "reviewLabel": "待复习",
+      "answeredProgress": "已答 {answered} / {total}",
+      "submitSet": "提交答案",
+      "submitting": "正在检查…",
+      "unansweredWarnTitle": "未答题",
+      "unansweredWarn": "你还有 {count, plural, one {# 道未答题} other {# 道未答题}}。仍要提交吗？",
+      "submitAnyway": "仍要提交",
+      "partialHint": "提示：{mask}",
+      "jumpToUnanswered": "转到未答题",
+      "retryIncorrect": "重做错题",
+      "retryUnanswered": "重做未答题",
+      "restartSet": "重新开始",
+      "resultsTitle": "结果",
+      "unanswered": "未作答",
+      "yourAnswer": "你的答案",
+      "correctAnswer": "正确答案"
+    },
+    "multipleChoice": {
+      "questionWord": "这个词是什么意思？",
+      "questionMeaning": "哪个词对应这个释义？",
+      "questionContext": "选择合适的词",
+      "modes": {
+        "contextual": "情境"
+      },
+      "contextualLanguageHint": "问题以 {language}（工作区语言）生成。",
+      "contextualEmptyTitle": "生成情境题",
+      "contextualEmptyDescription": "根据你的词汇创建填空式选择题。",
+      "contextualProDescription": "情境 AI 问题适用于 Pro。",
+      "unlockContextual": "用 Pro 解锁",
+      "correct": "正确！",
+      "incorrect": "正确答案：{answer}",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} 正确",
+      "previous": "上一题",
+      "next": "下一题",
+      "shuffle": "打乱题目",
+      "finish": "结束本轮",
+      "keyboardHint": "1–4 选择 · Enter 下一题"
+    },
+    "matchPairs": {
+      "words": "单词",
+      "meanings": "释义",
+      "roundProgress": "第 {current} / {total} 轮",
+      "progress": "已配对 {matched} / {total}",
+      "hint": "先选一个词，再点对应释义",
+      "complete": "全部配对完成——太棒了！",
+      "shuffle": "打乱列"
+    },
+    "typeAnswer": {
+      "questionWord": "这个词是什么意思？",
+      "questionMeaning": "哪个词对应这个释义？",
+      "questionContext": "用正确的词完成",
+      "modes": {
+        "contextual": "情境"
+      },
+      "contextualEmptyTitle": "生成情境题",
+      "contextualEmptyDescription": "根据你的词汇创建填空式输入题。",
+      "contextualProDescription": "情境 AI 问题适用于 Pro。",
+      "unlockContextual": "用 Pro 解锁",
+      "placeholder": "输入你的答案…",
+      "yourAnswer": "你的答案",
+      "correctAnswer": "正确答案",
+      "correct": "正确！",
+      "incorrect": "不太对——请看上方正确答案",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} 正确",
+      "keyboardHint": "Enter 检查 · 再按 Enter 下一题",
+      "previous": "上一题",
+      "next": "下一题",
+      "check": "检查",
+      "shuffle": "打乱",
+      "finish": "结束本轮"
+    },
+    "formSentence": {
+      "vocabularyLabel": "词汇",
+      "meaningLabel": "释义",
+      "prompt": "用这个词写一个完整句子。",
+      "placeholder": "写一个完整句子…",
+      "insertWord": "加入句子",
+      "yourSentence": "你的句子",
+      "corrected": "已改正",
+      "betterSuggestion": "更自然",
+      "sentenceMeaning": "释义 / 翻译",
+      "correct": "正确——词汇用法自然",
+      "incorrect": "需要改进",
+      "evaluating": "正在评估你的句子…",
+      "submit": "提交",
+      "unlockSubmit": "解锁 AI 反馈",
+      "saveExample": "保存为例句",
+      "saved": "已保存",
+      "savedExample": "句子已保存为例句",
+      "alreadySaved": "此例句已保存",
+      "continue": "继续",
+      "finish": "结束本轮",
+      "progress": "{current} / {total}",
+      "score": "{correct} / {answered} 正确",
+      "keyboardHint": "⌘/Ctrl+Enter 提交 · 再按继续",
+      "errors": {
+        "empty": "提交前请先写一个句子。",
+        "tooLong": "请将句子控制在 500 个字符以内。",
+        "unavailable": "暂时无法评估你的句子。请重试。",
+        "forbidden": "AI 造句反馈适用于 Pro。",
+        "disabled": "设置中已关闭 AI 辅助。",
+        "wordMissing": "该词汇已不存在。",
+        "saveFailed": "无法保存例句。请重试。"
+      }
+    }
+  },
+  "writing": {
+    "title": "写作",
+    "studio": "工作室",
+    "description": "为正在学习的语言创建练习单和写作提示。",
+    "disabledNoWorkspace": "添加写作文档前，请先创建工作区。",
+    "create": "创建写作",
+    "createFirst": "创建第一篇写作",
+    "learningNote": {
+      "create": "学习笔记",
+      "filter": "学习笔记",
+      "filterLabel": "类型",
+      "badge": "学习笔记"
+    },
+    "onTheDesk": "桌面",
+    "library": "资料库",
+    "allWritings": "全部写作",
+    "collections": "合集",
+    "refine": "筛选",
+    "openWriting": "打开",
+    "emptyTitle": "你还没有创建任何写作",
+    "emptyDescription": "创建第一份写作练习单，开始练习。",
+    "searchPlaceholder": "搜索写作…",
+    "noResults": "没有匹配的写作",
+    "groupCount": "{count, plural, one {# 份文档} other {# 份文档}}",
+    "filterAll": "全部",
+    "filterCefr": "CEFR",
+    "filterTopic": "主题",
+    "filterFormality": "语体",
+    "groupBy": "分组方式",
+    "groupByMode": "文档类型",
+    "groupByWeek": "按周",
+    "groupByMonth": "按月",
+    "weekOf": "{date} 所在周",
+    "sortBy": "排序方式",
+    "sortUpdatedDesc": "最近更新",
+    "sortUpdatedAsc": "最早更新",
+    "sortCreatedDesc": "最新创建",
+    "sortCreatedAsc": "最早创建",
+    "sortTitleAsc": "标题（A → Z）",
+    "sortTitleDesc": "标题（Z → A）",
+    "sortCefrAsc": "CEFR（A1 → C2）",
+    "sortCefrDesc": "CEFR（C2 → A1）",
+    "meta": {
+      "none": "未设置",
+      "cefrLabel": "CEFR 等级",
+      "cefrPlaceholder": "选择等级",
+      "topicLabel": "主题",
+      "topicPlaceholder": "选择主题",
+      "formalityLabel": "语体",
+      "formalityPlaceholder": "选择语体",
+      "cefr": {
+        "a1": "A1",
+        "a2": "A2",
+        "b1": "B1",
+        "b2": "B2",
+        "c1": "C1",
+        "c2": "C2"
+      },
+      "formality": {
+        "formal": "正式",
+        "informal": "非正式",
+        "neutral": "中性"
+      }
+    },
+    "columns": {
+      "title": "标题",
+      "sections": "章节",
+      "questions": "问题",
+      "updated": "最近更新",
+      "actions": "操作"
+    },
+    "sectionCount": "{count, plural, one {# 个章节} other {# 个章节}}",
+    "questionCount": "{count, plural, one {# 道题} other {# 道题}}",
+    "backToList": "返回写作",
+    "backToPreview": "返回预览",
+    "previewTitle": "写作预览",
+    "previewDescription": "只读查看你的写作。打开「编辑」以修改。",
+    "edit": "编辑",
+    "editDescription": "保存以保留更改。取消会丢弃未保存的编辑。",
+    "editSaveHint": "保存以更新预览。取消会丢弃未保存的编辑。",
+    "deleted": "写作已删除",
+    "deleteConfirmTitle": "删除这篇写作？",
+    "deleteConfirmDescription": "「{title}」将被永久删除。",
+    "newTitle": "新建写作",
+    "editTitle": "编辑写作",
+    "formDescription": "为篇目命名、选择类型，然后开始写。",
+    "documentTitle": "标题",
+    "titlePlaceholder": "例如：我的人生故事",
+    "documentDescription": "描述",
+    "descriptionPlaceholder": "这篇写作的简短摘要或提示…",
+    "titleRequired": "标题为必填",
+    "titleTaken": "已有写作或文件夹使用此标题",
+    "promptRequired": "请至少添加一个问题提示",
+    "mode": "模式",
+    "modes": {
+      "richDocument": "富文本文档",
+      "questionSet": "题集",
+      "richDocumentHint": "使用富文本编辑器自由写作。",
+      "questionSetHint": "结构化章节与问题——像教材练习单。",
+      "learningNoteHint": "个人学习笔记——加上标签方便日后查找。"
+    },
+    "content": "内容",
+    "contentPlaceholder": "在此开始写内容…",
+    "ai": {
+      "check": "用 AI 检查",
+      "improve": "改进句子",
+      "grammar": "检查语法",
+      "checking": "正在用 AI 检查…",
+      "checkingImprove": "正在改进句子…",
+      "checkingGrammar": "正在检查语法…",
+      "suggestion": "AI 建议",
+      "apply": "采用",
+      "skip": "跳过",
+      "disclaimer": "AI 建议可能不准确。",
+      "empty": "请先写一些内容，再用 AI 检查。",
+      "unavailable": "AI 建议暂时不可用，请稍后再试。",
+      "forbidden": "AI 写作辅助适用于 Pro。",
+      "disabled": "设置中已关闭 AI 辅助。",
+      "noIssues": "未发现问题。",
+      "noImprove": "这个句子已经很自然了。",
+      "noGrammar": "未发现语法问题。",
+      "applyFailed": "无法自动应用该建议。",
+      "upgradeHint": "AI 写作辅助适用于 Pro。",
+      "types": {
+        "grammar": "语法",
+        "spelling": "拼写",
+        "vocabulary": "词汇",
+        "style": "风格",
+        "clarity": "清晰度"
+      },
+      "severities": {
+        "error": "错误",
+        "suggestion": "可选"
+      }
+    },
+    "sections": "章节",
+    "section": "章节",
+    "sectionTitlePlaceholder": "章节标题（可选）",
+    "question": "问题",
+    "prompt": "提示",
+    "promptPlaceholder": "你在哪里出生？",
+    "exampleAnswer": "示例答案",
+    "exampleAnswerPlaceholder": "可选的示范答案…",
+    "notes": "备注 / 提示",
+    "notesPlaceholder": "可选的教学备注或提示…",
+    "optional": "可选",
+    "addQuestion": "添加问题",
+    "addSection": "添加章节",
+    "deleteQuestion": "删除问题",
+    "duplicateQuestion": "复制问题",
+    "deleteSection": "删除章节",
+    "dragQuestion": "拖动以调整问题顺序",
+    "dragSection": "拖动以调整章节顺序",
+    "collapseSection": "折叠章节",
+    "expandSection": "展开章节",
+    "save": "保存",
+    "saved": "写作已保存",
+    "created": "写作已创建",
+    "saveFailed": "保存写作失败",
+    "autosaving": "正在自动保存…",
+    "autosaveReady": "更改会自动保存",
+    "autosavePending": "保存后即可启用自动保存",
+    "export": {
+      "button": "导出",
+      "title": "导出写作",
+      "kicker": "导出写作",
+      "untitled": "未命名写作",
+      "description": "选择可打印练习单的格式。",
+      "descriptionDocument": "将此篇目下载为可打印页面或可编辑文件。",
+      "descriptionQuestionSet": "根据这些问题下载一份练习单。",
+      "format": "格式",
+      "formatPdf": "PDF",
+      "formatDocx": "Word",
+      "formatPdfHint": "可打印页面",
+      "formatDocxHint": "可编辑文件",
+      "options": "包含",
+      "includeExamples": "示例答案",
+      "includeNotes": "备注 / 提示",
+      "leaveBlankSpace": "空白书写区",
+      "confirm": "导出",
+      "success": "已开始下载",
+      "failed": "导出失败",
+      "empty": "导出前请至少添加一道题或一些文档内容",
+      "preparing": "正在准备导出…",
+      "writingFile": "正在保存文件…",
+      "progressCount": "{current} / {total}",
+      "documentHeading": "写作",
+      "titleLabel": "标题",
+      "descriptionLabel": "描述",
+      "sectionLabel": "章节",
+      "questionLabel": "问题",
+      "exampleAnswerLabel": "示例答案",
+      "notesLabel": "备注"
+    }
+  },
+  "flashcards": {
+    "title": "闪卡",
+    "weakTitle": "练习难词",
+    "mode": "模式",
+    "description": "用流畅翻卡、键盘快捷键和间隔重复评分来学习词汇。",
+    "noWorkspace": "开始闪卡学习前，请先创建工作区。",
+    "emptyTitle": "还没有词汇",
+    "emptyDescription": "请先在工作区中添加单词，再回来用闪卡学习。",
+    "addWords": "添加单词",
+    "noFilteredCards": "没有符合筛选条件的卡片。请调整筛选后继续。",
+    "studyMode": "学习模式",
+    "modes": {
+      "wordToMeaning": "单词 → 释义",
+      "meaningToWord": "释义 → 单词",
+      "mixed": "混合"
+    },
+    "filterStatus": "学习状态",
+    "status": {
+      "NEW": "新词",
+      "LEARNING": "学习中",
+      "REVIEW": "复习",
+      "MASTERED": "已掌握"
+    },
+    "questionWord": "这个词是什么意思？",
+    "questionMeaning": "哪个词对应这个释义？",
+    "answer": "答案",
+    "tapToFlip": "点击卡片或按空格键显示",
+    "showAnswer": "显示答案",
+    "hideAnswer": "隐藏答案",
+    "flip": "翻转",
+    "previous": "上一张",
+    "next": "下一张",
+    "shuffle": "打乱",
+    "restart": "重新开始",
+    "progress": "{current} / {total}",
+    "keyboardHint": "空格显示 · ← → 切换 · 1–4 评分",
+    "meanings": "释义",
+    "examples": "例句",
+    "synonyms": "同义词",
+    "notes": "备注",
+    "noMeaning": "暂无释义",
+    "ratePrompt": "你掌握得怎么样？",
+    "ratings": {
+      "AGAIN": "再来",
+      "HARD": "较难",
+      "GOOD": "良好",
+      "EASY": "简单"
+    },
+    "ratingHints": {
+      "AGAIN": "< 1 分钟",
+      "HARD": "很快",
+      "GOOD": "良好",
+      "EASY": "简单"
+    },
+    "sessionComplete": "本轮完成！",
+    "tryAgain": "再试一次",
+    "ratingFailed": "无法保存评分"
+  },
+  "dashboard": {
+    "overview": "概览",
+    "your": "你的",
+    "workspaceLabel": "工作区",
+    "description": "面向你在意的语言的私人学习空间——收集单词、保存理论、用自己的话练习，再通过写作、听力和口语，直到真正属于你。",
+    "wordsSaved": "已保存单词",
+    "wordsReadyToPractice": "可练习单词",
+    "theoryNotes": "理论笔记",
+    "writingPieces": "写作篇目",
+    "activeWorkspace": "当前工作区",
+    "guideEyebrow": "入门",
+    "guideTitle": "如何使用 Notoria",
+    "guideTagline": "你的语言。你的知识。你的学习日记。",
+    "guideSubtitle": "Notoria 是私人、个人化的工作区——不是告诉你该学什么的传统课程。你选择语言、单词、语法笔记、例句，以及想用来练习的材料。",
+    "guideSubtitleSecondary": "工作区会随你的学习旅程一起成长。从「速记」快速记下碎片开始，再到词汇与理论——再把收集到的内容变成练习、写作、听力和口语。",
+    "guideFullCtaPrompt": "想了解更多 Notoria 的用法？",
+    "guideFullCta": "阅读完整指南",
+    "modulesTitle": "探索工作区",
+    "modulesSubtitle": "直接进入某个板块，或先打开对应教程。",
+    "startHere": "从这里开始",
+    "pro": "Pro",
+    "unlock": "解锁 Pro",
+    "open": "打开",
+    "steps": {
+      "inbox": {
+        "title": "速记",
+        "body": "几秒内记下单词、短语、语法疑问或写作想法——不必立刻决定放哪里。可加可选备注或来源，保留在「待处理」中，有空时再把速记转为词汇、理论、写作或练习。只有在你完成创建对应条目后，该项才会标记为「已处理」。"
+      },
+      "vocabulary": {
+        "title": "词汇",
+        "body": "添加你自己的单词和短语，附上释义、例句、发音和标签。按主题、水平或场景整理——再在练习与复习中复用。从日常生活、课堂、书籍或媒体中的词开始；你的词库会成为练习的基础。"
+      },
+      "theory": {
+        "title": "理论",
+        "body": "用自己的话保存语法规则、发音笔记、用法说明和个人例句。把理论当作随时可查阅的参考笔记本。记录得越多，个人知识库就越扎实。"
+      },
+      "exercises": {
+        "title": "练习",
+        "body": "用闪卡、测验、填空等方式练习——内容来自你自己的词汇和理论。练习会随你添加的知识一起成长。保存的材料越多，练习就越有用、越个性化。"
+      },
+      "writing": {
+        "title": "写作",
+        "body": "用自己的主题和词汇起草文本、创建题集。写作是为了主动运用所学，而不只是记忆。开通 Pro 后，AI 可以检查并改进你的内容，需要时也可导出材料。"
+      },
+      "listening": {
+        "title": "听力",
+        "body": "上传音频或视频，获取转录，并把它变成一课。用转录捕捉陌生词汇和表达，再用你选择的真实内容练习。带上自己的听力材料，而不受限于预设内容。"
+      },
+      "speaking": {
+        "title": "口语",
+        "body": "与 AI 导师视频通话，用自己的学习知识自然地练习口语。每次会话后，查看转录与反馈，了解需要改进之处。这形成闭环：学习 → 练习 → 运用 → 复习 → 提升。"
+      },
+      "reading": {
+        "title": "阅读",
+        "body": "导入或粘贴篇章，再生成理解练习——选择题、书面作答，以及正确 / 错误 / 未提及。免费版每天有有限次数的 AI 生成与评分；Pro 提高每日上限；Premium 不限次数。"
+      }
+    },
+    "modules": {
+      "vocabulary": {
+        "title": "词汇",
+        "description": "这门语言的个人词库。",
+        "how": "添加单词、标记主要释义，并附上例句。用标签和搜索方便日后查找。",
+        "cta": "打开词汇"
+      },
+      "theory": {
+        "title": "理论",
+        "description": "记录语言如何运作的笔记本——不是写作练习。",
+        "how": "创建笔记、选择分类，需要复习时再回来看。",
+        "cta": "打开理论"
+      },
+      "exercises": {
+        "title": "练习",
+        "description": "基于你已保存单词的短时练习。",
+        "how": "先添加一些单词，再选择模式。常来几分钟也算数。",
+        "cta": "打开练习"
+      },
+      "writing": {
+        "title": "写作",
+        "description": "可反复阅读和导出的富文本文档与题集。",
+        "how": "开始起草，用文件夹整理，并用 Pro 的 AI 检查或改进文本。",
+        "cta": "打开写作"
+      },
+      "listening": {
+        "title": "听力",
+        "description": "把真实音频或视频变成一课。",
+        "how": "免费版可上传片段并生成转录。生成听力练习属于 Pro。",
+        "cta": "打开听力"
+      },
+      "speaking": {
+        "title": "口语",
+        "description": "与 AI 导师进行实时视频对话。",
+        "how": "创建会话并加入通话。免费版每天包含一次 AI 会议，含导师。",
+        "cta": "打开口语"
+      },
+      "reading": {
+        "title": "阅读",
+        "description": "带 AI 理解练习的篇章。",
+        "how": "导入或粘贴文本，生成问题，再练习与复习。免费版有每日 AI 上限；Pro 每天 10 次；Premium 不限次数。",
+        "cta": "打开阅读"
+      }
+    },
+    "counts": {
+      "words": "{count, plural, one {# 个单词} other {# 个单词}}",
+      "notes": "{count, plural, one {# 篇笔记} other {# 篇笔记}}",
+      "writings": "{count, plural, one {# 篇} other {# 篇}}",
+      "practiceReady": "{count, plural, one {# 个单词就绪} other {# 个单词就绪}}"
+    },
+    "sidebarFooter": "私人语言学习工作区",
+    "practiceNowEyebrow": "今天",
+    "practiceNowTitle": "立即练习",
+    "practiceNowReady": "{count, plural, one {有 # 个单词可以练习。} other {有 # 个单词可以练习。}}",
+    "practiceNowNeedsMeaning": "为单词标记主要释义，它才会出现在练习中。",
+    "practiceNowCta": "开始练习",
+    "practiceNowVocabCta": "打开词汇",
+    "continueTitle": "继续",
+    "continueSubtitle": "接着做你上次进行的内容。",
+    "helloTitle": "你好，{name}",
+    "continueLearning": "继续学习",
+    "continueLearningSubtitle": "进入某个工作区板块。",
+    "snapshotTitle": "快速一览",
+    "quickActions": "快捷操作",
+    "quickAddWord": "添加单词",
+    "quickStartExercise": "开始练习",
+    "quickOpenWriting": "打开写作",
+    "quickOpenTheory": "打开理论",
+    "quickOpenListening": "打开听力",
+    "quickOpenSpeaking": "打开口语",
+    "nextStepTitle": "下一步",
+    "continueEmpty": "还没有可继续的内容——添加理论笔记、写作篇目、听力课或口语会话后，会显示在这里。",
+    "inbox": {
+      "title": "速记",
+      "subtitle": "等待整理进资料库的快速笔记。",
+      "count": "{count, plural, =0 {暂无待处理} one {# 项待处理} other {# 项待处理}}",
+      "cta": "打开速记"
+    },
+    "reviewLater": {
+      "title": "稍后复习",
+      "subtitle": "你标记为稍后再看的项目。",
+      "empty": "从词汇、理论或写作中收藏内容，就会显示在这里。"
+    },
+    "recentActivity": {
+      "title": "最近动态",
+      "subtitle": "你最近创建或处理过的内容。",
+      "empty": "当你添加和处理学习材料时，动态会显示在这里。",
+      "untitled": "未命名",
+      "verbs": {
+        "created": "已创建{entity}：{title}",
+        "updated": "已更新{entity}：{title}",
+        "completed": "已完成{entity}：{title}",
+        "processed": "已处理速记：{title}",
+        "review_later_added": "已标记复习：{title}",
+        "review_later_removed": "已取消复习：{title}"
+      },
+      "verbLabels": {
+        "created": "已创建",
+        "updated": "已更新",
+        "completed": "已完成",
+        "processed": "已处理",
+        "review_later_added": "稍后复习",
+        "review_later_removed": "已取消标记"
+      }
+    },
+    "learningNote": {
+      "label": "最新学习笔记"
+    },
+    "loopEyebrow": "循环",
+    "loopTitle": "收集、练习，再运用",
+    "loopSubtitle": "Notoria 最适合作为一个循环：保存遇到的内容，短时操练，再放回真实的写作、听力和口语中。",
+    "loop": {
+      "collect": {
+        "title": "收集",
+        "body": "用自己的话保存单词和理论——包括你会真正再打开的例句、标签和备注。"
+      },
+      "practice": {
+        "title": "练习",
+        "body": "用资料库进行短时练习。几分钟也能推进进度。"
+      },
+      "use": {
+        "title": "运用",
+        "body": "用已保存的材料写作、听力和口语，让知识不只停在闪卡上。"
+      }
+    }
+  },
+  "search": {
+    "placeholder": "搜索任何内容…",
+    "emptyHint": "在此工作区内搜索词汇、理论、写作等内容。",
+    "noResults": "没有与“{query}”匹配的结果",
+    "failed": "搜索失败，请重试。",
+    "clear": "清除搜索",
+    "shortcut": "Ctrl K",
+    "resultsLabel": "搜索结果",
+    "types": {
+      "folder": "文件夹"
+    },
+    "posGroups": {
+      "noun": "名词",
+      "verb": "动词",
+      "adjective": "形容词",
+      "adverb": "副词",
+      "pronoun": "代词",
+      "preposition": "介词",
+      "conjunction": "连词",
+      "interjection": "感叹词",
+      "article": "冠词",
+      "determiner": "限定词"
+    }
+  },
+  "prompts": {
+    "skip": "跳过",
+    "gotIt": "知道了",
+    "titles": {
+      "greeting": "欢迎回来！👋",
+      "motivation": "一点小提醒",
+      "language": "今天的语言",
+      "activity": "一个建议"
+    },
+    "greeting": {
+      "morning": {
+        "title": "早上好！☀️",
+        "message": "准备好学点新东西了吗？"
+      },
+      "afternoon": {
+        "title": "下午好！",
+        "message": "今天想学些什么？"
+      },
+      "evening": {
+        "title": "晚上好！",
+        "message": "睡前要不要稍微练一会儿？"
+      },
+      "welcomeBack": {
+        "title": "欢迎回来！👋",
+        "message": "今天想学些什么？"
+      },
+      "hello": {
+        "title": "你好！",
+        "message": "让今天有所收获——哪怕几分钟也很有用。"
+      }
+    },
+    "motivation": {
+      "whatToPractice": {
+        "title": "随时可以开始",
+        "message": "今天想练习什么？"
+      },
+      "fewMinutes": {
+        "title": "几分钟也很有价值",
+        "message": "短暂练习也能带来改变。今天在学什么？"
+      },
+      "oneStep": {
+        "title": "保持出现的习惯",
+        "message": "今天哪怕一小步，也是进步。"
+      },
+      "curious": {
+        "title": "追随你的好奇心",
+        "message": "选个主题深入一下——只要开始就算数。"
+      }
+    },
+    "language": {
+      "practiceToday": {
+        "title": "今天的语言",
+        "message": "今天准备练习 <lang></lang> 吗？"
+      },
+      "learnWords": {
+        "title": "扩充词汇",
+        "message": "想学几个新的 <lang></lang> 单词吗？"
+      },
+      "whatToLearn": {
+        "title": "选个重点",
+        "message": "今天想在 <lang></lang> 里学些什么？"
+      },
+      "keepGoing": {
+        "title": "你正在养成习惯",
+        "message": "继续练习 <lang></lang>——点滴积累会很可观。"
+      }
+    },
+    "activity": {
+      "vocabulary": {
+        "title": "一个建议",
+        "message": "今天复习一些词汇怎么样？"
+      },
+      "writing": {
+        "title": "一个建议",
+        "message": "想练习一下写作吗？"
+      },
+      "theoryOrExercise": {
+        "title": "一个建议",
+        "message": "可以复习一个理论主题，或试一次练习。"
+      },
+      "exercise": {
+        "title": "一个建议",
+        "message": "准备好来一次快速练习了吗？"
+      },
+      "theory": {
+        "title": "一个建议",
+        "message": "读一篇理论笔记，刷新一下记忆怎么样？"
+      }
+    }
+  },
+  "onboarding": {
+    "skip": "跳过",
+    "skipForNow": "暂时跳过",
+    "getStarted": "开始使用",
+    "close": "关闭",
+    "welcome": {
+      "title": "欢迎使用 Notoria！👋",
+      "message": "工作区已就绪。我们用几个简单步骤帮你起步。",
+      "features": {
+        "vocabulary": "积累词汇",
+        "writing": "练习写作",
+        "exercises": "通过练习学习",
+        "theory": "复习理论与学习材料"
+      }
+    },
+    "firstAction": {
+      "title": "开始学习吧！",
+      "message": "先添加一些词汇，然后就可以探索练习和其他学习功能。"
+    },
+    "actions": {
+      "addVocabulary": {
+        "empty": {
+          "title": "从第一批单词开始",
+          "description": "添加一些词汇，打好学习基础。"
+        },
+        "starting": {
+          "title": "继续扩充词汇",
+          "description": "再多加几个词，然后再尝试练习。"
+        },
+        "almost": {
+          "title": "快准备好了！",
+          "description": "再多加几个词，练习体验会更好。"
+        }
+      },
+      "tryExercise": {
+        "title": "准备练习了吗？",
+        "description": "词汇已足够，可以开始第一次练习。"
+      },
+      "startWriting": {
+        "title": "开始写作",
+        "description": "创建你的第一次写作练习。"
+      },
+      "exploreTheory": {
+        "title": "探索理论",
+        "description": "保存语法、用法以及语言运作方式的笔记。"
+      },
+      "exploreWorkspace": {
+        "title": "探索工作区",
+        "description": "四处看看，按自己的节奏继续学习。"
+      }
+    }
+  },
+  "tutorials": {
+    "show": "显示教程",
+    "showShort": "教程",
+    "guideLabel": "指南",
+    "next": "下一步",
+    "skip": "跳过教程",
+    "done": "知道了",
+    "stepProgress": "{current} / {total}",
+    "vocabulary": {
+      "title": "词汇",
+      "description": "添加对你重要的单词——然后在 Notoria 中搜索、整理并复用。",
+      "cta": "添加单词",
+      "steps": {
+        "addWord": {
+          "title": "1. 添加单词",
+          "body": "开始建立个人词汇库。添加你真正想记住的单词和短语——然后在下一屏填写释义、例句和标签。"
+        },
+        "search": {
+          "title": "2. 搜索词库",
+          "body": "搜索词汇，而不必滚动浏览全部内容。可按单词、释义或标签查找。"
+        },
+        "filters": {
+          "title": "3. 筛选与整理",
+          "body": "按词性、标签或排序方式缩小范围。用标签按主题、水平或场景给单词分组。"
+        },
+        "library": {
+          "title": "4. 你的词库",
+          "body": "已保存的单词都在这里。打开任意条目进行编辑，或在练习与稍后复习中使用。"
+        }
+      }
+    },
+    "vocabularyAdd": {
+      "title": "添加单词",
+      "description": "这个表单是 Notoria 的核心——每个字段都帮助你记住并在日后复用这个词。",
+      "cta": "知道了",
+      "steps": {
+        "word": {
+          "title": "1. 输入单词",
+          "body": "输入你正在学习的单词或短语。它会成为词库中的主条目。"
+        },
+        "partOfSpeech": {
+          "title": "2. 词性",
+          "body": "选择名词、动词、形容词等。这有助于筛选和 AI 建议保持准确。"
+        },
+        "meanings": {
+          "title": "3. 释义",
+          "body": "添加一个或多个释义。为练习最多标星 5 个主要释义——其余保留作参考。可拖动排序。"
+        },
+        "examples": {
+          "title": "4. 例句",
+          "body": "添加展示该词用法的句子。需要时，打开「其他详情」添加译文或备注。"
+        },
+        "tags": {
+          "title": "5. 标签",
+          "body": "按水平、主题或场景打标签，方便日后查找和练习相关单词。"
+        },
+        "synonyms": {
+          "title": "6. 同义词",
+          "body": "从词库中关联相关单词，连接条目并加深记忆。"
+        },
+        "notes": {
+          "title": "7. 备注",
+          "body": "可选的自由备注——发音提示、用法细节，或任何你想记住的内容。"
+        },
+        "save": {
+          "title": "8. 保存",
+          "body": "准备好后保存单词。随时可从词汇库中编辑。"
+        }
+      }
+    },
+    "writing": {
+      "title": "写作",
+      "description": "用自己的句子运用所学——草稿、题集，以及可反复查看的篇目。",
+      "cta": "开始写作",
+      "steps": {
+        "create": {
+          "title": "1. 开始写作",
+          "body": "基于想练习的内容创建文本或写作练习。不必完美——用它来尝试，并发现还需要学什么。"
+        },
+        "search": {
+          "title": "2. 搜索",
+          "body": "按标题或内容快速找到篇目，而不必手动浏览全部。"
+        },
+        "filters": {
+          "title": "3. 筛选",
+          "body": "按水平、主题、语体或排序方式缩小范围，整理写作资料库。"
+        },
+        "library": {
+          "title": "4. 你的写作库",
+          "body": "打开一篇继续写。开通 Pro 后，还可用 AI 检查并改进内容，或在需要时导出副本。"
+        },
+        "newFolder": {
+          "title": "5. 创建文件夹",
+          "body": "点击「新建文件夹」，按主题、水平或项目分组写作。文件夹是可选的——也可以全部放在顶层。"
+        },
+        "nameFolder": {
+          "title": "6. 命名文件夹",
+          "body": "输入便于日后查找的名称（例如「作文草稿」或「B1 练习单」）。文件夹会创建在你当前查看的位置。"
+        },
+        "organize": {
+          "title": "7. 文件夹与文件",
+          "body": "文件夹显示在写作列表上方。打开文件夹在其中工作——在该处新建的篇目会自动保存在该文件夹中。"
+        },
+        "moveItem": {
+          "title": "8. 在文件夹间移动",
+          "body": "使用任意篇目上的移动图标，或将其拖到文件夹卡片上。也可以把文件夹拖入其他文件夹以嵌套主题。"
+        }
+      }
+    },
+    "theory": {
+      "title": "理论",
+      "description": "保存你想记住的讲解——语法、发音、用法和个人笔记。",
+      "cta": "添加理论",
+      "steps": {
+        "add": {
+          "title": "1. 添加笔记",
+          "body": "为想记住的内容创建理论笔记。撰写时选择分类，让相关主题聚在一起。"
+        },
+        "category": {
+          "title": "2. 按分类浏览",
+          "body": "按分类筛选笔记，快速回到语法、发音、用法或其他已保存主题。"
+        },
+        "search": {
+          "title": "3. 搜索",
+          "body": "搜索理论资料库，快速找到笔记，而不必在全部内容中翻找。"
+        },
+        "read": {
+          "title": "4. 阅读与回顾",
+          "body": "需要复习时随时打开笔记。想回来多少次都可以——这是你的参考笔记本。"
+        },
+        "newFolder": {
+          "title": "5. 创建文件夹",
+          "body": "点击「新建文件夹」，按主题、单元或考试分组理论笔记。文件夹是可选的——笔记也可以留在顶层。"
+        },
+        "nameFolder": {
+          "title": "6. 命名文件夹",
+          "body": "输入清晰的名称（例如「语法 B1」或「发音」）。文件夹会创建在你当前查看的位置。"
+        },
+        "organize": {
+          "title": "7. 文件夹与文件",
+          "body": "文件夹显示在笔记上方。打开文件夹只查看其中内容——在该处新建的笔记会保存在该文件夹中。"
+        },
+        "moveItem": {
+          "title": "8. 在文件夹间移动笔记",
+          "body": "使用任意笔记上的移动图标，或将其拖到文件夹上。也可以把文件夹互相嵌套，按主题整理。"
+        }
+      }
+    },
+    "exercise": {
+      "title": "练习",
+      "description": "把知识变成练习——闪卡、测验、填空等。",
+      "cta": "试一次练习",
+      "steps": {
+        "sources": {
+          "title": "1. 选择来源",
+          "body": "从已保存的词汇、理论笔记或导入材料练习。添加得越多，练习就越有用。"
+        },
+        "types": {
+          "title": "2. 选择练习类型",
+          "body": "选择闪卡、选择题、配对、填空、输入答案或造句——然后用自己的知识开始短时练习。"
+        }
+      }
+    },
+    "listening": {
+      "title": "听力",
+      "description": "带上你真正想理解的内容——上传音频或视频，阅读转录，并从中学习。",
+      "cta": "打开听力",
+      "steps": {
+        "upload": {
+          "title": "1. 上传材料",
+          "body": "带上你真正想理解的内容——播客、视频、课程或自己的录音。"
+        },
+        "uploadArea": {
+          "title": "2. 选择文件",
+          "body": "选择或拖入音频或视频文件。Notoria 会上传它，并在支持时生成转录。"
+        },
+        "lessons": {
+          "title": "3. 学习你的课程",
+          "body": "打开一课，阅读转录，捕捉新词和表达，并用你选择的材料练习。"
+        },
+        "newFolder": {
+          "title": "4. 创建文件夹",
+          "body": "点击「新建文件夹」，按主题、课程或水平分组课程。文件夹是可选的——也可以全部放在顶层。"
+        },
+        "nameFolder": {
+          "title": "5. 命名文件夹",
+          "body": "输入对你有意义的名称（例如「播客」或「备考」）。文件夹会创建在你当前查看的位置。"
+        },
+        "organize": {
+          "title": "6. 文件夹与文件",
+          "body": "文件夹显示在课程上方。打开文件夹只浏览该组——在文件夹内上传的内容会保存在那里。"
+        },
+        "moveItem": {
+          "title": "7. 在文件夹间移动课程",
+          "body": "使用任意课程上的移动图标，或将其拖到文件夹卡片上。也可以嵌套文件夹，整理更大的合集。"
+        }
+      }
+    },
+    "speaking": {
+      "title": "口语",
+      "description": "在对话中练习运用语言——然后查看转录与反馈。",
+      "cta": "开始通话",
+      "steps": {
+        "start": {
+          "title": "1. 开始会话",
+          "body": "创建口语会话，准备好后加入。在真实对话中练习运用语言，而不只是学习它。"
+        },
+        "sessions": {
+          "title": "2. 事后回顾",
+          "body": "打开会话，阅读转录与反馈。用它发现错误、复用有用短语，并决定下一步要记入学习日记的内容。"
+        }
+      }
+    },
+    "reading": {
+      "title": "阅读",
+      "description": "导入或粘贴篇章，生成理解练习，并查看结果。",
+      "cta": "打开阅读",
+      "steps": {
+        "import": {
+          "title": "1. 添加篇章",
+          "body": "粘贴文本或上传 PDF/DOCX，创建可用于练习的阅读篇章。"
+        },
+        "importForm": {
+          "title": "2. 检查文本",
+          "body": "保存前检查标题、语言和正文。需要时可编辑提取的文本。"
+        },
+        "search": {
+          "title": "3. 查找篇章",
+          "body": "列表变长后，按标题或源文件名搜索阅读资料库。"
+        },
+        "passages": {
+          "title": "4. 从资料库练习",
+          "body": "打开一篇篇章以生成问题、作答并查看结果——需要时包括书面评分。"
+        },
+        "newFolder": {
+          "title": "5. 创建文件夹",
+          "body": "点击「新建文件夹」，按主题、考试或水平分组篇章。文件夹是可选的——也可以全部放在顶层。"
+        },
+        "nameFolder": {
+          "title": "6. 命名文件夹",
+          "body": "输入清晰的名称（例如「新闻文章」或「备考」）。文件夹会创建在你当前查看的位置。"
+        },
+        "organize": {
+          "title": "7. 文件夹与篇章",
+          "body": "文件夹显示在篇章上方。打开文件夹只浏览该组——在文件夹内的新导入会保存在那里。"
+        },
+        "moveItem": {
+          "title": "8. 在文件夹间移动篇章",
+          "body": "使用任意篇章上的移动图标，或将其拖到文件夹卡片上。也可以嵌套文件夹，整理更大的合集。"
+        }
+      }
+    },
+    "inbox": {
+      "title": "速记",
+      "description": "快速保存碎片——单词、疑问、想法——有空时再变成真正的学习条目。",
+      "cta": "知道了",
+      "steps": {
+        "capture": {
+          "title": "1. 速记内容",
+          "body": "用速记保存单词、短语、语法疑问或写作想法，不必立刻决定放哪里。这里速度比完美结构更重要。"
+        },
+        "list": {
+          "title": "2. 速记列表",
+          "body": "每张卡片显示内容、可选备注/来源，以及保存时间。需要查找时，可在列表上方使用文件夹、「待处理 / 已处理」、搜索和排序。打开卡片上的 ··· 菜单进行处理。"
+        },
+        "process": {
+          "title": "3. 转入 Notoria",
+          "body": "将速记发送到词汇、理论、写作或练习。只有在那里完成保存后，才会变为「已处理」——取消创建表单则会继续等待。"
+        }
+      }
+    }
+  },
+  "settings": {
+    "eyebrow": "偏好设置",
+    "title": "应用",
+    "highlight": "偏好",
+    "description": "Notoria 的外观与行为偏好——不是工作区或账户设置。",
+    "appearance": "外观",
+    "appearanceDescription": "整个应用的视觉偏好。",
+    "theme": "主题",
+    "themeDescription": "选择浅色、深色，或跟随系统。",
+    "themeLight": "浅色",
+    "themeDark": "深色",
+    "themeSystem": "系统",
+    "accessibility": "无障碍",
+    "accessibilityDescription": "调整 Notoria 中动效与交互的感受。",
+    "motion": "减少动效",
+    "motionDescription": "限制动画。系统选项跟随设备偏好。",
+    "motionSystem": "系统",
+    "motionReduce": "减少",
+    "motionFull": "完整动效",
+    "learning": "学习",
+    "learningDescription": "适用于各板块的引导偏好。",
+    "ai": {
+      "title": "AI 辅助",
+      "description": "控制 Notoria 中 AI 功能的行为方式。",
+      "enabled": "AI 辅助",
+      "enabledDescription": "允许 Notoria 使用 AI 驱动的功能。",
+      "on": "开",
+      "off": "关",
+      "responseStyle": "回复风格",
+      "responseStyleDescription": "控制 Notoria 使用 AI 回复时的详细程度。",
+      "responseConcise": "简洁",
+      "responseBalanced": "适中",
+      "responseDetailed": "详细",
+      "correctionStyle": "纠错风格",
+      "correctionStyleDescription": "AI 应如何解释你在语言反馈中的错误？",
+      "correctionMinimal": "最少",
+      "correctionExplain": "解释错误",
+      "correctionDetailed": "详细",
+      "suggestions": "AI 建议",
+      "suggestionsDescription": "在编辑词汇时（如可用）显示主动的 AI 建议。",
+      "confirmActions": "确认 AI 操作",
+      "confirmActionsDescription": "在 AI 更改你的内容前先询问。",
+      "confirmAlways": "始终",
+      "confirmContentChange": "仅在更改内容时",
+      "confirmNever": "从不",
+      "saveFailed": "无法保存 AI 偏好",
+      "disabledToast": "设置中已关闭 AI 辅助"
+    },
+    "tutorials": "板块教程",
+    "tutorialsDescription": "重置已完成的板块引导，使「显示教程」从头开始。",
+    "tutorialsReset": "重置教程",
+    "tutorialsResetDone": "板块教程已重置",
+    "shortcuts": {
+      "title": "键盘快捷键",
+      "description": "Notoria 网页应用的全局快捷键。功能专用按键保留在各活动内。",
+      "enabled": "启用快捷键",
+      "enabledDescription": "开关全部全局快捷键，不会丢失自定义绑定。",
+      "on": "开",
+      "off": "关",
+      "action": "操作",
+      "keys": "快捷键",
+      "edit": "编辑",
+      "add": "添加快捷键",
+      "addTitle": "添加快捷键",
+      "addDescription": "选择要快速访问的操作，然后按下要使用的组合键。",
+      "chooseAction": "选择操作",
+      "customized": "已自定义",
+      "defaultBadge": "默认",
+      "defaultWas": "原默认为 {keys}",
+      "extraBadge": "额外",
+      "remove": "移除",
+      "removed": "快捷键已移除",
+      "replace": "替换",
+      "resetOne": "恢复默认",
+      "resetOneDone": "快捷键已恢复默认",
+      "resetAll": "重置全部快捷键",
+      "resetAllDescription": "将所有全局快捷键恢复为默认组合键。",
+      "resetAllConfirmTitle": "将所有键盘快捷键重置为默认设置？",
+      "resetAllConfirmDescription": "自定义的全局快捷键将被清除。功能快捷键不受影响。",
+      "resetAllDone": "全部快捷键已重置",
+      "editTitle": "编辑：{action}",
+      "editDescription": "按下组合键。浏览器保留的快捷键无法被 Notoria 使用。",
+      "pressKeys": "按下组合键",
+      "pickActionFirst": "先选择操作，再按下组合键",
+      "saved": "快捷键已保存",
+      "conflict": "此快捷键已分配给「{action}」。",
+      "reserved": "由浏览器保留，无法被 Notoria 使用。",
+      "statusAvailable": "✓ {keys}",
+      "statusConflict": "⚠ {keys} — 已分配给 {action}。",
+      "statusReserved": "⚠ {keys} — 由浏览器保留，无法被 Notoria 使用。",
+      "reservedTitle": "部分快捷键无法使用",
+      "reservedDescription": "浏览器和 Windows 保留了 Ctrl + N、Ctrl + Shift + T、Win + E 等按键。Notoria 无法覆盖它们。",
+      "reservedGroups": {
+        "ctrl": "Ctrl",
+        "ctrlShift": "Ctrl + Shift",
+        "alt": "Alt",
+        "win": "Windows"
+      },
+      "reservedPurposes": {
+        "newWindow": "新建窗口",
+        "newTab": "新建标签页",
+        "closeTab": "关闭标签页",
+        "reopenTab": "重新打开已关闭的标签页",
+        "closeWindow": "关闭窗口",
+        "newIncognito": "新建隐私窗口",
+        "addressBar": "地址栏",
+        "reload": "重新加载",
+        "hardReload": "强制重新加载",
+        "nextTab": "下一个标签页",
+        "prevTab": "上一个标签页",
+        "print": "打印",
+        "openFile": "打开文件",
+        "browserSave": "浏览器保存页面",
+        "bookmark": "收藏页面",
+        "history": "历史记录",
+        "downloads": "下载",
+        "viewSource": "查看源代码",
+        "findInPage": "页内查找",
+        "findNext": "查找下一个",
+        "findPrev": "查找上一个",
+        "devtools": "开发者工具",
+        "console": "JavaScript 控制台",
+        "inspect": "检查元素",
+        "clearData": "清除浏览数据",
+        "taskManager": "浏览器任务管理器",
+        "altClose": "关闭窗口",
+        "altTab": "切换应用",
+        "winExplorer": "文件资源管理器",
+        "winDesktop": "显示桌面",
+        "winLock": "锁定电脑",
+        "winRun": "运行对话框",
+        "winSettings": "Windows 设置",
+        "winTaskView": "任务视图",
+        "winClipboard": "剪贴板历史"
+      },
+      "actions": {
+        "openSearch": "搜索",
+        "toggleTheme": "切换主题",
+        "quickSave": "快速保存",
+        "quickEdit": "快速编辑",
+        "quickView": "快速查看",
+        "download": "下载",
+        "deleteItem": "删除",
+        "createNew": "新建",
+        "goBack": "后退",
+        "goForward": "前进"
+      },
+      "actionDescriptions": {
+        "openSearch": "在工作区中搜索",
+        "toggleTheme": "在浅色与深色模式之间切换",
+        "quickSave": "保存当前项目",
+        "quickEdit": "开始编辑当前项目",
+        "quickView": "以查看模式打开当前项目",
+        "download": "下载当前项目",
+        "deleteItem": "删除所选项目",
+        "createNew": "在此板块中新建项目",
+        "goBack": "返回上一页",
+        "goForward": "前进到浏览历史中的下一页"
+      }
+    },
+    "data": {
+      "title": "数据与隐私",
+      "description": "存储在此浏览器中的本地偏好数据。账户与工作区内容在其他位置管理。",
+      "clear": "清除本地偏好",
+      "clearDescription": "移除本设备上与主题无关的应用偏好：动效、快捷键、教程及类似本地设置。不会删除你的账户或工作区数据。",
+      "clearConfirmTitle": "清除本地偏好？",
+      "clearConfirmDescription": "仅清除此浏览器中的偏好。你的账户、账单和学习内容不会被删除。",
+      "clearDone": "本地偏好已清除",
+      "policiesTitle": "法律政策",
+      "policiesDescription": "Notoria 的隐私政策与使用条款。",
+      "privacyLink": "隐私政策",
+      "termsLink": "使用条款",
+      "helpLink": "支持"
+    },
+    "tagManager": {
+      "sectionTitle": "词汇",
+      "sectionDescription": "管理词汇标签在词库中的应用方式。",
+      "title": "标签管理",
+      "description": "管理用于整理词汇的标签。",
+      "open": "管理标签"
+    },
+    "customTags": "自定义标签",
+    "customTagsDescription": "为词汇创建工作区专用标签。内置标签始终可用。",
+    "tagName": "标签名称",
+    "tagNamePlaceholder": "例如 YKI、JLPT N5、IELTS",
+    "tagNameRequired": "请输入标签名称。",
+    "addTag": "添加标签",
+    "renameTag": "重命名",
+    "editTagTitle": "重命名标签",
+    "editTagDescription": "新名称将应用于使用此标签的每个单词。",
+    "tagCreated": "标签已创建",
+    "tagUpdated": "标签已重命名",
+    "tagDeleted": "标签已删除",
+    "tagExists": "已存在同名标签",
+    "noCustomTags": "尚无自定义标签",
+    "deleteTagTitle": "删除此标签？",
+    "deleteTagConfirm": "删除此标签？它将从所有单词中移除。",
+    "deleteTagDescription": "「{name}」将从所有单词中移除。单词本身不会被删除。"
+  },
+  "theory": {
+    "eyebrow": "理论",
+    "title": "理论",
+    "highlight": "学习",
+    "description": "关于语法、发音、口语及语言规律的笔记——不是写作练习。",
+    "library": "资料库",
+    "collections": "合集",
+    "disabledNoWorkspace": "请先创建工作区，再添加理论笔记。",
+    "create": "添加理论",
+    "createFirst": "添加第一条笔记",
+    "emptyTitle": "尚无理论笔记",
+    "emptyDescription": "在此保存说明：格、发音、听力、口语与用法。实际写作练习请使用「写作」。",
+    "searchPlaceholder": "搜索主题…",
+    "filterAll": "全部",
+    "noResults": "没有匹配的主题",
+    "noResultsDescription": "尝试其他搜索或分类。",
+    "readingTime": "{minutes, plural, one {阅读约 # 分钟} other {阅读约 # 分钟}}",
+    "backToList": "返回理论",
+    "backToPreview": "返回笔记",
+    "previewTitle": "理论笔记",
+    "previewDescription": "阅读此笔记。打开「编辑」进行修改。",
+    "edit": "编辑",
+    "editTitle": "编辑理论",
+    "editDescription": "保存以保留更改。取消将丢弃未保存的编辑。",
+    "editSaveHint": "保存以更新笔记。取消将丢弃未保存的编辑。",
+    "newTitle": "新建理论",
+    "formDescription": "为规则命名、选择分类，然后用自己的话解释。",
+    "documentTitle": "标题",
+    "titlePlaceholder": "例如：芬兰语部分格如何使用",
+    "categoryLabel": "分类",
+    "summaryLabel": "简短描述",
+    "summaryPlaceholder": "一两句用于资料库卡片的说明…",
+    "content": "讲解",
+    "contentPlaceholder": "解释规则、模式或用法。需要时可添加例句…",
+    "titleRequired": "标题为必填项",
+    "descriptionTooLong": "简短描述不得超过 {max} 个字符。",
+    "categoryInvalid": "请选择有效分类。",
+    "notFound": "未找到理论笔记。",
+    "saved": "理论笔记已保存",
+    "created": "理论笔记已创建",
+    "saveFailed": "保存理论笔记失败",
+    "deleted": "理论笔记已删除",
+    "deleteConfirmTitle": "删除此理论笔记？",
+    "deleteConfirmDescription": "「{title}」将被永久删除。",
+    "autosaving": "自动保存中…",
+    "autosaveReady": "更改会自动保存",
+    "autosavePending": "保存后启用自动保存",
+    "categories": {
+      "grammar": "语法",
+      "vocabulary": "词汇",
+      "pronunciation": "发音",
+      "writing": "写作",
+      "communication": "交际",
+      "usage": "用法",
+      "culture": "文化与语境"
+    },
+    "export": {
+      "button": "导出",
+      "title": "导出理论",
+      "kicker": "导出理论",
+      "untitled": "未命名笔记",
+      "description": "将此笔记下载为可打印页面或可编辑文件。",
+      "format": "格式",
+      "formatPdf": "PDF",
+      "formatDocx": "Word",
+      "formatPdfHint": "可打印页面",
+      "formatDocxHint": "可编辑文件",
+      "confirm": "导出",
+      "success": "已开始下载",
+      "failed": "导出失败",
+      "empty": "导出前请先添加内容",
+      "preparing": "正在准备导出…",
+      "writingFile": "正在保存文件…",
+      "progressCount": "{current} / {total}",
+      "documentHeading": "理论",
+      "titleLabel": "标题",
+      "descriptionLabel": "描述"
+    }
+  },
+  "reading": {
+    "eyebrow": "阅读",
+    "title": "阅读",
+    "description": "粘贴或导入文章，生成理解练习，并用已保存的结果进行练习。",
+    "disabledNoWorkspace": "请先创建工作区，再添加阅读文章。",
+    "import": "添加文章",
+    "importFirst": "添加第一篇文章",
+    "importTitle": "添加阅读文章",
+    "importDescription": "粘贴文本或上传 PDF/DOCX，编辑预览，然后可选择生成练习。",
+    "importTabsAria": "文章来源",
+    "tabPaste": "粘贴",
+    "tabUpload": "上传",
+    "bodyLabel": "文章正文",
+    "bodyPlaceholder": "在此粘贴或输入阅读文章…",
+    "titleLabel": "标题",
+    "titlePlaceholder": "可选标题",
+    "languageLabel": "文章语言",
+    "wordCount": "{count, plural, one {# 个词} other {# 个词}}",
+    "continuePreview": "继续预览",
+    "dropTitle": "将 PDF 或 DOCX 拖放到此处",
+    "dropDescription": "或点击浏览。扫描版 PDF 在需要时会使用 OCR。",
+    "extractSuccess": "文本已提取——保存前请先检查并编辑。",
+    "sourcePaste": "粘贴的文本",
+    "back": "返回",
+    "savePassage": "保存文章",
+    "saveAndGenerate": "保存并生成练习",
+    "generateHint": "用 {language} 生成理解题。将使用你的 AI 练习配额。",
+    "modeLabel": "练习类型",
+    "questionCountLabel": "题目数",
+    "difficultyLabel": "难度",
+    "difficultyNone": "自动",
+    "questionLanguageLabel": "题目语言",
+    "skipGenerate": "暂时跳过",
+    "generateExercises": "生成练习",
+    "generateTitle": "生成练习",
+    "generateDescription": "根据此文章创建理解题。生成一次后即保存。",
+    "exercisesGenerated": "练习已就绪。",
+    "created": "文章已保存",
+    "deleted": "文章已删除",
+    "submitted": "答案已提交",
+    "emptyTitle": "尚无阅读文章",
+    "emptyDescription": "粘贴文本或上传 PDF/DOCX 以开始阅读练习。",
+    "myPassages": "我的文章",
+    "passageHint": "打开文章以生成练习或继续练习。",
+    "open": "打开",
+    "practice": {
+      "submit": "提交答案",
+      "loading": "正在加载题目…",
+      "questionLabel": "第 {number} 题。",
+      "writtenPlaceholder": "写下你的答案…",
+      "correct": "正确",
+      "incorrect": "不太对",
+      "expected": "正确答案",
+      "objectiveScore": "客观题正确 {correct} / {total}",
+      "mobileTabsAria": "练习面板",
+      "unansweredWarnTitle": "未答题目",
+      "unansweredWarn": "部分题目尚未作答。仍要提交吗？",
+      "submitAnyway": "仍然提交",
+      "gradingPending": "书面答案尚未评分。你的答案已保存——可以重试评分。",
+      "retryGrading": "重试评分",
+      "retryAttempt": "再试一次",
+      "progress": "第 {current} 题，共 {total} 题",
+      "aiFeedbackLabel": "AI 反馈",
+      "understood": "已理解",
+      "missing": "遗漏"
+    },
+    "startPractice": "开始练习",
+    "practiceTitle": "阅读练习",
+    "backToList": "返回阅读",
+    "backToPassage": "返回文章",
+    "passagePanel": "文章",
+    "questionsPanel": "题目",
+    "questionSets": "练习集",
+    "noSetsYet": "尚无练习",
+    "noSetsDescription": "生成一次练习即可——它们会保存，刷新不会重新生成。",
+    "setCount": "{count, plural, one {# 套练习} other {# 套练习}}",
+    "questionCountValue": "{count, plural, one {# 道题} other {# 道题}}",
+    "staleSet": "文章自本练习集后已更新",
+    "vocabHint": "在文章中选中单词或短短语，即可添加到词汇。",
+    "addToVocabulary": "添加到词汇",
+    "deleteConfirmTitle": "删除此文章？",
+    "deleteConfirmDescription": "「{title}」及其全部练习与作答记录将被永久删除。",
+    "modes": {
+      "multiple_choice": "选择题",
+      "written": "书面作答",
+      "true_false_not_stated": "对 / 错 / 未提及",
+      "mixed": "混合"
+    },
+    "sources": {
+      "paste": "粘贴",
+      "pdf": "PDF",
+      "docx": "DOCX"
+    },
+    "setStatus": {
+      "generating": "生成中",
+      "ready": "就绪",
+      "failed": "失败"
+    },
+    "tfns": {
+      "true": "对",
+      "false": "错",
+      "not_stated": "未提及"
+    },
+    "errors": {
+      "UNAUTHORIZED": "请登录后继续。",
+      "OPENAI_NOT_CONFIGURED": "AI 尚未配置。",
+      "INVALID_INPUT": "请检查输入后重试。",
+      "INVALID_FILE": "请选择 PDF 或 DOCX 文件。",
+      "EMPTY_FILE": "该文件为空。请选择包含内容的 PDF 或 DOCX。",
+      "INVALID_FILE_TYPE": "仅支持 PDF 和 DOCX 文件。",
+      "FILE_TOO_LARGE": "文件过大。请使用不超过 100 MB 的文件。",
+      "EMPTY_CONTENT": "请添加更长的文章（至少几句话）。",
+      "SCANNED_PDF": "此 PDF 似乎为扫描件。OCR 未能提取足够文本——请改为粘贴文章。",
+      "UNSUPPORTED_PARSE": "无法读取该文件。请尝试 .docx 或基于文本的 PDF。",
+      "EXTRACT_TRUNCATED": "仅部分文档可用于练习。原文件仍已保存。",
+      "EXTRACT_UNAVAILABLE": "文件已上传，但无法提取文本。你可以下载原件或手动粘贴文本。",
+      "UPLOAD_FAILED": "上传失败。请检查网络连接后重试。",
+      "UPLOAD_CANCELLED": "上传已取消。",
+      "STORAGE_FAILED": "无法保存上传内容。请重试。",
+      "NETWORK_FAILED": "上传时出现网络错误。请重试。",
+      "PASSAGE_NOT_FOUND": "未找到阅读文章。",
+      "SET_NOT_FOUND": "未找到练习集。",
+      "ATTEMPT_NOT_FOUND": "未找到练习记录。",
+      "SET_NOT_READY": "练习尚未就绪。",
+      "GENERATION_FAILED": "无法生成练习。请重试。",
+      "GENERATION_UNAVAILABLE": "目前无法生成练习。",
+      "VALIDATION_FAILED": "生成的练习不可用。请重试。",
+      "GRADING_FAILED": "无法为书面答案评分。请重试。",
+      "ATTEMPT_NOT_EDITABLE": "此作答记录已无法编辑。",
+      "PROCESSING_FAILED": "出了点问题。请重试。",
+      "AI_DISABLED": "设置中已关闭 AI 辅助。",
+      "AI_QUOTA_EXCEEDED": "你已达到本周期的 AI 阅读限额。",
+      "RATE_LIMITED": "请求过多。请稍候再试。",
+      "AI_BUSY": "阅读 AI 正忙。请等待完成后再试。",
+      "generic": "出了点问题。请重试。"
+    },
+    "newPassage": "添加文章",
+    "saving": "保存中…",
+    "saved": "文章已保存",
+    "openPassage": "打开",
+    "searchPlaceholder": "搜索文章…",
+    "noResults": "没有匹配的文章",
+    "generateNew": "生成练习",
+    "generate": "生成",
+    "generating": "生成中…",
+    "generated": "练习已就绪。",
+    "exerciseMode": "练习类型",
+    "modeMultipleChoice": "选择题",
+    "modeWritten": "书面作答",
+    "modeTfns": "对 / 错 / 未提及",
+    "modeMixed": "混合",
+    "questionCount": "题目数",
+    "questionLanguage": "题目语言",
+    "difficulty": "难度",
+    "setsHeading": "练习集",
+    "noSets": "尚无练习集。生成一次即可——刷新不会重新生成。",
+    "resumePractice": "继续",
+    "retryAttempt": "再试一次",
+    "deleteSet": "删除此练习集？",
+    "setFailed": "生成失败",
+    "setGenerating": "生成中…",
+    "passageTab": "文章",
+    "questionsTab": "题目",
+    "progress": "{current} / {total}",
+    "submit": "提交答案",
+    "submitting": "提交中…",
+    "resultsTitle": "结果已出",
+    "objectiveScore": "客观题正确 {correct} / {total}",
+    "aiFeedbackLabel": "AI 反馈",
+    "explanation": "讲解",
+    "excerpt": "摘录",
+    "correctAnswer": "正确答案",
+    "yourAnswer": "你的答案",
+    "unansweredWarn": "部分题目仍为空。仍要提交吗？",
+    "gradingPending": "书面答案无法评分。你可以重试评分。",
+    "retryGrading": "重试评分",
+    "selectWordHint": "选中单词或短短语以添加到词汇。",
+    "uploadHint": "上传 PDF 或 DOCX。纯图片扫描 PDF 暂不支持。",
+    "uploadChoose": "选择文件",
+    "uploading": "上传中… {percent}%",
+    "extracting": "正在提取文本…",
+    "uploadInProgress": "此文件正在处理中。",
+    "cancelUpload": "取消上传",
+    "retryUpload": "重试上传",
+    "downloadOriginal": "下载原件",
+    "status": {
+      "generating": "生成中",
+      "ready": "就绪",
+      "failed": "失败"
+    },
+    "deleteSetDescription": "此练习集及其作答记录将被永久删除。文章本身会保留。",
+    "dropActive": "松开以提取文本",
+    "supportedFiles": "文件须为 PDF 或 DOCX，且不超过 100 MB。",
+    "replaceFile": "点击选择其他文件",
+    "emptyFolder": "此文件夹为空"
+  },
+  "listening": {
+    "eyebrow": "听力",
+    "title": "听力",
+    "highlight": "练习",
+    "description": "上传 MP3 或 MP4，将其变为互动听力课。",
+    "disabledNoWorkspace": "请先创建工作区，再添加听力课。",
+    "upload": "上传听力",
+    "uploadFirst": "上传你的第一段听力",
+    "uploadTitle": "上传听力",
+    "uploadDescription": "拖放 MP3 或 MP4 文件。我们会转录内容，供你练习听力。",
+    "dropTitle": "将 MP3 或 MP4 文件拖放到此处",
+    "dropDescription": "或浏览你的电脑",
+    "replaceFile": "点击选择其他文件",
+    "uploadAction": "上传",
+    "titleLabel": "标题",
+    "titlePlaceholder": "可选——将根据音频生成",
+    "emptyTitle": "尚无听力课",
+    "emptyDescription": "上传音频或视频文件以创建你的第一堂听力课。",
+    "myLessons": "我的听力课",
+    "collections": "合集",
+    "searchPlaceholder": "按标题或文件名搜索…",
+    "filterAll": "全部",
+    "filterCefr": "CEFR",
+    "filterTopic": "主题",
+    "filterFormality": "语体",
+    "filterStatus": "状态",
+    "sortNewest": "最新优先",
+    "sortOldest": "最早优先",
+    "sortTitleAsc": "标题（A → Z）",
+    "sortTitleDesc": "标题（Z → A）",
+    "clearFilters": "清除筛选",
+    "sortBy": "排序",
+    "noResults": "没有匹配的听力课",
+    "noResultsDescription": "尝试其他搜索或清除筛选。",
+    "continue": "继续",
+    "open": "打开",
+    "viewProgress": "查看",
+    "retry": "重试",
+    "created": "听力课创建成功。",
+    "deleted": "听力课已删除",
+    "renameFile": "重命名文件",
+    "renameFileTitle": "重命名文件",
+    "renameFileDescription": "更改文件名。音频本身不会重新上传。",
+    "fileNameLabel": "文件名",
+    "renamed": "文件名已更新",
+    "deleteConfirmTitle": "删除此听力课？",
+    "deleteConfirmDescription": "「{title}」及其练习将被永久删除。",
+    "backToList": "返回听力",
+    "backToLesson": "返回课程",
+    "lessonDescription": "听音、选择练习类型，并在同一页回答全部题目。",
+    "practiceDescription": "播放音频、作答并检查听力理解。",
+    "startPractice": "开始练习",
+    "transcript": "转录文稿",
+    "showTranscript": "显示文稿",
+    "hideTranscript": "隐藏文稿",
+    "speakerLabel": "说话人 {id}",
+    "identifyingSpeakers": "正在识别说话人…",
+    "exerciseTitle": "听力练习",
+    "chooseExerciseType": "选择练习类型：",
+    "chooseTypeHint": "选择填空或选择题以生成问题。",
+    "exercisesGenerated": "练习已生成。",
+    "generationInProgress": "练习正在生成中。",
+    "exercisesTitle": "练习",
+    "exerciseCount": "{count, plural, one {# 道练习} other {# 道练习}}",
+    "status": {
+      "UPLOADING": "上传中",
+      "TRANSCRIBING": "转录中",
+      "GENERATING": "正在生成练习",
+      "COMPLETED": "已完成",
+      "FAILED": "失败"
+    },
+    "steps": {
+      "uploading": "上传中…",
+      "transcribing": "转录中…",
+      "generating": "正在生成练习…",
+      "wait": "可能需要一分钟。请保持此窗口打开。"
+    },
+    "types": {
+      "FILL_BLANK": "填空",
+      "MULTIPLE_CHOICE": "选择题",
+      "DICTATION": "听写",
+      "WORD_ORDERING": "词序排列"
+    },
+    "player": {
+      "play": "播放",
+      "pause": "暂停",
+      "replay": "重播",
+      "seek": "跳转",
+      "playSegment": "播放此段",
+      "mute": "静音",
+      "unmute": "取消静音",
+      "volume": "音量",
+      "loadError": "无法加载音频。请检查网络连接后重试。"
+    },
+    "meta": {
+      "none": "未设置",
+      "cefrLabel": "CEFR 等级",
+      "topicLabel": "主题",
+      "formalityLabel": "语体",
+      "cefr": {
+        "a1": "A1",
+        "a2": "A2",
+        "b1": "B1",
+        "b2": "B2",
+        "c1": "C1",
+        "c2": "C2"
+      },
+      "formality": {
+        "formal": "正式",
+        "informal": "非正式",
+        "neutral": "中性"
+      }
+    },
+    "fillBlankOverview": "填写缺失的词语以完成段落。",
+    "practice": {
+      "progress": "{current} / {total}",
+      "answeredProgress": "已答 {answered} / {total}",
+      "score": "正确 {correct} 题",
+      "check": "检查",
+      "checkAnswers": "检查答案",
+      "submitSet": "提交答案",
+      "questionLabel": "第 {number} 题",
+      "blankLabel": "第 {number} 空",
+      "listenPrompt": "听这段音频。",
+      "next": "下一题",
+      "previous": "上一题",
+      "finish": "完成",
+      "correct": "正确",
+      "incorrect": "不太对",
+      "expected": "正确答案",
+      "completeTitle": "听力完成",
+      "completeScore": "正确 {correct} / {total}",
+      "completePercent": "{percent}%",
+      "review": "查看答案",
+      "tryAgain": "再试一次",
+      "back": "返回听力",
+      "backToResults": "返回结果",
+      "yourAnswer": "你的答案",
+      "blanksProgress": "已填 {filled} / {total} 空",
+      "changeType": "更改类型",
+      "hideReview": "隐藏回顾",
+      "jumpToUnanswered": "跳转到未答",
+      "unansweredWarnTitle": "未答题目",
+      "unansweredWarn": "你仍有未答题目。仍要提交吗？",
+      "submitAnyway": "仍然提交",
+      "typeHintMc": "听完后，为本页每道题选择最佳答案。"
+    },
+    "errors": {
+      "CLOUDINARY_NOT_CONFIGURED": "媒体存储尚未配置。",
+      "ASSEMBLYAI_NOT_CONFIGURED": "语音转文字尚未配置。",
+      "OPENAI_NOT_CONFIGURED": "练习生成尚未配置。",
+      "INVALID_FILE": "请选择 MP3 或 MP4 文件。",
+      "INVALID_FILE_TYPE": "仅支持 MP3 和 MP4 文件。",
+      "FILE_TOO_LARGE": "文件过大。请使用不超过 25 MB 的文件。",
+      "AUDIO_TOO_LONG": "该音频超过 45 分钟。请拆分或使用更短片段进行一次转录。",
+      "AUDIO_DURATION_UNKNOWN": "转录前无法确认音频时长。请重新上传文件后重试。",
+      "TRANSCRIPTION_FAILED": "无法转录该音频。请重试。",
+      "GENERATION_FAILED": "无法生成练习。请重试。",
+      "GENERATION_UNAVAILABLE": "目前无法生成练习。请稍后再试。",
+      "VALIDATION_FAILED": "生成的练习不可用。请重试。",
+      "LESSON_NOT_FOUND": "未找到听力课。",
+      "PROCESSING_FAILED": "创建此课程时出错。请重试。",
+      "EMPTY_TRANSCRIPT": "该文件中未检测到语音。",
+      "DUPLICATE_FILENAME": "已存在同名文件。",
+      "FILENAME_REQUIRED": "请输入文件名。"
+    }
+  },
+  "speaking": {
+    "eyebrow": "口语",
+    "title": "口语",
+    "highlight": "练习",
+    "description": "加入与 AI 导师的实时视频通话，用工作区语言练习对话。",
+    "disabledNoWorkspace": "请先创建工作区，再开始口语会话。",
+    "newCall": "新建通话",
+    "newCallFirst": "开始你的第一次通话",
+    "newTitle": "新建口语通话",
+    "newDescription": "选择等级和主题。AI 导师将加入通话并与你交谈。",
+    "modalTip": "选择对话难度，并留下简短备注，让导师知道要练习什么。",
+    "create": "创建通话",
+    "created": "口语通话已创建",
+    "titleLabel": "标题",
+    "titlePlaceholder": "可选——将根据主题生成",
+    "notesLabel": "给导师的备注",
+    "notesPlaceholder": "你想练习的任何内容，或经常混淆的词语…",
+    "emptyTitle": "尚无口语会话",
+    "emptyDescription": "开始与 AI 导师的视频通话以练习口语。",
+    "mySessions": "我的口语会话",
+    "sessionHint": "打开已结束的通话查看反馈与文稿。",
+    "stats": {
+      "aria": "口语会话统计",
+      "total": "会话",
+      "completed": "已完成",
+      "ready": "就绪",
+      "topics": "主题"
+    },
+    "guide": {
+      "aria": "口语练习如何进行",
+      "pick": {
+        "title": "设定重点",
+        "body": "选择 CEFR 和主题，以便导师把对话导向你需要的内容。"
+      },
+      "call": {
+        "title": "实时交谈",
+        "body": "加入视频通话，自然说话，听不清时可以要求重复。"
+      },
+      "review": {
+        "title": "事后回顾",
+        "body": "回来查看反馈和文稿，可复用于词汇或写作。"
+      }
+    },
+    "join": "加入通话",
+    "open": "打开",
+    "viewProgress": "查看进度",
+    "backToList": "返回口语",
+    "sessionDescription": "加入通话，然后回到这里查看反馈和文稿。",
+    "deleted": "口语会话已删除",
+    "ended": "通话已结束",
+    "endSession": "结束会话",
+    "deleteConfirmTitle": "删除此会话？",
+    "deleteConfirmDescription": "这将删除「{title}」及其文稿。",
+    "processingTitle": "正在准备反馈",
+    "processingDescription": "导师正在收尾。反馈将在一分钟内出现在此。",
+    "feedbackTitle": "导师反馈",
+    "feedbackDescription": "对话过程的简短回顾。",
+    "transcriptTitle": "文稿",
+    "transcriptFinalizing": "正在完成文稿",
+    "transcriptLoadingTitle": "正在收集文稿",
+    "transcriptLoadingDescription": "通话中的对话轮次将很快出现在此。",
+    "transcriptEmpty": "此会话未捕获文稿。",
+    "transcriptError": "文稿不完整",
+    "status": {
+      "upcoming": "就绪",
+      "active": "通话中",
+      "processing": "处理中",
+      "completed": "已完成",
+      "cancelled": "已取消"
+    },
+    "meta": {
+      "cefrLabel": "CEFR 等级",
+      "topicLabel": "主题",
+      "cefr": {
+        "a1": "A1",
+        "a2": "A2",
+        "b1": "B1",
+        "b2": "B2",
+        "c1": "C1",
+        "c2": "C2"
+      }
+    },
+    "call": {
+      "lobbyTitle": "准备好开口了吗？",
+      "lobbyDescription": "检查摄像头和麦克风，然后加入。AI 导师会在你之后不久进入。",
+      "permissions": "请在浏览器中允许麦克风访问以加入通话。摄像头可选。",
+      "cancel": "取消",
+      "join": "加入通话",
+      "joining": "正在加入…",
+      "tutorFailed": "你已在通话中，但 AI 导师未能加入。请尝试离开后重新加入。",
+      "tutorSetupTimeout": "AI 导师加入时间过长，通话已结束。请开始新会话再试。",
+      "endedTitle": "通话已结束",
+      "endedDescription": "反馈将在片刻后出现在会话页面。",
+      "back": "返回会话",
+      "notConfigured": "视频通话尚未配置。请添加 Stream Video API 密钥以开始通话。",
+      "sessionLimitReached": "此口语会话已达到 30 分钟合理使用上限并已结束。",
+      "elapsedTitle": "通话时长",
+      "inactivityWarning": "已有一段时间无人说话。通话即将结束。",
+      "inactivityCountdown": "{seconds} 秒后结束…",
+      "inactivityEnded": "因一段时间无活动，通话已结束。",
+      "continueCall": "继续通话"
+    },
+    "errors": {
+      "STREAM_NOT_CONFIGURED": "视频通话尚未配置。",
+      "OPENAI_NOT_CONFIGURED": "AI 导师尚未配置。",
+      "INVALID_INPUT": "请检查主题和等级后重试。",
+      "SESSION_NOT_FOUND": "未找到口语会话。",
+      "SESSION_NOT_JOINABLE": "此通话已无法加入。",
+      "SESSION_EXPIRED": "此口语会话已达时限，无法再加入。",
+      "ACTIVE_SESSION_EXISTS": "你已有进行中的口语会话。请先结束后再开始新的。",
+      "STREAM_CALL_FAILED": "无法启动视频通话。请重试。",
+      "UNAUTHORIZED": "请登录后加入口语通话。",
+      "AI_QUOTA_EXCEEDED": "你已用完今日 AI 口语额度。将在 UTC 午夜重置——或升级以获得更多会话。"
+    },
+    "quotaLockedTitle": "已达每日口语上限",
+    "quotaLockedBody": "你已用完今日的 AI 口语会话。现有会话仍可查看——升级可获得更多，或等待额度重置后再来。"
+  },
+  "errors": {
+    "generic": "出了点问题",
+    "noWorkspace": "没有活动工作区",
+    "notFound": "页面未找到",
+    "unauthorized": "需要登录",
+    "forbidden": "拒绝访问",
+    "rateLimit": "请求过多",
+    "network": "连接问题",
+    "offline": "你处于离线状态",
+    "timeout": "请求超时",
+    "server": "我们这边出了点问题。请重试。若问题持续，请联系支持。"
+  },
+  "learningOnboarding": {
+    "step": "开始使用",
+    "title": "你想学什么？",
+    "description": "选择你要开始学习的第一种语言。",
+    "searchPlaceholder": "搜索语言…",
+    "noResults": "没有匹配的语言。",
+    "continue": "继续",
+    "continuing": "继续中…",
+    "error": "出了点问题。请重试。",
+    "invalidLanguage": "该语言不可用。请选择其他语言。"
+  },
+  "auth": {
+    "welcomeBack": "欢迎回来",
+    "signInDescription": "登录你的 Notoria 账户",
+    "signInEyebrow": "登录",
+    "signUpEyebrow": "注册",
+    "createAccountTitle": "创建你的账户",
+    "registerDescription": "创建账户，然后选择你想学的内容。",
+    "email": "邮箱",
+    "password": "密码",
+    "name": "姓名",
+    "signIn": "登录",
+    "signingIn": "登录中…",
+    "signOut": "退出登录",
+    "createAccount": "创建账户",
+    "creatingAccount": "正在创建账户…",
+    "noAccount": "还没有账户？",
+    "hasAccount": "已有账户？",
+    "invalidCredentials": "邮箱或密码无效",
+    "emailExists": "已存在使用此邮箱的账户",
+    "emailInvalid": "请输入有效的邮箱地址",
+    "registerFailed": "无法创建账户。请重试。",
+    "signInAfterRegisterFailed": "账户已创建。请登录。",
+    "passwordHint": "至少 8 个字符",
+    "passwordTooShort": "密码至少需要 8 个字符",
+    "passwordInvalid": "密码未满足全部要求",
+    "passwordRequirements": {
+      "label": "密码要求",
+      "met": "已满足",
+      "unmet": "未满足",
+      "minLength": "至少 8 个字符。",
+      "uppercase": "至少一个大写字母。",
+      "lowercase": "至少一个小写字母。",
+      "number": "至少一个数字。",
+      "special": "至少一个特殊字符。"
+    },
+    "showPassword": "显示密码",
+    "hidePassword": "隐藏密码",
+    "forgotPassword": "忘记密码？",
+    "forgotPasswordEyebrow": "账户找回",
+    "forgotPasswordTitle": "忘记密码了？",
+    "forgotPasswordDescription": "输入你的邮箱，若账户存在，我们将发送重置链接。",
+    "sendResetLink": "发送重置链接",
+    "sendingResetLink": "发送中…",
+    "forgotPasswordSentTitle": "请查收邮箱",
+    "forgotPasswordSent": "如果此邮箱对应账户存在，我们已向你发送密码重置链接。",
+    "forgotPasswordFailed": "无法发送重置链接。请重试。",
+    "backToSignIn": "返回登录",
+    "resetPasswordEyebrow": "账户找回",
+    "resetPasswordTitle": "设置新密码",
+    "resetPasswordDescription": "为你的 Notoria 账户输入新密码。",
+    "resetPassword": "重置密码",
+    "resettingPassword": "重置中…",
+    "resetPasswordSuccessTitle": "密码已更新",
+    "resetPasswordSuccess": "密码已重置。你现在可以登录。",
+    "resetPasswordFailed": "无法重置密码。请重试。",
+    "resetTokenInvalid": "此重置链接无效或已过期。请重新申请。",
+    "resetTokenMissing": "此重置链接缺失或不完整。请重新申请。",
+    "account": "账户",
+    "accountSettings": "账户设置",
+    "accountDescription": "更新你的头像和密码。",
+    "profile": "个人资料",
+    "avatar": "头像",
+    "avatarDescription": "为账户上传照片。支持 JPG、PNG、WebP 或 GIF，最大 5 MB——上传前我们会压缩。",
+    "changeAvatar": "上传照片",
+    "removeAvatar": "移除照片",
+    "avatarUpdated": "头像已更新",
+    "avatarRemoved": "头像已移除",
+    "avatarUploadFailed": "无法上传头像",
+    "avatarInvalidType": "请选择 JPG、PNG、WebP 或 GIF 图片",
+    "avatarTooLarge": "图片须不超过 5 MB（压缩后约 900 KB 以下）。",
+    "avatarNotConfigured": "图片上传尚未配置",
+    "changePassword": "更改密码",
+    "currentPassword": "当前密码",
+    "newPassword": "新密码",
+    "confirmPassword": "确认新密码",
+    "updatePassword": "更新密码",
+    "passwordUpdated": "密码已更新",
+    "passwordUpdateFailed": "无法更新密码",
+    "invalidCurrentPassword": "当前密码不正确",
+    "passwordMismatch": "两次输入的密码不一致",
+    "retypePassword": "再次输入密码",
+    "passwordSameAsCurrent": "新密码必须与当前密码不同",
+    "verifyingPassword": "正在验证当前密码…",
+    "saveName": "保存姓名",
+    "nameUpdated": "姓名已更新",
+    "nameUpdateFailed": "无法更新姓名",
+    "nameTooShort": "姓名至少需要 2 个字符",
+    "continueWithGoogle": "使用 Google 继续",
+    "continuingWithGoogle": "正在连接 Google…",
+    "orContinueWith": "或使用邮箱继续",
+    "oauthCancelled": "Google 登录已取消。你可以再试一次。",
+    "oauthFailed": "Google 登录失败。请重试。",
+    "oauthAccountNotLinked": "此邮箱已用于其他登录方式。",
+    "oauthNotConfigured": "Google 登录尚未配置。",
+    "legalPrivacy": "隐私",
+    "legalTerms": "条款",
+    "registerAgreement": "创建账户即表示你同意 <terms>使用条款</terms> 和 <privacy>隐私政策</privacy>。",
+    "avatarRequestTooLarge": "该照片太大，无法发送。请尝试更小的图片。",
+    "requestTooLarge": "请求过大。你的更改已保留——请重试。"
+  },
+  "account": {
+    "eyebrow": "账户",
+    "title": "你的",
+    "highlight": "账户",
+    "description": "管理个人资料、订阅、数据导出与导入，以及账户安全——包括永久关闭账户。",
+    "pro": {
+      "freeLede": "免费版包含核心学习功能与少量每日 AI 额度。Pro 可解除这些限制。",
+      "activeLede": "Pro 已开通。订阅续期期间，当前 AI 工具保持不限量。",
+      "premiumLede": "Premium 已开通。你的教练会使用已保存在 Notoria 中的学习活动。",
+      "premiumIncluded": "Premium 已包含",
+      "unlockLabel": "用 Pro 解锁",
+      "includedLabel": "已包含在你的 Pro 方案中",
+      "features": {
+        "aiPractice": "基于你自己的材料进行填空、语境练习与造句",
+        "writingAi": "对你写的文本提供纠正与建议",
+        "export": "以 PDF 或 Word 分享或打印练习单",
+        "listening": "将你自己的音频或视频变为练习课",
+        "speaking": "实时 AI 导师通话，含文稿与反馈"
+      }
+    },
+    "profile": {
+      "title": "个人资料",
+      "description": "你在 Notoria 中的展示方式。邮箱与登录绑定，不可在此更改。",
+      "emailHint": "邮箱无法在此更改。如需更换地址，请联系 contact@notoria.fi。"
+    },
+    "security": {
+      "title": "密码",
+      "description": "选择一个不在其他地方重复使用的强密码。"
+    },
+    "data": {
+      "title": "你的数据",
+      "description": "随时下载学习数据副本，或从先前备份恢复。",
+      "exportTitle": "导出账户备份",
+      "exportHint": "下载包含工作区与学习内容的 JSON 文件。媒体文件以 URL 链接，不嵌入文件。",
+      "exportAction": "下载备份",
+      "exportDone": "备份已下载",
+      "exportFailed": "无法准备备份。请重试。",
+      "importTitle": "导入账户备份",
+      "importHint": "从先前的账户备份恢复 Notoria 学习数据。不会更改你的账户、登录与订阅信息。",
+      "importAction": "导入备份",
+      "clearTitle": "删除全部账户数据",
+      "clearHint": "删除所有工作区与学习内容，同时保留登录与订阅。这不会关闭你的账户。",
+      "clearAction": "删除全部数据"
+    },
+    "clearData": {
+      "kicker": "保留账户",
+      "title": "删除全部账户数据？",
+      "description": "这将永久删除 {email} 的学习数据，但保留登录状态与订阅不变。",
+      "warningTitle": "继续之前",
+      "warnings": {
+        "workspaces": "每个工作区以及全部词汇、理论、写作、阅读、听力、口语、练习与收件箱项目都将被删除。",
+        "media": "已上传的媒体（听力文件、阅读文档、导入内容与头像）将被移除。",
+        "kept": "你的登录、邮箱与订阅保持有效。之后可以创建新工作区。",
+        "permanent": "确认后没有恢复期。"
+      },
+      "backupTitle": "请先下载备份",
+      "backupHint": "将学习数据导出为 JSON 文件以便妥善保管。媒体文件以 URL 链接，不嵌入文件。",
+      "backup": "下载备份",
+      "backupDone": "备份已下载",
+      "backupFailed": "无法准备备份。请重试。",
+      "confirmLabel": "输入 {phrase} 以确认",
+      "confirm": "删除全部数据",
+      "deleted": "全部学习数据已删除",
+      "failed": "无法删除你的数据。请重试。"
+    },
+    "backupImport": {
+      "title": "恢复你的 Notoria 学习数据",
+      "description": "导入从 Notoria 导出的 JSON 备份。仅恢复学习数据——不会恢复账户身份或订阅。",
+      "uploadHint": "选择来自「导出账户备份」的 JSON 文件。",
+      "chooseFile": "选择备份文件",
+      "uploading": "上传中… {percent}%",
+      "uploadBytes": "{loaded} / {total}",
+      "analyzing": "正在检查备份…",
+      "importing": "正在导入学习数据…",
+      "detectedTitle": "已检测到 Notoria 账户备份",
+      "strategyTitle": "应如何导入此备份？",
+      "strategyAddAsNew": "添加为新数据——创建新副本，不替换现有学习数据。同一语言下已存在的工作区会接收备份内容，而不会重复创建。",
+      "readyTitle": "准备导入",
+      "nothingToImport": "此备份中没有可导入的新内容。",
+      "notImportedTitle": "部分账户信息不会导入",
+      "notImportedHint": "你的姓名、邮箱、登录信息与订阅由当前账户管理，无法通过备份导入更改。学习数据仍可导入。",
+      "notImportedFields": {
+        "name": "账户姓名",
+        "email": "邮箱",
+        "subscription": "订阅",
+        "auth": "身份验证信息"
+      },
+      "skippedTitle": "可能跳过",
+      "warnings": {
+        "workspace_language_reuse": "部分工作区在同一语言下已存在。其内容将加入现有工作区，而不会创建重复项。",
+        "empty_backup": "此备份不包含任何可导入的学习数据。"
+      },
+      "cancel": "取消",
+      "confirm": "导入学习数据",
+      "close": "关闭",
+      "doneTitle": "学习数据已导入",
+      "doneDescription": "备份中的学习数据已添加到此账户。",
+      "doneToast": "学习数据已导入",
+      "importedTitle": "已导入",
+      "counts": {
+        "workspaces": "{count, plural, one {# 个工作区} other {# 个工作区}}",
+        "folders": "{count, plural, one {# 个文件夹} other {# 个文件夹}}",
+        "tags": "{count, plural, one {# 个标签} other {# 个标签}}",
+        "vocabulary": "{count, plural, one {# 个词汇项} other {# 个词汇项}}",
+        "theory": "{count, plural, one {# 个理论页} other {# 个理论页}}",
+        "writing": "{count, plural, one {# 个写作文档} other {# 个写作文档}}",
+        "exercises": "{count, plural, one {# 道练习} other {# 道练习}}",
+        "listening": "{count, plural, one {# 堂听力课} other {# 堂听力课}}",
+        "speaking": "{count, plural, one {# 次口语会话} other {# 次口语会话}}"
+      },
+      "skips": {
+        "workspace_language_exists": "{count, plural, one {# 个工作区在该语言下已存在} other {# 个工作区在该语言下已存在}}",
+        "vocabulary_duplicate": "{count, plural, one {# 个词汇项已存在} other {# 个词汇项已存在}}",
+        "listening_missing_media": "{count, plural, one {# 堂听力课缺少媒体 URL} other {# 堂听力课缺少媒体 URL}}",
+        "listening_duplicate_filename": "{count, plural, one {# 堂听力课已跳过（文件名重复）} other {# 堂听力课已跳过（文件名重复）}}",
+        "invalid_workspace_ref": "{count, plural, one {# 项缺少工作区} other {# 项缺少工作区}}",
+        "invalid_record": "{count, plural, one {# 条无效记录} other {# 条无效记录}}",
+        "unsupported_account_field": "账户身份字段不会导入"
+      },
+      "errors": {
+        "fileTooLarge": "该备份文件过大。请重新导出或联系支持。",
+        "invalidBackup": "这不像是有效的 Notoria 备份。请使用从 Notoria「导出账户备份」功能导出的 JSON 文件。",
+        "unauthorized": "请重新登录以导入备份。",
+        "invalidInput": "请选择 JSON 备份文件。",
+        "importFailed": "无法导入此备份。请重试。",
+        "requestTooLarge": "该备份太大，无法通过此页面处理。请尝试更小的导出或联系支持。",
+        "notConfigured": "备份导入的文件存储尚未配置。"
+      }
+    },
+    "danger": {
+      "title": "关闭账户",
+      "description": "永久删除你的 Notoria 账户及其全部内容。",
+      "deleteTitle": "删除我的账户",
+      "deleteHint": "这将移除此账户的所有工作区、学习内容与账单。如需保留副本，请先使用上方的「导出账户备份」。",
+      "deleteAction": "删除账户"
+    },
+    "delete": {
+      "kicker": "不可撤销",
+      "title": "删除你的账户？",
+      "description": "你即将永久关闭 {email}。此操作无法撤销。",
+      "warningTitle": "继续之前",
+      "warnings": {
+        "workspaces": "每个工作区以及全部词汇、理论、写作、听力与口语数据都将被删除。",
+        "billing": "任何有效的 Notoria Pro 订阅将立即取消。",
+        "media": "已上传的媒体与头像将被移除。",
+        "permanent": "确认后没有恢复期。"
+      },
+      "backupTitle": "请先下载备份",
+      "backupHint": "将学习数据导出为 JSON 文件以便妥善保管。媒体文件以 URL 链接，不嵌入文件。",
+      "backup": "下载备份",
+      "backupDone": "备份已下载",
+      "backupFailed": "无法准备备份。请重试。",
+      "confirmLabel": "输入 {phrase} 以确认",
+      "confirm": "永久删除账户",
+      "deleted": "你的账户已删除",
+      "failed": "无法删除账户。请重试。"
+    }
+  },
+  "billing": {
+    "title": "订阅",
+    "description": "核心学习、每日 AI 额度，以及付费方案。",
+    "proDescription": "你当前拥有 Notoria Pro。",
+    "tagline": "核心学习，外加每日 AI 额度。",
+    "price": "€9.99 / 月",
+    "priceAmount": "€9.99",
+    "pricePeriod": "/月",
+    "introFirstMonthOnly": "仅限首月 · 之后 {price}/月",
+    "introCheckoutHint": "首月 {intro}，之后 {price}/月。可随时取消。",
+    "freePrice": "€0",
+    "mostPopular": "最受欢迎",
+    "currentPlan": "当前方案",
+    "choosePro": "选择 Pro",
+    "freePlanDescription": "从必备功能开始学习。",
+    "proPlanDescription": "完整的 Notoria 工具包。",
+    "premiumPlanDescription": "个性化 AI 学习智能。",
+    "distinction": "Pro 提供工具。Premium 帮助你更智能地使用它们。",
+    "modalTitle": "升级你的 Notoria 方案",
+    "modalSubtitle": "Free 覆盖必备功能。Pro 解锁完整工具包。Premium 增加个性化学习智能。",
+    "modalTitlePro": "你已使用 Pro",
+    "modalSubtitlePro": "你已拥有完整的 Notoria 工具包。Premium 增加个性化学习智能。",
+    "modalTitlePremium": "你已使用 Premium",
+    "modalSubtitlePremium": "个性化学习智能已启用。",
+    "premiumActiveCopy": "你的教练会根据此工作区的真实学习活动，建议下一步做什么。",
+    "premiumActiveFineprint": "可随时在 Stripe 中管理账单。",
+    "lockedTitle": "这是 Pro 功能",
+    "lockedDescription": "升级到 Pro，即可使用 Notoria 的核心 AI 工具包、文件导入、完整听力练习、写作支持，以及 PDF/Word 导出。",
+    "planName": "Notoria",
+    "cancelAnytime": "可随时取消",
+    "upgrade": "升级到 Pro",
+    "manage": "管理订阅",
+    "proBadge": "Pro",
+    "freeBadge": "Free",
+    "premiumBadge": "Premium",
+    "renewsOn": "续订日期：{date}",
+    "status": "状态：{status}",
+    "monthlyPrice": "{price} / 月",
+    "usageToday": "今日 AI 用量",
+    "quotaCount": "{used} / {limit}",
+    "unlimitedAi": "核心 AI 工具包",
+    "quotaUnlimitedHint": "此方案下日常使用无限制。",
+    "quotaRemainingHint": "今日剩余 {remaining} · {reset} 重置",
+    "quotaExhaustedHint": "额度已用完 · {reset} 重置",
+    "quotaResetUtcMidnight": "UTC 午夜",
+    "quotaExceeded": "你已用完今日此 AI 功能的额度。将在 UTC 午夜重置——或升级以获得更高限额。",
+    "quotaExceededNoUpgrade": "你已用完今日此 AI 功能的额度。将于 {reset} 重置。",
+    "quotaMessages": {
+      "ai_meeting": {
+        "free": "你已用完今日的 AI 口语会话。升级可获得更多次数，或在额度重置后返回（{reset}）。",
+        "pro": "你已达到每日 AI 口语限额。升级到 Premium 可获得更高额度，或在额度重置后返回（{reset}）。",
+        "premium": "你已达到今日 AI 口语限额。将于 {reset} 重置。"
+      },
+      "ai_reading": {
+        "free": "你已用完今日的 AI 阅读额度。升级可获得更多练习，或在重置后返回（{reset}）。",
+        "pro": "你已达到每日 AI 阅读限额。升级到 Premium 可获得更高额度，或在重置后返回（{reset}）。",
+        "premium": "你已达到今日 AI 阅读限额。将于 {reset} 重置。"
+      },
+      "ai_listening_transcript": {
+        "free": "你已用完今日的 AI 听力转录。升级可获得更多，或在重置后返回（{reset}）。",
+        "pro": "你已达到每日听力转录限额。升级到 Premium 可获得更多，或在重置后返回（{reset}）。",
+        "premium": "你已达到今日听力转录限额。将于 {reset} 重置。"
+      },
+      "ai_vocabulary": {
+        "free": "你已用完今日的 AI 词汇操作。升级可获得更多，或在重置后返回（{reset}）。",
+        "pro": "你已达到今日 AI 词汇限额。将于 {reset} 重置。",
+        "premium": "你已达到今日 AI 词汇限额。将于 {reset} 重置。"
+      },
+      "ai_writing": {
+        "free": "你已用完今日的 AI 写作支持。升级可获得更多，或在重置后返回（{reset}）。",
+        "pro": "你已达到今日 AI 写作限额。将于 {reset} 重置。",
+        "premium": "你已达到今日 AI 写作限额。将于 {reset} 重置。"
+      },
+      "ai_exercise": {
+        "free": "你已用完今日的 AI 练习生成。升级可获得更多，或在重置后返回（{reset}）。",
+        "pro": "你已达到今日 AI 练习限额。将于 {reset} 重置。",
+        "premium": "你已达到今日 AI 练习限额。将于 {reset} 重置。"
+      },
+      "ai_exercise_import": {
+        "free": "Free 方案不包含练习导入。升级到 Pro 即可导入练习单。",
+        "pro": "你已达到今日练习导入限额。升级到 Premium 可获得更多，或在重置后返回（{reset}）。",
+        "premium": "你已达到今日练习导入限额。将于 {reset} 重置。"
+      },
+      "ai_learning_coach_chat": {
+        "free": "学习教练对话是 Premium 功能。",
+        "pro": "学习教练对话是 Premium 功能。",
+        "premium": "你已达到今日学习教练对话限额。将于 {reset} 重置。"
+      },
+      "content_import": {
+        "free": "Free 方案不包含内容导入。升级到 Pro 即可导入学习材料。",
+        "pro": "你已达到今日内容导入限额。将于 {reset} 重置。",
+        "premium": "你已达到今日内容导入限额。将于 {reset} 重置。"
+      }
+    },
+    "explorePremium": "了解 Premium",
+    "switchTo": "切换到 {plan}",
+    "switchToFreeHint": "你将保留此方案至续订日，之后切换到 Free。",
+    "switchScheduled": "本计费周期结束后，你将切换到 Free。",
+    "downgradeScheduled": "已安排切换到 Pro",
+    "planUpdated": "你的方案已更新。",
+    "continueToStripe": "继续前往 Stripe",
+    "upgradeToPremium": "升级到 Premium",
+    "switchToPro": "切换到 Pro",
+    "switchToFree": "切换到 Free",
+    "cancelPro": "取消 Pro",
+    "cancelPremium": "取消 Premium",
+    "keepPro": "保留 Pro",
+    "keepPremium": "保留 Premium",
+    "changePlan": "更改方案",
+    "manageBilling": "管理账单",
+    "cancellationScheduled": "已安排取消",
+    "accessUntil": "你的 {plan} 访问权限将保持有效至 {date}。",
+    "thenFree": "之后，你的账户将切换到 Free。",
+    "endsOn": "结束于 {date}",
+    "startsOn": "开始于 {date}",
+    "periodEndFallback": "本计费周期结束时",
+    "confirming": "已收到付款。正在确认你的订阅…",
+    "confirmingChange": "正在确认你的订阅…",
+    "stillConfirming": "Stripe 仍在确认此更改。你的方案将在 Stripe 确认后更新。",
+    "nowOnPro": "你现在已使用 Pro。",
+    "nowOnPremium": "你现在已使用 Premium。",
+    "keptPlan": "你的 {plan} 方案将继续续订。",
+    "paymentFailed": "付款未完成。你的方案未被更改。",
+    "priceMissing": "此方案的价格在该 Stripe 账户中不存在。请检查价格 ID 是否与密钥模式匹配。",
+    "priceModeMismatch": "此 Stripe 价格所属模式与密钥模式不一致。",
+    "priceInactive": "此 Stripe 价格未激活。",
+    "priceCurrency": "此 Stripe 价格必须以欧元计费。",
+    "priceInterval": "此 Stripe 价格必须是月度订阅。",
+    "prorationHint": "价格立即变更。Stripe 会立即收取或退还按比例差额。",
+    "confirmUpgradeTitle": "切换到 Premium？",
+    "confirmUpgradeBody": "Premium 会立即替换当前订阅中的 Pro。Stripe 会立即收取按比例差额。这不会开启第二个订阅。任何已安排的取消将被移除。",
+    "confirmDowngradeTitle": "切换到 Pro？",
+    "confirmDowngradeBody": "你将保留全部 Premium 功能至 {date}。之后订阅将以 Pro（€9.99/月）继续。在此之前当前方案仍为 Premium。",
+    "downgradeScheduleHint": "Premium 将保持有效至 {date}。之后开始使用 Pro——当前不会立即变更。",
+    "switchingToProOn": "将于 {date} 切换到 Pro。在此之前 Premium 访问仍有效。",
+    "confirmCancelTitle": "取消 {plan}？",
+    "confirmCancelBody": "你的 {plan} 访问权限将保持有效至 {date}。之后账户将切换到 Free。你将不再被扣款。",
+    "cancelFeedbackLabel": "你为什么取消？",
+    "cancelFeedbackOptional": "可选——你可以跳过此项并仍完成取消。",
+    "cancelCommentLabel": "还有什么想说的吗？",
+    "cancelCommentPlaceholder": "可选备注",
+    "cancelCommentCount": "{count} / {max}",
+    "cancelReasons": {
+      "too_expensive": "太贵了",
+      "missing_features": "我需要更多功能",
+      "switched_service": "我找到了替代方案",
+      "unused": "我不再需要了",
+      "too_complex": "使用起来太复杂",
+      "low_quality": "质量不够好",
+      "other": "其他原因"
+    },
+    "invalidCancellationFeedback": "取消反馈无效。请选择列出的原因，或缩短你的备注。",
+    "confirmKeepTitle": "保留 {plan}？",
+    "confirmKeepBody": "已安排的取消将被移除。{plan} 将继续续订，下次扣款日期为 {date}。",
+    "back": "返回",
+    "choosePremium": "选择 Premium",
+    "openCoach": "打开学习教练",
+    "alreadySubscribed": "你已拥有此方案。",
+    "activating": "正在确认你的订阅…",
+    "checkoutSuccess": "已收到付款。你的方案即将激活。",
+    "checkoutCanceled": "结账已取消。你未被扣款。",
+    "checkoutFailed": "无法开始结账。请重试。",
+    "portalFailed": "无法打开账单管理。请重试。",
+    "alreadyPro": "你已拥有有效的 Pro 订阅。",
+    "notConfigured": "账单尚未配置。",
+    "noCustomer": "此账户尚未关联账单客户。",
+    "points": {
+      "core": "闪卡、写作、理论笔记与 CSV 导出",
+      "meeting": "每日 1 次口语辅导通话",
+      "transcript": "每日 1 次听力转录",
+      "exercises": "每日 3 次 AI 练习生成",
+      "vocabulary": "每日 5 次词汇 AI 操作",
+      "unlimited": "无限练习生成、词汇 AI 与写作支持",
+      "import": "导入学习材料",
+      "practiceFromMaterial": "基于练习单的 AI 练习",
+      "listening": "每日 10 次听力转录",
+      "speaking": "每日 10 次口语辅导通话",
+      "writing": "AI 写作支持",
+      "export": "PDF 与 DOCX 导出",
+      "coach": "基于你活动的 AI 学习教练",
+      "askCoach": "向 AI 学习教练提问——进度、词汇、语法、理论、翻译，以及接下来练什么",
+      "profile": "个人学习档案",
+      "daily": "今日自适应练习",
+      "weekly": "每周学习回顾",
+      "mistakes": "从闪卡失误中练习"
+    },
+    "quotaLabels": {
+      "ai_meeting": "AI 口语辅导",
+      "ai_listening_transcript": "AI 听力转录",
+      "ai_reading": "AI 阅读练习",
+      "ai_exercise": "AI 练习生成",
+      "ai_exercise_import": "基于练习单的 AI 练习",
+      "ai_vocabulary": "AI 词汇操作",
+      "ai_writing": "AI 写作支持",
+      "ai_learning_coach_chat": "AI 学习教练",
+      "content_import": "导入学习材料"
+    },
+    "cell": {
+      "unlimited": "无限",
+      "limited": "有限",
+      "perDay": "{count}/天",
+      "quotaPerDay": {
+        "ai_meeting": "{count, plural, one {# 次通话/天} other {# 次通话/天}}",
+        "ai_listening_transcript": "{count, plural, one {# 次转录/天} other {# 次转录/天}}",
+        "ai_reading": "{count, plural, one {# 次阅读 AI/天} other {# 次阅读 AI/天}}",
+        "ai_exercise": "{count, plural, one {# 次生成/天} other {# 次生成/天}}",
+        "ai_exercise_import": "{count, plural, one {# 次生成/天} other {# 次生成/天}}",
+        "ai_vocabulary": "{count, plural, one {# 次操作/天} other {# 次操作/天}}",
+        "ai_writing": "{count, plural, one {# 次操作/天} other {# 次操作/天}}",
+        "content_import": "{count, plural, one {# 次导入/天} other {# 次导入/天}}",
+        "ask_learning_coach": "{count, plural, one {# 条消息/天} other {# 条消息/天}}"
+      },
+      "includedSr": "已包含",
+      "unavailableSr": "不可用"
+    },
+    "features": {
+      "vocabulary": "词汇",
+      "exercises": "练习",
+      "theory": "理论",
+      "workspace": "工作区",
+      "aiMeeting": "AI 会议",
+      "aiListeningTranscript": "AI 听力转录",
+      "aiReading": "AI 阅读练习",
+      "aiExercise": "AI 练习生成",
+      "aiVocabulary": "AI 词汇操作",
+      "aiSpeakingTutor": "AI 口语辅导",
+      "aiWriting": "AI 写作",
+      "aiWritingSupport": "AI 写作支持",
+      "importLearningMaterial": "导入学习材料",
+      "exportLearningMaterial": "导出学习材料",
+      "importExportLearningMaterial": "导入与导出材料",
+      "importAccountBackup": "导入账户备份",
+      "importExportAccountBackup": "导入与导出账户备份",
+      "aiPracticeFromMaterial": "基于练习单的 AI 练习",
+      "practiceFromMaterial": "基于练习单的 AI 练习",
+      "listening": "听力",
+      "speaking": "口语",
+      "reading": "阅读",
+      "pdfDocxExport": "导出学习材料",
+      "learningCoach": "学习教练",
+      "askLearningCoach": "向 AI 学习教练提问",
+      "learningProfile": "个人学习档案",
+      "adaptiveDailyPractice": "自适应每日练习",
+      "practiceFromMistakes": "从错误中练习",
+      "weeklyLearningReview": "每周学习回顾",
+      "learningTrends": "学习趋势",
+      "personalLearningPath": "个人学习路径",
+      "personalizedRecommendations": "个性化建议",
+      "crossModuleIntelligence": "跨模块个性化"
+    },
+    "compare": {
+      "heading": "对比方案",
+      "premiumDelta": "Premium 增加个性化学习智能",
+      "tableCaption": "Free、Pro 与 Premium 功能对比",
+      "feature": "功能",
+      "current": "当前",
+      "capability": "你获得什么",
+      "free": "Free",
+      "pro": "Pro",
+      "premium": "Premium",
+      "freeIncludes": "Free 已包含",
+      "proUnlocks": "Pro 增加",
+      "premiumAdds": "Premium 增加",
+      "impact": "为什么重要",
+      "yes": "是",
+      "locked": "未解锁",
+      "categories": {
+        "core": "核心学习",
+        "ai": "AI 工具",
+        "export": "导入与导出",
+        "personalized": "个性化学习"
+      },
+      "rows": {
+        "practice": {
+          "capability": "闪卡、配对、测验与填空作答",
+          "impact": "基于你自己单词的核心训练"
+        },
+        "vocabAi": {
+          "capability": "添加单词时的 AI 拼写与释义",
+          "impact": "用免费 AI 帮助更快添加单词"
+        },
+        "studio": {
+          "capability": "写作编辑器与理论笔记",
+          "impact": "起草文本并保存语法笔记"
+        },
+        "csv": {
+          "capability": "CSV 导出",
+          "impact": "将单词备份到电子表格"
+        },
+        "aiPractice": {
+          "capability": "基于词汇、理论与导入的 AI 练习",
+          "impact": "填空、情境训练、造句"
+        },
+        "writingAi": {
+          "capability": "写作 AI（检查与改进）",
+          "impact": "获得对你自己文本的纠正"
+        },
+        "export": {
+          "capability": "PDF 与 Word 导出",
+          "impact": "打印练习单或分享文件"
+        },
+        "listening": {
+          "capability": "听力课程",
+          "impact": "将你的音频或视频转化为练习"
+        },
+        "speaking": {
+          "capability": "与 AI 的口语通话",
+          "impact": "实时辅导通话，随后获得转录"
+        }
+      }
+    },
+    "benefits": {
+      "vocab": {
+        "title": "AI 驱动的词汇辅助",
+        "body": "在词汇模块中直接生成词汇想法，获得解释、例句与个性化学习帮助。"
+      },
+      "writing": {
+        "title": "AI 写作辅助",
+        "body": "获得 AI 驱动的纠正、建议、解释与反馈，改进你的写作。"
+      },
+      "exercises": {
+        "title": "AI 驱动的练习",
+        "body": "根据你的学习需求，用 AI 创建并练习个性化练习。"
+      },
+      "theoryAi": {
+        "title": "AI 理论练习",
+        "body": "将你的个人理论笔记转化为交互式填空练习，含新情境、提示与解释。"
+      },
+      "importAi": {
+        "title": "AI 导入练习",
+        "body": "导入练习单、图片、PDF 或网址，并转化为练习卡片——与练习工作室中的词汇和理论 AI 一起使用。"
+      },
+      "listening": {
+        "title": "增强的听力体验",
+        "body": "获得更强大的工具，用于练习与处理听力内容。"
+      },
+      "speaking": {
+        "title": "AI 口语通话",
+        "body": "通过视频通话与 AI 辅导进行实时对话练习，然后获得反馈与转录。"
+      },
+      "files": {
+        "title": "PDF 与 Word（DOCX）支持",
+        "body": "将词汇、写作与理论笔记导出为 PDF 或 DOCX，方便分享材料。"
+      },
+      "personal": {
+        "title": "更个性化的学习体验",
+        "body": "使用 AI 工具，让你的词汇、写作与练习更有用、更贴合你。"
+      }
+    }
+  },
+  "coach": {
+    "eyebrow": "Premium",
+    "title": "学习",
+    "highlight": "教练",
+    "description": "个性化展示你的学习方式，以及接下来该关注什么。",
+    "descriptionIntelligence": "接下来该做什么、为什么重要，以及你的学习如何变化。",
+    "lockedTitle": "此功能属于 Notoria Premium。",
+    "lockedBody": "Premium 会将你的词汇、复习、听力、口语、写作与理论活动，转化为聚焦的练习计划。",
+    "distinction": "Pro 提供工具。Premium 帮助你更智能地使用它们。",
+    "upgrade": "升级到 Premium",
+    "noteLabel": "教练笔记",
+    "focusLabel": "你的学习重点",
+    "focusCta": "从这里开始",
+    "profile": "学习档案",
+    "profileTitle": "你目前所处的位置",
+    "today": "今日重点",
+    "todayTitle": "接下来做什么",
+    "plan": "自适应练习",
+    "planTitle": "今日 {minutes} 分钟计划",
+    "planMinutes": "约 {count} 分钟",
+    "startStep": "开始",
+    "startPlan": "开始今日练习",
+    "mistakes": "从错误中练习",
+    "mistakesTitle": "需要关注的单词",
+    "practiceMistakes": "练习这些单词",
+    "path": "学习路径",
+    "pathTitle": "你的学习路径",
+    "pathCurrent": "当前重点",
+    "pathNext": "下一步",
+    "pathThen": "随后",
+    "pathLater": "稍后",
+    "cross": "关联",
+    "crossTitle": "跨模块关联",
+    "crossHints": {
+      "theory_to_practice": "练习你刚学过的内容",
+      "vocab_to_speaking": "在口语中使用薄弱词汇"
+    },
+    "week": "你的一周",
+    "weekTitle": "过去 7 天",
+    "trends": "学习趋势",
+    "trendsTitle": "自上周以来",
+    "trendsEmpty": "随着学习活动增多，你的学习趋势将显示在这里。",
+    "language": "工作区语言",
+    "speakingLevel": "口语",
+    "vocabulary": "词汇",
+    "vocabularyEmpty": "尚无词汇",
+    "reviews": "闪卡复习",
+    "misses": "再来 / 困难",
+    "listening": "听力",
+    "speaking": "口语",
+    "writing": "写作",
+    "theory": "理论",
+    "due": "{count} 张卡片待复习",
+    "weak": "标记为再来或困难的单词：{words}",
+    "weakShort": "{words}",
+    "noWeak": "尚无再来或困难的闪卡评分。",
+    "empty": "你的学习教练正在了解你。继续在 Notoria 中学习，教练就会开始在这里识别模式并给出建议。",
+    "hintSpeaking": "过去 7 天没有口语会话",
+    "hintListening": "近期没有更新听力课程",
+    "hintWriting": "近期没有更新写作文档",
+    "hintTheory": "近期没有更新理论笔记",
+    "refresh": "更新教练",
+    "refreshed": "已根据你的最新活动更新教练。",
+    "refreshFailed": "无法更新教练。请重试。",
+    "refreshRateLimited": "你刚刚刷新过。请稍等一分钟后再试。",
+    "refreshBusy": "教练正在更新中。请稍候。",
+    "ask": {
+      "label": "询问教练",
+      "title": "询问你的学习教练",
+      "description": "可以问任何与学习相关的问题——进度、接下来练什么、词汇、语法、理论、翻译，或你粘贴的任何学习内容。回答会跟随你提问所用的语言。",
+      "emptyReady": "你的教练已就绪。我还不了解你的学习习惯，可以先问一个单词、一个语法点，或先练什么。",
+      "placeholder": "向你的学习教练提问…",
+      "inputHint": "按 Enter 发送。Shift+Enter 换行。",
+      "send": "发送消息",
+      "thinking": "教练正在思考…",
+      "you": "你",
+      "coach": "教练",
+      "promptsLabel": "建议问题",
+      "retry": "重试",
+      "upgrade": "升级到 Premium",
+      "errorQuota": "你已达到今日学习教练限额。明天可再次使用。",
+      "errorPremium": "学习教练是 Premium 功能。可根据你的学习活动获得个性化建议。",
+      "errorUnavailable": "教练目前无法回复。本次消息未计入额度。请重试。",
+      "prompts": {
+        "practice_today": "我今天应该专注什么？",
+        "struggling_words": "为什么这些单词让我吃力？",
+        "practice_weak": "帮我练习薄弱单词。",
+        "review_first": "我应该先复习什么？",
+        "neglecting": "我最近忽略了什么？",
+        "improve_speaking": "为什么我的口语没有进步？",
+        "study_20": "我今天该如何安排 20 分钟？",
+        "getting_started": "我应该先练习什么？",
+        "am_i_improving": "我真的在进步吗？",
+        "what_changed": "这周我的学习有什么变化？"
+      }
+    },
+    "next": {
+      "label": "决定",
+      "title": "你的下一步",
+      "planTitle": "今日推荐练习",
+      "whyOrder": "为什么是这个顺序？先处理到期与困难词汇，再练你最近忽略的模块。",
+      "cta": "开始今日练习"
+    },
+    "why": {
+      "title": "为什么？",
+      "due": "{count} 张词汇卡片待复习",
+      "weak": "{count} 个单词反复感到困难",
+      "reviews": "过去 7 天有 {count} 次闪卡复习",
+      "speakingIdle": "过去 7 天没有口语会话",
+      "listeningIdle": "过去 7 天没有听力活动",
+      "writingIdle": "过去 7 天没有写作更新",
+      "theoryIdle": "过去 7 天没有理论笔记更新",
+      "focus": "当前重点：{focus}"
+    },
+    "chips": {
+      "due": "{count} 张待复习",
+      "weak": "{count} 个困难单词",
+      "speakingIdle": "7 天没有口语会话",
+      "mastered": "现已掌握 {count} 个",
+      "dueLabel": "待复习卡片",
+      "weakLabel": "困难单词"
+    },
+    "quick": {
+      "label": "背景",
+      "title": "快速背景"
+    },
+    "progress": {
+      "label": "衡量",
+      "title": "你的进度",
+      "description": "看看学习中有哪些变化——以及教练注意到了什么。",
+      "empty": "你才刚开始。继续学习，教练会逐渐展示有意义的进度。",
+      "chartEmpty": "此图表的事件历史还不够。继续复习或口语练习，趋势就会出现。",
+      "chartSr": "过去 {days} 天的 {metric}，最新区间从 {from} 到 {to}。",
+      "activityTitle": "学习活动 — 过去 {days} 天",
+      "activityNote": "活动显示你把时间花在哪里——并不代表这些时间是否提升了能力。",
+      "compareLabel": "时段对比",
+      "noticesTitle": "教练注意到的情况",
+      "askAbout": "向教练询问此事",
+      "periodLabel": "进度时段",
+      "metricLabel": "图表指标",
+      "period": {
+        "7": "7 天",
+        "30": "30 天",
+        "90": "90 天"
+      },
+      "metrics": {
+        "flashcardReviews": "复习",
+        "againOrHard": "困难评分",
+        "speakingSessions": "口语会话"
+      },
+      "tooltip": {
+        "weekOf": "{date} 所在周",
+        "firstAt": "首次活动 {time}",
+        "reviews": "{count, plural, one {# 次闪卡复习} other {# 次闪卡复习}}",
+        "againOrHard": "{count, plural, one {# 次再来/困难评分} other {# 次再来/困难评分}}",
+        "speaking": "{count, plural, one {# 次口语会话} other {# 次口语会话}}",
+        "none": "此时段无活动",
+        "words": "单词：{list}",
+        "topics": "主题：{list}"
+      },
+      "streak": {
+        "label": "连续打卡",
+        "days": "{count, plural, one {天连续} other {天连续}}",
+        "practicedToday": "你今天已练习——连续记录安全。",
+        "keepGoing": "今天练习以保持连续打卡。",
+        "start": "今天学点东西，开始连续打卡。",
+        "weekLabel": "过去 7 天",
+        "best": "最佳连续：{count, plural, one {# 天} other {# 天}}",
+        "dayEmpty": "当天无学习活动",
+        "dayActive": "已记录学习活动",
+        "dayReviews": "{count, plural, one {# 次闪卡复习} other {# 次闪卡复习}}",
+        "daySpeaking": "{count, plural, one {# 次口语会话} other {# 次口语会话}}",
+        "dayListening": "{count, plural, one {# 次听力更新} other {# 次听力更新}}",
+        "dayWriting": "{count, plural, one {# 次写作更新} other {# 次写作更新}}",
+        "dayTheory": "{count, plural, one {# 次理论更新} other {# 次理论更新}}"
+      }
+    },
+    "notices": {
+      "reviews_up": "闪卡复习活动高于上一时段。",
+      "reviews_down": "闪卡复习活动低于上一时段。",
+      "misses_down": "再来/困难评分相较上一时段有所减少。",
+      "misses_up": "再来/困难评分相较上一时段有所增加。",
+      "speaking_quiet": "相对词汇活动，口语会话仍然偏少。",
+      "speaking_up": "口语会话相较上一时段有所增加。",
+      "due_open": "你仍有卡片待复习。",
+      "weak_open": "部分单词仍反复感到困难。",
+      "getting_started": "历史数据还不足以给出有力的进度解读。"
+    },
+    "attention": {
+      "label": "行动",
+      "title": "需要关注的事项",
+      "dueTitle": "{count} 张卡片待复习",
+      "dueBody": "复习到期词汇，避免逾期卡片堆积。",
+      "weakTitle": "{count} 个反复困难的单词",
+      "weakBody": "练习这些单词：{words}",
+      "review": "复习",
+      "practice": "练习"
+    },
+    "rating": {
+      "AGAIN": "再来",
+      "HARD": "困难"
+    },
+    "status": {
+      "MASTERED": "已掌握",
+      "REVIEW": "复习",
+      "LEARNING": "学习中",
+      "NEW": "新"
+    },
+    "focus": {
+      "review-due": "复习到期词汇",
+      "weak-words": "练习困难单词",
+      "listening": "添加或重温听力课程",
+      "speaking": "开始口语练习",
+      "writing": "打开写作工作室",
+      "theory": "打开理论笔记",
+      "keep-going": "保持你已有的节奏"
+    }
+  },
+  "gettingStarted": {
+    "backToWorkspace": "返回工作区",
+    "meta": {
+      "eyebrow": "指南",
+      "title": "欢迎使用 Notoria",
+      "description": "关于如何建立你的个人语言学习日记，并将知识转化为练习，你需要了解的一切。"
+    },
+    "toc": {
+      "title": "本页内容",
+      "welcome": "什么是 Notoria？",
+      "howItWorks": "如何运作",
+      "vocabulary": "词汇",
+      "theory": "理论",
+      "exercise": "练习",
+      "writing": "写作",
+      "listening": "听力",
+      "speaking": "口语",
+      "reading": "阅读",
+      "connections": "知识转化为练习",
+      "philosophy": "你的学习日记",
+      "startHere": "从这里开始",
+      "inbox": "速记"
+    },
+    "welcome": {
+      "title": "什么是 Notoria？",
+      "lead": "Notoria 是你的私人学习日记。",
+      "paragraphs": [
+        "可以把它想成语言旅程的笔记本——只不过你写下的一切都能成为练习的一部分。",
+        "没有必须遵循的预设课程。没有「正确」使用工作区的方式。没有老师在身后盯着。也没有人给你的笔记打分。"
+      ],
+      "examplesIntro": "由你决定什么属于你的 Notoria。例如，你可以：",
+      "examples": [
+        "记下今天听到的一个词",
+        "保存你终于理解的一条语法规则",
+        "添加一句对你有意义的例句",
+        "上传一段你想学习的视频",
+        "写下你想练习说的内容"
+      ],
+      "overTime": "随着时间推移，这些小片段会变成你自己的个人语言知识库。",
+      "noWrongWay": {
+        "title": "建立日记没有对错之分。",
+        "paragraphs": [
+          "你的学习日记属于你。你不必把一切组织得完美。你不必使用每一项功能。你也不必遵循某种特定的学习方法。",
+          "用任何让学习对你更轻松、更有意义的方式使用 Notoria。目标不是打造完美数据库——而是创建一个真正属于你的学习空间。"
+        ]
+      }
+    },
+    "howItWorks": {
+      "title": "Notoria 如何运作",
+      "intro": "Notoria 将你的学习区域连接成一条旅程：",
+      "flow": {
+        "collect": "收集",
+        "understand": "理解",
+        "practice": "练习",
+        "create": "创造",
+        "listen": "听",
+        "speak": "说",
+        "review": "复习"
+      },
+      "anywhereNote": "你可以从任何地方开始，但许多人会大致遵循这样的路径：",
+      "steps": {
+        "collect": {
+          "title": "1. 收集知识",
+          "body": "用速记快速记下碎片，再从课程、对话、书籍、媒体，或任何你接触语言的地方添加词汇与理论。"
+        },
+        "understand": {
+          "title": "2. 理解它",
+          "body": "保留你自己的解释、例句、语法笔记与发音笔记——用对你有意义的方式书写。"
+        },
+        "practice": {
+          "title": "3. 练习它",
+          "body": "把你收集的内容转化为基于你自己单词与知识的练习。"
+        },
+        "use": {
+          "title": "4. 使用它",
+          "body": "用你一直在积累的语言练习写作、听力与口语。"
+        },
+        "review": {
+          "title": "5. 复习它",
+          "body": "回顾你曾感到困难的内容，补充学到的东西，持续扩展你的日记。"
+        }
+      },
+      "connectedNote": "这些区域协同工作——不是彼此独立的应用。你在词汇与理论中添加的内容，会供给练习、写作、听力与口语。"
+    },
+    "sections": {
+      "vocabulary": {
+        "title": "词汇",
+        "intro": "词汇是你的个人词库——Notoria 中其他一切的基础。",
+        "bullets": [
+          "添加你实际遇到的单词与短语",
+          "包含释义、翻译与例句",
+          "需要时添加发音笔记",
+          "用标签按主题、水平、情境，或任何有助于日后查找的方式组织",
+          "在练习与复习中复用词汇"
+        ],
+        "body": "不是死记硬背通用词表，而是建立能反映你真实学习旅程的词库。",
+        "exampleIntro": "例如，你今天听到芬兰语单词「varata」：",
+        "examples": [
+          "单词：varata",
+          "释义：预订 / 预约",
+          "例句：Haluan varata ajan.",
+          "标签：日常生活"
+        ],
+        "exampleNote": "这个词现在已成为你个人 Notoria 知识的一部分——随时可以复习与练习。",
+        "emphasis": "不必添加你看到的每一个词。添加对你有意义的词。"
+      },
+      "theory": {
+        "title": "理论",
+        "intro": "理论是你的个人语言参考——保存你想记住的知识。",
+        "bullets": [
+          "语法规则与模式",
+          "发音笔记",
+          "用法解释",
+          "例句与个人笔记",
+          "你反复忘记的内容"
+        ],
+        "body": "用你自己的话写解释。语法笔记不必听起来像教科书。如果简单解释对你有意义，那对你的日记来说就是好解释。",
+        "emphasis": "理论就像一本参考笔记本——当你忘记某事时可以随时回来查阅。"
+      },
+      "exercise": {
+        "title": "练习",
+        "intro": "练习让你主动运用已收集的知识。",
+        "bullets": [
+          "闪卡",
+          "测验与选择题",
+          "填空练习",
+          "基于已保存单词的词汇练习",
+          "基于理论笔记的语法练习",
+          "基于你自己材料的其他形式"
+        ],
+        "emphasis": "价值来自练习你自己的知识——不是通用课程里的随机词汇，而是你亲自认定重要的单词与概念。"
+      },
+      "writing": {
+        "title": "写作",
+        "intro": "写作是将被动知识转化为主动语言使用的地方。",
+        "bullets": [
+          "就你关心的主题起草文本",
+          "为自己创建问题集",
+          "练习使用已学词汇",
+          "尝试新语法",
+          "随时间回顾并改进写作",
+          "使用 Pro：用 AI 检查并改进你的作品",
+          "需要时导出你的写作"
+        ],
+        "emphasis": "你的写作不必完美。重点是使用语言、犯错、发现自己还不会的，并随时间改进。"
+      },
+      "listening": {
+        "title": "听力",
+        "intro": "听力让你学习自己选择的真实内容——而不只是预设课程。",
+        "bullets": [
+          "上传音频或视频",
+          "生成转录",
+          "逐行学习转录",
+          "将材料转化为课程",
+          "从真实内容中发现词汇与表达"
+        ],
+        "body": "把你真正想理解的内容带进 Notoria：",
+        "examples": [
+          "一段 YouTube 视频",
+          "一段对话录音",
+          "一集播客",
+          "一场讲座",
+          "任何其他学习材料"
+        ],
+        "emphasis": "内容由你掌控。Notoria 帮助你理解并从中学习。"
+      },
+      "speaking": {
+        "title": "口语",
+        "intro": "口语是学习旅程中主动对话的部分。",
+        "bullets": [
+          "通过视频与 AI 辅导对话",
+          "自然地练习口语",
+          "使用你已收集的词汇与知识",
+          "事后回顾对话转录",
+          "阅读反馈并识别改进方向"
+        ],
+        "emphasis": "口语不必完美。目的是在真实情境中练习使用语言——然后从发生的事情中学习。"
+      },
+      "reading": {
+        "title": "阅读",
+        "intro": "阅读将你选择的文本转化为理解练习。",
+        "bullets": [
+          "粘贴文本或上传 PDF/DOCX 篇章",
+          "生成选择题、书面题，或正确/错误/未提及问题",
+          "练习并复习答案，书面回答由 AI 评分",
+          "将篇章中有用的词保存到词汇",
+          "用文件夹组织篇章"
+        ],
+        "emphasis": "带入你真正想理解的材料——新闻、故事、练习单——并转化为属于你日记的练习。"
+      },
+      "inbox": {
+        "title": "速记",
+        "intro": "速记是你的快速投放区——一遇到就先保存，稍后再决定它属于哪里。",
+        "bullets": [
+          "几秒钟内保存单词、短语、语法疑问或写作想法",
+          "可选添加备注或来源作为背景",
+          "在准备好之前，将条目保留在「待处理」",
+          "有时间时，将速记转化为词汇、理论、写作或练习",
+          "只有在你完成创建对应链接条目后，才会标记为「已处理」"
+        ],
+        "body": "速记位于循环的起点：先收集，再整理。当下不必有完美分类——你需要的是把想法保存下来。",
+        "emphasis": "如果你只有十秒，速记就够了。整理可以稍后再做。",
+        "exampleIntro": "例如，你在公交上听到一个短语，只有片刻时间：",
+        "examples": [
+          "内容：varata aika",
+          "备注：公交上听到——预约",
+          "来源：日常生活",
+          "稍后：处理到词汇，附上释义与例句"
+        ],
+        "exampleNote": "碎片已安全保存在速记中。当你有五分钟安静时间时，把它发送到词汇（或理论 / 写作）并完成条目——那时才会标记为已处理。"
+      }
+    },
+    "connections": {
+      "title": "你的知识成为你的练习",
+      "intro": "当你持续添加对学习真正重要的内容时，Notoria 会更有用：",
+      "flow": {
+        "vocabTheory": "词汇 + 理论",
+        "exercise": "练习",
+        "writingListening": "写作 + 听力",
+        "speaking": "口语",
+        "review": "复习",
+        "addMore": "添加更多知识"
+      },
+      "paragraphs": [
+        "速记保存碎片，直到你准备好安置它们。",
+        "你在词汇与理论中收集的内容，会成为练习的来源。",
+        "写作与听力帮助你在新情境中使用并理解语言。",
+        "口语把这一切放入主动对话。",
+        "复习闭合循环——而每次复习往往又带来新的单词与笔记。"
+      ],
+      "highlight": "你添加的对你重要的知识越多，练习就越有用、越个人化。"
+    },
+    "philosophy": {
+      "title": "这是你的日记。",
+      "lead": "Notoria 是服务于你学习过程的工具——不是检验你学得有多好的考试。",
+      "dontNeed": [
+        "你不必把笔记做得完美",
+        "你不必担心标签是否「正确」",
+        "你不必写出教科书级别的解释",
+        "你不必完成每一道练习",
+        "你不必使用每一项功能"
+      ],
+      "canDo": [
+        "你可以改变主意。",
+        "你可以重新整理。",
+        "你可以犯错。",
+        "你可以按自己的节奏学习。"
+      ],
+      "quote": "没有人在给你的日记打分。你是为自己建立它。"
+    },
+    "startHere": {
+      "title": "第一次入门",
+      "intro": "你不必在开始前把一切都设置好。只需从你想记住的东西开始。",
+      "firstTen": {
+        "title": "你的前 10 分钟",
+        "steps": {
+          "language": "选择你想学习的语言。",
+          "words": "添加 5–10 个你真正想记住的词。",
+          "theory": "添加一两条理论或语法笔记。",
+          "exercise": "根据你的知识创建一道练习。",
+          "writing": "试着写几句话。",
+          "listeningSpeaking": "准备好时，试试听力或口语。",
+          "return": "明天再回来，添加新的内容。",
+          "capture": "打开速记，保存一条你想稍后回来看的快速笔记或短语。"
+        }
+      },
+      "closing": "只需从你想记住的东西开始。你的日记会从那里自然生长。"
+    }
+  },
+  "legal": {
+    "eyebrow": "法律信息",
+    "navLabel": "法律页面",
+    "privacy": "隐私政策",
+    "terms": "使用条款",
+    "privacyTitle": "隐私政策",
+    "termsTitle": "使用条款",
+    "privacyDescription": "Notoria 如何为其私人语言学习工作区收集、使用与删除个人数据及学习内容。",
+    "termsDescription": "使用 Notoria 私人语言学习工作区、账户、AI 功能以及 Notoria Pro 账单的相关条款。",
+    "updated": "最近更新：{date}",
+    "updatedDate": "2026 年 9 月 23 日",
+    "backToSignIn": "返回登录",
+    "backHome": "返回 Notoria",
+    "authFooter": "隐私 · 条款",
+    "privacyShort": "隐私",
+    "termsShort": "条款",
+    "registerAgreement": "创建账户即表示你同意<terms>使用条款</terms>与<privacy>隐私政策</privacy>。",
+    "settingsLinksTitle": "政策",
+    "settingsLinksDescription": "了解 Notoria 如何处理你的数据，以及使用本服务的规则。",
+    "contactEmail": "contact@notoria.fi",
+    "privacyPolicy": {
+      "intro": "本隐私政策说明 Notoria（<site>www.notoria.fi</site>）如何为其私人语言学习网页应用处理个人数据。内容与当前产品实际运作方式一致。若此处未描述某项做法，我们不宣称会这样做。",
+      "tocTitle": "本页内容",
+      "tocAria": "本页内容",
+      "toc": {
+        "controller": "责任主体",
+        "scope": "本政策涵盖范围",
+        "data": "我们处理的数据",
+        "purposes": "我们为何处理数据",
+        "auth": "账户与登录",
+        "ai": "AI 功能",
+        "payments": "付款（Notoria Pro）",
+        "processors": "服务提供商",
+        "cookies": "Cookie 与设备存储",
+        "transfers": "国际传输",
+        "retention": "我们保留数据多久",
+        "deletion": "导出与账户删除",
+        "rights": "你的权利（GDPR）",
+        "children": "儿童",
+        "changes": "变更",
+        "contact": "联系"
+      },
+      "sections": {
+        "controller": {
+          "title": "1. 责任主体",
+          "p1": "Notoria 是位于 <site>www.notoria.fi</site> 的语言学习服务，面向芬兰及更广泛的欧盟/欧洲经济区用户提供。",
+          "p2": "如有隐私问题、数据主体请求及其他用户联系，请发送邮件至 <contact>contact@notoria.fi</contact>。",
+          "p3": "当前产品中未公布数据控制者的注册公司名称与邮寄地址。若你因 GDPR 请求需要正式的控制者身份信息，请发送邮件至 <contact>contact@notoria.fi</contact>，我们将提供。"
+        },
+        "scope": {
+          "title": "2. 本政策涵盖范围",
+          "p1": "当出现以下情况时，本政策涵盖所处理的个人数据与学习内容：",
+          "list": [
+            "创建或使用账户",
+            "在私人工作区中保存材料",
+            "订阅 Notoria Pro",
+            "使用可选的 AI 辅助工具",
+            "上传用于听力或个人资料的媒体",
+            "使用口语练习",
+            "发送反馈或联系我们"
+          ],
+          "p2": "当前应用代码不包含第三方营销分析或广告 SDK。我们不宣称使用产品中不存在的跟踪器。"
+        },
+        "data": {
+          "title": "3. 我们处理的数据",
+          "p1": "Notoria 出于不同原因处理不同类型的数据。主要类别包括：",
+          "accountAuth": {
+            "title": "账户与身份验证",
+            "list": [
+              "姓名与电子邮箱地址",
+              "邮箱/密码账户的密码哈希（密码绝不以明文存储）",
+              "若你使用 Google 登录，则包括 Google 账户标识符与 OAuth 令牌",
+              "可选的个人资料照片（头像）",
+              "账户角色以及创建/更新时间戳"
+            ]
+          },
+          "learningContent": {
+            "title": "你创建的学习内容",
+            "p1": "你在私人工作区中添加的内容，例如词汇、理论笔记、写作文档、练习与导入的练习材料、听力课程（包括媒体引用与转录）、口语会话转录及相关会话字段、文件夹、标签，以及如闪卡复习等学习进度。",
+            "p2": "这是你的学习材料。Notoria 存储它们，以便你能够返回并据此练习。"
+          },
+          "subscription": {
+            "title": "订阅与付款元数据",
+            "list": [
+              "方案（free 或 Pro）与订阅状态",
+              "Stripe 客户与订阅标识符，以及适用时的当前周期结束时间"
+            ],
+            "p1": "卡号与付款方式机密由 Stripe 保管。Notoria 仅保留反映你 Pro 状态所需的账单元数据。"
+          },
+          "device": {
+            "title": "设备与偏好数据",
+            "p1": "用于登录、语言区域、活动工作区、AI 辅助偏好、主题及类似产品设置的 Cookie 与浏览器存储。参见 <cookies>Cookie 与设备存储</cookies>。"
+          },
+          "support": {
+            "title": "支持与反馈",
+            "list0": "你发送至 <contact>contact@notoria.fi</contact> 的邮件",
+            "list1": "来自支持的应用内反馈（消息、反馈类型、你的邮箱、是否已登录、可选账户 ID、页面路径、用户代理，以及最多三张可选图片附件）",
+            "p1": "反馈通过邮件送达 Notoria 的技术收件箱（<technical></technical>）。它不会作为 Notoria 内部的独立工单数据库存储。"
+          }
+        },
+        "purposes": {
+          "title": "4. 我们为何处理数据",
+          "headers": {
+            "purpose": "目的",
+            "basis": "典型 GDPR 依据"
+          },
+          "rows": [
+            {
+              "purpose": "提供账户、工作区以及你保存的学习材料",
+              "basis": "合同（第 6(1)(b) 条）"
+            },
+            {
+              "purpose": "对你进行身份验证（邮箱/密码或 Google）并重置密码",
+              "basis": "合同（第 6(1)(b) 条）"
+            },
+            {
+              "purpose": "通过 Stripe 运行 Notoria Pro 账单与订阅状态",
+              "basis": "合同（第 6(1)(b) 条）"
+            },
+            {
+              "purpose": "当你使用这些功能时，提供可选 AI 帮助、听力转录与口语练习",
+              "basis": "合同（第 6(1)(b) 条）；在可用处使用偏好控制"
+            },
+            {
+              "purpose": "保持服务安全可靠（防止滥用、调试）",
+              "basis": "合法利益（第 6(1)(f) 条）"
+            },
+            {
+              "purpose": "回复支持与反馈消息",
+              "basis": "合法利益 / 合同，视请求而定"
+            },
+            {
+              "purpose": "遵守法律义务",
+              "basis": "法律义务（第 6(1)(c) 条）"
+            }
+          ],
+          "p1": "若你需要某项具体活动的正式法律依据说明，请发送邮件至 <contact>contact@notoria.fi</contact>。"
+        },
+        "auth": {
+          "title": "5. 账户与登录",
+          "p1": "Notoria 使用 Auth.js（NextAuth）与 JWT 会话。你可以使用邮箱和密码登录，或在已配置 Google 登录时使用 Google OAuth。",
+          "p2": "密码重置邮件仅发送给设有密码的账户。重置令牌以哈希形式存储，30 分钟后过期，且仅用于设置新密码。"
+        },
+        "ai": {
+          "title": "6. AI 功能",
+          "p1": "当前产品中的可选 AI 功能使用 <strong>OpenAI</strong>。根据你使用的工具，Notoria 可能发送相关学习内容——例如词汇条目、写作文本或选区、练习或理论上下文、听力转录、口语转录，或口语辅导的实时音频。",
+          "p2": "AI 辅助偏好（包括是否启用辅助）存储在浏览器 Cookie 中，以便产品尊重你的设置。许多调用模型的服务器操作会先检查辅助是否已启用。在 <settings>设置</settings> 中关闭辅助会阻止需要它的 AI 工具。",
+          "p3": "当你使用需要转录的听力功能时，通过 AssemblyAI 进行的听力转录仍可运行，因为转录是该媒体工作流的一部分，而不仅取决于可选的「AI 辅助」偏好。",
+          "p4": "当前代码库除 OpenAI 外不使用其他大型语言模型提供商。OpenAI 作为这些功能的处理者，依据其自身条款与隐私政策处理数据。"
+        },
+        "payments": {
+          "title": "7. 付款（Notoria Pro）",
+          "p1": "付费订阅由 <strong>Stripe</strong> 处理。结账、发票、付款方式与取消通过 Stripe Checkout 与 Stripe 客户门户进行。Stripe webhook 会更新你在 Notoria 中的方案与状态。",
+          "p2": "Stripe 作为付款提供商处理付款数据。有关卡片处理，请参阅 Stripe 自身的隐私文档。"
+        },
+        "processors": {
+          "title": "8. 服务提供商",
+          "p1": "取决于你使用的功能，个人数据或学习内容可能由以下方处理：",
+          "headers": {
+            "provider": "提供商",
+            "role": "在 Notoria 中的角色"
+          },
+          "rows": [
+            {
+              "provider": "PostgreSQL 数据库（生产环境文档记载为 Neon）",
+              "role": "账户与学习数据"
+            },
+            {
+              "provider": "Vercel",
+              "role": "应用托管（配置区域包括法兰克福 / fra1）"
+            },
+            {
+              "provider": "Cloudinary",
+              "role": "头像、听力媒体、编辑器图片与练习导入文件"
+            },
+            {
+              "provider": "AssemblyAI",
+              "role": "听力音频转录"
+            },
+            {
+              "provider": "Stream Video",
+              "role": "实时口语通话音视频传输；仅在随后收到录制事件时才会存储如录制 URL 等会话字段。新通话不使用 Stream 转录。"
+            },
+            {
+              "provider": "OpenAI",
+              "role": "可选 AI 辅助、口语辅导实时音频，以及口语通话转录（gpt-4o-transcribe）"
+            },
+            {
+              "provider": "Resend",
+              "role": "密码重置邮件与支持反馈投递"
+            },
+            {
+              "provider": "Stripe",
+              "role": "Notoria Pro 结账、门户与订阅状态"
+            },
+            {
+              "provider": "Google",
+              "role": "当你选择 Google 时的 OAuth 登录；UI 使用的网页字体"
+            },
+            {
+              "provider": "Dicebear",
+              "role": "口语会话中使用的生成头像图片（基于名称种子；不会发送账户密码）"
+            }
+          ],
+          "p2": "口语通话转录在会话期间通过 OpenAI Realtime（gpt-4o-transcribe）捕获并存储在服务端。新通话已禁用 Stream 转录与字幕。通话创建时禁用录制；仅当产品随后从 Stream 收到录制就绪事件时，才会存储录制 URL。"
+        },
+        "cookies": {
+          "title": "9. Cookie 与设备存储",
+          "p1": "Notoria 使用 Cookie 及类似存储以实现必要的产品功能。没有单独的 Cookie 政策，因为当前实现不包含需要该政策的广告或分析 Cookie 计划。",
+          "cookiesTitle": "应用使用的 Cookie",
+          "headers": {
+            "cookie": "Cookie",
+            "purpose": "用途"
+          },
+          "rows": [
+            {
+              "cookie": "Auth.js session cookie",
+              "purpose": "保持你的登录状态（JWT 会话；库默认命名）",
+              "code": false
+            },
+            {
+              "cookie": "notoria-locale",
+              "purpose": "界面语言",
+              "code": true
+            },
+            {
+              "cookie": "notoria-workspace",
+              "purpose": "活动工作区",
+              "code": true
+            },
+            {
+              "cookie": "notoria-ai-preferences",
+              "purpose": "AI 辅助偏好",
+              "code": true
+            },
+            {
+              "cookie": "sidebar_state",
+              "purpose": "侧边栏打开/关闭偏好",
+              "code": true
+            }
+          ],
+          "storageTitle": "本地与会话存储",
+          "p2": "你的浏览器还可能存储主题偏好（通过 next-themes）、引导/教程标志、键盘与动效偏好、视图模式选择、临时练习或闪卡会话状态，以及类似的仅客户端设置。",
+          "p3": "在设置中清除本地偏好会移除这些设备偏好。它不会删除服务器上的账户或工作区内容。"
+        },
+        "transfers": {
+          "title": "10. 国际传输",
+          "p1": "上述部分提供商位于欧洲经济区以外（例如美国），或可能在多个地区处理数据。当个人数据离开欧洲经济区/英国时，传输依赖这些提供商在适用法律下提供的保障——例如在适用时使用标准合同条款——以及其已公布的隐私条款。",
+          "p2": "Notoria 的应用托管配置面向法兰克福区域（fra1）。若你需要查找特定功能的相关提供商文档，请询问 <contact>contact@notoria.fi</contact>。"
+        },
+        "retention": {
+          "title": "11. 我们保留数据多久",
+          "list": [
+            "账户与学习数据在账户保持开放期间保留，以便你使用服务",
+            "密码重置令牌在 30 分钟后过期",
+            "订阅元数据按需要保留，以反映你当前的 Pro 状态与 Stripe 账单关系",
+            "支持与反馈邮件保留至处理你的请求及相关跟进所需的时长"
+          ],
+          "p1": "基础设施提供商的确切备份保留窗口未在应用中硬编码，可能遵循这些提供商的运营惯例。若你需要就删除请求进行澄清，请联系我们。"
+        },
+        "deletion": {
+          "title": "12. 导出与账户删除",
+          "exportTitle": "导出",
+          "exportP1": "你可以从 <account>账户</account> 下载工作区与学习内容的 JSON 备份（包括词汇、理论笔记、练习/写作、听力课程与口语会话）。媒体文件以 URL 引用，而非以二进制文件嵌入。",
+          "exportP2": "当前导出不包含每一条与账户相关的记录。例如，闪卡进度/复习与练习导入源记录不在 JSON 备份中。OAuth 令牌、密码哈希与 Stripe 标识符不会被导出。",
+          "deleteTitle": "删除账户",
+          "deleteP1": "你可以从 <account>账户</account> 永久删除你的账户。删除成功后，Notoria 将：",
+          "deleteList": [
+            "从 Notoria 数据库删除你的用户记录及级联学习数据",
+            "在已配置 Stripe 的情况下取消并移除相关 Stripe 客户数据（尽力而为）",
+            "销毁删除流程已实现从 Cloudinary 移除的头像媒体与听力课程媒体"
+          ],
+          "deleteP2": "当前删除流程不宣称会自动清除每一个第三方产物。特别是，某些 Cloudinary 资源（如编辑器图片或练习导入文件）以及 Stream 口语通话产物，可能仍受这些提供商约束，直至另行清理或按其自身时间表清除。",
+          "deleteP3": "删除后，加密备份或日志中也可能短暂保留有限的残余副本，直至这些系统轮换。若你删除账户后仍有特定内容残留，请发送邮件至 <contact>contact@notoria.fi</contact>。"
+        },
+        "rights": {
+          "title": "13. 你的权利（GDPR）",
+          "p1": "若你位于欧盟/欧洲经济区，或受 GDPR 保护，你可能有权：",
+          "list": [
+            "访问你的个人数据",
+            "更正不准确的数据",
+            "删除数据（包括通过删除你的账户）",
+            "限制或反对某些处理",
+            "接收你所提供数据的可移植副本（参见上文「导出」）",
+            "在处理基于同意时撤回同意"
+          ],
+          "listComplaint": "向监管机构提出投诉——在芬兰为数据保护监察专员办公室（<ombudsman>tietosuoja.fi</ombudsman>）",
+          "p2": "若要行使这些权利，请发送邮件至 <contact>contact@notoria.fi</contact>。我们可能需要核实请求来自账户持有人。"
+        },
+        "children": {
+          "title": "14. 儿童",
+          "p1": "Notoria 需要账户，并作为个人学习工作区构建。产品未实现专门的年龄门槛。它不面向儿童。若你认为儿童数据在没有适当授权的情况下被提交，请联系 <contact>contact@notoria.fi</contact>。"
+        },
+        "changes": {
+          "title": "15. 变更",
+          "p1": "当产品或法律要求发生变化时，我们可能更新本隐私政策。页面顶部的「最近更新」日期会在修订发布时更改。",
+          "p2": "当变更具有实质性时，我们将以当时可行的合理方式进行告知——例如更新本页，并在适当时通过应用内通知或邮件。"
+        },
+        "contact": {
+          "title": "16. 联系",
+          "p1": "隐私与一般联系：<contact>contact@notoria.fi</contact>",
+          "p2": "产品反馈技术收件箱（亦列于 <contactPage>联系我们</contactPage>）：<technical></technical>",
+          "p3": "网站：<site>www.notoria.fi</site>"
+        }
+      }
+    },
+    "termsOfUse": {
+      "intro": "本使用条款说明使用位于 <site>www.notoria.fi</site> 的 Notoria 的规则。它们描述了产品当前的运作方式：私人学习工作区、通过 Stripe 的可选 Notoria Pro 账单，以及 AI 辅助功能。它们不能替代律师就你具体情况提供的建议。",
+      "tocTitle": "本页内容",
+      "tocAria": "本页内容",
+      "toc": {
+        "agreement": "协议",
+        "service": "服务",
+        "accounts": "账户",
+        "content": "你的内容",
+        "acceptable-use": "可接受使用",
+        "ip": "知识产权",
+        "ai": "AI 生成输出",
+        "plans": "Free 方案与 Notoria Pro",
+        "billing": "订阅与账单",
+        "refunds": "退款与消费者权利",
+        "availability": "可用性",
+        "termination": "暂停与终止",
+        "liability": "免责声明与责任",
+        "changes": "变更",
+        "law": "适用法律",
+        "contact": "联系"
+      },
+      "sections": {
+        "agreement": {
+          "title": "1. 协议",
+          "p1": "创建账户或使用 Notoria，即表示你同意本条款以及 <privacy>隐私政策</privacy>。若你不同意，请勿使用本服务。",
+          "p2": "有关本条款的问题：<contact>contact@notoria.fi</contact>。"
+        },
+        "service": {
+          "title": "2. 服务",
+          "p1": "Notoria 是一款私人语言学习网页应用。你可以创建工作区，并保存如词汇、理论笔记、写作、练习、听力课程与口语会话等学习材料。",
+          "p2": "部分功能在 Free 方案中可用。Notoria Pro 解锁产品中以及你的 <account>账户</account> 页面所示的额外能力——包括听力、口语、某些 AI 学习工具、练习导入，以及付费文档导出格式。功能可用性可能随产品演进而变化。",
+          "p3": "Notoria 用于个人语言学习。它不是学校、考试机构或专业咨询服务。"
+        },
+        "accounts": {
+          "title": "3. 账户",
+          "list": [
+            "提供准确的账户信息",
+            "妥善保管你的密码与账户访问权限",
+            "使用邮箱和密码登录，或在 Google 登录可用时使用 Google",
+            "仅在你有能力根据适用法律订立有约束力协议时使用 Notoria"
+          ],
+          "p1": "产品未实现单独的年龄门槛。若你认为账户在没有适当授权的情况下被创建，请联系 <contact>contact@notoria.fi</contact>。",
+          "p2": "若你认为账户已被盗用，请通过 <contact>contact@notoria.fi</contact> 通知我们。"
+        },
+        "content": {
+          "title": "4. 你的内容",
+          "p1": "你在 Notoria 中创建或上传的学习内容，所有权仍归你所有。",
+          "p2": "你授予 Notoria 有限许可，以便托管、处理、显示与备份该内容，使服务能够运行——包括在你使用相关功能时，将相关材料发送给 AI、转录、媒体或付款提供商。该许可仅为替你运营 Notoria 而存在。它不会将你内容的所有权转让给我们。",
+          "p3": "你对所存储的内容负责。请勿上传你无权使用的材料，也请勿使用 Notoria 存储非法内容。"
+        },
+        "acceptableUse": {
+          "title": "5. 可接受使用",
+          "p1": "你同意不：",
+          "list": [
+            "违法或侵犯他人权利",
+            "试图访问其他用户的私人工作区或账户",
+            "探测、过载或干扰服务、API 或相关基础设施",
+            "以伤害他人或通过欺诈规避方案限额的方式滥用 AI、转录、听力或口语功能",
+            "对服务进行逆向工程，除非强制性本地法律允许",
+            "向 Stripe、Google 或 Notoria 支持虚报身份"
+          ]
+        },
+        "ip": {
+          "title": "6. 知识产权",
+          "p1": "Notoria 的名称、品牌、软件与产品设计归 Notoria 或其许可方所有。本条款不会将产品所有权转让给你。",
+          "p2": "你的学习内容仍归你所有，但受第 4 节有限许可的约束。"
+        },
+        "ai": {
+          "title": "7. AI 生成输出",
+          "p1": "部分功能可以基于你的材料进行检查、建议、生成、转录、总结或辅导。输出可能不完整、不正确，或不适合你的目标。你仍有责任在依赖 AI 结果用于学习、考试、专业用途或发布之前进行审核。",
+          "p2": "若在 <settings>设置</settings> 中关闭了辅助、你的方案不包含特定工具，或提供商暂时无法访问，则 AI 功能可能不可用。",
+          "p3": "并非所有 AI 助手都需要 Notoria Pro。产品会显示哪些工具免费、哪些需要 Pro。"
+        },
+        "plans": {
+          "title": "8. Free 方案与 Notoria Pro",
+          "p1": "Free 方案覆盖产品中所示的、基于你自己词汇及相关学习工具的核心练习。",
+          "p2": "Notoria Pro 是付费订阅，可解锁额外功能。在当前产品中，这通常包括听力、口语、练习导入、造句练习、许多 AI 辅助学习工具，以及 PDF/DOCX 文档导出。某些较轻量的 AI 助手（例如某些词汇或编辑器格式辅助）在启用 AI 辅助时，可能仍在 Free 方案中可用。",
+          "p3": "Pro 访问权限与你的用户账户绑定，因此适用于该账户下的各工作区。具有管理员角色的账户可能无需个人 Stripe 订阅即可获得 Pro 级别访问。",
+          "p4": "适用于你购买的价格，是当前 Pro 方案在 Stripe Checkout 显示的价格。产品中其他位置显示的任何价格（例如账户页）仅供参考，且必须与有效的 Stripe 价格配置一致。"
+        },
+        "billing": {
+          "title": "9. 订阅、账单与取消",
+          "list0": "Pro 订阅通过 <strong>Stripe</strong> 计费",
+          "list1": "你可以从 <account>账户</account> 或应用中锁定的 Pro 控件开始结账",
+          "list2": "从账户页，你可以打开 Stripe 客户门户以查看发票、更新付款方式并取消订阅",
+          "list3": "取消遵循 Stripe 客户门户对你订阅的行为",
+          "p1": "取消后，仅在你的 Stripe 订阅状态仍在产品中授予 Pro 时，Pro 访问才会继续。在当前实现中，被视为 Pro 的状态包括 <code>active</code>、<code>trialing</code> 与 <code>past_due</code>。当状态不再符合条件时，账户将回到 Free 方案。",
+          "p2": "若付款失败，Stripe 可能将订阅移至 <code>past_due</code> 或其他状态。Notoria 通过 Stripe webhook 同步该状态。在状态保持为 <code>past_due</code> 期间，按当前访问规则 Pro 功能仍可用；若订阅随后变为已取消或其他不合格状态，Pro 访问将结束。",
+          "p3": "删除你的 Notoria 账户会作为账户删除的一部分立即取消 Stripe 订阅（尽力而为）。这不同于通过客户门户取消续订同时保留账户。"
+        },
+        "refunds": {
+          "title": "10. 退款与消费者权利",
+          "p1": "Notoria 未实现自动的应用内退款按钮。可通过 Stripe 客户门户取消。",
+          "p2": "若你希望进行退款审核，或欧盟/欧洲经济区关于数字内容或远程合同的消费者规则赋予你适用于本次购买的权利，请发送邮件至 <contact>contact@notoria.fi</contact>，并附上你的账户邮箱与 Stripe 收据详情。我们将依据适用法律与 Stripe 工具处理请求。",
+          "p3": "本条款中的任何内容无意限制芬兰或欧盟法律下不可放弃的强制性消费者权利。"
+        },
+        "availability": {
+          "title": "11. 可用性",
+          "p1": "我们力求保持 Notoria 可用，但不保证服务不间断或无错误。维护、提供商中断，或第三方 AI、媒体、邮件或付款服务的变更都可能影响功能。"
+        },
+        "termination": {
+          "title": "12. 暂停与终止",
+          "p1": "你可以随时从 <account>账户</account> 删除账户。删除会永久移除你在 Notoria 数据库中的账户及相关学习数据，具体细节与残余处理者说明见 <privacy>隐私政策</privacy>。删除前你可以从账户导出 JSON 备份。",
+          "p2": "若你严重或反复违反本条款、滥用服务，或造成安全或法律风险，我们可能暂停或终止访问。在合理且合法的情况下，我们将尝试通过你账户上的邮箱通知你。"
+        },
+        "liability": {
+          "title": "13. 免责声明与责任",
+          "p1": "Notoria 以「按可用性提供」的方式用于个人语言学习。在适用法律允许的最大范围内，我们排除法律未要求的保证。",
+          "p2": "在适用法律允许的最大范围内，Notoria 不对因使用服务或依赖 AI 输出而产生的间接、附带、特殊、后果性损害或数据丢失承担责任。在责任无法排除时，责任限于索赔前三个月内你为 Notoria Pro 支付的金额，或强制性法律要求的任何更高金额。",
+          "p3": "这些限制不排除芬兰或欧盟法律不允许限制的责任——包括对消费者不可放弃的责任，以及在相关规则适用时因过失造成死亡或人身伤害的责任。"
+        },
+        "changes": {
+          "title": "14. 服务与条款的变更",
+          "p1": "我们可能更新功能、方案与本条款。本页的「最近更新」日期会在新版本发布时更改。",
+          "p2": "若变更具有实质性，我们将在可行时提供合理通知——例如更新本页，并在适当时通过应用内通知或邮件。生效日期后继续使用即表示你接受更新后的条款，除非强制性法律要求不同程序。"
+        },
+        "law": {
+          "title": "15. 适用法律",
+          "p1": "本条款受芬兰法律管辖，不考虑会导致适用其他司法管辖区法律的法律冲突规则。",
+          "p2": "芬兰法院拥有管辖权，但不影响允许你在欧盟/欧洲经济区内居住国提起诉讼的强制性消费者保护。",
+          "p3": "当前产品中未公布超出 Notoria 服务与联系邮箱的正式运营者身份。如需合同或监管往来，请使用 <contact>contact@notoria.fi</contact>。"
+        },
+        "contact": {
+          "title": "16. 联系",
+          "p1": "账单问题、条款问题及相关法律通知：<contact>contact@notoria.fi</contact>",
+          "p2": "网站：<site>www.notoria.fi</site>",
+          "p3": "有关一般支持选项与技术反馈收件箱，请参见 <contactPage>联系我们</contactPage> 与 <support>支持</support>。"
+        }
+      }
+    }
+  },
+  "footer": {
+    "navLabel": "网站链接",
+    "explore": "探索",
+    "support": "支持",
+    "legal": "法律信息",
+    "howToUse": "使用指南",
+    "about": "关于我们",
+    "ourStory": "我们的故事",
+    "supportLink": "支持",
+    "contactUs": "联系我们",
+    "privacy": "隐私政策",
+    "terms": "使用条款",
+    "copyright": "© 2026 Notoria",
+    "tagline": "为语言学习者而做。"
+  },
+  "sitePages": {
+    "about": {
+      "eyebrow": "关于",
+      "title": "关于 Notoria",
+      "lede": "一个用于自学任意语言的私人工作区——围绕你带入的材料构建，而不是让你滚动浏览的目录。",
+      "what": {
+        "title": "它是什么",
+        "p1": "Notoria 是一个用于自学语言的私人工作区。你把词汇、笔记、理论、练习、写作、听力与口语集中在一处，并按你正在学习的语言组织。",
+        "p2": "它不是学校平台，也不是现成课程图书馆。它是你自己收集与创建材料的家——值得保留的词、终于记住的解释、属于你真实进步的练习。",
+        "beat": "你的材料。你的语言。一个地方。"
+      },
+      "why": {
+        "title": "为什么是 Notoria",
+        "p1": "当各部分保持关联时，语言学习会更有用。",
+        "p2": "上周保存的词应该容易再次练习。用自己的话写下的笔记，在同一模式再次让你困惑时仍应在那里。写作、听力与口语应能调用同一批材料——而不是分散在手机与电脑的各个角落。",
+        "p3": "Notoria 把这些线索连在一起，让练习连贯，而不是零散。"
+      },
+      "who": {
+        "title": "它适合谁",
+        "p1": "独立学习者——希望自己的材料始终处于过程中心。",
+        "p2": "如果你更喜欢收集对你重要的内容，而不是跟随别人固定的大纲，Notoria 就是为这种节奏而做。足够沉静以支持认真学习，也足够实用以方便日常回访。"
+      },
+      "yourWay": {
+        "title": "你的材料，你的方式",
+        "p1": "书籍、老师、课程、播客、对话，以及你已经在用的一切仍然重要。Notoria 并不试图取代它们。",
+        "p2": "它提供的是一个把这些材料汇集起来的地方：保存你注意到的内容，按语言组织，用自己的话解释，并据此持续练习。",
+        "beat": "Notoria 伴随你的学习生活。它并不试图成为学习生活本身。"
+      },
+      "provides": {
+        "title": "你可以做什么",
+        "intro": "在工作区内，主要部分彼此配合：",
+        "items": {
+          "vocab": "建立带有释义、例句与标签的个人词库",
+          "practice": "用源自你自己单词与笔记的练习进行训练",
+          "create": "撰写可日后重温的理论笔记与写作内容",
+          "listenSpeak": "将媒体转化为听力练习，并在 Pro 下与 AI 辅导对话"
+        },
+        "note": "部分 AI、听力、口语与导出工具属于 Notoria Pro。Free 方案仍覆盖日常词汇练习与核心学习循环。"
+      },
+      "ai": {
+        "title": "AI，在它有帮助的地方",
+        "p1": "当 AI 可用时，它是辅助工具——不是产品的中心。",
+        "p2": "它可以帮助塑造练习、检查写作，或支持听力与口语。它不决定你该学什么，也不取代注意、记忆与回访的工作。",
+        "p3": "由你决定什么进入工作区，以及你回来复习什么。"
+      }
+    },
+    "ourStory": {
+      "eyebrow": "故事",
+      "title": "我们的故事",
+      "lede": "语言学习工具无处不在。但真正重要的材料，到了练习时却仍无处可寻。",
+      "frustration": {
+        "title": "熟悉的分散",
+        "p1": "如果你曾认真尝试过自学语言，你一定知道那种形态。",
+        "p2": "单词在一个应用里。语法笔记在一份文档里。例句截图进一个你不再打开的文件夹。听力在手机上。写作在别处。口语几乎从不与这一切相连。",
+        "p3": "你可以收集很多。那部分很容易。",
+        "p4": "困难出现在之后——当你坐下来练习，却发现没有任何东西共享一个地方。每个工具记得一个碎片。没有一个记得你正在构建的语言本身。",
+        "beat": "有用的材料，分散各处。练习，总是重新开始。"
+      },
+      "realisation": {
+        "title": "本该显而易见的事",
+        "p1": "到了某个时刻，挫败感不再是关于更多功能，而是关于重心在哪里。",
+        "p2": "学习者自己的材料——值得保留的词、用自己的话写下的笔记、终于让某事豁然开朗的例句——不应置于用于练习的工具之外。它本身就应该是循环。",
+        "p3": "忽视你已收集内容的练习，不过是包装更好的忙碌工作。",
+        "beat": "你的材料属于中心。"
+      },
+      "exists": {
+        "title": "Notoria 为何存在",
+        "p1": "Notoria 存在，是为了给这些材料一个私人家园——并让词汇、笔记、理论、练习、写作、听力与口语都处于围绕它构建的同一个工作区中。",
+        "p2": "不是一堆共享登录、彼此脱节的模块。而是一个地方：你保存的可以成为你练习的，你练习的又可以加深你保留的。",
+        "p3": "你把语言带进来。Notoria 帮助你与它相处——重温、操练、用它写作、听它、说它——而不会在每次切换工具时丢失线索。",
+        "p4": "这就是全部想法，说得直白。"
+      },
+      "believes": {
+        "title": "我们相信什么",
+        "p1": "自学应感觉个人化、实用且连贯。不是表演式的。也不被你并未要求的内容目录不断打断。",
+        "p2": "Notoria 不是学校。它不是课程市场。它也不试图取代老师、教材，或专注倾听的安静工作。",
+        "p3": "它是你正在学习的语言的工作区——足够私密以属于你，足够结构化以有用，也足够轻盈，让产品不挡在学习前面。",
+        "beat": "更少噪音。更多连贯。"
+      },
+      "going": {
+        "title": "它将走向何方",
+        "p1": "方向并不戏剧化。保持私密。保持实用。对软件能做与不能做的事保持诚实。",
+        "p2": "持续改进围绕你自己材料的学习循环——记忆、理解、产出、听力与口语之间的连接。",
+        "p3": "在真正有帮助的地方使用 AI：塑造练习，支持写作、听力或口语。不是噱头。不是学习者自身工作的替代。也不是用噪音填满产品的借口。",
+        "closing": "Notoria 之所以被构建，是因为有人厌倦了这种断裂——并想为自己的学习材料找到更好的地方。这个理由依然成立。"
+      }
+    },
+    "howToUse": {
+      "eyebrow": "指南",
+      "title": "如何使用 Notoria",
+      "lede": "学习循环的实用地图——从几个词开始，准备好后再扩展练习、写作、听力与口语。",
+      "intro": {
+        "title": "一个工作区，不是一门课程",
+        "p1": "Notoria 是你已在学习的语言的私人空间。你把材料带进来、整理好，并据此练习——而不是从你并未选择的课程目录开始。",
+        "p2": "每个工作区对应一种语言。速记、词汇、理论、练习、写作、听力与口语共同存在于其中，因此你保存的可以成为你练习的。",
+        "beat": "你不必一次学完 Notoria。你与语言一起成长它。"
+      },
+      "loop": {
+        "title": "学习循环",
+        "p1": "产品的大部分建立在一个简单循环上：",
+        "stages": {
+          "bring": {
+            "label": "带入",
+            "body": "保存单词、短语与笔记——用速记快速记下碎片，或直接从课程、书籍、媒体与对话添加到词汇与理论。"
+          },
+          "organise": {
+            "label": "整理",
+            "body": "把该语言的一切放在同一个工作区，附上释义、例句与帮助你再次找到内容的标签。"
+          },
+          "understand": {
+            "label": "理解",
+            "body": "当某个模式需要解释时——语法、用法，或你总是忘记的内容——用自己的话写理论笔记。"
+          },
+          "practise": {
+            "label": "练习",
+            "body": "把已保存的内容转化为练习与复习，让记忆训练来自你自己的材料。"
+          },
+          "use": {
+            "label": "使用",
+            "body": "用它写作、听它、说它——让语言从识别走向主动使用。"
+          },
+          "review": {
+            "label": "回来",
+            "body": "稍后再回来，添加新内容，重温困难之处，让循环继续，而不是重新开始。"
+          }
+        },
+        "beat": "带入 → 整理 → 理解 → 练习 → 使用 → 回来。"
+      },
+      "startSmall": {
+        "title": "从小处开始",
+        "p1": "Notoria 不是你要「完成」的东西。没有一张清单表示你已经用完了这个产品。",
+        "p2": "美好的第一天可以是：一个工作区、几条速记，以及五个你真正在意的词。笔记、更长练习、写作、听力与口语可以等到它们在你的循环中赢得位置时再加入。"
+      },
+      "firstSession": {
+        "title": "第一次会话",
+        "intro": "如果你想要一条具体的起步路径，可以试一次：",
+        "steps": {
+          "workspace": {
+            "title": "创建一个工作区",
+            "body": "为你正在学习的语言创建一个，并给它一个你日后能认出来的名称。"
+          },
+          "words": {
+            "title": "添加一些单词",
+            "body": "打开词汇，保存你想记住的单词或短语，需要时附上释义或例句。或先在速记中放下碎片，稍后再处理。"
+          },
+          "notes": {
+            "title": "需要时写一条短笔记",
+            "body": "在理论中，用自己的话记录一个语法或用法要点——仅在某事需要解释时。"
+          },
+          "practice": {
+            "title": "做一次短练习",
+            "body": "打开练习，从你刚添加的材料开始训练——基于你自己单词的闪卡或操练。"
+          },
+          "return": {
+            "title": "明天再回来",
+            "body": "再添加一点、重温一条笔记，或再练习一次。连贯比第一天覆盖每个区域更重要。"
+          }
+        }
+      },
+      "connect": {
+        "title": "各区域如何连接",
+        "p1": "速记是快速入口。词汇与理论是材料落定之处。练习把这些材料转化为训练。写作、听力与口语帮助你更主动地使用语言。",
+        "p2": "你不必按顺序走完每个区域。许多人会先在单词与短练习上停留一段时间。",
+        "p3": "自然的下一步是：当你想按自己的方式产出语言时写作，当你想让同一批材料进入耳朵与声音时听与说——听力与口语属于 Notoria Pro。",
+        "beat": "先收集与理解。当材料准备好离开纸面时，再使用与说。"
+      },
+      "areas": {
+        "title": "主要区域",
+        "intro": "各区域用途的简短地图：",
+        "vocab": {
+          "label": "词汇",
+          "body": "你的个人词库——释义、例句、标签与闪卡进度。这通常是其他一切汲取的基础。"
+        },
+        "theory": {
+          "label": "理论",
+          "body": "用自己的话写下的语法与用法笔记，当同一模式再次出现时可随时重温。"
+        },
+        "exercises": {
+          "label": "练习",
+          "body": "基于你的词汇、理论笔记或导入材料的练习会话——让操练始终与你实际保存的内容相连。"
+        },
+        "writing": {
+          "label": "写作",
+          "body": "用于主动使用语言的文档与问题集，而不仅是识别。"
+        },
+        "listening": {
+          "label": "听力",
+          "body": "在工作区中将媒体转化为听力练习。适用于 Notoria Pro。"
+        },
+        "speaking": {
+          "label": "口语",
+          "body": "与 AI 辅导进行实时练习，扎根于你正在学习的语言。适用于 Notoria Pro。"
+        },
+        "reading": {
+          "label": "阅读",
+          "body": "导入或粘贴篇章，生成理解练习，并复习结果。Free 包含每日 AI 限额；Pro 与 Premium 提高或取消该限额。"
+        },
+        "capture": {
+          "label": "速记",
+          "body": "碎片的快速投放区——单词、疑问与想法——你稍后会处理到词汇、理论、写作或练习。只有片刻时先速记；条目在完成创建链接条目前保持未处理。"
+        }
+      },
+      "notEverything": {
+        "title": "你不必使用所有功能",
+        "p1": "跳过此刻没有帮助的区域。一个安静的词库和几条笔记，已经可以是强大的系统。",
+        "p2": "当你想要结构化复习时加入练习。当你想要产出时加入写作。当听与说成为下一步有用步骤时加入听力与口语。"
+      },
+      "cta": {
+        "title": "准备开始了吗？",
+        "body": "创建一个工作区，添加几个词，让循环从那里生长。",
+        "createAccount": "创建账户",
+        "signIn": "登录",
+        "openWorkspace": "打开你的工作区",
+        "inAppGuide": "打开入门指南",
+        "signedInNote": "如需应用内逐步按钮式导览，请打开 <link>入门指南</link>。",
+        "signedOutNote": "已有账户？<link>登录</link>以打开你的工作区。登录后，应用内入门指南会覆盖详细的界面导览。"
+      }
+    },
+    "support": {
+      "eyebrow": "支持",
+      "title": "支持",
+      "lede": "常见问题的快速解答，以及需要时发送反馈的简单方式。",
+      "faq": {
+        "title": "常见问题",
+        "lede": "从这里开始——大多数答案不到一分钟就能读完。",
+        "groups": {
+          "gettingStarted": "入门",
+          "accountBilling": "账户与账单",
+          "learningAi": "学习与 AI",
+          "dataPrivacy": "数据与隐私"
+        },
+        "workspace": {
+          "q": "什么是工作区，我如何切换语言？",
+          "a": "每个工作区对应你正在学习的一种语言。词汇、理论、写作、练习、听力与口语都保留在该工作区内。从应用中的工作区菜单创建或切换工作区。"
+        },
+        "start": {
+          "q": "我应该如何开始？",
+          "a": "为你正在学习的语言创建一个工作区，在 <vocabulary>词汇</vocabulary> 中添加几个词，然后尝试一次短练习。关于学习方法，参见 <howToUse>使用指南</howToUse>。已登录？打开应用内 <gettingStarted>入门指南</gettingStarted> 以获取界面导览。"
+        },
+        "account": {
+          "q": "我如何更改密码或关闭账户？",
+          "a": "打开 <account>账户</account>。若你使用邮箱登录，可在此更新密码、管理 Notoria Pro、导出备份，或永久删除账户。"
+        },
+        "pro": {
+          "q": "账单与取消如何运作？",
+          "a": "Notoria Pro 通过 Stripe 计费。从 <account>账户</account> 你可以升级、打开 Stripe 客户门户以管理付款方式与发票，或取消续订。"
+        },
+        "proFeatures": {
+          "q": "哪些免费，哪些需要 Notoria Pro？",
+          "a": "日常词汇练习及相关学习工具可在 Free 方案使用。部分 AI 工具、听力、口语与文档导出功能属于 Notoria Pro。可从 <account>账户</account> 对比并升级。"
+        },
+        "learning": {
+          "q": "Notoria 的学习功能如何运作？",
+          "a": "Notoria 将词汇、理论、练习、写作、听力与口语放在同一个工作区，以便练习能使用你保存的材料。从单词与笔记开始，准备好后再加入练习与主动使用。<about>关于</about> 解释产品；<howToUse>使用指南</howToUse> 描绘学习循环。"
+        },
+        "ai": {
+          "q": "我可以关闭 AI 帮助吗？",
+          "a": "可以。AI 辅助偏好在 <settings>设置</settings> 中。关闭辅助后，需要它的 AI 工具将被阻止。"
+        },
+        "data": {
+          "q": "我的学习内容存储在哪里？",
+          "a": "你的账户与学习数据保存在 Notoria 的数据库中。头像与听力文件等媒体存储在我们的媒体主机上。有关处理者与删除详情，参见 <privacy>隐私政策</privacy>。"
+        },
+        "backup": {
+          "q": "我可以导出或备份数据吗？",
+          "a": "可以。从 <account>账户</account> 你可以下载工作区与学习内容的 JSON 备份。媒体文件以 URL 链接，而非嵌入。有关隐私与删除详情，参见 <privacy>隐私政策</privacy>。"
+        }
+      },
+      "feedback": {
+        "title": "发送反馈",
+        "lede": "报告错误、建议功能，或分享想法。请简短清晰——这样最有帮助。",
+        "typeLabel": "反馈类型",
+        "types": {
+          "bug": "错误",
+          "feature": "功能请求",
+          "general": "一般反馈"
+        },
+        "emailLabel": "你的邮箱",
+        "emailHint": "如需回复，我们将使用此邮箱。",
+        "accountEmailNote": "如需更多详情，我们将回复 <email></email>。",
+        "messageLabel": "消息",
+        "placeholders": {
+          "bug": "出了什么问题、发生在哪里，以及你预期的结果…",
+          "feature": "你希望 Notoria 做什么，以及为什么有帮助…",
+          "general": "分享想法、建议，或你脑中的任何其他内容…"
+        },
+        "messageHint": "至少 10 个字符。请勿粘贴密码或私人学习内容。",
+        "imagesLabel": "截图（可选）",
+        "addImages": "添加图片",
+        "removeImage": "移除 {name}",
+        "imagesHint": "最多 3 张图片，JPG/PNG/WebP/GIF，每张最大 3 MB。",
+        "submit": "发送反馈",
+        "sending": "发送中…",
+        "successTitle": "谢谢——你的反馈已发送。",
+        "successBody": "Notoria 团队会阅读。如需更多详情，我们将通过邮件回复。",
+        "successToast": "反馈已发送",
+        "sendAnother": "再发一条消息",
+        "errors": {
+          "tooShort": "请多写一点，以便我们理解问题。",
+          "tooLong": "请将消息控制在 5,000 个字符以内。",
+          "emailRequired": "请输入邮箱地址以便我们回复。",
+          "invalid": "请检查表单后重试。",
+          "invalidImage": "仅可使用 JPG、PNG、WebP 或 GIF 图片。",
+          "imageTooLarge": "每张图片必须不超过 3 MB。",
+          "tooManyImages": "最多可附加 3 张图片。",
+          "rateLimited": "你最近已发送多条消息。请稍候再试。",
+          "notConfigured": "反馈邮件目前不可用。请直接发送邮件至 contact@notoria.fi。",
+          "sendFailed": "无法发送你的反馈。请重试，或发送邮件至 contact@notoria.fi。"
+        }
+      },
+      "contactCta": {
+        "prompt": "需要直接联系我们？",
+        "link": "联系我们"
+      }
+    },
+    "contact": {
+      "eyebrow": "联系",
+      "title": "联系我们",
+      "lede": "发邮件或打电话——使用与你需求匹配的联系方式。",
+      "routing": "技术问题请联系开发联系人。账户、账单、隐私与一般问题请使用主要支持邮箱。",
+      "general": {
+        "title": "一般与账户支持",
+        "body": "关于 Notoria、你的账户、账单、隐私，或任何非技术错误的日常问题。",
+        "topics": {
+          "questions": "一般问题",
+          "account": "账户",
+          "billing": "账单",
+          "privacy": "隐私",
+          "other": "其他"
+        }
+      },
+      "technical": {
+        "title": "技术问题",
+        "body": "当应用中有地方看起来坏了——错误、意外异常，或与开发相关的问题——请写到这里。"
+      },
+      "phone": {
+        "title": "电话",
+        "body": "更喜欢直接沟通？可在合理时段通过电话联系我们。"
+      },
+      "supportCta": {
+        "prompt": "在寻找答案或想发送反馈？",
+        "link": "支持"
+      }
+    }
+  },
+  "errorPages": {
+    "statusUnavailable": "不可用",
+    "reference": "参考编号：{id}",
+    "referenceLabel": "参考编号",
+    "actions": {
+      "dashboard": "前往仪表盘",
+      "home": "返回首页",
+      "back": "返回",
+      "tryAgain": "重试",
+      "support": "报告问题",
+      "report": "报告问题"
+    },
+    "notFound": {
+      "title": "找不到页面",
+      "description": "此页面不存在，或链接可能已过期。请检查地址，或前往仪表盘。"
+    },
+    "unauthorized": {
+      "title": "需要登录",
+      "description": "您的会话可能已过期，或此页面需要登录后才能继续。",
+      "primary": "登录"
+    },
+    "forbidden": {
+      "title": "拒绝访问",
+      "description": "您的账户没有权限查看此内容。若您认为这是误判，请联系支持。"
+    },
+    "rateLimit": {
+      "title": "请求过于频繁",
+      "description": "您发送请求的速度过快。请稍候再试。",
+      "retryIn": "{time} 后重试"
+    },
+    "server": {
+      "title": "出了点问题",
+      "description": "我们这边出了点问题。请重试。若问题持续，请联系支持。"
+    },
+    "network": {
+      "title": "连接问题",
+      "description": "无法连接到 Notoria。请检查网络后重试。您刚才的操作可能尚未保存。"
+    },
+    "offline": {
+      "title": "您已离线",
+      "description": "看起来没有网络连接。重新连接后再试。未保存的更改可能仍在表单中。"
+    },
+    "timeout": {
+      "title": "请求超时",
+      "description": "操作耗时过长。请重试。该操作可能尚未完成。"
+    },
+    "resources": {
+      "exercise": {
+        "title": "找不到此练习",
+        "description": "它可能已被删除，或链接已过期。",
+        "primary": "返回练习"
+      },
+      "vocabulary": {
+        "title": "找不到此词汇条目",
+        "description": "它可能已被删除，或链接已过期。",
+        "primary": "返回词汇"
+      },
+      "reading": {
+        "title": "找不到此阅读篇章",
+        "description": "它可能已被删除，或链接已过期。",
+        "primary": "返回阅读"
+      },
+      "writing": {
+        "title": "找不到此写作文档",
+        "description": "它可能已被删除，或链接已过期。",
+        "primary": "返回写作"
+      },
+      "theory": {
+        "title": "找不到此理论笔记",
+        "description": "它可能已被删除，或链接已过期。",
+        "primary": "返回理论"
+      },
+      "listening": {
+        "title": "找不到此听力课程",
+        "description": "它可能已被删除，或链接已过期。",
+        "primary": "返回听力"
+      },
+      "speaking": {
+        "title": "找不到此口语会话",
+        "description": "它可能已被删除，或链接已过期。",
+        "primary": "返回口语"
+      },
+      "folder": {
+        "title": "找不到此文件夹",
+        "description": "它可能已被删除，或链接已过期。",
+        "primary": "前往仪表盘"
+      },
+      "generic": {
+        "title": "找不到此项目",
+        "description": "它可能已被删除，或链接已过期。",
+        "primary": "前往仪表盘"
+      }
+    }
+  },
+  "admin": {
+    "nav": {
+      "admin": "管理",
+      "manage": "管理",
+      "overview": "概览",
+      "users": "用户",
+      "workspaces": "工作区",
+      "jobs": "任务",
+      "audit": "审计",
+      "content": "内容",
+      "contentLibrary": "内容库",
+      "backToApp": "返回应用",
+      "openMenu": "打开管理菜单",
+      "openAdmin": "管理仪表盘"
+    },
+    "modules": {
+      "vocabulary": "词汇",
+      "theory": "理论",
+      "writing": "写作",
+      "exercises": "练习",
+      "listening": "听力",
+      "reading": "阅读",
+      "speaking": "口语",
+      "inbox": "速记",
+      "folders": "文件夹"
+    },
+    "common": {
+      "search": "搜索",
+      "clear": "清除",
+      "filter": "筛选",
+      "previous": "上一页",
+      "next": "下一页",
+      "pageOf": "第 {page} 页，共 {totalPages} 页",
+      "results": "{total} 条结果",
+      "backToList": "返回列表",
+      "empty": "无结果"
+    },
+    "overview": {
+      "title": "概览",
+      "description": "来自应用数据的实时计数。时间范围使用 UTC 日历日。活跃学习者统计有学习活动事件的去重用户——不是登录次数。",
+      "metrics": "指标",
+      "recentAudit": "近期管理操作",
+      "recentAuditLede": "审计轨迹中的最新变更。",
+      "viewAllAudit": "查看审计日志",
+      "cards": {
+        "users": "用户总数",
+        "newUsers7d": "新用户（7 天）",
+        "newUsers30d": "新用户（30 天）",
+        "activeUsers7d": "活跃学习者（7 天）",
+        "workspaces": "工作区",
+        "vocabulary": "词汇",
+        "theory": "理论",
+        "writing": "写作",
+        "exercises": "练习",
+        "listening": "听力",
+        "reading": "阅读",
+        "speaking": "口语",
+        "inbox": "速记",
+        "failedListening": "失败的听力",
+        "failedImports": "失败的导入",
+        "runningJobs": "运行中的任务锁",
+        "recentAudits7d": "审计条目（7 天）"
+      }
+    },
+    "users": {
+      "title": "用户",
+      "description": "搜索账户、更改角色、暂停访问，或经确认后删除。",
+      "searchPlaceholder": "搜索姓名或邮箱…",
+      "empty": "没有符合这些筛选条件的用户。",
+      "selfGuard": "安全机制会阻止在此更改或删除你自己的管理员账户。",
+      "columns": {
+        "user": "用户",
+        "role": "角色",
+        "status": "状态",
+        "plan": "方案",
+        "workspaces": "工作区",
+        "created": "注册时间"
+      },
+      "filters": {
+        "role": "角色",
+        "status": "状态",
+        "allRoles": "任意角色",
+        "allStatuses": "任意状态"
+      },
+      "status": {
+        "active": "活跃",
+        "suspended": "已暂停"
+      },
+      "fields": {
+        "id": "用户 ID",
+        "name": "姓名",
+        "role": "角色",
+        "status": "状态",
+        "plan": "方案",
+        "created": "注册时间",
+        "updated": "更新时间",
+        "emailVerified": "邮箱已验证"
+      },
+      "detail": {
+        "account": "账户",
+        "usage": "内容计数",
+        "usageLede": "各学习模块中拥有的记录。",
+        "actions": "账户操作",
+        "workspaces": "工作区",
+        "workspacesLede": "此用户拥有的语言工作区。"
+      },
+      "actions": {
+        "saveProfile": "保存姓名",
+        "grantAdmin": "授予管理员",
+        "revokeAdmin": "撤销管理员",
+        "suspend": "暂停",
+        "restore": "恢复",
+        "delete": "删除账户"
+      },
+      "confirm": {
+        "grantAdmin": "要向此账户授予管理员权限吗？",
+        "revokeAdmin": "要撤销管理员权限吗？如果他们是最后一位活跃管理员，操作将失败。",
+        "suspend": "要暂停此账户吗？他们将在下一次受保护请求时失去访问权限。",
+        "restore": "要恢复此账户吗？",
+        "delete": "要永久删除此账户及其级联学习数据吗？此操作无法撤销。"
+      }
+    },
+    "workspaces": {
+      "title": "工作区",
+      "description": "检查并管理语言工作区。",
+      "searchPlaceholder": "搜索名称、语言或所有者邮箱…",
+      "empty": "没有符合这些筛选条件的工作区。",
+      "createForUser": "为此用户创建工作区",
+      "columns": {
+        "name": "名称",
+        "language": "语言",
+        "owner": "所有者",
+        "updated": "更新时间"
+      },
+      "fields": {
+        "id": "工作区 ID",
+        "name": "名称",
+        "nameOptional": "可选显示名称",
+        "language": "语言",
+        "owner": "所有者",
+        "created": "创建时间",
+        "updated": "更新时间"
+      },
+      "detail": {
+        "description": "语言：{language}",
+        "meta": "工作区",
+        "actions": "工作区操作",
+        "actionsLede": "编辑语言时，每位所有者下语言必须唯一。删除会级联移除此工作区中的学习内容。"
+      },
+      "actions": {
+        "create": "创建工作区",
+        "save": "保存",
+        "delete": "删除工作区"
+      },
+      "confirm": {
+        "delete": "要通过数据库级联删除此工作区及其全部学习内容吗？"
+      }
+    },
+    "content": {
+      "description": "列表仅显示元数据。打开一行可查看标识符与状态。私有正文（转录、笔记）默认不会在此加载。",
+      "searchPlaceholder": "搜索标题…",
+      "empty": "没有符合这些筛选条件的记录。",
+      "listeningMediaNote": "删除听力课程会移除数据库行。外部媒体清理为尽力而为，且不会由此管理操作执行。",
+      "columns": {
+        "title": "标题",
+        "status": "状态",
+        "owner": "所有者",
+        "workspace": "工作区",
+        "updated": "更新时间"
+      },
+      "fields": {
+        "id": "ID",
+        "status": "状态",
+        "errorCode": "错误代码",
+        "owner": "所有者",
+        "workspace": "工作区",
+        "created": "创建时间",
+        "updated": "更新时间"
+      },
+      "detail": {
+        "description": "元数据检查。私有正文不会自动加载。",
+        "meta": "记录",
+        "metaLede": "仅标识符与状态。",
+        "actions": "操作"
+      },
+      "actions": {
+        "delete": "删除记录"
+      },
+      "confirm": {
+        "delete": "要删除此记录吗？相关子行将遵循数据库级联 / 置空规则。"
+      }
+    },
+    "jobs": {
+      "title": "任务",
+      "description": "运行中的锁与失败的处理记录。状态为只读——不要强行把失败任务显示为成功。",
+      "searchPlaceholder": "按标题筛选…",
+      "empty": "没有符合这些筛选条件的任务。",
+      "buckets": {
+        "attention": "需要关注",
+        "running": "运行中",
+        "failed": "失败",
+        "all": "全部",
+        "runningLocks": "运行中的锁",
+        "failedLocks": "失败的锁",
+        "failedListening": "失败的听力",
+        "failedImports": "失败的导入"
+      },
+      "filters": {
+        "kind": "类型",
+        "allKinds": "全部类型"
+      },
+      "kinds": {
+        "ai_lock": "AI 锁",
+        "listening": "听力",
+        "exercise_import": "练习导入",
+        "lock": "AI 锁",
+        "import": "练习导入"
+      },
+      "columns": {
+        "kind": "类型",
+        "title": "标题",
+        "status": "状态",
+        "error": "错误",
+        "owner": "所有者",
+        "updated": "更新时间"
+      }
+    },
+    "audit": {
+      "title": "审计日志",
+      "description": "管理变更的只读历史。凭证与私有正文绝不会存储在此。",
+      "searchPlaceholder": "搜索操作、实体或操作者邮箱…",
+      "empty": "尚无审计条目。",
+      "columns": {
+        "when": "时间",
+        "actor": "操作者",
+        "action": "操作",
+        "entity": "实体",
+        "success": "结果"
+      },
+      "success": {
+        "yes": "成功",
+        "no": "失败"
+      }
+    },
+    "errors": {
+      "UNKNOWN": "出了点问题。请重试。",
+      "LAST_ADMIN": "无法更改最后一位活跃管理员。",
+      "CANNOT_DEMOTE_SELF": "你不能降级自己的管理员账户。",
+      "CANNOT_SUSPEND_SELF": "你不能暂停自己的账户。",
+      "CANNOT_DELETE_SELF": "你不能删除自己的账户。",
+      "USER_NOT_FOUND": "找不到用户。",
+      "WORKSPACE_NOT_FOUND": "找不到工作区。",
+      "WORKSPACE_LANGUAGE_EXISTS": "此用户已有该语言的工作区。",
+      "INVALID_LANGUAGE": "无效的语言代码。",
+      "CONTENT_NOT_FOUND": "找不到记录。",
+      "INVALID_CONTENT_MODULE": "未知的内容模块。"
+    }
+  }
+}

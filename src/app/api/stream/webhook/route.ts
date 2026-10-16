@@ -9,15 +9,13 @@ import type {
 } from "@stream-io/node-sdk";
 import { db } from "@/db";
 import { speakingSessions } from "@/db/schema";
-import { isSpeakingTutorUserId } from "@/lib/speaking/stream";
 import {
-  markSpeakingSessionEnded,
-  saveSpeakingTranscript,
+  finalizeSpeakingSession,
+  saveLegacyStreamTranscript,
 } from "@/lib/speaking/finalize";
-import {
-  formatSpeakingTranscript,
-  parseTranscriptJsonl,
-} from "@/lib/speaking/summary";
+import { isSpeakingPastDeadline } from "@/lib/speaking/lifetime";
+import { scheduleSpeakingAbandonFinalize } from "@/lib/speaking/recovery";
+import { isSpeakingTutorUserId } from "@/lib/speaking/stream";
 import { connectSpeakingTutorToCall } from "@/lib/speaking/tutor";
 import { getStreamVideo, isStreamVideoConfigured } from "@/lib/stream-video";
 
@@ -99,6 +97,20 @@ export async function POST(request: NextRequest) {
 async function handleSessionStarted(event: CallSessionStartedEvent) {
   const sessionId = speakingSessionIdFromCall(event);
   if (!sessionId) return;
+
+  const session = await db.query.speakingSessions.findFirst({
+    where: eq(speakingSessions.id, sessionId),
+    columns: { status: true, startedAt: true },
+  });
+  if (!session) return;
+  if (session.status === "completed" || session.status === "cancelled" || session.status === "processing") {
+    return;
+  }
+  if (isSpeakingPastDeadline(session.startedAt)) {
+    await finalizeSpeakingSession(sessionId);
+    return;
+  }
+
   await connectSpeakingTutorToCall(sessionId);
 }
 
@@ -112,34 +124,34 @@ async function handleParticipantLeft(event: CallSessionParticipantLeftEvent) {
     return;
   }
 
-  await markSpeakingSessionEnded(sessionId);
+  // Do not end immediately — allow refresh/reconnect with the same deadline.
+  await scheduleSpeakingAbandonFinalize(sessionId);
 }
 
 async function handleSessionEnded(event: CallEndedEvent) {
   const sessionId = speakingSessionIdFromCall(event);
   if (!sessionId) return;
-  await markSpeakingSessionEnded(sessionId);
+  // Full finalize (mark + complete) — idempotent with client end / summary replay.
+  await finalizeSpeakingSession(sessionId);
 }
 
 async function handleTranscriptionReady(event: CallTranscriptionReadyEvent) {
+  // Legacy only: new sessions use OpenAI transcripts and disable Stream transcription.
   const sessionId = speakingSessionIdFromCall(event);
   const transcriptUrl = event.call_transcription?.url;
   if (!sessionId || !transcriptUrl) return;
 
-  let transcriptText = "";
   try {
     const response = await fetch(transcriptUrl);
     const raw = await response.text();
-    transcriptText = formatSpeakingTranscript(parseTranscriptJsonl(raw));
+    await saveLegacyStreamTranscript({
+      sessionId,
+      transcriptUrl,
+      rawJsonl: raw,
+    });
   } catch (error) {
     console.error("Failed to fetch speaking transcript", error);
   }
-
-  await saveSpeakingTranscript({
-    sessionId,
-    transcriptUrl,
-    transcriptText,
-  });
 }
 
 async function handleRecordingReady(event: CallRecordingReadyEvent) {

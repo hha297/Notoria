@@ -15,6 +15,34 @@ const UI_LANGUAGE_NAMES: Record<AppLocale, string> = {
   fi: "Finnish",
   sv: "Swedish",
   vi: "Vietnamese",
+  id: "Indonesian",
+  de: "German",
+  fr: "French",
+  es: "Spanish",
+  it: "Italian",
+  pt: "Portuguese",
+  nl: "Dutch",
+  no: "Norwegian",
+  da: "Danish",
+  pl: "Polish",
+  ru: "Russian",
+  uk: "Ukrainian",
+  ja: "Japanese",
+  ko: "Korean",
+  zh: "Chinese",
+  ar: "Arabic",
+  hi: "Hindi",
+  th: "Thai",
+  tr: "Turkish",
+  el: "Greek",
+  cs: "Czech",
+  hu: "Hungarian",
+  ro: "Romanian",
+  be: "Belarusian",
+  bs: "Bosnian",
+  hy: "Armenian",
+  sq: "Albanian",
+  bg: "Bulgarian",
 };
 
 const bodySchema = z.object({
@@ -29,12 +57,18 @@ export async function POST(request: Request) {
   try {
     body = await request.json();
   } catch {
-    return NextResponse.json({ ok: false, code: "AI_INVALID_REQUEST" }, { status: 400 });
+    return NextResponse.json(
+      { ok: false, code: "AI_INVALID_REQUEST" },
+      { status: 400 },
+    );
   }
 
   const parsed = bodySchema.safeParse(body);
   if (!parsed.success) {
-    return NextResponse.json({ ok: false, code: "AI_INVALID_REQUEST" }, { status: 400 });
+    return NextResponse.json(
+      { ok: false, code: "AI_INVALID_REQUEST" },
+      { status: 400 },
+    );
   }
 
   const note = await getTheoryNote(parsed.data.theoryId);
@@ -67,13 +101,19 @@ export async function POST(request: Request) {
     await settleMeteredAi(access, true);
     return NextResponse.json({ ok: true, exercises });
   } catch (error) {
-    await settleMeteredAi(access, false);
+    await settleMeteredAi(access, false, error);
     const message = error instanceof Error ? error.message : "";
-    if (message === "OPENAI_NOT_CONFIGURED" || message === "AI_INVALID_RESPONSE") {
+    if (
+      message === "OPENAI_NOT_CONFIGURED" ||
+      message === "AI_INVALID_RESPONSE"
+    ) {
       console.error("theory exercise AI failed", message);
     } else {
       console.error("theory exercise AI failed");
     }
-    return NextResponse.json({ ok: false, code: "AI_UNAVAILABLE" }, { status: 503 });
+    return NextResponse.json(
+      { ok: false, code: "AI_UNAVAILABLE" },
+      { status: 503 },
+    );
   }
 }

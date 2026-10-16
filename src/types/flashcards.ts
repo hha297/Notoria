@@ -16,6 +16,11 @@ export type FlashcardWord = {
   /** ISO timestamp of vocabulary creation (newest → oldest selection). */
   createdAt: string;
   meanings: string[];
+  /**
+   * Usage labels aligned with `meanings` (same index).
+   * Retained for context; do not surface as the answer face.
+   */
+  meaningUsageLabels?: string[][];
   examples: string[];
   tags: string[];
 };

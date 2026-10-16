@@ -15,8 +15,33 @@ export type BillingExpect =
   | "resume"
   | "schedule_pro";
 
+/**
+ * Stripe `cancellation_details.feedback` values offered in-app when moving to Free.
+ * Order matches Customer Portal cancellation reasons (excluding customer_service).
+ */
+export const CANCELLATION_FEEDBACK_REASONS = [
+  "too_expensive",
+  "missing_features",
+  "switched_service",
+  "unused",
+  "too_complex",
+  "low_quality",
+  "other",
+] as const;
+
+export type CancellationFeedbackReason =
+  (typeof CANCELLATION_FEEDBACK_REASONS)[number];
+
+/** Max length for optional cancellation comment (client + server). Under Stripe's 5000 cap. */
+export const CANCELLATION_COMMENT_MAX_LENGTH = 500;
+
+export type CancellationFeedback = {
+  feedback?: CancellationFeedbackReason;
+  comment?: string;
+};
+
 export type BillingCommand =
-  | { intent: "change"; plan: PlanId }
+  | { intent: "change"; plan: PlanId; cancellation?: CancellationFeedback }
   | { intent: "resume" };
 
 export type ResolvedBillingCommand =
@@ -70,21 +95,128 @@ export function stripeKeyMode(secret: string): "test" | "live" | "unknown" {
   return "unknown";
 }
 
+function isCancellationFeedbackReason(
+  value: unknown,
+): value is CancellationFeedbackReason {
+  return (
+    typeof value === "string" &&
+    (CANCELLATION_FEEDBACK_REASONS as readonly string[]).includes(value)
+  );
+}
+
+/**
+ * Optional feedback is accepted only when cancelling to Free.
+ * Invalid reasons / oversized comments fail closed.
+ */
+export function parseCancellationFeedback(input: {
+  plan: PlanId;
+  feedback?: unknown;
+  comment?: unknown;
+}):
+  | { ok: true; cancellation?: CancellationFeedback }
+  | { ok: false; code: "INVALID_FEEDBACK" } {
+  const hasFeedback =
+    input.feedback !== undefined &&
+    input.feedback !== null &&
+    input.feedback !== "";
+  const hasComment =
+    input.comment !== undefined &&
+    input.comment !== null &&
+    input.comment !== "";
+
+  if (!hasFeedback && !hasComment) {
+    return { ok: true };
+  }
+
+  if (input.plan !== "free") {
+    return { ok: false, code: "INVALID_FEEDBACK" };
+  }
+
+  const cancellation: CancellationFeedback = {};
+
+  if (hasFeedback) {
+    if (!isCancellationFeedbackReason(input.feedback)) {
+      return { ok: false, code: "INVALID_FEEDBACK" };
+    }
+    cancellation.feedback = input.feedback;
+  }
+
+  if (hasComment) {
+    if (typeof input.comment !== "string") {
+      return { ok: false, code: "INVALID_FEEDBACK" };
+    }
+    const comment = input.comment.trim();
+    if (comment.length > CANCELLATION_COMMENT_MAX_LENGTH) {
+      return { ok: false, code: "INVALID_FEEDBACK" };
+    }
+    if (comment) {
+      cancellation.comment = comment;
+    }
+  }
+
+  if (!cancellation.feedback && !cancellation.comment) {
+    return { ok: true };
+  }
+
+  return { ok: true, cancellation };
+}
+
 export function parseBillingCommand(body: unknown):
   | { ok: true; command: BillingCommand }
-  | { ok: false; code: "INVALID_PLAN" } {
+  | { ok: false; code: "INVALID_PLAN" | "INVALID_FEEDBACK" } {
   if (!body || typeof body !== "object") {
     return { ok: false, code: "INVALID_PLAN" };
   }
   const record = body as Record<string, unknown>;
   if (record.intent === "resume") {
+    if (
+      (record.feedback !== undefined &&
+        record.feedback !== null &&
+        record.feedback !== "") ||
+      (record.comment !== undefined &&
+        record.comment !== null &&
+        record.comment !== "")
+    ) {
+      return { ok: false, code: "INVALID_FEEDBACK" };
+    }
     return { ok: true, command: { intent: "resume" } };
   }
   const plan = record.plan;
   if (plan === "free" || plan === "pro" || plan === "premium") {
-    return { ok: true, command: { intent: "change", plan } };
+    const feedback = parseCancellationFeedback({
+      plan,
+      feedback: record.feedback,
+      comment: record.comment,
+    });
+    if (!feedback.ok) return feedback;
+    return {
+      ok: true,
+      command: {
+        intent: "change",
+        plan,
+        ...(feedback.cancellation
+          ? { cancellation: feedback.cancellation }
+          : {}),
+      },
+    };
   }
   return { ok: false, code: "INVALID_PLAN" };
+}
+
+/** Stripe `cancellation_details` payload for cancel_at_period_end updates. */
+export function stripeCancellationDetails(
+  cancellation: CancellationFeedback | undefined,
+):
+  | { feedback?: CancellationFeedbackReason; comment?: string }
+  | undefined {
+  if (!cancellation) return undefined;
+  const details: {
+    feedback?: CancellationFeedbackReason;
+    comment?: string;
+  } = {};
+  if (cancellation.feedback) details.feedback = cancellation.feedback;
+  if (cancellation.comment) details.comment = cancellation.comment;
+  return details.feedback || details.comment ? details : undefined;
 }
 
 /**

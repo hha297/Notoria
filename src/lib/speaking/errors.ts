@@ -4,8 +4,11 @@ export const SPEAKING_ERROR_CODES = [
   "INVALID_INPUT",
   "SESSION_NOT_FOUND",
   "SESSION_NOT_JOINABLE",
+  "SESSION_EXPIRED",
+  "ACTIVE_SESSION_EXISTS",
   "STREAM_CALL_FAILED",
   "UNAUTHORIZED",
+  "AI_QUOTA_EXCEEDED",
 ] as const;
 
 export type SpeakingErrorCode = (typeof SPEAKING_ERROR_CODES)[number];

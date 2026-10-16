@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { Plus, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQuery } from "@tanstack/react-query";
+import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { PageShell } from "@/components/layout/page-shell";
 import { ListPageLoading } from "@/components/layout/page-loading";
 import {
@@ -17,9 +18,9 @@ import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button
 import { CollectionViewModeToggle } from "@/components/shared/collection-view-mode-toggle";
 import { WritingCollections } from "@/components/writing/writing-collections";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useCollectionViewMode } from "@/hooks/use-collection-view-mode";
+import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import {
   folderListQueryOptions,
   readingListQueryOptions,
@@ -45,6 +46,7 @@ export function ReadingView({
 }: ReadingViewProps) {
   const t = useTranslations("reading");
   const tFolders = useTranslations("folders");
+  const readingQuota = useQuotaLockMessage("ai_reading");
   const [importOpen, setImportOpen] = useState(false);
   const [search, setSearch] = useState("");
   const [viewMode, setViewMode] = useCollectionViewMode("reading");
@@ -116,15 +118,17 @@ export function ReadingView({
   const actions = (
     <>
       <ShowTutorialButton section="reading" />
-      <Button
+      <QuotaLockButton
         type="button"
         className="route-primary-cta"
+        locked={readingQuota.locked}
+        lockMessage={readingQuota.message}
+        icon={<Plus className="size-4" />}
         onClick={() => setImportOpen(true)}
         data-tutorial="reading-import"
       >
-        <Plus className="size-4" />
         {t("import")}
-      </Button>
+      </QuotaLockButton>
     </>
   );
 
@@ -150,15 +154,17 @@ export function ReadingView({
               {isEmptyRoot ? (
                 <>
                   <ShowTutorialButton section="reading" />
-                  <Button
+                  <QuotaLockButton
                     type="button"
                     className="route-primary-cta"
+                    locked={readingQuota.locked}
+                    lockMessage={readingQuota.message}
+                    icon={<Plus className="size-4" />}
                     onClick={() => setImportOpen(true)}
                     data-tutorial="reading-import"
                   >
-                    <Plus className="size-4" />
                     {t("import")}
-                  </Button>
+                  </QuotaLockButton>
                 </>
               ) : (
                 actions
@@ -206,14 +212,16 @@ export function ReadingView({
                   title={tFolders("emptyFolder")}
                   description={tFolders("emptyFolderDescription")}
                 >
-                  <Button
+                  <QuotaLockButton
                     className="mt-5 route-primary-cta"
+                    locked={readingQuota.locked}
+                    lockMessage={readingQuota.message}
+                    icon={<Plus className="size-4" />}
                     onClick={() => setImportOpen(true)}
                     data-tutorial="reading-import"
                   >
-                    <Plus className="size-4" />
                     {t("import")}
-                  </Button>
+                  </QuotaLockButton>
                 </FolderEmptyState>
               ) : (
                 <div data-tutorial="reading-passages">

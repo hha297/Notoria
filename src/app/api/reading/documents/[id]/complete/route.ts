@@ -70,7 +70,11 @@ export async function POST(request: Request, context: RouteContext) {
           ? 401
           : error.code === "PASSAGE_NOT_FOUND"
             ? 404
-            : 400;
+            : error.code === "AI_QUOTA_EXCEEDED"
+              ? 402
+              : error.code === "RATE_LIMITED" || error.code === "AI_BUSY"
+                ? 429
+                : 400;
       return NextResponse.json(
         { error: error.code, code: error.code },
         { status },

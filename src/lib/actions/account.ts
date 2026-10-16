@@ -590,6 +590,7 @@ export async function exportAccountBackup() {
         meaning: meaning.meaning,
         isPrimary: meaning.isPrimary,
         sortOrder: meaning.sortOrder,
+        usageLabels: meaning.usageLabels ?? [],
       })),
       examples: word.examples.map((example) => ({
         sentence: example.sentence,

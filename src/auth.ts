@@ -6,13 +6,29 @@ import { compare } from "bcryptjs";
 import { eq } from "drizzle-orm";
 import { z } from "zod";
 import { db } from "@/db";
-import { accounts, users } from "@/db/schema";
+import { accounts, users, type UserRole } from "@/db/schema";
 import { isGoogleAuthConfigured } from "@/lib/auth/google";
 
 const credentialsSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
 });
+
+const ROLE_REFRESH_MS = 60_000;
+
+async function loadAuthUser(userId: string) {
+  return db.query.users.findFirst({
+    where: eq(users.id, userId),
+    columns: {
+      id: true,
+      role: true,
+      suspendedAt: true,
+      name: true,
+      email: true,
+      image: true,
+    },
+  });
+}
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
   trustHost: true,
@@ -33,10 +49,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           Google({
             clientId: process.env.GOOGLE_CLIENT_ID!,
             clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
-            /**
-             * Link Google to an existing credentials account with the same
-             * email so we never create a duplicate user identity.
-             */
             allowDangerousEmailAccountLinking: true,
             profile(profile) {
               return {
@@ -61,49 +73,60 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       },
       async authorize(credentials) {
         const parsed = credentialsSchema.safeParse(credentials);
-
-        if (!parsed.success) {
-          return null;
-        }
+        if (!parsed.success) return null;
 
         const user = await db.query.users.findFirst({
           where: eq(users.email, parsed.data.email.toLowerCase()),
         });
 
-        // OAuth-only accounts have no passwordHash — do not invent one.
-        if (!user?.passwordHash) {
-          return null;
-        }
+        if (!user?.passwordHash || user.suspendedAt) return null;
 
         const valid = await compare(parsed.data.password, user.passwordHash);
-
-        if (!valid) {
-          return null;
-        }
+        if (!valid) return null;
 
         return {
           id: user.id,
           name: user.name,
           email: user.email,
           image: user.image,
+          role: user.role,
         };
       },
     }),
   ],
   callbacks: {
-    jwt({ token, user, trigger, session }) {
-      if (user) {
+    async signIn({ user }) {
+      if (!user.id) return true;
+      const row = await loadAuthUser(user.id);
+      if (row?.suspendedAt) return false;
+      return true;
+    },
+    async jwt({ token, user, trigger, session }) {
+      if (user?.id) {
         token.id = user.id;
         token.picture = user.image ?? null;
       }
 
+      const now = Date.now();
+      const checkedAt = Number(token.adminCheckedAt ?? 0);
+      const shouldRefresh =
+        Boolean(user?.id) ||
+        trigger === "update" ||
+        !token.role ||
+        now - checkedAt > ROLE_REFRESH_MS;
+
+      if (token.id && shouldRefresh) {
+        const row = await loadAuthUser(token.id as string);
+        if (row) {
+          token.role = row.role;
+          token.suspendedAt = row.suspendedAt?.toISOString() ?? null;
+          token.adminCheckedAt = now;
+        }
+      }
+
       if (trigger === "update") {
-        if (session?.image !== undefined) {
-          token.picture = session.image;
-        }
-        if (session?.name !== undefined) {
-          token.name = session.name;
-        }
+        if (session?.image !== undefined) token.picture = session.image;
+        if (session?.name !== undefined) token.name = session.name;
       }
 
       return token;
@@ -113,8 +136,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         session.user.id = token.id as string;
         session.user.image =
           (token.picture as string | null | undefined) ?? null;
+        session.user.role = token.role as UserRole | undefined;
+        session.user.suspendedAt =
+          typeof token.suspendedAt === "string" ? token.suspendedAt : null;
       }
-
       return session;
     },
   },

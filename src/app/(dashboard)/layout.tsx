@@ -11,8 +11,11 @@ import { AiPreferencesProvider } from "@/components/providers/ai-preferences-pro
 import { locales, type AppLocale } from "@/i18n/config";
 import { LOCALE_COOKIE } from "@/i18n/request";
 import { getResolvedAiPreferences } from "@/lib/ai/preferences-server";
+import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
+import { isAdminRole } from "@/lib/auth/require-admin";
 import { getSession } from "@/lib/auth/session";
+import { getUserEntitlements } from "@/lib/billing/entitlements";
 import {
   getCurrentSubscription,
   hasActiveProSubscription,
@@ -46,15 +49,26 @@ export default async function DashboardLayout({
   children: React.ReactNode;
 }) {
   const timer = createPerfTimer("dashboard.layout");
-  const [workspaces, activeWorkspace, session, subscription, proAccess, aiPreferences] =
-    await Promise.all([
-      getUserWorkspaces(),
-      getActiveWorkspace(),
-      getSession(),
-      getCurrentSubscription(),
-      getCurrentProAccess(),
-      getResolvedAiPreferences(),
-    ]);
+  const [
+    workspaces,
+    activeWorkspace,
+    session,
+    subscription,
+    proAccess,
+    aiPreferences,
+    userRecord,
+  ] = await Promise.all([
+    getUserWorkspaces(),
+    getActiveWorkspace(),
+    getSession(),
+    getCurrentSubscription(),
+    getCurrentProAccess(),
+    getResolvedAiPreferences(),
+    getCurrentUserRecord(),
+  ]);
+  const entitlements = session?.user?.id
+    ? await getUserEntitlements(session.user.id)
+    : null;
   timer.finish();
 
   if (workspaces.length === 0) {
@@ -88,6 +102,7 @@ export default async function DashboardLayout({
       introOfferEligible={
         isIntroOfferEligible(subscription ?? {}) && introOfferAvailable()
       }
+      initialQuotas={entitlements?.quotas ?? []}
     >
       <AiPreferencesProvider initial={aiPreferences}>
         <DashboardDocumentTitle />
@@ -100,6 +115,7 @@ export default async function DashboardLayout({
           userImage={session?.user?.image}
           isPro={hasActiveProSubscription(subscription)}
           plan={displayPlan(subscription)}
+          isAdmin={isAdminRole(userRecord?.role)}
           footer={<SiteFooter variant="app" />}
         >
           <WelcomePromptModal

@@ -1,4 +1,5 @@
 import type { JSONContent } from "@tiptap/react";
+import { normalizeMeaningUsageLabels } from "@/lib/vocabulary/meaning-usage";
 import { serializeVocabularyNotes } from "@/lib/vocabulary/notes-content";
 import { normalizeWordTags } from "@/lib/vocabulary-tags";
 import { normalizeVocabularyWord } from "@/lib/vocabulary/word-identity";
@@ -7,7 +8,11 @@ export type VocabularyFormSnapshot = {
   word: string;
   partOfSpeech: string | null;
   notes: string;
-  meanings: Array<{ meaning: string; isPrimary: boolean }>;
+  meanings: Array<{
+    meaning: string;
+    isPrimary: boolean;
+    usageLabels: string[];
+  }>;
   examples: Array<{ sentence: string; meaning: string; notes: string }>;
   tags: string[];
   synonymIds: string[];
@@ -16,6 +21,7 @@ export type VocabularyFormSnapshot = {
 type MeaningLike = {
   meaning: string;
   isPrimary: boolean;
+  usageLabels?: string[];
 };
 
 type ExampleLike = {
@@ -43,6 +49,7 @@ export function buildVocabularyFormSnapshot(input: {
       .map((item) => ({
         meaning: item.meaning.trim(),
         isPrimary: item.isPrimary,
+        usageLabels: normalizeMeaningUsageLabels(item.usageLabels),
       }))
       .filter((item) => item.meaning.length > 0),
     examples: input.examples

@@ -13,9 +13,16 @@ export type SectionPattern = {
   match: RegExp;
 };
 
-const languageTargetAlternation = WORKPLACE_LANGUAGES.map((language) =>
-  language.name.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"),
-).join("|");
+const languageTargetAlternation = [
+  ...new Set(
+    WORKPLACE_LANGUAGES.flatMap((language) => [
+      language.name,
+      language.englishName,
+    ]),
+  ),
+]
+  .map((label) => label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&"))
+  .join("|");
 
 /** Dictionary titles such as "widget in English". */
 export const TITLE_PATTERNS: readonly SectionPattern[] = [

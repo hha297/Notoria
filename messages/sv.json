@@ -90,6 +90,8 @@
     "errors": {
       "proRequired": "Filimport finns på Pro och Premium.",
       "quotaExceeded": "Dagens importgräns är nådd. Försök i morgon eller uppgradera för en högre gräns.",
+      "rateLimited": "För många importförfrågningar. Vänta en stund och försök igen.",
+      "busy": "En import pågår redan. Vänta tills den är klar och försök igen.",
       "fileTooLarge": "Filen är för stor. Håll under 10 MB.",
       "unsupportedFormat": "Använd CSV, PDF, DOCX eller textfil.",
       "emptyFile": "Vi hittade inget läsbart innehåll i filen.",
@@ -130,9 +132,33 @@
     "formatWorking": "Formaterar…",
     "formatAiFallback": "AI-formatering är inte tillgänglig — grundläggande städning tillämpades istället",
     "formatFailed": "Kunde inte formatera innehållet. Försök igen.",
+    "formatQuotaExceeded": "Dagens AI-formateringskvot är slut. Den återställs vid UTC midnatt — eller uppgradera för en högre gräns.",
+    "formatRateLimited": "För många formateringsförfrågningar. Vänta en stund och försök igen.",
     "tableSelectionInvalid": "Kunde inte konvertera urvalet till en tabell",
     "headingCollapse": "Kollapsa avsnitt",
-    "headingExpand": "Expandera avsnitt"
+    "headingExpand": "Expandera avsnitt",
+    "paradigmHeaders": {
+      "case": "Kasus",
+      "singular": "Singular",
+      "plural": "Plural"
+    },
+    "paradigmCases": {
+      "nominative": "Nominativ",
+      "genitive": "Genitiv",
+      "partitive": "Partitiv",
+      "accusative": "Ackusativ",
+      "inessive": "Inessiv",
+      "elative": "Elativ",
+      "illative": "Illativ",
+      "adessive": "Adessiv",
+      "ablative": "Ablativ",
+      "allative": "Allativ",
+      "essive": "Essiv",
+      "translative": "Translativ",
+      "instructive": "Instruktiv",
+      "abessive": "Abessiv",
+      "comitative": "Komitativ"
+    }
   },
   "nav": {
     "dashboard": "Instrumentpanel",
@@ -166,6 +192,11 @@
     "captureDescription": "Spara något att bearbeta senare. Du behöver inte bestämma var det hör hemma ännu.",
     "captureSubmit": "Spara till Fångst",
     "captured": "Sparad i Fångst",
+    "edit": "Redigera",
+    "editTitle": "Redigera fångst",
+    "editDescription": "Uppdatera innehållet eller flytta det till en annan mapp.",
+    "editSubmit": "Spara ändringar",
+    "updated": "Fångst uppdaterad",
     "contentLabel": "Innehåll",
     "contentPlaceholder": "Ett ord, en fras, en idé eller något du vill återkomma till…",
     "contentRequired": "Lägg till innehåll först",
@@ -174,14 +205,21 @@
     "sourceLabel": "Källa (valfritt)",
     "sourcePlaceholder": "Bok, podcast, lektion…",
     "sourcePrefix": "Från {source}",
+    "folderLabel": "Mapp",
+    "foldersNav": "Fångstmappar",
+    "scopeAll": "Alla fångster",
+    "unfiled": "Osorterade",
     "filterUnprocessed": "Att bearbeta",
     "filterProcessed": "Bearbetade",
     "emptyTitle": "Fångst är tom",
     "emptyDescription": "Spara något snabbt — ett ord från ett samtal, ett grammatiktvivel, en skrividé — och sortera det senare.",
     "emptyProcessedTitle": "Inga bearbetade objekt ännu",
     "emptyProcessedDescription": "När du har sparat något från Fångst till ordförråd, teori, skrivande eller övningar visas det här.",
+    "emptyFolderTitle": "Den här mappen är tom",
+    "emptyFolderDescription": "Flytta fångster hit, eller spara något nytt i den här mappen.",
+    "deleteFolderDescription": "Vill du radera “{name}”? Mappen tas bort, men {count, plural, one {# fångst blir kvar} other {# fångster blir kvar}} bland Osorterade.",
     "statusProcessed": "Bearbetad",
-    "processMenu": "Bearbeta",
+    "processMenu": "Fångståtgärder",
     "processed": "Markerad som bearbetad",
     "deleted": "Borttagen från Fångst",
     "process": {
@@ -193,13 +231,14 @@
       "delete": "Ta bort"
     },
     "searchPlaceholder": "Sök fångster…",
+    "searchInScope": "Sök i {scope}…",
     "sortBy": "Sortera efter",
     "sortNewest": "Nyast först",
     "sortOldest": "Äldst först",
     "sortNameAsc": "Namn (A → Ö)",
     "sortNameDesc": "Namn (Ö → A)",
     "noResultsTitle": "Inga träffar",
-    "noResultsDescription": "Prova en annan sökning, eller rensa den för att se allt på den här fliken."
+    "noResultsDescription": "Prova en annan sökning, eller rensa den för att se allt i den här mappen och fliken."
   },
   "reviewLater": {
     "add": "Granska senare",
@@ -224,6 +263,7 @@
     "deleteDescription": "“{name}” och allt inuti den ({folderCount, plural, one {# mapp} other {# mappar}}, {itemCount, plural, one {# objekt} other {# objekt}}) kommer att raderas permanent.",
     "deleteDescriptionEmpty": "“{name}” kommer att raderas permanent.",
     "root": "Alla filer",
+    "unfiled": "Osorterade",
     "open": "Öppna",
     "rename": "Döp om",
     "move": "Flytta till…",
@@ -263,6 +303,15 @@
     "language": "Arbetsytans språk",
     "languageHint": "En arbetsyta per språk. Du kan inte skapa dubbletter.",
     "languageExists": "En arbetsyta för detta språk finns redan.",
+    "languageSearchPlaceholder": "Sök språk…",
+    "languageSearchEmpty": "Inga språk hittades",
+    "languageRegions": {
+      "europe": "Europa",
+      "asia": "Asien",
+      "africa": "Afrika",
+      "americas": "Amerika",
+      "oceania": "Oceanien"
+    },
     "created": "Arbetsyta skapad",
     "updated": "Arbetsyta uppdaterad",
     "deleted": "Arbetsyta raderad",
@@ -312,6 +361,15 @@
     "primaryMeaningLimit": "Du kan markera högst {max} primära betydelser",
     "primaryMeanings": "Primära betydelser",
     "otherMeanings": "Andra betydelser",
+    "usageLabels": {
+      "label": "Användningsetiketter",
+      "add": "Användning",
+      "menuTitle": "Användningsetiketter",
+      "clear": "Rensa alla",
+      "remove": "Ta bort {label}",
+      "aria": "Användningsetiketter för denna betydelse",
+      "count": "{count, plural, one {# etikett} other {# etiketter}}"
+    },
     "examples": "Exempelmeningar",
     "addExample": "Lägg till exempel",
     "removeExample": "Ta bort exempel",
@@ -388,22 +446,32 @@
     "tagManager": {
       "open": "Hantera taggar",
       "title": "Tagghanterare",
-      "description": "Markera ett ord först — Lägg till eller Ta bort styrs av om ordet redan har taggen.",
-      "groupsLabel": "Tagggrupper",
+      "description": "Välj en tagg och lägg till eller ta bort den från ord. Tilldelade och övriga ord visas i skilda listor.",
+      "groupsLabel": "Standardtagggrupper",
       "tagsHeading": "Taggar",
-      "wordsHeading": "Ord · {tag}",
+      "standardTagsHeading": "Standardtaggar",
+      "customTagsHeading": "Egna taggar",
+      "customTagsHint": "Etiketter du skapar för egen organisation — inte ordklasser.",
+      "emptyCustomTags": "Inga egna taggar ännu. Skapa dem när du redigerar ett ord.",
+      "wordsHeading": "{tag}",
+      "kindStandard": "Standard",
+      "kindCustom": "Egen",
+      "assignedHeading": "Ord med den här taggen",
+      "otherHeading": "Övriga ord",
+      "sectionCount": "{count}",
+      "selectSection": "Markera alla i avsnittet",
       "searchPlaceholder": "Sök ord eller betydelser…",
       "wordCount": "{count}",
       "loading": "Laddar ordförråd…",
       "emptyBank": "Ditt ordförråd är tomt.",
-      "emptyFilter": "Inga ord matchar den här sökningen.",
-      "selectVisible": "Markera synliga",
-      "showing": "{count} visas",
-      "showingSelectable": "{selectable} valbara · {count} visas",
+      "emptyAssigned": "Inga ord har den här taggen ännu.",
+      "emptyAssignedSearch": "Inga matchande ord med den här taggen.",
+      "emptyOther": "Alla ord har redan den här taggen.",
+      "emptyOtherSearch": "Inga matchande ord att tilldela.",
       "selected": "{count} markerade",
-      "modeHintIdle": "Markera ett ord för att börja. Det låser Lägg till eller Ta bort.",
-      "modeHintAdd": "Första valet saknar taggen — bara ord utan taggen kan markeras.",
-      "modeHintRemove": "Första valet har redan taggen — bara taggade ord kan markeras.",
+      "modeHintIdle": "Markera ord i endera listan. Första valet låser Lägg till eller Ta bort.",
+      "modeHintAdd": "Lägger till taggen — bara ord under Övriga ord kan förbli markerade.",
+      "modeHintRemove": "Tar bort taggen — bara redan taggade ord kan förbli markerade.",
       "addToTag": "Lägg till i tagg",
       "removeFromTag": "Ta bort från tagg",
       "applyAdd": "Lägg till i tagg ({count})",
@@ -479,7 +547,10 @@
         "notes": "Anteckningar",
         "updated": "Senast uppdaterad"
       }
-    }
+    },
+    "otherMeaningsPage": "{total} betydelser · sida {page} av {totalPages}",
+    "otherMeaningsPrev": "Föregående",
+    "otherMeaningsNext": "Nästa"
   },
   "tags": {
     "groups": {
@@ -522,6 +593,13 @@
       "idiom": "Idiom",
       "grammar": "Grammatik",
       "expression": "Uttryck"
+    },
+    "meaningUsage": {
+      "literary": "Litterär",
+      "technical": "Teknisk",
+      "archaic": "Ålderdomlig",
+      "regional": "Regional",
+      "figurative": "Bildlig"
     },
     "learningStatus": {
       "new": "Ny",
@@ -909,7 +987,22 @@
       "tryAgain": "Försök igen",
       "questionsLabel": "Frågor",
       "correctLabel": "Korrekt",
-      "reviewLabel": "För att granska"
+      "reviewLabel": "För att granska",
+      "answeredProgress": "{answered} / {total} besvarade",
+      "submitSet": "Skicka svar",
+      "submitting": "Kontrollerar…",
+      "unansweredWarnTitle": "Obesvarade frågor",
+      "unansweredWarn": "Du har fortfarande {count, plural, one {# obesvarad fråga} other {# obesvarade frågor}}. Skicka ändå?",
+      "submitAnyway": "Skicka ändå",
+      "partialHint": "Ledtråd: {mask}",
+      "jumpToUnanswered": "Gå till obesvarade",
+      "retryIncorrect": "Försök felaktiga igen",
+      "retryUnanswered": "Försök obesvarade igen",
+      "restartSet": "Starta om setet",
+      "resultsTitle": "Resultat",
+      "unanswered": "Ej besvarad",
+      "yourAnswer": "Ditt svar",
+      "correctAnswer": "Rätt svar"
     },
     "multipleChoice": {
       "questionWord": "Vad är betydelsen av detta ord?",
@@ -1826,24 +1919,12 @@
           "title": "1. Fånga något",
           "body": "Använd Fångst för att spara ett ord, en fras, ett grammatikfrågetecken eller en skrividé utan att bestämma var det hör hemma ännu. Hastighet är viktigare än perfekt struktur här."
         },
-        "filters": {
-          "title": "2. Att bearbeta vs bearbetat",
-          "body": "Att bearbeta håller poster som fortfarande väntar. Bearbetat visar fångster du redan gjort om till ordförråd, teori, skrivande eller övningar."
-        },
-        "search": {
-          "title": "3. Sök",
-          "body": "Filtrera den aktuella fliken efter innehåll, anteckning eller källa så du hittar en fångst snabbt."
-        },
-        "sort": {
-          "title": "4. Sortera",
-          "body": "Sortera efter nyast, äldst eller namn så listan passar hur du vill arbeta igenom den."
-        },
         "list": {
-          "title": "5. Din fångstlista",
-          "body": "Varje kort visar innehållet, valfri anteckning/källa och när du sparade det. Öppna ···-menyn på ett kort för att bearbeta det."
+          "title": "2. Din fångstlista",
+          "body": "Varje kort visar innehållet, valfri anteckning/källa och när du sparade det. Använd mappar, Att bearbeta / Bearbetat, sök och sortering ovanför listan när du behöver hitta något. Öppna ···-menyn på ett kort för att bearbeta det."
         },
         "process": {
-          "title": "6. Bearbeta till Notoria",
+          "title": "3. Bearbeta till Notoria",
           "body": "Skicka en fångst till Ordförråd, Teori, Skrivande eller Övning. Den blir Bearbetad först när du sparat klart där — avbryter du skapandet lämnas den kvar."
         }
       }
@@ -1934,8 +2015,7 @@
       "confirmContentChange": "Endast vid innehållsändring",
       "confirmNever": "Aldrig",
       "saveFailed": "Kunde inte spara AI-inställningar",
-      "disabledToast": "AI-hjälp är avstängd i Inställningar",
-      "formatConfirm": "AI kommer att skriva om detta innehåll. Fortsätta?"
+      "disabledToast": "AI-hjälp är avstängd i Inställningar"
     },
     "tutorials": "Sektionstutorials",
     "tutorialsDescription": "Återställ genomförda sektiongenomgångar så att \"Visa tutorial\" börjar från början igen.",
@@ -2222,7 +2302,9 @@
       "expected": "Rätt svar",
       "objectiveScore": "{correct} / {total} objektiva rätt",
       "mobileTabsAria": "Övningspaneler",
+      "unansweredWarnTitle": "Obesvarade frågor",
       "unansweredWarn": "Vissa frågor är obesvarade. Skicka ändå?",
+      "submitAnyway": "Skicka ändå",
       "gradingPending": "Fria svar kunde inte betygsättas ännu. Dina svar är sparade — du kan försöka betygsätta igen.",
       "retryGrading": "Försök betygsätta igen",
       "retryAttempt": "Försök igen",
@@ -2296,7 +2378,9 @@
       "ATTEMPT_NOT_EDITABLE": "Detta försök kan inte längre redigeras.",
       "PROCESSING_FAILED": "Något gick fel. Försök igen.",
       "AI_DISABLED": "AI-hjälp är avstängd i dina inställningar.",
-      "AI_QUOTA_EXCEEDED": "Du har nått din AI-övningsgräns för den här perioden.",
+      "AI_QUOTA_EXCEEDED": "Du har nått din AI-läsgräns för den här perioden.",
+      "RATE_LIMITED": "För många förfrågningar. Vänta en stund och försök igen.",
+      "AI_BUSY": "Läs-AI är redan upptagen. Vänta tills den är klar och försök igen.",
       "generic": "Något gick fel. Försök igen."
     },
     "newPassage": "Lägg till text",
@@ -2344,6 +2428,7 @@
     "uploadChoose": "Välj fil",
     "uploading": "Laddar upp… {percent} %",
     "extracting": "Extraherar text…",
+    "uploadInProgress": "Den här filen bearbetas redan.",
     "cancelUpload": "Avbryt uppladdning",
     "retryUpload": "Försök ladda upp igen",
     "downloadOriginal": "Ladda ner original",
@@ -2419,6 +2504,7 @@
     "chooseExerciseType": "Välj övningstyp:",
     "chooseTypeHint": "Välj Fyll i luckan eller Flervalsfråga för att generera frågor.",
     "exercisesGenerated": "Övningar genererade.",
+    "generationInProgress": "Övningar genereras redan.",
     "exercisesTitle": "Övningar",
     "exerciseCount": "{count, plural, one {# övning} other {# övningar}}",
     "status": {
@@ -2473,9 +2559,11 @@
     "fillBlankOverview": "Fyll i luckorna i texten.",
     "practice": {
       "progress": "{current} / {total}",
+      "answeredProgress": "{answered} / {total} besvarade",
       "score": "{correct} korrekt",
       "check": "Kontrollera",
       "checkAnswers": "Kontrollera svar",
+      "submitSet": "Skicka svar",
       "questionLabel": "Fråga {number}",
       "blankLabel": "Lucka {number}",
       "listenPrompt": "Lyssna på denna del av ljudet.",
@@ -2496,7 +2584,11 @@
       "blanksProgress": "{filled} / {total} luckor",
       "changeType": "Byt typ",
       "hideReview": "Dölj granskning",
-      "typeHintMc": "Lyssna och välj bästa svaret på varje fråga."
+      "jumpToUnanswered": "Gå till obesvarade",
+      "unansweredWarnTitle": "Obesvarade frågor",
+      "unansweredWarn": "Du har fortfarande obesvarade frågor. Skicka ändå?",
+      "submitAnyway": "Skicka ändå",
+      "typeHintMc": "Lyssna och välj bästa svaret på varje fråga på den här sidan."
     },
     "errors": {
       "CLOUDINARY_NOT_CONFIGURED": "Medielagring är inte konfigurerad.",
@@ -2514,7 +2606,8 @@
       "EMPTY_TRANSCRIPT": "Inget tal hittades i den filen.",
       "DUPLICATE_FILENAME": "En fil med detta namn finns redan.",
       "FILENAME_REQUIRED": "Ange ett filnamn.",
-      "AUDIO_TOO_LONG": "Ljudet är längre än 45 minuter. Dela upp det eller använd ett kortare klipp för ett transkript."
+      "AUDIO_TOO_LONG": "Ljudet är längre än 45 minuter. Dela upp det eller använd ett kortare klipp för ett transkript.",
+      "AUDIO_DURATION_UNKNOWN": "Vi kunde inte bekräfta ljudlängden före transkription. Ladda upp filen igen och försök på nytt."
     }
   },
   "speaking": {
@@ -2575,6 +2668,11 @@
     "feedbackTitle": "Tutorns feedback",
     "feedbackDescription": "En kort sammanfattning av hur samtalet gick.",
     "transcriptTitle": "Transkript",
+    "transcriptFinalizing": "Slutför transkript",
+    "transcriptLoadingTitle": "Hämtar transkript",
+    "transcriptLoadingDescription": "Turerna från samtalet visas här snart.",
+    "transcriptEmpty": "Inget transkript sparades för den här sessionen.",
+    "transcriptError": "Transkriptet är ofullständigt",
     "status": {
       "upcoming": "Redo",
       "active": "I samtal",
@@ -2606,7 +2704,13 @@
       "endedDescription": "Feedback kommer att visas på sessionssidan om några ögonblick.",
       "back": "Tillbaka till session",
       "notConfigured": "Videomöten är inte konfigurerade än. Lägg till Stream Video API-nycklar för att starta ett samtal.",
-      "sessionLimitReached": "Den här talsessionen nådde 30-minutersgränsen för rimlig användning och har avslutats."
+      "sessionLimitReached": "Den här talsessionen nådde 30-minutersgränsen för rimlig användning och har avslutats.",
+      "tutorSetupTimeout": "AI-tutorn tog för lång tid att ansluta, så samtalet avslutades. Starta en ny session.",
+      "elapsedTitle": "Tid i samtalet",
+      "inactivityWarning": "Ingen har pratat på ett tag. Samtalet avslutas snart.",
+      "inactivityCountdown": "Avslutas om {seconds}s…",
+      "inactivityEnded": "Samtalet avslutades efter inaktivitet.",
+      "continueCall": "Fortsätt samtal"
     },
     "errors": {
       "STREAM_NOT_CONFIGURED": "Videomöten är inte konfigurerade.",
@@ -2614,9 +2718,14 @@
       "INVALID_INPUT": "Kontrollera ämnet och nivån, försök sedan igen.",
       "SESSION_NOT_FOUND": "Tal-session hittades inte.",
       "SESSION_NOT_JOINABLE": "Detta samtal är inte längre tillgängligt att gå med i.",
+      "SESSION_EXPIRED": "Den här talsessionen nådde tidsgränsen och kan inte längre anslutas till.",
+      "ACTIVE_SESSION_EXISTS": "Du har redan en aktiv talsession. Avsluta den innan du startar en ny.",
       "STREAM_CALL_FAILED": "Kunde inte starta videomötet. Försök igen.",
-      "UNAUTHORIZED": "Logga in för att gå med i ett tal-samtal."
-    }
+      "UNAUTHORIZED": "Logga in för att gå med i ett tal-samtal.",
+      "AI_QUOTA_EXCEEDED": "Du har använt dagens AI-talkvot. Den återställs vid UTC midnatt — eller uppgradera för fler sessioner."
+    },
+    "quotaLockedTitle": "Daglig talkvot nådd",
+    "quotaLockedBody": "Du har använt dagens AI-talsession. Befintliga sessioner finns kvar — uppgradera för fler, eller kom tillbaka efter att kvoten återställs."
   },
   "errors": {
     "generic": "Något gick fel",
@@ -2961,6 +3070,21 @@
     "confirmDowngradeBody": "Pro ersätter Premium direkt. Stripe krediterar den proportionella mellanskillnaden omedelbart. Premium-funktioner upphör när Stripe bekräftar det nya priset. En schemalagd uppsägning tas bort.",
     "confirmCancelTitle": "Avsluta {plan}?",
     "confirmCancelBody": "Din {plan}-åtkomst gäller till {date}. Därefter går kontot över till Free. Du debiteras inte igen.",
+    "cancelFeedbackLabel": "Varför avslutar du?",
+    "cancelFeedbackOptional": "Valfritt — du kan hoppa över detta och ändå avsluta.",
+    "cancelCommentLabel": "Vill du tillägga något?",
+    "cancelCommentPlaceholder": "Valfri kommentar",
+    "cancelCommentCount": "{count} / {max}",
+    "cancelReasons": {
+      "too_expensive": "Det är för dyrt",
+      "missing_features": "Jag behöver fler funktioner",
+      "switched_service": "Jag hittade ett alternativ",
+      "unused": "Jag behöver det inte längre",
+      "too_complex": "Det var för komplicerat att använda",
+      "low_quality": "Kvaliteten var bristfällig",
+      "other": "Annan anledning"
+    },
+    "invalidCancellationFeedback": "Feedbacken för uppsägningen är ogiltig. Välj en listad anledning eller korta kommentaren.",
     "confirmKeepTitle": "Behålla {plan}?",
     "confirmKeepBody": "Den schemalagda uppsägningen tas bort. {plan} fortsätter att förnyas, och nästa debitering är {date}.",
     "back": "Tillbaka",
@@ -2969,7 +3093,59 @@
     "usageToday": "AI-användning idag",
     "quotaCount": "{used} / {limit}",
     "unlimitedAi": "Obegränsad AI",
-    "quotaExceeded": "Dagens gratiskvot är slut. Uppgradera till Pro för obegränsad AI.",
+    "quotaUnlimitedHint": "Obegränsad för vanlig användning på den här planen.",
+    "quotaRemainingHint": "{remaining} kvar idag · återställs {reset}",
+    "quotaExhaustedHint": "Kvoten är slut · återställs {reset}",
+    "quotaResetUtcMidnight": "vid UTC midnatt",
+    "quotaExceeded": "Dagens AI-kvot för den här funktionen är slut. Den återställs vid UTC midnatt — eller uppgradera för en högre gräns.",
+    "quotaExceededNoUpgrade": "Dagens AI-kvot för den här funktionen är slut. Återställs {reset}.",
+    "quotaMessages": {
+      "ai_meeting": {
+        "free": "Du har använt dagens AI-talsession. Uppgradera för fler sessioner, eller kom tillbaka efter att kvoten återställs ({reset}).",
+        "pro": "Du har nått din dagliga AI-talgräns. Uppgradera till Premium för högre kvot, eller kom tillbaka efter återställning ({reset}).",
+        "premium": "Du har nått dagens AI-talgräns. Återställs {reset}."
+      },
+      "ai_reading": {
+        "free": "Du har använt dagens AI-läskvot. Uppgradera för mer övning, eller kom tillbaka efter återställning ({reset}).",
+        "pro": "Du har nått din dagliga AI-läsgräns. Uppgradera till Premium, eller kom tillbaka efter återställning ({reset}).",
+        "premium": "Du har nått dagens AI-läsgräns. Återställs {reset}."
+      },
+      "ai_listening_transcript": {
+        "free": "Du har använt dagens AI-lyssningstranskript. Uppgradera för fler, eller kom tillbaka efter återställning ({reset}).",
+        "pro": "Du har nått din dagliga lyssningstranskriptgräns. Uppgradera till Premium, eller kom tillbaka efter återställning ({reset}).",
+        "premium": "Du har nått dagens lyssningstranskriptgräns. Återställs {reset}."
+      },
+      "ai_vocabulary": {
+        "free": "Du har använt dagens AI-ordförrådsåtgärder. Uppgradera för fler, eller kom tillbaka efter återställning ({reset}).",
+        "pro": "Du har nått dagens AI-ordförrådsgräns. Återställs {reset}.",
+        "premium": "Du har nått dagens AI-ordförrådsgräns. Återställs {reset}."
+      },
+      "ai_writing": {
+        "free": "Du har använt dagens AI-skrivstöd. Uppgradera för mer, eller kom tillbaka efter återställning ({reset}).",
+        "pro": "Du har nått dagens AI-skrivgräns. Återställs {reset}.",
+        "premium": "Du har nått dagens AI-skrivgräns. Återställs {reset}."
+      },
+      "ai_exercise": {
+        "free": "Du har använt dagens AI-övningsgenerering. Uppgradera för fler, eller kom tillbaka efter återställning ({reset}).",
+        "pro": "Du har nått dagens AI-övningsgräns. Återställs {reset}.",
+        "premium": "Du har nått dagens AI-övningsgräns. Återställs {reset}."
+      },
+      "ai_exercise_import": {
+        "free": "Övningsimport ingår inte i Free. Uppgradera till Pro för att importera arbetsblad.",
+        "pro": "Du har nått dagens övningsimportgräns. Uppgradera till Premium, eller kom tillbaka efter återställning ({reset}).",
+        "premium": "Du har nått dagens övningsimportgräns. Återställs {reset}."
+      },
+      "ai_learning_coach_chat": {
+        "free": "Learning Coach-chatt är en Premium-funktion.",
+        "pro": "Learning Coach-chatt är en Premium-funktion.",
+        "premium": "Du har nått dagens Learning Coach-chattgräns. Återställs {reset}."
+      },
+      "content_import": {
+        "free": "Innehållsimport ingår inte i Free. Uppgradera till Pro för att importera studiematerial.",
+        "pro": "Du har nått dagens innehållsimportgräns. Återställs {reset}.",
+        "premium": "Du har nått dagens innehållsimportgräns. Återställs {reset}."
+      }
+    },
     "alreadySubscribed": "Du har redan den här planen.",
     "status": "Status: {status}",
     "renewsOn": "Förnyas den {date}",
@@ -3218,6 +3394,8 @@
     "refresh": "Uppdatera coach",
     "refreshed": "Coachen uppdaterades från din senaste aktivitet.",
     "refreshFailed": "Kunde inte uppdatera coachen. Försök igen.",
+    "refreshRateLimited": "Du uppdaterade nyligen. Vänta en minut och försök igen.",
+    "refreshBusy": "Coachen uppdateras redan. Vänta en stund.",
     "status": {
       "MASTERED": "Bemästrat",
       "REVIEW": "Repetition",
@@ -3848,11 +4026,11 @@
             },
             {
               "provider": "Stream Video",
-              "role": "Direktsamtal för tal; automatisk transkribering; sessionsfält såsom transkriptions-URL:er (och inspelnings-URL:er endast om en inspelningshändelse senare tas emot)"
+              "role": "Ljud/video för talsamtal; inspelnings-URL:er endast om en inspelningshändelse senare tas emot. Nya samtal använder inte Stream-transkribering."
             },
             {
               "provider": "OpenAI",
-              "role": "Valfri AI-assistans och realtidsljud för taltutorn"
+              "role": "Valfri AI-assistans, realtidsljud för taltutorn och transkribering av talsamtal (gpt-4o-transcribe)"
             },
             {
               "provider": "Resend",
@@ -3871,7 +4049,7 @@
               "role": "Genererade avatarbilder som används i talsessioner (från ett namnfrö; inget kontolösenord skickas)"
             }
           ],
-          "p2": "Talsamtal skapas med transkribering aktiverad. Inspelning är avaktiverad när samtalet skapas i den nuvarande implementationen; en inspelnings-URL lagras endast om produkten senare tar emot en händelse om färdig inspelning från Stream."
+          "p2": "Transkriptioner från talsamtal hämtas med OpenAI Realtime (gpt-4o-transcribe) under sessionen och lagras på servern. Stream-transkribering och undertexter är avstängda för nya samtal. Inspelning är avaktiverad när samtalet skapas; en inspelnings-URL lagras endast om produkten senare tar emot en händelse om färdig inspelning från Stream."
         },
         "cookies": {
           "title": "9. Cookies och lagring på enheten",
@@ -4468,6 +4646,7 @@
   "errorPages": {
     "statusUnavailable": "Otillgänglig",
     "reference": "Referens: {id}",
+    "referenceLabel": "Referens-ID",
     "actions": {
       "dashboard": "Gå till instrumentpanelen",
       "home": "Till startsidan",
@@ -4478,7 +4657,7 @@
     },
     "notFound": {
       "title": "Sidan hittades inte",
-      "description": "Sidan finns inte, eller så är länken inaktuell. Kontrollera adressen eller gå tillbaka."
+      "description": "Sidan finns inte, eller så är länken inaktuell. Kontrollera adressen eller gå till instrumentpanelen."
     },
     "unauthorized": {
       "title": "Inloggning krävs",
@@ -4556,6 +4735,264 @@
         "description": "Det kan ha raderats, eller så är länken inaktuell.",
         "primary": "Gå till instrumentpanelen"
       }
+    }
+  },
+  "admin": {
+    "nav": {
+      "admin": "Admin",
+      "manage": "Manage",
+      "overview": "Overview",
+      "users": "Users",
+      "workspaces": "Workspaces",
+      "jobs": "Jobs",
+      "audit": "Audit",
+      "content": "Content",
+      "contentLibrary": "Content library",
+      "backToApp": "Back to app",
+      "openMenu": "Open admin menu",
+      "openAdmin": "Admin dashboard"
+    },
+    "modules": {
+      "vocabulary": "Vocabulary",
+      "theory": "Theory",
+      "writing": "Writing",
+      "exercises": "Exercises",
+      "listening": "Listening",
+      "reading": "Reading",
+      "speaking": "Speaking",
+      "inbox": "Capture",
+      "folders": "Folders"
+    },
+    "common": {
+      "search": "Search",
+      "clear": "Clear",
+      "filter": "Filter",
+      "previous": "Previous",
+      "next": "Next",
+      "pageOf": "Page {page} of {totalPages}",
+      "results": "{total} results",
+      "backToList": "Back to list",
+      "empty": "No results"
+    },
+    "overview": {
+      "title": "Overview",
+      "description": "Live counts from application data. Time ranges use UTC calendar days. Active learners count distinct users with learning activity events — not logins.",
+      "metrics": "Metrics",
+      "recentAudit": "Recent admin actions",
+      "recentAuditLede": "Latest mutations from the audit trail.",
+      "viewAllAudit": "View audit log",
+      "cards": {
+        "users": "Total users",
+        "newUsers7d": "New users (7d)",
+        "newUsers30d": "New users (30d)",
+        "activeUsers7d": "Active learners (7d)",
+        "workspaces": "Workspaces",
+        "vocabulary": "Vocabulary",
+        "theory": "Theory",
+        "writing": "Writing",
+        "exercises": "Exercises",
+        "listening": "Listening",
+        "reading": "Reading",
+        "speaking": "Speaking",
+        "inbox": "Capture",
+        "failedListening": "Failed listening",
+        "failedImports": "Failed imports",
+        "runningJobs": "Running job locks",
+        "recentAudits7d": "Audit entries (7d)"
+      }
+    },
+    "users": {
+      "title": "Users",
+      "description": "Search accounts, change roles, suspend access, or delete with confirmation.",
+      "searchPlaceholder": "Search name or email…",
+      "empty": "No users match these filters.",
+      "selfGuard": "Safeguards prevent changing or deleting your own admin account here.",
+      "columns": {
+        "user": "User",
+        "role": "Role",
+        "status": "Status",
+        "plan": "Plan",
+        "workspaces": "Workspaces",
+        "created": "Registered"
+      },
+      "filters": {
+        "role": "Role",
+        "status": "Status",
+        "allRoles": "Any role",
+        "allStatuses": "Any status"
+      },
+      "status": {
+        "active": "Active",
+        "suspended": "Suspended"
+      },
+      "fields": {
+        "id": "User id",
+        "name": "Name",
+        "role": "Role",
+        "status": "Status",
+        "plan": "Plan",
+        "created": "Registered",
+        "updated": "Updated",
+        "emailVerified": "Email verified"
+      },
+      "detail": {
+        "account": "Account",
+        "usage": "Content counts",
+        "usageLede": "Owned records across learning modules.",
+        "actions": "Account actions",
+        "workspaces": "Workspaces",
+        "workspacesLede": "Language workspaces owned by this user."
+      },
+      "actions": {
+        "saveProfile": "Save name",
+        "grantAdmin": "Grant admin",
+        "revokeAdmin": "Revoke admin",
+        "suspend": "Suspend",
+        "restore": "Restore",
+        "delete": "Delete account"
+      },
+      "confirm": {
+        "grantAdmin": "Grant admin access to this account?",
+        "revokeAdmin": "Revoke admin access? This fails if they are the last active admin.",
+        "suspend": "Suspend this account? They lose access on the next protected request.",
+        "restore": "Restore this account?",
+        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone."
+      }
+    },
+    "workspaces": {
+      "title": "Workspaces",
+      "description": "Inspect and manage language workspaces.",
+      "searchPlaceholder": "Search name, language, or owner email…",
+      "empty": "No workspaces match these filters.",
+      "createForUser": "Create workspace for this user",
+      "columns": {
+        "name": "Name",
+        "language": "Language",
+        "owner": "Owner",
+        "updated": "Updated"
+      },
+      "fields": {
+        "id": "Workspace id",
+        "name": "Name",
+        "nameOptional": "Optional display name",
+        "language": "Language",
+        "owner": "Owner",
+        "created": "Created",
+        "updated": "Updated"
+      },
+      "detail": {
+        "description": "Language: {language}",
+        "meta": "Workspace",
+        "actions": "Workspace actions",
+        "actionsLede": "Editing language must stay unique per owner. Deletion cascades learning content in this workspace."
+      },
+      "actions": {
+        "create": "Create workspace",
+        "save": "Save",
+        "delete": "Delete workspace"
+      },
+      "confirm": {
+        "delete": "Delete this workspace and all learning content inside it via database cascades?"
+      }
+    },
+    "content": {
+      "description": "Lists show metadata only. Open a row for identifiers and status. Private bodies (transcripts, notes) are not loaded here by default.",
+      "searchPlaceholder": "Search titles…",
+      "empty": "No records match these filters.",
+      "listeningMediaNote": "Deleting a listening lesson removes the database row. External media cleanup is best-effort and is not performed by this admin action.",
+      "columns": {
+        "title": "Title",
+        "status": "Status",
+        "owner": "Owner",
+        "workspace": "Workspace",
+        "updated": "Updated"
+      },
+      "fields": {
+        "id": "Id",
+        "status": "Status",
+        "errorCode": "Error code",
+        "owner": "Owner",
+        "workspace": "Workspace",
+        "created": "Created",
+        "updated": "Updated"
+      },
+      "detail": {
+        "description": "Metadata inspection. Private bodies are not auto-loaded.",
+        "meta": "Record",
+        "metaLede": "Identifiers and status only.",
+        "actions": "Actions"
+      },
+      "actions": {
+        "delete": "Delete record"
+      },
+      "confirm": {
+        "delete": "Delete this record? Related child rows follow database cascade / set-null rules."
+      }
+    },
+    "jobs": {
+      "title": "Jobs",
+      "description": "Running locks and failed processing records. Statuses are read-only — do not force a failed job to appear successful.",
+      "searchPlaceholder": "Filter by title…",
+      "empty": "No jobs match these filters.",
+      "buckets": {
+        "attention": "Needs attention",
+        "running": "Running",
+        "failed": "Failed",
+        "all": "All",
+        "runningLocks": "Running locks",
+        "failedLocks": "Failed locks",
+        "failedListening": "Failed listening",
+        "failedImports": "Failed imports"
+      },
+      "filters": {
+        "kind": "Kind",
+        "allKinds": "All kinds"
+      },
+      "kinds": {
+        "ai_lock": "AI lock",
+        "listening": "Listening",
+        "exercise_import": "Exercise import",
+        "lock": "AI lock",
+        "import": "Exercise import"
+      },
+      "columns": {
+        "kind": "Kind",
+        "title": "Title",
+        "status": "Status",
+        "error": "Error",
+        "owner": "Owner",
+        "updated": "Updated"
+      }
+    },
+    "audit": {
+      "title": "Audit log",
+      "description": "Read-only history of administrative mutations. Credentials and private bodies are never stored here.",
+      "searchPlaceholder": "Search action, entity, or actor email…",
+      "empty": "No audit entries yet.",
+      "columns": {
+        "when": "When",
+        "actor": "Actor",
+        "action": "Action",
+        "entity": "Entity",
+        "success": "Result"
+      },
+      "success": {
+        "yes": "OK",
+        "no": "Failed"
+      }
+    },
+    "errors": {
+      "UNKNOWN": "Something went wrong. Try again.",
+      "LAST_ADMIN": "Cannot change the last active admin.",
+      "CANNOT_DEMOTE_SELF": "You cannot demote your own admin account.",
+      "CANNOT_SUSPEND_SELF": "You cannot suspend your own account.",
+      "CANNOT_DELETE_SELF": "You cannot delete your own account.",
+      "USER_NOT_FOUND": "User not found.",
+      "WORKSPACE_NOT_FOUND": "Workspace not found.",
+      "WORKSPACE_LANGUAGE_EXISTS": "This user already has a workspace for that language.",
+      "INVALID_LANGUAGE": "Invalid language code.",
+      "CONTENT_NOT_FOUND": "Record not found.",
+      "INVALID_CONTENT_MODULE": "Unknown content module."
     }
   }
 }

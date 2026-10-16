@@ -1,5 +1,10 @@
 import type { JSONContent } from "@tiptap/react";
-import OpenAI from "openai";
+import {
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  clipForAi,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import {
   vocabularyNotesFormatResultSchema,
   type VocabularyNotesFormatBlock,
@@ -8,13 +13,13 @@ import {
 } from "@/lib/vocabulary/ai-types";
 import { WORKPLACE_LANGUAGES, getLanguageByCode } from "@/lib/languages";
 import { PARADIGM_AI_RULES } from "@/lib/editor/format/paradigm-ai-rules";
+import {
+  canonicalizeParadigmCaseRows,
+  canonicalizeParadigmHeaderRow,
+} from "@/lib/editor/paradigm-headers";
 
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
-    throw new Error("OPENAI_NOT_CONFIGURED");
-  }
-  return new OpenAI({ apiKey, timeout: 45_000 });
+  return requireOpenAiClient({ timeoutMs: 45_000 });
 }
 
 function parseJsonContent(content: string | null | undefined) {
@@ -33,8 +38,8 @@ Goal: turn messy pasted notes into clean, copyable structured content. Convert a
 
 Rules:
 1. Preserve the learner's information. Do not invent forms that are unsupported by the notes. You MAY normalize morphology; that is analysis, not invention.
-2. When notes look like a paradigm for the study language, convert them into ONE table whose headers match that language and the notes. Do not force every language into the same columns or headers.
-3. Do not invent a table layout from another language. Use headers and columns that already appear in the notes / study language. If the notes are not a paradigm, keep paragraphs, headings, and lists.
+2. When notes look like a case×number paradigm, convert them into ONE table. For the header row use EXACTLY these English tokens (do not translate): "Case", "Singular", "Plural". For the first-column case labels use EXACTLY these English tokens (do not translate): Nominative, Genitive, Partitive, Accusative, Inessive, Elative, Illative, Adessive, Ablative, Allative, Essive, Translative, Instructive, Abessive, Comitative. If the notes are not a paradigm, keep paragraphs, headings, and lists — do not invent a table.
+3. Do not invent a table layout from another language. Only use Case/Singular/Plural when the notes clearly have case×number forms. Otherwise keep paragraphs, headings, and lists.
 4. Put the category/label in the first column when the notes are a paradigm. Set boldFirstColumn true for label columns.
 5. Map each form to its actual grammatical category using linguistic analysis of the study language. Do not fill cells sequentially from top to bottom. Do not trust source labels blindly when a dump is long, repeated, or inconsistent.
 6. Keep non-table notes as paragraph / heading / bulletList / orderedList blocks ONLY when that text already exists in the notes.
@@ -118,11 +123,12 @@ export async function formatVocabularyNotesWithAi(
   const languageHint = input.language
     ? (getLanguageByCode(input.language)?.name ?? input.language)
     : null;
+  const notes = clipForAi(input.notes, AI_INPUT_LIMITS.vocabNotes);
 
   const completion = await client.chat.completions.create({
     model: "gpt-4o",
     temperature: 0.1,
-    max_tokens: 4_000,
+    max_tokens: AI_OUTPUT_TOKENS.vocabNotesFormat,
     response_format: { type: "json_object" },
     messages: [
       { role: "system", content: notesFormatSystemPrompt() },
@@ -131,7 +137,7 @@ export async function formatVocabularyNotesWithAi(
         content: JSON.stringify({
           word: input.word?.trim() || null,
           studyLanguageHint: languageHint,
-          notes: input.notes,
+          notes,
           reminder:
             "Merge same-label rows with formA/formB. Strip person/possessive endings. First column = category labels only.",
         }),
@@ -186,7 +192,9 @@ function normalizeBlock(
     return null;
   }
 
-  const headers = block.headers.map((cell) => cell.trim());
+  const headers = canonicalizeParadigmHeaderRow(
+    block.headers.map((cell) => cell.trim()),
+  );
   if (headers.some((cell) => !cell) || headers.length === 0) return null;
   const colCount = headers.length;
   const rows = block.rows
@@ -200,7 +208,7 @@ function normalizeBlock(
   return {
     type: "table",
     headers,
-    rows: mergeTableRowsByLabel(rows),
+    rows: canonicalizeParadigmCaseRows(mergeTableRowsByLabel(rows)),
     boldFirstColumn: block.boldFirstColumn !== false,
   };
 }
@@ -218,6 +226,7 @@ function isInventedParadigmHeading(text: string, word?: string | null) {
   const languageLabels = new Set(
     WORKPLACE_LANGUAGES.flatMap((language) => [
       language.name.trim().toLowerCase(),
+      language.englishName.trim().toLowerCase(),
       language.code.trim().toLowerCase(),
     ]),
   );

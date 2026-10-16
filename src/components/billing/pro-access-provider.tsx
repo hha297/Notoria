@@ -1,7 +1,16 @@
 "use client";
 
-import { createContext, useContext, useMemo, useState, type ReactNode } from "react";
-import type { PlanId } from "@/lib/billing/plans";
+import {
+  createContext,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useState,
+  type ReactNode,
+} from "react";
+import type { PlanId, QuotaStatus } from "@/lib/billing/plans";
+import { getMyQuotaStatuses } from "@/lib/actions/billing-quotas";
 import { ProUpgradeDialog } from "@/components/billing/pro-upgrade-dialog";
 
 type ProAccessContextValue = {
@@ -11,6 +20,8 @@ type ProAccessContextValue = {
   currentPeriodEnd: string | null;
   scheduledPlan: PlanId | null;
   introOfferEligible: boolean;
+  quotas: QuotaStatus[];
+  refreshQuotas: () => Promise<void>;
   openUpgrade: () => void;
   openPremium: () => void;
 };
@@ -24,6 +35,7 @@ export function ProAccessProvider({
   currentPeriodEnd = null,
   scheduledPlan = null,
   introOfferEligible = false,
+  initialQuotas = [],
   children,
 }: {
   hasProAccess: boolean;
@@ -32,9 +44,25 @@ export function ProAccessProvider({
   currentPeriodEnd?: string | null;
   scheduledPlan?: PlanId | null;
   introOfferEligible?: boolean;
+  initialQuotas?: QuotaStatus[];
   children: ReactNode;
 }) {
   const [upgradeOpen, setUpgradeOpen] = useState(false);
+  const [quotas, setQuotas] = useState<QuotaStatus[]>(initialQuotas);
+
+  useEffect(() => {
+    setQuotas(initialQuotas);
+  }, [initialQuotas]);
+
+  const refreshQuotas = useCallback(async () => {
+    try {
+      const next = await getMyQuotaStatuses();
+      setQuotas(next);
+    } catch {
+      // Keep last known snapshot; backend still enforces.
+    }
+  }, []);
+
   const value = useMemo(
     () => ({
       hasProAccess,
@@ -43,6 +71,8 @@ export function ProAccessProvider({
       currentPeriodEnd,
       scheduledPlan,
       introOfferEligible,
+      quotas,
+      refreshQuotas,
       openUpgrade: () => setUpgradeOpen(true),
       openPremium: () => setUpgradeOpen(true),
     }),
@@ -53,6 +83,8 @@ export function ProAccessProvider({
       currentPeriodEnd,
       scheduledPlan,
       introOfferEligible,
+      quotas,
+      refreshQuotas,
     ],
   );
 
@@ -68,6 +100,8 @@ export function ProAccessProvider({
   );
 }
 
+const EMPTY_QUOTAS: QuotaStatus[] = [];
+
 export function useProAccess() {
   const context = useContext(ProAccessContext);
   if (!context) {
@@ -78,6 +112,8 @@ export function useProAccess() {
       currentPeriodEnd: null,
       scheduledPlan: null,
       introOfferEligible: false,
+      quotas: EMPTY_QUOTAS,
+      refreshQuotas: async () => {},
       openUpgrade: () => {},
       openPremium: () => {},
     };

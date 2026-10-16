@@ -4,6 +4,7 @@ import { PageShell } from "@/components/layout/page-shell";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import styles from "@/components/style/inbox/inbox.module.css";
 import { mx } from "@/lib/css-module";
+import { getFolders } from "@/lib/actions/folders";
 import { getStudyInboxItems } from "@/lib/actions/study-inbox";
 import { getActiveWorkspace } from "@/lib/workspace";
 
@@ -32,15 +33,26 @@ export default async function InboxPage() {
     );
   }
 
-  const rows = await getStudyInboxItems("all");
+  const [rows, folders] = await Promise.all([
+    getStudyInboxItems("all"),
+    getFolders("inbox"),
+  ]);
+
   const items = rows.map((row) => ({
     id: row.id,
     content: row.content,
     note: row.note,
     source: row.source,
     status: row.status,
+    folderId: row.folderId ?? null,
     createdAt: row.createdAt.toISOString(),
   }));
 
-  return <InboxView items={items} initialFilter="unprocessed" />;
+  return (
+    <InboxView
+      items={items}
+      folders={folders}
+      initialFilter="unprocessed"
+    />
+  );
 }

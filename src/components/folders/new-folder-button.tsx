@@ -12,6 +12,8 @@ type NewFolderButtonProps = {
   className?: string;
   variant?: "outline" | "ghost";
   size?: "sm" | "default";
+  /** Accent for quiet-action hover when used outside FolderWorkspace. */
+  routeAction?: string;
 };
 
 const SECTION_ROUTE_ACTION: Record<FolderSection, string> = {
@@ -19,6 +21,7 @@ const SECTION_ROUTE_ACTION: Record<FolderSection, string> = {
   theory: "theory",
   listening: "listen",
   reading: "read",
+  inbox: "home",
 };
 
 export function NewFolderButton({
@@ -26,12 +29,13 @@ export function NewFolderButton({
   className,
   variant = "outline",
   size = "default",
+  routeAction: routeActionProp,
 }: NewFolderButtonProps) {
   const t = useTranslations("folders");
   const workspace = useFolderWorkspace();
-  const routeAction = workspace
-    ? SECTION_ROUTE_ACTION[workspace.section]
-    : "writing";
+  const routeAction =
+    routeActionProp ??
+    (workspace ? SECTION_ROUTE_ACTION[workspace.section] : "writing");
 
   return (
     <Button

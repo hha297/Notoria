@@ -133,8 +133,9 @@ export function MultiFilterSelect({
       <DropdownMenuTrigger
         className={cn(
           buttonVariants({ variant: "outline" }),
-          "h-10 w-full min-w-0 justify-between gap-1.5 border-input px-2.5 font-normal normal-case tracking-normal shadow-none",
-          values.length > 0 && "border-accent-lime/40",
+          "h-10 w-full min-w-0 justify-between gap-1.5 border-page-accent-border px-2.5 font-normal normal-case tracking-normal shadow-none",
+          "focus-visible:border-page-accent",
+          values.length > 0 && "border-page-accent/55",
           triggerClassName,
         )}
       >

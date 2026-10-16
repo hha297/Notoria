@@ -1,3 +1,4 @@
+import { vocabularyAiFields } from "@/lib/ai/bounds";
 import { FILL_BLANK_PLACEHOLDER } from "@/lib/exercises/ai-types";
 import { LEXICAL_SURFACE_GUIDANCE } from "@/lib/exercises/lexical-surface";
 import {
@@ -25,7 +26,7 @@ Requirements:
 8. CRITICAL — meaningful context aligned with the taught meaning:
    - The sentence must clearly reflect the specific vocabulary meaning provided (if the word has multiple senses, use THAT meaning).
    - Provide enough context that a learner understands what is happening and why this word fits.
-   - Avoid vague, incomplete, or context-free frames such as "I like ________." / "This day is ________."
+   - Avoid vague, incomplete, or context-free frames that leave the blank unconstrained.
    - Prefer natural everyday usage a teacher would accept as a useful example.
    - Make the answer inferable from context without being trivially spoon-fed.
 9. Do not include the answer or the base word anywhere else in the sentence.
@@ -38,11 +39,11 @@ Requirements:
 13. Vary sentence structure and context. If the same word appears more than once, write a clearly different sentence each time.
 14. Do not invent unnecessary facts. Do not change the vocabulary word or meaning.
 15. Keep explanation empty.
-16. Optionally include instruction: a short learner-facing task line in the SAME language as the sentence (e.g. "Fill in the blank with the correct word." / equivalent). Do NOT invent a specific grammar topic unless the word metadata clearly supports it. Prefer a neutral fill-in-the-blank instruction.
+16. Optionally include instruction: a short neutral learner-facing task line in the SAME language as the sentence. Do NOT invent a specific grammar topic unless the word metadata clearly supports it.
 17. ALWAYS include sentenceMeaning: a short natural translation/gloss of the COMPLETE correct sentence (with the answer filled in).
     - Write sentenceMeaning in uiLanguage (the website interface language), NOT in the practice/study language (unless they are the same).
     - Do NOT put sentenceMeaning inside the practice sentence. It is a separate field for post-answer UI.
-18. Prefer sentence-final punctuation attached right after the blank (e.g. "… ________.") — avoid leaving a lone period as a separate fragment.
+18. Prefer sentence-final punctuation attached immediately after the blank — avoid leaving a lone period as a separate fragment.
 19. Return one exercise per input entry. Copy wordId from the input.
 20. Quality test: would a language teacher consider this a useful example for this exact word/meaning? If not, rewrite.
 21. Put the selected exerciseDifficulty id into the difficulty field of each exercise.
@@ -100,15 +101,23 @@ export function fillBlankUserPayload(input: {
     reminder:
       "Practice sentence/answer must be in languageHint. ALWAYS include sentenceMeaning in uiLanguage (website language), not the study language. Obey difficultyGuidance and fillBlankGuidance. Target words must come from the provided list only. Difficulty controls sentence construction only — never swap targets. word/baseWord is the lemma; answer is the contextual surface form.",
     regenerateReason: input.regenerateReason,
-    words: input.words.map((word) => ({
-      wordId: word.id,
-      lemma: word.word,
-      word: word.word,
-      meaning: word.meaning,
-      partOfSpeech: word.partOfSpeech,
-      topic: word.topic,
-      avoidSentences: word.avoidSentences?.slice(0, 12) ?? [],
-    })),
+    words: input.words.map((word) => {
+      const fields = vocabularyAiFields({
+        word: word.word,
+        meaning: word.meaning,
+        partOfSpeech: word.partOfSpeech,
+        topic: word.topic,
+      });
+      return {
+        wordId: word.id,
+        lemma: fields.word,
+        word: fields.word,
+        meaning: fields.meaning,
+        partOfSpeech: fields.partOfSpeech,
+        topic: fields.topic,
+        avoidSentences: word.avoidSentences?.slice(0, 12) ?? [],
+      };
+    }),
   };
 }
 

@@ -147,6 +147,10 @@ export function parseTranscriptionData(
         : 0,
     audioDuration:
       typeof record.audioDuration === "number" ? record.audioDuration : null,
+    assemblyTranscriptId:
+      typeof record.assemblyTranscriptId === "string"
+        ? record.assemblyTranscriptId
+        : null,
   });
 }
 

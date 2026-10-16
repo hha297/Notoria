@@ -9,7 +9,7 @@ type ErrorPageProps = {
   reset: () => void;
 };
 
-/** Dashboard segment errors — keeps studio chrome from the layout above. */
+/** Dashboard segment errors — full-viewport takeover (hides studio chrome). */
 export default function DashboardErrorPage({ error, reset }: ErrorPageProps) {
   useEffect(() => {
     logTechnicalError("dashboard.error", error, { digest: error.digest });

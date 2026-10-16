@@ -60,7 +60,7 @@ export function SpeakingSessionCard({
     });
   }
 
-  const joinable = isSpeakingJoinable(session.status);
+  const joinable = isSpeakingJoinable(session.status, session.startedAt);
   const href = `/speaking/${session.id}`;
   const actionHref = joinable ? `/speaking/${session.id}/call` : href;
 

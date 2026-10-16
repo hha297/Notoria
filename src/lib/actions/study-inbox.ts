@@ -6,6 +6,7 @@ import { db } from "@/db";
 import { studyInboxItems } from "@/db/schema";
 import { recordActivity } from "@/lib/activity/record";
 import { getCurrentUserId } from "@/lib/auth/session";
+import { resolveFolderId } from "@/lib/actions/folders";
 import { withTiming } from "@/lib/perf/dev-timing";
 import { getActiveWorkspace, requireActiveWorkspace } from "@/lib/workspace";
 import {
@@ -76,12 +77,14 @@ export async function createStudyInboxItem(input: StudyInboxCaptureValues) {
   const parsed = studyInboxCaptureSchema.parse(input);
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
+  const folderId = await resolveFolderId(parsed.folderId ?? null, "inbox");
 
   const [row] = await db
     .insert(studyInboxItems)
     .values({
       userId,
       workspaceId: workspace.id,
+      folderId,
       content: parsed.content,
       note: parsed.note || null,
       source: parsed.source || null,
@@ -110,6 +113,7 @@ export async function updateStudyInboxItem(
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
   await requireOwnedInboxItem(id, userId, workspace.id);
+  const folderId = await resolveFolderId(parsed.folderId ?? null, "inbox");
 
   const [row] = await db
     .update(studyInboxItems)
@@ -117,6 +121,7 @@ export async function updateStudyInboxItem(
       content: parsed.content,
       note: parsed.note || null,
       source: parsed.source || null,
+      folderId,
       updatedAt: new Date(),
     })
     .where(

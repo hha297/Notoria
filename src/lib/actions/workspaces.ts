@@ -12,7 +12,10 @@ import {
   workspaces,
 } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
-import { isValidLanguageCode } from "@/lib/languages";
+import {
+  isLegacyLanguageCode,
+  isSelectableLanguageCode,
+} from "@/lib/languages";
 import {
   customTagKey,
   getCustomTagName,
@@ -23,7 +26,7 @@ import { getActiveWorkspace, WORKSPACE_COOKIE } from "@/lib/workspace";
 
 const createWorkspaceSchema = z.object({
   name: z.string().optional(),
-  language: z.string().min(2),
+  language: z.string().trim().min(2).max(16),
 });
 
 const workspaceTagSchema = z.object({
@@ -32,13 +35,13 @@ const workspaceTagSchema = z.object({
 
 const updateWorkspaceSchema = z.object({
   name: z.string().trim().min(1).max(80),
-  language: z.string().min(2),
+  language: z.string().trim().min(2).max(16),
 });
 
 export async function createWorkspace(data: z.infer<typeof createWorkspaceSchema>) {
   const parsed = createWorkspaceSchema.parse(data);
 
-  if (!isValidLanguageCode(parsed.language)) {
+  if (!isSelectableLanguageCode(parsed.language)) {
     throw new Error("Invalid language");
   }
 
@@ -102,10 +105,6 @@ export async function updateWorkspace(
 ) {
   const parsed = updateWorkspaceSchema.parse(data);
 
-  if (!isValidLanguageCode(parsed.language)) {
-    throw new Error("Invalid language");
-  }
-
   const userId = await getCurrentUserId();
   const workspace = await db.query.workspaces.findFirst({
     where: eq(workspaces.id, workspaceId),
@@ -113,6 +112,13 @@ export async function updateWorkspace(
 
   if (!workspace || workspace.userId !== userId) {
     throw new Error("Workspace not found");
+  }
+
+  const keepingLegacy =
+    parsed.language === workspace.language &&
+    isLegacyLanguageCode(parsed.language);
+  if (!isSelectableLanguageCode(parsed.language) && !keepingLegacy) {
+    throw new Error("Invalid language");
   }
 
   if (parsed.language !== workspace.language) {

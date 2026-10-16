@@ -1,9 +1,8 @@
 "use client";
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
-import { useCallback, useEffect, useMemo, useState, useTransition } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
-import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { FlashcardCard } from "@/components/flashcards/flashcard-card";
@@ -22,8 +21,10 @@ import {
   filterFlashcardWords,
   getFiltersKey,
   loadSessionState,
+  reconcileSessionCursor,
   resolveCardDirection,
   saveSessionState,
+  shouldKeepActiveSession,
 } from "@/lib/flashcards/session";
 import type {
   FlashcardFilters,
@@ -40,7 +41,6 @@ type FlashcardSessionProps = {
 };
 
 export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) {
-  const router = useRouter();
   const t = useTranslations("flashcards");
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FILTERS);
   const [studyMode, setStudyMode] = useState<FlashcardStudyMode>("word-to-meaning");
@@ -50,6 +50,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
   const [isPending, startTransition] = useTransition();
   const reduceMotion = useReducedMotion();
   const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
+  const ratingLock = useRef(false);
 
   const filteredWords = useMemo(
     () => filterFlashcardWords(words, filters),
@@ -62,20 +63,9 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
   );
 
   const filtersKey = getFiltersKey(filters, studyMode);
-  const availableIds = useMemo(
-    () => new Set(filteredWords.map((word) => word.id)),
-    [filteredWords],
-  );
 
-  const filteredWordIdsKey = useMemo(
-    () =>
-      filteredWords
-        .map((word) => word.id)
-        .sort()
-        .join(","),
-    [filteredWords],
-  );
-
+  // Bootstrap only when workspace or filters/study-mode change — not when
+  // rating refreshes word metadata / due order.
   useEffect(() => {
     if (filteredWords.length === 0) {
       setSession(null);
@@ -84,37 +74,54 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
       return;
     }
 
-    const saved = loadSessionState(workspaceId);
-    if (canRestoreSession(saved, workspaceId, filtersKey, availableIds)) {
-      setSession(saved);
-      return;
-    }
+    setSession((current) => {
+      if (shouldKeepActiveSession(current, workspaceId, filtersKey)) {
+        return current;
+      }
 
-    setSessionComplete(false);
-    const nextSession = createSessionState({
-      workspaceId,
-      words: filteredWords,
-      filters,
-      studyMode,
+      const saved = loadSessionState(workspaceId);
+      if (canRestoreSession(saved, workspaceId, filtersKey)) {
+        return saved;
+      }
+
+      const nextSession = createSessionState({
+        workspaceId,
+        words: filteredWords,
+        filters,
+        studyMode,
+      });
+      saveSessionState(nextSession);
+      return nextSession;
     });
+  }, [workspaceId, filtersKey, filteredWords, filters, studyMode]);
 
-    setSession(nextSession);
-    saveSessionState(nextSession);
-  }, [
-    workspaceId,
-    filtersKey,
-    filteredWordIdsKey,
-    availableIds,
-    filteredWords,
-    filters,
-    studyMode,
-  ]);
+  // Reset the complete flag when filters/workspace intentionally rebuild the deck.
+  useEffect(() => {
+    setSessionComplete(false);
+  }, [workspaceId, filtersKey]);
 
   useEffect(() => {
     if (session) {
       saveSessionState(session);
     }
   }, [session]);
+
+  // If a queued card is no longer in the loaded word map, skip forward without
+  // resetting completed progress.
+  useEffect(() => {
+    if (!session || sessionComplete) return;
+
+    const next = reconcileSessionCursor(session, (id) => wordMap.has(id));
+    if (next === session) return;
+
+    if (next == null) {
+      setSessionComplete(true);
+      return;
+    }
+
+    setSession(next);
+    saveSessionState(next);
+  }, [session, sessionComplete, wordMap]);
 
   const currentWord = session
     ? wordMap.get(session.cardIds[session.currentIndex] ?? "")
@@ -198,43 +205,65 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
 
   const handleRate = useCallback(
     (rating: FlashcardRating) => {
-      if (!session || !currentWord) {
+      if (!session || !currentWord || ratingLock.current || isPending) {
         return;
       }
 
+      const ratedWordId = currentWord.id;
+      const ratedDirection = currentDirection;
+      const fromIndex = session.currentIndex;
+      const atEnd = fromIndex >= session.cardIds.length - 1;
+
+      ratingLock.current = true;
       const feltCorrect = rating === "GOOD" || rating === "EASY";
-      recordOutcome({ wordId: currentWord.id, correct: feltCorrect });
+      recordOutcome({ wordId: ratedWordId, correct: feltCorrect });
+
+      // Advance (or complete) immediately so a later data refresh cannot rebuild
+      // the deck at index 0 before progress is persisted.
+      if (atEnd) {
+        setSessionComplete(true);
+        updateSession((current) => ({
+          ...current,
+          isFlipped: false,
+        }));
+      } else {
+        setNavDirection(1);
+        updateSession((current) => ({
+          ...current,
+          currentIndex: current.currentIndex + 1,
+          isFlipped: false,
+        }));
+      }
 
       startTransition(async () => {
         try {
           await recordFlashcardReview({
-            wordId: currentWord.id,
+            wordId: ratedWordId,
             rating,
-            direction: currentDirection,
+            direction: ratedDirection,
           });
-
-          if (session.currentIndex < session.cardIds.length - 1) {
-            setNavDirection(1);
-            updateSession((current) => ({
-              ...current,
-              currentIndex: current.currentIndex + 1,
-              isFlipped: false,
-            }));
-          } else {
-            setSessionComplete(true);
-          }
-
-          router.refresh();
         } catch {
           toast.error(t("ratingFailed"));
+          setSessionComplete(false);
+          setNavDirection(-1);
+          updateSession((current) => {
+            const restoreIndex = current.cardIds.indexOf(ratedWordId);
+            return {
+              ...current,
+              currentIndex: restoreIndex >= 0 ? restoreIndex : fromIndex,
+              isFlipped: true,
+            };
+          });
+        } finally {
+          ratingLock.current = false;
         }
       });
     },
     [
       currentDirection,
       currentWord,
+      isPending,
       recordOutcome,
-      router,
       session,
       t,
       updateSession,
@@ -274,7 +303,9 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
   useHotkeys(
     "1,2,3,4",
     (event) => {
-      if (sessionComplete || !session?.isFlipped || isPending) return;
+      if (sessionComplete || !session?.isFlipped || isPending || ratingLock.current) {
+        return;
+      }
       const ratings = {
         "1": "AGAIN",
         "2": "HARD",

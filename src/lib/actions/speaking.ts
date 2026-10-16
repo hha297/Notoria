@@ -1,8 +1,7 @@
 "use server";
 
-import { and, desc, eq } from "drizzle-orm";
+import { and, desc, eq, inArray } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
-import type { TranscriptionSettingsRequest } from "@stream-io/node-sdk";
 import { db } from "@/db";
 import { speakingSessions, users } from "@/db/schema";
 import { ProAccessError } from "@/lib/auth/paid-access";
@@ -10,27 +9,36 @@ import { requireAiAssistanceEnabled } from "@/lib/ai/preferences-server";
 import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { getCurrentUserId, getSession } from "@/lib/auth/session";
 import { consumeUsage } from "@/lib/billing/entitlements";
+import { isQuotaExceededError } from "@/lib/billing/errors";
+import { SPEAKING_MAX_SESSION_SECONDS } from "@/lib/billing/plans";
 import {
   finalizeUsageReservation,
   refundUsageReservation,
 } from "@/lib/billing/usage";
 import { SpeakingError } from "@/lib/speaking/errors";
+import { finalizeSpeakingSession } from "@/lib/speaking/finalize";
 import { defaultSpeakingTitle } from "@/lib/speaking/instructions";
+import {
+  isSpeakingJoinable,
+  speakingTokenValiditySeconds,
+} from "@/lib/speaking/lifetime";
+import {
+  recoverExpiredSpeakingSession,
+  recoverExpiredSpeakingSessionsForUser,
+} from "@/lib/speaking/recovery";
 import {
   speakingAvatarUri,
   speakingTutorUserId,
   SPEAKING_TUTOR_NAME,
-  streamTranscriptionLanguage,
 } from "@/lib/speaking/stream";
 import {
   toSpeakingListItem,
   type SpeakingSessionDetail,
   type SpeakingSessionListItem,
 } from "@/lib/speaking/types";
-import { getStreamVideo } from "@/lib/stream-video";
+import { generateStreamUserToken, getStreamVideo } from "@/lib/stream-video";
 import { getActiveWorkspace, requireActiveWorkspace } from "@/lib/workspace";
 import { connectSpeakingTutorToCall } from "@/lib/speaking/tutor";
-import { finalizeSpeakingSession } from "@/lib/speaking/finalize";
 import { createSpeakingSessionSchema } from "@/schemas/speaking";
 
 /** Page-scoped revalidation for session CRUD (speaking has no folder layout tree). */
@@ -61,10 +69,38 @@ async function requireOwnedSession(id: string) {
   return { session, userId, workspace };
 }
 
+/** One joinable session at a time — recover expired first, then reject duplicates. */
+async function assertNoOtherActiveSpeakingSession(
+  userId: string,
+  exceptId?: string,
+) {
+  await recoverExpiredSpeakingSessionsForUser(userId);
+
+  const open = await db.query.speakingSessions.findMany({
+    where: and(
+      eq(speakingSessions.userId, userId),
+      inArray(speakingSessions.status, ["upcoming", "active"]),
+    ),
+    columns: { id: true, status: true, startedAt: true },
+    limit: 5,
+  });
+
+  const blocking = open.find(
+    (row) =>
+      row.id !== exceptId &&
+      isSpeakingJoinable(row.status, row.startedAt),
+  );
+  if (blocking) {
+    throw new SpeakingError("ACTIVE_SESSION_EXISTS");
+  }
+}
+
 export async function getSpeakingSessions(): Promise<SpeakingSessionListItem[]> {
   const userId = await getCurrentUserId();
   const workspace = await getActiveWorkspace();
   if (!workspace) return [];
+
+  await recoverExpiredSpeakingSessionsForUser(userId);
 
   const rows = await db.query.speakingSessions.findMany({
     where: and(
@@ -93,7 +129,11 @@ export async function getSpeakingSession(
 ): Promise<SpeakingSessionDetail | null> {
   try {
     const { session } = await requireOwnedSession(id);
-    return session;
+    await recoverExpiredSpeakingSession(session.id);
+    const latest = await db.query.speakingSessions.findFirst({
+      where: eq(speakingSessions.id, session.id),
+    });
+    return latest ?? session;
   } catch (error) {
     if (
       error instanceof SpeakingError ||
@@ -127,7 +167,17 @@ export async function createSpeakingSession(formData: FormData) {
     throw new SpeakingError("INVALID_INPUT");
   }
 
-  const reservation = await consumeUsage(user, "ai_meeting");
+  await assertNoOtherActiveSpeakingSession(userId);
+
+  let reservation: Awaited<ReturnType<typeof consumeUsage>>;
+  try {
+    reservation = await consumeUsage(user, "ai_meeting");
+  } catch (error) {
+    if (isQuotaExceededError(error)) {
+      throw new SpeakingError("AI_QUOTA_EXCEEDED");
+    }
+    throw error;
+  }
 
   try {
     const title =
@@ -158,20 +208,46 @@ export async function createSpeakingSession(formData: FormData) {
     try {
       const streamVideo = getStreamVideo();
       const call = streamVideo.video.call("default", created.id);
+      const tutorId = speakingTutorUserId(created.id);
+
+      const learnerName = user.name || "Learner";
+      await streamVideo.upsertUsers([
+        {
+          id: userId,
+          name: learnerName,
+          // Minimum role — do not grant Stream admin to ordinary learners.
+          role: "user",
+          image: speakingAvatarUri(learnerName, "initials"),
+        },
+        {
+          id: tutorId,
+          name: SPEAKING_TUTOR_NAME,
+          role: "user",
+          image: speakingAvatarUri(SPEAKING_TUTOR_NAME, "bottts"),
+        },
+      ]);
+
       await call.create({
         data: {
           created_by_id: userId,
+          members: [
+            { user_id: userId },
+            { user_id: tutorId },
+          ],
           custom: {
             speakingSessionId: created.id,
             title: created.title,
+            maxDurationSeconds: SPEAKING_MAX_SESSION_SECONDS,
           },
           settings_override: {
+            limits: {
+              max_duration_seconds: SPEAKING_MAX_SESSION_SECONDS,
+              max_participants: 2,
+            },
+            // Transcripts come from OpenAI Realtime (gpt-4o-transcribe), not Stream.
             transcription: {
-              language: streamTranscriptionLanguage(
-                workspace.language,
-              ) as NonNullable<TranscriptionSettingsRequest["language"]>,
-              mode: "auto-on",
-              closed_caption_mode: "auto-on",
+              mode: "disabled",
+              closed_caption_mode: "disabled",
             },
             recording: {
               mode: "disabled",
@@ -179,15 +255,6 @@ export async function createSpeakingSession(formData: FormData) {
           },
         },
       });
-
-      await streamVideo.upsertUsers([
-        {
-          id: speakingTutorUserId(created.id),
-          name: SPEAKING_TUTOR_NAME,
-          role: "user",
-          image: speakingAvatarUri(SPEAKING_TUTOR_NAME, "bottts"),
-        },
-      ]);
     } catch (error) {
       await db.delete(speakingSessions).where(eq(speakingSessions.id, created.id));
       if (error instanceof SpeakingError) throw error;
@@ -219,22 +286,44 @@ export async function deleteSpeakingSession(id: string) {
   revalidateSpeaking();
 }
 
-export async function generateSpeakingToken() {
-  const session = await getSession();
-  const userId = session?.user?.id;
+/**
+ * Issue a Stream user token only after ownership + joinability checks.
+ * Tokens are scoped by validity to the remaining session deadline.
+ */
+export async function generateSpeakingToken(sessionId: string) {
+  if (!sessionId?.trim()) {
+    throw new SpeakingError("INVALID_INPUT");
+  }
+
+  const auth = await getSession();
+  const userId = auth?.user?.id;
   if (!userId) {
     throw new SpeakingError("UNAUTHORIZED");
   }
+
+  const { session } = await requireOwnedSession(sessionId);
+  const recovered = await recoverExpiredSpeakingSession(session.id);
+  const current = recovered ?? session;
+
+  if (!isSpeakingJoinable(current.status, current.startedAt)) {
+    throw new SpeakingError(
+      current.startedAt && current.status !== "upcoming"
+        ? "SESSION_EXPIRED"
+        : "SESSION_NOT_JOINABLE",
+    );
+  }
+
+  await assertNoOtherActiveSpeakingSession(userId, session.id);
 
   const user = await db.query.users.findFirst({
     where: eq(users.id, userId),
     columns: { name: true, image: true },
   });
 
-  const name = user?.name || session.user?.name || "Learner";
+  const name = user?.name || auth.user?.name || "Learner";
   const image =
     user?.image ||
-    session.user?.image ||
+    auth.user?.image ||
     speakingAvatarUri(name, "initials");
 
   const streamVideo = getStreamVideo();
@@ -242,21 +331,33 @@ export async function generateSpeakingToken() {
     {
       id: userId,
       name,
-      role: "admin",
+      role: "user",
       image,
     },
   ]);
 
-  return streamVideo.generateUserToken({
-    user_id: userId,
-    validity_in_seconds: 3600,
+  return generateStreamUserToken({
+    userId,
+    validityInSeconds: speakingTokenValiditySeconds(current.startedAt),
   });
 }
 
 export async function connectSpeakingTutor(sessionId: string) {
   await requireAiAssistanceEnabled();
-  await requireOwnedSession(sessionId);
+  const { session } = await requireOwnedSession(sessionId);
+  const recovered = await recoverExpiredSpeakingSession(session.id);
+  const current = recovered ?? session;
+  if (!isSpeakingJoinable(current.status, current.startedAt)) {
+    throw new SpeakingError("SESSION_NOT_JOINABLE");
+  }
   await connectSpeakingTutorToCall(sessionId);
+  const latest = await db.query.speakingSessions.findFirst({
+    where: eq(speakingSessions.id, sessionId),
+    columns: { startedAt: true },
+  });
+  return {
+    startedAt: latest?.startedAt?.toISOString() ?? null,
+  };
 }
 
 export async function endSpeakingSession(sessionId: string, captions?: string) {

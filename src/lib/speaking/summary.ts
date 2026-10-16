@@ -1,4 +1,9 @@
-import OpenAI from "openai";
+import {
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  clipForAi,
+} from "@/lib/ai/bounds";
+import { createOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { speakingFeedbackPrompt } from "@/lib/speaking/instructions";
 import { isSpeakingTutorUserId } from "@/lib/speaking/stream";
@@ -43,16 +48,23 @@ export async function summarizeSpeakingSession(input: {
   title: string;
   transcript: string;
 }) {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey || !input.transcript.trim()) {
+  const transcript = clipForAi(
+    input.transcript,
+    AI_INPUT_LIMITS.speakingTranscript,
+  );
+  if (!transcript) {
     return null;
   }
 
-  const client = new OpenAI({ apiKey, timeout: 45_000 });
+  const client = createOpenAiClient({ timeoutMs: 45_000, requireKey: false });
+  if (!client) {
+    return null;
+  }
+
   const completion = await client.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: 0.3,
-    max_tokens: 900,
+    max_tokens: AI_OUTPUT_TOKENS.speakingSummary,
     messages: [
       {
         role: "system",
@@ -63,7 +75,7 @@ export async function summarizeSpeakingSession(input: {
       },
       {
         role: "user",
-        content: input.transcript.slice(0, 24_000),
+        content: transcript,
       },
     ],
   });

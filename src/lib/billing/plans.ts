@@ -18,6 +18,13 @@ export const PAID_ACCESS_STATUSES = new Set(["active", "trialing", "past_due"]);
 /**
  * Metered AI actions. Limits are per plan via PLAN_DAILY_QUOTAS.
  * `null` means unlimited for ordinary use (still subject to rate/abuse limits).
+ *
+ * Surfaces that reuse an existing feature id (no new daily quotas published):
+ * - Editor AI Format (GPT-4o) → `ai_writing`
+ * - Theory sentence-meaning API → `ai_exercise`
+ * - Reading PDF OCR (vision only) → `ai_reading` with subject `reading-ocr:{passageId}`
+ * - Content-import AI analyze + confirm → `content_import` with a shared file subject
+ * - Learning Coach force-refresh → no daily quota; cooldown + rate/concurrency only
  */
 export const QUOTA_FEATURES = [
   "ai_meeting",
@@ -130,6 +137,11 @@ export const PREMIUM_COACH_CHAT_DAILY =
 /**
  * Fair-use: one speaking “call” is one user-facing session, not every realtime
  * message. Cap duration so a single quota unit cannot run indefinitely.
+ *
+ * Enforced in code via Stream `settings_override.limits.max_duration_seconds`
+ * on call create, plus app deadline from `startedAt`. Also configure the Stream
+ * Dashboard call type `default` → Limits → max duration 1800s and disable
+ * JoinEndedCall for the learner role (see speaking stream module comments).
  */
 export const SPEAKING_MAX_SESSION_SECONDS = 30 * 60;
 

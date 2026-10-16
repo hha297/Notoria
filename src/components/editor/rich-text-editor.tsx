@@ -23,7 +23,7 @@ import {
 } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 import { common, createLowlight } from "lowlight";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { EditorToolbar } from "@/components/editor/editor-toolbar";
@@ -46,10 +46,37 @@ import {
   coerceHeadingLevel,
   normalizeTipTapHeadingLevels,
 } from "@/lib/editor/heading-level";
+import {
+  canonicalizeParadigmHeadersInDoc,
+  localizeParadigmHeadersInDoc,
+  PARADIGM_CASE_KEYS,
+  type ParadigmCaseLabels,
+  type ParadigmUiLabels,
+} from "@/lib/editor/paradigm-headers";
 import "@/components/style/editor/tiptap.module.css";
 import { cn } from "@/lib/utils";
 
 const lowlight = createLowlight(common);
+
+function prepareEditorDoc(
+  doc: JSONContent | null | undefined,
+  labels: ParadigmUiLabels,
+): JSONContent {
+  const normalized = normalizeTipTapHeadingLevels(
+    doc ?? { type: "doc", content: [{ type: "paragraph" }] },
+  );
+  return localizeParadigmHeadersInDoc(
+    canonicalizeParadigmHeadersInDoc(normalized, labels),
+    labels,
+  );
+}
+
+function emitEditorDoc(
+  doc: JSONContent,
+  labels: ParadigmUiLabels,
+): JSONContent {
+  return canonicalizeParadigmHeadersInDoc(doc, labels);
+}
 
 /** Coerce level so string "2" from JSON never collapses to TipTap's default H1. */
 const CoercedHeading = Heading.extend({
@@ -170,7 +197,23 @@ export function RichTextEditor({
 }: RichTextEditorProps) {
   const tEditor = useTranslations("editor");
   const tAi = useTranslations("settings.ai");
-  const { preferences, shouldConfirmContentChange } = useAiPreferences();
+  const { preferences } = useAiPreferences();
+  const paradigmLabels = useMemo<ParadigmUiLabels>(() => {
+    const cases = {} as ParadigmCaseLabels;
+    for (const key of PARADIGM_CASE_KEYS) {
+      cases[key] = tEditor(`paradigmCases.${key}`);
+    }
+    return {
+      headers: {
+        case: tEditor("paradigmHeaders.case"),
+        singular: tEditor("paradigmHeaders.singular"),
+        plural: tEditor("paradigmHeaders.plural"),
+      },
+      cases,
+    };
+  }, [tEditor]);
+  const paradigmLabelsRef = useRef(paradigmLabels);
+  paradigmLabelsRef.current = paradigmLabels;
   const autosaveTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
   const lastSavedContent = useRef("");
   const pendingUploads = useRef(0);
@@ -214,16 +257,14 @@ export function RichTextEditor({
       collapseLabel: tEditor("headingCollapse"),
       storageKey: collapseStorageKey,
     }),
-    content: normalizeTipTapHeadingLevels(
-      content ?? {
-        type: "doc",
-        content: [{ type: "paragraph" }],
-      },
-    ),
+    content: prepareEditorDoc(content, paradigmLabels),
     onUpdate: ({ editor: currentEditor }) => {
       if (pendingUploads.current > 0) return;
 
-      const json = currentEditor.getJSON();
+      const json = emitEditorDoc(
+        currentEditor.getJSON(),
+        paradigmLabelsRef.current,
+      );
       if (editorDocHasTransientImages(json)) {
         persistTransientRef.current(currentEditor);
         return;
@@ -251,13 +292,13 @@ export function RichTextEditor({
     editorProps: {
       attributes: {
         class: cn(
-          "prose prose-neutral dark:prose-invert max-w-none break-words px-4 py-4 sm:px-5 sm:py-5 [overflow-wrap:anywhere] focus:outline-none",
+          "prose prose-neutral dark:prose-invert max-w-none break-words px-3 py-3 sm:px-5 sm:py-5 [overflow-wrap:anywhere] focus:outline-none",
           "prose-headings:font-heading prose-headings:font-bold prose-headings:tracking-tight",
           "prose-p:font-sans prose-p:leading-[1.7] prose-p:text-[1.05rem]",
           "prose-h1:text-[1.5rem] prose-h1:leading-[1.25]",
           "prose-h2:text-[1.2rem] prose-h2:leading-[1.3]",
           "prose-h3:text-[1.05rem] prose-h3:leading-snug",
-          "[&_img]:h-auto [&_img]:max-h-80 [&_img]:max-w-full [&_img]:rounded-lg [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_table]:max-w-full",
+          "[&_img]:h-auto [&_img]:max-h-80 [&_img]:max-w-full [&_img]:rounded-lg [&_pre]:max-w-full [&_pre]:overflow-x-auto [&_table]:w-full [&_table]:max-w-full [&_table]:table-fixed",
           isNotes
             ? editable
               ? "min-h-[140px]"
@@ -285,7 +326,10 @@ export function RichTextEditor({
   });
 
   emitLatestRef.current = (currentEditor) => {
-    const json = currentEditor.getJSON();
+    const json = emitEditorDoc(
+      currentEditor.getJSON(),
+      paradigmLabelsRef.current,
+    );
     onChangeRef.current?.(json);
 
     const autosave = onAutosaveRef.current;
@@ -376,13 +420,20 @@ export function RichTextEditor({
     if (!editor || content === undefined) return;
     if (pendingUploads.current > 0) return;
 
-    const current = JSON.stringify(editor.getJSON());
-    const incoming = JSON.stringify(content ?? { type: "doc", content: [] });
+    const displayDoc = prepareEditorDoc(content, paradigmLabels);
+    const currentCanonical = JSON.stringify(
+      emitEditorDoc(editor.getJSON(), paradigmLabels),
+    );
+    const incomingCanonical = JSON.stringify(
+      emitEditorDoc(content ?? { type: "doc", content: [] }, paradigmLabels),
+    );
+    const currentDisplay = JSON.stringify(editor.getJSON());
+    const incomingDisplay = JSON.stringify(displayDoc);
 
     if (pendingLocalDocRef.current) {
-      if (incoming === pendingLocalDocRef.current) {
+      if (incomingCanonical === pendingLocalDocRef.current) {
         pendingLocalDocRef.current = null;
-      } else if (current === pendingLocalDocRef.current) {
+      } else if (currentCanonical === pendingLocalDocRef.current) {
         // Parent still has pre-Format content; keep the local formatted doc.
         return;
       } else {
@@ -390,18 +441,13 @@ export function RichTextEditor({
       }
     }
 
-    if (current !== incoming) {
-      editor.commands.setContent(
-        normalizeTipTapHeadingLevels(
-          content ?? { type: "doc", content: [] },
-        ),
-        {
-          emitUpdate: false,
-        },
-      );
-      lastSavedContent.current = incoming;
+    if (currentDisplay !== incomingDisplay) {
+      editor.commands.setContent(displayDoc, {
+        emitUpdate: false,
+      });
+      lastSavedContent.current = incomingCanonical;
     }
-  }, [content, editor]);
+  }, [content, editor, paradigmLabels]);
 
   useEffect(() => {
     if (!editor) return;
@@ -437,10 +483,6 @@ export function RichTextEditor({
       toast.message(tAi("disabledToast"));
       return;
     }
-    if (shouldConfirmContentChange) {
-      const confirmed = window.confirm(tAi("formatConfirm"));
-      if (!confirmed) return;
-    }
     const current = activeEditor.getJSON();
     setFormatting(true);
     try {
@@ -453,23 +495,31 @@ export function RichTextEditor({
       if (!result.ok) {
         if (result.code === "EMPTY") {
           toast.message(tEditor("formatUnchanged"));
+        } else if (result.code === "AI_QUOTA_EXCEEDED") {
+          toast.error(tEditor("formatQuotaExceeded"));
+        } else if (result.code === "RATE_LIMITED" || result.code === "AI_BUSY") {
+          toast.error(tEditor("formatRateLimited"));
         } else {
           toast.error(tEditor("formatFailed"));
         }
         return;
       }
 
-      const formatted = result.doc;
-      if (JSON.stringify(formatted) === JSON.stringify(current)) {
+      const labels = paradigmLabelsRef.current;
+      const formatted = prepareEditorDoc(result.doc, labels);
+      const currentCanonical = emitEditorDoc(current, labels);
+      if (
+        JSON.stringify(emitEditorDoc(formatted, labels)) ===
+        JSON.stringify(currentCanonical)
+      ) {
         toast.message(tEditor("formatUnchanged"));
         return;
       }
 
       const selection = activeEditor.state.selection;
       activeEditor.commands.setContent(formatted, { emitUpdate: false });
-      const next = activeEditor.getJSON();
-      const serialized = JSON.stringify(next);
-      pendingLocalDocRef.current = serialized;
+      const next = emitEditorDoc(activeEditor.getJSON(), labels);
+      pendingLocalDocRef.current = JSON.stringify(next);
 
       const maxPos = activeEditor.state.doc.content.size;
       const from = Math.min(selection.from, maxPos);
@@ -488,15 +538,22 @@ export function RichTextEditor({
       }
     } catch {
       // Last-resort local tidy if the server action itself throws.
-      const formatted = formatTiptapDocument(current, {
-        language: languageRef.current,
-      });
-      if (JSON.stringify(formatted) === JSON.stringify(current)) {
+      const labels = paradigmLabelsRef.current;
+      const formatted = prepareEditorDoc(
+        formatTiptapDocument(current, {
+          language: languageRef.current,
+        }),
+        labels,
+      );
+      if (
+        JSON.stringify(emitEditorDoc(formatted, labels)) ===
+        JSON.stringify(emitEditorDoc(current, labels))
+      ) {
         toast.error(tEditor("formatFailed"));
         return;
       }
       activeEditor.commands.setContent(formatted, { emitUpdate: false });
-      const next = activeEditor.getJSON();
+      const next = emitEditorDoc(activeEditor.getJSON(), labels);
       pendingLocalDocRef.current = JSON.stringify(next);
       onChangeRef.current?.(next);
       toast.message(tEditor("formatAiFallback"));

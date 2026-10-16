@@ -73,7 +73,7 @@ export function WorkspaceSelector({
           </Button>
         ) : (
           <>
-            <div className="control-surface flex min-w-0 flex-1 items-center overflow-hidden rounded-md border border-input sm:flex-initial">
+            <div className="control-surface flex min-w-0 flex-1 items-center overflow-hidden rounded-md border border-page-accent-border sm:flex-initial">
               <Select
                 value={active?.id}
                 open={selectOpen}

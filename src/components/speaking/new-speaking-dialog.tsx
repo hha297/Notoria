@@ -2,10 +2,11 @@
 
 import { useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
-import { Loader2, Video } from "lucide-react";
+import { Video } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
+import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -22,6 +23,7 @@ import styles from "@/components/style/workspace/sheet.module.css";
 import { createSpeakingSession } from "@/lib/actions/speaking";
 import { mx } from "@/lib/css-module";
 import { isSpeakingErrorCode } from "@/lib/speaking/errors";
+import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import {
   DEFAULT_TOPIC_ID,
   WRITING_CEFR_LEVELS,
@@ -40,12 +42,12 @@ export function NewSpeakingDialog({
   onOpenChange,
 }: NewSpeakingDialogProps) {
   const t = useTranslations("speaking");
-  const tBilling = useTranslations("billing");
   const tMeta = useTranslations("speaking.meta");
   const tTags = useTranslations("tags");
   const tc = useTranslations("common");
   const router = useRouter();
   const queryClient = useQueryClient();
+  const speakingQuota = useQuotaLockMessage("ai_meeting");
   const [title, setTitle] = useState("");
   const [cefrLevel, setCefrLevel] = useState("b1");
   const [topic, setTopic] = useState<string>(DEFAULT_TOPIC_ID);
@@ -61,7 +63,7 @@ export function NewSpeakingDialog({
 
   function errorMessage(error: unknown) {
     const code = error instanceof Error ? error.message : "STREAM_CALL_FAILED";
-    if (code === "AI_QUOTA_EXCEEDED") return tBilling("quotaExceeded");
+    if (code === "AI_QUOTA_EXCEEDED") return speakingQuota.message;
     return isSpeakingErrorCode(code)
       ? t(`errors.${code}`)
       : t("errors.STREAM_CALL_FAILED");
@@ -74,6 +76,7 @@ export function NewSpeakingDialog({
   }
 
   function handleSubmit() {
+    if (speakingQuota.locked) return;
     startTransition(async () => {
       try {
         const formData = new FormData();
@@ -82,13 +85,19 @@ export function NewSpeakingDialog({
         formData.set("topic", topic);
         formData.set("notes", notes);
         await createSpeakingSession(formData);
+        await speakingQuota.refreshQuotas();
         void queryClient.invalidateQueries({ queryKey: ["speaking"] });
         router.push("/speaking");
+        router.refresh();
         toast.success(t("created"));
         onOpenChange(false);
         resetForm();
       } catch (error) {
+        const code = error instanceof Error ? error.message : "";
         toast.error(errorMessage(error));
+        if (code === "AI_QUOTA_EXCEEDED") {
+          await speakingQuota.refreshQuotas();
+        }
       }
     });
   }
@@ -131,7 +140,7 @@ export function NewSpeakingDialog({
               onChange={(event) => setTitle(event.target.value)}
               placeholder={t("titlePlaceholder")}
               className={mx(styles, "workspace-sheet-input")}
-              disabled={isPending}
+              disabled={isPending || speakingQuota.locked}
             />
           </div>
 
@@ -175,7 +184,7 @@ export function NewSpeakingDialog({
               placeholder={t("notesPlaceholder")}
               maxLength={2000}
               rows={3}
-              disabled={isPending}
+              disabled={isPending || speakingQuota.locked}
               className={mx(styles, "workspace-sheet-input speaking-notes-field")}
             />
           </div>
@@ -191,19 +200,17 @@ export function NewSpeakingDialog({
           >
             {tc("cancel")}
           </Button>
-          <Button
+          <QuotaLockButton
             type="button"
             className={mx(styles, "workspace-sheet-cta")}
+            locked={speakingQuota.locked}
+            lockMessage={speakingQuota.message}
+            pending={isPending}
+            icon={<Video className="size-4" />}
             onClick={handleSubmit}
-            disabled={isPending}
           >
-            {isPending ? (
-              <Loader2 className="size-4 animate-spin" />
-            ) : (
-              <Video className="size-4" />
-            )}
             {t("create")}
-          </Button>
+          </QuotaLockButton>
         </div>
       </DialogContent>
     </Dialog>

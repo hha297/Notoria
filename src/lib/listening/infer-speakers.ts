@@ -1,4 +1,11 @@
-import OpenAI from "openai";
+import {
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  clipForAi,
+  listeningPromptSource,
+  type AiDeadline,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { applySpeakerNames, normalizeSpeakerId } from "@/lib/listening/speakers";
 import { splitListeningSentences } from "@/lib/listening/select-type";
 import type { ListeningSentence, ListeningUtterance } from "@/lib/listening/types";
@@ -18,7 +25,12 @@ function parseSpeakerMap(raw: unknown): Record<string, string> {
     for (const item of speakers) {
       if (!item || typeof item !== "object") continue;
       const entry = item as Record<string, unknown>;
-      const id = typeof entry.id === "string" ? entry.id : typeof entry.speaker === "string" ? entry.speaker : "";
+      const id =
+        typeof entry.id === "string"
+          ? entry.id
+          : typeof entry.speaker === "string"
+            ? entry.speaker
+            : "";
       const name =
         typeof entry.displayName === "string"
           ? entry.displayName
@@ -59,22 +71,33 @@ function mergeConsecutiveUtterances(utterances: ListeningUtterance[]) {
 export async function inferSpeakerDisplayNames(input: {
   transcript: string;
   utterances: ListeningUtterance[];
+  deadline?: AiDeadline;
 }): Promise<{ utterances: ListeningUtterance[]; speakerMap: Record<string, string> }> {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey || input.utterances.length === 0) {
+  if (input.utterances.length === 0) {
     return { utterances: input.utterances, speakerMap: {} };
   }
 
   try {
-    const client = new OpenAI({ apiKey });
-    const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      temperature: 0,
-      response_format: { type: "json_object" },
-      messages: [
-        {
-          role: "system",
-          content: `You map speaker labels to personal names for a language-learning transcript.
+    input.deadline?.throwIfExpired();
+    const client = requireOpenAiClient({ timeoutMs: 30_000 });
+    const source = listeningPromptSource({
+      transcript: input.transcript,
+      dialogue: input.utterances.map((utterance) => ({
+        speaker: utterance.speaker,
+        displayName: utterance.displayName,
+        text: utterance.text,
+      })),
+    });
+    const completion = await client.chat.completions.create(
+      {
+        model: "gpt-4o-mini",
+        temperature: 0,
+        max_tokens: AI_OUTPUT_TOKENS.speakerInfer,
+        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: "system",
+            content: `You map speaker labels to personal names for a language-learning transcript.
 
 Rules:
 - The spoken text is already transcribed. NEVER rewrite, translate, summarize, or alter it.
@@ -85,19 +108,15 @@ Rules:
 - Never guess from gender, role, accent, or context.
 - Never use titles like Teacher, Student, Man, or Woman as names.
 - Return JSON only: { "speakers": [{ "id": "A", "displayName": null }] }`,
-        },
-        {
-          role: "user",
-          content: JSON.stringify({
-            transcript: input.transcript,
-            utterances: input.utterances.map((utterance) => ({
-              speaker: utterance.speaker,
-              text: utterance.text,
-            })),
-          }),
-        },
-      ],
-    });
+          },
+          {
+            role: "user",
+            content: JSON.stringify(source),
+          },
+        ],
+      },
+      input.deadline ? { signal: input.deadline.signal } : undefined,
+    );
 
     const content = completion.choices[0]?.message?.content;
     if (!content) {
@@ -114,8 +133,8 @@ Rules:
 export async function assignDialogueSpeakers(input: {
   transcript: string;
   sentences: ListeningSentence[];
+  deadline?: AiDeadline;
 }): Promise<{ utterances: ListeningUtterance[]; speakerMap: Record<string, string> }> {
-  const apiKey = process.env.OPENAI_API_KEY;
   const sentences =
     input.sentences.length > 0
       ? input.sentences
@@ -125,20 +144,29 @@ export async function assignDialogueSpeakers(input: {
           end: 0,
         }));
 
-  if (!apiKey || sentences.length < 2) {
+  if (sentences.length < 2) {
     return { utterances: [], speakerMap: {} };
   }
 
   try {
-    const client = new OpenAI({ apiKey });
-    const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
-      temperature: 0,
-      response_format: { type: "json_object" },
-      messages: [
-        {
-          role: "system",
-          content: `You label speakers in an already-transcribed listening dialogue.
+    input.deadline?.throwIfExpired();
+    const client = requireOpenAiClient({ timeoutMs: 30_000 });
+    const source = listeningPromptSource({
+      transcript: input.transcript,
+      sentences: sentences.map((sentence) => ({
+        text: clipForAi(sentence.text, AI_INPUT_LIMITS.sentenceText),
+      })),
+    });
+    const completion = await client.chat.completions.create(
+      {
+        model: "gpt-4o-mini",
+        temperature: 0,
+        max_tokens: AI_OUTPUT_TOKENS.speakerInfer,
+        response_format: { type: "json_object" },
+        messages: [
+          {
+            role: "system",
+            content: `You label speakers in an already-transcribed listening dialogue.
 
 Rules:
 - NEVER rewrite, translate, summarize, or change the sentence text.
@@ -154,19 +182,15 @@ Rules:
   "speakers": [{ "id": "A", "displayName": null }, { "id": "B", "displayName": null }],
   "turns": [{ "index": 1, "speaker": "A" }, { "index": 2, "speaker": "B" }]
 }`,
-        },
-        {
-          role: "user",
-          content: JSON.stringify({
-            transcript: input.transcript,
-            sentences: sentences.map((sentence, index) => ({
-              index: index + 1,
-              text: sentence.text,
-            })),
-          }),
-        },
-      ],
-    });
+          },
+          {
+            role: "user",
+            content: JSON.stringify(source),
+          },
+        ],
+      },
+      input.deadline ? { signal: input.deadline.signal } : undefined,
+    );
 
     const content = completion.choices[0]?.message?.content;
     if (!content) {

@@ -24,7 +24,13 @@ export function CoachRefreshButton() {
         startTransition(async () => {
           const result = await refreshLearningCoach();
           if (!result.ok) {
-            toast.error(t("refreshFailed"));
+            if (result.code === "RATE_LIMITED") {
+              toast.error(t("refreshRateLimited"));
+            } else if (result.code === "AI_BUSY") {
+              toast.error(t("refreshBusy"));
+            } else {
+              toast.error(t("refreshFailed"));
+            }
             return;
           }
           router.refresh();

@@ -1,4 +1,10 @@
-import OpenAI from "openai";
+import {
+  AI_INPUT_LIMITS,
+  AI_OUTPUT_TOKENS,
+  clipForAi,
+  clipOptional,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { getLanguageByCode } from "@/lib/languages";
 import { normalizeWritingAiResult } from "@/lib/writing/ai-filter";
@@ -11,11 +17,7 @@ import {
 import { writingFocusText } from "@/lib/writing/plain-text";
 
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY?.trim();
-  if (!apiKey) {
-    throw new Error("OPENAI_NOT_CONFIGURED");
-  }
-  return new OpenAI({ apiKey, timeout: 20_000 });
+  return requireOpenAiClient({ timeoutMs: 20_000 });
 }
 
 function parseJsonContent(content: string | null | undefined) {
@@ -32,21 +34,29 @@ function languageHint(code: string | null | undefined) {
   return getLanguageByCode(code)?.name ?? code;
 }
 
+function writingMaxTokens(action: WritingAiRequest["action"]) {
+  if (action === "continue") return AI_OUTPUT_TOKENS.writingContinue;
+  if (action === "improve") return AI_OUTPUT_TOKENS.writingImprove;
+  return AI_OUTPUT_TOKENS.writingCheck;
+}
+
 export async function analyzeWriting(input: WritingAiRequest): Promise<WritingAiResult> {
   const client = getOpenAIClient();
-  const focusText = writingFocusText(
-    input.action,
-    input.content,
+  const content = clipForAi(input.content, AI_INPUT_LIMITS.theory);
+  const selectedText = clipOptional(
     input.selectedText,
+    AI_INPUT_LIMITS.writtenAnswer * 2,
   );
+  const topic = clipOptional(input.topic, AI_INPUT_LIMITS.topic);
+  const title = clipOptional(input.title, AI_INPUT_LIMITS.title);
+  const focusText = writingFocusText(input.action, content, selectedText);
   const usesCorrection =
     input.action === "check" || input.action === "correct";
 
   const completion = await client.chat.completions.create({
     model: "gpt-4o-mini",
     temperature: input.action === "improve" ? 0.35 : 0.15,
-    max_tokens:
-      input.action === "continue" ? 250 : input.action === "improve" ? 500 : 900,
+    max_tokens: writingMaxTokens(input.action),
     response_format: { type: "json_object" },
     messages: [
       {
@@ -60,14 +70,14 @@ export async function analyzeWriting(input: WritingAiRequest): Promise<WritingAi
         role: "user",
         content: JSON.stringify({
           action: input.action,
-          title: input.title || null,
-          content: input.content,
-          selectedText: input.selectedText || null,
+          title,
+          content,
+          selectedText,
           focusText,
           languageCode: input.language || null,
           languageHint: languageHint(input.language),
           cefrLevel: input.level ? input.level.toUpperCase() : null,
-          topic: input.topic || null,
+          topic,
           formality: input.formality || null,
         }),
       },
@@ -88,6 +98,6 @@ export async function analyzeWriting(input: WritingAiRequest): Promise<WritingAi
 
   return normalizeWritingAiResult(parsed.data, {
     action: input.action,
-    content: input.content,
+    content,
   });
 }

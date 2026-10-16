@@ -21,6 +21,7 @@ import {
   ListeningMultipleChoiceQuestion,
 } from "@/components/listening/listening-exercise-questions";
 import { ListeningTranscript } from "@/components/listening/listening-transcript";
+import { ConfirmActionDialog } from "@/components/shared/confirm-action-dialog";
 import { Button } from "@/components/ui/button";
 import exerciseStyles from "@/components/style/listening/exercise.module.css";
 import {
@@ -63,6 +64,7 @@ export function ListeningPracticeSession({
   const t = useTranslations("listening");
   const tPractice = useTranslations("listening.practice");
   const tTypes = useTranslations("listening.types");
+  const tCommon = useTranslations("common");
   const { hasProAccess, openUpgrade } = useProAccess();
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -74,6 +76,7 @@ export function ListeningPracticeSession({
   const [phase, setPhase] = useState<Phase>("lobby");
   const [showTranscript, setShowTranscript] = useState(false);
   const [showReview, setShowReview] = useState(false);
+  const [submitConfirmOpen, setSubmitConfirmOpen] = useState(false);
   const [seekRequest, setSeekRequest] = useState<{
     ms: number;
     nonce: number;
@@ -146,9 +149,17 @@ export function ListeningPracticeSession({
     ? hasAnswer(current, answers[current.id])
     : false;
 
-  const progressCurrent = isFillBlank
-    ? 1
-    : Math.min(questionIndex + 1, practiceExercises.length || 1);
+  const mcAnsweredCount = isFillBlank
+    ? 0
+    : practiceExercises.filter((exercise) =>
+        hasAnswer(exercise, answers[exercise.id]),
+      ).length;
+  const mcUnansweredIds = isFillBlank
+    ? []
+    : practiceExercises
+        .filter((exercise) => !hasAnswer(exercise, answers[exercise.id]))
+        .map((exercise) => exercise.id);
+
   const progressLabel = isFillBlank
     ? tPractice("blanksProgress", {
         filled: asStringArray(answers[current?.id ?? ""]).filter((v) =>
@@ -156,10 +167,15 @@ export function ListeningPracticeSession({
         ).length,
         total: asStringArray(current?.correctAnswer).length,
       })
-    : tPractice("progress", {
-        current: progressCurrent,
-        total: practiceExercises.length || 1,
-      });
+    : checked || phase === "complete"
+      ? tPractice("completeScore", {
+          correct: score.correctCount,
+          total: score.total,
+        })
+      : tPractice("answeredProgress", {
+          answered: mcAnsweredCount,
+          total: practiceExercises.length || 0,
+        });
   const progressRatio = isFillBlank
     ? checked
       ? 1
@@ -168,8 +184,11 @@ export function ListeningPracticeSession({
             .length / asStringArray(current?.correctAnswer).length
         : 0
     : practiceExercises.length
-      ? (checked ? questionIndex + 1 : questionIndex) /
-        practiceExercises.length
+      ? (checked || phase === "complete"
+          ? score.total
+            ? score.correctCount / score.total
+            : 0
+          : mcAnsweredCount / practiceExercises.length)
       : 0;
 
   const mistakes = useMemo(() => {
@@ -237,7 +256,13 @@ export function ListeningPracticeSession({
 
     startTransition(async () => {
       try {
-        await generateListeningExercises(lesson.id, type);
+        const generated = await generateListeningExercises(lesson.id, type);
+        if (generated.inProgress) {
+          toast.message(t("generationInProgress"));
+          setSelectedType(null);
+          setPhase("lobby");
+          return;
+        }
         toast.success(t("exercisesGenerated"));
         setPhase("active");
         void queryClient.invalidateQueries({ queryKey: ["listening"] });
@@ -262,24 +287,38 @@ export function ListeningPracticeSession({
   }
 
   function handleCheck() {
+    // Fill-blank keeps a single Check for the passage.
+    if (!isFillBlank) return;
     if (!current || !canCheck) return;
+    setChecked(true);
+  }
+
+  function handleSubmitMc() {
+    if (isFillBlank || checked) return;
+    if (mcUnansweredIds.length > 0) {
+      setSubmitConfirmOpen(true);
+      return;
+    }
+    // Stay on the full list so feedback appears beside each question.
+    setChecked(true);
+  }
+
+  function confirmSubmitMc() {
+    setSubmitConfirmOpen(false);
     setChecked(true);
   }
 
   function handleNext() {
     if (!checked) return;
-    if (isFillBlank || questionIndex >= practiceExercises.length - 1) {
-      // compute all results for fill blank / last MC
-      if (isFillBlank) {
-        setPhase("complete");
-        return;
-      }
-      // ensure remaining unanswered aren't counted — for sequential MC all prior are checked
-      setPhase("complete");
-      return;
-    }
-    setQuestionIndex((value) => value + 1);
-    setChecked(false);
+    setPhase("complete");
+  }
+
+  function jumpToUnansweredMc() {
+    const first = mcUnansweredIds[0];
+    if (!first) return;
+    document
+      .getElementById(`listening-q-${first}`)
+      ?.scrollIntoView({ behavior: "smooth", block: "start" });
   }
 
   function tryAgain() {
@@ -498,7 +537,7 @@ export function ListeningPracticeSession({
           <p className={mx(exerciseStyles, "progressLabel")}>
             {isFillBlank
               ? t("fillBlankOverview")
-              : tPractice("questionLabel", { number: questionIndex + 1 })}
+              : tPractice("listenPrompt")}
           </p>
           <p className={mx(exerciseStyles, "progressCount")}>{progressLabel}</p>
         </div>
@@ -520,70 +559,130 @@ export function ListeningPracticeSession({
       {media}
 
       <div className={mx(exerciseStyles, "stage")}>
-        <p className={mx(exerciseStyles, "instruction")}>
-          {tPractice("listenPrompt")}
-        </p>
-
-        <AnimatePresence mode="wait">
-          <motion.section
-            key={`${current.id}:${round}:${questionIndex}`}
-            initial={reduceMotion ? false : { opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
-            transition={{ duration: reduceMotion ? 0 : 0.2, ease: EASE }}
-            className={mx(exerciseStyles, "questionPanel")}
-          >
-            {isFillBlank ? (
-              <ListeningFillBlankQuestion
-                exercise={current}
-                answer={asStringArray(answers[current.id])}
-                checked={checked}
-                onChange={(value) => setAnswer(current.id, value)}
-              />
-            ) : (
-              <ListeningMultipleChoiceQuestion
-                exercise={current}
-                index={questionIndex}
-                answer={
-                  typeof answers[current.id] === "string"
-                    ? String(answers[current.id])
-                    : null
-                }
-                checked={checked}
-                onChange={(value) => setAnswer(current.id, value)}
-              />
-            )}
-
-            {checked ? (
-              <ListeningExerciseFeedback
-                correct={currentCorrect}
-                userAnswer={
-                  isFillBlank
-                    ? asStringArray(answers[current.id]).join(" / ")
-                    : String(answers[current.id] ?? "")
-                }
-                expected={formatExpected(current)}
-              />
-            ) : null}
-          </motion.section>
-        </AnimatePresence>
-
-        <div className={mx(exerciseStyles, "actions")}>
-          {!checked ? (
-            <Button type="button" onClick={handleCheck} disabled={!canCheck}>
-              {tPractice("checkAnswers")}
-            </Button>
-          ) : (
-            <Button type="button" onClick={handleNext}>
-              {isFillBlank || questionIndex >= practiceExercises.length - 1
-                ? tPractice("finish")
-                : tPractice("next")}
-            </Button>
-          )}
-        </div>
+        {isFillBlank ? (
+          <>
+            <p className={mx(exerciseStyles, "instruction")}>
+              {tPractice("listenPrompt")}
+            </p>
+            <AnimatePresence mode="wait">
+              <motion.section
+                key={`${current.id}:${round}`}
+                initial={reduceMotion ? false : { opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={reduceMotion ? undefined : { opacity: 0, y: -6 }}
+                transition={{ duration: reduceMotion ? 0 : 0.2, ease: EASE }}
+                className={mx(exerciseStyles, "questionPanel")}
+              >
+                <ListeningFillBlankQuestion
+                  exercise={current}
+                  answer={asStringArray(answers[current.id])}
+                  checked={checked}
+                  onChange={(value) => setAnswer(current.id, value)}
+                />
+                {checked ? (
+                  <ListeningExerciseFeedback
+                    correct={currentCorrect}
+                    userAnswer={asStringArray(answers[current.id]).join(" / ")}
+                    expected={formatExpected(current)}
+                  />
+                ) : null}
+              </motion.section>
+            </AnimatePresence>
+            <div className={mx(exerciseStyles, "actions")}>
+              {!checked ? (
+                <Button type="button" onClick={handleCheck} disabled={!canCheck}>
+                  {tPractice("checkAnswers")}
+                </Button>
+              ) : (
+                <Button type="button" onClick={handleNext}>
+                  {tPractice("finish")}
+                </Button>
+              )}
+            </div>
+          </>
+        ) : (
+          <>
+            <p className={mx(exerciseStyles, "instruction")}>
+              {tPractice("typeHintMc")}
+            </p>
+            <div className="flex flex-col gap-6" key={`mc-set-${round}`}>
+              {practiceExercises.map((exercise, index) => {
+                const result = results[exercise.id];
+                const itemChecked = checked;
+                const itemCorrect =
+                  Boolean(result?.length) && Boolean(result?.every(Boolean));
+                return (
+                  <section
+                    key={exercise.id}
+                    id={`listening-q-${exercise.id}`}
+                    className={mx(exerciseStyles, "questionPanel")}
+                  >
+                    <ListeningMultipleChoiceQuestion
+                      exercise={exercise}
+                      index={index}
+                      answer={
+                        typeof answers[exercise.id] === "string"
+                          ? String(answers[exercise.id])
+                          : null
+                      }
+                      checked={itemChecked}
+                      onChange={(value) => setAnswer(exercise.id, value)}
+                    />
+                    {itemChecked ? (
+                      <ListeningExerciseFeedback
+                        correct={itemCorrect}
+                        userAnswer={String(answers[exercise.id] ?? "")}
+                        expected={formatExpected(exercise)}
+                      />
+                    ) : null}
+                  </section>
+                );
+              })}
+            </div>
+            <div className={mx(exerciseStyles, "actions")}>
+              {!checked ? (
+                <>
+                  {mcUnansweredIds.length > 0 ? (
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={jumpToUnansweredMc}
+                    >
+                      {tPractice("jumpToUnanswered")}
+                    </Button>
+                  ) : null}
+                  <Button type="button" onClick={handleSubmitMc}>
+                    {tPractice("submitSet")}
+                  </Button>
+                </>
+              ) : (
+                <>
+                  <Button type="button" variant="outline" onClick={tryAgain}>
+                    <RotateCcw className="size-4" />
+                    {tPractice("tryAgain")}
+                  </Button>
+                  <Button type="button" onClick={handleNext}>
+                    {tPractice("finish")}
+                  </Button>
+                </>
+              )}
+            </div>
+          </>
+        )}
 
         {transcriptBlock}
       </div>
+
+      <ConfirmActionDialog
+        open={submitConfirmOpen}
+        onOpenChange={setSubmitConfirmOpen}
+        title={tPractice("unansweredWarnTitle")}
+        description={tPractice("unansweredWarn")}
+        confirmLabel={tPractice("submitAnyway")}
+        cancelLabel={tCommon("cancel")}
+        onConfirm={confirmSubmitMc}
+        onCancel={jumpToUnansweredMc}
+      />
     </div>
   );
 }

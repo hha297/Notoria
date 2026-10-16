@@ -4,9 +4,25 @@ import { and, desc, eq } from "drizzle-orm";
 import { revalidatePath } from "next/cache";
 import { db } from "@/db";
 import { exerciseImports, importedExercises } from "@/db/schema";
+import {
+  AI_JOBS,
+  JobLockLostError,
+  jobLockIsActive,
+  readJobLock,
+  runExclusiveJob,
+} from "@/lib/ai/job-lock";
 import { requireAiAssistanceEnabled } from "@/lib/ai/preferences-server";
 import { getCurrentUserId } from "@/lib/auth/session";
-import { runSharedUsage, requireFeature, loadEntitlementUser } from "@/lib/billing/entitlements";
+import { shouldRefundUsage } from "@/lib/ai/bounds";
+import {
+  consumeUsage,
+  requireFeature,
+  loadEntitlementUser,
+} from "@/lib/billing/entitlements";
+import {
+  finalizeUsageReservation,
+  refundUsageReservation,
+} from "@/lib/billing/usage";
 import {
   configureCloudinary,
   getCloudinaryPublicConfig,
@@ -464,25 +480,39 @@ export async function createExerciseImportFromUrl(formData: FormData) {
 
 /**
  * Extract content from the imported source (internal). No exercise generation.
+ * Pass `{ regenerate: true }` only from an explicit retry.
  */
-export async function extractExerciseImport(id: string) {
+export async function extractExerciseImport(
+  id: string,
+  options?: { regenerate?: boolean },
+) {
   const { row } = await requireOwnedImport(id);
+  const regenerate = options?.regenerate === true;
 
-  if (row.status === "COMPLETED" && row.exercises.length > 0) {
-    return { id: row.id, status: "COMPLETED" as const };
+  if (!regenerate && row.status === "COMPLETED" && row.exercises.length > 0) {
+    return { id: row.id, status: "COMPLETED" as const, inProgress: false };
   }
 
-  if (row.status === "EXTRACTING" || row.status === "GENERATING") {
-    throw new ExerciseImportError("ALREADY_PROCESSING");
+  if (
+    !regenerate &&
+    row.extractedText?.trim() &&
+    row.status !== "FAILED" &&
+    row.status !== "UPLOADING"
+  ) {
+    return {
+      id: row.id,
+      status: row.status === "COMPLETED" ? ("COMPLETED" as const) : ("ANALYZING" as const),
+      inProgress: false,
+    };
   }
 
   const user = await requireExerciseImportPlan();
-
-  return runSharedUsage(
-    user,
-    "ai_exercise_import",
-    id,
-    async () => {
+  const outcome = await runExclusiveJob({
+    operation: AI_JOBS.exerciseImportExtract,
+    subjectId: id,
+    regenerate,
+    run: async ({ stillOwner }) => {
+      const reservation = await consumeUsage(user, "ai_exercise_import", id);
       try {
         await db
           .update(exerciseImports)
@@ -495,6 +525,7 @@ export async function extractExerciseImport(id: string) {
         revalidateImports(id);
 
         const extracted = await extractImportContent(toSourceInput(row));
+        if (!(await stillOwner())) throw new JobLockLostError();
 
         await db
           .update(exerciseImports)
@@ -506,96 +537,138 @@ export async function extractExerciseImport(id: string) {
           .where(eq(exerciseImports.id, id));
         revalidateImports(id);
 
-        return { id, status: "ANALYZING" as const };
+        return { id, status: "ANALYZING" as const, inProgress: false };
       } catch (error) {
-        const failed = await markImportFailed(id, error);
-        throw failed;
+        if (error instanceof JobLockLostError) throw error;
+        if (shouldRefundUsage(error)) {
+          await refundUsageReservation(reservation.reservationId);
+        } else {
+          await finalizeUsageReservation(reservation.reservationId);
+        }
+        throw await markImportFailed(id, error);
       }
     },
-    { finalize: false },
-  );
+  });
+
+  if (outcome.status === "in_progress") {
+    return { id, status: "EXTRACTING" as const, inProgress: true };
+  }
+  return outcome.result;
 }
 
 /**
  * Generate and persist exercises from already-extracted import text.
  */
-export async function generateExerciseImportExercises(id: string) {
+export async function generateExerciseImportExercises(
+  id: string,
+  options?: { regenerate?: boolean },
+) {
   await requireAiAssistanceEnabled();
   const { row, workspace } = await requireOwnedImport(id);
+  const regenerate = options?.regenerate === true;
 
-  if (row.status === "COMPLETED" && row.exercises.length > 0) {
-    return { id: row.id, status: "COMPLETED" as const };
+  if (!regenerate && row.status === "COMPLETED" && row.exercises.length > 0) {
+    return { id: row.id, status: "COMPLETED" as const, inProgress: false };
+  }
+
+  const extractLock = await readJobLock(AI_JOBS.exerciseImportExtract, id);
+  if (!regenerate && jobLockIsActive(extractLock)) {
+    return { id, status: "EXTRACTING" as const, inProgress: true };
   }
 
   const text = row.extractedText?.trim() ?? "";
   if (!text) {
+    if (row.status === "EXTRACTING" || row.status === "GENERATING") {
+      return { id, status: row.status, inProgress: true };
+    }
     throw new ExerciseImportError("EMPTY_CONTENT");
   }
 
   const user = await requireExerciseImportPlan();
-
-  return runSharedUsage(user, "ai_exercise_import", id, async () => {
-    try {
-      await db
-        .update(exerciseImports)
-        .set({
-          status: "GENERATING",
-          errorCode: null,
-          updatedAt: new Date(),
-        })
-        .where(eq(exerciseImports.id, id));
-      revalidateImports(id);
-
-      const exercises = await generateExercisesFromImport({
-        importId: id,
-        title: row.title,
-        extractedText: text,
-        studyLanguage: workspace.language,
-      });
-
-      if (exercises.length === 0) {
-        throw new ExerciseImportError("GENERATION_FAILED");
-      }
-
-      await db.transaction(async (tx) => {
-        await tx
-          .delete(importedExercises)
-          .where(eq(importedExercises.importId, id));
-        await tx.insert(importedExercises).values(
-          exercises.map((exercise, index) => ({
-            importId: id,
-            type: exercise.type,
-            data: exercise,
-            sortOrder: index,
-          })),
-        );
-
-        await tx
+  const outcome = await runExclusiveJob({
+    operation: AI_JOBS.exerciseImportGenerate,
+    subjectId: id,
+    regenerate,
+    run: async ({ stillOwner }) => {
+      const reservation = await consumeUsage(user, "ai_exercise_import", id);
+      try {
+        await db
           .update(exerciseImports)
           .set({
-            status: "COMPLETED",
+            status: "GENERATING",
             errorCode: null,
             updatedAt: new Date(),
           })
           .where(eq(exerciseImports.id, id));
-      });
+        revalidateImports(id);
 
-      revalidateImports(id);
-      return { id, status: "COMPLETED" as const };
-    } catch (error) {
-      const failed = await markImportFailed(id, error);
-      throw failed;
-    }
+        const exercises = await generateExercisesFromImport({
+          importId: id,
+          title: row.title,
+          extractedText: text,
+          studyLanguage: workspace.language,
+        });
+
+        if (exercises.length === 0) {
+          throw new ExerciseImportError("GENERATION_FAILED");
+        }
+        if (!(await stillOwner())) throw new JobLockLostError();
+
+        await db.transaction(async (tx) => {
+          await tx
+            .delete(importedExercises)
+            .where(eq(importedExercises.importId, id));
+          await tx.insert(importedExercises).values(
+            exercises.map((exercise, index) => ({
+              importId: id,
+              type: exercise.type,
+              data: exercise,
+              sortOrder: index,
+            })),
+          );
+
+          await tx
+            .update(exerciseImports)
+            .set({
+              status: "COMPLETED",
+              errorCode: null,
+              updatedAt: new Date(),
+            })
+            .where(eq(exerciseImports.id, id));
+        });
+
+        await finalizeUsageReservation(reservation.reservationId);
+        revalidateImports(id);
+        return { id, status: "COMPLETED" as const, inProgress: false };
+      } catch (error) {
+        if (error instanceof JobLockLostError) throw error;
+        if (shouldRefundUsage(error)) {
+          await refundUsageReservation(reservation.reservationId);
+        } else {
+          await finalizeUsageReservation(reservation.reservationId);
+        }
+        throw await markImportFailed(id, error);
+      }
+    },
   });
+
+  if (outcome.status === "in_progress") {
+    return { id, status: "GENERATING" as const, inProgress: true };
+  }
+  return outcome.result;
 }
 
 /**
  * Extract content → generate exercises → persist.
  * Prefer calling extract + generate separately from the client for status UI.
  */
-export async function processExerciseImport(id: string) {
-  await extractExerciseImport(id);
-  return generateExerciseImportExercises(id);
+export async function processExerciseImport(
+  id: string,
+  options?: { regenerate?: boolean },
+) {
+  const extracted = await extractExerciseImport(id, options);
+  if (extracted.inProgress || extracted.status === "COMPLETED") return extracted;
+  return generateExerciseImportExercises(id, options);
 }
 
 export async function deleteExerciseImport(id: string) {
@@ -631,5 +704,5 @@ export async function retryExerciseImport(id: string) {
 
   await db.delete(importedExercises).where(eq(importedExercises.importId, id));
 
-  return processExerciseImport(id);
+  return processExerciseImport(id, { regenerate: true });
 }

@@ -208,6 +208,37 @@
   transition: border-color 0.2s ease, background 0.2s ease;
 }
 
+/* Tag chips on the card: accent wash + border, not muted slate */
+.vocab-module :global(.tag-chip[data-tag-tone="card"]),
+.vocab-module-card :global(.tag-chip[data-tag-tone="card"]) {
+  border-color: color-mix(
+    in oklab,
+    var(--vocab-pos-accent) 36%,
+    transparent
+  ) !important;
+  background-color: color-mix(
+    in oklab,
+    var(--vocab-pos-accent) 16%,
+    transparent
+  ) !important;
+  background-image: none !important;
+  color: var(--vocab-pos-accent) !important;
+}
+
+:global(.dark) .vocab-module :global(.tag-chip[data-tag-tone="card"]),
+:global(.dark) .vocab-module-card :global(.tag-chip[data-tag-tone="card"]) {
+  border-color: color-mix(
+    in oklab,
+    var(--vocab-pos-accent) 42%,
+    transparent
+  ) !important;
+  background-color: color-mix(
+    in oklab,
+    var(--vocab-pos-accent) 22%,
+    transparent
+  ) !important;
+}
+
 .vocab-module:hover,
 .vocab-module:focus-within,
 .vocab-module-card:hover,
@@ -548,8 +579,29 @@
 }
 
 .vocab-preview-notes {
-  max-width: 44rem;
+  width: 100%;
+  max-width: none;
   font-size: 1rem;
   line-height: 1.7;
   color: var(--ink);
+}
+
+.vocab-preview-pager {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+}
+
+.vocab-preview-pager-meta {
+  margin: 0;
+  font-size: 0.78rem;
+  color: var(--muted-foreground);
+}
+
+.vocab-preview-pager-controls {
+  display: flex;
+  gap: 0.35rem;
 }

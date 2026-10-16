@@ -1,4 +1,12 @@
-import OpenAI from "openai";
+import {
+  AI_DEADLINES_MS,
+  AI_INPUT_LIMITS,
+  clipForAi,
+  clipOptional,
+  createAiDeadline,
+  listeningPromptSource,
+} from "@/lib/ai/bounds";
+import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { ListeningError, toListeningError } from "@/lib/listening/errors";
 import { mergeFillBlankQuestions } from "@/lib/listening/fill-blank-passage";
@@ -66,12 +74,11 @@ function asTopic(value: string | null | undefined): string | null {
 }
 
 function getOpenAIClient() {
-  const apiKey = process.env.OPENAI_API_KEY;
-  if (!apiKey) {
+  try {
+    return requireOpenAiClient({ timeoutMs: 90_000 });
+  } catch {
     throw new ListeningError("OPENAI_NOT_CONFIGURED");
   }
-
-  return new OpenAI({ apiKey });
 }
 
 function blankGroundedInTranscript(blank: string, transcript: string) {
@@ -377,7 +384,7 @@ function mergeExercises(
 }
 
 async function requestExerciseJson(input: {
-  client: OpenAI;
+  client: ReturnType<typeof getOpenAIClient>;
   transcript: string;
   sentences: string[];
   dialogue: ReturnType<typeof dialogueTurnsForPrompt>;
@@ -392,6 +399,7 @@ async function requestExerciseJson(input: {
   max: number;
   durationSeconds: number;
   extraInstruction?: string;
+  signal?: AbortSignal;
 }) {
   const speakers = [
     ...new Set(
@@ -415,16 +423,23 @@ async function requestExerciseJson(input: {
     ? "Return exactly one questions item: the full transcript with blanks. Never split it into multiple questions."
     : "Split content into many short questions instead of a few broad ones.";
 
-  const completion = await input.client.chat.completions.create({
-    model: "gpt-4o-mini",
-    temperature: 0.35,
-    max_tokens: isFillBlank ? 12000 : 8000,
-    response_format: { type: "json_object" },
-    messages: [
-      {
-        role: "system",
-        content: await aiSystemPrompt(
-          `You are a language-learning content designer for Notoria Listening lessons.
+  const source = listeningPromptSource({
+    transcript: input.transcript,
+    sentences: input.sentences.map((text) => ({ text })),
+    dialogue: isDialogue ? input.dialogue : undefined,
+  });
+
+  const completion = await input.client.chat.completions.create(
+    {
+      model: "gpt-4o-mini",
+      temperature: 0.35,
+      max_tokens: isFillBlank ? 8_000 : 6_000,
+      response_format: { type: "json_object" },
+      messages: [
+        {
+          role: "system",
+          content: await aiSystemPrompt(
+            `You are a language-learning content designer for Notoria Listening lessons.
 Create one Listening exercise SET of a single type.
 
 Rules:
@@ -438,37 +453,34 @@ Rules:
 - ${splitRule}
 - Return JSON only.
 ${instructions.rules.map((rule) => `- ${rule}`).join("\n")}${
-            input.extraInstruction ? `\n- ${input.extraInstruction}` : ""
-          }`,
-          { responseStyle: true },
-        ),
-      },
-      {
-        role: "user",
-        content: JSON.stringify({
-          transcript: input.transcript,
-          sentences: input.sentences.map((sentence, index) => ({
-            index: index + 1,
-            text: sentence,
-          })),
-          dialogue: isDialogue ? input.dialogue : undefined,
-          language: input.language ?? null,
-          cefrLevel: input.cefrLevel ?? null,
-          topic: input.topic ?? null,
-          formality: input.formality ?? null,
-          fallbackTitle: input.fallbackTitle,
-          requiredType: input.exerciseType,
-          audioDurationSeconds: input.durationSeconds,
-          targetQuestionCount: {
-            min: input.min,
-            target: input.target,
-            max: input.max,
-          },
-          instructions,
-        }),
-      },
-    ],
-  });
+              input.extraInstruction ? `\n- ${input.extraInstruction}` : ""
+            }`,
+            { responseStyle: true },
+          ),
+        },
+        {
+          role: "user",
+          content: JSON.stringify({
+            ...source,
+            language: input.language ?? null,
+            cefrLevel: input.cefrLevel ?? null,
+            topic: clipOptional(input.topic, AI_INPUT_LIMITS.topic),
+            formality: input.formality ?? null,
+            fallbackTitle: clipForAi(input.fallbackTitle, AI_INPUT_LIMITS.title),
+            requiredType: input.exerciseType,
+            audioDurationSeconds: input.durationSeconds,
+            targetQuestionCount: {
+              min: input.min,
+              target: input.target,
+              max: input.max,
+            },
+            instructions,
+          }),
+        },
+      ],
+    },
+    input.signal ? { signal: input.signal } : undefined,
+  );
 
   return completion.choices[0]?.message?.content;
 }
@@ -492,7 +504,8 @@ export async function generateListeningExercisesFromTranscript(input: {
   exercises: StoredListeningExercise[];
 }> {
   const client = getOpenAIClient();
-  const transcript = input.transcript.trim();
+  const deadline = createAiDeadline(AI_DEADLINES_MS.listeningGenerate);
+  const transcript = clipForAi(input.transcript, AI_INPUT_LIMITS.transcript);
 
   if (!transcript) {
     throw new ListeningError("EMPTY_TRANSCRIPT");
@@ -537,6 +550,7 @@ export async function generateListeningExercisesFromTranscript(input: {
     target,
     max,
     durationSeconds,
+    signal: deadline.signal,
   };
 
   let content: string | null | undefined;
@@ -544,15 +558,18 @@ export async function generateListeningExercisesFromTranscript(input: {
   try {
     content = await requestExerciseJson(requestInput);
   } catch (error) {
+    deadline.clear();
     throw toListeningError(error);
   }
 
   if (!content) {
+    deadline.clear();
     throw new ListeningError("GENERATION_FAILED");
   }
 
   const parsedJson = parseJsonObject(content);
   if (!parsedJson && exerciseType !== "FILL_BLANK") {
+    deadline.clear();
     throw new ListeningError("VALIDATION_FAILED");
   }
 
@@ -560,7 +577,11 @@ export async function generateListeningExercisesFromTranscript(input: {
     ? toStoredSet(exerciseType, parsedJson, transcript, extraTerms)
     : null;
 
-  if ((!stored || stored.exercises.length === 0) && exerciseType === "FILL_BLANK") {
+  if (
+    (!stored || stored.exercises.length === 0) &&
+    exerciseType === "FILL_BLANK" &&
+    !deadline.expired()
+  ) {
     try {
       const retryContent = await requestExerciseJson({
         ...requestInput,
@@ -603,7 +624,7 @@ export async function generateListeningExercisesFromTranscript(input: {
       ? fillBlankCount(stored.exercises) < min
       : stored.exercises.length < min;
 
-  if (needsMore) {
+  if (needsMore && !deadline.expired()) {
     const extraInstruction =
       exerciseType === "FILL_BLANK"
         ? `The first pass only produced ${fillBlankCount(stored.exercises)} blanks. Return EXACTLY one questions item covering the FULL transcript with about ${target} blanks. Keep the original paragraph breaks. Do not split into multiple questions.`
@@ -637,9 +658,11 @@ export async function generateListeningExercisesFromTranscript(input: {
         }
       }
     } catch {
-      // Keep the first usable set if the follow-up call fails.
+      // Keep the first usable set; do not start further paid follow-ups.
     }
   }
+
+  deadline.clear();
 
   if (stored.exercises.some((exercise) => exercise.type !== exerciseType)) {
     throw new ListeningError("VALIDATION_FAILED");

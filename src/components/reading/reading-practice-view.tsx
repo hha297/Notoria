@@ -9,6 +9,7 @@ import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { PageShell } from "@/components/layout/page-shell";
 import { SessionPageLoading } from "@/components/layout/page-loading";
+import { ConfirmActionDialog } from "@/components/shared/confirm-action-dialog";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
 import {
@@ -53,6 +54,7 @@ export function ReadingPracticeView({
 }: ReadingPracticeViewProps) {
   const t = useTranslations("reading");
   const tBilling = useTranslations("billing");
+  const tCommon = useTranslations("common");
   const { openUpgrade } = useProAccess();
   const router = useRouter();
   const [attempt, setAttempt] = useState<ReadingAttemptClient | null>(null);
@@ -63,6 +65,7 @@ export function ReadingPracticeView({
   const [responses, setResponses] = useState<Record<string, unknown>>({});
   const [loading, setLoading] = useState(true);
   const [isPending, startTransition] = useTransition();
+  const [submitConfirmOpen, setSubmitConfirmOpen] = useState(false);
   const [selectionMenu, setSelectionMenu] = useState<{
     word: string;
     sentence: string;
@@ -131,14 +134,8 @@ export function ReadingPracticeView({
     });
   }
 
-  function handleSubmit() {
+  function submitAnswers() {
     if (!attempt) return;
-    const unanswered = questions.some((q) => {
-      const value = responses[q.id];
-      return responseText(value).trim().length === 0;
-    });
-    if (unanswered && !window.confirm(t("practice.unansweredWarn"))) return;
-
     startTransition(async () => {
       try {
         const result = await submitReadingAttempt({
@@ -148,16 +145,38 @@ export function ReadingPracticeView({
             response,
           })),
         });
-        setAttempt(result.attempt);
+        setAttempt((current) =>
+          current?.status === "graded" && result.attempt.status !== "graded"
+            ? current
+            : result.attempt,
+        );
         if (result.attempt.status === "grading_failed") {
           toast.message(t("practice.gradingPending"));
-        } else {
+        } else if (result.attempt.status === "graded") {
           toast.success(t("submitted"));
         }
       } catch (error) {
         notifyActionError(error, "errors.GRADING_FAILED");
       }
     });
+  }
+
+  function handleSubmit() {
+    if (!attempt) return;
+    const unanswered = questions.some((q) => {
+      const value = responses[q.id];
+      return responseText(value).trim().length === 0;
+    });
+    if (unanswered) {
+      setSubmitConfirmOpen(true);
+      return;
+    }
+    submitAnswers();
+  }
+
+  function confirmSubmit() {
+    setSubmitConfirmOpen(false);
+    submitAnswers();
   }
 
   function handleRetry() {
@@ -178,10 +197,14 @@ export function ReadingPracticeView({
     startTransition(async () => {
       try {
         const data = await retryReadingWrittenGrading(attempt.id);
-        setAttempt(data.attempt);
+        setAttempt((current) =>
+          current?.status === "graded" && data.attempt.status !== "graded"
+            ? current
+            : data.attempt,
+        );
         if (data.attempt.status === "grading_failed") {
           toast.message(t("practice.gradingPending"));
-        } else {
+        } else if (data.attempt.status === "graded") {
           toast.success(t("submitted"));
         }
       } catch (error) {
@@ -460,6 +483,17 @@ export function ReadingPracticeView({
           </Button>
         </div>
       ) : null}
+
+      <ConfirmActionDialog
+        open={submitConfirmOpen}
+        onOpenChange={setSubmitConfirmOpen}
+        title={t("practice.unansweredWarnTitle")}
+        description={t("practice.unansweredWarn")}
+        confirmLabel={t("practice.submitAnyway")}
+        cancelLabel={tCommon("cancel")}
+        pending={isPending}
+        onConfirm={confirmSubmit}
+      />
     </PageShell>
   );
 }

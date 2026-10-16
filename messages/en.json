@@ -90,6 +90,8 @@
     "errors": {
       "proRequired": "File import is available on Pro and Premium.",
       "quotaExceeded": "You've used today's import limit. Try again tomorrow, or upgrade for a higher limit.",
+      "rateLimited": "Too many import requests. Wait a moment, then try again.",
+      "busy": "An import is already in progress. Wait for it to finish, then try again.",
       "fileTooLarge": "That file is too large. Keep it under 10 MB.",
       "unsupportedFormat": "Use a CSV, PDF, DOCX, or plain text file.",
       "emptyFile": "We couldn't find readable content in this file.",
@@ -130,9 +132,33 @@
     "formatWorking": "Formatting…",
     "formatAiFallback": "AI formatting unavailable — applied basic tidy instead",
     "formatFailed": "Could not format the content. Try again.",
+    "formatQuotaExceeded": "You've used today's AI formatting allowance. It resets at UTC midnight — or upgrade for a higher limit.",
+    "formatRateLimited": "Too many format requests. Wait a moment, then try again.",
     "tableSelectionInvalid": "Couldn't convert the selection into a table",
     "headingCollapse": "Collapse section",
-    "headingExpand": "Expand section"
+    "headingExpand": "Expand section",
+    "paradigmHeaders": {
+      "case": "Case",
+      "singular": "Singular",
+      "plural": "Plural"
+    },
+    "paradigmCases": {
+      "nominative": "Nominative",
+      "genitive": "Genitive",
+      "partitive": "Partitive",
+      "accusative": "Accusative",
+      "inessive": "Inessive",
+      "elative": "Elative",
+      "illative": "Illative",
+      "adessive": "Adessive",
+      "ablative": "Ablative",
+      "allative": "Allative",
+      "essive": "Essive",
+      "translative": "Translative",
+      "instructive": "Instructive",
+      "abessive": "Abessive",
+      "comitative": "Comitative"
+    }
   },
   "nav": {
     "dashboard": "Dashboard",
@@ -166,6 +192,11 @@
     "captureDescription": "Save something to process later. You do not need to decide where it belongs yet.",
     "captureSubmit": "Save to Capture",
     "captured": "Saved to Capture",
+    "edit": "Edit",
+    "editTitle": "Edit capture",
+    "editDescription": "Update the content or move it to a different folder.",
+    "editSubmit": "Save changes",
+    "updated": "Capture updated",
     "contentLabel": "Content",
     "contentPlaceholder": "A word, phrase, idea, or anything you want to come back to…",
     "contentRequired": "Add some content first",
@@ -174,14 +205,21 @@
     "sourceLabel": "Source (optional)",
     "sourcePlaceholder": "Book, podcast, class…",
     "sourcePrefix": "From {source}",
+    "folderLabel": "Folder",
+    "foldersNav": "Capture folders",
+    "scopeAll": "All captures",
+    "unfiled": "Unfiled",
     "filterUnprocessed": "To process",
     "filterProcessed": "Processed",
     "emptyTitle": "Nothing captured yet",
     "emptyDescription": "Capture something quickly — a word from a conversation, a grammar doubt, a writing idea — and sort it later.",
     "emptyProcessedTitle": "No processed items yet",
     "emptyProcessedDescription": "When you finish adding something from Capture into vocabulary, theory, writing, or exercises, it shows up here.",
+    "emptyFolderTitle": "This folder is empty",
+    "emptyFolderDescription": "Move captures here, or capture something new into this folder.",
+    "deleteFolderDescription": "Delete “{name}”? The folder will be removed, but its {count, plural, one {# capture stays} other {# captures stay}} in Unfiled.",
     "statusProcessed": "Processed",
-    "processMenu": "Process item",
+    "processMenu": "Capture actions",
     "processed": "Marked as processed",
     "deleted": "Deleted from Capture",
     "process": {
@@ -193,13 +231,14 @@
       "delete": "Delete"
     },
     "searchPlaceholder": "Search captures…",
+    "searchInScope": "Search in {scope}…",
     "sortBy": "Sort by",
     "sortNewest": "Newest first",
     "sortOldest": "Oldest first",
     "sortNameAsc": "Name (A → Z)",
     "sortNameDesc": "Name (Z → A)",
     "noResultsTitle": "No matches",
-    "noResultsDescription": "Try another search, or clear it to see everything in this tab."
+    "noResultsDescription": "Try another search, or clear it to see everything in this folder and tab."
   },
   "reviewLater": {
     "add": "Review later",
@@ -224,6 +263,7 @@
     "deleteDescription": "“{name}” and everything inside it ({folderCount, plural, one {# folder} other {# folders}}, {itemCount, plural, one {# item} other {# items}}) will be permanently deleted.",
     "deleteDescriptionEmpty": "“{name}” will be permanently deleted.",
     "root": "All files",
+    "unfiled": "Unfiled",
     "open": "Open",
     "rename": "Rename",
     "move": "Move to…",
@@ -263,6 +303,15 @@
     "language": "Workspace language",
     "languageHint": "One workspace per language. You cannot create duplicates.",
     "languageExists": "A workspace for this language already exists.",
+    "languageSearchPlaceholder": "Search languages…",
+    "languageSearchEmpty": "No languages found",
+    "languageRegions": {
+      "europe": "Europe",
+      "asia": "Asia",
+      "africa": "Africa",
+      "americas": "Americas",
+      "oceania": "Oceania"
+    },
     "created": "Workspace created",
     "updated": "Workspace updated",
     "deleted": "Workspace deleted",
@@ -312,6 +361,18 @@
     "primaryMeaningLimit": "You can mark at most {max} primary meanings",
     "primaryMeanings": "Primary meanings",
     "otherMeanings": "Other meanings",
+    "usageLabels": {
+      "label": "Usage labels",
+      "add": "Usage",
+      "menuTitle": "Usage labels",
+      "clear": "Clear all",
+      "remove": "Remove {label}",
+      "aria": "Usage labels for this meaning",
+      "count": "{count, plural, one {# label} other {# labels}}"
+    },
+    "otherMeaningsPage": "{total} meanings · page {page} of {totalPages}",
+    "otherMeaningsPrev": "Previous",
+    "otherMeaningsNext": "Next",
     "examples": "Example sentences",
     "addExample": "Add example",
     "removeExample": "Remove example",
@@ -388,22 +449,32 @@
     "tagManager": {
       "open": "Manage tags",
       "title": "Tag Manager",
-      "description": "Select a word first — Add or Remove is chosen from whether that word already has the tag.",
-      "groupsLabel": "Tag groups",
+      "description": "Pick a tag, then assign or remove it from words. Assigned and other words stay in separate lists.",
+      "groupsLabel": "Standard tag groups",
       "tagsHeading": "Tags",
-      "wordsHeading": "Words · {tag}",
+      "standardTagsHeading": "Standard tags",
+      "customTagsHeading": "Custom tags",
+      "customTagsHint": "Labels you create for your own organization — not parts of speech.",
+      "emptyCustomTags": "No custom tags yet. Create them when editing a word.",
+      "wordsHeading": "{tag}",
+      "kindStandard": "Standard",
+      "kindCustom": "Custom",
+      "assignedHeading": "Words with this tag",
+      "otherHeading": "Other words",
+      "sectionCount": "{count}",
+      "selectSection": "Select all in section",
       "searchPlaceholder": "Search words or meanings…",
       "wordCount": "{count}",
       "loading": "Loading vocabulary…",
       "emptyBank": "Your vocabulary bank is empty.",
-      "emptyFilter": "No words match this search.",
-      "selectVisible": "Select visible",
-      "showing": "{count} shown",
-      "showingSelectable": "{selectable} selectable · {count} shown",
+      "emptyAssigned": "No words have this tag yet.",
+      "emptyAssignedSearch": "No matching words with this tag.",
+      "emptyOther": "Every word already has this tag.",
+      "emptyOtherSearch": "No matching words to assign.",
       "selected": "{count} selected",
-      "modeHintIdle": "Select a word to start. That choice locks Add or Remove for this selection.",
-      "modeHintAdd": "First pick has no tag — only words without this tag can be selected.",
-      "modeHintRemove": "First pick already has this tag — only tagged words can be selected.",
+      "modeHintIdle": "Select words in either list. The first choice locks Add or Remove for this selection.",
+      "modeHintAdd": "Adding this tag — only words in Other words can stay selected.",
+      "modeHintRemove": "Removing this tag — only words already tagged can stay selected.",
       "addToTag": "Add to tag",
       "removeFromTag": "Remove from tag",
       "applyAdd": "Add to tag ({count})",
@@ -522,6 +593,13 @@
       "idiom": "Idiom",
       "grammar": "Grammar",
       "expression": "Expression"
+    },
+    "meaningUsage": {
+      "literary": "Literary",
+      "technical": "Technical",
+      "archaic": "Archaic",
+      "regional": "Regional",
+      "figurative": "Figurative"
     },
     "learningStatus": {
       "new": "New",
@@ -909,7 +987,22 @@
       "tryAgain": "Try again",
       "questionsLabel": "Questions",
       "correctLabel": "Correct",
-      "reviewLabel": "To review"
+      "reviewLabel": "To review",
+      "answeredProgress": "{answered} / {total} answered",
+      "submitSet": "Submit answers",
+      "submitting": "Checking…",
+      "unansweredWarnTitle": "Unanswered questions",
+      "unansweredWarn": "You still have {count, plural, one {# unanswered question} other {# unanswered questions}}. Submit anyway?",
+      "submitAnyway": "Submit anyway",
+      "partialHint": "Hint: {mask}",
+      "jumpToUnanswered": "Go to unanswered",
+      "retryIncorrect": "Retry incorrect",
+      "retryUnanswered": "Retry unanswered",
+      "restartSet": "Restart set",
+      "resultsTitle": "Results",
+      "unanswered": "Not answered",
+      "yourAnswer": "Your answer",
+      "correctAnswer": "Correct answer"
     },
     "multipleChoice": {
       "questionWord": "What is the meaning of this word?",
@@ -1865,24 +1958,12 @@
           "title": "1. Capture something",
           "body": "Use Capture to save a word, phrase, grammar doubt, or writing idea without deciding where it belongs yet. Speed matters more than perfect structure here."
         },
-        "filters": {
-          "title": "2. To process vs processed",
-          "body": "To process holds items still waiting. Processed shows captures you already turned into vocabulary, theory, writing, or exercises."
-        },
-        "search": {
-          "title": "3. Search",
-          "body": "Filter the current tab by content, note, or source so you can find a capture quickly."
-        },
-        "sort": {
-          "title": "4. Sort",
-          "body": "Sort by newest, oldest, or name so the list matches how you want to work through it."
-        },
         "list": {
-          "title": "5. Your capture list",
-          "body": "Each card shows the content, optional note/source, and when you saved it. Open the ··· menu on a card to process it."
+          "title": "2. Your capture list",
+          "body": "Each card shows the content, optional note/source, and when you saved it. Use folders, To process / Processed, search, and sort above the list when you need to find something. Open the ··· menu on a card to process it."
         },
         "process": {
-          "title": "6. Process into Notoria",
+          "title": "3. Process into Notoria",
           "body": "Send a capture to Vocabulary, Theory, Writing, or Exercise. It only becomes Processed after you finish saving there — canceling the create form leaves it waiting."
         }
       }
@@ -1934,8 +2015,7 @@
       "confirmContentChange": "Only when changing content",
       "confirmNever": "Never",
       "saveFailed": "Could not save AI preferences",
-      "disabledToast": "AI assistance is turned off in Settings",
-      "formatConfirm": "AI will rewrite this content. Continue?"
+      "disabledToast": "AI assistance is turned off in Settings"
     },
     "tutorials": "Section tutorials",
     "tutorialsDescription": "Reset completed section walkthroughs so “Show tutorial” starts from the beginning again.",
@@ -2222,7 +2302,9 @@
       "expected": "Correct answer",
       "objectiveScore": "{correct} / {total} objective correct",
       "mobileTabsAria": "Practice panels",
+      "unansweredWarnTitle": "Unanswered questions",
       "unansweredWarn": "Some questions are unanswered. Submit anyway?",
+      "submitAnyway": "Submit anyway",
       "gradingPending": "Written answers could not be graded yet. Your answers are saved — you can retry grading.",
       "retryGrading": "Retry grading",
       "retryAttempt": "Try again",
@@ -2296,7 +2378,9 @@
       "ATTEMPT_NOT_EDITABLE": "This attempt can no longer be edited.",
       "PROCESSING_FAILED": "Something went wrong. Try again.",
       "AI_DISABLED": "AI assistance is turned off in your settings.",
-      "AI_QUOTA_EXCEEDED": "You have reached your AI exercise limit for this period.",
+      "AI_QUOTA_EXCEEDED": "You have reached your AI reading limit for this period.",
+      "RATE_LIMITED": "Too many requests. Wait a moment, then try again.",
+      "AI_BUSY": "Reading AI is already busy. Wait for it to finish, then try again.",
       "generic": "Something went wrong. Try again."
     },
     "newPassage": "Add passage",
@@ -2344,6 +2428,7 @@
     "uploadChoose": "Choose file",
     "uploading": "Uploading… {percent}%",
     "extracting": "Extracting text…",
+    "uploadInProgress": "This file is already being processed.",
     "cancelUpload": "Cancel upload",
     "retryUpload": "Retry upload",
     "downloadOriginal": "Download original",
@@ -2419,6 +2504,7 @@
     "chooseExerciseType": "Choose exercise type:",
     "chooseTypeHint": "Choose Fill in the Blank or Multiple Choice to generate questions.",
     "exercisesGenerated": "Exercises generated.",
+    "generationInProgress": "Exercises are already being generated.",
     "exercisesTitle": "Exercises",
     "exerciseCount": "{count, plural, one {# exercise} other {# exercises}}",
     "status": {
@@ -2473,9 +2559,11 @@
     "fillBlankOverview": "Complete the passage by filling in the missing words.",
     "practice": {
       "progress": "{current} / {total}",
+      "answeredProgress": "{answered} / {total} answered",
       "score": "{correct} correct",
       "check": "Check",
       "checkAnswers": "Check Answers",
+      "submitSet": "Submit answers",
       "questionLabel": "Question {number}",
       "blankLabel": "Blank {number}",
       "listenPrompt": "Listen to this part of the audio.",
@@ -2496,7 +2584,11 @@
       "blanksProgress": "{filled} / {total} blanks",
       "changeType": "Change type",
       "hideReview": "Hide review",
-      "typeHintMc": "Listen, then choose the best answer for each question."
+      "jumpToUnanswered": "Go to unanswered",
+      "unansweredWarnTitle": "Unanswered questions",
+      "unansweredWarn": "You still have unanswered questions. Submit anyway?",
+      "submitAnyway": "Submit anyway",
+      "typeHintMc": "Listen, then choose the best answer for each question on this page."
     },
     "errors": {
       "CLOUDINARY_NOT_CONFIGURED": "Media storage is not configured.",
@@ -2506,6 +2598,7 @@
       "INVALID_FILE_TYPE": "Only MP3 and MP4 files are supported.",
       "FILE_TOO_LARGE": "That file is too large. Use a file under 25 MB.",
       "AUDIO_TOO_LONG": "That audio is longer than 45 minutes. Split it or use a shorter clip for one transcript.",
+      "AUDIO_DURATION_UNKNOWN": "We could not confirm the audio length before transcription. Re-upload the file and try again.",
       "TRANSCRIPTION_FAILED": "We could not transcribe that audio. Try again.",
       "GENERATION_FAILED": "We could not generate exercises. Try again.",
       "GENERATION_UNAVAILABLE": "Exercise generation is unavailable right now. Please try again later.",
@@ -2575,6 +2668,11 @@
     "feedbackTitle": "Tutor feedback",
     "feedbackDescription": "A short recap of how the conversation went.",
     "transcriptTitle": "Transcript",
+    "transcriptFinalizing": "Finalizing transcript",
+    "transcriptLoadingTitle": "Collecting transcript",
+    "transcriptLoadingDescription": "Turns from the call will appear here shortly.",
+    "transcriptEmpty": "No transcript was captured for this session.",
+    "transcriptError": "Transcript incomplete",
     "status": {
       "upcoming": "Ready",
       "active": "In call",
@@ -2602,11 +2700,17 @@
       "join": "Join call",
       "joining": "Joining…",
       "tutorFailed": "You are in the call, but the AI tutor could not join. Try leaving and joining again.",
+      "tutorSetupTimeout": "The AI tutor took too long to join, so the call was ended. Start a new session to try again.",
       "endedTitle": "Call ended",
       "endedDescription": "Feedback will appear on the session page in a few moments.",
       "back": "Back to session",
       "notConfigured": "Video calling is not configured yet. Add Stream Video API keys to start a call.",
-      "sessionLimitReached": "This speaking session reached the 30-minute fair-use limit and has ended."
+      "sessionLimitReached": "This speaking session reached the 30-minute fair-use limit and has ended.",
+      "elapsedTitle": "Time in call",
+      "inactivityWarning": "No one has spoken for a while. The call will end soon.",
+      "inactivityCountdown": "Ending in {seconds}s…",
+      "inactivityEnded": "The call ended after a period of inactivity.",
+      "continueCall": "Continue call"
     },
     "errors": {
       "STREAM_NOT_CONFIGURED": "Video calling is not configured.",
@@ -2614,9 +2718,14 @@
       "INVALID_INPUT": "Check the topic and level, then try again.",
       "SESSION_NOT_FOUND": "Speaking session not found.",
       "SESSION_NOT_JOINABLE": "This call is no longer available to join.",
+      "SESSION_EXPIRED": "This speaking session reached its time limit and can no longer be joined.",
+      "ACTIVE_SESSION_EXISTS": "You already have an active speaking session. End it before starting another.",
       "STREAM_CALL_FAILED": "Could not start the video call. Try again.",
-      "UNAUTHORIZED": "Sign in to join a speaking call."
-    }
+      "UNAUTHORIZED": "Sign in to join a speaking call.",
+      "AI_QUOTA_EXCEEDED": "You've used your AI speaking allowance for today. It resets at UTC midnight — or upgrade for more sessions."
+    },
+    "quotaLockedTitle": "Daily speaking limit reached",
+    "quotaLockedBody": "You've used today's AI speaking session. Existing sessions stay available — upgrade for more, or come back after the allowance resets."
   },
   "errors": {
     "generic": "Something went wrong",
@@ -2940,7 +3049,59 @@
     "usageToday": "AI usage today",
     "quotaCount": "{used} / {limit}",
     "unlimitedAi": "Core AI toolkit",
+    "quotaUnlimitedHint": "Unlimited for ordinary use on this plan.",
+    "quotaRemainingHint": "{remaining} left today · resets {reset}",
+    "quotaExhaustedHint": "Allowance used · resets {reset}",
+    "quotaResetUtcMidnight": "at UTC midnight",
     "quotaExceeded": "You've used today's allowance for this AI feature. It resets at UTC midnight — or upgrade for a higher limit.",
+    "quotaExceededNoUpgrade": "You've used today's allowance for this AI feature. It resets {reset}.",
+    "quotaMessages": {
+      "ai_meeting": {
+        "free": "You've used your AI speaking session for today. Upgrade for more sessions, or return after your allowance resets ({reset}).",
+        "pro": "You've reached your daily AI speaking limit. Upgrade to Premium for a higher allowance, or return after your allowance resets ({reset}).",
+        "premium": "You've reached today's AI speaking limit. It resets {reset}."
+      },
+      "ai_reading": {
+        "free": "You've used today's AI reading allowance. Upgrade for more practice, or return after it resets ({reset}).",
+        "pro": "You've reached your daily AI reading limit. Upgrade to Premium for a higher allowance, or return after it resets ({reset}).",
+        "premium": "You've reached today's AI reading limit. It resets {reset}."
+      },
+      "ai_listening_transcript": {
+        "free": "You've used today's AI listening transcript. Upgrade for more, or return after it resets ({reset}).",
+        "pro": "You've reached your daily listening transcript limit. Upgrade to Premium for more, or return after it resets ({reset}).",
+        "premium": "You've reached today's listening transcript limit. It resets {reset}."
+      },
+      "ai_vocabulary": {
+        "free": "You've used today's AI vocabulary actions. Upgrade for more, or return after it resets ({reset}).",
+        "pro": "You've reached today's AI vocabulary limit. It resets {reset}.",
+        "premium": "You've reached today's AI vocabulary limit. It resets {reset}."
+      },
+      "ai_writing": {
+        "free": "You've used today's AI writing support. Upgrade for more, or return after it resets ({reset}).",
+        "pro": "You've reached today's AI writing limit. It resets {reset}.",
+        "premium": "You've reached today's AI writing limit. It resets {reset}."
+      },
+      "ai_exercise": {
+        "free": "You've used today's AI exercise generation. Upgrade for more, or return after it resets ({reset}).",
+        "pro": "You've reached today's AI exercise limit. It resets {reset}.",
+        "premium": "You've reached today's AI exercise limit. It resets {reset}."
+      },
+      "ai_exercise_import": {
+        "free": "Exercise import isn't included on Free. Upgrade to Pro to import worksheets.",
+        "pro": "You've reached today's exercise import limit. Upgrade to Premium for more, or return after it resets ({reset}).",
+        "premium": "You've reached today's exercise import limit. It resets {reset}."
+      },
+      "ai_learning_coach_chat": {
+        "free": "Learning Coach chat is a Premium feature.",
+        "pro": "Learning Coach chat is a Premium feature.",
+        "premium": "You've reached today's Learning Coach chat limit. It resets {reset}."
+      },
+      "content_import": {
+        "free": "Content import isn't included on Free. Upgrade to Pro to import learning material.",
+        "pro": "You've reached today's content import limit. It resets {reset}.",
+        "premium": "You've reached today's content import limit. It resets {reset}."
+      }
+    },
     "explorePremium": "Explore Premium",
     "switchTo": "Switch to {plan}",
     "switchToFreeHint": "You keep this plan until the renewal date, then move to Free.",
@@ -2984,6 +3145,21 @@
     "switchingToProOn": "Switching to Pro on {date}. Premium access remains active until then.",
     "confirmCancelTitle": "Cancel {plan}?",
     "confirmCancelBody": "Your {plan} access remains active until {date}. After that, your account moves to Free. You will not be charged again.",
+    "cancelFeedbackLabel": "Why are you canceling?",
+    "cancelFeedbackOptional": "Optional — you can skip this and still cancel.",
+    "cancelCommentLabel": "Anything else to share?",
+    "cancelCommentPlaceholder": "Optional comment",
+    "cancelCommentCount": "{count} / {max}",
+    "cancelReasons": {
+      "too_expensive": "It's too expensive",
+      "missing_features": "I need more features",
+      "switched_service": "I found an alternative",
+      "unused": "I no longer need it",
+      "too_complex": "It was too complex to use",
+      "low_quality": "Quality was lacking",
+      "other": "Other reason"
+    },
+    "invalidCancellationFeedback": "That cancellation feedback is invalid. Please choose a listed reason or shorten your comment.",
     "confirmKeepTitle": "Keep {plan}?",
     "confirmKeepBody": "The scheduled cancellation will be removed. {plan} keeps renewing, and the next charge is on {date}.",
     "back": "Back",
@@ -3246,6 +3422,8 @@
     "refresh": "Update coach",
     "refreshed": "Coach updated from your latest activity.",
     "refreshFailed": "Could not update the coach. Please try again.",
+    "refreshRateLimited": "You refreshed recently. Wait a minute, then try again.",
+    "refreshBusy": "Coach is already updating. Please wait a moment.",
     "ask": {
       "label": "Ask your coach",
       "title": "Ask your Learning Coach",
@@ -3848,11 +4026,11 @@
             },
             {
               "provider": "Stream Video",
-              "role": "Live speaking calls; automatic transcription; session fields such as transcript URLs (and recording URLs only if a recording event is later received)"
+              "role": "Live speaking call audio/video transport; session fields such as recording URLs only if a recording event is later received. New calls do not use Stream transcription."
             },
             {
               "provider": "OpenAI",
-              "role": "Optional AI assistance and speaking-tutor realtime audio"
+              "role": "Optional AI assistance, speaking-tutor realtime audio, and speaking-call transcription (gpt-4o-transcribe)"
             },
             {
               "provider": "Resend",
@@ -3871,7 +4049,7 @@
               "role": "Generated avatar images used in speaking sessions (from a name seed; no account password is sent)"
             }
           ],
-          "p2": "Speaking calls are created with transcription enabled. Recording is disabled at call creation in the current implementation; a recording URL is stored only if the product later receives a recording-ready event from Stream."
+          "p2": "Speaking call transcripts are captured with OpenAI Realtime (gpt-4o-transcribe) during the session and stored server-side. Stream transcription and captions are disabled for new calls. Recording is disabled at call creation; a recording URL is stored only if the product later receives a recording-ready event from Stream."
         },
         "cookies": {
           "title": "9. Cookies and device storage",
@@ -4468,6 +4646,7 @@
   "errorPages": {
     "statusUnavailable": "Unavailable",
     "reference": "Reference: {id}",
+    "referenceLabel": "Reference ID",
     "actions": {
       "dashboard": "Go to Dashboard",
       "home": "Return to Home",
@@ -4478,7 +4657,7 @@
     },
     "notFound": {
       "title": "Page not found",
-      "description": "This page doesn’t exist, or the link may be outdated. Check the address or head back to a place you know."
+      "description": "This page doesn’t exist, or the link may be outdated. Check the address or go to the dashboard."
     },
     "unauthorized": {
       "title": "Sign in required",
@@ -4556,6 +4735,264 @@
         "description": "It may have been deleted, or the link may be outdated.",
         "primary": "Go to Dashboard"
       }
+    }
+  },
+  "admin": {
+    "nav": {
+      "admin": "Admin",
+      "manage": "Manage",
+      "overview": "Overview",
+      "users": "Users",
+      "workspaces": "Workspaces",
+      "jobs": "Jobs",
+      "audit": "Audit",
+      "content": "Content",
+      "contentLibrary": "Content library",
+      "backToApp": "Back to app",
+      "openMenu": "Open admin menu",
+      "openAdmin": "Admin dashboard"
+    },
+    "modules": {
+      "vocabulary": "Vocabulary",
+      "theory": "Theory",
+      "writing": "Writing",
+      "exercises": "Exercises",
+      "listening": "Listening",
+      "reading": "Reading",
+      "speaking": "Speaking",
+      "inbox": "Capture",
+      "folders": "Folders"
+    },
+    "common": {
+      "search": "Search",
+      "clear": "Clear",
+      "filter": "Filter",
+      "previous": "Previous",
+      "next": "Next",
+      "pageOf": "Page {page} of {totalPages}",
+      "results": "{total} results",
+      "backToList": "Back to list",
+      "empty": "No results"
+    },
+    "overview": {
+      "title": "Overview",
+      "description": "Live counts from application data. Time ranges use UTC calendar days. Active learners count distinct users with learning activity events — not logins.",
+      "metrics": "Metrics",
+      "recentAudit": "Recent admin actions",
+      "recentAuditLede": "Latest mutations from the audit trail.",
+      "viewAllAudit": "View audit log",
+      "cards": {
+        "users": "Total users",
+        "newUsers7d": "New users (7d)",
+        "newUsers30d": "New users (30d)",
+        "activeUsers7d": "Active learners (7d)",
+        "workspaces": "Workspaces",
+        "vocabulary": "Vocabulary",
+        "theory": "Theory",
+        "writing": "Writing",
+        "exercises": "Exercises",
+        "listening": "Listening",
+        "reading": "Reading",
+        "speaking": "Speaking",
+        "inbox": "Capture",
+        "failedListening": "Failed listening",
+        "failedImports": "Failed imports",
+        "runningJobs": "Running job locks",
+        "recentAudits7d": "Audit entries (7d)"
+      }
+    },
+    "users": {
+      "title": "Users",
+      "description": "Search accounts, change roles, suspend access, or delete with confirmation.",
+      "searchPlaceholder": "Search name or email…",
+      "empty": "No users match these filters.",
+      "selfGuard": "Safeguards prevent changing or deleting your own admin account here.",
+      "columns": {
+        "user": "User",
+        "role": "Role",
+        "status": "Status",
+        "plan": "Plan",
+        "workspaces": "Workspaces",
+        "created": "Registered"
+      },
+      "filters": {
+        "role": "Role",
+        "status": "Status",
+        "allRoles": "Any role",
+        "allStatuses": "Any status"
+      },
+      "status": {
+        "active": "Active",
+        "suspended": "Suspended"
+      },
+      "fields": {
+        "id": "User id",
+        "name": "Name",
+        "role": "Role",
+        "status": "Status",
+        "plan": "Plan",
+        "created": "Registered",
+        "updated": "Updated",
+        "emailVerified": "Email verified"
+      },
+      "detail": {
+        "account": "Account",
+        "usage": "Content counts",
+        "usageLede": "Owned records across learning modules.",
+        "actions": "Account actions",
+        "workspaces": "Workspaces",
+        "workspacesLede": "Language workspaces owned by this user."
+      },
+      "actions": {
+        "saveProfile": "Save name",
+        "grantAdmin": "Grant admin",
+        "revokeAdmin": "Revoke admin",
+        "suspend": "Suspend",
+        "restore": "Restore",
+        "delete": "Delete account"
+      },
+      "confirm": {
+        "grantAdmin": "Grant admin access to this account?",
+        "revokeAdmin": "Revoke admin access? This fails if they are the last active admin.",
+        "suspend": "Suspend this account? They lose access on the next protected request.",
+        "restore": "Restore this account?",
+        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone."
+      }
+    },
+    "workspaces": {
+      "title": "Workspaces",
+      "description": "Inspect and manage language workspaces.",
+      "searchPlaceholder": "Search name, language, or owner email…",
+      "empty": "No workspaces match these filters.",
+      "createForUser": "Create workspace for this user",
+      "columns": {
+        "name": "Name",
+        "language": "Language",
+        "owner": "Owner",
+        "updated": "Updated"
+      },
+      "fields": {
+        "id": "Workspace id",
+        "name": "Name",
+        "nameOptional": "Optional display name",
+        "language": "Language",
+        "owner": "Owner",
+        "created": "Created",
+        "updated": "Updated"
+      },
+      "detail": {
+        "description": "Language: {language}",
+        "meta": "Workspace",
+        "actions": "Workspace actions",
+        "actionsLede": "Editing language must stay unique per owner. Deletion cascades learning content in this workspace."
+      },
+      "actions": {
+        "create": "Create workspace",
+        "save": "Save",
+        "delete": "Delete workspace"
+      },
+      "confirm": {
+        "delete": "Delete this workspace and all learning content inside it via database cascades?"
+      }
+    },
+    "content": {
+      "description": "Lists show metadata only. Open a row for identifiers and status. Private bodies (transcripts, notes) are not loaded here by default.",
+      "searchPlaceholder": "Search titles…",
+      "empty": "No records match these filters.",
+      "listeningMediaNote": "Deleting a listening lesson removes the database row. External media cleanup is best-effort and is not performed by this admin action.",
+      "columns": {
+        "title": "Title",
+        "status": "Status",
+        "owner": "Owner",
+        "workspace": "Workspace",
+        "updated": "Updated"
+      },
+      "fields": {
+        "id": "Id",
+        "status": "Status",
+        "errorCode": "Error code",
+        "owner": "Owner",
+        "workspace": "Workspace",
+        "created": "Created",
+        "updated": "Updated"
+      },
+      "detail": {
+        "description": "Metadata inspection. Private bodies are not auto-loaded.",
+        "meta": "Record",
+        "metaLede": "Identifiers and status only.",
+        "actions": "Actions"
+      },
+      "actions": {
+        "delete": "Delete record"
+      },
+      "confirm": {
+        "delete": "Delete this record? Related child rows follow database cascade / set-null rules."
+      }
+    },
+    "jobs": {
+      "title": "Jobs",
+      "description": "Running locks and failed processing records. Statuses are read-only — do not force a failed job to appear successful.",
+      "searchPlaceholder": "Filter by title…",
+      "empty": "No jobs match these filters.",
+      "buckets": {
+        "attention": "Needs attention",
+        "running": "Running",
+        "failed": "Failed",
+        "all": "All",
+        "runningLocks": "Running locks",
+        "failedLocks": "Failed locks",
+        "failedListening": "Failed listening",
+        "failedImports": "Failed imports"
+      },
+      "filters": {
+        "kind": "Kind",
+        "allKinds": "All kinds"
+      },
+      "kinds": {
+        "ai_lock": "AI lock",
+        "listening": "Listening",
+        "exercise_import": "Exercise import",
+        "lock": "AI lock",
+        "import": "Exercise import"
+      },
+      "columns": {
+        "kind": "Kind",
+        "title": "Title",
+        "status": "Status",
+        "error": "Error",
+        "owner": "Owner",
+        "updated": "Updated"
+      }
+    },
+    "audit": {
+      "title": "Audit log",
+      "description": "Read-only history of administrative mutations. Credentials and private bodies are never stored here.",
+      "searchPlaceholder": "Search action, entity, or actor email…",
+      "empty": "No audit entries yet.",
+      "columns": {
+        "when": "When",
+        "actor": "Actor",
+        "action": "Action",
+        "entity": "Entity",
+        "success": "Result"
+      },
+      "success": {
+        "yes": "OK",
+        "no": "Failed"
+      }
+    },
+    "errors": {
+      "UNKNOWN": "Something went wrong. Try again.",
+      "LAST_ADMIN": "Cannot change the last active admin.",
+      "CANNOT_DEMOTE_SELF": "You cannot demote your own admin account.",
+      "CANNOT_SUSPEND_SELF": "You cannot suspend your own account.",
+      "CANNOT_DELETE_SELF": "You cannot delete your own account.",
+      "USER_NOT_FOUND": "User not found.",
+      "WORKSPACE_NOT_FOUND": "Workspace not found.",
+      "WORKSPACE_LANGUAGE_EXISTS": "This user already has a workspace for that language.",
+      "INVALID_LANGUAGE": "Invalid language code.",
+      "CONTENT_NOT_FOUND": "Record not found.",
+      "INVALID_CONTENT_MODULE": "Unknown content module."
     }
   }
 }

@@ -2,7 +2,8 @@
 
 .floating-panel {
   height: fit-content;
-  max-height: calc(100dvh - 1.25rem - 0.75rem);
+  /* Top sticky inset + bottom inset so the panel fits the viewport while stuck. */
+  max-height: calc(100dvh - 1.25rem - 1.25rem);
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
@@ -91,13 +92,16 @@
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  border-radius: 0.5rem;
-  padding: 0.5rem 0.625rem;
+  min-height: 2.15rem;
+  border-radius: 0.65rem;
+  border: 1px solid transparent;
+  padding: 0.45rem 0.65rem;
   font-size: 0.8125rem;
-  font-weight: 500;
+  font-weight: 550;
   color: var(--ink);
   transition:
     background-color 160ms ease,
+    border-color 160ms ease,
     color 160ms ease,
     box-shadow 160ms ease;
 }
@@ -105,21 +109,26 @@
 .nav-link:hover {
   background: color-mix(
     in oklab,
-    var(--nav-route-bg, var(--muted)) 48%,
+    var(--nav-route-bg, var(--muted)) 42%,
     transparent
   );
   color: var(--nav-route-fg, var(--ink));
 }
 
 .nav-link.is-active {
+  border-color: color-mix(
+    in oklab,
+    var(--nav-route-fg, var(--primary)) 28%,
+    var(--hairline-cloud)
+  );
   background: color-mix(
     in oklab,
-    var(--nav-route-bg, var(--primary)) 78%,
+    var(--nav-route-bg, var(--primary)) 62%,
     var(--surface-elevated)
   );
-  color: var(--nav-route-fg, var(--on-primary));
-  box-shadow: inset 0 0 0 1px
-    color-mix(in oklab, var(--nav-route-fg, var(--primary)) 28%, transparent);
+  color: var(--nav-route-fg, var(--ink));
+  font-weight: 650;
+  box-shadow: inset 2px 0 0 var(--nav-route-fg, var(--primary));
 }
 
 .nav-link.is-active :global(.nav-link-icon),

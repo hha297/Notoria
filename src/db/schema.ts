@@ -117,6 +117,7 @@ export const folderSectionEnum = pgEnum("folder_section", [
   "listening",
   "theory",
   "reading",
+  "inbox",
 ]);
 
 export const speakingStatusEnum = pgEnum("speaking_status", [
@@ -204,7 +205,9 @@ export const users = pgTable(
      * Paid plan scheduled to take effect at period end (e.g. Premium → Pro).
      * Effective entitlements stay on subscriptionPlan until then.
      */
-    scheduledSubscriptionPlan: subscriptionPlanEnum("scheduled_subscription_plan"),
+    scheduledSubscriptionPlan: subscriptionPlanEnum(
+      "scheduled_subscription_plan",
+    ),
     stripeScheduleId: text("stripe_schedule_id"),
     /**
      * Lifetime first-month intro offer. Set once after Stripe confirms the
@@ -212,6 +215,11 @@ export const users = pgTable(
      */
     introOfferUsedAt: timestamp("intro_offer_used_at", {
       withTimezone: true,
+    }),
+    /** Null = active. Set by admins to block protected operations. */
+    suspendedAt: timestamp("suspended_at", {
+      withTimezone: true,
+      mode: "date",
     }),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
@@ -227,6 +235,45 @@ export const users = pgTable(
     uniqueIndex("users_stripe_subscription_id_unique")
       .on(table.stripeSubscriptionId)
       .where(sql`${table.stripeSubscriptionId} is not null`),
+    index("users_role_idx").on(table.role),
+    index("users_created_at_idx").on(table.createdAt),
+  ],
+);
+
+/**
+ * Admin mutation audit trail. Never store credentials, tokens, or full
+ * private transcripts / file bodies in meta.
+ */
+export const adminAuditEvents = pgTable(
+  "admin_audit_events",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    actorUserId: uuid("actor_user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "restrict" }),
+    action: text("action").notNull(),
+    entityType: text("entity_type").notNull(),
+    entityId: text("entity_id"),
+    targetUserId: uuid("target_user_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    /** Sanitized before/after or context — no secrets or full private bodies. */
+    meta: jsonb("meta").$type<Record<string, unknown>>(),
+    success: boolean("success").notNull().default(true),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("admin_audit_events_created_idx").on(table.createdAt),
+    index("admin_audit_events_actor_created_idx").on(
+      table.actorUserId,
+      table.createdAt,
+    ),
+    index("admin_audit_events_entity_created_idx").on(
+      table.entityType,
+      table.createdAt,
+    ),
   ],
 );
 
@@ -411,6 +458,14 @@ export const wordMeanings = pgTable(
     /** Used by exercises; secondary meanings stay on the word for reference. */
     isPrimary: boolean("is_primary").notNull().default(true),
     sortOrder: integer("sort_order").notNull().default(0),
+    /**
+     * Optional register/style labels for this sense only (stable ids).
+     * Empty = unspecified usage — not “standard language”.
+     */
+    usageLabels: text("usage_labels")
+      .array()
+      .notNull()
+      .default(sql`'{}'::text[]`),
     createdAt: timestamp("created_at", { withTimezone: true })
       .notNull()
       .defaultNow(),
@@ -597,7 +652,7 @@ export const exercises = pgTable(
     ),
     index("exercises_fts_idx").using(
       "gin",
-      sql`setweight(to_tsvector('simple', coalesce(${table.title}, '') || ' ' || coalesce(${table.description}, '')), 'A') || setweight(jsonb_to_tsvector('simple', ${table.content}, '["string"]'::jsonb), 'C')`,
+      sql`(setweight(to_tsvector('simple', coalesce(${table.title}, '') || ' ' || coalesce(${table.description}, '')), 'A') || setweight(jsonb_to_tsvector('simple', ${table.content}, '["string"]'::jsonb), 'C'))`,
     ),
   ],
 );
@@ -640,10 +695,7 @@ export const listeningLessons = pgTable(
   },
   (table) => [
     uniqueIndex("listening_lessons_workspace_normalized_filename_unique")
-      .on(
-        table.workspaceId,
-        sql`lower(trim(${table.originalFilename}))`,
-      )
+      .on(table.workspaceId, sql`lower(trim(${table.originalFilename}))`)
       .where(sql`${table.originalFilename} is not null`),
     index("listening_lessons_folder_id_idx").on(table.folderId),
     index("listening_lessons_user_workspace_updated_idx").on(
@@ -713,7 +765,7 @@ export const grammarNotes = pgTable(
     ),
     index("grammar_notes_fts_idx").using(
       "gin",
-      sql`setweight(to_tsvector('simple', coalesce(${table.title}, '')), 'A') || setweight(jsonb_to_tsvector('simple', ${table.content}, '["string"]'::jsonb), 'C')`,
+      sql`(setweight(to_tsvector('simple', coalesce(${table.title}, '')), 'A') || setweight(jsonb_to_tsvector('simple', ${table.content}, '["string"]'::jsonb), 'C'))`,
     ),
   ],
 );
@@ -738,6 +790,8 @@ export const speakingSessions = pgTable(
     endedAt: timestamp("ended_at", { withTimezone: true }),
     transcriptUrl: text("transcript_url"),
     transcript: text("transcript"),
+    /** Structured OpenAI Realtime transcript state (status + ordered entries). */
+    transcriptDebug: jsonb("transcript_debug"),
     recordingUrl: text("recording_url"),
     summary: text("summary"),
     createdAt: timestamp("created_at", { withTimezone: true })
@@ -1125,20 +1179,23 @@ export const vocabularySynonymsRelations = relations(
   }),
 );
 
-export const flashcardReviewsRelations = relations(flashcardReviews, ({ one }) => ({
-  user: one(users, {
-    fields: [flashcardReviews.userId],
-    references: [users.id],
+export const flashcardReviewsRelations = relations(
+  flashcardReviews,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [flashcardReviews.userId],
+      references: [users.id],
+    }),
+    word: one(vocabularyWords, {
+      fields: [flashcardReviews.wordId],
+      references: [vocabularyWords.id],
+    }),
+    workspace: one(workspaces, {
+      fields: [flashcardReviews.workspaceId],
+      references: [workspaces.id],
+    }),
   }),
-  word: one(vocabularyWords, {
-    fields: [flashcardReviews.wordId],
-    references: [vocabularyWords.id],
-  }),
-  workspace: one(workspaces, {
-    fields: [flashcardReviews.workspaceId],
-    references: [workspaces.id],
-  }),
-}));
+);
 
 export const flashcardProgressRelations = relations(
   flashcardProgress,
@@ -1363,8 +1420,89 @@ export const aiUsage = pgTable(
 );
 
 /**
+ * Execution lock for a paid or provider-backed job.
+ * Usage reservations dedupe quota only; this row is what stops a second
+ * provider call. Expired running locks can be taken over after a crash.
+ */
+export const aiJobLocks = pgTable(
+  "ai_job_locks",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    operation: text("operation").notNull(),
+    subjectId: text("subject_id").notNull(),
+    ownerId: text("owner_id").notNull(),
+    status: text("status").notNull(),
+    lockedUntil: timestamp("locked_until", { withTimezone: true }).notNull(),
+    result: jsonb("result"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("ai_job_locks_operation_subject_unique").on(
+      table.operation,
+      table.subjectId,
+    ),
+    check(
+      "ai_job_locks_status_check",
+      sql`${table.status} in ('running', 'completed', 'failed', 'released')`,
+    ),
+  ],
+);
+
+/**
+ * Provider-usage telemetry (tokens, latency, outcome, request ids).
+ * Separate from quota counters in `ai_usage`. Cost fields are ESTIMATES only.
+ * Never store prompts, transcripts, audio, or secrets here.
+ */
+export const aiProviderEvents = pgTable(
+  "ai_provider_events",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id").references(() => users.id, {
+      onDelete: "set null",
+    }),
+    operation: text("operation").notNull(),
+    feature: text("feature"),
+    model: text("model"),
+    promptTokens: integer("prompt_tokens"),
+    completionTokens: integer("completion_tokens"),
+    totalTokens: integer("total_tokens"),
+    elapsedMs: integer("elapsed_ms"),
+    retryCount: integer("retry_count").notNull().default(0),
+    outcome: text("outcome").notNull(),
+    providerRequestId: text("provider_request_id"),
+    providerJobId: text("provider_job_id"),
+    /** Speaking duration only — not text-generation usage. */
+    speakingDurationSeconds: integer("speaking_duration_seconds"),
+    /** Millionths of a USD — ESTIMATE only, never an invoice amount. */
+    costEstimateMicros: integer("cost_estimate_micros"),
+    costIsEstimate: boolean("cost_is_estimate").notNull().default(true),
+    reservationId: uuid("reservation_id"),
+    workKind: text("work_kind").notNull().default("interactive"),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("ai_provider_events_user_created_idx").on(
+      table.userId,
+      table.createdAt,
+    ),
+    index("ai_provider_events_operation_created_idx").on(
+      table.operation,
+      table.createdAt,
+    ),
+  ],
+);
+
+/**
  * One reservation per metered AI action. Refunds flip status once so a
  * failure cannot decrement usage twice.
+ * A subject id dedupes the charge. It is not an execution lock.
  */
 export const aiUsageReservations = pgTable(
   "ai_usage_reservations",
@@ -1420,6 +1558,10 @@ export const studyInboxItems = pgTable(
     workspaceId: uuid("workspace_id")
       .notNull()
       .references(() => workspaces.id, { onDelete: "cascade" }),
+    /** Flat Capture folders; null = Unfiled. Deleting a folder sets this to null. */
+    folderId: uuid("folder_id").references(() => workspaceFolders.id, {
+      onDelete: "set null",
+    }),
     content: text("content").notNull(),
     note: text("note"),
     source: text("source"),
@@ -1441,6 +1583,7 @@ export const studyInboxItems = pgTable(
       table.status,
       table.createdAt,
     ),
+    index("study_inbox_items_folder_id_idx").on(table.folderId),
     index("study_inbox_items_fts_idx").using(
       "gin",
       sql`to_tsvector('simple', coalesce(${table.content}, '') || ' ' || coalesce(${table.note}, '') || ' ' || coalesce(${table.source}, ''))`,
@@ -1520,6 +1663,8 @@ export const workspaceActivityEvents = pgTable(
 );
 
 export type User = typeof users.$inferSelect;
+export type UserRole = (typeof userRoleEnum.enumValues)[number];
+export type AdminAuditEvent = typeof adminAuditEvents.$inferSelect;
 export type Account = typeof accounts.$inferSelect;
 export type SubscriptionPlan = (typeof subscriptionPlanEnum.enumValues)[number];
 export type Workspace = typeof workspaces.$inferSelect;
@@ -1527,6 +1672,10 @@ export type WorkspaceTag = typeof workspaceTags.$inferSelect;
 export type WorkspaceFolder = typeof workspaceFolders.$inferSelect;
 export type FolderSection = (typeof folderSectionEnum.enumValues)[number];
 export type VocabularyWord = typeof vocabularyWords.$inferSelect;
+export type VocabularyStatus =
+  (typeof vocabularyStatusEnum.enumValues)[number];
+export type ListeningStatus =
+  (typeof listeningStatusEnum.enumValues)[number];
 export type VocabularySynonym = typeof vocabularySynonyms.$inferSelect;
 export type WordMeaning = typeof wordMeanings.$inferSelect;
 export type WordExample = typeof wordExamples.$inferSelect;
@@ -1559,3 +1708,4 @@ export type LearningEntityType =
 export type WorkspaceActivityEvent =
   typeof workspaceActivityEvents.$inferSelect;
 export type ActivityVerb = (typeof activityVerbEnum.enumValues)[number];
+export type AiProviderEvent = typeof aiProviderEvents.$inferSelect;

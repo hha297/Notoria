@@ -83,7 +83,7 @@ export function FlashcardCard({
             aria-hidden={isFlipped}
             className={cn(
               FACE,
-              "border-border-subtle bg-linear-to-br from-surface-elevated via-surface to-surface-muted/70 shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_16px_36px_-18px_rgba(35,37,29,0.32)] dark:from-surface-elevated dark:via-surface dark:to-surface-muted dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_40px_-16px_rgba(0,0,0,0.55)]",
+              "border-(--exercise-panel-border,var(--page-accent-border)) bg-linear-to-br from-(--exercise-panel-bg,var(--surface)) via-surface to-surface-muted/60 shadow-[inset_0_1px_0_rgba(255,255,255,0.55),0_16px_36px_-18px_rgba(35,37,29,0.32)] dark:from-(--exercise-panel-bg,var(--surface)) dark:via-surface dark:to-surface-muted dark:shadow-[inset_0_1px_0_rgba(255,255,255,0.08),0_20px_40px_-16px_rgba(0,0,0,0.55)]",
             )}
             style={{
               backfaceVisibility: "hidden",

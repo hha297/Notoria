@@ -27,7 +27,10 @@ export function mapVocabRows(
     const row = rows[i] ?? [];
     const word = cellForField(row, mappings, "word");
     const meaningRaw = cellForField(row, mappings, "meaning");
-    const meanings = splitMultiValue(meaningRaw);
+    const meanings = splitMultiValue(meaningRaw).map((meaning) => ({
+      meaning,
+      usageLabels: [] as string[],
+    }));
     const posRaw = cellForField(row, mappings, "partOfSpeech");
     const partOfSpeech = normalizePartOfSpeech(posRaw) || undefined;
     const examples = splitMultiValue(cellForField(row, mappings, "example"));
@@ -156,7 +159,7 @@ export function parseVocabLinesFromText(text: string): VocabImportDraft[] {
 
     drafts.push({
       word,
-      meanings: meaning ? [meaning] : [],
+      meanings: meaning ? [{ meaning, usageLabels: [] }] : [],
       examples: [],
       tags: [],
       rowIndex: i,
