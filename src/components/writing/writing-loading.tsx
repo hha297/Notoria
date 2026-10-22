@@ -37,10 +37,7 @@ export function WritingFormLoading() {
       aria-label="Loading"
       className="notoria-route-loading writing-sheet"
     >
-      <div className="writing-paper-chrome">
-        <Skeleton className="h-4 w-32" />
-        <Skeleton className="h-9 w-24" />
-      </div>
+      <Skeleton className="h-4 w-32" />
       <Skeleton className="h-3 w-28" />
       <Skeleton className="h-12 w-2/3 max-w-lg" />
       <Skeleton className="h-4 w-80 max-w-full" />
@@ -55,6 +52,9 @@ export function WritingFormLoading() {
       </div>
       <Skeleton className="h-24 w-full" />
       <Skeleton className="min-h-72 w-full rounded-xl" />
+      <div className="writing-paper-actions">
+        <Skeleton className="h-9 w-24" />
+      </div>
     </div>
   );
 }

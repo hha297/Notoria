@@ -280,7 +280,13 @@
     "invalidMove": "ไม่สามารถย้ายโฟลเดอร์เข้าไปในตัวเองได้",
     "tooDeep": "โฟลเดอร์นี้ซ้อนกันลึกเกินไป",
     "notFound": "ไม่พบโฟลเดอร์",
-    "nameTaken": "มีโฟลเดอร์หรืองานเขียนที่ใช้ชื่อนี้อยู่แล้ว"
+    "nameTaken": "มีโฟลเดอร์หรืองานเขียนที่ใช้ชื่อนี้อยู่แล้ว",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "สลับธีม",

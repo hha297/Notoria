@@ -280,7 +280,13 @@
     "invalidMove": "Папка не може да бъде преместена в себе си",
     "tooDeep": "Тази папка е вложена твърде дълбоко",
     "notFound": "Папката не е намерена",
-    "nameTaken": "Папка или писмен материал вече използва това име"
+    "nameTaken": "Папка или писмен материал вече използва това име",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Превключване на темата",

@@ -280,7 +280,13 @@
     "invalidMove": "Kansiota ei voi siirtää itseensä",
     "tooDeep": "Kansio on liian syvällä",
     "notFound": "Kansiota ei löytynyt",
-    "nameTaken": "Kansio tai kirjoitus käyttää jo tätä nimeä"
+    "nameTaken": "Kansio tai kirjoitus käyttää jo tätä nimeä",
+    "dragTipTitle": "Siirrä kansioon",
+    "dragTipBody": "Tietokoneella hiirellä tai ohjauslevyllä: vedä kohde kansikortin päälle siirtääksesi sen. Voit myös käyttää siirto-kuvaketta.",
+    "dragTipDismiss": "Sulje vinkki",
+    "dragTipShow": "Miten siirretään kansioon",
+    "dragTipDemo": "Vedä kohde kansioon",
+    "dragTipCard": "Kohde"
   },
   "theme": {
     "toggle": "Vaihda teema",

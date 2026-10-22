@@ -280,7 +280,13 @@
     "invalidMove": "无法将文件夹移动到自身内部",
     "tooDeep": "此文件夹嵌套层级过深",
     "notFound": "未找到文件夹",
-    "nameTaken": "已有文件夹或写作使用此名称"
+    "nameTaken": "已有文件夹或写作使用此名称",
+    "dragTipTitle": "移到文件夹",
+    "dragTipBody": "在带鼠标或触控板的电脑上，将条目拖到文件夹卡片上即可移动。也可以使用每项上的移动图标。",
+    "dragTipDismiss": "关闭提示",
+    "dragTipShow": "如何移到文件夹",
+    "dragTipDemo": "拖到文件夹",
+    "dragTipCard": "条目"
   },
   "theme": {
     "toggle": "切换主题",

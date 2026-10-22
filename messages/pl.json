@@ -280,7 +280,13 @@
     "invalidMove": "Nie można przenieść folderu do samego siebie",
     "tooDeep": "Ten folder jest zagnieżdżony zbyt głęboko",
     "notFound": "Nie znaleziono folderu",
-    "nameTaken": "Folder lub tekst o tej nazwie już istnieje"
+    "nameTaken": "Folder lub tekst o tej nazwie już istnieje",
+    "dragTipTitle": "Przenieś do folderu",
+    "dragTipBody": "Na komputerze z myszą lub gładzikiem przeciągnij element na kartę folderu, aby go przenieść. Możesz też użyć ikony przenoszenia.",
+    "dragTipDismiss": "Ukryj wskazówkę",
+    "dragTipShow": "Jak przenosić do folderów",
+    "dragTipDemo": "Przeciągnij do folderu",
+    "dragTipCard": "Element"
   },
   "theme": {
     "toggle": "Przełącz motyw",

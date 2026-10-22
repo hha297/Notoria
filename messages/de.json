@@ -280,7 +280,13 @@
     "invalidMove": "Ein Ordner kann nicht in sich selbst verschoben werden",
     "tooDeep": "Dieser Ordner ist zu tief verschachtelt",
     "notFound": "Ordner nicht gefunden",
-    "nameTaken": "Ein Ordner oder ein Schreibdokument verwendet diesen Namen bereits"
+    "nameTaken": "Ein Ordner oder ein Schreibdokument verwendet diesen Namen bereits",
+    "dragTipTitle": "In einen Ordner verschieben",
+    "dragTipBody": "Am Computer mit Maus oder Trackpad: Ziehe ein Element auf eine Ordnerkarte, um es zu verschieben. Du kannst auch das Verschieben-Symbol nutzen.",
+    "dragTipDismiss": "Tipp schließen",
+    "dragTipShow": "So verschiebst du in Ordner",
+    "dragTipDemo": "Element auf Ordner ziehen",
+    "dragTipCard": "Element"
   },
   "theme": {
     "toggle": "Design umschalten",

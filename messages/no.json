@@ -280,7 +280,13 @@
     "invalidMove": "Kan ikke flytte en mappe inn i seg selv",
     "tooDeep": "Denne mappen er nestet for dypt",
     "notFound": "Mappe ikke funnet",
-    "nameTaken": "En mappe eller et skriveinnlegg bruker allerede dette navnet"
+    "nameTaken": "En mappe eller et skriveinnlegg bruker allerede dette navnet",
+    "dragTipTitle": "Flytt til en mappe",
+    "dragTipBody": "På en datamaskin med mus eller styreplate: dra et element til et mappekort for å flytte det. Du kan også bruke flytt-ikonet.",
+    "dragTipDismiss": "Lukk tips",
+    "dragTipShow": "Slik flytter du til mapper",
+    "dragTipDemo": "Dra til en mappe",
+    "dragTipCard": "Element"
   },
   "theme": {
     "toggle": "Bytt tema",

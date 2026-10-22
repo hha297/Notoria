@@ -280,7 +280,13 @@
     "invalidMove": "Can't move a folder into itself",
     "tooDeep": "This folder is nested too deeply",
     "notFound": "Folder not found",
-    "nameTaken": "A folder or writing already uses this name"
+    "nameTaken": "A folder or writing already uses this name",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Toggle theme",
@@ -1866,7 +1872,7 @@
         },
         "moveItem": {
           "title": "8. Move between folders",
-          "body": "Use the move icon on any piece, or drag it onto a folder card. You can also drag folders into other folders to nest topics."
+          "body": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item, or drag folders into other folders to nest topics."
         }
       }
     },
@@ -1905,7 +1911,7 @@
         },
         "moveItem": {
           "title": "8. Move notes between folders",
-          "body": "Use the move icon on any note, or drag it onto a folder. You can also nest folders inside each other to organize by topic."
+          "body": "On a computer with a mouse or trackpad, drag a note onto a folder card to move it. You can also use the move icon on each note, or nest folders inside each other to organize by topic."
         }
       }
     },
@@ -1955,7 +1961,7 @@
         },
         "moveItem": {
           "title": "7. Move lessons between folders",
-          "body": "Use the move icon on any lesson, or drag it onto a folder card. You can also nest folders to organize larger collections."
+          "body": "On a computer with a mouse or trackpad, drag a lesson onto a folder card to move it. You can also use the move icon on each lesson, or nest folders to organize larger collections."
         }
       }
     },
@@ -2009,7 +2015,7 @@
         },
         "moveItem": {
           "title": "8. Move passages between folders",
-          "body": "Use the move icon on any passage, or drag it onto a folder card. You can also nest folders for larger collections."
+          "body": "On a computer with a mouse or trackpad, drag a passage onto a folder card to move it. You can also use the move icon on each passage, or nest folders for larger collections."
         }
       }
     },

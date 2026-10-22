@@ -280,7 +280,13 @@
     "invalidMove": "Não é possível mover uma pasta para dentro de si própria",
     "tooDeep": "Esta pasta está aninhada com demasiada profundidade",
     "notFound": "Pasta não encontrada",
-    "nameTaken": "Já existe uma pasta ou um texto com este nome"
+    "nameTaken": "Já existe uma pasta ou um texto com este nome",
+    "dragTipTitle": "Mover para uma pasta",
+    "dragTipBody": "Num computador com rato ou trackpad, arrasta um item para um cartão de pasta para o mover. Também podes usar o ícone de mover.",
+    "dragTipDismiss": "Dispensar dica",
+    "dragTipShow": "Como mover para pastas",
+    "dragTipDemo": "Arrastar para uma pasta",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Alternar tema",

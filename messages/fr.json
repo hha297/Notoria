@@ -280,7 +280,13 @@
     "invalidMove": "Impossible de déplacer un dossier dans lui-même",
     "tooDeep": "Ce dossier est imbriqué trop profondément",
     "notFound": "Dossier introuvable",
-    "nameTaken": "Un dossier ou une écriture utilise déjà ce nom"
+    "nameTaken": "Un dossier ou une écriture utilise déjà ce nom",
+    "dragTipTitle": "Déplacer dans un dossier",
+    "dragTipBody": "Sur ordinateur avec souris ou trackpad, glissez un élément sur une carte dossier pour le déplacer. Vous pouvez aussi utiliser l’icône de déplacement.",
+    "dragTipDismiss": "Masquer l’astuce",
+    "dragTipShow": "Comment déplacer vers un dossier",
+    "dragTipDemo": "Glisser vers un dossier",
+    "dragTipCard": "Élément"
   },
   "theme": {
     "toggle": "Changer de thème",

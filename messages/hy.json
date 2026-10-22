@@ -280,7 +280,13 @@
     "invalidMove": "Հնարավոր չէ պանակը տեղափոխել իր մեջ",
     "tooDeep": "Այս պանակը չափազանց խորն է ներդրված",
     "notFound": "Պանակը չի գտնվել",
-    "nameTaken": "Այս անունն արդեն օգտագործվում է պանակի կամ գրավոր աշխատանքի համար"
+    "nameTaken": "Այս անունն արդեն օգտագործվում է պանակի կամ գրավոր աշխատանքի համար",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Փոխել թեման",

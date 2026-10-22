@@ -592,6 +592,24 @@
     background-image: var(--menu-item-hover);
   }
 
+  .menu-item-surface:hover:not([data-variant="destructive"]),
+  .menu-item-surface:focus:not([data-variant="destructive"]),
+  .menu-item-surface[data-highlighted]:not([data-variant="destructive"]),
+  .menu-item-surface[data-popup-open]:not([data-variant="destructive"]),
+  .menu-item-surface[data-open]:not([data-variant="destructive"]),
+  .menu-item-surface[aria-selected="true"]:not([data-variant="destructive"]) {
+    color: var(--page-accent);
+  }
+
+  .menu-item-surface:hover:not([data-variant="destructive"]) svg,
+  .menu-item-surface:focus:not([data-variant="destructive"]) svg,
+  .menu-item-surface[data-highlighted]:not([data-variant="destructive"]) svg,
+  .menu-item-surface[data-popup-open]:not([data-variant="destructive"]) svg,
+  .menu-item-surface[data-open]:not([data-variant="destructive"]) svg,
+  .menu-item-surface[aria-selected="true"]:not([data-variant="destructive"]) svg {
+    color: currentColor;
+  }
+
   .btn-blend-primary {
     background-color: var(--primary);
     background-image: var(--btn-primary-surface);
@@ -1478,6 +1496,19 @@
     --writing-accent-bg: var(--module-writing-bg);
     --page-accent: var(--writing-accent-fg);
     --page-accent-soft: var(--writing-accent-bg);
+    /* Resolve primary on the sheet so Save / CTAs follow kind accent, not brand gold */
+    --primary: var(--page-accent);
+    --primary-hover: color-mix(
+      in oklab,
+      var(--page-accent) 78%,
+      var(--ink)
+    );
+    --primary-active: color-mix(
+      in oklab,
+      var(--page-accent) 62%,
+      var(--ink)
+    );
+    --primary-foreground: var(--background);
   }
 
   .theory-atelier-shell,
@@ -1488,6 +1519,18 @@
     --writing-accent-bg: var(--module-theory-bg);
     --page-accent: var(--writing-accent-fg);
     --page-accent-soft: var(--writing-accent-bg);
+    --primary: var(--page-accent);
+    --primary-hover: color-mix(
+      in oklab,
+      var(--page-accent) 78%,
+      var(--ink)
+    );
+    --primary-active: color-mix(
+      in oklab,
+      var(--page-accent) 62%,
+      var(--ink)
+    );
+    --primary-foreground: var(--background);
   }
 
   .listening-atelier-shell,
@@ -2197,6 +2240,30 @@
       transparent
     ) !important;
     color: var(--module-vocab-fg) !important;
+  }
+
+  /* Usage labels menu (Meanings) — portaled, pin hover to success green */
+  .vocab-usage-menu {
+    --page-accent: var(--success);
+    --page-accent-soft: var(--success-muted);
+    border-color: color-mix(
+      in oklab,
+      var(--success) 28%,
+      var(--hairline-cloud)
+    ) !important;
+  }
+
+  .vocab-usage-menu [data-slot="dropdown-menu-checkbox-item"]:focus,
+  .vocab-usage-menu
+    [data-slot="dropdown-menu-checkbox-item"][data-highlighted],
+  .vocab-usage-menu [data-slot="dropdown-menu-item"]:focus,
+  .vocab-usage-menu [data-slot="dropdown-menu-item"][data-highlighted] {
+    background: color-mix(
+      in oklab,
+      var(--success-muted) 55%,
+      transparent
+    ) !important;
+    color: var(--success) !important;
   }
 
   .vocab-custom-tag-menu [data-slot="dropdown-menu-separator"] {
@@ -3056,11 +3123,29 @@
     gap: 1.75rem;
   }
 
-  .writing-paper-chrome {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-    margin-bottom: 0.35rem;
+  .folder-drag-demo-card {
+    animation: folder-drag-demo-move 2.8s ease-in-out infinite;
+  }
+
+  @keyframes folder-drag-demo-move {
+    0%,
+    12% {
+      transform: translate(0, 0);
+    }
+    40%,
+    58% {
+      transform: translate(2.35rem, -1.15rem);
+    }
+    72%,
+    100% {
+      transform: translate(0, 0);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .folder-drag-demo-card {
+      animation: none;
+    }
   }
 
   .writing-back {
@@ -3082,21 +3167,7 @@
     width: 100%;
     flex-direction: column;
     gap: 0.5rem;
-  }
-
-  /* Mobile: keep Back at top; park Save/Export under the writing surface */
-  @media (max-width: 639px) {
-    .writing-sheet > .writing-paper-chrome {
-      display: contents;
-    }
-
-    .writing-sheet .writing-back {
-      order: -1;
-    }
-
-    .writing-sheet .writing-paper-actions {
-      order: 40;
-    }
+    margin-top: 0.25rem;
   }
 
   .writing-paper-page {
@@ -3146,14 +3217,37 @@
     --writing-accent-bg: var(--module-writing-bg);
   }
 
+  .theory-sheet {
+    --writing-accent-fg: var(--module-theory-fg);
+    --writing-accent-bg: var(--module-theory-bg);
+    --page-accent: var(--writing-accent-fg);
+    --page-accent-soft: var(--writing-accent-bg);
+    --primary: var(--page-accent);
+    --primary-hover: color-mix(
+      in oklab,
+      var(--page-accent) 78%,
+      var(--ink)
+    );
+    --primary-active: color-mix(
+      in oklab,
+      var(--page-accent) 62%,
+      var(--ink)
+    );
+    --primary-foreground: var(--background);
+  }
+
   .writing-sheet[data-writing-kind="question_set"] {
     --writing-accent-fg: var(--module-theory-fg);
     --writing-accent-bg: var(--module-theory-bg);
+    --page-accent: var(--writing-accent-fg);
+    --page-accent-soft: var(--writing-accent-bg);
   }
 
   .writing-sheet[data-writing-kind="learning_note"] {
     --writing-accent-fg: var(--module-vocab-fg);
     --writing-accent-bg: var(--module-vocab-bg);
+    --page-accent: var(--writing-accent-fg);
+    --page-accent-soft: var(--writing-accent-bg);
   }
 
   .writing-sheet-title {
@@ -3573,15 +3667,11 @@
       grid-template-columns: minmax(0, 1fr) auto;
     }
 
-    .writing-paper-chrome {
-      flex-direction: row;
-      align-items: flex-end;
-      justify-content: space-between;
-    }
-
     .writing-paper-actions {
       width: auto;
       flex-direction: row;
+      flex-wrap: wrap;
+      justify-content: flex-end;
     }
 
     .writing-entry-actions,

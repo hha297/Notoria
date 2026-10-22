@@ -280,7 +280,13 @@
     "invalidMove": "Kan een map niet in zichzelf verplaatsen",
     "tooDeep": "Deze map is te diep genest",
     "notFound": "Map niet gevonden",
-    "nameTaken": "Een map of schrijfonderdeel gebruikt deze naam al"
+    "nameTaken": "Een map of schrijfonderdeel gebruikt deze naam al",
+    "dragTipTitle": "Verplaatsen naar een map",
+    "dragTipBody": "Op een computer met muis of trackpad sleep je een item op een mapkaart om het te verplaatsen. Je kunt ook het verplaatspictogram gebruiken.",
+    "dragTipDismiss": "Tip sluiten",
+    "dragTipShow": "Zo verplaats je naar mappen",
+    "dragTipDemo": "Sleep naar een map",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Thema wisselen",

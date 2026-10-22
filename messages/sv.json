@@ -280,7 +280,13 @@
     "invalidMove": "Kan inte flytta en mapp in i sig själv",
     "tooDeep": "Denna mapp är nästlad för djupt",
     "notFound": "Mapp hittades inte",
-    "nameTaken": "En mapp eller skrivande använder redan detta namn"
+    "nameTaken": "En mapp eller skrivande använder redan detta namn",
+    "dragTipTitle": "Flytta till en mapp",
+    "dragTipBody": "På en dator med mus eller styrplatta: dra ett objekt till ett mappkort för att flytta det. Du kan också använda flyttikonen på varje objekt.",
+    "dragTipDismiss": "Stäng tipset",
+    "dragTipShow": "Så flyttar du till mappar",
+    "dragTipDemo": "Dra objekt till mapp",
+    "dragTipCard": "Objekt"
   },
   "theme": {
     "toggle": "Väx tema",

@@ -127,7 +127,7 @@ export function WritingEditor({
   });
   const { isPending: isSaving, tryBegin, release } = useMutationLock();
   const [imageUploading, setImageUploading] = useState(false);
-  const [isAutosaving, setIsAutosaving] = useState(false);
+  const [, setIsAutosaving] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [editor, setEditor] = useState<Editor | null>(null);
   const [questionFeedback, setQuestionFeedback] =
@@ -564,57 +564,13 @@ export function WritingEditor({
 
   return (
     <div className="writing-sheet" data-writing-kind={createType}>
-      <div className="writing-paper-chrome">
-        <Link
-          href={previewHref ?? listHref}
-          className="writing-back text-ink dark:!text-white"
-        >
-          <ArrowLeft className="size-4 shrink-0 text-current" />
-          {previewHref ? t("backToPreview") : t("backToList")}
-        </Link>
-        <div className="writing-paper-actions">
-          {previewHref ? (
-            <Button
-              type="button"
-              variant="outline"
-              size="lg"
-              onClick={() => router.replace(previewHref)}
-              disabled={isSaving}
-              className="h-11 w-full sm:h-9 sm:w-auto"
-            >
-              {tCommon("cancel")}
-            </Button>
-          ) : null}
-          {showExport ? (
-            <LockedFeatureButton
-              type="button"
-              variant="outline"
-              size="lg"
-              icon={<Download className="size-4" />}
-              onClick={() => setExportOpen(true)}
-              disabled={!canExport}
-              title={canExport ? undefined : t("export.empty")}
-              className="route-quiet-action h-11 w-full sm:h-9 sm:w-auto"
-              data-route-action="writing"
-            >
-              {t("export.button")}
-            </LockedFeatureButton>
-          ) : null}
-          <Button
-            onClick={() => void persistExercise(true)}
-            disabled={isSaving || imageUploading || !canSave}
-            size="lg"
-            className="h-11 w-full sm:h-9 sm:w-auto"
-          >
-            {isSaving ? (
-              <Loader2 className="size-4 animate-spin" />
-            ) : (
-              <Save className="size-4" />
-            )}
-            {t("save")}
-          </Button>
-        </div>
-      </div>
+      <Link
+        href={previewHref ?? listHref}
+        className="writing-back text-ink dark:!text-white"
+      >
+        <ArrowLeft className="size-4 shrink-0 text-current" />
+        {previewHref ? t("backToPreview") : t("backToList")}
+      </Link>
 
       <p className="writing-kicker">
         {createType === "question_set"
@@ -814,15 +770,48 @@ export function WritingEditor({
           </ContentTransition>
           </div>
 
-      <p className="text-sm text-muted-foreground">
-        {previewHref
-          ? t("editSaveHint")
-          : isAutosaving
-            ? t("autosaving")
-            : initialData
-              ? t("autosaveReady")
-              : t("autosavePending")}
-      </p>
+      <div className="writing-paper-actions">
+        {previewHref ? (
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            onClick={() => router.replace(previewHref)}
+            disabled={isSaving}
+            className="h-11 w-full sm:h-9 sm:w-auto"
+          >
+            {tCommon("cancel")}
+          </Button>
+        ) : null}
+        {showExport ? (
+          <LockedFeatureButton
+            type="button"
+            variant="outline"
+            size="lg"
+            icon={<Download className="size-4" />}
+            onClick={() => setExportOpen(true)}
+            disabled={!canExport}
+            title={canExport ? undefined : t("export.empty")}
+            className="route-quiet-action h-11 w-full sm:h-9 sm:w-auto"
+            data-route-action="writing"
+          >
+            {t("export.button")}
+          </LockedFeatureButton>
+        ) : null}
+        <Button
+          onClick={() => void persistExercise(true)}
+          disabled={isSaving || imageUploading || !canSave}
+          size="lg"
+          className="h-11 w-full sm:h-9 sm:w-auto"
+        >
+          {isSaving ? (
+            <Loader2 className="size-4 animate-spin" />
+          ) : (
+            <Save className="size-4" />
+          )}
+          {t("save")}
+        </Button>
+      </div>
 
       <WritingExportDialog
         open={exportOpen}

@@ -313,7 +313,7 @@
       color-mix(in oklab, var(--module-home-bg) 88%, var(--popover)),
       color-mix(in oklab, var(--module-home-bg) 55%, var(--popover))
     ) !important;
-  color: var(--ink) !important;
+  color: var(--module-home-fg) !important;
 }
 
 .inbox-sort-option[data-selected],
@@ -653,7 +653,7 @@
     var(--popover)
   ) !important;
   background-image: none !important;
-  color: var(--ink) !important;
+  color: var(--option-accent) !important;
 }
 
 .inbox-process-option :global(svg) {

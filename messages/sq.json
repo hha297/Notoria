@@ -280,7 +280,13 @@
     "invalidMove": "Nuk mund të zhvendosni një dosje brenda vetvetes",
     "tooDeep": "Kjo dosje është e futur shumë thellë",
     "notFound": "Dosja nuk u gjet",
-    "nameTaken": "Një dosje ose shkrim e përdor tashmë këtë emër"
+    "nameTaken": "Një dosje ose shkrim e përdor tashmë këtë emër",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Ndrysho temën",

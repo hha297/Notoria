@@ -280,7 +280,13 @@
     "invalidMove": "ফোল্ডারকে নিজের ভেতরে সরানো যায় না",
     "tooDeep": "এই ফোল্ডার খুব গভীরে নেস্ট করা আছে",
     "notFound": "ফোল্ডার পাওয়া যায়নি",
-    "nameTaken": "এই নামে ইতিমধ্যে একটি ফোল্ডার বা লেখালেখি আছে"
+    "nameTaken": "এই নামে ইতিমধ্যে একটি ফোল্ডার বা লেখালেখি আছে",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "থিম পরিবর্তন",

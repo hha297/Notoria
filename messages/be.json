@@ -280,7 +280,13 @@
     "invalidMove": "Нельга перамясціць папку ў саму сябе",
     "tooDeep": "Гэта папка ўкладзена занадта глыбока",
     "notFound": "Папку не знойдзена",
-    "nameTaken": "Папка або пісьмо з такой назвай ужо існуе"
+    "nameTaken": "Папка або пісьмо з такой назвай ужо існуе",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Пераключыць тэму",

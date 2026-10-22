@@ -317,14 +317,6 @@ export function TagMultiSelect({
   return (
     <div className="space-y-5">
       <div className="space-y-2.5">
-        <Label
-          className={mx(
-            composerStyles,
-            "vocab-composer-kicker text-[0.68rem] font-semibold tracking-[0.18em] uppercase",
-          )}
-        >
-          {tv("tags")}
-        </Label>
         <div className={mx(composerStyles, "vocab-chip-board")}>
           <div
             className={mx(

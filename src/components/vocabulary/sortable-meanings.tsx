@@ -146,7 +146,9 @@ function MeaningRowShell({
           </Button>
         </div>
         <div className="flex min-w-0 flex-1 flex-col gap-2">
-          <div className="flex min-w-0 items-center gap-2">
+          <div
+            className={mx(composerStyles, "vocab-meaning-input-row")}
+          >
             <CapitalizedInput
               ref={inputRef}
               value={item.meaning}
@@ -155,7 +157,7 @@ function MeaningRowShell({
               placeholder={placeholder}
               className={mx(
                 composerStyles,
-                "vocab-composer-field min-w-0 flex-1",
+                "vocab-composer-field min-w-0",
               )}
             />
             <MeaningUsageTrigger

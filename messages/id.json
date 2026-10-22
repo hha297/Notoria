@@ -280,7 +280,13 @@
     "invalidMove": "Folder tidak dapat dipindahkan ke dalam dirinya sendiri",
     "tooDeep": "Folder ini bersarang terlalu dalam",
     "notFound": "Folder tidak ditemukan",
-    "nameTaken": "Nama ini sudah digunakan folder atau tulisan"
+    "nameTaken": "Nama ini sudah digunakan folder atau tulisan",
+    "dragTipTitle": "Pindahkan ke folder",
+    "dragTipBody": "Di komputer dengan mouse atau trackpad, seret item ke kartu folder untuk memindahkannya. Anda juga bisa memakai ikon pindah.",
+    "dragTipDismiss": "Tutup tip",
+    "dragTipShow": "Cara memindahkan ke folder",
+    "dragTipDemo": "Seret ke folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Ganti tema",

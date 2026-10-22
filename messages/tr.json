@@ -280,7 +280,13 @@
     "invalidMove": "Bir klasör kendi içine taşınamaz",
     "tooDeep": "Bu klasör çok derin iç içe geçmiş",
     "notFound": "Klasör bulunamadı",
-    "nameTaken": "Bu adı zaten bir klasör veya yazı kullanıyor"
+    "nameTaken": "Bu adı zaten bir klasör veya yazı kullanıyor",
+    "dragTipTitle": "Klasöre taşı",
+    "dragTipBody": "Fare veya dokunmatik yüzeyi olan bilgisayarda bir öğeyi klasör kartının üzerine sürükleyerek taşıyabilirsiniz. Taşıma simgesini de kullanabilirsiniz.",
+    "dragTipDismiss": "İpucunu kapat",
+    "dragTipShow": "Klasöre nasıl taşınır",
+    "dragTipDemo": "Klasöre sürükle",
+    "dragTipCard": "Öğe"
   },
   "theme": {
     "toggle": "Temayı değiştir",

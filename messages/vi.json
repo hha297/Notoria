@@ -280,7 +280,13 @@
     "invalidMove": "Không thể chuyển thư mục vào chính nó",
     "tooDeep": "Thư mục này đã lồng quá sâu",
     "notFound": "Không tìm thấy thư mục",
-    "nameTaken": "Đã có thư mục hoặc bài viết dùng tên này"
+    "nameTaken": "Đã có thư mục hoặc bài viết dùng tên này",
+    "dragTipTitle": "Chuyển vào thư mục",
+    "dragTipBody": "Trên máy tính với chuột hoặc trackpad, kéo một mục thả lên thẻ thư mục để chuyển. Bạn cũng có thể dùng biểu tượng di chuyển trên từng mục.",
+    "dragTipDismiss": "Ẩn mẹo",
+    "dragTipShow": "Cách chuyển vào thư mục",
+    "dragTipDemo": "Kéo mục vào thư mục",
+    "dragTipCard": "Mục"
   },
   "theme": {
     "toggle": "Đổi giao diện",
@@ -1671,7 +1677,7 @@
         },
         "moveItem": {
           "title": "8. Di chuyển giữa các thư mục",
-          "body": "Dùng biểu tượng di chuyển trên bài viết, hoặc kéo thả lên thẻ thư mục. Bạn cũng có thể lồng thư mục trong thư mục khác."
+          "body": "Trên máy tính với chuột hoặc trackpad, kéo một mục thả lên thẻ thư mục để chuyển. Bạn cũng có thể dùng biểu tượng di chuyển trên từng mục, hoặc lồng thư mục trong thư mục khác."
         }
       }
     },
@@ -1710,7 +1716,7 @@
         },
         "moveItem": {
           "title": "8. Di chuyển ghi chú",
-          "body": "Dùng biểu tượng di chuyển trên ghi chú, hoặc kéo thả lên thư mục. Bạn cũng có thể lồng thư mục để sắp xếp theo chủ đề."
+          "body": "Trên máy tính với chuột hoặc trackpad, kéo ghi chú thả lên thẻ thư mục để chuyển. Bạn cũng có thể dùng biểu tượng di chuyển, hoặc lồng thư mục để sắp xếp theo chủ đề."
         }
       }
     },
@@ -1760,7 +1766,7 @@
         },
         "moveItem": {
           "title": "7. Di chuyển bài nghe",
-          "body": "Dùng biểu tượng di chuyển trên bài, hoặc kéo thả lên thẻ thư mục. Bạn cũng có thể lồng thư mục để tổ chức bộ sưu tập lớn hơn."
+          "body": "Trên máy tính với chuột hoặc trackpad, kéo bài nghe thả lên thẻ thư mục để chuyển. Bạn cũng có thể dùng biểu tượng di chuyển, hoặc lồng thư mục để tổ chức bộ sưu tập lớn hơn."
         }
       }
     },
@@ -1833,7 +1839,7 @@
         },
         "moveItem": {
           "title": "8. Di chuyển đoạn giữa thư mục",
-          "body": "Dùng biểu tượng di chuyển trên đoạn, hoặc kéo sang thẻ thư mục. Bạn cũng có thể lồng thư mục."
+          "body": "Trên máy tính với chuột hoặc trackpad, kéo đoạn thả lên thẻ thư mục để chuyển. Bạn cũng có thể dùng biểu tượng di chuyển, hoặc lồng thư mục."
         }
       }
     }

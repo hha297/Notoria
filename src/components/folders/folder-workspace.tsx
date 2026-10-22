@@ -328,7 +328,9 @@ export function FolderWorkspace({
                 currentFolderId={currentFolderId}
               />
             ) : null}
-            <div data-tutorial="folder-organize">{children}</div>
+            <div data-tutorial="folder-organize" className="space-y-3">
+              {children}
+            </div>
           </div>
         </FolderDndProvider>
 

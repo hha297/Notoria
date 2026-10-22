@@ -65,7 +65,7 @@ export default async function DashboardPage() {
       ? getRecentActivity({
           userId,
           workspaceId: workspace.id,
-          limit: 8,
+          limit: 5,
         })
       : Promise.resolve([]),
     getLatestLearningNote(workspace.id),

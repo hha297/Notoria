@@ -280,7 +280,13 @@
     "invalidMove": "Folder se ne može premjestiti u sebe",
     "tooDeep": "Ovaj folder je ugniježđen preduboko",
     "notFound": "Folder nije pronađen",
-    "nameTaken": "Folder ili pisanje već koristi ovo ime"
+    "nameTaken": "Folder ili pisanje već koristi ovo ime",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Promijeni temu",

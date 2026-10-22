@@ -550,7 +550,7 @@
 .admin-select-item[data-highlighted],
 .admin-select-item[data-selected] {
   background: color-mix(in oklab, var(--primary) 14%, transparent) !important;
-  color: var(--ink) !important;
+  color: var(--page-accent, var(--primary)) !important;
 }
 
 .admin-btn,

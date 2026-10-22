@@ -280,7 +280,13 @@
     "invalidMove": "No es pot moure una carpeta dins d'ella mateixa",
     "tooDeep": "Aquesta carpeta està niada massa profundament",
     "notFound": "No s'ha trobat la carpeta",
-    "nameTaken": "Ja hi ha una carpeta o un text amb aquest nom"
+    "nameTaken": "Ja hi ha una carpeta o un text amb aquest nom",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Canvia el tema",

@@ -199,8 +199,8 @@ export function DashboardStudio({
                     /* Theory/writing TipTap sheets: tighter mobile inset so content isn't squeezed. */
                     pathname.startsWith("/writing/") ||
                       pathname.startsWith("/theory/")
-                      ? "px-2.5 pt-4 [--studio-main-pad:0.625rem] sm:[--studio-main-pad:1.5rem]"
-                      : "px-4 pt-6 [--studio-main-pad:1rem] sm:[--studio-main-pad:1.5rem]",
+                      ? "px-2.5 pt-4 [--studio-main-pad:0.625rem] [--studio-main-pt:1rem] sm:[--studio-main-pad:1.5rem] sm:[--studio-main-pt:2rem]"
+                      : "px-4 pt-6 [--studio-main-pad:1rem] [--studio-main-pt:1.5rem] sm:[--studio-main-pad:1.5rem] sm:[--studio-main-pt:2rem]",
                     pathname === "/writing" ||
                       pathname.startsWith("/writing/folders") ||
                       pathname === "/theory" ||

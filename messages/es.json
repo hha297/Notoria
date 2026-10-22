@@ -280,7 +280,13 @@
     "invalidMove": "No se puede mover una carpeta dentro de sí misma",
     "tooDeep": "Esta carpeta está anidada demasiado profundamente",
     "notFound": "Carpeta no encontrada",
-    "nameTaken": "Ya hay una carpeta o escritura con este nombre"
+    "nameTaken": "Ya hay una carpeta o escritura con este nombre",
+    "dragTipTitle": "Mover a una carpeta",
+    "dragTipBody": "En un ordenador con ratón o trackpad, arrastra un elemento sobre una tarjeta de carpeta para moverlo. También puedes usar el icono de mover.",
+    "dragTipDismiss": "Cerrar consejo",
+    "dragTipShow": "Cómo mover a carpetas",
+    "dragTipDemo": "Arrastrar a una carpeta",
+    "dragTipCard": "Elemento"
   },
   "theme": {
     "toggle": "Cambiar tema",

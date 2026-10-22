@@ -280,7 +280,13 @@
     "invalidMove": "फ़ोल्डर को स्वयं में नहीं ले जाया जा सकता",
     "tooDeep": "यह फ़ोल्डर बहुत गहराई तक नेस्ट किया गया है",
     "notFound": "फ़ोल्डर नहीं मिला",
-    "nameTaken": "यह नाम पहले से किसी फ़ोल्डर या लेखन में उपयोग हो रहा है"
+    "nameTaken": "यह नाम पहले से किसी फ़ोल्डर या लेखन में उपयोग हो रहा है",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "थीम बदलें",

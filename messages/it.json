@@ -280,7 +280,13 @@
     "invalidMove": "Non è possibile spostare una cartella dentro se stessa",
     "tooDeep": "Questa cartella è annidata troppo in profondità",
     "notFound": "Cartella non trovata",
-    "nameTaken": "Una cartella o uno scritto usa già questo nome"
+    "nameTaken": "Una cartella o uno scritto usa già questo nome",
+    "dragTipTitle": "Sposta in una cartella",
+    "dragTipBody": "Su computer con mouse o trackpad, trascina un elemento su una scheda cartella per spostarlo. Puoi anche usare l’icona di spostamento.",
+    "dragTipDismiss": "Chiudi suggerimento",
+    "dragTipShow": "Come spostare nelle cartelle",
+    "dragTipDemo": "Trascina sulla cartella",
+    "dragTipCard": "Elemento"
   },
   "theme": {
     "toggle": "Cambia tema",

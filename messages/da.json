@@ -280,7 +280,13 @@
     "invalidMove": "Kan ikke flytte en mappe ind i sig selv",
     "tooDeep": "Denne mappe er indlejret for dybt",
     "notFound": "Mappe ikke fundet",
-    "nameTaken": "En mappe eller skrivning bruger allerede dette navn"
+    "nameTaken": "En mappe eller skrivning bruger allerede dette navn",
+    "dragTipTitle": "Flyt til en mappe",
+    "dragTipBody": "På en computer med mus eller trackpad: træk et emne hen på et mappekort for at flytte det. Du kan også bruge flyt-ikonet.",
+    "dragTipDismiss": "Luk tip",
+    "dragTipShow": "Sådan flytter du til mapper",
+    "dragTipDemo": "Træk til en mappe",
+    "dragTipCard": "Emne"
   },
   "theme": {
     "toggle": "Skift tema",
