@@ -8,6 +8,7 @@ import {
   isIntroOfferEligible,
 } from "@/lib/billing/plans";
 import { getCurrentUserRecord } from "@/lib/auth/current-user";
+import { authErrorResponse } from "@/lib/auth/http";
 import { getSession } from "@/lib/auth/session";
 import { hasActivePaidPlan, hasProAccess } from "@/lib/auth/paid-access";
 import {
@@ -84,7 +85,14 @@ export async function requireProApiUser() {
     };
   }
 
-  const user = await getCurrentUserRecord();
+  let user;
+  try {
+    user = await getCurrentUserRecord();
+  } catch (error) {
+    const response = authErrorResponse(error);
+    if (response) return { ok: false as const, response };
+    throw error;
+  }
 
   if (!user) {
     return {

@@ -2768,6 +2768,9 @@
     "noAccount": "还没有账户？",
     "hasAccount": "已有账户？",
     "invalidCredentials": "邮箱或密码无效",
+    "rememberMe": "记住我",
+    "signInUnavailable": "暂时无法登录。请重试。",
+    "accountSuspended": "此账号已停用。如果您认为这是误判，请联系支持。",
     "emailExists": "已存在使用此邮箱的账户",
     "emailInvalid": "请输入有效的邮箱地址",
     "registerFailed": "无法创建账户。请重试。",
@@ -3441,6 +3444,8 @@
       "errorQuota": "你已达到今日学习教练限额。明天可再次使用。",
       "errorPremium": "学习教练是 Premium 功能。可根据你的学习活动获得个性化建议。",
       "errorUnavailable": "教练目前无法回复。本次消息未计入额度。请重试。",
+      "errorWorkspace": "提问前请先选择一个工作区。",
+      "errorUnauthorized": "请重新登录后继续。",
       "prompts": {
         "practice_today": "我今天应该专注什么？",
         "struggling_words": "为什么这些单词让我吃力？",

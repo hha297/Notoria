@@ -1,6 +1,8 @@
 import { eq } from "drizzle-orm";
 import Stripe from "stripe";
 import { db } from "@/db";
+import { AuthorizationUnavailableError } from "@/lib/auth/errors";
+import { classifyDependencyError } from "@/lib/auth/policy";
 import { users } from "@/db/schema";
 import { displayPlan, isIntroOfferEligible, PAID_ACCESS_STATUSES } from "@/lib/billing/plans";
 import { getStripeClient } from "@/lib/stripe/client";
@@ -72,8 +74,11 @@ export function billingFailureCode(error: unknown) {
 export function billingFailureStatus(error: unknown) {
   if (error instanceof BillingCommandError) return error.status;
   if (error instanceof StripeConfigError) return 503;
+  if (error instanceof AuthorizationUnavailableError) return 503;
   if (billingFailureCode(error) === "PAYMENT_FAILED") return 402;
   if (billingFailureCode(error) === "PRICE_NOT_FOUND") return 422;
+  const dependency = classifyDependencyError(error);
+  if (dependency === "timeout" || dependency === "connection") return 503;
   return 500;
 }
 

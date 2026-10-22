@@ -2573,6 +2573,9 @@
     "noAccount": "Eikö sinulla ole tiliä?",
     "hasAccount": "Onko sinulla jo tili?",
     "invalidCredentials": "Virheellinen sähköposti tai salasana",
+    "rememberMe": "Muista minut",
+    "signInUnavailable": "Kirjautuminen ei onnistu juuri nyt. Yritä uudelleen.",
+    "accountSuspended": "Tämä tili on jäädytetty. Ota yhteyttä tukeen, jos uskot tämän olevan virhe.",
     "emailExists": "Tämä sähköposti on jo käytössä",
     "emailInvalid": "Anna kelvollinen sähköpostiosoite",
     "registerFailed": "Tilin luonti epäonnistui. Yritä uudelleen.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "Olet käyttänyt tämän päivän oppimisvalmentaja-kiintiön. Valmentaja on taas käytettävissä huomenna.",
       "errorPremium": "Oppimisvalmentaja on Premium-ominaisuus. Saat henkilökohtaisia suosituksia opiskeluaktiviteettisi perusteella.",
       "errorUnavailable": "Valmentaja ei voinut vastata juuri nyt. Viestiäsi ei laskettu. Yritä uudelleen.",
+      "errorWorkspace": "Valitse työtila ennen kuin kysyt valmentajalta.",
+      "errorUnauthorized": "Kirjaudu uudelleen jatkaaksesi.",
       "prompts": {
         "practice_today": "Mihin minun pitäisi keskittyä tänään?",
         "struggling_words": "Miksi nämä sanat ovat minulle vaikeita?",

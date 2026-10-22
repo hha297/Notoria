@@ -2768,6 +2768,9 @@
     "noAccount": "Nemate račun?",
     "hasAccount": "Već imate račun?",
     "invalidCredentials": "Nevažeća e-pošta ili lozinka",
+    "rememberMe": "Zapamti me",
+    "signInUnavailable": "Prijava sada nije uspjela. Pokušajte ponovo.",
+    "accountSuspended": "Ovaj nalog je suspendovan. Kontaktirajte podršku ako mislite da je ovo greška.",
     "emailExists": "Račun s ovom e-poštom već postoji",
     "emailInvalid": "Unesite važeću adresu e-pošte",
     "registerFailed": "Nije moguće kreirati račun. Pokušajte ponovo.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "Dostigli ste današnji limit Trenera učenja. Trener će biti dostupan ponovo sutra.",
       "errorPremium": "Trener učenja je Premium funkcija. Dobijte personalizirane preporuke na osnovu aktivnosti učenja.",
       "errorUnavailable": "Trener trenutno nije mogao odgovoriti. Poruka nije uračunata. Pokušajte ponovo.",
+      "errorWorkspace": "Odaberite radni prostor prije nego što pitate trenera.",
+      "errorUnauthorized": "Prijavite se ponovo da nastavite.",
       "prompts": {
         "practice_today": "Na šta da se fokusiram danas?",
         "struggling_words": "Zašto mi ove riječi idu teško?",

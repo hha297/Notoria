@@ -2768,6 +2768,9 @@
     "noAccount": "Belum punya akun?",
     "hasAccount": "Sudah punya akun?",
     "invalidCredentials": "Email atau kata sandi tidak valid",
+    "rememberMe": "Ingat saya",
+    "signInUnavailable": "Kami tidak dapat memasukkan Anda saat ini. Coba lagi.",
+    "accountSuspended": "Akun ini ditangguhkan. Hubungi dukungan jika Anda merasa ini keliru.",
     "emailExists": "Akun dengan email ini sudah ada",
     "emailInvalid": "Masukkan alamat email yang valid",
     "registerFailed": "Tidak dapat membuat akun. Silakan coba lagi.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "Anda telah mencapai batas Pelatih Belajar hari ini. Pelatih akan tersedia lagi besok.",
       "errorPremium": "Pelatih Belajar adalah fitur Premium. Dapatkan rekomendasi yang dipersonalisasi berdasarkan aktivitas belajar Anda.",
       "errorUnavailable": "Pelatih Anda tidak dapat merespons saat ini. Pesan Anda tidak dihitung. Silakan coba lagi.",
+      "errorWorkspace": "Pilih ruang kerja sebelum bertanya pada pelatih.",
+      "errorUnauthorized": "Masuk lagi untuk melanjutkan.",
       "prompts": {
         "practice_today": "Apa yang harus saya fokuskan hari ini?",
         "struggling_words": "Mengapa saya kesulitan dengan kata-kata ini?",

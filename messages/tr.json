@@ -2768,6 +2768,9 @@
     "noAccount": "Hesabınız yok mu?",
     "hasAccount": "Zaten bir hesabınız var mı?",
     "invalidCredentials": "Geçersiz e-posta veya şifre",
+    "rememberMe": "Beni hatırla",
+    "signInUnavailable": "Şu anda giriş yapılamadı. Lütfen yeniden deneyin.",
+    "accountSuspended": "Bu hesap askıya alındı. Bunun bir hata olduğunu düşünüyorsanız destekle iletişime geçin.",
     "emailExists": "Bu e-posta ile bir hesap zaten mevcut",
     "emailInvalid": "Geçerli bir e-posta adresi girin",
     "registerFailed": "Hesap oluşturulamadı. Lütfen yeniden deneyin.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "Bugünkü Öğrenme Koçu limitinize ulaştınız. Koçunuz yarın tekrar kullanılabilir olacak.",
       "errorPremium": "Öğrenme Koçu bir Premium özelliğidir. Öğrenme etkinliğinize göre kişiselleştirilmiş öneriler alın.",
       "errorUnavailable": "Koçunuz şu anda yanıt veremedi. Mesajınız sayılmadı. Lütfen yeniden deneyin.",
+      "errorWorkspace": "Koça sormadan önce bir çalışma alanı seçin.",
+      "errorUnauthorized": "Devam etmek için yeniden giriş yapın.",
       "prompts": {
         "practice_today": "Bugün neye odaklanmalıyım?",
         "struggling_words": "Bu kelimelerde neden zorlanıyorum?",

@@ -11,6 +11,8 @@ import {
 } from "@/lib/ai/preferences-server";
 import type { AiPreferences } from "@/lib/ai/preferences";
 import { getCurrentUserRecord } from "@/lib/auth/current-user";
+import { authErrorResponse } from "@/lib/auth/http";
+import { AccountSuspendedError } from "@/lib/auth/errors";
 import {
   consumeUsage,
   requireFeature,
@@ -42,10 +44,17 @@ export type MeteredAiAccessWithUser = MeteredAiAccess & {
   user: NonNullable<Awaited<ReturnType<typeof getCurrentUserRecord>>>;
 };
 
-async function unauthorized() {
+function unauthorized() {
   return NextResponse.json(
-    { ok: false, code: "AI_FORBIDDEN" },
+    { ok: false, code: "UNAUTHORIZED", error: "Authentication required" },
     { status: 401 },
+  );
+}
+
+function suspended() {
+  return NextResponse.json(
+    { ok: false, code: "ACCOUNT_SUSPENDED", error: "Account suspended" },
+    { status: 403 },
   );
 }
 
@@ -53,9 +62,19 @@ async function preferencesOrResponse(): Promise<
   | { ok: true; preferences: AiPreferences; user: NonNullable<Awaited<ReturnType<typeof getCurrentUserRecord>>> }
   | { ok: false; response: NextResponse }
 > {
-  const user = await getCurrentUserRecord();
+  let user;
+  try {
+    user = await getCurrentUserRecord();
+  } catch (error) {
+    const response = authErrorResponse(error);
+    if (response) return { ok: false, response };
+    throw error;
+  }
   if (!user) {
-    return { ok: false, response: await unauthorized() };
+    return { ok: false, response: unauthorized() };
+  }
+  if (user.suspendedAt) {
+    return { ok: false, response: suspended() };
   }
   if (isPaidOpsStopped()) {
     return {
@@ -79,8 +98,13 @@ async function preferencesOrResponse(): Promise<
         ),
       };
     }
+    if (error instanceof AccountSuspendedError) {
+      return { ok: false, response: suspended() };
+    }
+    const unavailable = authErrorResponse(error);
+    if (unavailable) return { ok: false, response: unavailable };
     if (error instanceof Error && error.message === "Unauthorized") {
-      return { ok: false, response: await unauthorized() };
+      return { ok: false, response: unauthorized() };
     }
     return {
       ok: false,
@@ -129,6 +153,8 @@ export async function guardProFeature(feature: FeatureId): Promise<
         ),
       };
     }
+    const mapped = authErrorResponse(error);
+    if (mapped) return { ok: false, response: mapped };
     return {
       ok: false,
       response: NextResponse.json(
@@ -182,6 +208,8 @@ export async function guardMeteredAi(
         response: NextResponse.json(error.body, { status: 402 }),
       };
     }
+    const mapped = authErrorResponse(error);
+    if (mapped) return { ok: false, response: mapped };
     return {
       ok: false,
       response: NextResponse.json(
@@ -226,6 +254,8 @@ export async function guardPremiumCoachChat(): Promise<
         response: NextResponse.json(error.body, { status: 402 }),
       };
     }
+    const mapped = authErrorResponse(error);
+    if (mapped) return { ok: false, response: mapped };
     return {
       ok: false,
       response: NextResponse.json(

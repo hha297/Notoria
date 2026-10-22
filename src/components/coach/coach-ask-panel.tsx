@@ -55,6 +55,7 @@ export function CoachAskPanel({
   seedQuestion = null,
 }: CoachAskPanelProps) {
   const t = useTranslations("coach.ask");
+  const tAuth = useTranslations("auth");
   const coachQuota = useQuotaLockMessage("ai_learning_coach_chat");
   const inputId = useId();
   const listRef = useRef<HTMLDivElement>(null);
@@ -63,7 +64,13 @@ export function CoachAskPanel({
   const [turns, setTurns] = useState<ChatTurn[]>([]);
   const [sending, setSending] = useState(false);
   const [errorKind, setErrorKind] = useState<
-    null | "quota" | "premium" | "unavailable" | "generic"
+    | null
+    | "quota"
+    | "premium"
+    | "unavailable"
+    | "workspace"
+    | "unauthorized"
+    | "generic"
   >(null);
   const [lastFailedMessage, setLastFailedMessage] = useState<string | null>(
     null,
@@ -106,6 +113,14 @@ export function CoachAskPanel({
           void coachQuota.refreshQuotas();
         } else if (code === "PREMIUM_REQUIRED") {
           setErrorKind("premium");
+        } else if (
+          code === "WORKSPACE_REQUIRED" ||
+          code === "NO_WORKSPACE" ||
+          code === "NO_ACTIVE_WORKSPACE"
+        ) {
+          setErrorKind("workspace");
+        } else if (response.status === 401 || code === "UNAUTHORIZED") {
+          setErrorKind("unauthorized");
         } else {
           setErrorKind("unavailable");
         }
@@ -263,9 +278,17 @@ export function CoachAskPanel({
       {errorKind && errorKind !== "quota" ? (
         <div className={mx(styles, "coach-ask-error")} role="alert">
           <p>
-            {errorKind === "premium" ? t("errorPremium") : t("errorUnavailable")}
+            {errorKind === "premium"
+              ? t("errorPremium")
+              : errorKind === "workspace"
+                ? t("errorWorkspace")
+                : errorKind === "unauthorized"
+                  ? t("errorUnauthorized")
+                  : t("errorUnavailable")}
           </p>
-          {lastFailedMessage && errorKind !== "premium" ? (
+          {lastFailedMessage &&
+          errorKind !== "premium" &&
+          errorKind !== "unauthorized" ? (
             <Button
               type="button"
               variant="outline"
@@ -283,6 +306,14 @@ export function CoachAskPanel({
               className={buttonVariants({ size: "sm" })}
             >
               {t("upgrade")}
+            </Link>
+          ) : null}
+          {errorKind === "unauthorized" ? (
+            <Link
+              href="/sign-in?callbackUrl=%2Fcoach"
+              className={buttonVariants({ size: "sm" })}
+            >
+              {tAuth("signIn")}
             </Link>
           ) : null}
         </div>

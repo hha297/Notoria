@@ -2768,6 +2768,9 @@
     "noAccount": "Har du inget konto?",
     "hasAccount": "Har du redan ett konto?",
     "invalidCredentials": "Ogiltig e-post eller lösenord",
+    "rememberMe": "Kom ihåg mig",
+    "signInUnavailable": "Vi kunde inte logga in dig just nu. Försök igen.",
+    "accountSuspended": "Det här kontot är avstängt. Kontakta support om du tror att det är ett misstag.",
     "emailExists": "Ett konto med denna e-post finns redan",
     "emailInvalid": "Ange en giltig e-postadress",
     "registerFailed": "Kunde inte skapa konto. Försök igen.",
@@ -3456,6 +3459,8 @@
       "errorQuota": "Du har nått dagens gräns för lärcoachen. Coachen är tillgänglig igen i morgon.",
       "errorPremium": "Lärcoachen är en Premium-funktion. Få personliga rekommendationer baserade på din studieaktivitet.",
       "errorUnavailable": "Din coach kunde inte svara just nu. Ditt meddelande räknades inte. Försök igen.",
+      "errorWorkspace": "Välj en arbetsyta innan du frågar coachen.",
+      "errorUnauthorized": "Logga in igen för att fortsätta.",
       "prompts": {
         "practice_today": "Vad ska jag fokusera på idag?",
         "struggling_words": "Varför har jag svårt med dessa ord?",

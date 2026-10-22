@@ -2768,6 +2768,9 @@
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
     "invalidCredentials": "Invalid email or password",
+    "rememberMe": "Remember me",
+    "signInUnavailable": "We couldn't sign you in right now. Please try again.",
+    "accountSuspended": "This account is suspended. Contact support if you think this is a mistake.",
     "emailExists": "An account with this email already exists",
     "emailInvalid": "Enter a valid email address",
     "registerFailed": "Could not create account. Please try again.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "You've reached today's Learning Coach limit. Your Coach will be available again tomorrow.",
       "errorPremium": "Learning Coach is a Premium feature. Get personalized recommendations based on your learning activity.",
       "errorUnavailable": "Your Coach couldn't respond right now. Your message wasn't counted. Please try again.",
+      "errorWorkspace": "Choose a workspace before asking the coach.",
+      "errorUnauthorized": "Sign in again to continue.",
       "prompts": {
         "practice_today": "What should I focus on today?",
         "struggling_words": "Why am I struggling with these words?",

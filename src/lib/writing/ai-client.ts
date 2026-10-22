@@ -1,3 +1,4 @@
+import { mapAiClientCode } from "@/lib/ai/client-status";
 import type { WritingAiAction, WritingAiResult } from "@/lib/writing/ai-types";
 
 export type WritingAiClientFailure = {
@@ -44,14 +45,11 @@ export async function requestWritingAi(input: {
     if (!response.ok || !payload || payload.ok !== true) {
       return {
         ok: false,
-        code:
-          payload && "code" in payload && payload.code
-            ? payload.code
-            : response.status === 402
-              ? "AI_QUOTA_EXCEEDED"
-              : response.status === 403 || response.status === 401
-                ? "AI_FORBIDDEN"
-                : "AI_UNAVAILABLE",
+        code: mapAiClientCode(
+          response.status,
+          payload && "code" in payload ? payload.code : undefined,
+          { quotaOn402: true },
+        ),
       };
     }
 

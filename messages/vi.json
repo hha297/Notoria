@@ -2573,6 +2573,9 @@
     "noAccount": "Chưa có tài khoản?",
     "hasAccount": "Đã có tài khoản?",
     "invalidCredentials": "Email hoặc mật khẩu chưa đúng",
+    "rememberMe": "Ghi nhớ đăng nhập",
+    "signInUnavailable": "Hiện không thể đăng nhập. Vui lòng thử lại.",
+    "accountSuspended": "Tài khoản này đã bị tạm khóa. Liên hệ hỗ trợ nếu bạn cho rằng đây là nhầm lẫn.",
     "emailExists": "Email này đã được dùng",
     "emailInvalid": "Nhập địa chỉ email hợp lệ",
     "registerFailed": "Không tạo được tài khoản. Thử lại nhé.",
@@ -3456,6 +3459,8 @@
       "errorQuota": "Bạn đã hết hạn mức huấn luyện viên hôm nay. Huấn luyện viên sẽ có lại vào ngày mai.",
       "errorPremium": "Huấn luyện viên học tập là tính năng Premium. Nhận gợi ý cá nhân dựa trên hoạt động học của bạn.",
       "errorUnavailable": "Huấn luyện viên không phản hồi được lúc này. Tin nhắn của bạn chưa được tính. Vui lòng thử lại.",
+      "errorWorkspace": "Hãy chọn không gian làm việc trước khi hỏi huấn luyện viên.",
+      "errorUnauthorized": "Đăng nhập lại để tiếp tục.",
       "prompts": {
         "practice_today": "Tôi nên tập trung vào điều gì hôm nay?",
         "struggling_words": "Vì sao tôi khó với những từ này?",

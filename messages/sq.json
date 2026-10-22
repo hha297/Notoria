@@ -2768,6 +2768,9 @@
     "noAccount": "Nuk keni llogari?",
     "hasAccount": "Keni tashmë një llogari?",
     "invalidCredentials": "Email ose fjalëkalim i pavlefshëm",
+    "rememberMe": "Më mbaj mend",
+    "signInUnavailable": "Hyrja nuk u krye tani. Ju lutemi provoni përsëri.",
+    "accountSuspended": "Kjo llogari është pezulluar. Kontaktoni mbështetjen nëse mendoni se është gabim.",
     "emailExists": "Një llogari me këtë email ekziston tashmë",
     "emailInvalid": "Vendosni një adresë email të vlefshme",
     "registerFailed": "Llogaria nuk mund të krijohej. Ju lutemi provoni përsëri.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "Keni arritur kufirin e sotëm të Trajnerit të të Mësuarit. Trajneri do të jetë përsëri i disponueshëm nesër.",
       "errorPremium": "Trajneri i të Mësuarit është një veçori Premium. Merrni rekomandime të personalizuara bazuar në aktivitetin tuaj të të mësuarit.",
       "errorUnavailable": "Trajneri juaj nuk mundi të përgjigjej tani. Mesazhi juaj nuk u numërua. Ju lutemi provoni përsëri.",
+      "errorWorkspace": "Zgjidhni një hapësirë pune para se të pyesni trajnerin.",
+      "errorUnauthorized": "Hyni përsëri për të vazhduar.",
       "prompts": {
         "practice_today": "Ku duhet të përqendrohem sot?",
         "struggling_words": "Pse po has vështirësi me këto fjalë?",

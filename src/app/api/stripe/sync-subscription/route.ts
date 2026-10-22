@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { auth } from "@/auth";
+import { authErrorResponse } from "@/lib/auth/http";
 import { displayPlan } from "@/lib/billing/plans";
 import { StripeConfigError } from "@/lib/stripe/config";
 import { reconcileUserSubscription } from "@/lib/stripe/subscription";
@@ -62,6 +63,8 @@ export async function POST() {
         { status: 503 },
       );
     }
+    const mapped = authErrorResponse(error);
+    if (mapped) return mapped;
     console.error("Stripe subscription sync failed");
     return NextResponse.json(
       { error: "Could not confirm subscription", code: "SYNC_FAILED" },

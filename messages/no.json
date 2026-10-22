@@ -2768,6 +2768,9 @@
     "noAccount": "Har du ikke en konto?",
     "hasAccount": "Har du allerede en konto?",
     "invalidCredentials": "Ugyldig e-post eller passord",
+    "rememberMe": "Husk meg",
+    "signInUnavailable": "Vi kunne ikke logge deg inn akkurat nå. Prøv igjen.",
+    "accountSuspended": "Denne kontoen er suspendert. Kontakt support hvis du mener dette er en feil.",
     "emailExists": "En konto med denne e-postadressen finnes allerede",
     "emailInvalid": "Skriv inn en gyldig e-postadresse",
     "registerFailed": "Kunne ikke opprette konto. Prøv igjen.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "Du har nådd dagens grense for læringsveilederen. Veilederen din er tilgjengelig igjen i morgen.",
       "errorPremium": "Læringsveilederen er en Premium-funksjon. Få personlige anbefalinger basert på læringsaktiviteten din.",
       "errorUnavailable": "Veilederen din kunne ikke svare akkurat nå. Meldingen din ble ikke telt. Prøv igjen.",
+      "errorWorkspace": "Velg et arbeidsområde før du spør veilederen.",
+      "errorUnauthorized": "Logg inn igjen for å fortsette.",
       "prompts": {
         "practice_today": "Hva bør jeg fokusere på i dag?",
         "struggling_words": "Hvorfor sliter jeg med disse ordene?",

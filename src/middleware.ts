@@ -1,62 +1,53 @@
 import { auth } from "@/auth";
+import { decideAccess } from "@/lib/auth/access-gate";
 import { logPerf } from "@/lib/perf/dev-timing";
+import { runWithAuthRequest } from "@/lib/auth/request-context";
+import {
+  applySessionPersistence,
+  isAuthCookieMutation,
+  stripSessionSetCookies,
+} from "@/lib/auth/session-cookie";
 
-export default auth((request) => {
+const withAuth = auth((request) => {
   const started = performance.now();
-  const isLoggedIn = !!request.auth;
-  const { pathname } = request.nextUrl;
-  const role = request.auth?.user?.role;
-  const suspended = Boolean(request.auth?.user?.suspendedAt);
-
-  const isAuthRoute =
-    pathname.startsWith("/sign-in") || pathname.startsWith("/sign-up");
-  const isPasswordResetRoute =
-    pathname.startsWith("/forgot-password") ||
-    pathname.startsWith("/reset-password");
-  const isLegalRoute =
-    pathname.startsWith("/privacy") || pathname.startsWith("/terms");
-  const isSiteInfoRoute =
-    pathname.startsWith("/about") ||
-    pathname.startsWith("/our-story") ||
-    pathname.startsWith("/how-to-use") ||
-    pathname.startsWith("/support") ||
-    pathname.startsWith("/contact") ||
-    pathname.startsWith("/help");
-  const isPublicRoute =
-    isAuthRoute ||
-    isPasswordResetRoute ||
-    isLegalRoute ||
-    isSiteInfoRoute ||
-    pathname.startsWith("/api/auth") ||
-    pathname.startsWith("/api/stripe/webhook") ||
-    pathname.startsWith("/api/stream/webhook");
-  const isAdminRoute = pathname === "/admin" || pathname.startsWith("/admin/");
-
   try {
-    if (!isLoggedIn && !isPublicRoute) {
-      const loginUrl = new URL("/sign-in", request.nextUrl.origin);
-      loginUrl.searchParams.set("callbackUrl", pathname);
-      return Response.redirect(loginUrl);
-    }
+    const decision = decideAccess({
+      pathname: request.nextUrl.pathname,
+      search: request.nextUrl.search,
+      origin: request.nextUrl.origin,
+      isLoggedIn: Boolean(request.auth?.user?.id),
+      role: request.auth?.user?.role,
+      suspended: Boolean(request.auth?.user?.suspendedAt),
+      authzStale: Boolean(request.auth?.user?.authzStale),
+    });
 
-    if (isLoggedIn && suspended && !isAuthRoute && !isPublicRoute) {
-      const loginUrl = new URL("/sign-in", request.nextUrl.origin);
-      loginUrl.searchParams.set("error", "AccountSuspended");
-      return Response.redirect(loginUrl);
+    if (decision.type === "redirect") {
+      return Response.redirect(decision.url);
     }
-
-    if (isLoggedIn && isAuthRoute && !suspended) {
-      return Response.redirect(new URL("/", request.nextUrl.origin));
-    }
-
-    // First gate only — pages/actions still call requireAdmin().
-    if (isAdminRoute && isLoggedIn && role !== "ADMIN") {
-      return Response.redirect(new URL("/", request.nextUrl.origin));
+    if (decision.type === "json") {
+      return Response.json(decision.body, {
+        status: decision.status,
+        headers: { "cache-control": "no-store" },
+      });
     }
   } finally {
     logPerf("middleware", performance.now() - started);
   }
 });
+
+export default async function middleware(
+  request: Parameters<typeof withAuth>[0],
+  event: Parameters<typeof withAuth>[1],
+) {
+  return runWithAuthRequest(request, async () => {
+    const response = await withAuth(request, event);
+    if (!response) return response;
+    if (isAuthCookieMutation(request.nextUrl.pathname)) {
+      return stripSessionSetCookies(response);
+    }
+    return applySessionPersistence(response);
+  });
+}
 
 export const config = {
   matcher: ["/((?!_next/static|_next/image|favicon.ico|.*\\..*).*)"],

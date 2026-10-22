@@ -2768,6 +2768,9 @@
     "noAccount": "Ainda não tem conta?",
     "hasAccount": "Já tem conta?",
     "invalidCredentials": "E-mail ou palavra-passe inválidos",
+    "rememberMe": "Lembrar-me",
+    "signInUnavailable": "Não foi possível iniciar sessão agora. Tente novamente.",
+    "accountSuspended": "Esta conta está suspensa. Contacte o suporte se achar que isto é um erro.",
     "emailExists": "Já existe uma conta com este e-mail",
     "emailInvalid": "Introduza um endereço de e-mail válido",
     "registerFailed": "Não foi possível criar a conta. Tente novamente.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "Atingiu o limite de hoje do Tutor de aprendizagem. O seu Tutor estará disponível novamente amanhã.",
       "errorPremium": "O Tutor de aprendizagem é uma funcionalidade Premium. Obtenha recomendações personalizadas com base na sua atividade de aprendizagem.",
       "errorUnavailable": "O seu Tutor não conseguiu responder neste momento. A sua mensagem não foi contabilizada. Tente novamente.",
+      "errorWorkspace": "Escolha um espaço de trabalho antes de perguntar ao tutor.",
+      "errorUnauthorized": "Inicie sessão novamente para continuar.",
       "prompts": {
         "practice_today": "Em que me devo focar hoje?",
         "struggling_words": "Porque estou a ter dificuldades com estas palavras?",

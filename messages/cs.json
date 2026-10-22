@@ -2768,6 +2768,9 @@
     "noAccount": "Nemáte účet?",
     "hasAccount": "Už máte účet?",
     "invalidCredentials": "Neplatný e-mail nebo heslo",
+    "rememberMe": "Zapamatovat si mě",
+    "signInUnavailable": "Přihlášení se teď nezdařilo. Zkuste to znovu.",
+    "accountSuspended": "Tento účet je pozastaven. Pokud jde o omyl, kontaktujte podporu.",
     "emailExists": "Účet s tímto e-mailem již existuje",
     "emailInvalid": "Zadejte platnou e-mailovou adresu",
     "registerFailed": "Účet se nepodařilo vytvořit. Zkuste to prosím znovu.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "Dosáhli jste dnešního limitu kouče učení. Kouč bude znovu dostupný zítra.",
       "errorPremium": "Kouč učení je funkce Premium. Získejte personalizovaná doporučení podle aktivity učení.",
       "errorUnavailable": "Váš kouč teď nemohl odpovědět. Zpráva nebyla započítána. Zkuste to znovu.",
+      "errorWorkspace": "Než se zeptáte kouče, vyberte pracovní prostor.",
+      "errorUnauthorized": "Pro pokračování se znovu přihlaste.",
       "prompts": {
         "practice_today": "Na co se mám dnes zaměřit?",
         "struggling_words": "Proč mi tato slova dělají potíže?",

@@ -3,6 +3,7 @@ import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { users } from "@/db/schema";
 import { auth } from "@/auth";
+import { authErrorResponse } from "@/lib/auth/http";
 import { getStripeClient } from "@/lib/stripe/client";
 import { getAppBaseUrl, StripeConfigError } from "@/lib/stripe/config";
 
@@ -71,6 +72,8 @@ export async function POST() {
       );
     }
 
+    const mapped = authErrorResponse(error);
+    if (mapped) return mapped;
     console.error("Failed to create Stripe portal session");
     return NextResponse.json(
       { error: "Could not open billing portal", code: "PORTAL_FAILED" },

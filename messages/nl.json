@@ -2768,6 +2768,9 @@
     "noAccount": "Nog geen account?",
     "hasAccount": "Hebt u al een account?",
     "invalidCredentials": "Ongeldig e-mailadres of wachtwoord",
+    "rememberMe": "Onthoud mij",
+    "signInUnavailable": "Inloggen lukt nu niet. Probeer het opnieuw.",
+    "accountSuspended": "Dit account is geschorst. Neem contact op met support als dit een vergissing is.",
     "emailExists": "Er bestaat al een account met dit e-mailadres",
     "emailInvalid": "Voer een geldig e-mailadres in",
     "registerFailed": "Account kon niet worden aangemaakt. Probeer het opnieuw.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "U hebt de limiet van vandaag voor de Leercoach bereikt. Uw Coach is morgen weer beschikbaar.",
       "errorPremium": "Leercoach is een Premium-functie. Ontvang gepersonaliseerde aanbevelingen op basis van uw leeractiviteit.",
       "errorUnavailable": "Uw Coach kon nu niet antwoorden. Uw bericht is niet meegeteld. Probeer het opnieuw.",
+      "errorWorkspace": "Kies een workspace voordat u de coach iets vraagt.",
+      "errorUnauthorized": "Meld u opnieuw aan om verder te gaan.",
       "prompts": {
         "practice_today": "Waar moet ik me vandaag op richten?",
         "struggling_words": "Waarom heb ik moeite met deze woorden?",

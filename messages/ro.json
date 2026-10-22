@@ -2768,6 +2768,9 @@
     "noAccount": "Nu aveți un cont?",
     "hasAccount": "Aveți deja un cont?",
     "invalidCredentials": "E-mail sau parolă nevalidă",
+    "rememberMe": "Ține-mă minte",
+    "signInUnavailable": "Nu te-am putut conecta acum. Încearcă din nou.",
+    "accountSuspended": "Acest cont este suspendat. Contactează asistența dacă crezi că este o greșeală.",
     "emailExists": "Există deja un cont cu acest e-mail",
     "emailInvalid": "Introduceți o adresă de e-mail validă",
     "registerFailed": "Nu s-a putut crea contul. Vă rugăm să încercați din nou.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "Ați atins limita de azi pentru Learning Coach. Coach-ul va fi din nou disponibil mâine.",
       "errorPremium": "Learning Coach este o funcție Premium. Obțineți recomandări personalizate pe baza activității dvs. de învățare.",
       "errorUnavailable": "Coach-ul nu a putut răspunde acum. Mesajul dvs. nu a fost numărat. Încercați din nou.",
+      "errorWorkspace": "Alege un spațiu de lucru înainte să întrebi coach-ul.",
+      "errorUnauthorized": "Autentifică-te din nou pentru a continua.",
       "prompts": {
         "practice_today": "Pe ce ar trebui să mă concentrez azi?",
         "struggling_words": "De ce am dificultăți cu aceste cuvinte?",

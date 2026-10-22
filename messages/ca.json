@@ -2768,6 +2768,9 @@
     "noAccount": "No teniu un compte?",
     "hasAccount": "Ja teniu un compte?",
     "invalidCredentials": "Correu electrònic o contrasenya no vàlids",
+    "rememberMe": "Recorda'm",
+    "signInUnavailable": "No hem pogut iniciar la sessió ara. Torneu-ho a provar.",
+    "accountSuspended": "Aquest compte està suspès. Contacteu amb el suport si creieu que és un error.",
     "emailExists": "Ja existeix un compte amb aquest correu electrònic",
     "emailInvalid": "Introduïu una adreça de correu electrònic vàlida",
     "registerFailed": "No s’ha pogut crear el compte. Torneu-ho a provar.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "Heu arribat al límit del Learning Coach d'avui. El vostre Coach tornarà a estar disponible demà.",
       "errorPremium": "El Learning Coach és una funció Premium. Obteniu recomanacions personalitzades basades en la vostra activitat d'aprenentatge.",
       "errorUnavailable": "El vostre Coach no ha pogut respondre ara. El missatge no s'ha comptat. Torneu-ho a provar.",
+      "errorWorkspace": "Trieu un espai de treball abans de preguntar al coach.",
+      "errorUnauthorized": "Torneu a iniciar la sessió per continuar.",
       "prompts": {
         "practice_today": "En què m'hauria de centrar avui?",
         "struggling_words": "Per què em costen aquestes paraules?",

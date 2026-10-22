@@ -2768,6 +2768,9 @@
     "noAccount": "Még nincs fiókja?",
     "hasAccount": "Már van fiókja?",
     "invalidCredentials": "Érvénytelen e-mail vagy jelszó",
+    "rememberMe": "Emlékezz rám",
+    "signInUnavailable": "Most nem sikerült bejelentkezni. Próbálja újra.",
+    "accountSuspended": "Ez a fiók fel van függesztve. Ha ez tévedés, lépjen kapcsolatba az ügyfélszolgálattal.",
     "emailExists": "Ezzel az e-mail-címmel már létezik fiók",
     "emailInvalid": "Adjon meg érvényes e-mail-címet",
     "registerFailed": "Nem sikerült létrehozni a fiókot. Kérjük, próbálja újra.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "Elérte a mai tanulási edző keretet. Az edző holnap lesz újra elérhető.",
       "errorPremium": "A tanulási edző Premium funkció. Kapjon személyre szabott javaslatokat a tanulási tevékenysége alapján.",
       "errorUnavailable": "Az edzője jelenleg nem tudott válaszolni. Az üzenete nem került beleszámításba. Próbálja újra.",
+      "errorWorkspace": "Válasszon munkaterületet, mielőtt kérdez az edzőtől.",
+      "errorUnauthorized": "A folytatáshoz jelentkezzen be újra.",
       "prompts": {
         "practice_today": "Mire összpontosítsak ma?",
         "struggling_words": "Miért nehezek ezek a szavak?",

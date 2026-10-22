@@ -2768,6 +2768,9 @@
     "noAccount": "Nie masz konta?",
     "hasAccount": "Masz już konto?",
     "invalidCredentials": "Nieprawidłowy e-mail lub hasło",
+    "rememberMe": "Zapamiętaj mnie",
+    "signInUnavailable": "Nie udało się teraz zalogować. Spróbuj ponownie.",
+    "accountSuspended": "To konto jest zawieszone. Skontaktuj się z pomocą, jeśli to pomyłka.",
     "emailExists": "Konto z tym adresem e-mail już istnieje",
     "emailInvalid": "Wpisz prawidłowy adres e-mail",
     "registerFailed": "Nie udało się utworzyć konta. Spróbuj ponownie.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "Osiągnąłeś dzisiejszy limit Trenera nauki. Trener będzie dostępny jutro.",
       "errorPremium": "Trener nauki to funkcja Premium. Otrzymuj spersonalizowane rekomendacje na podstawie aktywności nauki.",
       "errorUnavailable": "Trener nie mógł teraz odpowiedzieć. Twoja wiadomość nie została policzona. Spróbuj ponownie.",
+      "errorWorkspace": "Wybierz obszar roboczy, zanim zapytasz trenera.",
+      "errorUnauthorized": "Zaloguj się ponownie, aby kontynuować.",
       "prompts": {
         "practice_today": "Na czym powinienem się dziś skupić?",
         "struggling_words": "Dlaczego mam trudności z tymi słowami?",

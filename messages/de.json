@@ -2768,6 +2768,9 @@
     "noAccount": "Noch kein Konto?",
     "hasAccount": "Bereits ein Konto?",
     "invalidCredentials": "Ungültige E-Mail oder Passwort",
+    "rememberMe": "Angemeldet bleiben",
+    "signInUnavailable": "Die Anmeldung ist gerade nicht möglich. Bitte erneut versuchen.",
+    "accountSuspended": "Dieses Konto ist gesperrt. Wende dich an den Support, wenn das ein Fehler ist.",
     "emailExists": "Ein Konto mit dieser E-Mail existiert bereits",
     "emailInvalid": "Gib eine gültige E-Mail-Adresse ein",
     "registerFailed": "Konto konnte nicht erstellt werden. Bitte erneut versuchen.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "Du hast das heutige Learning-Coach-Limit erreicht. Dein Coach ist morgen wieder verfügbar.",
       "errorPremium": "Learning Coach ist eine Premium-Funktion. Erhalte personalisierte Empfehlungen basierend auf deiner Lernaktivität.",
       "errorUnavailable": "Dein Coach konnte gerade nicht antworten. Deine Nachricht wurde nicht gezählt. Bitte erneut versuchen.",
+      "errorWorkspace": "Wähle einen Workspace, bevor du den Coach fragst.",
+      "errorUnauthorized": "Melde dich erneut an, um fortzufahren.",
       "prompts": {
         "practice_today": "Worauf sollte ich mich heute konzentrieren?",
         "struggling_words": "Warum fallen mir diese Wörter so schwer?",

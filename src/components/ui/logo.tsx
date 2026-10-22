@@ -13,7 +13,7 @@ function LogoFrame({
   return (
     <div
       className={cn(
-        "shrink-0 overflow-hidden rounded-sm border border-hairline-cloud",
+        "shrink-0 overflow-hidden rounded-sm",
         className,
       )}
     >

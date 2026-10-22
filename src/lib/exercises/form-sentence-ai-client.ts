@@ -1,3 +1,4 @@
+import { mapAiClientCode } from "@/lib/ai/client-status";
 import type {
   FormSentenceAiRequest,
   FormSentenceAiResult,
@@ -39,12 +40,10 @@ export async function requestFormSentenceAi(
     if (!response.ok || !payload || payload.ok !== true) {
       return {
         ok: false,
-        code:
-          payload && "code" in payload && payload.code
-            ? payload.code
-            : response.status === 403 || response.status === 401
-              ? "AI_FORBIDDEN"
-              : "AI_UNAVAILABLE",
+        code: mapAiClientCode(
+          response.status,
+          payload && "code" in payload ? payload.code : undefined,
+        ),
       };
     }
 

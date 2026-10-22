@@ -2768,6 +2768,9 @@
     "noAccount": "Har du ikke en konto?",
     "hasAccount": "Har du allerede en konto?",
     "invalidCredentials": "Ugyldig e-mail eller adgangskode",
+    "rememberMe": "Husk mig",
+    "signInUnavailable": "Vi kunne ikke logge dig ind lige nu. Prøv igen.",
+    "accountSuspended": "Denne konto er suspenderet. Kontakt support, hvis du mener, det er en fejl.",
     "emailExists": "Der findes allerede en konto med denne e-mail",
     "emailInvalid": "Angiv en gyldig e-mailadresse",
     "registerFailed": "Kunne ikke oprette konto. Prøv igen.",
@@ -3441,6 +3444,8 @@
       "errorQuota": "Du har nået dagens grænse for læringscoachen. Din coach er tilgængelig igen i morgen.",
       "errorPremium": "Læringscoach er en Premium-funktion. Få personlige anbefalinger baseret på din læringsaktivitet.",
       "errorUnavailable": "Din coach kunne ikke svare lige nu. Din besked blev ikke talt med. Prøv igen.",
+      "errorWorkspace": "Vælg et workspace, før du spørger coachen.",
+      "errorUnauthorized": "Log ind igen for at fortsætte.",
       "prompts": {
         "practice_today": "Hvad skal jeg fokusere på i dag?",
         "struggling_words": "Hvorfor har jeg svært ved disse ord?",

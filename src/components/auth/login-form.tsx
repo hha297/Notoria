@@ -5,7 +5,7 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { useId, useMemo, useState } from "react";
 import { signIn } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { ArrowRight, Loader2, LogIn } from "lucide-react";
+import { ArrowRight, Check, Loader2, LogIn } from "lucide-react";
 import {
   AuthGoogleSection,
 } from "@/components/auth/google-sign-in-button";
@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import styles from "@/components/style/auth/auth.module.css";
 import { mx } from "@/lib/css-module";
+import { safeLocalCallback } from "@/lib/auth/policy";
 import { requestWelcomeModalOnLogin } from "@/lib/prompts/storage";
 
 function oauthErrorMessage(
@@ -31,6 +32,9 @@ function oauthErrorMessage(
   if (error === "Configuration") {
     return t("oauthNotConfigured");
   }
+  if (error === "AccountSuspended") {
+    return t("accountSuspended");
+  }
   return t("oauthFailed");
 }
 
@@ -43,10 +47,13 @@ export function LoginForm({
   const searchParams = useSearchParams();
   const t = useTranslations("auth");
   const formErrorId = useId();
+  const rememberId = useId();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [remember, setRemember] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const callbackUrl = safeLocalCallback(searchParams.get("callbackUrl"));
 
   const oauthError = useMemo(
     () => oauthErrorMessage(searchParams.get("error"), t),
@@ -64,20 +71,26 @@ export function LoginForm({
       const result = await signIn("credentials", {
         email: email.trim(),
         password,
+        remember: remember ? "true" : "false",
         redirect: false,
       });
 
       if (result?.error) {
-        setError(t("invalidCredentials"));
+        if (result.code === "account_suspended") {
+          setError(t("accountSuspended"));
+        } else if (result.error === "CredentialsSignin") {
+          setError(t("invalidCredentials"));
+        } else {
+          setError(t("signInUnavailable"));
+        }
         return;
       }
 
-      const callbackUrl = searchParams.get("callbackUrl") ?? "/";
       requestWelcomeModalOnLogin();
       router.push(callbackUrl);
       router.refresh();
     } catch {
-      setError(t("invalidCredentials"));
+      setError(t("signInUnavailable"));
     } finally {
       setIsLoading(false);
     }
@@ -85,7 +98,12 @@ export function LoginForm({
 
   return (
     <div className={mx(styles, "auth-form-stack")}>
-      <AuthGoogleSection enabled={googleEnabled} disabled={isLoading} />
+      <AuthGoogleSection
+        enabled={googleEnabled}
+        disabled={isLoading}
+        remember={remember}
+        callbackUrl={callbackUrl}
+      />
 
       <form
         onSubmit={handleSubmit}
@@ -144,6 +162,24 @@ export function LoginForm({
             aria-invalid={displayError ? true : undefined}
           />
         </div>
+
+        <button
+          id={rememberId}
+          type="button"
+          role="checkbox"
+          aria-checked={remember}
+          aria-label={t("rememberMe")}
+          className={mx(styles, "auth-remember", remember && "is-active")}
+          onClick={() => setRemember((value) => !value)}
+          disabled={isLoading}
+        >
+          <span className={mx(styles, "auth-remember-mark")} aria-hidden>
+            <Check className="size-3.5" strokeWidth={3} />
+          </span>
+          <span className={mx(styles, "auth-remember-label")}>
+            {t("rememberMe")}
+          </span>
+        </button>
 
         {displayError ? (
           <p
