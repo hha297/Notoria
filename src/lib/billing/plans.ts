@@ -264,9 +264,13 @@ export function displayPlan(user: PlanUser): PlanId {
   return "free";
 }
 
-/** Admins receive Premium capabilities without a Stripe subscription. */
+/**
+ * Effective plan for feature gates and quotas.
+ * Admins and testers receive Premium capabilities without a Stripe
+ * subscription. displayPlan() stays Stripe-only so billing UI stays accurate.
+ */
 export function entitlementPlan(user: PlanUser): PlanId {
-  if (user?.role === "ADMIN") return "premium";
+  if (user?.role === "ADMIN" || user?.role === "TESTER") return "premium";
   return displayPlan(user);
 }
 

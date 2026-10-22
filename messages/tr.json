@@ -2851,7 +2851,9 @@
     "legalTerms": "Koşullar",
     "registerAgreement": "Hesap oluşturarak <terms>Kullanım Koşulları</terms> ve <privacy>Gizlilik Politikası</privacy>’nı kabul etmiş olursunuz.",
     "avatarRequestTooLarge": "Bu fotoğraf gönderilemeyecek kadar büyük. Daha küçük bir görsel deneyin.",
-    "requestTooLarge": "Bu istek çok büyüktü. Değişiklikleriniz korundu — lütfen yeniden deneyin."
+    "requestTooLarge": "Bu istek çok büyüktü. Değişiklikleriniz korundu — lütfen yeniden deneyin.",
+    "roleAdmin": "Yönetici",
+    "roleTester": "Test kullanıcısı"
   },
   "account": {
     "eyebrow": "Hesap",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Yönetim",
+      "admin": "Yönetici",
       "manage": "Yönet",
       "overview": "Genel bakış",
       "users": "Kullanıcılar",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "İçerik kütüphanesi",
       "backToApp": "Uygulamaya dön",
       "openMenu": "Yönetim menüsünü aç",
-      "openAdmin": "Yönetim paneli"
+      "openAdmin": "Yönetici paneli"
     },
     "modules": {
       "vocabulary": "Kelime dağarcığı",
@@ -4803,7 +4805,28 @@
         "failedListening": "Başarısız dinleme",
         "failedImports": "Başarısız içe aktarmalar",
         "runningJobs": "Çalışan iş kilitleri",
-        "recentAudits7d": "Denetim kayıtları (7g)"
+        "recentAudits7d": "Denetim kayıtları (7g)",
+        "admins": "Yöneticiler",
+        "testers": "Test kullanıcıları",
+        "suspended": "Askıya alınanlar",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Hızlı erişim",
+      "quickAccessLede": "Yönetim araçlarına gidin.",
+      "groups": {
+        "people": "Kişiler",
+        "content": "İçerik",
+        "ops": "İşlemler"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Plan",
         "created": "Kayıt",
         "updated": "Güncellendi",
-        "emailVerified": "E-posta doğrulandı"
+        "emailVerified": "E-posta doğrulandı",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Hesap",
@@ -4846,7 +4871,8 @@
         "usageLede": "Öğrenme modüllerindeki sahip olunan kayıtlar.",
         "actions": "Hesap işlemleri",
         "workspaces": "Çalışma alanları",
-        "workspacesLede": "Bu kullanıcının sahip olduğu dil çalışma alanları."
+        "workspacesLede": "Bu kullanıcının sahip olduğu dil çalışma alanları.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Adı kaydet",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Yöneticiyi kaldır",
         "suspend": "Askıya al",
         "restore": "Geri yükle",
-        "delete": "Hesabı sil"
+        "delete": "Hesabı sil",
+        "grantTester": "Test kullanıcısı rolü ver",
+        "revokeTester": "Test kullanıcısı rolünü kaldır",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Bu hesaba yönetici erişimi verilsin mi?",
         "revokeAdmin": "Yönetici erişimi kaldırılsın mı? Son aktif yöneticiyse bu işlem başarısız olur.",
         "suspend": "Bu hesap askıya alınsın mı? Bir sonraki korumalı istekte erişimi kaybederler.",
         "restore": "Bu hesap geri yüklensin mi?",
-        "delete": "Bu hesap ve bağlı öğrenme verileri kalıcı olarak silinsin mi? Bu geri alınamaz."
+        "delete": "Bu hesap ve bağlı öğrenme verileri kalıcı olarak silinsin mi? Bu geri alınamaz.",
+        "grantTester": "Test kullanıcısı rolü verilsin mi? QA için tüm uygulama özelliklerini alırlar; kayıtlı abonelik değişmez.",
+        "revokeTester": "Test kullanıcısı rolü kaldırılsın mı? Özellik erişimi gerçek aboneliklerine döner."
+      },
+      "roleHelp": "Test kullanıcısı rolü, kayıtlı aboneliği değiştirmeden QA için tüm Free, Pro ve Premium özelliklerini açar. Bu panel için yönetici gerekir.",
+      "roles": {
+        "user": "Kullanıcı",
+        "tester": "Test kullanıcısı",
+        "admin": "Yönetici"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Dil",
         "owner": "Sahip",
         "created": "Oluşturuldu",
-        "updated": "Güncellendi"
+        "updated": "Güncellendi",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Dil: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Bu çalışma alanı ve içindeki tüm öğrenme içeriği veritabanı zincirleme silme ile silinsin mi?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Sahip",
         "workspace": "Çalışma alanı",
         "created": "Oluşturuldu",
-        "updated": "Güncellendi"
+        "updated": "Güncellendi",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Meta veri incelemesi. Özel gövdeler otomatik yüklenmez.",
@@ -4928,11 +4983,13 @@
         "actions": "İşlemler"
       },
       "actions": {
-        "delete": "Kaydı sil"
+        "delete": "Kaydı sil",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Bu kayıt silinsin mi? İlgili alt satırlar veritabanı cascade / set-null kurallarını izler."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "İşler",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Bu kullanıcının bu dil için zaten bir çalışma alanı var.",
       "INVALID_LANGUAGE": "Geçersiz dil kodu.",
       "CONTENT_NOT_FOUND": "Kayıt bulunamadı.",
-      "INVALID_CONTENT_MODULE": "Bilinmeyen içerik modülü."
+      "INVALID_CONTENT_MODULE": "Bilinmeyen içerik modülü.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

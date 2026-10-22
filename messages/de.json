@@ -2851,7 +2851,9 @@
     "legalTerms": "Bedingungen",
     "registerAgreement": "Mit der Erstellung eines Kontos stimmst du den <terms>Nutzungsbedingungen</terms> und der <privacy>Datenschutzerklärung</privacy> zu.",
     "avatarRequestTooLarge": "Dieses Foto ist zu groß zum Senden. Versuche ein kleineres Bild.",
-    "requestTooLarge": "Diese Anfrage war zu groß. Deine Änderungen wurden behalten — bitte erneut versuchen."
+    "requestTooLarge": "Diese Anfrage war zu groß. Deine Änderungen wurden behalten — bitte erneut versuchen.",
+    "roleAdmin": "Administrator",
+    "roleTester": "Testnutzer"
   },
   "account": {
     "eyebrow": "Konto",
@@ -4744,18 +4746,18 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Administrator",
       "manage": "Verwalten",
       "overview": "Übersicht",
       "users": "Benutzer",
       "workspaces": "Arbeitsbereiche",
       "jobs": "Jobs",
-      "audit": "Audit",
+      "audit": "Protokoll",
       "content": "Inhalte",
       "contentLibrary": "Inhaltsbibliothek",
       "backToApp": "Zurück zur App",
       "openMenu": "Admin-Menü öffnen",
-      "openAdmin": "Admin-Dashboard"
+      "openAdmin": "Administrator-Dashboard"
     },
     "modules": {
       "vocabulary": "Wortschatz",
@@ -4765,7 +4767,7 @@
       "listening": "Hören",
       "reading": "Lesen",
       "speaking": "Sprechen",
-      "inbox": "Capture",
+      "inbox": "Erfassen",
       "folders": "Ordner"
     },
     "common": {
@@ -4799,11 +4801,32 @@
         "listening": "Hören",
         "reading": "Lesen",
         "speaking": "Sprechen",
-        "inbox": "Capture",
+        "inbox": "Erfassen",
         "failedListening": "Fehlgeschlagenes Hören",
         "failedImports": "Fehlgeschlagene Importe",
         "runningJobs": "Laufende Job-Sperren",
-        "recentAudits7d": "Audit-Einträge (7 T.)"
+        "recentAudits7d": "Audit-Einträge (7 T.)",
+        "admins": "Administratoren",
+        "testers": "Testnutzer",
+        "suspended": "Gesperrt",
+        "contentTotal": "Inhaltsdatensätze"
+      },
+      "quickAccess": "Schnellzugriff",
+      "quickAccessLede": "Zu den Verwaltungswerkzeugen.",
+      "groups": {
+        "people": "Personen",
+        "content": "Inhalte",
+        "ops": "Betrieb"
+      },
+      "charts": {
+        "signupsTitle": "Neue Konten",
+        "signupsLede": "Tägliche Registrierungen der letzten 14 UTC-Tage.",
+        "activeTitle": "Aktive Lernende",
+        "activeLede": "Unterschiedliche Lernende mit Aktivität pro Tag (14T).",
+        "rolesTitle": "Rollen",
+        "rolesLede": "Konten nach Rolle.",
+        "contentTitle": "Inhaltsmix",
+        "contentLede": "Gespeicherte Datensätze in Lernmodulen."
       }
     },
     "users": {
@@ -4816,7 +4839,7 @@
         "user": "Benutzer",
         "role": "Rolle",
         "status": "Status",
-        "plan": "Plan",
+        "plan": "Tarif",
         "workspaces": "Arbeitsbereiche",
         "created": "Registriert"
       },
@@ -4838,7 +4861,9 @@
         "plan": "Plan",
         "created": "Registriert",
         "updated": "Aktualisiert",
-        "emailVerified": "E-Mail verifiziert"
+        "emailVerified": "E-Mail verifiziert",
+        "email": "E-Mail",
+        "password": "Passwort"
       },
       "detail": {
         "account": "Konto",
@@ -4846,7 +4871,8 @@
         "usageLede": "Eigene Datensätze über alle Lernmodule.",
         "actions": "Kontoaktionen",
         "workspaces": "Arbeitsbereiche",
-        "workspacesLede": "Sprach-Arbeitsbereiche im Besitz dieses Benutzers."
+        "workspacesLede": "Sprach-Arbeitsbereiche im Besitz dieses Benutzers.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Name speichern",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Admin entziehen",
         "suspend": "Sperren",
         "restore": "Wiederherstellen",
-        "delete": "Konto löschen"
+        "delete": "Konto löschen",
+        "grantTester": "Testnutzer vergeben",
+        "revokeTester": "Testnutzer entziehen",
+        "create": "Benutzer erstellen"
       },
       "confirm": {
         "grantAdmin": "Diesem Konto Admin-Zugang vergeben?",
         "revokeAdmin": "Admin-Zugang entziehen? Das schlägt fehl, wenn es der letzte aktive Admin ist.",
         "suspend": "Dieses Konto sperren? Der Zugang entfällt bei der nächsten geschützten Anfrage.",
         "restore": "Dieses Konto wiederherstellen?",
-        "delete": "Dieses Konto und die abhängigen Lerndaten dauerhaft löschen? Das kann nicht rückgängig gemacht werden."
+        "delete": "Dieses Konto und die abhängigen Lerndaten dauerhaft löschen? Das kann nicht rückgängig gemacht werden.",
+        "grantTester": "Testnutzer-Rolle vergeben? Sie erhalten alle App-Funktionen für QA; das gespeicherte Abo bleibt unverändert.",
+        "revokeTester": "Testnutzer-Rolle entziehen? Der Funktionszugang richtet sich wieder nach ihrem tatsächlichen Abo."
+      },
+      "roleHelp": "Die Testnutzer-Rolle schaltet alle Free-, Pro- und Premium-Funktionen für QA frei, ohne das gespeicherte Abo zu ändern. Für dieses Dashboard ist ein Administrator erforderlich.",
+      "roles": {
+        "user": "Nutzer",
+        "tester": "Testnutzer",
+        "admin": "Administrator"
+      },
+      "create": {
+        "title": "Benutzer erstellen",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Sprache",
         "owner": "Inhaber",
         "created": "Erstellt",
-        "updated": "Aktualisiert"
+        "updated": "Aktualisiert",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Sprache: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Diesen Arbeitsbereich und alle Lerninhalte darin über Datenbank-Kaskaden löschen?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Inhaber",
         "workspace": "Arbeitsbereich",
         "created": "Erstellt",
-        "updated": "Aktualisiert"
+        "updated": "Aktualisiert",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Metadatenprüfung. Private Inhalte werden nicht automatisch geladen.",
@@ -4928,11 +4983,13 @@
         "actions": "Aktionen"
       },
       "actions": {
-        "delete": "Datensatz löschen"
+        "delete": "Datensatz löschen",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Diesen Datensatz löschen? Zugehörige Kindzeilen folgen den Kaskaden- bzw. Set-Null-Regeln der Datenbank."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Jobs",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Dieser Benutzer hat bereits einen Arbeitsbereich für diese Sprache.",
       "INVALID_LANGUAGE": "Ungültiger Sprachcode.",
       "CONTENT_NOT_FOUND": "Datensatz nicht gefunden.",
-      "INVALID_CONTENT_MODULE": "Unbekanntes Inhaltsmodul."
+      "INVALID_CONTENT_MODULE": "Unbekanntes Inhaltsmodul.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

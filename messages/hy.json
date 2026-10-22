@@ -2851,7 +2851,9 @@
     "legalTerms": "Պայմաններ",
     "registerAgreement": "Հաշիվ ստեղծելով՝ դուք համաձայնում եք <terms>Օգտագործման պայմաններին</terms> և <privacy>Գաղտնիության քաղաքականությանը</privacy>։",
     "avatarRequestTooLarge": "Այդ լուսանկարը չափազանց մեծ է ուղարկելու համար։ Փորձեք ավելի փոքր պատկեր։",
-    "requestTooLarge": "Այդ հարցումը չափազանց մեծ էր։ Ձեր փոփոխությունները պահպանված են — խնդրում ենք կրկին փորձել։"
+    "requestTooLarge": "Այդ հարցումը չափազանց մեծ էր։ Ձեր փոփոխությունները պահպանված են — խնդրում ենք կրկին փորձել։",
+    "roleAdmin": "Ադմինիստրատոր",
+    "roleTester": "Փորձարկող"
   },
   "account": {
     "eyebrow": "Հաշիվ",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Ադմին",
+      "admin": "Ադմինիստրատոր",
       "manage": "Կառավարում",
       "overview": "Ակնարկ",
       "users": "Օգտատերեր",
@@ -4765,7 +4767,7 @@
       "listening": "Լսողություն",
       "reading": "Ընթերցանություն",
       "speaking": "Խոսակցություն",
-      "inbox": "Capture",
+      "inbox": "Հավաքում",
       "folders": "Թղթապանակներ"
     },
     "common": {
@@ -4799,11 +4801,32 @@
         "listening": "Լսողություն",
         "reading": "Ընթերցանություն",
         "speaking": "Խոսակցություն",
-        "inbox": "Capture",
+        "inbox": "Հավաքում",
         "failedListening": "Ձախողված լսողություն",
         "failedImports": "Ձախողված ներմուծումներ",
         "runningJobs": "Ընթացիկ առաջադրանքների կողպեքներ",
-        "recentAudits7d": "Աուդիտի գրառումներ (7օր)"
+        "recentAudits7d": "Աուդիտի գրառումներ (7օր)",
+        "admins": "Ադմինիստրատորներ",
+        "testers": "Փորձարկողներ",
+        "suspended": "Կասեցված",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Արագ մուտք",
+      "quickAccessLede": "Անցնել կառավարման գործիքներին։",
+      "groups": {
+        "people": "Մարդիկ",
+        "content": "Բովանդակություն",
+        "ops": "Գործառույթներ"
+      },
+      "charts": {
+        "signupsTitle": "Nouveaux comptes",
+        "signupsLede": "Inscriptions quotidiennes sur les 14 derniers jours UTC.",
+        "activeTitle": "Apprenants actifs",
+        "activeLede": "Apprenants distincts avec activité chaque jour (14 j).",
+        "rolesTitle": "Rôles",
+        "rolesLede": "Comptes par rôle.",
+        "contentTitle": "Répartition du contenu",
+        "contentLede": "Enregistrements dans les modules d’apprentissage."
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Պլան",
         "created": "Գրանցված",
         "updated": "Թարմացված",
-        "emailVerified": "Էլփոստը հաստատված է"
+        "emailVerified": "Էլփոստը հաստատված է",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Հաշիվ",
@@ -4846,7 +4871,8 @@
         "usageLede": "Սեփական գրառումներ ուսումնական մոդուլներում։",
         "actions": "Հաշվի գործողություններ",
         "workspaces": "Աշխատատարածքներ",
-        "workspacesLede": "Այս օգտատիրոջ լեզվական աշխատատարածքները։"
+        "workspacesLede": "Այս օգտատիրոջ լեզվական աշխատատարածքները։",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Պահպանել անունը",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Հանել ադմին",
         "suspend": "Կասեցնել",
         "restore": "Վերականգնել",
-        "delete": "Ջնջել հաշիվը"
+        "delete": "Ջնջել հաշիվը",
+        "grantTester": "Տալ փորձարկողի դեր",
+        "revokeTester": "Հանել փորձարկողի դերը",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Ադմին մուտք տա՞լ այս հաշվին։",
         "revokeAdmin": "Հանե՞լ ադմին մուտքը։ Չի հաջողվի, եթե սա վերջին ակտիվ ադմինն է։",
         "suspend": "Կասեցնե՞լ այս հաշիվը։ Մուտքը կկորցնեն հաջորդ պաշտպանված հարցման ժամանակ։",
         "restore": "Վերականգնե՞լ այս հաշիվը։",
-        "delete": "Մշտապես ջնջե՞լ այս հաշիվը և կապակցված ուսումնական տվյալները։ Սա հնարավոր չէ հետարկել։"
+        "delete": "Մշտապես ջնջե՞լ այս հաշիվը և կապակցված ուսումնական տվյալները։ Սա հնարավոր չէ հետարկել։",
+        "grantTester": "Տա՞լ փորձարկողի դեր։ QA-ի համար ստանում են հավելվածի բոլոր հնարավորությունները. պահված բաժանորդագրությունը չի փոխվում։",
+        "revokeTester": "Հանի՞ր փորձարկողի դերը։ Հնարավորությունների մուտքը վերադառնում է իրենց իրական բաժանորդագրությանը։"
+      },
+      "roleHelp": "Փորձարկողի դերը բացում է Free, Pro և Premium բոլոր հնարավորությունները QA-ի համար՝ առանց պահված բաժանորդագրությունը փոխելու։ Այս վահանակի համար պետք է ադմինիստրատոր։",
+      "roles": {
+        "user": "Օգտատեր",
+        "tester": "Փորձարկող",
+        "admin": "Ադմինիստրատոր"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Լեզու",
         "owner": "Սեփականատեր",
         "created": "Ստեղծված",
-        "updated": "Թարմացված"
+        "updated": "Թարմացված",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Լեզու՝ {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Ջնջե՞լ այս աշխատատարածքը և նրա ամբողջ ուսումնական բովանդակությունը տվյալների բազայի կասկադներով։"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Սեփականատեր",
         "workspace": "Աշխատատարածք",
         "created": "Ստեղծված",
-        "updated": "Թարմացված"
+        "updated": "Թարմացված",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Մետատվյալների ստուգում։ Անձնական բովանդակությունը ավտոմատ չի բեռնվում։",
@@ -4928,11 +4983,13 @@
         "actions": "Գործողություններ"
       },
       "actions": {
-        "delete": "Ջնջել գրառումը"
+        "delete": "Ջնջել գրառումը",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Ջնջե՞լ այս գրառումը։ Կապակցված ենթատողերը հետևում են տվյալների բազայի cascade / set-null կանոններին։"
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Առաջադրանքներ",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Այս օգտատերն արդեն ունի աշխատատարածք այդ լեզվի համար։",
       "INVALID_LANGUAGE": "Անվավեր լեզվի կոդ։",
       "CONTENT_NOT_FOUND": "Գրառումը չի գտնվել։",
-      "INVALID_CONTENT_MODULE": "Անհայտ բովանդակության մոդուլ։"
+      "INVALID_CONTENT_MODULE": "Անհայտ բովանդակության մոդուլ։",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

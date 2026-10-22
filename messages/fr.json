@@ -2851,7 +2851,9 @@
     "legalTerms": "Conditions",
     "registerAgreement": "En créant un compte, vous acceptez les <terms>Conditions d’utilisation</terms> et la <privacy>Politique de confidentialité</privacy>.",
     "avatarRequestTooLarge": "Cette photo est trop volumineuse pour être envoyée. Essayez une image plus petite.",
-    "requestTooLarge": "Cette requête était trop volumineuse. Vos modifications ont été conservées — veuillez réessayer."
+    "requestTooLarge": "Cette requête était trop volumineuse. Vos modifications ont été conservées — veuillez réessayer.",
+    "roleAdmin": "Administrateur",
+    "roleTester": "Testeur"
   },
   "account": {
     "eyebrow": "Compte",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Administrateur",
       "manage": "Gérer",
       "overview": "Vue d'ensemble",
       "users": "Utilisateurs",
@@ -4765,7 +4767,7 @@
       "listening": "Écoute",
       "reading": "Lecture",
       "speaking": "Expression orale",
-      "inbox": "Capture",
+      "inbox": "Collecte",
       "folders": "Dossiers"
     },
     "common": {
@@ -4799,11 +4801,32 @@
         "listening": "Écoute",
         "reading": "Lecture",
         "speaking": "Expression orale",
-        "inbox": "Capture",
+        "inbox": "Collecte",
         "failedListening": "Écoute en échec",
         "failedImports": "Imports en échec",
         "runningJobs": "Verrous de tâches en cours",
-        "recentAudits7d": "Entrées d'audit (7 j)"
+        "recentAudits7d": "Entrées d'audit (7 j)",
+        "admins": "Administrateurs",
+        "testers": "Testeurs",
+        "suspended": "Suspendus",
+        "contentTotal": "Enregistrements de contenu"
+      },
+      "quickAccess": "Accès rapide",
+      "quickAccessLede": "Accéder aux outils de gestion.",
+      "groups": {
+        "people": "Personnes",
+        "content": "Contenu",
+        "ops": "Opérations"
+      },
+      "charts": {
+        "signupsTitle": "Nouveaux comptes",
+        "signupsLede": "Inscriptions quotidiennes sur les 14 derniers jours UTC.",
+        "activeTitle": "Apprenants actifs",
+        "activeLede": "Apprenants distincts avec activité chaque jour (14 j).",
+        "rolesTitle": "Rôles",
+        "rolesLede": "Comptes par rôle.",
+        "contentTitle": "Répartition du contenu",
+        "contentLede": "Enregistrements dans les modules d’apprentissage."
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Offre",
         "created": "Inscrit",
         "updated": "Mis à jour",
-        "emailVerified": "E-mail vérifié"
+        "emailVerified": "E-mail vérifié",
+        "email": "E-mail",
+        "password": "Mot de passe"
       },
       "detail": {
         "account": "Compte",
@@ -4846,7 +4871,8 @@
         "usageLede": "Enregistrements appartenant aux modules d'apprentissage.",
         "actions": "Actions du compte",
         "workspaces": "Espaces de travail",
-        "workspacesLede": "Espaces linguistiques appartenant à cet utilisateur."
+        "workspacesLede": "Espaces linguistiques appartenant à cet utilisateur.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Enregistrer le nom",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Révoquer le rôle admin",
         "suspend": "Suspendre",
         "restore": "Restaurer",
-        "delete": "Supprimer le compte"
+        "delete": "Supprimer le compte",
+        "grantTester": "Accorder le rôle testeur",
+        "revokeTester": "Révoquer le rôle testeur",
+        "create": "Créer un utilisateur"
       },
       "confirm": {
         "grantAdmin": "Accorder l'accès admin à ce compte ?",
         "revokeAdmin": "Révoquer l'accès admin ? Cette action échoue s'il s'agit du dernier admin actif.",
         "suspend": "Suspendre ce compte ? Il perdra l'accès à la prochaine requête protégée.",
         "restore": "Restaurer ce compte ?",
-        "delete": "Supprimer définitivement ce compte et les données d'apprentissage en cascade ? Cette action est irréversible."
+        "delete": "Supprimer définitivement ce compte et les données d'apprentissage en cascade ? Cette action est irréversible.",
+        "grantTester": "Accorder le rôle testeur ? Ils obtiennent toutes les fonctions de l’app pour le QA ; l’abonnement enregistré ne change pas.",
+        "revokeTester": "Révoquer le rôle testeur ? L’accès aux fonctions revient à leur abonnement réel."
+      },
+      "roleHelp": "Le rôle testeur débloque toutes les fonctions Free, Pro et Premium pour le QA sans modifier l’abonnement enregistré. Un administrateur est requis pour ce tableau de bord.",
+      "roles": {
+        "user": "Utilisateur",
+        "tester": "Testeur",
+        "admin": "Administrateur"
+      },
+      "create": {
+        "title": "Créer un utilisateur",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Langue",
         "owner": "Propriétaire",
         "created": "Créé",
-        "updated": "Mis à jour"
+        "updated": "Mis à jour",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Langue : {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Supprimer cet espace de travail et tout le contenu d'apprentissage qu'il contient via les cascades de la base de données ?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Propriétaire",
         "workspace": "Espace de travail",
         "created": "Créé",
-        "updated": "Mis à jour"
+        "updated": "Mis à jour",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Inspection des métadonnées. Les corps privés ne sont pas chargés automatiquement.",
@@ -4928,11 +4983,13 @@
         "actions": "Actions"
       },
       "actions": {
-        "delete": "Supprimer l'enregistrement"
+        "delete": "Supprimer l'enregistrement",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Supprimer cet enregistrement ? Les lignes enfants associées suivent les règles de cascade / set-null de la base de données."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Tâches",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Cet utilisateur a déjà un espace de travail pour cette langue.",
       "INVALID_LANGUAGE": "Code de langue invalide.",
       "CONTENT_NOT_FOUND": "Enregistrement introuvable.",
-      "INVALID_CONTENT_MODULE": "Module de contenu inconnu."
+      "INVALID_CONTENT_MODULE": "Module de contenu inconnu.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

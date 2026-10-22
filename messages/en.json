@@ -2812,6 +2812,8 @@
     "resetTokenMissing": "This reset link is missing or incomplete. Request a new one.",
     "account": "Account",
     "accountSettings": "Account settings",
+    "roleAdmin": "Admin",
+    "roleTester": "Tester",
     "accountDescription": "Update your profile photo and password.",
     "profile": "Profile",
     "avatar": "Profile photo",
@@ -4783,15 +4785,36 @@
       "title": "Overview",
       "description": "Live counts from application data. Time ranges use UTC calendar days. Active learners count distinct users with learning activity events — not logins.",
       "metrics": "Metrics",
+      "quickAccess": "Quick access",
+      "quickAccessLede": "Jump to management tools.",
       "recentAudit": "Recent admin actions",
       "recentAuditLede": "Latest mutations from the audit trail.",
       "viewAllAudit": "View audit log",
+      "groups": {
+        "people": "People",
+        "content": "Content",
+        "ops": "Operations"
+      },
+      "charts": {
+        "signupsTitle": "New accounts",
+        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
+        "activeTitle": "Active learners",
+        "activeLede": "Distinct learners with activity each day (14d).",
+        "rolesTitle": "Roles",
+        "rolesLede": "Share of accounts by role.",
+        "contentTitle": "Content mix",
+        "contentLede": "Stored records across learning modules."
+      },
       "cards": {
         "users": "Total users",
+        "admins": "Admins",
+        "testers": "Testers",
+        "suspended": "Suspended",
         "newUsers7d": "New users (7d)",
         "newUsers30d": "New users (30d)",
         "activeUsers7d": "Active learners (7d)",
         "workspaces": "Workspaces",
+        "contentTotal": "Content records",
         "vocabulary": "Vocabulary",
         "theory": "Theory",
         "writing": "Writing",
@@ -4808,10 +4831,20 @@
     },
     "users": {
       "title": "Users",
-      "description": "Search accounts, change roles, suspend access, or delete with confirmation.",
+      "description": "Create accounts, edit profiles, change roles, suspend access, or delete with confirmation.",
       "searchPlaceholder": "Search name or email…",
       "empty": "No users match these filters.",
       "selfGuard": "Safeguards prevent changing or deleting your own admin account here.",
+      "roleHelp": "Tester unlocks all Free, Pro, and Premium features for QA without changing the stored subscription. Admin is required for this dashboard.",
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "roles": {
+        "user": "User",
+        "tester": "Tester",
+        "admin": "Admin"
+      },
       "columns": {
         "user": "User",
         "role": "Role",
@@ -4830,9 +4863,16 @@
         "active": "Active",
         "suspended": "Suspended"
       },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
+      },
       "fields": {
         "id": "User id",
         "name": "Name",
+        "email": "Email",
+        "password": "Password",
         "role": "Role",
         "status": "Status",
         "plan": "Plan",
@@ -4845,13 +4885,17 @@
         "usage": "Content counts",
         "usageLede": "Owned records across learning modules.",
         "actions": "Account actions",
+        "danger": "Danger zone",
         "workspaces": "Workspaces",
         "workspacesLede": "Language workspaces owned by this user."
       },
       "actions": {
-        "saveProfile": "Save name",
+        "create": "Create user",
+        "saveProfile": "Save profile",
         "grantAdmin": "Grant admin",
         "revokeAdmin": "Revoke admin",
+        "grantTester": "Grant tester",
+        "revokeTester": "Revoke tester",
         "suspend": "Suspend",
         "restore": "Restore",
         "delete": "Delete account"
@@ -4859,6 +4903,8 @@
       "confirm": {
         "grantAdmin": "Grant admin access to this account?",
         "revokeAdmin": "Revoke admin access? This fails if they are the last active admin.",
+        "grantTester": "Grant tester access? They get full app features for QA; the stored subscription is unchanged.",
+        "revokeTester": "Revoke tester access? Feature access returns to their actual subscription.",
         "suspend": "Suspend this account? They lose access on the next protected request.",
         "restore": "Restore this account?",
         "delete": "Permanently delete this account and cascaded learning data? This cannot be undone."
@@ -4866,10 +4912,14 @@
     },
     "workspaces": {
       "title": "Workspaces",
-      "description": "Inspect and manage language workspaces.",
+      "description": "Create and manage language workspaces.",
       "searchPlaceholder": "Search name, language, or owner email…",
       "empty": "No workspaces match these filters.",
       "createForUser": "Create workspace for this user",
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
+      },
       "columns": {
         "name": "Name",
         "language": "Language",
@@ -4882,6 +4932,8 @@
         "nameOptional": "Optional display name",
         "language": "Language",
         "owner": "Owner",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com",
         "created": "Created",
         "updated": "Updated"
       },
@@ -4901,10 +4953,11 @@
       }
     },
     "content": {
-      "description": "Lists show metadata only. Open a row for identifiers and status. Private bodies (transcripts, notes) are not loaded here by default.",
+      "description": "Lists show metadata only. Open a row to edit the title or delete. Private bodies (transcripts, notes) are not loaded here by default.",
       "searchPlaceholder": "Search titles…",
       "empty": "No records match these filters.",
       "listeningMediaNote": "Deleting a listening lesson removes the database row. External media cleanup is best-effort and is not performed by this admin action.",
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed.",
       "columns": {
         "title": "Title",
         "status": "Status",
@@ -4914,6 +4967,9 @@
       },
       "fields": {
         "id": "Id",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name",
         "status": "Status",
         "errorCode": "Error code",
         "owner": "Owner",
@@ -4922,12 +4978,13 @@
         "updated": "Updated"
       },
       "detail": {
-        "description": "Metadata inspection. Private bodies are not auto-loaded.",
+        "description": "Edit the display title or delete the record. Private bodies are not auto-loaded.",
         "meta": "Record",
         "metaLede": "Identifiers and status only.",
         "actions": "Actions"
       },
       "actions": {
+        "saveTitle": "Save title",
         "delete": "Delete record"
       },
       "confirm": {
@@ -4993,10 +5050,13 @@
       "CANNOT_SUSPEND_SELF": "You cannot suspend your own account.",
       "CANNOT_DELETE_SELF": "You cannot delete your own account.",
       "USER_NOT_FOUND": "User not found.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
       "WORKSPACE_NOT_FOUND": "Workspace not found.",
       "WORKSPACE_LANGUAGE_EXISTS": "This user already has a workspace for that language.",
       "INVALID_LANGUAGE": "Invalid language code.",
       "CONTENT_NOT_FOUND": "Record not found.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing.",
       "INVALID_CONTENT_MODULE": "Unknown content module."
     }
   }

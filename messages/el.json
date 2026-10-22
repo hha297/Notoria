@@ -2851,7 +2851,9 @@
     "legalTerms": "Όροι",
     "registerAgreement": "Δημιουργώντας λογαριασμό, συμφωνείτε με τους <terms>Όρους χρήσης</terms> και την <privacy>Πολιτική απορρήτου</privacy>.",
     "avatarRequestTooLarge": "Αυτή η φωτογραφία είναι πολύ μεγάλη για αποστολή. Δοκιμάστε μικρότερη εικόνα.",
-    "requestTooLarge": "Αυτό το αίτημα ήταν πολύ μεγάλο. Οι αλλαγές σας διατηρήθηκαν — παρακαλούμε δοκιμάστε ξανά."
+    "requestTooLarge": "Αυτό το αίτημα ήταν πολύ μεγάλο. Οι αλλαγές σας διατηρήθηκαν — παρακαλούμε δοκιμάστε ξανά.",
+    "roleAdmin": "Διαχειριστής",
+    "roleTester": "Δοκιμαστής"
   },
   "account": {
     "eyebrow": "Λογαριασμός",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Διαχείριση",
+      "admin": "Διαχειριστής",
       "manage": "Διαχείριση",
       "overview": "Επισκόπηση",
       "users": "Χρήστες",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "Βιβλιοθήκη περιεχομένου",
       "backToApp": "Επιστροφή στην εφαρμογή",
       "openMenu": "Άνοιγμα μενού διαχείρισης",
-      "openAdmin": "Πίνακας διαχείρισης"
+      "openAdmin": "Πίνακας διαχειριστή"
     },
     "modules": {
       "vocabulary": "Λεξιλόγιο",
@@ -4803,7 +4805,28 @@
         "failedListening": "Αποτυχημένες ακροάσεις",
         "failedImports": "Αποτυχημένες εισαγωγές",
         "runningJobs": "Κλειδώματα ενεργών εργασιών",
-        "recentAudits7d": "Καταχωρίσεις ελέγχου (7η)"
+        "recentAudits7d": "Καταχωρίσεις ελέγχου (7η)",
+        "admins": "Διαχειριστές",
+        "testers": "Δοκιμαστές",
+        "suspended": "Ανασταλμένοι",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Γρήγορη πρόσβαση",
+      "quickAccessLede": "Μετάβαση στα εργαλεία διαχείρισης.",
+      "groups": {
+        "people": "Άτομα",
+        "content": "Περιεχόμενο",
+        "ops": "Λειτουργίες"
+      },
+      "charts": {
+        "signupsTitle": "Neue Konten",
+        "signupsLede": "Tägliche Registrierungen der letzten 14 UTC-Tage.",
+        "activeTitle": "Aktive Lernende",
+        "activeLede": "Unterschiedliche Lernende mit Aktivität pro Tag (14T).",
+        "rolesTitle": "Rollen",
+        "rolesLede": "Konten nach Rolle.",
+        "contentTitle": "Inhaltsmix",
+        "contentLede": "Gespeicherte Datensätze in Lernmodulen."
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Πλάνο",
         "created": "Εγγραφή",
         "updated": "Ενημερώθηκε",
-        "emailVerified": "Επαληθευμένο email"
+        "emailVerified": "Επαληθευμένο email",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Λογαριασμός",
@@ -4846,7 +4871,8 @@
         "usageLede": "Ιδιόκτητες εγγραφές σε όλες τις ενότητες μάθησης.",
         "actions": "Ενέργειες λογαριασμού",
         "workspaces": "Χώροι εργασίας",
-        "workspacesLede": "Χώροι εργασίας γλώσσας που ανήκουν σε αυτόν τον χρήστη."
+        "workspacesLede": "Χώροι εργασίας γλώσσας που ανήκουν σε αυτόν τον χρήστη.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Αποθήκευση ονόματος",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Ανάκληση διαχειριστή",
         "suspend": "Αναστολή",
         "restore": "Επαναφορά",
-        "delete": "Διαγραφή λογαριασμού"
+        "delete": "Διαγραφή λογαριασμού",
+        "grantTester": "Χορήγηση δοκιμαστή",
+        "revokeTester": "Ανάκληση δοκιμαστή",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Να χορηγηθεί πρόσβαση διαχειριστή σε αυτόν τον λογαριασμό;",
         "revokeAdmin": "Να ανακληθεί η πρόσβαση διαχειριστή; Αποτυγχάνει αν είναι ο τελευταίος ενεργός διαχειριστής.",
         "suspend": "Να ανασταλεί αυτός ο λογαριασμός; Χάνουν την πρόσβαση στο επόμενο προστατευμένο αίτημα.",
         "restore": "Να επαναφερθεί αυτός ο λογαριασμός;",
-        "delete": "Να διαγραφεί οριστικά αυτός ο λογαριασμός και τα σχετιζόμενα δεδομένα μάθησης; Δεν μπορεί να αναιρεθεί."
+        "delete": "Να διαγραφεί οριστικά αυτός ο λογαριασμός και τα σχετιζόμενα δεδομένα μάθησης; Δεν μπορεί να αναιρεθεί.",
+        "grantTester": "Χορήγηση ρόλου δοκιμαστή; Λαμβάνουν όλες τις λειτουργίες της εφαρμογής για QA· η αποθηκευμένη συνδρομή δεν αλλάζει.",
+        "revokeTester": "Ανάκληση ρόλου δοκιμαστή; Η πρόσβαση στις λειτουργίες επιστρέφει στην πραγματική τους συνδρομή."
+      },
+      "roleHelp": "Ο ρόλος δοκιμαστή ξεκλειδώνει όλες τις λειτουργίες Free, Pro και Premium για QA χωρίς να αλλάζει την αποθηκευμένη συνδρομή. Απαιτείται διαχειριστής για αυτόν τον πίνακα.",
+      "roles": {
+        "user": "Χρήστης",
+        "tester": "Δοκιμαστής",
+        "admin": "Διαχειριστής"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Γλώσσα",
         "owner": "Κάτοχος",
         "created": "Δημιουργήθηκε",
-        "updated": "Ενημερώθηκε"
+        "updated": "Ενημερώθηκε",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Γλώσσα: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Να διαγραφεί αυτός ο χώρος εργασίας και όλο το περιεχόμενο μάθησης μέσα του μέσω διαδοχικών διαγραφών βάσης δεδομένων;"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Κάτοχος",
         "workspace": "Χώρος εργασίας",
         "created": "Δημιουργήθηκε",
-        "updated": "Ενημερώθηκε"
+        "updated": "Ενημερώθηκε",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Επιθεώρηση μεταδεδομένων. Τα ιδιωτικά σώματα δεν φορτώνονται αυτόματα.",
@@ -4928,11 +4983,13 @@
         "actions": "Ενέργειες"
       },
       "actions": {
-        "delete": "Διαγραφή εγγραφής"
+        "delete": "Διαγραφή εγγραφής",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Να διαγραφεί αυτή η εγγραφή; Οι σχετιζόμενες θυγατρικές γραμμές ακολουθούν κανόνες διαδοχικής διαγραφής / null της βάσης δεδομένων."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Εργασίες",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Αυτός ο χρήστης έχει ήδη χώρο εργασίας για αυτή τη γλώσσα.",
       "INVALID_LANGUAGE": "Μη έγκυρος κωδικός γλώσσας.",
       "CONTENT_NOT_FOUND": "Η εγγραφή δεν βρέθηκε.",
-      "INVALID_CONTENT_MODULE": "Άγνωστη ενότητα περιεχομένου."
+      "INVALID_CONTENT_MODULE": "Άγνωστη ενότητα περιεχομένου.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

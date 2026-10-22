@@ -2851,7 +2851,9 @@
     "legalTerms": "약관",
     "registerAgreement": "계정을 만들면 <terms>이용약관</terms> 및 <privacy>개인정보 처리방침</privacy>에 동의하게 됩니다.",
     "avatarRequestTooLarge": "사진이 너무 커서 보낼 수 없습니다. 더 작은 이미지를 시도해 보세요.",
-    "requestTooLarge": "요청이 너무 큽니다. 변경 사항은 유지되었습니다 — 다시 시도해 주세요."
+    "requestTooLarge": "요청이 너무 큽니다. 변경 사항은 유지되었습니다 — 다시 시도해 주세요.",
+    "roleAdmin": "관리자",
+    "roleTester": "테스터"
   },
   "account": {
     "eyebrow": "계정",
@@ -4803,7 +4805,28 @@
         "failedListening": "실패한 듣기",
         "failedImports": "실패한 가져오기",
         "runningJobs": "실행 중인 작업 잠금",
-        "recentAudits7d": "감사 항목 (7일)"
+        "recentAudits7d": "감사 항목 (7일)",
+        "admins": "관리자",
+        "testers": "테스터",
+        "suspended": "정지됨",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "바로가기",
+      "quickAccessLede": "관리 도구로 이동하세요.",
+      "groups": {
+        "people": "사용자",
+        "content": "콘텐츠",
+        "ops": "운영"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "플랜",
         "created": "가입일",
         "updated": "업데이트됨",
-        "emailVerified": "이메일 인증됨"
+        "emailVerified": "이메일 인증됨",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "계정",
@@ -4846,7 +4871,8 @@
         "usageLede": "학습 모듈 전반의 소유 기록입니다.",
         "actions": "계정 작업",
         "workspaces": "워크스페이스",
-        "workspacesLede": "이 사용자가 소유한 언어 워크스페이스입니다."
+        "workspacesLede": "이 사용자가 소유한 언어 워크스페이스입니다.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "이름 저장",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "관리자 해제",
         "suspend": "정지",
         "restore": "복원",
-        "delete": "계정 삭제"
+        "delete": "계정 삭제",
+        "grantTester": "테스터 역할 부여",
+        "revokeTester": "테스터 역할 해제",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "이 계정에 관리자 권한을 부여할까요?",
         "revokeAdmin": "관리자 권한을 해제할까요? 마지막 활성 관리자인 경우 실패합니다.",
         "suspend": "이 계정을 정지할까요? 다음 보호된 요청부터 접근할 수 없게 됩니다.",
         "restore": "이 계정을 복원할까요?",
-        "delete": "이 계정과 연결된 학습 데이터를 영구 삭제할까요? 되돌릴 수 없습니다."
+        "delete": "이 계정과 연결된 학습 데이터를 영구 삭제할까요? 되돌릴 수 없습니다.",
+        "grantTester": "테스터 역할을 부여할까요? QA용으로 앱의 모든 기능을 사용할 수 있으며, 저장된 구독은 변경되지 않습니다.",
+        "revokeTester": "테스터 역할을 해제할까요? 기능 접근은 실제 구독으로 돌아갑니다."
+      },
+      "roleHelp": "테스터 역할은 저장된 구독을 바꾸지 않고 QA용으로 Free, Pro, Premium의 모든 기능을 사용할 수 있습니다. 이 대시보드에는 관리자가 필요합니다.",
+      "roles": {
+        "user": "사용자",
+        "tester": "테스터",
+        "admin": "관리자"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "언어",
         "owner": "소유자",
         "created": "생성됨",
-        "updated": "업데이트됨"
+        "updated": "업데이트됨",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "언어: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "이 워크스페이스와 안의 모든 학습 콘텐츠를 데이터베이스 연쇄로 삭제할까요?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "소유자",
         "workspace": "워크스페이스",
         "created": "생성됨",
-        "updated": "업데이트됨"
+        "updated": "업데이트됨",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "메타데이터 확인. 비공개 본문은 자동으로 불러오지 않습니다.",
@@ -4928,11 +4983,13 @@
         "actions": "작업"
       },
       "actions": {
-        "delete": "기록 삭제"
+        "delete": "기록 삭제",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "이 기록을 삭제할까요? 관련 하위 행은 데이터베이스 cascade / set-null 규칙을 따릅니다."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "작업",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "이 사용자에게 해당 언어의 워크스페이스가 이미 있습니다.",
       "INVALID_LANGUAGE": "잘못된 언어 코드입니다.",
       "CONTENT_NOT_FOUND": "기록을 찾을 수 없습니다.",
-      "INVALID_CONTENT_MODULE": "알 수 없는 콘텐츠 모듈입니다."
+      "INVALID_CONTENT_MODULE": "알 수 없는 콘텐츠 모듈입니다.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

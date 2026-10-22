@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import styles from "@/components/style/admin/admin.module.css";
 import { mx } from "@/lib/css-module";
 
@@ -39,22 +38,22 @@ export function AdminPagination({
       </p>
       <div className={mx(styles, "admin-pagination-controls")}>
         {prev ? (
-          <Button render={<Link href={prev} />} variant="outline" size="sm">
+          <Link href={prev} className={mx(styles, "admin-btn", "admin-btn-ghost")}>
             {labels.previous}
-          </Button>
+          </Link>
         ) : (
-          <Button variant="outline" size="sm" disabled>
+          <button type="button" className={mx(styles, "admin-btn", "admin-btn-ghost")} disabled>
             {labels.previous}
-          </Button>
+          </button>
         )}
         {next ? (
-          <Button render={<Link href={next} />} variant="outline" size="sm">
+          <Link href={next} className={mx(styles, "admin-btn", "admin-btn-ghost")}>
             {labels.next}
-          </Button>
+          </Link>
         ) : (
-          <Button variant="outline" size="sm" disabled>
+          <button type="button" className={mx(styles, "admin-btn", "admin-btn-ghost")} disabled>
             {labels.next}
-          </Button>
+          </button>
         )}
       </div>
     </div>

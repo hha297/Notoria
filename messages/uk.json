@@ -2812,6 +2812,8 @@
     "resetTokenMissing": "Це посилання для скидання відсутнє або неповне. Запросіть нове.",
     "account": "Обліковий запис",
     "accountSettings": "Налаштування облікового запису",
+    "roleAdmin": "Адміністратор",
+    "roleTester": "Тестувальник",
     "accountDescription": "Оновіть фото профілю та пароль.",
     "profile": "Профіль",
     "avatar": "Фото профілю",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Адмін",
+      "admin": "Адміністратор",
       "manage": "Керування",
       "overview": "Огляд",
       "users": "Користувачі",
@@ -4803,7 +4805,28 @@
         "failedListening": "Невдале аудіювання",
         "failedImports": "Невдалі імпорти",
         "runningJobs": "Активні блокування завдань",
-        "recentAudits7d": "Записи аудиту (7 дн.)"
+        "recentAudits7d": "Записи аудиту (7 дн.)",
+        "admins": "Адміністратори",
+        "testers": "Тестувальники",
+        "suspended": "Заблоковані",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Швидкий доступ",
+      "quickAccessLede": "Перейти до інструментів керування.",
+      "groups": {
+        "people": "Люди",
+        "content": "Вміст",
+        "ops": "Операції"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "План",
         "created": "Зареєстровано",
         "updated": "Оновлено",
-        "emailVerified": "Email підтверджено"
+        "emailVerified": "Email підтверджено",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Обліковий запис",
@@ -4846,7 +4871,8 @@
         "usageLede": "Власні записи в навчальних модулях.",
         "actions": "Дії з обліковим записом",
         "workspaces": "Робочі простори",
-        "workspacesLede": "Мовні робочі простори цього користувача."
+        "workspacesLede": "Мовні робочі простори цього користувача.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Зберегти ім’я",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Відкликати адміна",
         "suspend": "Призупинити",
         "restore": "Відновити",
-        "delete": "Видалити обліковий запис"
+        "delete": "Видалити обліковий запис",
+        "grantTester": "Призначити тестувальника",
+        "revokeTester": "Зняти тестувальника",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Надати цьому обліковому запису доступ адміна?",
         "revokeAdmin": "Відкликати доступ адміна? Це не вдасться, якщо це останній активний адмін.",
         "suspend": "Призупинити цей обліковий запис? Доступ буде втрачено на наступному захищеному запиті.",
         "restore": "Відновити цей обліковий запис?",
-        "delete": "Назавжди видалити цей обліковий запис і пов’язані навчальні дані? Цю дію не можна скасувати."
+        "delete": "Назавжди видалити цей обліковий запис і пов’язані навчальні дані? Цю дію не можна скасувати.",
+        "grantTester": "Призначити роль тестувальника? Вони отримають усі функції застосунку для QA; збережена підписка не зміниться.",
+        "revokeTester": "Зняти роль тестувальника? Доступ до функцій повернеться до їхньої фактичної підписки."
+      },
+      "roleHelp": "Роль тестувальника відкриває всі функції Free, Pro і Premium для QA, не змінюючи збережену підписку. Для цієї панелі потрібен адміністратор.",
+      "roles": {
+        "user": "Користувач",
+        "tester": "Тестувальник",
+        "admin": "Адміністратор"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Мова",
         "owner": "Власник",
         "created": "Створено",
-        "updated": "Оновлено"
+        "updated": "Оновлено",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Мова: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Видалити цей робочий простір і весь навчальний контент у ньому через каскади бази даних?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Власник",
         "workspace": "Робочий простір",
         "created": "Створено",
-        "updated": "Оновлено"
+        "updated": "Оновлено",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Перегляд метаданих. Приватний вміст не завантажується автоматично.",
@@ -4928,11 +4983,13 @@
         "actions": "Дії"
       },
       "actions": {
-        "delete": "Видалити запис"
+        "delete": "Видалити запис",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Видалити цей запис? Пов’язані дочірні рядки підпадають під правила каскаду / set-null у базі даних."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Завдання",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "У цього користувача вже є робочий простір для цієї мови.",
       "INVALID_LANGUAGE": "Недійсний код мови.",
       "CONTENT_NOT_FOUND": "Запис не знайдено.",
-      "INVALID_CONTENT_MODULE": "Невідомий модуль контенту."
+      "INVALID_CONTENT_MODULE": "Невідомий модуль контенту.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

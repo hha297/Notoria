@@ -13,7 +13,7 @@ import { LOCALE_COOKIE } from "@/i18n/request";
 import { getResolvedAiPreferences } from "@/lib/ai/preferences-server";
 import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
-import { isAdminRole } from "@/lib/auth/require-admin";
+import { isAdminRole, isTesterRole } from "@/lib/auth/roles";
 import { getSession } from "@/lib/auth/session";
 import { getUserEntitlements } from "@/lib/billing/entitlements";
 import {
@@ -116,6 +116,7 @@ export default async function DashboardLayout({
           isPro={hasActiveProSubscription(subscription)}
           plan={displayPlan(subscription)}
           isAdmin={isAdminRole(userRecord?.role)}
+          isTester={isTesterRole(userRecord?.role)}
           footer={<SiteFooter variant="app" />}
         >
           <WelcomePromptModal

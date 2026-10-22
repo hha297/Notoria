@@ -2851,7 +2851,9 @@
     "legalTerms": "Termos",
     "registerAgreement": "Ao criar uma conta, concorda com os <terms>Termos de Utilização</terms> e a <privacy>Política de Privacidade</privacy>.",
     "avatarRequestTooLarge": "Essa fotografia é demasiado grande para enviar. Experimente uma imagem mais pequena.",
-    "requestTooLarge": "Esse pedido era demasiado grande. As suas alterações foram mantidas — tente novamente."
+    "requestTooLarge": "Esse pedido era demasiado grande. As suas alterações foram mantidas — tente novamente.",
+    "roleAdmin": "Administrador",
+    "roleTester": "Testador"
   },
   "account": {
     "eyebrow": "Conta",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Administração",
+      "admin": "Administrador",
       "manage": "Gerir",
       "overview": "Visão geral",
       "users": "Utilizadores",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "Biblioteca de conteúdo",
       "backToApp": "Voltar à aplicação",
       "openMenu": "Abrir menu de administração",
-      "openAdmin": "Painel de administração"
+      "openAdmin": "Painel de administrador"
     },
     "modules": {
       "vocabulary": "Vocabulário",
@@ -4803,7 +4805,28 @@
         "failedListening": "Audição com falha",
         "failedImports": "Importações com falha",
         "runningJobs": "Bloqueios de tarefas em execução",
-        "recentAudits7d": "Entradas de auditoria (7 d)"
+        "recentAudits7d": "Entradas de auditoria (7 d)",
+        "admins": "Administradores",
+        "testers": "Testadores",
+        "suspended": "Suspensos",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Acesso rápido",
+      "quickAccessLede": "Ir para as ferramentas de gestão.",
+      "groups": {
+        "people": "Pessoas",
+        "content": "Conteúdo",
+        "ops": "Operações"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Plano",
         "created": "Registado",
         "updated": "Atualizado",
-        "emailVerified": "E-mail verificado"
+        "emailVerified": "E-mail verificado",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Conta",
@@ -4846,7 +4871,8 @@
         "usageLede": "Registos próprios em todos os módulos de aprendizagem.",
         "actions": "Ações da conta",
         "workspaces": "Espaços de trabalho",
-        "workspacesLede": "Espaços de trabalho de língua pertencentes a este utilizador."
+        "workspacesLede": "Espaços de trabalho de língua pertencentes a este utilizador.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Guardar nome",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Revogar administração",
         "suspend": "Suspender",
         "restore": "Repor",
-        "delete": "Eliminar conta"
+        "delete": "Eliminar conta",
+        "grantTester": "Conceder testador",
+        "revokeTester": "Revogar testador",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Conceder acesso de administrador a esta conta?",
         "revokeAdmin": "Revogar o acesso de administrador? Falha se forem o último administrador ativo.",
         "suspend": "Suspender esta conta? Perdem o acesso no próximo pedido protegido.",
         "restore": "Repor esta conta?",
-        "delete": "Eliminar permanentemente esta conta e os dados de aprendizagem em cascata? Esta ação não pode ser anulada."
+        "delete": "Eliminar permanentemente esta conta e os dados de aprendizagem em cascata? Esta ação não pode ser anulada.",
+        "grantTester": "Conceder a função de testador? Obtêm todas as funções da app para QA; a assinatura guardada não muda.",
+        "revokeTester": "Revogar a função de testador? O acesso às funções volta à assinatura real deles."
+      },
+      "roleHelp": "A função de testador desbloqueia todas as funções Free, Pro e Premium para QA sem alterar a assinatura guardada. É preciso ser administrador neste painel.",
+      "roles": {
+        "user": "Utilizador",
+        "tester": "Testador",
+        "admin": "Administrador"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Língua",
         "owner": "Proprietário",
         "created": "Criado",
-        "updated": "Atualizado"
+        "updated": "Atualizado",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Língua: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Eliminar este espaço de trabalho e todo o conteúdo de aprendizagem nele contido através das cascatas da base de dados?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Proprietário",
         "workspace": "Espaço de trabalho",
         "created": "Criado",
-        "updated": "Atualizado"
+        "updated": "Atualizado",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Inspeção de metadados. Os corpos privados não são carregados automaticamente.",
@@ -4928,11 +4983,13 @@
         "actions": "Ações"
       },
       "actions": {
-        "delete": "Eliminar registo"
+        "delete": "Eliminar registo",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Eliminar este registo? As linhas filhas relacionadas seguem as regras de cascata / set-null da base de dados."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Tarefas",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Este utilizador já tem um espaço de trabalho para essa língua.",
       "INVALID_LANGUAGE": "Código de língua inválido.",
       "CONTENT_NOT_FOUND": "Registo não encontrado.",
-      "INVALID_CONTENT_MODULE": "Módulo de conteúdo desconhecido."
+      "INVALID_CONTENT_MODULE": "Módulo de conteúdo desconhecido.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

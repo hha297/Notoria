@@ -2656,7 +2656,9 @@
     "legalTerms": "Ehdot",
     "registerAgreement": "Luomalla tilin hyväksyt <terms>käyttöehdot</terms> ja <privacy>tietosuojaselosteen</privacy>.",
     "avatarRequestTooLarge": "Kuva on liian suuri lähetettäväksi. Kokeile pienempää kuvaa.",
-    "requestTooLarge": "Pyyntö oli liian suuri. Muutoksesi säilyivät — yritä uudelleen."
+    "requestTooLarge": "Pyyntö oli liian suuri. Muutoksesi säilyivät — yritä uudelleen.",
+    "roleAdmin": "Ylläpitäjä",
+    "roleTester": "Testaaja"
   },
   "account": {
     "eyebrow": "Tili",
@@ -4743,101 +4745,124 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
-      "manage": "Manage",
-      "overview": "Overview",
-      "users": "Users",
-      "workspaces": "Workspaces",
-      "jobs": "Jobs",
-      "audit": "Audit",
-      "content": "Content",
-      "contentLibrary": "Content library",
-      "backToApp": "Back to app",
-      "openMenu": "Open admin menu",
-      "openAdmin": "Admin dashboard"
+      "admin": "Ylläpito",
+      "manage": "Hallinta",
+      "overview": "Yhteenveto",
+      "users": "Käyttäjät",
+      "workspaces": "Työtilat",
+      "jobs": "Työt",
+      "audit": "Auditointi",
+      "content": "Sisältö",
+      "contentLibrary": "Sisältökirjasto",
+      "backToApp": "Takaisin sovellukseen",
+      "openMenu": "Avaa admin-valikko",
+      "openAdmin": "Ylläpitopaneeli"
     },
     "modules": {
-      "vocabulary": "Vocabulary",
-      "theory": "Theory",
-      "writing": "Writing",
-      "exercises": "Exercises",
-      "listening": "Listening",
-      "reading": "Reading",
-      "speaking": "Speaking",
-      "inbox": "Capture",
-      "folders": "Folders"
+      "vocabulary": "Sanasto",
+      "theory": "Teoria",
+      "writing": "Kirjoittaminen",
+      "exercises": "Harjoitus",
+      "listening": "Kuuntelu",
+      "reading": "Lukeminen",
+      "speaking": "Puhuminen",
+      "inbox": "Keräys",
+      "folders": "Kansiot"
     },
     "common": {
-      "search": "Search",
-      "clear": "Clear",
-      "filter": "Filter",
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {totalPages}",
-      "results": "{total} results",
-      "backToList": "Back to list",
-      "empty": "No results"
+      "search": "Haku",
+      "clear": "Tyhjennä",
+      "filter": "Suodata",
+      "previous": "Edellinen",
+      "next": "Seuraava",
+      "pageOf": "Sivu {page} / {totalPages}",
+      "results": "{total} tulosta",
+      "backToList": "Takaisin listaan",
+      "empty": "Ei tuloksia"
     },
     "overview": {
-      "title": "Overview",
-      "description": "Live counts from application data. Time ranges use UTC calendar days. Active learners count distinct users with learning activity events — not logins.",
-      "metrics": "Metrics",
-      "recentAudit": "Recent admin actions",
-      "recentAuditLede": "Latest mutations from the audit trail.",
-      "viewAllAudit": "View audit log",
+      "title": "Yhteenveto",
+      "description": "Live-luvut sovellusdatasta. Aikavälit käyttävät UTC-kalenteripäiviä. Aktiiviset oppijat laskevat käyttäjät, joilla on oppimistapahtumia — ei kirjautumisia.",
+      "metrics": "Mittarit",
+      "recentAudit": "Viimeisimmät ylläpitotoimet",
+      "recentAuditLede": "Uusimmat muutokset auditointilokista.",
+      "viewAllAudit": "Näytä auditointiloki",
       "cards": {
-        "users": "Total users",
-        "newUsers7d": "New users (7d)",
-        "newUsers30d": "New users (30d)",
-        "activeUsers7d": "Active learners (7d)",
-        "workspaces": "Workspaces",
-        "vocabulary": "Vocabulary",
-        "theory": "Theory",
-        "writing": "Writing",
-        "exercises": "Exercises",
-        "listening": "Listening",
-        "reading": "Reading",
-        "speaking": "Speaking",
-        "inbox": "Capture",
-        "failedListening": "Failed listening",
-        "failedImports": "Failed imports",
-        "runningJobs": "Running job locks",
-        "recentAudits7d": "Audit entries (7d)"
+        "users": "Käyttäjiä yhteensä",
+        "newUsers7d": "Uudet käyttäjät (7 pv)",
+        "newUsers30d": "Uudet käyttäjät (30 pv)",
+        "activeUsers7d": "Aktiiviset oppijat (7 pv)",
+        "workspaces": "Työtilat",
+        "vocabulary": "Sanasto",
+        "theory": "Teoria",
+        "writing": "Kirjoittaminen",
+        "exercises": "Harjoitus",
+        "listening": "Kuuntelu",
+        "reading": "Lukeminen",
+        "speaking": "Puhuminen",
+        "inbox": "Keräys",
+        "failedListening": "Epäonnistuneet kuuntelut",
+        "failedImports": "Epäonnistuneet tuonnit",
+        "runningJobs": "Käynnissä olevat lukot",
+        "recentAudits7d": "Auditointimerkinnät (7 pv)",
+        "admins": "Ylläpitäjät",
+        "testers": "Testaajat",
+        "suspended": "Jäädytetyt",
+        "contentTotal": "Sisältötietueet"
+      },
+      "quickAccess": "Pikapääsy",
+      "quickAccessLede": "Siirry hallintatyökaluihin.",
+      "groups": {
+        "people": "Ihmiset",
+        "content": "Sisältö",
+        "ops": "Toiminnot"
+      },
+      "charts": {
+        "signupsTitle": "Uudet tilit",
+        "signupsLede": "Päivittäiset rekisteröinnit viimeisten 14 UTC-päivän ajalta.",
+        "activeTitle": "Aktiiviset oppijat",
+        "activeLede": "Eri oppijat aktiviteetilla päivittäin (14 pv).",
+        "rolesTitle": "Roolit",
+        "rolesLede": "Tilit rooleittain.",
+        "contentTitle": "Sisällön jakauma",
+        "contentLede": "Tallenteet oppimismoduleissa."
       }
     },
     "users": {
-      "title": "Users",
+      "title": "Käyttäjät",
       "description": "Search accounts, change roles, suspend access, or delete with confirmation.",
-      "searchPlaceholder": "Search name or email…",
+      "searchPlaceholder": "Hae nimeä tai sähköpostia…",
       "empty": "No users match these filters.",
       "selfGuard": "Safeguards prevent changing or deleting your own admin account here.",
       "columns": {
-        "user": "User",
-        "role": "Role",
-        "status": "Status",
-        "plan": "Plan",
-        "workspaces": "Workspaces",
-        "created": "Registered"
+        "user": "Käyttäjä",
+        "role": "Rooli",
+        "status": "Tila",
+        "plan": "Paketti",
+        "workspaces": "Työtilat",
+        "created": "Rekisteröity"
       },
       "filters": {
         "role": "Role",
         "status": "Status",
-        "allRoles": "Any role",
-        "allStatuses": "Any status"
+        "allRoles": "Kaikki roolit",
+        "allStatuses": "Kaikki tilat"
       },
       "status": {
-        "active": "Active",
-        "suspended": "Suspended"
+        "active": "Aktiivinen",
+        "suspended": "Jäädytetty"
       },
       "fields": {
         "id": "User id",
-        "name": "Name",
-        "role": "Role",
+        "name": "Nimi",
+        "role": "Rooli",
         "status": "Status",
         "plan": "Plan",
         "created": "Registered",
         "updated": "Updated",
-        "emailVerified": "Email verified"
+        "emailVerified": "Email verified",
+        "email": "Sähköposti",
+        "password": "Salasana"
       },
       "detail": {
         "account": "Account",
@@ -4845,7 +4870,8 @@
         "usageLede": "Owned records across learning modules.",
         "actions": "Account actions",
         "workspaces": "Workspaces",
-        "workspacesLede": "Language workspaces owned by this user."
+        "workspacesLede": "Language workspaces owned by this user.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Save name",
@@ -4853,14 +4879,34 @@
         "revokeAdmin": "Revoke admin",
         "suspend": "Suspend",
         "restore": "Restore",
-        "delete": "Delete account"
+        "delete": "Delete account",
+        "grantTester": "Anna testaaja-rooli",
+        "revokeTester": "Poista testaaja-rooli",
+        "create": "Luo käyttäjä"
       },
       "confirm": {
         "grantAdmin": "Grant admin access to this account?",
         "revokeAdmin": "Revoke admin access? This fails if they are the last active admin.",
         "suspend": "Suspend this account? They lose access on the next protected request.",
         "restore": "Restore this account?",
-        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone."
+        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone.",
+        "grantTester": "Annetaanko testaaja-rooli? He saavat kaikki sovellusominaisuudet QA:ta varten; tallennettu tilaus ei muutu.",
+        "revokeTester": "Poistetaanko testaaja-rooli? Ominaisuuksien käyttö palaa heidän todellisen tilauksensa mukaiseksi."
+      },
+      "roleHelp": "Testaaja-rooli avaa kaikki Free-, Pro- ja Premium-ominaisuudet QA:ta varten muuttamatta tallennettua tilausta. Tämä hallintapaneeli vaatii ylläpitäjän.",
+      "roles": {
+        "user": "Käyttäjä",
+        "tester": "Testaaja",
+        "admin": "Ylläpitäjä"
+      },
+      "create": {
+        "title": "Luo käyttäjä",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4882,7 +4928,9 @@
         "language": "Language",
         "owner": "Owner",
         "created": "Created",
-        "updated": "Updated"
+        "updated": "Updated",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Language: {language}",
@@ -4897,6 +4945,10 @@
       },
       "confirm": {
         "delete": "Delete this workspace and all learning content inside it via database cascades?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4918,7 +4970,10 @@
         "owner": "Owner",
         "workspace": "Workspace",
         "created": "Created",
-        "updated": "Updated"
+        "updated": "Updated",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Metadata inspection. Private bodies are not auto-loaded.",
@@ -4927,11 +4982,13 @@
         "actions": "Actions"
       },
       "actions": {
-        "delete": "Delete record"
+        "delete": "Delete record",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Delete this record? Related child rows follow database cascade / set-null rules."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Jobs",
@@ -4996,7 +5053,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "This user already has a workspace for that language.",
       "INVALID_LANGUAGE": "Invalid language code.",
       "CONTENT_NOT_FOUND": "Record not found.",
-      "INVALID_CONTENT_MODULE": "Unknown content module."
+      "INVALID_CONTENT_MODULE": "Unknown content module.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

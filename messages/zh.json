@@ -2812,6 +2812,8 @@
     "resetTokenMissing": "此重置链接缺失或不完整。请重新申请。",
     "account": "账户",
     "accountSettings": "账户设置",
+    "roleAdmin": "管理员",
+    "roleTester": "测试员",
     "accountDescription": "更新你的头像和密码。",
     "profile": "个人资料",
     "avatar": "头像",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "内容库",
       "backToApp": "返回应用",
       "openMenu": "打开管理菜单",
-      "openAdmin": "管理仪表盘"
+      "openAdmin": "管理控制台"
     },
     "modules": {
       "vocabulary": "词汇",
@@ -4803,7 +4805,28 @@
         "failedListening": "失败的听力",
         "failedImports": "失败的导入",
         "runningJobs": "运行中的任务锁",
-        "recentAudits7d": "审计条目（7 天）"
+        "recentAudits7d": "审计条目（7 天）",
+        "admins": "管理员",
+        "testers": "测试员",
+        "suspended": "已停用",
+        "contentTotal": "内容记录"
+      },
+      "quickAccess": "快捷入口",
+      "quickAccessLede": "前往管理工具。",
+      "groups": {
+        "people": "用户",
+        "content": "内容",
+        "ops": "运维"
+      },
+      "charts": {
+        "signupsTitle": "新账号",
+        "signupsLede": "过去 14 个 UTC 日的每日注册。",
+        "activeTitle": "活跃学习者",
+        "activeLede": "每日有学习活动的独立用户（14 天）。",
+        "rolesTitle": "角色",
+        "rolesLede": "按角色划分的账号占比。",
+        "contentTitle": "内容构成",
+        "contentLede": "各学习模块中的存储记录。"
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "方案",
         "created": "注册时间",
         "updated": "更新时间",
-        "emailVerified": "邮箱已验证"
+        "emailVerified": "邮箱已验证",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "账户",
@@ -4846,7 +4871,8 @@
         "usageLede": "各学习模块中拥有的记录。",
         "actions": "账户操作",
         "workspaces": "工作区",
-        "workspacesLede": "此用户拥有的语言工作区。"
+        "workspacesLede": "此用户拥有的语言工作区。",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "保存姓名",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "撤销管理员",
         "suspend": "暂停",
         "restore": "恢复",
-        "delete": "删除账户"
+        "delete": "删除账户",
+        "grantTester": "授予测试员角色",
+        "revokeTester": "撤销测试员角色",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "要向此账户授予管理员权限吗？",
         "revokeAdmin": "要撤销管理员权限吗？如果他们是最后一位活跃管理员，操作将失败。",
         "suspend": "要暂停此账户吗？他们将在下一次受保护请求时失去访问权限。",
         "restore": "要恢复此账户吗？",
-        "delete": "要永久删除此账户及其级联学习数据吗？此操作无法撤销。"
+        "delete": "要永久删除此账户及其级联学习数据吗？此操作无法撤销。",
+        "grantTester": "授予测试员角色？他们可获得全部应用功能用于 QA；已存订阅不会改变。",
+        "revokeTester": "撤销测试员角色？功能访问将恢复为他们的实际订阅。"
+      },
+      "roleHelp": "测试员角色可在不更改已存订阅的情况下，为 QA 解锁全部 Free、Pro 与 Premium 功能。此控制台需要管理员权限。",
+      "roles": {
+        "user": "用户",
+        "tester": "测试员",
+        "admin": "管理员"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "语言",
         "owner": "所有者",
         "created": "创建时间",
-        "updated": "更新时间"
+        "updated": "更新时间",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "语言：{language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "要通过数据库级联删除此工作区及其全部学习内容吗？"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "所有者",
         "workspace": "工作区",
         "created": "创建时间",
-        "updated": "更新时间"
+        "updated": "更新时间",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "元数据检查。私有正文不会自动加载。",
@@ -4928,11 +4983,13 @@
         "actions": "操作"
       },
       "actions": {
-        "delete": "删除记录"
+        "delete": "删除记录",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "要删除此记录吗？相关子行将遵循数据库级联 / 置空规则。"
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "任务",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "此用户已有该语言的工作区。",
       "INVALID_LANGUAGE": "无效的语言代码。",
       "CONTENT_NOT_FOUND": "找不到记录。",
-      "INVALID_CONTENT_MODULE": "未知的内容模块。"
+      "INVALID_CONTENT_MODULE": "未知的内容模块。",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

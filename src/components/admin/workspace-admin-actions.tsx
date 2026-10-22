@@ -23,6 +23,7 @@ type WorkspaceAdminActionsProps =
       name: string;
       language: string;
       ownerUserId?: never;
+      ownerEmail?: never;
     }
   | {
       mode: "create";
@@ -30,6 +31,15 @@ type WorkspaceAdminActionsProps =
       workspaceId?: never;
       name?: never;
       language?: never;
+      ownerEmail?: never;
+    }
+  | {
+      mode: "createByEmail";
+      workspaceId?: never;
+      name?: never;
+      language?: never;
+      ownerUserId?: never;
+      ownerEmail?: never;
     };
 
 export function WorkspaceAdminActions(props: WorkspaceAdminActionsProps) {
@@ -42,6 +52,7 @@ export function WorkspaceAdminActions(props: WorkspaceAdminActionsProps) {
   const [language, setLanguage] = useState(
     props.mode === "edit" ? props.language : WORKPLACE_LANGUAGES[0]?.code ?? "en",
   );
+  const [ownerEmail, setOwnerEmail] = useState("");
   const [error, setError] = useState<string | null>(null);
 
   function run(
@@ -54,7 +65,11 @@ export function WorkspaceAdminActions(props: WorkspaceAdminActionsProps) {
         const result = await action();
         if (options?.redirectTo) {
           router.push(options.redirectTo);
-        } else if (props.mode === "create" && "id" in result && result.id) {
+        } else if (
+          (props.mode === "create" || props.mode === "createByEmail") &&
+          "id" in result &&
+          result.id
+        ) {
           router.push(`/admin/workspaces/${result.id}`);
         }
         router.refresh();
@@ -65,9 +80,39 @@ export function WorkspaceAdminActions(props: WorkspaceAdminActionsProps) {
     });
   }
 
+  const isCreate =
+    props.mode === "create" || props.mode === "createByEmail";
+
   return (
-    <div className="grid gap-4">
+    <div className={isCreate ? mx(styles, "admin-create-card") : "grid gap-4"}>
+      {props.mode === "createByEmail" ? (
+        <div>
+          <h2 className={mx(styles, "admin-panel-title")}>
+            {t("workspaces.create.title")}
+          </h2>
+          <p className={mx(styles, "admin-panel-lede")}>
+            {t("workspaces.create.lede")}
+          </p>
+        </div>
+      ) : null}
+
       <div className={mx(styles, "admin-form-grid", "cols-2")}>
+        {props.mode === "createByEmail" ? (
+          <div className={mx(styles, "admin-field")}>
+            <Label htmlFor="admin-ws-owner">
+              {t("workspaces.fields.ownerEmail")}
+            </Label>
+            <Input
+              id="admin-ws-owner"
+              type="email"
+              value={ownerEmail}
+              onChange={(e) => setOwnerEmail(e.target.value)}
+              disabled={pending}
+              autoComplete="off"
+              placeholder={t("workspaces.fields.ownerEmailPlaceholder")}
+            />
+          </div>
+        ) : null}
         <div className={mx(styles, "admin-field")}>
           <Label htmlFor="admin-ws-name">{t("workspaces.fields.name")}</Label>
           <Input
@@ -77,9 +122,7 @@ export function WorkspaceAdminActions(props: WorkspaceAdminActionsProps) {
             disabled={pending}
             maxLength={80}
             placeholder={
-              props.mode === "create"
-                ? t("workspaces.fields.nameOptional")
-                : undefined
+              isCreate ? t("workspaces.fields.nameOptional") : undefined
             }
           />
         </div>
@@ -96,18 +139,29 @@ export function WorkspaceAdminActions(props: WorkspaceAdminActionsProps) {
       </div>
 
       <div className={mx(styles, "admin-actions")}>
-        {props.mode === "create" ? (
+        {isCreate ? (
           <Button
             type="button"
             size="sm"
-            disabled={pending}
+            disabled={
+              pending ||
+              (props.mode === "createByEmail" && ownerEmail.trim().length < 3)
+            }
             onClick={() =>
               run(() =>
-                adminCreateWorkspace({
-                  userId: props.ownerUserId,
-                  language,
-                  name: name.trim() || undefined,
-                }),
+                adminCreateWorkspace(
+                  props.mode === "create"
+                    ? {
+                        userId: props.ownerUserId,
+                        language,
+                        name: name.trim() || undefined,
+                      }
+                    : {
+                        ownerEmail: ownerEmail.trim(),
+                        language,
+                        name: name.trim() || undefined,
+                      },
+                ),
               )
             }
           >

@@ -2851,7 +2851,9 @@
     "legalTerms": "Kushtet",
     "registerAgreement": "Duke krijuar një llogari, pranoni <terms>Kushtet e përdorimit</terms> dhe <privacy>Politikën e privatësisë</privacy>.",
     "avatarRequestTooLarge": "Ajo foto është shumë e madhe për t’u dërguar. Provoni një imazh më të vogël.",
-    "requestTooLarge": "Ajo kërkesë ishte shumë e madhe. Ndryshimet tuaja u mbajtën — ju lutemi provoni përsëri."
+    "requestTooLarge": "Ajo kërkesë ishte shumë e madhe. Ndryshimet tuaja u mbajtën — ju lutemi provoni përsëri.",
+    "roleAdmin": "Administrator",
+    "roleTester": "Testues"
   },
   "account": {
     "eyebrow": "Llogaria",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Administrimi",
+      "admin": "Administrator",
       "manage": "Menaxhoni",
       "overview": "Përmbledhje",
       "users": "Përdoruesit",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "Biblioteka e përmbajtjes",
       "backToApp": "Kthehuni te aplikacioni",
       "openMenu": "Hapni menunë e administrimit",
-      "openAdmin": "Paneli i administrimit"
+      "openAdmin": "Paneli i administratorit"
     },
     "modules": {
       "vocabulary": "Fjalori",
@@ -4803,7 +4805,28 @@
         "failedListening": "Dëgjimi i dështuar",
         "failedImports": "Importimet e dështuara",
         "runningJobs": "Kyçe detyrash në ekzekutim",
-        "recentAudits7d": "Regjistrime auditimi (7d)"
+        "recentAudits7d": "Regjistrime auditimi (7d)",
+        "admins": "Administratorë",
+        "testers": "Testues",
+        "suspended": "Pezulluar",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Qasje e shpejtë",
+      "quickAccessLede": "Shko te mjetet e menaxhimit.",
+      "groups": {
+        "people": "Njerëz",
+        "content": "Përmbajtje",
+        "ops": "Operacione"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Plani",
         "created": "Regjistruar",
         "updated": "Përditësuar",
-        "emailVerified": "Email i verifikuar"
+        "emailVerified": "Email i verifikuar",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Llogaria",
@@ -4846,7 +4871,8 @@
         "usageLede": "Regjistrime në pronësi nëpër module mësimore.",
         "actions": "Veprimet e llogarisë",
         "workspaces": "Hapësirat e punës",
-        "workspacesLede": "Hapësirat gjuhësore në pronësi të këtij përdoruesi."
+        "workspacesLede": "Hapësirat gjuhësore në pronësi të këtij përdoruesi.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Ruani emrin",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Hiqni administrimin",
         "suspend": "Pezulloni",
         "restore": "Rivendosni",
-        "delete": "Fshini llogarinë"
+        "delete": "Fshini llogarinë",
+        "grantTester": "Jep rolin e testuesit",
+        "revokeTester": "Hiq rolin e testuesit",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "T’i jepet qasje administruese kësaj llogarie?",
         "revokeAdmin": "Të hiqet qasja administruese? Dështon nëse janë administratori i fundit aktiv.",
         "suspend": "Të pezullohet kjo llogari? Humbin qasjen në kërkesën e ardhshme të mbrojtur.",
         "restore": "Të rivendoset kjo llogari?",
-        "delete": "Të fshihet përgjithmonë kjo llogari dhe të dhënat e kaskaduara të të mësuarit? Kjo nuk mund të zhbëhet."
+        "delete": "Të fshihet përgjithmonë kjo llogari dhe të dhënat e kaskaduara të të mësuarit? Kjo nuk mund të zhbëhet.",
+        "grantTester": "Të jepet roli i testuesit? Marrin të gjitha funksionet e aplikacionit për QA; abonimi i ruajtur nuk ndryshon.",
+        "revokeTester": "Të hiqet roli i testuesit? Qasja te funksionet kthehet te abonimi i tyre i vërtetë."
+      },
+      "roleHelp": "Roli i testuesit hap të gjitha funksionet Free, Pro dhe Premium për QA pa ndryshuar abonimin e ruajtur. Për këtë panel nevojitet administrator.",
+      "roles": {
+        "user": "Përdorues",
+        "tester": "Testues",
+        "admin": "Administrator"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Gjuha",
         "owner": "Pronari",
         "created": "Krijuar",
-        "updated": "Përditësuar"
+        "updated": "Përditësuar",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Gjuha: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Të fshihet kjo hapësirë pune dhe e gjithë përmbajtja mësimore brenda saj përmes kaskadave të bazës së të dhënave?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Pronari",
         "workspace": "Hapësira e punës",
         "created": "Krijuar",
-        "updated": "Përditësuar"
+        "updated": "Përditësuar",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Inspektim i metadatave. Trupat privatë nuk ngarkohen automatikisht.",
@@ -4928,11 +4983,13 @@
         "actions": "Veprimet"
       },
       "actions": {
-        "delete": "Fshini regjistrimin"
+        "delete": "Fshini regjistrimin",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Të fshihet ky regjistrim? Rreshtat e lidhur fëmijë ndjekin rregullat cascade / set-null të bazës së të dhënave."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Detyrat",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Ky përdorues ka tashmë një hapësirë pune për atë gjuhë.",
       "INVALID_LANGUAGE": "Kod gjuhe i pavlefshëm.",
       "CONTENT_NOT_FOUND": "Regjistrimi nuk u gjet.",
-      "INVALID_CONTENT_MODULE": "Modul përmbajtjeje i panjohur."
+      "INVALID_CONTENT_MODULE": "Modul përmbajtjeje i panjohur.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

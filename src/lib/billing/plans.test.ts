@@ -48,6 +48,16 @@ describe("plan resolution", () => {
     expect(entitlementPlan({ role: "ADMIN", subscriptionPlan: "free" })).toBe(
       "premium",
     );
+    expect(entitlementPlan({ role: "TESTER", subscriptionPlan: "free" })).toBe(
+      "premium",
+    );
+    expect(
+      displayPlan({
+        role: "TESTER",
+        subscriptionPlan: "free",
+        subscriptionStatus: null,
+      }),
+    ).toBe("free");
   });
 });
 

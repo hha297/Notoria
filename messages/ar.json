@@ -2851,7 +2851,9 @@
     "legalTerms": "الشروط",
     "registerAgreement": "بإنشاء حساب، فإنك توافق على <terms>شروط الاستخدام</terms> و<privacy>سياسة الخصوصية</privacy>.",
     "avatarRequestTooLarge": "هذه الصورة كبيرة جدًا للإرسال. جرّب صورة أصغر.",
-    "requestTooLarge": "كان الطلب كبيرًا جدًا. احتُفظ بتغييراتك — يُرجى المحاولة مرة أخرى."
+    "requestTooLarge": "كان الطلب كبيرًا جدًا. احتُفظ بتغييراتك — يُرجى المحاولة مرة أخرى.",
+    "roleAdmin": "مسؤول",
+    "roleTester": "مختبر"
   },
   "account": {
     "eyebrow": "الحساب",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "الإدارة",
+      "admin": "مسؤول",
       "manage": "إدارة",
       "overview": "نظرة عامة",
       "users": "المستخدمون",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "مكتبة المحتوى",
       "backToApp": "العودة إلى التطبيق",
       "openMenu": "فتح قائمة الإدارة",
-      "openAdmin": "لوحة تحكم الإدارة"
+      "openAdmin": "لوحة المسؤول"
     },
     "modules": {
       "vocabulary": "المفردات",
@@ -4803,7 +4805,28 @@
         "failedListening": "استماع فاشل",
         "failedImports": "استيرادات فاشلة",
         "runningJobs": "أقفال مهام قيد التشغيل",
-        "recentAudits7d": "إدخالات التدقيق (7 أيام)"
+        "recentAudits7d": "إدخالات التدقيق (7 أيام)",
+        "admins": "المسؤولون",
+        "testers": "المختبرون",
+        "suspended": "موقوف",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "وصول سريع",
+      "quickAccessLede": "الانتقال إلى أدوات الإدارة.",
+      "groups": {
+        "people": "الأشخاص",
+        "content": "المحتوى",
+        "ops": "العمليات"
+      },
+      "charts": {
+        "signupsTitle": "New accounts",
+        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
+        "activeTitle": "Active learners",
+        "activeLede": "Distinct learners with activity each day (14d).",
+        "rolesTitle": "Roles",
+        "rolesLede": "Share of accounts by role.",
+        "contentTitle": "Content mix",
+        "contentLede": "Stored records across learning modules."
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "الخطة",
         "created": "تاريخ التسجيل",
         "updated": "آخر تحديث",
-        "emailVerified": "البريد الإلكتروني موثّق"
+        "emailVerified": "البريد الإلكتروني موثّق",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "الحساب",
@@ -4846,7 +4871,8 @@
         "usageLede": "السجلات المملوكة عبر وحدات التعلّم.",
         "actions": "إجراءات الحساب",
         "workspaces": "مساحات العمل",
-        "workspacesLede": "مساحات عمل اللغة التي يملكها هذا المستخدم."
+        "workspacesLede": "مساحات عمل اللغة التي يملكها هذا المستخدم.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "حفظ الاسم",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "سحب صلاحية الإدارة",
         "suspend": "تعليق",
         "restore": "استعادة",
-        "delete": "حذف الحساب"
+        "delete": "حذف الحساب",
+        "grantTester": "منح دور المختبر",
+        "revokeTester": "إلغاء دور المختبر",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "منح صلاحية الإدارة لهذا الحساب؟",
         "revokeAdmin": "سحب صلاحية الإدارة؟ يفشل ذلك إذا كان آخر مسؤول نشط.",
         "suspend": "تعليق هذا الحساب؟ يفقد الوصول عند الطلب المحمي التالي.",
         "restore": "استعادة هذا الحساب؟",
-        "delete": "حذف هذا الحساب نهائيًا وبيانات التعلّم المترابطة؟ لا يمكن التراجع عن ذلك."
+        "delete": "حذف هذا الحساب نهائيًا وبيانات التعلّم المترابطة؟ لا يمكن التراجع عن ذلك.",
+        "grantTester": "منح دور المختبر؟ يحصلون على كل ميزات التطبيق للاختبار؛ الاشتراك المخزّن لا يتغير.",
+        "revokeTester": "إلغاء دور المختبر؟ تعود صلاحيات الميزات وفق اشتراكهم الفعلي."
+      },
+      "roleHelp": "دور المختبر يفتح كل ميزات المجاني وPro وPremium للاختبار دون تغيير الاشتراك المخزّن. يلزم دور المسؤول لهذه اللوحة.",
+      "roles": {
+        "user": "مستخدم",
+        "tester": "مختبر",
+        "admin": "مسؤول"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "اللغة",
         "owner": "المالك",
         "created": "تاريخ الإنشاء",
-        "updated": "آخر تحديث"
+        "updated": "آخر تحديث",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "اللغة: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "حذف مساحة العمل هذه وكل محتوى التعلّم داخلها عبر تتابع قاعدة البيانات؟"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "المالك",
         "workspace": "مساحة العمل",
         "created": "تاريخ الإنشاء",
-        "updated": "آخر تحديث"
+        "updated": "آخر تحديث",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "فحص البيانات الوصفية. المحتوى الخاص لا يُحمَّل تلقائيًا.",
@@ -4928,11 +4983,13 @@
         "actions": "الإجراءات"
       },
       "actions": {
-        "delete": "حذف السجل"
+        "delete": "حذف السجل",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "حذف هذا السجل؟ تتبع الصفوف الفرعية قواعد التتابع / التعيين إلى فارغ في قاعدة البيانات."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "المهام",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "لدى هذا المستخدم بالفعل مساحة عمل لتلك اللغة.",
       "INVALID_LANGUAGE": "رمز لغة غير صالح.",
       "CONTENT_NOT_FOUND": "السجل غير موجود.",
-      "INVALID_CONTENT_MODULE": "وحدة محتوى غير معروفة."
+      "INVALID_CONTENT_MODULE": "وحدة محتوى غير معروفة.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

@@ -2851,7 +2851,9 @@
     "legalTerms": "Ketentuan",
     "registerAgreement": "Dengan membuat akun, Anda menyetujui <terms>Ketentuan Penggunaan</terms> dan <privacy>Kebijakan Privasi</privacy>.",
     "avatarRequestTooLarge": "Foto itu terlalu besar untuk dikirim. Coba gambar yang lebih kecil.",
-    "requestTooLarge": "Permintaan itu terlalu besar. Perubahan Anda tetap disimpan — silakan coba lagi."
+    "requestTooLarge": "Permintaan itu terlalu besar. Perubahan Anda tetap disimpan — silakan coba lagi.",
+    "roleAdmin": "Administrator",
+    "roleTester": "Penguji"
   },
   "account": {
     "eyebrow": "Akun",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Administrator",
       "manage": "Kelola",
       "overview": "Ringkasan",
       "users": "Pengguna",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "Perpustakaan konten",
       "backToApp": "Kembali ke aplikasi",
       "openMenu": "Buka menu admin",
-      "openAdmin": "Dasbor admin"
+      "openAdmin": "Dasbor administrator"
     },
     "modules": {
       "vocabulary": "Kosakata",
@@ -4765,7 +4767,7 @@
       "listening": "Mendengarkan",
       "reading": "Membaca",
       "speaking": "Berbicara",
-      "inbox": "Capture",
+      "inbox": "Tangkap",
       "folders": "Folder"
     },
     "common": {
@@ -4799,11 +4801,32 @@
         "listening": "Mendengarkan",
         "reading": "Membaca",
         "speaking": "Berbicara",
-        "inbox": "Capture",
+        "inbox": "Tangkap",
         "failedListening": "Mendengarkan gagal",
         "failedImports": "Impor gagal",
         "runningJobs": "Kunci pekerjaan berjalan",
-        "recentAudits7d": "Entri audit (7h)"
+        "recentAudits7d": "Entri audit (7h)",
+        "admins": "Administrator",
+        "testers": "Penguji",
+        "suspended": "Ditangguhkan",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Akses cepat",
+      "quickAccessLede": "Buka alat manajemen.",
+      "groups": {
+        "people": "Orang",
+        "content": "Konten",
+        "ops": "Operasi"
+      },
+      "charts": {
+        "signupsTitle": "Nouveaux comptes",
+        "signupsLede": "Inscriptions quotidiennes sur les 14 derniers jours UTC.",
+        "activeTitle": "Apprenants actifs",
+        "activeLede": "Apprenants distincts avec activité chaque jour (14 j).",
+        "rolesTitle": "Rôles",
+        "rolesLede": "Comptes par rôle.",
+        "contentTitle": "Répartition du contenu",
+        "contentLede": "Enregistrements dans les modules d’apprentissage."
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Paket",
         "created": "Terdaftar",
         "updated": "Diperbarui",
-        "emailVerified": "Email terverifikasi"
+        "emailVerified": "Email terverifikasi",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Akun",
@@ -4846,7 +4871,8 @@
         "usageLede": "Catatan yang dimiliki di seluruh modul belajar.",
         "actions": "Tindakan akun",
         "workspaces": "Ruang kerja",
-        "workspacesLede": "Ruang kerja bahasa yang dimiliki pengguna ini."
+        "workspacesLede": "Ruang kerja bahasa yang dimiliki pengguna ini.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Simpan nama",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Cabut admin",
         "suspend": "Tangguhkan",
         "restore": "Pulihkan",
-        "delete": "Hapus akun"
+        "delete": "Hapus akun",
+        "grantTester": "Berikan peran penguji",
+        "revokeTester": "Cabut peran penguji",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Berikan akses admin ke akun ini?",
         "revokeAdmin": "Cabut akses admin? Ini gagal jika mereka adalah admin aktif terakhir.",
         "suspend": "Tangguhkan akun ini? Mereka kehilangan akses pada permintaan terlindungi berikutnya.",
         "restore": "Pulihkan akun ini?",
-        "delete": "Hapus permanen akun ini dan data belajar terkait? Tindakan ini tidak dapat dibatalkan."
+        "delete": "Hapus permanen akun ini dan data belajar terkait? Tindakan ini tidak dapat dibatalkan.",
+        "grantTester": "Berikan peran penguji? Mereka mendapat semua fitur aplikasi untuk QA; langganan tersimpan tidak berubah.",
+        "revokeTester": "Cabut peran penguji? Akses fitur kembali ke langganan aktual mereka."
+      },
+      "roleHelp": "Peran penguji membuka semua fitur Free, Pro, dan Premium untuk QA tanpa mengubah langganan tersimpan. Administrator diperlukan untuk dasbor ini.",
+      "roles": {
+        "user": "Pengguna",
+        "tester": "Penguji",
+        "admin": "Administrator"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Bahasa",
         "owner": "Pemilik",
         "created": "Dibuat",
-        "updated": "Diperbarui"
+        "updated": "Diperbarui",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Bahasa: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Hapus ruang kerja ini dan semua konten belajar di dalamnya melalui kaskade basis data?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Pemilik",
         "workspace": "Ruang kerja",
         "created": "Dibuat",
-        "updated": "Diperbarui"
+        "updated": "Diperbarui",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Pemeriksaan metadata. Isi pribadi tidak dimuat otomatis.",
@@ -4928,11 +4983,13 @@
         "actions": "Tindakan"
       },
       "actions": {
-        "delete": "Hapus catatan"
+        "delete": "Hapus catatan",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Hapus catatan ini? Baris anak terkait mengikuti aturan kaskade / set-null basis data."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Pekerjaan",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Pengguna ini sudah memiliki ruang kerja untuk bahasa tersebut.",
       "INVALID_LANGUAGE": "Kode bahasa tidak valid.",
       "CONTENT_NOT_FOUND": "Catatan tidak ditemukan.",
-      "INVALID_CONTENT_MODULE": "Modul konten tidak dikenal."
+      "INVALID_CONTENT_MODULE": "Modul konten tidak dikenal.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

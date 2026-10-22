@@ -27,6 +27,7 @@ type UserButtonProps = {
   isPro?: boolean;
   plan?: "free" | "pro" | "premium";
   isAdmin?: boolean;
+  isTester?: boolean;
   onNavigate?: () => void;
   active?: boolean;
 };
@@ -38,6 +39,7 @@ export function UserButton({
   isPro = false,
   plan = "free",
   isAdmin = false,
+  isTester = false,
   onNavigate,
   active = false,
 }: UserButtonProps) {
@@ -46,12 +48,16 @@ export function UserButton({
   const tb = useTranslations("billing");
   const ta = useTranslations("admin.nav");
 
-  const planBadge =
-    plan === "premium"
-      ? tb("premiumBadge")
-      : plan === "pro" || isPro
-        ? tb("proBadge")
-        : null;
+  /** Role wins over plan: Admin > Tester > Pro/Premium. */
+  const statusBadge = isAdmin
+    ? { label: t("roleAdmin"), variant: "outline" as const }
+    : isTester
+      ? { label: t("roleTester"), variant: "pro" as const }
+      : plan === "premium"
+        ? { label: tb("premiumBadge"), variant: "pro" as const }
+        : plan === "pro" || isPro
+          ? { label: tb("proBadge"), variant: "pro" as const }
+          : null;
 
   async function handleSignOut() {
     onNavigate?.();
@@ -76,9 +82,12 @@ export function UserButton({
         <span className="min-w-0 flex-1">
           <span className="flex min-w-0 items-center gap-1.5">
             <span className="block truncate font-medium text-ink">{name}</span>
-            {planBadge ? (
-              <Badge variant="pro" className="h-4 px-1.5 text-[10px]">
-                {planBadge}
+            {statusBadge ? (
+              <Badge
+                variant={statusBadge.variant}
+                className="h-4 shrink-0 px-1.5 text-[10px]"
+              >
+                {statusBadge.label}
               </Badge>
             ) : null}
           </span>
@@ -98,9 +107,12 @@ export function UserButton({
             <div className="flex flex-col gap-0.5">
               <span className="flex items-center gap-1.5">
                 <span className="font-medium text-ink">{name}</span>
-                {planBadge ? (
-                  <Badge variant="pro" className="h-4 px-1.5 text-[10px]">
-                    {planBadge}
+                {statusBadge ? (
+                  <Badge
+                    variant={statusBadge.variant}
+                    className="h-4 shrink-0 px-1.5 text-[10px]"
+                  >
+                    {statusBadge.label}
                   </Badge>
                 ) : null}
               </span>

@@ -4,6 +4,7 @@ import { AdminDataTable } from "@/components/admin/admin-data-table";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
 import { AdminPagination } from "@/components/admin/admin-pagination";
 import { AdminSearchForm } from "@/components/admin/admin-search-form";
+import { WorkspaceAdminActions } from "@/components/admin/workspace-admin-actions";
 import styles from "@/components/style/admin/admin.module.css";
 import { buildAdminListHref, formatAdminDate } from "@/lib/admin/format";
 import { listAdminWorkspaces } from "@/lib/admin/workspaces";
@@ -34,6 +35,8 @@ export default async function AdminWorkspacesPage({ searchParams }: PageProps) {
         title={t("workspaces.title")}
         description={t("workspaces.description")}
       />
+
+      <WorkspaceAdminActions mode="createByEmail" />
 
       <section className={mx(styles, "admin-panel")}>
         <div className={mx(styles, "admin-panel-head")}>

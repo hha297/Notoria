@@ -2851,7 +2851,9 @@
     "legalTerms": "Uslovi",
     "registerAgreement": "Kreiranjem računa prihvatate <terms>Uslove korištenja</terms> i <privacy>Politiku privatnosti</privacy>.",
     "avatarRequestTooLarge": "Ta fotografija je prevelika za slanje. Pokušajte manju sliku.",
-    "requestTooLarge": "Taj zahtjev je bio prevelik. Vaše izmjene su zadržane — pokušajte ponovo."
+    "requestTooLarge": "Taj zahtjev je bio prevelik. Vaše izmjene su zadržane — pokušajte ponovo.",
+    "roleAdmin": "Administrator",
+    "roleTester": "Ispitivač"
   },
   "account": {
     "eyebrow": "Račun",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Administrator",
       "manage": "Upravljanje",
       "overview": "Pregled",
       "users": "Korisnici",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "Biblioteka sadržaja",
       "backToApp": "Nazad u aplikaciju",
       "openMenu": "Otvori admin meni",
-      "openAdmin": "Admin kontrolna tabla"
+      "openAdmin": "Admin ploča"
     },
     "modules": {
       "vocabulary": "Vokabular",
@@ -4765,7 +4767,7 @@
       "listening": "Slušanje",
       "reading": "Čitanje",
       "speaking": "Govorenje",
-      "inbox": "Capture",
+      "inbox": "Prikupljanje",
       "folders": "Fascikle"
     },
     "common": {
@@ -4799,11 +4801,32 @@
         "listening": "Slušanje",
         "reading": "Čitanje",
         "speaking": "Govorenje",
-        "inbox": "Capture",
+        "inbox": "Prikupljanje",
         "failedListening": "Neuspješno slušanje",
         "failedImports": "Neuspješni uvozi",
         "runningJobs": "Pokrenute brave poslova",
-        "recentAudits7d": "Revizijski unosi (7d)"
+        "recentAudits7d": "Revizijski unosi (7d)",
+        "admins": "Administratori",
+        "testers": "Ispitivači",
+        "suspended": "Suspendovani",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Brzi pristup",
+      "quickAccessLede": "Idite na alate za upravljanje.",
+      "groups": {
+        "people": "Ljudi",
+        "content": "Sadržaj",
+        "ops": "Operacije"
+      },
+      "charts": {
+        "signupsTitle": "New accounts",
+        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
+        "activeTitle": "Active learners",
+        "activeLede": "Distinct learners with activity each day (14d).",
+        "rolesTitle": "Roles",
+        "rolesLede": "Share of accounts by role.",
+        "contentTitle": "Content mix",
+        "contentLede": "Stored records across learning modules."
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Plan",
         "created": "Registrovan",
         "updated": "Ažurirano",
-        "emailVerified": "E-mail potvrđen"
+        "emailVerified": "E-mail potvrđen",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Račun",
@@ -4846,7 +4871,8 @@
         "usageLede": "Vlasnički zapisi kroz module učenja.",
         "actions": "Radnje na računu",
         "workspaces": "Radni prostori",
-        "workspacesLede": "Jezički radni prostori koje posjeduje ovaj korisnik."
+        "workspacesLede": "Jezički radni prostori koje posjeduje ovaj korisnik.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Sačuvaj ime",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Ukloni admin",
         "suspend": "Suspenduj",
         "restore": "Vrati",
-        "delete": "Obriši račun"
+        "delete": "Obriši račun",
+        "grantTester": "Dodijeli ispitivača",
+        "revokeTester": "Ukloni ispitivača",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Dodijeliti admin pristup ovom računu?",
         "revokeAdmin": "Ukloniti admin pristup? Ovo neće uspjeti ako su posljednji aktivni admin.",
         "suspend": "Suspendovati ovaj račun? Gube pristup pri sljedećem zaštićenom zahtjevu.",
         "restore": "Vratiti ovaj račun?",
-        "delete": "Trajno obrisati ovaj račun i povezane podatke učenja? Ovo se ne može poništiti."
+        "delete": "Trajno obrisati ovaj račun i povezane podatke učenja? Ovo se ne može poništiti.",
+        "grantTester": "Dodijeliti ulogu ispitivača? Dobijaju sve funkcije aplikacije za QA; sačuvana pretplata se ne mijenja.",
+        "revokeTester": "Ukloniti ulogu ispitivača? Pristup funkcijama vraća se na njihovu stvarnu pretplatu."
+      },
+      "roleHelp": "Uloga ispitivača otključava sve Free, Pro i Premium funkcije za QA bez promjene sačuvane pretplate. Za ovu ploču potreban je administrator.",
+      "roles": {
+        "user": "Korisnik",
+        "tester": "Ispitivač",
+        "admin": "Administrator"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Jezik",
         "owner": "Vlasnik",
         "created": "Kreirano",
-        "updated": "Ažurirano"
+        "updated": "Ažurirano",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Jezik: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Obrisati ovaj radni prostor i sav sadržaj učenja u njemu putem kaskada baze?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Vlasnik",
         "workspace": "Radni prostor",
         "created": "Kreirano",
-        "updated": "Ažurirano"
+        "updated": "Ažurirano",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Pregled metapodataka. Privatna tijela se ne učitavaju automatski.",
@@ -4928,11 +4983,13 @@
         "actions": "Radnje"
       },
       "actions": {
-        "delete": "Obriši zapis"
+        "delete": "Obriši zapis",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Obrisati ovaj zapis? Povezani podredovi slijede pravila kaskade / set-null u bazi."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Poslovi",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Ovaj korisnik već ima radni prostor za taj jezik.",
       "INVALID_LANGUAGE": "Nevažeći kod jezika.",
       "CONTENT_NOT_FOUND": "Zapis nije pronađen.",
-      "INVALID_CONTENT_MODULE": "Nepoznat modul sadržaja."
+      "INVALID_CONTENT_MODULE": "Nepoznat modul sadržaja.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

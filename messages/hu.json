@@ -2851,7 +2851,9 @@
     "legalTerms": "Feltételek",
     "registerAgreement": "Fiók létrehozásával elfogadja a <terms>Felhasználási feltételeket</terms> és az <privacy>Adatvédelmi irányelvet</privacy>.",
     "avatarRequestTooLarge": "Ez a fénykép túl nagy a küldéshez. Próbáljon kisebb képet.",
-    "requestTooLarge": "Ez a kérés túl nagy volt. A módosításai megmaradtak — kérjük, próbálja újra."
+    "requestTooLarge": "Ez a kérés túl nagy volt. A módosításai megmaradtak — kérjük, próbálja újra.",
+    "roleAdmin": "Adminisztrátor",
+    "roleTester": "Teszter"
   },
   "account": {
     "eyebrow": "Fiók",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Adminisztrátor",
       "manage": "Kezelés",
       "overview": "Áttekintés",
       "users": "Felhasználók",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "Tartalomtár",
       "backToApp": "Vissza az alkalmazáshoz",
       "openMenu": "Admin menü megnyitása",
-      "openAdmin": "Admin irányítópult"
+      "openAdmin": "Adminisztrátori panel"
     },
     "modules": {
       "vocabulary": "Szókincs",
@@ -4803,7 +4805,28 @@
         "failedListening": "Sikertelen hallásértés",
         "failedImports": "Sikertelen importálások",
         "runningJobs": "Futó feladatzárolások",
-        "recentAudits7d": "Naplóbejegyzések (7 nap)"
+        "recentAudits7d": "Naplóbejegyzések (7 nap)",
+        "admins": "Adminisztrátorok",
+        "testers": "Teszterek",
+        "suspended": "Felfüggesztett",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Gyors elérés",
+      "quickAccessLede": "Ugrás a kezelőeszközökhöz.",
+      "groups": {
+        "people": "Emberek",
+        "content": "Tartalom",
+        "ops": "Üzemeltetés"
+      },
+      "charts": {
+        "signupsTitle": "Nouveaux comptes",
+        "signupsLede": "Inscriptions quotidiennes sur les 14 derniers jours UTC.",
+        "activeTitle": "Apprenants actifs",
+        "activeLede": "Apprenants distincts avec activité chaque jour (14 j).",
+        "rolesTitle": "Rôles",
+        "rolesLede": "Comptes par rôle.",
+        "contentTitle": "Répartition du contenu",
+        "contentLede": "Enregistrements dans les modules d’apprentissage."
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Csomag",
         "created": "Regisztráció",
         "updated": "Frissítve",
-        "emailVerified": "E-mail ellenőrizve"
+        "emailVerified": "E-mail ellenőrizve",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Fiók",
@@ -4846,7 +4871,8 @@
         "usageLede": "Tulajdonolt rekordok a tanulási modulokban.",
         "actions": "Fiókműveletek",
         "workspaces": "Munkaterületek",
-        "workspacesLede": "A felhasználó tulajdonában lévő nyelvi munkaterületek."
+        "workspacesLede": "A felhasználó tulajdonában lévő nyelvi munkaterületek.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Név mentése",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Admin jog visszavonása",
         "suspend": "Felfüggesztés",
         "restore": "Visszaállítás",
-        "delete": "Fiók törlése"
+        "delete": "Fiók törlése",
+        "grantTester": "Teszter szerepkör adása",
+        "revokeTester": "Teszter szerepkör visszavonása",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Admin hozzáférést ad ehhez a fiókhoz?",
         "revokeAdmin": "Visszavonja az admin hozzáférést? Ez sikertelen, ha ez az utolsó aktív admin.",
         "suspend": "Felfüggeszti ezt a fiókot? A következő védett kérésnél elveszíti a hozzáférést.",
         "restore": "Visszaállítja ezt a fiókot?",
-        "delete": "Véglegesen törli ezt a fiókot és a kapcsolódó tanulási adatokat? Ez nem vonható vissza."
+        "delete": "Véglegesen törli ezt a fiókot és a kapcsolódó tanulási adatokat? Ez nem vonható vissza.",
+        "grantTester": "Teszter szerepkör adása? QA-hoz megkapják az összes alkalmazásfunkciót; a tárolt előfizetés nem változik.",
+        "revokeTester": "Teszter szerepkör visszavonása? A funkcióhozzáférés a tényleges előfizetésükhöz tér vissza."
+      },
+      "roleHelp": "A teszter szerepkör QA-hoz feloldja az összes Free, Pro és Premium funkciót anélkül, hogy a tárolt előfizetés változik. Ehhez a panelhez adminisztrátor kell.",
+      "roles": {
+        "user": "Felhasználó",
+        "tester": "Teszter",
+        "admin": "Adminisztrátor"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Nyelv",
         "owner": "Tulajdonos",
         "created": "Létrehozva",
-        "updated": "Frissítve"
+        "updated": "Frissítve",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Nyelv: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Törli ezt a munkaterületet és az összes benne lévő tanulási tartalmat az adatbázis-kaszkádokon keresztül?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Tulajdonos",
         "workspace": "Munkaterület",
         "created": "Létrehozva",
-        "updated": "Frissítve"
+        "updated": "Frissítve",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Metaadat-ellenőrzés. A privát tartalmak automatikusan nem töltődnek be.",
@@ -4928,11 +4983,13 @@
         "actions": "Műveletek"
       },
       "actions": {
-        "delete": "Rekord törlése"
+        "delete": "Rekord törlése",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Törli ezt a rekordot? A kapcsolódó gyermek-sorok az adatbázis kaszkád / set-null szabályait követik."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Feladatok",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Ennek a felhasználónak már van munkaterülete ehhez a nyelvhez.",
       "INVALID_LANGUAGE": "Érvénytelen nyelvkód.",
       "CONTENT_NOT_FOUND": "A rekord nem található.",
-      "INVALID_CONTENT_MODULE": "Ismeretlen tartalommodul."
+      "INVALID_CONTENT_MODULE": "Ismeretlen tartalommodul.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

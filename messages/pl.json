@@ -2851,7 +2851,9 @@
     "legalTerms": "Warunki",
     "registerAgreement": "Tworząc konto, akceptujesz <terms>Warunki korzystania</terms> oraz <privacy>Politykę prywatności</privacy>.",
     "avatarRequestTooLarge": "To zdjęcie jest za duże do wysłania. Spróbuj mniejszego obrazu.",
-    "requestTooLarge": "To żądanie było za duże. Twoje zmiany zostały zachowane — spróbuj ponownie."
+    "requestTooLarge": "To żądanie było za duże. Twoje zmiany zostały zachowane — spróbuj ponownie.",
+    "roleAdmin": "Administrator",
+    "roleTester": "Tester"
   },
   "account": {
     "eyebrow": "Konto",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Administrator",
       "manage": "Zarządzaj",
       "overview": "Przegląd",
       "users": "Użytkownicy",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "Biblioteka treści",
       "backToApp": "Wróć do aplikacji",
       "openMenu": "Otwórz menu admina",
-      "openAdmin": "Panel admina"
+      "openAdmin": "Panel administratora"
     },
     "modules": {
       "vocabulary": "Słownictwo",
@@ -4765,7 +4767,7 @@
       "listening": "Słuchanie",
       "reading": "Czytanie",
       "speaking": "Mówienie",
-      "inbox": "Capture",
+      "inbox": "Przechwytywanie",
       "folders": "Foldery"
     },
     "common": {
@@ -4799,11 +4801,32 @@
         "listening": "Słuchanie",
         "reading": "Czytanie",
         "speaking": "Mówienie",
-        "inbox": "Capture",
+        "inbox": "Przechwytywanie",
         "failedListening": "Nieudane słuchanie",
         "failedImports": "Nieudane importy",
         "runningJobs": "Działające blokady zadań",
-        "recentAudits7d": "Wpisy audytu (7 dni)"
+        "recentAudits7d": "Wpisy audytu (7 dni)",
+        "admins": "Administratorzy",
+        "testers": "Testerzy",
+        "suspended": "Zawieszeni",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Szybki dostęp",
+      "quickAccessLede": "Przejdź do narzędzi zarządzania.",
+      "groups": {
+        "people": "Ludzie",
+        "content": "Treści",
+        "ops": "Operacje"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Plan",
         "created": "Rejestracja",
         "updated": "Aktualizacja",
-        "emailVerified": "E-mail zweryfikowany"
+        "emailVerified": "E-mail zweryfikowany",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Konto",
@@ -4846,7 +4871,8 @@
         "usageLede": "Własne rekordy we wszystkich modułach nauki.",
         "actions": "Działania na koncie",
         "workspaces": "Przestrzenie robocze",
-        "workspacesLede": "Przestrzenie językowe należące do tego użytkownika."
+        "workspacesLede": "Przestrzenie językowe należące do tego użytkownika.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Zapisz nazwę",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Odbierz admina",
         "suspend": "Zawieś",
         "restore": "Przywróć",
-        "delete": "Usuń konto"
+        "delete": "Usuń konto",
+        "grantTester": "Nadaj rolę testera",
+        "revokeTester": "Cofnij rolę testera",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Nadać dostęp admina temu kontu?",
         "revokeAdmin": "Odebrać dostęp admina? Operacja się nie powiedzie, jeśli to ostatni aktywny admin.",
         "suspend": "Zawiesić to konto? Utracą dostęp przy następnym chronionym żądaniu.",
         "restore": "Przywrócić to konto?",
-        "delete": "Trwale usunąć to konto i powiązane dane nauki? Tej operacji nie można cofnąć."
+        "delete": "Trwale usunąć to konto i powiązane dane nauki? Tej operacji nie można cofnąć.",
+        "grantTester": "Nadać rolę testera? Otrzymają wszystkie funkcje aplikacji do QA; zapisana subskrypcja się nie zmienia.",
+        "revokeTester": "Cofnąć rolę testera? Dostęp do funkcji wraca do ich rzeczywistej subskrypcji."
+      },
+      "roleHelp": "Rola testera odblokowuje wszystkie funkcje Free, Pro i Premium do QA bez zmiany zapisanej subskrypcji. Do tego panelu potrzebny jest administrator.",
+      "roles": {
+        "user": "Użytkownik",
+        "tester": "Tester",
+        "admin": "Administrator"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Język",
         "owner": "Właściciel",
         "created": "Utworzono",
-        "updated": "Aktualizacja"
+        "updated": "Aktualizacja",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Język: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Usunąć tę przestrzeń i całą treść nauki w niej poprzez kaskady bazy danych?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Właściciel",
         "workspace": "Przestrzeń",
         "created": "Utworzono",
-        "updated": "Aktualizacja"
+        "updated": "Aktualizacja",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Podgląd metadanych. Treści prywatne nie są ładowane automatycznie.",
@@ -4928,11 +4983,13 @@
         "actions": "Działania"
       },
       "actions": {
-        "delete": "Usuń rekord"
+        "delete": "Usuń rekord",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Usunąć ten rekord? Powiązane wiersze potomne podlegają regułom cascade / set-null bazy danych."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Zadania",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Ten użytkownik ma już przestrzeń dla tego języka.",
       "INVALID_LANGUAGE": "Nieprawidłowy kod języka.",
       "CONTENT_NOT_FOUND": "Nie znaleziono rekordu.",
-      "INVALID_CONTENT_MODULE": "Nieznany moduł treści."
+      "INVALID_CONTENT_MODULE": "Nieznany moduł treści.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

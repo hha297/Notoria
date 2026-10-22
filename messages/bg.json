@@ -2851,7 +2851,9 @@
     "legalTerms": "Условия",
     "registerAgreement": "Създавайки акаунт, вие се съгласявате с <terms>Условията за ползване</terms> и <privacy>Политиката за поверителност</privacy>.",
     "avatarRequestTooLarge": "Тази снимка е твърде голяма за изпращане. Опитайте с по-малко изображение.",
-    "requestTooLarge": "Тази заявка беше твърде голяма. Промените ви са запазени — моля, опитайте отново."
+    "requestTooLarge": "Тази заявка беше твърде голяма. Промените ви са запазени — моля, опитайте отново.",
+    "roleAdmin": "Администратор",
+    "roleTester": "Тестващ"
   },
   "account": {
     "eyebrow": "Акаунт",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Админ",
+      "admin": "Администратор",
       "manage": "Управление",
       "overview": "Преглед",
       "users": "Потребители",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "Библиотека със съдържание",
       "backToApp": "Назад към приложението",
       "openMenu": "Отваряне на админ менюто",
-      "openAdmin": "Админ табло"
+      "openAdmin": "Админ панел"
     },
     "modules": {
       "vocabulary": "Речник",
@@ -4803,7 +4805,28 @@
         "failedListening": "Неуспешно слушане",
         "failedImports": "Неуспешни импорти",
         "runningJobs": "Активни заключвания на задачи",
-        "recentAudits7d": "Одитни записи (7д)"
+        "recentAudits7d": "Одитни записи (7д)",
+        "admins": "Администратори",
+        "testers": "Тестващи",
+        "suspended": "Спрени",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Бърз достъп",
+      "quickAccessLede": "Към инструментите за управление.",
+      "groups": {
+        "people": "Хора",
+        "content": "Съдържание",
+        "ops": "Операции"
+      },
+      "charts": {
+        "signupsTitle": "New accounts",
+        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
+        "activeTitle": "Active learners",
+        "activeLede": "Distinct learners with activity each day (14d).",
+        "rolesTitle": "Roles",
+        "rolesLede": "Share of accounts by role.",
+        "contentTitle": "Content mix",
+        "contentLede": "Stored records across learning modules."
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "План",
         "created": "Регистриран",
         "updated": "Обновен",
-        "emailVerified": "Имейлът е потвърден"
+        "emailVerified": "Имейлът е потвърден",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Акаунт",
@@ -4846,7 +4871,8 @@
         "usageLede": "Собствени записи в учебните модули.",
         "actions": "Действия с акаунта",
         "workspaces": "Работни пространства",
-        "workspacesLede": "Езикови работни пространства, притежавани от този потребител."
+        "workspacesLede": "Езикови работни пространства, притежавани от този потребител.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Запазване на името",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Отнемане на админ",
         "suspend": "Спиране",
         "restore": "Възстановяване",
-        "delete": "Изтриване на акаунта"
+        "delete": "Изтриване на акаунта",
+        "grantTester": "Дай роля тестващ",
+        "revokeTester": "Премахни роля тестващ",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Да се даде админ достъп на този акаунт?",
         "revokeAdmin": "Да се отнеме админ достъпът? Това не успява, ако са последният активен админ.",
         "suspend": "Да се спре този акаунт? Губи достъп при следващата защитена заявка.",
         "restore": "Да се възстанови този акаунт?",
-        "delete": "Да се изтрие окончателно този акаунт и каскадните учебни данни? Това не може да бъде отменено."
+        "delete": "Да се изтрие окончателно този акаунт и каскадните учебни данни? Това не може да бъде отменено.",
+        "grantTester": "Да дадем роля тестващ? Получават всички функции на приложението за QA; запазеният абонамент не се променя.",
+        "revokeTester": "Да премахнем ролята тестващ? Достъпът се връща според реалния им абонамент."
+      },
+      "roleHelp": "Ролята тестващ отключва всички Free, Pro и Premium функции за QA без да променя запазения абонамент. За този панел е нужен администратор.",
+      "roles": {
+        "user": "Потребител",
+        "tester": "Тестващ",
+        "admin": "Администратор"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Език",
         "owner": "Собственик",
         "created": "Създадено",
-        "updated": "Обновено"
+        "updated": "Обновено",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Език: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Да се изтрие това работно пространство и цялото учебно съдържание в него чрез каскади в базата данни?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Собственик",
         "workspace": "Работно пространство",
         "created": "Създадено",
-        "updated": "Обновено"
+        "updated": "Обновено",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Преглед на метаданни. Частните съдържания не се зареждат автоматично.",
@@ -4928,11 +4983,13 @@
         "actions": "Действия"
       },
       "actions": {
-        "delete": "Изтриване на записа"
+        "delete": "Изтриване на записа",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Да се изтрие този запис? Свързаните дъщерни редове следват правилата за каскада / set-null в базата данни."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Задачи",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Този потребител вече има работно пространство за този език.",
       "INVALID_LANGUAGE": "Невалиден езиков код.",
       "CONTENT_NOT_FOUND": "Записът не е намерен.",
-      "INVALID_CONTENT_MODULE": "Неизвестен модул за съдържание."
+      "INVALID_CONTENT_MODULE": "Неизвестен модул за съдържание.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

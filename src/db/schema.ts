@@ -16,7 +16,7 @@ import {
   uuid,
 } from "drizzle-orm/pg-core";
 
-export const userRoleEnum = pgEnum("user_role", ["USER", "ADMIN"]);
+export const userRoleEnum = pgEnum("user_role", ["USER", "TESTER", "ADMIN"]);
 
 export const subscriptionPlanEnum = pgEnum("subscription_plan", [
   "free",

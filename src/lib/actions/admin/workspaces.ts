@@ -13,11 +13,16 @@ import {
 } from "@/lib/languages";
 import { resolveWorkspaceName } from "@/lib/workspace-names";
 
-const createSchema = z.object({
-  userId: z.string().uuid(),
-  language: z.string().min(2),
-  name: z.string().trim().max(80).optional(),
-});
+const createSchema = z
+  .object({
+    userId: z.string().uuid().optional(),
+    ownerEmail: z.string().email().optional(),
+    language: z.string().min(2),
+    name: z.string().trim().max(80).optional(),
+  })
+  .refine((value) => Boolean(value.userId || value.ownerEmail), {
+    message: "USER_NOT_FOUND",
+  });
 
 const updateSchema = z.object({
   workspaceId: z.string().uuid(),
@@ -39,15 +44,21 @@ export async function adminCreateWorkspace(input: z.infer<typeof createSchema>) 
     throw new Error("INVALID_LANGUAGE");
   }
 
-  const ownerRow = await db.query.users.findFirst({
-    where: eq(users.id, parsed.userId),
-    columns: { id: true },
-  });
+  const ownerRow = parsed.userId
+    ? await db.query.users.findFirst({
+        where: eq(users.id, parsed.userId),
+        columns: { id: true },
+      })
+    : await db.query.users.findFirst({
+        where: eq(users.email, parsed.ownerEmail!.toLowerCase().trim()),
+        columns: { id: true },
+      });
   if (!ownerRow) throw new Error("USER_NOT_FOUND");
+  const ownerUserId = ownerRow.id;
 
   const existing = await db.query.workspaces.findFirst({
     where: and(
-      eq(workspaces.userId, parsed.userId),
+      eq(workspaces.userId, ownerUserId),
       eq(workspaces.language, parsed.language),
     ),
   });
@@ -58,7 +69,7 @@ export async function adminCreateWorkspace(input: z.infer<typeof createSchema>) 
     const [row] = await tx
       .insert(workspaces)
       .values({
-        userId: parsed.userId,
+        userId: ownerUserId,
         language: parsed.language,
         name: resolveWorkspaceName(parsed.name, parsed.language),
       })
@@ -70,7 +81,7 @@ export async function adminCreateWorkspace(input: z.infer<typeof createSchema>) 
         action: "workspace.create",
         entityType: "workspace",
         entityId: row.id,
-        targetUserId: parsed.userId,
+        targetUserId: ownerUserId,
         meta: sanitizeAdminMeta({
           name: row.name,
           language: row.language,

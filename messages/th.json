@@ -2851,7 +2851,9 @@
     "legalTerms": "ข้อกำหนด",
     "registerAgreement": "การสร้างบัญชีถือว่าคุณยอมรับ <terms>ข้อกำหนดการใช้งาน</terms> และ <privacy>นโยบายความเป็นส่วนตัว</privacy>",
     "avatarRequestTooLarge": "รูปนั้นใหญ่เกินไปที่จะส่ง ลองใช้ภาพที่เล็กกว่า",
-    "requestTooLarge": "คำขอนั้นใหญ่เกินไป การเปลี่ยนแปลงของคุณยังถูกเก็บไว้ — กรุณาลองอีกครั้ง"
+    "requestTooLarge": "คำขอนั้นใหญ่เกินไป การเปลี่ยนแปลงของคุณยังถูกเก็บไว้ — กรุณาลองอีกครั้ง",
+    "roleAdmin": "ผู้ดูแลระบบ",
+    "roleTester": "ผู้ทดสอบ"
   },
   "account": {
     "eyebrow": "บัญชี",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "ผู้ดูแลระบบ",
+      "admin": "ผู้ดูแล",
       "manage": "จัดการ",
       "overview": "ภาพรวม",
       "users": "ผู้ใช้",
@@ -4803,7 +4805,28 @@
         "failedListening": "การฟังที่ล้มเหลว",
         "failedImports": "การนำเข้าที่ล้มเหลว",
         "runningJobs": "ล็อกงานที่กำลังทำงาน",
-        "recentAudits7d": "รายการตรวจสอบ (7 วัน)"
+        "recentAudits7d": "รายการตรวจสอบ (7 วัน)",
+        "admins": "ผู้ดูแลระบบ",
+        "testers": "ผู้ทดสอบ",
+        "suspended": "ระงับ",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "ทางลัด",
+      "quickAccessLede": "ไปที่เครื่องมือจัดการ",
+      "groups": {
+        "people": "ผู้คน",
+        "content": "เนื้อหา",
+        "ops": "การดำเนินงาน"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "แผน",
         "created": "ลงทะเบียน",
         "updated": "อัปเดต",
-        "emailVerified": "ยืนยันอีเมลแล้ว"
+        "emailVerified": "ยืนยันอีเมลแล้ว",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "บัญชี",
@@ -4846,7 +4871,8 @@
         "usageLede": "บันทึกที่เป็นเจ้าของในโมดูลการเรียน",
         "actions": "การดำเนินการบัญชี",
         "workspaces": "พื้นที่ทำงาน",
-        "workspacesLede": "พื้นที่ทำงานภาษาที่เป็นของของผู้ใช้นี้"
+        "workspacesLede": "พื้นที่ทำงานภาษาที่เป็นของของผู้ใช้นี้",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "บันทึกชื่อ",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "เพิกถอนสิทธิ์ผู้ดูแล",
         "suspend": "ระงับ",
         "restore": "คืนสิทธิ์",
-        "delete": "ลบบัญชี"
+        "delete": "ลบบัญชี",
+        "grantTester": "ให้บทบาทผู้ทดสอบ",
+        "revokeTester": "ถอนบทบาทผู้ทดสอบ",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "ให้สิทธิ์ผู้ดูแลแก่บัญชีนี้หรือไม่?",
         "revokeAdmin": "เพิกถอนสิทธิ์ผู้ดูแลหรือไม่? การดำเนินการจะล้มเหลวหากเป็นผู้ดูแลที่ใช้งานอยู่คนสุดท้าย",
         "suspend": "ระงับบัญชีนี้หรือไม่? จะสูญเสียการเข้าถึงเมื่อมีการร้องขอที่ต้องมีการป้องกันครั้งถัดไป",
         "restore": "คืนสิทธิ์บัญชีนี้หรือไม่?",
-        "delete": "ลบบัญชีนี้และข้อมูลการเรียนที่เกี่ยวข้องอย่างถาวรหรือไม่? การดำเนินการนี้ไม่สามารถย้อนกลับได้"
+        "delete": "ลบบัญชีนี้และข้อมูลการเรียนที่เกี่ยวข้องอย่างถาวรหรือไม่? การดำเนินการนี้ไม่สามารถย้อนกลับได้",
+        "grantTester": "ให้บทบาทผู้ทดสอบหรือไม่ พวกเขาจะได้ฟีเจอร์แอปทั้งหมดสำหรับ QA การสมัครที่บันทึกไว้ไม่เปลี่ยน",
+        "revokeTester": "ถอนบทบาทผู้ทดสอบหรือไม่ การเข้าถึงฟีเจอร์จะกลับไปตามการสมัครจริงของพวกเขา"
+      },
+      "roleHelp": "บทบาทผู้ทดสอบปลดล็อกฟีเจอร์ Free, Pro และ Premium ทั้งหมดสำหรับ QA โดยไม่เปลี่ยนการสมัครที่บันทึกไว้ แดชบอร์ดนี้ต้องเป็นผู้ดูแลระบบ",
+      "roles": {
+        "user": "ผู้ใช้",
+        "tester": "ผู้ทดสอบ",
+        "admin": "ผู้ดูแลระบบ"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "ภาษา",
         "owner": "เจ้าของ",
         "created": "สร้างเมื่อ",
-        "updated": "อัปเดต"
+        "updated": "อัปเดต",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "ภาษา: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "ลบพื้นที่ทำงานนี้และเนื้อหาการเรียนทั้งหมดภายในผ่าน cascade ของฐานข้อมูลหรือไม่?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "เจ้าของ",
         "workspace": "พื้นที่ทำงาน",
         "created": "สร้างเมื่อ",
-        "updated": "อัปเดต"
+        "updated": "อัปเดต",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "การตรวจสอบเมตาดาตา เนื้อหาส่วนตัวจะไม่โหลดอัตโนมัติ",
@@ -4928,11 +4983,13 @@
         "actions": "การดำเนินการ"
       },
       "actions": {
-        "delete": "ลบรายการ"
+        "delete": "ลบรายการ",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "ลบรายการนี้หรือไม่? แถวลูกที่เกี่ยวข้องจะเป็นไปตามกฎ cascade / set-null ของฐานข้อมูล"
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "งาน",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "ผู้ใช้นี้มีพื้นที่ทำงานสำหรับภาษานั้นอยู่แล้ว",
       "INVALID_LANGUAGE": "รหัสภาษาไม่ถูกต้อง",
       "CONTENT_NOT_FOUND": "ไม่พบรายการ",
-      "INVALID_CONTENT_MODULE": "โมดูลเนื้อหาที่ไม่รู้จัก"
+      "INVALID_CONTENT_MODULE": "โมดูลเนื้อหาที่ไม่รู้จัก",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

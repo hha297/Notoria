@@ -2851,7 +2851,9 @@
     "legalTerms": "शर्तें",
     "registerAgreement": "खाता बनाकर, आप <terms>उपयोग की शर्तें</terms> और <privacy>गोपनीयता नीति</privacy> से सहमत होते हैं।",
     "avatarRequestTooLarge": "वह फ़ोटो भेजने के लिए बहुत बड़ी है। छोटी छवि आज़माएँ।",
-    "requestTooLarge": "वह अनुरोध बहुत बड़ा था। आपके बदलाव रखे गए — कृपया पुनः प्रयास करें।"
+    "requestTooLarge": "वह अनुरोध बहुत बड़ा था। आपके बदलाव रखे गए — कृपया पुनः प्रयास करें।",
+    "roleAdmin": "प्रशासक",
+    "roleTester": "परीक्षक"
   },
   "account": {
     "eyebrow": "खाता",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "एडमिन",
+      "admin": "प्रशासक",
       "manage": "प्रबंधित करें",
       "overview": "अवलोकन",
       "users": "उपयोगकर्ता",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "सामग्री लाइब्रेरी",
       "backToApp": "ऐप पर वापस जाएँ",
       "openMenu": "एडमिन मेनू खोलें",
-      "openAdmin": "एडमिन डैशबोर्ड"
+      "openAdmin": "प्रशासक डैशबोर्ड"
     },
     "modules": {
       "vocabulary": "शब्दावली",
@@ -4803,7 +4805,28 @@
         "failedListening": "विफल श्रवण",
         "failedImports": "विफल आयात",
         "runningJobs": "चल रहे जॉब लॉक",
-        "recentAudits7d": "ऑडिट प्रविष्टियाँ (7दिन)"
+        "recentAudits7d": "ऑडिट प्रविष्टियाँ (7दिन)",
+        "admins": "प्रशासक",
+        "testers": "परीक्षक",
+        "suspended": "निलंबित",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "त्वरित पहुँच",
+      "quickAccessLede": "प्रबंधन टूल पर जाएँ।",
+      "groups": {
+        "people": "लोग",
+        "content": "सामग्री",
+        "ops": "संचालन"
+      },
+      "charts": {
+        "signupsTitle": "Nouveaux comptes",
+        "signupsLede": "Inscriptions quotidiennes sur les 14 derniers jours UTC.",
+        "activeTitle": "Apprenants actifs",
+        "activeLede": "Apprenants distincts avec activité chaque jour (14 j).",
+        "rolesTitle": "Rôles",
+        "rolesLede": "Comptes par rôle.",
+        "contentTitle": "Répartition du contenu",
+        "contentLede": "Enregistrements dans les modules d’apprentissage."
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "प्लान",
         "created": "पंजीकृत",
         "updated": "अपडेट",
-        "emailVerified": "ईमेल सत्यापित"
+        "emailVerified": "ईमेल सत्यापित",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "खाता",
@@ -4846,7 +4871,8 @@
         "usageLede": "लर्निंग मॉड्यूल में स्वामित्व वाले रिकॉर्ड।",
         "actions": "खाता कार्रवाइयाँ",
         "workspaces": "कार्यक्षेत्र",
-        "workspacesLede": "इस उपयोगकर्ता के स्वामित्व वाले भाषा कार्यक्षेत्र।"
+        "workspacesLede": "इस उपयोगकर्ता के स्वामित्व वाले भाषा कार्यक्षेत्र।",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "नाम सहेजें",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "एडमिन हटाएँ",
         "suspend": "निलंबित करें",
         "restore": "पुनर्स्थापित करें",
-        "delete": "खाता हटाएँ"
+        "delete": "खाता हटाएँ",
+        "grantTester": "परीक्षक भूमिका दें",
+        "revokeTester": "परीक्षक भूमिका हटाएँ",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "इस खाते को एडमिन पहुँच दें?",
         "revokeAdmin": "एडमिन पहुँच हटाएँ? यदि वे अंतिम सक्रिय एडमिन हैं तो यह विफल होगा।",
         "suspend": "इस खाते को निलंबित करें? अगले संरक्षित अनुरोध पर उनकी पहुँच समाप्त हो जाएगी।",
         "restore": "इस खाते को पुनर्स्थापित करें?",
-        "delete": "इस खाते और कैस्केडेड लर्निंग डेटा को स्थायी रूप से हटाएँ? यह पूर्ववत नहीं किया जा सकता।"
+        "delete": "इस खाते और कैस्केडेड लर्निंग डेटा को स्थायी रूप से हटाएँ? यह पूर्ववत नहीं किया जा सकता।",
+        "grantTester": "परीक्षक भूमिका दें? QA के लिए उन्हें ऐप की सभी सुविधाएँ मिलेंगी; संग्रहीत सदस्यता नहीं बदलेगी।",
+        "revokeTester": "परीक्षक भूमिका हटाएँ? सुविधा पहुँच उनकी वास्तविक सदस्यता पर लौट आएगी।"
+      },
+      "roleHelp": "परीक्षक भूमिका QA के लिए Free, Pro और Premium की सभी सुविधाएँ अनलॉक करती है, संग्रहीत सदस्यता नहीं बदलती। इस डैशबोर्ड के लिए प्रशासक चाहिए।",
+      "roles": {
+        "user": "उपयोगकर्ता",
+        "tester": "परीक्षक",
+        "admin": "प्रशासक"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "भाषा",
         "owner": "स्वामी",
         "created": "बनाया गया",
-        "updated": "अपडेट"
+        "updated": "अपडेट",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "भाषा: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "इस कार्यक्षेत्र और उसके अंदर की सभी लर्निंग सामग्री को डेटाबेस कैस्केड के माध्यम से हटाएँ?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "स्वामी",
         "workspace": "कार्यक्षेत्र",
         "created": "बनाया गया",
-        "updated": "अपडेट"
+        "updated": "अपडेट",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "मेटाडेटा निरीक्षण। निजी सामग्री स्वतः लोड नहीं होती।",
@@ -4928,11 +4983,13 @@
         "actions": "कार्रवाइयाँ"
       },
       "actions": {
-        "delete": "रिकॉर्ड हटाएँ"
+        "delete": "रिकॉर्ड हटाएँ",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "इस रिकॉर्ड को हटाएँ? संबंधित चाइल्ड पंक्तियाँ डेटाबेस कैस्केड / set-null नियमों का पालन करती हैं।"
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "जॉब्स",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "इस उपयोगकर्ता के पास उस भाषा का कार्यक्षेत्र पहले से है।",
       "INVALID_LANGUAGE": "अमान्य भाषा कोड।",
       "CONTENT_NOT_FOUND": "रिकॉर्ड नहीं मिला।",
-      "INVALID_CONTENT_MODULE": "अज्ञात सामग्री मॉड्यूल।"
+      "INVALID_CONTENT_MODULE": "अज्ञात सामग्री मॉड्यूल।",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

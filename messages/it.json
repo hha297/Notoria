@@ -2851,7 +2851,9 @@
     "legalTerms": "Termini",
     "registerAgreement": "Creando un account, Lei accetta i <terms>Termini di utilizzo</terms> e l’<privacy>Informativa sulla privacy</privacy>.",
     "avatarRequestTooLarge": "Questa foto è troppo grande per essere inviata. Provi con un’immagine più piccola.",
-    "requestTooLarge": "Questa richiesta era troppo grande. Le Sue modifiche sono state conservate — riprovi."
+    "requestTooLarge": "Questa richiesta era troppo grande. Le Sue modifiche sono state conservate — riprovi.",
+    "roleAdmin": "Amministratore",
+    "roleTester": "Collaudatore"
   },
   "account": {
     "eyebrow": "Account",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Amministratore",
       "manage": "Gestione",
       "overview": "Panoramica",
       "users": "Utenti",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "Libreria contenuti",
       "backToApp": "Torna all'app",
       "openMenu": "Apri menu admin",
-      "openAdmin": "Dashboard admin"
+      "openAdmin": "Dashboard amministratore"
     },
     "modules": {
       "vocabulary": "Vocabolario",
@@ -4765,7 +4767,7 @@
       "listening": "Ascolto",
       "reading": "Lettura",
       "speaking": "Conversazione",
-      "inbox": "Capture",
+      "inbox": "Raccolta",
       "folders": "Cartelle"
     },
     "common": {
@@ -4799,11 +4801,32 @@
         "listening": "Ascolto",
         "reading": "Lettura",
         "speaking": "Conversazione",
-        "inbox": "Capture",
+        "inbox": "Raccolta",
         "failedListening": "Ascolto non riuscito",
         "failedImports": "Importazioni non riuscite",
         "runningJobs": "Blocchi processi in esecuzione",
-        "recentAudits7d": "Voci di audit (7g)"
+        "recentAudits7d": "Voci di audit (7g)",
+        "admins": "Amministratori",
+        "testers": "Collaudatori",
+        "suspended": "Sospesi",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Accesso rapido",
+      "quickAccessLede": "Vai agli strumenti di gestione.",
+      "groups": {
+        "people": "Persone",
+        "content": "Contenuti",
+        "ops": "Operazioni"
+      },
+      "charts": {
+        "signupsTitle": "Nouveaux comptes",
+        "signupsLede": "Inscriptions quotidiennes sur les 14 derniers jours UTC.",
+        "activeTitle": "Apprenants actifs",
+        "activeLede": "Apprenants distincts avec activité chaque jour (14 j).",
+        "rolesTitle": "Rôles",
+        "rolesLede": "Comptes par rôle.",
+        "contentTitle": "Répartition du contenu",
+        "contentLede": "Enregistrements dans les modules d’apprentissage."
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Piano",
         "created": "Registrato",
         "updated": "Aggiornato",
-        "emailVerified": "E-mail verificata"
+        "emailVerified": "E-mail verificata",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Account",
@@ -4846,7 +4871,8 @@
         "usageLede": "Record di proprietà nei moduli di apprendimento.",
         "actions": "Azioni sull'account",
         "workspaces": "Workspace",
-        "workspacesLede": "Workspace linguistici di proprietà di questo utente."
+        "workspacesLede": "Workspace linguistici di proprietà di questo utente.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Salva nome",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Revoca admin",
         "suspend": "Sospendi",
         "restore": "Ripristina",
-        "delete": "Elimina account"
+        "delete": "Elimina account",
+        "grantTester": "Assegna collaudatore",
+        "revokeTester": "Revoca collaudatore",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Concedere l'accesso admin a questo account?",
         "revokeAdmin": "Revocare l'accesso admin? L'operazione non riesce se è l'ultimo admin attivo.",
         "suspend": "Sospendere questo account? Perderà l'accesso alla successiva richiesta protetta.",
         "restore": "Ripristinare questo account?",
-        "delete": "Eliminare definitivamente questo account e i dati di apprendimento in cascata? L'operazione non può essere annullata."
+        "delete": "Eliminare definitivamente questo account e i dati di apprendimento in cascata? L'operazione non può essere annullata.",
+        "grantTester": "Assegnare il ruolo collaudatore? Ottengono tutte le funzioni dell’app per il QA; l’abbonamento salvato non cambia.",
+        "revokeTester": "Revocare il ruolo collaudatore? L’accesso alle funzioni torna al loro abbonamento reale."
+      },
+      "roleHelp": "Il ruolo collaudatore sblocca tutte le funzioni Free, Pro e Premium per il QA senza modificare l’abbonamento salvato. Serve un amministratore per questa dashboard.",
+      "roles": {
+        "user": "Utente",
+        "tester": "Collaudatore",
+        "admin": "Amministratore"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Lingua",
         "owner": "Proprietario",
         "created": "Creato",
-        "updated": "Aggiornato"
+        "updated": "Aggiornato",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Lingua: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Eliminare questo workspace e tutti i contenuti di apprendimento al suo interno tramite le cascate del database?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Proprietario",
         "workspace": "Workspace",
         "created": "Creato",
-        "updated": "Aggiornato"
+        "updated": "Aggiornato",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Ispezione dei metadati. I corpi privati non vengono caricati automaticamente.",
@@ -4928,11 +4983,13 @@
         "actions": "Azioni"
       },
       "actions": {
-        "delete": "Elimina record"
+        "delete": "Elimina record",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Eliminare questo record? Le righe figlie correlate seguono le regole di cascata / set-null del database."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Processi",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Questo utente ha già un workspace per quella lingua.",
       "INVALID_LANGUAGE": "Codice lingua non valido.",
       "CONTENT_NOT_FOUND": "Record non trovato.",
-      "INVALID_CONTENT_MODULE": "Modulo di contenuto sconosciuto."
+      "INVALID_CONTENT_MODULE": "Modulo di contenuto sconosciuto.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

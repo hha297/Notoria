@@ -2851,7 +2851,9 @@
     "legalTerms": "শর্তাবলি",
     "registerAgreement": "অ্যাকাউন্ট তৈরি করে আপনি <terms>ব্যবহারের শর্তাবলি</terms> ও <privacy>গোপনীয়তা নীতি</privacy>-তে সম্মত হচ্ছেন।",
     "avatarRequestTooLarge": "সেই ছবি পাঠানোর জন্য খুব বড়। একটি ছোট ছবি চেষ্টা করুন।",
-    "requestTooLarge": "সেই অনুরোধ খুব বড় ছিল। আপনার পরিবর্তন রাখা হয়েছে — অনুগ্রহ করে আবার চেষ্টা করুন।"
+    "requestTooLarge": "সেই অনুরোধ খুব বড় ছিল। আপনার পরিবর্তন রাখা হয়েছে — অনুগ্রহ করে আবার চেষ্টা করুন।",
+    "roleAdmin": "প্রশাসক",
+    "roleTester": "পরীক্ষক"
   },
   "account": {
     "eyebrow": "অ্যাকাউন্ট",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "অ্যাডমিন",
+      "admin": "প্রশাসক",
       "manage": "পরিচালনা",
       "overview": "সারসংক্ষেপ",
       "users": "ব্যবহারকারী",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "কনটেন্ট লাইব্রেরি",
       "backToApp": "অ্যাপে ফিরে যান",
       "openMenu": "অ্যাডমিন মেনু খুলুন",
-      "openAdmin": "অ্যাডমিন ড্যাশবোর্ড"
+      "openAdmin": "প্রশাসক ড্যাশবোর্ড"
     },
     "modules": {
       "vocabulary": "শব্দভাণ্ডার",
@@ -4765,7 +4767,7 @@
       "listening": "শ্রবণ",
       "reading": "পঠন",
       "speaking": "কথন",
-      "inbox": "Capture",
+      "inbox": "সংগ্রহ",
       "folders": "ফোল্ডার"
     },
     "common": {
@@ -4799,11 +4801,32 @@
         "listening": "শ্রবণ",
         "reading": "পঠন",
         "speaking": "কথন",
-        "inbox": "Capture",
+        "inbox": "সংগ্রহ",
         "failedListening": "ব্যর্থ শ্রবণ",
         "failedImports": "ব্যর্থ ইমপোর্ট",
         "runningJobs": "চলমান জব লক",
-        "recentAudits7d": "অডিট এন্ট্রি (৭ দিন)"
+        "recentAudits7d": "অডিট এন্ট্রি (৭ দিন)",
+        "admins": "প্রশাসক",
+        "testers": "পরীক্ষক",
+        "suspended": "স্থগিত",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "দ্রুত অ্যাক্সেস",
+      "quickAccessLede": "ম্যানেজমেন্ট টুলে যান।",
+      "groups": {
+        "people": "ব্যক্তি",
+        "content": "কন্টেন্ট",
+        "ops": "অপারেশন"
+      },
+      "charts": {
+        "signupsTitle": "New accounts",
+        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
+        "activeTitle": "Active learners",
+        "activeLede": "Distinct learners with activity each day (14d).",
+        "rolesTitle": "Roles",
+        "rolesLede": "Share of accounts by role.",
+        "contentTitle": "Content mix",
+        "contentLede": "Stored records across learning modules."
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "প্ল্যান",
         "created": "নিবন্ধিত",
         "updated": "হালনাগাদ",
-        "emailVerified": "ইমেইল যাচাইকৃত"
+        "emailVerified": "ইমেইল যাচাইকৃত",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "অ্যাকাউন্ট",
@@ -4846,7 +4871,8 @@
         "usageLede": "শেখার মডিউল জুড়ে মালিকানাধীন রেকর্ড।",
         "actions": "অ্যাকাউন্ট কার্যক্রম",
         "workspaces": "ওয়ার্কস্পেস",
-        "workspacesLede": "এই ব্যবহারকারীর মালিকানাধীন ভাষা ওয়ার্কস্পেস।"
+        "workspacesLede": "এই ব্যবহারকারীর মালিকানাধীন ভাষা ওয়ার্কস্পেস।",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "নাম সংরক্ষণ",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "অ্যাডমিন প্রত্যাহার",
         "suspend": "স্থগিত করুন",
         "restore": "পুনরুদ্ধার",
-        "delete": "অ্যাকাউন্ট মুছুন"
+        "delete": "অ্যাকাউন্ট মুছুন",
+        "grantTester": "পরীক্ষক ভূমিকা দিন",
+        "revokeTester": "পরীক্ষক ভূমিকা তুলে নিন",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "এই অ্যাকাউন্টে অ্যাডমিন প্রবেশাধিকার দিতে চান?",
         "revokeAdmin": "অ্যাডমিন প্রবেশাধিকার প্রত্যাহার করবেন? এটি ব্যর্থ হবে যদি তারা শেষ সক্রিয় অ্যাডমিন হন।",
         "suspend": "এই অ্যাকাউন্ট স্থগিত করবেন? পরবর্তী সুরক্ষিত অনুরোধে তারা প্রবেশাধিকার হারাবেন।",
         "restore": "এই অ্যাকাউন্ট পুনরুদ্ধার করবেন?",
-        "delete": "এই অ্যাকাউন্ট এবং সংশ্লিষ্ট শেখার ডেটা স্থায়ীভাবে মুছবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না।"
+        "delete": "এই অ্যাকাউন্ট এবং সংশ্লিষ্ট শেখার ডেটা স্থায়ীভাবে মুছবেন? এটি পূর্বাবস্থায় ফেরানো যাবে না।",
+        "grantTester": "পরীক্ষক ভূমিকা দেবেন? QA-এর জন্য পুরো অ্যাপ ফিচার পাবেন; সংরক্ষিত সাবস্ক্রিপশন অপরিবর্তিত থাকবে।",
+        "revokeTester": "পরীক্ষক ভূমিকা তুলে নেবেন? ফিচার অ্যাক্সেস তাদের আসল সাবস্ক্রিপশনে ফিরবে।"
+      },
+      "roleHelp": "পরীক্ষক ভূমিকা QA-এর জন্য Free, Pro ও Premium সব ফিচার আনলক করে, সংরক্ষিত সাবস্ক্রিপশন পরিবর্তন করে না। এই ড্যাশবোর্ডের জন্য প্রশাসক দরকার।",
+      "roles": {
+        "user": "ব্যবহারকারী",
+        "tester": "পরীক্ষক",
+        "admin": "প্রশাসক"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "ভাষা",
         "owner": "মালিক",
         "created": "তৈরি",
-        "updated": "হালনাগাদ"
+        "updated": "হালনাগাদ",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "ভাষা: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "এই ওয়ার্কস্পেস এবং এর ভিতরের সব শেখার কনটেন্ট ডেটাবেস ক্যাসকেডের মাধ্যমে মুছবেন?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "মালিক",
         "workspace": "ওয়ার্কস্পেস",
         "created": "তৈরি",
-        "updated": "হালনাগাদ"
+        "updated": "হালনাগাদ",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "মেটাডেটা পরিদর্শন। ব্যক্তিগত বিষয়বস্তু স্বয়ংক্রিয়ভাবে লোড হয় না।",
@@ -4928,11 +4983,13 @@
         "actions": "কার্যক্রম"
       },
       "actions": {
-        "delete": "রেকর্ড মুছুন"
+        "delete": "রেকর্ড মুছুন",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "এই রেকর্ড মুছবেন? সংশ্লিষ্ট চাইল্ড সারি ডেটাবেস ক্যাসকেড / set-null নিয়ম অনুসরণ করে।"
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "জব",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "এই ব্যবহারকারীর সেই ভাষার জন্য ইতিমধ্যে একটি ওয়ার্কস্পেস আছে।",
       "INVALID_LANGUAGE": "অবৈধ ভাষা কোড।",
       "CONTENT_NOT_FOUND": "রেকর্ড পাওয়া যায়নি।",
-      "INVALID_CONTENT_MODULE": "অজানা কনটেন্ট মডিউল।"
+      "INVALID_CONTENT_MODULE": "অজানা কনটেন্ট মডিউল।",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

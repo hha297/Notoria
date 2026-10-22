@@ -2851,7 +2851,9 @@
     "legalTerms": "Умовы",
     "registerAgreement": "Ствараючы ўліковы запіс, вы згаджаецеся з <terms>Умовамі выкарыстання</terms> і <privacy>Палітыкай прыватнасці</privacy>.",
     "avatarRequestTooLarge": "Гэтае фота занадта вялікае для адпраўкі. Паспрабуйце меншы відарыс.",
-    "requestTooLarge": "Запыт быў занадта вялікі. Вашы змены захаваны — паспрабуйце яшчэ раз."
+    "requestTooLarge": "Запыт быў занадта вялікі. Вашы змены захаваны — паспрабуйце яшчэ раз.",
+    "roleAdmin": "Адміністратар",
+    "roleTester": "Тэставальнік"
   },
   "account": {
     "eyebrow": "Уліковы запіс",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Адмін",
+      "admin": "Адміністратар",
       "manage": "Кіраванне",
       "overview": "Агляд",
       "users": "Карыстальнікі",
@@ -4803,7 +4805,28 @@
         "failedListening": "Няўдалыя аўдзіраванні",
         "failedImports": "Няўдалыя імпарты",
         "runningJobs": "Актыўныя блакіроўкі заданняў",
-        "recentAudits7d": "Запісы аўдыту (7 дзён)"
+        "recentAudits7d": "Запісы аўдыту (7 дзён)",
+        "admins": "Адміністратары",
+        "testers": "Тэставальнікі",
+        "suspended": "Заблакаваныя",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Хуткі доступ",
+      "quickAccessLede": "Пераход да інструментаў кіравання.",
+      "groups": {
+        "people": "Людзі",
+        "content": "Змесціва",
+        "ops": "Аперацыі"
+      },
+      "charts": {
+        "signupsTitle": "New accounts",
+        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
+        "activeTitle": "Active learners",
+        "activeLede": "Distinct learners with activity each day (14d).",
+        "rolesTitle": "Roles",
+        "rolesLede": "Share of accounts by role.",
+        "contentTitle": "Content mix",
+        "contentLede": "Stored records across learning modules."
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "План",
         "created": "Зарэгістраваны",
         "updated": "Абноўлены",
-        "emailVerified": "Электронная пошта пацверджана"
+        "emailVerified": "Электронная пошта пацверджана",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Уліковы запіс",
@@ -4846,7 +4871,8 @@
         "usageLede": "Уласныя запісы па модулях навучання.",
         "actions": "Дзеянні з уліковым запісам",
         "workspaces": "Працоўныя прасторы",
-        "workspacesLede": "Моўныя працоўныя прасторы гэтага карыстальніка."
+        "workspacesLede": "Моўныя працоўныя прасторы гэтага карыстальніка.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Захаваць імя",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Адклікаць правы адміністратара",
         "suspend": "Прыпыніць",
         "restore": "Аднавіць",
-        "delete": "Выдаліць уліковы запіс"
+        "delete": "Выдаліць уліковы запіс",
+        "grantTester": "Прызначыць тэставальніка",
+        "revokeTester": "Зняць тэставальніка",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Даць гэтаму ўліковаму запісу правы адміністратара?",
         "revokeAdmin": "Адклікаць правы адміністратара? Аперацыя не ўдасца, калі гэта апошні актыўны адміністратар.",
         "suspend": "Прыпыніць гэты ўліковы запіс? Доступ будзе страчаны пры наступным абароненым запыце.",
         "restore": "Аднавіць гэты ўліковы запіс?",
-        "delete": "Назаўсёды выдаліць гэты ўліковы запіс і звязаныя навучальныя даныя? Гэта нельга адмяніць."
+        "delete": "Назаўсёды выдаліць гэты ўліковы запіс і звязаныя навучальныя даныя? Гэта нельга адмяніць.",
+        "grantTester": "Прызначыць ролю тэставальніка? Яны атрымаюць усе функцыі прыкладання для QA; захаваная падпіска не зменіцца.",
+        "revokeTester": "Зняць ролю тэставальніка? Доступ да функцый вернецца да іх фактычнай падпіскі."
+      },
+      "roleHelp": "Роля тэставальніка адкрывае ўсе функцыі Free, Pro і Premium для QA без змены захаванай падпіскі. Для гэтай панэлі патрэбны адміністратар.",
+      "roles": {
+        "user": "Карыстальнік",
+        "tester": "Тэставальнік",
+        "admin": "Адміністратар"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Мова",
         "owner": "Уладальнік",
         "created": "Створана",
-        "updated": "Абноўлена"
+        "updated": "Абноўлена",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Мова: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Выдаліць гэтую працоўную прастору і ўсё навучальнае змесціва ў ёй праз каскады базы даных?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Уладальнік",
         "workspace": "Працоўная прастора",
         "created": "Створана",
-        "updated": "Абноўлена"
+        "updated": "Абноўлена",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Прагляд метаданых. Прыватнае змесціва не загружаецца аўтаматычна.",
@@ -4928,11 +4983,13 @@
         "actions": "Дзеянні"
       },
       "actions": {
-        "delete": "Выдаліць запіс"
+        "delete": "Выдаліць запіс",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Выдаліць гэты запіс? Звязаныя даччыныя радкі выдаляюцца паводле правілаў cascade / set-null базы даных."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Заданні",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "У гэтага карыстальніка ўжо ёсць працоўная прастора для гэтай мовы.",
       "INVALID_LANGUAGE": "Няправільны код мовы.",
       "CONTENT_NOT_FOUND": "Запіс не знойдзены.",
-      "INVALID_CONTENT_MODULE": "Невядомы модуль змесціва."
+      "INVALID_CONTENT_MODULE": "Невядомы модуль змесціва.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

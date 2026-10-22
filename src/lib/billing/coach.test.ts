@@ -235,6 +235,23 @@ describe("premium coach entitlement", () => {
       }),
     ).toBe("premium");
     expect(
+      entitlementPlan({
+        role: "TESTER",
+        subscriptionPlan: "free",
+        subscriptionStatus: null,
+      }),
+    ).toBe("premium");
+    expect(
+      featureEnabled(
+        entitlementPlan({
+          role: "TESTER",
+          subscriptionPlan: "free",
+          subscriptionStatus: null,
+        }),
+        "ai_learning_coach",
+      ),
+    ).toBe(true);
+    expect(
       displayPlan({
         subscriptionPlan: "premium",
         subscriptionStatus: "active",

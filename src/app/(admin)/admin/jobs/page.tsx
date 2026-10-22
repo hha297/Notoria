@@ -3,6 +3,7 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { AdminDataTable } from "@/components/admin/admin-data-table";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
 import { AdminPagination } from "@/components/admin/admin-pagination";
+import { AdminJobsFilters } from "@/components/admin/admin-jobs-filters";
 import { AdminSearchForm } from "@/components/admin/admin-search-form";
 import styles from "@/components/style/admin/admin.module.css";
 import { buildAdminListHref, formatAdminDate } from "@/lib/admin/format";
@@ -68,30 +69,7 @@ export default async function AdminJobsPage({ searchParams }: PageProps) {
               })}
               hiddenFields={{ kind: params.kind }}
             />
-            <form method="get" action="/admin/jobs" className="flex gap-2">
-              {params.q ? (
-                <input type="hidden" name="q" value={params.q} />
-              ) : null}
-              <select
-                name="kind"
-                defaultValue={params.kind ?? ""}
-                className="h-8 rounded-md border border-page-accent-border control-surface px-2 text-sm"
-                aria-label={t("jobs.filters.kind")}
-              >
-                <option value="">{t("jobs.filters.allKinds")}</option>
-                <option value="ai_lock">{t("jobs.kinds.ai_lock")}</option>
-                <option value="listening">{t("jobs.kinds.listening")}</option>
-                <option value="exercise_import">
-                  {t("jobs.kinds.exercise_import")}
-                </option>
-              </select>
-              <button
-                type="submit"
-                className="h-8 rounded-md border border-page-accent-border px-3 text-sm font-semibold"
-              >
-                {t("common.filter")}
-              </button>
-            </form>
+            <AdminJobsFilters q={params.q} kind={params.kind} />
           </div>
         </div>
         <div className={mx(styles, "admin-panel-body")}>

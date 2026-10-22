@@ -2851,7 +2851,9 @@
     "legalTerms": "Podmínky",
     "registerAgreement": "Vytvořením účtu souhlasíte s <terms>Podmínkami používání</terms> a <privacy>Zásadami ochrany osobních údajů</privacy>.",
     "avatarRequestTooLarge": "Tato fotografie je příliš velká k odeslání. Zkuste menší obrázek.",
-    "requestTooLarge": "Tento požadavek byl příliš velký. Vaše změny zůstaly zachovány — zkuste to prosím znovu."
+    "requestTooLarge": "Tento požadavek byl příliš velký. Vaše změny zůstaly zachovány — zkuste to prosím znovu.",
+    "roleAdmin": "Správce",
+    "roleTester": "Tester"
   },
   "account": {
     "eyebrow": "Účet",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Správce",
       "manage": "Správa",
       "overview": "Přehled",
       "users": "Uživatelé",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "Knihovna obsahu",
       "backToApp": "Zpět do aplikace",
       "openMenu": "Otevřít nabídku admina",
-      "openAdmin": "Admin nástěnka"
+      "openAdmin": "Panel správce"
     },
     "modules": {
       "vocabulary": "Slovní zásoba",
@@ -4803,7 +4805,28 @@
         "failedListening": "Neúspěšný poslech",
         "failedImports": "Neúspěšné importy",
         "runningJobs": "Běžící zámky úloh",
-        "recentAudits7d": "Auditní záznamy (7d)"
+        "recentAudits7d": "Auditní záznamy (7d)",
+        "admins": "Správci",
+        "testers": "Testeři",
+        "suspended": "Pozastavení",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Rychlý přístup",
+      "quickAccessLede": "Přejít na nástroje správy.",
+      "groups": {
+        "people": "Lidé",
+        "content": "Obsah",
+        "ops": "Provoz"
+      },
+      "charts": {
+        "signupsTitle": "New accounts",
+        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
+        "activeTitle": "Active learners",
+        "activeLede": "Distinct learners with activity each day (14d).",
+        "rolesTitle": "Roles",
+        "rolesLede": "Share of accounts by role.",
+        "contentTitle": "Content mix",
+        "contentLede": "Stored records across learning modules."
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Plán",
         "created": "Registrace",
         "updated": "Aktualizováno",
-        "emailVerified": "E-mail ověřen"
+        "emailVerified": "E-mail ověřen",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Účet",
@@ -4846,7 +4871,8 @@
         "usageLede": "Vlastněné záznamy napříč moduly učení.",
         "actions": "Akce účtu",
         "workspaces": "Pracovní prostory",
-        "workspacesLede": "Jazykové pracovní prostory vlastněné tímto uživatelem."
+        "workspacesLede": "Jazykové pracovní prostory vlastněné tímto uživatelem.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Uložit jméno",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Odebrat admina",
         "suspend": "Pozastavit",
         "restore": "Obnovit",
-        "delete": "Smazat účet"
+        "delete": "Smazat účet",
+        "grantTester": "Udělít roli testera",
+        "revokeTester": "Odebrat roli testera",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Udělit tomuto účtu přístup admina?",
         "revokeAdmin": "Odebrat přístup admina? Selže, pokud jde o posledního aktivního admina.",
         "suspend": "Pozastavit tento účet? Ztratí přístup při dalším chráněném požadavku.",
         "restore": "Obnovit tento účet?",
-        "delete": "Trvale smazat tento účet a kaskádovaná data učení? Tuto akci nelze vrátit."
+        "delete": "Trvale smazat tento účet a kaskádovaná data učení? Tuto akci nelze vrátit.",
+        "grantTester": "Udělít roli testera? Získají všechny funkce aplikace pro QA; uložené předplatné se nemění.",
+        "revokeTester": "Odebrat roli testera? Přístup k funkcím se vrátí podle jejich skutečného předplatného."
+      },
+      "roleHelp": "Role testera odemyká všechny funkce Free, Pro a Premium pro QA bez změny uloženého předplatného. Pro tento panel je potřeba správce.",
+      "roles": {
+        "user": "Uživatel",
+        "tester": "Tester",
+        "admin": "Správce"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Jazyk",
         "owner": "Vlastník",
         "created": "Vytvořeno",
-        "updated": "Aktualizováno"
+        "updated": "Aktualizováno",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Jazyk: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Smazat tento pracovní prostor a veškerý obsah učení uvnitř přes kaskády databáze?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Vlastník",
         "workspace": "Pracovní prostor",
         "created": "Vytvořeno",
-        "updated": "Aktualizováno"
+        "updated": "Aktualizováno",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Kontrola metadat. Soukromá těla se nenačítají automaticky.",
@@ -4928,11 +4983,13 @@
         "actions": "Akce"
       },
       "actions": {
-        "delete": "Smazat záznam"
+        "delete": "Smazat záznam",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Smazat tento záznam? Související podřízené řádky se řídí pravidly kaskády / set-null databáze."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Úlohy",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Tento uživatel již má pracovní prostor pro tento jazyk.",
       "INVALID_LANGUAGE": "Neplatný kód jazyka.",
       "CONTENT_NOT_FOUND": "Záznam nenalezen.",
-      "INVALID_CONTENT_MODULE": "Neznámý modul obsahu."
+      "INVALID_CONTENT_MODULE": "Neznámý modul obsahu.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

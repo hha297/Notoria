@@ -2851,7 +2851,9 @@
     "legalTerms": "Условия",
     "registerAgreement": "Создавая аккаунт, вы соглашаетесь с <terms>Условиями использования</terms> и <privacy>Политикой конфиденциальности</privacy>.",
     "avatarRequestTooLarge": "Это фото слишком большое для отправки. Попробуйте изображение меньшего размера.",
-    "requestTooLarge": "Запрос слишком большой. Ваши изменения сохранены — попробуйте снова."
+    "requestTooLarge": "Запрос слишком большой. Ваши изменения сохранены — попробуйте снова.",
+    "roleAdmin": "Администратор",
+    "roleTester": "Тестировщик"
   },
   "account": {
     "eyebrow": "Аккаунт",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Админ",
+      "admin": "Администратор",
       "manage": "Управление",
       "overview": "Обзор",
       "users": "Пользователи",
@@ -4803,7 +4805,28 @@
         "failedListening": "Ошибки аудирования",
         "failedImports": "Ошибки импорта",
         "runningJobs": "Активные блокировки задач",
-        "recentAudits7d": "Записи аудита (7 дн.)"
+        "recentAudits7d": "Записи аудита (7 дн.)",
+        "admins": "Администраторы",
+        "testers": "Тестировщики",
+        "suspended": "Заблокированные",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Быстрый доступ",
+      "quickAccessLede": "Перейти к инструментам управления.",
+      "groups": {
+        "people": "Люди",
+        "content": "Контент",
+        "ops": "Операции"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "План",
         "created": "Регистрация",
         "updated": "Обновлён",
-        "emailVerified": "Email подтверждён"
+        "emailVerified": "Email подтверждён",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Аккаунт",
@@ -4846,7 +4871,8 @@
         "usageLede": "Записи, принадлежащие пользователю, по учебным модулям.",
         "actions": "Действия с аккаунтом",
         "workspaces": "Рабочие пространства",
-        "workspacesLede": "Языковые рабочие пространства этого пользователя."
+        "workspacesLede": "Языковые рабочие пространства этого пользователя.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Сохранить имя",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Снять права администратора",
         "suspend": "Приостановить",
         "restore": "Восстановить",
-        "delete": "Удалить аккаунт"
+        "delete": "Удалить аккаунт",
+        "grantTester": "Назначить тестировщика",
+        "revokeTester": "Снять тестировщика",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Назначить этому аккаунту права администратора?",
         "revokeAdmin": "Снять права администратора? Операция не выполнится, если это последний активный администратор.",
         "suspend": "Приостановить этот аккаунт? Доступ будет потерян при следующем защищённом запросе.",
         "restore": "Восстановить этот аккаунт?",
-        "delete": "Безвозвратно удалить этот аккаунт и связанные учебные данные? Это действие нельзя отменить."
+        "delete": "Безвозвратно удалить этот аккаунт и связанные учебные данные? Это действие нельзя отменить.",
+        "grantTester": "Назначить роль тестировщика? Они получат все функции приложения для QA; сохранённая подписка не изменится.",
+        "revokeTester": "Снять роль тестировщика? Доступ к функциям вернётся к их фактической подписке."
+      },
+      "roleHelp": "Роль тестировщика открывает все функции Free, Pro и Premium для QA, не меняя сохранённую подписку. Для этой панели нужен администратор.",
+      "roles": {
+        "user": "Пользователь",
+        "tester": "Тестировщик",
+        "admin": "Администратор"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Язык",
         "owner": "Владелец",
         "created": "Создано",
-        "updated": "Обновлено"
+        "updated": "Обновлено",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Язык: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Удалить это рабочее пространство и весь учебный контент в нём через каскады базы данных?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Владелец",
         "workspace": "Рабочее пространство",
         "created": "Создано",
-        "updated": "Обновлено"
+        "updated": "Обновлено",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Просмотр метаданных. Приватное содержимое не загружается автоматически.",
@@ -4928,11 +4983,13 @@
         "actions": "Действия"
       },
       "actions": {
-        "delete": "Удалить запись"
+        "delete": "Удалить запись",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Удалить эту запись? Связанные дочерние строки следуют правилам cascade / set-null базы данных."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Задачи",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "У этого пользователя уже есть рабочее пространство для этого языка.",
       "INVALID_LANGUAGE": "Недопустимый код языка.",
       "CONTENT_NOT_FOUND": "Запись не найдена.",
-      "INVALID_CONTENT_MODULE": "Неизвестный модуль контента."
+      "INVALID_CONTENT_MODULE": "Неизвестный модуль контента.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

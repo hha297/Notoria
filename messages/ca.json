@@ -2851,7 +2851,9 @@
     "legalTerms": "Condicions",
     "registerAgreement": "En crear un compte, accepteu les <terms>Condicions d’ús</terms> i la <privacy>Política de privacitat</privacy>.",
     "avatarRequestTooLarge": "Aquesta foto és massa gran per enviar-la. Proveu una imatge més petita.",
-    "requestTooLarge": "Aquesta sol·licitud era massa gran. Els canvis s’han conservat — torneu-ho a provar."
+    "requestTooLarge": "Aquesta sol·licitud era massa gran. Els canvis s’han conservat — torneu-ho a provar.",
+    "roleAdmin": "Administrador",
+    "roleTester": "Provador"
   },
   "account": {
     "eyebrow": "Compte",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Administrador",
       "manage": "Gestiona",
       "overview": "Resum",
       "users": "Usuaris",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "Biblioteca de contingut",
       "backToApp": "Tornar a l'aplicació",
       "openMenu": "Obrir el menú d'administració",
-      "openAdmin": "Tauler d'administració"
+      "openAdmin": "Tauler d'administrador"
     },
     "modules": {
       "vocabulary": "Vocabulari",
@@ -4803,7 +4805,28 @@
         "failedListening": "Escolta fallida",
         "failedImports": "Importacions fallides",
         "runningJobs": "Bloquejos de tasques en curs",
-        "recentAudits7d": "Entrades d'auditoria (7d)"
+        "recentAudits7d": "Entrades d'auditoria (7d)",
+        "admins": "Administradors",
+        "testers": "Provadors",
+        "suspended": "Suspesos",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Accés ràpid",
+      "quickAccessLede": "Aneu a les eines de gestió.",
+      "groups": {
+        "people": "Persones",
+        "content": "Contingut",
+        "ops": "Operacions"
+      },
+      "charts": {
+        "signupsTitle": "New accounts",
+        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
+        "activeTitle": "Active learners",
+        "activeLede": "Distinct learners with activity each day (14d).",
+        "rolesTitle": "Roles",
+        "rolesLede": "Share of accounts by role.",
+        "contentTitle": "Content mix",
+        "contentLede": "Stored records across learning modules."
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Pla",
         "created": "Registrat",
         "updated": "Actualitzat",
-        "emailVerified": "Correu verificat"
+        "emailVerified": "Correu verificat",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Compte",
@@ -4846,7 +4871,8 @@
         "usageLede": "Registres en propietat a tots els mòduls d'aprenentatge.",
         "actions": "Accions del compte",
         "workspaces": "Espais de treball",
-        "workspacesLede": "Espais de treball d'idioma propietat d'aquest usuari."
+        "workspacesLede": "Espais de treball d'idioma propietat d'aquest usuari.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Desa el nom",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Revocar admin",
         "suspend": "Suspendre",
         "restore": "Restaurar",
-        "delete": "Suprimir el compte"
+        "delete": "Suprimir el compte",
+        "grantTester": "Atorgar provador",
+        "revokeTester": "Revocar provador",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Concedir accés d'administració a aquest compte?",
         "revokeAdmin": "Revocar l'accés d'administració? Fallarà si és el darrer administrador actiu.",
         "suspend": "Suspendre aquest compte? Perdran l'accés a la propera sol·licitud protegida.",
         "restore": "Restaurar aquest compte?",
-        "delete": "Suprimir permanentment aquest compte i les dades d'aprenentatge en cascada? Aquesta acció no es pot desfer."
+        "delete": "Suprimir permanentment aquest compte i les dades d'aprenentatge en cascada? Aquesta acció no es pot desfer.",
+        "grantTester": "Atorgar el rol de provador? Obtenen totes les funcions de l'app per a QA; la subscripció desada no canvia.",
+        "revokeTester": "Revocar el rol de provador? L'accés a les funcions torna a la seva subscripció real."
+      },
+      "roleHelp": "El rol de provador desbloqueja totes les funcions Free, Pro i Premium per a QA sense canviar la subscripció desada. Cal ser administrador per a aquest tauler.",
+      "roles": {
+        "user": "Usuari",
+        "tester": "Provador",
+        "admin": "Administrador"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Idioma",
         "owner": "Propietari",
         "created": "Creat",
-        "updated": "Actualitzat"
+        "updated": "Actualitzat",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Idioma: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Suprimir aquest espai de treball i tot el contingut d'aprenentatge que conté mitjançant cascades de la base de dades?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Propietari",
         "workspace": "Espai de treball",
         "created": "Creat",
-        "updated": "Actualitzat"
+        "updated": "Actualitzat",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Inspecció de metadades. Els cossos privats no es carreguen automàticament.",
@@ -4928,11 +4983,13 @@
         "actions": "Accions"
       },
       "actions": {
-        "delete": "Suprimir el registre"
+        "delete": "Suprimir el registre",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Suprimir aquest registre? Les files fill relacionades segueixen les regles de cascada / set-null de la base de dades."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Tasques",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Aquest usuari ja té un espai de treball per a aquest idioma.",
       "INVALID_LANGUAGE": "Codi d'idioma no vàlid.",
       "CONTENT_NOT_FOUND": "Registre no trobat.",
-      "INVALID_CONTENT_MODULE": "Mòdul de contingut desconegut."
+      "INVALID_CONTENT_MODULE": "Mòdul de contingut desconegut.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

@@ -2851,7 +2851,9 @@
     "legalTerms": "Termeni",
     "registerAgreement": "Prin crearea unui cont, sunteți de acord cu <terms>Termenii de utilizare</terms> și <privacy>Politica de confidențialitate</privacy>.",
     "avatarRequestTooLarge": "Această fotografie este prea mare pentru a fi trimisă. Încercați o imagine mai mică.",
-    "requestTooLarge": "Această solicitare a fost prea mare. Modificările dvs. au fost păstrate — vă rugăm să încercați din nou."
+    "requestTooLarge": "Această solicitare a fost prea mare. Modificările dvs. au fost păstrate — vă rugăm să încercați din nou.",
+    "roleAdmin": "Administrator",
+    "roleTester": "Tester"
   },
   "account": {
     "eyebrow": "Cont",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Administrare",
+      "admin": "Administrator",
       "manage": "Gestionare",
       "overview": "Prezentare generală",
       "users": "Utilizatori",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "Bibliotecă de conținut",
       "backToApp": "Înapoi la aplicație",
       "openMenu": "Deschide meniul de administrare",
-      "openAdmin": "Panou de administrare"
+      "openAdmin": "Panou administrator"
     },
     "modules": {
       "vocabulary": "Vocabular",
@@ -4803,7 +4805,28 @@
         "failedListening": "Ascultare eșuată",
         "failedImports": "Importuri eșuate",
         "runningJobs": "Blocaje de sarcini active",
-        "recentAudits7d": "Înregistrări audit (7z)"
+        "recentAudits7d": "Înregistrări audit (7z)",
+        "admins": "Administratori",
+        "testers": "Testeri",
+        "suspended": "Suspendați",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Acces rapid",
+      "quickAccessLede": "Mergi la instrumentele de administrare.",
+      "groups": {
+        "people": "Persoane",
+        "content": "Conținut",
+        "ops": "Operațiuni"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Plan",
         "created": "Înregistrat",
         "updated": "Actualizat",
-        "emailVerified": "E-mail verificat"
+        "emailVerified": "E-mail verificat",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Cont",
@@ -4846,7 +4871,8 @@
         "usageLede": "Înregistrări deținute în modulele de învățare.",
         "actions": "Acțiuni asupra contului",
         "workspaces": "Spații de lucru",
-        "workspacesLede": "Spații de lucru pe limbă deținute de acest utilizator."
+        "workspacesLede": "Spații de lucru pe limbă deținute de acest utilizator.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Salvează numele",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Revocă administrator",
         "suspend": "Suspendă",
         "restore": "Restaurează",
-        "delete": "Șterge contul"
+        "delete": "Șterge contul",
+        "grantTester": "Acordă rolul de tester",
+        "revokeTester": "Revocă rolul de tester",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Acordați acces de administrator acestui cont?",
         "revokeAdmin": "Revocați accesul de administrator? Operațiunea eșuează dacă este ultimul administrator activ.",
         "suspend": "Suspendați acest cont? Pierde accesul la următoarea solicitare protejată.",
         "restore": "Restaurați acest cont?",
-        "delete": "Ștergeți definitiv acest cont și datele de învățare în cascadă? Acțiunea nu poate fi anulată."
+        "delete": "Ștergeți definitiv acest cont și datele de învățare în cascadă? Acțiunea nu poate fi anulată.",
+        "grantTester": "Acordăm rolul de tester? Primesc toate funcțiile aplicației pentru QA; abonamentul salvat nu se schimbă.",
+        "revokeTester": "Revocăm rolul de tester? Accesul la funcții revine la abonamentul lor real."
+      },
+      "roleHelp": "Rolul de tester deblochează toate funcțiile Free, Pro și Premium pentru QA fără a modifica abonamentul salvat. Pentru acest panou este necesar un administrator.",
+      "roles": {
+        "user": "Utilizator",
+        "tester": "Tester",
+        "admin": "Administrator"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Limbă",
         "owner": "Proprietar",
         "created": "Creat",
-        "updated": "Actualizat"
+        "updated": "Actualizat",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Limbă: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Ștergeți acest spațiu de lucru și tot conținutul de învățare din el prin cascadele bazei de date?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Proprietar",
         "workspace": "Spațiu de lucru",
         "created": "Creat",
-        "updated": "Actualizat"
+        "updated": "Actualizat",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Inspecție de metadate. Conținutul privat nu este încărcat automat.",
@@ -4928,11 +4983,13 @@
         "actions": "Acțiuni"
       },
       "actions": {
-        "delete": "Șterge înregistrarea"
+        "delete": "Șterge înregistrarea",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Ștergeți această înregistrare? Rândurile copil asociate urmează regulile de cascadă / set-null ale bazei de date."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Sarcini",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Acest utilizator are deja un spațiu de lucru pentru acea limbă.",
       "INVALID_LANGUAGE": "Cod de limbă nevalid.",
       "CONTENT_NOT_FOUND": "Înregistrarea nu a fost găsită.",
-      "INVALID_CONTENT_MODULE": "Modul de conținut necunoscut."
+      "INVALID_CONTENT_MODULE": "Modul de conținut necunoscut.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

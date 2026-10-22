@@ -2851,7 +2851,9 @@
     "legalTerms": "Vilkår",
     "registerAgreement": "Ved å opprette en konto godtar du <terms>Vilkår for bruk</terms> og <privacy>Personvernerklæringen</privacy>.",
     "avatarRequestTooLarge": "Det bildet er for stort til å sende. Prøv et mindre bilde.",
-    "requestTooLarge": "Den forespørselen var for stor. Endringene dine er beholdt — prøv igjen."
+    "requestTooLarge": "Den forespørselen var for stor. Endringene dine er beholdt — prøv igjen.",
+    "roleAdmin": "Administrator",
+    "roleTester": "Testbruker"
   },
   "account": {
     "eyebrow": "Konto",
@@ -4744,7 +4746,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Administrator",
       "manage": "Administrer",
       "overview": "Oversikt",
       "users": "Brukere",
@@ -4755,7 +4757,7 @@
       "contentLibrary": "Innholdsbibliotek",
       "backToApp": "Tilbake til appen",
       "openMenu": "Åpne admin-meny",
-      "openAdmin": "Admin-dashbord"
+      "openAdmin": "Administratordashbord"
     },
     "modules": {
       "vocabulary": "Ordforråd",
@@ -4771,7 +4773,7 @@
     "common": {
       "search": "Søk",
       "clear": "Nullstill",
-      "filter": "Filter",
+      "filter": "Filtrer",
       "previous": "Forrige",
       "next": "Neste",
       "pageOf": "Side {page} av {totalPages}",
@@ -4803,7 +4805,28 @@
         "failedListening": "Mislykket lytting",
         "failedImports": "Mislykkede importer",
         "runningJobs": "Kjørende jobb-låser",
-        "recentAudits7d": "Revisjonsposter (7d)"
+        "recentAudits7d": "Revisjonsposter (7d)",
+        "admins": "Administratorer",
+        "testers": "Testbrukere",
+        "suspended": "Suspenderte",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Hurtigtilgang",
+      "quickAccessLede": "Gå til administrasjonsverktøy.",
+      "groups": {
+        "people": "Personer",
+        "content": "Innhold",
+        "ops": "Drift"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Plan",
         "created": "Registrert",
         "updated": "Oppdatert",
-        "emailVerified": "E-post bekreftet"
+        "emailVerified": "E-post bekreftet",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Konto",
@@ -4846,7 +4871,8 @@
         "usageLede": "Eide poster på tvers av læringsmoduler.",
         "actions": "Kontohandlinger",
         "workspaces": "Arbeidsområder",
-        "workspacesLede": "Språkarbeidsområder eid av denne brukeren."
+        "workspacesLede": "Språkarbeidsområder eid av denne brukeren.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Lagre navn",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Fjern admin",
         "suspend": "Suspender",
         "restore": "Gjenopprett",
-        "delete": "Slett konto"
+        "delete": "Slett konto",
+        "grantTester": "Gi testbruker-rolle",
+        "revokeTester": "Fjern testbruker-rolle",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Gi admin-tilgang til denne kontoen?",
         "revokeAdmin": "Fjern admin-tilgang? Dette mislykkes hvis de er den siste aktive admin.",
         "suspend": "Suspendere denne kontoen? De mister tilgang ved neste beskyttede forespørsel.",
         "restore": "Gjenopprette denne kontoen?",
-        "delete": "Slette denne kontoen permanent og tilhørende læringsdata? Dette kan ikke angres."
+        "delete": "Slette denne kontoen permanent og tilhørende læringsdata? Dette kan ikke angres.",
+        "grantTester": "Gi testbruker-rolle? De får alle appfunksjoner for QA; det lagrede abonnementet endres ikke.",
+        "revokeTester": "Fjern testbruker-rolle? Funksjonstilgang går tilbake til deres faktiske abonnement."
+      },
+      "roleHelp": "Testbruker-rollen låser opp alle Free-, Pro- og Premium-funksjoner for QA uten å endre det lagrede abonnementet. Administrator kreves for dette panelet.",
+      "roles": {
+        "user": "Bruker",
+        "tester": "Testbruker",
+        "admin": "Administrator"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Språk",
         "owner": "Eier",
         "created": "Opprettet",
-        "updated": "Oppdatert"
+        "updated": "Oppdatert",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Språk: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Slette dette arbeidsområdet og alt læringsinnhold i det via database-kaskader?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Eier",
         "workspace": "Arbeidsområde",
         "created": "Opprettet",
-        "updated": "Oppdatert"
+        "updated": "Oppdatert",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Inspeksjon av metadata. Private innhold lastes ikke automatisk.",
@@ -4928,11 +4983,13 @@
         "actions": "Handlinger"
       },
       "actions": {
-        "delete": "Slett post"
+        "delete": "Slett post",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Slette denne posten? Relaterte underliggende rader følger database-kaskade- / set-null-regler."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Jobber",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Denne brukeren har allerede et arbeidsområde for det språket.",
       "INVALID_LANGUAGE": "Ugyldig språkkode.",
       "CONTENT_NOT_FOUND": "Post ikke funnet.",
-      "INVALID_CONTENT_MODULE": "Ukjent innholdsmodul."
+      "INVALID_CONTENT_MODULE": "Ukjent innholdsmodul.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

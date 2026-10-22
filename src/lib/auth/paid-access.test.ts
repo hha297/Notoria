@@ -3,7 +3,7 @@ import { hasProAccess, isPaidDocumentFormat } from "@/lib/auth/paid-access";
 
 function user(
   overrides: Partial<{
-    role: "USER" | "ADMIN";
+    role: "USER" | "ADMIN" | "TESTER";
     subscriptionPlan: "free" | "pro" | "premium";
     subscriptionStatus: string | null;
   }> = {},
@@ -19,6 +19,10 @@ function user(
 describe("paid feature access", () => {
   it("grants access to admins without a Pro subscription", () => {
     expect(hasProAccess(user({ role: "ADMIN" }))).toBe(true);
+  });
+
+  it("grants access to testers without a Pro subscription", () => {
+    expect(hasProAccess(user({ role: "TESTER" }))).toBe(true);
   });
 
   it("grants access to active Pro subscribers", () => {

@@ -2851,7 +2851,9 @@
     "legalTerms": "利用規約",
     "registerAgreement": "アカウントを作成すると、<terms>利用規約</terms>および<privacy>プライバシーポリシー</privacy>に同意したものとみなされます。",
     "avatarRequestTooLarge": "その写真は送信するには大きすぎます。より小さい画像をお試しください。",
-    "requestTooLarge": "リクエストが大きすぎました。変更内容は保持されています — もう一度お試しください。"
+    "requestTooLarge": "リクエストが大きすぎました。変更内容は保持されています — もう一度お試しください。",
+    "roleAdmin": "管理者",
+    "roleTester": "テスター"
   },
   "account": {
     "eyebrow": "アカウント",
@@ -4803,7 +4805,28 @@
         "failedListening": "失敗したリスニング",
         "failedImports": "失敗したインポート",
         "runningJobs": "実行中のジョブロック",
-        "recentAudits7d": "監査エントリ（7日）"
+        "recentAudits7d": "監査エントリ（7日）",
+        "admins": "管理者",
+        "testers": "テスター",
+        "suspended": "停止中",
+        "contentTotal": "コンテンツ件数"
+      },
+      "quickAccess": "クイックアクセス",
+      "quickAccessLede": "管理ツールへ移動します。",
+      "groups": {
+        "people": "ユーザー",
+        "content": "コンテンツ",
+        "ops": "運用"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "プラン",
         "created": "登録日",
         "updated": "更新日",
-        "emailVerified": "メール確認済み"
+        "emailVerified": "メール確認済み",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "アカウント",
@@ -4846,7 +4871,8 @@
         "usageLede": "学習モジュール全体の所有レコードです。",
         "actions": "アカウント操作",
         "workspaces": "ワークスペース",
-        "workspacesLede": "このユーザーが所有する言語ワークスペースです。"
+        "workspacesLede": "このユーザーが所有する言語ワークスペースです。",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "名前を保存",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "管理者を取り消し",
         "suspend": "停止",
         "restore": "復元",
-        "delete": "アカウントを削除"
+        "delete": "アカウントを削除",
+        "grantTester": "テスター役割を付与",
+        "revokeTester": "テスター役割を解除",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "このアカウントに管理者権限を付与しますか？",
         "revokeAdmin": "管理者権限を取り消しますか？最後の有効な管理者である場合は失敗します。",
         "suspend": "このアカウントを停止しますか？次の保護されたリクエストからアクセスできなくなります。",
         "restore": "このアカウントを復元しますか？",
-        "delete": "このアカウントと関連する学習データを完全に削除しますか？この操作は取り消せません。"
+        "delete": "このアカウントと関連する学習データを完全に削除しますか？この操作は取り消せません。",
+        "grantTester": "テスター役割を付与しますか？QA用にアプリの全機能を利用できます。保存済みのサブスクリプションは変わりません。",
+        "revokeTester": "テスター役割を解除しますか？機能アクセスは実際のサブスクリプションに戻ります。"
+      },
+      "roleHelp": "テスター役割は保存済みのサブスクリプションを変えずに、QA用に Free / Pro / Premium の全機能を利用できます。このダッシュボードには管理者が必要です。",
+      "roles": {
+        "user": "ユーザー",
+        "tester": "テスター",
+        "admin": "管理者"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "言語",
         "owner": "所有者",
         "created": "作成日",
-        "updated": "更新日"
+        "updated": "更新日",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "言語: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "このワークスペースと中の学習コンテンツを、データベースのカスケードで削除しますか？"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "所有者",
         "workspace": "ワークスペース",
         "created": "作成日",
-        "updated": "更新日"
+        "updated": "更新日",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "メタデータの確認です。非公開本文は自動では読み込まれません。",
@@ -4928,11 +4983,13 @@
         "actions": "操作"
       },
       "actions": {
-        "delete": "レコードを削除"
+        "delete": "レコードを削除",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "このレコードを削除しますか？関連する子行はデータベースのカスケード／null 設定ルールに従います。"
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "ジョブ",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "このユーザーには、その言語のワークスペースがすでにあります。",
       "INVALID_LANGUAGE": "無効な言語コードです。",
       "CONTENT_NOT_FOUND": "レコードが見つかりません。",
-      "INVALID_CONTENT_MODULE": "不明なコンテンツモジュールです。"
+      "INVALID_CONTENT_MODULE": "不明なコンテンツモジュールです。",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

@@ -2851,7 +2851,9 @@
     "legalTerms": "Villkor",
     "registerAgreement": "Genom att skapa ett konto godkänner du <terms>användarvillkoren</terms> och <privacy>integritetspolicyn</privacy>.",
     "avatarRequestTooLarge": "Fotot är för stort att skicka. Prova en mindre bild.",
-    "requestTooLarge": "Begäran var för stor. Dina ändringar sparades — försök igen."
+    "requestTooLarge": "Begäran var för stor. Dina ändringar sparades — försök igen.",
+    "roleAdmin": "Administratör",
+    "roleTester": "Testare"
   },
   "account": {
     "eyebrow": "Konto",
@@ -4744,34 +4746,34 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
-      "manage": "Manage",
-      "overview": "Overview",
-      "users": "Users",
-      "workspaces": "Workspaces",
+      "admin": "Administratör",
+      "manage": "Hantera",
+      "overview": "Översikt",
+      "users": "Användare",
+      "workspaces": "Arbetsytor",
       "jobs": "Jobs",
       "audit": "Audit",
-      "content": "Content",
+      "content": "Innehåll",
       "contentLibrary": "Content library",
-      "backToApp": "Back to app",
+      "backToApp": "Tillbaka till appen",
       "openMenu": "Open admin menu",
-      "openAdmin": "Admin dashboard"
+      "openAdmin": "Administratörspanel"
     },
     "modules": {
-      "vocabulary": "Vocabulary",
-      "theory": "Theory",
-      "writing": "Writing",
-      "exercises": "Exercises",
-      "listening": "Listening",
-      "reading": "Reading",
-      "speaking": "Speaking",
-      "inbox": "Capture",
-      "folders": "Folders"
+      "vocabulary": "Vokabulär",
+      "theory": "Teori",
+      "writing": "Skrivande",
+      "exercises": "Övning",
+      "listening": "Lyssnande",
+      "reading": "Läsning",
+      "speaking": "Tala",
+      "inbox": "Fångst",
+      "folders": "Mappar"
     },
     "common": {
-      "search": "Search",
+      "search": "Sök",
       "clear": "Clear",
-      "filter": "Filter",
+      "filter": "Filtrera",
       "previous": "Previous",
       "next": "Next",
       "pageOf": "Page {page} of {totalPages}",
@@ -4792,18 +4794,39 @@
         "newUsers30d": "New users (30d)",
         "activeUsers7d": "Active learners (7d)",
         "workspaces": "Workspaces",
-        "vocabulary": "Vocabulary",
-        "theory": "Theory",
-        "writing": "Writing",
-        "exercises": "Exercises",
-        "listening": "Listening",
-        "reading": "Reading",
-        "speaking": "Speaking",
-        "inbox": "Capture",
+        "vocabulary": "Vokabulär",
+        "theory": "Teori",
+        "writing": "Skrivande",
+        "exercises": "Övning",
+        "listening": "Lyssnande",
+        "reading": "Läsning",
+        "speaking": "Tala",
+        "inbox": "Fångst",
         "failedListening": "Failed listening",
         "failedImports": "Failed imports",
         "runningJobs": "Running job locks",
-        "recentAudits7d": "Audit entries (7d)"
+        "recentAudits7d": "Audit entries (7d)",
+        "admins": "Administratörer",
+        "testers": "Testare",
+        "suspended": "Avstängda",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Snabbåtkomst",
+      "quickAccessLede": "Gå till hanteringsverktyg.",
+      "groups": {
+        "people": "Personer",
+        "content": "Innehåll",
+        "ops": "Drift"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4823,12 +4846,12 @@
       "filters": {
         "role": "Role",
         "status": "Status",
-        "allRoles": "Any role",
-        "allStatuses": "Any status"
+        "allRoles": "Alla roller",
+        "allStatuses": "Alla statusar"
       },
       "status": {
-        "active": "Active",
-        "suspended": "Suspended"
+        "active": "Aktiv",
+        "suspended": "Suspenderad"
       },
       "fields": {
         "id": "User id",
@@ -4838,7 +4861,9 @@
         "plan": "Plan",
         "created": "Registered",
         "updated": "Updated",
-        "emailVerified": "Email verified"
+        "emailVerified": "Email verified",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Account",
@@ -4846,7 +4871,8 @@
         "usageLede": "Owned records across learning modules.",
         "actions": "Account actions",
         "workspaces": "Workspaces",
-        "workspacesLede": "Language workspaces owned by this user."
+        "workspacesLede": "Language workspaces owned by this user.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Save name",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Revoke admin",
         "suspend": "Suspend",
         "restore": "Restore",
-        "delete": "Delete account"
+        "delete": "Delete account",
+        "grantTester": "Ge testarroll",
+        "revokeTester": "Ta bort testarroll",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Grant admin access to this account?",
         "revokeAdmin": "Revoke admin access? This fails if they are the last active admin.",
         "suspend": "Suspend this account? They lose access on the next protected request.",
         "restore": "Restore this account?",
-        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone."
+        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone.",
+        "grantTester": "Ge testarroll? De får alla appfunktioner för QA; den sparade prenumerationen ändras inte.",
+        "revokeTester": "Ta bort testarroll? Funktionsåtkomsten återgår till deras faktiska prenumeration."
+      },
+      "roleHelp": "Testarrollen låser upp alla Free-, Pro- och Premium-funktioner för QA utan att ändra den sparade prenumerationen. Administratör krävs för den här panelen.",
+      "roles": {
+        "user": "Användare",
+        "tester": "Testare",
+        "admin": "Administratör"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Language",
         "owner": "Owner",
         "created": "Created",
-        "updated": "Updated"
+        "updated": "Updated",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Language: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Delete this workspace and all learning content inside it via database cascades?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Owner",
         "workspace": "Workspace",
         "created": "Created",
-        "updated": "Updated"
+        "updated": "Updated",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Metadata inspection. Private bodies are not auto-loaded.",
@@ -4928,11 +4983,13 @@
         "actions": "Actions"
       },
       "actions": {
-        "delete": "Delete record"
+        "delete": "Delete record",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Delete this record? Related child rows follow database cascade / set-null rules."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Jobs",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "This user already has a workspace for that language.",
       "INVALID_LANGUAGE": "Invalid language code.",
       "CONTENT_NOT_FOUND": "Record not found.",
-      "INVALID_CONTENT_MODULE": "Unknown content module."
+      "INVALID_CONTENT_MODULE": "Unknown content module.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

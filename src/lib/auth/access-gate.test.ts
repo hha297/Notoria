@@ -146,6 +146,16 @@ describe("decideAccess", () => {
         pathname: "/admin",
         search: "",
         isLoggedIn: true,
+        role: "TESTER",
+      }).type,
+    ).toBe("redirect");
+
+    expect(
+      decideAccess({
+        ...base,
+        pathname: "/admin",
+        search: "",
+        isLoggedIn: true,
         role: "ADMIN",
         authzStale: true,
       }).type,

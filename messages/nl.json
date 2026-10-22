@@ -2851,7 +2851,9 @@
     "legalTerms": "Voorwaarden",
     "registerAgreement": "Door een account aan te maken, gaat u akkoord met de <terms>Gebruiksvoorwaarden</terms> en het <privacy>Privacybeleid</privacy>.",
     "avatarRequestTooLarge": "Die foto is te groot om te versturen. Probeer een kleinere afbeelding.",
-    "requestTooLarge": "Dat verzoek was te groot. Uw wijzigingen zijn behouden — probeer het opnieuw."
+    "requestTooLarge": "Dat verzoek was te groot. Uw wijzigingen zijn behouden — probeer het opnieuw.",
+    "roleAdmin": "Beheerder",
+    "roleTester": "Testgebruiker"
   },
   "account": {
     "eyebrow": "Account",
@@ -4751,11 +4753,11 @@
       "workspaces": "Werkruimten",
       "jobs": "Taken",
       "audit": "Audit",
-      "content": "Content",
+      "content": "Inhoud",
       "contentLibrary": "Contentbibliotheek",
       "backToApp": "Terug naar app",
       "openMenu": "Beheermenu openen",
-      "openAdmin": "Beheerdashboard"
+      "openAdmin": "Beheerdersdashboard"
     },
     "modules": {
       "vocabulary": "Vocabulaire",
@@ -4803,7 +4805,28 @@
         "failedListening": "Mislukt luisteren",
         "failedImports": "Mislukte imports",
         "runningJobs": "Actieve taakvergrendelingen",
-        "recentAudits7d": "Auditvermeldingen (7d)"
+        "recentAudits7d": "Auditvermeldingen (7d)",
+        "admins": "Beheerders",
+        "testers": "Testgebruikers",
+        "suspended": "Opgeschort",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Snelle toegang",
+      "quickAccessLede": "Ga naar de beheertools.",
+      "groups": {
+        "people": "Mensen",
+        "content": "Inhoud",
+        "ops": "Operaties"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4838,7 +4861,9 @@
         "plan": "Abonnement",
         "created": "Geregistreerd",
         "updated": "Bijgewerkt",
-        "emailVerified": "E-mail geverifieerd"
+        "emailVerified": "E-mail geverifieerd",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Account",
@@ -4846,7 +4871,8 @@
         "usageLede": "Eigen records in alle leermodules.",
         "actions": "Accountacties",
         "workspaces": "Werkruimten",
-        "workspacesLede": "Taalwerkruimten die van deze gebruiker zijn."
+        "workspacesLede": "Taalwerkruimten die van deze gebruiker zijn.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Naam opslaan",
@@ -4854,14 +4880,34 @@
         "revokeAdmin": "Beheerder intrekken",
         "suspend": "Opschorten",
         "restore": "Herstellen",
-        "delete": "Account verwijderen"
+        "delete": "Account verwijderen",
+        "grantTester": "Testgebruiker toekennen",
+        "revokeTester": "Testgebruiker intrekken",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Beheerderstoegang toekennen aan dit account?",
         "revokeAdmin": "Beheerderstoegang intrekken? Dit mislukt als dit de laatste actieve beheerder is.",
         "suspend": "Dit account opschorten? De gebruiker verliest toegang bij het volgende beschermde verzoek.",
         "restore": "Dit account herstellen?",
-        "delete": "Dit account en gekoppelde leergegevens permanent verwijderen? Dit kan niet ongedaan worden gemaakt."
+        "delete": "Dit account en gekoppelde leergegevens permanent verwijderen? Dit kan niet ongedaan worden gemaakt.",
+        "grantTester": "Rol testgebruiker toekennen? Ze krijgen alle appfuncties voor QA; het opgeslagen abonnement verandert niet.",
+        "revokeTester": "Rol testgebruiker intrekken? Functietoegang keert terug naar hun echte abonnement."
+      },
+      "roleHelp": "De rol testgebruiker ontgrendelt alle Free-, Pro- en Premium-functies voor QA zonder het opgeslagen abonnement te wijzigen. Voor dit dashboard is een beheerder vereist.",
+      "roles": {
+        "user": "Gebruiker",
+        "tester": "Testgebruiker",
+        "admin": "Beheerder"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4883,7 +4929,9 @@
         "language": "Taal",
         "owner": "Eigenaar",
         "created": "Aangemaakt",
-        "updated": "Bijgewerkt"
+        "updated": "Bijgewerkt",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Taal: {language}",
@@ -4898,6 +4946,10 @@
       },
       "confirm": {
         "delete": "Deze werkruimte en alle leercontent erin verwijderen via databasecascades?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4919,7 +4971,10 @@
         "owner": "Eigenaar",
         "workspace": "Werkruimte",
         "created": "Aangemaakt",
-        "updated": "Bijgewerkt"
+        "updated": "Bijgewerkt",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Metadata-inspectie. Privé-inhoud wordt niet automatisch geladen.",
@@ -4928,11 +4983,13 @@
         "actions": "Acties"
       },
       "actions": {
-        "delete": "Record verwijderen"
+        "delete": "Record verwijderen",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Dit record verwijderen? Gerelateerde onderliggende rijen volgen cascade-/set-null-regels van de database."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Taken",
@@ -4997,7 +5054,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Deze gebruiker heeft al een werkruimte voor die taal.",
       "INVALID_LANGUAGE": "Ongeldige taalcode.",
       "CONTENT_NOT_FOUND": "Record niet gevonden.",
-      "INVALID_CONTENT_MODULE": "Onbekende contentmodule."
+      "INVALID_CONTENT_MODULE": "Onbekende contentmodule.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }
