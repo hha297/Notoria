@@ -76,7 +76,7 @@ function ExerciseStudioLoading() {
         {Array.from({ length: 4 }, (_, index) => (
           <div
             key={index}
-            className="grid gap-6 py-8 md:grid-cols-12 md:items-center"
+            className="grid gap-4 py-5 sm:gap-6 sm:py-8 md:grid-cols-12 md:items-center"
           >
             <div className="space-y-3 md:col-span-6">
               <Skeleton className="h-8 w-16" />

@@ -554,7 +554,7 @@ export function TheoryExerciseSessionView({
     <div
       data-exercise="theory"
       data-theory-category={session.category}
-      className={mx(featureStyles, "theory-practice-stage -mx-4 space-y-5 px-4 py-4 sm:-mx-6 sm:space-y-8 sm:px-6 sm:py-9")}
+      className={mx(featureStyles, "theory-practice-stage -mx-[var(--studio-main-pad,1rem)] space-y-5 px-4 py-4 sm:-mx-[var(--studio-main-pad,1.5rem)] sm:space-y-8 sm:px-6 sm:py-9")}
     >
       <div className="space-y-4">
         {instructionsField}

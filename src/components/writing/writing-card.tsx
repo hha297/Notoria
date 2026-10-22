@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
+import { useDateFnsLocale } from "@/hooks/use-date-fns-locale";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { FolderItemDrag } from "@/components/folders/folder-dnd";
@@ -33,6 +34,7 @@ function WritingKindFacts({
   document: WritingListItem;
 }) {
   const t = useTranslations("writing");
+  const dateLocale = useDateFnsLocale();
   const listMeta = document.listMeta;
   const isQuestionSet = listMeta.mode === "question_set";
 
@@ -51,6 +53,7 @@ function WritingKindFacts({
       <span>
         {formatDistanceToNow(new Date(document.updatedAt), {
           addSuffix: true,
+          locale: dateLocale,
         })}
       </span>
     </p>

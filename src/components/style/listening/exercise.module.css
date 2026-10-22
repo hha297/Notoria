@@ -70,6 +70,25 @@
   gap: 0.45rem;
 }
 
+@media (max-width: 639px) {
+  .shell {
+    gap: 0.75rem;
+  }
+
+  .header {
+    gap: 0.5rem 0.65rem;
+  }
+
+  .headerActions {
+    gap: 0.35rem;
+    margin-inline-start: auto;
+  }
+
+  .headerActions :global(button) {
+    min-height: 2.25rem;
+  }
+}
+
 .exit {
   border: 1px solid color-mix(in oklab, var(--hairline-cloud) 90%, transparent) !important;
   background: transparent !important;

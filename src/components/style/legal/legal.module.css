@@ -51,10 +51,10 @@
   margin-inline: auto;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1.15rem;
   flex: 1 1 auto;
-  padding-inline: 1.15rem;
-  padding-bottom: 1.5rem;
+  padding-inline: 0.95rem;
+  padding-bottom: 1.25rem;
 }
 
 @media (min-width: 768px) {

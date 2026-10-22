@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
+import { useDateFnsLocale } from "@/hooks/use-date-fns-locale";
 import {
   ArrowRight,
   Bookmark,
@@ -134,6 +135,7 @@ export function DashboardHome({
 }: DashboardHomeProps) {
   const t = useTranslations("dashboard");
   const tNav = useTranslations("nav");
+  const dateLocale = useDateFnsLocale();
   const firstName = userName.trim().split(/\s+/)[0] || userName;
   const next = suggestedModule(snapshot, practiceReadyCount);
 
@@ -396,6 +398,7 @@ export function DashboardHome({
                       >
                         {formatDistanceToNow(new Date(item.createdAt), {
                           addSuffix: true,
+                          locale: dateLocale,
                         })}
                       </time>
                     </div>

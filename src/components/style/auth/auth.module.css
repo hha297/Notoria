@@ -1,4 +1,11 @@
 /* --- Auth atelier --- */
+/* Compact mobile auth shell — less vertical waste on narrow screens */
+@media (max-width: 639px) {
+  .auth-layout {
+    padding-inline: 0.85rem;
+  }
+}
+
 .auth-layout {
   min-height: 100svh;
   background: var(--background);
@@ -13,7 +20,13 @@
   min-height: 100svh;
   align-items: center;
   justify-content: center;
-  padding: 1.5rem 1rem 2rem;
+  padding: 1.15rem 0.85rem 1.5rem;
+}
+
+@media (min-width: 640px) {
+  .auth-atelier-shell {
+    padding: 1.5rem 1rem 2rem;
+  }
 }
 
 .auth-atelier-shell-footer {

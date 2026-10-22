@@ -71,6 +71,7 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
   const [value, setValue] = useState("");
   const [debounced, setDebounced] = useState("");
   const [open, setOpen] = useState(false);
+  const [mobileExpanded, setMobileExpanded] = useState(false);
   const [activeIndex, setActiveIndex] = useState(0);
   const [isMac, setIsMac] = useState(false);
   const [searchShortcutLabel, setSearchShortcutLabel] = useState("Ctrl + K");
@@ -124,10 +125,14 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
     });
     pendingEnter.current = next.pendingEnter;
     setOpen(next.open);
+    if (!value.trim()) setMobileExpanded(false);
     if (document.activeElement === inputRef.current) {
       inputRef.current?.blur();
     }
   }
+
+  const showMobileTrigger =
+    compact && !mobileExpanded && !value.trim() && !open;
 
   function openResult(result: SearchResult) {
     closeSearch();
@@ -229,8 +234,34 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
   }
 
   return (
-    <div ref={rootRef} className="relative w-full">
-      <div className="relative">
+    <div
+      ref={rootRef}
+      className={cn(
+        "relative min-w-0",
+        showMobileTrigger ? "w-auto sm:w-full" : "w-full",
+      )}
+    >
+      {showMobileTrigger ? (
+        <button
+          type="button"
+          className="control-surface inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-page-accent-border text-muted-foreground sm:hidden"
+          aria-label={t("placeholder")}
+          onClick={() => {
+            setMobileExpanded(true);
+            setOpen(true);
+            window.requestAnimationFrame(() => inputRef.current?.focus());
+          }}
+        >
+          <Search className="size-4" />
+        </button>
+      ) : null}
+
+      <div
+        className={cn(
+          "relative",
+          showMobileTrigger && "hidden sm:block",
+        )}
+      >
         <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
         <Input
           ref={inputRef}
@@ -239,8 +270,15 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
             pendingEnter.current = false;
             setValue(event.target.value);
             setOpen(true);
+            setMobileExpanded(true);
           }}
-          onFocus={() => setOpen(true)}
+          onFocus={() => {
+            setOpen(true);
+            setMobileExpanded(true);
+          }}
+          onBlur={() => {
+            if (!value.trim() && !showPanel) setMobileExpanded(false);
+          }}
           onKeyDown={onKeyDown}
           placeholder={t("placeholder")}
           autoComplete="off"
@@ -252,7 +290,7 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
           aria-autocomplete="list"
           className={cn(
             "control-surface rounded-md border-page-accent-border pr-20 pl-10 shadow-none",
-            compact && "h-10",
+            compact && "h-9 sm:h-10",
           )}
         />
         <div className="absolute top-1/2 right-3 flex -translate-y-1/2 items-center gap-1.5">

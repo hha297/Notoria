@@ -81,6 +81,27 @@
   gap: 0.5rem;
 }
 
+.actionsWide {
+  display: none;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.actionsNarrow {
+  display: contents;
+}
+
+@media (min-width: 640px) {
+  .actionsWide {
+    display: flex;
+  }
+
+  .actionsNarrow {
+    display: none;
+  }
+}
+
 .hero {
   display: flex;
   flex-direction: column;
@@ -263,4 +284,50 @@
   background: color-mix(in oklab, var(--detail-bg) 42%, transparent);
   font-size: 0.875rem;
   color: var(--muted-foreground);
+}
+
+@media (max-width: 639px) {
+  .shell {
+    gap: 0.85rem;
+    padding-bottom: 1.5rem;
+  }
+
+  .header {
+    gap: 0.5rem 0.65rem;
+  }
+
+  .actions {
+    gap: 0.35rem;
+    margin-inline-start: auto;
+  }
+
+  .title {
+    font-size: clamp(1.35rem, 6.5vw, 1.85rem);
+    line-height: 1.18;
+  }
+
+  .meta {
+    margin-top: 0.55rem;
+    gap: 0.35rem;
+  }
+
+  .lede {
+    margin-top: 0.55rem;
+    font-size: 0.9rem;
+    line-height: 1.5;
+  }
+
+  .body {
+    margin-top: 0.15rem;
+    padding-top: 1rem;
+  }
+
+  .panel {
+    padding: 0.85rem 0.9rem;
+    border-radius: 0.75rem;
+  }
+
+  .status {
+    padding: 0.75rem 0.85rem;
+  }
 }

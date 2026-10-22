@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { formatDistanceToNow } from "date-fns";
+import { formatDistanceToNow, type Locale } from "date-fns";
 import {
   ArrowRight,
   BookOpen,
@@ -17,6 +17,7 @@ import {
 import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
+import { useDateFnsLocale } from "@/hooks/use-date-fns-locale";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
@@ -80,6 +81,7 @@ function noteMeta(
   note: TheoryExerciseCardItem,
   t: ReturnType<typeof useTranslations<"exercises.theory">>,
   tTheory: ReturnType<typeof useTranslations<"theory">>,
+  dateLocale: Locale,
 ) {
   return [
     note.sectionCount > 0 ? t("sections", { count: note.sectionCount }) : null,
@@ -87,7 +89,10 @@ function noteMeta(
       ? t("estimatedExercises", { count: note.estimatedExercises })
       : t("limitedExercises"),
     tTheory("readingTime", { minutes: note.readingMinutes }),
-    formatDistanceToNow(new Date(note.updatedAt), { addSuffix: true }),
+    formatDistanceToNow(new Date(note.updatedAt), {
+      addSuffix: true,
+      locale: dateLocale,
+    }),
   ].filter((item): item is string => Boolean(item));
 }
 
@@ -97,6 +102,7 @@ export function TheoryExercisePicker({
 }: TheoryExercisePickerProps) {
   const t = useTranslations("exercises.theory");
   const tTheory = useTranslations("theory");
+  const dateLocale = useDateFnsLocale();
   const [search, setSearch] = useState("");
   const [categories, setCategories] = useState<MultiFilterValue>([]);
   const [viewMode, setViewMode] = useState<TheoryViewMode>("list");
@@ -338,7 +344,7 @@ export function TheoryExercisePicker({
                         index={globalIndex}
                         slot={globalIndex % THEORY_COLOR_SLOTS}
                         label={categoryLabel(note.category, tTheory)}
-                        meta={noteMeta(note, t, tTheory)}
+                        meta={noteMeta(note, t, tTheory, dateLocale)}
                         practiceLabel={t("practice")}
                         viewLabel={t("view")}
                       />
@@ -366,7 +372,7 @@ export function TheoryExercisePicker({
                         slot={globalIndex % THEORY_COLOR_SLOTS}
                         featured={featured}
                         label={categoryLabel(note.category, tTheory)}
-                        meta={noteMeta(note, t, tTheory)}
+                        meta={noteMeta(note, t, tTheory, dateLocale)}
                         practiceLabel={t("practice")}
                         viewLabel={t("view")}
                       />
@@ -419,6 +425,7 @@ function TheoryGroupedNotes({
 }) {
   const t = useTranslations("exercises.theory");
   const tTheory = useTranslations("theory");
+  const dateLocale = useDateFnsLocale();
   const visibleIds = groups.flatMap((group) => group.notes.map((note) => note.id));
   const allState = checkState(selectedIds, visibleIds);
 
@@ -535,7 +542,7 @@ function TheoryGroupedNotes({
                         index={index}
                         slot={index % THEORY_COLOR_SLOTS}
                         label={categoryLabel(note.category, tTheory)}
-                        meta={noteMeta(note, t, tTheory)}
+                        meta={noteMeta(note, t, tTheory, dateLocale)}
                         practiceLabel={t("practice")}
                         viewLabel={t("view")}
                       />
@@ -565,7 +572,7 @@ function TheoryGroupedNotes({
                           slot={index % THEORY_COLOR_SLOTS}
                           featured={false}
                           label={categoryLabel(note.category, tTheory)}
-                          meta={noteMeta(note, t, tTheory)}
+                          meta={noteMeta(note, t, tTheory, dateLocale)}
                           practiceLabel={t("practice")}
                           viewLabel={t("view")}
                         />

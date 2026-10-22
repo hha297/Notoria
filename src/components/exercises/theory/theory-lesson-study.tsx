@@ -194,7 +194,7 @@ function LessonOpening({
   return (
     <header
       className={cn(
-        "theory-zone-hero relative -mx-4 px-5 py-8 sm:-mx-6 sm:px-7",
+        "theory-zone-hero relative -mx-[var(--studio-main-pad,1rem)] px-4 py-5 sm:-mx-[var(--studio-main-pad,1.5rem)] sm:px-7",
         compact ? "sm:py-8" : "sm:py-11",
       )}
     >
@@ -417,7 +417,7 @@ function ReviewDocument({
       {sections.length > 1 ? (
         <nav
           aria-label={t("lesson.outline")}
-          className="sticky top-[var(--studio-chrome-offset,3.5rem)] z-10 -mx-4 mb-6 bg-surface-elevated px-5 py-3 before:pointer-events-none before:absolute before:inset-x-0 before:-top-24 before:h-24 before:bg-surface-elevated sm:-mx-6 sm:px-7"
+          className="sticky top-[var(--studio-chrome-offset,3.5rem)] z-10 -mx-[var(--studio-main-pad,1rem)] mb-6 bg-surface-elevated px-5 py-3 before:pointer-events-none before:absolute before:inset-x-0 before:-top-24 before:h-24 before:bg-surface-elevated sm:-mx-[var(--studio-main-pad,1.5rem)] sm:px-7"
         >
           <p className="mb-2 text-[0.65rem] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
             {t("lesson.outline")}
@@ -464,7 +464,7 @@ function ReviewDocument({
         ))}
       </div>
 
-      <div className={mx(featureStyles, "theory-zone-practice relative mt-6 -mx-4 px-5 py-8 sm:-mx-6 sm:mt-8 sm:px-7 sm:py-10")}>
+      <div className={mx(featureStyles, "theory-zone-practice relative mt-6 -mx-[var(--studio-main-pad,1rem)] px-5 py-8 sm:-mx-[var(--studio-main-pad,1.5rem)] sm:mt-8 sm:px-7 sm:py-10")}>
         <LessonDecor tone="practice" />
         <div className="relative">
           <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--lesson-practice) uppercase">
@@ -565,7 +565,7 @@ function LessonSection({
         ease: EASE,
       }}
       className={cn(
-        "relative min-w-0 scroll-mt-24 -mx-4 px-5 py-7 sm:-mx-6 sm:px-7 sm:py-8",
+        "relative min-w-0 scroll-mt-24 -mx-[var(--studio-main-pad,1rem)] px-5 py-7 sm:-mx-[var(--studio-main-pad,1.5rem)] sm:px-7 sm:py-8",
         zone === "idea" && mx(featureStyles, "theory-zone-idea"),
         zone === "examples" && mx(featureStyles, "theory-zone-examples"),
         zone === "insight" && mx(featureStyles, "theory-zone-insight"),

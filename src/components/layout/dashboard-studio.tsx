@@ -130,8 +130,8 @@ export function DashboardStudio({
           Sticky sidebar lives in normal flow beside main content so its
           containing block ends above the footer (no absolute overlay / z-fight).
         */}
-        <div className="flex min-h-0 flex-1 flex-col px-3 pt-5">
-          <div className="mx-auto flex w-full max-w-[90rem] min-h-0 flex-1 items-stretch gap-6">
+        <div className="flex min-h-0 flex-1 flex-col px-2 pt-3 sm:px-3 sm:pt-5">
+          <div className="mx-auto flex w-full max-w-[90rem] min-h-0 flex-1 items-stretch gap-4 sm:gap-6">
             <div className="hidden w-[15.5rem] shrink-0 lg:block">
               <div className="sticky top-5 z-20">
                 <FloatingSidebar
@@ -143,7 +143,7 @@ export function DashboardStudio({
 
             <div
               ref={stackRef}
-              className="flex min-h-0 min-w-0 flex-1 flex-col gap-3 self-stretch [--studio-inset:1.25rem] [--studio-stack-gap:0.75rem] [--studio-chrome-height:6.75rem] sm:[--studio-chrome-height:calc(3.5rem+1px)] [--studio-chrome-offset:var(--studio-inset)]"
+              className="flex min-h-0 min-w-0 flex-1 flex-col gap-2 self-stretch sm:gap-3 [--studio-inset:0.75rem] sm:[--studio-inset:1.25rem] [--studio-stack-gap:0.5rem] sm:[--studio-stack-gap:0.75rem] [--studio-chrome-height:3.25rem] sm:[--studio-chrome-height:calc(3.5rem+1px)] [--studio-chrome-offset:var(--studio-inset)]"
             >
               <header
                 ref={chromeRef}
@@ -151,13 +151,13 @@ export function DashboardStudio({
                 data-studio-scene={studioScene}
                 data-exercise={exerciseDetailSlug ?? undefined}
               >
-                <div className="flex flex-col gap-2 px-3 py-2.5 sm:h-14 sm:flex-row sm:items-center sm:gap-2 sm:px-4 sm:py-0">
-                  <div className="flex min-w-0 w-full items-center gap-1.5 sm:flex-1 sm:basis-0 sm:gap-2">
+                <div className="flex h-12 items-center gap-1.5 px-2 sm:h-14 sm:gap-2 sm:px-4">
+                  <div className="flex min-w-0 flex-1 items-center gap-1.5 sm:basis-0 sm:gap-2">
                     <Button
                       type="button"
                       variant="outline"
                       size="icon"
-                      className="size-10 shrink-0 lg:hidden"
+                      className="size-9 shrink-0 sm:size-10 lg:hidden"
                       aria-label={t("groups.main")}
                       onClick={() => setNavOpen(true)}
                     >
@@ -174,14 +174,14 @@ export function DashboardStudio({
                       <div className="min-w-0 flex-1" />
                     )}
                   </div>
-                  <div className="flex w-full min-w-0 items-center gap-1.5 sm:w-auto sm:shrink-0 sm:gap-2">
-                    <div className="min-w-0 flex-1 sm:flex-initial">
+                  <div className="flex min-w-0 shrink-0 items-center gap-1 sm:gap-2">
+                    <div className="min-w-0 max-w-[9.5rem] sm:max-w-none sm:flex-initial">
                       <WorkspaceSelector
                         workspaces={workspaces}
                         activeWorkspaceId={activeWorkspaceId}
                       />
                     </div>
-                    <LocaleThemeControls locale={locale} />
+                    <LocaleThemeControls locale={locale} compact />
                   </div>
                 </div>
               </header>
@@ -199,8 +199,8 @@ export function DashboardStudio({
                     /* Theory/writing TipTap sheets: tighter mobile inset so content isn't squeezed. */
                     pathname.startsWith("/writing/") ||
                       pathname.startsWith("/theory/")
-                      ? "px-2.5 pt-4 [--studio-main-pad:0.625rem] [--studio-main-pt:1rem] sm:[--studio-main-pad:1.5rem] sm:[--studio-main-pt:2rem]"
-                      : "px-4 pt-6 [--studio-main-pad:1rem] [--studio-main-pt:1.5rem] sm:[--studio-main-pad:1.5rem] sm:[--studio-main-pt:2rem]",
+                      ? "px-2.5 pt-3 [--studio-main-pad:0.625rem] [--studio-main-pt:0.75rem] sm:pt-8 sm:[--studio-main-pad:1.5rem] sm:[--studio-main-pt:2rem]"
+                      : "px-3 pt-4 [--studio-main-pad:0.75rem] [--studio-main-pt:1rem] sm:px-6 sm:pt-8 sm:[--studio-main-pad:1.5rem] sm:[--studio-main-pt:2rem]",
                     pathname === "/writing" ||
                       pathname.startsWith("/writing/folders") ||
                       pathname === "/theory" ||

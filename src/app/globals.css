@@ -1815,6 +1815,15 @@
     overflow: visible;
   }
 
+  /* Tighten shared library stacks on narrow screens (overrides gap-10 utilities). */
+  @media (max-width: 639px) {
+    .writing-atelier.flex.flex-col,
+    .home-atelier.flex.flex-col,
+    .account-atelier.flex.flex-col {
+      gap: 1.5rem;
+    }
+  }
+
   .theory-atelier {
     min-width: 0;
     overflow: visible;
@@ -2391,8 +2400,14 @@
     display: grid;
     width: 100%;
     grid-template-columns: minmax(0, 1fr);
-    gap: 1.35rem 2rem;
+    gap: 0.85rem 2rem;
     align-items: start;
+  }
+
+  @media (min-width: 640px) {
+    .writing-hero {
+      gap: 1.35rem 2rem;
+    }
   }
 
   .writing-hero-copy {
@@ -2409,26 +2424,41 @@
   .writing-brand-title {
     margin: 0.55rem 0 0;
     font-family: var(--font-heading);
-    font-size: clamp(2.35rem, 5.2vw, 3.45rem);
+    font-size: clamp(1.75rem, 7vw, 3.45rem);
     font-weight: 700;
     letter-spacing: -0.04em;
-    line-height: 1.05;
+    line-height: 1.1;
     color: var(--ink);
+    overflow-wrap: anywhere;
   }
 
   .writing-brand-lede {
     max-width: 40rem;
-    margin-top: 0.85rem;
-    margin-bottom: 0.85rem;
-    font-size: 1.05rem;
-    line-height: 1.65;
+    margin-top: 0.65rem;
+    margin-bottom: 0.65rem;
+    font-size: 0.95rem;
+    line-height: 1.55;
     color: var(--muted-foreground);
+  }
+
+  @media (min-width: 640px) {
+    .writing-brand-title {
+      font-size: clamp(2.35rem, 5.2vw, 3.45rem);
+      line-height: 1.05;
+    }
+
+    .writing-brand-lede {
+      margin-top: 0.85rem;
+      margin-bottom: 0.85rem;
+      font-size: 1.05rem;
+      line-height: 1.65;
+    }
   }
 
   .writing-workspace {
     display: flex;
     flex-direction: column;
-    gap: 1.15rem;
+    gap: 1rem;
     min-width: 0;
   }
 
@@ -2666,11 +2696,19 @@
   .writing-feature-title {
     margin: 0.15rem 0 0;
     font-family: var(--font-heading);
-    font-size: clamp(2rem, 4.6vw, 3.35rem);
+    font-size: clamp(1.55rem, 6.5vw, 3.35rem);
     font-weight: 700;
-    line-height: 1.08;
+    line-height: 1.12;
     letter-spacing: -0.04em;
     color: var(--ink);
+    overflow-wrap: anywhere;
+  }
+
+  @media (min-width: 640px) {
+    .writing-feature-title {
+      font-size: clamp(2rem, 4.6vw, 3.35rem);
+      line-height: 1.08;
+    }
   }
 
   .writing-feature-title a,
@@ -3585,19 +3623,27 @@
     display: inline-flex;
     align-items: center;
     gap: 0.35rem;
-    height: 2.25rem;
-    padding: 0 0.9rem;
+    height: 2rem;
+    padding: 0 0.75rem;
     border: 1px solid var(--hairline-cloud);
     border-radius: 999px;
     background: transparent;
     color: var(--muted-foreground);
-    font-size: 0.875rem;
+    font-size: 0.8125rem;
     cursor: pointer;
     transition:
       border-color 160ms ease,
       background-color 160ms ease,
       box-shadow 160ms ease,
       color 160ms ease;
+  }
+
+  @media (min-width: 640px) {
+    .writing-chip {
+      height: 2.25rem;
+      padding: 0 0.9rem;
+      font-size: 0.875rem;
+    }
   }
 
   .writing-chip[data-writing-kind="rich_document"] {

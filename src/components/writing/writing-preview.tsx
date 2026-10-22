@@ -7,10 +7,10 @@ import { useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { RichTextContent } from "@/components/editor/rich-text-content";
 import { DescriptionContent } from "@/components/form/description-content";
 import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
+import { DetailHeaderActions } from "@/components/shared/detail-header-actions";
 import { ReviewLaterButton } from "@/components/review-later/review-later-button";
 import { WritingExportDialog } from "@/components/writing/export-dialog";
 import { Button } from "@/components/ui/button";
@@ -154,35 +154,36 @@ export function WritingPreview({
             <ArrowLeft className="size-4 shrink-0" />
             {t("backToList")}
           </Link>
-          <div className={mx(detailStyles, "actions")}>
-            <ReviewLaterButton
-              entityType="writing"
-              entityId={id}
-              titleSnapshot={title}
-              marked={reviewLaterMarked}
-            />
-            <LockedFeatureButton
-              type="button"
-              variant="outline"
-              icon={<Download className="size-4" />}
-              onClick={() => setExportOpen(true)}
-              disabled={!canExport}
-              title={canExport ? undefined : t("export.empty")}
-              className="route-quiet-action"
-              data-route-action="writing"
-            >
-              {t("export.button")}
-            </LockedFeatureButton>
-            <Button
-              type="button"
-              variant="destructive"
-              onClick={() => setDeleteOpen(true)}
-              disabled={isPending}
-            >
-              <Trash2 className="size-4" />
-              {tCommon("delete")}
-            </Button>
-          </div>
+          <DetailHeaderActions
+            leading={
+              <ReviewLaterButton
+                entityType="writing"
+                entityId={id}
+                titleSnapshot={title}
+                marked={reviewLaterMarked}
+              />
+            }
+            items={[
+              {
+                id: "export",
+                label: t("export.button"),
+                icon: Download,
+                onSelect: () => setExportOpen(true),
+                disabled: !canExport,
+                requiresPro: true,
+                className: "route-quiet-action",
+                routeAction: "writing",
+              },
+              {
+                id: "delete",
+                label: tCommon("delete"),
+                icon: Trash2,
+                onSelect: () => setDeleteOpen(true),
+                disabled: isPending,
+                destructive: true,
+              },
+            ]}
+          />
         </header>
 
         <section className={mx(detailStyles, "hero")}>

@@ -2,6 +2,7 @@
 
 import { useMemo, useState, useTransition } from "react";
 import { format, formatDistanceToNow } from "date-fns";
+import { useDateFnsLocale } from "@/hooks/use-date-fns-locale";
 import {
   Folder,
   FolderOpen,
@@ -96,6 +97,7 @@ export function InboxView({
   initialFilter,
 }: InboxViewProps) {
   const t = useTranslations("inbox");
+  const dateLocale = useDateFnsLocale();
   const tf = useTranslations("folders");
   const te = useTranslations("errors");
   const router = useRouter();
@@ -314,7 +316,9 @@ export function InboxView({
     return (
       <div className={mx(styles, compact ? "inbox-card-meta-compact" : "inbox-card-meta")}>
         <time dateTime={item.createdAt}>
-          {format(new Date(item.createdAt), "MMM d, yyyy")}
+          {format(new Date(item.createdAt), "MMM d, yyyy", {
+            locale: dateLocale,
+          })}
         </time>
         {!compact ? (
           <>
@@ -322,6 +326,7 @@ export function InboxView({
             <span>
               {formatDistanceToNow(new Date(item.createdAt), {
                 addSuffix: true,
+                locale: dateLocale,
               })}
             </span>
           </>

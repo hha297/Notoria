@@ -1,4 +1,10 @@
 /* --- Admin console — Notoria ops surface --- */
+@media (max-width: 639px) {
+  .admin-main {
+    padding-inline: 0.75rem;
+  }
+}
+
 .admin-shell {
   --admin-rail: color-mix(in oklab, var(--primary) 72%, var(--ink));
   --admin-panel: color-mix(in oklab, var(--surface-elevated) 94%, transparent);

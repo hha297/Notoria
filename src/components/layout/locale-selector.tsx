@@ -97,7 +97,8 @@ export function LocaleSelector({
           )}
         >
           <SelectValue>
-            <LocaleOption locale={value} trigger={!compact} />
+            {/* Flag-only below sm; full label from sm up. Menu items keep labels. */}
+            <LocaleOption locale={value} trigger />
           </SelectValue>
         </SelectTrigger>
         <SelectContent

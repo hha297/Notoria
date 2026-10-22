@@ -6,6 +6,7 @@ import { formatDistanceToNow } from "date-fns";
 import { Clock, Plus, Search, Upload } from "lucide-react";
 import { useMemo, useState } from "react";
 import { useTranslations } from "next-intl";
+import { useDateFnsLocale } from "@/hooks/use-date-fns-locale";
 import { PageShell } from "@/components/layout/page-shell";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { FolderItemDrag } from "@/components/folders/folder-dnd";
@@ -362,6 +363,7 @@ function TheoryCard({
   workspaceId: string;
 }) {
   const t = useTranslations("theory");
+  const dateLocale = useDateFnsLocale();
   const href = `/theory/${note.id}`;
 
   return (
@@ -398,6 +400,7 @@ function TheoryCard({
             <span>
               {formatDistanceToNow(new Date(note.updatedAt), {
                 addSuffix: true,
+                locale: dateLocale,
               })}
             </span>
           </p>

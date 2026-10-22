@@ -8,15 +8,16 @@ import { useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
-import { LockedFeatureButton } from "@/components/billing/locked-feature-button";
 import { RichTextContent } from "@/components/editor/rich-text-content";
 import { DescriptionContent } from "@/components/form/description-content";
 import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
+import { DetailHeaderActions } from "@/components/shared/detail-header-actions";
 import { ReviewLaterButton } from "@/components/review-later/review-later-button";
 import { TheoryExportDialog } from "@/components/theory/export-dialog";
 import { Button } from "@/components/ui/button";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
 import detailStyles from "@/components/style/workspace/detail.module.css";
+import { useDateFnsLocale } from "@/hooks/use-date-fns-locale";
 import { removeCachedListItem } from "@/hooks/use-invalidate-workspace-queries";
 import { deleteTheoryNote } from "@/lib/actions/theory";
 import { mx } from "@/lib/css-module";
@@ -50,6 +51,7 @@ export function TheoryReader({
   const t = useTranslations("theory");
   const tCommon = useTranslations("common");
   const te = useTranslations("errors");
+  const dateLocale = useDateFnsLocale();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [exportOpen, setExportOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
@@ -107,35 +109,36 @@ export function TheoryReader({
             <ArrowLeft className="size-4 shrink-0" />
             {t("backToList")}
           </Link>
-          <div className={mx(detailStyles, "actions")}>
-            <ReviewLaterButton
-              entityType="theory"
-              entityId={id}
-              titleSnapshot={title}
-              marked={reviewLaterMarked}
-            />
-            <LockedFeatureButton
-              type="button"
-              variant="outline"
-              icon={<Download className="size-4" />}
-              onClick={() => setExportOpen(true)}
-              disabled={!canExport}
-              title={canExport ? undefined : t("export.empty")}
-              className="route-quiet-action"
-              data-route-action="theory"
-            >
-              {t("export.button")}
-            </LockedFeatureButton>
-            <Button
-              type="button"
-              variant="destructive"
-              onClick={() => setDeleteOpen(true)}
-              disabled={isPending}
-            >
-              <Trash2 className="size-4" />
-              {tCommon("delete")}
-            </Button>
-          </div>
+          <DetailHeaderActions
+            leading={
+              <ReviewLaterButton
+                entityType="theory"
+                entityId={id}
+                titleSnapshot={title}
+                marked={reviewLaterMarked}
+              />
+            }
+            items={[
+              {
+                id: "export",
+                label: t("export.button"),
+                icon: Download,
+                onSelect: () => setExportOpen(true),
+                disabled: !canExport,
+                requiresPro: true,
+                className: "route-quiet-action",
+                routeAction: "theory",
+              },
+              {
+                id: "delete",
+                label: tCommon("delete"),
+                icon: Trash2,
+                onSelect: () => setDeleteOpen(true),
+                disabled: isPending,
+                destructive: true,
+              },
+            ]}
+          />
         </header>
 
         <section className={mx(detailStyles, "hero")}>
@@ -162,7 +165,10 @@ export function TheoryReader({
               {t("readingTime", { minutes })}
             </span>
             <span className={mx(detailStyles, "tag")}>
-              {formatDistanceToNow(new Date(updatedAt), { addSuffix: true })}
+              {formatDistanceToNow(new Date(updatedAt), {
+                addSuffix: true,
+                locale: dateLocale,
+              })}
             </span>
           </div>
           {parsed.description ? (

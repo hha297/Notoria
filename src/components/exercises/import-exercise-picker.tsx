@@ -17,6 +17,7 @@ import { useTranslations } from "next-intl";
 import { useMemo, useState, useTransition } from "react";
 import { toast } from "sonner";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
+import { useDateFnsLocale } from "@/hooks/use-date-fns-locale";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -52,6 +53,7 @@ function SourceIcon({ type }: { type: ExerciseImportListItem["sourceType"] }) {
 export function ImportExercisePicker({ imports }: ImportPickerProps) {
   const t = useTranslations("exercises.import");
   const tc = useTranslations("common");
+  const dateLocale = useDateFnsLocale();
   const router = useRouter();
   const [isPending, startTransition] = useTransition();
   const [deleteTarget, setDeleteTarget] =
@@ -229,7 +231,7 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
                     className={cn(
                       mx(
                         importStyles,
-                        "import-row group relative grid gap-4 px-1 py-7 sm:grid-cols-[4.25rem_minmax(0,1fr)_auto] sm:items-start sm:gap-x-5 sm:px-2 sm:py-8",
+                        "import-row group relative grid gap-3 px-1 py-5 sm:grid-cols-[4.25rem_minmax(0,1fr)_auto] sm:items-start sm:gap-x-5 sm:gap-4 sm:px-2 sm:py-8",
                       ),
                     )}
                   >
@@ -293,6 +295,7 @@ export function ImportExercisePicker({ imports }: ImportPickerProps) {
                         {t("importedAgo", {
                           time: formatDistanceToNow(new Date(item.createdAt), {
                             addSuffix: true,
+                            locale: dateLocale,
                           }),
                         })}
                       </p>

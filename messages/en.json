@@ -15,7 +15,8 @@
     "clearFilter": "Clear",
     "filters": "Filters",
     "hideFilters": "Hide filters",
-    "remove": "Remove"
+    "remove": "Remove",
+    "moreActions": "More actions"
   },
   "contentImport": {
     "title": {

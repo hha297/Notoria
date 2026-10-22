@@ -10,6 +10,7 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
 import { ConfirmDeleteDialog } from "@/components/shared/confirm-delete-dialog";
+import { useDateFnsLocale } from "@/hooks/use-date-fns-locale";
 import { deleteSpeakingSession } from "@/lib/actions/speaking";
 import { isSpeakingErrorCode } from "@/lib/speaking/errors";
 import { isSpeakingJoinable } from "@/lib/speaking/types";
@@ -37,6 +38,7 @@ export function SpeakingSessionCard({
   const tMeta = useTranslations("speaking.meta");
   const tTags = useTranslations("tags");
   const tc = useTranslations("common");
+  const dateLocale = useDateFnsLocale();
   const [deleteOpen, setDeleteOpen] = useState(false);
   const [isPending, startTransition] = useTransition();
 
@@ -71,7 +73,10 @@ export function SpeakingSessionCard({
     session.cefrLevel
       ? tMeta(`cefr.${session.cefrLevel as WritingCefr}`)
       : null,
-    formatDistanceToNow(new Date(session.createdAt), { addSuffix: true }),
+    formatDistanceToNow(new Date(session.createdAt), {
+      addSuffix: true,
+      locale: dateLocale,
+    }),
   ].filter(Boolean);
 
   return (

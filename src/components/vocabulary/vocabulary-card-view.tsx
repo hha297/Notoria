@@ -4,6 +4,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { formatDistanceToNow } from "date-fns";
+import { useDateFnsLocale } from "@/hooks/use-date-fns-locale";
 import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
 import { mx } from "@/lib/css-module";
 import { VocabularyMeaningPreview } from "@/components/vocabulary/vocabulary-meaning-preview";
@@ -54,6 +55,7 @@ function VocabularyCard({
   const t = useTranslations("vocabulary");
   const tPos = useTranslations("tags.pos");
   const tCommon = useTranslations("common");
+  const dateLocale = useDateFnsLocale();
   const pos = word.partOfSpeech;
   const posLabel = !pos
     ? t("uncategorizedPos")
@@ -63,6 +65,7 @@ function VocabularyCard({
   const href = `/vocabulary/${word.id}`;
   const updated = formatDistanceToNow(new Date(word.updatedAt), {
     addSuffix: true,
+    locale: dateLocale,
   });
 
   return (
