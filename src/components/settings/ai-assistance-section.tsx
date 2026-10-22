@@ -149,6 +149,22 @@ export function AiAssistanceSection() {
       />
 
       <ChoiceRow
+        title={t("exerciseNextSetPrefetch")}
+        hint={t("exerciseNextSetPrefetchDescription")}
+        ariaLabel={t("exerciseNextSetPrefetch")}
+        value={preferences.exerciseNextSetPrefetch ? "on" : "off"}
+        onChange={(value) =>
+          void updatePreferences({
+            exerciseNextSetPrefetch: value === "on",
+          })
+        }
+        options={[
+          ["on", t("on")],
+          ["off", t("off")],
+        ]}
+      />
+
+      <ChoiceRow
         title={t("confirmActions")}
         hint={t("confirmActionsDescription")}
         ariaLabel={t("confirmActions")}

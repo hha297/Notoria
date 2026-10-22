@@ -163,6 +163,13 @@ const ALL_COMPARISON_ROWS: PlanComparisonRow[] = [
     cells: { free: yes(), pro: yes(), premium: yes() },
   },
   {
+    id: "exercise_custom_instructions",
+    category: "personalized",
+    nameKey: "exerciseCustomInstructions",
+    premiumCapability: "exercise_custom_instructions",
+    cells: { free: no(), pro: no(), premium: yes() },
+  },
+  {
     id: "ai_learning_coach",
     category: "personalized",
     nameKey: "learningCoach",

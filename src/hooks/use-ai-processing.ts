@@ -38,10 +38,15 @@ export function useAiProcessing(initial?: Partial<AIProcessingState>) {
         message: options?.message,
         detail: options?.detail,
         title: options?.title ?? prev.title,
+        stageStartedAt:
+          stage !== "idle" && stage !== "completed" && stage !== "error"
+            ? Date.now()
+            : undefined,
         errorMessage:
           stage === "error"
             ? (options?.errorMessage ?? prev.errorMessage)
             : undefined,
+        failedAtStage: undefined,
       }));
     },
     [],
@@ -63,6 +68,7 @@ export function useAiProcessing(initial?: Partial<AIProcessingState>) {
         }),
         title: input.title ?? prev.title,
         detail: input.detail ?? prev.detail,
+        stageStartedAt: prev.stage === "uploading" ? prev.stageStartedAt : Date.now(),
         errorMessage: undefined,
       }));
     },
@@ -75,6 +81,13 @@ export function useAiProcessing(initial?: Partial<AIProcessingState>) {
       stage: "error",
       progress: progressForStage("error", { lastProgress: prev.progress }),
       errorMessage,
+      stageStartedAt: undefined,
+      failedAtStage:
+        prev.stage !== "idle" &&
+        prev.stage !== "error" &&
+        prev.stage !== "completed"
+          ? prev.stage
+          : prev.failedAtStage,
     }));
   }, []);
 
@@ -84,6 +97,7 @@ export function useAiProcessing(initial?: Partial<AIProcessingState>) {
       stage: "completed",
       progress: 100,
       errorMessage: undefined,
+      stageStartedAt: undefined,
     }));
   }, []);
 

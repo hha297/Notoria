@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# import} other {# importer}}"
     },
     "processing": {
-      "workingTitle": "Arbejder på din øvelse",
+      "workingTitle": "Din øvelse forberedes",
       "readyTitle": "Øvelse klar",
       "errorTitle": "Noget gik galt",
       "cancel": "Annuller",
       "retry": "Prøv igen",
-      "dismiss": "Afvis",
+      "dismiss": "Luk",
       "stages": {
-        "uploading": "Uploader…",
-        "extracting": "Udtrækker indhold…",
-        "analyzing": "Analyserer indhold…",
-        "generating": "Genererer øvelse…",
-        "saving": "Gemmer øvelse…",
+        "uploading": "Uploader fil",
+        "extracting": "Udtrækker indhold",
+        "analyzing": "Analyserer indhold",
+        "generating": "Genererer spørgsmål",
+        "saving": "Gemmer og forbereder øvelsen",
         "completed": "Øvelse klar",
-        "error": "Generering mislykkedes"
-      }
+        "error": "Generering mislykkedes",
+        "preparing": "Forbereder læringsmateriale",
+        "validating": "Validerer svar og hints"
+      },
+      "stillWorking": "Genererer stadig… {seconds} s gået",
+      "hints": {
+        "uploading": "Sender din fil sikkert.",
+        "extracting": "Læser tekst og struktur fra kilden.",
+        "analyzing": "Finder øvelseshint i materialet.",
+        "preparing": "Samler valgt ordforråd eller teori til dette sæt.",
+        "generating": "Modellen skriver spørgsmål. Det kan tage et øjeblik.",
+        "validating": "Tjekker svar, hints og struktur før øvelse.",
+        "saving": "Samler dit øvelsessæt."
+      },
+      "nextSetPreparing": "Forbereder næste sæt…",
+      "nextSetReady": "Næste sæt klar",
+      "nextSetFailed": "Kunne ikke forberede næste sæt",
+      "nextSetRetry": "Forbered næste sæt",
+      "openNextSet": "Åbn næste sæt"
     },
     "import": {
       "eyebrow": "Importeret øvelse",
@@ -822,6 +839,7 @@
       "aiReady": "Øvelse klar",
       "aiUnavailable": "Kunne ikke generere AI-spørgsmål lige nu.",
       "aiForbidden": "AI-teoriøvelser er tilgængelige med Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI-hjælp er slået fra i Indstillinger.",
       "feedback": {
         "correct": "Korrekt!",
@@ -874,7 +892,21 @@
         "theRule": "Reglen",
         "why": "Hvorfor",
         "complete": "Forstået",
-        "completeHint": "Du kan gå videre, når du er klar."
+        "completeHint": "Du kan gå videre, når du er klar.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "Hint",
       "startsWith": "Starter med “{letter}”",
       "revealPrompt": "Stadig fastlåst? Du kan vise det fulde svar.",
-      "revealAnswer": "Vis svar"
+      "revealAnswer": "Vis svar",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Intet ordforråd endnu",
@@ -977,8 +1011,38 @@
       "forbidden": "AI-øvelsesgenerering er tilgængelig med Pro.",
       "disabled": "AI-hjælp er slået fra i Indstillinger.",
       "upgradeHint": "Free inkluderer nogle få AI-øvelsesgenereringer hver dag. Pro fjerner grænsen.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Tilføj ordforrådsord, før du genererer spørgsmål.",
-      "noneValid": "AI kunne ikke oprette gyldige spørgsmål til disse ord. Prøv igen."
+      "noneValid": "AI kunne ikke oprette gyldige spørgsmål til disse ord. Prøv igen.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Session fuldført",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "Kun ved indholdsændringer",
       "confirmNever": "Aldrig",
       "saveFailed": "Kunne ikke gemme AI-indstillinger",
-      "disabledToast": "AI-assistance er slået fra under Indstillinger"
+      "disabledToast": "AI-assistance er slået fra under Indstillinger",
+      "exerciseNextSetPrefetch": "Forbered næste øvelsessæt",
+      "exerciseNextSetPrefetchDescription": "Når du begynder at svare, forberedes næste sæt automatisk i baggrunden. Bruger én AI-øvelseskredit ved start. Slå fra for kun at generere, når du trykker Nyt sæt."
     },
     "tutorials": "Sektionstutorials",
     "tutorialsDescription": "Nulstil gennemførte sektionsgennemgange, så „Vis tutorial“ starter forfra.",
@@ -3261,7 +3327,8 @@
       "learningTrends": "Læringstendenser",
       "personalLearningPath": "Personlig læringssti",
       "personalizedRecommendations": "Personlige anbefalinger",
-      "crossModuleIntelligence": "Personalisering på tværs af moduler"
+      "crossModuleIntelligence": "Personalisering på tværs af moduler",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Sammenlign planer",

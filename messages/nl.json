@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# import} other {# imports}}"
     },
     "processing": {
-      "workingTitle": "Bezig met uw oefening",
+      "workingTitle": "Je oefening wordt voorbereid",
       "readyTitle": "Oefening klaar",
       "errorTitle": "Er ging iets mis",
       "cancel": "Annuleren",
-      "retry": "Opnieuw",
+      "retry": "Opnieuw proberen",
       "dismiss": "Sluiten",
       "stages": {
-        "uploading": "Uploaden…",
-        "extracting": "Inhoud extraheren…",
-        "analyzing": "Inhoud analyseren…",
-        "generating": "Oefening genereren…",
-        "saving": "Oefening opslaan…",
+        "uploading": "Bestand uploaden",
+        "extracting": "Inhoud extraheren",
+        "analyzing": "Inhoud analyseren",
+        "generating": "Vragen genereren",
+        "saving": "Oefening opslaan en voorbereiden",
         "completed": "Oefening klaar",
-        "error": "Genereren mislukt"
-      }
+        "error": "Genereren mislukt",
+        "preparing": "Leermateriaal voorbereiden",
+        "validating": "Antwoorden en hints controleren"
+      },
+      "stillWorking": "Nog bezig met genereren… {seconds} s verstreken",
+      "hints": {
+        "uploading": "Je bestand wordt veilig verzonden.",
+        "extracting": "Tekst en structuur uit de bron worden gelezen.",
+        "analyzing": "Oefentips in het materiaal worden herkend.",
+        "preparing": "Geselecteerde woordenschat of theorie voor deze set wordt verzameld.",
+        "generating": "Het model schrijft vragen. Dit kan even duren.",
+        "validating": "Antwoorden, hints en structuur worden vóór het oefenen gecontroleerd.",
+        "saving": "Je oefenset wordt samengesteld."
+      },
+      "nextSetPreparing": "Volgende set voorbereiden…",
+      "nextSetReady": "Volgende set klaar",
+      "nextSetFailed": "Volgende set kon niet worden voorbereid",
+      "nextSetRetry": "Volgende set voorbereiden",
+      "openNextSet": "Volgende set openen"
     },
     "import": {
       "eyebrow": "Geïmporteerde oefening",
@@ -822,6 +839,7 @@
       "aiReady": "Oefening klaar",
       "aiUnavailable": "AI-vragen konden nu niet worden gegenereerd.",
       "aiForbidden": "AI-theorieoefeningen zijn beschikbaar met Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI-hulp is uitgeschakeld in Instellingen.",
       "feedback": {
         "correct": "Goed!",
@@ -874,7 +892,21 @@
         "theRule": "De regel",
         "why": "Waarom",
         "complete": "Begrepen",
-        "completeHint": "U kunt verdergaan wanneer u klaar bent."
+        "completeHint": "U kunt verdergaan wanneer u klaar bent.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "Hint",
       "startsWith": "Begint met “{letter}”",
       "revealPrompt": "Nog vast? U kunt het volledige antwoord tonen.",
-      "revealAnswer": "Antwoord tonen"
+      "revealAnswer": "Antwoord tonen",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Nog geen woordenschat",
@@ -977,8 +1011,38 @@
       "forbidden": "AI-oefeningengeneratie is beschikbaar met Pro.",
       "disabled": "AI-hulp is uitgeschakeld in Instellingen.",
       "upgradeHint": "Free omvat enkele AI-oefeningengeneraties per dag. Pro verwijdert de limiet.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Voeg woordenschatwoorden toe voordat u vragen genereert.",
-      "noneValid": "AI kon geen geldige vragen maken voor deze woorden. Probeer het opnieuw."
+      "noneValid": "AI kon geen geldige vragen maken voor deze woorden. Probeer het opnieuw.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Sessie voltooid",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "Alleen bij wijziging van inhoud",
       "confirmNever": "Nooit",
       "saveFailed": "AI-voorkeuren konden niet worden opgeslagen",
-      "disabledToast": "AI-ondersteuning staat uit in Instellingen"
+      "disabledToast": "AI-ondersteuning staat uit in Instellingen",
+      "exerciseNextSetPrefetch": "Volgende oefenset voorbereiden",
+      "exerciseNextSetPrefetchDescription": "Nadat je begint te antwoorden, wordt de volgende set automatisch op de achtergrond voorbereid. Gebruikt één AI-oefenkrediet bij de start. Zet uit om alleen te genereren bij Nieuwe set."
     },
     "tutorials": "Sectietutorials",
     "tutorialsDescription": "Reset voltooide sectiewandelingen zodat „Tutorial tonen” weer vanaf het begin start.",
@@ -3261,7 +3327,8 @@
       "learningTrends": "Leertrends",
       "personalLearningPath": "Persoonlijk leerpad",
       "personalizedRecommendations": "Gepersonaliseerde aanbevelingen",
-      "crossModuleIntelligence": "Cross-module personalisatie"
+      "crossModuleIntelligence": "Cross-module personalisatie",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Abonnementen vergelijken",

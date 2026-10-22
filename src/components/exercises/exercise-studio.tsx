@@ -43,6 +43,7 @@ function subscribeStudioSource(onStoreChange: () => void) {
 type ExerciseStudioProps = {
   theories: TheoryExerciseCardItem[];
   imports?: ExerciseImportListItem[];
+  folders?: { id: string; name: string; parentId: string | null }[];
   workspaceName: string;
   vocabularyCount: number;
 };
@@ -50,6 +51,7 @@ type ExerciseStudioProps = {
 export function ExerciseStudio({
   theories,
   imports = [],
+  folders = [],
   workspaceName,
   vocabularyCount,
 }: ExerciseStudioProps) {
@@ -94,7 +96,7 @@ export function ExerciseStudio({
               <ExerciseTypePicker />
             </div>
           ) : source === "theory" ? (
-            <TheoryExercisePicker theories={theories} />
+            <TheoryExercisePicker theories={theories} folders={folders} />
           ) : (
             <ImportExercisePanel imports={imports} />
           )}

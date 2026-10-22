@@ -3,12 +3,11 @@
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Check, Sparkles } from "lucide-react";
-import { ExerciseHint } from "@/components/exercises/exercise-hint";
+import { ProgressiveHintReveal } from "@/components/exercises/progressive-hint-reveal";
 import {
   applyAnswerFormCasing,
   splitPromptAtBlank,
 } from "@/lib/exercises/blank-hint";
-import { hintInitialLetter } from "@/lib/exercises/hint";
 import {
   contextualSurfaceAnswer,
   displayContextualOption,
@@ -49,7 +48,6 @@ export function MultipleChoiceStage({
   const t = useTranslations("exercises.multipleChoice");
   const tSession = useTranslations("exercises.session");
   const tType = useTranslations("exercises.types.multiple-choice");
-  const tHint = useTranslations("exercises.timedHint");
   const tAi = useTranslations("exercises.ai");
   const reduceMotion = useReducedMotion();
   const surface = contextualSurfaceAnswer(question);
@@ -149,17 +147,16 @@ export function MultipleChoiceStage({
           </div>
         </div>
 
-        {onRevealAnswer ? (
-          <div className="mt-8">
-            <ExerciseHint
-              resetKey={question.id}
-              answered={revealed}
-              correctAnswer={surface}
-              onRevealAnswer={onRevealAnswer}
-            >
-              {tHint("startsWith", { letter: hintInitialLetter(surface) })}
-            </ExerciseHint>
-          </div>
+        {!revealed ? (
+          <ProgressiveHintReveal
+            hints={question.hints}
+            grounding={question.meaningHint}
+            answers={[surface, ...question.options]}
+            resetKey={question.id}
+            answered={revealed}
+            correctAnswer={onRevealAnswer ? surface : undefined}
+            onRevealAnswer={onRevealAnswer}
+          />
         ) : null}
 
         <div

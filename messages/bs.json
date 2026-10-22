@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# uvoz} few {# uvoza} other {# uvoza}}"
     },
     "processing": {
-      "workingTitle": "Radimo na vašoj vježbi",
+      "workingTitle": "Priprema vježbe",
       "readyTitle": "Vježba je spremna",
-      "errorTitle": "Nešto nije u redu",
+      "errorTitle": "Nešto je pošlo po zlu",
       "cancel": "Otkaži",
       "retry": "Pokušaj ponovo",
       "dismiss": "Zatvori",
       "stages": {
-        "uploading": "Otpremanje…",
-        "extracting": "Izvlačenje sadržaja…",
-        "analyzing": "Analiza sadržaja…",
-        "generating": "Generisanje vježbe…",
-        "saving": "Spremanje vježbe…",
+        "uploading": "Otpremanje datoteke",
+        "extracting": "Izvlačenje sadržaja",
+        "analyzing": "Analiza sadržaja",
+        "generating": "Generisanje pitanja",
+        "saving": "Spremanje i priprema vježbe",
         "completed": "Vježba je spremna",
-        "error": "Generisanje nije uspjelo"
-      }
+        "error": "Generisanje nije uspjelo",
+        "preparing": "Priprema nastavnog materijala",
+        "validating": "Provjera odgovora i savjeta"
+      },
+      "stillWorking": "Još se generiše… proteklo {seconds} s",
+      "hints": {
+        "uploading": "Sigurno slanje vaše datoteke.",
+        "extracting": "Čitanje teksta i strukture iz izvora.",
+        "analyzing": "Pronalaženje savjeta za vježbu u materijalu.",
+        "preparing": "Prikupljanje odabranog vokabulara ili teorije za ovaj set.",
+        "generating": "Model piše pitanja. Može potrajati.",
+        "validating": "Provjera odgovora, savjeta i strukture prije vježbe.",
+        "saving": "Sastavljanje vašeg seta vježbi."
+      },
+      "nextSetPreparing": "Priprema sljedećeg seta…",
+      "nextSetReady": "Sljedeći set je spreman",
+      "nextSetFailed": "Nije moguće pripremiti sljedeći set",
+      "nextSetRetry": "Pripremi sljedeći set",
+      "openNextSet": "Otvori sljedeći set"
     },
     "import": {
       "eyebrow": "Uvezena vježba",
@@ -822,6 +839,7 @@
       "aiReady": "Vježba je spremna",
       "aiUnavailable": "Trenutno nije moguće generisati AI pitanja.",
       "aiForbidden": "AI teorijske vježbe dostupne su uz Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI pomoć je isključena u Postavkama.",
       "feedback": {
         "correct": "Tačno!",
@@ -874,7 +892,21 @@
         "theRule": "Pravilo",
         "why": "Zašto",
         "complete": "Razumijem",
-        "completeHint": "Možete nastaviti kad budete spremni."
+        "completeHint": "Možete nastaviti kad budete spremni.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "Nagovještaj",
       "startsWith": "Počinje sa „{letter}“",
       "revealPrompt": "Još uvijek zapeli? Možete otkriti cijeli odgovor.",
-      "revealAnswer": "Otkrij odgovor"
+      "revealAnswer": "Otkrij odgovor",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Još nema vokabulara",
@@ -977,8 +1011,38 @@
       "forbidden": "AI generisanje vježbi dostupno je uz Pro.",
       "disabled": "AI pomoć je isključena u Postavkama.",
       "upgradeHint": "Besplatni plan uključuje nekoliko AI generisanja vježbi dnevno. Pro uklanja ograničenje.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Dodajte riječi u vokabular prije generisanja pitanja.",
-      "noneValid": "AI nije mogao kreirati važeća pitanja za ove riječi. Pokušajte ponovo."
+      "noneValid": "AI nije mogao kreirati važeća pitanja za ove riječi. Pokušajte ponovo.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Sesija je završena",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "Samo pri izmjeni sadržaja",
       "confirmNever": "Nikada",
       "saveFailed": "Nije moguće sačuvati AI postavke",
-      "disabledToast": "AI pomoć je isključena u Postavkama"
+      "disabledToast": "AI pomoć je isključena u Postavkama",
+      "exerciseNextSetPrefetch": "Pripremi sljedeći set vježbi",
+      "exerciseNextSetPrefetchDescription": "Nakon što počnete odgovarati, sljedeći set se automatski priprema u pozadini. Koristi jedan AI kredit za vježbu pri pokretanju. Isključite da generišete samo na Novi set."
     },
     "tutorials": "Tutorijali sekcija",
     "tutorialsDescription": "Resetujte završene obilaske sekcija kako bi „Prikaži tutorijal“ ponovo počeo od početka.",
@@ -3261,7 +3327,8 @@
       "learningTrends": "Trendovi učenja",
       "personalLearningPath": "Lični put učenja",
       "personalizedRecommendations": "Personalizirane preporuke",
-      "crossModuleIntelligence": "Personalizacija kroz module"
+      "crossModuleIntelligence": "Personalizacija kroz module",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Uporedite planove",

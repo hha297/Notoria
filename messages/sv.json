@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# import} other {# importer}}"
     },
     "processing": {
-      "workingTitle": "Arbetar med din övning",
-      "readyTitle": "Övning klar",
+      "workingTitle": "Övningen förbereds",
+      "readyTitle": "Övningen är klar",
       "errorTitle": "Något gick fel",
       "cancel": "Avbryt",
       "retry": "Försök igen",
-      "dismiss": "Avfärda",
+      "dismiss": "Stäng",
       "stages": {
-        "uploading": "Laddar upp…",
-        "extracting": "Extraherar innehåll…",
-        "analyzing": "Analyserar innehåll…",
-        "generating": "Genererar övning…",
-        "saving": "Sparar övning…",
-        "completed": "Övning klar",
-        "error": "Generering misslyckades"
-      }
+        "uploading": "Laddar upp fil",
+        "extracting": "Extraherar innehåll",
+        "analyzing": "Analyserar innehåll",
+        "generating": "Genererar frågor",
+        "saving": "Sparar och förbereder övningen",
+        "completed": "Övningen är klar",
+        "error": "Genereringen misslyckades",
+        "preparing": "Förbereder läromaterial",
+        "validating": "Validerar svar och tips"
+      },
+      "stillWorking": "Genererar fortfarande… {seconds} s har gått",
+      "hints": {
+        "uploading": "Skickar din fil säkert.",
+        "extracting": "Läser text och struktur från källan.",
+        "analyzing": "Identifierar övningsledtrådar i materialet.",
+        "preparing": "Samlar valt ordförråd eller teori för denna uppsättning.",
+        "generating": "Modellen skriver frågor. Det kan ta en stund.",
+        "validating": "Kontrollerar svar, tips och struktur före övning.",
+        "saving": "Sätter ihop din övningsuppsättning."
+      },
+      "nextSetPreparing": "Förbereder nästa uppsättning…",
+      "nextSetReady": "Nästa uppsättning är klar",
+      "nextSetFailed": "Kunde inte förbereda nästa uppsättning",
+      "nextSetRetry": "Förbered nästa uppsättning",
+      "openNextSet": "Öppna nästa uppsättning"
     },
     "import": {
       "eyebrow": "Importerad övning",
@@ -822,6 +839,7 @@
       "aiReady": "Övning klar",
       "aiUnavailable": "Kunde inte generera AI-frågor just nu.",
       "aiForbidden": "AI-teoriövningar är tillgängliga med Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI-hjälp är avstängd i Inställningar.",
       "feedback": {
         "correct": "Korrekt!",
@@ -874,7 +892,21 @@
         "theRule": "Regeln",
         "why": "Varför",
         "complete": "Förstått",
-        "completeHint": "Du kan gå vidare när du är redo."
+        "completeHint": "Du kan gå vidare när du är redo.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "Ledtråd",
       "startsWith": "Börjar med “{letter}”",
       "revealPrompt": "Fortfarande fast? Du kan avslöja hela svaret.",
-      "revealAnswer": "Avslöja svaret"
+      "revealAnswer": "Avslöja svaret",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Inga ord ännu",
@@ -977,8 +1011,38 @@
       "forbidden": "AI-övningsgenerering är tillgänglig med Pro.",
       "disabled": "AI-hjälp är avstängd i Inställningar.",
       "upgradeHint": "AI-övningsgenerering är tillgänglig med Pro.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Lägg till ordförrådsord innan du genererar frågor.",
-      "noneValid": "AI kunde inte skapa giltiga frågor för dessa ord. Försök igen."
+      "noneValid": "AI kunde inte skapa giltiga frågor för dessa ord. Försök igen.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Session komplett",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "Endast vid innehållsändring",
       "confirmNever": "Aldrig",
       "saveFailed": "Kunde inte spara AI-inställningar",
-      "disabledToast": "AI-hjälp är avstängd i Inställningar"
+      "disabledToast": "AI-hjälp är avstängd i Inställningar",
+      "exerciseNextSetPrefetch": "Förbered nästa övningsuppsättning",
+      "exerciseNextSetPrefetchDescription": "När du börjar svara förbereds nästa uppsättning automatiskt i bakgrunden. Använder en AI-övningskredit när förberedelsen startar. Stäng av för att bara generera när du trycker Ny uppsättning."
     },
     "tutorials": "Sektionstutorials",
     "tutorialsDescription": "Återställ genomförda sektiongenomgångar så att \"Visa tutorial\" börjar från början igen.",
@@ -3360,7 +3426,8 @@
       "learningTrends": "Lärtrender",
       "personalLearningPath": "Personlig lärväg",
       "personalizedRecommendations": "Personliga rekommendationer",
-      "crossModuleIntelligence": "Personalisering över moduler"
+      "crossModuleIntelligence": "Personalisering över moduler",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     }
   },
   "coach": {

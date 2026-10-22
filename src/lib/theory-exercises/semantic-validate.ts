@@ -8,6 +8,10 @@ import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import type { TheoryExercise } from "@/lib/theory-exercises/types";
 
+function isDeadlineExceeded(error: unknown): boolean {
+  return error instanceof Error && error.message === "AI_DEADLINE_EXCEEDED";
+}
+
 /**
  * Semantic judge for Theory exercises.
  * Uses general criteria only — no sample words, sentences, or language-specific fixes.
@@ -57,8 +61,8 @@ const semanticResultSchema = z.object({
     .max(40),
 });
 
-/** Max exercises per judge call — smaller batches catch wrong-case slips more reliably. */
-export const THEORY_SEMANTIC_CHUNK_SIZE = 8;
+/** Interactive sets are ~10 items — one judge call is faster than chunk fan-out. */
+export const THEORY_SEMANTIC_CHUNK_SIZE = 12;
 
 function parseJsonContent(content: string | null | undefined) {
   if (!content?.trim()) return null;
@@ -177,7 +181,7 @@ async function judgeSemanticChunk(input: {
               theoryFocus: input.theoryFocus
                 ? clipForAi(input.theoryFocus, 400)
                 : null,
-              theoryRules: clipForAi(input.theoryRules, 4_000),
+              theoryRules: clipForAi(input.theoryRules, 2_500),
               reminder:
                 "Reject when answerCategory differs from requiredCategory, even if labels claim the Theory form.",
               exercises: input.items.map(exercisePayload),
@@ -223,18 +227,40 @@ export async function validateTheoryExercisesSemantically(input: {
     responseStyle: true,
   });
 
-  const kept: TheoryExercise[] = [];
+  if (input.signal?.aborted) {
+    throw afterProviderError(new Error("AI_DEADLINE_EXCEEDED"));
+  }
+
+  const chunks: TheoryExercise[][] = [];
   for (let i = 0; i < input.items.length; i += THEORY_SEMANTIC_CHUNK_SIZE) {
-    if (input.signal?.aborted) {
+    chunks.push(input.items.slice(i, i + THEORY_SEMANTIC_CHUNK_SIZE));
+  }
+
+  // Judge chunks in parallel — sequential judging was the main latency tax.
+  const settled = await Promise.allSettled(
+    chunks.map((chunk) =>
+      judgeSemanticChunk({
+        ...input,
+        items: chunk,
+        systemPrompt,
+      }),
+    ),
+  );
+
+  const keepIds = new Set<string>();
+  for (let index = 0; index < settled.length; index += 1) {
+    const result = settled[index]!;
+    const chunk = chunks[index]!;
+    if (result.status === "fulfilled") {
+      for (const item of result.value) keepIds.add(item.id);
+      continue;
+    }
+    if (input.signal?.aborted || isDeadlineExceeded(result.reason)) {
       throw afterProviderError(new Error("AI_DEADLINE_EXCEEDED"));
     }
-    const chunk = input.items.slice(i, i + THEORY_SEMANTIC_CHUNK_SIZE);
-    const accepted = await judgeSemanticChunk({
-      ...input,
-      items: chunk,
-      systemPrompt,
-    });
-    kept.push(...accepted);
+    // Chunk judge failed — keep structural items from that chunk.
+    for (const item of chunk) keepIds.add(item.id);
   }
-  return kept;
+
+  return input.items.filter((item) => keepIds.has(item.id));
 }

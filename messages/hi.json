@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# आयात} other {# आयात}}"
     },
     "processing": {
-      "workingTitle": "आपके अभ्यास पर काम हो रहा है",
-      "readyTitle": "अभ्यास तैयार",
+      "workingTitle": "आपका अभ्यास तैयार हो रहा है",
+      "readyTitle": "अभ्यास तैयार है",
       "errorTitle": "कुछ गलत हो गया",
       "cancel": "रद्द करें",
-      "retry": "पुनः प्रयास करें",
-      "dismiss": "खारिज करें",
+      "retry": "फिर से कोशिश करें",
+      "dismiss": "बंद करें",
       "stages": {
-        "uploading": "अपलोड हो रहा है…",
-        "extracting": "सामग्री निकाली जा रही है…",
-        "analyzing": "सामग्री का विश्लेषण हो रहा है…",
-        "generating": "अभ्यास बनाया जा रहा है…",
-        "saving": "अभ्यास सहेजा जा रहा है…",
-        "completed": "अभ्यास तैयार",
-        "error": "निर्माण विफल"
-      }
+        "uploading": "फ़ाइल अपलोड हो रही है",
+        "extracting": "सामग्री निकाली जा रही है",
+        "analyzing": "सामग्री का विश्लेषण",
+        "generating": "प्रश्न बनाए जा रहे हैं",
+        "saving": "अभ्यास सहेजा और तैयार किया जा रहा है",
+        "completed": "अभ्यास तैयार है",
+        "error": "बनाना विफल",
+        "preparing": "अध्ययन सामग्री तैयार हो रही है",
+        "validating": "उत्तर और संकेत जाँचे जा रहे हैं"
+      },
+      "stillWorking": "अभी भी बना रहे हैं… {seconds} सेकंड बीते",
+      "hints": {
+        "uploading": "आपकी फ़ाइल सुरक्षित रूप से भेजी जा रही है।",
+        "extracting": "स्रोत से पाठ और संरचना पढ़ी जा रही है।",
+        "analyzing": "सामग्री से अभ्यास संकेत पहचाने जा रहे हैं।",
+        "preparing": "इस सेट के लिए चुना शब्दावली या सिद्धांत इकट्ठा किया जा रहा है।",
+        "generating": "मॉडल प्रश्न लिख रहा है। इसमें थोड़ा समय लग सकता है।",
+        "validating": "अभ्यास से पहले उत्तर, संकेत और संरचना जाँची जा रही है।",
+        "saving": "आपका अभ्यास सेट जोड़ा जा रहा है।"
+      },
+      "nextSetPreparing": "अगला सेट तैयार हो रहा है…",
+      "nextSetReady": "अगला सेट तैयार है",
+      "nextSetFailed": "अगला सेट तैयार नहीं हो सका",
+      "nextSetRetry": "अगला सेट तैयार करें",
+      "openNextSet": "अगला सेट खोलें"
     },
     "import": {
       "eyebrow": "आयातित अभ्यास",
@@ -822,6 +839,7 @@
       "aiReady": "अभ्यास तैयार",
       "aiUnavailable": "अभी AI प्रश्न नहीं बनाए जा सके।",
       "aiForbidden": "AI सिद्धांत अभ्यास Pro के साथ उपलब्ध हैं।",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "सेटिंग्स में AI सहायता बंद है।",
       "feedback": {
         "correct": "सही!",
@@ -874,7 +892,21 @@
         "theRule": "नियम",
         "why": "क्यों",
         "complete": "ठीक है",
-        "completeHint": "जब तैयार हों, आगे बढ़ सकते हैं।"
+        "completeHint": "जब तैयार हों, आगे बढ़ सकते हैं।",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "संकेत",
       "startsWith": "“{letter}” से शुरू होता है",
       "revealPrompt": "अभी भी अटक गए? आप पूरा उत्तर दिखा सकते हैं।",
-      "revealAnswer": "उत्तर दिखाएँ"
+      "revealAnswer": "उत्तर दिखाएँ",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "अभी कोई शब्दावली नहीं",
@@ -977,8 +1011,38 @@
       "forbidden": "AI अभ्यास निर्माण Pro के साथ उपलब्ध है।",
       "disabled": "सेटिंग्स में AI सहायता बंद है।",
       "upgradeHint": "Free में प्रतिदिन कुछ AI अभ्यास निर्माण शामिल हैं। Pro सीमा हटाता है।",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "प्रश्न बनाने से पहले शब्दावली शब्द जोड़ें।",
-      "noneValid": "AI इन शब्दों के लिए मान्य प्रश्न नहीं बना सका। पुनः प्रयास करें।"
+      "noneValid": "AI इन शब्दों के लिए मान्य प्रश्न नहीं बना सका। पुनः प्रयास करें।",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "सत्र पूर्ण",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "केवल सामग्री बदलते समय",
       "confirmNever": "कभी नहीं",
       "saveFailed": "AI प्राथमिकताएँ सहेजी नहीं जा सकीं",
-      "disabledToast": "सेटिंग में AI सहायता बंद है"
+      "disabledToast": "सेटिंग में AI सहायता बंद है",
+      "exerciseNextSetPrefetch": "अगला अभ्यास सेट पहले से तैयार करें",
+      "exerciseNextSetPrefetchDescription": "जवाब देना शुरू करने के बाद अगला सेट पृष्ठभूमि में अपने आप तैयार होता है। शुरू होने पर एक AI अभ्यास क्रेडिट लगता है। बंद करें तो केवल नए सेट पर जनरेट होगा।"
     },
     "tutorials": "अनुभाग ट्यूटोरियल",
     "tutorialsDescription": "पूर्ण किए गए अनुभाग वॉकथ्रू रीसेट करें ताकि “ट्यूटोरियल दिखाएँ” फिर से शुरू से चले।",
@@ -3261,7 +3327,8 @@
       "learningTrends": "लर्निंग रुझान",
       "personalLearningPath": "व्यक्तिगत लर्निंग पथ",
       "personalizedRecommendations": "व्यक्तिगत सुझाव",
-      "crossModuleIntelligence": "क्रॉस-मॉड्यूल वैयक्तिकरण"
+      "crossModuleIntelligence": "क्रॉस-मॉड्यूल वैयक्तिकरण",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "प्लान तुलना करें",

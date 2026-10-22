@@ -6,6 +6,7 @@ import {
   aiUsage,
   aiUsageReservations,
   exerciseImports,
+  exerciseInstructionPresets,
   listeningLessons,
   readingPassages,
   users,
@@ -119,6 +120,9 @@ export async function purgeUserLearningData(userId: string) {
   );
 
   await db.delete(workspaces).where(eq(workspaces.userId, userId));
+  await db
+    .delete(exerciseInstructionPresets)
+    .where(eq(exerciseInstructionPresets.userId, userId));
   await db
     .delete(aiUsageReservations)
     .where(eq(aiUsageReservations.userId, userId));

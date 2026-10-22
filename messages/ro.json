@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# import} few {# importuri} other {# de importuri}}"
     },
     "processing": {
-      "workingTitle": "Lucrăm la exercițiul dumneavoastră",
-      "readyTitle": "Exercițiu gata",
-      "errorTitle": "A apărut o eroare",
-      "cancel": "Anulați",
-      "retry": "Reîncercați",
-      "dismiss": "Închideți",
+      "workingTitle": "Se pregătește exercițiul",
+      "readyTitle": "Exercițiul este gata",
+      "errorTitle": "Ceva nu a mers bine",
+      "cancel": "Anulează",
+      "retry": "Încearcă din nou",
+      "dismiss": "Închide",
       "stages": {
-        "uploading": "Se încarcă…",
-        "extracting": "Se extrage conținutul…",
-        "analyzing": "Se analizează conținutul…",
-        "generating": "Se generează exercițiul…",
-        "saving": "Se salvează exercițiul…",
-        "completed": "Exercițiu gata",
-        "error": "Generarea a eșuat"
-      }
+        "uploading": "Se încarcă fișierul",
+        "extracting": "Se extrage conținutul",
+        "analyzing": "Se analizează conținutul",
+        "generating": "Se generează întrebările",
+        "saving": "Se salvează și se pregătește exercițiul",
+        "completed": "Exercițiul este gata",
+        "error": "Generarea a eșuat",
+        "preparing": "Se pregătește materialul de învățare",
+        "validating": "Se validează răspunsurile și indiciile"
+      },
+      "stillWorking": "Încă se generează… au trecut {seconds} s",
+      "hints": {
+        "uploading": "Fișierul tău este trimis în siguranță.",
+        "extracting": "Se citește textul și structura din sursă.",
+        "analyzing": "Se identifică indicii de practică din material.",
+        "preparing": "Se adună vocabularul sau teoria selectate pentru acest set.",
+        "generating": "Modelul scrie întrebări. Poate dura puțin.",
+        "validating": "Se verifică răspunsurile, indiciile și structura înainte de practică.",
+        "saving": "Se asamblează setul tău de practică."
+      },
+      "nextSetPreparing": "Se pregătește următorul set…",
+      "nextSetReady": "Următorul set este gata",
+      "nextSetFailed": "Nu s-a putut pregăti următorul set",
+      "nextSetRetry": "Pregătește următorul set",
+      "openNextSet": "Deschide următorul set"
     },
     "import": {
       "eyebrow": "Practică importată",
@@ -822,6 +839,7 @@
       "aiReady": "Practică gata",
       "aiUnavailable": "Nu s-au putut genera întrebări cu IA momentan.",
       "aiForbidden": "Exercițiile de teorie cu IA sunt disponibile cu Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "Asistența IA este dezactivată în Setări.",
       "feedback": {
         "correct": "Corect!",
@@ -874,7 +892,21 @@
         "theRule": "Regula",
         "why": "De ce",
         "complete": "Am înțeles",
-        "completeHint": "Puteți continua când sunteți pregătit."
+        "completeHint": "Puteți continua când sunteți pregătit.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "Indiciu",
       "startsWith": "Începe cu „{letter}”",
       "revealPrompt": "Tot blocat? Puteți dezvălui răspunsul complet.",
-      "revealAnswer": "Dezvăluiți răspunsul"
+      "revealAnswer": "Dezvăluiți răspunsul",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Niciun vocabular încă",
@@ -977,8 +1011,38 @@
       "forbidden": "Generarea exercițiilor cu IA este disponibilă cu Pro.",
       "disabled": "Asistența IA este dezactivată în Setări.",
       "upgradeHint": "Planul Free include câteva generări de exerciții cu IA pe zi. Pro elimină limita.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Adăugați cuvinte de vocabular înainte de a genera întrebări.",
-      "noneValid": "IA nu a putut crea întrebări valide pentru aceste cuvinte. Încercați din nou."
+      "noneValid": "IA nu a putut crea întrebări valide pentru aceste cuvinte. Încercați din nou.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Sesiune finalizată",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "Doar la modificarea conținutului",
       "confirmNever": "Niciodată",
       "saveFailed": "Nu s-au putut salva preferințele AI",
-      "disabledToast": "Asistența AI este dezactivată în Setări"
+      "disabledToast": "Asistența AI este dezactivată în Setări",
+      "exerciseNextSetPrefetch": "Pregătește următorul set de exerciții",
+      "exerciseNextSetPrefetchDescription": "După ce începi să răspunzi, următorul set se pregătește automat în fundal. Folosește un credit de exercițiu AI la pornire. Dezactivează pentru a genera doar la Set nou."
     },
     "tutorials": "Tutoriale pe secțiuni",
     "tutorialsDescription": "Resetați tutorialele de secțiune finalizate, astfel încât „Afișează tutorialul” să reînceapă de la început.",
@@ -3261,7 +3327,8 @@
       "learningTrends": "Tendințe de învățare",
       "personalLearningPath": "Parcurs personal de învățare",
       "personalizedRecommendations": "Recomandări personalizate",
-      "crossModuleIntelligence": "Personalizare între module"
+      "crossModuleIntelligence": "Personalizare între module",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Comparați planurile",

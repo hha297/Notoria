@@ -1,4 +1,9 @@
 import { vocabularyAiFields } from "@/lib/ai/bounds";
+import { additionalInstructionFields } from "@/lib/exercises/additional-instructions";
+import {
+  PROGRESSIVE_HINT_PROMPT,
+  progressiveHintPayload,
+} from "@/lib/exercises/progressive-hints";
 import {
   CONTEXTUAL_BLANK,
   CONTEXTUAL_DISTRACTOR_POOL_MAX,
@@ -48,6 +53,8 @@ CRITICAL — difficulty controls the ENTIRE question (sentence structure, gramma
 - Intensive: nuanced but natural; difficulty from reasoning, never from artificial length or confusion.
 - NEVER swap the assigned target for an "easier" or "harder" vocabulary item.
 
+${PROGRESSIVE_HINT_PROMPT}
+
 Return JSON only:
 {
   "exercises": [
@@ -59,7 +66,8 @@ Return JSON only:
       "correctOption": string,
       "baseWord": string,
       "answerForm": string,
-      "sentenceMeaning": string
+      "sentenceMeaning": string,
+      "hints": string[]
     }
   ]
 }
@@ -104,6 +112,8 @@ CRITICAL — difficulty controls the ENTIRE question (sentence structure, gramma
 - Intensive: nuanced but natural; difficulty from reasoning, never from artificial length or confusion.
 - NEVER swap the assigned target for an "easier" or "harder" vocabulary item.
 
+${PROGRESSIVE_HINT_PROMPT}
+
 Return JSON only:
 {
   "exercises": [
@@ -112,7 +122,8 @@ Return JSON only:
       "type": "type-answer",
       "completeSentence": string,
       "answer": string,
-      "sentenceMeaning": string
+      "sentenceMeaning": string,
+      "hints": string[]
     }
   ]
 }
@@ -141,6 +152,8 @@ export function contextualAiUserPayload(input: {
     distractorPool?: string[];
   }>;
   regenerateReason?: string;
+  additionalInstructions?: string | null;
+  submittedMistake?: string | null;
 }) {
   const profile = getExerciseDifficultyProfile(input.difficulty);
   return {
@@ -158,6 +171,12 @@ export function contextualAiUserPayload(input: {
         ? "Write completeSentence in studyLanguage with the correctly inflected target already in the sentence — no blank. Return that exact token as answerForm and correctOption. baseWord stays the lemma. options must be exactly 4 contextual forms for that same slot. One exercise per wordId. Difficulty changes construction only — never swap targets."
         : "Write completeSentence in studyLanguage with the correctly inflected target already in the sentence — no blank. answer is that exact in-sentence token, not automatically the saved lemma. One exercise per wordId. Difficulty changes construction only — never swap targets.",
     regenerateReason: input.regenerateReason,
+    ...additionalInstructionFields(input.additionalInstructions),
+    ...progressiveHintPayload({
+      explanationLanguage: input.uiLanguage,
+      difficulty: profile.id,
+      submittedMistake: input.submittedMistake,
+    }),
     words: input.words.map((word) => {
       const fields = vocabularyAiFields({
         word: word.word,

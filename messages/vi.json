@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# bản nhập} other {# bản nhập}}"
     },
     "processing": {
-      "workingTitle": "Đang xử lý bài tập",
-      "readyTitle": "Bài tập đã sẵn sàng",
-      "errorTitle": "Có lỗi xảy ra",
-      "cancel": "Huỷ",
+      "workingTitle": "Đang tạo bài tập",
+      "readyTitle": "Bài tập sẵn sàng",
+      "errorTitle": "Đã xảy ra lỗi",
+      "cancel": "Hủy",
       "retry": "Thử lại",
       "dismiss": "Đóng",
       "stages": {
-        "uploading": "Đang tải lên…",
-        "extracting": "Đang trích nội dung…",
-        "analyzing": "Đang phân tích…",
-        "generating": "Đang tạo bài tập…",
-        "saving": "Đang lưu…",
+        "uploading": "Đang tải tệp lên",
+        "extracting": "Đang trích xuất nội dung",
+        "analyzing": "Đang phân tích nội dung",
+        "generating": "Đang tạo câu hỏi",
+        "saving": "Đang lưu và chuẩn bị bài tập",
         "completed": "Bài tập sẵn sàng",
-        "error": "Tạo bài thất bại"
-      }
+        "error": "Tạo bài thất bại",
+        "preparing": "Đang chuẩn bị tài liệu học",
+        "validating": "Đang kiểm tra đáp án và gợi ý"
+      },
+      "stillWorking": "Vẫn đang tạo… đã {seconds} giây",
+      "hints": {
+        "uploading": "Đang gửi tệp của bạn an toàn.",
+        "extracting": "Đang đọc văn bản và cấu trúc từ nguồn.",
+        "analyzing": "Đang tìm gợi ý luyện tập từ tài liệu.",
+        "preparing": "Đang gom từ vựng hoặc lý thuyết đã chọn cho bộ này.",
+        "generating": "Mô hình đang viết câu hỏi. Có thể mất một lúc.",
+        "validating": "Đang kiểm tra đáp án, gợi ý và cấu trúc trước khi luyện.",
+        "saving": "Đang ghép bộ bài luyện tập của bạn."
+      },
+      "nextSetPreparing": "Đang chuẩn bị bộ tiếp theo…",
+      "nextSetReady": "Bộ tiếp theo đã sẵn sàng",
+      "nextSetFailed": "Không chuẩn bị được bộ tiếp theo",
+      "nextSetRetry": "Chuẩn bị bộ tiếp theo",
+      "openNextSet": "Mở bộ tiếp theo"
     },
     "import": {
       "eyebrow": "Bài từ tài liệu nhập",
@@ -822,6 +839,7 @@
       "aiReady": "Sẵn sàng luyện tập",
       "aiUnavailable": "Không tạo được câu hỏi AI lúc này.",
       "aiForbidden": "Bài tập lý thuyết bằng AI dành cho Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "Hỗ trợ AI đang tắt trong Cài đặt.",
       "feedback": {
         "correct": "Đúng!",
@@ -874,7 +892,21 @@
         "theRule": "Quy tắc",
         "why": "Vì sao",
         "complete": "Đã hiểu",
-        "completeHint": "Bạn có thể tiếp tục khi sẵn sàng."
+        "completeHint": "Bạn có thể tiếp tục khi sẵn sàng.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "Gợi ý",
       "startsWith": "Bắt đầu bằng “{letter}”",
       "revealPrompt": "Vẫn chưa ra? Bạn có thể xem đáp án.",
-      "revealAnswer": "Hiện đáp án"
+      "revealAnswer": "Hiện đáp án",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Chưa có từ để luyện",
@@ -977,8 +1011,38 @@
       "forbidden": "Tạo bài tập bằng AI dành cho Pro.",
       "disabled": "Hỗ trợ AI đang tắt trong Cài đặt.",
       "upgradeHint": "Tạo bài tập bằng AI dành cho Pro.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Thêm từ vựng trước khi tạo câu hỏi.",
-      "noneValid": "AI không tạo được câu hỏi hợp lệ cho các từ này. Thử lại."
+      "noneValid": "AI không tạo được câu hỏi hợp lệ cho các từ này. Thử lại.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Hoàn thành phiên học",
@@ -1820,7 +1884,9 @@
       "confirmContentChange": "Chỉ khi đổi nội dung",
       "confirmNever": "Không hỏi",
       "saveFailed": "Không lưu được tuỳ chọn AI",
-      "disabledToast": "Hỗ trợ AI đang tắt trong Cài đặt"
+      "disabledToast": "Hỗ trợ AI đang tắt trong Cài đặt",
+      "exerciseNextSetPrefetch": "Chuẩn bị sẵn bộ bài tiếp theo",
+      "exerciseNextSetPrefetchDescription": "Sau khi bạn bắt đầu trả lời, tự động chuẩn bị bộ tiếp theo ở nền. Dùng một lượt AI exercise khi bắt đầu chuẩn bị. Tắt nếu chỉ muốn tạo khi bấm Bộ mới."
     },
     "tutorials": "Tutorial từng mục",
     "tutorialsDescription": "Đặt lại các tutorial đã xem để “Show tutorial” bắt đầu lại từ đầu.",
@@ -3165,7 +3231,8 @@
       "learningTrends": "Xu hướng học",
       "personalLearningPath": "Lộ trình học cá nhân",
       "personalizedRecommendations": "Gợi ý cá nhân hóa",
-      "crossModuleIntelligence": "Cá nhân hóa xuyên mô-đun"
+      "crossModuleIntelligence": "Cá nhân hóa xuyên mô-đun",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     }
   },
   "writing": {

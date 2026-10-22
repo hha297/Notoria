@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# içe aktarım} other {# içe aktarım}}"
     },
     "processing": {
-      "workingTitle": "Alıştırmanız üzerinde çalışılıyor",
+      "workingTitle": "Alıştırmanız hazırlanıyor",
       "readyTitle": "Alıştırma hazır",
       "errorTitle": "Bir şeyler ters gitti",
       "cancel": "İptal",
       "retry": "Yeniden dene",
       "dismiss": "Kapat",
       "stages": {
-        "uploading": "Yükleniyor…",
-        "extracting": "İçerik çıkarılıyor…",
-        "analyzing": "İçerik analiz ediliyor…",
-        "generating": "Alıştırma oluşturuluyor…",
-        "saving": "Alıştırma kaydediliyor…",
+        "uploading": "Dosya yükleniyor",
+        "extracting": "İçerik çıkarılıyor",
+        "analyzing": "İçerik analiz ediliyor",
+        "generating": "Sorular oluşturuluyor",
+        "saving": "Alıştırma kaydedilip hazırlanıyor",
         "completed": "Alıştırma hazır",
-        "error": "Oluşturma başarısız"
-      }
+        "error": "Oluşturma başarısız",
+        "preparing": "Öğrenme materyali hazırlanıyor",
+        "validating": "Yanıtlar ve ipuçları doğrulanıyor"
+      },
+      "stillWorking": "Hâlâ oluşturuluyor… {seconds} sn geçti",
+      "hints": {
+        "uploading": "Dosyanız güvenle gönderiliyor.",
+        "extracting": "Kaynaktan metin ve yapı okunuyor.",
+        "analyzing": "Materyaldeki alıştırma ipuçları belirleniyor.",
+        "preparing": "Bu set için seçilen kelime dağarcığı veya teori toplanıyor.",
+        "generating": "Model soruları yazıyor. Biraz sürebilir.",
+        "validating": "Pratikten önce yanıtlar, ipuçları ve yapı kontrol ediliyor.",
+        "saving": "Alıştırma setiniz birleştiriliyor."
+      },
+      "nextSetPreparing": "Sonraki set hazırlanıyor…",
+      "nextSetReady": "Sonraki set hazır",
+      "nextSetFailed": "Sonraki set hazırlanamadı",
+      "nextSetRetry": "Sonraki seti hazırla",
+      "openNextSet": "Sonraki seti aç"
     },
     "import": {
       "eyebrow": "İçe aktarılan pratik",
@@ -822,6 +839,7 @@
       "aiReady": "Pratik hazır",
       "aiUnavailable": "Şu anda AI soruları oluşturulamadı.",
       "aiForbidden": "AI teori alıştırmaları Pro ile kullanılabilir.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI yardımı Ayarlar’da kapalı.",
       "feedback": {
         "correct": "Doğru!",
@@ -874,7 +892,21 @@
         "theRule": "Kural",
         "why": "Neden",
         "complete": "Anlaşıldı",
-        "completeHint": "Hazır olduğunuzda ilerleyebilirsiniz."
+        "completeHint": "Hazır olduğunuzda ilerleyebilirsiniz.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "İpucu",
       "startsWith": "“{letter}” ile başlar",
       "revealPrompt": "Hâlâ takıldınız mı? Tam cevabı gösterebilirsiniz.",
-      "revealAnswer": "Cevabı Göster"
+      "revealAnswer": "Cevabı Göster",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Henüz kelime yok",
@@ -977,8 +1011,38 @@
       "forbidden": "AI alıştırma oluşturma Pro ile kullanılabilir.",
       "disabled": "AI yardımı Ayarlar’da kapalı.",
       "upgradeHint": "Free her gün birkaç AI alıştırma oluşturma içerir. Pro limiti kaldırır.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Soru oluşturmadan önce kelime bilgisi kelimeleri ekleyin.",
-      "noneValid": "AI bu kelimeler için geçerli sorular oluşturamadı. Tekrar deneyin."
+      "noneValid": "AI bu kelimeler için geçerli sorular oluşturamadı. Tekrar deneyin.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Oturum tamamlandı",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "Yalnızca içerik değişirken",
       "confirmNever": "Asla",
       "saveFailed": "Yapay zekâ tercihleri kaydedilemedi",
-      "disabledToast": "Yapay zekâ desteği Ayarlar’da kapalı"
+      "disabledToast": "Yapay zekâ desteği Ayarlar’da kapalı",
+      "exerciseNextSetPrefetch": "Sonraki alıştırma setini hazırla",
+      "exerciseNextSetPrefetchDescription": "Cevaplamaya başladıktan sonra sonraki set arka planda otomatik hazırlanır. Başlangıçta bir AI alıştırma kredisi kullanır. Yalnızca Yeni set ile oluşturmak için kapatın."
     },
     "tutorials": "Bölüm eğitimleri",
     "tutorialsDescription": "Tamamlanan bölüm turlarını sıfırlayın; böylece “Eğitimi göster” yeniden baştan başlar.",
@@ -3261,7 +3327,8 @@
       "learningTrends": "Öğrenme Eğilimleri",
       "personalLearningPath": "Kişisel Öğrenme Yolu",
       "personalizedRecommendations": "Kişiselleştirilmiş öneriler",
-      "crossModuleIntelligence": "Modüller arası kişiselleştirme"
+      "crossModuleIntelligence": "Modüller arası kişiselleştirme",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Planları karşılaştır",

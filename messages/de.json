@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# Import} other {# Importe}}"
     },
     "processing": {
-      "workingTitle": "Deine Übung wird erstellt",
+      "workingTitle": "Übung wird vorbereitet",
       "readyTitle": "Übung bereit",
       "errorTitle": "Etwas ist schiefgelaufen",
       "cancel": "Abbrechen",
       "retry": "Erneut versuchen",
       "dismiss": "Schließen",
       "stages": {
-        "uploading": "Wird hochgeladen…",
-        "extracting": "Inhalt wird extrahiert…",
-        "analyzing": "Inhalt wird analysiert…",
-        "generating": "Übung wird erzeugt…",
-        "saving": "Übung wird gespeichert…",
+        "uploading": "Datei wird hochgeladen",
+        "extracting": "Inhalt wird extrahiert",
+        "analyzing": "Inhalt wird analysiert",
+        "generating": "Fragen werden erzeugt",
+        "saving": "Übung wird gespeichert und vorbereitet",
         "completed": "Übung bereit",
-        "error": "Erzeugung fehlgeschlagen"
-      }
+        "error": "Erzeugung fehlgeschlagen",
+        "preparing": "Lernmaterial wird vorbereitet",
+        "validating": "Antworten und Hinweise werden geprüft"
+      },
+      "stillWorking": "Wird noch erzeugt… {seconds} s vergangen",
+      "hints": {
+        "uploading": "Datei wird sicher gesendet.",
+        "extracting": "Text und Struktur der Quelle werden gelesen.",
+        "analyzing": "Übungs Hinweise im Material werden erkannt.",
+        "preparing": "Ausgewählter Wortschatz oder Theorie für diesen Satz wird gesammelt.",
+        "generating": "Das Modell schreibt Fragen. Das kann etwas dauern.",
+        "validating": "Antworten, Hinweise und Struktur werden vor dem Üben geprüft.",
+        "saving": "Dein Übungssatz wird zusammengestellt."
+      },
+      "nextSetPreparing": "Nächster Satz wird vorbereitet…",
+      "nextSetReady": "Nächster Satz bereit",
+      "nextSetFailed": "Nächster Satz konnte nicht vorbereitet werden",
+      "nextSetRetry": "Nächsten Satz vorbereiten",
+      "openNextSet": "Nächsten Satz öffnen"
     },
     "import": {
       "eyebrow": "Importiertes Training",
@@ -822,6 +839,7 @@
       "aiReady": "Übung bereit",
       "aiUnavailable": "KI-Fragen konnten gerade nicht erzeugt werden.",
       "aiForbidden": "KI-Theorieübungen sind mit Pro verfügbar.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "KI-Unterstützung ist in den Einstellungen deaktiviert.",
       "feedback": {
         "correct": "Richtig!",
@@ -874,7 +892,21 @@
         "theRule": "Die Regel",
         "why": "Warum",
         "complete": "Verstanden",
-        "completeHint": "Du kannst weitergehen, wenn du bereit bist."
+        "completeHint": "Du kannst weitergehen, wenn du bereit bist.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "Hinweis",
       "startsWith": "Beginnt mit „{letter}“",
       "revealPrompt": "Immer noch feststeckend? Du kannst die vollständige Antwort anzeigen.",
-      "revealAnswer": "Antwort anzeigen"
+      "revealAnswer": "Antwort anzeigen",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Noch kein Wortschatz",
@@ -977,8 +1011,38 @@
       "forbidden": "KI-Übungserzeugung ist mit Pro verfügbar.",
       "disabled": "KI-Unterstützung ist in den Einstellungen deaktiviert.",
       "upgradeHint": "Free umfasst einige KI-Übungserzeugungen pro Tag. Pro entfernt das Limit.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Füge Wortschatzwörter hinzu, bevor du Fragen erzeugst.",
-      "noneValid": "KI konnte für diese Wörter keine gültigen Fragen erstellen. Bitte erneut versuchen."
+      "noneValid": "KI konnte für diese Wörter keine gültigen Fragen erstellen. Bitte erneut versuchen.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Sitzung abgeschlossen",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "Nur bei Inhaltsänderungen",
       "confirmNever": "Nie",
       "saveFailed": "KI-Einstellungen konnten nicht gespeichert werden",
-      "disabledToast": "KI-Hilfe ist in den Einstellungen deaktiviert"
+      "disabledToast": "KI-Hilfe ist in den Einstellungen deaktiviert",
+      "exerciseNextSetPrefetch": "Nächsten Übungssatz vorbereiten",
+      "exerciseNextSetPrefetchDescription": "Nachdem du angefangen hast zu antworten, wird der nächste Satz automatisch im Hintergrund vorbereitet. Verbraucht ein KI-Übungskredit beim Start. Ausschalten, um nur bei Neuem Satz zu erzeugen."
     },
     "tutorials": "Bereichs-Tutorials",
     "tutorialsDescription": "Abgeschlossene Bereichs-Einführungen zurücksetzen, damit „Tutorial zeigen“ wieder von vorne beginnt.",
@@ -3261,7 +3327,8 @@
       "learningTrends": "Lerntrends",
       "personalLearningPath": "Persönlicher Lernpfad",
       "personalizedRecommendations": "Personalisierte Empfehlungen",
-      "crossModuleIntelligence": "Modulübergreifende Personalisierung"
+      "crossModuleIntelligence": "Modulübergreifende Personalisierung",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Pläne vergleichen",

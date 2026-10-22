@@ -7,6 +7,7 @@ import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseDifficultySelect } from "@/components/exercises/exercise-difficulty-select";
+import { ExerciseAdditionalInstructions } from "@/components/exercises/exercise-additional-instructions";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { ExerciseSetSubmitBar } from "@/components/exercises/exercise-set-submit-bar";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
@@ -70,6 +71,7 @@ export function TypeAnswerSession({
   const [activeIds, setActiveIds] = useState<string[] | null>(null);
   const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
   const { difficulty, setDifficulty } = useExerciseDifficulty("type_answer");
+  const [additionalInstructions, setAdditionalInstructions] = useState("");
   const {
     state: processing,
     setStage,
@@ -171,6 +173,7 @@ export function TypeAnswerSession({
     setItems([]);
     setActiveIds(null);
     resetAttempt();
+    setStage("preparing");
     setStage("generating");
 
     try {
@@ -178,18 +181,24 @@ export function TypeAnswerSession({
         language && language.trim().length >= 2
           ? language.trim().slice(0, 16)
           : null;
+      const sessionId =
+        typeof crypto !== "undefined" && "randomUUID" in crypto
+          ? crypto.randomUUID()
+          : `ta-${Date.now()}`;
 
       const result = await requestContextualExerciseAi({
         exerciseType: "type-answer",
         language: languageCode,
         difficulty,
         uiLocale: isValidLocale(uiLocale) ? uiLocale : "en",
+        additionalInstructions,
         words: sampledWords.map((word) => ({
           id: word.id,
           word: word.word.trim().slice(0, 120),
           meaning: word.meanings[0]?.trim() || null,
           partOfSpeech: word.partOfSpeech,
         })),
+        nextSet: { sessionId, sequence: 0 },
       });
 
       if (!result.ok) {
@@ -198,8 +207,8 @@ export function TypeAnswerSession({
           await exerciseQuota.refreshQuotas();
           return;
         }
-        if (result.code === "AI_FORBIDDEN") {
-          fail(tAi("forbidden"));
+        if (result.code === "AI_FORBIDDEN" || result.code === "PREMIUM_REQUIRED") {
+          fail(result.code === "PREMIUM_REQUIRED" ? tAi("premiumRequired") : tAi("forbidden"));
           openUpgrade();
           return;
         }
@@ -211,6 +220,7 @@ export function TypeAnswerSession({
         return;
       }
 
+      setStage("validating");
       const nextItems = result.exercises
         .filter((exercise) => exercise.type === "type-answer")
         .map((exercise, index) =>
@@ -230,7 +240,7 @@ export function TypeAnswerSession({
       setStage("saving");
       setItems(nextItems);
       completeProcessing();
-      resetProcessing();
+      window.setTimeout(() => resetProcessing(), 350);
     } catch {
       fail(tAi("unavailable"));
     }
@@ -238,6 +248,7 @@ export function TypeAnswerSession({
     commitAndBeginNext,
     completeProcessing,
     difficulty,
+    additionalInstructions,
     fail,
     filteredWords,
     language,
@@ -346,6 +357,16 @@ export function TypeAnswerSession({
     return (
       <div className="space-y-6">
         {filtersBar}
+        <ExerciseAdditionalInstructions
+          scope="vocabulary"
+          value={additionalInstructions}
+          onChange={setAdditionalInstructions}
+          settings={{ difficulty }}
+          onSettingsChange={(next) => {
+            if (next.difficulty) setDifficulty(next.difficulty);
+          }}
+          disabled={generating}
+        />
         <ExerciseDifficultySelect
           value={difficulty}
           onChange={setDifficulty}
@@ -381,6 +402,16 @@ export function TypeAnswerSession({
     return (
       <div className="space-y-6">
         {filtersBar}
+        <ExerciseAdditionalInstructions
+          scope="vocabulary"
+          value={additionalInstructions}
+          onChange={setAdditionalInstructions}
+          settings={{ difficulty }}
+          onSettingsChange={(next) => {
+            if (next.difficulty) setDifficulty(next.difficulty);
+          }}
+          disabled={generating}
+        />
         <div className="relative mx-auto max-w-lg overflow-hidden px-4 py-10 text-center sm:px-8 sm:py-14">
           <div
             aria-hidden
@@ -417,6 +448,19 @@ export function TypeAnswerSession({
   return (
     <div className="space-y-6">
       {filtersBar}
+
+      {isContextual ? (
+        <ExerciseAdditionalInstructions
+          scope="vocabulary"
+          value={additionalInstructions}
+          onChange={setAdditionalInstructions}
+          settings={{ difficulty }}
+          onSettingsChange={(next) => {
+            if (next.difficulty) setDifficulty(next.difficulty);
+          }}
+          disabled={generating || submitted}
+        />
+      ) : null}
 
       {isContextual ? (
         <ExerciseDifficultySelect

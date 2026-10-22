@@ -11,6 +11,7 @@ export function toTheoryExerciseCard(note: {
   title: string;
   content: unknown;
   updatedAt: Date | string;
+  folderId?: string | null;
 }): TheoryExerciseCardItem {
   const parsed = parseTheoryContent(note.content);
   const plain = theoryDocPlainText(parsed.doc);
@@ -31,5 +32,6 @@ export function toTheoryExerciseCard(note: {
       typeof note.updatedAt === "string"
         ? note.updatedAt
         : note.updatedAt.toISOString(),
+    folderId: note.folderId ?? null,
   };
 }

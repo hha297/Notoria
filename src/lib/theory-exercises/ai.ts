@@ -8,6 +8,11 @@ import {
 } from "@/lib/ai/bounds";
 import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
+import { appendAdditionalInstructions, additionalInstructionFields } from "@/lib/exercises/additional-instructions";
+import {
+  PROGRESSIVE_HINT_PROMPT,
+  progressiveHintPayload,
+} from "@/lib/exercises/progressive-hints";
 import {
   mapAiDraftsToTheoryExercises,
   theoryAiResponseSchema,
@@ -29,7 +34,9 @@ import { ensureSentenceMeanings } from "@/lib/exercises/sentence-meaning";
 import type { AppLocale } from "@/i18n/config";
 
 function getOpenAIClient() {
-  return requireOpenAiClient({ timeoutMs: 90_000 });
+  // Interactive theory sets are lean (~10 items); keep the SDK timeout below
+  // the app deadline so a hung provider call fails fast enough to recover.
+  return requireOpenAiClient({ timeoutMs: 75_000 });
 }
 
 function parseJsonContent(content: string | null | undefined) {
@@ -127,12 +134,15 @@ Vary vocabulary and contexts; do not stop early after a few items.
     "instruction"?: string,
     "skillLabel"?: string,
     "hint": string,
+    "hints": string[],
     "explanation"?: string,
     "materialSource"?: "theory" | "vocabulary" | "ai",
     "showArrow"?: boolean
   } ]
 }
-No markdown.`;
+No markdown.
+
+${PROGRESSIVE_HINT_PROMPT}`;
 
 async function requestExerciseBatch(input: {
   client: ReturnType<typeof requireOpenAiClient>;
@@ -147,22 +157,30 @@ async function requestExerciseBatch(input: {
   studyLanguage?: string;
   uiLanguage?: string;
   avoidSentences?: string[];
+  additionalInstructions?: string | null;
   signal?: AbortSignal;
 }): Promise<{ theoryFocus?: string; exercises: TheoryAiExerciseDraft[] }> {
   let completion;
   try {
+    const maxTokens = Math.min(
+      AI_OUTPUT_TOKENS.theoryBatch,
+      Math.max(2_400, 700 + input.maxExercises * 420),
+    );
     completion = await input.client.chat.completions.create(
       {
         model: "gpt-4o-mini",
-        temperature: 0.85,
-        max_tokens: AI_OUTPUT_TOKENS.theoryBatch,
+        temperature: 0.7,
+        max_tokens: maxTokens,
         response_format: { type: "json_object" },
         messages: [
           {
             role: "system",
-            content: await aiSystemPrompt(THEORY_EXERCISE_AI_PROMPT, {
-              responseStyle: true,
-            }),
+            content: appendAdditionalInstructions(
+              await aiSystemPrompt(THEORY_EXERCISE_AI_PROMPT, {
+                responseStyle: true,
+              }),
+              input.additionalInstructions,
+            ),
           },
           {
             role: "user",
@@ -173,13 +191,17 @@ async function requestExerciseBatch(input: {
               maxExercises: input.maxExercises,
               batch: input.batchIndex,
               theoryRules: input.theoryRules,
-              theoryExamples: input.theoryExamples.slice(0, 40),
+              theoryExamples: input.theoryExamples.slice(0, 8),
               maxExampleDerivedExercises: input.maxExampleReuse,
               aimExampleDerivedExercises: input.aimExampleReuse,
-              vocabularyWords: input.vocabularyWords,
-              avoidReusingTheseSentences: (input.avoidSentences ?? []).slice(0, 40),
+              vocabularyWords: input.vocabularyWords.slice(0, 20),
+              avoidReusingTheseSentences: (input.avoidSentences ?? []).slice(0, 12),
+              ...additionalInstructionFields(input.additionalInstructions),
+              ...progressiveHintPayload({
+                explanationLanguage: input.uiLanguage ?? "English",
+              }),
               reminder:
-                "Form-category lock: answer must be the Theory category in theoryFocus (never a different case/tense/mood that only fits the sentence). Blank the Theory-category token only. Write completedSentence first, then blank that exact answer. sourceWord = base of the blanked answer. instruction/explanation must name the real category of the answer. Practice fields in studyLanguage; sentenceMeaning in uiLanguage. Prefer fresh vocabulary; example-derived items optional and capped.",
+                "Form-category lock: answer must be the Theory category in theoryFocus. Blank that token only. Write completedSentence first, then blank that exact answer. sentenceMeaning in uiLanguage. Return exactly maxExercises items.",
             }),
           },
         ],
@@ -217,20 +239,23 @@ export async function generateAiTheoryExercises(input: {
   studyLanguage?: string;
   /** Website UI language name for sentenceMeaning (e.g. "Finnish", "English"). */
   uiLanguage?: string;
+  additionalInstructions?: string | null;
 }): Promise<TheoryExercise[]> {
   const material = extractTheoryGenerationMaterial(input.doc);
   if (!material.rulesText.trim() && material.exampleTexts.length === 0) {
     return [];
   }
 
-  /** Requested set size (UI asks ~24). Never aim below the practice minimum. */
-  const MIN_PRACTICE_SET = 15;
-  const count = Math.min(Math.max(input.count ?? 24, MIN_PRACTICE_SET), 30);
+  /**
+   * Interactive default is a lean 10-item set. Keep provider work to one
+   * generation pass + a time-boxed semantic check so wall time stays under ~1 min.
+   */
+  const MIN_PRACTICE_SET = 8;
+  const count = Math.min(Math.max(input.count ?? 10, 1), 20);
   const deadline = createAiDeadline(AI_DEADLINES_MS.theoryGenerate);
   const exampleLexemes = material.exampleLexemes;
   const mapOpts = { studyLanguage: undefined as string | undefined, exampleLexemes };
 
-  // Map a larger pool than the final count so reuse + semantic filters still leave enough.
   const mapDrafts = (drafts: TheoryAiExerciseDraft[], maxItems: number) =>
     mapAiDraftsToTheoryExercises(
       input.theoryId,
@@ -243,13 +268,13 @@ export async function generateAiTheoryExercises(input: {
   try {
     const client = getOpenAIClient();
     const vocabularyWords = (input.vocabulary ?? [])
-      .slice(0, 60)
+      .slice(0, 20)
       .map((w) => clipForAi(w.word, AI_INPUT_LIMITS.word))
       .filter((word) => word.length > 0);
-    const theoryRules = clipForAi(material.rulesText, AI_INPUT_LIMITS.theory);
+    const theoryRules = clipForAi(material.rulesText, Math.min(AI_INPUT_LIMITS.theory, 6_000));
     const theoryExamples = material.exampleTexts
-      .slice(0, 40)
-      .map((text) => clipForAi(text, 240))
+      .slice(0, 8)
+      .map((text) => clipForAi(text, 180))
       .filter(Boolean);
     const title = clipForAi(input.theoryTitle, AI_INPUT_LIMITS.title);
     const studyLanguage = input.studyLanguage?.trim() || undefined;
@@ -268,61 +293,65 @@ export async function generateAiTheoryExercises(input: {
       vocabularyWords,
       studyLanguage,
       uiLanguage,
+      additionalInstructions: input.additionalInstructions,
       signal: deadline.signal,
     };
 
-    // Over-request so structural + semantic filters still leave a full practice set.
-    const first = Math.ceil(count * 0.75) + 4;
-    const second = Math.ceil(count * 0.75) + 4;
-    const poolCap = Math.min(60, count * 2);
-    const settled = await Promise.allSettled([
-      requestExerciseBatch({ ...batchArgs, maxExercises: first, batchIndex: 1 }),
-      requestExerciseBatch({ ...batchArgs, maxExercises: second, batchIndex: 2 }),
-    ]);
-
-    const rejections = settled
-      .filter((result): result is PromiseRejectedResult => result.status === "rejected")
-      .map((result) => result.reason);
-    const deadlineHit =
-      deadline.expired() || rejections.some(isDeadlineExceeded);
-
+    // Ask for exactly the set size — over-requesting balloons output tokens.
+    const primarySize = count;
+    const rejections: unknown[] = [];
     let drafts: TheoryAiExerciseDraft[] = [];
     let theoryFocus: string | undefined;
-    for (const result of settled) {
-      if (result.status === "fulfilled") {
-        drafts = [...drafts, ...result.value.exercises];
-        theoryFocus = theoryFocus ?? result.value.theoryFocus?.trim();
+
+    try {
+      const primary = await requestExerciseBatch({
+        ...batchArgs,
+        maxExercises: primarySize,
+        batchIndex: 1,
+      });
+      drafts = primary.exercises;
+      theoryFocus = primary.theoryFocus?.trim();
+    } catch (error) {
+      rejections.push(error);
+      if (isDeadlineExceeded(error) || deadline.expired()) {
+        throw afterProviderError(new Error("AI_DEADLINE_EXCEEDED"));
       }
     }
 
+    const SEMANTIC_BUDGET_MS = 20_000;
     const applySemantic = async (candidates: TheoryExercise[]) => {
       if (candidates.length === 0 || deadline.expired()) return candidates;
       try {
         deadline.throwIfExpired();
-        const accepted = await validateTheoryExercisesSemantically({
-          items: candidates,
+        const judge = validateTheoryExercisesSemantically({
+          items: candidates.slice(0, count),
           theoryTitle: title,
           theoryFocus,
           theoryRules,
           studyLanguage,
           signal: deadline.signal,
         });
+        const timedOut = new Promise<TheoryExercise[]>((resolve) => {
+          const timer = setTimeout(() => resolve(candidates.slice(0, count)), SEMANTIC_BUDGET_MS);
+          timer.unref?.();
+        });
+        const accepted = await Promise.race([judge, timedOut]);
         return accepted.slice(0, count);
       } catch (error) {
         if (isDeadlineExceeded(error) || deadline.expired()) {
           return candidates.slice(0, count);
         }
-        throw error;
+        // Structural items are already mapped — prefer returning them over failing.
+        console.error("theory semantic skipped after error");
+        return candidates.slice(0, count);
       }
     };
 
-    let items = await applySemantic(mapDrafts(drafts, poolCap));
+    let items = await applySemantic(mapDrafts(drafts, count));
 
-    // Bounded refill until we hit the practice minimum (or the requested count).
-    let refillAttempts = 0;
+    // One short refill only when the set is badly short (not a second full round).
     const needAtLeast = Math.min(count, MIN_PRACTICE_SET);
-    while (items.length < needAtLeast && !deadlineHit && refillAttempts < 4) {
-      refillAttempts += 1;
+    if (items.length < needAtLeast && !deadline.expired()) {
       const avoid = [
         ...drafts.map((d) => d.sentence).filter((s): s is string => Boolean(s)),
         ...drafts
@@ -332,28 +361,28 @@ export async function generateAiTheoryExercises(input: {
           .filter((item): item is TheoryFillBlankExercise => item.type === "fill_blank")
           .map((item) => item.completedSentence ?? item.sentence),
       ];
-      const need = Math.max(needAtLeast - items.length + 6, 12);
+      const need = Math.max(needAtLeast - items.length, 4);
       try {
         deadline.throwIfExpired();
         const refill = await requestExerciseBatch({
           ...batchArgs,
-          maxExercises: Math.min(need, 20),
-          batchIndex: 2 + refillAttempts,
+          maxExercises: Math.min(need, 8),
+          batchIndex: 2,
           avoidSentences: avoid,
         });
         drafts = [...drafts, ...refill.exercises];
         theoryFocus = theoryFocus ?? refill.theoryFocus?.trim();
-        items = await applySemantic(mapDrafts(drafts, poolCap));
+        items = await applySemantic(mapDrafts(drafts, count));
       } catch (error) {
-        if (isDeadlineExceeded(error) || deadline.expired()) {
-          break;
-        }
+        rejections.push(error);
         if (items.length === 0) {
+          if (isDeadlineExceeded(error) || deadline.expired()) {
+            throw afterProviderError(new Error("AI_DEADLINE_EXCEEDED"));
+          }
           throw error instanceof Error && error.message === "AI_INVALID_RESPONSE"
             ? error
             : afterProviderError(error);
         }
-        break;
       }
     }
 
@@ -370,14 +399,24 @@ export async function generateAiTheoryExercises(input: {
       throw new Error("AI_INVALID_RESPONSE");
     }
 
-    // Honest partial sets: return only validated items (may be < requested count).
     if (deadline.expired()) {
       return items;
     }
 
     const uiLocale = resolveUiLocaleFromLanguageName(uiLanguage);
+    const missingMeanings = items.filter((item) => {
+      if (item.type !== "fill_blank") return false;
+      return !item.sentenceMeaning?.trim();
+    }).length;
+    // Generator usually includes sentenceMeaning — skip a second AI round when possible.
+    if (missingMeanings === 0) {
+      return items;
+    }
+
     return ensureSentenceMeanings(items, {
       uiLocale,
+      signal: deadline.signal,
+      workKind: "interactive",
       getSentence: (item) => {
         if (item.type !== "fill_blank") return "";
         return (

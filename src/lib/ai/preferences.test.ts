@@ -32,6 +32,18 @@ describe("parseAiPreferences", () => {
     expect(prefs.correctionStyle).toBe("minimal");
     expect(prefs.suggestionsEnabled).toBe(false);
     expect(prefs.confirmActions).toBe("always");
+    expect(prefs.exerciseNextSetPrefetch).toBe(true);
+  });
+
+  it("defaults exercise next-set prefetch on for legacy cookies", () => {
+    const prefs = parseAiPreferences({
+      enabled: true,
+      responseStyle: "balanced",
+      correctionStyle: "explain",
+      suggestionsEnabled: true,
+      confirmActions: "content-change",
+    });
+    expect(prefs.exerciseNextSetPrefetch).toBe(true);
   });
 });
 

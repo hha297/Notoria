@@ -61,7 +61,8 @@ export const AI_DEADLINES_MS = {
   default: 120_000,
   listeningTranscribe: 240_000,
   listeningGenerate: 180_000,
-  theoryGenerate: 180_000,
+  /** Interactive theory sets aim for one batch + short semantic budget. */
+  theoryGenerate: 100_000,
   readingOcr: 180_000,
   readingGrade: 90_000,
   importExtract: 120_000,

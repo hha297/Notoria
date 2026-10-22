@@ -1,14 +1,24 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
-import { guardMeteredAi, settleMeteredAi } from "@/lib/ai/guard-route";
+import { getCurrentUserRecord } from "@/lib/auth/current-user";
+import { authErrorResponse } from "@/lib/auth/http";
 import { getFlashcardWords } from "@/lib/actions/flashcards";
 import { getTheoryNote } from "@/lib/actions/theory";
 import { generateAiTheoryExercises } from "@/lib/theory-exercises/ai";
 import { parseTheoryContent } from "@/lib/theory/content";
 import { locales, type AppLocale } from "@/i18n/config";
 import { getActiveWorkspace } from "@/lib/workspace";
+import { gateAdditionalInstructions } from "@/lib/exercises/additional-instructions-server";
+import { exerciseNextSetMetaSchema } from "@/lib/exercises/ai-types";
+import {
+  exerciseJobInProgressResponse,
+  runExclusiveExerciseGeneration,
+} from "@/lib/exercises/next-set-job";
+import { DEFAULT_NEXT_SET_COUNT } from "@/lib/exercises/next-set-fingerprint";
 
 export const runtime = "nodejs";
+/** Match `AI_DEADLINES_MS.theoryGenerate` with a little headroom. */
+export const maxDuration = 120;
 
 const UI_LANGUAGE_NAMES: Record<AppLocale, string> = {
   en: "English",
@@ -50,6 +60,8 @@ const bodySchema = z.object({
   count: z.number().int().min(1).max(30).optional(),
   /** Website UI locale for sentenceMeaning. */
   uiLocale: z.enum(locales).optional(),
+  additionalInstructions: z.string().trim().max(2_000).optional().nullable(),
+  nextSet: exerciseNextSetMetaSchema.optional(),
 });
 
 export async function POST(request: Request) {
@@ -76,32 +88,86 @@ export async function POST(request: Request) {
     return NextResponse.json({ ok: false, code: "NOT_FOUND" }, { status: 404 });
   }
 
-  const access = await guardMeteredAi("ai_exercise");
-  if (!access.ok) return access.response;
+  let user;
+  try {
+    user = await getCurrentUserRecord();
+  } catch (error) {
+    const mapped = authErrorResponse(error);
+    if (mapped) return mapped;
+    throw error;
+  }
+  if (!user) {
+    return NextResponse.json(
+      { ok: false, code: "UNAUTHORIZED", error: "Authentication required" },
+      { status: 401 },
+    );
+  }
+
+  const gated = await gateAdditionalInstructions(parsed.data.additionalInstructions);
+  if (!gated.ok) {
+    return NextResponse.json({ ok: false, code: gated.code }, { status: 403 });
+  }
+
+  const nextSet = parsed.data.nextSet;
+  const sessionId = nextSet?.sessionId ?? `oneshot-${user.id}`;
+  const sequence = nextSet?.sequence ?? 0;
+  const count = parsed.data.count ?? DEFAULT_NEXT_SET_COUNT;
+  const revision =
+    note.updatedAt instanceof Date
+      ? note.updatedAt.toISOString()
+      : String(note.updatedAt ?? "");
 
   try {
-    const content = parseTheoryContent(note.content);
-    const words = await getFlashcardWords();
-    const workspace = await getActiveWorkspace();
-    const uiLocale = parsed.data.uiLocale ?? "en";
-    const exercises = await generateAiTheoryExercises({
-      theoryId: note.id,
-      theoryTitle: note.title,
-      doc: content.doc,
-      vocabulary: words.map((w) => ({
-        id: w.id,
-        word: w.word,
-        partOfSpeech: w.partOfSpeech,
-        tags: w.tags,
-      })),
-      count: parsed.data.count,
-      studyLanguage: workspace?.language,
-      uiLanguage: UI_LANGUAGE_NAMES[uiLocale],
+    const outcome = await runExclusiveExerciseGeneration({
+      userId: user.id,
+      regenerate: nextSet?.regenerate === true,
+      fingerprint: {
+        kind: "theory",
+        sessionId,
+        sourceIds: [note.id],
+        sourceRevisions: [revision],
+        mode: "theory",
+        difficulty: null,
+        language: null,
+        uiLocale: parsed.data.uiLocale ?? null,
+        count,
+        additionalInstructions: gated.text,
+        sequence,
+      },
+      generate: async () => {
+        const content = parseTheoryContent(note.content);
+        const words = await getFlashcardWords();
+        const workspace = await getActiveWorkspace();
+        const uiLocale = parsed.data.uiLocale ?? "en";
+        return generateAiTheoryExercises({
+          theoryId: note.id,
+          theoryTitle: note.title,
+          doc: content.doc,
+          vocabulary: words.map((w) => ({
+            id: w.id,
+            word: w.word,
+            partOfSpeech: w.partOfSpeech,
+            tags: w.tags,
+          })),
+          count,
+          studyLanguage: workspace?.language,
+          uiLanguage: UI_LANGUAGE_NAMES[uiLocale],
+          additionalInstructions: gated.text,
+        });
+      },
     });
-    await settleMeteredAi(access, true);
-    return NextResponse.json({ ok: true, exercises });
+
+    if (outcome.status === "blocked") return outcome.response;
+    if (outcome.status === "in_progress") {
+      return exerciseJobInProgressResponse();
+    }
+
+    return NextResponse.json({
+      ok: true,
+      exercises: outcome.result,
+      reused: outcome.duplicate,
+    });
   } catch (error) {
-    await settleMeteredAi(access, false, error);
     const message = error instanceof Error ? error.message : "";
     if (
       message === "OPENAI_NOT_CONFIGURED" ||

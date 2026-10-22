@@ -669,15 +669,32 @@
       "cancel": "Cancel",
       "retry": "Retry",
       "dismiss": "Dismiss",
+      "stillWorking": "Still generating… {seconds}s elapsed",
       "stages": {
-        "uploading": "Uploading…",
-        "extracting": "Extracting content…",
-        "analyzing": "Analyzing content…",
-        "generating": "Generating exercise…",
-        "saving": "Saving exercise…",
+        "uploading": "Uploading file",
+        "extracting": "Extracting content",
+        "analyzing": "Analyzing content",
+        "preparing": "Preparing learning material",
+        "generating": "Generating questions",
+        "validating": "Validating answers and hints",
+        "saving": "Saving and preparing the exercise",
         "completed": "Exercise ready",
         "error": "Generation failed"
-      }
+      },
+      "hints": {
+        "uploading": "Sending your file securely.",
+        "extracting": "Reading text and structure from the source.",
+        "analyzing": "Identifying practice cues from the material.",
+        "preparing": "Gathering the selected vocabulary or theory for this set.",
+        "generating": "The model is writing questions. This can take a little while.",
+        "validating": "Checking answers, hints, and structure before practice.",
+        "saving": "Assembling your practice set."
+      },
+      "nextSetPreparing": "Preparing next set…",
+      "nextSetReady": "Next set ready",
+      "nextSetFailed": "Could not prepare the next set",
+      "nextSetRetry": "Prepare next set",
+      "openNextSet": "Open next set"
     },
     "import": {
       "eyebrow": "Imported practice",
@@ -822,6 +839,7 @@
       "aiReady": "Practice ready",
       "aiUnavailable": "Could not generate AI questions right now.",
       "aiForbidden": "AI theory exercises are available with Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI assistance is turned off in Settings.",
       "feedback": {
         "correct": "Correct!",
@@ -861,6 +879,8 @@
         "quickReview": "Quick review",
         "skipReview": "Skip review",
         "startPractice": "Start practice",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise",
         "openTheory": "Open full theory",
         "tryIt": "Try it",
         "outline": "In this lesson",
@@ -875,6 +895,18 @@
         "why": "Why",
         "complete": "Understood",
         "completeHint": "You can move on when you're ready."
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "Hint",
       "startsWith": "Starts with “{letter}”",
       "revealPrompt": "Still stuck? You can reveal the full answer.",
-      "revealAnswer": "Reveal Answer"
+      "revealAnswer": "Reveal Answer",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "No vocabulary yet",
@@ -977,6 +1011,36 @@
       "forbidden": "AI exercise generation is available with Pro.",
       "disabled": "AI assistance is turned off in Settings.",
       "upgradeHint": "Free includes a few AI exercise generations each day. Pro removes the limit.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetSaveAs": "Save as preset",
+      "presetUpdate": "Update preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetUpdated": "Preset updated",
+      "presetRenamed": "Preset renamed",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is.",
       "emptyWords": "Add vocabulary words before generating questions.",
       "noneValid": "AI could not create valid questions for these words. Try again."
     },
@@ -2009,6 +2073,8 @@
       "correctionDetailed": "Detailed",
       "suggestions": "AI suggestions",
       "suggestionsDescription": "Show proactive AI suggestions while editing vocabulary when available.",
+      "exerciseNextSetPrefetch": "Prepare next exercise set",
+      "exerciseNextSetPrefetchDescription": "After you start answering, automatically prepare the next set in the background. Uses one AI exercise credit when preparation starts. Turn off to only generate when you tap New set.",
       "confirmActions": "Confirm AI actions",
       "confirmActionsDescription": "Ask before AI changes your content.",
       "confirmAlways": "Always",
@@ -3261,7 +3327,8 @@
       "learningTrends": "Learning Trends",
       "personalLearningPath": "Personal Learning Path",
       "personalizedRecommendations": "Personalized recommendations",
-      "crossModuleIntelligence": "Cross-module personalization"
+      "crossModuleIntelligence": "Cross-module personalization",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Compare plans",

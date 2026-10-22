@@ -7,6 +7,7 @@ import {
 } from "@/lib/ai/bounds";
 import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
+import { appendAdditionalInstructions } from "@/lib/exercises/additional-instructions";
 import { getLanguageByCode } from "@/lib/languages";
 import {
   CONTEXTUAL_MC_GENERATOR_PROMPT,
@@ -27,6 +28,7 @@ import {
 import type { ExerciseDifficulty } from "@/lib/exercises/difficulty";
 import { promptMatchesDifficulty } from "@/lib/exercises/prompt-matches-difficulty";
 import { resolveValidBlankMeaningHint } from "@/lib/exercises/blank-hint";
+import { resolveProgressiveHints } from "@/lib/exercises/progressive-hints";
 import {
   optionLooksLikeLemma,
   resolveContextualFromCompleteSentence,
@@ -190,6 +192,12 @@ function validateMc(
     baseWord: lemma,
     answerForm,
     sentenceMeaning: draft.sentenceMeaning,
+    hints: resolveProgressiveHints({
+      raw: draft.hints,
+      answers: [answerForm, lemma],
+      grounding: word.meaning,
+      difficulty,
+    }),
   };
 }
 
@@ -224,6 +232,12 @@ function validateTypeAnswer(
     prompt,
     answer,
     sentenceMeaning: draft.sentenceMeaning,
+    hints: resolveProgressiveHints({
+      raw: draft.hints,
+      answers: [answer, word.word],
+      grounding: word.meaning,
+      difficulty,
+    }),
   };
 }
 
@@ -290,6 +304,7 @@ async function requestExercises(
     difficulty: input.difficulty,
     uiLanguage: uiLanguageName(input.uiLocale),
     words,
+    additionalInstructions: input.additionalInstructions,
     regenerateReason: options?.simplifyRetry ? SURFACE_RETRY_REASON : undefined,
   });
 
@@ -303,7 +318,10 @@ async function requestExercises(
       messages: [
         {
           role: "system",
-          content: await aiSystemPrompt(system, { responseStyle: true }),
+          content: appendAdditionalInstructions(
+            await aiSystemPrompt(system, { responseStyle: true }),
+            input.additionalInstructions,
+          ),
         },
         {
           role: "user",

@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# импорт} few {# импорта} many {# импортов} other {# импорта}}"
     },
     "processing": {
-      "workingTitle": "Готовим ваше упражнение",
+      "workingTitle": "Готовим упражнение",
       "readyTitle": "Упражнение готово",
       "errorTitle": "Что-то пошло не так",
       "cancel": "Отмена",
       "retry": "Повторить",
       "dismiss": "Закрыть",
       "stages": {
-        "uploading": "Загрузка…",
-        "extracting": "Извлечение содержимого…",
-        "analyzing": "Анализ содержимого…",
-        "generating": "Создание упражнения…",
-        "saving": "Сохранение упражнения…",
+        "uploading": "Загрузка файла",
+        "extracting": "Извлечение содержимого",
+        "analyzing": "Анализ содержимого",
+        "generating": "Генерация вопросов",
+        "saving": "Сохранение и подготовка упражнения",
         "completed": "Упражнение готово",
-        "error": "Не удалось создать"
-      }
+        "error": "Не удалось создать",
+        "preparing": "Подготовка учебного материала",
+        "validating": "Проверка ответов и подсказок"
+      },
+      "stillWorking": "Всё ещё генерируем… прошло {seconds} с",
+      "hints": {
+        "uploading": "Безопасная отправка файла.",
+        "extracting": "Чтение текста и структуры источника.",
+        "analyzing": "Поиск подсказок для практики в материале.",
+        "preparing": "Сбор выбранной лексики или теории для этого набора.",
+        "generating": "Модель пишет вопросы. Это может занять время.",
+        "validating": "Проверка ответов, подсказок и структуры перед практикой.",
+        "saving": "Сборка вашего набора упражнений."
+      },
+      "nextSetPreparing": "Готовим следующий набор…",
+      "nextSetReady": "Следующий набор готов",
+      "nextSetFailed": "Не удалось подготовить следующий набор",
+      "nextSetRetry": "Подготовить следующий набор",
+      "openNextSet": "Открыть следующий набор"
     },
     "import": {
       "eyebrow": "Импортированная практика",
@@ -822,6 +839,7 @@
       "aiReady": "Практика готова",
       "aiUnavailable": "Сейчас не удалось создать вопросы ИИ.",
       "aiForbidden": "Упражнения по теории с ИИ доступны с Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "ИИ-помощь отключена в настройках.",
       "feedback": {
         "correct": "Верно!",
@@ -874,7 +892,21 @@
         "theRule": "Правило",
         "why": "Почему",
         "complete": "Понятно",
-        "completeHint": "Можете перейти дальше, когда будете готовы."
+        "completeHint": "Можете перейти дальше, когда будете готовы.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "Подсказка",
       "startsWith": "Начинается с «{letter}»",
       "revealPrompt": "Всё ещё сложно? Можно открыть полный ответ.",
-      "revealAnswer": "Показать ответ"
+      "revealAnswer": "Показать ответ",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Пока нет словаря",
@@ -977,8 +1011,38 @@
       "forbidden": "Создание упражнений с ИИ доступно с Pro.",
       "disabled": "ИИ-помощь отключена в настройках.",
       "upgradeHint": "Бесплатный план включает несколько генераций упражнений ИИ в день. Pro снимает лимит.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Добавьте слова словаря, прежде чем создавать вопросы.",
-      "noneValid": "ИИ не смог создать корректные вопросы для этих слов. Попробуйте ещё раз."
+      "noneValid": "ИИ не смог создать корректные вопросы для этих слов. Попробуйте ещё раз.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Сессия завершена",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "Только при изменении контента",
       "confirmNever": "Никогда",
       "saveFailed": "Не удалось сохранить настройки ИИ",
-      "disabledToast": "ИИ-помощь отключена в настройках"
+      "disabledToast": "ИИ-помощь отключена в настройках",
+      "exerciseNextSetPrefetch": "Готовить следующий набор упражнений",
+      "exerciseNextSetPrefetchDescription": "После того как вы начнёте отвечать, следующий набор готовится автоматически в фоне. Расходует один кредит ИИ-упражнения при старте. Отключите, чтобы генерировать только по кнопке Новый набор."
     },
     "tutorials": "Обучающие обзоры разделов",
     "tutorialsDescription": "Сбросить пройденные обзоры разделов, чтобы «Показать обучение» начиналось сначала.",
@@ -3261,7 +3327,8 @@
       "learningTrends": "Учебные тенденции",
       "personalLearningPath": "Личный учебный путь",
       "personalizedRecommendations": "Персональные рекомендации",
-      "crossModuleIntelligence": "Персонализация между модулями"
+      "crossModuleIntelligence": "Персонализация между модулями",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Сравнение планов",

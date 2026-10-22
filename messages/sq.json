@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# import} other {# importe}}"
     },
     "processing": {
-      "workingTitle": "Duke punuar me ushtrimin tuaj",
+      "workingTitle": "Ushtrimi po përgatitet",
       "readyTitle": "Ushtrimi është gati",
       "errorTitle": "Diçka shkoi keq",
       "cancel": "Anulo",
       "retry": "Provo përsëri",
       "dismiss": "Mbyll",
       "stages": {
-        "uploading": "Duke ngarkuar…",
-        "extracting": "Duke nxjerrë përmbajtjen…",
-        "analyzing": "Duke analizuar përmbajtjen…",
-        "generating": "Duke gjeneruar ushtrimin…",
-        "saving": "Duke ruajtur ushtrimin…",
+        "uploading": "Ngarkimi i skedarit",
+        "extracting": "Nxjerrja e përmbajtjes",
+        "analyzing": "Analiza e përmbajtjes",
+        "generating": "Gjenerimi i pyetjeve",
+        "saving": "Ruajtja dhe përgatitja e ushtrimit",
         "completed": "Ushtrimi është gati",
-        "error": "Gjenerimi dështoi"
-      }
+        "error": "Gjenerimi dështoi",
+        "preparing": "Përgatitja e materialit mësimor",
+        "validating": "Validimi i përgjigjeve dhe ndihmave"
+      },
+      "stillWorking": "Ende po gjenerohet… kanë kaluar {seconds} s",
+      "hints": {
+        "uploading": "Skedari juaj dërgohet në mënyrë të sigurt.",
+        "extracting": "Leximi i tekstit dhe strukturës nga burimi.",
+        "analyzing": "Identifikimi i ndihmave të praktikës në material.",
+        "preparing": "Mbledhja e fjalorit ose teorisë së zgjedhur për këtë set.",
+        "generating": "Modeli po shkruan pyetje. Mund të marrë pak kohë.",
+        "validating": "Kontrolli i përgjigjeve, ndihmave dhe strukturës para praktikës.",
+        "saving": "Montimi i setit tuaj të praktikës."
+      },
+      "nextSetPreparing": "Po përgatitet seti tjetër…",
+      "nextSetReady": "Seti tjetër është gati",
+      "nextSetFailed": "Nuk u përgatit seti tjetër",
+      "nextSetRetry": "Përgatit setin tjetër",
+      "openNextSet": "Hap setin tjetër"
     },
     "import": {
       "eyebrow": "Praktikë e importuar",
@@ -822,6 +839,7 @@
       "aiReady": "Praktika është gati",
       "aiUnavailable": "Nuk mund të gjeneroheshin pyetje AI tani.",
       "aiForbidden": "Ushtrimet e teorisë me AI janë të disponueshme me Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "Ndihma e AI është e çaktivizuar te Cilësimet.",
       "feedback": {
         "correct": "E saktë!",
@@ -874,7 +892,21 @@
         "theRule": "Rregulli",
         "why": "Pse",
         "complete": "U kuptua",
-        "completeHint": "Mund të vazhdoni kur të jeni gati."
+        "completeHint": "Mund të vazhdoni kur të jeni gati.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "Ndihmë",
       "startsWith": "Fillon me “{letter}”",
       "revealPrompt": "Ende të bllokuar? Mund ta zbuloni përgjigjen e plotë.",
-      "revealAnswer": "Zbulo përgjigjen"
+      "revealAnswer": "Zbulo përgjigjen",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Nuk ka fjalor ende",
@@ -977,8 +1011,38 @@
       "forbidden": "Gjenerimi i ushtrimeve me AI është i disponueshëm me Pro.",
       "disabled": "Ndihma e AI është e çaktivizuar te Cilësimet.",
       "upgradeHint": "Free përfshin disa gjenerime ushtrimesh AI çdo ditë. Pro heq kufirin.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Shtoni fjalë fjalori përpara se të gjeneroni pyetje.",
-      "noneValid": "AI nuk mund të krijonte pyetje të vlefshme për këto fjalë. Provoni përsëri."
+      "noneValid": "AI nuk mund të krijonte pyetje të vlefshme për këto fjalë. Provoni përsëri.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Seanca përfundoi",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "Vetëm kur ndryshon përmbajtjen",
       "confirmNever": "Kurrë",
       "saveFailed": "Preferencat e AI nuk u ruajtën",
-      "disabledToast": "Ndihma e AI është e çaktivizuar te Cilësimet"
+      "disabledToast": "Ndihma e AI është e çaktivizuar te Cilësimet",
+      "exerciseNextSetPrefetch": "Përgatit setin tjetër të ushtrimeve",
+      "exerciseNextSetPrefetchDescription": "Pasi filloni të përgjigjeni, seti tjetër përgatitet automatikisht në sfond. Përdor një kredit ushtrimi AI në fillim. Çaktivizoni për të gjeneruar vetëm me Set të ri."
     },
     "tutorials": "Udhëzuesit e seksioneve",
     "tutorialsDescription": "Rivendosni udhëzuesit e përfunduar të seksioneve që «Shfaq udhëzuesin» të fillojë përsëri nga fillimi.",
@@ -3261,7 +3327,8 @@
       "learningTrends": "Tendencat e të mësuarit",
       "personalLearningPath": "Rruga personale e të mësuarit",
       "personalizedRecommendations": "Rekomandime të personalizuara",
-      "crossModuleIntelligence": "Personalizim ndërmodular"
+      "crossModuleIntelligence": "Personalizim ndërmodular",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Krahasoni planet",

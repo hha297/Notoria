@@ -11,14 +11,17 @@ import { ExerciseAiBar } from "@/components/exercises/exercise-ai-bar";
 import { FillBlankStage } from "@/components/exercises/fill-blank-stage";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { ExerciseSetSubmitBar } from "@/components/exercises/exercise-set-submit-bar";
+import { NextSetStatusChip } from "@/components/exercises/next-set-status";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { Button } from "@/components/ui/button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
+import { useExerciseNextSet } from "@/hooks/use-exercise-next-set";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { isValidLocale } from "@/i18n/config";
 import { requestExerciseAi } from "@/lib/exercises/ai-client";
+import type { ExerciseAiFillBlank, ExerciseAiWordInput } from "@/lib/exercises/ai-types";
 import {
   fillBlankExerciseToItem,
   fillBlankItemSentence,
@@ -29,6 +32,7 @@ import {
   buildFillBlankItems,
   type FillBlankItem,
 } from "@/lib/exercises/fill-blank";
+import { DEFAULT_NEXT_SET_COUNT } from "@/lib/exercises/next-set-fingerprint";
 import { isNonEmptyAnswer, type SetQuestionResult } from "@/lib/exercises/set-attempt";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { answersMatchAny, shuffleArray } from "@/lib/exercises/utils";
@@ -38,6 +42,11 @@ import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferen
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
 import { DEFAULT_FLASHCARD_FILTERS } from "@/types/flashcards";
+
+type FillBlankNextPayload = {
+  picked: FlashcardWord[];
+  words: ExerciseAiWordInput[];
+};
 
 type FillBlankSessionProps = {
   workspaceId: string;
@@ -61,6 +70,7 @@ export function FillBlankSession({
   const [items, setItems] = useState<FillBlankItem[]>([]);
   const [activeIds, setActiveIds] = useState<string[] | null>(null);
   const { difficulty, setDifficulty } = useExerciseDifficulty("fill_blank");
+  const [additionalInstructions, setAdditionalInstructions] = useState("");
   const [usedWordIds, setUsedWordIds] = useState<string[]>([]);
   const avoidByWord = useRef<Record<string, string[]>>({});
   const batchRef = useRef(0);
@@ -160,68 +170,14 @@ export function FillBlankSession({
     resetAttempt();
   }, [clearPreferences, hasProAccess, workspaceId, resetAttempt]);
 
-  const generateQuestions = useCallback(async () => {
-    if (filteredWords.length === 0) {
-      toast.error(tAi("emptyWords"));
-      return;
-    }
-
-    const prefs = commitAndBeginNext();
-    setStage("generating");
-    try {
-      const eligibleWords = filteredWords.filter(wordHasBlankMeaningHint);
-      if (eligibleWords.length === 0) {
-        fail(tAi("emptyWords"));
-        return;
-      }
-      const picked = pickFillBlankAiWords(eligibleWords, 10, {
-        recentlyUsedIds: usedWordIds,
-        softAvoidWordIds: prefs.softAvoidWordIds,
-        softPreferWordIds: prefs.softPreferWordIds,
-      });
-      const payloadWords = picked.map((word) =>
-        toExerciseAiWord(word, [
-          ...(avoidByWord.current[word.id] ?? []),
-          ...prefs.softAvoidItemKeys,
-        ]),
-      );
-      const result = await requestExerciseAi({
-        exerciseType: "fill-in-blank",
-        language: language ?? null,
-        difficulty,
-        uiLocale: isValidLocale(uiLocale) ? uiLocale : "en",
-        words: payloadWords,
-      });
-
-      if (!result.ok) {
-        if (result.code === "AI_QUOTA_EXCEEDED") {
-          fail(exerciseQuota.message);
-          await exerciseQuota.refreshQuotas();
-          return;
-        }
-        if (result.code === "AI_FORBIDDEN") {
-          fail(tAi("forbidden"));
-          openUpgrade();
-          return;
-        }
-        if (result.code === "AI_DISABLED") {
-          fail(tAi("disabled"));
-          return;
-        }
-        fail(
-          result.code === "AI_EMPTY" ? tAi("emptyWords") : tAi("unavailable"),
-        );
-        return;
-      }
-
-      setStage("saving");
-
+  const mapExercisesToItems = useCallback(
+    (exercises: ExerciseAiFillBlank[], picked: FlashcardWord[]) => {
       batchRef.current += 1;
       const batchId = `${Date.now()}-${batchRef.current}`;
       const remaining = [...picked];
       const nextItems: FillBlankItem[] = [];
 
-      for (const [itemIndex, exercise] of result.exercises.entries()) {
+      for (const [itemIndex, exercise] of exercises.entries()) {
         const matchIndex = remaining.findIndex((word) => word.id === exercise.wordId);
         const word =
           matchIndex >= 0
@@ -235,18 +191,18 @@ export function FillBlankSession({
         );
         if (item) nextItems.push(item);
       }
+      return nextItems;
+    },
+    [],
+  );
 
-      if (nextItems.length === 0) {
-        fail(tAi("noneValid"));
-        return;
-      }
-
+  const applyGeneratedItems = useCallback(
+    (nextItems: FillBlankItem[]) => {
       for (const item of nextItems) {
         const sentence = fillBlankItemSentence(item);
         const existing = avoidByWord.current[item.wordId] ?? [];
         avoidByWord.current[item.wordId] = [...existing, sentence].slice(-12);
       }
-
       setUsedWordIds((current) => [
         ...current,
         ...nextItems.map((item) => item.wordId),
@@ -255,27 +211,223 @@ export function FillBlankSession({
       setItems(shuffleArray(nextItems));
       setActiveIds(null);
       resetAttempt();
-      completeProcessing();
-      window.setTimeout(() => resetProcessing(), 350);
-    } catch {
-      fail(tAi("unavailable"));
+    },
+    [resetAttempt],
+  );
+
+  const buildNextPayload = useCallback((): FillBlankNextPayload | null => {
+    const prefs = commitAndBeginNext();
+    const eligibleWords = filteredWords.filter(wordHasBlankMeaningHint);
+    if (eligibleWords.length === 0) return null;
+    const picked = pickFillBlankAiWords(eligibleWords, DEFAULT_NEXT_SET_COUNT, {
+      recentlyUsedIds: usedWordIds,
+      softAvoidWordIds: prefs.softAvoidWordIds,
+      softPreferWordIds: prefs.softPreferWordIds,
+    });
+    if (picked.length === 0) return null;
+    return {
+      picked,
+      words: picked.map((word) =>
+        toExerciseAiWord(word, [
+          ...(avoidByWord.current[word.id] ?? []),
+          ...prefs.softAvoidItemKeys,
+        ]),
+      ),
+    };
+  }, [commitAndBeginNext, filteredWords, usedWordIds]);
+
+  const {
+    sessionId,
+    sequence,
+    status: nextSetStatus,
+    notifyAnswerInteraction,
+    openNextSet,
+    retryPrefetch,
+    markGeneratedSequence,
+    resetForNewActiveSet,
+  } = useExerciseNextSet<FillBlankNextPayload, FillBlankItem[]>({
+    enabled: hasProAccess && Boolean(aiItems),
+    buildPayload: () => buildNextPayload(),
+    generate: async (payload, meta) => {
+      const result = await requestExerciseAi(
+        {
+          exerciseType: "fill-in-blank",
+          language: language ?? null,
+          difficulty,
+          uiLocale: isValidLocale(uiLocale) ? uiLocale : "en",
+          additionalInstructions,
+          words: payload.words,
+          nextSet: {
+            sessionId: meta.sessionId,
+            sequence: meta.sequence,
+            regenerate: meta.regenerate,
+          },
+        },
+        { signal: meta.signal },
+      );
+      if (!result.ok) {
+        return {
+          ok: false,
+          retryable:
+            result.code === "AI_UNAVAILABLE" ||
+            result.code === "AI_JOB_IN_PROGRESS",
+        };
+      }
+      const nextItems = mapExercisesToItems(result.exercises, payload.picked);
+      if (nextItems.length === 0) return { ok: false, retryable: false };
+      return { ok: true, result: nextItems };
+    },
+    applyResult: (items) => {
+      applyGeneratedItems(items);
+    },
+  });
+
+  const generateQuestions = useCallback(
+    async (options?: {
+      sequence?: number;
+      regenerate?: boolean;
+      showProgress?: boolean;
+      signal?: AbortSignal;
+    }) => {
+      if (filteredWords.length === 0) {
+        toast.error(tAi("emptyWords"));
+        return false;
+      }
+
+      const showProgress = options?.showProgress !== false;
+      const targetSequence =
+        options?.sequence ?? (aiItems ? sequence + 1 : sequence);
+      const payload = buildNextPayload();
+      if (!payload) {
+        if (showProgress) fail(tAi("emptyWords"));
+        return false;
+      }
+
+      if (showProgress) {
+        setStage("preparing");
+        setStage("generating");
+      }
+      try {
+        const result = await requestExerciseAi(
+          {
+            exerciseType: "fill-in-blank",
+            language: language ?? null,
+            difficulty,
+            uiLocale: isValidLocale(uiLocale) ? uiLocale : "en",
+            additionalInstructions,
+            words: payload.words,
+            nextSet: {
+              sessionId,
+              sequence: targetSequence,
+              regenerate: options?.regenerate,
+            },
+          },
+          { signal: options?.signal },
+        );
+
+        if (!result.ok) {
+          if (!showProgress) return false;
+          if (result.code === "AI_QUOTA_EXCEEDED") {
+            fail(exerciseQuota.message);
+            await exerciseQuota.refreshQuotas();
+            return false;
+          }
+          if (result.code === "AI_FORBIDDEN" || result.code === "PREMIUM_REQUIRED") {
+            fail(
+              result.code === "PREMIUM_REQUIRED"
+                ? tAi("premiumRequired")
+                : tAi("forbidden"),
+            );
+            openUpgrade();
+            return false;
+          }
+          if (result.code === "AI_DISABLED") {
+            fail(tAi("disabled"));
+            return false;
+          }
+          fail(
+            result.code === "AI_EMPTY" ? tAi("emptyWords") : tAi("unavailable"),
+          );
+          return false;
+        }
+
+        if (showProgress) setStage("validating");
+        const nextItems = mapExercisesToItems(result.exercises, payload.picked);
+        if (nextItems.length === 0) {
+          if (showProgress) fail(tAi("noneValid"));
+          return false;
+        }
+
+        if (showProgress) setStage("saving");
+        applyGeneratedItems(nextItems);
+        markGeneratedSequence(targetSequence);
+        if (showProgress) {
+          completeProcessing();
+          window.setTimeout(() => resetProcessing(), 350);
+        }
+        return true;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") {
+          return false;
+        }
+        if (showProgress) fail(tAi("unavailable"));
+        return false;
+      }
+    },
+    [
+      additionalInstructions,
+      aiItems,
+      applyGeneratedItems,
+      buildNextPayload,
+      completeProcessing,
+      difficulty,
+      exerciseQuota,
+      fail,
+      filteredWords,
+      language,
+      mapExercisesToItems,
+      markGeneratedSequence,
+      openUpgrade,
+      resetProcessing,
+      sequence,
+      sessionId,
+      setStage,
+      tAi,
+      uiLocale,
+    ],
+  );
+
+  const handleNewSet = useCallback(async () => {
+    const outcome = await openNextSet();
+    if (outcome.mode === "applied") return;
+    if (outcome.mode === "attached") {
+      setStage("generating");
+      const ok = await outcome.promise;
+      if (ok) {
+        completeProcessing();
+        window.setTimeout(() => resetProcessing(), 350);
+      } else {
+        fail(tAi("unavailable"));
+      }
+      return;
     }
+    await generateQuestions({ sequence: outcome.sequence, showProgress: true });
   }, [
-    commitAndBeginNext,
     completeProcessing,
-    difficulty,
     fail,
-    filteredWords,
-    language,
-    openUpgrade,
-    resetAttempt,
+    generateQuestions,
+    openNextSet,
     resetProcessing,
     setStage,
     tAi,
-    exerciseQuota,
-    uiLocale,
-    usedWordIds,
   ]);
+
+  // Drop a prepared set when generation config changes mid-session.
+  useEffect(() => {
+    if (!aiItems) return;
+    resetForNewActiveSet(sequence);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only invalidate on config
+  }, [difficulty, additionalInstructions]);
 
   const handleSubmit = () => {
     void submit((currentAnswers) => {
@@ -314,7 +466,11 @@ export function FillBlankSession({
       difficulty={difficulty}
       disabled={filteredWords.length === 0 || submitted}
       onDifficultyChange={setDifficulty}
-      onGenerate={() => void generateQuestions()}
+      onGenerate={() =>
+        void (aiItems ? handleNewSet() : generateQuestions({ sequence: 0 }))
+      }
+      additionalInstructions={additionalInstructions}
+      onAdditionalInstructionsChange={setAdditionalInstructions}
     />
   );
 
@@ -348,13 +504,25 @@ export function FillBlankSession({
       <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
       {aiBar}
 
+      {hasSession && hasProAccess && !showAiProgress ? (
+        <NextSetStatusChip
+          status={nextSetStatus}
+          onRetry={() => retryPrefetch()}
+          onOpen={() => void handleNewSet()}
+          className="mx-auto w-fit"
+        />
+      ) : null}
+
       {showAiProgress ? (
         <AiProcessingProgress
           state={processing}
           pipeline="aiGenerate"
           onRetry={
             processing.stage === "error"
-              ? () => void generateQuestions()
+              ? () =>
+                  void (aiItems
+                    ? handleNewSet()
+                    : generateQuestions({ sequence: 0, regenerate: true }))
               : undefined
           }
           onDismissError={
@@ -365,7 +533,7 @@ export function FillBlankSession({
         <EmptyGenerateCard
           locked={exerciseQuota.locked}
           lockMessage={exerciseQuota.message}
-          onGenerate={() => void generateQuestions()}
+          onGenerate={() => void generateQuestions({ sequence: 0 })}
         />
       ) : hasSession ? (
         <>
@@ -421,7 +589,10 @@ export function FillBlankSession({
                   peeked={false}
                   isCorrect={isCorrect}
                   unanswered={unanswered}
-                  onInputChange={(value) => setAnswer(item.id, value)}
+                  onInputChange={(value) => {
+                    setAnswer(item.id, value);
+                    if (value.trim()) notifyAnswerInteraction();
+                  }}
                 />
               );
             })}
@@ -448,7 +619,7 @@ export function FillBlankSession({
                   hasProAccess
                     ? {
                         label: tAi("generateMore"),
-                        onClick: () => void generateQuestions(),
+                        onClick: () => void handleNewSet(),
                         loading: generating,
                         locked: exerciseQuota.locked,
                         lockMessage: exerciseQuota.message,

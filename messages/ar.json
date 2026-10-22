@@ -663,21 +663,38 @@
       "importCount": "{count, plural, zero {# استيراد} one {استيراد واحد} two {استيرادان} few {# استيرادات} many {# استيرادًا} other {# استيراد}}"
     },
     "processing": {
-      "workingTitle": "جارٍ العمل على تمرينك",
+      "workingTitle": "جارٍ إعداد التمرين",
       "readyTitle": "التمرين جاهز",
       "errorTitle": "حدث خطأ ما",
       "cancel": "إلغاء",
       "retry": "إعادة المحاولة",
-      "dismiss": "تجاهل",
+      "dismiss": "إغلاق",
       "stages": {
-        "uploading": "جارٍ الرفع…",
-        "extracting": "جارٍ استخراج المحتوى…",
-        "analyzing": "جارٍ تحليل المحتوى…",
-        "generating": "جارٍ إنشاء التمرين…",
-        "saving": "جارٍ حفظ التمرين…",
+        "uploading": "رفع الملف",
+        "extracting": "استخراج المحتوى",
+        "analyzing": "تحليل المحتوى",
+        "generating": "توليد الأسئلة",
+        "saving": "حفظ التمرين وإعداده",
         "completed": "التمرين جاهز",
-        "error": "فشل الإنشاء"
-      }
+        "error": "فشل التوليد",
+        "preparing": "إعداد المادة التعليمية",
+        "validating": "التحقق من الإجابات والتلميحات"
+      },
+      "stillWorking": "ما زال التوليد جارياً… مرّت {seconds} ث",
+      "hints": {
+        "uploading": "إرسال ملفك بأمان.",
+        "extracting": "قراءة النص والبنية من المصدر.",
+        "analyzing": "تحديد تلميحات التمرين من المادة.",
+        "preparing": "جمع المفردات أو النظرية المحددة لهذه المجموعة.",
+        "generating": "النموذج يكتب الأسئلة. قد يستغرق ذلك بعض الوقت.",
+        "validating": "فحص الإجابات والتلميحات والبنية قبل التمرين.",
+        "saving": "تجميع مجموعة التمرين الخاصة بك."
+      },
+      "nextSetPreparing": "جارٍ إعداد المجموعة التالية…",
+      "nextSetReady": "المجموعة التالية جاهزة",
+      "nextSetFailed": "تعذّر إعداد المجموعة التالية",
+      "nextSetRetry": "إعداد المجموعة التالية",
+      "openNextSet": "فتح المجموعة التالية"
     },
     "import": {
       "eyebrow": "ممارسة مستوردة",
@@ -822,6 +839,7 @@
       "aiReady": "الممارسة جاهزة",
       "aiUnavailable": "تعذّر إنشاء أسئلة الذكاء الاصطناعي الآن.",
       "aiForbidden": "تمارين النظرية بالذكاء الاصطناعي متاحة مع Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "تم إيقاف مساعدة الذكاء الاصطناعي في الإعدادات.",
       "feedback": {
         "correct": "صحيح!",
@@ -874,7 +892,21 @@
         "theRule": "القاعدة",
         "why": "لماذا",
         "complete": "مفهوم",
-        "completeHint": "يمكنك المتابعة عندما تكون جاهزًا."
+        "completeHint": "يمكنك المتابعة عندما تكون جاهزًا.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "تلميح",
       "startsWith": "تبدأ بـ «{letter}»",
       "revealPrompt": "ما زلت عالقًا؟ يمكنك كشف الإجابة الكاملة.",
-      "revealAnswer": "كشف الإجابة"
+      "revealAnswer": "كشف الإجابة",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "لا توجد مفردات بعد",
@@ -977,8 +1011,38 @@
       "forbidden": "إنشاء التمارين بالذكاء الاصطناعي متاح مع Pro.",
       "disabled": "تم إيقاف مساعدة الذكاء الاصطناعي في الإعدادات.",
       "upgradeHint": "الخطة المجانية تتضمن بضع إنشاءات تمارين بالذكاء الاصطناعي يوميًا. Pro يزيل الحد.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "أضف كلمات مفردات قبل إنشاء الأسئلة.",
-      "noneValid": "تعذّر على الذكاء الاصطناعي إنشاء أسئلة صالحة لهذه الكلمات. حاول مرة أخرى."
+      "noneValid": "تعذّر على الذكاء الاصطناعي إنشاء أسئلة صالحة لهذه الكلمات. حاول مرة أخرى.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "اكتملت الجلسة",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "فقط عند تغيير المحتوى",
       "confirmNever": "أبدًا",
       "saveFailed": "تعذّر حفظ تفضيلات الذكاء الاصطناعي",
-      "disabledToast": "مساعدة الذكاء الاصطناعي متوقفة في الإعدادات"
+      "disabledToast": "مساعدة الذكاء الاصطناعي متوقفة في الإعدادات",
+      "exerciseNextSetPrefetch": "إعداد مجموعة التمرين التالية مسبقاً",
+      "exerciseNextSetPrefetchDescription": "بعد أن تبدأ بالإجابة، تُعدّ المجموعة التالية تلقائياً في الخلفية. يستخدم رصيد تمرين ذكاء اصطناعي واحد عند البدء. عطّله للتوليد فقط عند الضغط على مجموعة جديدة."
     },
     "tutorials": "دروس الأقسام",
     "tutorialsDescription": "أعد تعيين جولات الأقسام المكتملة حتى يبدأ «إظهار الدرس» من البداية مرة أخرى.",
@@ -3261,7 +3327,8 @@
       "learningTrends": "اتجاهات التعلّم",
       "personalLearningPath": "مسار التعلّم الشخصي",
       "personalizedRecommendations": "توصيات مخصصة",
-      "crossModuleIntelligence": "تخصيص عبر الوحدات"
+      "crossModuleIntelligence": "تخصيص عبر الوحدات",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "قارن الخطط",

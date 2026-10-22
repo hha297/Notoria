@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# importação} other {# importações}}"
     },
     "processing": {
-      "workingTitle": "A preparar o seu exercício",
+      "workingTitle": "A preparar o teu exercício",
       "readyTitle": "Exercício pronto",
       "errorTitle": "Algo correu mal",
       "cancel": "Cancelar",
       "retry": "Tentar novamente",
       "dismiss": "Fechar",
       "stages": {
-        "uploading": "A carregar…",
-        "extracting": "A extrair conteúdo…",
-        "analyzing": "A analisar conteúdo…",
-        "generating": "A gerar exercício…",
-        "saving": "A guardar exercício…",
+        "uploading": "A carregar ficheiro",
+        "extracting": "A extrair conteúdo",
+        "analyzing": "A analisar conteúdo",
+        "generating": "A gerar perguntas",
+        "saving": "A guardar e preparar o exercício",
         "completed": "Exercício pronto",
-        "error": "A geração falhou"
-      }
+        "error": "Falha na geração",
+        "preparing": "A preparar material de estudo",
+        "validating": "A validar respostas e dicas"
+      },
+      "stillWorking": "Ainda a gerar… {seconds} s decorridos",
+      "hints": {
+        "uploading": "A enviar o teu ficheiro com segurança.",
+        "extracting": "A ler texto e estrutura da fonte.",
+        "analyzing": "A identificar pistas de prática no material.",
+        "preparing": "A reunir o vocabulário ou a teoria selecionados para este conjunto.",
+        "generating": "O modelo está a escrever perguntas. Pode demorar um pouco.",
+        "validating": "A verificar respostas, dicas e estrutura antes da prática.",
+        "saving": "A montar o teu conjunto de prática."
+      },
+      "nextSetPreparing": "A preparar o próximo conjunto…",
+      "nextSetReady": "Próximo conjunto pronto",
+      "nextSetFailed": "Não foi possível preparar o próximo conjunto",
+      "nextSetRetry": "Preparar próximo conjunto",
+      "openNextSet": "Abrir próximo conjunto"
     },
     "import": {
       "eyebrow": "Prática importada",
@@ -822,6 +839,7 @@
       "aiReady": "Prática pronta",
       "aiUnavailable": "Não foi possível gerar perguntas com IA de momento.",
       "aiForbidden": "Os exercícios de teoria com IA estão disponíveis com Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "A assistência de IA está desativada nas Definições.",
       "feedback": {
         "correct": "Correto!",
@@ -874,7 +892,21 @@
         "theRule": "A regra",
         "why": "Porquê",
         "complete": "Compreendido",
-        "completeHint": "Pode avançar quando estiver pronto."
+        "completeHint": "Pode avançar quando estiver pronto.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "Dica",
       "startsWith": "Começa por “{letter}”",
       "revealPrompt": "Ainda com dificuldades? Pode revelar a resposta completa.",
-      "revealAnswer": "Revelar resposta"
+      "revealAnswer": "Revelar resposta",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Ainda sem vocabulário",
@@ -977,8 +1011,38 @@
       "forbidden": "A geração de exercícios com IA está disponível com Pro.",
       "disabled": "A assistência de IA está desativada nas Definições.",
       "upgradeHint": "Free inclui algumas gerações de exercícios com IA por dia. Pro remove o limite.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Adicione palavras de vocabulário antes de gerar perguntas.",
-      "noneValid": "A IA não conseguiu criar perguntas válidas para estas palavras. Tente novamente."
+      "noneValid": "A IA não conseguiu criar perguntas válidas para estas palavras. Tente novamente.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Sessão concluída",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "Apenas ao alterar conteúdo",
       "confirmNever": "Nunca",
       "saveFailed": "Não foi possível guardar as preferências de IA",
-      "disabledToast": "A assistência de IA está desativada nas Definições"
+      "disabledToast": "A assistência de IA está desativada nas Definições",
+      "exerciseNextSetPrefetch": "Preparar o próximo conjunto de exercícios",
+      "exerciseNextSetPrefetchDescription": "Depois de começares a responder, o próximo conjunto é preparado automaticamente em segundo plano. Usa um crédito de exercício de IA ao começar. Desativa para gerar só ao tocar em Novo conjunto."
     },
     "tutorials": "Tutoriais de secção",
     "tutorialsDescription": "Repor os percursos de secção concluídos para que «Mostrar tutorial» comece novamente do início.",
@@ -3261,7 +3327,8 @@
       "learningTrends": "Tendências de aprendizagem",
       "personalLearningPath": "Percurso pessoal de aprendizagem",
       "personalizedRecommendations": "Recomendações personalizadas",
-      "crossModuleIntelligence": "Personalização entre módulos"
+      "crossModuleIntelligence": "Personalização entre módulos",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Comparar planos",

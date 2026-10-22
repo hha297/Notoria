@@ -670,14 +670,31 @@
       "retry": "다시 시도",
       "dismiss": "닫기",
       "stages": {
-        "uploading": "업로드 중…",
-        "extracting": "내용 추출 중…",
-        "analyzing": "내용 분석 중…",
-        "generating": "연습 생성 중…",
-        "saving": "연습 저장 중…",
+        "uploading": "파일 업로드 중",
+        "extracting": "내용 추출 중",
+        "analyzing": "내용 분석 중",
+        "generating": "문제 생성 중",
+        "saving": "연습 저장 및 준비 중",
         "completed": "연습 준비 완료",
-        "error": "생성에 실패했습니다"
-      }
+        "error": "생성 실패",
+        "preparing": "학습 자료 준비 중",
+        "validating": "답과 힌트 검증 중"
+      },
+      "stillWorking": "아직 생성 중… {seconds}초 경과",
+      "hints": {
+        "uploading": "파일을 안전하게 전송합니다.",
+        "extracting": "소스에서 텍스트와 구조를 읽습니다.",
+        "analyzing": "자료에서 연습 단서를 찾습니다.",
+        "preparing": "이 세트에 선택한 어휘나 이론을 모읍니다.",
+        "generating": "모델이 문제를 작성합니다. 잠시 걸릴 수 있습니다.",
+        "validating": "연습 전에 답, 힌트, 구조를 확인합니다.",
+        "saving": "연습 세트를 구성합니다."
+      },
+      "nextSetPreparing": "다음 세트 준비 중…",
+      "nextSetReady": "다음 세트 준비됨",
+      "nextSetFailed": "다음 세트를 준비하지 못했습니다",
+      "nextSetRetry": "다음 세트 준비",
+      "openNextSet": "다음 세트 열기"
     },
     "import": {
       "eyebrow": "가져온 연습",
@@ -822,6 +839,7 @@
       "aiReady": "연습 준비 완료",
       "aiUnavailable": "지금은 AI 문제를 생성할 수 없습니다.",
       "aiForbidden": "AI 이론 연습은 Pro에서 이용할 수 있습니다.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "설정에서 AI 지원이 꺼져 있습니다.",
       "feedback": {
         "correct": "정답입니다!",
@@ -874,7 +892,21 @@
         "theRule": "규칙",
         "why": "이유",
         "complete": "이해했습니다",
-        "completeHint": "준비되면 다음으로 넘어갈 수 있습니다."
+        "completeHint": "준비되면 다음으로 넘어갈 수 있습니다.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "힌트",
       "startsWith": "“{letter}”(으)로 시작",
       "revealPrompt": "아직도 막히나요? 전체 정답을 공개할 수 있습니다.",
-      "revealAnswer": "정답 공개"
+      "revealAnswer": "정답 공개",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "아직 어휘가 없습니다",
@@ -977,8 +1011,38 @@
       "forbidden": "AI 연습 생성은 Pro에서 이용할 수 있습니다.",
       "disabled": "설정에서 AI 지원이 꺼져 있습니다.",
       "upgradeHint": "Free는 하루 몇 회의 AI 연습 생성이 포함됩니다. Pro는 한도가 없습니다.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "문제를 생성하기 전에 어휘를 추가하세요.",
-      "noneValid": "AI가 이 단어들로 유효한 문제를 만들지 못했습니다. 다시 시도해 주세요."
+      "noneValid": "AI가 이 단어들로 유효한 문제를 만들지 못했습니다. 다시 시도해 주세요.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "세션 완료",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "콘텐츠 변경 시에만",
       "confirmNever": "안 함",
       "saveFailed": "AI 환경설정을 저장하지 못했습니다",
-      "disabledToast": "설정에서 AI 지원이 꺼져 있습니다"
+      "disabledToast": "설정에서 AI 지원이 꺼져 있습니다",
+      "exerciseNextSetPrefetch": "다음 연습 세트 미리 준비",
+      "exerciseNextSetPrefetchDescription": "답변을 시작하면 다음 세트를 백그라운드에서 자동 준비합니다. 시작 시 AI 연습 크레딧 1개를 사용합니다. 끄면 새 세트를 눌렀을 때만 생성합니다."
     },
     "tutorials": "섹션 튜토리얼",
     "tutorialsDescription": "완료한 섹션 안내를 초기화하여 “튜토리얼 보기”가 처음부터 다시 시작되도록 합니다.",
@@ -3261,7 +3327,8 @@
       "learningTrends": "학습 추세",
       "personalLearningPath": "개인 학습 경로",
       "personalizedRecommendations": "개인화된 추천",
-      "crossModuleIntelligence": "모듈 간 개인화"
+      "crossModuleIntelligence": "모듈 간 개인화",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "플랜 비교",

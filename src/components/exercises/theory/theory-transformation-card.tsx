@@ -3,11 +3,10 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Sparkles } from "lucide-react";
-import { HintText } from "@/components/exercises/theory/theory-card-shared";
+import { ProgressiveHintReveal } from "@/components/exercises/progressive-hint-reveal";
 import { TheoryPracticeFeedback } from "@/components/exercises/theory/theory-practice-feedback";
 import { revealTextForExercise } from "@/lib/theory-exercises/generate-ai";
 import type { TheoryTransformationExercise } from "@/lib/theory-exercises/types";
-import { ExerciseSetPartialHint } from "@/components/exercises/exercise-set-partial-hint";
 import { EXERCISE_SET_QUESTION_CARD_CLASS } from "@/components/exercises/exercise-set-question-card";
 import sessionStyles from "@/components/style/exercises/session.module.css";
 import { mx } from "@/lib/css-module";
@@ -132,15 +131,12 @@ export function TheoryTransformationCard({
             </span>
           </p>
 
-          {!submitted && item.hint ? (
-            <div className="mt-4">
-              <HintText text={item.hint} />
-            </div>
-          ) : null}
-
           {!submitted ? (
-            <ExerciseSetPartialHint
-              answer={item.answer}
+            <ProgressiveHintReveal
+              hints={item.hints}
+              legacyHint={item.hint}
+              grounding={item.learningObjective}
+              answers={item.acceptedAnswers}
               resetKey={item.id}
               answered={submitted}
             />

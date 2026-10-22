@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Check, Sparkles } from "lucide-react";
-import { ExerciseSetPartialHint } from "@/components/exercises/exercise-set-partial-hint";
+import { ProgressiveHintReveal } from "@/components/exercises/progressive-hint-reveal";
 import { EXERCISE_SET_QUESTION_CARD_CLASS } from "@/components/exercises/exercise-set-question-card";
 import {
   blankMeaningHintFromItem,
@@ -194,10 +194,13 @@ export function FillBlankStage({
           </div>
 
           {!revealed ? (
-            <ExerciseSetPartialHint
-              answer={expected}
+            <ProgressiveHintReveal
+              hints={item.hints}
+              grounding={cue || item.meanings[0]}
+              answers={item.acceptableAnswers}
               resetKey={item.id}
               answered={revealed}
+              correctAnswer={onRevealAnswer ? expected : undefined}
               onRevealAnswer={onRevealAnswer}
             />
           ) : null}

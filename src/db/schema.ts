@@ -770,6 +770,40 @@ export const grammarNotes = pgTable(
   ],
 );
 
+export const exerciseInstructionPresets = pgTable(
+  "exercise_instruction_presets",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    name: text("name").notNull(),
+    instructions: text("instructions").notNull(),
+    /** Supported generation prefs (e.g. difficulty). Never stores learning sources. */
+    settings: jsonb("settings")
+      .$type<Record<string, unknown>>()
+      .notNull()
+      .default({}),
+    scope: text("scope").notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    index("exercise_instruction_presets_user_scope_idx").on(
+      table.userId,
+      table.scope,
+    ),
+    check(
+      "exercise_instruction_presets_scope_check",
+      sql`${table.scope} in ('vocabulary', 'theory')`,
+    ),
+  ],
+);
+
 export const speakingSessions = pgTable(
   "speaking_sessions",
   {
@@ -1050,6 +1084,7 @@ export const usersRelations = relations(users, ({ many }) => ({
   grammarNotes: many(grammarNotes),
   folders: many(workspaceFolders),
   exerciseImports: many(exerciseImports),
+  exerciseInstructionPresets: many(exerciseInstructionPresets),
   passwordResetTokens: many(passwordResetTokens),
 }));
 
@@ -1229,6 +1264,16 @@ export const exercisesRelations = relations(exercises, ({ one }) => ({
     references: [workspaceFolders.id],
   }),
 }));
+
+export const exerciseInstructionPresetsRelations = relations(
+  exerciseInstructionPresets,
+  ({ one }) => ({
+    user: one(users, {
+      fields: [exerciseInstructionPresets.userId],
+      references: [users.id],
+    }),
+  }),
+);
 
 export const grammarNotesRelations = relations(grammarNotes, ({ one }) => ({
   user: one(users, {
@@ -1683,6 +1728,8 @@ export type FlashcardReview = typeof flashcardReviews.$inferSelect;
 export type FlashcardProgress = typeof flashcardProgress.$inferSelect;
 export type Exercise = typeof exercises.$inferSelect;
 export type GrammarNote = typeof grammarNotes.$inferSelect;
+export type ExerciseInstructionPreset =
+  typeof exerciseInstructionPresets.$inferSelect;
 export type ListeningLesson = typeof listeningLessons.$inferSelect;
 export type ListeningExercise = typeof listeningExercises.$inferSelect;
 export type SpeakingSession = typeof speakingSessions.$inferSelect;

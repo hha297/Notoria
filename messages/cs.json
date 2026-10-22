@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# import} few {# importy} many {# importu} other {# importů}}"
     },
     "processing": {
-      "workingTitle": "Pracujeme na vašem cvičení",
-      "readyTitle": "Cvičení připraveno",
+      "workingTitle": "Připravujeme cvičení",
+      "readyTitle": "Cvičení je připraveno",
       "errorTitle": "Něco se pokazilo",
       "cancel": "Zrušit",
       "retry": "Zkusit znovu",
       "dismiss": "Zavřít",
       "stages": {
-        "uploading": "Nahrávání…",
-        "extracting": "Extrakce obsahu…",
-        "analyzing": "Analýza obsahu…",
-        "generating": "Generování cvičení…",
-        "saving": "Ukládání cvičení…",
-        "completed": "Cvičení připraveno",
-        "error": "Generování selhalo"
-      }
+        "uploading": "Nahrávání souboru",
+        "extracting": "Extrakce obsahu",
+        "analyzing": "Analýza obsahu",
+        "generating": "Generování otázek",
+        "saving": "Ukládání a příprava cvičení",
+        "completed": "Cvičení je připraveno",
+        "error": "Generování selhalo",
+        "preparing": "Příprava učebního materiálu",
+        "validating": "Ověřování odpovědí a nápověd"
+      },
+      "stillWorking": "Stále generujeme… uplynulo {seconds} s",
+      "hints": {
+        "uploading": "Bezpečné odesílání souboru.",
+        "extracting": "Čtení textu a struktury ze zdroje.",
+        "analyzing": "Hledání cvičebních vodítek v materiálu.",
+        "preparing": "Shromažďování vybrané slovní zásoby nebo teorie pro tuto sadu.",
+        "generating": "Model píše otázky. Může to chvíli trvat.",
+        "validating": "Kontrola odpovědí, nápověd a struktury před cvičením.",
+        "saving": "Sestavování vaší cvičební sady."
+      },
+      "nextSetPreparing": "Připravujeme další sadu…",
+      "nextSetReady": "Další sada je připravena",
+      "nextSetFailed": "Další sadu se nepodařilo připravit",
+      "nextSetRetry": "Připravit další sadu",
+      "openNextSet": "Otevřít další sadu"
     },
     "import": {
       "eyebrow": "Importovaná praxe",
@@ -822,6 +839,7 @@
       "aiReady": "Praxe připravena",
       "aiUnavailable": "Otázky AI se momentálně nepodařilo vygenerovat.",
       "aiForbidden": "AI teoretická cvičení jsou dostupná s Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI asistence je vypnutá v Nastavení.",
       "feedback": {
         "correct": "Správně!",
@@ -874,7 +892,21 @@
         "theRule": "Pravidlo",
         "why": "Proč",
         "complete": "Rozumím",
-        "completeHint": "Můžete pokračovat, až budete připraveni."
+        "completeHint": "Můžete pokračovat, až budete připraveni.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "Tip",
       "startsWith": "Začíná na „{letter}“",
       "revealPrompt": "Stále nevíte? Můžete odhalit celou odpověď.",
-      "revealAnswer": "Odhalit odpověď"
+      "revealAnswer": "Odhalit odpověď",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Zatím žádná slovní zásoba",
@@ -977,8 +1011,38 @@
       "forbidden": "Generování cvičení AI je dostupné s Pro.",
       "disabled": "AI asistence je vypnutá v Nastavení.",
       "upgradeHint": "Free zahrnuje několik generování cvičení AI denně. Pro limit odstraňuje.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Než budete generovat otázky, přidejte slova do slovní zásoby.",
-      "noneValid": "AI nedokázala vytvořit platné otázky pro tato slova. Zkuste to znovu."
+      "noneValid": "AI nedokázala vytvořit platné otázky pro tato slova. Zkuste to znovu.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Relace dokončena",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "Jen při změně obsahu",
       "confirmNever": "Nikdy",
       "saveFailed": "Předvolby AI se nepodařilo uložit",
-      "disabledToast": "AI asistence je vypnutá v Nastavení"
+      "disabledToast": "AI asistence je vypnutá v Nastavení",
+      "exerciseNextSetPrefetch": "Připravit další sadu cvičení",
+      "exerciseNextSetPrefetchDescription": "Po začátku odpovídání se další sada připraví automaticky na pozadí. Při startu spotřebuje jeden kredit AI cvičení. Vypněte pro generování jen při Nové sadě."
     },
     "tutorials": "Tutoriály sekcí",
     "tutorialsDescription": "Obnovit dokončené prohlídky sekcí, aby „Zobrazit tutoriál“ začal znovu od začátku.",
@@ -3261,7 +3327,8 @@
       "learningTrends": "Trendy učení",
       "personalLearningPath": "Osobní cesta učení",
       "personalizedRecommendations": "Personalizovaná doporučení",
-      "crossModuleIntelligence": "Personalizace napříč moduly"
+      "crossModuleIntelligence": "Personalizace napříč moduly",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Porovnat plány",

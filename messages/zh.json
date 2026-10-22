@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# 项导入} other {# 项导入}}"
     },
     "processing": {
-      "workingTitle": "正在处理练习",
+      "workingTitle": "正在准备练习",
       "readyTitle": "练习已就绪",
       "errorTitle": "出了点问题",
       "cancel": "取消",
       "retry": "重试",
       "dismiss": "关闭",
       "stages": {
-        "uploading": "正在上传…",
-        "extracting": "正在提取内容…",
-        "analyzing": "正在分析内容…",
-        "generating": "正在生成练习…",
-        "saving": "正在保存练习…",
+        "uploading": "正在上传文件",
+        "extracting": "正在提取内容",
+        "analyzing": "正在分析内容",
+        "generating": "正在生成题目",
+        "saving": "正在保存并准备练习",
         "completed": "练习已就绪",
-        "error": "生成失败"
-      }
+        "error": "生成失败",
+        "preparing": "正在准备学习材料",
+        "validating": "正在校验答案与提示"
+      },
+      "stillWorking": "仍在生成… 已用时 {seconds} 秒",
+      "hints": {
+        "uploading": "正在安全发送你的文件。",
+        "extracting": "正在读取来源中的文本与结构。",
+        "analyzing": "正在从材料中识别练习线索。",
+        "preparing": "正在收集本套所选的词汇或理论。",
+        "generating": "模型正在编写题目，可能需要一点时间。",
+        "validating": "练习前检查答案、提示与结构。",
+        "saving": "正在组装你的练习套题。"
+      },
+      "nextSetPreparing": "正在准备下一套…",
+      "nextSetReady": "下一套已就绪",
+      "nextSetFailed": "无法准备下一套",
+      "nextSetRetry": "准备下一套",
+      "openNextSet": "打开下一套"
     },
     "import": {
       "eyebrow": "导入练习",
@@ -822,6 +839,7 @@
       "aiReady": "练习已就绪",
       "aiUnavailable": "暂时无法生成 AI 问题。",
       "aiForbidden": "AI 理论练习适用于 Pro。",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "设置中已关闭 AI 辅助。",
       "feedback": {
         "correct": "正确！",
@@ -874,7 +892,21 @@
         "theRule": "规则",
         "why": "原因",
         "complete": "已理解",
-        "completeHint": "准备好就可以继续。"
+        "completeHint": "准备好就可以继续。",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "提示",
       "startsWith": "以「{letter}」开头",
       "revealPrompt": "还是卡住了？可以显示完整答案。",
-      "revealAnswer": "显示答案"
+      "revealAnswer": "显示答案",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "还没有词汇",
@@ -977,8 +1011,38 @@
       "forbidden": "AI 练习生成适用于 Pro。",
       "disabled": "设置中已关闭 AI 辅助。",
       "upgradeHint": "免费版每天包含几次 AI 练习生成。Pro 取消上限。",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "生成问题前请先添加词汇。",
-      "noneValid": "AI 无法为这些词创建有效问题。请重试。"
+      "noneValid": "AI 无法为这些词创建有效问题。请重试。",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "本轮完成",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "仅在更改内容时",
       "confirmNever": "从不",
       "saveFailed": "无法保存 AI 偏好",
-      "disabledToast": "设置中已关闭 AI 辅助"
+      "disabledToast": "设置中已关闭 AI 辅助",
+      "exerciseNextSetPrefetch": "预先准备下一套练习",
+      "exerciseNextSetPrefetchDescription": "开始作答后，自动在后台准备下一套。开始准备时会消耗一次 AI 练习额度。关闭后仅在点击“新一套”时生成。"
     },
     "tutorials": "板块教程",
     "tutorialsDescription": "重置已完成的板块引导，使「显示教程」从头开始。",
@@ -3261,7 +3327,8 @@
       "learningTrends": "学习趋势",
       "personalLearningPath": "个人学习路径",
       "personalizedRecommendations": "个性化建议",
-      "crossModuleIntelligence": "跨模块个性化"
+      "crossModuleIntelligence": "跨模块个性化",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "对比方案",

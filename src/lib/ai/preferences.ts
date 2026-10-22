@@ -19,6 +19,8 @@ export type AiPreferences = {
   correctionStyle: AiCorrectionStyle;
   suggestionsEnabled: boolean;
   confirmActions: AiConfirmActions;
+  /** Prefetch the next exercise set after the learner starts answering. */
+  exerciseNextSetPrefetch: boolean;
 };
 
 export const DEFAULT_AI_PREFERENCES: AiPreferences = {
@@ -27,6 +29,7 @@ export const DEFAULT_AI_PREFERENCES: AiPreferences = {
   correctionStyle: "explain",
   suggestionsEnabled: true,
   confirmActions: "content-change",
+  exerciseNextSetPrefetch: true,
 };
 
 export const aiPreferencesSchema = z.object({
@@ -35,6 +38,7 @@ export const aiPreferencesSchema = z.object({
   correctionStyle: z.enum(AI_CORRECTION_STYLES),
   suggestionsEnabled: z.boolean(),
   confirmActions: z.enum(AI_CONFIRM_ACTIONS),
+  exerciseNextSetPrefetch: z.boolean().default(true),
 });
 
 export const aiPreferencesUpdateSchema = aiPreferencesSchema.partial();

@@ -58,12 +58,13 @@ export function ExerciseStudioClient({
   }
 
   return (
-    <ExerciseStudio
-      theories={data.theories}
-      imports={data.imports}
-      workspaceName={workspaceName}
-      vocabularyCount={data.vocabularyCount}
-    />
+      <ExerciseStudio
+        theories={data.theories}
+        imports={data.imports}
+        folders={data.folders ?? []}
+        workspaceName={workspaceName}
+        vocabularyCount={data.vocabularyCount}
+      />
   );
 }
 

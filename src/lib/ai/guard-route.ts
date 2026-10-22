@@ -180,7 +180,7 @@ function abuseFailureResponse(error: unknown): NextResponse | null {
 /** Reserves one Free quota unit. Pro and Premium skip the write. */
 export async function guardMeteredAi(
   feature: QuotaFeatureId,
-  options?: { abuse?: AiAbuseOperation },
+  options?: { abuse?: AiAbuseOperation; subjectId?: string | null },
 ): Promise<MeteredAiAccess | { ok: false; response: NextResponse }> {
   const access = await preferencesOrResponse();
   if (!access.ok) return access;
@@ -191,7 +191,11 @@ export async function guardMeteredAi(
       const gate = beginAiAbuseControl(access.user.id, options.abuse);
       releaseAbuse = gate.release;
     }
-    const reservation = await consumeUsage(access.user, feature);
+    const reservation = await consumeUsage(
+      access.user,
+      feature,
+      options?.subjectId,
+    );
     return {
       ok: true,
       preferences: access.preferences,

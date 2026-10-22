@@ -6,15 +6,18 @@ import { vocabularyWords } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
 import { getExerciseImports } from "@/lib/actions/exercise-import";
 import { getTheoryExerciseCards } from "@/lib/actions/theory";
+import { getFolders } from "@/lib/actions/folders";
 import { getActiveWorkspace } from "@/lib/workspace";
 import { withTiming } from "@/lib/perf/dev-timing";
 import type { TheoryExerciseCardItem } from "@/components/exercises/theory-exercise-picker";
 import type { ExerciseImportListItem } from "@/lib/exercise-import/types";
+import type { FolderListItem } from "@/lib/folders/types";
 
 export type ExerciseStudioData = {
   theories: TheoryExerciseCardItem[];
   imports: ExerciseImportListItem[];
   vocabularyCount: number;
+  folders: FolderListItem[];
 };
 
 async function getWorkspaceVocabularyCount() {
@@ -37,12 +40,13 @@ async function getWorkspaceVocabularyCount() {
 
 export async function getExerciseStudioData(): Promise<ExerciseStudioData> {
   return withTiming("exercises.studio", async () => {
-    const [theories, imports, vocabularyCount] = await Promise.all([
+    const [theories, imports, vocabularyCount, folders] = await Promise.all([
       getTheoryExerciseCards(),
       getExerciseImports().catch(() => [] as ExerciseImportListItem[]),
       getWorkspaceVocabularyCount().catch(() => 0),
+      getFolders("theory").catch(() => [] as FolderListItem[]),
     ]);
 
-    return { theories, imports, vocabularyCount };
+    return { theories, imports, vocabularyCount, folders };
   });
 }

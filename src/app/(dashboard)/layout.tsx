@@ -20,7 +20,7 @@ import {
   getCurrentSubscription,
   hasActiveProSubscription,
 } from "@/lib/stripe/pro";
-import { displayPlan, isIntroOfferEligible } from "@/lib/billing/plans";
+import { displayPlan, entitlementPlan, isIntroOfferEligible } from "@/lib/billing/plans";
 import {
   getStripePremiumFirstMonthCouponId,
   getStripeProFirstMonthCouponId,
@@ -86,6 +86,7 @@ export default async function DashboardLayout({
     <ProAccessProvider
       hasProAccess={proAccess.hasProAccess}
       plan={displayPlan(subscription)}
+      entitlementPlan={entitlements?.plan ?? entitlementPlan(userRecord)}
       cancelAtPeriodEnd={Boolean(
         subscription?.stripeCancelAtPeriodEnd &&
         !subscription?.scheduledSubscriptionPlan &&

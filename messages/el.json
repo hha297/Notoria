@@ -663,21 +663,38 @@
       "importCount": "{count, plural, one {# εισαγωγή} other {# εισαγωγές}}"
     },
     "processing": {
-      "workingTitle": "Επεξεργασία της άσκησής σας",
+      "workingTitle": "Προετοιμασία της άσκησής σας",
       "readyTitle": "Η άσκηση είναι έτοιμη",
       "errorTitle": "Κάτι πήγε στραβά",
       "cancel": "Ακύρωση",
-      "retry": "Επανάληψη",
+      "retry": "Δοκιμάστε ξανά",
       "dismiss": "Κλείσιμο",
       "stages": {
-        "uploading": "Μεταφόρτωση…",
-        "extracting": "Εξαγωγή περιεχομένου…",
-        "analyzing": "Ανάλυση περιεχομένου…",
-        "generating": "Δημιουργία άσκησης…",
-        "saving": "Αποθήκευση άσκησης…",
+        "uploading": "Ανέβασμα αρχείου",
+        "extracting": "Εξαγωγή περιεχομένου",
+        "analyzing": "Ανάλυση περιεχομένου",
+        "generating": "Δημιουργία ερωτήσεων",
+        "saving": "Αποθήκευση και προετοιμασία της άσκησης",
         "completed": "Η άσκηση είναι έτοιμη",
-        "error": "Η δημιουργία απέτυχε"
-      }
+        "error": "Η δημιουργία απέτυχε",
+        "preparing": "Προετοιμασία μαθησιακού υλικού",
+        "validating": "Έλεγχος απαντήσεων και υποδείξεων"
+      },
+      "stillWorking": "Ακόμα δημιουργία… πέρασαν {seconds} δ",
+      "hints": {
+        "uploading": "Ασφαλής αποστολή του αρχείου σας.",
+        "extracting": "Ανάγνωση κειμένου και δομής από την πηγή.",
+        "analyzing": "Εντοπισμός ενδείξεων εξάσκησης στο υλικό.",
+        "preparing": "Συλλογή επιλεγμένου λεξιλογίου ή θεωρίας για αυτό το σύνολο.",
+        "generating": "Το μοντέλο γράφει ερωτήσεις. Μπορεί να πάρει λίγο χρόνο.",
+        "validating": "Έλεγχος απαντήσεων, υποδείξεων και δομής πριν την εξάσκηση.",
+        "saving": "Συναρμολόγηση του συνόλου εξάσκησής σας."
+      },
+      "nextSetPreparing": "Προετοιμασία επόμενου συνόλου…",
+      "nextSetReady": "Το επόμενο σύνολο είναι έτοιμο",
+      "nextSetFailed": "Δεν ήταν δυνατή η προετοιμασία του επόμενου συνόλου",
+      "nextSetRetry": "Προετοιμασία επόμενου συνόλου",
+      "openNextSet": "Άνοιγμα επόμενου συνόλου"
     },
     "import": {
       "eyebrow": "Εισαγμένη εξάσκηση",
@@ -822,6 +839,7 @@
       "aiReady": "Η εξάσκηση είναι έτοιμη",
       "aiUnavailable": "Δεν ήταν δυνατή η δημιουργία ερωτήσεων τεχνητής νοημοσύνης αυτή τη στιγμή.",
       "aiForbidden": "Οι ασκήσεις θεωρίας με τεχνητή νοημοσύνη είναι διαθέσιμες με Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "Η βοήθεια τεχνητής νοημοσύνης είναι απενεργοποιημένη στις Ρυθμίσεις.",
       "feedback": {
         "correct": "Σωστά!",
@@ -874,7 +892,21 @@
         "theRule": "Ο κανόνας",
         "why": "Γιατί",
         "complete": "Κατανοητό",
-        "completeHint": "Μπορείτε να συνεχίσετε όταν είστε έτοιμοι."
+        "completeHint": "Μπορείτε να συνεχίσετε όταν είστε έτοιμοι.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "Υπόδειξη",
       "startsWith": "Ξεκινά με «{letter}»",
       "revealPrompt": "Ακόμα κολλήσατε; Μπορείτε να αποκαλύψετε την πλήρη απάντηση.",
-      "revealAnswer": "Αποκάλυψη απάντησης"
+      "revealAnswer": "Αποκάλυψη απάντησης",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Δεν υπάρχει ακόμη λεξιλόγιο",
@@ -977,8 +1011,38 @@
       "forbidden": "Η δημιουργία ασκήσεων με τεχνητή νοημοσύνη είναι διαθέσιμη με Pro.",
       "disabled": "Η βοήθεια τεχνητής νοημοσύνης είναι απενεργοποιημένη στις Ρυθμίσεις.",
       "upgradeHint": "Το Free περιλαμβάνει λίγες δημιουργίες ασκήσεων με τεχνητή νοημοσύνη κάθε μέρα. Το Pro καταργεί το όριο.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Προσθέστε λέξεις λεξιλογίου πριν δημιουργήσετε ερωτήσεις.",
-      "noneValid": "Η τεχνητή νοημοσύνη δεν μπόρεσε να δημιουργήσει έγκυρες ερωτήσεις για αυτές τις λέξεις. Δοκιμάστε ξανά."
+      "noneValid": "Η τεχνητή νοημοσύνη δεν μπόρεσε να δημιουργήσει έγκυρες ερωτήσεις για αυτές τις λέξεις. Δοκιμάστε ξανά.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Η συνεδρία ολοκληρώθηκε",
@@ -2015,7 +2079,9 @@
       "confirmContentChange": "Μόνο όταν αλλάζει περιεχόμενο",
       "confirmNever": "Ποτέ",
       "saveFailed": "Δεν ήταν δυνατή η αποθήκευση των προτιμήσεων AI",
-      "disabledToast": "Η βοήθεια AI είναι απενεργοποιημένη στις Ρυθμίσεις"
+      "disabledToast": "Η βοήθεια AI είναι απενεργοποιημένη στις Ρυθμίσεις",
+      "exerciseNextSetPrefetch": "Προετοιμασία επόμενου συνόλου ασκήσεων",
+      "exerciseNextSetPrefetchDescription": "Αφού αρχίσετε να απαντάτε, το επόμενο σύνολο προετοιμάζεται αυτόματα στο παρασκήνιο. Χρησιμοποιεί μία πίστωση άσκησης AI κατά την έναρξη. Απενεργοποιήστε για δημιουργία μόνο με Νέο σύνολο."
     },
     "tutorials": "Οδηγοί ενοτήτων",
     "tutorialsDescription": "Επαναφέρετε τους ολοκληρωμένους οδηγούς ενοτήτων ώστε το «Εμφάνιση οδηγού» να ξεκινά από την αρχή.",
@@ -3261,7 +3327,8 @@
       "learningTrends": "Τάσεις μάθησης",
       "personalLearningPath": "Προσωπική διαδρομή μάθησης",
       "personalizedRecommendations": "Εξατομικευμένες συστάσεις",
-      "crossModuleIntelligence": "Εξατομίκευση μεταξύ ενοτήτων"
+      "crossModuleIntelligence": "Εξατομίκευση μεταξύ ενοτήτων",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Σύγκριση πλάνων",

@@ -670,14 +670,31 @@
       "retry": "Yritä uudelleen",
       "dismiss": "Sulje",
       "stages": {
-        "uploading": "Ladataan…",
-        "extracting": "Poimitaan sisältöä…",
-        "analyzing": "Analysoidaan…",
-        "generating": "Luodaan harjoitusta…",
-        "saving": "Tallennetaan…",
+        "uploading": "Ladataan tiedostoa",
+        "extracting": "Poimitaan sisältöä",
+        "analyzing": "Analysoidaan sisältöä",
+        "generating": "Luodaan kysymyksiä",
+        "saving": "Tallennetaan ja valmistellaan harjoitusta",
         "completed": "Harjoitus valmis",
-        "error": "Luonti epäonnistui"
-      }
+        "error": "Luonti epäonnistui",
+        "preparing": "Valmistellaan oppimateriaalia",
+        "validating": "Tarkistetaan vastauksia ja vihjeitä"
+      },
+      "stillWorking": "Luonti vielä käynnissä… {seconds} s kulunut",
+      "hints": {
+        "uploading": "Tiedostoa lähetetään turvallisesti.",
+        "extracting": "Luetaan tekstiä ja rakennetta lähteestä.",
+        "analyzing": "Etsitään harjoitusvihjeitä materiaalista.",
+        "preparing": "Kerätään valittu sanasto tai teoria tälle setille.",
+        "generating": "Malli kirjoittaa kysymyksiä. Tämä voi kestää hetken.",
+        "validating": "Tarkistetaan vastaukset, vihjeet ja rakenne ennen harjoittelua.",
+        "saving": "Kootaan harjoitussettiäsi."
+      },
+      "nextSetPreparing": "Valmistellaan seuraavaa settiä…",
+      "nextSetReady": "Seuraava setti valmis",
+      "nextSetFailed": "Seuraavaa settiä ei voitu valmistella",
+      "nextSetRetry": "Valmistele seuraava setti",
+      "openNextSet": "Avaa seuraava setti"
     },
     "import": {
       "eyebrow": "Tuotu harjoitus",
@@ -822,6 +839,7 @@
       "aiReady": "Harjoitus valmis",
       "aiUnavailable": "Tekoälykysymyksiä ei voitu luoda juuri nyt.",
       "aiForbidden": "Teorian tekoälyharjoitukset kuuluvat Pro-pakettiin.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI-avustus on pois päältä Asetuksissa.",
       "feedback": {
         "correct": "Oikein!",
@@ -874,7 +892,21 @@
         "theRule": "Sääntö",
         "why": "Miksi",
         "complete": "Selvä",
-        "completeHint": "Voit jatkaa, kun olet valmis."
+        "completeHint": "Voit jatkaa, kun olet valmis.",
+        "startExercise": "Aloita harjoitus",
+        "skipReviewAndStart": "Ohita kertaus ja aloita harjoitus"
+      },
+      "folders": {
+        "unfiled": "Ilman kansiota",
+        "joiner": " → ",
+        "count": "{count, plural, one {# muistiinpano} other {# muistiinpanoa}}",
+        "selectAll": "Valitse kaikki",
+        "selectGroup": "Valitse muistiinpanot kansioon {name}",
+        "expand": "Laajenna {name}",
+        "collapse": "Pienennä {name}",
+        "selectedCount": "{count, plural, one {# teoria valittu} other {# teoriaa valittu}}",
+        "practiceSelected": "Harjoittele valittuja",
+        "clearSelection": "Tyhjennä valinta"
       }
     },
     "types": {
@@ -931,7 +963,9 @@
       "label": "Vihje",
       "startsWith": "Alkaa merkillä “{letter}”",
       "revealPrompt": "Vieläkö jumissa? Voit paljastaa koko vastauksen.",
-      "revealAnswer": "Näytä vastaus"
+      "revealAnswer": "Näytä vastaus",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Ei sanastoa vielä",
@@ -977,8 +1011,38 @@
       "forbidden": "Tekoälyharjoitukset kuuluvat Pro-tilaukseen.",
       "disabled": "AI-avustus on pois päältä Asetuksissa.",
       "upgradeHint": "Tekoälyharjoitukset kuuluvat Pro-tilaukseen.",
+      "additionalInstructions": "Lisäohjeet",
+      "additionalInstructionsPlaceholder": "Esimerkiksi: Käytä ravintolatilanteita, pidä kieli A2-tasolla ja selitä virheet käyttöliittymän kielellä.",
+      "additionalInstructionsLocked": "Päivitä Premiumiin mukauttaaksesi tuettuja harjoitustyyppejä, asettaaksesi tilanteen ja lisätäksesi omat ohjeesi.",
+      "premiumRequired": "Lisäohjeet kuuluvat Premium-tilaukseen.",
+      "presetLabel": "Esiasetukset",
+      "presetNone": "Ei esiasetusta valittuna",
+      "presetApply": "Käytä",
+      "presetSave": "Tallenna esiasetus",
+      "presetName": "Esiasetuksen nimi",
+      "presetDelete": "Poista",
+      "presetSaved": "Esiasetus tallennettu",
+      "presetDeleted": "Esiasetus poistettu",
+      "presetSaveFailed": "Esiasetusta ei voitu tallentaa.",
       "emptyWords": "Lisää sanoja ennen kysymysten luomista.",
-      "noneValid": "Tekoäly ei saanut luotua kelvollisia kysymyksiä näille sanoille. Yritä uudelleen."
+      "noneValid": "Tekoäly ei saanut luotua kelvollisia kysymyksiä näille sanoille. Yritä uudelleen.",
+      "additionalInstructionsHelper": "Mukauta harjoituksen kontekstia, tyyliä tai painotusta. Jätä tyhjäksi käyttääksesi oletusasetuksia.",
+      "presetUpdate": "Päivitä esiasetus",
+      "presetUpdated": "Esiasetus päivitetty",
+      "presetsTitle": "Tallennetut esiasetukset",
+      "presetsHelper": "Esiasetukset tallentavat harjoituksen asetukset ja lisäohjeet. Ne eivät muuta valittua sanastoa tai teorioita.",
+      "presetsEmpty": "Ei tallennettuja esiasetuksia vielä. Tallenna nykyiset asetukset käyttääksesi niitä myöhemmin.",
+      "presetSaveAs": "Tallenna esiasetuksena",
+      "presetUpdateCurrent": "Päivitä nykyisillä asetuksilla",
+      "presetRename": "Nimeä uudelleen",
+      "presetManage": "Hallitse esiasetusta",
+      "presetRenamed": "Esiasetus nimetty uudelleen",
+      "presetSaveDialogTitle": "Tallenna esiasetuksena",
+      "presetSaveDialogDescription": "Anna nimi, jotta voit käyttää nykyisiä harjoitusasetuksia ja lisäohjeita uudelleen. Valittua sanastoa tai teorioita ei tallenneta.",
+      "presetRenameDialogTitle": "Nimeä esiasetus uudelleen",
+      "presetRenameDialogDescription": "Valitse uusi nimi tälle esiasetukselle.",
+      "presetDeleteDialogTitle": "Poistetaanko esiasetus?",
+      "presetDeleteDialogDescription": "Poistetaanko “{name}”? Nykyinen harjoitusasetus säilyy ennallaan."
     },
     "session": {
       "complete": "Harjoitus valmis",
@@ -1820,7 +1884,9 @@
       "confirmContentChange": "Vain sisältöä muuttaessa",
       "confirmNever": "Ei koskaan",
       "saveFailed": "AI-asetuksia ei voitu tallentaa",
-      "disabledToast": "AI-avustus on pois päältä Asetuksissa"
+      "disabledToast": "AI-avustus on pois päältä Asetuksissa",
+      "exerciseNextSetPrefetch": "Valmistele seuraava harjoitussetti",
+      "exerciseNextSetPrefetchDescription": "Kun alat vastata, seuraava setti valmistellaan taustalla automaattisesti. Käyttää yhden tekoälyharjoituskrediitin valmistelun alkaessa. Poista käytöstä, jos haluat luoda vain kun napautat Uusi setti."
     },
     "tutorials": "Osioiden oppaat",
     "tutorialsDescription": "Nollaa suoritetut osio-oppaat, jotta “Show tutorial” alkaa alusta.",
@@ -3066,7 +3132,8 @@
       "learningTrends": "Oppimistrendit",
       "personalLearningPath": "Henkilökohtainen oppimispolku",
       "personalizedRecommendations": "Henkilökohtaiset suositukset",
-      "crossModuleIntelligence": "Moduulien välinen personointi"
+      "crossModuleIntelligence": "Moduulien välinen personointi",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Vertaa tilauksia",

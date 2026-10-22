@@ -12,10 +12,18 @@ import { getActiveWorkspace } from "@/lib/workspace";
 
 export default async function TheoryExercisePracticePage({
   params,
+  searchParams,
 }: {
   params: Promise<{ id: string }>;
+  searchParams: Promise<{ also?: string }>;
 }) {
   const { id } = await params;
+  const { also } = await searchParams;
+  const alsoTheoryIds = (also ?? "")
+    .split(",")
+    .map((value) => value.trim())
+    .filter((value) => value && value !== id)
+    .slice(0, 7);
   const t = await getTranslations("exercises");
   const workspace = await getActiveWorkspace();
 
@@ -63,7 +71,10 @@ export default async function TheoryExercisePracticePage({
         <ArrowLeft className="size-4" />
         {t("backToStudio")}
       </Link>
-      <TheoryExerciseSessionView session={session} />
+      <TheoryExerciseSessionView
+        session={session}
+        alsoTheoryIds={alsoTheoryIds}
+      />
     </div>
   );
 }
