@@ -15,7 +15,20 @@
     "clearFilter": "Մաքրել",
     "filters": "Զտիչներ",
     "hideFilters": "Թաքցնել զտիչները",
-    "remove": "Հեռացնել"
+    "remove": "Հեռացնել",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {

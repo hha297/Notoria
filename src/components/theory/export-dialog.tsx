@@ -3,10 +3,12 @@
 import formatStyles from "@/components/style/export/export-format.module.css";
 import { mx } from "@/lib/css-module";
 import { Download, Loader2 } from "lucide-react";
+import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
+import { ExportAppearanceOptions } from "@/components/export/export-appearance-options";
 import { ExportFormatOptions } from "@/components/export/export-format-options";
 import { ExportSheet, ExportSheetSection } from "@/components/export/export-sheet";
 import { Button } from "@/components/ui/button";
@@ -17,7 +19,10 @@ import {
   getDefaultExportFormat,
 } from "@/lib/export/formats";
 import {
-  DEFAULT_EXPORT_OPTIONS,
+  DEFAULT_EXPORT_APPEARANCE,
+  type ExportAppearance,
+} from "@/lib/export/print-theme";
+import {
   exportTheoryNote,
   theoryDocHasExportableContent,
   type ExportFormat,
@@ -44,8 +49,13 @@ export function TheoryExportDialog({
 }: TheoryExportDialogProps) {
   const t = useTranslations("theory.export");
   const tc = useTranslations("common");
+  const tAppearance = useTranslations("common.exportAppearance");
+  const { resolvedTheme } = useTheme();
   const { hasProAccess, openUpgrade } = useProAccess();
-  const [format, setFormat] = useState<ExportFormat>(DEFAULT_EXPORT_OPTIONS.format);
+  const [format, setFormat] = useState<ExportFormat>("pdf");
+  const [appearance, setAppearance] = useState<ExportAppearance>(
+    DEFAULT_EXPORT_APPEARANCE,
+  );
   const [isExporting, setIsExporting] = useState(false);
   const [progressValue, setProgressValue] = useState(0);
   const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -57,6 +67,7 @@ export function TheoryExportDialog({
     setFormat(
       getDefaultExportFormat(hasProAccess, DOCUMENT_EXPORT_FORMATS) as ExportFormat,
     );
+    setAppearance(DEFAULT_EXPORT_APPEARANCE);
   }, [open, hasProAccess]);
 
   useEffect(() => {
@@ -87,7 +98,11 @@ export function TheoryExportDialog({
         title,
         description,
         doc,
-        options: { format },
+        options: {
+          format,
+          appearance,
+          themeMode: resolvedTheme === "dark" ? "dark" : "light",
+        },
         labels: {
           documentHeading: t("documentHeading"),
           titleLabel: t("titleLabel"),
@@ -153,7 +168,12 @@ export function TheoryExportDialog({
         </>
       }
     >
-      <div className={cn(isExporting && "pointer-events-none opacity-55")}>
+      <div
+        className={cn(
+          "space-y-5",
+          isExporting && "pointer-events-none opacity-55",
+        )}
+      >
         <ExportSheetSection label={t("format")}>
           <ExportFormatOptions
             idPrefix="theory-export"
@@ -171,6 +191,15 @@ export function TheoryExportDialog({
               pdf: t("formatPdfHint"),
               docx: t("formatDocxHint"),
             }}
+          />
+        </ExportSheetSection>
+        <ExportSheetSection label={tAppearance("label")}>
+          <ExportAppearanceOptions
+            idPrefix="theory-export-appearance"
+            value={appearance}
+            onChange={setAppearance}
+            surface="theory"
+            showDocxNote={format === "docx"}
           />
         </ExportSheetSection>
       </div>

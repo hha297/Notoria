@@ -31,36 +31,62 @@ import type {
 import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
 import {
   DOCX_FONT_SANS,
-  PRINT_ACCENT,
-  PRINT_HAIRLINE,
-  PRINT_INK,
-  PRINT_LEDE_WASH,
-  PRINT_MUTED,
-  PRINT_RULE,
   hexForDocx,
+  resolveExportTheme,
 } from "@/lib/export/print-theme";
 
 const FONT_SANS = DOCX_FONT_SANS;
 const YIELD_EVERY = 30;
-const INK = hexForDocx(PRINT_INK);
-const MUTED = hexForDocx(PRINT_MUTED);
-const ACCENT = hexForDocx(PRINT_ACCENT.vocabulary);
-const HAIRLINE = hexForDocx(PRINT_HAIRLINE);
-const RULE = hexForDocx(PRINT_RULE);
-const WASH = hexForDocx(PRINT_LEDE_WASH);
 
-const thinBorder = {
+let INK = hexForDocx(resolveExportTheme("print", "vocabulary").ink);
+let MUTED = hexForDocx(resolveExportTheme("print", "vocabulary").muted);
+let ACCENT = hexForDocx(resolveExportTheme("print", "vocabulary").accent);
+let HAIRLINE = hexForDocx(resolveExportTheme("print", "vocabulary").hairline);
+let RULE = hexForDocx(resolveExportTheme("print", "vocabulary").rule);
+let WASH = hexForDocx(resolveExportTheme("print", "vocabulary").wash);
+let PAPER = hexForDocx(resolveExportTheme("print", "vocabulary").paper);
+
+let thinBorder = {
   style: BorderStyle.SINGLE,
   size: 4,
   color: HAIRLINE,
 };
 
-const borders = {
+let borders = {
   top: thinBorder,
   bottom: thinBorder,
   left: thinBorder,
   right: thinBorder,
 };
+
+function applyVocabularyDocxTheme(
+  appearance: VocabularyExportOptions["appearance"],
+  themeMode: VocabularyExportOptions["themeMode"],
+) {
+  const theme = resolveExportTheme(
+    appearance ?? "print",
+    "vocabulary",
+    themeMode,
+  );
+  INK = hexForDocx(theme.ink);
+  MUTED = hexForDocx(theme.muted);
+  ACCENT = hexForDocx(theme.accent);
+  HAIRLINE = hexForDocx(theme.hairline);
+  RULE = hexForDocx(theme.rule);
+  WASH = hexForDocx(theme.wash);
+  PAPER = hexForDocx(theme.paper);
+  thinBorder = {
+    style: BorderStyle.SINGLE,
+    size: 4,
+    color: HAIRLINE,
+  };
+  borders = {
+    top: thinBorder,
+    bottom: thinBorder,
+    left: thinBorder,
+    right: thinBorder,
+  };
+}
 
 function txt(value: string) {
   return sanitizeExportText(value);
@@ -249,6 +275,7 @@ export async function generateVocabularyDocxBlob(
   options: VocabularyExportOptions,
   onProgress?: VocabularyExportProgressHandler,
 ): Promise<Blob> {
+  applyVocabularyDocxTheme(options.appearance, options.themeMode);
   const children: (Paragraph | Table)[] = [
     new Paragraph({
       spacing: { after: 80 },
@@ -364,6 +391,9 @@ export async function generateVocabularyDocxBlob(
   const doc = new Document({
     creator: "Notoria",
     title: labels.documentHeading,
+    background: {
+      color: PAPER,
+    },
     sections: [
       {
         properties: {

@@ -10,51 +10,51 @@ import type {
 import { renderTipTapDocToPdf } from "@/lib/writing/export/tiptap-pdf";
 import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
 import { PdfMasthead } from "@/lib/export/pdf-masthead";
-import { PDF_FONT_SANS } from "@/lib/export/pdf-fonts";
+import { ensurePdfFonts, PDF_FONT_SANS } from "@/lib/export/pdf-fonts";
 import {
-  PRINT_FOOTER,
-  PRINT_INK,
-  PRINT_PAPER,
-  printAccent,
+  resolveExportTheme,
+  type ExportThemeTokens,
   type PrintSurface,
 } from "@/lib/export/print-theme";
 
-const styles = StyleSheet.create({
-  page: {
-    paddingTop: 44,
-    paddingBottom: 52,
-    paddingHorizontal: 48,
-    fontFamily: PDF_FONT_SANS,
-    fontSize: 11,
-    color: PRINT_INK,
-    backgroundColor: PRINT_PAPER,
-  },
-  footer: {
-    position: "absolute",
-    bottom: 26,
-    left: 48,
-    right: 48,
-    fontSize: 8,
-    fontFamily: PDF_FONT_SANS,
-    color: PRINT_FOOTER,
-    letterSpacing: 0.4,
-  },
-});
+function createPageStyles(theme: ExportThemeTokens) {
+  return StyleSheet.create({
+    page: {
+      paddingTop: 44,
+      paddingBottom: 52,
+      paddingHorizontal: 48,
+      fontFamily: PDF_FONT_SANS,
+      fontSize: 11,
+      color: theme.ink,
+      backgroundColor: theme.paper,
+    },
+    footer: {
+      position: "absolute",
+      bottom: 26,
+      left: 48,
+      right: 48,
+      fontSize: 8,
+      fontFamily: PDF_FONT_SANS,
+      color: theme.footer,
+      letterSpacing: 0.4,
+    },
+  });
+}
 
 function RichDocumentPdf({
   model,
   labels,
   layout,
-  surface,
+  theme,
 }: {
   model: ExportDocumentModel;
   labels: ExportLabels;
   layout: ExportLayout;
-  surface: PrintSurface;
+  theme: ExportThemeTokens;
 }) {
   const title = sanitizeExportText(model.title) || "—";
   const description = sanitizeExportText(model.description);
-  const accent = printAccent(surface);
+  const styles = createPageStyles(theme);
 
   return (
     <Document>
@@ -63,9 +63,9 @@ function RichDocumentPdf({
           kicker={labels.documentHeading}
           title={title}
           lede={description || undefined}
-          accent={accent}
+          theme={theme}
         />
-        {renderTipTapDocToPdf(model.doc, layout, accent)}
+        {renderTipTapDocToPdf(model.doc, layout, theme)}
         <Text
           style={styles.footer}
           render={({ pageNumber, totalPages }) =>
@@ -83,13 +83,15 @@ export async function generateRichDocumentPdfBlob(
   labels: ExportLabels,
   layout: ExportLayout = "document",
   surface: PrintSurface = "writing",
+  theme: ExportThemeTokens = resolveExportTheme("print", surface),
 ): Promise<Blob> {
+  await ensurePdfFonts();
   return pdf(
     <RichDocumentPdf
       model={model}
       labels={labels}
       layout={layout}
-      surface={surface}
+      theme={theme}
     />,
   ).toBlob();
 }

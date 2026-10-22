@@ -14,19 +14,31 @@ import type { JSONContent } from "@tiptap/react";
 import { coerceHeadingLevel } from "@/lib/editor/heading-level";
 import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
 import {
+  DOCX_FONT_MONO,
   DOCX_FONT_SANS,
-  PRINT_HAIRLINE,
-  PRINT_INK,
-  PRINT_LEDE_WASH,
-  PRINT_RULE,
   hexForDocx,
+  resolveExportTheme,
+  type ExportThemeTokens,
 } from "@/lib/export/print-theme";
 
 const FONT_SANS = DOCX_FONT_SANS;
-const INK = hexForDocx(PRINT_INK);
-const HAIRLINE = hexForDocx(PRINT_HAIRLINE);
-const RULE = hexForDocx(PRINT_RULE);
-const WASH = hexForDocx(PRINT_LEDE_WASH);
+const FONT_MONO = DOCX_FONT_MONO;
+
+let theme: ExportThemeTokens = resolveExportTheme("print", "writing");
+let INK = hexForDocx(theme.ink);
+let HAIRLINE = hexForDocx(theme.hairline);
+let RULE = hexForDocx(theme.rule);
+let WASH = hexForDocx(theme.wash);
+let ACCENT = hexForDocx(theme.accent);
+
+function applyTipTapDocxTheme(next: ExportThemeTokens) {
+  theme = next;
+  INK = hexForDocx(theme.ink);
+  HAIRLINE = hexForDocx(theme.hairline);
+  RULE = hexForDocx(theme.rule);
+  WASH = hexForDocx(theme.wash);
+  ACCENT = hexForDocx(theme.accent);
+}
 
 const BODY_SIZE = 22;
 const HEADING_SIZES: Record<number, number> = {
@@ -41,6 +53,7 @@ type MarkAttrs = {
   underline?: boolean;
   highlight?: boolean;
   strike?: boolean;
+  code?: boolean;
 };
 
 function getMarks(node: JSONContent): MarkAttrs {
@@ -61,6 +74,9 @@ function getMarks(node: JSONContent): MarkAttrs {
         break;
       case "strike":
         result.strike = true;
+        break;
+      case "code":
+        result.code = true;
         break;
       default:
         break;
@@ -89,14 +105,17 @@ function textRunFromNode(node: JSONContent, size: number): TextRun {
   const marks = getMarks(node);
   return new TextRun({
     text: node.text ?? "",
-    font: FONT_SANS,
-    size,
+    font: marks.code ? FONT_MONO : FONT_SANS,
+    size: marks.code ? Math.max(18, size - 2) : size,
     bold: marks.bold,
     italics: marks.italic,
     underline: marks.underline ? {} : undefined,
     highlight: marks.highlight ? "yellow" : undefined,
     strike: marks.strike,
     color: INK,
+    shading: marks.code
+      ? { type: ShadingType.CLEAR, fill: WASH }
+      : undefined,
   });
 }
 
@@ -277,12 +296,26 @@ function renderBlock(
       );
     case "codeBlock":
       return [
-        paragraphFromNodes(
-          [{ type: "text", text: collectPlainText(node) || " " }],
-          {
-            shading: { type: ShadingType.CLEAR, fill: WASH },
+        new Paragraph({
+          spacing: { before: 80, after: 120 },
+          shading: { type: ShadingType.CLEAR, fill: WASH },
+          border: {
+            left: {
+              style: BorderStyle.SINGLE,
+              size: 10,
+              color: ACCENT,
+              space: 8,
+            },
           },
-        ),
+          children: [
+            new TextRun({
+              text: collectPlainText(node) || " ",
+              font: FONT_MONO,
+              size: 18,
+              color: INK,
+            }),
+          ],
+        }),
       ];
     case "horizontalRule":
       return [
@@ -312,7 +345,9 @@ function renderBlock(
 /** Continuous TipTap → DOCX body, matching Writing rich-document structure. */
 export function renderTipTapDocToDocx(
   doc: JSONContent | null,
+  nextTheme: ExportThemeTokens = resolveExportTheme("print", "writing"),
 ): Array<Paragraph | Table> {
+  applyTipTapDocxTheme(nextTheme);
   if (!doc?.content?.length) {
     return [paragraphFromNodes(undefined)];
   }

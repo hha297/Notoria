@@ -1,7 +1,9 @@
 import { Font } from "@react-pdf/renderer";
 
-/** Matches the app body font (`IBM_Plex_Sans` in `layout.tsx`). */
+/** Matches app body/heading font (`IBM_Plex_Sans` in `layout.tsx`). */
 export const PDF_FONT_SANS = "IBMPlexSans";
+/** Matches app monospace font (`JetBrains_Mono` in `layout.tsx`). */
+export const PDF_FONT_MONO = "JetBrainsMono";
 
 let fontReady: Promise<void> | null = null;
 
@@ -18,15 +20,29 @@ export async function ensurePdfFonts() {
   if (!fontReady) {
     fontReady = (async () => {
       const origin = window.location.origin;
-      const [regular, italic, medium, mediumItalic, bold, boldItalic] =
-        await Promise.all([
-          fetchFontBlob(origin, "IBMPlexSans-Regular.ttf"),
-          fetchFontBlob(origin, "IBMPlexSans-Italic.ttf"),
-          fetchFontBlob(origin, "IBMPlexSans-Medium.ttf"),
-          fetchFontBlob(origin, "IBMPlexSans-MediumItalic.ttf"),
-          fetchFontBlob(origin, "IBMPlexSans-Bold.ttf"),
-          fetchFontBlob(origin, "IBMPlexSans-BoldItalic.ttf"),
-        ]);
+      const [
+        regular,
+        italic,
+        medium,
+        mediumItalic,
+        bold,
+        boldItalic,
+        monoRegular,
+        monoItalic,
+        monoBold,
+        monoBoldItalic,
+      ] = await Promise.all([
+        fetchFontBlob(origin, "IBMPlexSans-Regular.ttf"),
+        fetchFontBlob(origin, "IBMPlexSans-Italic.ttf"),
+        fetchFontBlob(origin, "IBMPlexSans-Medium.ttf"),
+        fetchFontBlob(origin, "IBMPlexSans-MediumItalic.ttf"),
+        fetchFontBlob(origin, "IBMPlexSans-Bold.ttf"),
+        fetchFontBlob(origin, "IBMPlexSans-BoldItalic.ttf"),
+        fetchFontBlob(origin, "JetBrainsMono-Regular.ttf"),
+        fetchFontBlob(origin, "JetBrainsMono-Italic.ttf"),
+        fetchFontBlob(origin, "JetBrainsMono-Bold.ttf"),
+        fetchFontBlob(origin, "JetBrainsMono-BoldItalic.ttf"),
+      ]);
 
       Font.register({
         family: PDF_FONT_SANS,
@@ -46,6 +62,24 @@ export async function ensurePdfFonts() {
           { src: URL.createObjectURL(bold), fontWeight: 700 },
           {
             src: URL.createObjectURL(boldItalic),
+            fontWeight: 700,
+            fontStyle: "italic",
+          },
+        ],
+      });
+
+      Font.register({
+        family: PDF_FONT_MONO,
+        fonts: [
+          { src: URL.createObjectURL(monoRegular), fontWeight: 400 },
+          {
+            src: URL.createObjectURL(monoItalic),
+            fontWeight: 400,
+            fontStyle: "italic",
+          },
+          { src: URL.createObjectURL(monoBold), fontWeight: 700 },
+          {
+            src: URL.createObjectURL(monoBoldItalic),
             fontWeight: 700,
             fontStyle: "italic",
           },

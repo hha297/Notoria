@@ -16,7 +16,20 @@
     "hideFilters": "Ẩn bộ lọc",
     "open": "Mở",
     "remove": "Xóa",
-    "moreActions": "Thêm hành động"
+    "moreActions": "Thêm hành động",
+    "exportAppearance": {
+      "label": "Giao diện",
+      "print": "Thân thiện khi in",
+      "printHint": "Nền trắng, chữ tối",
+      "theme": "Theo giao diện hiện tại",
+      "themeHint": "Khớp theme sáng hoặc tối của bạn",
+      "previewKicker": "Trang mẫu",
+      "previewTitle": "Tiêu đề tài liệu",
+      "previewBody": "Nội dung dùng màu và khoảng cách đã chọn.",
+      "previewCallout": "Hộp chú thích theo màu module.",
+      "fixedNote": "Giao diện được cố định trong file. Xuất lại nếu muốn đổi.",
+      "docxBackgroundNote": "Word và ứng dụng khác có thể không hiển thị nền trang giống nhau, nhất là khi in."
+    }
   },
   "contentImport": {
     "title": {

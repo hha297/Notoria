@@ -12,7 +12,10 @@ import type {
 } from "@/lib/writing/export/types";
 import type { WritingEditorState } from "@/lib/writing/content";
 import type { JSONContent } from "@tiptap/react";
-import type { PrintSurface } from "@/lib/export/print-theme";
+import {
+  resolveExportTheme,
+  type PrintSurface,
+} from "@/lib/export/print-theme";
 
 export type { ExportFormat, ExportOptions, ExportLabels } from "@/lib/writing/export/types";
 export { DEFAULT_EXPORT_OPTIONS } from "@/lib/writing/export/types";
@@ -52,7 +55,7 @@ export async function exportTheoryNote(params: {
   title: string;
   description?: string | null;
   doc: JSONContent;
-  options: Pick<ExportOptions, "format">;
+  options: Pick<ExportOptions, "format" | "appearance" | "themeMode">;
   labels: ExportLabels;
 }): Promise<{ filename: string }> {
   const model = buildRichDocumentExport(
@@ -68,6 +71,8 @@ export async function exportTheoryNote(params: {
       includeExampleAnswers: false,
       includeNotes: false,
       leaveBlankSpace: false,
+      appearance: params.options.appearance ?? "print",
+      themeMode: params.options.themeMode,
     },
     labels: params.labels,
     filenamePrefix: "theory",
@@ -99,13 +104,20 @@ export async function exportDocumentModel(params: {
     new Date(),
     params.filenamePrefix,
   );
+  const surface = params.surface ?? "writing";
+  const theme = resolveExportTheme(
+    params.options.appearance ?? "print",
+    surface,
+    params.options.themeMode,
+  );
   const blob = await generateExportBlob(
     params.model,
     params.labels,
     params.options,
     params.layout ??
       (params.model.mode === "rich_document" ? "document" : "worksheet"),
-    params.surface ?? "writing",
+    surface,
+    theme,
   );
   downloadBlob(blob, filename);
 
@@ -118,10 +130,25 @@ async function generateExportBlob(
   options: ExportOptions,
   layout: ExportLayout,
   surface: PrintSurface,
+  theme: ReturnType<typeof resolveExportTheme>,
 ): Promise<Blob> {
   if (options.format === "docx") {
-    return generateWritingDocxBlob(model, labels, options, layout, surface);
+    return generateWritingDocxBlob(
+      model,
+      labels,
+      options,
+      layout,
+      surface,
+      theme,
+    );
   }
 
-  return generateWritingPdfBlob(model, labels, options, layout, surface);
+  return generateWritingPdfBlob(
+    model,
+    labels,
+    options,
+    layout,
+    surface,
+    theme,
+  );
 }
