@@ -51,6 +51,10 @@ export const metadata: Metadata = {
   applicationName: "Notoria",
   manifest: "/manifest.webmanifest",
 
+  other: {
+    "google-adsense-account": "ca-pub-7602749915037597",
+  },
+
   icons: {
     icon: [
       {
