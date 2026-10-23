@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import Script from "next/script";
 import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 // Previous Notoria fonts.
 // Kept intentionally for rollback/reference.
@@ -113,7 +114,7 @@ export const viewport: Viewport = {
   themeColor: [
     {
       media: "(prefers-color-scheme: light)",
-      color: "#eeefe9",
+      color: "#ffffff",
     },
     {
       media: "(prefers-color-scheme: dark)",
@@ -139,6 +140,12 @@ export default async function RootLayout({
       className={`${ibmPlexSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body className={`${ibmPlexSans.className} min-h-full font-sans`} suppressHydrationWarning>
+        <Script
+          async
+          src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7602749915037597"
+          crossOrigin="anonymous"
+          strategy="afterInteractive"
+        />
         <NextIntlClientProvider messages={messages}>
           <ThemeProvider>
             <PreferencesProvider>
