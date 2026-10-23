@@ -15,7 +15,20 @@
     "clearFilter": "Pastro",
     "filters": "Filtrat",
     "hideFilters": "Fshih filtrat",
-    "remove": "Hiq"
+    "remove": "Hiq",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Nuk mund të zhvendosni një dosje brenda vetvetes",
     "tooDeep": "Kjo dosje është e futur shumë thellë",
     "notFound": "Dosja nuk u gjet",
-    "nameTaken": "Një dosje ose shkrim e përdor tashmë këtë emër"
+    "nameTaken": "Një dosje ose shkrim e përdor tashmë këtë emër",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Ndrysho temën",
@@ -291,7 +310,11 @@
     "createWorkspace": "Krijo hapësirë pune",
     "createWorkspaceHint": "Shtoni një hapësirë pune tjetër për gjuhë",
     "switchWorkspace": "Ndrysho hapësirën e punës",
-    "switchFailed": "Nuk mundëm të ndryshonim hapësirën e punës"
+    "switchFailed": "Nuk mundëm të ndryshonim hapësirën e punës",
+    "selectLanguage": "Zgjidhni gjuhën",
+    "allLanguages": "Të gjitha gjuhët",
+    "changeLanguageFailed": "Nuk mund të ndryshohej gjuha e ndërfaqes",
+    "popularLanguages": "Të njohura"
   },
   "workspace": {
     "title": "Hapësirat e punës",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# import} other {# importe}}"
     },
     "processing": {
-      "workingTitle": "Duke punuar me ushtrimin tuaj",
+      "workingTitle": "Ushtrimi po përgatitet",
       "readyTitle": "Ushtrimi është gati",
       "errorTitle": "Diçka shkoi keq",
       "cancel": "Anulo",
       "retry": "Provo përsëri",
       "dismiss": "Mbyll",
       "stages": {
-        "uploading": "Duke ngarkuar…",
-        "extracting": "Duke nxjerrë përmbajtjen…",
-        "analyzing": "Duke analizuar përmbajtjen…",
-        "generating": "Duke gjeneruar ushtrimin…",
-        "saving": "Duke ruajtur ushtrimin…",
+        "uploading": "Ngarkimi i skedarit",
+        "extracting": "Nxjerrja e përmbajtjes",
+        "analyzing": "Analiza e përmbajtjes",
+        "generating": "Gjenerimi i pyetjeve",
+        "saving": "Ruajtja dhe përgatitja e ushtrimit",
         "completed": "Ushtrimi është gati",
-        "error": "Gjenerimi dështoi"
-      }
+        "error": "Gjenerimi dështoi",
+        "preparing": "Përgatitja e materialit mësimor",
+        "validating": "Validimi i përgjigjeve dhe ndihmave"
+      },
+      "stillWorking": "Ende po gjenerohet… kanë kaluar {seconds} s",
+      "hints": {
+        "uploading": "Skedari juaj dërgohet në mënyrë të sigurt.",
+        "extracting": "Leximi i tekstit dhe strukturës nga burimi.",
+        "analyzing": "Identifikimi i ndihmave të praktikës në material.",
+        "preparing": "Mbledhja e fjalorit ose teorisë së zgjedhur për këtë set.",
+        "generating": "Modeli po shkruan pyetje. Mund të marrë pak kohë.",
+        "validating": "Kontrolli i përgjigjeve, ndihmave dhe strukturës para praktikës.",
+        "saving": "Montimi i setit tuaj të praktikës."
+      },
+      "nextSetPreparing": "Po përgatitet seti tjetër…",
+      "nextSetReady": "Seti tjetër është gati",
+      "nextSetFailed": "Nuk u përgatit seti tjetër",
+      "nextSetRetry": "Përgatit setin tjetër",
+      "openNextSet": "Hap setin tjetër"
     },
     "import": {
       "eyebrow": "Praktikë e importuar",
@@ -822,6 +862,7 @@
       "aiReady": "Praktika është gati",
       "aiUnavailable": "Nuk mund të gjeneroheshin pyetje AI tani.",
       "aiForbidden": "Ushtrimet e teorisë me AI janë të disponueshme me Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "Ndihma e AI është e çaktivizuar te Cilësimet.",
       "feedback": {
         "correct": "E saktë!",
@@ -874,7 +915,21 @@
         "theRule": "Rregulli",
         "why": "Pse",
         "complete": "U kuptua",
-        "completeHint": "Mund të vazhdoni kur të jeni gati."
+        "completeHint": "Mund të vazhdoni kur të jeni gati.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Ndihmë",
       "startsWith": "Fillon me “{letter}”",
       "revealPrompt": "Ende të bllokuar? Mund ta zbuloni përgjigjen e plotë.",
-      "revealAnswer": "Zbulo përgjigjen"
+      "revealAnswer": "Zbulo përgjigjen",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Nuk ka fjalor ende",
@@ -977,8 +1034,38 @@
       "forbidden": "Gjenerimi i ushtrimeve me AI është i disponueshëm me Pro.",
       "disabled": "Ndihma e AI është e çaktivizuar te Cilësimet.",
       "upgradeHint": "Free përfshin disa gjenerime ushtrimesh AI çdo ditë. Pro heq kufirin.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Shtoni fjalë fjalori përpara se të gjeneroni pyetje.",
-      "noneValid": "AI nuk mund të krijonte pyetje të vlefshme për këto fjalë. Provoni përsëri."
+      "noneValid": "AI nuk mund të krijonte pyetje të vlefshme për këto fjalë. Provoni përsëri.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Seanca përfundoi",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Vetëm kur ndryshon përmbajtjen",
       "confirmNever": "Kurrë",
       "saveFailed": "Preferencat e AI nuk u ruajtën",
-      "disabledToast": "Ndihma e AI është e çaktivizuar te Cilësimet"
+      "disabledToast": "Ndihma e AI është e çaktivizuar te Cilësimet",
+      "exerciseNextSetPrefetch": "Përgatit setin tjetër të ushtrimeve",
+      "exerciseNextSetPrefetchDescription": "Pasi filloni të përgjigjeni, seti tjetër përgatitet automatikisht në sfond. Përdor një kredit ushtrimi AI në fillim. Çaktivizoni për të gjeneruar vetëm me Set të ri."
     },
     "tutorials": "Udhëzuesit e seksioneve",
     "tutorialsDescription": "Rivendosni udhëzuesit e përfunduar të seksioneve që «Shfaq udhëzuesin» të fillojë përsëri nga fillimi.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Nuk keni llogari?",
     "hasAccount": "Keni tashmë një llogari?",
     "invalidCredentials": "Email ose fjalëkalim i pavlefshëm",
+    "rememberMe": "Më mbaj mend",
+    "signInUnavailable": "Hyrja nuk u krye tani. Ju lutemi provoni përsëri.",
+    "accountSuspended": "Kjo llogari është pezulluar. Kontaktoni mbështetjen nëse mendoni se është gabim.",
     "emailExists": "Një llogari me këtë email ekziston tashmë",
     "emailInvalid": "Vendosni një adresë email të vlefshme",
     "registerFailed": "Llogaria nuk mund të krijohej. Ju lutemi provoni përsëri.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Kushtet",
     "registerAgreement": "Duke krijuar një llogari, pranoni <terms>Kushtet e përdorimit</terms> dhe <privacy>Politikën e privatësisë</privacy>.",
     "avatarRequestTooLarge": "Ajo foto është shumë e madhe për t’u dërguar. Provoni një imazh më të vogël.",
-    "requestTooLarge": "Ajo kërkesë ishte shumë e madhe. Ndryshimet tuaja u mbajtën — ju lutemi provoni përsëri."
+    "requestTooLarge": "Ajo kërkesë ishte shumë e madhe. Ndryshimet tuaja u mbajtën — ju lutemi provoni përsëri.",
+    "roleAdmin": "Administrator",
+    "roleTester": "Testues"
   },
   "account": {
     "eyebrow": "Llogaria",
@@ -2910,6 +3004,7 @@
       "backup": "Shkarko kopjen rezervë",
       "backupDone": "Kopja rezervë u shkarkua",
       "backupFailed": "Kopja rezervë nuk mund të përgatitej. Provoni përsëri.",
+      "confirmPhrase": "Fshi të gjitha të dhënat",
       "confirmLabel": "Shkruani {phrase} për të konfirmuar",
       "confirm": "Fshi të gjitha të dhënat",
       "deleted": "Të gjitha të dhënat e të mësuarit janë fshirë",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Mund të anashkalohen",
       "warnings": {
         "workspace_language_reuse": "Disa hapësira pune ekzistojnë tashmë për të njëjtën gjuhë. Përmbajtja e tyre do të shtohet në hapësirat ekzistuese në vend që të krijohen dyfishime.",
-        "empty_backup": "Kjo kopje rezervë nuk përmban të dhëna të importueshme të të mësuarit."
+        "empty_backup": "Kjo kopje rezervë nuk përmban të dhëna të importueshme të të mësuarit.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Anulo",
       "confirm": "Importo të dhënat e të mësuarit",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# artikull fjalori ekziston tashmë} other {# artikuj fjalori ekzistojnë tashmë}}",
         "listening_missing_media": "{count, plural, one {# mësim dëgjimi pa URL media} other {# mësime dëgjimi pa URL media}}",
         "listening_duplicate_filename": "{count, plural, one {# mësim dëgjimi u anashkalua (emër skedari i dyfishtë)} other {# mësime dëgjimi u anashkaluan (emër skedari i dyfishtë)}}",
+        "speaking_duplicate": "{count, plural, one {# sesion të foluri ekziston tashmë} other {# sesione të foluri ekzistojnë tashmë}}",
         "invalid_workspace_ref": "{count, plural, one {# artikull me hapësirë pune që mungon} other {# artikuj me hapësirë pune që mungon}}",
         "invalid_record": "{count, plural, one {# regjistër i pavlefshëm} other {# regjistra të pavlefshëm}}",
-        "unsupported_account_field": "Fushat e identitetit të llogarisë nuk importohen"
+        "unsupported_account_field": "Fushat e identitetit të llogarisë nuk importohen",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Ai skedar i kopjes rezervë është shumë i madh. Provoni të eksportoni përsëri ose kontaktoni mbështetjen.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Kjo kopje rezervë nuk mund të importohej. Provoni përsëri.",
         "requestTooLarge": "Ajo kopje rezervë është shumë e madhe për t’u përpunuar përmes kësaj faqeje. Provoni një eksport më të vogël ose kontaktoni mbështetjen.",
         "notConfigured": "Ruajtja e skedarëve nuk është konfiguruar ende për importin e kopjes rezervë."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Mbyll llogarinë",
@@ -3002,6 +3110,7 @@
       "backup": "Shkarko kopjen rezervë",
       "backupDone": "Kopja rezervë u shkarkua",
       "backupFailed": "Kopja rezervë nuk mund të përgatitej. Provoni përsëri.",
+      "confirmPhrase": "Fshi llogarinë time",
       "confirmLabel": "Shkruani {phrase} për të konfirmuar",
       "confirm": "Fshi përgjithmonë llogarinë",
       "deleted": "Llogaria juaj është fshirë",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Tendencat e të mësuarit",
       "personalLearningPath": "Rruga personale e të mësuarit",
       "personalizedRecommendations": "Rekomandime të personalizuara",
-      "crossModuleIntelligence": "Personalizim ndërmodular"
+      "crossModuleIntelligence": "Personalizim ndërmodular",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Krahasoni planet",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Keni arritur kufirin e sotëm të Trajnerit të të Mësuarit. Trajneri do të jetë përsëri i disponueshëm nesër.",
       "errorPremium": "Trajneri i të Mësuarit është një veçori Premium. Merrni rekomandime të personalizuara bazuar në aktivitetin tuaj të të mësuarit.",
       "errorUnavailable": "Trajneri juaj nuk mundi të përgjigjej tani. Mesazhi juaj nuk u numërua. Ju lutemi provoni përsëri.",
+      "errorWorkspace": "Zgjidhni një hapësirë pune para se të pyesni trajnerin.",
+      "errorUnauthorized": "Hyni përsëri për të vazhduar.",
       "prompts": {
         "practice_today": "Ku duhet të përqendrohem sot?",
         "struggling_words": "Pse po has vështirësi me këto fjalë?",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Administrimi",
+      "admin": "Administrator",
       "manage": "Menaxhoni",
       "overview": "Përmbledhje",
       "users": "Përdoruesit",
@@ -4750,7 +4862,7 @@
       "contentLibrary": "Biblioteka e përmbajtjes",
       "backToApp": "Kthehuni te aplikacioni",
       "openMenu": "Hapni menunë e administrimit",
-      "openAdmin": "Paneli i administrimit"
+      "openAdmin": "Paneli i administratorit"
     },
     "modules": {
       "vocabulary": "Fjalori",
@@ -4798,7 +4910,28 @@
         "failedListening": "Dëgjimi i dështuar",
         "failedImports": "Importimet e dështuara",
         "runningJobs": "Kyçe detyrash në ekzekutim",
-        "recentAudits7d": "Regjistrime auditimi (7d)"
+        "recentAudits7d": "Regjistrime auditimi (7d)",
+        "admins": "Administratorë",
+        "testers": "Testues",
+        "suspended": "Pezulluar",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Qasje e shpejtë",
+      "quickAccessLede": "Shko te mjetet e menaxhimit.",
+      "groups": {
+        "people": "Njerëz",
+        "content": "Përmbajtje",
+        "ops": "Operacione"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "Plani",
         "created": "Regjistruar",
         "updated": "Përditësuar",
-        "emailVerified": "Email i verifikuar"
+        "emailVerified": "Email i verifikuar",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Llogaria",
@@ -4841,7 +4976,8 @@
         "usageLede": "Regjistrime në pronësi nëpër module mësimore.",
         "actions": "Veprimet e llogarisë",
         "workspaces": "Hapësirat e punës",
-        "workspacesLede": "Hapësirat gjuhësore në pronësi të këtij përdoruesi."
+        "workspacesLede": "Hapësirat gjuhësore në pronësi të këtij përdoruesi.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Ruani emrin",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Hiqni administrimin",
         "suspend": "Pezulloni",
         "restore": "Rivendosni",
-        "delete": "Fshini llogarinë"
+        "delete": "Fshini llogarinë",
+        "grantTester": "Jep rolin e testuesit",
+        "revokeTester": "Hiq rolin e testuesit",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "T’i jepet qasje administruese kësaj llogarie?",
         "revokeAdmin": "Të hiqet qasja administruese? Dështon nëse janë administratori i fundit aktiv.",
         "suspend": "Të pezullohet kjo llogari? Humbin qasjen në kërkesën e ardhshme të mbrojtur.",
         "restore": "Të rivendoset kjo llogari?",
-        "delete": "Të fshihet përgjithmonë kjo llogari dhe të dhënat e kaskaduara të të mësuarit? Kjo nuk mund të zhbëhet."
+        "delete": "Të fshihet përgjithmonë kjo llogari dhe të dhënat e kaskaduara të të mësuarit? Kjo nuk mund të zhbëhet.",
+        "grantTester": "Të jepet roli i testuesit? Marrin të gjitha funksionet e aplikacionit për QA; abonimi i ruajtur nuk ndryshon.",
+        "revokeTester": "Të hiqet roli i testuesit? Qasja te funksionet kthehet te abonimi i tyre i vërtetë."
+      },
+      "roleHelp": "Roli i testuesit hap të gjitha funksionet Free, Pro dhe Premium për QA pa ndryshuar abonimin e ruajtur. Për këtë panel nevojitet administrator.",
+      "roles": {
+        "user": "Përdorues",
+        "tester": "Testues",
+        "admin": "Administrator"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Gjuha",
         "owner": "Pronari",
         "created": "Krijuar",
-        "updated": "Përditësuar"
+        "updated": "Përditësuar",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Gjuha: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Të fshihet kjo hapësirë pune dhe e gjithë përmbajtja mësimore brenda saj përmes kaskadave të bazës së të dhënave?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Pronari",
         "workspace": "Hapësira e punës",
         "created": "Krijuar",
-        "updated": "Përditësuar"
+        "updated": "Përditësuar",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Inspektim i metadatave. Trupat privatë nuk ngarkohen automatikisht.",
@@ -4923,11 +5088,13 @@
         "actions": "Veprimet"
       },
       "actions": {
-        "delete": "Fshini regjistrimin"
+        "delete": "Fshini regjistrimin",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Të fshihet ky regjistrim? Rreshtat e lidhur fëmijë ndjekin rregullat cascade / set-null të bazës së të dhënave."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Detyrat",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Ky përdorues ka tashmë një hapësirë pune për atë gjuhë.",
       "INVALID_LANGUAGE": "Kod gjuhe i pavlefshëm.",
       "CONTENT_NOT_FOUND": "Regjistrimi nuk u gjet.",
-      "INVALID_CONTENT_MODULE": "Modul përmbajtjeje i panjohur."
+      "INVALID_CONTENT_MODULE": "Modul përmbajtjeje i panjohur.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

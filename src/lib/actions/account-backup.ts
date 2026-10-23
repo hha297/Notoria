@@ -1,9 +1,6 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { eq } from "drizzle-orm";
-import { db } from "@/db";
-import { vocabularyWords, workspaces } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
 import {
   AccountBackupParseError,
@@ -20,6 +17,7 @@ import {
   sanitizeBackupFilename,
 } from "@/lib/account-backup/blob-path";
 import { importAccountBackupLearningData } from "@/lib/account-backup/import";
+import { loadExistingInventory } from "@/lib/account-backup/inventory";
 import { deleteReadingBlob, downloadReadingBlob } from "@/lib/reading/blob";
 
 export type AccountBackupActionError =
@@ -79,11 +77,17 @@ async function loadBackupTextFromBlob(
     }
     return { ok: true, text: buffer.toString("utf8") };
   } catch (error) {
+    const message =
+      error instanceof Error && error.message === "BLOB_NOT_FOUND"
+        ? "The uploaded backup expired or could not be found. Please choose the file again."
+        : error instanceof Error
+          ? error.message
+          : undefined;
     return {
       ok: false,
       error: {
         code: "IMPORT_FAILED",
-        message: error instanceof Error ? error.message : undefined,
+        message,
       },
     };
   }
@@ -188,32 +192,8 @@ export async function analyzeAccountBackupFromUpload(input: {
       return { ok: false, error: { code: "INVALID_BACKUP", message } };
     }
 
-    const existingWorkspaces = await db.query.workspaces.findMany({
-      where: eq(workspaces.userId, userId),
-      columns: { id: true, language: true },
-    });
-
-    const existingVocab =
-      existingWorkspaces.length > 0
-        ? await db.query.vocabularyWords.findMany({
-            where: eq(vocabularyWords.userId, userId),
-            columns: {
-              workspaceId: true,
-              word: true,
-              partOfSpeech: true,
-            },
-          })
-        : [];
-
-    const preview = buildBackupPreview(
-      backup,
-      existingWorkspaces,
-      existingVocab.map((row) => ({
-        workspaceId: row.workspaceId,
-        word: row.word,
-        partOfSpeech: row.partOfSpeech ?? "",
-      })),
-    );
+    const inventory = await loadExistingInventory(userId);
+    const preview = buildBackupPreview(backup, inventory);
 
     return {
       ok: true,
@@ -286,11 +266,20 @@ export async function confirmAccountBackupFromUpload(input: {
     if (error instanceof Error && error.message === "Unauthorized") {
       return { ok: false, error: { code: "UNAUTHORIZED" } };
     }
+    const raw = error instanceof Error ? error.message : undefined;
+    const message =
+      !raw
+        ? undefined
+        : raw.includes("BLOB_NOT_FOUND")
+          ? "The uploaded backup expired or could not be found. Please choose the file again."
+          : raw.includes("Failed query:")
+            ? "Could not import one or more records from this backup. Other items may still have imported — check the summary and try again."
+            : raw;
     return {
       ok: false,
       error: {
         code: "IMPORT_FAILED",
-        message: error instanceof Error ? error.message : undefined,
+        message,
       },
     };
   }

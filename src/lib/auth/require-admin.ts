@@ -14,14 +14,17 @@ export class AdminAccessError extends Error {
   }
 }
 
-/**
- * Active admin for the current session. Role/suspension always come from DB
- * so demotions and suspensions apply on the next protected server call.
- */
-export const requireAdmin = cache(async () => {
-  await getCurrentUserId();
-  const user = await getCurrentUserRecord();
+type AdminUser = {
+  id: string;
+  role: string;
+  suspendedAt: Date | string | null;
+};
 
+/**
+ * Admin permission from a fresh user row. A missing row, suspension, or a
+ * non-admin role are denials. This does not accept a JWT role by itself.
+ */
+export function assertAdminUser<T extends AdminUser>(user: T | null | undefined): T {
   if (!user) {
     throw new AdminAccessError("Unauthorized");
   }
@@ -31,6 +34,17 @@ export const requireAdmin = cache(async () => {
   if (!isAdminRole(user.role)) {
     throw new AdminAccessError();
   }
-
   return user;
+}
+
+/**
+ * Active admin for the current session. Role and suspension always come from
+ * the database, so demotions and suspensions apply on the next protected call.
+ * If that read fails, the error stays a service failure and the session cookie
+ * is left in place.
+ */
+export const requireAdmin = cache(async () => {
+  await getCurrentUserId();
+  const user = await getCurrentUserRecord();
+  return assertAdminUser(user);
 });

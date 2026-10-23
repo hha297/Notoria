@@ -36,7 +36,7 @@ export default async function AdminContentDetailPage({ params }: PageProps) {
         actions={
           <Link
             href={`/admin/content/${moduleParam}`}
-            className="text-sm font-semibold underline"
+            className={mx(styles, "admin-text-link")}
           >
             {t("common.backToList")}
           </Link>
@@ -70,7 +70,7 @@ export default async function AdminContentDetailPage({ params }: PageProps) {
             <dd>
               <Link
                 href={`/admin/users/${row.userId}`}
-                className="font-semibold underline"
+                className={mx(styles, "admin-text-link")}
               >
                 {row.ownerEmail}
               </Link>
@@ -79,7 +79,7 @@ export default async function AdminContentDetailPage({ params }: PageProps) {
             <dd>
               <Link
                 href={`/admin/workspaces/${row.workspaceId}`}
-                className="font-semibold underline"
+                className={mx(styles, "admin-text-link")}
               >
                 {row.workspaceName}
               </Link>
@@ -99,7 +99,11 @@ export default async function AdminContentDetailPage({ params }: PageProps) {
           </h2>
         </div>
         <div className={mx(styles, "admin-panel-body")}>
-          <ContentAdminActions module={moduleParam} id={row.id} />
+          <ContentAdminActions
+            module={moduleParam}
+            id={row.id}
+            title={row.title}
+          />
         </div>
       </section>
     </div>

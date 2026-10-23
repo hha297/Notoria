@@ -20,6 +20,8 @@ export type FillBlankItem = {
   instruction?: string;
   /** Whole-sentence meaning in the website UI language (shown after answer). */
   sentenceMeaning?: string;
+  /** Pre-generated progressive hints. Empty means the stage may build a grounded fallback. */
+  hints?: string[];
 };
 
 export function buildFillBlankAcceptableAnswers(

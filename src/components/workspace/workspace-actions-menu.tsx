@@ -43,7 +43,8 @@ export function WorkspaceActionsMenu({
         <DropdownMenuTrigger
           className={cn(
             buttonVariants({ variant: "ghost" }),
-            "size-10 shrink-0 rounded-none px-0 text-muted-foreground hover:bg-transparent hover:text-ink",
+            "h-10 w-10 shrink-0 rounded-none px-0 text-muted-foreground hover:bg-transparent hover:text-ink",
+            /* In navbar: .studio-chrome-control nested under the shell → height 100%. */
             className,
           )}
           aria-label={t("manageNamed", { name: workspace.name })}

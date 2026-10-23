@@ -94,6 +94,63 @@ function CountList({
   );
 }
 
+function SkipList({
+  items,
+  t,
+}: {
+  items: BackupPreview["skipped"];
+  t: ReturnType<typeof useTranslations<"account.backupImport">>;
+}) {
+  if (items.length === 0) return null;
+  return (
+    <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
+      {items.map((item) => (
+        <li key={`${item.source}:${item.reason}`}>
+          {t(`skips.${item.reason}`, { count: item.count })}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function SkipSections({
+  skipped,
+  t,
+}: {
+  skipped: BackupPreview["skipped"];
+  t: ReturnType<typeof useTranslations<"account.backupImport">>;
+}) {
+  // In-file duplicate names are omitted from the UI — "Ready to import" /
+  // "Imported" counts already reflect deduped totals and listing them as
+  // "skipped" reads like a problem on empty accounts.
+  const inAccount = skipped.filter((item) => item.source === "account");
+  const other = skipped.filter((item) => item.source === "other");
+
+  if (inAccount.length === 0 && other.length === 0) {
+    return null;
+  }
+
+  return (
+    <div className="space-y-4">
+      {inAccount.length > 0 ? (
+        <div>
+          <p className="mb-1 text-sm font-semibold">{t("skippedInAccountTitle")}</p>
+          <p className="mb-2 text-sm text-muted-foreground">
+            {t("skippedInAccountHint")}
+          </p>
+          <SkipList items={inAccount} t={t} />
+        </div>
+      ) : null}
+      {other.length > 0 ? (
+        <div>
+          <p className="mb-1 text-sm font-semibold">{t("skippedOtherTitle")}</p>
+          <SkipList items={other} t={t} />
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 export function AccountBackupImportDialog({
   open,
   onOpenChange,
@@ -437,18 +494,7 @@ export function AccountBackupImportDialog({
               </div>
             ) : null}
 
-            {preview.skipped.length > 0 ? (
-              <div>
-                <p className="mb-1 text-sm font-semibold">{t("skippedTitle")}</p>
-                <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                  {preview.skipped.map((item) => (
-                    <li key={item.reason}>
-                      {t(`skips.${item.reason}`, { count: item.count })}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ) : null}
+            <SkipSections skipped={preview.skipped} t={t} />
           </div>
         ) : null}
 
@@ -456,15 +502,7 @@ export function AccountBackupImportDialog({
           <div className="space-y-3 py-2">
             <p className="text-sm font-semibold">{t("importedTitle")}</p>
             <CountList counts={result.imported} t={t} />
-            {result.skipped.length > 0 ? (
-              <ul className="m-0 list-disc space-y-1 pl-5 text-sm text-muted-foreground">
-                {result.skipped.map((item) => (
-                  <li key={item.reason}>
-                    {t(`skips.${item.reason}`, { count: item.count })}
-                  </li>
-                ))}
-              </ul>
-            ) : null}
+            <SkipSections skipped={result.skipped} t={t} />
           </div>
         ) : null}
 

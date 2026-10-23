@@ -15,7 +15,20 @@
     "clearFilter": "清除",
     "filters": "筛选",
     "hideFilters": "隐藏筛选",
-    "remove": "移除"
+    "remove": "移除",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "无法将文件夹移动到自身内部",
     "tooDeep": "此文件夹嵌套层级过深",
     "notFound": "未找到文件夹",
-    "nameTaken": "已有文件夹或写作使用此名称"
+    "nameTaken": "已有文件夹或写作使用此名称",
+    "dragTipTitle": "移到文件夹",
+    "dragTipBody": "在带鼠标或触控板的电脑上，将条目拖到文件夹卡片上即可移动。也可以使用每项上的移动图标。",
+    "dragTipDismiss": "关闭提示",
+    "dragTipShow": "如何移到文件夹",
+    "dragTipDemo": "拖到文件夹",
+    "dragTipCard": "条目"
   },
   "theme": {
     "toggle": "切换主题",
@@ -291,7 +310,11 @@
     "createWorkspace": "创建工作区",
     "createWorkspaceHint": "添加另一个语言工作区",
     "switchWorkspace": "切换工作区",
-    "switchFailed": "无法切换工作区"
+    "switchFailed": "无法切换工作区",
+    "selectLanguage": "选择语言",
+    "allLanguages": "所有语言",
+    "changeLanguageFailed": "无法更改界面语言",
+    "popularLanguages": "热门"
   },
   "workspace": {
     "title": "工作区",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# 项导入} other {# 项导入}}"
     },
     "processing": {
-      "workingTitle": "正在处理练习",
+      "workingTitle": "正在准备练习",
       "readyTitle": "练习已就绪",
       "errorTitle": "出了点问题",
       "cancel": "取消",
       "retry": "重试",
       "dismiss": "关闭",
       "stages": {
-        "uploading": "正在上传…",
-        "extracting": "正在提取内容…",
-        "analyzing": "正在分析内容…",
-        "generating": "正在生成练习…",
-        "saving": "正在保存练习…",
+        "uploading": "正在上传文件",
+        "extracting": "正在提取内容",
+        "analyzing": "正在分析内容",
+        "generating": "正在生成题目",
+        "saving": "正在保存并准备练习",
         "completed": "练习已就绪",
-        "error": "生成失败"
-      }
+        "error": "生成失败",
+        "preparing": "正在准备学习材料",
+        "validating": "正在校验答案与提示"
+      },
+      "stillWorking": "仍在生成… 已用时 {seconds} 秒",
+      "hints": {
+        "uploading": "正在安全发送你的文件。",
+        "extracting": "正在读取来源中的文本与结构。",
+        "analyzing": "正在从材料中识别练习线索。",
+        "preparing": "正在收集本套所选的词汇或理论。",
+        "generating": "模型正在编写题目，可能需要一点时间。",
+        "validating": "练习前检查答案、提示与结构。",
+        "saving": "正在组装你的练习套题。"
+      },
+      "nextSetPreparing": "正在准备下一套…",
+      "nextSetReady": "下一套已就绪",
+      "nextSetFailed": "无法准备下一套",
+      "nextSetRetry": "准备下一套",
+      "openNextSet": "打开下一套"
     },
     "import": {
       "eyebrow": "导入练习",
@@ -822,6 +862,7 @@
       "aiReady": "练习已就绪",
       "aiUnavailable": "暂时无法生成 AI 问题。",
       "aiForbidden": "AI 理论练习适用于 Pro。",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "设置中已关闭 AI 辅助。",
       "feedback": {
         "correct": "正确！",
@@ -874,7 +915,21 @@
         "theRule": "规则",
         "why": "原因",
         "complete": "已理解",
-        "completeHint": "准备好就可以继续。"
+        "completeHint": "准备好就可以继续。",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "提示",
       "startsWith": "以「{letter}」开头",
       "revealPrompt": "还是卡住了？可以显示完整答案。",
-      "revealAnswer": "显示答案"
+      "revealAnswer": "显示答案",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "还没有词汇",
@@ -977,8 +1034,38 @@
       "forbidden": "AI 练习生成适用于 Pro。",
       "disabled": "设置中已关闭 AI 辅助。",
       "upgradeHint": "免费版每天包含几次 AI 练习生成。Pro 取消上限。",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "生成问题前请先添加词汇。",
-      "noneValid": "AI 无法为这些词创建有效问题。请重试。"
+      "noneValid": "AI 无法为这些词创建有效问题。请重试。",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "本轮完成",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "仅在更改内容时",
       "confirmNever": "从不",
       "saveFailed": "无法保存 AI 偏好",
-      "disabledToast": "设置中已关闭 AI 辅助"
+      "disabledToast": "设置中已关闭 AI 辅助",
+      "exerciseNextSetPrefetch": "预先准备下一套练习",
+      "exerciseNextSetPrefetchDescription": "开始作答后，自动在后台准备下一套。开始准备时会消耗一次 AI 练习额度。关闭后仅在点击“新一套”时生成。"
     },
     "tutorials": "板块教程",
     "tutorialsDescription": "重置已完成的板块引导，使「显示教程」从头开始。",
@@ -2768,6 +2857,9 @@
     "noAccount": "还没有账户？",
     "hasAccount": "已有账户？",
     "invalidCredentials": "邮箱或密码无效",
+    "rememberMe": "记住我",
+    "signInUnavailable": "暂时无法登录。请重试。",
+    "accountSuspended": "此账号已停用。如果您认为这是误判，请联系支持。",
     "emailExists": "已存在使用此邮箱的账户",
     "emailInvalid": "请输入有效的邮箱地址",
     "registerFailed": "无法创建账户。请重试。",
@@ -2809,6 +2901,8 @@
     "resetTokenMissing": "此重置链接缺失或不完整。请重新申请。",
     "account": "账户",
     "accountSettings": "账户设置",
+    "roleAdmin": "管理员",
+    "roleTester": "测试员",
     "accountDescription": "更新你的头像和密码。",
     "profile": "个人资料",
     "avatar": "头像",
@@ -2910,6 +3004,7 @@
       "backup": "下载备份",
       "backupDone": "备份已下载",
       "backupFailed": "无法准备备份。请重试。",
+      "confirmPhrase": "删除全部数据",
       "confirmLabel": "输入 {phrase} 以确认",
       "confirm": "删除全部数据",
       "deleted": "全部学习数据已删除",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "可能跳过",
       "warnings": {
         "workspace_language_reuse": "部分工作区在同一语言下已存在。其内容将加入现有工作区，而不会创建重复项。",
-        "empty_backup": "此备份不包含任何可导入的学习数据。"
+        "empty_backup": "此备份不包含任何可导入的学习数据。",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "取消",
       "confirm": "导入学习数据",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# 个词汇项已存在} other {# 个词汇项已存在}}",
         "listening_missing_media": "{count, plural, one {# 堂听力课缺少媒体 URL} other {# 堂听力课缺少媒体 URL}}",
         "listening_duplicate_filename": "{count, plural, one {# 堂听力课已跳过（文件名重复）} other {# 堂听力课已跳过（文件名重复）}}",
+        "speaking_duplicate": "{count, plural, one {# 口语练习已存在} other {# 口语练习已存在}}",
         "invalid_workspace_ref": "{count, plural, one {# 项缺少工作区} other {# 项缺少工作区}}",
         "invalid_record": "{count, plural, one {# 条无效记录} other {# 条无效记录}}",
-        "unsupported_account_field": "账户身份字段不会导入"
+        "unsupported_account_field": "账户身份字段不会导入",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "该备份文件过大。请重新导出或联系支持。",
@@ -2977,7 +3080,12 @@
         "importFailed": "无法导入此备份。请重试。",
         "requestTooLarge": "该备份太大，无法通过此页面处理。请尝试更小的导出或联系支持。",
         "notConfigured": "备份导入的文件存储尚未配置。"
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "关闭账户",
@@ -3002,6 +3110,7 @@
       "backup": "下载备份",
       "backupDone": "备份已下载",
       "backupFailed": "无法准备备份。请重试。",
+      "confirmPhrase": "删除我的账户",
       "confirmLabel": "输入 {phrase} 以确认",
       "confirm": "永久删除账户",
       "deleted": "你的账户已删除",
@@ -3256,7 +3365,8 @@
       "learningTrends": "学习趋势",
       "personalLearningPath": "个人学习路径",
       "personalizedRecommendations": "个性化建议",
-      "crossModuleIntelligence": "跨模块个性化"
+      "crossModuleIntelligence": "跨模块个性化",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "对比方案",
@@ -3441,6 +3551,8 @@
       "errorQuota": "你已达到今日学习教练限额。明天可再次使用。",
       "errorPremium": "学习教练是 Premium 功能。可根据你的学习活动获得个性化建议。",
       "errorUnavailable": "教练目前无法回复。本次消息未计入额度。请重试。",
+      "errorWorkspace": "提问前请先选择一个工作区。",
+      "errorUnauthorized": "请重新登录后继续。",
       "prompts": {
         "practice_today": "我今天应该专注什么？",
         "struggling_words": "为什么这些单词让我吃力？",
@@ -4750,7 +4862,7 @@
       "contentLibrary": "内容库",
       "backToApp": "返回应用",
       "openMenu": "打开管理菜单",
-      "openAdmin": "管理仪表盘"
+      "openAdmin": "管理控制台"
     },
     "modules": {
       "vocabulary": "词汇",
@@ -4798,7 +4910,28 @@
         "failedListening": "失败的听力",
         "failedImports": "失败的导入",
         "runningJobs": "运行中的任务锁",
-        "recentAudits7d": "审计条目（7 天）"
+        "recentAudits7d": "审计条目（7 天）",
+        "admins": "管理员",
+        "testers": "测试员",
+        "suspended": "已停用",
+        "contentTotal": "内容记录"
+      },
+      "quickAccess": "快捷入口",
+      "quickAccessLede": "前往管理工具。",
+      "groups": {
+        "people": "用户",
+        "content": "内容",
+        "ops": "运维"
+      },
+      "charts": {
+        "signupsTitle": "新账号",
+        "signupsLede": "过去 14 个 UTC 日的每日注册。",
+        "activeTitle": "活跃学习者",
+        "activeLede": "每日有学习活动的独立用户（14 天）。",
+        "rolesTitle": "角色",
+        "rolesLede": "按角色划分的账号占比。",
+        "contentTitle": "内容构成",
+        "contentLede": "各学习模块中的存储记录。"
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "方案",
         "created": "注册时间",
         "updated": "更新时间",
-        "emailVerified": "邮箱已验证"
+        "emailVerified": "邮箱已验证",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "账户",
@@ -4841,7 +4976,8 @@
         "usageLede": "各学习模块中拥有的记录。",
         "actions": "账户操作",
         "workspaces": "工作区",
-        "workspacesLede": "此用户拥有的语言工作区。"
+        "workspacesLede": "此用户拥有的语言工作区。",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "保存姓名",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "撤销管理员",
         "suspend": "暂停",
         "restore": "恢复",
-        "delete": "删除账户"
+        "delete": "删除账户",
+        "grantTester": "授予测试员角色",
+        "revokeTester": "撤销测试员角色",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "要向此账户授予管理员权限吗？",
         "revokeAdmin": "要撤销管理员权限吗？如果他们是最后一位活跃管理员，操作将失败。",
         "suspend": "要暂停此账户吗？他们将在下一次受保护请求时失去访问权限。",
         "restore": "要恢复此账户吗？",
-        "delete": "要永久删除此账户及其级联学习数据吗？此操作无法撤销。"
+        "delete": "要永久删除此账户及其级联学习数据吗？此操作无法撤销。",
+        "grantTester": "授予测试员角色？他们可获得全部应用功能用于 QA；已存订阅不会改变。",
+        "revokeTester": "撤销测试员角色？功能访问将恢复为他们的实际订阅。"
+      },
+      "roleHelp": "测试员角色可在不更改已存订阅的情况下，为 QA 解锁全部 Free、Pro 与 Premium 功能。此控制台需要管理员权限。",
+      "roles": {
+        "user": "用户",
+        "tester": "测试员",
+        "admin": "管理员"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "语言",
         "owner": "所有者",
         "created": "创建时间",
-        "updated": "更新时间"
+        "updated": "更新时间",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "语言：{language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "要通过数据库级联删除此工作区及其全部学习内容吗？"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "所有者",
         "workspace": "工作区",
         "created": "创建时间",
-        "updated": "更新时间"
+        "updated": "更新时间",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "元数据检查。私有正文不会自动加载。",
@@ -4923,11 +5088,13 @@
         "actions": "操作"
       },
       "actions": {
-        "delete": "删除记录"
+        "delete": "删除记录",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "要删除此记录吗？相关子行将遵循数据库级联 / 置空规则。"
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "任务",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "此用户已有该语言的工作区。",
       "INVALID_LANGUAGE": "无效的语言代码。",
       "CONTENT_NOT_FOUND": "找不到记录。",
-      "INVALID_CONTENT_MODULE": "未知的内容模块。"
+      "INVALID_CONTENT_MODULE": "未知的内容模块。",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

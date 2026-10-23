@@ -16,6 +16,8 @@ import { ProUpgradeDialog } from "@/components/billing/pro-upgrade-dialog";
 type ProAccessContextValue = {
   hasProAccess: boolean;
   plan: PlanId;
+  /** Feature gates. Tester and Admin are Premium even when Stripe says Free. */
+  entitlementPlan: PlanId;
   cancelAtPeriodEnd: boolean;
   currentPeriodEnd: string | null;
   scheduledPlan: PlanId | null;
@@ -31,6 +33,7 @@ const ProAccessContext = createContext<ProAccessContextValue | null>(null);
 export function ProAccessProvider({
   hasProAccess,
   plan = "free",
+  entitlementPlan: entitlement = plan,
   cancelAtPeriodEnd = false,
   currentPeriodEnd = null,
   scheduledPlan = null,
@@ -40,6 +43,7 @@ export function ProAccessProvider({
 }: {
   hasProAccess: boolean;
   plan?: PlanId;
+  entitlementPlan?: PlanId;
   cancelAtPeriodEnd?: boolean;
   currentPeriodEnd?: string | null;
   scheduledPlan?: PlanId | null;
@@ -67,6 +71,7 @@ export function ProAccessProvider({
     () => ({
       hasProAccess,
       plan,
+      entitlementPlan: entitlement,
       cancelAtPeriodEnd,
       currentPeriodEnd,
       scheduledPlan,
@@ -79,6 +84,7 @@ export function ProAccessProvider({
     [
       hasProAccess,
       plan,
+      entitlement,
       cancelAtPeriodEnd,
       currentPeriodEnd,
       scheduledPlan,
@@ -108,6 +114,7 @@ export function useProAccess() {
     return {
       hasProAccess: false,
       plan: "free" as PlanId,
+      entitlementPlan: "free" as PlanId,
       cancelAtPeriodEnd: false,
       currentPeriodEnd: null,
       scheduledPlan: null,

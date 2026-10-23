@@ -8,6 +8,9 @@ export type ExerciseSessionMode =
   | "type_answer"
   | "form_sentence";
 
+/** Default interactive set size when the mode allows it. */
+export const DEFAULT_SESSION_QUESTION_COUNT = 10;
+
 /** Maximum items (or pairs) per exercise session. */
 export const SESSION_SIZE_MAX_BY_MODE: Record<ExerciseSessionMode, number> = {
   flashcards: 30,
@@ -266,9 +269,11 @@ export function sampleSessionItems<T>(
 ): T[] {
   if (items.length === 0) return [];
   const range = SESSION_SIZE_RANGE_BY_MODE[mode];
+  const max = SESSION_SIZE_MAX_BY_MODE[mode];
+  const preferred = Math.min(DEFAULT_SESSION_QUESTION_COUNT, max);
   const size = range
     ? pickSessionSizeInRange(items.length, range.min, range.max)
-    : pickSessionSize(items.length, SESSION_SIZE_MAX_BY_MODE[mode]);
+    : pickSessionSize(items.length, preferred);
 
   if (!preferences) {
     return shuffleArray(items).slice(0, size);

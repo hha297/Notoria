@@ -15,7 +15,20 @@
     "filters": "Filter",
     "hideFilters": "Dölj filter",
     "open": "Öppna",
-    "remove": "Ta bort"
+    "remove": "Ta bort",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Kan inte flytta en mapp in i sig själv",
     "tooDeep": "Denna mapp är nästlad för djupt",
     "notFound": "Mapp hittades inte",
-    "nameTaken": "En mapp eller skrivande använder redan detta namn"
+    "nameTaken": "En mapp eller skrivande använder redan detta namn",
+    "dragTipTitle": "Flytta till en mapp",
+    "dragTipBody": "På en dator med mus eller styrplatta: dra ett objekt till ett mappkort för att flytta det. Du kan också använda flyttikonen på varje objekt.",
+    "dragTipDismiss": "Stäng tipset",
+    "dragTipShow": "Så flyttar du till mappar",
+    "dragTipDemo": "Dra objekt till mapp",
+    "dragTipCard": "Objekt"
   },
   "theme": {
     "toggle": "Väx tema",
@@ -291,7 +310,11 @@
     "createWorkspace": "Skapa arbetsyta",
     "createWorkspaceHint": "Lägg till en till språkarbeetsyta",
     "switchWorkspace": "Byt arbetsyta",
-    "switchFailed": "Kunde inte byta arbetsyta"
+    "switchFailed": "Kunde inte byta arbetsyta",
+    "selectLanguage": "Välj språk",
+    "allLanguages": "Alla språk",
+    "changeLanguageFailed": "Det gick inte att byta gränssnittsspråk",
+    "popularLanguages": "Populära"
   },
   "workspace": {
     "title": "Arbetsytor",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# import} other {# importer}}"
     },
     "processing": {
-      "workingTitle": "Arbetar med din övning",
-      "readyTitle": "Övning klar",
+      "workingTitle": "Övningen förbereds",
+      "readyTitle": "Övningen är klar",
       "errorTitle": "Något gick fel",
       "cancel": "Avbryt",
       "retry": "Försök igen",
-      "dismiss": "Avfärda",
+      "dismiss": "Stäng",
       "stages": {
-        "uploading": "Laddar upp…",
-        "extracting": "Extraherar innehåll…",
-        "analyzing": "Analyserar innehåll…",
-        "generating": "Genererar övning…",
-        "saving": "Sparar övning…",
-        "completed": "Övning klar",
-        "error": "Generering misslyckades"
-      }
+        "uploading": "Laddar upp fil",
+        "extracting": "Extraherar innehåll",
+        "analyzing": "Analyserar innehåll",
+        "generating": "Genererar frågor",
+        "saving": "Sparar och förbereder övningen",
+        "completed": "Övningen är klar",
+        "error": "Genereringen misslyckades",
+        "preparing": "Förbereder läromaterial",
+        "validating": "Validerar svar och tips"
+      },
+      "stillWorking": "Genererar fortfarande… {seconds} s har gått",
+      "hints": {
+        "uploading": "Skickar din fil säkert.",
+        "extracting": "Läser text och struktur från källan.",
+        "analyzing": "Identifierar övningsledtrådar i materialet.",
+        "preparing": "Samlar valt ordförråd eller teori för denna uppsättning.",
+        "generating": "Modellen skriver frågor. Det kan ta en stund.",
+        "validating": "Kontrollerar svar, tips och struktur före övning.",
+        "saving": "Sätter ihop din övningsuppsättning."
+      },
+      "nextSetPreparing": "Förbereder nästa uppsättning…",
+      "nextSetReady": "Nästa uppsättning är klar",
+      "nextSetFailed": "Kunde inte förbereda nästa uppsättning",
+      "nextSetRetry": "Förbered nästa uppsättning",
+      "openNextSet": "Öppna nästa uppsättning"
     },
     "import": {
       "eyebrow": "Importerad övning",
@@ -822,6 +862,7 @@
       "aiReady": "Övning klar",
       "aiUnavailable": "Kunde inte generera AI-frågor just nu.",
       "aiForbidden": "AI-teoriövningar är tillgängliga med Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI-hjälp är avstängd i Inställningar.",
       "feedback": {
         "correct": "Korrekt!",
@@ -874,7 +915,21 @@
         "theRule": "Regeln",
         "why": "Varför",
         "complete": "Förstått",
-        "completeHint": "Du kan gå vidare när du är redo."
+        "completeHint": "Du kan gå vidare när du är redo.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Ledtråd",
       "startsWith": "Börjar med “{letter}”",
       "revealPrompt": "Fortfarande fast? Du kan avslöja hela svaret.",
-      "revealAnswer": "Avslöja svaret"
+      "revealAnswer": "Avslöja svaret",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Inga ord ännu",
@@ -977,8 +1034,38 @@
       "forbidden": "AI-övningsgenerering är tillgänglig med Pro.",
       "disabled": "AI-hjälp är avstängd i Inställningar.",
       "upgradeHint": "AI-övningsgenerering är tillgänglig med Pro.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Lägg till ordförrådsord innan du genererar frågor.",
-      "noneValid": "AI kunde inte skapa giltiga frågor för dessa ord. Försök igen."
+      "noneValid": "AI kunde inte skapa giltiga frågor för dessa ord. Försök igen.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Session komplett",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Endast vid innehållsändring",
       "confirmNever": "Aldrig",
       "saveFailed": "Kunde inte spara AI-inställningar",
-      "disabledToast": "AI-hjälp är avstängd i Inställningar"
+      "disabledToast": "AI-hjälp är avstängd i Inställningar",
+      "exerciseNextSetPrefetch": "Förbered nästa övningsuppsättning",
+      "exerciseNextSetPrefetchDescription": "När du börjar svara förbereds nästa uppsättning automatiskt i bakgrunden. Använder en AI-övningskredit när förberedelsen startar. Stäng av för att bara generera när du trycker Ny uppsättning."
     },
     "tutorials": "Sektionstutorials",
     "tutorialsDescription": "Återställ genomförda sektiongenomgångar så att \"Visa tutorial\" börjar från början igen.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Har du inget konto?",
     "hasAccount": "Har du redan ett konto?",
     "invalidCredentials": "Ogiltig e-post eller lösenord",
+    "rememberMe": "Kom ihåg mig",
+    "signInUnavailable": "Vi kunde inte logga in dig just nu. Försök igen.",
+    "accountSuspended": "Det här kontot är avstängt. Kontakta support om du tror att det är ett misstag.",
     "emailExists": "Ett konto med denna e-post finns redan",
     "emailInvalid": "Ange en giltig e-postadress",
     "registerFailed": "Kunde inte skapa konto. Försök igen.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Villkor",
     "registerAgreement": "Genom att skapa ett konto godkänner du <terms>användarvillkoren</terms> och <privacy>integritetspolicyn</privacy>.",
     "avatarRequestTooLarge": "Fotot är för stort att skicka. Prova en mindre bild.",
-    "requestTooLarge": "Begäran var för stor. Dina ändringar sparades — försök igen."
+    "requestTooLarge": "Begäran var för stor. Dina ändringar sparades — försök igen.",
+    "roleAdmin": "Administratör",
+    "roleTester": "Testare"
   },
   "account": {
     "eyebrow": "Konto",
@@ -2910,6 +3004,7 @@
       "backup": "Ladda ner säkerhetskopia",
       "backupDone": "Säkerhetskopia nedladdad",
       "backupFailed": "Kunde inte förbereda din säkerhetskopia. Försök igen.",
+      "confirmPhrase": "Radera alla data",
       "confirmLabel": "Skriv {phrase} för att bekräfta",
       "confirm": "Radera all data",
       "deleted": "All inlärningsdata har raderats",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Kan hoppas över",
       "warnings": {
         "workspace_language_reuse": "Vissa arbetsytor finns redan för samma språk. Deras innehåll läggs till i dina befintliga arbetsytor i stället för att dupliceras.",
-        "empty_backup": "Den här säkerhetskopian innehåller ingen importerbar inlärningsdata."
+        "empty_backup": "Den här säkerhetskopian innehåller ingen importerbar inlärningsdata.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Avbryt",
       "confirm": "Importera inlärningsdata",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# ordförrådspost finns redan} other {# ordförrådsposter finns redan}}",
         "listening_missing_media": "{count, plural, one {# lyssningslektion saknar media-URL} other {# lyssningslektioner saknar media-URL}}",
         "listening_duplicate_filename": "{count, plural, one {# lyssningslektion hoppades över (duplicerat filnamn)} other {# lyssningslektioner hoppades över (duplicerat filnamn)}}",
+        "speaking_duplicate": "{count, plural, one {# talsession finns redan} other {# talsessioner finns redan}}",
         "invalid_workspace_ref": "{count, plural, one {# objekt med saknad arbetsyta} other {# objekt med saknad arbetsyta}}",
         "invalid_record": "{count, plural, one {# ogiltig post} other {# ogiltiga poster}}",
-        "unsupported_account_field": "Kontoidentitetsfält importeras inte"
+        "unsupported_account_field": "Kontoidentitetsfält importeras inte",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Säkerhetskopiefilen är för stor. Exportera igen eller kontakta support.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Kunde inte importera säkerhetskopian. Försök igen.",
         "requestTooLarge": "Säkerhetskopian är för stor att bearbeta på den här sidan. Prova en mindre export eller kontakta support.",
         "notConfigured": "Fillagring är inte konfigurerad för import av säkerhetskopior ännu."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Stäng konto",
@@ -3002,6 +3110,7 @@
       "backup": "Ladda ner säkerhetskopia",
       "backupDone": "Säkerhetskopia nedladdad",
       "backupFailed": "Kunde inte förbereda din säkerhetskopia. Försök igen.",
+      "confirmPhrase": "Radera mitt konto",
       "confirmLabel": "Skriv {phrase} för att bekräfta",
       "confirm": "Permanently delete account",
       "deleted": "Ditt konto har tagits bort",
@@ -3355,7 +3464,8 @@
       "learningTrends": "Lärtrender",
       "personalLearningPath": "Personlig lärväg",
       "personalizedRecommendations": "Personliga rekommendationer",
-      "crossModuleIntelligence": "Personalisering över moduler"
+      "crossModuleIntelligence": "Personalisering över moduler",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     }
   },
   "coach": {
@@ -3456,6 +3566,8 @@
       "errorQuota": "Du har nått dagens gräns för lärcoachen. Coachen är tillgänglig igen i morgon.",
       "errorPremium": "Lärcoachen är en Premium-funktion. Få personliga rekommendationer baserade på din studieaktivitet.",
       "errorUnavailable": "Din coach kunde inte svara just nu. Ditt meddelande räknades inte. Försök igen.",
+      "errorWorkspace": "Välj en arbetsyta innan du frågar coachen.",
+      "errorUnauthorized": "Logga in igen för att fortsätta.",
       "prompts": {
         "practice_today": "Vad ska jag fokusera på idag?",
         "struggling_words": "Varför har jag svårt med dessa ord?",
@@ -4739,34 +4851,34 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
-      "manage": "Manage",
-      "overview": "Overview",
-      "users": "Users",
-      "workspaces": "Workspaces",
+      "admin": "Administratör",
+      "manage": "Hantera",
+      "overview": "Översikt",
+      "users": "Användare",
+      "workspaces": "Arbetsytor",
       "jobs": "Jobs",
       "audit": "Audit",
-      "content": "Content",
+      "content": "Innehåll",
       "contentLibrary": "Content library",
-      "backToApp": "Back to app",
+      "backToApp": "Tillbaka till appen",
       "openMenu": "Open admin menu",
-      "openAdmin": "Admin dashboard"
+      "openAdmin": "Administratörspanel"
     },
     "modules": {
-      "vocabulary": "Vocabulary",
-      "theory": "Theory",
-      "writing": "Writing",
-      "exercises": "Exercises",
-      "listening": "Listening",
-      "reading": "Reading",
-      "speaking": "Speaking",
-      "inbox": "Capture",
-      "folders": "Folders"
+      "vocabulary": "Vokabulär",
+      "theory": "Teori",
+      "writing": "Skrivande",
+      "exercises": "Övning",
+      "listening": "Lyssnande",
+      "reading": "Läsning",
+      "speaking": "Tala",
+      "inbox": "Fångst",
+      "folders": "Mappar"
     },
     "common": {
-      "search": "Search",
+      "search": "Sök",
       "clear": "Clear",
-      "filter": "Filter",
+      "filter": "Filtrera",
       "previous": "Previous",
       "next": "Next",
       "pageOf": "Page {page} of {totalPages}",
@@ -4787,18 +4899,39 @@
         "newUsers30d": "New users (30d)",
         "activeUsers7d": "Active learners (7d)",
         "workspaces": "Workspaces",
-        "vocabulary": "Vocabulary",
-        "theory": "Theory",
-        "writing": "Writing",
-        "exercises": "Exercises",
-        "listening": "Listening",
-        "reading": "Reading",
-        "speaking": "Speaking",
-        "inbox": "Capture",
+        "vocabulary": "Vokabulär",
+        "theory": "Teori",
+        "writing": "Skrivande",
+        "exercises": "Övning",
+        "listening": "Lyssnande",
+        "reading": "Läsning",
+        "speaking": "Tala",
+        "inbox": "Fångst",
         "failedListening": "Failed listening",
         "failedImports": "Failed imports",
         "runningJobs": "Running job locks",
-        "recentAudits7d": "Audit entries (7d)"
+        "recentAudits7d": "Audit entries (7d)",
+        "admins": "Administratörer",
+        "testers": "Testare",
+        "suspended": "Avstängda",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Snabbåtkomst",
+      "quickAccessLede": "Gå till hanteringsverktyg.",
+      "groups": {
+        "people": "Personer",
+        "content": "Innehåll",
+        "ops": "Drift"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4818,12 +4951,12 @@
       "filters": {
         "role": "Role",
         "status": "Status",
-        "allRoles": "Any role",
-        "allStatuses": "Any status"
+        "allRoles": "Alla roller",
+        "allStatuses": "Alla statusar"
       },
       "status": {
-        "active": "Active",
-        "suspended": "Suspended"
+        "active": "Aktiv",
+        "suspended": "Suspenderad"
       },
       "fields": {
         "id": "User id",
@@ -4833,7 +4966,9 @@
         "plan": "Plan",
         "created": "Registered",
         "updated": "Updated",
-        "emailVerified": "Email verified"
+        "emailVerified": "Email verified",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Account",
@@ -4841,7 +4976,8 @@
         "usageLede": "Owned records across learning modules.",
         "actions": "Account actions",
         "workspaces": "Workspaces",
-        "workspacesLede": "Language workspaces owned by this user."
+        "workspacesLede": "Language workspaces owned by this user.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Save name",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Revoke admin",
         "suspend": "Suspend",
         "restore": "Restore",
-        "delete": "Delete account"
+        "delete": "Delete account",
+        "grantTester": "Ge testarroll",
+        "revokeTester": "Ta bort testarroll",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Grant admin access to this account?",
         "revokeAdmin": "Revoke admin access? This fails if they are the last active admin.",
         "suspend": "Suspend this account? They lose access on the next protected request.",
         "restore": "Restore this account?",
-        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone."
+        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone.",
+        "grantTester": "Ge testarroll? De får alla appfunktioner för QA; den sparade prenumerationen ändras inte.",
+        "revokeTester": "Ta bort testarroll? Funktionsåtkomsten återgår till deras faktiska prenumeration."
+      },
+      "roleHelp": "Testarrollen låser upp alla Free-, Pro- och Premium-funktioner för QA utan att ändra den sparade prenumerationen. Administratör krävs för den här panelen.",
+      "roles": {
+        "user": "Användare",
+        "tester": "Testare",
+        "admin": "Administratör"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Language",
         "owner": "Owner",
         "created": "Created",
-        "updated": "Updated"
+        "updated": "Updated",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Language: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Delete this workspace and all learning content inside it via database cascades?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Owner",
         "workspace": "Workspace",
         "created": "Created",
-        "updated": "Updated"
+        "updated": "Updated",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Metadata inspection. Private bodies are not auto-loaded.",
@@ -4923,11 +5088,13 @@
         "actions": "Actions"
       },
       "actions": {
-        "delete": "Delete record"
+        "delete": "Delete record",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Delete this record? Related child rows follow database cascade / set-null rules."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Jobs",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "This user already has a workspace for that language.",
       "INVALID_LANGUAGE": "Invalid language code.",
       "CONTENT_NOT_FOUND": "Record not found.",
-      "INVALID_CONTENT_MODULE": "Unknown content module."
+      "INVALID_CONTENT_MODULE": "Unknown content module.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

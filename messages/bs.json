@@ -15,7 +15,20 @@
     "clearFilter": "Očisti",
     "filters": "Filteri",
     "hideFilters": "Sakrij filtere",
-    "remove": "Ukloni"
+    "remove": "Ukloni",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Folder se ne može premjestiti u sebe",
     "tooDeep": "Ovaj folder je ugniježđen preduboko",
     "notFound": "Folder nije pronađen",
-    "nameTaken": "Folder ili pisanje već koristi ovo ime"
+    "nameTaken": "Folder ili pisanje već koristi ovo ime",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Promijeni temu",
@@ -291,7 +310,11 @@
     "createWorkspace": "Kreiraj radni prostor",
     "createWorkspaceHint": "Dodajte još jedan jezični radni prostor",
     "switchWorkspace": "Promijeni radni prostor",
-    "switchFailed": "Promjena radnog prostora nije uspjela"
+    "switchFailed": "Promjena radnog prostora nije uspjela",
+    "selectLanguage": "Odaberite jezik",
+    "allLanguages": "Svi jezici",
+    "changeLanguageFailed": "Nije moguće promijeniti jezik sučelja",
+    "popularLanguages": "Popularno"
   },
   "workspace": {
     "title": "Radni prostori",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# uvoz} few {# uvoza} other {# uvoza}}"
     },
     "processing": {
-      "workingTitle": "Radimo na vašoj vježbi",
+      "workingTitle": "Priprema vježbe",
       "readyTitle": "Vježba je spremna",
-      "errorTitle": "Nešto nije u redu",
+      "errorTitle": "Nešto je pošlo po zlu",
       "cancel": "Otkaži",
       "retry": "Pokušaj ponovo",
       "dismiss": "Zatvori",
       "stages": {
-        "uploading": "Otpremanje…",
-        "extracting": "Izvlačenje sadržaja…",
-        "analyzing": "Analiza sadržaja…",
-        "generating": "Generisanje vježbe…",
-        "saving": "Spremanje vježbe…",
+        "uploading": "Otpremanje datoteke",
+        "extracting": "Izvlačenje sadržaja",
+        "analyzing": "Analiza sadržaja",
+        "generating": "Generisanje pitanja",
+        "saving": "Spremanje i priprema vježbe",
         "completed": "Vježba je spremna",
-        "error": "Generisanje nije uspjelo"
-      }
+        "error": "Generisanje nije uspjelo",
+        "preparing": "Priprema nastavnog materijala",
+        "validating": "Provjera odgovora i savjeta"
+      },
+      "stillWorking": "Još se generiše… proteklo {seconds} s",
+      "hints": {
+        "uploading": "Sigurno slanje vaše datoteke.",
+        "extracting": "Čitanje teksta i strukture iz izvora.",
+        "analyzing": "Pronalaženje savjeta za vježbu u materijalu.",
+        "preparing": "Prikupljanje odabranog vokabulara ili teorije za ovaj set.",
+        "generating": "Model piše pitanja. Može potrajati.",
+        "validating": "Provjera odgovora, savjeta i strukture prije vježbe.",
+        "saving": "Sastavljanje vašeg seta vježbi."
+      },
+      "nextSetPreparing": "Priprema sljedećeg seta…",
+      "nextSetReady": "Sljedeći set je spreman",
+      "nextSetFailed": "Nije moguće pripremiti sljedeći set",
+      "nextSetRetry": "Pripremi sljedeći set",
+      "openNextSet": "Otvori sljedeći set"
     },
     "import": {
       "eyebrow": "Uvezena vježba",
@@ -822,6 +862,7 @@
       "aiReady": "Vježba je spremna",
       "aiUnavailable": "Trenutno nije moguće generisati AI pitanja.",
       "aiForbidden": "AI teorijske vježbe dostupne su uz Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI pomoć je isključena u Postavkama.",
       "feedback": {
         "correct": "Tačno!",
@@ -874,7 +915,21 @@
         "theRule": "Pravilo",
         "why": "Zašto",
         "complete": "Razumijem",
-        "completeHint": "Možete nastaviti kad budete spremni."
+        "completeHint": "Možete nastaviti kad budete spremni.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Nagovještaj",
       "startsWith": "Počinje sa „{letter}“",
       "revealPrompt": "Još uvijek zapeli? Možete otkriti cijeli odgovor.",
-      "revealAnswer": "Otkrij odgovor"
+      "revealAnswer": "Otkrij odgovor",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Još nema vokabulara",
@@ -977,8 +1034,38 @@
       "forbidden": "AI generisanje vježbi dostupno je uz Pro.",
       "disabled": "AI pomoć je isključena u Postavkama.",
       "upgradeHint": "Besplatni plan uključuje nekoliko AI generisanja vježbi dnevno. Pro uklanja ograničenje.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Dodajte riječi u vokabular prije generisanja pitanja.",
-      "noneValid": "AI nije mogao kreirati važeća pitanja za ove riječi. Pokušajte ponovo."
+      "noneValid": "AI nije mogao kreirati važeća pitanja za ove riječi. Pokušajte ponovo.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Sesija je završena",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Samo pri izmjeni sadržaja",
       "confirmNever": "Nikada",
       "saveFailed": "Nije moguće sačuvati AI postavke",
-      "disabledToast": "AI pomoć je isključena u Postavkama"
+      "disabledToast": "AI pomoć je isključena u Postavkama",
+      "exerciseNextSetPrefetch": "Pripremi sljedeći set vježbi",
+      "exerciseNextSetPrefetchDescription": "Nakon što počnete odgovarati, sljedeći set se automatski priprema u pozadini. Koristi jedan AI kredit za vježbu pri pokretanju. Isključite da generišete samo na Novi set."
     },
     "tutorials": "Tutorijali sekcija",
     "tutorialsDescription": "Resetujte završene obilaske sekcija kako bi „Prikaži tutorijal“ ponovo počeo od početka.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Nemate račun?",
     "hasAccount": "Već imate račun?",
     "invalidCredentials": "Nevažeća e-pošta ili lozinka",
+    "rememberMe": "Zapamti me",
+    "signInUnavailable": "Prijava sada nije uspjela. Pokušajte ponovo.",
+    "accountSuspended": "Ovaj nalog je suspendovan. Kontaktirajte podršku ako mislite da je ovo greška.",
     "emailExists": "Račun s ovom e-poštom već postoji",
     "emailInvalid": "Unesite važeću adresu e-pošte",
     "registerFailed": "Nije moguće kreirati račun. Pokušajte ponovo.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Uslovi",
     "registerAgreement": "Kreiranjem računa prihvatate <terms>Uslove korištenja</terms> i <privacy>Politiku privatnosti</privacy>.",
     "avatarRequestTooLarge": "Ta fotografija je prevelika za slanje. Pokušajte manju sliku.",
-    "requestTooLarge": "Taj zahtjev je bio prevelik. Vaše izmjene su zadržane — pokušajte ponovo."
+    "requestTooLarge": "Taj zahtjev je bio prevelik. Vaše izmjene su zadržane — pokušajte ponovo.",
+    "roleAdmin": "Administrator",
+    "roleTester": "Ispitivač"
   },
   "account": {
     "eyebrow": "Račun",
@@ -2910,6 +3004,7 @@
       "backup": "Preuzmi sigurnosnu kopiju",
       "backupDone": "Sigurnosna kopija preuzeta",
       "backupFailed": "Nije moguće pripremiti sigurnosnu kopiju. Pokušajte ponovo.",
+      "confirmPhrase": "Obriši sve podatke",
       "confirmLabel": "Upišite {phrase} za potvrdu",
       "confirm": "Izbriši sve podatke",
       "deleted": "Svi podaci za učenje su izbrisani",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Može biti preskočeno",
       "warnings": {
         "workspace_language_reuse": "Neki radni prostori već postoje za isti jezik. Njihov sadržaj bit će dodan u postojeće radne prostore umjesto kreiranja duplikata.",
-        "empty_backup": "Ova sigurnosna kopija ne sadrži uvozne podatke za učenje."
+        "empty_backup": "Ova sigurnosna kopija ne sadrži uvozne podatke za učenje.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Otkaži",
       "confirm": "Uvezi podatke za učenje",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# stavka vokabulara već postoji} few {# stavke vokabulara već postoje} other {# stavki vokabulara već postoji}}",
         "listening_missing_media": "{count, plural, one {# lekcija slušanja bez URL-a medija} few {# lekcije slušanja bez URL-ova medija} other {# lekcija slušanja bez URL-ova medija}}",
         "listening_duplicate_filename": "{count, plural, one {# lekcija slušanja preskočena (duplikat naziva datoteke)} few {# lekcije slušanja preskočene (duplikat naziva datoteke)} other {# lekcija slušanja preskočeno (duplikat naziva datoteke)}}",
+        "speaking_duplicate": "{count, plural, one {# sesija govora već postoji} few {# sesije govora već postoje} other {# sesija govora već postoji}}",
         "invalid_workspace_ref": "{count, plural, one {# stavka bez radnog prostora} few {# stavke bez radnog prostora} other {# stavki bez radnog prostora}}",
         "invalid_record": "{count, plural, one {# nevažeći zapis} few {# nevažeća zapisa} other {# nevažećih zapisa}}",
-        "unsupported_account_field": "Polja identiteta računa se ne uvoze"
+        "unsupported_account_field": "Polja identiteta računa se ne uvoze",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Ta datoteka sigurnosne kopije je prevelika. Pokušajte ponovo izvesti ili kontaktirajte podršku.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Nije moguće uvesti ovu sigurnosnu kopiju. Pokušajte ponovo.",
         "requestTooLarge": "Ta sigurnosna kopija je prevelika za obradu putem ove stranice. Pokušajte manji izvoz ili kontaktirajte podršku.",
         "notConfigured": "Skladište datoteka još nije konfigurisano za uvoz sigurnosne kopije."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Zatvori račun",
@@ -3002,6 +3110,7 @@
       "backup": "Preuzmi sigurnosnu kopiju",
       "backupDone": "Sigurnosna kopija preuzeta",
       "backupFailed": "Nije moguće pripremiti sigurnosnu kopiju. Pokušajte ponovo.",
+      "confirmPhrase": "Obriši moj račun",
       "confirmLabel": "Upišite {phrase} za potvrdu",
       "confirm": "Trajno izbriši račun",
       "deleted": "Vaš račun je izbrisan",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Trendovi učenja",
       "personalLearningPath": "Lični put učenja",
       "personalizedRecommendations": "Personalizirane preporuke",
-      "crossModuleIntelligence": "Personalizacija kroz module"
+      "crossModuleIntelligence": "Personalizacija kroz module",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Uporedite planove",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Dostigli ste današnji limit Trenera učenja. Trener će biti dostupan ponovo sutra.",
       "errorPremium": "Trener učenja je Premium funkcija. Dobijte personalizirane preporuke na osnovu aktivnosti učenja.",
       "errorUnavailable": "Trener trenutno nije mogao odgovoriti. Poruka nije uračunata. Pokušajte ponovo.",
+      "errorWorkspace": "Odaberite radni prostor prije nego što pitate trenera.",
+      "errorUnauthorized": "Prijavite se ponovo da nastavite.",
       "prompts": {
         "practice_today": "Na šta da se fokusiram danas?",
         "struggling_words": "Zašto mi ove riječi idu teško?",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Administrator",
       "manage": "Upravljanje",
       "overview": "Pregled",
       "users": "Korisnici",
@@ -4750,7 +4862,7 @@
       "contentLibrary": "Biblioteka sadržaja",
       "backToApp": "Nazad u aplikaciju",
       "openMenu": "Otvori admin meni",
-      "openAdmin": "Admin kontrolna tabla"
+      "openAdmin": "Admin ploča"
     },
     "modules": {
       "vocabulary": "Vokabular",
@@ -4760,7 +4872,7 @@
       "listening": "Slušanje",
       "reading": "Čitanje",
       "speaking": "Govorenje",
-      "inbox": "Capture",
+      "inbox": "Prikupljanje",
       "folders": "Fascikle"
     },
     "common": {
@@ -4794,11 +4906,32 @@
         "listening": "Slušanje",
         "reading": "Čitanje",
         "speaking": "Govorenje",
-        "inbox": "Capture",
+        "inbox": "Prikupljanje",
         "failedListening": "Neuspješno slušanje",
         "failedImports": "Neuspješni uvozi",
         "runningJobs": "Pokrenute brave poslova",
-        "recentAudits7d": "Revizijski unosi (7d)"
+        "recentAudits7d": "Revizijski unosi (7d)",
+        "admins": "Administratori",
+        "testers": "Ispitivači",
+        "suspended": "Suspendovani",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Brzi pristup",
+      "quickAccessLede": "Idite na alate za upravljanje.",
+      "groups": {
+        "people": "Ljudi",
+        "content": "Sadržaj",
+        "ops": "Operacije"
+      },
+      "charts": {
+        "signupsTitle": "New accounts",
+        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
+        "activeTitle": "Active learners",
+        "activeLede": "Distinct learners with activity each day (14d).",
+        "rolesTitle": "Roles",
+        "rolesLede": "Share of accounts by role.",
+        "contentTitle": "Content mix",
+        "contentLede": "Stored records across learning modules."
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "Plan",
         "created": "Registrovan",
         "updated": "Ažurirano",
-        "emailVerified": "E-mail potvrđen"
+        "emailVerified": "E-mail potvrđen",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Račun",
@@ -4841,7 +4976,8 @@
         "usageLede": "Vlasnički zapisi kroz module učenja.",
         "actions": "Radnje na računu",
         "workspaces": "Radni prostori",
-        "workspacesLede": "Jezički radni prostori koje posjeduje ovaj korisnik."
+        "workspacesLede": "Jezički radni prostori koje posjeduje ovaj korisnik.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Sačuvaj ime",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Ukloni admin",
         "suspend": "Suspenduj",
         "restore": "Vrati",
-        "delete": "Obriši račun"
+        "delete": "Obriši račun",
+        "grantTester": "Dodijeli ispitivača",
+        "revokeTester": "Ukloni ispitivača",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Dodijeliti admin pristup ovom računu?",
         "revokeAdmin": "Ukloniti admin pristup? Ovo neće uspjeti ako su posljednji aktivni admin.",
         "suspend": "Suspendovati ovaj račun? Gube pristup pri sljedećem zaštićenom zahtjevu.",
         "restore": "Vratiti ovaj račun?",
-        "delete": "Trajno obrisati ovaj račun i povezane podatke učenja? Ovo se ne može poništiti."
+        "delete": "Trajno obrisati ovaj račun i povezane podatke učenja? Ovo se ne može poništiti.",
+        "grantTester": "Dodijeliti ulogu ispitivača? Dobijaju sve funkcije aplikacije za QA; sačuvana pretplata se ne mijenja.",
+        "revokeTester": "Ukloniti ulogu ispitivača? Pristup funkcijama vraća se na njihovu stvarnu pretplatu."
+      },
+      "roleHelp": "Uloga ispitivača otključava sve Free, Pro i Premium funkcije za QA bez promjene sačuvane pretplate. Za ovu ploču potreban je administrator.",
+      "roles": {
+        "user": "Korisnik",
+        "tester": "Ispitivač",
+        "admin": "Administrator"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Jezik",
         "owner": "Vlasnik",
         "created": "Kreirano",
-        "updated": "Ažurirano"
+        "updated": "Ažurirano",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Jezik: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Obrisati ovaj radni prostor i sav sadržaj učenja u njemu putem kaskada baze?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Vlasnik",
         "workspace": "Radni prostor",
         "created": "Kreirano",
-        "updated": "Ažurirano"
+        "updated": "Ažurirano",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Pregled metapodataka. Privatna tijela se ne učitavaju automatski.",
@@ -4923,11 +5088,13 @@
         "actions": "Radnje"
       },
       "actions": {
-        "delete": "Obriši zapis"
+        "delete": "Obriši zapis",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Obrisati ovaj zapis? Povezani podredovi slijede pravila kaskade / set-null u bazi."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Poslovi",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Ovaj korisnik već ima radni prostor za taj jezik.",
       "INVALID_LANGUAGE": "Nevažeći kod jezika.",
       "CONTENT_NOT_FOUND": "Zapis nije pronađen.",
-      "INVALID_CONTENT_MODULE": "Nepoznat modul sadržaja."
+      "INVALID_CONTENT_MODULE": "Nepoznat modul sadržaja.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

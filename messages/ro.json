@@ -15,7 +15,20 @@
     "clearFilter": "Ștergeți",
     "filters": "Filtre",
     "hideFilters": "Ascundeți filtrele",
-    "remove": "Eliminați"
+    "remove": "Eliminați",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Nu puteți muta un folder în el însuși",
     "tooDeep": "Acest folder este imbricat prea adânc",
     "notFound": "Folderul nu a fost găsit",
-    "nameTaken": "Un folder sau o scriere folosește deja acest nume"
+    "nameTaken": "Un folder sau o scriere folosește deja acest nume",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Comutați tema",
@@ -291,7 +310,11 @@
     "createWorkspace": "Creați spațiu de lucru",
     "createWorkspaceHint": "Adăugați un alt spațiu de lucru pentru o limbă",
     "switchWorkspace": "Schimbați spațiul de lucru",
-    "switchFailed": "Nu s-a putut schimba spațiul de lucru"
+    "switchFailed": "Nu s-a putut schimba spațiul de lucru",
+    "selectLanguage": "Selectați limba",
+    "allLanguages": "Toate limbile",
+    "changeLanguageFailed": "Nu s-a putut schimba limba interfeței",
+    "popularLanguages": "Populare"
   },
   "workspace": {
     "title": "Spații de lucru",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# import} few {# importuri} other {# de importuri}}"
     },
     "processing": {
-      "workingTitle": "Lucrăm la exercițiul dumneavoastră",
-      "readyTitle": "Exercițiu gata",
-      "errorTitle": "A apărut o eroare",
-      "cancel": "Anulați",
-      "retry": "Reîncercați",
-      "dismiss": "Închideți",
+      "workingTitle": "Se pregătește exercițiul",
+      "readyTitle": "Exercițiul este gata",
+      "errorTitle": "Ceva nu a mers bine",
+      "cancel": "Anulează",
+      "retry": "Încearcă din nou",
+      "dismiss": "Închide",
       "stages": {
-        "uploading": "Se încarcă…",
-        "extracting": "Se extrage conținutul…",
-        "analyzing": "Se analizează conținutul…",
-        "generating": "Se generează exercițiul…",
-        "saving": "Se salvează exercițiul…",
-        "completed": "Exercițiu gata",
-        "error": "Generarea a eșuat"
-      }
+        "uploading": "Se încarcă fișierul",
+        "extracting": "Se extrage conținutul",
+        "analyzing": "Se analizează conținutul",
+        "generating": "Se generează întrebările",
+        "saving": "Se salvează și se pregătește exercițiul",
+        "completed": "Exercițiul este gata",
+        "error": "Generarea a eșuat",
+        "preparing": "Se pregătește materialul de învățare",
+        "validating": "Se validează răspunsurile și indiciile"
+      },
+      "stillWorking": "Încă se generează… au trecut {seconds} s",
+      "hints": {
+        "uploading": "Fișierul tău este trimis în siguranță.",
+        "extracting": "Se citește textul și structura din sursă.",
+        "analyzing": "Se identifică indicii de practică din material.",
+        "preparing": "Se adună vocabularul sau teoria selectate pentru acest set.",
+        "generating": "Modelul scrie întrebări. Poate dura puțin.",
+        "validating": "Se verifică răspunsurile, indiciile și structura înainte de practică.",
+        "saving": "Se asamblează setul tău de practică."
+      },
+      "nextSetPreparing": "Se pregătește următorul set…",
+      "nextSetReady": "Următorul set este gata",
+      "nextSetFailed": "Nu s-a putut pregăti următorul set",
+      "nextSetRetry": "Pregătește următorul set",
+      "openNextSet": "Deschide următorul set"
     },
     "import": {
       "eyebrow": "Practică importată",
@@ -822,6 +862,7 @@
       "aiReady": "Practică gata",
       "aiUnavailable": "Nu s-au putut genera întrebări cu IA momentan.",
       "aiForbidden": "Exercițiile de teorie cu IA sunt disponibile cu Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "Asistența IA este dezactivată în Setări.",
       "feedback": {
         "correct": "Corect!",
@@ -874,7 +915,21 @@
         "theRule": "Regula",
         "why": "De ce",
         "complete": "Am înțeles",
-        "completeHint": "Puteți continua când sunteți pregătit."
+        "completeHint": "Puteți continua când sunteți pregătit.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Indiciu",
       "startsWith": "Începe cu „{letter}”",
       "revealPrompt": "Tot blocat? Puteți dezvălui răspunsul complet.",
-      "revealAnswer": "Dezvăluiți răspunsul"
+      "revealAnswer": "Dezvăluiți răspunsul",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Niciun vocabular încă",
@@ -977,8 +1034,38 @@
       "forbidden": "Generarea exercițiilor cu IA este disponibilă cu Pro.",
       "disabled": "Asistența IA este dezactivată în Setări.",
       "upgradeHint": "Planul Free include câteva generări de exerciții cu IA pe zi. Pro elimină limita.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Adăugați cuvinte de vocabular înainte de a genera întrebări.",
-      "noneValid": "IA nu a putut crea întrebări valide pentru aceste cuvinte. Încercați din nou."
+      "noneValid": "IA nu a putut crea întrebări valide pentru aceste cuvinte. Încercați din nou.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Sesiune finalizată",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Doar la modificarea conținutului",
       "confirmNever": "Niciodată",
       "saveFailed": "Nu s-au putut salva preferințele AI",
-      "disabledToast": "Asistența AI este dezactivată în Setări"
+      "disabledToast": "Asistența AI este dezactivată în Setări",
+      "exerciseNextSetPrefetch": "Pregătește următorul set de exerciții",
+      "exerciseNextSetPrefetchDescription": "După ce începi să răspunzi, următorul set se pregătește automat în fundal. Folosește un credit de exercițiu AI la pornire. Dezactivează pentru a genera doar la Set nou."
     },
     "tutorials": "Tutoriale pe secțiuni",
     "tutorialsDescription": "Resetați tutorialele de secțiune finalizate, astfel încât „Afișează tutorialul” să reînceapă de la început.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Nu aveți un cont?",
     "hasAccount": "Aveți deja un cont?",
     "invalidCredentials": "E-mail sau parolă nevalidă",
+    "rememberMe": "Ține-mă minte",
+    "signInUnavailable": "Nu te-am putut conecta acum. Încearcă din nou.",
+    "accountSuspended": "Acest cont este suspendat. Contactează asistența dacă crezi că este o greșeală.",
     "emailExists": "Există deja un cont cu acest e-mail",
     "emailInvalid": "Introduceți o adresă de e-mail validă",
     "registerFailed": "Nu s-a putut crea contul. Vă rugăm să încercați din nou.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Termeni",
     "registerAgreement": "Prin crearea unui cont, sunteți de acord cu <terms>Termenii de utilizare</terms> și <privacy>Politica de confidențialitate</privacy>.",
     "avatarRequestTooLarge": "Această fotografie este prea mare pentru a fi trimisă. Încercați o imagine mai mică.",
-    "requestTooLarge": "Această solicitare a fost prea mare. Modificările dvs. au fost păstrate — vă rugăm să încercați din nou."
+    "requestTooLarge": "Această solicitare a fost prea mare. Modificările dvs. au fost păstrate — vă rugăm să încercați din nou.",
+    "roleAdmin": "Administrator",
+    "roleTester": "Tester"
   },
   "account": {
     "eyebrow": "Cont",
@@ -2910,6 +3004,7 @@
       "backup": "Descărcați copia de rezervă",
       "backupDone": "Copia de rezervă a fost descărcată",
       "backupFailed": "Nu s-a putut pregăti copia de rezervă. Încercați din nou.",
+      "confirmPhrase": "Șterge toate datele",
       "confirmLabel": "Tastați {phrase} pentru a confirma",
       "confirm": "Ștergeți toate datele",
       "deleted": "Toate datele de învățare au fost șterse",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Pot fi omise",
       "warnings": {
         "workspace_language_reuse": "Unele spații de lucru există deja pentru aceeași limbă. Conținutul lor va fi adăugat în spațiile de lucru existente în loc să se creeze duplicate.",
-        "empty_backup": "Această copie de rezervă nu conține date de învățare importabile."
+        "empty_backup": "Această copie de rezervă nu conține date de învățare importabile.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Anulați",
       "confirm": "Importați datele de învățare",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# element de vocabular există deja} few {# elemente de vocabular există deja} other {# de elemente de vocabular există deja}}",
         "listening_missing_media": "{count, plural, one {# lecție de ascultare fără URL media} few {# lecții de ascultare fără URL media} other {# de lecții de ascultare fără URL media}}",
         "listening_duplicate_filename": "{count, plural, one {# lecție de ascultare omisă (nume de fișier duplicat)} few {# lecții de ascultare omise (nume de fișier duplicat)} other {# de lecții de ascultare omise (nume de fișier duplicat)}}",
+        "speaking_duplicate": "{count, plural, one {# sesiune de vorbire există deja} few {# sesiuni de vorbire există deja} other {# de sesiuni de vorbire există deja}}",
         "invalid_workspace_ref": "{count, plural, one {# element fără spațiu de lucru} few {# elemente fără spațiu de lucru} other {# de elemente fără spațiu de lucru}}",
         "invalid_record": "{count, plural, one {# înregistrare nevalidă} few {# înregistrări nevalide} other {# de înregistrări nevalide}}",
-        "unsupported_account_field": "Câmpurile de identitate ale contului nu sunt importate"
+        "unsupported_account_field": "Câmpurile de identitate ale contului nu sunt importate",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Fișierul de rezervă este prea mare. Încercați să exportați din nou sau contactați asistența.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Nu s-a putut importa această copie de rezervă. Încercați din nou.",
         "requestTooLarge": "Această copie de rezervă este prea mare pentru a fi procesată pe această pagină. Încercați un export mai mic sau contactați asistența.",
         "notConfigured": "Stocarea fișierelor nu este încă configurată pentru importul copiilor de rezervă."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Închideți contul",
@@ -3002,6 +3110,7 @@
       "backup": "Descărcați copia de rezervă",
       "backupDone": "Copia de rezervă a fost descărcată",
       "backupFailed": "Nu s-a putut pregăti copia de rezervă. Încercați din nou.",
+      "confirmPhrase": "Șterge contul meu",
       "confirmLabel": "Tastați {phrase} pentru a confirma",
       "confirm": "Ștergeți definitiv contul",
       "deleted": "Contul dvs. a fost șters",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Tendințe de învățare",
       "personalLearningPath": "Parcurs personal de învățare",
       "personalizedRecommendations": "Recomandări personalizate",
-      "crossModuleIntelligence": "Personalizare între module"
+      "crossModuleIntelligence": "Personalizare între module",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Comparați planurile",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Ați atins limita de azi pentru Learning Coach. Coach-ul va fi din nou disponibil mâine.",
       "errorPremium": "Learning Coach este o funcție Premium. Obțineți recomandări personalizate pe baza activității dvs. de învățare.",
       "errorUnavailable": "Coach-ul nu a putut răspunde acum. Mesajul dvs. nu a fost numărat. Încercați din nou.",
+      "errorWorkspace": "Alege un spațiu de lucru înainte să întrebi coach-ul.",
+      "errorUnauthorized": "Autentifică-te din nou pentru a continua.",
       "prompts": {
         "practice_today": "Pe ce ar trebui să mă concentrez azi?",
         "struggling_words": "De ce am dificultăți cu aceste cuvinte?",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Administrare",
+      "admin": "Administrator",
       "manage": "Gestionare",
       "overview": "Prezentare generală",
       "users": "Utilizatori",
@@ -4750,7 +4862,7 @@
       "contentLibrary": "Bibliotecă de conținut",
       "backToApp": "Înapoi la aplicație",
       "openMenu": "Deschide meniul de administrare",
-      "openAdmin": "Panou de administrare"
+      "openAdmin": "Panou administrator"
     },
     "modules": {
       "vocabulary": "Vocabular",
@@ -4798,7 +4910,28 @@
         "failedListening": "Ascultare eșuată",
         "failedImports": "Importuri eșuate",
         "runningJobs": "Blocaje de sarcini active",
-        "recentAudits7d": "Înregistrări audit (7z)"
+        "recentAudits7d": "Înregistrări audit (7z)",
+        "admins": "Administratori",
+        "testers": "Testeri",
+        "suspended": "Suspendați",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Acces rapid",
+      "quickAccessLede": "Mergi la instrumentele de administrare.",
+      "groups": {
+        "people": "Persoane",
+        "content": "Conținut",
+        "ops": "Operațiuni"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "Plan",
         "created": "Înregistrat",
         "updated": "Actualizat",
-        "emailVerified": "E-mail verificat"
+        "emailVerified": "E-mail verificat",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Cont",
@@ -4841,7 +4976,8 @@
         "usageLede": "Înregistrări deținute în modulele de învățare.",
         "actions": "Acțiuni asupra contului",
         "workspaces": "Spații de lucru",
-        "workspacesLede": "Spații de lucru pe limbă deținute de acest utilizator."
+        "workspacesLede": "Spații de lucru pe limbă deținute de acest utilizator.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Salvează numele",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Revocă administrator",
         "suspend": "Suspendă",
         "restore": "Restaurează",
-        "delete": "Șterge contul"
+        "delete": "Șterge contul",
+        "grantTester": "Acordă rolul de tester",
+        "revokeTester": "Revocă rolul de tester",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Acordați acces de administrator acestui cont?",
         "revokeAdmin": "Revocați accesul de administrator? Operațiunea eșuează dacă este ultimul administrator activ.",
         "suspend": "Suspendați acest cont? Pierde accesul la următoarea solicitare protejată.",
         "restore": "Restaurați acest cont?",
-        "delete": "Ștergeți definitiv acest cont și datele de învățare în cascadă? Acțiunea nu poate fi anulată."
+        "delete": "Ștergeți definitiv acest cont și datele de învățare în cascadă? Acțiunea nu poate fi anulată.",
+        "grantTester": "Acordăm rolul de tester? Primesc toate funcțiile aplicației pentru QA; abonamentul salvat nu se schimbă.",
+        "revokeTester": "Revocăm rolul de tester? Accesul la funcții revine la abonamentul lor real."
+      },
+      "roleHelp": "Rolul de tester deblochează toate funcțiile Free, Pro și Premium pentru QA fără a modifica abonamentul salvat. Pentru acest panou este necesar un administrator.",
+      "roles": {
+        "user": "Utilizator",
+        "tester": "Tester",
+        "admin": "Administrator"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Limbă",
         "owner": "Proprietar",
         "created": "Creat",
-        "updated": "Actualizat"
+        "updated": "Actualizat",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Limbă: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Ștergeți acest spațiu de lucru și tot conținutul de învățare din el prin cascadele bazei de date?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Proprietar",
         "workspace": "Spațiu de lucru",
         "created": "Creat",
-        "updated": "Actualizat"
+        "updated": "Actualizat",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Inspecție de metadate. Conținutul privat nu este încărcat automat.",
@@ -4923,11 +5088,13 @@
         "actions": "Acțiuni"
       },
       "actions": {
-        "delete": "Șterge înregistrarea"
+        "delete": "Șterge înregistrarea",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Ștergeți această înregistrare? Rândurile copil asociate urmează regulile de cascadă / set-null ale bazei de date."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Sarcini",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Acest utilizator are deja un spațiu de lucru pentru acea limbă.",
       "INVALID_LANGUAGE": "Cod de limbă nevalid.",
       "CONTENT_NOT_FOUND": "Înregistrarea nu a fost găsită.",
-      "INVALID_CONTENT_MODULE": "Modul de conținut necunoscut."
+      "INVALID_CONTENT_MODULE": "Modul de conținut necunoscut.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

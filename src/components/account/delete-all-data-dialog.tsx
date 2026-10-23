@@ -2,12 +2,13 @@
 
 import styles from "@/components/style/account/account.module.css";
 import { mx } from "@/lib/css-module";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useQueryClient } from "@tanstack/react-query";
 import { AlertTriangle, Download, Eraser, Loader2 } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { ConfirmPhraseLabel } from "@/components/account/confirm-phrase-label";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -20,7 +21,10 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { deleteAllAccountData } from "@/lib/actions/account";
-import { DELETE_ALL_DATA_CONFIRMATION } from "@/lib/account/constants";
+import {
+  displayConfirmPhrase,
+  matchesConfirmPhrase,
+} from "@/lib/account/confirm-phrase";
 import { downloadAccountBackupJson } from "@/lib/account/download-backup";
 
 type DeleteAllDataDialogProps = {
@@ -36,13 +40,24 @@ export function DeleteAllDataDialog({
 }: DeleteAllDataDialogProps) {
   const t = useTranslations("account.clearData");
   const tc = useTranslations("common");
+  const locale = useLocale();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [confirmation, setConfirmation] = useState("");
   const [isBackupPending, startBackupTransition] = useTransition();
   const [isDeletePending, startDeleteTransition] = useTransition();
+
+  const expectedPhrase = t("confirmPhrase");
+  const displayPhrase = displayConfirmPhrase(expectedPhrase, locale);
   const canDelete =
-    confirmation.trim() === DELETE_ALL_DATA_CONFIRMATION && !isDeletePending;
+    matchesConfirmPhrase(confirmation, expectedPhrase, locale) &&
+    !isDeletePending;
+
+  useEffect(() => {
+    // Reset on locale change and whenever the dialog closes/reopens.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setConfirmation("");
+  }, [locale, open]);
 
   function handleOpenChange(next: boolean) {
     if (isDeletePending) return;
@@ -71,7 +86,7 @@ export function DeleteAllDataDialog({
     startDeleteTransition(async () => {
       try {
         await deleteAllAccountData({
-          confirmation: DELETE_ALL_DATA_CONFIRMATION,
+          confirmation,
         });
         toast.success(t("deleted"));
         setConfirmation("");
@@ -153,18 +168,21 @@ export function DeleteAllDataDialog({
             </Button>
           </div>
 
-          <div className={mx(styles, "account-field")}>
+          <div className={mx(styles, "account-delete-confirm")}>
             <Label
               htmlFor="delete-all-data-confirm"
               className={mx(styles, "account-label")}
             >
-              {t("confirmLabel", { phrase: DELETE_ALL_DATA_CONFIRMATION })}
+              <ConfirmPhraseLabel
+                template={t("confirmLabel", { phrase: "\u0000" })}
+                phrase={displayPhrase}
+              />
             </Label>
             <Input
               id="delete-all-data-confirm"
               value={confirmation}
               onChange={(event) => setConfirmation(event.target.value)}
-              placeholder={DELETE_ALL_DATA_CONFIRMATION}
+              placeholder={displayPhrase}
               autoComplete="off"
               spellCheck={false}
               disabled={isDeletePending}
@@ -174,7 +192,10 @@ export function DeleteAllDataDialog({
         </div>
 
         <DialogFooter
-          className={mx(styles, "account-delete-footer mx-0 mb-0 shrink-0")}
+          className={mx(
+            styles,
+            "account-delete-footer mx-0 mb-0 sm:mx-0 sm:mb-0 shrink-0",
+          )}
         >
           <Button
             type="button"

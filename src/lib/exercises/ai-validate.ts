@@ -17,6 +17,7 @@ import {
   type FillBlankItem,
 } from "@/lib/exercises/fill-blank";
 import { normalizeAnswer } from "@/lib/exercises/utils";
+import { resolveProgressiveHints } from "@/lib/exercises/progressive-hints";
 
 export { FILL_BLANK_PLACEHOLDER, isRelatedWordForm };
 
@@ -215,6 +216,12 @@ export function fillBlankExerciseToItem(
     aiGenerated: true,
     instruction: exercise.instruction?.trim() || undefined,
     sentenceMeaning: exercise.sentenceMeaning?.trim() || undefined,
+    hints: resolveProgressiveHints({
+      raw: exercise.hints,
+      answers: [answer, word.word],
+      grounding: meaningHint,
+      difficulty: exercise.difficulty,
+    }),
   };
 }
 

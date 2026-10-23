@@ -3,7 +3,10 @@ import { getLocale, getTranslations } from "next-intl/server";
 import { AdminDataTable } from "@/components/admin/admin-data-table";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
 import { AdminPagination } from "@/components/admin/admin-pagination";
+import { AdminRoleBadge } from "@/components/admin/admin-role-badge";
 import { AdminSearchForm } from "@/components/admin/admin-search-form";
+import { AdminUsersFilters } from "@/components/admin/admin-users-filters";
+import { CreateUserForm } from "@/components/admin/create-user-form";
 import { Badge } from "@/components/ui/badge";
 import styles from "@/components/style/admin/admin.module.css";
 import { buildAdminListHref, formatAdminDate } from "@/lib/admin/format";
@@ -40,6 +43,19 @@ export default async function AdminUsersPage({ searchParams }: PageProps) {
     status: params.status,
   };
 
+  function roleLabel(role: string) {
+    if (role === "ADMIN") return t("users.roles.admin");
+    if (role === "TESTER") return t("users.roles.tester");
+    return t("users.roles.user");
+  }
+
+  function planLabel(plan: string) {
+    if (plan === "premium") return t("users.plans.premium");
+    if (plan === "pro") return t("users.plans.pro");
+    if (plan === "free") return t("users.plans.free");
+    return plan.charAt(0).toUpperCase() + plan.slice(1);
+  }
+
   return (
     <div className={mx(styles, "admin-page")}>
       <AdminPageHeader
@@ -47,6 +63,8 @@ export default async function AdminUsersPage({ searchParams }: PageProps) {
         title={t("users.title")}
         description={t("users.description")}
       />
+
+      <CreateUserForm />
 
       <section className={mx(styles, "admin-panel")}>
         <div className={mx(styles, "admin-panel-head")}>
@@ -66,35 +84,11 @@ export default async function AdminUsersPage({ searchParams }: PageProps) {
                 status: params.status,
               }}
             />
-            <form method="get" action="/admin/users" className="flex flex-wrap gap-2">
-              {params.q ? <input type="hidden" name="q" value={params.q} /> : null}
-              <select
-                name="role"
-                defaultValue={params.role ?? ""}
-                className="h-8 rounded-md border border-page-accent-border control-surface px-2 text-sm"
-                aria-label={t("users.filters.role")}
-              >
-                <option value="">{t("users.filters.allRoles")}</option>
-                <option value="USER">USER</option>
-                <option value="ADMIN">ADMIN</option>
-              </select>
-              <select
-                name="status"
-                defaultValue={params.status ?? ""}
-                className="h-8 rounded-md border border-page-accent-border control-surface px-2 text-sm"
-                aria-label={t("users.filters.status")}
-              >
-                <option value="">{t("users.filters.allStatuses")}</option>
-                <option value="active">{t("users.status.active")}</option>
-                <option value="suspended">{t("users.status.suspended")}</option>
-              </select>
-              <button
-                type="submit"
-                className="h-8 rounded-md border border-page-accent-border px-3 text-sm font-semibold"
-              >
-                {t("common.filter")}
-              </button>
-            </form>
+            <AdminUsersFilters
+              q={params.q}
+              role={params.role}
+              status={params.status}
+            />
           </div>
         </div>
         <div className={mx(styles, "admin-panel-body")}>
@@ -109,21 +103,27 @@ export default async function AdminUsersPage({ searchParams }: PageProps) {
                 cell: (row) => (
                   <div>
                     <Link href={`/admin/users/${row.id}`}>{row.name}</Link>
-                    <div className={mx(styles, "admin-muted")}>{row.email}</div>
+                    <div className={mx(styles, "admin-mono", "admin-muted")}>
+                      {row.email}
+                    </div>
                   </div>
                 ),
               },
               {
                 key: "role",
                 header: t("users.columns.role"),
-                cell: (row) => row.role,
+                cell: (row) => (
+                  <AdminRoleBadge role={row.role} label={roleLabel(row.role)} />
+                ),
               },
               {
                 key: "status",
                 header: t("users.columns.status"),
                 cell: (row) =>
                   row.suspendedAt ? (
-                    <Badge variant="destructive">{t("users.status.suspended")}</Badge>
+                    <Badge variant="destructive">
+                      {t("users.status.suspended")}
+                    </Badge>
                   ) : (
                     <Badge variant="secondary">{t("users.status.active")}</Badge>
                   ),
@@ -131,16 +131,19 @@ export default async function AdminUsersPage({ searchParams }: PageProps) {
               {
                 key: "plan",
                 header: t("users.columns.plan"),
-                cell: (row) => row.subscriptionPlan,
+                className: mx(styles, "admin-mono"),
+                cell: (row) => planLabel(row.subscriptionPlan),
               },
               {
                 key: "workspaces",
                 header: t("users.columns.workspaces"),
+                className: mx(styles, "admin-mono"),
                 cell: (row) => row.workspaceCount,
               },
               {
                 key: "created",
                 header: t("users.columns.created"),
+                className: mx(styles, "admin-mono"),
                 cell: (row) => formatAdminDate(row.createdAt, locale),
               },
             ]}

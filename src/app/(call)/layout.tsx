@@ -3,7 +3,7 @@ import "@stream-io/video-react-sdk/dist/css/styles.css";
 import "./call.css";
 import { ProAccessProvider } from "@/components/billing/pro-access-provider";
 import { getUserEntitlements } from "@/lib/billing/entitlements";
-import { displayPlan, isIntroOfferEligible } from "@/lib/billing/plans";
+import { displayPlan, entitlementPlan, isIntroOfferEligible } from "@/lib/billing/plans";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
 import { getSession } from "@/lib/auth/session";
 import {
@@ -36,6 +36,7 @@ export default async function CallLayout({
     <ProAccessProvider
       hasProAccess={proAccess.hasProAccess}
       plan={displayPlan(subscription)}
+      entitlementPlan={entitlements?.plan ?? entitlementPlan(subscription)}
       cancelAtPeriodEnd={Boolean(
         subscription?.stripeCancelAtPeriodEnd && displayPlan(subscription) !== "free",
       )}

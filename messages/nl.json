@@ -15,7 +15,20 @@
     "clearFilter": "Wissen",
     "filters": "Filters",
     "hideFilters": "Filters verbergen",
-    "remove": "Verwijderen"
+    "remove": "Verwijderen",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Kan een map niet in zichzelf verplaatsen",
     "tooDeep": "Deze map is te diep genest",
     "notFound": "Map niet gevonden",
-    "nameTaken": "Een map of schrijfonderdeel gebruikt deze naam al"
+    "nameTaken": "Een map of schrijfonderdeel gebruikt deze naam al",
+    "dragTipTitle": "Verplaatsen naar een map",
+    "dragTipBody": "Op een computer met muis of trackpad sleep je een item op een mapkaart om het te verplaatsen. Je kunt ook het verplaatspictogram gebruiken.",
+    "dragTipDismiss": "Tip sluiten",
+    "dragTipShow": "Zo verplaats je naar mappen",
+    "dragTipDemo": "Sleep naar een map",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Thema wisselen",
@@ -291,7 +310,11 @@
     "createWorkspace": "Werkruimte aanmaken",
     "createWorkspaceHint": "Nog een taalwerkruimte toevoegen",
     "switchWorkspace": "Werkruimte wisselen",
-    "switchFailed": "Kon niet van werkruimte wisselen"
+    "switchFailed": "Kon niet van werkruimte wisselen",
+    "selectLanguage": "Taal kiezen",
+    "allLanguages": "Alle talen",
+    "changeLanguageFailed": "Interface-taal kon niet worden gewijzigd",
+    "popularLanguages": "Populair"
   },
   "workspace": {
     "title": "Werkruimten",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# import} other {# imports}}"
     },
     "processing": {
-      "workingTitle": "Bezig met uw oefening",
+      "workingTitle": "Je oefening wordt voorbereid",
       "readyTitle": "Oefening klaar",
       "errorTitle": "Er ging iets mis",
       "cancel": "Annuleren",
-      "retry": "Opnieuw",
+      "retry": "Opnieuw proberen",
       "dismiss": "Sluiten",
       "stages": {
-        "uploading": "Uploaden…",
-        "extracting": "Inhoud extraheren…",
-        "analyzing": "Inhoud analyseren…",
-        "generating": "Oefening genereren…",
-        "saving": "Oefening opslaan…",
+        "uploading": "Bestand uploaden",
+        "extracting": "Inhoud extraheren",
+        "analyzing": "Inhoud analyseren",
+        "generating": "Vragen genereren",
+        "saving": "Oefening opslaan en voorbereiden",
         "completed": "Oefening klaar",
-        "error": "Genereren mislukt"
-      }
+        "error": "Genereren mislukt",
+        "preparing": "Leermateriaal voorbereiden",
+        "validating": "Antwoorden en hints controleren"
+      },
+      "stillWorking": "Nog bezig met genereren… {seconds} s verstreken",
+      "hints": {
+        "uploading": "Je bestand wordt veilig verzonden.",
+        "extracting": "Tekst en structuur uit de bron worden gelezen.",
+        "analyzing": "Oefentips in het materiaal worden herkend.",
+        "preparing": "Geselecteerde woordenschat of theorie voor deze set wordt verzameld.",
+        "generating": "Het model schrijft vragen. Dit kan even duren.",
+        "validating": "Antwoorden, hints en structuur worden vóór het oefenen gecontroleerd.",
+        "saving": "Je oefenset wordt samengesteld."
+      },
+      "nextSetPreparing": "Volgende set voorbereiden…",
+      "nextSetReady": "Volgende set klaar",
+      "nextSetFailed": "Volgende set kon niet worden voorbereid",
+      "nextSetRetry": "Volgende set voorbereiden",
+      "openNextSet": "Volgende set openen"
     },
     "import": {
       "eyebrow": "Geïmporteerde oefening",
@@ -822,6 +862,7 @@
       "aiReady": "Oefening klaar",
       "aiUnavailable": "AI-vragen konden nu niet worden gegenereerd.",
       "aiForbidden": "AI-theorieoefeningen zijn beschikbaar met Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI-hulp is uitgeschakeld in Instellingen.",
       "feedback": {
         "correct": "Goed!",
@@ -874,7 +915,21 @@
         "theRule": "De regel",
         "why": "Waarom",
         "complete": "Begrepen",
-        "completeHint": "U kunt verdergaan wanneer u klaar bent."
+        "completeHint": "U kunt verdergaan wanneer u klaar bent.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Hint",
       "startsWith": "Begint met “{letter}”",
       "revealPrompt": "Nog vast? U kunt het volledige antwoord tonen.",
-      "revealAnswer": "Antwoord tonen"
+      "revealAnswer": "Antwoord tonen",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Nog geen woordenschat",
@@ -977,8 +1034,38 @@
       "forbidden": "AI-oefeningengeneratie is beschikbaar met Pro.",
       "disabled": "AI-hulp is uitgeschakeld in Instellingen.",
       "upgradeHint": "Free omvat enkele AI-oefeningengeneraties per dag. Pro verwijdert de limiet.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Voeg woordenschatwoorden toe voordat u vragen genereert.",
-      "noneValid": "AI kon geen geldige vragen maken voor deze woorden. Probeer het opnieuw."
+      "noneValid": "AI kon geen geldige vragen maken voor deze woorden. Probeer het opnieuw.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Sessie voltooid",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Alleen bij wijziging van inhoud",
       "confirmNever": "Nooit",
       "saveFailed": "AI-voorkeuren konden niet worden opgeslagen",
-      "disabledToast": "AI-ondersteuning staat uit in Instellingen"
+      "disabledToast": "AI-ondersteuning staat uit in Instellingen",
+      "exerciseNextSetPrefetch": "Volgende oefenset voorbereiden",
+      "exerciseNextSetPrefetchDescription": "Nadat je begint te antwoorden, wordt de volgende set automatisch op de achtergrond voorbereid. Gebruikt één AI-oefenkrediet bij de start. Zet uit om alleen te genereren bij Nieuwe set."
     },
     "tutorials": "Sectietutorials",
     "tutorialsDescription": "Reset voltooide sectiewandelingen zodat „Tutorial tonen” weer vanaf het begin start.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Nog geen account?",
     "hasAccount": "Hebt u al een account?",
     "invalidCredentials": "Ongeldig e-mailadres of wachtwoord",
+    "rememberMe": "Onthoud mij",
+    "signInUnavailable": "Inloggen lukt nu niet. Probeer het opnieuw.",
+    "accountSuspended": "Dit account is geschorst. Neem contact op met support als dit een vergissing is.",
     "emailExists": "Er bestaat al een account met dit e-mailadres",
     "emailInvalid": "Voer een geldig e-mailadres in",
     "registerFailed": "Account kon niet worden aangemaakt. Probeer het opnieuw.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Voorwaarden",
     "registerAgreement": "Door een account aan te maken, gaat u akkoord met de <terms>Gebruiksvoorwaarden</terms> en het <privacy>Privacybeleid</privacy>.",
     "avatarRequestTooLarge": "Die foto is te groot om te versturen. Probeer een kleinere afbeelding.",
-    "requestTooLarge": "Dat verzoek was te groot. Uw wijzigingen zijn behouden — probeer het opnieuw."
+    "requestTooLarge": "Dat verzoek was te groot. Uw wijzigingen zijn behouden — probeer het opnieuw.",
+    "roleAdmin": "Beheerder",
+    "roleTester": "Testgebruiker"
   },
   "account": {
     "eyebrow": "Account",
@@ -2910,6 +3004,7 @@
       "backup": "Back-up downloaden",
       "backupDone": "Back-up gedownload",
       "backupFailed": "Uw back-up kon niet worden voorbereid. Probeer het opnieuw.",
+      "confirmPhrase": "Alle gegevens verwijderen",
       "confirmLabel": "Typ {phrase} om te bevestigen",
       "confirm": "Alle gegevens verwijderen",
       "deleted": "Alle leergegevens zijn verwijderd",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Kan worden overgeslagen",
       "warnings": {
         "workspace_language_reuse": "Sommige werkruimten bestaan al voor dezelfde taal. Hun inhoud wordt aan uw bestaande werkruimten toegevoegd in plaats van duplicaten te maken.",
-        "empty_backup": "Deze back-up bevat geen importeerbare leergegevens."
+        "empty_backup": "Deze back-up bevat geen importeerbare leergegevens.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Annuleren",
       "confirm": "Leergegevens importeren",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# woordenschatitem bestaat al} other {# woordenschatitems bestaan al}}",
         "listening_missing_media": "{count, plural, one {# luisterles zonder media-URL} other {# luisterlessen zonder media-URL’s}}",
         "listening_duplicate_filename": "{count, plural, one {# luisterles overgeslagen (dubbele bestandsnaam)} other {# luisterlessen overgeslagen (dubbele bestandsnaam)}}",
+        "speaking_duplicate": "{count, plural, one {# spreeksessie bestaat al} other {# spreeksessies bestaan al}}",
         "invalid_workspace_ref": "{count, plural, one {# item zonder werkruimte} other {# items zonder werkruimte}}",
         "invalid_record": "{count, plural, one {# ongeldig record} other {# ongeldige records}}",
-        "unsupported_account_field": "Accountidentiteitsvelden worden niet geïmporteerd"
+        "unsupported_account_field": "Accountidentiteitsvelden worden niet geïmporteerd",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Dat back-upbestand is te groot. Probeer opnieuw te exporteren of neem contact op met de ondersteuning.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Deze back-up kon niet worden geïmporteerd. Probeer het opnieuw.",
         "requestTooLarge": "Die back-up is te groot om via deze pagina te verwerken. Probeer een kleinere export of neem contact op met de ondersteuning.",
         "notConfigured": "Bestandsopslag is nog niet geconfigureerd voor back-upimport."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Account sluiten",
@@ -3002,6 +3110,7 @@
       "backup": "Back-up downloaden",
       "backupDone": "Back-up gedownload",
       "backupFailed": "Uw back-up kon niet worden voorbereid. Probeer het opnieuw.",
+      "confirmPhrase": "Mijn account verwijderen",
       "confirmLabel": "Typ {phrase} om te bevestigen",
       "confirm": "Account definitief verwijderen",
       "deleted": "Uw account is verwijderd",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Leertrends",
       "personalLearningPath": "Persoonlijk leerpad",
       "personalizedRecommendations": "Gepersonaliseerde aanbevelingen",
-      "crossModuleIntelligence": "Cross-module personalisatie"
+      "crossModuleIntelligence": "Cross-module personalisatie",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Abonnementen vergelijken",
@@ -3441,6 +3551,8 @@
       "errorQuota": "U hebt de limiet van vandaag voor de Leercoach bereikt. Uw Coach is morgen weer beschikbaar.",
       "errorPremium": "Leercoach is een Premium-functie. Ontvang gepersonaliseerde aanbevelingen op basis van uw leeractiviteit.",
       "errorUnavailable": "Uw Coach kon nu niet antwoorden. Uw bericht is niet meegeteld. Probeer het opnieuw.",
+      "errorWorkspace": "Kies een workspace voordat u de coach iets vraagt.",
+      "errorUnauthorized": "Meld u opnieuw aan om verder te gaan.",
       "prompts": {
         "practice_today": "Waar moet ik me vandaag op richten?",
         "struggling_words": "Waarom heb ik moeite met deze woorden?",
@@ -4746,11 +4858,11 @@
       "workspaces": "Werkruimten",
       "jobs": "Taken",
       "audit": "Audit",
-      "content": "Content",
+      "content": "Inhoud",
       "contentLibrary": "Contentbibliotheek",
       "backToApp": "Terug naar app",
       "openMenu": "Beheermenu openen",
-      "openAdmin": "Beheerdashboard"
+      "openAdmin": "Beheerdersdashboard"
     },
     "modules": {
       "vocabulary": "Vocabulaire",
@@ -4798,7 +4910,28 @@
         "failedListening": "Mislukt luisteren",
         "failedImports": "Mislukte imports",
         "runningJobs": "Actieve taakvergrendelingen",
-        "recentAudits7d": "Auditvermeldingen (7d)"
+        "recentAudits7d": "Auditvermeldingen (7d)",
+        "admins": "Beheerders",
+        "testers": "Testgebruikers",
+        "suspended": "Opgeschort",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Snelle toegang",
+      "quickAccessLede": "Ga naar de beheertools.",
+      "groups": {
+        "people": "Mensen",
+        "content": "Inhoud",
+        "ops": "Operaties"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "Abonnement",
         "created": "Geregistreerd",
         "updated": "Bijgewerkt",
-        "emailVerified": "E-mail geverifieerd"
+        "emailVerified": "E-mail geverifieerd",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Account",
@@ -4841,7 +4976,8 @@
         "usageLede": "Eigen records in alle leermodules.",
         "actions": "Accountacties",
         "workspaces": "Werkruimten",
-        "workspacesLede": "Taalwerkruimten die van deze gebruiker zijn."
+        "workspacesLede": "Taalwerkruimten die van deze gebruiker zijn.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Naam opslaan",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Beheerder intrekken",
         "suspend": "Opschorten",
         "restore": "Herstellen",
-        "delete": "Account verwijderen"
+        "delete": "Account verwijderen",
+        "grantTester": "Testgebruiker toekennen",
+        "revokeTester": "Testgebruiker intrekken",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Beheerderstoegang toekennen aan dit account?",
         "revokeAdmin": "Beheerderstoegang intrekken? Dit mislukt als dit de laatste actieve beheerder is.",
         "suspend": "Dit account opschorten? De gebruiker verliest toegang bij het volgende beschermde verzoek.",
         "restore": "Dit account herstellen?",
-        "delete": "Dit account en gekoppelde leergegevens permanent verwijderen? Dit kan niet ongedaan worden gemaakt."
+        "delete": "Dit account en gekoppelde leergegevens permanent verwijderen? Dit kan niet ongedaan worden gemaakt.",
+        "grantTester": "Rol testgebruiker toekennen? Ze krijgen alle appfuncties voor QA; het opgeslagen abonnement verandert niet.",
+        "revokeTester": "Rol testgebruiker intrekken? Functietoegang keert terug naar hun echte abonnement."
+      },
+      "roleHelp": "De rol testgebruiker ontgrendelt alle Free-, Pro- en Premium-functies voor QA zonder het opgeslagen abonnement te wijzigen. Voor dit dashboard is een beheerder vereist.",
+      "roles": {
+        "user": "Gebruiker",
+        "tester": "Testgebruiker",
+        "admin": "Beheerder"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Taal",
         "owner": "Eigenaar",
         "created": "Aangemaakt",
-        "updated": "Bijgewerkt"
+        "updated": "Bijgewerkt",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Taal: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Deze werkruimte en alle leercontent erin verwijderen via databasecascades?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Eigenaar",
         "workspace": "Werkruimte",
         "created": "Aangemaakt",
-        "updated": "Bijgewerkt"
+        "updated": "Bijgewerkt",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Metadata-inspectie. Privé-inhoud wordt niet automatisch geladen.",
@@ -4923,11 +5088,13 @@
         "actions": "Acties"
       },
       "actions": {
-        "delete": "Record verwijderen"
+        "delete": "Record verwijderen",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Dit record verwijderen? Gerelateerde onderliggende rijen volgen cascade-/set-null-regels van de database."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Taken",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Deze gebruiker heeft al een werkruimte voor die taal.",
       "INVALID_LANGUAGE": "Ongeldige taalcode.",
       "CONTENT_NOT_FOUND": "Record niet gevonden.",
-      "INVALID_CONTENT_MODULE": "Onbekende contentmodule."
+      "INVALID_CONTENT_MODULE": "Onbekende contentmodule.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

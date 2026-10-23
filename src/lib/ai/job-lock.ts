@@ -10,6 +10,8 @@ export const AI_JOBS = {
   speakingTutor: "speaking.tutor",
   speakingSummary: "speaking.summary",
   speakingFinalize: "speaking.finalize",
+  /** Next vocabulary / theory exercise set (prefetch or New set). */
+  exerciseNextSet: "exercise.next_set",
 } as const;
 
 export type JobLockStatus = "running" | "completed" | "failed" | "released";

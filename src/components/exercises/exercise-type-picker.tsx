@@ -71,7 +71,7 @@ function ActivityModule({
   const className = cn(
     mx(
       featureStyles,
-      "activity-module group grid grid-cols-[auto_minmax(0,1fr)] gap-x-4 gap-y-4 px-1 py-8 sm:px-2 sm:py-10",
+      "activity-module group grid grid-cols-[auto_minmax(0,1fr)] gap-x-3 gap-y-3 px-1 py-5 sm:gap-x-4 sm:gap-y-4 sm:px-2 sm:py-10",
     ),
     "lg:grid-cols-[4.5rem_minmax(0,1fr)_minmax(0,1.05fr)] lg:items-center lg:gap-x-8",
     "rounded-md transition-colors duration-200",

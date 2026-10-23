@@ -15,7 +15,20 @@
     "clearFilter": "Изчистване",
     "filters": "Филтри",
     "hideFilters": "Скриване на филтрите",
-    "remove": "Премахване"
+    "remove": "Премахване",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Папка не може да бъде преместена в себе си",
     "tooDeep": "Тази папка е вложена твърде дълбоко",
     "notFound": "Папката не е намерена",
-    "nameTaken": "Папка или писмен материал вече използва това име"
+    "nameTaken": "Папка или писмен материал вече използва това име",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Превключване на темата",
@@ -291,7 +310,11 @@
     "createWorkspace": "Създаване на работно пространство",
     "createWorkspaceHint": "Добавяне на друго езиково работно пространство",
     "switchWorkspace": "Смяна на работното пространство",
-    "switchFailed": "Не можахме да сменим работното пространство"
+    "switchFailed": "Не можахме да сменим работното пространство",
+    "selectLanguage": "Изберете език",
+    "allLanguages": "Всички езици",
+    "changeLanguageFailed": "Езикът на интерфейса не можа да бъде променен",
+    "popularLanguages": "Популярни"
   },
   "workspace": {
     "title": "Работни пространства",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# импорт} other {# импорта}}"
     },
     "processing": {
-      "workingTitle": "Работим върху упражнението ви",
+      "workingTitle": "Подготвяме упражнението",
       "readyTitle": "Упражнението е готово",
       "errorTitle": "Нещо се обърка",
       "cancel": "Отказ",
       "retry": "Опитай отново",
       "dismiss": "Затвори",
       "stages": {
-        "uploading": "Качване…",
-        "extracting": "Извличане на съдържание…",
-        "analyzing": "Анализ на съдържанието…",
-        "generating": "Генериране на упражнение…",
-        "saving": "Запазване на упражнението…",
+        "uploading": "Качване на файл",
+        "extracting": "Извличане на съдържание",
+        "analyzing": "Анализ на съдържанието",
+        "generating": "Генериране на въпроси",
+        "saving": "Запазване и подготовка на упражнението",
         "completed": "Упражнението е готово",
-        "error": "Генерирането неуспешно"
-      }
+        "error": "Генерирането не успя",
+        "preparing": "Подготовка на учебен материал",
+        "validating": "Проверка на отговори и подсказки"
+      },
+      "stillWorking": "Все още генерираме… изминаха {seconds} с",
+      "hints": {
+        "uploading": "Сигурно изпращане на файла.",
+        "extracting": "Четене на текст и структура от източника.",
+        "analyzing": "Намиране на подсказки за практика в материала.",
+        "preparing": "Събиране на избрания речник или теория за този набор.",
+        "generating": "Моделът пише въпроси. Може да отнеме време.",
+        "validating": "Проверка на отговори, подсказки и структура преди практика.",
+        "saving": "Сглобяване на вашия набор упражнения."
+      },
+      "nextSetPreparing": "Подготвяме следващия набор…",
+      "nextSetReady": "Следващият набор е готов",
+      "nextSetFailed": "Неуспешна подготовка на следващия набор",
+      "nextSetRetry": "Подготви следващия набор",
+      "openNextSet": "Отвори следващия набор"
     },
     "import": {
       "eyebrow": "Импортирана практика",
@@ -822,6 +862,7 @@
       "aiReady": "Упражнението е готово",
       "aiUnavailable": "Въпросите с ИИ не можаха да бъдат генерирани в момента.",
       "aiForbidden": "Упражненията по теория с ИИ са налични с Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "Помощта с ИИ е изключена в Настройки.",
       "feedback": {
         "correct": "Вярно!",
@@ -874,7 +915,21 @@
         "theRule": "Правилото",
         "why": "Защо",
         "complete": "Разбрах",
-        "completeHint": "Можете да продължите, когато сте готови."
+        "completeHint": "Можете да продължите, когато сте готови.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Подсказка",
       "startsWith": "Започва с „{letter}“",
       "revealPrompt": "Все още затруднени? Можете да разкриете пълния отговор.",
-      "revealAnswer": "Разкрий отговора"
+      "revealAnswer": "Разкрий отговора",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Все още няма речник",
@@ -977,8 +1034,38 @@
       "forbidden": "Генерирането на упражнения с ИИ е налично с Pro.",
       "disabled": "Помощта с ИИ е изключена в Настройки.",
       "upgradeHint": "Безплатният план включва няколко генерирания на упражнения с ИИ всеки ден. Pro премахва лимита.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Добавете думи в речника, преди да генерирате въпроси.",
-      "noneValid": "ИИ не можа да създаде валидни въпроси за тези думи. Опитайте отново."
+      "noneValid": "ИИ не можа да създаде валидни въпроси за тези думи. Опитайте отново.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Сесията е завършена",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Само при промяна на съдържание",
       "confirmNever": "Никога",
       "saveFailed": "Неуспешно запазване на AI предпочитанията",
-      "disabledToast": "AI помощта е изключена в Настройки"
+      "disabledToast": "AI помощта е изключена в Настройки",
+      "exerciseNextSetPrefetch": "Подготви следващия набор упражнения",
+      "exerciseNextSetPrefetchDescription": "След като започнете да отговаряте, следващият набор се подготвя автоматично на заден план. Използва един AI кредит за упражнение при старт. Изключете, за да генерирате само с Нов набор."
     },
     "tutorials": "Уроци за разделите",
     "tutorialsDescription": "Нулирайте завършените обиколки на разделите, за да започне „Покажи урока“ отново от началото.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Нямате акаунт?",
     "hasAccount": "Вече имате акаунт?",
     "invalidCredentials": "Невалиден имейл или парола",
+    "rememberMe": "Запомни ме",
+    "signInUnavailable": "Входът не успя в момента. Опитайте отново.",
+    "accountSuspended": "Този акаунт е спрян. Свържете се с поддръжката, ако смятате, че е грешка.",
     "emailExists": "Вече съществува акаунт с този имейл",
     "emailInvalid": "Въведете валиден имейл адрес",
     "registerFailed": "Акаунтът не можа да бъде създаден. Моля, опитайте отново.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Условия",
     "registerAgreement": "Създавайки акаунт, вие се съгласявате с <terms>Условията за ползване</terms> и <privacy>Политиката за поверителност</privacy>.",
     "avatarRequestTooLarge": "Тази снимка е твърде голяма за изпращане. Опитайте с по-малко изображение.",
-    "requestTooLarge": "Тази заявка беше твърде голяма. Промените ви са запазени — моля, опитайте отново."
+    "requestTooLarge": "Тази заявка беше твърде голяма. Промените ви са запазени — моля, опитайте отново.",
+    "roleAdmin": "Администратор",
+    "roleTester": "Тестващ"
   },
   "account": {
     "eyebrow": "Акаунт",
@@ -2910,6 +3004,7 @@
       "backup": "Изтегли архива",
       "backupDone": "Архивът е изтеглен",
       "backupFailed": "Архивът не можа да бъде подготвен. Опитайте отново.",
+      "confirmPhrase": "Изтрий всички данни",
       "confirmLabel": "Въведете {phrase}, за да потвърдите",
       "confirm": "Изтрий всички данни",
       "deleted": "Всички учебни данни са изтрити",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Може да бъде пропуснато",
       "warnings": {
         "workspace_language_reuse": "Някои работни пространства вече съществуват за същия език. Съдържанието им ще бъде добавено към съществуващите работни пространства вместо да се създават дубликати.",
-        "empty_backup": "Този архив не съдържа импортируеми учебни данни."
+        "empty_backup": "Този архив не съдържа импортируеми учебни данни.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Отказ",
       "confirm": "Импортирай учебните данни",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# елемент от речника вече съществува} other {# елемента от речника вече съществуват}}",
         "listening_missing_media": "{count, plural, one {# урок по слушане без URL на медия} other {# урока по слушане без URL на медия}}",
         "listening_duplicate_filename": "{count, plural, one {# урок по слушане пропуснат (дублирано име на файл)} other {# урока по слушане пропуснати (дублирано име на файл)}}",
+        "speaking_duplicate": "{count, plural, one {# сесия по говорене вече съществува} other {# сесии по говорене вече съществуват}}",
         "invalid_workspace_ref": "{count, plural, one {# елемент с липсващо работно пространство} other {# елемента с липсващо работно пространство}}",
         "invalid_record": "{count, plural, one {# невалиден запис} other {# невалидни записа}}",
-        "unsupported_account_field": "Полетата за идентичност на акаунта не се импортират"
+        "unsupported_account_field": "Полетата за идентичност на акаунта не се импортират",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Този архивен файл е твърде голям. Опитайте да експортирате отново или се свържете с поддръжката.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Този архив не можа да бъде импортиран. Опитайте отново.",
         "requestTooLarge": "Този архив е твърде голям за обработка през тази страница. Опитайте с по-малък експорт или се свържете с поддръжката.",
         "notConfigured": "Файловото хранилище все още не е конфигурирано за импорт на архиви."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Затвори акаунта",
@@ -3002,6 +3110,7 @@
       "backup": "Изтегли архива",
       "backupDone": "Архивът е изтеглен",
       "backupFailed": "Архивът не можа да бъде подготвен. Опитайте отново.",
+      "confirmPhrase": "Изтрий акаунта ми",
       "confirmLabel": "Въведете {phrase}, за да потвърдите",
       "confirm": "Окончателно изтрий акаунта",
       "deleted": "Акаунтът ви е изтрит",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Тенденции в ученето",
       "personalLearningPath": "Личен път на учене",
       "personalizedRecommendations": "Персонализирани препоръки",
-      "crossModuleIntelligence": "Персонализация между модули"
+      "crossModuleIntelligence": "Персонализация между модули",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Сравнение на плановете",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Достигнахте днешния лимит на учебния коуч. Коучът ви ще бъде наличен отново утре.",
       "errorPremium": "Учебният коуч е функция на Premium. Получавайте персонализирани препоръки въз основа на учебната си активност.",
       "errorUnavailable": "Коучът ви не можа да отговори в момента. Съобщението ви не беше преброено. Моля, опитайте отново.",
+      "errorWorkspace": "Изберете работно пространство, преди да попитате коуча.",
+      "errorUnauthorized": "Влезте отново, за да продължите.",
       "prompts": {
         "practice_today": "Върху какво да се съсредоточа днес?",
         "struggling_words": "Защо се затруднявам с тези думи?",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Админ",
+      "admin": "Администратор",
       "manage": "Управление",
       "overview": "Преглед",
       "users": "Потребители",
@@ -4750,7 +4862,7 @@
       "contentLibrary": "Библиотека със съдържание",
       "backToApp": "Назад към приложението",
       "openMenu": "Отваряне на админ менюто",
-      "openAdmin": "Админ табло"
+      "openAdmin": "Админ панел"
     },
     "modules": {
       "vocabulary": "Речник",
@@ -4798,7 +4910,28 @@
         "failedListening": "Неуспешно слушане",
         "failedImports": "Неуспешни импорти",
         "runningJobs": "Активни заключвания на задачи",
-        "recentAudits7d": "Одитни записи (7д)"
+        "recentAudits7d": "Одитни записи (7д)",
+        "admins": "Администратори",
+        "testers": "Тестващи",
+        "suspended": "Спрени",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Бърз достъп",
+      "quickAccessLede": "Към инструментите за управление.",
+      "groups": {
+        "people": "Хора",
+        "content": "Съдържание",
+        "ops": "Операции"
+      },
+      "charts": {
+        "signupsTitle": "New accounts",
+        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
+        "activeTitle": "Active learners",
+        "activeLede": "Distinct learners with activity each day (14d).",
+        "rolesTitle": "Roles",
+        "rolesLede": "Share of accounts by role.",
+        "contentTitle": "Content mix",
+        "contentLede": "Stored records across learning modules."
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "План",
         "created": "Регистриран",
         "updated": "Обновен",
-        "emailVerified": "Имейлът е потвърден"
+        "emailVerified": "Имейлът е потвърден",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Акаунт",
@@ -4841,7 +4976,8 @@
         "usageLede": "Собствени записи в учебните модули.",
         "actions": "Действия с акаунта",
         "workspaces": "Работни пространства",
-        "workspacesLede": "Езикови работни пространства, притежавани от този потребител."
+        "workspacesLede": "Езикови работни пространства, притежавани от този потребител.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Запазване на името",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Отнемане на админ",
         "suspend": "Спиране",
         "restore": "Възстановяване",
-        "delete": "Изтриване на акаунта"
+        "delete": "Изтриване на акаунта",
+        "grantTester": "Дай роля тестващ",
+        "revokeTester": "Премахни роля тестващ",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Да се даде админ достъп на този акаунт?",
         "revokeAdmin": "Да се отнеме админ достъпът? Това не успява, ако са последният активен админ.",
         "suspend": "Да се спре този акаунт? Губи достъп при следващата защитена заявка.",
         "restore": "Да се възстанови този акаунт?",
-        "delete": "Да се изтрие окончателно този акаунт и каскадните учебни данни? Това не може да бъде отменено."
+        "delete": "Да се изтрие окончателно този акаунт и каскадните учебни данни? Това не може да бъде отменено.",
+        "grantTester": "Да дадем роля тестващ? Получават всички функции на приложението за QA; запазеният абонамент не се променя.",
+        "revokeTester": "Да премахнем ролята тестващ? Достъпът се връща според реалния им абонамент."
+      },
+      "roleHelp": "Ролята тестващ отключва всички Free, Pro и Premium функции за QA без да променя запазения абонамент. За този панел е нужен администратор.",
+      "roles": {
+        "user": "Потребител",
+        "tester": "Тестващ",
+        "admin": "Администратор"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Език",
         "owner": "Собственик",
         "created": "Създадено",
-        "updated": "Обновено"
+        "updated": "Обновено",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Език: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Да се изтрие това работно пространство и цялото учебно съдържание в него чрез каскади в базата данни?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Собственик",
         "workspace": "Работно пространство",
         "created": "Създадено",
-        "updated": "Обновено"
+        "updated": "Обновено",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Преглед на метаданни. Частните съдържания не се зареждат автоматично.",
@@ -4923,11 +5088,13 @@
         "actions": "Действия"
       },
       "actions": {
-        "delete": "Изтриване на записа"
+        "delete": "Изтриване на записа",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Да се изтрие този запис? Свързаните дъщерни редове следват правилата за каскада / set-null в базата данни."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Задачи",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Този потребител вече има работно пространство за този език.",
       "INVALID_LANGUAGE": "Невалиден езиков код.",
       "CONTENT_NOT_FOUND": "Записът не е намерен.",
-      "INVALID_CONTENT_MODULE": "Неизвестен модул за съдържание."
+      "INVALID_CONTENT_MODULE": "Неизвестен модул за съдържание.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

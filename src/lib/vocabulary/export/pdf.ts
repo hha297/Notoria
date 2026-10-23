@@ -26,7 +26,11 @@ import type {
   VocabularyExportRow,
 } from "@/lib/vocabulary/export/types";
 import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
-import { PRINT_RGB } from "@/lib/export/print-theme";
+import {
+  resolveExportTheme,
+  tokensToRgb,
+  type ExportThemeTokens,
+} from "@/lib/export/print-theme";
 
 function toRgb(parts: readonly [number, number, number]) {
   return rgb(parts[0] / 255, parts[1] / 255, parts[2] / 255);
@@ -40,14 +44,34 @@ const MARGIN_BOTTOM = 52;
 const CONTENT_WIDTH = PAGE_WIDTH - MARGIN_X * 2;
 const YIELD_EVERY = 20;
 
-const INK = toRgb(PRINT_RGB.ink);
-const MUTED = toRgb(PRINT_RGB.muted);
-const HAIRLINE = toRgb(PRINT_RGB.hairline);
-const HEADER_FILL = toRgb(PRINT_RGB.ledeWash);
-const RULE = toRgb(PRINT_RGB.rule);
-const ACCENT = toRgb(PRINT_RGB.accent.vocabulary);
-const PAPER = toRgb(PRINT_RGB.paper);
-const FOOTER = toRgb(PRINT_RGB.footer);
+let INK = toRgb(tokensToRgb(resolveExportTheme("print", "vocabulary")).ink);
+let MUTED = toRgb(tokensToRgb(resolveExportTheme("print", "vocabulary")).muted);
+let HAIRLINE = toRgb(
+  tokensToRgb(resolveExportTheme("print", "vocabulary")).hairline,
+);
+let HEADER_FILL = toRgb(
+  tokensToRgb(resolveExportTheme("print", "vocabulary")).wash,
+);
+let RULE = toRgb(tokensToRgb(resolveExportTheme("print", "vocabulary")).rule);
+let ACCENT = toRgb(
+  tokensToRgb(resolveExportTheme("print", "vocabulary")).accent,
+);
+let PAPER = toRgb(tokensToRgb(resolveExportTheme("print", "vocabulary")).paper);
+let FOOTER = toRgb(
+  tokensToRgb(resolveExportTheme("print", "vocabulary")).footer,
+);
+
+function applyVocabularyPdfTheme(theme: ExportThemeTokens) {
+  const colors = tokensToRgb(theme);
+  INK = toRgb(colors.ink);
+  MUTED = toRgb(colors.muted);
+  HAIRLINE = toRgb(colors.hairline);
+  HEADER_FILL = toRgb(colors.wash);
+  RULE = toRgb(colors.rule);
+  ACCENT = toRgb(colors.accent);
+  PAPER = toRgb(colors.paper);
+  FOOTER = toRgb(colors.footer);
+}
 
 const FONT_FILES = {
   regular: "IBMPlexSans-Regular.ttf",
@@ -688,6 +712,13 @@ export async function generateVocabularyPdfBlob(
   options: VocabularyExportOptions,
   onProgress?: VocabularyExportProgressHandler,
 ): Promise<Blob> {
+  applyVocabularyPdfTheme(
+    resolveExportTheme(
+      options.appearance ?? "print",
+      "vocabulary",
+      options.themeMode,
+    ),
+  );
   const pdf = await PDFDocument.create();
   pdf.setTitle(labels.documentHeading);
   pdf.setCreator("Notoria");

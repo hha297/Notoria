@@ -100,7 +100,7 @@ export function LearningLanguageOnboarding() {
         </header>
 
         <section
-          className={mx(styles, "learning-onboarding-panel elevated-surface flex flex-col gap-4 rounded-[0.95rem] border border-hairline-cloud p-4 sm:gap-5 sm:p-5")}
+          className={mx(styles, "learning-onboarding-panel elevated-surface flex flex-col gap-4 rounded-[0.95rem] border border-hairline-cloud sm:gap-5")}
           aria-labelledby="learning-onboarding-heading"
         >
           <h2 id="learning-onboarding-heading" className="sr-only">
@@ -134,10 +134,10 @@ export function LearningLanguageOnboarding() {
                 {t("noResults")}
               </p>
             ) : (
-              <div className="flex flex-col gap-4">
+              <div className="flex w-full flex-col gap-4">
                 {languageGroups.map((group) => (
-                  <section key={group.region} className="flex flex-col gap-2">
-                    <h3 className="sticky top-0 z-[1] bg-background/95 px-0.5 py-1 text-[0.72rem] font-bold tracking-[0.08em] text-muted-foreground uppercase backdrop-blur-sm">
+                  <section key={group.region} className="flex w-full flex-col gap-2">
+                    <h3 className={mx(styles, "learning-onboarding-region")}>
                       {tWorkspace(`languageRegions.${group.region}`)}
                     </h3>
                     <div className="grid grid-cols-1 gap-2 sm:grid-cols-2">
@@ -219,7 +219,7 @@ function LanguageOption({
       disabled={disabled}
       onClick={onSelect}
       className={cn(
-        "flex w-full min-h-11 items-center gap-2.5 rounded-xl border border-hairline-cloud control-surface px-3 py-2.5 text-left transition-colors",
+        "flex w-full min-h-11 items-center gap-3 rounded-xl border border-hairline-cloud control-surface px-3.5 py-2.5 text-left transition-colors",
         "hover:border-primary/35",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
         "disabled:cursor-not-allowed disabled:opacity-70",

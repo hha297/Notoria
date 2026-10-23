@@ -15,7 +15,20 @@
     "clearFilter": "Vymazat",
     "filters": "Filtry",
     "hideFilters": "Skrýt filtry",
-    "remove": "Odebrat"
+    "remove": "Odebrat",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Složku nelze přesunout do sebe samé",
     "tooDeep": "Tato složka je zanořená příliš hluboko",
     "notFound": "Složka nenalezena",
-    "nameTaken": "Složka nebo text s tímto názvem už existuje"
+    "nameTaken": "Složka nebo text s tímto názvem už existuje",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Přepnout motiv",
@@ -291,7 +310,11 @@
     "createWorkspace": "Vytvořit pracovní prostor",
     "createWorkspaceHint": "Přidat další jazykový pracovní prostor",
     "switchWorkspace": "Přepnout pracovní prostor",
-    "switchFailed": "Pracovní prostor se nepodařilo přepnout"
+    "switchFailed": "Pracovní prostor se nepodařilo přepnout",
+    "selectLanguage": "Vybrat jazyk",
+    "allLanguages": "Všechny jazyky",
+    "changeLanguageFailed": "Nepodařilo se změnit jazyk rozhraní",
+    "popularLanguages": "Oblíbené"
   },
   "workspace": {
     "title": "Pracovní prostory",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# import} few {# importy} many {# importu} other {# importů}}"
     },
     "processing": {
-      "workingTitle": "Pracujeme na vašem cvičení",
-      "readyTitle": "Cvičení připraveno",
+      "workingTitle": "Připravujeme cvičení",
+      "readyTitle": "Cvičení je připraveno",
       "errorTitle": "Něco se pokazilo",
       "cancel": "Zrušit",
       "retry": "Zkusit znovu",
       "dismiss": "Zavřít",
       "stages": {
-        "uploading": "Nahrávání…",
-        "extracting": "Extrakce obsahu…",
-        "analyzing": "Analýza obsahu…",
-        "generating": "Generování cvičení…",
-        "saving": "Ukládání cvičení…",
-        "completed": "Cvičení připraveno",
-        "error": "Generování selhalo"
-      }
+        "uploading": "Nahrávání souboru",
+        "extracting": "Extrakce obsahu",
+        "analyzing": "Analýza obsahu",
+        "generating": "Generování otázek",
+        "saving": "Ukládání a příprava cvičení",
+        "completed": "Cvičení je připraveno",
+        "error": "Generování selhalo",
+        "preparing": "Příprava učebního materiálu",
+        "validating": "Ověřování odpovědí a nápověd"
+      },
+      "stillWorking": "Stále generujeme… uplynulo {seconds} s",
+      "hints": {
+        "uploading": "Bezpečné odesílání souboru.",
+        "extracting": "Čtení textu a struktury ze zdroje.",
+        "analyzing": "Hledání cvičebních vodítek v materiálu.",
+        "preparing": "Shromažďování vybrané slovní zásoby nebo teorie pro tuto sadu.",
+        "generating": "Model píše otázky. Může to chvíli trvat.",
+        "validating": "Kontrola odpovědí, nápověd a struktury před cvičením.",
+        "saving": "Sestavování vaší cvičební sady."
+      },
+      "nextSetPreparing": "Připravujeme další sadu…",
+      "nextSetReady": "Další sada je připravena",
+      "nextSetFailed": "Další sadu se nepodařilo připravit",
+      "nextSetRetry": "Připravit další sadu",
+      "openNextSet": "Otevřít další sadu"
     },
     "import": {
       "eyebrow": "Importovaná praxe",
@@ -822,6 +862,7 @@
       "aiReady": "Praxe připravena",
       "aiUnavailable": "Otázky AI se momentálně nepodařilo vygenerovat.",
       "aiForbidden": "AI teoretická cvičení jsou dostupná s Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI asistence je vypnutá v Nastavení.",
       "feedback": {
         "correct": "Správně!",
@@ -874,7 +915,21 @@
         "theRule": "Pravidlo",
         "why": "Proč",
         "complete": "Rozumím",
-        "completeHint": "Můžete pokračovat, až budete připraveni."
+        "completeHint": "Můžete pokračovat, až budete připraveni.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Tip",
       "startsWith": "Začíná na „{letter}“",
       "revealPrompt": "Stále nevíte? Můžete odhalit celou odpověď.",
-      "revealAnswer": "Odhalit odpověď"
+      "revealAnswer": "Odhalit odpověď",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Zatím žádná slovní zásoba",
@@ -977,8 +1034,38 @@
       "forbidden": "Generování cvičení AI je dostupné s Pro.",
       "disabled": "AI asistence je vypnutá v Nastavení.",
       "upgradeHint": "Free zahrnuje několik generování cvičení AI denně. Pro limit odstraňuje.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Než budete generovat otázky, přidejte slova do slovní zásoby.",
-      "noneValid": "AI nedokázala vytvořit platné otázky pro tato slova. Zkuste to znovu."
+      "noneValid": "AI nedokázala vytvořit platné otázky pro tato slova. Zkuste to znovu.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Relace dokončena",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Jen při změně obsahu",
       "confirmNever": "Nikdy",
       "saveFailed": "Předvolby AI se nepodařilo uložit",
-      "disabledToast": "AI asistence je vypnutá v Nastavení"
+      "disabledToast": "AI asistence je vypnutá v Nastavení",
+      "exerciseNextSetPrefetch": "Připravit další sadu cvičení",
+      "exerciseNextSetPrefetchDescription": "Po začátku odpovídání se další sada připraví automaticky na pozadí. Při startu spotřebuje jeden kredit AI cvičení. Vypněte pro generování jen při Nové sadě."
     },
     "tutorials": "Tutoriály sekcí",
     "tutorialsDescription": "Obnovit dokončené prohlídky sekcí, aby „Zobrazit tutoriál“ začal znovu od začátku.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Nemáte účet?",
     "hasAccount": "Už máte účet?",
     "invalidCredentials": "Neplatný e-mail nebo heslo",
+    "rememberMe": "Zapamatovat si mě",
+    "signInUnavailable": "Přihlášení se teď nezdařilo. Zkuste to znovu.",
+    "accountSuspended": "Tento účet je pozastaven. Pokud jde o omyl, kontaktujte podporu.",
     "emailExists": "Účet s tímto e-mailem již existuje",
     "emailInvalid": "Zadejte platnou e-mailovou adresu",
     "registerFailed": "Účet se nepodařilo vytvořit. Zkuste to prosím znovu.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Podmínky",
     "registerAgreement": "Vytvořením účtu souhlasíte s <terms>Podmínkami používání</terms> a <privacy>Zásadami ochrany osobních údajů</privacy>.",
     "avatarRequestTooLarge": "Tato fotografie je příliš velká k odeslání. Zkuste menší obrázek.",
-    "requestTooLarge": "Tento požadavek byl příliš velký. Vaše změny zůstaly zachovány — zkuste to prosím znovu."
+    "requestTooLarge": "Tento požadavek byl příliš velký. Vaše změny zůstaly zachovány — zkuste to prosím znovu.",
+    "roleAdmin": "Správce",
+    "roleTester": "Tester"
   },
   "account": {
     "eyebrow": "Účet",
@@ -2910,6 +3004,7 @@
       "backup": "Stáhnout zálohu",
       "backupDone": "Záloha stažena",
       "backupFailed": "Zálohu se nepodařilo připravit. Zkuste to znovu.",
+      "confirmPhrase": "Smazat všechna data",
       "confirmLabel": "Pro potvrzení napište {phrase}",
       "confirm": "Smazat všechna data",
       "deleted": "Všechna učební data byla smazána",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Může být přeskočeno",
       "warnings": {
         "workspace_language_reuse": "Některé pracovní prostory již existují pro stejný jazyk. Jejich obsah bude přidán do stávajících pracovních prostorů místo vytváření duplicit.",
-        "empty_backup": "Tato záloha neobsahuje žádná importovatelná učební data."
+        "empty_backup": "Tato záloha neobsahuje žádná importovatelná učební data.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Zrušit",
       "confirm": "Importovat učební data",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# položka slovní zásoby již existuje} few {# položky slovní zásoby již existují} many {# položky slovní zásoby již existuje} other {# položek slovní zásoby již existuje}}",
         "listening_missing_media": "{count, plural, one {# lekce poslechu bez URL média} few {# lekce poslechu bez URL média} many {# lekce poslechu bez URL média} other {# lekcí poslechu bez URL média}}",
         "listening_duplicate_filename": "{count, plural, one {# lekce poslechu přeskočena (duplicitní název souboru)} few {# lekce poslechu přeskočeny (duplicitní název souboru)} many {# lekce poslechu přeskočeno (duplicitní název souboru)} other {# lekcí poslechu přeskočeno (duplicitní název souboru)}}",
+        "speaking_duplicate": "{count, plural, one {# řečová relace již existuje} few {# řečové relace již existují} many {# řečových relací již existuje} other {# řečových relací již existuje}}",
         "invalid_workspace_ref": "{count, plural, one {# položka s chybějícím pracovním prostorem} few {# položky s chybějícím pracovním prostorem} many {# položky s chybějícím pracovním prostorem} other {# položek s chybějícím pracovním prostorem}}",
         "invalid_record": "{count, plural, one {# neplatný záznam} few {# neplatné záznamy} many {# neplatného záznamu} other {# neplatných záznamů}}",
-        "unsupported_account_field": "Pole identity účtu se neimportují"
+        "unsupported_account_field": "Pole identity účtu se neimportují",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Tento soubor zálohy je příliš velký. Zkuste exportovat znovu nebo kontaktujte podporu.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Tuto zálohu se nepodařilo importovat. Zkuste to znovu.",
         "requestTooLarge": "Tato záloha je příliš velká ke zpracování na této stránce. Zkuste menší export nebo kontaktujte podporu.",
         "notConfigured": "Úložiště souborů pro import zálohy ještě není nastaveno."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Uzavřít účet",
@@ -3002,6 +3110,7 @@
       "backup": "Stáhnout zálohu",
       "backupDone": "Záloha stažena",
       "backupFailed": "Zálohu se nepodařilo připravit. Zkuste to znovu.",
+      "confirmPhrase": "Smazat můj účet",
       "confirmLabel": "Pro potvrzení napište {phrase}",
       "confirm": "Trvale smazat účet",
       "deleted": "Váš účet byl smazán",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Trendy učení",
       "personalLearningPath": "Osobní cesta učení",
       "personalizedRecommendations": "Personalizovaná doporučení",
-      "crossModuleIntelligence": "Personalizace napříč moduly"
+      "crossModuleIntelligence": "Personalizace napříč moduly",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Porovnat plány",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Dosáhli jste dnešního limitu kouče učení. Kouč bude znovu dostupný zítra.",
       "errorPremium": "Kouč učení je funkce Premium. Získejte personalizovaná doporučení podle aktivity učení.",
       "errorUnavailable": "Váš kouč teď nemohl odpovědět. Zpráva nebyla započítána. Zkuste to znovu.",
+      "errorWorkspace": "Než se zeptáte kouče, vyberte pracovní prostor.",
+      "errorUnauthorized": "Pro pokračování se znovu přihlaste.",
       "prompts": {
         "practice_today": "Na co se mám dnes zaměřit?",
         "struggling_words": "Proč mi tato slova dělají potíže?",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Správce",
       "manage": "Správa",
       "overview": "Přehled",
       "users": "Uživatelé",
@@ -4750,7 +4862,7 @@
       "contentLibrary": "Knihovna obsahu",
       "backToApp": "Zpět do aplikace",
       "openMenu": "Otevřít nabídku admina",
-      "openAdmin": "Admin nástěnka"
+      "openAdmin": "Panel správce"
     },
     "modules": {
       "vocabulary": "Slovní zásoba",
@@ -4798,7 +4910,28 @@
         "failedListening": "Neúspěšný poslech",
         "failedImports": "Neúspěšné importy",
         "runningJobs": "Běžící zámky úloh",
-        "recentAudits7d": "Auditní záznamy (7d)"
+        "recentAudits7d": "Auditní záznamy (7d)",
+        "admins": "Správci",
+        "testers": "Testeři",
+        "suspended": "Pozastavení",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Rychlý přístup",
+      "quickAccessLede": "Přejít na nástroje správy.",
+      "groups": {
+        "people": "Lidé",
+        "content": "Obsah",
+        "ops": "Provoz"
+      },
+      "charts": {
+        "signupsTitle": "New accounts",
+        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
+        "activeTitle": "Active learners",
+        "activeLede": "Distinct learners with activity each day (14d).",
+        "rolesTitle": "Roles",
+        "rolesLede": "Share of accounts by role.",
+        "contentTitle": "Content mix",
+        "contentLede": "Stored records across learning modules."
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "Plán",
         "created": "Registrace",
         "updated": "Aktualizováno",
-        "emailVerified": "E-mail ověřen"
+        "emailVerified": "E-mail ověřen",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Účet",
@@ -4841,7 +4976,8 @@
         "usageLede": "Vlastněné záznamy napříč moduly učení.",
         "actions": "Akce účtu",
         "workspaces": "Pracovní prostory",
-        "workspacesLede": "Jazykové pracovní prostory vlastněné tímto uživatelem."
+        "workspacesLede": "Jazykové pracovní prostory vlastněné tímto uživatelem.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Uložit jméno",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Odebrat admina",
         "suspend": "Pozastavit",
         "restore": "Obnovit",
-        "delete": "Smazat účet"
+        "delete": "Smazat účet",
+        "grantTester": "Udělít roli testera",
+        "revokeTester": "Odebrat roli testera",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Udělit tomuto účtu přístup admina?",
         "revokeAdmin": "Odebrat přístup admina? Selže, pokud jde o posledního aktivního admina.",
         "suspend": "Pozastavit tento účet? Ztratí přístup při dalším chráněném požadavku.",
         "restore": "Obnovit tento účet?",
-        "delete": "Trvale smazat tento účet a kaskádovaná data učení? Tuto akci nelze vrátit."
+        "delete": "Trvale smazat tento účet a kaskádovaná data učení? Tuto akci nelze vrátit.",
+        "grantTester": "Udělít roli testera? Získají všechny funkce aplikace pro QA; uložené předplatné se nemění.",
+        "revokeTester": "Odebrat roli testera? Přístup k funkcím se vrátí podle jejich skutečného předplatného."
+      },
+      "roleHelp": "Role testera odemyká všechny funkce Free, Pro a Premium pro QA bez změny uloženého předplatného. Pro tento panel je potřeba správce.",
+      "roles": {
+        "user": "Uživatel",
+        "tester": "Tester",
+        "admin": "Správce"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Jazyk",
         "owner": "Vlastník",
         "created": "Vytvořeno",
-        "updated": "Aktualizováno"
+        "updated": "Aktualizováno",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Jazyk: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Smazat tento pracovní prostor a veškerý obsah učení uvnitř přes kaskády databáze?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Vlastník",
         "workspace": "Pracovní prostor",
         "created": "Vytvořeno",
-        "updated": "Aktualizováno"
+        "updated": "Aktualizováno",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Kontrola metadat. Soukromá těla se nenačítají automaticky.",
@@ -4923,11 +5088,13 @@
         "actions": "Akce"
       },
       "actions": {
-        "delete": "Smazat záznam"
+        "delete": "Smazat záznam",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Smazat tento záznam? Související podřízené řádky se řídí pravidly kaskády / set-null databáze."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Úlohy",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Tento uživatel již má pracovní prostor pro tento jazyk.",
       "INVALID_LANGUAGE": "Neplatný kód jazyka.",
       "CONTENT_NOT_FOUND": "Záznam nenalezen.",
-      "INVALID_CONTENT_MODULE": "Neznámý modul obsahu."
+      "INVALID_CONTENT_MODULE": "Neznámý modul obsahu.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

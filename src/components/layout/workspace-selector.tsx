@@ -23,15 +23,18 @@ import { Button } from "@/components/ui/button";
 import { setActiveWorkspace } from "@/lib/actions/workspaces";
 import { getLanguageName, WORKPLACE_LANGUAGES } from "@/lib/languages";
 import type { Workspace } from "@/db/schema";
+import { cn } from "@/lib/utils";
 
 type WorkspaceSelectorProps = {
   workspaces: Workspace[];
   activeWorkspaceId?: string;
+  className?: string;
 };
 
 export function WorkspaceSelector({
   workspaces,
   activeWorkspaceId,
+  className,
 }: WorkspaceSelectorProps) {
   const router = useRouter();
   const t = useTranslations("header");
@@ -65,7 +68,12 @@ export function WorkspaceSelector({
 
   return (
     <>
-      <div className="flex w-full min-w-0 items-center gap-1.5 sm:w-auto sm:gap-2.5">
+      <div
+        className={cn(
+          "flex min-w-0 items-center gap-1.5 sm:gap-2",
+          className,
+        )}
+      >
         {workspaces.length === 0 ? (
           <Button onClick={() => setCreateOpen(true)} className="w-full sm:w-auto">
             <Plus className="size-4" />
@@ -73,7 +81,17 @@ export function WorkspaceSelector({
           </Button>
         ) : (
           <>
-            <div className="control-surface flex min-w-0 flex-1 items-center overflow-hidden rounded-md border border-page-accent-border sm:flex-initial">
+            {/*
+              Select shell owns the flexible/min width. Create stays shrink-0
+              beside it so long CTA labels cannot crush the workspace name.
+            */}
+            <div
+              className={cn(
+                "studio-chrome-control control-surface flex min-h-0 min-w-0 items-stretch overflow-hidden rounded-md border border-page-accent-border",
+                "flex-1",
+                "sm:w-[14rem] sm:flex-none md:w-[16rem] lg:w-[17.5rem]",
+              )}
+            >
               <Select
                 value={active?.id}
                 open={selectOpen}
@@ -83,7 +101,8 @@ export function WorkspaceSelector({
               >
                 <SelectTrigger
                   aria-label={active ? active.name : t("switchWorkspace")}
-                  className="h-10 w-full min-w-0 max-w-none flex-1 rounded-none border-0 bg-transparent px-2.5 shadow-none focus-visible:ring-0 sm:w-auto sm:max-w-[220px] sm:min-w-[148px]"
+                  title={active ? active.name : t("switchWorkspace")}
+                  className="h-auto min-h-0 w-full min-w-0 max-w-none flex-1 rounded-none border-0 bg-transparent px-2.5 py-0 shadow-none focus-visible:ring-0 data-[size=default]:h-auto data-[size=default]:min-h-0"
                 >
                   <SelectValue>
                     {active && (
@@ -110,7 +129,6 @@ export function WorkspaceSelector({
                     ))}
                   </SelectGroup>
 
-                  {/* Mobile: create lives in the menu instead of a separate + button */}
                   <div className="sm:hidden">
                     <SelectSeparator />
                     <div className="p-1">
@@ -140,10 +158,10 @@ export function WorkspaceSelector({
                 <>
                   <span
                     aria-hidden
-                    className="hidden h-5 w-px shrink-0 bg-hairline-cloud sm:block"
+                    className="hidden w-px shrink-0 self-stretch bg-hairline-cloud sm:block"
                   />
                   <WorkspaceActionsMenu
-                    className="hidden sm:inline-flex"
+                    className="studio-chrome-control hidden w-10 sm:inline-flex"
                     workspace={active}
                     workspaces={workspaces}
                   />
@@ -153,7 +171,7 @@ export function WorkspaceSelector({
 
             <Button
               onClick={() => setCreateOpen(true)}
-              className="hidden shrink-0 sm:inline-flex"
+              className="studio-chrome-control hidden shrink-0 sm:inline-flex"
               aria-label={t("createWorkspace")}
             >
               <Plus className="size-4" />
@@ -184,10 +202,13 @@ function WorkspaceOption({
   return (
     <span className="flex min-w-0 items-center gap-2">
       {language && (
-        <CountryFlag code={language.flagCode} className="h-3.5 w-5 shrink-0" />
+        <CountryFlag
+          code={language.flagCode}
+          className="h-3.5 w-5 shrink-0"
+        />
       )}
-      <span className="truncate">{name}</span>
-      <span className="hidden truncate text-muted-foreground md:inline">
+      <span className="min-w-0 truncate">{name}</span>
+      <span className="hidden min-w-0 truncate text-muted-foreground xl:inline">
         · {getLanguageName(languageCode)}
       </span>
     </span>

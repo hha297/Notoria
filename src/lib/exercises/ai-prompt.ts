@@ -1,4 +1,9 @@
 import { vocabularyAiFields } from "@/lib/ai/bounds";
+import { additionalInstructionFields } from "@/lib/exercises/additional-instructions";
+import {
+  PROGRESSIVE_HINT_PROMPT,
+  progressiveHintPayload,
+} from "@/lib/exercises/progressive-hints";
 import { FILL_BLANK_PLACEHOLDER } from "@/lib/exercises/ai-types";
 import { LEXICAL_SURFACE_GUIDANCE } from "@/lib/exercises/lexical-surface";
 import {
@@ -48,6 +53,8 @@ Requirements:
 20. Quality test: would a language teacher consider this a useful example for this exact word/meaning? If not, rewrite.
 21. Put the selected exerciseDifficulty id into the difficulty field of each exercise.
 
+${PROGRESSIVE_HINT_PROMPT}
+
 Return structured JSON only:
 {
   "exercises": [
@@ -61,7 +68,8 @@ Return structured JSON only:
       "instruction": string,
       "explanation": string,
       "difficulty": string,
-      "sentenceMeaning": string
+      "sentenceMeaning": string,
+      "hints": string[]
     }
   ]
 }
@@ -83,6 +91,8 @@ export function fillBlankUserPayload(input: {
     avoidSentences?: string[];
   }>;
   regenerateReason?: string;
+  additionalInstructions?: string | null;
+  submittedMistake?: string | null;
 }) {
   const difficulty = parseExerciseDifficulty(
     input.difficulty ?? null,
@@ -99,8 +109,14 @@ export function fillBlankUserPayload(input: {
     difficultyGuidance: profile.aiGuidance,
     fillBlankGuidance: profile.fillBlankGuidance,
     reminder:
-      "Practice sentence/answer must be in languageHint. ALWAYS include sentenceMeaning in uiLanguage (website language), not the study language. Obey difficultyGuidance and fillBlankGuidance. Target words must come from the provided list only. Difficulty controls sentence construction only — never swap targets. word/baseWord is the lemma; answer is the contextual surface form.",
+      "Practice sentence/answer must be in languageHint. ALWAYS include sentenceMeaning in uiLanguage (website language), not the study language. Obey difficultyGuidance and fillBlankGuidance. Target words must come from the provided list only. Difficulty controls sentence construction only — never swap targets. word/baseWord is the lemma; answer is the contextual surface form. Hints follow hintDifficulty and must not reveal the answer.",
     regenerateReason: input.regenerateReason,
+    ...additionalInstructionFields(input.additionalInstructions),
+    ...progressiveHintPayload({
+      explanationLanguage: input.uiLanguage,
+      difficulty: profile.id,
+      submittedMistake: input.submittedMistake,
+    }),
     words: input.words.map((word) => {
       const fields = vocabularyAiFields({
         word: word.word,

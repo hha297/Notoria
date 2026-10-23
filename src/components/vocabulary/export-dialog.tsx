@@ -2,9 +2,11 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { Download, Loader2 } from "lucide-react";
+import { useTheme } from "next-themes";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
+import { ExportAppearanceOptions } from "@/components/export/export-appearance-options";
 import {
   ExportFormatOptions,
   ExportOptionChip,
@@ -20,6 +22,7 @@ import {
   getDefaultExportFormat,
   VOCABULARY_EXPORT_FORMATS,
 } from "@/lib/export/formats";
+import { DEFAULT_EXPORT_APPEARANCE } from "@/lib/export/print-theme";
 import {
   DEFAULT_VOCABULARY_EXPORT_OPTIONS,
   exportVocabulary,
@@ -56,6 +59,8 @@ export function VocabularyExportDialog({
   const t = useTranslations("vocabulary.export");
   const tVocab = useTranslations("vocabulary");
   const tc = useTranslations("common");
+  const tAppearance = useTranslations("common.exportAppearance");
+  const { resolvedTheme } = useTheme();
   const { hasProAccess, openUpgrade } = useProAccess();
   const [options, setOptions] = useState<VocabularyExportOptions>(
     DEFAULT_VOCABULARY_EXPORT_OPTIONS,
@@ -74,8 +79,10 @@ export function VocabularyExportDialog({
         hasProAccess,
         VOCABULARY_EXPORT_FORMATS,
       ) as VocabularyExportFormat,
+      appearance: DEFAULT_EXPORT_APPEARANCE,
+      themeMode: resolvedTheme === "dark" ? "dark" : "light",
     }));
-  }, [open, hasProAccess]);
+  }, [open, hasProAccess, resolvedTheme]);
 
   useEffect(() => {
     if (open) return;
@@ -110,7 +117,10 @@ export function VocabularyExportDialog({
       await exportVocabulary({
         workspaceName,
         words,
-        options,
+        options: {
+          ...options,
+          themeMode: resolvedTheme === "dark" ? "dark" : "light",
+        },
         labels: {
           documentHeading: t("documentHeading"),
           workspaceLabel: t("workspaceLabel"),
@@ -214,6 +224,20 @@ export function VocabularyExportDialog({
             }}
           />
         </ExportSheetSection>
+
+        {options.format !== "csv" ? (
+          <ExportSheetSection label={tAppearance("label")}>
+            <ExportAppearanceOptions
+              idPrefix="vocab-export-appearance"
+              value={options.appearance}
+              onChange={(appearance) =>
+                setOptions((current) => ({ ...current, appearance }))
+              }
+              surface="vocabulary"
+              showDocxNote={options.format === "docx"}
+            />
+          </ExportSheetSection>
+        ) : null}
 
         <ExportSheetSection label={t("content")}>
           <div className={mx(formatStyles, "export-option-list")}>

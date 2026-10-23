@@ -1,10 +1,12 @@
 "use client";
 
 import Link from "next/link";
-import { formatDistanceToNow } from "date-fns";
+import { useRouter } from "next/navigation";
+import { formatDistanceToNow, type Locale } from "date-fns";
 import {
   ArrowRight,
   BookOpen,
+  ChevronDown,
   ChevronLeft,
   ChevronRight,
   LayoutGrid,
@@ -12,9 +14,10 @@ import {
   Plus,
   Search,
 } from "lucide-react";
-import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
+import { useDateFnsLocale } from "@/hooks/use-date-fns-locale";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { LinkButton } from "@/components/ui/link-button";
@@ -33,6 +36,13 @@ import { buildPageList } from "@/lib/vocabulary/display";
 import featureStyles from "@/components/style/exercises/theory.module.css";
 import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
+import {
+  checkState,
+  folderPathLabel,
+  groupTheoryPickerNotes,
+  toggleMembers,
+  type TheoryPickerFolder,
+} from "@/lib/theory-exercises/group-picker";
 
 export type TheoryExerciseCardItem = {
   id: string;
@@ -45,6 +55,7 @@ export type TheoryExerciseCardItem = {
   estimatedExercises: number;
   sectionCount: number;
   updatedAt: string;
+  folderId?: string | null;
 };
 
 type TheoryViewMode = "list" | "cards";
@@ -54,6 +65,7 @@ const THEORY_COLOR_SLOTS = 6;
 
 type TheoryExercisePickerProps = {
   theories: TheoryExerciseCardItem[];
+  folders?: TheoryPickerFolder[];
 };
 
 function categoryLabel(
@@ -69,6 +81,7 @@ function noteMeta(
   note: TheoryExerciseCardItem,
   t: ReturnType<typeof useTranslations<"exercises.theory">>,
   tTheory: ReturnType<typeof useTranslations<"theory">>,
+  dateLocale: Locale,
 ) {
   return [
     note.sectionCount > 0 ? t("sections", { count: note.sectionCount }) : null,
@@ -76,17 +89,30 @@ function noteMeta(
       ? t("estimatedExercises", { count: note.estimatedExercises })
       : t("limitedExercises"),
     tTheory("readingTime", { minutes: note.readingMinutes }),
-    formatDistanceToNow(new Date(note.updatedAt), { addSuffix: true }),
+    formatDistanceToNow(new Date(note.updatedAt), {
+      addSuffix: true,
+      locale: dateLocale,
+    }),
   ].filter((item): item is string => Boolean(item));
 }
 
-export function TheoryExercisePicker({ theories }: TheoryExercisePickerProps) {
+export function TheoryExercisePicker({
+  theories,
+  folders = [],
+}: TheoryExercisePickerProps) {
   const t = useTranslations("exercises.theory");
   const tTheory = useTranslations("theory");
+  const dateLocale = useDateFnsLocale();
   const [search, setSearch] = useState("");
   const [categories, setCategories] = useState<MultiFilterValue>([]);
   const [viewMode, setViewMode] = useState<TheoryViewMode>("list");
   const [page, setPage] = useState(1);
+  const [expanded, setExpanded] = useState<Record<string, boolean>>({});
+  const [searchOpen, setSearchOpen] = useState<{
+    query: string;
+    open: Record<string, boolean>;
+  } | null>(null);
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(() => new Set());
 
   const categoryOptions = useMemo(() => {
     const present = new Set(
@@ -122,6 +148,26 @@ export function TheoryExercisePicker({ theories }: TheoryExercisePickerProps) {
     });
   }, [theories, search, categories, tTheory]);
 
+  const libraryGrouping = useMemo(
+    () => groupTheoryPickerNotes(theories, folders),
+    [folders, theories],
+  );
+  const filteredIds = useMemo(
+    () => new Set(filtered.map((note) => note.id)),
+    [filtered],
+  );
+  const visibleGroups = useMemo(() => {
+    if (libraryGrouping.kind !== "grouped") return [];
+    return libraryGrouping.groups
+      .map((group) => ({
+        ...group,
+        notes: group.notes.filter((note) => filteredIds.has(note.id)),
+      }))
+      .filter((group) => group.notes.length > 0);
+  }, [filteredIds, libraryGrouping]);
+  const searching = search.trim().length > 0;
+  const router = useRouter();
+
   const hasFilters = search.trim() !== "" || isMultiFilterActive(categories);
   const pageSize = THEORY_PAGE_SIZE;
   const totalPages = Math.max(1, Math.ceil(filtered.length / pageSize));
@@ -129,9 +175,17 @@ export function TheoryExercisePicker({ theories }: TheoryExercisePickerProps) {
   const pageStart = (currentPage - 1) * pageSize;
   const paged = filtered.slice(pageStart, pageStart + pageSize);
 
-  useEffect(() => {
-    setPage(1);
-  }, [search, categories]);
+  const practiceSelected = () => {
+    const ids = [...selectedIds];
+    if (ids.length === 0) return;
+    const [primary, ...rest] = ids;
+    if (!primary) return;
+    const href =
+      rest.length > 0
+        ? `/exercises/theory/${primary}?also=${encodeURIComponent(rest.join(","))}`
+        : `/exercises/theory/${primary}`;
+    router.push(href);
+  };
 
   return (
     <div className="space-y-8" data-exercise="theory">
@@ -191,7 +245,12 @@ export function TheoryExercisePicker({ theories }: TheoryExercisePickerProps) {
               <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
               <Input
                 value={search}
-                onChange={(event) => setSearch(event.target.value)}
+                onChange={(event) => {
+                  const next = event.target.value;
+                  setSearch(next);
+                  setPage(1);
+                  if (!next.trim() && searchOpen) setSearchOpen(null);
+                }}
                 placeholder={t("searchPlaceholder")}
                 className="h-10 pl-9 sm:h-9"
               />
@@ -200,7 +259,10 @@ export function TheoryExercisePicker({ theories }: TheoryExercisePickerProps) {
             <MultiFilterSelect
               emptyLabel={t("filterCategory")}
               values={categories}
-              onChange={setCategories}
+              onChange={(next) => {
+                setCategories(next);
+                setPage(1);
+              }}
               triggerClassName="h-10 w-full min-w-0 sm:h-9 sm:w-auto sm:min-w-36"
               options={categoryOptions}
             />
@@ -223,12 +285,53 @@ export function TheoryExercisePicker({ theories }: TheoryExercisePickerProps) {
                   onClick={() => {
                     setSearch("");
                     setCategories([]);
+                    setPage(1);
+                    if (searchOpen) setSearchOpen(null);
                   }}
                 >
                   {t("clearFilters")}
                 </button>
               ) : null}
             </TheoryEmpty>
+          ) : libraryGrouping.kind === "grouped" ? (
+            <div className="space-y-4">
+              {selectedIds.size > 0 ? (
+                <div className="flex flex-wrap items-center gap-2 rounded-md border border-border/70 bg-muted/30 px-3 py-2">
+                  <span className="text-sm text-ink">
+                    {t("folders.selectedCount", { count: selectedIds.size })}
+                  </span>
+                  <Button
+                    type="button"
+                    size="sm"
+                    className="gap-1.5 border-transparent bg-primary text-primary-foreground hover:bg-primary-hover"
+                    onClick={practiceSelected}
+                  >
+                    {t("folders.practiceSelected")}
+                    <ArrowRight className="size-3.5 shrink-0" aria-hidden />
+                  </Button>
+                  <Button
+                    type="button"
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => setSelectedIds(new Set())}
+                  >
+                    {t("folders.clearSelection")}
+                  </Button>
+                </div>
+              ) : null}
+              <TheoryGroupedNotes
+                groups={visibleGroups}
+                viewMode={viewMode}
+                searching={searching}
+                searchQuery={search}
+                expanded={expanded}
+                searchOpen={searchOpen}
+                selectedIds={selectedIds}
+                onExpandedChange={setExpanded}
+                onSearchOpenChange={setSearchOpen}
+                onSelectedChange={setSelectedIds}
+              />
+            </div>
           ) : viewMode === "cards" ? (
             <>
               <ul className="grid gap-4 sm:grid-cols-2">
@@ -241,7 +344,7 @@ export function TheoryExercisePicker({ theories }: TheoryExercisePickerProps) {
                         index={globalIndex}
                         slot={globalIndex % THEORY_COLOR_SLOTS}
                         label={categoryLabel(note.category, tTheory)}
-                        meta={noteMeta(note, t, tTheory)}
+                        meta={noteMeta(note, t, tTheory, dateLocale)}
                         practiceLabel={t("practice")}
                         viewLabel={t("view")}
                       />
@@ -269,7 +372,7 @@ export function TheoryExercisePicker({ theories }: TheoryExercisePickerProps) {
                         slot={globalIndex % THEORY_COLOR_SLOTS}
                         featured={featured}
                         label={categoryLabel(note.category, tTheory)}
-                        meta={noteMeta(note, t, tTheory)}
+                        meta={noteMeta(note, t, tTheory, dateLocale)}
                         practiceLabel={t("practice")}
                         viewLabel={t("view")}
                       />
@@ -287,6 +390,252 @@ export function TheoryExercisePicker({ theories }: TheoryExercisePickerProps) {
         </div>
       )}
     </div>
+  );
+}
+
+function TheoryGroupedNotes({
+  groups,
+  viewMode,
+  searching,
+  searchQuery,
+  expanded,
+  searchOpen,
+  selectedIds,
+  onExpandedChange,
+  onSearchOpenChange,
+  onSelectedChange,
+}: {
+  groups: Array<{
+    id: string;
+    unfiled: boolean;
+    path: string[];
+    notes: TheoryExerciseCardItem[];
+  }>;
+  viewMode: TheoryViewMode;
+  searching: boolean;
+  searchQuery: string;
+  expanded: Record<string, boolean>;
+  searchOpen: { query: string; open: Record<string, boolean> } | null;
+  selectedIds: Set<string>;
+  onExpandedChange: (value: Record<string, boolean>) => void;
+  onSearchOpenChange: (
+    value: { query: string; open: Record<string, boolean> } | null,
+  ) => void;
+  onSelectedChange: (value: Set<string>) => void;
+}) {
+  const t = useTranslations("exercises.theory");
+  const tTheory = useTranslations("theory");
+  const dateLocale = useDateFnsLocale();
+  const visibleIds = groups.flatMap((group) => group.notes.map((note) => note.id));
+  const allState = checkState(selectedIds, visibleIds);
+
+  const isOpen = (groupId: string) => {
+    if (searching) {
+      if (searchOpen?.query === searchQuery && groupId in searchOpen.open) {
+        return searchOpen.open[groupId];
+      }
+      return true;
+    }
+    return Boolean(expanded[groupId]);
+  };
+
+  const toggleOpen = (groupId: string) => {
+    if (searching) {
+      const base =
+        searchOpen?.query === searchQuery ? searchOpen.open : {};
+      const openNow = groupId in base ? base[groupId] : true;
+      onSearchOpenChange({
+        query: searchQuery,
+        open: { ...base, [groupId]: !openNow },
+      });
+      return;
+    }
+    onExpandedChange({ ...expanded, [groupId]: !expanded[groupId] });
+  };
+
+  return (
+    <div className="space-y-4">
+      <div className="flex min-h-10 items-center gap-2">
+        <span className="inline-flex size-9 shrink-0 items-center justify-center">
+          <SelectionCheckbox
+            checked={allState === "all"}
+            indeterminate={allState === "some"}
+            label={t("folders.selectAll")}
+            onChange={(select) =>
+              onSelectedChange(toggleMembers(selectedIds, visibleIds, select))
+            }
+          />
+        </span>
+        <span className="text-sm font-medium text-ink">{t("folders.selectAll")}</span>
+      </div>
+      {groups.map((group) => {
+        const headingText = group.unfiled
+          ? t("folders.unfiled")
+          : folderPathLabel(group.path, t("folders.joiner"));
+        const open = isOpen(group.id);
+        const memberIds = group.notes.map((note) => note.id);
+        const groupState = checkState(selectedIds, memberIds);
+        return (
+          <section key={group.id} className="space-y-3">
+            <div className="flex min-h-10 items-center gap-1.5 sm:gap-2">
+              <span className="inline-flex size-9 shrink-0 items-center justify-center">
+                <button
+                  type="button"
+                  className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted/60 hover:text-ink focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:outline-none"
+                  aria-expanded={open}
+                  aria-label={
+                    open
+                      ? t("folders.collapse", { name: headingText })
+                      : t("folders.expand", { name: headingText })
+                  }
+                  onClick={() => toggleOpen(group.id)}
+                >
+                  {open ? (
+                    <ChevronDown className="size-4" aria-hidden />
+                  ) : (
+                    <ChevronRight className="size-4" aria-hidden />
+                  )}
+                </button>
+              </span>
+              <span className="inline-flex size-9 shrink-0 items-center justify-center">
+                <SelectionCheckbox
+                  checked={groupState === "all"}
+                  indeterminate={groupState === "some"}
+                  label={t("folders.selectGroup", { name: headingText })}
+                  onChange={(select) =>
+                    onSelectedChange(
+                      toggleMembers(selectedIds, memberIds, select),
+                    )
+                  }
+                />
+              </span>
+              <h3 className="min-w-0 flex-1 text-sm leading-snug font-semibold wrap-anywhere text-pretty text-ink">
+                {group.unfiled ? (
+                  headingText
+                ) : (
+                  <FolderPathParts path={group.path} />
+                )}
+              </h3>
+              <span className="shrink-0 self-center text-xs tabular-nums text-muted-foreground">
+                {t("folders.count", { count: group.notes.length })}
+              </span>
+            </div>
+            {open ? (
+              viewMode === "cards" ? (
+                <ul className="grid gap-4 sm:grid-cols-2">
+                  {group.notes.map((note, index) => (
+                    <li key={note.id} className="min-w-0">
+                      <div className="mb-2">
+                        <SelectionCheckbox
+                          checked={selectedIds.has(note.id)}
+                          indeterminate={false}
+                          label={note.title}
+                          onChange={(select) =>
+                            onSelectedChange(
+                              toggleMembers(selectedIds, [note.id], select),
+                            )
+                          }
+                        />
+                      </div>
+                      <TheoryCard
+                        note={note}
+                        index={index}
+                        slot={index % THEORY_COLOR_SLOTS}
+                        label={categoryLabel(note.category, tTheory)}
+                        meta={noteMeta(note, t, tTheory, dateLocale)}
+                        practiceLabel={t("practice")}
+                        viewLabel={t("view")}
+                      />
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <ol className="space-y-3">
+                  {group.notes.map((note, index) => (
+                    <li key={note.id} className="flex min-w-0 items-start gap-3">
+                      <div className="pt-6">
+                        <SelectionCheckbox
+                          checked={selectedIds.has(note.id)}
+                          indeterminate={false}
+                          label={note.title}
+                          onChange={(select) =>
+                            onSelectedChange(
+                              toggleMembers(selectedIds, [note.id], select),
+                            )
+                          }
+                        />
+                      </div>
+                      <div className="min-w-0 flex-1">
+                        <TheoryListRow
+                          note={note}
+                          index={index}
+                          slot={index % THEORY_COLOR_SLOTS}
+                          featured={false}
+                          label={categoryLabel(note.category, tTheory)}
+                          meta={noteMeta(note, t, tTheory, dateLocale)}
+                          practiceLabel={t("practice")}
+                          viewLabel={t("view")}
+                        />
+                      </div>
+                    </li>
+                  ))}
+                </ol>
+              )
+            ) : null}
+          </section>
+        );
+      })}
+    </div>
+  );
+}
+
+function FolderPathParts({ path }: { path: readonly string[] }) {
+  const t = useTranslations("exercises.theory");
+  return (
+    <span className="inline">
+      {path.map((part, index) => (
+        <span key={`${index}-${part}`}>
+          {index > 0 ? (
+            <span
+              className="mx-1.5 inline-block text-muted-foreground"
+              aria-hidden
+            >
+              {t("folders.joiner").trim() || "→"}
+            </span>
+          ) : null}
+          <span>{part}</span>
+        </span>
+      ))}
+    </span>
+  );
+}
+
+function SelectionCheckbox({
+  checked,
+  indeterminate,
+  label,
+  onChange,
+}: {
+  checked: boolean;
+  indeterminate: boolean;
+  label: string;
+  onChange: (checked: boolean) => void;
+}) {
+  const ref = useRef<HTMLInputElement>(null);
+  useEffect(() => {
+    if (ref.current) ref.current.indeterminate = indeterminate;
+  }, [checked, indeterminate]);
+
+  return (
+    <input
+      ref={ref}
+      type="checkbox"
+      checked={checked}
+      aria-label={label}
+      aria-checked={indeterminate ? "mixed" : checked}
+      onChange={(event) => onChange(event.target.checked)}
+      className="size-4 shrink-0 rounded-[3px] border border-page-accent-border accent-primary focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:outline-none"
+    />
   );
 }
 

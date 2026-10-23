@@ -73,18 +73,22 @@ export function MeaningUsageTrigger({
         aria-label={t("aria")}
         className={cn(
           mx(composerStyles, "vocab-usage-trigger"),
-          "inline-flex h-8 shrink-0 cursor-pointer items-center gap-1 rounded-md px-2 text-xs font-semibold",
+          "inline-flex h-full shrink-0 cursor-pointer items-center gap-1.5 rounded-md px-2.5 text-sm font-semibold",
           className,
         )}
       >
-        <Tag className="size-3.5" aria-hidden />
+        <Tag className="size-4" aria-hidden />
         <span>
           {value.length === 0
             ? t("add")
             : t("count", { count: value.length })}
         </span>
       </DropdownMenuTrigger>
-      <DropdownMenuContent align="end" className="min-w-48">
+      {/* Portaled: pin hover to meanings success green. */}
+      <DropdownMenuContent
+        align="end"
+        className="vocab-usage-menu min-w-48"
+      >
         <DropdownMenuGroup>
           <DropdownMenuLabel>{t("menuTitle")}</DropdownMenuLabel>
           {MEANING_USAGE_IDS.map((id) => (

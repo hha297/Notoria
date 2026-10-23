@@ -35,7 +35,7 @@ export default async function AdminWorkspaceDetailPage({ params }: PageProps) {
         actions={
           <Link
             href="/admin/workspaces"
-            className="text-sm font-semibold underline"
+            className={mx(styles, "admin-text-link")}
           >
             {t("common.backToList")}
           </Link>
@@ -58,7 +58,7 @@ export default async function AdminWorkspaceDetailPage({ params }: PageProps) {
             <dd>
               <Link
                 href={`/admin/users/${workspace.userId}`}
-                className="font-semibold underline"
+                className={mx(styles, "admin-text-link")}
               >
                 {workspace.ownerName}
               </Link>

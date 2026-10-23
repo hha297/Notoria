@@ -3,160 +3,165 @@ import { Image, Text, View, StyleSheet } from "@react-pdf/renderer";
 import type { ReactNode } from "react";
 import { coerceHeadingLevel } from "@/lib/editor/heading-level";
 import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
-import { PDF_FONT_SANS } from "@/lib/export/pdf-fonts";
+import { PDF_FONT_MONO, PDF_FONT_SANS } from "@/lib/export/pdf-fonts";
 import {
-  PRINT_ACCENT,
-  PRINT_HAIRLINE,
-  PRINT_INK,
-  PRINT_MUTED,
-  PRINT_NOTE_WASH,
-  PRINT_RULE,
+  resolveExportTheme,
+  type ExportThemeTokens,
 } from "@/lib/export/print-theme";
 import type { ExportLayout } from "@/lib/writing/export/types";
 
 const FONT_SANS = PDF_FONT_SANS;
-const DEFAULT_ACCENT = PRINT_ACCENT.writing;
+const FONT_MONO = PDF_FONT_MONO;
 
-const styles = StyleSheet.create({
-  body: {
-    width: "100%",
-  },
-  block: {
-    marginBottom: 12,
-  },
-  docBlock: {
-    marginBottom: 9,
-  },
-  docSpacer: {
-    marginBottom: 8,
-  },
-  ruledLine: {
-    borderBottomWidth: 0.8,
-    borderBottomColor: PRINT_RULE,
-    marginBottom: 7,
-    minHeight: 20,
-    justifyContent: "flex-end",
-    paddingBottom: 2,
-  },
-  ruledText: {
-    fontFamily: FONT_SANS,
-    fontSize: 11.5,
-    fontWeight: 400,
-    color: PRINT_INK,
-  },
-  ruledHeading: {
-    fontFamily: FONT_SANS,
-    fontSize: 13,
-    fontWeight: 700,
-    color: PRINT_INK,
-  },
-  docText: {
-    fontFamily: FONT_SANS,
-    fontSize: 11,
-    fontWeight: 400,
-    color: PRINT_INK,
-    lineHeight: 1.55,
-  },
-  docH1: {
-    fontFamily: FONT_SANS,
-    fontSize: 16,
-    fontWeight: 700,
-    color: PRINT_INK,
-    lineHeight: 1.28,
-    marginTop: 10,
-    marginBottom: 2,
-    paddingBottom: 4,
-    borderBottomWidth: 1,
-    borderBottomColor: PRINT_HAIRLINE,
-  },
-  docH2: {
-    fontFamily: FONT_SANS,
-    fontSize: 13,
-    fontWeight: 700,
-    color: PRINT_INK,
-    lineHeight: 1.3,
-    marginTop: 10,
-    marginBottom: 1,
-  },
-  docH3: {
-    fontFamily: FONT_SANS,
-    fontSize: 11.5,
-    fontWeight: 700,
-    color: PRINT_MUTED,
-    lineHeight: 1.3,
-    marginTop: 8,
-  },
-  listBlock: {
-    marginBottom: 10,
-  },
-  blockquote: {
-    borderLeftWidth: 2.5,
-    borderLeftColor: PRINT_HAIRLINE,
-    backgroundColor: PRINT_NOTE_WASH,
-    paddingLeft: 10,
-    paddingVertical: 6,
-    paddingRight: 8,
-    marginBottom: 12,
-    marginTop: 2,
-  },
-  codeBlock: {
-    backgroundColor: PRINT_NOTE_WASH,
-    borderRadius: 4,
-    padding: 8,
-    marginBottom: 12,
-  },
-  codeText: {
-    fontFamily: FONT_SANS,
-    fontSize: 10,
-    color: PRINT_INK,
-    lineHeight: 1.4,
-  },
-  hr: {
-    borderBottomWidth: 1,
-    borderBottomColor: PRINT_HAIRLINE,
-    marginVertical: 12,
-  },
-  image: {
-    maxWidth: "100%",
-    marginBottom: 12,
-    objectFit: "contain",
-  },
-  table: {
-    width: "100%",
-    marginBottom: 12,
-    borderWidth: 1,
-    borderColor: PRINT_HAIRLINE,
-  },
-  tableRow: {
-    flexDirection: "row",
-    borderBottomWidth: 1,
-    borderBottomColor: PRINT_HAIRLINE,
-  },
-  tableCell: {
-    flex: 1,
-    padding: 6,
-    borderRightWidth: 1,
-    borderRightColor: PRINT_HAIRLINE,
-  },
-  tableHeaderCell: {
-    flex: 1,
-    padding: 6,
-    borderRightWidth: 1,
-    borderRightColor: PRINT_HAIRLINE,
-    backgroundColor: PRINT_NOTE_WASH,
-  },
-  tableCellText: {
-    fontFamily: FONT_SANS,
-    fontSize: 10.5,
-    color: PRINT_INK,
-  },
-});
+/** Active theme for this synchronous render pass (export is single-threaded). */
+let theme: ExportThemeTokens = resolveExportTheme("print", "writing");
+let styles = createTipTapPdfStyles(theme);
+
+function createTipTapPdfStyles(t: ExportThemeTokens) {
+  return StyleSheet.create({
+    body: {
+      width: "100%",
+    },
+    block: {
+      marginBottom: 12,
+    },
+    docBlock: {
+      marginBottom: 9,
+    },
+    docSpacer: {
+      marginBottom: 8,
+    },
+    ruledLine: {
+      borderBottomWidth: 0.8,
+      borderBottomColor: t.rule,
+      marginBottom: 7,
+      minHeight: 20,
+      justifyContent: "flex-end",
+      paddingBottom: 2,
+    },
+    ruledText: {
+      fontFamily: FONT_SANS,
+      fontSize: 11.5,
+      fontWeight: 400,
+      color: t.ink,
+    },
+    ruledHeading: {
+      fontFamily: FONT_SANS,
+      fontSize: 13,
+      fontWeight: 700,
+      color: t.ink,
+    },
+    docText: {
+      fontFamily: FONT_SANS,
+      fontSize: 11,
+      fontWeight: 400,
+      color: t.ink,
+      lineHeight: 1.55,
+    },
+    docH1: {
+      fontFamily: FONT_SANS,
+      fontSize: 16,
+      fontWeight: 700,
+      color: t.ink,
+      lineHeight: 1.28,
+      marginTop: 10,
+      marginBottom: 2,
+      paddingBottom: 4,
+      borderBottomWidth: 1,
+      borderBottomColor: t.hairline,
+    },
+    docH2: {
+      fontFamily: FONT_SANS,
+      fontSize: 13,
+      fontWeight: 700,
+      color: t.ink,
+      lineHeight: 1.3,
+      marginTop: 10,
+      marginBottom: 1,
+    },
+    docH3: {
+      fontFamily: FONT_SANS,
+      fontSize: 11.5,
+      fontWeight: 700,
+      color: t.muted,
+      lineHeight: 1.3,
+      marginTop: 8,
+    },
+    listBlock: {
+      marginBottom: 10,
+    },
+    blockquote: {
+      borderLeftWidth: 2.5,
+      borderLeftColor: t.accent,
+      backgroundColor: t.wash,
+      paddingLeft: 10,
+      paddingVertical: 6,
+      paddingRight: 8,
+      marginBottom: 12,
+      marginTop: 2,
+    },
+    codeBlock: {
+      backgroundColor: t.wash,
+      borderRadius: 4,
+      padding: 8,
+      marginBottom: 12,
+      borderWidth: 1,
+      borderColor: t.hairline,
+    },
+    codeText: {
+      fontFamily: FONT_MONO,
+      fontSize: 9.5,
+      color: t.ink,
+      lineHeight: 1.45,
+    },
+    hr: {
+      borderBottomWidth: 1,
+      borderBottomColor: t.hairline,
+      marginVertical: 12,
+    },
+    image: {
+      maxWidth: "100%",
+      marginBottom: 12,
+      objectFit: "contain",
+    },
+    table: {
+      width: "100%",
+      marginBottom: 12,
+      borderWidth: 1,
+      borderColor: t.hairline,
+    },
+    tableRow: {
+      flexDirection: "row",
+      borderBottomWidth: 1,
+      borderBottomColor: t.hairline,
+    },
+    tableCell: {
+      flex: 1,
+      padding: 6,
+      borderRightWidth: 1,
+      borderRightColor: t.hairline,
+    },
+    tableHeaderCell: {
+      flex: 1,
+      padding: 6,
+      borderRightWidth: 1,
+      borderRightColor: t.hairline,
+      backgroundColor: t.wash,
+    },
+    tableCellText: {
+      fontFamily: FONT_SANS,
+      fontSize: 10.5,
+      color: t.ink,
+    },
+  });
+}
 
 type MarkAttrs = {
   bold?: boolean;
   italic?: boolean;
   underline?: boolean;
   highlight?: boolean;
+  code?: boolean;
   linkHref?: string;
 };
 
@@ -180,6 +185,9 @@ function getMarks(node: JSONContent): MarkAttrs {
         break;
       case "highlight":
         result.highlight = true;
+        break;
+      case "code":
+        result.code = true;
         break;
       case "link":
         result.linkHref =
@@ -238,8 +246,11 @@ function renderRun(
     textDecoration: (marks.underline || marks.linkHref
       ? "underline"
       : "none") as "underline" | "none",
-    color: marks.linkHref ? accent : PRINT_INK,
-    ...(marks.highlight ? { backgroundColor: "#f2f6c8" } : {}),
+    color: marks.linkHref ? accent : theme.ink,
+    ...(marks.code
+      ? { fontFamily: FONT_MONO, fontSize: 10, backgroundColor: theme.wash }
+      : {}),
+    ...(marks.highlight ? { backgroundColor: theme.highlight } : {}),
   };
 
   if (isDocument) {
@@ -638,8 +649,12 @@ function renderBlock(
 export function renderTipTapDocToPdf(
   doc: JSONContent | null,
   layout: ExportLayout = "document",
-  accent: string = DEFAULT_ACCENT,
+  nextTheme: ExportThemeTokens = resolveExportTheme("print", "writing"),
 ): ReactNode {
+  theme = nextTheme;
+  styles = createTipTapPdfStyles(theme);
+  const accent = theme.accent;
+
   if (!doc?.content?.length) {
     return (
       <View style={layout === "document" ? styles.docBlock : styles.block}>

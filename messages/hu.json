@@ -15,7 +15,20 @@
     "clearFilter": "Törlés",
     "filters": "Szűrők",
     "hideFilters": "Szűrők elrejtése",
-    "remove": "Eltávolítás"
+    "remove": "Eltávolítás",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "A mappa nem helyezhető át önmagába",
     "tooDeep": "Ez a mappa túl mélyen van beágyazva",
     "notFound": "A mappa nem található",
-    "nameTaken": "Ezt a nevet már egy mappa vagy írás használja"
+    "nameTaken": "Ezt a nevet már egy mappa vagy írás használja",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Téma váltása",
@@ -291,7 +310,11 @@
     "createWorkspace": "Munkaterület létrehozása",
     "createWorkspaceHint": "Újabb nyelvi munkaterület hozzáadása",
     "switchWorkspace": "Munkaterület váltása",
-    "switchFailed": "Nem sikerült váltani a munkaterületet"
+    "switchFailed": "Nem sikerült váltani a munkaterületet",
+    "selectLanguage": "Nyelv kiválasztása",
+    "allLanguages": "Összes nyelv",
+    "changeLanguageFailed": "Nem sikerült megváltoztatni a felület nyelvét",
+    "popularLanguages": "Népszerű"
   },
   "workspace": {
     "title": "Munkaterületek",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# import} other {# import}}"
     },
     "processing": {
-      "workingTitle": "Gyakorlat készítése",
+      "workingTitle": "Gyakorlat előkészítése",
       "readyTitle": "A gyakorlat kész",
       "errorTitle": "Valami hiba történt",
       "cancel": "Mégse",
-      "retry": "Újrapróbálás",
+      "retry": "Újra",
       "dismiss": "Bezárás",
       "stages": {
-        "uploading": "Feltöltés…",
-        "extracting": "Tartalom kinyerése…",
-        "analyzing": "Tartalom elemzése…",
-        "generating": "Gyakorlat generálása…",
-        "saving": "Gyakorlat mentése…",
+        "uploading": "Fájl feltöltése",
+        "extracting": "Tartalom kinyerése",
+        "analyzing": "Tartalom elemzése",
+        "generating": "Kérdések generálása",
+        "saving": "Gyakorlat mentése és előkészítése",
         "completed": "A gyakorlat kész",
-        "error": "A generálás sikertelen"
-      }
+        "error": "A generálás sikertelen",
+        "preparing": "Tananyag előkészítése",
+        "validating": "Válaszok és tippek ellenőrzése"
+      },
+      "stillWorking": "Még generálás… {seconds} mp telt el",
+      "hints": {
+        "uploading": "A fájl biztonságos küldése.",
+        "extracting": "Szöveg és szerkezet olvasása a forrásból.",
+        "analyzing": "Gyakorlási tippek azonosítása az anyagban.",
+        "preparing": "A kiválasztott szókincs vagy elmélet összegyűjtése ehhez a készlethez.",
+        "generating": "A modell kérdéseket ír. Ez eltarthat egy ideig.",
+        "validating": "Válaszok, tippek és szerkezet ellenőrzése gyakorlás előtt.",
+        "saving": "A gyakorló készleted összeállítása."
+      },
+      "nextSetPreparing": "Következő készlet előkészítése…",
+      "nextSetReady": "Következő készlet kész",
+      "nextSetFailed": "A következő készletet nem sikerült előkészíteni",
+      "nextSetRetry": "Következő készlet előkészítése",
+      "openNextSet": "Következő készlet megnyitása"
     },
     "import": {
       "eyebrow": "Importált gyakorlás",
@@ -822,6 +862,7 @@
       "aiReady": "A gyakorlat kész",
       "aiUnavailable": "Jelenleg nem sikerült AI kérdéseket generálni.",
       "aiForbidden": "Az AI elméleti gyakorlatok a Pro csomaggal érhetők el.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "Az AI segítség ki van kapcsolva a Beállításokban.",
       "feedback": {
         "correct": "Helyes!",
@@ -874,7 +915,21 @@
         "theRule": "A szabály",
         "why": "Miért",
         "complete": "Értem",
-        "completeHint": "Akkor léphet tovább, amikor készen áll."
+        "completeHint": "Akkor léphet tovább, amikor készen áll.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Tipp",
       "startsWith": "„{letter}” betűvel kezdődik",
       "revealPrompt": "Még mindig elakadt? Felfedheti a teljes választ.",
-      "revealAnswer": "Válasz felfedése"
+      "revealAnswer": "Válasz felfedése",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Még nincs szókincs",
@@ -977,8 +1034,38 @@
       "forbidden": "Az AI gyakorlatgenerálás a Pro csomaggal érhető el.",
       "disabled": "Az AI segítség ki van kapcsolva a Beállításokban.",
       "upgradeHint": "Az Ingyenes csomag naponta néhány AI gyakorlatgenerálást tartalmaz. A Pro eltávolítja a korlátot.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Adjon hozzá szókincsszavakat a kérdések generálása előtt.",
-      "noneValid": "Az AI nem tudott érvényes kérdéseket létrehozni ezekhez a szavakhoz. Próbálja meg újra."
+      "noneValid": "Az AI nem tudott érvényes kérdéseket létrehozni ezekhez a szavakhoz. Próbálja meg újra.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "A foglalkozás kész",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Csak tartalomváltoztatáskor",
       "confirmNever": "Soha",
       "saveFailed": "Az MI-preferenciákat nem sikerült menteni",
-      "disabledToast": "Az MI-asszisztencia ki van kapcsolva a Beállításokban"
+      "disabledToast": "Az MI-asszisztencia ki van kapcsolva a Beállításokban",
+      "exerciseNextSetPrefetch": "Következő gyakorlókészlet előkészítése",
+      "exerciseNextSetPrefetchDescription": "Miután elkezdesz válaszolni, a következő készlet automatikusan előkészül a háttérben. Indításkor egy AI-gyakorlat kreditet használ. Kapcsold ki, ha csak Új készletnél szeretnél generálni."
     },
     "tutorials": "Szakaszbemutatók",
     "tutorialsDescription": "A befejezett szakaszbemutatók visszaállítása, hogy a „Bemutató megjelenítése” újra az elejétől induljon.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Még nincs fiókja?",
     "hasAccount": "Már van fiókja?",
     "invalidCredentials": "Érvénytelen e-mail vagy jelszó",
+    "rememberMe": "Emlékezz rám",
+    "signInUnavailable": "Most nem sikerült bejelentkezni. Próbálja újra.",
+    "accountSuspended": "Ez a fiók fel van függesztve. Ha ez tévedés, lépjen kapcsolatba az ügyfélszolgálattal.",
     "emailExists": "Ezzel az e-mail-címmel már létezik fiók",
     "emailInvalid": "Adjon meg érvényes e-mail-címet",
     "registerFailed": "Nem sikerült létrehozni a fiókot. Kérjük, próbálja újra.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Feltételek",
     "registerAgreement": "Fiók létrehozásával elfogadja a <terms>Felhasználási feltételeket</terms> és az <privacy>Adatvédelmi irányelvet</privacy>.",
     "avatarRequestTooLarge": "Ez a fénykép túl nagy a küldéshez. Próbáljon kisebb képet.",
-    "requestTooLarge": "Ez a kérés túl nagy volt. A módosításai megmaradtak — kérjük, próbálja újra."
+    "requestTooLarge": "Ez a kérés túl nagy volt. A módosításai megmaradtak — kérjük, próbálja újra.",
+    "roleAdmin": "Adminisztrátor",
+    "roleTester": "Teszter"
   },
   "account": {
     "eyebrow": "Fiók",
@@ -2910,6 +3004,7 @@
       "backup": "Biztonsági mentés letöltése",
       "backupDone": "Biztonsági mentés letöltve",
       "backupFailed": "Nem sikerült előkészíteni a biztonsági mentést. Próbálja újra.",
+      "confirmPhrase": "Összes adat törlése",
       "confirmLabel": "Írja be a következőt a megerősítéshez: {phrase}",
       "confirm": "Minden adat törlése",
       "deleted": "Minden tanulási adat törölve",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Kihagyásra kerülhet",
       "warnings": {
         "workspace_language_reuse": "Egyes munkaterületek már léteznek ugyanahhoz a nyelvhez. A tartalmuk a meglévő munkaterületeibe kerül, ahelyett hogy duplikátumok jönnének létre.",
-        "empty_backup": "Ez a biztonsági mentés nem tartalmaz importálható tanulási adatokat."
+        "empty_backup": "Ez a biztonsági mentés nem tartalmaz importálható tanulási adatokat.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Mégse",
       "confirm": "Tanulási adatok importálása",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# szókincselem már létezik} other {# szókincselem már létezik}}",
         "listening_missing_media": "{count, plural, one {# hallásértési lecke hiányzó média-URL-lel} other {# hallásértési lecke hiányzó média-URL-lel}}",
         "listening_duplicate_filename": "{count, plural, one {# hallásértési lecke kihagyva (ismétlődő fájlnév)} other {# hallásértési lecke kihagyva (ismétlődő fájlnév)}}",
+        "speaking_duplicate": "{count, plural, one {# beszédóra már létezik} other {# beszédóra már létezik}}",
         "invalid_workspace_ref": "{count, plural, one {# elem hiányzó munkaterülettel} other {# elem hiányzó munkaterülettel}}",
         "invalid_record": "{count, plural, one {# érvénytelen rekord} other {# érvénytelen rekord}}",
-        "unsupported_account_field": "A fiókazonosítási mezők nem kerülnek importálásra"
+        "unsupported_account_field": "A fiókazonosítási mezők nem kerülnek importálásra",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Ez a biztonsági mentés fájl túl nagy. Próbálja újra exportálni, vagy lépjen kapcsolatba az ügyfélszolgálattal.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Nem sikerült importálni ezt a biztonsági mentést. Próbálja újra.",
         "requestTooLarge": "Ez a biztonsági mentés túl nagy az ezen az oldalon történő feldolgozáshoz. Próbáljon kisebb exportot, vagy lépjen kapcsolatba az ügyfélszolgálattal.",
         "notConfigured": "A fájltárolás még nincs konfigurálva a biztonsági mentés importjához."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Fiók bezárása",
@@ -3002,6 +3110,7 @@
       "backup": "Biztonsági mentés letöltése",
       "backupDone": "Biztonsági mentés letöltve",
       "backupFailed": "Nem sikerült előkészíteni a biztonsági mentést. Próbálja újra.",
+      "confirmPhrase": "Fiókom törlése",
       "confirmLabel": "Írja be a következőt a megerősítéshez: {phrase}",
       "confirm": "Fiók végleges törlése",
       "deleted": "A fiókja törölve lett",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Tanulási trendek",
       "personalLearningPath": "Személyes tanulási útvonal",
       "personalizedRecommendations": "Személyre szabott javaslatok",
-      "crossModuleIntelligence": "Modulok közötti személyre szabás"
+      "crossModuleIntelligence": "Modulok közötti személyre szabás",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Csomagok összehasonlítása",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Elérte a mai tanulási edző keretet. Az edző holnap lesz újra elérhető.",
       "errorPremium": "A tanulási edző Premium funkció. Kapjon személyre szabott javaslatokat a tanulási tevékenysége alapján.",
       "errorUnavailable": "Az edzője jelenleg nem tudott válaszolni. Az üzenete nem került beleszámításba. Próbálja újra.",
+      "errorWorkspace": "Válasszon munkaterületet, mielőtt kérdez az edzőtől.",
+      "errorUnauthorized": "A folytatáshoz jelentkezzen be újra.",
       "prompts": {
         "practice_today": "Mire összpontosítsak ma?",
         "struggling_words": "Miért nehezek ezek a szavak?",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Adminisztrátor",
       "manage": "Kezelés",
       "overview": "Áttekintés",
       "users": "Felhasználók",
@@ -4750,7 +4862,7 @@
       "contentLibrary": "Tartalomtár",
       "backToApp": "Vissza az alkalmazáshoz",
       "openMenu": "Admin menü megnyitása",
-      "openAdmin": "Admin irányítópult"
+      "openAdmin": "Adminisztrátori panel"
     },
     "modules": {
       "vocabulary": "Szókincs",
@@ -4798,7 +4910,28 @@
         "failedListening": "Sikertelen hallásértés",
         "failedImports": "Sikertelen importálások",
         "runningJobs": "Futó feladatzárolások",
-        "recentAudits7d": "Naplóbejegyzések (7 nap)"
+        "recentAudits7d": "Naplóbejegyzések (7 nap)",
+        "admins": "Adminisztrátorok",
+        "testers": "Teszterek",
+        "suspended": "Felfüggesztett",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Gyors elérés",
+      "quickAccessLede": "Ugrás a kezelőeszközökhöz.",
+      "groups": {
+        "people": "Emberek",
+        "content": "Tartalom",
+        "ops": "Üzemeltetés"
+      },
+      "charts": {
+        "signupsTitle": "Nouveaux comptes",
+        "signupsLede": "Inscriptions quotidiennes sur les 14 derniers jours UTC.",
+        "activeTitle": "Apprenants actifs",
+        "activeLede": "Apprenants distincts avec activité chaque jour (14 j).",
+        "rolesTitle": "Rôles",
+        "rolesLede": "Comptes par rôle.",
+        "contentTitle": "Répartition du contenu",
+        "contentLede": "Enregistrements dans les modules d’apprentissage."
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "Csomag",
         "created": "Regisztráció",
         "updated": "Frissítve",
-        "emailVerified": "E-mail ellenőrizve"
+        "emailVerified": "E-mail ellenőrizve",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Fiók",
@@ -4841,7 +4976,8 @@
         "usageLede": "Tulajdonolt rekordok a tanulási modulokban.",
         "actions": "Fiókműveletek",
         "workspaces": "Munkaterületek",
-        "workspacesLede": "A felhasználó tulajdonában lévő nyelvi munkaterületek."
+        "workspacesLede": "A felhasználó tulajdonában lévő nyelvi munkaterületek.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Név mentése",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Admin jog visszavonása",
         "suspend": "Felfüggesztés",
         "restore": "Visszaállítás",
-        "delete": "Fiók törlése"
+        "delete": "Fiók törlése",
+        "grantTester": "Teszter szerepkör adása",
+        "revokeTester": "Teszter szerepkör visszavonása",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Admin hozzáférést ad ehhez a fiókhoz?",
         "revokeAdmin": "Visszavonja az admin hozzáférést? Ez sikertelen, ha ez az utolsó aktív admin.",
         "suspend": "Felfüggeszti ezt a fiókot? A következő védett kérésnél elveszíti a hozzáférést.",
         "restore": "Visszaállítja ezt a fiókot?",
-        "delete": "Véglegesen törli ezt a fiókot és a kapcsolódó tanulási adatokat? Ez nem vonható vissza."
+        "delete": "Véglegesen törli ezt a fiókot és a kapcsolódó tanulási adatokat? Ez nem vonható vissza.",
+        "grantTester": "Teszter szerepkör adása? QA-hoz megkapják az összes alkalmazásfunkciót; a tárolt előfizetés nem változik.",
+        "revokeTester": "Teszter szerepkör visszavonása? A funkcióhozzáférés a tényleges előfizetésükhöz tér vissza."
+      },
+      "roleHelp": "A teszter szerepkör QA-hoz feloldja az összes Free, Pro és Premium funkciót anélkül, hogy a tárolt előfizetés változik. Ehhez a panelhez adminisztrátor kell.",
+      "roles": {
+        "user": "Felhasználó",
+        "tester": "Teszter",
+        "admin": "Adminisztrátor"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Nyelv",
         "owner": "Tulajdonos",
         "created": "Létrehozva",
-        "updated": "Frissítve"
+        "updated": "Frissítve",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Nyelv: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Törli ezt a munkaterületet és az összes benne lévő tanulási tartalmat az adatbázis-kaszkádokon keresztül?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Tulajdonos",
         "workspace": "Munkaterület",
         "created": "Létrehozva",
-        "updated": "Frissítve"
+        "updated": "Frissítve",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Metaadat-ellenőrzés. A privát tartalmak automatikusan nem töltődnek be.",
@@ -4923,11 +5088,13 @@
         "actions": "Műveletek"
       },
       "actions": {
-        "delete": "Rekord törlése"
+        "delete": "Rekord törlése",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Törli ezt a rekordot? A kapcsolódó gyermek-sorok az adatbázis kaszkád / set-null szabályait követik."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Feladatok",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Ennek a felhasználónak már van munkaterülete ehhez a nyelvhez.",
       "INVALID_LANGUAGE": "Érvénytelen nyelvkód.",
       "CONTENT_NOT_FOUND": "A rekord nem található.",
-      "INVALID_CONTENT_MODULE": "Ismeretlen tartalommodul."
+      "INVALID_CONTENT_MODULE": "Ismeretlen tartalommodul.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

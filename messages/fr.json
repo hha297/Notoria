@@ -15,7 +15,20 @@
     "clearFilter": "Effacer",
     "filters": "Filtres",
     "hideFilters": "Masquer les filtres",
-    "remove": "Retirer"
+    "remove": "Retirer",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Impossible de déplacer un dossier dans lui-même",
     "tooDeep": "Ce dossier est imbriqué trop profondément",
     "notFound": "Dossier introuvable",
-    "nameTaken": "Un dossier ou une écriture utilise déjà ce nom"
+    "nameTaken": "Un dossier ou une écriture utilise déjà ce nom",
+    "dragTipTitle": "Déplacer dans un dossier",
+    "dragTipBody": "Sur ordinateur avec souris ou trackpad, glissez un élément sur une carte dossier pour le déplacer. Vous pouvez aussi utiliser l’icône de déplacement.",
+    "dragTipDismiss": "Masquer l’astuce",
+    "dragTipShow": "Comment déplacer vers un dossier",
+    "dragTipDemo": "Glisser vers un dossier",
+    "dragTipCard": "Élément"
   },
   "theme": {
     "toggle": "Changer de thème",
@@ -291,7 +310,11 @@
     "createWorkspace": "Créer un espace de travail",
     "createWorkspaceHint": "Ajouter un autre espace de travail linguistique",
     "switchWorkspace": "Changer d’espace de travail",
-    "switchFailed": "Impossible de changer d’espace de travail"
+    "switchFailed": "Impossible de changer d’espace de travail",
+    "selectLanguage": "Choisir la langue",
+    "allLanguages": "Toutes les langues",
+    "changeLanguageFailed": "Impossible de changer la langue de l’interface",
+    "popularLanguages": "Populaires"
   },
   "workspace": {
     "title": "Espaces de travail",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# import} other {# imports}}"
     },
     "processing": {
-      "workingTitle": "Préparation de votre exercice",
+      "workingTitle": "Préparation de l’exercice",
       "readyTitle": "Exercice prêt",
       "errorTitle": "Une erreur s’est produite",
       "cancel": "Annuler",
       "retry": "Réessayer",
       "dismiss": "Fermer",
       "stages": {
-        "uploading": "Importation…",
-        "extracting": "Extraction du contenu…",
-        "analyzing": "Analyse du contenu…",
-        "generating": "Génération de l’exercice…",
-        "saving": "Enregistrement de l’exercice…",
+        "uploading": "Envoi du fichier",
+        "extracting": "Extraction du contenu",
+        "analyzing": "Analyse du contenu",
+        "generating": "Génération des questions",
+        "saving": "Enregistrement et préparation de l’exercice",
         "completed": "Exercice prêt",
-        "error": "Échec de la génération"
-      }
+        "error": "Échec de la génération",
+        "preparing": "Préparation du matériel",
+        "validating": "Validation des réponses et indices"
+      },
+      "stillWorking": "Génération en cours… {seconds} s écoulées",
+      "hints": {
+        "uploading": "Envoi sécurisé de votre fichier.",
+        "extracting": "Lecture du texte et de la structure de la source.",
+        "analyzing": "Repérage des indices d’exercice dans le matériel.",
+        "preparing": "Collecte du vocabulaire ou de la théorie sélectionnés pour cet ensemble.",
+        "generating": "Le modèle rédige les questions. Cela peut prendre un moment.",
+        "validating": "Vérification des réponses, indices et structure avant la pratique.",
+        "saving": "Assemblage de votre ensemble d’exercices."
+      },
+      "nextSetPreparing": "Préparation du prochain ensemble…",
+      "nextSetReady": "Prochain ensemble prêt",
+      "nextSetFailed": "Impossible de préparer le prochain ensemble",
+      "nextSetRetry": "Préparer le prochain ensemble",
+      "openNextSet": "Ouvrir le prochain ensemble"
     },
     "import": {
       "eyebrow": "Pratique importée",
@@ -822,6 +862,7 @@
       "aiReady": "Pratique prête",
       "aiUnavailable": "Impossible de générer des questions IA pour le moment.",
       "aiForbidden": "Les exercices de théorie IA sont disponibles avec Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "L’assistance IA est désactivée dans les Paramètres.",
       "feedback": {
         "correct": "Correct !",
@@ -874,7 +915,21 @@
         "theRule": "La règle",
         "why": "Pourquoi",
         "complete": "Compris",
-        "completeHint": "Vous pouvez passer à la suite quand vous êtes prêt."
+        "completeHint": "Vous pouvez passer à la suite quand vous êtes prêt.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Indice",
       "startsWith": "Commence par « {letter} »",
       "revealPrompt": "Toujours bloqué ? Vous pouvez révéler la réponse complète.",
-      "revealAnswer": "Révéler la réponse"
+      "revealAnswer": "Révéler la réponse",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Pas encore de vocabulaire",
@@ -977,8 +1034,38 @@
       "forbidden": "La génération d’exercices IA est disponible avec Pro.",
       "disabled": "L’assistance IA est désactivée dans les Paramètres.",
       "upgradeHint": "Free inclut quelques générations d’exercices IA par jour. Pro supprime la limite.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Ajoutez des mots de vocabulaire avant de générer des questions.",
-      "noneValid": "L’IA n’a pas pu créer de questions valides pour ces mots. Réessayez."
+      "noneValid": "L’IA n’a pas pu créer de questions valides pour ces mots. Réessayez.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Session terminée",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Uniquement lors d’une modification du contenu",
       "confirmNever": "Jamais",
       "saveFailed": "Impossible d’enregistrer les préférences IA",
-      "disabledToast": "L’assistance IA est désactivée dans les Paramètres"
+      "disabledToast": "L’assistance IA est désactivée dans les Paramètres",
+      "exerciseNextSetPrefetch": "Préparer le prochain ensemble d’exercices",
+      "exerciseNextSetPrefetchDescription": "Après que vous ayez commencé à répondre, le prochain ensemble est préparé automatiquement en arrière-plan. Utilise un crédit d’exercice IA au démarrage. Désactivez pour ne générer que via Nouvel ensemble."
     },
     "tutorials": "Tutoriels de section",
     "tutorialsDescription": "Réinitialiser les parcours de section terminés afin que « Afficher le tutoriel » recommence depuis le début.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Vous n’avez pas de compte ?",
     "hasAccount": "Vous avez déjà un compte ?",
     "invalidCredentials": "E-mail ou mot de passe incorrect",
+    "rememberMe": "Se souvenir de moi",
+    "signInUnavailable": "La connexion est impossible pour le moment. Veuillez réessayer.",
+    "accountSuspended": "Ce compte est suspendu. Contactez l'assistance si vous pensez qu'il s'agit d'une erreur.",
     "emailExists": "Un compte avec cet e-mail existe déjà",
     "emailInvalid": "Saisissez une adresse e-mail valide",
     "registerFailed": "Impossible de créer le compte. Veuillez réessayer.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Conditions",
     "registerAgreement": "En créant un compte, vous acceptez les <terms>Conditions d’utilisation</terms> et la <privacy>Politique de confidentialité</privacy>.",
     "avatarRequestTooLarge": "Cette photo est trop volumineuse pour être envoyée. Essayez une image plus petite.",
-    "requestTooLarge": "Cette requête était trop volumineuse. Vos modifications ont été conservées — veuillez réessayer."
+    "requestTooLarge": "Cette requête était trop volumineuse. Vos modifications ont été conservées — veuillez réessayer.",
+    "roleAdmin": "Administrateur",
+    "roleTester": "Testeur"
   },
   "account": {
     "eyebrow": "Compte",
@@ -2910,6 +3004,7 @@
       "backup": "Télécharger la sauvegarde",
       "backupDone": "Sauvegarde téléchargée",
       "backupFailed": "Impossible de préparer votre sauvegarde. Réessayez.",
+      "confirmPhrase": "Supprimer toutes les données",
       "confirmLabel": "Saisissez {phrase} pour confirmer",
       "confirm": "Supprimer toutes les données",
       "deleted": "Toutes les données d’apprentissage ont été supprimées",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Peut être ignoré",
       "warnings": {
         "workspace_language_reuse": "Certains espaces de travail existent déjà pour la même langue. Leur contenu sera ajouté à vos espaces de travail existants au lieu de créer des doublons.",
-        "empty_backup": "Cette sauvegarde ne contient aucune donnée d’apprentissage importable."
+        "empty_backup": "Cette sauvegarde ne contient aucune donnée d’apprentissage importable.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Annuler",
       "confirm": "Importer les données d’apprentissage",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# élément de vocabulaire existe déjà} other {# éléments de vocabulaire existent déjà}}",
         "listening_missing_media": "{count, plural, one {# leçon d’écoute sans URL média} other {# leçons d’écoute sans URL média}}",
         "listening_duplicate_filename": "{count, plural, one {# leçon d’écoute ignorée (nom de fichier en double)} other {# leçons d’écoute ignorées (nom de fichier en double)}}",
+        "speaking_duplicate": "{count, plural, one {# session d’oral existe déjà} other {# sessions d’oral existent déjà}}",
         "invalid_workspace_ref": "{count, plural, one {# élément sans espace de travail} other {# éléments sans espace de travail}}",
         "invalid_record": "{count, plural, one {# enregistrement invalide} other {# enregistrements invalides}}",
-        "unsupported_account_field": "Les champs d’identité du compte ne sont pas importés"
+        "unsupported_account_field": "Les champs d’identité du compte ne sont pas importés",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Ce fichier de sauvegarde est trop volumineux. Essayez d’exporter à nouveau ou contactez l’assistance.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Impossible d’importer cette sauvegarde. Réessayez.",
         "requestTooLarge": "Cette sauvegarde est trop volumineuse pour être traitée via cette page. Essayez un export plus petit ou contactez l’assistance.",
         "notConfigured": "Le stockage de fichiers n’est pas encore configuré pour l’import de sauvegarde."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Fermer le compte",
@@ -3002,6 +3110,7 @@
       "backup": "Télécharger la sauvegarde",
       "backupDone": "Sauvegarde téléchargée",
       "backupFailed": "Impossible de préparer votre sauvegarde. Réessayez.",
+      "confirmPhrase": "Supprimer mon compte",
       "confirmLabel": "Saisissez {phrase} pour confirmer",
       "confirm": "Supprimer définitivement le compte",
       "deleted": "Votre compte a été supprimé",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Tendances d'apprentissage",
       "personalLearningPath": "Parcours d'apprentissage personnel",
       "personalizedRecommendations": "Recommandations personnalisées",
-      "crossModuleIntelligence": "Personnalisation inter-modules"
+      "crossModuleIntelligence": "Personnalisation inter-modules",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Comparer les offres",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Vous avez atteint la limite du Learning Coach pour aujourd'hui. Votre coach sera de nouveau disponible demain.",
       "errorPremium": "Le Learning Coach est une fonctionnalité Premium. Obtenez des recommandations personnalisées basées sur votre activité d'apprentissage.",
       "errorUnavailable": "Votre coach n'a pas pu répondre pour le moment. Votre message n'a pas été comptabilisé. Veuillez réessayer.",
+      "errorWorkspace": "Choisissez un espace avant de demander au coach.",
+      "errorUnauthorized": "Connectez-vous à nouveau pour continuer.",
       "prompts": {
         "practice_today": "Sur quoi dois-je me concentrer aujourd'hui ?",
         "struggling_words": "Pourquoi ai-je du mal avec ces mots ?",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Administrateur",
       "manage": "Gérer",
       "overview": "Vue d'ensemble",
       "users": "Utilisateurs",
@@ -4760,7 +4872,7 @@
       "listening": "Écoute",
       "reading": "Lecture",
       "speaking": "Expression orale",
-      "inbox": "Capture",
+      "inbox": "Collecte",
       "folders": "Dossiers"
     },
     "common": {
@@ -4794,11 +4906,32 @@
         "listening": "Écoute",
         "reading": "Lecture",
         "speaking": "Expression orale",
-        "inbox": "Capture",
+        "inbox": "Collecte",
         "failedListening": "Écoute en échec",
         "failedImports": "Imports en échec",
         "runningJobs": "Verrous de tâches en cours",
-        "recentAudits7d": "Entrées d'audit (7 j)"
+        "recentAudits7d": "Entrées d'audit (7 j)",
+        "admins": "Administrateurs",
+        "testers": "Testeurs",
+        "suspended": "Suspendus",
+        "contentTotal": "Enregistrements de contenu"
+      },
+      "quickAccess": "Accès rapide",
+      "quickAccessLede": "Accéder aux outils de gestion.",
+      "groups": {
+        "people": "Personnes",
+        "content": "Contenu",
+        "ops": "Opérations"
+      },
+      "charts": {
+        "signupsTitle": "Nouveaux comptes",
+        "signupsLede": "Inscriptions quotidiennes sur les 14 derniers jours UTC.",
+        "activeTitle": "Apprenants actifs",
+        "activeLede": "Apprenants distincts avec activité chaque jour (14 j).",
+        "rolesTitle": "Rôles",
+        "rolesLede": "Comptes par rôle.",
+        "contentTitle": "Répartition du contenu",
+        "contentLede": "Enregistrements dans les modules d’apprentissage."
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "Offre",
         "created": "Inscrit",
         "updated": "Mis à jour",
-        "emailVerified": "E-mail vérifié"
+        "emailVerified": "E-mail vérifié",
+        "email": "E-mail",
+        "password": "Mot de passe"
       },
       "detail": {
         "account": "Compte",
@@ -4841,7 +4976,8 @@
         "usageLede": "Enregistrements appartenant aux modules d'apprentissage.",
         "actions": "Actions du compte",
         "workspaces": "Espaces de travail",
-        "workspacesLede": "Espaces linguistiques appartenant à cet utilisateur."
+        "workspacesLede": "Espaces linguistiques appartenant à cet utilisateur.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Enregistrer le nom",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Révoquer le rôle admin",
         "suspend": "Suspendre",
         "restore": "Restaurer",
-        "delete": "Supprimer le compte"
+        "delete": "Supprimer le compte",
+        "grantTester": "Accorder le rôle testeur",
+        "revokeTester": "Révoquer le rôle testeur",
+        "create": "Créer un utilisateur"
       },
       "confirm": {
         "grantAdmin": "Accorder l'accès admin à ce compte ?",
         "revokeAdmin": "Révoquer l'accès admin ? Cette action échoue s'il s'agit du dernier admin actif.",
         "suspend": "Suspendre ce compte ? Il perdra l'accès à la prochaine requête protégée.",
         "restore": "Restaurer ce compte ?",
-        "delete": "Supprimer définitivement ce compte et les données d'apprentissage en cascade ? Cette action est irréversible."
+        "delete": "Supprimer définitivement ce compte et les données d'apprentissage en cascade ? Cette action est irréversible.",
+        "grantTester": "Accorder le rôle testeur ? Ils obtiennent toutes les fonctions de l’app pour le QA ; l’abonnement enregistré ne change pas.",
+        "revokeTester": "Révoquer le rôle testeur ? L’accès aux fonctions revient à leur abonnement réel."
+      },
+      "roleHelp": "Le rôle testeur débloque toutes les fonctions Free, Pro et Premium pour le QA sans modifier l’abonnement enregistré. Un administrateur est requis pour ce tableau de bord.",
+      "roles": {
+        "user": "Utilisateur",
+        "tester": "Testeur",
+        "admin": "Administrateur"
+      },
+      "create": {
+        "title": "Créer un utilisateur",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Langue",
         "owner": "Propriétaire",
         "created": "Créé",
-        "updated": "Mis à jour"
+        "updated": "Mis à jour",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Langue : {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Supprimer cet espace de travail et tout le contenu d'apprentissage qu'il contient via les cascades de la base de données ?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Propriétaire",
         "workspace": "Espace de travail",
         "created": "Créé",
-        "updated": "Mis à jour"
+        "updated": "Mis à jour",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Inspection des métadonnées. Les corps privés ne sont pas chargés automatiquement.",
@@ -4923,11 +5088,13 @@
         "actions": "Actions"
       },
       "actions": {
-        "delete": "Supprimer l'enregistrement"
+        "delete": "Supprimer l'enregistrement",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Supprimer cet enregistrement ? Les lignes enfants associées suivent les règles de cascade / set-null de la base de données."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Tâches",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Cet utilisateur a déjà un espace de travail pour cette langue.",
       "INVALID_LANGUAGE": "Code de langue invalide.",
       "CONTENT_NOT_FOUND": "Enregistrement introuvable.",
-      "INVALID_CONTENT_MODULE": "Module de contenu inconnu."
+      "INVALID_CONTENT_MODULE": "Module de contenu inconnu.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

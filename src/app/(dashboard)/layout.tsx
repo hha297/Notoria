@@ -13,14 +13,14 @@ import { LOCALE_COOKIE } from "@/i18n/request";
 import { getResolvedAiPreferences } from "@/lib/ai/preferences-server";
 import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { getCurrentProAccess } from "@/lib/auth/pro-access";
-import { isAdminRole } from "@/lib/auth/require-admin";
+import { isAdminRole, isTesterRole } from "@/lib/auth/roles";
 import { getSession } from "@/lib/auth/session";
 import { getUserEntitlements } from "@/lib/billing/entitlements";
 import {
   getCurrentSubscription,
   hasActiveProSubscription,
 } from "@/lib/stripe/pro";
-import { displayPlan, isIntroOfferEligible } from "@/lib/billing/plans";
+import { displayPlan, entitlementPlan, isIntroOfferEligible } from "@/lib/billing/plans";
 import {
   getStripePremiumFirstMonthCouponId,
   getStripeProFirstMonthCouponId,
@@ -86,6 +86,7 @@ export default async function DashboardLayout({
     <ProAccessProvider
       hasProAccess={proAccess.hasProAccess}
       plan={displayPlan(subscription)}
+      entitlementPlan={entitlements?.plan ?? entitlementPlan(userRecord)}
       cancelAtPeriodEnd={Boolean(
         subscription?.stripeCancelAtPeriodEnd &&
         !subscription?.scheduledSubscriptionPlan &&
@@ -116,6 +117,7 @@ export default async function DashboardLayout({
           isPro={hasActiveProSubscription(subscription)}
           plan={displayPlan(subscription)}
           isAdmin={isAdminRole(userRecord?.role)}
+          isTester={isTesterRole(userRecord?.role)}
           footer={<SiteFooter variant="app" />}
         >
           <WelcomePromptModal

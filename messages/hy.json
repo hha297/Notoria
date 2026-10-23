@@ -15,7 +15,20 @@
     "clearFilter": "Մաքրել",
     "filters": "Զտիչներ",
     "hideFilters": "Թաքցնել զտիչները",
-    "remove": "Հեռացնել"
+    "remove": "Հեռացնել",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Հնարավոր չէ պանակը տեղափոխել իր մեջ",
     "tooDeep": "Այս պանակը չափազանց խորն է ներդրված",
     "notFound": "Պանակը չի գտնվել",
-    "nameTaken": "Այս անունն արդեն օգտագործվում է պանակի կամ գրավոր աշխատանքի համար"
+    "nameTaken": "Այս անունն արդեն օգտագործվում է պանակի կամ գրավոր աշխատանքի համար",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Փոխել թեման",
@@ -291,7 +310,11 @@
     "createWorkspace": "Ստեղծել աշխատատարածք",
     "createWorkspaceHint": "Ավելացնել մեկ այլ լեզվի աշխատատարածք",
     "switchWorkspace": "Փոխել աշխատատարածքը",
-    "switchFailed": "Չհաջողվեց փոխել աշխատատարածքը"
+    "switchFailed": "Չհաջողվեց փոխել աշխատատարածքը",
+    "selectLanguage": "Ընտրեք լեզուն",
+    "allLanguages": "Բոլոր լեզուները",
+    "changeLanguageFailed": "Չհաջողվեց փոխել միջերեսի լեզուն",
+    "popularLanguages": "Հանրաճանաչ"
   },
   "workspace": {
     "title": "Աշխատատարածքներ",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# ներմուծում} other {# ներմուծում}}"
     },
     "processing": {
-      "workingTitle": "Աշխատում ենք Ձեր վարժության վրա",
+      "workingTitle": "Վարժությունը պատրաստվում է",
       "readyTitle": "Վարժությունը պատրաստ է",
       "errorTitle": "Ինչ-որ բան սխալ գնաց",
       "cancel": "Չեղարկել",
       "retry": "Կրկին փորձել",
       "dismiss": "Փակել",
       "stages": {
-        "uploading": "Վերբեռնվում է…",
-        "extracting": "Բովանդակությունը արդյունահանվում է…",
-        "analyzing": "Բովանդակությունը վերլուծվում է…",
-        "generating": "Վարժությունը ստեղծվում է…",
-        "saving": "Վարժությունը պահվում է…",
+        "uploading": "Ֆայլի վերբեռնում",
+        "extracting": "Բովանդակության առանձնացում",
+        "analyzing": "Բովանդակության վերլուծություն",
+        "generating": "Հարցերի ստեղծում",
+        "saving": "Վարժության պահում և պատրաստում",
         "completed": "Վարժությունը պատրաստ է",
-        "error": "Ստեղծումը ձախողվեց"
-      }
+        "error": "Ստեղծումը ձախողվեց",
+        "preparing": "Ուսումնական նյութի պատրաստում",
+        "validating": "Պատասխանների և հուշումների ստուգում"
+      },
+      "stillWorking": "Դեռ ստեղծվում է… անցել է {seconds} վ",
+      "hints": {
+        "uploading": "Ձեր ֆայլը անվտանգ ուղարկվում է։",
+        "extracting": "Աղբյուրից կարդացվում են տեքստը և կառուցվածքը։",
+        "analyzing": "Նյութում գտնվում են վարժության հուշումներ։",
+        "preparing": "Հավաքվում է այս հավաքածուի ընտրված բառապաշարը կամ տեսությունը։",
+        "generating": "Մոդելը գրում է հարցեր։ Կարող է որոշ ժամանակ տևել։",
+        "validating": "Վարժությունից առաջ ստուգվում են պատասխանները, հուշումները և կառուցվածքը։",
+        "saving": "Հավաքվում է ձեր վարժությունների հավաքածուն։"
+      },
+      "nextSetPreparing": "Հաջորդ հավաքածուն պատրաստվում է…",
+      "nextSetReady": "Հաջորդ հավաքածուն պատրաստ է",
+      "nextSetFailed": "Հնարավոր չեղավ պատրաստել հաջորդ հավաքածուն",
+      "nextSetRetry": "Պատրաստել հաջորդ հավաքածուն",
+      "openNextSet": "Բացել հաջորդ հավաքածուն"
     },
     "import": {
       "eyebrow": "Ներմուծված վարժություն",
@@ -822,6 +862,7 @@
       "aiReady": "Վարժությունը պատրաստ է",
       "aiUnavailable": "Այժմ չհաջողվեց ստեղծել AI հարցեր։",
       "aiForbidden": "AI տեսության վարժությունները հասանելի են Pro-ով։",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI օգնությունը անջատված է Կարգավորումներում։",
       "feedback": {
         "correct": "Ճիշտ է։",
@@ -874,7 +915,21 @@
         "theRule": "Կանոնը",
         "why": "Ինչու",
         "complete": "Հասկացա",
-        "completeHint": "Կարող եք շարունակել, երբ պատրաստ եք։"
+        "completeHint": "Կարող եք շարունակել, երբ պատրաստ եք։",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Հուշում",
       "startsWith": "Սկսվում է «{letter}»-ով",
       "revealPrompt": "Դեռ դժվարանու՞մ եք։ Կարող եք բացահայտել ամբողջական պատասխանը։",
-      "revealAnswer": "Բացահայտել պատասխանը"
+      "revealAnswer": "Բացահայտել պատասխանը",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Բառապաշար դեռ չկա",
@@ -977,8 +1034,38 @@
       "forbidden": "AI վարժությունների ստեղծումը հասանելի է Pro-ով։",
       "disabled": "AI օգնությունը անջատված է Կարգավորումներում։",
       "upgradeHint": "Անվճար տարբերակը ներառում է մի քանի AI վարժության ստեղծում ամեն օր։ Pro-ը հանում է սահմանը։",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Ավելացրեք բառապաշարի բառեր՝ նախքան հարցեր ստեղծելը։",
-      "noneValid": "AI-ն չկարողացավ վավեր հարցեր ստեղծել այս բառերի համար։ Փորձեք կրկին։"
+      "noneValid": "AI-ն չկարողացավ վավեր հարցեր ստեղծել այս բառերի համար։ Փորձեք կրկին։",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Նստաշրջանն ավարտված է",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Միայն բովանդակությունը փոխելիս",
       "confirmNever": "Երբեք",
       "saveFailed": "Չհաջողվեց պահպանել AI նախընտրությունները",
-      "disabledToast": "AI օգնությունը անջատված է Կարգավորումներում"
+      "disabledToast": "AI օգնությունը անջատված է Կարգավորումներում",
+      "exerciseNextSetPrefetch": "Նախապատրաստել հաջորդ վարժությունների հավաքածուն",
+      "exerciseNextSetPrefetchDescription": "Երբ սկսեք պատասխանել, հաջորդ հավաքածուն ավտոմատ պատրաստվում է ֆոնում։ Սկզբում օգտագործում է մեկ AI վարժության կրեդիտ։ Անջատեք՝ միայն Նոր հավաքածուով ստեղծելու համար։"
     },
     "tutorials": "Բաժնի ուսուցումներ",
     "tutorialsDescription": "Վերակայեք ավարտված բաժնի ուղեկցումները, որպեսզի «Ցուցադրել ուսուցումը» նորից սկսի սկզբից։",
@@ -2768,6 +2857,9 @@
     "noAccount": "Հաշիվ չունե՞ք",
     "hasAccount": "Արդեն հաշիվ ունե՞ք",
     "invalidCredentials": "Սխալ էլ. փոստ կամ գաղտնաբառ",
+    "rememberMe": "Հիշել ինձ",
+    "signInUnavailable": "Այս պահին մուտք գործել չհաջողվեց։ Կրկին փորձեք։",
+    "accountSuspended": "Այս հաշիվը կասեցված է։ Եթե սա սխալ է, կապվեք աջակցության հետ։",
     "emailExists": "Այս էլ. փոստով հաշիվ արդեն գոյություն ունի",
     "emailInvalid": "Մուտքագրեք վավեր էլ. փոստի հասցե",
     "registerFailed": "Չհաջողվեց ստեղծել հաշիվ։ Խնդրում ենք կրկին փորձել։",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Պայմաններ",
     "registerAgreement": "Հաշիվ ստեղծելով՝ դուք համաձայնում եք <terms>Օգտագործման պայմաններին</terms> և <privacy>Գաղտնիության քաղաքականությանը</privacy>։",
     "avatarRequestTooLarge": "Այդ լուսանկարը չափազանց մեծ է ուղարկելու համար։ Փորձեք ավելի փոքր պատկեր։",
-    "requestTooLarge": "Այդ հարցումը չափազանց մեծ էր։ Ձեր փոփոխությունները պահպանված են — խնդրում ենք կրկին փորձել։"
+    "requestTooLarge": "Այդ հարցումը չափազանց մեծ էր։ Ձեր փոփոխությունները պահպանված են — խնդրում ենք կրկին փորձել։",
+    "roleAdmin": "Ադմինիստրատոր",
+    "roleTester": "Փորձարկող"
   },
   "account": {
     "eyebrow": "Հաշիվ",
@@ -2909,6 +3003,7 @@
       "backup": "Ներբեռնել պահուստ",
       "backupDone": "Պահուստը ներբեռնված է",
       "backupFailed": "Չհաջողվեց պատրաստել պահուստը։ Կրկին փորձեք։",
+      "confirmPhrase": "Ջնջել բոլոր տվյալները",
       "confirmLabel": "Հաստատելու համար մուտքագրեք {phrase}",
       "confirm": "Ջնջել բոլոր տվյալները",
       "deleted": "Ամբողջ ուսումնական տվյալները ջնջված են",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Կարող է բաց թողնվել",
       "warnings": {
         "workspace_language_reuse": "Որոշ աշխատատարածքներ արդեն գոյություն ունեն նույն լեզվի համար։ Դրանց բովանդակությունը կավելացվի առկա աշխատատարածքներին՝ առանց կրկնօրինակների։",
-        "empty_backup": "Այս պահուստը ներմուծելի ուսումնական տվյալներ չի պարունակում։"
+        "empty_backup": "Այս պահուստը ներմուծելի ուսումնական տվյալներ չի պարունակում։",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Չեղարկել",
       "confirm": "Ներմուծել ուսումնական տվյալները",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# բառապաշարի տարր արդեն գոյություն ունի} other {# բառապաշարի տարր արդեն գոյություն ունի}}",
         "listening_missing_media": "{count, plural, one {# լսման դաս՝ առանց մեդիա URL-ի} other {# լսման դաս՝ առանց մեդիա URL-ի}}",
         "listening_duplicate_filename": "{count, plural, one {# լսման դաս բաց թողնված է (կրկնվող ֆայլի անուն)} other {# լսման դաս բաց թողնված է (կրկնվող ֆայլի անուն)}}",
+        "speaking_duplicate": "{count, plural, one {# խոսքի սեսիա արդեն գոյություն ունի} other {# խոսքի սեսիա արդեն գոյություն ունի}}",
         "invalid_workspace_ref": "{count, plural, one {# տարր՝ առանց աշխատատարածքի} other {# տարր՝ առանց աշխատատարածքի}}",
         "invalid_record": "{count, plural, one {# անվավեր գրառում} other {# անվավեր գրառում}}",
-        "unsupported_account_field": "Հաշվի ինքնության դաշտերը չեն ներմուծվում"
+        "unsupported_account_field": "Հաշվի ինքնության դաշտերը չեն ներմուծվում",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Այդ պահուստի ֆայլը չափազանց մեծ է։ Կրկին արտահանեք կամ կապվեք աջակցության հետ։",
@@ -2977,7 +3080,12 @@
         "importFailed": "Չհաջողվեց ներմուծել այս պահուստը։ Կրկին փորձեք։",
         "requestTooLarge": "Այդ պահուստը չափազանց մեծ է այս էջով մշակելու համար։ Փորձեք ավելի փոքր արտահանում կամ կապվեք աջակցության հետ։",
         "notConfigured": "Պահուստի ներմուծման համար ֆայլերի պահեստը դեռ կազմաձևված չէ։"
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Փակել հաշիվը",
@@ -3002,6 +3110,7 @@
       "backup": "Ներբեռնել պահուստ",
       "backupDone": "Պահուստը ներբեռնված է",
       "backupFailed": "Չհաջողվեց պատրաստել պահուստը։ Կրկին փորձեք։",
+      "confirmPhrase": "Ջնջել իմ հաշիվը",
       "confirmLabel": "Հաստատելու համար մուտքագրեք {phrase}",
       "confirm": "Մշտապես ջնջել հաշիվը",
       "deleted": "Ձեր հաշիվը ջնջված է",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Ուսումնական միտումներ",
       "personalLearningPath": "Անձնական ուսումնական ուղի",
       "personalizedRecommendations": "Անհատականացված առաջարկներ",
-      "crossModuleIntelligence": "Մոդուլների միջև անհատականացում"
+      "crossModuleIntelligence": "Մոդուլների միջև անհատականացում",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Համեմատել պլանները",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Հասել եք այսօրվա Learning Coach սահմանաչափին։ Մարզիչը կրկին հասանելի կլինի վաղը։",
       "errorPremium": "Learning Coach-ը Premium հնարավորություն է։ Ստացեք անհատականացված առաջարկություններ՝ հիմնված ձեր ուսումնական ակտիվության վրա։",
       "errorUnavailable": "Մարզիչը չկարողացավ պատասխանել հիմա։ Ձեր հաղորդագրությունը չի հաշվվել։ Խնդրում ենք կրկին փորձել։",
+      "errorWorkspace": "Մարզչին հարցնելուց առաջ ընտրեք աշխատատարածք։",
+      "errorUnauthorized": "Շարունակելու համար նորից մուտք գործեք։",
       "prompts": {
         "practice_today": "Ինչի վրա պե՞տք է կենտրոնանամ այսօր։",
         "struggling_words": "Ինչու՞ եմ դժվարանում այս բառերի հետ։",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Ադմին",
+      "admin": "Ադմինիստրատոր",
       "manage": "Կառավարում",
       "overview": "Ակնարկ",
       "users": "Օգտատերեր",
@@ -4760,7 +4872,7 @@
       "listening": "Լսողություն",
       "reading": "Ընթերցանություն",
       "speaking": "Խոսակցություն",
-      "inbox": "Capture",
+      "inbox": "Հավաքում",
       "folders": "Թղթապանակներ"
     },
     "common": {
@@ -4794,11 +4906,32 @@
         "listening": "Լսողություն",
         "reading": "Ընթերցանություն",
         "speaking": "Խոսակցություն",
-        "inbox": "Capture",
+        "inbox": "Հավաքում",
         "failedListening": "Ձախողված լսողություն",
         "failedImports": "Ձախողված ներմուծումներ",
         "runningJobs": "Ընթացիկ առաջադրանքների կողպեքներ",
-        "recentAudits7d": "Աուդիտի գրառումներ (7օր)"
+        "recentAudits7d": "Աուդիտի գրառումներ (7օր)",
+        "admins": "Ադմինիստրատորներ",
+        "testers": "Փորձարկողներ",
+        "suspended": "Կասեցված",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Արագ մուտք",
+      "quickAccessLede": "Անցնել կառավարման գործիքներին։",
+      "groups": {
+        "people": "Մարդիկ",
+        "content": "Բովանդակություն",
+        "ops": "Գործառույթներ"
+      },
+      "charts": {
+        "signupsTitle": "Nouveaux comptes",
+        "signupsLede": "Inscriptions quotidiennes sur les 14 derniers jours UTC.",
+        "activeTitle": "Apprenants actifs",
+        "activeLede": "Apprenants distincts avec activité chaque jour (14 j).",
+        "rolesTitle": "Rôles",
+        "rolesLede": "Comptes par rôle.",
+        "contentTitle": "Répartition du contenu",
+        "contentLede": "Enregistrements dans les modules d’apprentissage."
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "Պլան",
         "created": "Գրանցված",
         "updated": "Թարմացված",
-        "emailVerified": "Էլփոստը հաստատված է"
+        "emailVerified": "Էլփոստը հաստատված է",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Հաշիվ",
@@ -4841,7 +4976,8 @@
         "usageLede": "Սեփական գրառումներ ուսումնական մոդուլներում։",
         "actions": "Հաշվի գործողություններ",
         "workspaces": "Աշխատատարածքներ",
-        "workspacesLede": "Այս օգտատիրոջ լեզվական աշխատատարածքները։"
+        "workspacesLede": "Այս օգտատիրոջ լեզվական աշխատատարածքները։",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Պահպանել անունը",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Հանել ադմին",
         "suspend": "Կասեցնել",
         "restore": "Վերականգնել",
-        "delete": "Ջնջել հաշիվը"
+        "delete": "Ջնջել հաշիվը",
+        "grantTester": "Տալ փորձարկողի դեր",
+        "revokeTester": "Հանել փորձարկողի դերը",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Ադմին մուտք տա՞լ այս հաշվին։",
         "revokeAdmin": "Հանե՞լ ադմին մուտքը։ Չի հաջողվի, եթե սա վերջին ակտիվ ադմինն է։",
         "suspend": "Կասեցնե՞լ այս հաշիվը։ Մուտքը կկորցնեն հաջորդ պաշտպանված հարցման ժամանակ։",
         "restore": "Վերականգնե՞լ այս հաշիվը։",
-        "delete": "Մշտապես ջնջե՞լ այս հաշիվը և կապակցված ուսումնական տվյալները։ Սա հնարավոր չէ հետարկել։"
+        "delete": "Մշտապես ջնջե՞լ այս հաշիվը և կապակցված ուսումնական տվյալները։ Սա հնարավոր չէ հետարկել։",
+        "grantTester": "Տա՞լ փորձարկողի դեր։ QA-ի համար ստանում են հավելվածի բոլոր հնարավորությունները. պահված բաժանորդագրությունը չի փոխվում։",
+        "revokeTester": "Հանի՞ր փորձարկողի դերը։ Հնարավորությունների մուտքը վերադառնում է իրենց իրական բաժանորդագրությանը։"
+      },
+      "roleHelp": "Փորձարկողի դերը բացում է Free, Pro և Premium բոլոր հնարավորությունները QA-ի համար՝ առանց պահված բաժանորդագրությունը փոխելու։ Այս վահանակի համար պետք է ադմինիստրատոր։",
+      "roles": {
+        "user": "Օգտատեր",
+        "tester": "Փորձարկող",
+        "admin": "Ադմինիստրատոր"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Լեզու",
         "owner": "Սեփականատեր",
         "created": "Ստեղծված",
-        "updated": "Թարմացված"
+        "updated": "Թարմացված",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Լեզու՝ {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Ջնջե՞լ այս աշխատատարածքը և նրա ամբողջ ուսումնական բովանդակությունը տվյալների բազայի կասկադներով։"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Սեփականատեր",
         "workspace": "Աշխատատարածք",
         "created": "Ստեղծված",
-        "updated": "Թարմացված"
+        "updated": "Թարմացված",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Մետատվյալների ստուգում։ Անձնական բովանդակությունը ավտոմատ չի բեռնվում։",
@@ -4923,11 +5088,13 @@
         "actions": "Գործողություններ"
       },
       "actions": {
-        "delete": "Ջնջել գրառումը"
+        "delete": "Ջնջել գրառումը",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Ջնջե՞լ այս գրառումը։ Կապակցված ենթատողերը հետևում են տվյալների բազայի cascade / set-null կանոններին։"
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Առաջադրանքներ",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Այս օգտատերն արդեն ունի աշխատատարածք այդ լեզվի համար։",
       "INVALID_LANGUAGE": "Անվավեր լեզվի կոդ։",
       "CONTENT_NOT_FOUND": "Գրառումը չի գտնվել։",
-      "INVALID_CONTENT_MODULE": "Անհայտ բովանդակության մոդուլ։"
+      "INVALID_CONTENT_MODULE": "Անհայտ բովանդակության մոդուլ։",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

@@ -64,6 +64,16 @@ export const exerciseAiWordSchema = z.object({
   avoidSentences: z.array(z.string().trim().min(1).max(400)).max(12).optional(),
 });
 
+/** Identifies one prepared / in-flight set for durable job claiming. */
+export const exerciseNextSetMetaSchema = z.object({
+  sessionId: z.string().trim().min(1).max(80),
+  sequence: z.number().int().min(0).max(10_000),
+  /** Force a new provider call after a failed job. */
+  regenerate: z.boolean().optional(),
+});
+
+export type ExerciseNextSetMeta = z.infer<typeof exerciseNextSetMetaSchema>;
+
 export const exerciseAiRequestSchema = z.object({
   exerciseType: z.literal("fill-in-blank"),
   language: z.string().trim().min(2).max(16).optional().nullable(),
@@ -77,6 +87,9 @@ export const exerciseAiRequestSchema = z.object({
   words: z.array(exerciseAiWordSchema).min(1).max(FILL_BLANK_AI_BATCH),
   /** Website UI locale for sentenceMeaning (not the study/workspace language). */
   uiLocale: z.enum(locales).optional(),
+  /** Premium-only. Empty is ignored. Free/Pro are rejected on the server. */
+  additionalInstructions: z.string().trim().max(2_000).optional().nullable(),
+  nextSet: exerciseNextSetMetaSchema.optional(),
 });
 
 export type ExerciseAiWordInput = z.infer<typeof exerciseAiWordSchema>;
@@ -94,6 +107,7 @@ export const exerciseAiFillBlankSchema = z.object({
   difficulty: optionalTextSchema.catch(null),
   /** Full correct sentence gloss in the website UI language. */
   sentenceMeaning: optionalTextSchema.catch(null),
+  hints: z.array(z.string().trim().max(240)).max(3).optional().catch(undefined),
 });
 
 export const exerciseAiResultSchema = z.object({

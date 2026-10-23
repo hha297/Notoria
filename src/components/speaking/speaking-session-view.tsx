@@ -9,6 +9,8 @@ import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
+import { DetailHeaderActions } from "@/components/shared/detail-header-actions";
+import { useDateFnsLocale } from "@/hooks/use-date-fns-locale";
 import { DescriptionContent } from "@/components/form/description-content";
 import {
   Dialog,
@@ -42,6 +44,7 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
   const tMeta = useTranslations("speaking.meta");
   const tTags = useTranslations("tags");
   const tc = useTranslations("common");
+  const dateLocale = useDateFnsLocale();
   const router = useRouter();
   const queryClient = useQueryClient();
   const [deleteOpen, setDeleteOpen] = useState(false);
@@ -126,6 +129,7 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
     key: "created",
     label: formatDistanceToNow(new Date(session.createdAt), {
       addSuffix: true,
+      locale: dateLocale,
     }),
   });
 
@@ -140,40 +144,39 @@ export function SpeakingSessionView({ session }: SpeakingSessionViewProps) {
             <ArrowLeft className="size-4 shrink-0" />
             {t("backToList")}
           </Link>
-          <div className={mx(detailStyles, "actions")}>
-            {joinable ? (
-              <LinkButton href={`/speaking/${session.id}/call`}>
-                <Video className="size-4" />
-                {t("join")}
-              </LinkButton>
-            ) : null}
-            {session.status === "active" ? (
-              <Button
-                type="button"
-                variant="outline"
-                className="route-quiet-action"
-                data-route-action="speak"
-                onClick={handleEnd}
-                disabled={isPending}
-              >
-                {isPending ? (
-                  <Loader2 className="size-4 animate-spin" />
-                ) : (
-                  <PhoneOff className="size-4" />
-                )}
-                {t("endSession")}
-              </Button>
-            ) : null}
-            <Button
-              type="button"
-              variant="destructive"
-              onClick={() => setDeleteOpen(true)}
-              disabled={isPending}
-            >
-              <Trash2 className="size-4" />
-              {tc("delete")}
-            </Button>
-          </div>
+          <DetailHeaderActions
+            primary={
+              joinable ? (
+                <LinkButton href={`/speaking/${session.id}/call`}>
+                  <Video className="size-4" />
+                  {t("join")}
+                </LinkButton>
+              ) : null
+            }
+            items={[
+              ...(session.status === "active"
+                ? [
+                    {
+                      id: "end",
+                      label: t("endSession"),
+                      icon: PhoneOff,
+                      onSelect: handleEnd,
+                      disabled: isPending,
+                      className: "route-quiet-action",
+                      routeAction: "speak",
+                    } as const,
+                  ]
+                : []),
+              {
+                id: "delete",
+                label: tc("delete"),
+                icon: Trash2,
+                onSelect: () => setDeleteOpen(true),
+                disabled: isPending,
+                destructive: true,
+              },
+            ]}
+          />
         </header>
 
         <section className={mx(detailStyles, "hero")}>

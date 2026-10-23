@@ -15,7 +15,21 @@
     "filters": "Bộ lọc",
     "hideFilters": "Ẩn bộ lọc",
     "open": "Mở",
-    "remove": "Xóa"
+    "remove": "Xóa",
+    "moreActions": "Thêm hành động",
+    "exportAppearance": {
+      "label": "Giao diện",
+      "print": "Thân thiện khi in",
+      "printHint": "Nền trắng, chữ tối",
+      "theme": "Theo giao diện hiện tại",
+      "themeHint": "Khớp theme sáng hoặc tối của bạn",
+      "previewKicker": "Trang mẫu",
+      "previewTitle": "Tiêu đề tài liệu",
+      "previewBody": "Nội dung dùng màu và khoảng cách đã chọn.",
+      "previewCallout": "Hộp chú thích theo màu module.",
+      "fixedNote": "Giao diện được cố định trong file. Xuất lại nếu muốn đổi.",
+      "docxBackgroundNote": "Word và ứng dụng khác có thể không hiển thị nền trang giống nhau, nhất là khi in."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +294,13 @@
     "invalidMove": "Không thể chuyển thư mục vào chính nó",
     "tooDeep": "Thư mục này đã lồng quá sâu",
     "notFound": "Không tìm thấy thư mục",
-    "nameTaken": "Đã có thư mục hoặc bài viết dùng tên này"
+    "nameTaken": "Đã có thư mục hoặc bài viết dùng tên này",
+    "dragTipTitle": "Chuyển vào thư mục",
+    "dragTipBody": "Trên máy tính với chuột hoặc trackpad, kéo một mục thả lên thẻ thư mục để chuyển. Bạn cũng có thể dùng biểu tượng di chuyển trên từng mục.",
+    "dragTipDismiss": "Ẩn mẹo",
+    "dragTipShow": "Cách chuyển vào thư mục",
+    "dragTipDemo": "Kéo mục vào thư mục",
+    "dragTipCard": "Mục"
   },
   "theme": {
     "toggle": "Đổi giao diện",
@@ -291,7 +311,11 @@
     "createWorkspace": "Tạo không gian học",
     "createWorkspaceHint": "Thêm không gian học cho ngôn ngữ khác",
     "switchWorkspace": "Đổi không gian học",
-    "switchFailed": "Không đổi được không gian học. Thử lại nhé."
+    "switchFailed": "Không đổi được không gian học. Thử lại nhé.",
+    "selectLanguage": "Chọn ngôn ngữ",
+    "allLanguages": "Tất cả ngôn ngữ",
+    "changeLanguageFailed": "Không đổi được ngôn ngữ giao diện",
+    "popularLanguages": "Phổ biến"
   },
   "workspace": {
     "title": "Không gian học",
@@ -663,21 +687,38 @@
       "importCount": "{count, plural, one {# bản nhập} other {# bản nhập}}"
     },
     "processing": {
-      "workingTitle": "Đang xử lý bài tập",
-      "readyTitle": "Bài tập đã sẵn sàng",
-      "errorTitle": "Có lỗi xảy ra",
-      "cancel": "Huỷ",
+      "workingTitle": "Đang tạo bài tập",
+      "readyTitle": "Bài tập sẵn sàng",
+      "errorTitle": "Đã xảy ra lỗi",
+      "cancel": "Hủy",
       "retry": "Thử lại",
       "dismiss": "Đóng",
       "stages": {
-        "uploading": "Đang tải lên…",
-        "extracting": "Đang trích nội dung…",
-        "analyzing": "Đang phân tích…",
-        "generating": "Đang tạo bài tập…",
-        "saving": "Đang lưu…",
+        "uploading": "Đang tải tệp lên",
+        "extracting": "Đang trích xuất nội dung",
+        "analyzing": "Đang phân tích nội dung",
+        "generating": "Đang tạo câu hỏi",
+        "saving": "Đang lưu và chuẩn bị bài tập",
         "completed": "Bài tập sẵn sàng",
-        "error": "Tạo bài thất bại"
-      }
+        "error": "Tạo bài thất bại",
+        "preparing": "Đang chuẩn bị tài liệu học",
+        "validating": "Đang kiểm tra đáp án và gợi ý"
+      },
+      "stillWorking": "Vẫn đang tạo… đã {seconds} giây",
+      "hints": {
+        "uploading": "Đang gửi tệp của bạn an toàn.",
+        "extracting": "Đang đọc văn bản và cấu trúc từ nguồn.",
+        "analyzing": "Đang tìm gợi ý luyện tập từ tài liệu.",
+        "preparing": "Đang gom từ vựng hoặc lý thuyết đã chọn cho bộ này.",
+        "generating": "Mô hình đang viết câu hỏi. Có thể mất một lúc.",
+        "validating": "Đang kiểm tra đáp án, gợi ý và cấu trúc trước khi luyện.",
+        "saving": "Đang ghép bộ bài luyện tập của bạn."
+      },
+      "nextSetPreparing": "Đang chuẩn bị bộ tiếp theo…",
+      "nextSetReady": "Bộ tiếp theo đã sẵn sàng",
+      "nextSetFailed": "Không chuẩn bị được bộ tiếp theo",
+      "nextSetRetry": "Chuẩn bị bộ tiếp theo",
+      "openNextSet": "Mở bộ tiếp theo"
     },
     "import": {
       "eyebrow": "Bài từ tài liệu nhập",
@@ -822,6 +863,7 @@
       "aiReady": "Sẵn sàng luyện tập",
       "aiUnavailable": "Không tạo được câu hỏi AI lúc này.",
       "aiForbidden": "Bài tập lý thuyết bằng AI dành cho Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "Hỗ trợ AI đang tắt trong Cài đặt.",
       "feedback": {
         "correct": "Đúng!",
@@ -874,7 +916,21 @@
         "theRule": "Quy tắc",
         "why": "Vì sao",
         "complete": "Đã hiểu",
-        "completeHint": "Bạn có thể tiếp tục khi sẵn sàng."
+        "completeHint": "Bạn có thể tiếp tục khi sẵn sàng.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +987,9 @@
       "label": "Gợi ý",
       "startsWith": "Bắt đầu bằng “{letter}”",
       "revealPrompt": "Vẫn chưa ra? Bạn có thể xem đáp án.",
-      "revealAnswer": "Hiện đáp án"
+      "revealAnswer": "Hiện đáp án",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Chưa có từ để luyện",
@@ -977,8 +1035,38 @@
       "forbidden": "Tạo bài tập bằng AI dành cho Pro.",
       "disabled": "Hỗ trợ AI đang tắt trong Cài đặt.",
       "upgradeHint": "Tạo bài tập bằng AI dành cho Pro.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Thêm từ vựng trước khi tạo câu hỏi.",
-      "noneValid": "AI không tạo được câu hỏi hợp lệ cho các từ này. Thử lại."
+      "noneValid": "AI không tạo được câu hỏi hợp lệ cho các từ này. Thử lại.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Hoàn thành phiên học",
@@ -1607,7 +1695,7 @@
         },
         "moveItem": {
           "title": "8. Di chuyển giữa các thư mục",
-          "body": "Dùng biểu tượng di chuyển trên bài viết, hoặc kéo thả lên thẻ thư mục. Bạn cũng có thể lồng thư mục trong thư mục khác."
+          "body": "Trên máy tính với chuột hoặc trackpad, kéo một mục thả lên thẻ thư mục để chuyển. Bạn cũng có thể dùng biểu tượng di chuyển trên từng mục, hoặc lồng thư mục trong thư mục khác."
         }
       }
     },
@@ -1646,7 +1734,7 @@
         },
         "moveItem": {
           "title": "8. Di chuyển ghi chú",
-          "body": "Dùng biểu tượng di chuyển trên ghi chú, hoặc kéo thả lên thư mục. Bạn cũng có thể lồng thư mục để sắp xếp theo chủ đề."
+          "body": "Trên máy tính với chuột hoặc trackpad, kéo ghi chú thả lên thẻ thư mục để chuyển. Bạn cũng có thể dùng biểu tượng di chuyển, hoặc lồng thư mục để sắp xếp theo chủ đề."
         }
       }
     },
@@ -1696,7 +1784,7 @@
         },
         "moveItem": {
           "title": "7. Di chuyển bài nghe",
-          "body": "Dùng biểu tượng di chuyển trên bài, hoặc kéo thả lên thẻ thư mục. Bạn cũng có thể lồng thư mục để tổ chức bộ sưu tập lớn hơn."
+          "body": "Trên máy tính với chuột hoặc trackpad, kéo bài nghe thả lên thẻ thư mục để chuyển. Bạn cũng có thể dùng biểu tượng di chuyển, hoặc lồng thư mục để tổ chức bộ sưu tập lớn hơn."
         }
       }
     },
@@ -1769,7 +1857,7 @@
         },
         "moveItem": {
           "title": "8. Di chuyển đoạn giữa thư mục",
-          "body": "Dùng biểu tượng di chuyển trên đoạn, hoặc kéo sang thẻ thư mục. Bạn cũng có thể lồng thư mục."
+          "body": "Trên máy tính với chuột hoặc trackpad, kéo đoạn thả lên thẻ thư mục để chuyển. Bạn cũng có thể dùng biểu tượng di chuyển, hoặc lồng thư mục."
         }
       }
     }
@@ -1820,7 +1908,9 @@
       "confirmContentChange": "Chỉ khi đổi nội dung",
       "confirmNever": "Không hỏi",
       "saveFailed": "Không lưu được tuỳ chọn AI",
-      "disabledToast": "Hỗ trợ AI đang tắt trong Cài đặt"
+      "disabledToast": "Hỗ trợ AI đang tắt trong Cài đặt",
+      "exerciseNextSetPrefetch": "Chuẩn bị sẵn bộ bài tiếp theo",
+      "exerciseNextSetPrefetchDescription": "Sau khi bạn bắt đầu trả lời, tự động chuẩn bị bộ tiếp theo ở nền. Dùng một lượt AI exercise khi bắt đầu chuẩn bị. Tắt nếu chỉ muốn tạo khi bấm Bộ mới."
     },
     "tutorials": "Tutorial từng mục",
     "tutorialsDescription": "Đặt lại các tutorial đã xem để “Show tutorial” bắt đầu lại từ đầu.",
@@ -2573,6 +2663,9 @@
     "noAccount": "Chưa có tài khoản?",
     "hasAccount": "Đã có tài khoản?",
     "invalidCredentials": "Email hoặc mật khẩu chưa đúng",
+    "rememberMe": "Ghi nhớ đăng nhập",
+    "signInUnavailable": "Hiện không thể đăng nhập. Vui lòng thử lại.",
+    "accountSuspended": "Tài khoản này đã bị tạm khóa. Liên hệ hỗ trợ nếu bạn cho rằng đây là nhầm lẫn.",
     "emailExists": "Email này đã được dùng",
     "emailInvalid": "Nhập địa chỉ email hợp lệ",
     "registerFailed": "Không tạo được tài khoản. Thử lại nhé.",
@@ -2653,7 +2746,9 @@
     "legalTerms": "Điều khoản",
     "registerAgreement": "Khi tạo tài khoản, bạn đồng ý với <terms>Điều khoản sử dụng</terms> và <privacy>Chính sách quyền riêng tư</privacy>.",
     "avatarRequestTooLarge": "Ảnh quá lớn để gửi. Hãy thử ảnh nhỏ hơn.",
-    "requestTooLarge": "Yêu cầu quá lớn. Thay đổi của bạn vẫn được giữ — hãy thử lại."
+    "requestTooLarge": "Yêu cầu quá lớn. Thay đổi của bạn vẫn được giữ — hãy thử lại.",
+    "roleAdmin": "Quản trị viên",
+    "roleTester": "Người kiểm thử"
   },
   "account": {
     "eyebrow": "Tài khoản",
@@ -2715,6 +2810,7 @@
       "backup": "Tải backup",
       "backupDone": "Đã tải backup",
       "backupFailed": "Không chuẩn bị được backup. Thử lại nhé.",
+      "confirmPhrase": "Xóa toàn bộ dữ liệu",
       "confirmLabel": "Gõ {phrase} để xác nhận",
       "confirm": "Xóa toàn bộ dữ liệu",
       "deleted": "Đã xóa toàn bộ dữ liệu học",
@@ -2743,9 +2839,15 @@
         "auth": "Thông tin xác thực"
       },
       "skippedTitle": "Có thể bỏ qua",
+      "skippedInAccountTitle": "Đã có trên tài khoản của bạn",
+      "skippedInAccountHint": "Các tên này trùng với mục bạn đã có. Chúng sẽ không được nhập lại. Mục mới trong cùng workspace vẫn được nhập.",
+      "skippedInBackupTitle": "Tên trùng trong file backup",
+      "skippedInBackupHint": "File liệt kê cùng một tên nhiều lần. Chỉ bản đầu tiên của mỗi tên được nhập — điều này bình thường kể cả khi tài khoản đang trống.",
+      "skippedOtherTitle": "Không nhập được",
       "warnings": {
-        "workspace_language_reuse": "Một số workspace đã tồn tại cho cùng ngôn ngữ. Nội dung sẽ được thêm vào workspace hiện có thay vì tạo bản trùng.",
-        "empty_backup": "Bản sao lưu này không chứa dữ liệu học có thể nhập."
+        "workspace_language_reuse": "Tài khoản đã có workspace cùng ngôn ngữ. Nội dung backup của ngôn ngữ đó được thêm vào workspace hiện có — không tạo thêm workspace trùng.",
+        "empty_backup": "Bản sao lưu này không có dữ liệu học có thể nhập.",
+        "ambiguous_name_match": "Một số mục hiện có trùng tên. Import sẽ dùng một mục theo cách xác định và không đổi các mục còn lại."
       },
       "cancel": "Hủy",
       "confirm": "Nhập dữ liệu học",
@@ -2766,13 +2868,20 @@
         "speaking": "{count, plural, one {# phiên speaking} other {# phiên speaking}}"
       },
       "skips": {
-        "workspace_language_exists": "{count, plural, one {# workspace đã tồn tại cho ngôn ngữ đó} other {# workspace đã tồn tại cho ngôn ngữ đó}}",
-        "vocabulary_duplicate": "{count, plural, one {# mục từ vựng đã tồn tại} other {# mục từ vựng đã tồn tại}}",
+        "workspace_language_exists": "{count, plural, one {# workspace được dùng lại (cùng ngôn ngữ) — nội dung vẫn nhập} other {# workspace được dùng lại (cùng ngôn ngữ) — nội dung vẫn nhập}}",
+        "vocabulary_duplicate": "{count, plural, one {# mục từ vựng} other {# mục từ vựng}}",
         "listening_missing_media": "{count, plural, one {# bài listening thiếu URL media} other {# bài listening thiếu URL media}}",
-        "listening_duplicate_filename": "{count, plural, one {# bài listening bị bỏ qua (trùng tên file)} other {# bài listening bị bỏ qua (trùng tên file)}}",
+        "listening_duplicate_filename": "{count, plural, one {# bài listening (trùng tên file)} other {# bài listening (trùng tên file)}}",
+        "speaking_duplicate": "{count, plural, one {# phiên speaking} other {# phiên speaking}}",
         "invalid_workspace_ref": "{count, plural, one {# mục thiếu workspace} other {# mục thiếu workspace}}",
         "invalid_record": "{count, plural, one {# bản ghi không hợp lệ} other {# bản ghi không hợp lệ}}",
-        "unsupported_account_field": "Các trường danh tính tài khoản không được nhập"
+        "unsupported_account_field": "Các trường danh tính tài khoản không được nhập",
+        "folder_duplicate": "{count, plural, one {# thư mục} other {# thư mục}}",
+        "tag_duplicate": "{count, plural, one {# thẻ} other {# thẻ}}",
+        "theory_duplicate": "{count, plural, one {# trang theory} other {# trang theory}}",
+        "writing_duplicate": "{count, plural, one {# tài liệu writing} other {# tài liệu writing}}",
+        "exercise_duplicate": "{count, plural, one {# bài tập} other {# bài tập}}",
+        "listening_duplicate": "{count, plural, one {# bài listening} other {# bài listening}}"
       },
       "errors": {
         "fileTooLarge": "File backup quá lớn. Hãy xuất lại hoặc liên hệ hỗ trợ.",
@@ -2807,6 +2916,7 @@
       "backup": "Tải backup",
       "backupDone": "Đã tải backup",
       "backupFailed": "Không chuẩn bị được backup. Thử lại nhé.",
+      "confirmPhrase": "Xóa tài khoản của tôi",
       "confirmLabel": "Gõ {phrase} để xác nhận",
       "confirm": "Xóa tài khoản vĩnh viễn",
       "deleted": "Tài khoản của bạn đã được xóa",
@@ -3160,7 +3270,8 @@
       "learningTrends": "Xu hướng học",
       "personalLearningPath": "Lộ trình học cá nhân",
       "personalizedRecommendations": "Gợi ý cá nhân hóa",
-      "crossModuleIntelligence": "Cá nhân hóa xuyên mô-đun"
+      "crossModuleIntelligence": "Cá nhân hóa xuyên mô-đun",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     }
   },
   "writing": {
@@ -3456,6 +3567,8 @@
       "errorQuota": "Bạn đã hết hạn mức huấn luyện viên hôm nay. Huấn luyện viên sẽ có lại vào ngày mai.",
       "errorPremium": "Huấn luyện viên học tập là tính năng Premium. Nhận gợi ý cá nhân dựa trên hoạt động học của bạn.",
       "errorUnavailable": "Huấn luyện viên không phản hồi được lúc này. Tin nhắn của bạn chưa được tính. Vui lòng thử lại.",
+      "errorWorkspace": "Hãy chọn không gian làm việc trước khi hỏi huấn luyện viên.",
+      "errorUnauthorized": "Đăng nhập lại để tiếp tục.",
       "prompts": {
         "practice_today": "Tôi nên tập trung vào điều gì hôm nay?",
         "struggling_words": "Vì sao tôi khó với những từ này?",
@@ -4739,260 +4852,318 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
-      "manage": "Manage",
-      "overview": "Overview",
-      "users": "Users",
-      "workspaces": "Workspaces",
-      "jobs": "Jobs",
-      "audit": "Audit",
-      "content": "Content",
-      "contentLibrary": "Content library",
-      "backToApp": "Back to app",
-      "openMenu": "Open admin menu",
-      "openAdmin": "Admin dashboard"
+      "admin": "Quản trị",
+      "manage": "Quản lý",
+      "overview": "Tổng quan",
+      "users": "Người dùng",
+      "workspaces": "Không gian làm việc",
+      "jobs": "Công việc",
+      "audit": "Nhật ký",
+      "content": "Nội dung",
+      "contentLibrary": "Thư viện nội dung",
+      "backToApp": "Về ứng dụng",
+      "openMenu": "Mở menu quản trị",
+      "openAdmin": "Bảng điều khiển quản trị"
     },
     "modules": {
-      "vocabulary": "Vocabulary",
-      "theory": "Theory",
-      "writing": "Writing",
-      "exercises": "Exercises",
-      "listening": "Listening",
-      "reading": "Reading",
-      "speaking": "Speaking",
-      "inbox": "Capture",
-      "folders": "Folders"
+      "vocabulary": "Từ vựng",
+      "theory": "Lý thuyết",
+      "writing": "Viết",
+      "exercises": "Bài tập",
+      "listening": "Nghe",
+      "reading": "Đọc",
+      "speaking": "Nói",
+      "inbox": "Ghi nhanh",
+      "folders": "Thư mục"
     },
     "common": {
-      "search": "Search",
-      "clear": "Clear",
-      "filter": "Filter",
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {totalPages}",
-      "results": "{total} results",
-      "backToList": "Back to list",
-      "empty": "No results"
+      "search": "Tìm kiếm",
+      "clear": "Xóa",
+      "filter": "Lọc",
+      "previous": "Trước",
+      "next": "Sau",
+      "pageOf": "Trang {page} / {totalPages}",
+      "results": "{total} kết quả",
+      "backToList": "Về danh sách",
+      "empty": "Không có kết quả"
     },
     "overview": {
-      "title": "Overview",
-      "description": "Live counts from application data. Time ranges use UTC calendar days. Active learners count distinct users with learning activity events — not logins.",
-      "metrics": "Metrics",
-      "recentAudit": "Recent admin actions",
-      "recentAuditLede": "Latest mutations from the audit trail.",
-      "viewAllAudit": "View audit log",
+      "title": "Tổng quan",
+      "description": "Số liệu trực tiếp từ dữ liệu ứng dụng. Khoảng thời gian theo ngày lịch UTC. Người học hoạt động đếm user có sự kiện học — không phải lần đăng nhập.",
+      "metrics": "Chỉ số",
+      "recentAudit": "Hành động admin gần đây",
+      "recentAuditLede": "Các thay đổi mới nhất từ nhật ký audit.",
+      "viewAllAudit": "Xem nhật ký audit",
       "cards": {
-        "users": "Total users",
-        "newUsers7d": "New users (7d)",
-        "newUsers30d": "New users (30d)",
-        "activeUsers7d": "Active learners (7d)",
-        "workspaces": "Workspaces",
-        "vocabulary": "Vocabulary",
-        "theory": "Theory",
-        "writing": "Writing",
-        "exercises": "Exercises",
-        "listening": "Listening",
-        "reading": "Reading",
-        "speaking": "Speaking",
-        "inbox": "Capture",
-        "failedListening": "Failed listening",
-        "failedImports": "Failed imports",
-        "runningJobs": "Running job locks",
-        "recentAudits7d": "Audit entries (7d)"
+        "users": "Tổng người dùng",
+        "newUsers7d": "Người dùng mới (7 ngày)",
+        "newUsers30d": "Người dùng mới (30 ngày)",
+        "activeUsers7d": "Người học hoạt động (7 ngày)",
+        "workspaces": "Không gian làm việc",
+        "vocabulary": "Từ vựng",
+        "theory": "Lý thuyết",
+        "writing": "Viết",
+        "exercises": "Bài tập",
+        "listening": "Nghe",
+        "reading": "Đọc",
+        "speaking": "Nói",
+        "inbox": "Ghi nhanh",
+        "failedListening": "Nghe thất bại",
+        "failedImports": "Nhập thất bại",
+        "runningJobs": "Khóa job đang chạy",
+        "recentAudits7d": "Mục audit (7 ngày)",
+        "admins": "Quản trị viên",
+        "testers": "Người kiểm thử",
+        "suspended": "Đã khóa",
+        "contentTotal": "Bản ghi nội dung"
+      },
+      "quickAccess": "Truy cập nhanh",
+      "quickAccessLede": "Nhảy tới công cụ quản trị.",
+      "groups": {
+        "people": "Người dùng",
+        "content": "Nội dung",
+        "ops": "Vận hành"
+      },
+      "charts": {
+        "signupsTitle": "Tài khoản mới",
+        "signupsLede": "Đăng ký mỗi ngày trong 14 ngày UTC gần nhất.",
+        "activeTitle": "Người học hoạt động",
+        "activeLede": "Số người học có hoạt động mỗi ngày (14 ngày).",
+        "rolesTitle": "Vai trò",
+        "rolesLede": "Tỷ lệ tài khoản theo vai trò.",
+        "contentTitle": "Phân bố nội dung",
+        "contentLede": "Bản ghi trên các module học."
       }
     },
     "users": {
-      "title": "Users",
-      "description": "Search accounts, change roles, suspend access, or delete with confirmation.",
-      "searchPlaceholder": "Search name or email…",
-      "empty": "No users match these filters.",
-      "selfGuard": "Safeguards prevent changing or deleting your own admin account here.",
+      "title": "Người dùng",
+      "description": "Tạo tài khoản, sửa hồ sơ, đổi vai trò, tạm khóa hoặc xóa có xác nhận.",
+      "searchPlaceholder": "Tìm theo tên hoặc email…",
+      "empty": "Không có người dùng khớp bộ lọc này.",
+      "selfGuard": "Không thể đổi hoặc xóa tài khoản quản trị của chính bạn tại đây.",
       "columns": {
-        "user": "User",
-        "role": "Role",
-        "status": "Status",
-        "plan": "Plan",
-        "workspaces": "Workspaces",
-        "created": "Registered"
+        "user": "Người dùng",
+        "role": "Vai trò",
+        "status": "Trạng thái",
+        "plan": "Gói",
+        "workspaces": "Workspace",
+        "created": "Đăng ký"
       },
       "filters": {
-        "role": "Role",
-        "status": "Status",
-        "allRoles": "Any role",
-        "allStatuses": "Any status"
+        "role": "Vai trò",
+        "status": "Trạng thái",
+        "allRoles": "Mọi vai trò",
+        "allStatuses": "Mọi trạng thái"
       },
       "status": {
-        "active": "Active",
-        "suspended": "Suspended"
+        "active": "Đang hoạt động",
+        "suspended": "Đã tạm khóa"
       },
       "fields": {
-        "id": "User id",
-        "name": "Name",
-        "role": "Role",
-        "status": "Status",
-        "plan": "Plan",
-        "created": "Registered",
-        "updated": "Updated",
-        "emailVerified": "Email verified"
+        "id": "ID người dùng",
+        "name": "Tên",
+        "role": "Vai trò",
+        "status": "Trạng thái",
+        "plan": "Gói",
+        "created": "Đăng ký",
+        "updated": "Cập nhật",
+        "emailVerified": "Email đã xác minh",
+        "email": "Email",
+        "password": "Mật khẩu"
       },
       "detail": {
-        "account": "Account",
-        "usage": "Content counts",
-        "usageLede": "Owned records across learning modules.",
-        "actions": "Account actions",
-        "workspaces": "Workspaces",
-        "workspacesLede": "Language workspaces owned by this user."
+        "account": "Tài khoản",
+        "usage": "Số lượng nội dung",
+        "usageLede": "Bản ghi thuộc các module học.",
+        "actions": "Thao tác tài khoản",
+        "workspaces": "Không gian làm việc",
+        "workspacesLede": "Workspace ngôn ngữ của người dùng này.",
+        "danger": "Vùng nguy hiểm"
       },
       "actions": {
-        "saveProfile": "Save name",
-        "grantAdmin": "Grant admin",
-        "revokeAdmin": "Revoke admin",
-        "suspend": "Suspend",
-        "restore": "Restore",
-        "delete": "Delete account"
+        "saveProfile": "Lưu hồ sơ",
+        "grantAdmin": "Cấp quản trị",
+        "revokeAdmin": "Thu hồi quản trị",
+        "suspend": "Tạm khóa",
+        "restore": "Khôi phục",
+        "delete": "Xóa tài khoản",
+        "grantTester": "Cấp vai trò kiểm thử",
+        "revokeTester": "Thu hồi vai trò kiểm thử",
+        "create": "Tạo người dùng"
       },
       "confirm": {
-        "grantAdmin": "Grant admin access to this account?",
-        "revokeAdmin": "Revoke admin access? This fails if they are the last active admin.",
-        "suspend": "Suspend this account? They lose access on the next protected request.",
-        "restore": "Restore this account?",
-        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone."
+        "grantAdmin": "Cấp quyền quản trị cho tài khoản này?",
+        "revokeAdmin": "Thu hồi quyền quản trị? Thao tác thất bại nếu đây là quản trị viên đang hoạt động cuối cùng.",
+        "suspend": "Tạm khóa tài khoản này? Họ mất quyền truy cập ở yêu cầu bảo vệ tiếp theo.",
+        "restore": "Khôi phục tài khoản này?",
+        "delete": "Xóa vĩnh viễn tài khoản và dữ liệu học liên quan? Không thể hoàn tác.",
+        "grantTester": "Cấp vai trò người kiểm thử? Họ dùng được mọi tính năng ứng dụng để QA; gói đăng ký đã lưu không đổi.",
+        "revokeTester": "Thu hồi vai trò người kiểm thử? Quyền dùng tính năng trở lại theo gói đăng ký thực tế của họ."
+      },
+      "roleHelp": "Vai trò người kiểm thử mở toàn bộ tính năng Free, Pro và Premium để QA mà không đổi gói đăng ký đã lưu. Cần quản trị viên cho bảng điều khiển này.",
+      "roles": {
+        "user": "Người dùng",
+        "tester": "Người kiểm thử",
+        "admin": "Quản trị viên"
+      },
+      "create": {
+        "title": "Tạo người dùng",
+        "lede": "Tạo tài khoản với email và mật khẩu. Họ có thể đăng nhập ngay."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
-      "title": "Workspaces",
-      "description": "Inspect and manage language workspaces.",
-      "searchPlaceholder": "Search name, language, or owner email…",
-      "empty": "No workspaces match these filters.",
-      "createForUser": "Create workspace for this user",
+      "title": "Không gian làm việc",
+      "description": "Tạo và quản lý workspace theo ngôn ngữ.",
+      "searchPlaceholder": "Tìm theo tên, ngôn ngữ hoặc email chủ…",
+      "empty": "Không có workspace khớp bộ lọc này.",
+      "createForUser": "Tạo workspace cho người dùng này",
       "columns": {
-        "name": "Name",
-        "language": "Language",
-        "owner": "Owner",
-        "updated": "Updated"
+        "name": "Tên",
+        "language": "Ngôn ngữ",
+        "owner": "Chủ sở hữu",
+        "updated": "Cập nhật"
       },
       "fields": {
-        "id": "Workspace id",
-        "name": "Name",
-        "nameOptional": "Optional display name",
-        "language": "Language",
-        "owner": "Owner",
-        "created": "Created",
-        "updated": "Updated"
+        "id": "ID workspace",
+        "name": "Tên",
+        "nameOptional": "Tên hiển thị (tuỳ chọn)",
+        "language": "Ngôn ngữ",
+        "owner": "Chủ sở hữu",
+        "created": "Tạo lúc",
+        "updated": "Cập nhật",
+        "ownerEmail": "Email chủ sở hữu",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
-        "description": "Language: {language}",
+        "description": "Ngôn ngữ: {language}",
         "meta": "Workspace",
-        "actions": "Workspace actions",
-        "actionsLede": "Editing language must stay unique per owner. Deletion cascades learning content in this workspace."
+        "actions": "Thao tác workspace",
+        "actionsLede": "Ngôn ngữ phải duy nhất theo chủ sở hữu. Xóa sẽ cascade nội dung học trong workspace."
       },
       "actions": {
-        "create": "Create workspace",
-        "save": "Save",
-        "delete": "Delete workspace"
+        "create": "Tạo workspace",
+        "save": "Lưu",
+        "delete": "Xóa workspace"
       },
       "confirm": {
-        "delete": "Delete this workspace and all learning content inside it via database cascades?"
+        "delete": "Xóa workspace này và toàn bộ nội dung học bên trong qua cascade?"
+      },
+      "create": {
+        "title": "Tạo workspace",
+        "lede": "Gắn workspace ngôn ngữ mới vào tài khoản có sẵn bằng email."
       }
     },
     "content": {
-      "description": "Lists show metadata only. Open a row for identifiers and status. Private bodies (transcripts, notes) are not loaded here by default.",
-      "searchPlaceholder": "Search titles…",
-      "empty": "No records match these filters.",
-      "listeningMediaNote": "Deleting a listening lesson removes the database row. External media cleanup is best-effort and is not performed by this admin action.",
+      "description": "Danh sách chỉ hiện metadata. Mở một dòng để sửa tiêu đề hoặc xóa. Nội dung riêng tư không tải mặc định.",
+      "searchPlaceholder": "Tìm theo tiêu đề…",
+      "empty": "Không có bản ghi khớp bộ lọc này.",
+      "listeningMediaNote": "Xóa bài nghe chỉ gỡ hàng trong database. Dọn media ngoài là best-effort và không do thao tác admin này thực hiện.",
       "columns": {
-        "title": "Title",
-        "status": "Status",
-        "owner": "Owner",
+        "title": "Tiêu đề",
+        "status": "Trạng thái",
+        "owner": "Chủ sở hữu",
         "workspace": "Workspace",
-        "updated": "Updated"
+        "updated": "Cập nhật"
       },
       "fields": {
         "id": "Id",
-        "status": "Status",
-        "errorCode": "Error code",
-        "owner": "Owner",
+        "status": "Trạng thái",
+        "errorCode": "Mã lỗi",
+        "owner": "Chủ sở hữu",
         "workspace": "Workspace",
-        "created": "Created",
-        "updated": "Updated"
+        "created": "Tạo lúc",
+        "updated": "Cập nhật",
+        "title": "Tiêu đề",
+        "word": "Từ",
+        "folderName": "Tên thư mục"
       },
       "detail": {
-        "description": "Metadata inspection. Private bodies are not auto-loaded.",
-        "meta": "Record",
-        "metaLede": "Identifiers and status only.",
-        "actions": "Actions"
+        "description": "Sửa tiêu đề hiển thị hoặc xóa bản ghi. Nội dung riêng tư không tự tải.",
+        "meta": "Bản ghi",
+        "metaLede": "Chỉ định danh và trạng thái.",
+        "actions": "Thao tác"
       },
       "actions": {
-        "delete": "Delete record"
+        "delete": "Xóa bản ghi",
+        "saveTitle": "Lưu tiêu đề"
       },
       "confirm": {
-        "delete": "Delete this record? Related child rows follow database cascade / set-null rules."
-      }
+        "delete": "Xóa bản ghi này? Các hàng con theo cascade / set-null của database."
+      },
+      "inboxEditNote": "Mục Capture lưu văn bản tự do. Không hỗ trợ sửa tiêu đề tại đây — xóa nếu cần gỡ bản ghi."
     },
     "jobs": {
-      "title": "Jobs",
-      "description": "Running locks and failed processing records. Statuses are read-only — do not force a failed job to appear successful.",
-      "searchPlaceholder": "Filter by title…",
-      "empty": "No jobs match these filters.",
+      "title": "Công việc",
+      "description": "Khóa đang chạy và bản ghi xử lý thất bại. Trạng thái chỉ đọc — không ép job thất bại thành thành công.",
+      "searchPlaceholder": "Lọc theo tiêu đề…",
+      "empty": "Không có job khớp bộ lọc này.",
       "buckets": {
-        "attention": "Needs attention",
-        "running": "Running",
-        "failed": "Failed",
-        "all": "All",
-        "runningLocks": "Running locks",
-        "failedLocks": "Failed locks",
-        "failedListening": "Failed listening",
-        "failedImports": "Failed imports"
+        "attention": "Cần chú ý",
+        "running": "Đang chạy",
+        "failed": "Thất bại",
+        "all": "Tất cả",
+        "runningLocks": "Khóa đang chạy",
+        "failedLocks": "Khóa thất bại",
+        "failedListening": "Nghe thất bại",
+        "failedImports": "Nhập thất bại"
       },
       "filters": {
-        "kind": "Kind",
-        "allKinds": "All kinds"
+        "kind": "Loại",
+        "allKinds": "Mọi loại"
       },
       "kinds": {
-        "ai_lock": "AI lock",
-        "listening": "Listening",
-        "exercise_import": "Exercise import",
-        "lock": "AI lock",
-        "import": "Exercise import"
+        "ai_lock": "Khóa AI",
+        "listening": "Nghe",
+        "exercise_import": "Nhập bài tập",
+        "lock": "Khóa AI",
+        "import": "Nhập bài tập"
       },
       "columns": {
-        "kind": "Kind",
-        "title": "Title",
-        "status": "Status",
-        "error": "Error",
-        "owner": "Owner",
-        "updated": "Updated"
+        "kind": "Loại",
+        "title": "Tiêu đề",
+        "status": "Trạng thái",
+        "error": "Lỗi",
+        "owner": "Chủ sở hữu",
+        "updated": "Cập nhật"
       }
     },
     "audit": {
-      "title": "Audit log",
-      "description": "Read-only history of administrative mutations. Credentials and private bodies are never stored here.",
-      "searchPlaceholder": "Search action, entity, or actor email…",
-      "empty": "No audit entries yet.",
+      "title": "Nhật ký audit",
+      "description": "Lịch sử chỉ đọc các thay đổi quản trị. Không lưu mật khẩu hay nội dung riêng tư.",
+      "searchPlaceholder": "Tìm theo hành động, thực thể hoặc email người thực hiện…",
+      "empty": "Chưa có mục audit.",
       "columns": {
-        "when": "When",
-        "actor": "Actor",
-        "action": "Action",
-        "entity": "Entity",
-        "success": "Result"
+        "when": "Khi",
+        "actor": "Người thực hiện",
+        "action": "Hành động",
+        "entity": "Thực thể",
+        "success": "Kết quả"
       },
       "success": {
         "yes": "OK",
-        "no": "Failed"
+        "no": "Thất bại"
       }
     },
     "errors": {
-      "UNKNOWN": "Something went wrong. Try again.",
-      "LAST_ADMIN": "Cannot change the last active admin.",
-      "CANNOT_DEMOTE_SELF": "You cannot demote your own admin account.",
-      "CANNOT_SUSPEND_SELF": "You cannot suspend your own account.",
-      "CANNOT_DELETE_SELF": "You cannot delete your own account.",
-      "USER_NOT_FOUND": "User not found.",
-      "WORKSPACE_NOT_FOUND": "Workspace not found.",
-      "WORKSPACE_LANGUAGE_EXISTS": "This user already has a workspace for that language.",
-      "INVALID_LANGUAGE": "Invalid language code.",
-      "CONTENT_NOT_FOUND": "Record not found.",
-      "INVALID_CONTENT_MODULE": "Unknown content module."
+      "UNKNOWN": "Đã xảy ra lỗi. Thử lại.",
+      "LAST_ADMIN": "Không thể thay đổi quản trị viên đang hoạt động cuối cùng.",
+      "CANNOT_DEMOTE_SELF": "Bạn không thể hạ quyền quản trị của chính mình.",
+      "CANNOT_SUSPEND_SELF": "Bạn không thể tạm khóa tài khoản của chính mình.",
+      "CANNOT_DELETE_SELF": "Bạn không thể xóa tài khoản của chính mình.",
+      "USER_NOT_FOUND": "Không tìm thấy người dùng.",
+      "WORKSPACE_NOT_FOUND": "Không tìm thấy workspace.",
+      "WORKSPACE_LANGUAGE_EXISTS": "Người dùng này đã có workspace cho ngôn ngữ đó.",
+      "INVALID_LANGUAGE": "Mã ngôn ngữ không hợp lệ.",
+      "CONTENT_NOT_FOUND": "Không tìm thấy bản ghi.",
+      "INVALID_CONTENT_MODULE": "Module nội dung không xác định.",
+      "EMAIL_EXISTS": "Email này đã được đăng ký.",
+      "PASSWORD_TOO_WEAK": "Mật khẩu chưa đủ mạnh.",
+      "CONTENT_TITLE_UNSUPPORTED": "Loại nội dung này không hỗ trợ sửa tiêu đề."
     }
   }
 }

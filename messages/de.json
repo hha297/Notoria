@@ -15,7 +15,20 @@
     "clearFilter": "Zurücksetzen",
     "filters": "Filter",
     "hideFilters": "Filter ausblenden",
-    "remove": "Entfernen"
+    "remove": "Entfernen",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Ein Ordner kann nicht in sich selbst verschoben werden",
     "tooDeep": "Dieser Ordner ist zu tief verschachtelt",
     "notFound": "Ordner nicht gefunden",
-    "nameTaken": "Ein Ordner oder ein Schreibdokument verwendet diesen Namen bereits"
+    "nameTaken": "Ein Ordner oder ein Schreibdokument verwendet diesen Namen bereits",
+    "dragTipTitle": "In einen Ordner verschieben",
+    "dragTipBody": "Am Computer mit Maus oder Trackpad: Ziehe ein Element auf eine Ordnerkarte, um es zu verschieben. Du kannst auch das Verschieben-Symbol nutzen.",
+    "dragTipDismiss": "Tipp schließen",
+    "dragTipShow": "So verschiebst du in Ordner",
+    "dragTipDemo": "Element auf Ordner ziehen",
+    "dragTipCard": "Element"
   },
   "theme": {
     "toggle": "Design umschalten",
@@ -291,7 +310,11 @@
     "createWorkspace": "Arbeitsbereich erstellen",
     "createWorkspaceHint": "Weiteren Sprach-Arbeitsbereich hinzufügen",
     "switchWorkspace": "Arbeitsbereich wechseln",
-    "switchFailed": "Arbeitsbereich konnte nicht gewechselt werden"
+    "switchFailed": "Arbeitsbereich konnte nicht gewechselt werden",
+    "selectLanguage": "Sprache wählen",
+    "allLanguages": "Alle Sprachen",
+    "changeLanguageFailed": "Oberflächensprache konnte nicht geändert werden",
+    "popularLanguages": "Beliebt"
   },
   "workspace": {
     "title": "Arbeitsbereiche",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# Import} other {# Importe}}"
     },
     "processing": {
-      "workingTitle": "Deine Übung wird erstellt",
+      "workingTitle": "Übung wird vorbereitet",
       "readyTitle": "Übung bereit",
       "errorTitle": "Etwas ist schiefgelaufen",
       "cancel": "Abbrechen",
       "retry": "Erneut versuchen",
       "dismiss": "Schließen",
       "stages": {
-        "uploading": "Wird hochgeladen…",
-        "extracting": "Inhalt wird extrahiert…",
-        "analyzing": "Inhalt wird analysiert…",
-        "generating": "Übung wird erzeugt…",
-        "saving": "Übung wird gespeichert…",
+        "uploading": "Datei wird hochgeladen",
+        "extracting": "Inhalt wird extrahiert",
+        "analyzing": "Inhalt wird analysiert",
+        "generating": "Fragen werden erzeugt",
+        "saving": "Übung wird gespeichert und vorbereitet",
         "completed": "Übung bereit",
-        "error": "Erzeugung fehlgeschlagen"
-      }
+        "error": "Erzeugung fehlgeschlagen",
+        "preparing": "Lernmaterial wird vorbereitet",
+        "validating": "Antworten und Hinweise werden geprüft"
+      },
+      "stillWorking": "Wird noch erzeugt… {seconds} s vergangen",
+      "hints": {
+        "uploading": "Datei wird sicher gesendet.",
+        "extracting": "Text und Struktur der Quelle werden gelesen.",
+        "analyzing": "Übungs Hinweise im Material werden erkannt.",
+        "preparing": "Ausgewählter Wortschatz oder Theorie für diesen Satz wird gesammelt.",
+        "generating": "Das Modell schreibt Fragen. Das kann etwas dauern.",
+        "validating": "Antworten, Hinweise und Struktur werden vor dem Üben geprüft.",
+        "saving": "Dein Übungssatz wird zusammengestellt."
+      },
+      "nextSetPreparing": "Nächster Satz wird vorbereitet…",
+      "nextSetReady": "Nächster Satz bereit",
+      "nextSetFailed": "Nächster Satz konnte nicht vorbereitet werden",
+      "nextSetRetry": "Nächsten Satz vorbereiten",
+      "openNextSet": "Nächsten Satz öffnen"
     },
     "import": {
       "eyebrow": "Importiertes Training",
@@ -822,6 +862,7 @@
       "aiReady": "Übung bereit",
       "aiUnavailable": "KI-Fragen konnten gerade nicht erzeugt werden.",
       "aiForbidden": "KI-Theorieübungen sind mit Pro verfügbar.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "KI-Unterstützung ist in den Einstellungen deaktiviert.",
       "feedback": {
         "correct": "Richtig!",
@@ -874,7 +915,21 @@
         "theRule": "Die Regel",
         "why": "Warum",
         "complete": "Verstanden",
-        "completeHint": "Du kannst weitergehen, wenn du bereit bist."
+        "completeHint": "Du kannst weitergehen, wenn du bereit bist.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Hinweis",
       "startsWith": "Beginnt mit „{letter}“",
       "revealPrompt": "Immer noch feststeckend? Du kannst die vollständige Antwort anzeigen.",
-      "revealAnswer": "Antwort anzeigen"
+      "revealAnswer": "Antwort anzeigen",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Noch kein Wortschatz",
@@ -977,8 +1034,38 @@
       "forbidden": "KI-Übungserzeugung ist mit Pro verfügbar.",
       "disabled": "KI-Unterstützung ist in den Einstellungen deaktiviert.",
       "upgradeHint": "Free umfasst einige KI-Übungserzeugungen pro Tag. Pro entfernt das Limit.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Füge Wortschatzwörter hinzu, bevor du Fragen erzeugst.",
-      "noneValid": "KI konnte für diese Wörter keine gültigen Fragen erstellen. Bitte erneut versuchen."
+      "noneValid": "KI konnte für diese Wörter keine gültigen Fragen erstellen. Bitte erneut versuchen.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Sitzung abgeschlossen",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Nur bei Inhaltsänderungen",
       "confirmNever": "Nie",
       "saveFailed": "KI-Einstellungen konnten nicht gespeichert werden",
-      "disabledToast": "KI-Hilfe ist in den Einstellungen deaktiviert"
+      "disabledToast": "KI-Hilfe ist in den Einstellungen deaktiviert",
+      "exerciseNextSetPrefetch": "Nächsten Übungssatz vorbereiten",
+      "exerciseNextSetPrefetchDescription": "Nachdem du angefangen hast zu antworten, wird der nächste Satz automatisch im Hintergrund vorbereitet. Verbraucht ein KI-Übungskredit beim Start. Ausschalten, um nur bei Neuem Satz zu erzeugen."
     },
     "tutorials": "Bereichs-Tutorials",
     "tutorialsDescription": "Abgeschlossene Bereichs-Einführungen zurücksetzen, damit „Tutorial zeigen“ wieder von vorne beginnt.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Noch kein Konto?",
     "hasAccount": "Bereits ein Konto?",
     "invalidCredentials": "Ungültige E-Mail oder Passwort",
+    "rememberMe": "Angemeldet bleiben",
+    "signInUnavailable": "Die Anmeldung ist gerade nicht möglich. Bitte erneut versuchen.",
+    "accountSuspended": "Dieses Konto ist gesperrt. Wende dich an den Support, wenn das ein Fehler ist.",
     "emailExists": "Ein Konto mit dieser E-Mail existiert bereits",
     "emailInvalid": "Gib eine gültige E-Mail-Adresse ein",
     "registerFailed": "Konto konnte nicht erstellt werden. Bitte erneut versuchen.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Bedingungen",
     "registerAgreement": "Mit der Erstellung eines Kontos stimmst du den <terms>Nutzungsbedingungen</terms> und der <privacy>Datenschutzerklärung</privacy> zu.",
     "avatarRequestTooLarge": "Dieses Foto ist zu groß zum Senden. Versuche ein kleineres Bild.",
-    "requestTooLarge": "Diese Anfrage war zu groß. Deine Änderungen wurden behalten — bitte erneut versuchen."
+    "requestTooLarge": "Diese Anfrage war zu groß. Deine Änderungen wurden behalten — bitte erneut versuchen.",
+    "roleAdmin": "Administrator",
+    "roleTester": "Testnutzer"
   },
   "account": {
     "eyebrow": "Konto",
@@ -2910,6 +3004,7 @@
       "backup": "Backup herunterladen",
       "backupDone": "Backup heruntergeladen",
       "backupFailed": "Backup konnte nicht vorbereitet werden. Bitte erneut versuchen.",
+      "confirmPhrase": "Alle Daten löschen",
       "confirmLabel": "Tippe {phrase} zur Bestätigung",
       "confirm": "Alle Daten löschen",
       "deleted": "Alle Lerndaten wurden gelöscht",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Können übersprungen werden",
       "warnings": {
         "workspace_language_reuse": "Einige Arbeitsbereiche existieren bereits für dieselbe Sprache. Ihr Inhalt wird in deine bestehenden Arbeitsbereiche eingefügt, statt Duplikate zu erstellen.",
-        "empty_backup": "Dieses Backup enthält keine importierbaren Lerndaten."
+        "empty_backup": "Dieses Backup enthält keine importierbaren Lerndaten.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Abbrechen",
       "confirm": "Lerndaten importieren",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# Wortschatzeintrag existiert bereits} other {# Wortschatzeinträge existieren bereits}}",
         "listening_missing_media": "{count, plural, one {# Hörlektion ohne Medien-URL} other {# Hörlektionen ohne Medien-URLs}}",
         "listening_duplicate_filename": "{count, plural, one {# Hörlektion übersprungen (doppelter Dateiname)} other {# Hörlektionen übersprungen (doppelter Dateiname)}}",
+        "speaking_duplicate": "{count, plural, one {# Sprecheinheit existiert bereits} other {# Sprecheinheiten existieren bereits}}",
         "invalid_workspace_ref": "{count, plural, one {# Eintrag ohne Arbeitsbereich} other {# Einträge ohne Arbeitsbereich}}",
         "invalid_record": "{count, plural, one {# ungültiger Datensatz} other {# ungültige Datensätze}}",
-        "unsupported_account_field": "Kontoidentitätsfelder werden nicht importiert"
+        "unsupported_account_field": "Kontoidentitätsfelder werden nicht importiert",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Diese Backup-Datei ist zu groß. Exportiere erneut oder kontaktiere den Support.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Dieses Backup konnte nicht importiert werden. Bitte erneut versuchen.",
         "requestTooLarge": "Dieses Backup ist zu groß für diese Seite. Versuche einen kleineren Export oder kontaktiere den Support.",
         "notConfigured": "Dateispeicher ist für den Backup-Import noch nicht konfiguriert."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Konto schließen",
@@ -3002,6 +3110,7 @@
       "backup": "Backup herunterladen",
       "backupDone": "Backup heruntergeladen",
       "backupFailed": "Backup konnte nicht vorbereitet werden. Bitte erneut versuchen.",
+      "confirmPhrase": "Mein Konto löschen",
       "confirmLabel": "Tippe {phrase} zur Bestätigung",
       "confirm": "Konto dauerhaft löschen",
       "deleted": "Dein Konto wurde gelöscht",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Lerntrends",
       "personalLearningPath": "Persönlicher Lernpfad",
       "personalizedRecommendations": "Personalisierte Empfehlungen",
-      "crossModuleIntelligence": "Modulübergreifende Personalisierung"
+      "crossModuleIntelligence": "Modulübergreifende Personalisierung",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Pläne vergleichen",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Du hast das heutige Learning-Coach-Limit erreicht. Dein Coach ist morgen wieder verfügbar.",
       "errorPremium": "Learning Coach ist eine Premium-Funktion. Erhalte personalisierte Empfehlungen basierend auf deiner Lernaktivität.",
       "errorUnavailable": "Dein Coach konnte gerade nicht antworten. Deine Nachricht wurde nicht gezählt. Bitte erneut versuchen.",
+      "errorWorkspace": "Wähle einen Workspace, bevor du den Coach fragst.",
+      "errorUnauthorized": "Melde dich erneut an, um fortzufahren.",
       "prompts": {
         "practice_today": "Worauf sollte ich mich heute konzentrieren?",
         "struggling_words": "Warum fallen mir diese Wörter so schwer?",
@@ -4739,18 +4851,18 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Administrator",
       "manage": "Verwalten",
       "overview": "Übersicht",
       "users": "Benutzer",
       "workspaces": "Arbeitsbereiche",
       "jobs": "Jobs",
-      "audit": "Audit",
+      "audit": "Protokoll",
       "content": "Inhalte",
       "contentLibrary": "Inhaltsbibliothek",
       "backToApp": "Zurück zur App",
       "openMenu": "Admin-Menü öffnen",
-      "openAdmin": "Admin-Dashboard"
+      "openAdmin": "Administrator-Dashboard"
     },
     "modules": {
       "vocabulary": "Wortschatz",
@@ -4760,7 +4872,7 @@
       "listening": "Hören",
       "reading": "Lesen",
       "speaking": "Sprechen",
-      "inbox": "Capture",
+      "inbox": "Erfassen",
       "folders": "Ordner"
     },
     "common": {
@@ -4794,11 +4906,32 @@
         "listening": "Hören",
         "reading": "Lesen",
         "speaking": "Sprechen",
-        "inbox": "Capture",
+        "inbox": "Erfassen",
         "failedListening": "Fehlgeschlagenes Hören",
         "failedImports": "Fehlgeschlagene Importe",
         "runningJobs": "Laufende Job-Sperren",
-        "recentAudits7d": "Audit-Einträge (7 T.)"
+        "recentAudits7d": "Audit-Einträge (7 T.)",
+        "admins": "Administratoren",
+        "testers": "Testnutzer",
+        "suspended": "Gesperrt",
+        "contentTotal": "Inhaltsdatensätze"
+      },
+      "quickAccess": "Schnellzugriff",
+      "quickAccessLede": "Zu den Verwaltungswerkzeugen.",
+      "groups": {
+        "people": "Personen",
+        "content": "Inhalte",
+        "ops": "Betrieb"
+      },
+      "charts": {
+        "signupsTitle": "Neue Konten",
+        "signupsLede": "Tägliche Registrierungen der letzten 14 UTC-Tage.",
+        "activeTitle": "Aktive Lernende",
+        "activeLede": "Unterschiedliche Lernende mit Aktivität pro Tag (14T).",
+        "rolesTitle": "Rollen",
+        "rolesLede": "Konten nach Rolle.",
+        "contentTitle": "Inhaltsmix",
+        "contentLede": "Gespeicherte Datensätze in Lernmodulen."
       }
     },
     "users": {
@@ -4811,7 +4944,7 @@
         "user": "Benutzer",
         "role": "Rolle",
         "status": "Status",
-        "plan": "Plan",
+        "plan": "Tarif",
         "workspaces": "Arbeitsbereiche",
         "created": "Registriert"
       },
@@ -4833,7 +4966,9 @@
         "plan": "Plan",
         "created": "Registriert",
         "updated": "Aktualisiert",
-        "emailVerified": "E-Mail verifiziert"
+        "emailVerified": "E-Mail verifiziert",
+        "email": "E-Mail",
+        "password": "Passwort"
       },
       "detail": {
         "account": "Konto",
@@ -4841,7 +4976,8 @@
         "usageLede": "Eigene Datensätze über alle Lernmodule.",
         "actions": "Kontoaktionen",
         "workspaces": "Arbeitsbereiche",
-        "workspacesLede": "Sprach-Arbeitsbereiche im Besitz dieses Benutzers."
+        "workspacesLede": "Sprach-Arbeitsbereiche im Besitz dieses Benutzers.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Name speichern",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Admin entziehen",
         "suspend": "Sperren",
         "restore": "Wiederherstellen",
-        "delete": "Konto löschen"
+        "delete": "Konto löschen",
+        "grantTester": "Testnutzer vergeben",
+        "revokeTester": "Testnutzer entziehen",
+        "create": "Benutzer erstellen"
       },
       "confirm": {
         "grantAdmin": "Diesem Konto Admin-Zugang vergeben?",
         "revokeAdmin": "Admin-Zugang entziehen? Das schlägt fehl, wenn es der letzte aktive Admin ist.",
         "suspend": "Dieses Konto sperren? Der Zugang entfällt bei der nächsten geschützten Anfrage.",
         "restore": "Dieses Konto wiederherstellen?",
-        "delete": "Dieses Konto und die abhängigen Lerndaten dauerhaft löschen? Das kann nicht rückgängig gemacht werden."
+        "delete": "Dieses Konto und die abhängigen Lerndaten dauerhaft löschen? Das kann nicht rückgängig gemacht werden.",
+        "grantTester": "Testnutzer-Rolle vergeben? Sie erhalten alle App-Funktionen für QA; das gespeicherte Abo bleibt unverändert.",
+        "revokeTester": "Testnutzer-Rolle entziehen? Der Funktionszugang richtet sich wieder nach ihrem tatsächlichen Abo."
+      },
+      "roleHelp": "Die Testnutzer-Rolle schaltet alle Free-, Pro- und Premium-Funktionen für QA frei, ohne das gespeicherte Abo zu ändern. Für dieses Dashboard ist ein Administrator erforderlich.",
+      "roles": {
+        "user": "Nutzer",
+        "tester": "Testnutzer",
+        "admin": "Administrator"
+      },
+      "create": {
+        "title": "Benutzer erstellen",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Sprache",
         "owner": "Inhaber",
         "created": "Erstellt",
-        "updated": "Aktualisiert"
+        "updated": "Aktualisiert",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Sprache: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Diesen Arbeitsbereich und alle Lerninhalte darin über Datenbank-Kaskaden löschen?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Inhaber",
         "workspace": "Arbeitsbereich",
         "created": "Erstellt",
-        "updated": "Aktualisiert"
+        "updated": "Aktualisiert",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Metadatenprüfung. Private Inhalte werden nicht automatisch geladen.",
@@ -4923,11 +5088,13 @@
         "actions": "Aktionen"
       },
       "actions": {
-        "delete": "Datensatz löschen"
+        "delete": "Datensatz löschen",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Diesen Datensatz löschen? Zugehörige Kindzeilen folgen den Kaskaden- bzw. Set-Null-Regeln der Datenbank."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Jobs",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Dieser Benutzer hat bereits einen Arbeitsbereich für diese Sprache.",
       "INVALID_LANGUAGE": "Ungültiger Sprachcode.",
       "CONTENT_NOT_FOUND": "Datensatz nicht gefunden.",
-      "INVALID_CONTENT_MODULE": "Unbekanntes Inhaltsmodul."
+      "INVALID_CONTENT_MODULE": "Unbekanntes Inhaltsmodul.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

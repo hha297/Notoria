@@ -8,8 +8,10 @@ import { RotateCcw, Sparkles } from "lucide-react";
 import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
+import { ExerciseAdditionalInstructions } from "@/components/exercises/exercise-additional-instructions";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { ExerciseSetSubmitBar } from "@/components/exercises/exercise-set-submit-bar";
+import { NextSetStatusChip } from "@/components/exercises/next-set-status";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { TheoryFillBlankCard } from "@/components/exercises/theory/theory-fill-blank-card";
 import { TheoryLessonStudy, type TheoryLessonView } from "@/components/exercises/theory/theory-lesson-study";
@@ -18,10 +20,13 @@ import { TheoryTransformationCard } from "@/components/exercises/theory/theory-t
 import { Button } from "@/components/ui/button";
 import { LinkButton } from "@/components/ui/link-button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
+import { useExerciseNextSet } from "@/hooks/use-exercise-next-set";
 import { useExerciseSetAttempt } from "@/hooks/use-exercise-set-attempt";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
+import { DEFAULT_NEXT_SET_COUNT } from "@/lib/exercises/next-set-fingerprint";
 import { isNonEmptyAnswer, type SetQuestionResult } from "@/lib/exercises/set-attempt";
 import { shuffleArray } from "@/lib/exercises/utils";
+import { requestTheoryExerciseAi } from "@/lib/theory-exercises/ai-client";
 import {
   buildTheoryLessonBeats,
   theoryLessonHasMaterial,
@@ -34,6 +39,11 @@ import type { TheoryExercise, TheoryExerciseSession } from "@/lib/theory-exercis
 import featureStyles from "@/components/style/exercises/theory.module.css";
 import { mx } from "@/lib/css-module";
 
+type TheoryNextPayload = {
+  theoryIds: string[];
+  perTheory: number;
+};
+
 type TheoryExerciseSessionViewProps = {
   session: TheoryExerciseSession;
   /**
@@ -41,6 +51,8 @@ type TheoryExerciseSessionViewProps = {
    * Used by Import sessions.
    */
   practiceOnly?: boolean;
+  /** Extra theory ids selected in the studio picker (same workspace). */
+  alsoTheoryIds?: string[];
 };
 
 function gradeTheorySet(
@@ -74,15 +86,15 @@ function gradeTheorySet(
 export function TheoryExerciseSessionView({
   session,
   practiceOnly = false,
+  alsoTheoryIds = [],
 }: TheoryExerciseSessionViewProps) {
   const t = useTranslations("exercises.theory");
   const tSession = useTranslations("exercises.session");
-  const { hasProAccess, openUpgrade } = useProAccess();
+  const { openUpgrade } = useProAccess();
   const exerciseQuota = useQuotaLockMessage("ai_exercise");
   const [items, setItems] = useState<TheoryExercise[]>(() =>
     shuffleArray(filterPersistedTheoryExercises(session.items)),
   );
-  const [autoTried, setAutoTried] = useState(false);
   const [activeIds, setActiveIds] = useState<string[] | null>(null);
   const beats = useMemo(
     () => buildTheoryLessonBeats(session.doc),
@@ -97,6 +109,7 @@ export function TheoryExerciseSessionView({
   const [phase, setPhase] = useState<"overview" | "quick" | "practice">(
     () => (hasLesson ? "overview" : "practice"),
   );
+  const [additionalInstructions, setAdditionalInstructions] = useState("");
   const {
     state: processing,
     setStage,
@@ -147,93 +160,239 @@ export function TheoryExerciseSessionView({
 
   const uiLocale = useLocale();
 
-  const generateWithAi = useCallback(async () => {
-    setStage("generating", { title: session.theoryTitle });
-    try {
-      const response = await fetch("/api/ai/theory-exercise", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          theoryId: session.theoryId,
-          count: 24,
-          uiLocale,
-        }),
-      });
-      const result = (await response.json()) as {
-        ok?: boolean;
-        code?: string;
-        exercises?: TheoryExercise[];
-      };
-      if (!response.ok || !result.ok) {
-        if (result.code === "AI_QUOTA_EXCEEDED") {
-          fail(exerciseQuota.message);
-          await exerciseQuota.refreshQuotas();
-          return;
+  const buildTheoryPayload = useCallback((): TheoryNextPayload => {
+    const theoryIds = [
+      session.theoryId,
+      ...alsoTheoryIds.filter((id) => id !== session.theoryId),
+    ].slice(0, 3);
+    const perTheory =
+      theoryIds.length === 1
+        ? DEFAULT_NEXT_SET_COUNT
+        : Math.max(
+            4,
+            Math.ceil(DEFAULT_NEXT_SET_COUNT / theoryIds.length),
+          );
+    return { theoryIds, perTheory };
+  }, [alsoTheoryIds, session.theoryId]);
+
+  const {
+    sessionId,
+    sequence,
+    status: nextSetStatus,
+    notifyAnswerInteraction,
+    openNextSet,
+    retryPrefetch,
+    markGeneratedSequence,
+    resetForNewActiveSet,
+  } = useExerciseNextSet<TheoryNextPayload, TheoryExercise[]>({
+    enabled: !practiceOnly && items.length > 0,
+    buildPayload: () => buildTheoryPayload(),
+    generate: async (payload, meta) => {
+      const merged: TheoryExercise[] = [];
+      for (const [index, theoryId] of payload.theoryIds.entries()) {
+        const result = await requestTheoryExerciseAi(
+          {
+            theoryId,
+            count: payload.perTheory,
+            uiLocale,
+            additionalInstructions:
+              additionalInstructions.trim() || undefined,
+            nextSet: {
+              sessionId: meta.sessionId,
+              // Offset per theory so multi-source merges stay unique per sequence.
+              sequence: meta.sequence * 10 + index,
+              regenerate: meta.regenerate,
+            },
+          },
+          { signal: meta.signal },
+        );
+        if (!result.ok) {
+          return {
+            ok: false,
+            retryable:
+              result.code === "AI_UNAVAILABLE" ||
+              result.code === "AI_JOB_IN_PROGRESS",
+          };
         }
-        if (result.code === "AI_FORBIDDEN") {
-          fail(t("aiForbidden"));
-          openUpgrade();
-          return;
-        }
-        if (result.code === "AI_DISABLED") {
-          fail(t("aiDisabled"));
-          return;
-        }
-        fail(t("aiUnavailable"));
-        return;
+        merged.push(...filterPersistedTheoryExercises(result.exercises));
       }
-      const incoming = filterPersistedTheoryExercises(result.exercises ?? []);
-      if (incoming.length === 0) {
-        fail(t("aiUnavailable"));
-        return;
+      if (merged.length === 0) return { ok: false, retryable: false };
+      return { ok: true, result: merged };
+    },
+    applyResult: (nextItems) => {
+      loadItems(nextItems, true);
+    },
+  });
+
+  const generateWithAi = useCallback(
+    async (options?: {
+      sequence?: number;
+      regenerate?: boolean;
+      showProgress?: boolean;
+      signal?: AbortSignal;
+    }) => {
+      const showProgress = options?.showProgress !== false;
+      const targetSequence =
+        options?.sequence ?? (items.length > 0 ? sequence + 1 : sequence);
+      const payload = buildTheoryPayload();
+      if (showProgress) {
+        setStage("preparing", { title: session.theoryTitle });
+        setStage("generating", { title: session.theoryTitle });
       }
-      setStage("saving");
-      completeProcessing();
-      loadItems(incoming, true);
+      const controller = options?.signal
+        ? null
+        : new AbortController();
+      const signal = options?.signal ?? controller!.signal;
+      // Stay above the server interactive deadline so the UI does not abort
+      // a request that is about to succeed.
+      const timeoutId = controller
+        ? window.setTimeout(() => controller.abort(), 110_000)
+        : null;
+      try {
+        const merged: TheoryExercise[] = [];
+        for (const [index, theoryId] of payload.theoryIds.entries()) {
+          const result = await requestTheoryExerciseAi(
+            {
+              theoryId,
+              count: payload.perTheory,
+              uiLocale,
+              additionalInstructions:
+                additionalInstructions.trim() || undefined,
+              nextSet: {
+                sessionId,
+                sequence: targetSequence * 10 + index,
+                regenerate: options?.regenerate,
+              },
+            },
+            { signal },
+          );
+          if (!result.ok) {
+            if (!showProgress) return false;
+            if (result.code === "AI_QUOTA_EXCEEDED") {
+              fail(exerciseQuota.message);
+              await exerciseQuota.refreshQuotas();
+              return false;
+            }
+            if (result.code === "PREMIUM_REQUIRED") {
+              fail(t("aiPremiumRequired"));
+              openUpgrade();
+              return false;
+            }
+            if (result.code === "AI_FORBIDDEN") {
+              fail(t("aiForbidden"));
+              openUpgrade();
+              return false;
+            }
+            if (result.code === "AI_DISABLED") {
+              fail(t("aiDisabled"));
+              return false;
+            }
+            fail(t("aiUnavailable"));
+            return false;
+          }
+          merged.push(...filterPersistedTheoryExercises(result.exercises));
+        }
+        if (merged.length === 0) {
+          if (showProgress) fail(t("aiUnavailable"));
+          return false;
+        }
+        if (showProgress) {
+          setStage("validating");
+          setStage("saving");
+        }
+        loadItems(merged, true);
+        markGeneratedSequence(targetSequence);
+        if (showProgress) {
+          completeProcessing();
+          toast.success(t("aiReady"));
+          window.setTimeout(() => resetProcessing(), 350);
+        }
+        return true;
+      } catch (error) {
+        if (error instanceof DOMException && error.name === "AbortError") {
+          if (showProgress) fail(t("aiUnavailable"));
+          return false;
+        }
+        if (showProgress) fail(t("aiUnavailable"));
+        return false;
+      } finally {
+        if (timeoutId != null) window.clearTimeout(timeoutId);
+      }
+    },
+    [
+      additionalInstructions,
+      buildTheoryPayload,
+      completeProcessing,
+      exerciseQuota,
+      fail,
+      items.length,
+      loadItems,
+      markGeneratedSequence,
+      openUpgrade,
+      resetProcessing,
+      sequence,
+      session.theoryTitle,
+      sessionId,
+      setStage,
+      t,
+      uiLocale,
+    ],
+  );
+
+  const handleNewSet = useCallback(async () => {
+    const outcome = await openNextSet();
+    if (outcome.mode === "applied") {
       toast.success(t("aiReady"));
-      window.setTimeout(() => resetProcessing(), 350);
-    } catch {
-      fail(t("aiUnavailable"));
+      return;
     }
+    if (outcome.mode === "attached") {
+      setStage("generating", { title: session.theoryTitle });
+      const ok = await outcome.promise;
+      if (ok) {
+        completeProcessing();
+        toast.success(t("aiReady"));
+        window.setTimeout(() => resetProcessing(), 350);
+      } else {
+        fail(t("aiUnavailable"));
+      }
+      return;
+    }
+    await generateWithAi({ sequence: outcome.sequence, showProgress: true });
   }, [
     completeProcessing,
-    exerciseQuota,
     fail,
-    loadItems,
-    openUpgrade,
+    generateWithAi,
+    openNextSet,
     resetProcessing,
-    session.theoryId,
     session.theoryTitle,
     setStage,
     t,
-    uiLocale,
   ]);
+
+  useEffect(() => {
+    if (practiceOnly || items.length === 0) return;
+    resetForNewActiveSet(sequence);
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only invalidate on config
+  }, [additionalInstructions, alsoTheoryIds.join("|")]);
 
   useEffect(() => {
     const filtered = filterPersistedTheoryExercises(session.items);
     setItems(shuffleArray(filtered));
     setActiveIds(null);
     resetAttempt();
-    setAutoTried(false);
     setPhase(hasLesson ? "overview" : "practice");
     // Only reset when the theory document / item source changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional: avoid reshuffling mid-attempt
   }, [hasLesson, session.theoryId, session.items]);
 
-  useEffect(() => {
-    if (practiceOnly || autoTried || items.length > 0 || generating) return;
-    setAutoTried(true);
-    if (hasProAccess) {
-      void generateWithAi();
+  const beginExercise = useCallback(async () => {
+    if (items.length > 0) {
+      setPhase("practice");
+      return;
     }
-  }, [
-    autoTried,
-    generateWithAi,
-    generating,
-    hasProAccess,
-    items.length,
-    practiceOnly,
-  ]);
+    const ready = await generateWithAi();
+    if (ready) setPhase("practice");
+  }, [generateWithAi, items.length]);
 
   const total = practiceItems.length;
   const submitted = attemptPhase === "submitted";
@@ -258,9 +417,46 @@ export function TheoryExerciseSessionView({
     });
   };
 
-  const goToPractice = () => setPhase("practice");
+  const instructionsField = practiceOnly ? null : (
+    <ExerciseAdditionalInstructions
+      scope="theory"
+      value={additionalInstructions}
+      onChange={setAdditionalInstructions}
+      disabled={generating}
+    />
+  );
+
   const lessonView: TheoryLessonView | null =
     phase === "overview" || phase === "quick" ? phase : null;
+
+  // Show progress as soon as generation starts — do not keep the lesson chrome
+  // with only a button spinner while a multi-minute AI call runs.
+  if (
+    !practiceOnly &&
+    items.length === 0 &&
+    (generating ||
+      processing.stage === "error" ||
+      processing.stage === "completed")
+  ) {
+    return (
+      <div data-exercise="theory" className="mx-auto max-w-xl py-6">
+        <AiProcessingProgress
+          state={processing}
+          pipeline="aiGenerate"
+          onRetry={
+            processing.stage === "error"
+              ? () => void generateWithAi()
+              : undefined
+          }
+          onDismissError={
+            processing.stage === "error"
+              ? () => resetProcessing()
+              : undefined
+          }
+        />
+      </div>
+    );
+  }
 
   if (hasLesson && lessonView) {
     return (
@@ -277,31 +473,12 @@ export function TheoryExerciseSessionView({
           generateError={generateError}
           practiceLocked={false}
           onQuickReview={() => setPhase("quick")}
-          onSkipToPractice={goToPractice}
-          onStartPractice={goToPractice}
-          onRetryGenerate={() => void generateWithAi()}
+          onSkipToPractice={() => void beginExercise()}
+          onStartPractice={() => void beginExercise()}
+          onRetryGenerate={() => void beginExercise()}
+          instructions={instructionsField}
         />
       </div>
-    );
-  }
-
-  if (
-    items.length === 0 &&
-    (generating ||
-      processing.stage === "error" ||
-      processing.stage === "completed")
-  ) {
-    return (
-      <AiProcessingProgress
-        state={processing}
-        pipeline="aiGenerate"
-        onRetry={
-          processing.stage === "error" ? () => void generateWithAi() : undefined
-        }
-        onDismissError={
-          processing.stage === "error" ? () => resetProcessing() : undefined
-        }
-      />
     );
   }
 
@@ -333,6 +510,7 @@ export function TheoryExerciseSessionView({
             <p className="mt-3 text-sm leading-relaxed text-muted-foreground">
               {t("needAiDescription")}
             </p>
+            <div className="mt-6">{instructionsField}</div>
             <div className="mt-6 flex flex-wrap items-center gap-2">
               <QuotaLockButton
                 type="button"
@@ -340,7 +518,7 @@ export function TheoryExerciseSessionView({
                 lockMessage={exerciseQuota.message}
                 pending={generating}
                 icon={<Sparkles className="size-4" />}
-                onClick={generateWithAi}
+                onClick={() => void beginExercise()}
               >
                 {t("generateAi")}
               </QuotaLockButton>
@@ -376,9 +554,10 @@ export function TheoryExerciseSessionView({
     <div
       data-exercise="theory"
       data-theory-category={session.category}
-      className={mx(featureStyles, "theory-practice-stage -mx-4 space-y-5 px-4 py-4 sm:-mx-6 sm:space-y-8 sm:px-6 sm:py-9")}
+      className={mx(featureStyles, "theory-practice-stage -mx-[var(--studio-main-pad,1rem)] space-y-5 px-4 py-4 sm:-mx-[var(--studio-main-pad,1.5rem)] sm:space-y-8 sm:px-6 sm:py-9")}
     >
       <div className="space-y-4">
+        {instructionsField}
         <div className="min-w-0">
           <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
             {submitted ? tSession("resultsTitle") : t("lesson.nowPractice")}
@@ -438,7 +617,7 @@ export function TheoryExerciseSessionView({
                 lockMessage={exerciseQuota.message}
                 pending={generating}
                 icon={<Sparkles className="size-4" />}
-                onClick={() => void generateWithAi()}
+                onClick={() => void handleNewSet()}
               >
                 {t("regenerate")}
               </QuotaLockButton>
@@ -454,6 +633,13 @@ export function TheoryExerciseSessionView({
             </Button>
           </div>
         </div>
+        {!practiceOnly ? (
+          <NextSetStatusChip
+            status={nextSetStatus}
+            onRetry={() => retryPrefetch()}
+            onOpen={() => void handleNewSet()}
+          />
+        ) : null}
       </div>
 
       <div className="space-y-4" key={attemptKey}>
@@ -463,6 +649,10 @@ export function TheoryExerciseSessionView({
           const result = results[item.id];
           const correct = Boolean(result?.correct);
           const unanswered = Boolean(result?.unanswered);
+          const onAnswerChange = (next: string) => {
+            setAnswer(item.id, next);
+            if (next.trim()) notifyAnswerInteraction();
+          };
           if (item.type === "fill_blank") {
             return (
               <TheoryFillBlankCard
@@ -470,7 +660,7 @@ export function TheoryExerciseSessionView({
                 item={item}
                 number={index + 1}
                 value={value}
-                onChange={(next) => setAnswer(item.id, next)}
+                onChange={onAnswerChange}
                 submitted={submitted}
                 correct={correct}
                 unanswered={unanswered}
@@ -484,7 +674,7 @@ export function TheoryExerciseSessionView({
                 item={item}
                 number={index + 1}
                 value={value}
-                onChange={(next) => setAnswer(item.id, next)}
+                onChange={onAnswerChange}
                 submitted={submitted}
                 correct={correct}
                 unanswered={unanswered}
@@ -497,7 +687,7 @@ export function TheoryExerciseSessionView({
               item={item}
               number={index + 1}
               value={value}
-              onChange={(next) => setAnswer(item.id, next)}
+              onChange={onAnswerChange}
               submitted={submitted}
               correct={correct}
               unanswered={unanswered}
@@ -533,7 +723,7 @@ export function TheoryExerciseSessionView({
                 ? undefined
                 : {
                     label: t("generateMore"),
-                    onClick: () => void generateWithAi(),
+                    onClick: () => void handleNewSet(),
                     loading: generating,
                     locked: exerciseQuota.locked,
                     lockMessage: exerciseQuota.message,

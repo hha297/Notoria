@@ -72,10 +72,10 @@ export function ExerciseSourceSelector({
                 active ? "text-ink" : "text-muted-foreground hover:text-ink",
               )}
             >
-              <span className="block text-sm font-semibold leading-snug [overflow-wrap:anywhere] sm:truncate">
+              <span className="block text-xs font-semibold leading-snug [overflow-wrap:anywhere] sm:truncate sm:text-sm">
                 {tab.label}
               </span>
-              <span className="mt-0.5 block text-xs font-medium leading-snug text-muted-foreground [overflow-wrap:anywhere] sm:truncate">
+              <span className="mt-0.5 block text-[0.65rem] font-medium leading-snug text-muted-foreground [overflow-wrap:anywhere] sm:truncate sm:text-xs">
                 {tab.count}
               </span>
               <span

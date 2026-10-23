@@ -15,7 +15,20 @@
     "clearFilter": "साफ़ करें",
     "filters": "फ़िल्टर",
     "hideFilters": "फ़िल्टर छिपाएँ",
-    "remove": "हटाएँ"
+    "remove": "हटाएँ",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "फ़ोल्डर को स्वयं में नहीं ले जाया जा सकता",
     "tooDeep": "यह फ़ोल्डर बहुत गहराई तक नेस्ट किया गया है",
     "notFound": "फ़ोल्डर नहीं मिला",
-    "nameTaken": "यह नाम पहले से किसी फ़ोल्डर या लेखन में उपयोग हो रहा है"
+    "nameTaken": "यह नाम पहले से किसी फ़ोल्डर या लेखन में उपयोग हो रहा है",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "थीम बदलें",
@@ -291,7 +310,11 @@
     "createWorkspace": "कार्यस्थान बनाएँ",
     "createWorkspaceHint": "एक और भाषा कार्यस्थान जोड़ें",
     "switchWorkspace": "कार्यस्थान बदलें",
-    "switchFailed": "कार्यस्थान नहीं बदला जा सका"
+    "switchFailed": "कार्यस्थान नहीं बदला जा सका",
+    "selectLanguage": "भाषा चुनें",
+    "allLanguages": "सभी भाषाएँ",
+    "changeLanguageFailed": "इंटरफ़ेस भाषा बदली नहीं जा सकी",
+    "popularLanguages": "लोकप्रिय"
   },
   "workspace": {
     "title": "कार्यस्थान",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# आयात} other {# आयात}}"
     },
     "processing": {
-      "workingTitle": "आपके अभ्यास पर काम हो रहा है",
-      "readyTitle": "अभ्यास तैयार",
+      "workingTitle": "आपका अभ्यास तैयार हो रहा है",
+      "readyTitle": "अभ्यास तैयार है",
       "errorTitle": "कुछ गलत हो गया",
       "cancel": "रद्द करें",
-      "retry": "पुनः प्रयास करें",
-      "dismiss": "खारिज करें",
+      "retry": "फिर से कोशिश करें",
+      "dismiss": "बंद करें",
       "stages": {
-        "uploading": "अपलोड हो रहा है…",
-        "extracting": "सामग्री निकाली जा रही है…",
-        "analyzing": "सामग्री का विश्लेषण हो रहा है…",
-        "generating": "अभ्यास बनाया जा रहा है…",
-        "saving": "अभ्यास सहेजा जा रहा है…",
-        "completed": "अभ्यास तैयार",
-        "error": "निर्माण विफल"
-      }
+        "uploading": "फ़ाइल अपलोड हो रही है",
+        "extracting": "सामग्री निकाली जा रही है",
+        "analyzing": "सामग्री का विश्लेषण",
+        "generating": "प्रश्न बनाए जा रहे हैं",
+        "saving": "अभ्यास सहेजा और तैयार किया जा रहा है",
+        "completed": "अभ्यास तैयार है",
+        "error": "बनाना विफल",
+        "preparing": "अध्ययन सामग्री तैयार हो रही है",
+        "validating": "उत्तर और संकेत जाँचे जा रहे हैं"
+      },
+      "stillWorking": "अभी भी बना रहे हैं… {seconds} सेकंड बीते",
+      "hints": {
+        "uploading": "आपकी फ़ाइल सुरक्षित रूप से भेजी जा रही है।",
+        "extracting": "स्रोत से पाठ और संरचना पढ़ी जा रही है।",
+        "analyzing": "सामग्री से अभ्यास संकेत पहचाने जा रहे हैं।",
+        "preparing": "इस सेट के लिए चुना शब्दावली या सिद्धांत इकट्ठा किया जा रहा है।",
+        "generating": "मॉडल प्रश्न लिख रहा है। इसमें थोड़ा समय लग सकता है।",
+        "validating": "अभ्यास से पहले उत्तर, संकेत और संरचना जाँची जा रही है।",
+        "saving": "आपका अभ्यास सेट जोड़ा जा रहा है।"
+      },
+      "nextSetPreparing": "अगला सेट तैयार हो रहा है…",
+      "nextSetReady": "अगला सेट तैयार है",
+      "nextSetFailed": "अगला सेट तैयार नहीं हो सका",
+      "nextSetRetry": "अगला सेट तैयार करें",
+      "openNextSet": "अगला सेट खोलें"
     },
     "import": {
       "eyebrow": "आयातित अभ्यास",
@@ -822,6 +862,7 @@
       "aiReady": "अभ्यास तैयार",
       "aiUnavailable": "अभी AI प्रश्न नहीं बनाए जा सके।",
       "aiForbidden": "AI सिद्धांत अभ्यास Pro के साथ उपलब्ध हैं।",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "सेटिंग्स में AI सहायता बंद है।",
       "feedback": {
         "correct": "सही!",
@@ -874,7 +915,21 @@
         "theRule": "नियम",
         "why": "क्यों",
         "complete": "ठीक है",
-        "completeHint": "जब तैयार हों, आगे बढ़ सकते हैं।"
+        "completeHint": "जब तैयार हों, आगे बढ़ सकते हैं।",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "संकेत",
       "startsWith": "“{letter}” से शुरू होता है",
       "revealPrompt": "अभी भी अटक गए? आप पूरा उत्तर दिखा सकते हैं।",
-      "revealAnswer": "उत्तर दिखाएँ"
+      "revealAnswer": "उत्तर दिखाएँ",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "अभी कोई शब्दावली नहीं",
@@ -977,8 +1034,38 @@
       "forbidden": "AI अभ्यास निर्माण Pro के साथ उपलब्ध है।",
       "disabled": "सेटिंग्स में AI सहायता बंद है।",
       "upgradeHint": "Free में प्रतिदिन कुछ AI अभ्यास निर्माण शामिल हैं। Pro सीमा हटाता है।",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "प्रश्न बनाने से पहले शब्दावली शब्द जोड़ें।",
-      "noneValid": "AI इन शब्दों के लिए मान्य प्रश्न नहीं बना सका। पुनः प्रयास करें।"
+      "noneValid": "AI इन शब्दों के लिए मान्य प्रश्न नहीं बना सका। पुनः प्रयास करें।",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "सत्र पूर्ण",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "केवल सामग्री बदलते समय",
       "confirmNever": "कभी नहीं",
       "saveFailed": "AI प्राथमिकताएँ सहेजी नहीं जा सकीं",
-      "disabledToast": "सेटिंग में AI सहायता बंद है"
+      "disabledToast": "सेटिंग में AI सहायता बंद है",
+      "exerciseNextSetPrefetch": "अगला अभ्यास सेट पहले से तैयार करें",
+      "exerciseNextSetPrefetchDescription": "जवाब देना शुरू करने के बाद अगला सेट पृष्ठभूमि में अपने आप तैयार होता है। शुरू होने पर एक AI अभ्यास क्रेडिट लगता है। बंद करें तो केवल नए सेट पर जनरेट होगा।"
     },
     "tutorials": "अनुभाग ट्यूटोरियल",
     "tutorialsDescription": "पूर्ण किए गए अनुभाग वॉकथ्रू रीसेट करें ताकि “ट्यूटोरियल दिखाएँ” फिर से शुरू से चले।",
@@ -2768,6 +2857,9 @@
     "noAccount": "खाता नहीं है?",
     "hasAccount": "पहले से खाता है?",
     "invalidCredentials": "अमान्य ईमेल या पासवर्ड",
+    "rememberMe": "मुझे याद रखें",
+    "signInUnavailable": "अभी साइन इन नहीं हो सका। कृपया फिर कोशिश करें।",
+    "accountSuspended": "यह खाता निलंबित है। अगर यह गलती लगती है तो सहायता से संपर्क करें।",
     "emailExists": "इस ईमेल वाला खाता पहले से मौजूद है",
     "emailInvalid": "एक मान्य ईमेल पता दर्ज करें",
     "registerFailed": "खाता नहीं बनाया जा सका। कृपया पुनः प्रयास करें।",
@@ -2848,7 +2940,9 @@
     "legalTerms": "शर्तें",
     "registerAgreement": "खाता बनाकर, आप <terms>उपयोग की शर्तें</terms> और <privacy>गोपनीयता नीति</privacy> से सहमत होते हैं।",
     "avatarRequestTooLarge": "वह फ़ोटो भेजने के लिए बहुत बड़ी है। छोटी छवि आज़माएँ।",
-    "requestTooLarge": "वह अनुरोध बहुत बड़ा था। आपके बदलाव रखे गए — कृपया पुनः प्रयास करें।"
+    "requestTooLarge": "वह अनुरोध बहुत बड़ा था। आपके बदलाव रखे गए — कृपया पुनः प्रयास करें।",
+    "roleAdmin": "प्रशासक",
+    "roleTester": "परीक्षक"
   },
   "account": {
     "eyebrow": "खाता",
@@ -2910,6 +3004,7 @@
       "backup": "बैकअप डाउनलोड करें",
       "backupDone": "बैकअप डाउनलोड हो गया",
       "backupFailed": "आपका बैकअप तैयार नहीं हो सका। पुनः प्रयास करें।",
+      "confirmPhrase": "सभी डेटा हटाएँ",
       "confirmLabel": "पुष्टि के लिए {phrase} टाइप करें",
       "confirm": "सभी डेटा हटाएँ",
       "deleted": "सभी सीखने का डेटा हटा दिया गया है",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "छोड़ा जा सकता है",
       "warnings": {
         "workspace_language_reuse": "समान भाषा के लिए कुछ वर्कस्पेस पहले से मौजूद हैं। उनकी सामग्री डुप्लिकेट बनाने के बजाय आपके मौजूदा वर्कस्पेस में जोड़ी जाएगी।",
-        "empty_backup": "इस बैकअप में कोई आयात योग्य सीखने का डेटा नहीं है।"
+        "empty_backup": "इस बैकअप में कोई आयात योग्य सीखने का डेटा नहीं है।",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "रद्द करें",
       "confirm": "सीखने का डेटा आयात करें",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# शब्दावली आइटम पहले से मौजूद है} other {# शब्दावली आइटम पहले से मौजूद हैं}}",
         "listening_missing_media": "{count, plural, one {# सुनने के पाठ में मीडिया URL गायब} other {# सुनने के पाठों में मीडिया URL गायब}}",
         "listening_duplicate_filename": "{count, plural, one {# सुनने का पाठ छोड़ा गया (डुप्लिकेट फ़ाइल नाम)} other {# सुनने के पाठ छोड़े गए (डुप्लिकेट फ़ाइल नाम)}}",
+        "speaking_duplicate": "{count, plural, one {# बोलने का सत्र पहले से मौजूद है} other {# बोलने के सत्र पहले से मौजूद हैं}}",
         "invalid_workspace_ref": "{count, plural, one {# आइटम जिसमें वर्कस्पेस गायब} other {# आइटम जिनमें वर्कस्पेस गायब}}",
         "invalid_record": "{count, plural, one {# अमान्य रिकॉर्ड} other {# अमान्य रिकॉर्ड}}",
-        "unsupported_account_field": "खाता पहचान फ़ील्ड आयात नहीं होते"
+        "unsupported_account_field": "खाता पहचान फ़ील्ड आयात नहीं होते",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "वह बैकअप फ़ाइल बहुत बड़ी है। फिर निर्यात करें या सहायता से संपर्क करें।",
@@ -2977,7 +3080,12 @@
         "importFailed": "यह बैकअप आयात नहीं हो सका। पुनः प्रयास करें।",
         "requestTooLarge": "वह बैकअप इस पेज से प्रसंस्कृत करने के लिए बहुत बड़ा है। छोटा निर्यात आज़माएँ या सहायता से संपर्क करें।",
         "notConfigured": "बैकअप आयात के लिए फ़ाइल संग्रहण अभी कॉन्फ़िगर नहीं है।"
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "खाता बंद करें",
@@ -3002,6 +3110,7 @@
       "backup": "बैकअप डाउनलोड करें",
       "backupDone": "बैकअप डाउनलोड हो गया",
       "backupFailed": "आपका बैकअप तैयार नहीं हो सका। पुनः प्रयास करें।",
+      "confirmPhrase": "मेरा खाता हटाएँ",
       "confirmLabel": "पुष्टि के लिए {phrase} टाइप करें",
       "confirm": "खाता स्थायी रूप से हटाएँ",
       "deleted": "आपका खाता हटा दिया गया है",
@@ -3256,7 +3365,8 @@
       "learningTrends": "लर्निंग रुझान",
       "personalLearningPath": "व्यक्तिगत लर्निंग पथ",
       "personalizedRecommendations": "व्यक्तिगत सुझाव",
-      "crossModuleIntelligence": "क्रॉस-मॉड्यूल वैयक्तिकरण"
+      "crossModuleIntelligence": "क्रॉस-मॉड्यूल वैयक्तिकरण",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "प्लान तुलना करें",
@@ -3441,6 +3551,8 @@
       "errorQuota": "आप आज की लर्निंग कोच सीमा तक पहुँच चुके हैं। आपका कोच कल फिर उपलब्ध होगा।",
       "errorPremium": "लर्निंग कोच एक Premium सुविधा है। अपनी सीखने की गतिविधि के आधार पर व्यक्तिगत सुझाव पाएँ।",
       "errorUnavailable": "आपका कोच अभी जवाब नहीं दे सका। आपका संदेश गिना नहीं गया। कृपया फिर से कोशिश करें।",
+      "errorWorkspace": "कोच से पूछने से पहले एक कार्यक्षेत्र चुनें।",
+      "errorUnauthorized": "जारी रखने के लिए फिर साइन इन करें।",
       "prompts": {
         "practice_today": "आज मुझे किस पर ध्यान देना चाहिए?",
         "struggling_words": "इन शब्दों में मुझे कठिनाई क्यों हो रही है?",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "एडमिन",
+      "admin": "प्रशासक",
       "manage": "प्रबंधित करें",
       "overview": "अवलोकन",
       "users": "उपयोगकर्ता",
@@ -4750,7 +4862,7 @@
       "contentLibrary": "सामग्री लाइब्रेरी",
       "backToApp": "ऐप पर वापस जाएँ",
       "openMenu": "एडमिन मेनू खोलें",
-      "openAdmin": "एडमिन डैशबोर्ड"
+      "openAdmin": "प्रशासक डैशबोर्ड"
     },
     "modules": {
       "vocabulary": "शब्दावली",
@@ -4798,7 +4910,28 @@
         "failedListening": "विफल श्रवण",
         "failedImports": "विफल आयात",
         "runningJobs": "चल रहे जॉब लॉक",
-        "recentAudits7d": "ऑडिट प्रविष्टियाँ (7दिन)"
+        "recentAudits7d": "ऑडिट प्रविष्टियाँ (7दिन)",
+        "admins": "प्रशासक",
+        "testers": "परीक्षक",
+        "suspended": "निलंबित",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "त्वरित पहुँच",
+      "quickAccessLede": "प्रबंधन टूल पर जाएँ।",
+      "groups": {
+        "people": "लोग",
+        "content": "सामग्री",
+        "ops": "संचालन"
+      },
+      "charts": {
+        "signupsTitle": "Nouveaux comptes",
+        "signupsLede": "Inscriptions quotidiennes sur les 14 derniers jours UTC.",
+        "activeTitle": "Apprenants actifs",
+        "activeLede": "Apprenants distincts avec activité chaque jour (14 j).",
+        "rolesTitle": "Rôles",
+        "rolesLede": "Comptes par rôle.",
+        "contentTitle": "Répartition du contenu",
+        "contentLede": "Enregistrements dans les modules d’apprentissage."
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "प्लान",
         "created": "पंजीकृत",
         "updated": "अपडेट",
-        "emailVerified": "ईमेल सत्यापित"
+        "emailVerified": "ईमेल सत्यापित",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "खाता",
@@ -4841,7 +4976,8 @@
         "usageLede": "लर्निंग मॉड्यूल में स्वामित्व वाले रिकॉर्ड।",
         "actions": "खाता कार्रवाइयाँ",
         "workspaces": "कार्यक्षेत्र",
-        "workspacesLede": "इस उपयोगकर्ता के स्वामित्व वाले भाषा कार्यक्षेत्र।"
+        "workspacesLede": "इस उपयोगकर्ता के स्वामित्व वाले भाषा कार्यक्षेत्र।",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "नाम सहेजें",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "एडमिन हटाएँ",
         "suspend": "निलंबित करें",
         "restore": "पुनर्स्थापित करें",
-        "delete": "खाता हटाएँ"
+        "delete": "खाता हटाएँ",
+        "grantTester": "परीक्षक भूमिका दें",
+        "revokeTester": "परीक्षक भूमिका हटाएँ",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "इस खाते को एडमिन पहुँच दें?",
         "revokeAdmin": "एडमिन पहुँच हटाएँ? यदि वे अंतिम सक्रिय एडमिन हैं तो यह विफल होगा।",
         "suspend": "इस खाते को निलंबित करें? अगले संरक्षित अनुरोध पर उनकी पहुँच समाप्त हो जाएगी।",
         "restore": "इस खाते को पुनर्स्थापित करें?",
-        "delete": "इस खाते और कैस्केडेड लर्निंग डेटा को स्थायी रूप से हटाएँ? यह पूर्ववत नहीं किया जा सकता।"
+        "delete": "इस खाते और कैस्केडेड लर्निंग डेटा को स्थायी रूप से हटाएँ? यह पूर्ववत नहीं किया जा सकता।",
+        "grantTester": "परीक्षक भूमिका दें? QA के लिए उन्हें ऐप की सभी सुविधाएँ मिलेंगी; संग्रहीत सदस्यता नहीं बदलेगी।",
+        "revokeTester": "परीक्षक भूमिका हटाएँ? सुविधा पहुँच उनकी वास्तविक सदस्यता पर लौट आएगी।"
+      },
+      "roleHelp": "परीक्षक भूमिका QA के लिए Free, Pro और Premium की सभी सुविधाएँ अनलॉक करती है, संग्रहीत सदस्यता नहीं बदलती। इस डैशबोर्ड के लिए प्रशासक चाहिए।",
+      "roles": {
+        "user": "उपयोगकर्ता",
+        "tester": "परीक्षक",
+        "admin": "प्रशासक"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "भाषा",
         "owner": "स्वामी",
         "created": "बनाया गया",
-        "updated": "अपडेट"
+        "updated": "अपडेट",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "भाषा: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "इस कार्यक्षेत्र और उसके अंदर की सभी लर्निंग सामग्री को डेटाबेस कैस्केड के माध्यम से हटाएँ?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "स्वामी",
         "workspace": "कार्यक्षेत्र",
         "created": "बनाया गया",
-        "updated": "अपडेट"
+        "updated": "अपडेट",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "मेटाडेटा निरीक्षण। निजी सामग्री स्वतः लोड नहीं होती।",
@@ -4923,11 +5088,13 @@
         "actions": "कार्रवाइयाँ"
       },
       "actions": {
-        "delete": "रिकॉर्ड हटाएँ"
+        "delete": "रिकॉर्ड हटाएँ",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "इस रिकॉर्ड को हटाएँ? संबंधित चाइल्ड पंक्तियाँ डेटाबेस कैस्केड / set-null नियमों का पालन करती हैं।"
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "जॉब्स",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "इस उपयोगकर्ता के पास उस भाषा का कार्यक्षेत्र पहले से है।",
       "INVALID_LANGUAGE": "अमान्य भाषा कोड।",
       "CONTENT_NOT_FOUND": "रिकॉर्ड नहीं मिला।",
-      "INVALID_CONTENT_MODULE": "अज्ञात सामग्री मॉड्यूल।"
+      "INVALID_CONTENT_MODULE": "अज्ञात सामग्री मॉड्यूल।",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

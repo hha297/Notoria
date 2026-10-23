@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Check, Sparkles } from "lucide-react";
-import { HintText } from "@/components/exercises/theory/theory-card-shared";
+import { ProgressiveHintReveal } from "@/components/exercises/progressive-hint-reveal";
 import { TheoryPracticeFeedback } from "@/components/exercises/theory/theory-practice-feedback";
 import { EXERCISE_SET_QUESTION_CARD_CLASS } from "@/components/exercises/exercise-set-question-card";
 import { revealTextForExercise } from "@/lib/theory-exercises/generate-ai";
@@ -72,10 +72,15 @@ export function TheoryMultipleChoiceCard({
             {item.prompt}
           </p>
 
-          {!submitted && item.hint ? (
-            <div className="mt-4">
-              <HintText text={item.hint} />
-            </div>
+          {!submitted ? (
+            <ProgressiveHintReveal
+              hints={item.hints}
+              legacyHint={item.hint}
+              grounding={item.learningObjective}
+              answers={[item.correctOption, ...item.options]}
+              resetKey={item.id}
+              answered={submitted}
+            />
           ) : null}
 
           <div

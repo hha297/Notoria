@@ -7,6 +7,7 @@ import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseDifficultySelect } from "@/components/exercises/exercise-difficulty-select";
+import { ExerciseAdditionalInstructions } from "@/components/exercises/exercise-additional-instructions";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { ExerciseSetSubmitBar } from "@/components/exercises/exercise-set-submit-bar";
 import { MultipleChoiceStage } from "@/components/exercises/multiple-choice-stage";
@@ -78,6 +79,7 @@ export function MultipleChoiceSession({
   const [activeIds, setActiveIds] = useState<string[] | null>(null);
   const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
   const { difficulty, setDifficulty } = useExerciseDifficulty("multiple_choice");
+  const [additionalInstructions, setAdditionalInstructions] = useState("");
   const {
     state: processing,
     setStage,
@@ -180,6 +182,7 @@ export function MultipleChoiceSession({
     setQuestions([]);
     setActiveIds(null);
     resetAttempt();
+    setStage("preparing");
     setStage("generating");
 
     try {
@@ -194,12 +197,17 @@ export function MultipleChoiceSession({
         language && language.trim().length >= 2
           ? language.trim().slice(0, 16)
           : null;
+      const sessionId =
+        typeof crypto !== "undefined" && "randomUUID" in crypto
+          ? crypto.randomUUID()
+          : `mc-${Date.now()}`;
 
       const result = await requestContextualExerciseAi({
         exerciseType: "multiple-choice",
         language: languageCode,
         difficulty,
         uiLocale: isValidLocale(uiLocale) ? uiLocale : "en",
+        additionalInstructions,
         words: sampledWords.map((word) => ({
           id: word.id,
           word: word.word.trim().slice(0, 120),
@@ -210,6 +218,7 @@ export function MultipleChoiceSession({
               candidate.toLowerCase() !== word.word.trim().toLowerCase(),
           ),
         })),
+        nextSet: { sessionId, sequence: 0 },
       });
 
       if (!result.ok) {
@@ -218,8 +227,8 @@ export function MultipleChoiceSession({
           await exerciseQuota.refreshQuotas();
           return;
         }
-        if (result.code === "AI_FORBIDDEN") {
-          fail(tAi("forbidden"));
+        if (result.code === "AI_FORBIDDEN" || result.code === "PREMIUM_REQUIRED") {
+          fail(result.code === "PREMIUM_REQUIRED" ? tAi("premiumRequired") : tAi("forbidden"));
           openUpgrade();
           return;
         }
@@ -231,6 +240,7 @@ export function MultipleChoiceSession({
         return;
       }
 
+      setStage("validating");
       const nextQuestions = result.exercises
         .filter((exercise) => exercise.type === "multiple-choice")
         .map((exercise, index) =>
@@ -251,7 +261,7 @@ export function MultipleChoiceSession({
       setStage("saving");
       setQuestions(nextQuestions);
       completeProcessing();
-      resetProcessing();
+      window.setTimeout(() => resetProcessing(), 350);
     } catch {
       fail(tAi("unavailable"));
     }
@@ -259,6 +269,8 @@ export function MultipleChoiceSession({
     commitAndBeginNext,
     completeProcessing,
     difficulty,
+    additionalInstructions,
+    fail,
     fail,
     filteredWords,
     language,
@@ -369,6 +381,16 @@ export function MultipleChoiceSession({
     return (
       <div className="space-y-6">
         {filtersBar}
+        <ExerciseAdditionalInstructions
+          scope="vocabulary"
+          value={additionalInstructions}
+          onChange={setAdditionalInstructions}
+          settings={{ difficulty }}
+          onSettingsChange={(next) => {
+            if (next.difficulty) setDifficulty(next.difficulty);
+          }}
+          disabled={generating}
+        />
         <ExerciseDifficultySelect
           value={difficulty}
           onChange={setDifficulty}
@@ -404,6 +426,16 @@ export function MultipleChoiceSession({
     return (
       <div className="space-y-6">
         {filtersBar}
+        <ExerciseAdditionalInstructions
+          scope="vocabulary"
+          value={additionalInstructions}
+          onChange={setAdditionalInstructions}
+          settings={{ difficulty }}
+          onSettingsChange={(next) => {
+            if (next.difficulty) setDifficulty(next.difficulty);
+          }}
+          disabled={generating}
+        />
         <div className="relative mx-auto max-w-lg overflow-hidden px-4 py-10 text-center sm:px-8 sm:py-14">
           <div
             aria-hidden
@@ -440,6 +472,19 @@ export function MultipleChoiceSession({
   return (
     <div className="space-y-6">
       {filtersBar}
+
+      {isContextual ? (
+        <ExerciseAdditionalInstructions
+          scope="vocabulary"
+          value={additionalInstructions}
+          onChange={setAdditionalInstructions}
+          settings={{ difficulty }}
+          onSettingsChange={(next) => {
+            if (next.difficulty) setDifficulty(next.difficulty);
+          }}
+          disabled={generating || submitted}
+        />
+      ) : null}
 
       {isContextual ? (
         <ExerciseDifficultySelect

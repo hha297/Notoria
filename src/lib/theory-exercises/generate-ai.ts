@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { isRelatedWordForm } from "@/lib/exercises/lexical-surface";
+import { resolveProgressiveHints } from "@/lib/exercises/progressive-hints";
 import {
   enforceExampleReuseLimit,
   type TheoryGenerationMaterial,
@@ -28,6 +29,7 @@ export const theoryAiExerciseSchema = z.object({
   instruction: z.string().max(400).optional(),
   skillLabel: z.string().max(120).optional(),
   hint: z.string().min(1).max(300),
+  hints: z.array(z.string().trim().max(240)).max(3).optional().catch(undefined),
   explanation: z.string().max(500).optional(),
   materialSource: z.enum(["theory", "vocabulary", "ai"]).optional(),
   sentence: z.string().min(1).max(400).optional(),
@@ -832,6 +834,28 @@ export type MapAiDraftsOptions = {
   material?: Pick<TheoryGenerationMaterial, "exampleLexemes">;
 };
 
+function theoryHintFields(
+  draft: TheoryAiExerciseDraft,
+  answers: string[],
+  grounding: string,
+  legacyHint = draft.hint,
+) {
+  const hints = resolveProgressiveHints({
+    raw: draft.hints,
+    legacyHint,
+    answers,
+    grounding,
+  });
+  const scrubbedLegacy = legacyHint.trim();
+  const hint =
+    scrubbedLegacy &&
+    !hintLeaksAnswer(scrubbedLegacy, answers[0] ?? "") &&
+    hints.includes(scrubbedLegacy)
+      ? scrubbedLegacy
+      : (hints[0] ?? "");
+  return { hint, hints: hints.length > 0 ? hints : hint ? [hint] : [] };
+}
+
 export function mapAiDraftsToTheoryExercises(
   theoryId: string,
   drafts: TheoryAiExerciseDraft[],
@@ -916,8 +940,15 @@ export function mapAiDraftsToTheoryExercises(
       });
       if (!isFullWordBlank(scrubbed.sentence)) continue;
       if (isWrongStudyLanguageSentence(scrubbed.sentence, studyLanguage)) continue;
-      if (!scrubbed.hint.trim()) continue;
-      if (hintLeaksAnswer(scrubbed.hint, answerText)) continue;
+      const hintsForItem = theoryHintFields(
+        draft,
+        [answerText, ...(draft.acceptedAnswers ?? [])],
+        learningObjective,
+        scrubbed.hint,
+      );
+      if (!hintsForItem.hint || hintLeaksAnswer(hintsForItem.hint, answerText)) {
+        continue;
+      }
 
       const resolvedSourceWord = sourceWord || scrubbed.sourceWordCue;
       if (needsSourceWord && !resolvedSourceWord) continue;
@@ -940,7 +971,7 @@ export function mapAiDraftsToTheoryExercises(
           suffix: scrubbed.suffix,
           sourceWord: resolvedSourceWord,
           needsSourceWord,
-          hint: scrubbed.hint,
+          hint: hintsForItem.hint,
         })
       ) {
         continue;
@@ -962,7 +993,8 @@ export function mapAiDraftsToTheoryExercises(
         sentence: scrubbed.sentence,
         answer: answerText,
         acceptedAnswers: uniqueAnswers(answerText, draft.acceptedAnswers ?? []),
-        hint: scrubbed.hint,
+        hint: hintsForItem.hint,
+        hints: hintsForItem.hints,
         explanation,
         learningObjective,
         targetType: effectiveTargetType(targetType, Boolean(resolvedSourceWord)),
@@ -987,7 +1019,14 @@ export function mapAiDraftsToTheoryExercises(
       });
       if (!answerText || !promptWord) continue;
       if (!isRelatedWordForm(promptWord, answerText)) continue;
-      if (hintLeaksAnswer(hint, answerText)) continue;
+      const hintsForItem = theoryHintFields(
+        draft,
+        [answerText, ...(draft.acceptedAnswers ?? [])],
+        learningObjective,
+      );
+      if (!hintsForItem.hint || hintLeaksAnswer(hintsForItem.hint, answerText)) {
+        continue;
+      }
 
       const accepted = uniqueAnswers(answerText, draft.acceptedAnswers ?? []);
       const xf: TheoryTransformationExercise = {
@@ -1004,7 +1043,8 @@ export function mapAiDraftsToTheoryExercises(
         answer: answerText,
         acceptedAnswers: accepted,
         showArrow: draft.showArrow !== false,
-        hint,
+        hint: hintsForItem.hint,
+        hints: hintsForItem.hints,
         explanation,
         learningObjective,
         targetType: effectiveTargetType(targetType, true),
@@ -1024,7 +1064,17 @@ export function mapAiDraftsToTheoryExercises(
       ) {
         continue;
       }
-      if (hintLeaksAnswer(hint, draft.correctOption)) continue;
+      const hintsForItem = theoryHintFields(
+        draft,
+        [draft.correctOption, ...(draft.acceptedAnswers ?? [])],
+        learningObjective,
+      );
+      if (
+        !hintsForItem.hint ||
+        hintLeaksAnswer(hintsForItem.hint, draft.correctOption)
+      ) {
+        continue;
+      }
       const accepted = uniqueAnswers(draft.correctOption, draft.acceptedAnswers ?? []);
       const mc: TheoryMultipleChoiceExercise = {
         id: uid("ai_mc"),
@@ -1040,7 +1090,8 @@ export function mapAiDraftsToTheoryExercises(
         options: draft.options,
         correctOption: draft.correctOption,
         acceptedAnswers: accepted,
-        hint,
+        hint: hintsForItem.hint,
+        hints: hintsForItem.hints,
         explanation,
         learningObjective,
         targetType,

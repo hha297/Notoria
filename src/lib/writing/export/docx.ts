@@ -21,20 +21,25 @@ import { renderTipTapDocToDocx } from "@/lib/writing/export/tiptap-docx";
 import { sanitizeExportText } from "@/lib/export/sanitize-export-text";
 import {
   DOCX_FONT_SANS,
-  PRINT_ACCENT,
-  PRINT_INK,
-  PRINT_LEDE_WASH,
-  PRINT_MUTED,
-  PRINT_RULE,
   hexForDocx,
+  resolveExportTheme,
+  type ExportThemeTokens,
   type PrintSurface,
 } from "@/lib/export/print-theme";
 
 const FONT_SANS = DOCX_FONT_SANS;
-const INK = hexForDocx(PRINT_INK);
-const MUTED = hexForDocx(PRINT_MUTED);
-const RULE = hexForDocx(PRINT_RULE);
-const WASH = hexForDocx(PRINT_LEDE_WASH);
+
+let INK = hexForDocx(resolveExportTheme("print", "writing").ink);
+let MUTED = hexForDocx(resolveExportTheme("print", "writing").muted);
+let RULE = hexForDocx(resolveExportTheme("print", "writing").rule);
+let WASH = hexForDocx(resolveExportTheme("print", "writing").wash);
+
+function applyDocxTheme(theme: ExportThemeTokens) {
+  INK = hexForDocx(theme.ink);
+  MUTED = hexForDocx(theme.muted);
+  RULE = hexForDocx(theme.rule);
+  WASH = hexForDocx(theme.wash);
+}
 
 function answerLineParagraphs(text?: string): Paragraph[] {
   const lines = wrapTextOntoLines(text ?? "", BLANK_LINE_COUNT, 72);
@@ -244,10 +249,16 @@ export async function generateWritingDocxBlob(
   options: ExportOptions,
   _layout: ExportLayout = "worksheet",
   surface: PrintSurface = "writing",
+  theme: ExportThemeTokens = resolveExportTheme(
+    options.appearance ?? "print",
+    surface,
+    options.themeMode,
+  ),
 ): Promise<Blob> {
+  applyDocxTheme(theme);
   const title = sanitizeExportText(model.title) || "—";
   const description = sanitizeExportText(model.description);
-  const accent = hexForDocx(PRINT_ACCENT[surface]);
+  const accent = hexForDocx(theme.accent);
   const children: Array<Paragraph | Table> = [
     ...mastheadParagraphs(labels.documentHeading, title, description, accent),
   ];
@@ -288,13 +299,16 @@ export async function generateWritingDocxBlob(
       });
     });
   } else {
-    children.push(...renderTipTapDocToDocx(model.doc));
+    children.push(...renderTipTapDocToDocx(model.doc, theme));
   }
 
   const document = new Document({
     creator: "Notoria",
     title: model.title || labels.documentHeading,
     description: labels.documentHeading,
+    background: {
+      color: hexForDocx(theme.paper),
+    },
     sections: [
       {
         properties: {

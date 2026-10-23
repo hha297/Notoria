@@ -15,7 +15,20 @@
     "clearFilter": "مسح",
     "filters": "عوامل التصفية",
     "hideFilters": "إخفاء عوامل التصفية",
-    "remove": "إزالة"
+    "remove": "إزالة",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "لا يمكن نقل مجلد إلى داخله",
     "tooDeep": "هذا المجلد متداخل بعمق زائد",
     "notFound": "المجلد غير موجود",
-    "nameTaken": "مجلد أو كتابة يستخدم هذا الاسم بالفعل"
+    "nameTaken": "مجلد أو كتابة يستخدم هذا الاسم بالفعل",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "تبديل المظهر",
@@ -291,7 +310,11 @@
     "createWorkspace": "إنشاء مساحة عمل",
     "createWorkspaceHint": "إضافة مساحة عمل للغة أخرى",
     "switchWorkspace": "تبديل مساحة العمل",
-    "switchFailed": "تعذّر تبديل مساحة العمل"
+    "switchFailed": "تعذّر تبديل مساحة العمل",
+    "selectLanguage": "اختر اللغة",
+    "allLanguages": "كل اللغات",
+    "changeLanguageFailed": "تعذّر تغيير لغة الواجهة",
+    "popularLanguages": "شائعة"
   },
   "workspace": {
     "title": "مساحات العمل",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, zero {# استيراد} one {استيراد واحد} two {استيرادان} few {# استيرادات} many {# استيرادًا} other {# استيراد}}"
     },
     "processing": {
-      "workingTitle": "جارٍ العمل على تمرينك",
+      "workingTitle": "جارٍ إعداد التمرين",
       "readyTitle": "التمرين جاهز",
       "errorTitle": "حدث خطأ ما",
       "cancel": "إلغاء",
       "retry": "إعادة المحاولة",
-      "dismiss": "تجاهل",
+      "dismiss": "إغلاق",
       "stages": {
-        "uploading": "جارٍ الرفع…",
-        "extracting": "جارٍ استخراج المحتوى…",
-        "analyzing": "جارٍ تحليل المحتوى…",
-        "generating": "جارٍ إنشاء التمرين…",
-        "saving": "جارٍ حفظ التمرين…",
+        "uploading": "رفع الملف",
+        "extracting": "استخراج المحتوى",
+        "analyzing": "تحليل المحتوى",
+        "generating": "توليد الأسئلة",
+        "saving": "حفظ التمرين وإعداده",
         "completed": "التمرين جاهز",
-        "error": "فشل الإنشاء"
-      }
+        "error": "فشل التوليد",
+        "preparing": "إعداد المادة التعليمية",
+        "validating": "التحقق من الإجابات والتلميحات"
+      },
+      "stillWorking": "ما زال التوليد جارياً… مرّت {seconds} ث",
+      "hints": {
+        "uploading": "إرسال ملفك بأمان.",
+        "extracting": "قراءة النص والبنية من المصدر.",
+        "analyzing": "تحديد تلميحات التمرين من المادة.",
+        "preparing": "جمع المفردات أو النظرية المحددة لهذه المجموعة.",
+        "generating": "النموذج يكتب الأسئلة. قد يستغرق ذلك بعض الوقت.",
+        "validating": "فحص الإجابات والتلميحات والبنية قبل التمرين.",
+        "saving": "تجميع مجموعة التمرين الخاصة بك."
+      },
+      "nextSetPreparing": "جارٍ إعداد المجموعة التالية…",
+      "nextSetReady": "المجموعة التالية جاهزة",
+      "nextSetFailed": "تعذّر إعداد المجموعة التالية",
+      "nextSetRetry": "إعداد المجموعة التالية",
+      "openNextSet": "فتح المجموعة التالية"
     },
     "import": {
       "eyebrow": "ممارسة مستوردة",
@@ -822,6 +862,7 @@
       "aiReady": "الممارسة جاهزة",
       "aiUnavailable": "تعذّر إنشاء أسئلة الذكاء الاصطناعي الآن.",
       "aiForbidden": "تمارين النظرية بالذكاء الاصطناعي متاحة مع Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "تم إيقاف مساعدة الذكاء الاصطناعي في الإعدادات.",
       "feedback": {
         "correct": "صحيح!",
@@ -874,7 +915,21 @@
         "theRule": "القاعدة",
         "why": "لماذا",
         "complete": "مفهوم",
-        "completeHint": "يمكنك المتابعة عندما تكون جاهزًا."
+        "completeHint": "يمكنك المتابعة عندما تكون جاهزًا.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "تلميح",
       "startsWith": "تبدأ بـ «{letter}»",
       "revealPrompt": "ما زلت عالقًا؟ يمكنك كشف الإجابة الكاملة.",
-      "revealAnswer": "كشف الإجابة"
+      "revealAnswer": "كشف الإجابة",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "لا توجد مفردات بعد",
@@ -977,8 +1034,38 @@
       "forbidden": "إنشاء التمارين بالذكاء الاصطناعي متاح مع Pro.",
       "disabled": "تم إيقاف مساعدة الذكاء الاصطناعي في الإعدادات.",
       "upgradeHint": "الخطة المجانية تتضمن بضع إنشاءات تمارين بالذكاء الاصطناعي يوميًا. Pro يزيل الحد.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "أضف كلمات مفردات قبل إنشاء الأسئلة.",
-      "noneValid": "تعذّر على الذكاء الاصطناعي إنشاء أسئلة صالحة لهذه الكلمات. حاول مرة أخرى."
+      "noneValid": "تعذّر على الذكاء الاصطناعي إنشاء أسئلة صالحة لهذه الكلمات. حاول مرة أخرى.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "اكتملت الجلسة",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "فقط عند تغيير المحتوى",
       "confirmNever": "أبدًا",
       "saveFailed": "تعذّر حفظ تفضيلات الذكاء الاصطناعي",
-      "disabledToast": "مساعدة الذكاء الاصطناعي متوقفة في الإعدادات"
+      "disabledToast": "مساعدة الذكاء الاصطناعي متوقفة في الإعدادات",
+      "exerciseNextSetPrefetch": "إعداد مجموعة التمرين التالية مسبقاً",
+      "exerciseNextSetPrefetchDescription": "بعد أن تبدأ بالإجابة، تُعدّ المجموعة التالية تلقائياً في الخلفية. يستخدم رصيد تمرين ذكاء اصطناعي واحد عند البدء. عطّله للتوليد فقط عند الضغط على مجموعة جديدة."
     },
     "tutorials": "دروس الأقسام",
     "tutorialsDescription": "أعد تعيين جولات الأقسام المكتملة حتى يبدأ «إظهار الدرس» من البداية مرة أخرى.",
@@ -2768,6 +2857,9 @@
     "noAccount": "ليس لديك حساب؟",
     "hasAccount": "لديك حساب بالفعل؟",
     "invalidCredentials": "البريد الإلكتروني أو كلمة المرور غير صحيحة",
+    "rememberMe": "تذكرني",
+    "signInUnavailable": "تعذر تسجيل الدخول الآن. يُرجى المحاولة مجددًا.",
+    "accountSuspended": "هذا الحساب معلّق. تواصل مع الدعم إذا كنت تعتقد أن هذا خطأ.",
     "emailExists": "يوجد حساب بهذا البريد الإلكتروني بالفعل",
     "emailInvalid": "أدخل عنوان بريد إلكتروني صالحًا",
     "registerFailed": "تعذّر إنشاء الحساب. يُرجى المحاولة مرة أخرى.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "الشروط",
     "registerAgreement": "بإنشاء حساب، فإنك توافق على <terms>شروط الاستخدام</terms> و<privacy>سياسة الخصوصية</privacy>.",
     "avatarRequestTooLarge": "هذه الصورة كبيرة جدًا للإرسال. جرّب صورة أصغر.",
-    "requestTooLarge": "كان الطلب كبيرًا جدًا. احتُفظ بتغييراتك — يُرجى المحاولة مرة أخرى."
+    "requestTooLarge": "كان الطلب كبيرًا جدًا. احتُفظ بتغييراتك — يُرجى المحاولة مرة أخرى.",
+    "roleAdmin": "مسؤول",
+    "roleTester": "مختبر"
   },
   "account": {
     "eyebrow": "الحساب",
@@ -2910,6 +3004,7 @@
       "backup": "تنزيل النسخة الاحتياطية",
       "backupDone": "تم تنزيل النسخة الاحتياطية",
       "backupFailed": "تعذّر تجهيز نسختك الاحتياطية. حاول مرة أخرى.",
+      "confirmPhrase": "حذف كل البيانات",
       "confirmLabel": "اكتب {phrase} للتأكيد",
       "confirm": "حذف كل البيانات",
       "deleted": "تم حذف كل بيانات التعلّم",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "قد يُتخطى",
       "warnings": {
         "workspace_language_reuse": "بعض مساحات العمل موجودة بالفعل لنفس اللغة. سيُضاف محتواها إلى مساحات عملك الحالية بدلًا من إنشاء تكرارات.",
-        "empty_backup": "لا تحتوي هذه النسخة الاحتياطية على أي بيانات تعلّم قابلة للاستيراد."
+        "empty_backup": "لا تحتوي هذه النسخة الاحتياطية على أي بيانات تعلّم قابلة للاستيراد.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "إلغاء",
       "confirm": "استيراد بيانات التعلّم",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, zero {# عنصر مفردات موجود بالفعل} one {عنصر مفردات واحد موجود بالفعل} two {عنصرا مفردات موجودان بالفعل} few {# عناصر مفردات موجودة بالفعل} many {# عنصر مفردات موجود بالفعل} other {# عنصر مفردات موجود بالفعل}}",
         "listening_missing_media": "{count, plural, zero {# درس استماع بلا عنوان وسائط} one {درس استماع واحد بلا عنوان وسائط} two {درسا استماع بلا عنواني وسائط} few {# دروس استماع بلا عناوين وسائط} many {# درس استماع بلا عناوين وسائط} other {# درس استماع بلا عناوين وسائط}}",
         "listening_duplicate_filename": "{count, plural, zero {# درس استماع تم تخطيه (اسم ملف مكرر)} one {درس استماع واحد تم تخطيه (اسم ملف مكرر)} two {درسا استماع تم تخطيهما (اسم ملف مكرر)} few {# دروس استماع تم تخطيها (اسم ملف مكرر)} many {# درس استماع تم تخطيه (اسم ملف مكرر)} other {# درس استماع تم تخطيه (اسم ملف مكرر)}}",
+        "speaking_duplicate": "{count, plural, one {# جلسة تحدث موجودة بالفعل} other {# جلسات تحدث موجودة بالفعل}}",
         "invalid_workspace_ref": "{count, plural, zero {# عنصر بلا مساحة عمل} one {عنصر واحد بلا مساحة عمل} two {عنصران بلا مساحة عمل} few {# عناصر بلا مساحة عمل} many {# عنصرًا بلا مساحة عمل} other {# عنصر بلا مساحة عمل}}",
         "invalid_record": "{count, plural, zero {# سجل غير صالح} one {سجل واحد غير صالح} two {سجلان غير صالحين} few {# سجلات غير صالحة} many {# سجلًا غير صالح} other {# سجل غير صالح}}",
-        "unsupported_account_field": "حقول هوية الحساب لا تُستورد"
+        "unsupported_account_field": "حقول هوية الحساب لا تُستورد",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "ملف النسخة الاحتياطية هذا كبير جدًا. حاول التصدير مرة أخرى أو تواصل مع الدعم.",
@@ -2977,7 +3080,12 @@
         "importFailed": "تعذّر استيراد هذه النسخة الاحتياطية. حاول مرة أخرى.",
         "requestTooLarge": "هذه النسخة الاحتياطية كبيرة جدًا للمعالجة عبر هذه الصفحة. جرّب تصديرًا أصغر أو تواصل مع الدعم.",
         "notConfigured": "تخزين الملفات غير مُعدّ لاستيراد النسخ الاحتياطية بعد."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "إغلاق الحساب",
@@ -3002,6 +3110,7 @@
       "backup": "تنزيل النسخة الاحتياطية",
       "backupDone": "تم تنزيل النسخة الاحتياطية",
       "backupFailed": "تعذّر تجهيز نسختك الاحتياطية. حاول مرة أخرى.",
+      "confirmPhrase": "حذف حسابي",
       "confirmLabel": "اكتب {phrase} للتأكيد",
       "confirm": "حذف الحساب نهائيًا",
       "deleted": "تم حذف حسابك",
@@ -3256,7 +3365,8 @@
       "learningTrends": "اتجاهات التعلّم",
       "personalLearningPath": "مسار التعلّم الشخصي",
       "personalizedRecommendations": "توصيات مخصصة",
-      "crossModuleIntelligence": "تخصيص عبر الوحدات"
+      "crossModuleIntelligence": "تخصيص عبر الوحدات",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "قارن الخطط",
@@ -3441,6 +3551,8 @@
       "errorQuota": "بلغت حد مدرب التعلّم لهذا اليوم. سيكون مدربك متاحًا مجددًا غدًا.",
       "errorPremium": "مدرب التعلّم ميزة في Premium. احصل على توصيات مخصصة بناءً على نشاط تعلّمك.",
       "errorUnavailable": "تعذّر على مدربك الرد الآن. لم تُحتسب رسالتك. يُرجى المحاولة مجددًا.",
+      "errorWorkspace": "اختر مساحة عمل قبل سؤال المدرب.",
+      "errorUnauthorized": "سجّل الدخول مرة أخرى للمتابعة.",
       "prompts": {
         "practice_today": "على ماذا أركّز اليوم؟",
         "struggling_words": "لماذا أواجه صعوبة مع هذه الكلمات؟",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "الإدارة",
+      "admin": "مسؤول",
       "manage": "إدارة",
       "overview": "نظرة عامة",
       "users": "المستخدمون",
@@ -4750,7 +4862,7 @@
       "contentLibrary": "مكتبة المحتوى",
       "backToApp": "العودة إلى التطبيق",
       "openMenu": "فتح قائمة الإدارة",
-      "openAdmin": "لوحة تحكم الإدارة"
+      "openAdmin": "لوحة المسؤول"
     },
     "modules": {
       "vocabulary": "المفردات",
@@ -4798,7 +4910,28 @@
         "failedListening": "استماع فاشل",
         "failedImports": "استيرادات فاشلة",
         "runningJobs": "أقفال مهام قيد التشغيل",
-        "recentAudits7d": "إدخالات التدقيق (7 أيام)"
+        "recentAudits7d": "إدخالات التدقيق (7 أيام)",
+        "admins": "المسؤولون",
+        "testers": "المختبرون",
+        "suspended": "موقوف",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "وصول سريع",
+      "quickAccessLede": "الانتقال إلى أدوات الإدارة.",
+      "groups": {
+        "people": "الأشخاص",
+        "content": "المحتوى",
+        "ops": "العمليات"
+      },
+      "charts": {
+        "signupsTitle": "New accounts",
+        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
+        "activeTitle": "Active learners",
+        "activeLede": "Distinct learners with activity each day (14d).",
+        "rolesTitle": "Roles",
+        "rolesLede": "Share of accounts by role.",
+        "contentTitle": "Content mix",
+        "contentLede": "Stored records across learning modules."
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "الخطة",
         "created": "تاريخ التسجيل",
         "updated": "آخر تحديث",
-        "emailVerified": "البريد الإلكتروني موثّق"
+        "emailVerified": "البريد الإلكتروني موثّق",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "الحساب",
@@ -4841,7 +4976,8 @@
         "usageLede": "السجلات المملوكة عبر وحدات التعلّم.",
         "actions": "إجراءات الحساب",
         "workspaces": "مساحات العمل",
-        "workspacesLede": "مساحات عمل اللغة التي يملكها هذا المستخدم."
+        "workspacesLede": "مساحات عمل اللغة التي يملكها هذا المستخدم.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "حفظ الاسم",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "سحب صلاحية الإدارة",
         "suspend": "تعليق",
         "restore": "استعادة",
-        "delete": "حذف الحساب"
+        "delete": "حذف الحساب",
+        "grantTester": "منح دور المختبر",
+        "revokeTester": "إلغاء دور المختبر",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "منح صلاحية الإدارة لهذا الحساب؟",
         "revokeAdmin": "سحب صلاحية الإدارة؟ يفشل ذلك إذا كان آخر مسؤول نشط.",
         "suspend": "تعليق هذا الحساب؟ يفقد الوصول عند الطلب المحمي التالي.",
         "restore": "استعادة هذا الحساب؟",
-        "delete": "حذف هذا الحساب نهائيًا وبيانات التعلّم المترابطة؟ لا يمكن التراجع عن ذلك."
+        "delete": "حذف هذا الحساب نهائيًا وبيانات التعلّم المترابطة؟ لا يمكن التراجع عن ذلك.",
+        "grantTester": "منح دور المختبر؟ يحصلون على كل ميزات التطبيق للاختبار؛ الاشتراك المخزّن لا يتغير.",
+        "revokeTester": "إلغاء دور المختبر؟ تعود صلاحيات الميزات وفق اشتراكهم الفعلي."
+      },
+      "roleHelp": "دور المختبر يفتح كل ميزات المجاني وPro وPremium للاختبار دون تغيير الاشتراك المخزّن. يلزم دور المسؤول لهذه اللوحة.",
+      "roles": {
+        "user": "مستخدم",
+        "tester": "مختبر",
+        "admin": "مسؤول"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "اللغة",
         "owner": "المالك",
         "created": "تاريخ الإنشاء",
-        "updated": "آخر تحديث"
+        "updated": "آخر تحديث",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "اللغة: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "حذف مساحة العمل هذه وكل محتوى التعلّم داخلها عبر تتابع قاعدة البيانات؟"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "المالك",
         "workspace": "مساحة العمل",
         "created": "تاريخ الإنشاء",
-        "updated": "آخر تحديث"
+        "updated": "آخر تحديث",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "فحص البيانات الوصفية. المحتوى الخاص لا يُحمَّل تلقائيًا.",
@@ -4923,11 +5088,13 @@
         "actions": "الإجراءات"
       },
       "actions": {
-        "delete": "حذف السجل"
+        "delete": "حذف السجل",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "حذف هذا السجل؟ تتبع الصفوف الفرعية قواعد التتابع / التعيين إلى فارغ في قاعدة البيانات."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "المهام",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "لدى هذا المستخدم بالفعل مساحة عمل لتلك اللغة.",
       "INVALID_LANGUAGE": "رمز لغة غير صالح.",
       "CONTENT_NOT_FOUND": "السجل غير موجود.",
-      "INVALID_CONTENT_MODULE": "وحدة محتوى غير معروفة."
+      "INVALID_CONTENT_MODULE": "وحدة محتوى غير معروفة.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

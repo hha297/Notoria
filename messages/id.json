@@ -15,7 +15,20 @@
     "clearFilter": "Hapus",
     "filters": "Filter",
     "hideFilters": "Sembunyikan filter",
-    "remove": "Hapus"
+    "remove": "Hapus",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Folder tidak dapat dipindahkan ke dalam dirinya sendiri",
     "tooDeep": "Folder ini bersarang terlalu dalam",
     "notFound": "Folder tidak ditemukan",
-    "nameTaken": "Nama ini sudah digunakan folder atau tulisan"
+    "nameTaken": "Nama ini sudah digunakan folder atau tulisan",
+    "dragTipTitle": "Pindahkan ke folder",
+    "dragTipBody": "Di komputer dengan mouse atau trackpad, seret item ke kartu folder untuk memindahkannya. Anda juga bisa memakai ikon pindah.",
+    "dragTipDismiss": "Tutup tip",
+    "dragTipShow": "Cara memindahkan ke folder",
+    "dragTipDemo": "Seret ke folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Ganti tema",
@@ -291,7 +310,11 @@
     "createWorkspace": "Buat ruang kerja",
     "createWorkspaceHint": "Tambahkan ruang kerja bahasa lain",
     "switchWorkspace": "Ganti ruang kerja",
-    "switchFailed": "Tidak dapat mengganti ruang kerja"
+    "switchFailed": "Tidak dapat mengganti ruang kerja",
+    "selectLanguage": "Pilih bahasa",
+    "allLanguages": "Semua bahasa",
+    "changeLanguageFailed": "Tidak bisa mengubah bahasa antarmuka",
+    "popularLanguages": "Populer"
   },
   "workspace": {
     "title": "Ruang kerja",
@@ -670,14 +693,31 @@
       "retry": "Coba lagi",
       "dismiss": "Tutup",
       "stages": {
-        "uploading": "Mengunggah…",
-        "extracting": "Mengekstrak konten…",
-        "analyzing": "Menganalisis konten…",
-        "generating": "Membuat latihan…",
-        "saving": "Menyimpan latihan…",
+        "uploading": "Mengunggah berkas",
+        "extracting": "Mengekstrak konten",
+        "analyzing": "Menganalisis konten",
+        "generating": "Membuat pertanyaan",
+        "saving": "Menyimpan dan menyiapkan latihan",
         "completed": "Latihan siap",
-        "error": "Pembuatan gagal"
-      }
+        "error": "Pembuatan gagal",
+        "preparing": "Menyiapkan materi belajar",
+        "validating": "Memvalidasi jawaban dan petunjuk"
+      },
+      "stillWorking": "Masih membuat… {seconds} d berlalu",
+      "hints": {
+        "uploading": "Mengirim berkas Anda dengan aman.",
+        "extracting": "Membaca teks dan struktur dari sumber.",
+        "analyzing": "Mengidentifikasi petunjuk latihan dari materi.",
+        "preparing": "Mengumpulkan kosakata atau teori terpilih untuk set ini.",
+        "generating": "Model sedang menulis pertanyaan. Ini bisa memakan waktu.",
+        "validating": "Memeriksa jawaban, petunjuk, dan struktur sebelum berlatih.",
+        "saving": "Merakit set latihan Anda."
+      },
+      "nextSetPreparing": "Menyiapkan set berikutnya…",
+      "nextSetReady": "Set berikutnya siap",
+      "nextSetFailed": "Tidak dapat menyiapkan set berikutnya",
+      "nextSetRetry": "Siapkan set berikutnya",
+      "openNextSet": "Buka set berikutnya"
     },
     "import": {
       "eyebrow": "Latihan dari impor",
@@ -822,6 +862,7 @@
       "aiReady": "Latihan siap",
       "aiUnavailable": "Tidak dapat membuat pertanyaan AI saat ini.",
       "aiForbidden": "Latihan teori AI tersedia dengan Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "Bantuan AI dinonaktifkan di Settings.",
       "feedback": {
         "correct": "Benar!",
@@ -874,7 +915,21 @@
         "theRule": "Aturannya",
         "why": "Mengapa",
         "complete": "Mengerti",
-        "completeHint": "Anda dapat melanjutkan saat siap."
+        "completeHint": "Anda dapat melanjutkan saat siap.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Petunjuk",
       "startsWith": "Dimulai dengan “{letter}”",
       "revealPrompt": "Masih kesulitan? Anda dapat membuka jawaban lengkap.",
-      "revealAnswer": "Buka Jawaban"
+      "revealAnswer": "Buka Jawaban",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Belum ada kosakata",
@@ -977,8 +1034,38 @@
       "forbidden": "Pembuatan latihan AI tersedia dengan Pro.",
       "disabled": "Bantuan AI dinonaktifkan di Settings.",
       "upgradeHint": "Free mencakup beberapa pembuatan latihan AI setiap hari. Pro menghapus batasnya.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Tambahkan kata kosakata sebelum membuat pertanyaan.",
-      "noneValid": "AI tidak dapat membuat pertanyaan yang valid untuk kata-kata ini. Coba lagi."
+      "noneValid": "AI tidak dapat membuat pertanyaan yang valid untuk kata-kata ini. Coba lagi.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Sesi selesai",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Hanya saat mengubah konten",
       "confirmNever": "Tidak pernah",
       "saveFailed": "Tidak dapat menyimpan preferensi AI",
-      "disabledToast": "Bantuan AI dinonaktifkan di Pengaturan"
+      "disabledToast": "Bantuan AI dinonaktifkan di Pengaturan",
+      "exerciseNextSetPrefetch": "Siapkan set latihan berikutnya",
+      "exerciseNextSetPrefetchDescription": "Setelah Anda mulai menjawab, set berikutnya disiapkan otomatis di latar belakang. Memakai satu kredit latihan AI saat mulai. Matikan agar hanya membuat saat menekan Set baru."
     },
     "tutorials": "Tutorial bagian",
     "tutorialsDescription": "Atur ulang panduan bagian yang sudah selesai agar “Tampilkan tutorial” dimulai dari awal lagi.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Belum punya akun?",
     "hasAccount": "Sudah punya akun?",
     "invalidCredentials": "Email atau kata sandi tidak valid",
+    "rememberMe": "Ingat saya",
+    "signInUnavailable": "Kami tidak dapat memasukkan Anda saat ini. Coba lagi.",
+    "accountSuspended": "Akun ini ditangguhkan. Hubungi dukungan jika Anda merasa ini keliru.",
     "emailExists": "Akun dengan email ini sudah ada",
     "emailInvalid": "Masukkan alamat email yang valid",
     "registerFailed": "Tidak dapat membuat akun. Silakan coba lagi.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Ketentuan",
     "registerAgreement": "Dengan membuat akun, Anda menyetujui <terms>Ketentuan Penggunaan</terms> dan <privacy>Kebijakan Privasi</privacy>.",
     "avatarRequestTooLarge": "Foto itu terlalu besar untuk dikirim. Coba gambar yang lebih kecil.",
-    "requestTooLarge": "Permintaan itu terlalu besar. Perubahan Anda tetap disimpan — silakan coba lagi."
+    "requestTooLarge": "Permintaan itu terlalu besar. Perubahan Anda tetap disimpan — silakan coba lagi.",
+    "roleAdmin": "Administrator",
+    "roleTester": "Penguji"
   },
   "account": {
     "eyebrow": "Akun",
@@ -2910,6 +3004,7 @@
       "backup": "Unduh cadangan",
       "backupDone": "Cadangan diunduh",
       "backupFailed": "Tidak dapat menyiapkan cadangan Anda. Coba lagi.",
+      "confirmPhrase": "Hapus semua data",
       "confirmLabel": "Ketik {phrase} untuk mengonfirmasi",
       "confirm": "Hapus semua data",
       "deleted": "Semua data pembelajaran telah dihapus",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Mungkin dilewati",
       "warnings": {
         "workspace_language_reuse": "Beberapa ruang kerja sudah ada untuk bahasa yang sama. Kontennya akan ditambahkan ke ruang kerja yang ada alih-alih membuat duplikat.",
-        "empty_backup": "Cadangan ini tidak berisi data pembelajaran yang dapat diimpor."
+        "empty_backup": "Cadangan ini tidak berisi data pembelajaran yang dapat diimpor.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Batal",
       "confirm": "Impor data pembelajaran",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# item kosakata sudah ada} other {# item kosakata sudah ada}}",
         "listening_missing_media": "{count, plural, one {# pelajaran mendengarkan tanpa URL media} other {# pelajaran mendengarkan tanpa URL media}}",
         "listening_duplicate_filename": "{count, plural, one {# pelajaran mendengarkan dilewati (nama file duplikat)} other {# pelajaran mendengarkan dilewati (nama file duplikat)}}",
+        "speaking_duplicate": "{count, plural, one {# sesi berbicara sudah ada} other {# sesi berbicara sudah ada}}",
         "invalid_workspace_ref": "{count, plural, one {# item tanpa ruang kerja} other {# item tanpa ruang kerja}}",
         "invalid_record": "{count, plural, one {# catatan tidak valid} other {# catatan tidak valid}}",
-        "unsupported_account_field": "Bidang identitas akun tidak diimpor"
+        "unsupported_account_field": "Bidang identitas akun tidak diimpor",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "File cadangan itu terlalu besar. Coba ekspor lagi atau hubungi dukungan.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Tidak dapat mengimpor cadangan ini. Coba lagi.",
         "requestTooLarge": "Cadangan itu terlalu besar untuk diproses melalui halaman ini. Coba ekspor yang lebih kecil atau hubungi dukungan.",
         "notConfigured": "Penyimpanan file belum dikonfigurasi untuk impor cadangan."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Tutup akun",
@@ -3002,6 +3110,7 @@
       "backup": "Unduh cadangan",
       "backupDone": "Cadangan diunduh",
       "backupFailed": "Tidak dapat menyiapkan cadangan Anda. Coba lagi.",
+      "confirmPhrase": "Hapus akun saya",
       "confirmLabel": "Ketik {phrase} untuk mengonfirmasi",
       "confirm": "Hapus akun secara permanen",
       "deleted": "Akun Anda telah dihapus",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Tren Belajar",
       "personalLearningPath": "Jalur Belajar Pribadi",
       "personalizedRecommendations": "Rekomendasi yang dipersonalisasi",
-      "crossModuleIntelligence": "Personalisasi lintas modul"
+      "crossModuleIntelligence": "Personalisasi lintas modul",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Bandingkan paket",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Anda telah mencapai batas Pelatih Belajar hari ini. Pelatih akan tersedia lagi besok.",
       "errorPremium": "Pelatih Belajar adalah fitur Premium. Dapatkan rekomendasi yang dipersonalisasi berdasarkan aktivitas belajar Anda.",
       "errorUnavailable": "Pelatih Anda tidak dapat merespons saat ini. Pesan Anda tidak dihitung. Silakan coba lagi.",
+      "errorWorkspace": "Pilih ruang kerja sebelum bertanya pada pelatih.",
+      "errorUnauthorized": "Masuk lagi untuk melanjutkan.",
       "prompts": {
         "practice_today": "Apa yang harus saya fokuskan hari ini?",
         "struggling_words": "Mengapa saya kesulitan dengan kata-kata ini?",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Administrator",
       "manage": "Kelola",
       "overview": "Ringkasan",
       "users": "Pengguna",
@@ -4750,7 +4862,7 @@
       "contentLibrary": "Perpustakaan konten",
       "backToApp": "Kembali ke aplikasi",
       "openMenu": "Buka menu admin",
-      "openAdmin": "Dasbor admin"
+      "openAdmin": "Dasbor administrator"
     },
     "modules": {
       "vocabulary": "Kosakata",
@@ -4760,7 +4872,7 @@
       "listening": "Mendengarkan",
       "reading": "Membaca",
       "speaking": "Berbicara",
-      "inbox": "Capture",
+      "inbox": "Tangkap",
       "folders": "Folder"
     },
     "common": {
@@ -4794,11 +4906,32 @@
         "listening": "Mendengarkan",
         "reading": "Membaca",
         "speaking": "Berbicara",
-        "inbox": "Capture",
+        "inbox": "Tangkap",
         "failedListening": "Mendengarkan gagal",
         "failedImports": "Impor gagal",
         "runningJobs": "Kunci pekerjaan berjalan",
-        "recentAudits7d": "Entri audit (7h)"
+        "recentAudits7d": "Entri audit (7h)",
+        "admins": "Administrator",
+        "testers": "Penguji",
+        "suspended": "Ditangguhkan",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Akses cepat",
+      "quickAccessLede": "Buka alat manajemen.",
+      "groups": {
+        "people": "Orang",
+        "content": "Konten",
+        "ops": "Operasi"
+      },
+      "charts": {
+        "signupsTitle": "Nouveaux comptes",
+        "signupsLede": "Inscriptions quotidiennes sur les 14 derniers jours UTC.",
+        "activeTitle": "Apprenants actifs",
+        "activeLede": "Apprenants distincts avec activité chaque jour (14 j).",
+        "rolesTitle": "Rôles",
+        "rolesLede": "Comptes par rôle.",
+        "contentTitle": "Répartition du contenu",
+        "contentLede": "Enregistrements dans les modules d’apprentissage."
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "Paket",
         "created": "Terdaftar",
         "updated": "Diperbarui",
-        "emailVerified": "Email terverifikasi"
+        "emailVerified": "Email terverifikasi",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Akun",
@@ -4841,7 +4976,8 @@
         "usageLede": "Catatan yang dimiliki di seluruh modul belajar.",
         "actions": "Tindakan akun",
         "workspaces": "Ruang kerja",
-        "workspacesLede": "Ruang kerja bahasa yang dimiliki pengguna ini."
+        "workspacesLede": "Ruang kerja bahasa yang dimiliki pengguna ini.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Simpan nama",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Cabut admin",
         "suspend": "Tangguhkan",
         "restore": "Pulihkan",
-        "delete": "Hapus akun"
+        "delete": "Hapus akun",
+        "grantTester": "Berikan peran penguji",
+        "revokeTester": "Cabut peran penguji",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Berikan akses admin ke akun ini?",
         "revokeAdmin": "Cabut akses admin? Ini gagal jika mereka adalah admin aktif terakhir.",
         "suspend": "Tangguhkan akun ini? Mereka kehilangan akses pada permintaan terlindungi berikutnya.",
         "restore": "Pulihkan akun ini?",
-        "delete": "Hapus permanen akun ini dan data belajar terkait? Tindakan ini tidak dapat dibatalkan."
+        "delete": "Hapus permanen akun ini dan data belajar terkait? Tindakan ini tidak dapat dibatalkan.",
+        "grantTester": "Berikan peran penguji? Mereka mendapat semua fitur aplikasi untuk QA; langganan tersimpan tidak berubah.",
+        "revokeTester": "Cabut peran penguji? Akses fitur kembali ke langganan aktual mereka."
+      },
+      "roleHelp": "Peran penguji membuka semua fitur Free, Pro, dan Premium untuk QA tanpa mengubah langganan tersimpan. Administrator diperlukan untuk dasbor ini.",
+      "roles": {
+        "user": "Pengguna",
+        "tester": "Penguji",
+        "admin": "Administrator"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Bahasa",
         "owner": "Pemilik",
         "created": "Dibuat",
-        "updated": "Diperbarui"
+        "updated": "Diperbarui",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Bahasa: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Hapus ruang kerja ini dan semua konten belajar di dalamnya melalui kaskade basis data?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Pemilik",
         "workspace": "Ruang kerja",
         "created": "Dibuat",
-        "updated": "Diperbarui"
+        "updated": "Diperbarui",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Pemeriksaan metadata. Isi pribadi tidak dimuat otomatis.",
@@ -4923,11 +5088,13 @@
         "actions": "Tindakan"
       },
       "actions": {
-        "delete": "Hapus catatan"
+        "delete": "Hapus catatan",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Hapus catatan ini? Baris anak terkait mengikuti aturan kaskade / set-null basis data."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Pekerjaan",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Pengguna ini sudah memiliki ruang kerja untuk bahasa tersebut.",
       "INVALID_LANGUAGE": "Kode bahasa tidak valid.",
       "CONTENT_NOT_FOUND": "Catatan tidak ditemukan.",
-      "INVALID_CONTENT_MODULE": "Modul konten tidak dikenal."
+      "INVALID_CONTENT_MODULE": "Modul konten tidak dikenal.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

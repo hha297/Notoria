@@ -9,6 +9,19 @@ const RESOURCE_NOT_FOUND_CODES = new Set([
   "WORKSPACE_NOT_FOUND",
 ]);
 
+const WORKSPACE_STATE_CODES = new Set([
+  "WORKSPACE_REQUIRED",
+  "NO_WORKSPACE",
+  "NO_ACTIVE_WORKSPACE",
+  "NO ACTIVE WORKSPACE",
+]);
+
+const SERVICE_UNAVAILABLE_CODES = new Set([
+  "AUTH_UNAVAILABLE",
+  "AUTHORIZATION_UNAVAILABLE",
+  "SERVICE_UNAVAILABLE",
+]);
+
 function statusFromError(error: unknown): number | undefined {
   if (typeof error !== "object" || error === null) return undefined;
   if ("status" in error) {
@@ -77,7 +90,12 @@ export function normalizeError(
     "digest" in error &&
     typeof (error as { digest?: unknown }).digest === "string"
       ? (error as { digest: string }).digest
-      : undefined);
+      : typeof error === "object" &&
+          error !== null &&
+          "referenceId" in error &&
+          typeof (error as { referenceId?: unknown }).referenceId === "string"
+        ? (error as { referenceId: string }).referenceId
+        : undefined);
 
   if (typeof navigator !== "undefined" && navigator.onLine === false) {
     return new AppError({
@@ -91,6 +109,26 @@ export function normalizeError(
 
   const code = codeFromError(error).toUpperCase();
   const status = statusFromError(error);
+
+  if (SERVICE_UNAVAILABLE_CODES.has(code) || status === 503) {
+    return new AppError({
+      kind: "server",
+      statusCode: 503,
+      referenceId,
+      resource,
+      cause: error,
+    });
+  }
+
+  if (WORKSPACE_STATE_CODES.has(code)) {
+    return new AppError({
+      kind: "forbidden",
+      statusCode: status === 401 ? 403 : (status ?? 403),
+      referenceId,
+      resource,
+      cause: error,
+    });
+  }
 
   if (code === "UNAUTHORIZED" || code === "UNAUTHENTICATED" || status === 401) {
     return new AppError({

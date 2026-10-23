@@ -15,7 +15,20 @@
     "clearFilter": "Сбросить",
     "filters": "Фильтры",
     "hideFilters": "Скрыть фильтры",
-    "remove": "Удалить"
+    "remove": "Удалить",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Нельзя переместить папку в саму себя",
     "tooDeep": "Эта папка вложена слишком глубоко",
     "notFound": "Папка не найдена",
-    "nameTaken": "Папка или текст с таким названием уже есть"
+    "nameTaken": "Папка или текст с таким названием уже есть",
+    "dragTipTitle": "Переместить в папку",
+    "dragTipBody": "На компьютере с мышью или трекпадом перетащите элемент на карточку папки. Также можно использовать значок перемещения.",
+    "dragTipDismiss": "Скрыть подсказку",
+    "dragTipShow": "Как перемещать в папки",
+    "dragTipDemo": "Перетащить в папку",
+    "dragTipCard": "Элемент"
   },
   "theme": {
     "toggle": "Переключить тему",
@@ -291,7 +310,11 @@
     "createWorkspace": "Создать рабочее пространство",
     "createWorkspaceHint": "Добавить ещё одно языковое пространство",
     "switchWorkspace": "Сменить рабочее пространство",
-    "switchFailed": "Не удалось сменить рабочее пространство"
+    "switchFailed": "Не удалось сменить рабочее пространство",
+    "selectLanguage": "Выберите язык",
+    "allLanguages": "Все языки",
+    "changeLanguageFailed": "Не удалось изменить язык интерфейса",
+    "popularLanguages": "Популярные"
   },
   "workspace": {
     "title": "Рабочие пространства",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# импорт} few {# импорта} many {# импортов} other {# импорта}}"
     },
     "processing": {
-      "workingTitle": "Готовим ваше упражнение",
+      "workingTitle": "Готовим упражнение",
       "readyTitle": "Упражнение готово",
       "errorTitle": "Что-то пошло не так",
       "cancel": "Отмена",
       "retry": "Повторить",
       "dismiss": "Закрыть",
       "stages": {
-        "uploading": "Загрузка…",
-        "extracting": "Извлечение содержимого…",
-        "analyzing": "Анализ содержимого…",
-        "generating": "Создание упражнения…",
-        "saving": "Сохранение упражнения…",
+        "uploading": "Загрузка файла",
+        "extracting": "Извлечение содержимого",
+        "analyzing": "Анализ содержимого",
+        "generating": "Генерация вопросов",
+        "saving": "Сохранение и подготовка упражнения",
         "completed": "Упражнение готово",
-        "error": "Не удалось создать"
-      }
+        "error": "Не удалось создать",
+        "preparing": "Подготовка учебного материала",
+        "validating": "Проверка ответов и подсказок"
+      },
+      "stillWorking": "Всё ещё генерируем… прошло {seconds} с",
+      "hints": {
+        "uploading": "Безопасная отправка файла.",
+        "extracting": "Чтение текста и структуры источника.",
+        "analyzing": "Поиск подсказок для практики в материале.",
+        "preparing": "Сбор выбранной лексики или теории для этого набора.",
+        "generating": "Модель пишет вопросы. Это может занять время.",
+        "validating": "Проверка ответов, подсказок и структуры перед практикой.",
+        "saving": "Сборка вашего набора упражнений."
+      },
+      "nextSetPreparing": "Готовим следующий набор…",
+      "nextSetReady": "Следующий набор готов",
+      "nextSetFailed": "Не удалось подготовить следующий набор",
+      "nextSetRetry": "Подготовить следующий набор",
+      "openNextSet": "Открыть следующий набор"
     },
     "import": {
       "eyebrow": "Импортированная практика",
@@ -822,6 +862,7 @@
       "aiReady": "Практика готова",
       "aiUnavailable": "Сейчас не удалось создать вопросы ИИ.",
       "aiForbidden": "Упражнения по теории с ИИ доступны с Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "ИИ-помощь отключена в настройках.",
       "feedback": {
         "correct": "Верно!",
@@ -874,7 +915,21 @@
         "theRule": "Правило",
         "why": "Почему",
         "complete": "Понятно",
-        "completeHint": "Можете перейти дальше, когда будете готовы."
+        "completeHint": "Можете перейти дальше, когда будете готовы.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Подсказка",
       "startsWith": "Начинается с «{letter}»",
       "revealPrompt": "Всё ещё сложно? Можно открыть полный ответ.",
-      "revealAnswer": "Показать ответ"
+      "revealAnswer": "Показать ответ",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Пока нет словаря",
@@ -977,8 +1034,38 @@
       "forbidden": "Создание упражнений с ИИ доступно с Pro.",
       "disabled": "ИИ-помощь отключена в настройках.",
       "upgradeHint": "Бесплатный план включает несколько генераций упражнений ИИ в день. Pro снимает лимит.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Добавьте слова словаря, прежде чем создавать вопросы.",
-      "noneValid": "ИИ не смог создать корректные вопросы для этих слов. Попробуйте ещё раз."
+      "noneValid": "ИИ не смог создать корректные вопросы для этих слов. Попробуйте ещё раз.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Сессия завершена",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Только при изменении контента",
       "confirmNever": "Никогда",
       "saveFailed": "Не удалось сохранить настройки ИИ",
-      "disabledToast": "ИИ-помощь отключена в настройках"
+      "disabledToast": "ИИ-помощь отключена в настройках",
+      "exerciseNextSetPrefetch": "Готовить следующий набор упражнений",
+      "exerciseNextSetPrefetchDescription": "После того как вы начнёте отвечать, следующий набор готовится автоматически в фоне. Расходует один кредит ИИ-упражнения при старте. Отключите, чтобы генерировать только по кнопке Новый набор."
     },
     "tutorials": "Обучающие обзоры разделов",
     "tutorialsDescription": "Сбросить пройденные обзоры разделов, чтобы «Показать обучение» начиналось сначала.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Нет аккаунта?",
     "hasAccount": "Уже есть аккаунт?",
     "invalidCredentials": "Неверный адрес эл. почты или пароль",
+    "rememberMe": "Запомнить меня",
+    "signInUnavailable": "Не удалось войти. Попробуйте ещё раз.",
+    "accountSuspended": "Эта учётная запись заблокирована. Напишите в поддержку, если это ошибка.",
     "emailExists": "Аккаунт с этим адресом эл. почты уже существует",
     "emailInvalid": "Введите действительный адрес эл. почты",
     "registerFailed": "Не удалось создать аккаунт. Попробуйте снова.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Условия",
     "registerAgreement": "Создавая аккаунт, вы соглашаетесь с <terms>Условиями использования</terms> и <privacy>Политикой конфиденциальности</privacy>.",
     "avatarRequestTooLarge": "Это фото слишком большое для отправки. Попробуйте изображение меньшего размера.",
-    "requestTooLarge": "Запрос слишком большой. Ваши изменения сохранены — попробуйте снова."
+    "requestTooLarge": "Запрос слишком большой. Ваши изменения сохранены — попробуйте снова.",
+    "roleAdmin": "Администратор",
+    "roleTester": "Тестировщик"
   },
   "account": {
     "eyebrow": "Аккаунт",
@@ -2910,6 +3004,7 @@
       "backup": "Скачать резервную копию",
       "backupDone": "Резервная копия скачана",
       "backupFailed": "Не удалось подготовить резервную копию. Попробуйте снова.",
+      "confirmPhrase": "Удалить все данные",
       "confirmLabel": "Введите {phrase} для подтверждения",
       "confirm": "Удалить все данные",
       "deleted": "Все учебные данные удалены",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Может быть пропущено",
       "warnings": {
         "workspace_language_reuse": "Некоторые рабочие пространства для того же языка уже существуют. Их содержимое будет добавлено в существующие рабочие пространства вместо создания дубликатов.",
-        "empty_backup": "В этой резервной копии нет учебных данных, пригодных для импорта."
+        "empty_backup": "В этой резервной копии нет учебных данных, пригодных для импорта.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Отмена",
       "confirm": "Импортировать учебные данные",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# элемент словаря уже существует} few {# элемента словаря уже существуют} many {# элементов словаря уже существуют} other {# элемента словаря уже существуют}}",
         "listening_missing_media": "{count, plural, one {# урок аудирования без URL медиа} few {# урока аудирования без URL медиа} many {# уроков аудирования без URL медиа} other {# урока аудирования без URL медиа}}",
         "listening_duplicate_filename": "{count, plural, one {# урок аудирования пропущен (дубликат имени файла)} few {# урока аудирования пропущены (дубликат имени файла)} many {# уроков аудирования пропущены (дубликат имени файла)} other {# урока аудирования пропущены (дубликат имени файла)}}",
+        "speaking_duplicate": "{count, plural, one {# сессия говорения уже существует} few {# сессии говорения уже существуют} many {# сессий говорения уже существуют} other {# сессии говорения уже существуют}}",
         "invalid_workspace_ref": "{count, plural, one {# элемент без рабочего пространства} few {# элемента без рабочего пространства} many {# элементов без рабочего пространства} other {# элемента без рабочего пространства}}",
         "invalid_record": "{count, plural, one {# недействительная запись} few {# недействительные записи} many {# недействительных записей} other {# недействительные записи}}",
-        "unsupported_account_field": "Поля идентичности аккаунта не импортируются"
+        "unsupported_account_field": "Поля идентичности аккаунта не импортируются",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Файл резервной копии слишком большой. Попробуйте экспортировать снова или обратитесь в поддержку.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Не удалось импортировать эту резервную копию. Попробуйте снова.",
         "requestTooLarge": "Эта резервная копия слишком большая для обработки на этой странице. Попробуйте меньший экспорт или обратитесь в поддержку.",
         "notConfigured": "Хранилище файлов для импорта резервных копий ещё не настроено."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Закрыть аккаунт",
@@ -3002,6 +3110,7 @@
       "backup": "Скачать резервную копию",
       "backupDone": "Резервная копия скачана",
       "backupFailed": "Не удалось подготовить резервную копию. Попробуйте снова.",
+      "confirmPhrase": "Удалить мой аккаунт",
       "confirmLabel": "Введите {phrase} для подтверждения",
       "confirm": "Безвозвратно удалить аккаунт",
       "deleted": "Ваш аккаунт удалён",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Учебные тенденции",
       "personalLearningPath": "Личный учебный путь",
       "personalizedRecommendations": "Персональные рекомендации",
-      "crossModuleIntelligence": "Персонализация между модулями"
+      "crossModuleIntelligence": "Персонализация между модулями",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Сравнение планов",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Вы достигли сегодняшнего лимита Learning Coach. Коуч снова будет доступен завтра.",
       "errorPremium": "Learning Coach — функция Premium. Получайте персональные рекомендации на основе вашей учебной активности.",
       "errorUnavailable": "Коуч сейчас не смог ответить. Сообщение не засчитано. Попробуйте снова.",
+      "errorWorkspace": "Выберите рабочее пространство, прежде чем спрашивать коуча.",
+      "errorUnauthorized": "Войдите снова, чтобы продолжить.",
       "prompts": {
         "practice_today": "На чём мне сосредоточиться сегодня?",
         "struggling_words": "Почему у меня сложности с этими словами?",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Админ",
+      "admin": "Администратор",
       "manage": "Управление",
       "overview": "Обзор",
       "users": "Пользователи",
@@ -4798,7 +4910,28 @@
         "failedListening": "Ошибки аудирования",
         "failedImports": "Ошибки импорта",
         "runningJobs": "Активные блокировки задач",
-        "recentAudits7d": "Записи аудита (7 дн.)"
+        "recentAudits7d": "Записи аудита (7 дн.)",
+        "admins": "Администраторы",
+        "testers": "Тестировщики",
+        "suspended": "Заблокированные",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Быстрый доступ",
+      "quickAccessLede": "Перейти к инструментам управления.",
+      "groups": {
+        "people": "Люди",
+        "content": "Контент",
+        "ops": "Операции"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "План",
         "created": "Регистрация",
         "updated": "Обновлён",
-        "emailVerified": "Email подтверждён"
+        "emailVerified": "Email подтверждён",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Аккаунт",
@@ -4841,7 +4976,8 @@
         "usageLede": "Записи, принадлежащие пользователю, по учебным модулям.",
         "actions": "Действия с аккаунтом",
         "workspaces": "Рабочие пространства",
-        "workspacesLede": "Языковые рабочие пространства этого пользователя."
+        "workspacesLede": "Языковые рабочие пространства этого пользователя.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Сохранить имя",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Снять права администратора",
         "suspend": "Приостановить",
         "restore": "Восстановить",
-        "delete": "Удалить аккаунт"
+        "delete": "Удалить аккаунт",
+        "grantTester": "Назначить тестировщика",
+        "revokeTester": "Снять тестировщика",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Назначить этому аккаунту права администратора?",
         "revokeAdmin": "Снять права администратора? Операция не выполнится, если это последний активный администратор.",
         "suspend": "Приостановить этот аккаунт? Доступ будет потерян при следующем защищённом запросе.",
         "restore": "Восстановить этот аккаунт?",
-        "delete": "Безвозвратно удалить этот аккаунт и связанные учебные данные? Это действие нельзя отменить."
+        "delete": "Безвозвратно удалить этот аккаунт и связанные учебные данные? Это действие нельзя отменить.",
+        "grantTester": "Назначить роль тестировщика? Они получат все функции приложения для QA; сохранённая подписка не изменится.",
+        "revokeTester": "Снять роль тестировщика? Доступ к функциям вернётся к их фактической подписке."
+      },
+      "roleHelp": "Роль тестировщика открывает все функции Free, Pro и Premium для QA, не меняя сохранённую подписку. Для этой панели нужен администратор.",
+      "roles": {
+        "user": "Пользователь",
+        "tester": "Тестировщик",
+        "admin": "Администратор"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Язык",
         "owner": "Владелец",
         "created": "Создано",
-        "updated": "Обновлено"
+        "updated": "Обновлено",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Язык: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Удалить это рабочее пространство и весь учебный контент в нём через каскады базы данных?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Владелец",
         "workspace": "Рабочее пространство",
         "created": "Создано",
-        "updated": "Обновлено"
+        "updated": "Обновлено",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Просмотр метаданных. Приватное содержимое не загружается автоматически.",
@@ -4923,11 +5088,13 @@
         "actions": "Действия"
       },
       "actions": {
-        "delete": "Удалить запись"
+        "delete": "Удалить запись",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Удалить эту запись? Связанные дочерние строки следуют правилам cascade / set-null базы данных."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Задачи",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "У этого пользователя уже есть рабочее пространство для этого языка.",
       "INVALID_LANGUAGE": "Недопустимый код языка.",
       "CONTENT_NOT_FOUND": "Запись не найдена.",
-      "INVALID_CONTENT_MODULE": "Неизвестный модуль контента."
+      "INVALID_CONTENT_MODULE": "Неизвестный модуль контента.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

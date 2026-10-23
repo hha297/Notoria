@@ -1,4 +1,8 @@
 import type { NoteBlock } from "@/lib/vocabulary/export/note-blocks";
+import {
+  DEFAULT_EXPORT_APPEARANCE,
+  type ExportAppearance,
+} from "@/lib/export/print-theme";
 
 export type VocabularyExportFormat = "pdf" | "csv" | "docx";
 
@@ -8,6 +12,8 @@ export type VocabularyExportOptions = {
   includeTags: boolean;
   includeLastUpdated: boolean;
   includeNotes: boolean;
+  appearance: ExportAppearance;
+  themeMode?: "light" | "dark";
 };
 
 export type VocabularyExportLabels = {
@@ -48,4 +54,5 @@ export const DEFAULT_VOCABULARY_EXPORT_OPTIONS: VocabularyExportOptions = {
   includeTags: true,
   includeLastUpdated: true,
   includeNotes: true,
+  appearance: DEFAULT_EXPORT_APPEARANCE,
 };

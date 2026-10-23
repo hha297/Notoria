@@ -58,6 +58,8 @@ export const CAPABILITY_FEATURES = [
   "personal_learning_profile",
   "personal_learning_path",
   "cross_module_ai",
+  /** Premium-only extra instructions and saved presets on exercise generation. */
+  "exercise_custom_instructions",
 ] as const;
 export type CapabilityFeatureId = (typeof CAPABILITY_FEATURES)[number];
 
@@ -191,6 +193,7 @@ export const VISIBLE_PREMIUM_FEATURES = [
   "practice_from_mistakes",
   "personal_learning_path",
   "cross_module_ai",
+  "exercise_custom_instructions",
 ] as const satisfies readonly CapabilityFeatureId[];
 
 export type FeatureAccess =
@@ -264,9 +267,13 @@ export function displayPlan(user: PlanUser): PlanId {
   return "free";
 }
 
-/** Admins receive Premium capabilities without a Stripe subscription. */
+/**
+ * Effective plan for feature gates and quotas.
+ * Admins and testers receive Premium capabilities without a Stripe
+ * subscription. displayPlan() stays Stripe-only so billing UI stays accurate.
+ */
 export function entitlementPlan(user: PlanUser): PlanId {
-  if (user?.role === "ADMIN") return "premium";
+  if (user?.role === "ADMIN" || user?.role === "TESTER") return "premium";
   return displayPlan(user);
 }
 
@@ -303,6 +310,7 @@ export function getFeatureAccess(plan: PlanId, feature: FeatureId): FeatureAcces
     case "personal_learning_profile":
     case "personal_learning_path":
     case "cross_module_ai":
+    case "exercise_custom_instructions":
       return { kind: "flag", enabled: premium };
     default: {
       const unreachable: never = feature;

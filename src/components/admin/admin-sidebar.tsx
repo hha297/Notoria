@@ -58,9 +58,9 @@ export function AdminSidebar({ onNavigate, className }: AdminSidebarProps) {
         className={mx(styles, "admin-brand")}
       >
         <Logo size="sm" />
-        <span>
+        <span className={mx(styles, "admin-brand-meta")}>
           <LogoWordmark tone="ink" />
-          <span className="mt-0.5 flex items-center gap-1 text-[11px] font-semibold text-muted-foreground">
+          <span className={mx(styles, "admin-brand-chip")}>
             <Shield className="size-3" aria-hidden />
             {t("nav.admin")}
           </span>

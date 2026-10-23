@@ -7,11 +7,12 @@ import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 type ThemeToggleProps = {
-  /** Auth pages: match compact language control (~36px). */
+  /** Kept for LocaleThemeControls API; height matches header actions (40px). */
   compact?: boolean;
+  className?: string;
 };
 
-export function ThemeToggle({ compact = false }: ThemeToggleProps) {
+export function ThemeToggle({ compact = false, className }: ThemeToggleProps) {
   const { resolvedTheme, setTheme } = useTheme();
   const t = useTranslations("theme");
   const isDark = resolvedTheme === "dark";
@@ -21,7 +22,17 @@ export function ThemeToggle({ compact = false }: ThemeToggleProps) {
       type="button"
       variant="outline"
       size="icon"
-      className={cn("shrink-0", compact && "size-9")}
+      className={
+        compact
+          ? cn(
+              "studio-chrome-control control-surface h-9 w-9 shrink-0 sm:h-10 sm:w-10",
+              className,
+            )
+          : cn(
+              "studio-chrome-control control-surface h-10 w-10 shrink-0",
+              className,
+            )
+      }
       aria-label={t("toggle")}
       onClick={() => setTheme(isDark ? "light" : "dark")}
     >

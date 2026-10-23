@@ -15,7 +15,20 @@
     "clearFilter": "ล้าง",
     "filters": "ตัวกรอง",
     "hideFilters": "ซ่อนตัวกรอง",
-    "remove": "นำออก"
+    "remove": "นำออก",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "ไม่สามารถย้ายโฟลเดอร์เข้าไปในตัวเองได้",
     "tooDeep": "โฟลเดอร์นี้ซ้อนกันลึกเกินไป",
     "notFound": "ไม่พบโฟลเดอร์",
-    "nameTaken": "มีโฟลเดอร์หรืองานเขียนที่ใช้ชื่อนี้อยู่แล้ว"
+    "nameTaken": "มีโฟลเดอร์หรืองานเขียนที่ใช้ชื่อนี้อยู่แล้ว",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "สลับธีม",
@@ -291,7 +310,11 @@
     "createWorkspace": "สร้างพื้นที่ทำงาน",
     "createWorkspaceHint": "เพิ่มพื้นที่ทำงานสำหรับภาษาอื่น",
     "switchWorkspace": "สลับพื้นที่ทำงาน",
-    "switchFailed": "ไม่สามารถสลับพื้นที่ทำงานได้"
+    "switchFailed": "ไม่สามารถสลับพื้นที่ทำงานได้",
+    "selectLanguage": "เลือกภาษา",
+    "allLanguages": "ทุกภาษา",
+    "changeLanguageFailed": "เปลี่ยนภาษาอินเทอร์เฟซไม่ได้",
+    "popularLanguages": "ยอดนิยม"
   },
   "workspace": {
     "title": "พื้นที่ทำงาน",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# รายการนำเข้า} other {# รายการนำเข้า}}"
     },
     "processing": {
-      "workingTitle": "กำลังจัดทำแบบฝึกหัดของคุณ",
+      "workingTitle": "กำลังเตรียมแบบฝึกหัด",
       "readyTitle": "แบบฝึกหัดพร้อมแล้ว",
       "errorTitle": "เกิดข้อผิดพลาด",
       "cancel": "ยกเลิก",
       "retry": "ลองอีกครั้ง",
       "dismiss": "ปิด",
       "stages": {
-        "uploading": "กำลังอัปโหลด…",
-        "extracting": "กำลังดึงเนื้อหา…",
-        "analyzing": "กำลังวิเคราะห์เนื้อหา…",
-        "generating": "กำลังสร้างแบบฝึกหัด…",
-        "saving": "กำลังบันทึกแบบฝึกหัด…",
+        "uploading": "กำลังอัปโหลดไฟล์",
+        "extracting": "กำลังดึงเนื้อหา",
+        "analyzing": "กำลังวิเคราะห์เนื้อหา",
+        "generating": "กำลังสร้างคำถาม",
+        "saving": "กำลังบันทึกและเตรียมแบบฝึกหัด",
         "completed": "แบบฝึกหัดพร้อมแล้ว",
-        "error": "การสร้างล้มเหลว"
-      }
+        "error": "สร้างไม่สำเร็จ",
+        "preparing": "กำลังเตรียมสื่อการเรียน",
+        "validating": "กำลังตรวจสอบคำตอบและคำใบ้"
+      },
+      "stillWorking": "ยังสร้างอยู่… ผ่านไป {seconds} วินาที",
+      "hints": {
+        "uploading": "กำลังส่งไฟล์อย่างปลอดภัย",
+        "extracting": "กำลังอ่านข้อความและโครงสร้างจากแหล่งที่มา",
+        "analyzing": "กำลังหาคำใบ้สำหรับฝึกจากสื่อ",
+        "preparing": "กำลังรวบรวมคำศัพท์หรือทฤษฎีที่เลือกสำหรับชุดนี้",
+        "generating": "โมเดลกำลังเขียนคำถาม อาจใช้เวลาสักครู่",
+        "validating": "กำลังตรวจคำตอบ คำใบ้ และโครงสร้างก่อนฝึก",
+        "saving": "กำลังประกอบชุดฝึกของคุณ"
+      },
+      "nextSetPreparing": "กำลังเตรียมชุดถัดไป…",
+      "nextSetReady": "ชุดถัดไปพร้อมแล้ว",
+      "nextSetFailed": "เตรียมชุดถัดไปไม่สำเร็จ",
+      "nextSetRetry": "เตรียมชุดถัดไป",
+      "openNextSet": "เปิดชุดถัดไป"
     },
     "import": {
       "eyebrow": "การฝึกจากสื่อนำเข้า",
@@ -822,6 +862,7 @@
       "aiReady": "การฝึกพร้อมแล้ว",
       "aiUnavailable": "ไม่สามารถสร้างคำถาม AI ได้ในขณะนี้",
       "aiForbidden": "แบบฝึกหัดทฤษฎีด้วย AI มีให้กับ Pro",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "ความช่วยเหลือ AI ถูกปิดใน Settings",
       "feedback": {
         "correct": "ถูกต้อง!",
@@ -874,7 +915,21 @@
         "theRule": "กฎ",
         "why": "เหตุผล",
         "complete": "เข้าใจแล้ว",
-        "completeHint": "คุณไปต่อได้เมื่อพร้อม"
+        "completeHint": "คุณไปต่อได้เมื่อพร้อม",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "คำใบ้",
       "startsWith": "ขึ้นต้นด้วย “{letter}”",
       "revealPrompt": "ยังติดอยู่ใช่ไหม? คุณเปิดดูคำตอบเต็มได้",
-      "revealAnswer": "เปิดดูคำตอบ"
+      "revealAnswer": "เปิดดูคำตอบ",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "ยังไม่มีคำศัพท์",
@@ -977,8 +1034,38 @@
       "forbidden": "การสร้างแบบฝึกหัดด้วย AI มีให้กับ Pro",
       "disabled": "ความช่วยเหลือ AI ถูกปิดใน Settings",
       "upgradeHint": "Free รวมการสร้างแบบฝึกหัดด้วย AI ได้วันละไม่กี่ครั้ง Pro ยกเลิกขีดจำกัด",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "เพิ่มคำศัพท์ก่อนสร้างคำถาม",
-      "noneValid": "AI ไม่สามารถสร้างคำถามที่ถูกต้องสำหรับคำเหล่านี้ได้ ลองอีกครั้ง"
+      "noneValid": "AI ไม่สามารถสร้างคำถามที่ถูกต้องสำหรับคำเหล่านี้ได้ ลองอีกครั้ง",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "เซสชันเสร็จสมบูรณ์",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "เฉพาะเมื่อเปลี่ยนเนื้อหา",
       "confirmNever": "ไม่ต้องถาม",
       "saveFailed": "ไม่สามารถบันทึกการตั้งค่า AI ได้",
-      "disabledToast": "ความช่วยเหลือจาก AI ถูกปิดในการตั้งค่า"
+      "disabledToast": "ความช่วยเหลือจาก AI ถูกปิดในการตั้งค่า",
+      "exerciseNextSetPrefetch": "เตรียมชุดแบบฝึกหัดถัดไปล่วงหน้า",
+      "exerciseNextSetPrefetchDescription": "เมื่อคุณเริ่มตอบ ระบบจะเตรียมชุดถัดไปในพื้นหลังอัตโนมัติ ใช้เครดิตแบบฝึก AI หนึ่งครั้งเมื่อเริ่ม ปิดหากต้องการสร้างเฉพาะเมื่อกดชุดใหม่"
     },
     "tutorials": "บทแนะนำในแต่ละส่วน",
     "tutorialsDescription": "รีเซ็ตบทแนะนำที่ทำครบแล้ว เพื่อให้ “แสดงบทแนะนำ” เริ่มใหม่ตั้งแต่ต้น",
@@ -2768,6 +2857,9 @@
     "noAccount": "ยังไม่มีบัญชี?",
     "hasAccount": "มีบัญชีอยู่แล้ว?",
     "invalidCredentials": "อีเมลหรือรหัสผ่านไม่ถูกต้อง",
+    "rememberMe": "จดจำฉัน",
+    "signInUnavailable": "ไม่สามารถเข้าสู่ระบบได้ในขณะนี้ โปรดลองอีกครั้ง",
+    "accountSuspended": "บัญชีนี้ถูกระงับ หากคิดว่าเป็นความผิดพลาด โปรดติดต่อฝ่ายสนับสนุน",
     "emailExists": "มีบัญชีที่ใช้อีเมลนี้อยู่แล้ว",
     "emailInvalid": "กรุณากรอกที่อยู่อีเมลที่ถูกต้อง",
     "registerFailed": "สร้างบัญชีไม่ได้ กรุณาลองอีกครั้ง",
@@ -2848,7 +2940,9 @@
     "legalTerms": "ข้อกำหนด",
     "registerAgreement": "การสร้างบัญชีถือว่าคุณยอมรับ <terms>ข้อกำหนดการใช้งาน</terms> และ <privacy>นโยบายความเป็นส่วนตัว</privacy>",
     "avatarRequestTooLarge": "รูปนั้นใหญ่เกินไปที่จะส่ง ลองใช้ภาพที่เล็กกว่า",
-    "requestTooLarge": "คำขอนั้นใหญ่เกินไป การเปลี่ยนแปลงของคุณยังถูกเก็บไว้ — กรุณาลองอีกครั้ง"
+    "requestTooLarge": "คำขอนั้นใหญ่เกินไป การเปลี่ยนแปลงของคุณยังถูกเก็บไว้ — กรุณาลองอีกครั้ง",
+    "roleAdmin": "ผู้ดูแลระบบ",
+    "roleTester": "ผู้ทดสอบ"
   },
   "account": {
     "eyebrow": "บัญชี",
@@ -2910,6 +3004,7 @@
       "backup": "ดาวน์โหลดข้อมูลสำรอง",
       "backupDone": "ดาวน์โหลดข้อมูลสำรองแล้ว",
       "backupFailed": "เตรียมข้อมูลสำรองไม่ได้ ลองอีกครั้ง",
+      "confirmPhrase": "ลบข้อมูลทั้งหมด",
       "confirmLabel": "พิมพ์ {phrase} เพื่อยืนยัน",
       "confirm": "ลบข้อมูลทั้งหมด",
       "deleted": "ลบข้อมูลการเรียนรู้ทั้งหมดแล้ว",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "อาจถูกข้าม",
       "warnings": {
         "workspace_language_reuse": "มีพื้นที่ทำงานสำหรับภาษาเดียวกันอยู่แล้ว เนื้อหาจะถูกเพิ่มเข้าไปในพื้นที่ทำงานที่มีอยู่แทนการสร้างซ้ำ",
-        "empty_backup": "ข้อมูลสำรองนี้ไม่มีข้อมูลการเรียนรู้ที่นำเข้าได้"
+        "empty_backup": "ข้อมูลสำรองนี้ไม่มีข้อมูลการเรียนรู้ที่นำเข้าได้",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "ยกเลิก",
       "confirm": "นำเข้าข้อมูลการเรียนรู้",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {มี # รายการคำศัพท์อยู่แล้ว} other {มี # รายการคำศัพท์อยู่แล้ว}}",
         "listening_missing_media": "{count, plural, one {# บทเรียนการฟังไม่มี URL สื่อ} other {# บทเรียนการฟังไม่มี URL สื่อ}}",
         "listening_duplicate_filename": "{count, plural, one {ข้าม # บทเรียนการฟัง (ชื่อไฟล์ซ้ำ)} other {ข้าม # บทเรียนการฟัง (ชื่อไฟล์ซ้ำ)}}",
+        "speaking_duplicate": "{count, plural, one {# เซสชันการพูดมีอยู่แล้ว} other {# เซสชันการพูดมีอยู่แล้ว}}",
         "invalid_workspace_ref": "{count, plural, one {# รายการไม่มีพื้นที่ทำงาน} other {# รายการไม่มีพื้นที่ทำงาน}}",
         "invalid_record": "{count, plural, one {# ระเบียนไม่ถูกต้อง} other {# ระเบียนไม่ถูกต้อง}}",
-        "unsupported_account_field": "ฟิลด์ตัวตนบัญชีจะไม่ถูกนำเข้า"
+        "unsupported_account_field": "ฟิลด์ตัวตนบัญชีจะไม่ถูกนำเข้า",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "ไฟล์สำรองนั้นใหญ่เกินไป ลองส่งออกอีกครั้งหรือติดต่อฝ่ายสนับสนุน",
@@ -2977,7 +3080,12 @@
         "importFailed": "นำเข้าข้อมูลสำรองนี้ไม่ได้ ลองอีกครั้ง",
         "requestTooLarge": "ข้อมูลสำรองนั้นใหญ่เกินไปที่จะประมวลผลผ่านหน้านี้ ลองส่งออกที่เล็กกว่าหรือติดต่อฝ่ายสนับสนุน",
         "notConfigured": "ยังไม่ได้ตั้งค่าที่เก็บไฟล์สำหรับการนำเข้าข้อมูลสำรอง"
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "ปิดบัญชี",
@@ -3002,6 +3110,7 @@
       "backup": "ดาวน์โหลดข้อมูลสำรอง",
       "backupDone": "ดาวน์โหลดข้อมูลสำรองแล้ว",
       "backupFailed": "เตรียมข้อมูลสำรองไม่ได้ ลองอีกครั้ง",
+      "confirmPhrase": "ลบบัญชีของฉัน",
       "confirmLabel": "พิมพ์ {phrase} เพื่อยืนยัน",
       "confirm": "ลบบัญชีอย่างถาวร",
       "deleted": "ลบบัญชีของคุณแล้ว",
@@ -3256,7 +3365,8 @@
       "learningTrends": "แนวโน้มการเรียนรู้",
       "personalLearningPath": "เส้นทางการเรียนรู้ส่วนบุคคล",
       "personalizedRecommendations": "คำแนะนำส่วนบุคคล",
-      "crossModuleIntelligence": "การปรับแต่งข้ามโมดูล"
+      "crossModuleIntelligence": "การปรับแต่งข้ามโมดูล",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "เปรียบเทียบแผน",
@@ -3441,6 +3551,8 @@
       "errorQuota": "คุณถึงขีดจำกัด Learning Coach ของวันนี้แล้ว โค้ชจะพร้อมใช้งานอีกครั้งพรุ่งนี้",
       "errorPremium": "Learning Coach เป็นฟีเจอร์ Premium รับคำแนะนำส่วนบุคคลตามกิจกรรมการเรียนรู้ของคุณ",
       "errorUnavailable": "โค้ชของคุณตอบไม่ได้ในตอนนี้ ข้อความของคุณยังไม่ถูกนับ โปรดลองอีกครั้ง",
+      "errorWorkspace": "เลือกเวิร์กสเปซก่อนถามโค้ช",
+      "errorUnauthorized": "ลงชื่อเข้าใช้อีกครั้งเพื่อดำเนินการต่อ",
       "prompts": {
         "practice_today": "วันนี้ฉันควรโฟกัสอะไร?",
         "struggling_words": "ทำไมฉันถึงมีปัญหากับคำเหล่านี้?",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "ผู้ดูแลระบบ",
+      "admin": "ผู้ดูแล",
       "manage": "จัดการ",
       "overview": "ภาพรวม",
       "users": "ผู้ใช้",
@@ -4798,7 +4910,28 @@
         "failedListening": "การฟังที่ล้มเหลว",
         "failedImports": "การนำเข้าที่ล้มเหลว",
         "runningJobs": "ล็อกงานที่กำลังทำงาน",
-        "recentAudits7d": "รายการตรวจสอบ (7 วัน)"
+        "recentAudits7d": "รายการตรวจสอบ (7 วัน)",
+        "admins": "ผู้ดูแลระบบ",
+        "testers": "ผู้ทดสอบ",
+        "suspended": "ระงับ",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "ทางลัด",
+      "quickAccessLede": "ไปที่เครื่องมือจัดการ",
+      "groups": {
+        "people": "ผู้คน",
+        "content": "เนื้อหา",
+        "ops": "การดำเนินงาน"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "แผน",
         "created": "ลงทะเบียน",
         "updated": "อัปเดต",
-        "emailVerified": "ยืนยันอีเมลแล้ว"
+        "emailVerified": "ยืนยันอีเมลแล้ว",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "บัญชี",
@@ -4841,7 +4976,8 @@
         "usageLede": "บันทึกที่เป็นเจ้าของในโมดูลการเรียน",
         "actions": "การดำเนินการบัญชี",
         "workspaces": "พื้นที่ทำงาน",
-        "workspacesLede": "พื้นที่ทำงานภาษาที่เป็นของของผู้ใช้นี้"
+        "workspacesLede": "พื้นที่ทำงานภาษาที่เป็นของของผู้ใช้นี้",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "บันทึกชื่อ",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "เพิกถอนสิทธิ์ผู้ดูแล",
         "suspend": "ระงับ",
         "restore": "คืนสิทธิ์",
-        "delete": "ลบบัญชี"
+        "delete": "ลบบัญชี",
+        "grantTester": "ให้บทบาทผู้ทดสอบ",
+        "revokeTester": "ถอนบทบาทผู้ทดสอบ",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "ให้สิทธิ์ผู้ดูแลแก่บัญชีนี้หรือไม่?",
         "revokeAdmin": "เพิกถอนสิทธิ์ผู้ดูแลหรือไม่? การดำเนินการจะล้มเหลวหากเป็นผู้ดูแลที่ใช้งานอยู่คนสุดท้าย",
         "suspend": "ระงับบัญชีนี้หรือไม่? จะสูญเสียการเข้าถึงเมื่อมีการร้องขอที่ต้องมีการป้องกันครั้งถัดไป",
         "restore": "คืนสิทธิ์บัญชีนี้หรือไม่?",
-        "delete": "ลบบัญชีนี้และข้อมูลการเรียนที่เกี่ยวข้องอย่างถาวรหรือไม่? การดำเนินการนี้ไม่สามารถย้อนกลับได้"
+        "delete": "ลบบัญชีนี้และข้อมูลการเรียนที่เกี่ยวข้องอย่างถาวรหรือไม่? การดำเนินการนี้ไม่สามารถย้อนกลับได้",
+        "grantTester": "ให้บทบาทผู้ทดสอบหรือไม่ พวกเขาจะได้ฟีเจอร์แอปทั้งหมดสำหรับ QA การสมัครที่บันทึกไว้ไม่เปลี่ยน",
+        "revokeTester": "ถอนบทบาทผู้ทดสอบหรือไม่ การเข้าถึงฟีเจอร์จะกลับไปตามการสมัครจริงของพวกเขา"
+      },
+      "roleHelp": "บทบาทผู้ทดสอบปลดล็อกฟีเจอร์ Free, Pro และ Premium ทั้งหมดสำหรับ QA โดยไม่เปลี่ยนการสมัครที่บันทึกไว้ แดชบอร์ดนี้ต้องเป็นผู้ดูแลระบบ",
+      "roles": {
+        "user": "ผู้ใช้",
+        "tester": "ผู้ทดสอบ",
+        "admin": "ผู้ดูแลระบบ"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "ภาษา",
         "owner": "เจ้าของ",
         "created": "สร้างเมื่อ",
-        "updated": "อัปเดต"
+        "updated": "อัปเดต",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "ภาษา: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "ลบพื้นที่ทำงานนี้และเนื้อหาการเรียนทั้งหมดภายในผ่าน cascade ของฐานข้อมูลหรือไม่?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "เจ้าของ",
         "workspace": "พื้นที่ทำงาน",
         "created": "สร้างเมื่อ",
-        "updated": "อัปเดต"
+        "updated": "อัปเดต",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "การตรวจสอบเมตาดาตา เนื้อหาส่วนตัวจะไม่โหลดอัตโนมัติ",
@@ -4923,11 +5088,13 @@
         "actions": "การดำเนินการ"
       },
       "actions": {
-        "delete": "ลบรายการ"
+        "delete": "ลบรายการ",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "ลบรายการนี้หรือไม่? แถวลูกที่เกี่ยวข้องจะเป็นไปตามกฎ cascade / set-null ของฐานข้อมูล"
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "งาน",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "ผู้ใช้นี้มีพื้นที่ทำงานสำหรับภาษานั้นอยู่แล้ว",
       "INVALID_LANGUAGE": "รหัสภาษาไม่ถูกต้อง",
       "CONTENT_NOT_FOUND": "ไม่พบรายการ",
-      "INVALID_CONTENT_MODULE": "โมดูลเนื้อหาที่ไม่รู้จัก"
+      "INVALID_CONTENT_MODULE": "โมดูลเนื้อหาที่ไม่รู้จัก",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

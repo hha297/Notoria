@@ -3,7 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Sparkles } from "lucide-react";
-import { HintText } from "@/components/exercises/theory/theory-card-shared";
+import { ProgressiveHintReveal } from "@/components/exercises/progressive-hint-reveal";
 import { TheoryPracticeFeedback } from "@/components/exercises/theory/theory-practice-feedback";
 import {
   buildCanonicalCompletedSentence,
@@ -12,7 +12,6 @@ import {
   scrubFillBlankPresentation,
 } from "@/lib/theory-exercises/generate-ai";
 import type { TheoryFillBlankExercise } from "@/lib/theory-exercises/types";
-import { ExerciseSetPartialHint } from "@/components/exercises/exercise-set-partial-hint";
 import { EXERCISE_SET_QUESTION_CARD_CLASS } from "@/components/exercises/exercise-set-question-card";
 import theoryStyles from "@/components/style/exercises/theory.module.css";
 import sessionStyles from "@/components/style/exercises/session.module.css";
@@ -197,15 +196,12 @@ export function TheoryFillBlankCard({
             ) : null}
           </p>
 
-          {!submitted && displayHint ? (
-            <div className="mt-4">
-              <HintText text={displayHint} />
-            </div>
-          ) : null}
-
           {!submitted ? (
-            <ExerciseSetPartialHint
-              answer={item.answer}
+            <ProgressiveHintReveal
+              hints={item.hints}
+              legacyHint={displayHint}
+              grounding={item.learningObjective}
+              answers={item.acceptedAnswers}
               resetKey={item.id}
               answered={submitted}
             />

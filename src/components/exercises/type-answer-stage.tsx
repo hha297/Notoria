@@ -10,7 +10,7 @@ import {
   splitPromptAtBlank,
 } from "@/lib/exercises/blank-hint";
 import type { TypeAnswerItem } from "@/lib/exercises/type-answer";
-import { ExerciseSetPartialHint } from "@/components/exercises/exercise-set-partial-hint";
+import { ProgressiveHintReveal } from "@/components/exercises/progressive-hint-reveal";
 import { EXERCISE_SET_QUESTION_CARD_CLASS } from "@/components/exercises/exercise-set-question-card";
 import featureStyles from "@/components/style/exercises/session.module.css";
 import { mx } from "@/lib/css-module";
@@ -190,10 +190,13 @@ export function TypeAnswerStage({
           />
 
           {!revealed ? (
-            <ExerciseSetPartialHint
-              answer={expected}
+            <ProgressiveHintReveal
+              hints={item.hints}
+              grounding={item.meaningHint || item.meanings[0]}
+              answers={item.acceptableAnswers}
               resetKey={item.id}
               answered={revealed}
+              correctAnswer={onRevealAnswer ? expected : undefined}
               onRevealAnswer={onRevealAnswer}
             />
           ) : null}

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { formatDistanceToNow } from "date-fns";
+import { useDateFnsLocale } from "@/hooks/use-date-fns-locale";
 import { useTranslations } from "next-intl";
 import { VocabularyWordTags } from "@/components/vocabulary/vocabulary-word-tags";
 import {
@@ -59,7 +60,11 @@ export function VocabularyUpdatedAt({
   className?: string;
 }) {
   const t = useTranslations("vocabulary");
-  const relative = formatDistanceToNow(new Date(updatedAt), { addSuffix: true });
+  const dateLocale = useDateFnsLocale();
+  const relative = formatDistanceToNow(new Date(updatedAt), {
+    addSuffix: true,
+    locale: dateLocale,
+  });
 
   return (
     <p className={cn("text-[11px] leading-snug text-muted-foreground", className)}>

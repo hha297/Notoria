@@ -84,7 +84,7 @@ export function TheoryEditor({
   const [description, setDescription] = useState(parsed.description);
   const [doc, setDoc] = useState<JSONContent>(parsed.doc);
   const [imageUploading, setImageUploading] = useState(false);
-  const [isAutosaving, setIsAutosaving] = useState(false);
+  const [, setIsAutosaving] = useState(false);
   const { isPending: isSaving, tryBegin, release } = useMutationLock();
 
   const [baseline, setBaseline] = useState<TheoryEditorSnapshot>(() =>
@@ -370,42 +370,13 @@ export function TheoryEditor({
 
   return (
     <div className="writing-sheet theory-sheet" data-theory-category={category}>
-      <div className="writing-paper-chrome">
-        <Link
-          href={previewHref ?? listHref}
-          className="writing-back text-ink dark:!text-white"
-        >
-          <ArrowLeft className="size-4 shrink-0 text-current" />
-          {previewHref ? t("backToPreview") : t("backToList")}
-        </Link>
-        <div className="writing-paper-actions">
-          {previewHref ? (
-            <Button
-              type="button"
-              variant="outline"
-              size="lg"
-              onClick={() => router.replace(previewHref)}
-              disabled={isSaving}
-              className="h-11 w-full sm:h-9 sm:w-auto"
-            >
-              {tCommon("cancel")}
-            </Button>
-          ) : null}
-          <Button
-            onClick={() => void persist()}
-            disabled={isSaving || imageUploading || !canSave}
-            size="lg"
-            className="h-11 w-full sm:h-9 sm:w-auto"
-          >
-            {isSaving ? (
-              <Loader2 className="size-4 animate-spin" />
-            ) : (
-              <Save className="size-4" />
-            )}
-            {tCommon("save")}
-          </Button>
-        </div>
-      </div>
+      <Link
+        href={previewHref ?? listHref}
+        className="writing-back text-ink dark:!text-white"
+      >
+        <ArrowLeft className="size-4 shrink-0 text-current" />
+        {previewHref ? t("backToPreview") : t("backToList")}
+      </Link>
 
       <p className="writing-kicker">{categoryHeading}</p>
       <label className="sr-only" htmlFor="theory-title">
@@ -504,15 +475,33 @@ export function TheoryEditor({
         </div>
       </div>
 
-      <p className="text-sm text-muted-foreground">
-        {previewHref
-          ? t("editSaveHint")
-          : isAutosaving
-            ? t("autosaving")
-            : initialData
-              ? t("autosaveReady")
-              : t("autosavePending")}
-      </p>
+      <div className="writing-paper-actions">
+        {previewHref ? (
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            onClick={() => router.replace(previewHref)}
+            disabled={isSaving}
+            className="h-11 w-full sm:h-9 sm:w-auto"
+          >
+            {tCommon("cancel")}
+          </Button>
+        ) : null}
+        <Button
+          onClick={() => void persist()}
+          disabled={isSaving || imageUploading || !canSave}
+          size="lg"
+          className="h-11 w-full sm:h-9 sm:w-auto"
+        >
+          {isSaving ? (
+            <Loader2 className="size-4 animate-spin" />
+          ) : (
+            <Save className="size-4" />
+          )}
+          {tCommon("save")}
+        </Button>
+      </div>
     </div>
   );
 }

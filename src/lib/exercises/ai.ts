@@ -6,6 +6,7 @@ import {
 import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { getLanguageByCode } from "@/lib/languages";
+import { appendAdditionalInstructions } from "@/lib/exercises/additional-instructions";
 import {
   FILL_BLANK_GENERATOR_PROMPT,
   fillBlankUserPayload,
@@ -126,9 +127,12 @@ export async function generateFillBlankExercises(
           messages: [
             {
               role: "system",
-              content: await aiSystemPrompt(FILL_BLANK_GENERATOR_PROMPT, {
+            content: appendAdditionalInstructions(
+              await aiSystemPrompt(FILL_BLANK_GENERATOR_PROMPT, {
                 responseStyle: true,
               }),
+              input.additionalInstructions,
+            ),
             },
             {
               role: "user",
@@ -140,6 +144,7 @@ export async function generateFillBlankExercises(
                   difficulty: input.difficulty,
                   uiLanguage: uiLanguageName(input.uiLocale),
                   words,
+                  additionalInstructions: input.additionalInstructions,
                   regenerateReason: retry
                     ? "Previous drafts were rejected. Keep each assigned wordId. Write a new natural sentence. answer must be the exact surface form required by grammar — never a pasted lemma when another form is required."
                     : undefined,

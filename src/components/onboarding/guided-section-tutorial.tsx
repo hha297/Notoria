@@ -40,6 +40,7 @@ import {
   TutorialBackdrop,
   TutorialSpotlight,
 } from "@/components/onboarding/tutorial-spotlight";
+import { FolderDragDemo } from "@/components/folders/folder-drag-demo";
 
 const EASE = [0.25, 0.1, 0.25, 1] as const;
 
@@ -243,6 +244,9 @@ export function GuidedSectionTutorial({
               {t(`${section}.steps.${step.id}.title`)}
             </p>
             <p className={mx(styles, "tutorial-sheet-step-body")}>{stepBody}</p>
+            {step.id === "moveItem" ? (
+              <FolderDragDemo className="mt-3" />
+            ) : null}
           </motion.div>
         </AnimatePresence>
 

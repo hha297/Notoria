@@ -24,6 +24,7 @@ import { queryKeys } from "@/lib/query/keys";
 import { removeCachedListItem } from "@/hooks/use-invalidate-workspace-queries";
 import { cn } from "@/lib/utils";
 import { formatDistanceToNow } from "date-fns";
+import { useDateFnsLocale } from "@/hooks/use-date-fns-locale";
 
 type ReadingPassageViewProps = {
   workspaceId: string;
@@ -36,6 +37,7 @@ export function ReadingPassageView({
 }: ReadingPassageViewProps) {
   const t = useTranslations("reading");
   const tc = useTranslations("common");
+  const dateLocale = useDateFnsLocale();
   const readingQuota = useQuotaLockMessage("ai_reading");
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -171,6 +173,7 @@ export function ReadingPassageView({
                       {t(`setStatus.${set.status}`)} ·{" "}
                       {formatDistanceToNow(new Date(set.createdAt), {
                         addSuffix: true,
+                        locale: dateLocale,
                       })}
                       {set.passageContentVersion < data.contentVersion
                         ? ` · ${t("staleSet")}`

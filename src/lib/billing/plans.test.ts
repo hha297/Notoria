@@ -48,6 +48,16 @@ describe("plan resolution", () => {
     expect(entitlementPlan({ role: "ADMIN", subscriptionPlan: "free" })).toBe(
       "premium",
     );
+    expect(entitlementPlan({ role: "TESTER", subscriptionPlan: "free" })).toBe(
+      "premium",
+    );
+    expect(
+      displayPlan({
+        role: "TESTER",
+        subscriptionPlan: "free",
+        subscriptionStatus: null,
+      }),
+    ).toBe("free");
   });
 });
 
@@ -119,6 +129,9 @@ describe("entitlements", () => {
     expect(featureEnabled("pro", "listening")).toBe(true);
     expect(featureEnabled("pro", "ai_learning_coach")).toBe(false);
     expect(featureEnabled("premium", "ai_learning_coach")).toBe(true);
+    expect(featureEnabled("free", "exercise_custom_instructions")).toBe(false);
+    expect(featureEnabled("pro", "exercise_custom_instructions")).toBe(false);
+    expect(featureEnabled("premium", "exercise_custom_instructions")).toBe(true);
     expect(featureEnabled("premium", "pdf_export")).toBe(true);
     expect(featureEnabled("premium", "adaptive_daily_practice")).toBe(true);
     expect(getFeatureAccess("free", "content_import")).toEqual({

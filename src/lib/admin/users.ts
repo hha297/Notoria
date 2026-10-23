@@ -32,7 +32,11 @@ export async function listAdminUsers(input: {
       or(ilike(users.email, `%${q}%`), ilike(users.name, `%${q}%`)),
     );
   }
-  if (input.role === "ADMIN" || input.role === "USER") {
+  if (
+    input.role === "ADMIN" ||
+    input.role === "USER" ||
+    input.role === "TESTER"
+  ) {
     conditions.push(eq(users.role, input.role));
   }
   if (input.status === "suspended") {

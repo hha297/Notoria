@@ -15,7 +15,20 @@
     "clearFilter": "Esborra",
     "filters": "Filtres",
     "hideFilters": "Amaga els filtres",
-    "remove": "Elimina"
+    "remove": "Elimina",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "No es pot moure una carpeta dins d'ella mateixa",
     "tooDeep": "Aquesta carpeta està niada massa profundament",
     "notFound": "No s'ha trobat la carpeta",
-    "nameTaken": "Ja hi ha una carpeta o un text amb aquest nom"
+    "nameTaken": "Ja hi ha una carpeta o un text amb aquest nom",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Canvia el tema",
@@ -291,7 +310,11 @@
     "createWorkspace": "Crea un espai de treball",
     "createWorkspaceHint": "Afegiu un altre espai de treball d'idioma",
     "switchWorkspace": "Canvia d'espai de treball",
-    "switchFailed": "No s'ha pogut canviar d'espai de treball"
+    "switchFailed": "No s'ha pogut canviar d'espai de treball",
+    "selectLanguage": "Select language",
+    "allLanguages": "All languages",
+    "changeLanguageFailed": "Could not change UI language",
+    "popularLanguages": "Popular"
   },
   "workspace": {
     "title": "Espais de treball",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# importació} other {# importacions}}"
     },
     "processing": {
-      "workingTitle": "Treballant en el vostre exercici",
-      "readyTitle": "Exercici a punt",
+      "workingTitle": "S’està preparant l’exercici",
+      "readyTitle": "Exercici llest",
       "errorTitle": "Alguna cosa ha anat malament",
-      "cancel": "Cancel·lar",
-      "retry": "Tornar-ho a provar",
-      "dismiss": "Descartar",
+      "cancel": "Cancel·la",
+      "retry": "Torna-ho a provar",
+      "dismiss": "Tanca",
       "stages": {
-        "uploading": "Pujant…",
-        "extracting": "Extraient el contingut…",
-        "analyzing": "Analitzant el contingut…",
-        "generating": "Generant l'exercici…",
-        "saving": "Desant l'exercici…",
-        "completed": "Exercici a punt",
-        "error": "La generació ha fallat"
-      }
+        "uploading": "S’està pujant el fitxer",
+        "extracting": "S’està extraient el contingut",
+        "analyzing": "S’està analitzant el contingut",
+        "generating": "S’estan generant preguntes",
+        "saving": "S’està desant i preparant l’exercici",
+        "completed": "Exercici llest",
+        "error": "La generació ha fallat",
+        "preparing": "S’està preparant el material",
+        "validating": "S’estan validant respostes i pistes"
+      },
+      "stillWorking": "Encara s’està generant… han passat {seconds} s",
+      "hints": {
+        "uploading": "S’està enviant el fitxer de forma segura.",
+        "extracting": "S’està llegint el text i l’estructura de la font.",
+        "analyzing": "S’identifiquen pistes de pràctica al material.",
+        "preparing": "S’està reunint el vocabulari o la teoria seleccionats per a aquest conjunt.",
+        "generating": "El model està escrivint preguntes. Pot trigar una mica.",
+        "validating": "Es comproven respostes, pistes i estructura abans de practicar.",
+        "saving": "S’està muntant el teu conjunt de pràctica."
+      },
+      "nextSetPreparing": "S’està preparant el següent conjunt…",
+      "nextSetReady": "El següent conjunt està llest",
+      "nextSetFailed": "No s’ha pogut preparar el següent conjunt",
+      "nextSetRetry": "Prepara el següent conjunt",
+      "openNextSet": "Obre el següent conjunt"
     },
     "import": {
       "eyebrow": "Pràctica importada",
@@ -822,6 +862,7 @@
       "aiReady": "Pràctica a punt",
       "aiUnavailable": "No s'han pogut generar preguntes amb IA ara mateix.",
       "aiForbidden": "Els exercicis de teoria amb IA estan disponibles amb Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "L'assistència d'IA està desactivada a Configuració.",
       "feedback": {
         "correct": "Correcte!",
@@ -874,7 +915,21 @@
         "theRule": "La regla",
         "why": "Per què",
         "complete": "Entesos",
-        "completeHint": "Podeu continuar quan estigueu a punt."
+        "completeHint": "Podeu continuar quan estigueu a punt.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Pista",
       "startsWith": "Comença amb «{letter}»",
       "revealPrompt": "Encara encallats? Podeu revelar la resposta completa.",
-      "revealAnswer": "Revelar la resposta"
+      "revealAnswer": "Revelar la resposta",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Encara no hi ha vocabulari",
@@ -977,8 +1034,38 @@
       "forbidden": "La generació d'exercicis amb IA està disponible amb Pro.",
       "disabled": "L'assistència d'IA està desactivada a Configuració.",
       "upgradeHint": "Free inclou unes quantes generacions d'exercicis amb IA cada dia. Pro elimina el límit.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Afegiu paraules de vocabulari abans de generar preguntes.",
-      "noneValid": "La IA no ha pogut crear preguntes vàlides per a aquestes paraules. Torneu-ho a provar."
+      "noneValid": "La IA no ha pogut crear preguntes vàlides per a aquestes paraules. Torneu-ho a provar.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Sessió completada",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Només en canviar el contingut",
       "confirmNever": "Mai",
       "saveFailed": "No s’han pogut desar les preferències d’IA",
-      "disabledToast": "L’assistència d’IA està desactivada a Configuració"
+      "disabledToast": "L’assistència d’IA està desactivada a Configuració",
+      "exerciseNextSetPrefetch": "Prepara el següent conjunt d’exercicis",
+      "exerciseNextSetPrefetchDescription": "Quan comencis a respondre, el següent conjunt es prepara automàticament en segon pla. Usa un crèdit d’exercici d’IA en començar. Desactiva’l per generar només amb Conjunt nou."
     },
     "tutorials": "Tutorials de secció",
     "tutorialsDescription": "Reinicieu els recorreguts de secció completats perquè «Mostra el tutorial» torni a començar des del principi.",
@@ -2768,6 +2857,9 @@
     "noAccount": "No teniu un compte?",
     "hasAccount": "Ja teniu un compte?",
     "invalidCredentials": "Correu electrònic o contrasenya no vàlids",
+    "rememberMe": "Recorda'm",
+    "signInUnavailable": "No hem pogut iniciar la sessió ara. Torneu-ho a provar.",
+    "accountSuspended": "Aquest compte està suspès. Contacteu amb el suport si creieu que és un error.",
     "emailExists": "Ja existeix un compte amb aquest correu electrònic",
     "emailInvalid": "Introduïu una adreça de correu electrònic vàlida",
     "registerFailed": "No s’ha pogut crear el compte. Torneu-ho a provar.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Condicions",
     "registerAgreement": "En crear un compte, accepteu les <terms>Condicions d’ús</terms> i la <privacy>Política de privacitat</privacy>.",
     "avatarRequestTooLarge": "Aquesta foto és massa gran per enviar-la. Proveu una imatge més petita.",
-    "requestTooLarge": "Aquesta sol·licitud era massa gran. Els canvis s’han conservat — torneu-ho a provar."
+    "requestTooLarge": "Aquesta sol·licitud era massa gran. Els canvis s’han conservat — torneu-ho a provar.",
+    "roleAdmin": "Administrador",
+    "roleTester": "Provador"
   },
   "account": {
     "eyebrow": "Compte",
@@ -2910,6 +3004,7 @@
       "backup": "Baixa la còpia de seguretat",
       "backupDone": "Còpia de seguretat baixada",
       "backupFailed": "No s’ha pogut preparar la còpia de seguretat. Torneu-ho a provar.",
+      "confirmPhrase": "Esborra totes les dades",
       "confirmLabel": "Escriviu {phrase} per confirmar",
       "confirm": "Suprimeix totes les dades",
       "deleted": "S’han suprimit totes les dades d’aprenentatge",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Es pot ometre",
       "warnings": {
         "workspace_language_reuse": "Alguns espais de treball ja existeixen per a la mateixa llengua. El seu contingut s’afegirà als espais de treball existents en lloc de crear duplicats.",
-        "empty_backup": "Aquesta còpia de seguretat no conté dades d’aprenentatge importables."
+        "empty_backup": "Aquesta còpia de seguretat no conté dades d’aprenentatge importables.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Cancel·la",
       "confirm": "Importa les dades d’aprenentatge",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# element de vocabulari ja existeix} other {# elements de vocabulari ja existeixen}}",
         "listening_missing_media": "{count, plural, one {# lliçó de comprensió oral sense URL multimèdia} other {# lliçons de comprensió oral sense URL multimèdia}}",
         "listening_duplicate_filename": "{count, plural, one {# lliçó de comprensió oral omesa (nom de fitxer duplicat)} other {# lliçons de comprensió oral omeses (nom de fitxer duplicat)}}",
+        "speaking_duplicate": "{count, plural, one {# sessió d’expressió oral ja existeix} other {# sessions d’expressió oral ja existeixen}}",
         "invalid_workspace_ref": "{count, plural, one {# element amb espai de treball que falta} other {# elements amb espai de treball que falta}}",
         "invalid_record": "{count, plural, one {# registre no vàlid} other {# registres no vàlids}}",
-        "unsupported_account_field": "Els camps d’identitat del compte no s’importen"
+        "unsupported_account_field": "Els camps d’identitat del compte no s’importen",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Aquest fitxer de còpia de seguretat és massa gran. Proveu d’exportar de nou o contacteu amb l’assistència.",
@@ -2977,7 +3080,12 @@
         "importFailed": "No s’ha pogut importar aquesta còpia de seguretat. Torneu-ho a provar.",
         "requestTooLarge": "Aquesta còpia de seguretat és massa gran per processar-la en aquesta pàgina. Proveu una exportació més petita o contacteu amb l’assistència.",
         "notConfigured": "L’emmagatzematge de fitxers encara no està configurat per a la importació de còpies de seguretat."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Tanca el compte",
@@ -3002,6 +3110,7 @@
       "backup": "Baixa la còpia de seguretat",
       "backupDone": "Còpia de seguretat baixada",
       "backupFailed": "No s’ha pogut preparar la còpia de seguretat. Torneu-ho a provar.",
+      "confirmPhrase": "Esborra el meu compte",
       "confirmLabel": "Escriviu {phrase} per confirmar",
       "confirm": "Suprimeix el compte permanentment",
       "deleted": "S’ha suprimit el compte",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Tendències d'aprenentatge",
       "personalLearningPath": "Camí d'aprenentatge personal",
       "personalizedRecommendations": "Recomanacions personalitzades",
-      "crossModuleIntelligence": "Personalització entre mòduls"
+      "crossModuleIntelligence": "Personalització entre mòduls",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Compareu els plans",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Heu arribat al límit del Learning Coach d'avui. El vostre Coach tornarà a estar disponible demà.",
       "errorPremium": "El Learning Coach és una funció Premium. Obteniu recomanacions personalitzades basades en la vostra activitat d'aprenentatge.",
       "errorUnavailable": "El vostre Coach no ha pogut respondre ara. El missatge no s'ha comptat. Torneu-ho a provar.",
+      "errorWorkspace": "Trieu un espai de treball abans de preguntar al coach.",
+      "errorUnauthorized": "Torneu a iniciar la sessió per continuar.",
       "prompts": {
         "practice_today": "En què m'hauria de centrar avui?",
         "struggling_words": "Per què em costen aquestes paraules?",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
+      "admin": "Administrador",
       "manage": "Gestiona",
       "overview": "Resum",
       "users": "Usuaris",
@@ -4750,7 +4862,7 @@
       "contentLibrary": "Biblioteca de contingut",
       "backToApp": "Tornar a l'aplicació",
       "openMenu": "Obrir el menú d'administració",
-      "openAdmin": "Tauler d'administració"
+      "openAdmin": "Tauler d'administrador"
     },
     "modules": {
       "vocabulary": "Vocabulari",
@@ -4798,7 +4910,28 @@
         "failedListening": "Escolta fallida",
         "failedImports": "Importacions fallides",
         "runningJobs": "Bloquejos de tasques en curs",
-        "recentAudits7d": "Entrades d'auditoria (7d)"
+        "recentAudits7d": "Entrades d'auditoria (7d)",
+        "admins": "Administradors",
+        "testers": "Provadors",
+        "suspended": "Suspesos",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Accés ràpid",
+      "quickAccessLede": "Aneu a les eines de gestió.",
+      "groups": {
+        "people": "Persones",
+        "content": "Contingut",
+        "ops": "Operacions"
+      },
+      "charts": {
+        "signupsTitle": "New accounts",
+        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
+        "activeTitle": "Active learners",
+        "activeLede": "Distinct learners with activity each day (14d).",
+        "rolesTitle": "Roles",
+        "rolesLede": "Share of accounts by role.",
+        "contentTitle": "Content mix",
+        "contentLede": "Stored records across learning modules."
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "Pla",
         "created": "Registrat",
         "updated": "Actualitzat",
-        "emailVerified": "Correu verificat"
+        "emailVerified": "Correu verificat",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Compte",
@@ -4841,7 +4976,8 @@
         "usageLede": "Registres en propietat a tots els mòduls d'aprenentatge.",
         "actions": "Accions del compte",
         "workspaces": "Espais de treball",
-        "workspacesLede": "Espais de treball d'idioma propietat d'aquest usuari."
+        "workspacesLede": "Espais de treball d'idioma propietat d'aquest usuari.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Desa el nom",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Revocar admin",
         "suspend": "Suspendre",
         "restore": "Restaurar",
-        "delete": "Suprimir el compte"
+        "delete": "Suprimir el compte",
+        "grantTester": "Atorgar provador",
+        "revokeTester": "Revocar provador",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Concedir accés d'administració a aquest compte?",
         "revokeAdmin": "Revocar l'accés d'administració? Fallarà si és el darrer administrador actiu.",
         "suspend": "Suspendre aquest compte? Perdran l'accés a la propera sol·licitud protegida.",
         "restore": "Restaurar aquest compte?",
-        "delete": "Suprimir permanentment aquest compte i les dades d'aprenentatge en cascada? Aquesta acció no es pot desfer."
+        "delete": "Suprimir permanentment aquest compte i les dades d'aprenentatge en cascada? Aquesta acció no es pot desfer.",
+        "grantTester": "Atorgar el rol de provador? Obtenen totes les funcions de l'app per a QA; la subscripció desada no canvia.",
+        "revokeTester": "Revocar el rol de provador? L'accés a les funcions torna a la seva subscripció real."
+      },
+      "roleHelp": "El rol de provador desbloqueja totes les funcions Free, Pro i Premium per a QA sense canviar la subscripció desada. Cal ser administrador per a aquest tauler.",
+      "roles": {
+        "user": "Usuari",
+        "tester": "Provador",
+        "admin": "Administrador"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Idioma",
         "owner": "Propietari",
         "created": "Creat",
-        "updated": "Actualitzat"
+        "updated": "Actualitzat",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Idioma: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Suprimir aquest espai de treball i tot el contingut d'aprenentatge que conté mitjançant cascades de la base de dades?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Propietari",
         "workspace": "Espai de treball",
         "created": "Creat",
-        "updated": "Actualitzat"
+        "updated": "Actualitzat",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Inspecció de metadades. Els cossos privats no es carreguen automàticament.",
@@ -4923,11 +5088,13 @@
         "actions": "Accions"
       },
       "actions": {
-        "delete": "Suprimir el registre"
+        "delete": "Suprimir el registre",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Suprimir aquest registre? Les files fill relacionades segueixen les regles de cascada / set-null de la base de dades."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Tasques",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Aquest usuari ja té un espai de treball per a aquest idioma.",
       "INVALID_LANGUAGE": "Codi d'idioma no vàlid.",
       "CONTENT_NOT_FOUND": "Registre no trobat.",
-      "INVALID_CONTENT_MODULE": "Mòdul de contingut desconegut."
+      "INVALID_CONTENT_MODULE": "Mòdul de contingut desconegut.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

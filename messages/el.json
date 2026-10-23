@@ -15,7 +15,20 @@
     "clearFilter": "Απαλοιφή",
     "filters": "Φίλτρα",
     "hideFilters": "Απόκρυψη φίλτρων",
-    "remove": "Αφαίρεση"
+    "remove": "Αφαίρεση",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Δεν μπορείτε να μετακινήσετε έναν φάκελο μέσα στον εαυτό του",
     "tooDeep": "Αυτός ο φάκελος είναι ένθετος πολύ βαθιά",
     "notFound": "Ο φάκελος δεν βρέθηκε",
-    "nameTaken": "Ένας φάκελος ή γραπτό χρησιμοποιεί ήδη αυτό το όνομα"
+    "nameTaken": "Ένας φάκελος ή γραπτό χρησιμοποιεί ήδη αυτό το όνομα",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Εναλλαγή θέματος",
@@ -291,7 +310,11 @@
     "createWorkspace": "Δημιουργία χώρου εργασίας",
     "createWorkspaceHint": "Προσθήκη άλλου χώρου εργασίας γλώσσας",
     "switchWorkspace": "Εναλλαγή χώρου εργασίας",
-    "switchFailed": "Δεν ήταν δυνατή η εναλλαγή χώρου εργασίας"
+    "switchFailed": "Δεν ήταν δυνατή η εναλλαγή χώρου εργασίας",
+    "selectLanguage": "Επιλογή γλώσσας",
+    "allLanguages": "Όλες οι γλώσσες",
+    "changeLanguageFailed": "Δεν ήταν δυνατή η αλλαγή της γλώσσας διεπαφής",
+    "popularLanguages": "Δημοφιλή"
   },
   "workspace": {
     "title": "Χώροι εργασίας",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# εισαγωγή} other {# εισαγωγές}}"
     },
     "processing": {
-      "workingTitle": "Επεξεργασία της άσκησής σας",
+      "workingTitle": "Προετοιμασία της άσκησής σας",
       "readyTitle": "Η άσκηση είναι έτοιμη",
       "errorTitle": "Κάτι πήγε στραβά",
       "cancel": "Ακύρωση",
-      "retry": "Επανάληψη",
+      "retry": "Δοκιμάστε ξανά",
       "dismiss": "Κλείσιμο",
       "stages": {
-        "uploading": "Μεταφόρτωση…",
-        "extracting": "Εξαγωγή περιεχομένου…",
-        "analyzing": "Ανάλυση περιεχομένου…",
-        "generating": "Δημιουργία άσκησης…",
-        "saving": "Αποθήκευση άσκησης…",
+        "uploading": "Ανέβασμα αρχείου",
+        "extracting": "Εξαγωγή περιεχομένου",
+        "analyzing": "Ανάλυση περιεχομένου",
+        "generating": "Δημιουργία ερωτήσεων",
+        "saving": "Αποθήκευση και προετοιμασία της άσκησης",
         "completed": "Η άσκηση είναι έτοιμη",
-        "error": "Η δημιουργία απέτυχε"
-      }
+        "error": "Η δημιουργία απέτυχε",
+        "preparing": "Προετοιμασία μαθησιακού υλικού",
+        "validating": "Έλεγχος απαντήσεων και υποδείξεων"
+      },
+      "stillWorking": "Ακόμα δημιουργία… πέρασαν {seconds} δ",
+      "hints": {
+        "uploading": "Ασφαλής αποστολή του αρχείου σας.",
+        "extracting": "Ανάγνωση κειμένου και δομής από την πηγή.",
+        "analyzing": "Εντοπισμός ενδείξεων εξάσκησης στο υλικό.",
+        "preparing": "Συλλογή επιλεγμένου λεξιλογίου ή θεωρίας για αυτό το σύνολο.",
+        "generating": "Το μοντέλο γράφει ερωτήσεις. Μπορεί να πάρει λίγο χρόνο.",
+        "validating": "Έλεγχος απαντήσεων, υποδείξεων και δομής πριν την εξάσκηση.",
+        "saving": "Συναρμολόγηση του συνόλου εξάσκησής σας."
+      },
+      "nextSetPreparing": "Προετοιμασία επόμενου συνόλου…",
+      "nextSetReady": "Το επόμενο σύνολο είναι έτοιμο",
+      "nextSetFailed": "Δεν ήταν δυνατή η προετοιμασία του επόμενου συνόλου",
+      "nextSetRetry": "Προετοιμασία επόμενου συνόλου",
+      "openNextSet": "Άνοιγμα επόμενου συνόλου"
     },
     "import": {
       "eyebrow": "Εισαγμένη εξάσκηση",
@@ -822,6 +862,7 @@
       "aiReady": "Η εξάσκηση είναι έτοιμη",
       "aiUnavailable": "Δεν ήταν δυνατή η δημιουργία ερωτήσεων τεχνητής νοημοσύνης αυτή τη στιγμή.",
       "aiForbidden": "Οι ασκήσεις θεωρίας με τεχνητή νοημοσύνη είναι διαθέσιμες με Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "Η βοήθεια τεχνητής νοημοσύνης είναι απενεργοποιημένη στις Ρυθμίσεις.",
       "feedback": {
         "correct": "Σωστά!",
@@ -874,7 +915,21 @@
         "theRule": "Ο κανόνας",
         "why": "Γιατί",
         "complete": "Κατανοητό",
-        "completeHint": "Μπορείτε να συνεχίσετε όταν είστε έτοιμοι."
+        "completeHint": "Μπορείτε να συνεχίσετε όταν είστε έτοιμοι.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Υπόδειξη",
       "startsWith": "Ξεκινά με «{letter}»",
       "revealPrompt": "Ακόμα κολλήσατε; Μπορείτε να αποκαλύψετε την πλήρη απάντηση.",
-      "revealAnswer": "Αποκάλυψη απάντησης"
+      "revealAnswer": "Αποκάλυψη απάντησης",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Δεν υπάρχει ακόμη λεξιλόγιο",
@@ -977,8 +1034,38 @@
       "forbidden": "Η δημιουργία ασκήσεων με τεχνητή νοημοσύνη είναι διαθέσιμη με Pro.",
       "disabled": "Η βοήθεια τεχνητής νοημοσύνης είναι απενεργοποιημένη στις Ρυθμίσεις.",
       "upgradeHint": "Το Free περιλαμβάνει λίγες δημιουργίες ασκήσεων με τεχνητή νοημοσύνη κάθε μέρα. Το Pro καταργεί το όριο.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Προσθέστε λέξεις λεξιλογίου πριν δημιουργήσετε ερωτήσεις.",
-      "noneValid": "Η τεχνητή νοημοσύνη δεν μπόρεσε να δημιουργήσει έγκυρες ερωτήσεις για αυτές τις λέξεις. Δοκιμάστε ξανά."
+      "noneValid": "Η τεχνητή νοημοσύνη δεν μπόρεσε να δημιουργήσει έγκυρες ερωτήσεις για αυτές τις λέξεις. Δοκιμάστε ξανά.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Η συνεδρία ολοκληρώθηκε",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Μόνο όταν αλλάζει περιεχόμενο",
       "confirmNever": "Ποτέ",
       "saveFailed": "Δεν ήταν δυνατή η αποθήκευση των προτιμήσεων AI",
-      "disabledToast": "Η βοήθεια AI είναι απενεργοποιημένη στις Ρυθμίσεις"
+      "disabledToast": "Η βοήθεια AI είναι απενεργοποιημένη στις Ρυθμίσεις",
+      "exerciseNextSetPrefetch": "Προετοιμασία επόμενου συνόλου ασκήσεων",
+      "exerciseNextSetPrefetchDescription": "Αφού αρχίσετε να απαντάτε, το επόμενο σύνολο προετοιμάζεται αυτόματα στο παρασκήνιο. Χρησιμοποιεί μία πίστωση άσκησης AI κατά την έναρξη. Απενεργοποιήστε για δημιουργία μόνο με Νέο σύνολο."
     },
     "tutorials": "Οδηγοί ενοτήτων",
     "tutorialsDescription": "Επαναφέρετε τους ολοκληρωμένους οδηγούς ενοτήτων ώστε το «Εμφάνιση οδηγού» να ξεκινά από την αρχή.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Δεν έχετε λογαριασμό;",
     "hasAccount": "Έχετε ήδη λογαριασμό;",
     "invalidCredentials": "Μη έγκυρο email ή κωδικός πρόσβασης",
+    "rememberMe": "Να με θυμάσαι",
+    "signInUnavailable": "Η σύνδεση δεν ήταν δυνατή αυτή τη στιγμή. Δοκιμάστε ξανά.",
+    "accountSuspended": "Αυτός ο λογαριασμός έχει ανασταλεί. Επικοινωνήστε με την υποστήριξη αν πιστεύετε ότι είναι λάθος.",
     "emailExists": "Υπάρχει ήδη λογαριασμός με αυτό το email",
     "emailInvalid": "Εισαγάγετε μια έγκυρη διεύθυνση email",
     "registerFailed": "Δεν ήταν δυνατή η δημιουργία λογαριασμού. Παρακαλούμε δοκιμάστε ξανά.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Όροι",
     "registerAgreement": "Δημιουργώντας λογαριασμό, συμφωνείτε με τους <terms>Όρους χρήσης</terms> και την <privacy>Πολιτική απορρήτου</privacy>.",
     "avatarRequestTooLarge": "Αυτή η φωτογραφία είναι πολύ μεγάλη για αποστολή. Δοκιμάστε μικρότερη εικόνα.",
-    "requestTooLarge": "Αυτό το αίτημα ήταν πολύ μεγάλο. Οι αλλαγές σας διατηρήθηκαν — παρακαλούμε δοκιμάστε ξανά."
+    "requestTooLarge": "Αυτό το αίτημα ήταν πολύ μεγάλο. Οι αλλαγές σας διατηρήθηκαν — παρακαλούμε δοκιμάστε ξανά.",
+    "roleAdmin": "Διαχειριστής",
+    "roleTester": "Δοκιμαστής"
   },
   "account": {
     "eyebrow": "Λογαριασμός",
@@ -2910,6 +3004,7 @@
       "backup": "Λήψη αντιγράφου ασφαλείας",
       "backupDone": "Το αντίγραφο ασφαλείας κατέβηκε",
       "backupFailed": "Δεν ήταν δυνατή η προετοιμασία του αντιγράφου ασφαλείας. Δοκιμάστε ξανά.",
+      "confirmPhrase": "Διαγραφή όλων των δεδομένων",
       "confirmLabel": "Πληκτρολογήστε {phrase} για επιβεβαίωση",
       "confirm": "Διαγραφή όλων των δεδομένων",
       "deleted": "Όλα τα μαθησιακά δεδομένα έχουν διαγραφεί",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Μπορεί να παραλειφθεί",
       "warnings": {
         "workspace_language_reuse": "Ορισμένοι χώροι εργασίας υπάρχουν ήδη για την ίδια γλώσσα. Το περιεχόμενό τους θα προστεθεί στους υπάρχοντες χώρους εργασίας αντί να δημιουργηθούν διπλότυπα.",
-        "empty_backup": "Αυτό το αντίγραφο ασφαλείας δεν περιέχει εισαγώγιμα μαθησιακά δεδομένα."
+        "empty_backup": "Αυτό το αντίγραφο ασφαλείας δεν περιέχει εισαγώγιμα μαθησιακά δεδομένα.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Ακύρωση",
       "confirm": "Εισαγωγή μαθησιακών δεδομένων",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# στοιχείο λεξιλογίου υπάρχει ήδη} other {# στοιχεία λεξιλογίου υπάρχουν ήδη}}",
         "listening_missing_media": "{count, plural, one {# μάθημα ακρόασης χωρίς URL πολυμέσων} other {# μαθήματα ακρόασης χωρίς URL πολυμέσων}}",
         "listening_duplicate_filename": "{count, plural, one {# μάθημα ακρόασης παραλείφθηκε (διπλότυπο όνομα αρχείου)} other {# μαθήματα ακρόασης παραλείφθηκαν (διπλότυπο όνομα αρχείου)}}",
+        "speaking_duplicate": "{count, plural, one {# συνεδρία ομιλίας υπάρχει ήδη} other {# συνεδρίες ομιλίας υπάρχουν ήδη}}",
         "invalid_workspace_ref": "{count, plural, one {# στοιχείο χωρίς χώρο εργασίας} other {# στοιχεία χωρίς χώρο εργασίας}}",
         "invalid_record": "{count, plural, one {# μη έγκυρη εγγραφή} other {# μη έγκυρες εγγραφές}}",
-        "unsupported_account_field": "Τα πεδία ταυτότητας λογαριασμού δεν εισάγονται"
+        "unsupported_account_field": "Τα πεδία ταυτότητας λογαριασμού δεν εισάγονται",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Αυτό το αρχείο αντιγράφου ασφαλείας είναι πολύ μεγάλο. Δοκιμάστε εξαγωγή ξανά ή επικοινωνήστε με την υποστήριξη.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Δεν ήταν δυνατή η εισαγωγή αυτού του αντιγράφου ασφαλείας. Δοκιμάστε ξανά.",
         "requestTooLarge": "Αυτό το αντίγραφο ασφαλείας είναι πολύ μεγάλο για επεξεργασία μέσω αυτής της σελίδας. Δοκιμάστε μικρότερη εξαγωγή ή επικοινωνήστε με την υποστήριξη.",
         "notConfigured": "Η αποθήκευση αρχείων δεν έχει ρυθμιστεί ακόμη για εισαγωγή αντιγράφου ασφαλείας."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Κλείσιμο λογαριασμού",
@@ -3002,6 +3110,7 @@
       "backup": "Λήψη αντιγράφου ασφαλείας",
       "backupDone": "Το αντίγραφο ασφαλείας κατέβηκε",
       "backupFailed": "Δεν ήταν δυνατή η προετοιμασία του αντιγράφου ασφαλείας. Δοκιμάστε ξανά.",
+      "confirmPhrase": "Διαγραφή του λογαριασμού μου",
       "confirmLabel": "Πληκτρολογήστε {phrase} για επιβεβαίωση",
       "confirm": "Οριστική διαγραφή λογαριασμού",
       "deleted": "Ο λογαριασμός σας έχει διαγραφεί",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Τάσεις μάθησης",
       "personalLearningPath": "Προσωπική διαδρομή μάθησης",
       "personalizedRecommendations": "Εξατομικευμένες συστάσεις",
-      "crossModuleIntelligence": "Εξατομίκευση μεταξύ ενοτήτων"
+      "crossModuleIntelligence": "Εξατομίκευση μεταξύ ενοτήτων",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Σύγκριση πλάνων",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Έχετε φτάσει το σημερινό όριο του Προπονητή Μάθησης. Ο Προπονητής θα είναι ξανά διαθέσιμος αύριο.",
       "errorPremium": "Ο Προπονητής Μάθησης είναι λειτουργία Premium. Λάβετε εξατομικευμένες συστάσεις βάσει της μαθησιακής σας δραστηριότητας.",
       "errorUnavailable": "Ο Προπονητής σας δεν μπόρεσε να απαντήσει αυτή τη στιγμή. Το μήνυμά σας δεν μετρήθηκε. Δοκιμάστε ξανά.",
+      "errorWorkspace": "Επιλέξτε χώρο εργασίας πριν ρωτήσετε τον προπονητή.",
+      "errorUnauthorized": "Συνδεθείτε ξανά για να συνεχίσετε.",
       "prompts": {
         "practice_today": "Σε τι πρέπει να εστιάσω σήμερα;",
         "struggling_words": "Γιατί δυσκολεύομαι με αυτές τις λέξεις;",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Διαχείριση",
+      "admin": "Διαχειριστής",
       "manage": "Διαχείριση",
       "overview": "Επισκόπηση",
       "users": "Χρήστες",
@@ -4750,7 +4862,7 @@
       "contentLibrary": "Βιβλιοθήκη περιεχομένου",
       "backToApp": "Επιστροφή στην εφαρμογή",
       "openMenu": "Άνοιγμα μενού διαχείρισης",
-      "openAdmin": "Πίνακας διαχείρισης"
+      "openAdmin": "Πίνακας διαχειριστή"
     },
     "modules": {
       "vocabulary": "Λεξιλόγιο",
@@ -4798,7 +4910,28 @@
         "failedListening": "Αποτυχημένες ακροάσεις",
         "failedImports": "Αποτυχημένες εισαγωγές",
         "runningJobs": "Κλειδώματα ενεργών εργασιών",
-        "recentAudits7d": "Καταχωρίσεις ελέγχου (7η)"
+        "recentAudits7d": "Καταχωρίσεις ελέγχου (7η)",
+        "admins": "Διαχειριστές",
+        "testers": "Δοκιμαστές",
+        "suspended": "Ανασταλμένοι",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Γρήγορη πρόσβαση",
+      "quickAccessLede": "Μετάβαση στα εργαλεία διαχείρισης.",
+      "groups": {
+        "people": "Άτομα",
+        "content": "Περιεχόμενο",
+        "ops": "Λειτουργίες"
+      },
+      "charts": {
+        "signupsTitle": "Neue Konten",
+        "signupsLede": "Tägliche Registrierungen der letzten 14 UTC-Tage.",
+        "activeTitle": "Aktive Lernende",
+        "activeLede": "Unterschiedliche Lernende mit Aktivität pro Tag (14T).",
+        "rolesTitle": "Rollen",
+        "rolesLede": "Konten nach Rolle.",
+        "contentTitle": "Inhaltsmix",
+        "contentLede": "Gespeicherte Datensätze in Lernmodulen."
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "Πλάνο",
         "created": "Εγγραφή",
         "updated": "Ενημερώθηκε",
-        "emailVerified": "Επαληθευμένο email"
+        "emailVerified": "Επαληθευμένο email",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Λογαριασμός",
@@ -4841,7 +4976,8 @@
         "usageLede": "Ιδιόκτητες εγγραφές σε όλες τις ενότητες μάθησης.",
         "actions": "Ενέργειες λογαριασμού",
         "workspaces": "Χώροι εργασίας",
-        "workspacesLede": "Χώροι εργασίας γλώσσας που ανήκουν σε αυτόν τον χρήστη."
+        "workspacesLede": "Χώροι εργασίας γλώσσας που ανήκουν σε αυτόν τον χρήστη.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Αποθήκευση ονόματος",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Ανάκληση διαχειριστή",
         "suspend": "Αναστολή",
         "restore": "Επαναφορά",
-        "delete": "Διαγραφή λογαριασμού"
+        "delete": "Διαγραφή λογαριασμού",
+        "grantTester": "Χορήγηση δοκιμαστή",
+        "revokeTester": "Ανάκληση δοκιμαστή",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Να χορηγηθεί πρόσβαση διαχειριστή σε αυτόν τον λογαριασμό;",
         "revokeAdmin": "Να ανακληθεί η πρόσβαση διαχειριστή; Αποτυγχάνει αν είναι ο τελευταίος ενεργός διαχειριστής.",
         "suspend": "Να ανασταλεί αυτός ο λογαριασμός; Χάνουν την πρόσβαση στο επόμενο προστατευμένο αίτημα.",
         "restore": "Να επαναφερθεί αυτός ο λογαριασμός;",
-        "delete": "Να διαγραφεί οριστικά αυτός ο λογαριασμός και τα σχετιζόμενα δεδομένα μάθησης; Δεν μπορεί να αναιρεθεί."
+        "delete": "Να διαγραφεί οριστικά αυτός ο λογαριασμός και τα σχετιζόμενα δεδομένα μάθησης; Δεν μπορεί να αναιρεθεί.",
+        "grantTester": "Χορήγηση ρόλου δοκιμαστή; Λαμβάνουν όλες τις λειτουργίες της εφαρμογής για QA· η αποθηκευμένη συνδρομή δεν αλλάζει.",
+        "revokeTester": "Ανάκληση ρόλου δοκιμαστή; Η πρόσβαση στις λειτουργίες επιστρέφει στην πραγματική τους συνδρομή."
+      },
+      "roleHelp": "Ο ρόλος δοκιμαστή ξεκλειδώνει όλες τις λειτουργίες Free, Pro και Premium για QA χωρίς να αλλάζει την αποθηκευμένη συνδρομή. Απαιτείται διαχειριστής για αυτόν τον πίνακα.",
+      "roles": {
+        "user": "Χρήστης",
+        "tester": "Δοκιμαστής",
+        "admin": "Διαχειριστής"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Γλώσσα",
         "owner": "Κάτοχος",
         "created": "Δημιουργήθηκε",
-        "updated": "Ενημερώθηκε"
+        "updated": "Ενημερώθηκε",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Γλώσσα: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Να διαγραφεί αυτός ο χώρος εργασίας και όλο το περιεχόμενο μάθησης μέσα του μέσω διαδοχικών διαγραφών βάσης δεδομένων;"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Κάτοχος",
         "workspace": "Χώρος εργασίας",
         "created": "Δημιουργήθηκε",
-        "updated": "Ενημερώθηκε"
+        "updated": "Ενημερώθηκε",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Επιθεώρηση μεταδεδομένων. Τα ιδιωτικά σώματα δεν φορτώνονται αυτόματα.",
@@ -4923,11 +5088,13 @@
         "actions": "Ενέργειες"
       },
       "actions": {
-        "delete": "Διαγραφή εγγραφής"
+        "delete": "Διαγραφή εγγραφής",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Να διαγραφεί αυτή η εγγραφή; Οι σχετιζόμενες θυγατρικές γραμμές ακολουθούν κανόνες διαδοχικής διαγραφής / null της βάσης δεδομένων."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Εργασίες",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Αυτός ο χρήστης έχει ήδη χώρο εργασίας για αυτή τη γλώσσα.",
       "INVALID_LANGUAGE": "Μη έγκυρος κωδικός γλώσσας.",
       "CONTENT_NOT_FOUND": "Η εγγραφή δεν βρέθηκε.",
-      "INVALID_CONTENT_MODULE": "Άγνωστη ενότητα περιεχομένου."
+      "INVALID_CONTENT_MODULE": "Άγνωστη ενότητα περιεχομένου.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

@@ -32,6 +32,8 @@ export type TheoryExerciseBase = {
   skillLabel?: string;
   instruction?: string;
   hint?: string;
+  /** Up to three pre-generated hints, revealed one at a time. */
+  hints?: string[];
   explanation?: string;
   /** Short statement of what is being practiced (not shown unless useful). */
   learningObjective?: string;

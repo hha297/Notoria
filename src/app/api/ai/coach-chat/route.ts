@@ -10,6 +10,8 @@ import {
   validateCoachChatActions,
 } from "@/lib/billing/coach-chat";
 import { generateCoachChatReply } from "@/lib/billing/coach-chat-ai";
+import { AuthorizationUnavailableError } from "@/lib/auth/errors";
+import { authErrorResponse } from "@/lib/auth/http";
 import { getActiveWorkspace } from "@/lib/workspace";
 
 export const runtime = "nodejs";
@@ -38,10 +40,10 @@ export async function POST(request: Request) {
 
   const workspace = await getActiveWorkspace();
   if (!workspace) {
-    await settleMeteredAi(access, false, new Error("AI_FORBIDDEN"));
+    await settleMeteredAi(access, false, new Error("WORKSPACE_REQUIRED"));
     return NextResponse.json(
-      { ok: false, code: "AI_FORBIDDEN" },
-      { status: 401 },
+      { ok: false, code: "WORKSPACE_REQUIRED" },
+      { status: 403 },
     );
   }
 
@@ -84,14 +86,21 @@ export async function POST(request: Request) {
   } catch (error) {
     await settleMeteredAi(access, false, error);
     const message = error instanceof Error ? error.message : "";
+    const mapped = authErrorResponse(error);
+    if (mapped) return mapped;
     if (message === "OPENAI_NOT_CONFIGURED" || message === "AI_INVALID_RESPONSE") {
       console.error("coach chat AI failed", message);
     } else if (message === "UNAUTHORIZED") {
       return NextResponse.json(
-        { ok: false, code: "AI_FORBIDDEN" },
+        { ok: false, code: "UNAUTHORIZED", error: "Authentication required" },
         { status: 401 },
       );
-    } else {
+    } else if (message === "WORKSPACE_REQUIRED") {
+      return NextResponse.json(
+        { ok: false, code: "WORKSPACE_REQUIRED" },
+        { status: 403 },
+      );
+    } else if (!(error instanceof AuthorizationUnavailableError)) {
       console.error("coach chat AI failed");
     }
     return NextResponse.json(

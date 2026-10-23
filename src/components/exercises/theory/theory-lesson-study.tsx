@@ -42,6 +42,7 @@ type TheoryLessonStudyProps = {
   onSkipToPractice: () => void;
   onStartPractice: () => void;
   onRetryGenerate?: () => void;
+  instructions?: ReactNode;
 };
 
 export function TheoryLessonStudy({
@@ -59,6 +60,7 @@ export function TheoryLessonStudy({
   onSkipToPractice,
   onStartPractice,
   onRetryGenerate,
+  instructions,
 }: TheoryLessonStudyProps) {
   const t = useTranslations("exercises.theory");
   const tTheory = useTranslations("theory");
@@ -83,13 +85,9 @@ export function TheoryLessonStudy({
     onRetryGenerate?.();
   };
 
-  const practiceLabel = practiceReady
-    ? t("lesson.startPractice")
-    : generating
-      ? t("lesson.preparing")
-      : practiceLocked
-        ? t("unlockAi")
-        : t("generateAi");
+  const practiceLabel = generating
+    ? t("lesson.preparing")
+    : t("lesson.startExercise");
 
   return (
     <article
@@ -114,6 +112,7 @@ export function TheoryLessonStudy({
             onQuickReview={onQuickReview}
             onSkip={onSkipToPractice}
             onRetryGenerate={onRetryGenerate}
+            instructions={instructions}
           />
         ) : null}
       </LessonOpening>
@@ -127,6 +126,7 @@ export function TheoryLessonStudy({
           generating={generating}
           practiceReady={practiceReady}
           generateError={generateError}
+          instructions={instructions}
           onStartPractice={startPractice}
         />
       ) : null}
@@ -194,7 +194,7 @@ function LessonOpening({
   return (
     <header
       className={cn(
-        "theory-zone-hero relative -mx-4 px-5 py-8 sm:-mx-6 sm:px-7",
+        "theory-zone-hero relative -mx-[var(--studio-main-pad,1rem)] px-4 py-5 sm:-mx-[var(--studio-main-pad,1.5rem)] sm:px-7",
         compact ? "sm:py-8" : "sm:py-11",
       )}
     >
@@ -254,6 +254,7 @@ function OverviewActions({
   onQuickReview,
   onSkip,
   onRetryGenerate,
+  instructions,
 }: {
   theoryHref: string;
   showQuick: boolean;
@@ -265,6 +266,7 @@ function OverviewActions({
   onQuickReview: () => void;
   onSkip: () => void;
   onRetryGenerate?: () => void;
+  instructions?: ReactNode;
 }) {
   const t = useTranslations("exercises.theory");
   const outlineSeen = new Set<string>();
@@ -312,40 +314,43 @@ function OverviewActions({
           {generateError}
         </p>
       ) : null}
+      {instructions}
       <div className="flex flex-col gap-2 sm:flex-row sm:flex-wrap sm:items-center">
-        {showQuick ? (
-          <Button
-            type="button"
-            onClick={onQuickReview}
-            className="h-11 w-full border-transparent bg-(--lesson-row-fg) text-background hover:opacity-90 sm:h-10 sm:w-auto"
-          >
-            {t("lesson.quickReview")}
-            <ChevronRight className="size-4" />
-          </Button>
-        ) : null}
         <Button
           type="button"
-          variant={showQuick ? "ghost" : "default"}
           onClick={practiceReady ? onSkip : onRetryGenerate}
           disabled={!practiceReady && generating}
-          className={cn(
-            "h-11 w-full sm:h-10 sm:w-auto",
-            !showQuick &&
-              "border-transparent bg-(--lesson-practice) text-background hover:opacity-90",
-          )}
+          className="h-11 w-full gap-1.5 border-transparent bg-(--lesson-practice) text-background hover:opacity-90 sm:h-10 sm:w-auto"
         >
           {!practiceReady && generating ? (
-            <Loader2 className="size-4 animate-spin" />
+            <Loader2 className="size-4 shrink-0 animate-spin" aria-hidden />
           ) : null}
           {practiceReady
-            ? t("lesson.skipReview")
+            ? showQuick
+              ? t("lesson.skipReviewAndStart")
+              : t("lesson.startExercise")
             : practiceLocked
               ? t("unlockAi")
               : generating
                 ? t("lesson.preparing")
-                : t("generateAi")}
-          {practiceReady ? <ChevronRight className="size-4" /> : null}
+                : showQuick
+                  ? t("lesson.skipReviewAndStart")
+                  : t("lesson.startExercise")}
+          {practiceReady || (!generating && !practiceLocked) ? (
+            <ChevronRight className="size-4 shrink-0" aria-hidden />
+          ) : null}
         </Button>
+        {showQuick ? (
+          <Button
+            type="button"
+            variant="outline"
+            onClick={onQuickReview}
+            className="h-11 w-full gap-1.5 border-page-accent-border sm:h-10 sm:w-auto"
+          >
+            {t("lesson.quickReview")}
+            <ChevronRight className="size-4 shrink-0" aria-hidden />
+          </Button>
+        ) : null}
       </div>
       <p>
         <Link
@@ -367,6 +372,7 @@ function ReviewDocument({
   practiceReady,
   generating,
   generateError,
+  instructions,
   onStartPractice,
 }: {
   sections: TheoryLessonSection[];
@@ -376,6 +382,7 @@ function ReviewDocument({
   practiceReady: boolean;
   generating: boolean;
   generateError?: string | null;
+  instructions?: ReactNode;
   onStartPractice: () => void;
 }) {
   const t = useTranslations("exercises.theory");
@@ -390,13 +397,14 @@ function ReviewDocument({
 
   return (
     <div className="relative mt-8 sm:mt-10">
+      {instructions ? <div className="mb-6">{instructions}</div> : null}
       <div className="mb-6 flex flex-wrap items-center gap-x-4 gap-y-2 px-1">
         <button
           type="button"
           onClick={onStartPractice}
           className="text-sm font-medium text-(--lesson-practice) underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-(--lesson-practice)/40 focus-visible:outline-none"
         >
-          {t("lesson.skipReview")}
+          {t("lesson.startExercise")}
         </button>
         <Link
           href={theoryHref}
@@ -409,7 +417,7 @@ function ReviewDocument({
       {sections.length > 1 ? (
         <nav
           aria-label={t("lesson.outline")}
-          className="sticky top-[var(--studio-chrome-offset,3.5rem)] z-10 -mx-4 mb-6 bg-surface-elevated px-5 py-3 before:pointer-events-none before:absolute before:inset-x-0 before:-top-24 before:h-24 before:bg-surface-elevated sm:-mx-6 sm:px-7"
+          className="sticky top-[var(--studio-chrome-offset,3.5rem)] z-10 -mx-[var(--studio-main-pad,1rem)] mb-6 bg-surface-elevated px-5 py-3 before:pointer-events-none before:absolute before:inset-x-0 before:-top-24 before:h-24 before:bg-surface-elevated sm:-mx-[var(--studio-main-pad,1.5rem)] sm:px-7"
         >
           <p className="mb-2 text-[0.65rem] font-semibold tracking-[0.18em] text-muted-foreground uppercase">
             {t("lesson.outline")}
@@ -456,7 +464,7 @@ function ReviewDocument({
         ))}
       </div>
 
-      <div className={mx(featureStyles, "theory-zone-practice relative mt-6 -mx-4 px-5 py-8 sm:-mx-6 sm:mt-8 sm:px-7 sm:py-10")}>
+      <div className={mx(featureStyles, "theory-zone-practice relative mt-6 -mx-[var(--studio-main-pad,1rem)] px-5 py-8 sm:-mx-[var(--studio-main-pad,1.5rem)] sm:mt-8 sm:px-7 sm:py-10")}>
         <LessonDecor tone="practice" />
         <div className="relative">
           <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--lesson-practice) uppercase">
@@ -474,14 +482,14 @@ function ReviewDocument({
             type="button"
             onClick={onStartPractice}
             disabled={!practiceReady && generating}
-            className="mt-6 h-11 w-full border-transparent bg-(--lesson-practice) text-background hover:opacity-90 sm:h-10 sm:w-auto"
+            className="mt-6 h-11 w-full gap-1.5 border-transparent bg-(--lesson-practice) text-background hover:opacity-90 sm:h-10 sm:w-auto"
           >
             {!practiceReady && generating ? (
-              <Loader2 className="size-4 animate-spin" />
+              <Loader2 className="size-4 shrink-0 animate-spin" aria-hidden />
             ) : null}
             {practiceLabel}
             {!(!practiceReady && generating) ? (
-              <ChevronRight className="size-4" />
+              <ChevronRight className="size-4 shrink-0" aria-hidden />
             ) : null}
           </Button>
         </div>
@@ -557,7 +565,7 @@ function LessonSection({
         ease: EASE,
       }}
       className={cn(
-        "relative min-w-0 scroll-mt-24 -mx-4 px-5 py-7 sm:-mx-6 sm:px-7 sm:py-8",
+        "relative min-w-0 scroll-mt-24 -mx-[var(--studio-main-pad,1rem)] px-5 py-7 sm:-mx-[var(--studio-main-pad,1.5rem)] sm:px-7 sm:py-8",
         zone === "idea" && mx(featureStyles, "theory-zone-idea"),
         zone === "examples" && mx(featureStyles, "theory-zone-examples"),
         zone === "insight" && mx(featureStyles, "theory-zone-insight"),

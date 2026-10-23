@@ -2,6 +2,11 @@ import { cache } from "react";
 import { eq } from "drizzle-orm";
 import { db } from "@/db";
 import { users } from "@/db/schema";
+import { incomingRequestId, logAuthEvent } from "@/lib/auth/diagnostics";
+import {
+  AuthorizationUnavailableError,
+} from "@/lib/auth/errors";
+import { classifyDependencyError } from "@/lib/auth/policy";
 import { getSession } from "@/lib/auth/session";
 import { withTiming } from "@/lib/perf/dev-timing";
 
@@ -34,11 +39,27 @@ export const getCurrentUserRecord = cache(async () => {
       return null;
     }
 
-    const user = await db.query.users.findFirst({
-      where: eq(users.id, session.user.id),
-      columns: USER_COLUMNS,
-    });
-
-    return user ?? null;
+    try {
+      const user = await db.query.users.findFirst({
+        where: eq(users.id, session.user.id),
+        columns: USER_COLUMNS,
+      });
+      return user ?? null;
+    } catch (error) {
+      const errorCategory =
+        error instanceof AuthorizationUnavailableError
+          ? error.category
+          : classifyDependencyError(error);
+      logAuthEvent({
+        stage: "authorization",
+        phase: "check",
+        outcome: "unavailable",
+        errorCategory,
+        requestId: await incomingRequestId(),
+      });
+      throw error instanceof AuthorizationUnavailableError
+        ? error
+        : new AuthorizationUnavailableError(errorCategory);
+    }
   });
 });

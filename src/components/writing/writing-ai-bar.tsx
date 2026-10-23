@@ -186,7 +186,7 @@ export function WritingAiBar({
             variant="outline"
             className={
               !writingQuota.locked && item.action === selectedAction
-                ? "border-primary bg-primary text-primary-foreground hover:bg-primary/90 hover:text-primary-foreground shadow-none"
+                ? "border-primary bg-primary bg-none! text-primary-foreground hover:bg-primary/90 hover:bg-none! hover:text-primary-foreground shadow-none"
                 : "shadow-none"
             }
             aria-pressed={item.action === selectedAction}

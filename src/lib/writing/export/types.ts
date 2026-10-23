@@ -1,5 +1,9 @@
 import type { JSONContent } from "@tiptap/react";
 import type { WritingMode } from "@/lib/writing/content";
+import {
+  DEFAULT_EXPORT_APPEARANCE,
+  type ExportAppearance,
+} from "@/lib/export/print-theme";
 
 export type ExportFormat = "pdf" | "docx";
 
@@ -10,6 +14,10 @@ export type ExportOptions = {
   includeExampleAnswers: boolean;
   includeNotes: boolean;
   leaveBlankSpace: boolean;
+  /** Print-friendly (default) or resolved current theme colors. */
+  appearance: ExportAppearance;
+  /** next-themes resolved mode when appearance is "theme". */
+  themeMode?: "light" | "dark";
 };
 
 export type ExportLabels = {
@@ -49,6 +57,7 @@ export const DEFAULT_EXPORT_OPTIONS: ExportOptions = {
   includeExampleAnswers: true,
   includeNotes: true,
   leaveBlankSpace: true,
+  appearance: DEFAULT_EXPORT_APPEARANCE,
 };
 
 export const BLANK_LINE_COUNT = 4;

@@ -35,6 +35,7 @@ export type TypeAnswerItem = {
   meaningHint?: string;
   aiGenerated?: boolean;
   sentenceMeaning?: string | null;
+  hints?: string[];
 };
 
 function buildAnswers(values: string[]) {
@@ -95,6 +96,7 @@ export function contextualExerciseToTypeAnswerItem(
     prompt: string;
     answer: string;
     sentenceMeaning?: string | null;
+    hints?: string[] | null;
   },
   word: FlashcardWord | undefined,
   index: number,
@@ -124,6 +126,7 @@ export function contextualExerciseToTypeAnswerItem(
     meaningHint,
     aiGenerated: true,
     sentenceMeaning: exercise.sentenceMeaning,
+    hints: exercise.hints ?? undefined,
   };
 }
 

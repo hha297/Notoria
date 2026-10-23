@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import styles from "@/components/style/admin/admin.module.css";
 import { mx } from "@/lib/css-module";
@@ -39,13 +38,13 @@ export function AdminSearchForm({
         placeholder={placeholder}
         aria-label={searchLabel}
       />
-      <Button type="submit" variant="outline" size="sm">
+      <button type="submit" className={mx(styles, "admin-btn")}>
         {searchLabel}
-      </Button>
+      </button>
       {clearHref && defaultQuery && clearLabel ? (
-        <Button render={<Link href={clearHref} />} variant="ghost" size="sm">
+        <Link href={clearHref} className={mx(styles, "admin-btn", "admin-btn-ghost")}>
           {clearLabel}
-        </Button>
+        </Link>
       ) : null}
     </form>
   );

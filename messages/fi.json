@@ -15,7 +15,20 @@
     "clearFilter": "Tyhjennä",
     "filters": "Suodattimet",
     "hideFilters": "Piilota suodattimet",
-    "remove": "Poista"
+    "remove": "Poista",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Kansiota ei voi siirtää itseensä",
     "tooDeep": "Kansio on liian syvällä",
     "notFound": "Kansiota ei löytynyt",
-    "nameTaken": "Kansio tai kirjoitus käyttää jo tätä nimeä"
+    "nameTaken": "Kansio tai kirjoitus käyttää jo tätä nimeä",
+    "dragTipTitle": "Siirrä kansioon",
+    "dragTipBody": "Tietokoneella hiirellä tai ohjauslevyllä: vedä kohde kansikortin päälle siirtääksesi sen. Voit myös käyttää siirto-kuvaketta.",
+    "dragTipDismiss": "Sulje vinkki",
+    "dragTipShow": "Miten siirretään kansioon",
+    "dragTipDemo": "Vedä kohde kansioon",
+    "dragTipCard": "Kohde"
   },
   "theme": {
     "toggle": "Vaihda teema",
@@ -291,7 +310,11 @@
     "createWorkspace": "Luo työtila",
     "createWorkspaceHint": "Lisää toinen kielityötila",
     "switchWorkspace": "Vaihda työtilaa",
-    "switchFailed": "Työtilan vaihto epäonnistui"
+    "switchFailed": "Työtilan vaihto epäonnistui",
+    "selectLanguage": "Valitse kieli",
+    "allLanguages": "Kaikki kielet",
+    "changeLanguageFailed": "Käyttöliittymän kieltä ei voitu vaihtaa",
+    "popularLanguages": "Suositut"
   },
   "workspace": {
     "title": "Työtilat",
@@ -670,14 +693,31 @@
       "retry": "Yritä uudelleen",
       "dismiss": "Sulje",
       "stages": {
-        "uploading": "Ladataan…",
-        "extracting": "Poimitaan sisältöä…",
-        "analyzing": "Analysoidaan…",
-        "generating": "Luodaan harjoitusta…",
-        "saving": "Tallennetaan…",
+        "uploading": "Ladataan tiedostoa",
+        "extracting": "Poimitaan sisältöä",
+        "analyzing": "Analysoidaan sisältöä",
+        "generating": "Luodaan kysymyksiä",
+        "saving": "Tallennetaan ja valmistellaan harjoitusta",
         "completed": "Harjoitus valmis",
-        "error": "Luonti epäonnistui"
-      }
+        "error": "Luonti epäonnistui",
+        "preparing": "Valmistellaan oppimateriaalia",
+        "validating": "Tarkistetaan vastauksia ja vihjeitä"
+      },
+      "stillWorking": "Luonti vielä käynnissä… {seconds} s kulunut",
+      "hints": {
+        "uploading": "Tiedostoa lähetetään turvallisesti.",
+        "extracting": "Luetaan tekstiä ja rakennetta lähteestä.",
+        "analyzing": "Etsitään harjoitusvihjeitä materiaalista.",
+        "preparing": "Kerätään valittu sanasto tai teoria tälle setille.",
+        "generating": "Malli kirjoittaa kysymyksiä. Tämä voi kestää hetken.",
+        "validating": "Tarkistetaan vastaukset, vihjeet ja rakenne ennen harjoittelua.",
+        "saving": "Kootaan harjoitussettiäsi."
+      },
+      "nextSetPreparing": "Valmistellaan seuraavaa settiä…",
+      "nextSetReady": "Seuraava setti valmis",
+      "nextSetFailed": "Seuraavaa settiä ei voitu valmistella",
+      "nextSetRetry": "Valmistele seuraava setti",
+      "openNextSet": "Avaa seuraava setti"
     },
     "import": {
       "eyebrow": "Tuotu harjoitus",
@@ -822,6 +862,7 @@
       "aiReady": "Harjoitus valmis",
       "aiUnavailable": "Tekoälykysymyksiä ei voitu luoda juuri nyt.",
       "aiForbidden": "Teorian tekoälyharjoitukset kuuluvat Pro-pakettiin.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI-avustus on pois päältä Asetuksissa.",
       "feedback": {
         "correct": "Oikein!",
@@ -874,7 +915,21 @@
         "theRule": "Sääntö",
         "why": "Miksi",
         "complete": "Selvä",
-        "completeHint": "Voit jatkaa, kun olet valmis."
+        "completeHint": "Voit jatkaa, kun olet valmis.",
+        "startExercise": "Aloita harjoitus",
+        "skipReviewAndStart": "Ohita kertaus ja aloita harjoitus"
+      },
+      "folders": {
+        "unfiled": "Ilman kansiota",
+        "joiner": " → ",
+        "count": "{count, plural, one {# muistiinpano} other {# muistiinpanoa}}",
+        "selectAll": "Valitse kaikki",
+        "selectGroup": "Valitse muistiinpanot kansioon {name}",
+        "expand": "Laajenna {name}",
+        "collapse": "Pienennä {name}",
+        "selectedCount": "{count, plural, one {# teoria valittu} other {# teoriaa valittu}}",
+        "practiceSelected": "Harjoittele valittuja",
+        "clearSelection": "Tyhjennä valinta"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Vihje",
       "startsWith": "Alkaa merkillä “{letter}”",
       "revealPrompt": "Vieläkö jumissa? Voit paljastaa koko vastauksen.",
-      "revealAnswer": "Näytä vastaus"
+      "revealAnswer": "Näytä vastaus",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Ei sanastoa vielä",
@@ -977,8 +1034,38 @@
       "forbidden": "Tekoälyharjoitukset kuuluvat Pro-tilaukseen.",
       "disabled": "AI-avustus on pois päältä Asetuksissa.",
       "upgradeHint": "Tekoälyharjoitukset kuuluvat Pro-tilaukseen.",
+      "additionalInstructions": "Lisäohjeet",
+      "additionalInstructionsPlaceholder": "Esimerkiksi: Käytä ravintolatilanteita, pidä kieli A2-tasolla ja selitä virheet käyttöliittymän kielellä.",
+      "additionalInstructionsLocked": "Päivitä Premiumiin mukauttaaksesi tuettuja harjoitustyyppejä, asettaaksesi tilanteen ja lisätäksesi omat ohjeesi.",
+      "premiumRequired": "Lisäohjeet kuuluvat Premium-tilaukseen.",
+      "presetLabel": "Esiasetukset",
+      "presetNone": "Ei esiasetusta valittuna",
+      "presetApply": "Käytä",
+      "presetSave": "Tallenna esiasetus",
+      "presetName": "Esiasetuksen nimi",
+      "presetDelete": "Poista",
+      "presetSaved": "Esiasetus tallennettu",
+      "presetDeleted": "Esiasetus poistettu",
+      "presetSaveFailed": "Esiasetusta ei voitu tallentaa.",
       "emptyWords": "Lisää sanoja ennen kysymysten luomista.",
-      "noneValid": "Tekoäly ei saanut luotua kelvollisia kysymyksiä näille sanoille. Yritä uudelleen."
+      "noneValid": "Tekoäly ei saanut luotua kelvollisia kysymyksiä näille sanoille. Yritä uudelleen.",
+      "additionalInstructionsHelper": "Mukauta harjoituksen kontekstia, tyyliä tai painotusta. Jätä tyhjäksi käyttääksesi oletusasetuksia.",
+      "presetUpdate": "Päivitä esiasetus",
+      "presetUpdated": "Esiasetus päivitetty",
+      "presetsTitle": "Tallennetut esiasetukset",
+      "presetsHelper": "Esiasetukset tallentavat harjoituksen asetukset ja lisäohjeet. Ne eivät muuta valittua sanastoa tai teorioita.",
+      "presetsEmpty": "Ei tallennettuja esiasetuksia vielä. Tallenna nykyiset asetukset käyttääksesi niitä myöhemmin.",
+      "presetSaveAs": "Tallenna esiasetuksena",
+      "presetUpdateCurrent": "Päivitä nykyisillä asetuksilla",
+      "presetRename": "Nimeä uudelleen",
+      "presetManage": "Hallitse esiasetusta",
+      "presetRenamed": "Esiasetus nimetty uudelleen",
+      "presetSaveDialogTitle": "Tallenna esiasetuksena",
+      "presetSaveDialogDescription": "Anna nimi, jotta voit käyttää nykyisiä harjoitusasetuksia ja lisäohjeita uudelleen. Valittua sanastoa tai teorioita ei tallenneta.",
+      "presetRenameDialogTitle": "Nimeä esiasetus uudelleen",
+      "presetRenameDialogDescription": "Valitse uusi nimi tälle esiasetukselle.",
+      "presetDeleteDialogTitle": "Poistetaanko esiasetus?",
+      "presetDeleteDialogDescription": "Poistetaanko “{name}”? Nykyinen harjoitusasetus säilyy ennallaan."
     },
     "session": {
       "complete": "Harjoitus valmis",
@@ -1820,7 +1907,9 @@
       "confirmContentChange": "Vain sisältöä muuttaessa",
       "confirmNever": "Ei koskaan",
       "saveFailed": "AI-asetuksia ei voitu tallentaa",
-      "disabledToast": "AI-avustus on pois päältä Asetuksissa"
+      "disabledToast": "AI-avustus on pois päältä Asetuksissa",
+      "exerciseNextSetPrefetch": "Valmistele seuraava harjoitussetti",
+      "exerciseNextSetPrefetchDescription": "Kun alat vastata, seuraava setti valmistellaan taustalla automaattisesti. Käyttää yhden tekoälyharjoituskrediitin valmistelun alkaessa. Poista käytöstä, jos haluat luoda vain kun napautat Uusi setti."
     },
     "tutorials": "Osioiden oppaat",
     "tutorialsDescription": "Nollaa suoritetut osio-oppaat, jotta “Show tutorial” alkaa alusta.",
@@ -2573,6 +2662,9 @@
     "noAccount": "Eikö sinulla ole tiliä?",
     "hasAccount": "Onko sinulla jo tili?",
     "invalidCredentials": "Virheellinen sähköposti tai salasana",
+    "rememberMe": "Muista minut",
+    "signInUnavailable": "Kirjautuminen ei onnistu juuri nyt. Yritä uudelleen.",
+    "accountSuspended": "Tämä tili on jäädytetty. Ota yhteyttä tukeen, jos uskot tämän olevan virhe.",
     "emailExists": "Tämä sähköposti on jo käytössä",
     "emailInvalid": "Anna kelvollinen sähköpostiosoite",
     "registerFailed": "Tilin luonti epäonnistui. Yritä uudelleen.",
@@ -2653,7 +2745,9 @@
     "legalTerms": "Ehdot",
     "registerAgreement": "Luomalla tilin hyväksyt <terms>käyttöehdot</terms> ja <privacy>tietosuojaselosteen</privacy>.",
     "avatarRequestTooLarge": "Kuva on liian suuri lähetettäväksi. Kokeile pienempää kuvaa.",
-    "requestTooLarge": "Pyyntö oli liian suuri. Muutoksesi säilyivät — yritä uudelleen."
+    "requestTooLarge": "Pyyntö oli liian suuri. Muutoksesi säilyivät — yritä uudelleen.",
+    "roleAdmin": "Ylläpitäjä",
+    "roleTester": "Testaaja"
   },
   "account": {
     "eyebrow": "Tili",
@@ -2715,6 +2809,7 @@
       "backup": "Lataa varmuuskopio",
       "backupDone": "Varmuuskopio ladattu",
       "backupFailed": "Varmuuskopiota ei voitu valmistella. Yritä uudelleen.",
+      "confirmPhrase": "Poista kaikki data",
       "confirmLabel": "Kirjoita {phrase} vahvistaaksesi",
       "confirm": "Poista kaikki data",
       "deleted": "Kaikki oppimisdata on poistettu",
@@ -2745,7 +2840,8 @@
       "skippedTitle": "Saatetaan ohittaa",
       "warnings": {
         "workspace_language_reuse": "Joitakin työtiloja on jo olemassa samalle kielelle. Niiden sisältö lisätään olemassa oleviin työtiloihin sen sijaan, että luotaisiin kaksoiskappaleita.",
-        "empty_backup": "Tämä varmuuskopio ei sisällä tuotavaa oppimisdataa."
+        "empty_backup": "Tämä varmuuskopio ei sisällä tuotavaa oppimisdataa.",
+        "ambiguous_name_match": "Joillakin olemassa olevilla kohteilla on sama nimi. Tuonti käyttää yhtä niistä deterministisesti eikä muuta muita."
       },
       "cancel": "Peruuta",
       "confirm": "Tuo oppimisdata",
@@ -2770,9 +2866,16 @@
         "vocabulary_duplicate": "{count, plural, one {# sanastoyksikkö on jo olemassa} other {# sanastoyksikköä on jo olemassa}}",
         "listening_missing_media": "{count, plural, one {# kuuntelutunnilta puuttuu media-URL} other {# kuuntelutunnilta puuttuu media-URL}}",
         "listening_duplicate_filename": "{count, plural, one {# kuuntelutunti ohitettiin (päällekkäinen tiedostonimi)} other {# kuuntelutuntia ohitettiin (päällekkäinen tiedostonimi)}}",
+        "speaking_duplicate": "{count, plural, one {# puhesessio on jo olemassa} other {# puhesessiota on jo olemassa}}",
         "invalid_workspace_ref": "{count, plural, one {# kohde ilman työtilaa} other {# kohdetta ilman työtilaa}}",
         "invalid_record": "{count, plural, one {# virheellinen tietue} other {# virheellistä tietuetta}}",
-        "unsupported_account_field": "Tilin henkilöllisyyskenttiä ei tuoda"
+        "unsupported_account_field": "Tilin henkilöllisyyskenttiä ei tuoda",
+        "folder_duplicate": "{count, plural, one {# kansio on jo olemassa} other {# kansiota on jo olemassa}}",
+        "tag_duplicate": "{count, plural, one {# tunniste on jo olemassa} other {# tunnistetta on jo olemassa}}",
+        "theory_duplicate": "{count, plural, one {# teoriasivu on jo olemassa} other {# teoriasivua on jo olemassa}}",
+        "writing_duplicate": "{count, plural, one {# kirjoitusasiakirja on jo olemassa} other {# kirjoitusasiakirjaa on jo olemassa}}",
+        "exercise_duplicate": "{count, plural, one {# harjoitus on jo olemassa} other {# harjoitusta on jo olemassa}}",
+        "listening_duplicate": "{count, plural, one {# kuuntelutunti on jo olemassa} other {# kuuntelutuntia on jo olemassa}}"
       },
       "errors": {
         "fileTooLarge": "Varmuuskopiotiedosto on liian suuri. Vie uudelleen tai ota yhteyttä tukeen.",
@@ -2782,7 +2885,12 @@
         "importFailed": "Varmuuskopiota ei voitu tuoda. Yritä uudelleen.",
         "requestTooLarge": "Varmuuskopio on liian suuri käsiteltäväksi tällä sivulla. Kokeile pienempää vientiä tai ota yhteyttä tukeen.",
         "notConfigured": "Tiedostojen tallennusta ei ole vielä määritetty varmuuskopioiden tuontia varten."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Sulje tili",
@@ -2807,6 +2915,7 @@
       "backup": "Lataa varmuuskopio",
       "backupDone": "Varmuuskopio ladattu",
       "backupFailed": "Varmuuskopiota ei voitu valmistella. Yritä uudelleen.",
+      "confirmPhrase": "Poista tilini",
       "confirmLabel": "Kirjoita {phrase} vahvistaaksesi",
       "confirm": "Poista tili pysyvästi",
       "deleted": "Tilisi on poistettu",
@@ -3061,7 +3170,8 @@
       "learningTrends": "Oppimistrendit",
       "personalLearningPath": "Henkilökohtainen oppimispolku",
       "personalizedRecommendations": "Henkilökohtaiset suositukset",
-      "crossModuleIntelligence": "Moduulien välinen personointi"
+      "crossModuleIntelligence": "Moduulien välinen personointi",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Vertaa tilauksia",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Olet käyttänyt tämän päivän oppimisvalmentaja-kiintiön. Valmentaja on taas käytettävissä huomenna.",
       "errorPremium": "Oppimisvalmentaja on Premium-ominaisuus. Saat henkilökohtaisia suosituksia opiskeluaktiviteettisi perusteella.",
       "errorUnavailable": "Valmentaja ei voinut vastata juuri nyt. Viestiäsi ei laskettu. Yritä uudelleen.",
+      "errorWorkspace": "Valitse työtila ennen kuin kysyt valmentajalta.",
+      "errorUnauthorized": "Kirjaudu uudelleen jatkaaksesi.",
       "prompts": {
         "practice_today": "Mihin minun pitäisi keskittyä tänään?",
         "struggling_words": "Miksi nämä sanat ovat minulle vaikeita?",
@@ -4738,101 +4850,124 @@
   },
   "admin": {
     "nav": {
-      "admin": "Admin",
-      "manage": "Manage",
-      "overview": "Overview",
-      "users": "Users",
-      "workspaces": "Workspaces",
-      "jobs": "Jobs",
-      "audit": "Audit",
-      "content": "Content",
-      "contentLibrary": "Content library",
-      "backToApp": "Back to app",
-      "openMenu": "Open admin menu",
-      "openAdmin": "Admin dashboard"
+      "admin": "Ylläpito",
+      "manage": "Hallinta",
+      "overview": "Yhteenveto",
+      "users": "Käyttäjät",
+      "workspaces": "Työtilat",
+      "jobs": "Työt",
+      "audit": "Auditointi",
+      "content": "Sisältö",
+      "contentLibrary": "Sisältökirjasto",
+      "backToApp": "Takaisin sovellukseen",
+      "openMenu": "Avaa admin-valikko",
+      "openAdmin": "Ylläpitopaneeli"
     },
     "modules": {
-      "vocabulary": "Vocabulary",
-      "theory": "Theory",
-      "writing": "Writing",
-      "exercises": "Exercises",
-      "listening": "Listening",
-      "reading": "Reading",
-      "speaking": "Speaking",
-      "inbox": "Capture",
-      "folders": "Folders"
+      "vocabulary": "Sanasto",
+      "theory": "Teoria",
+      "writing": "Kirjoittaminen",
+      "exercises": "Harjoitus",
+      "listening": "Kuuntelu",
+      "reading": "Lukeminen",
+      "speaking": "Puhuminen",
+      "inbox": "Keräys",
+      "folders": "Kansiot"
     },
     "common": {
-      "search": "Search",
-      "clear": "Clear",
-      "filter": "Filter",
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {totalPages}",
-      "results": "{total} results",
-      "backToList": "Back to list",
-      "empty": "No results"
+      "search": "Haku",
+      "clear": "Tyhjennä",
+      "filter": "Suodata",
+      "previous": "Edellinen",
+      "next": "Seuraava",
+      "pageOf": "Sivu {page} / {totalPages}",
+      "results": "{total} tulosta",
+      "backToList": "Takaisin listaan",
+      "empty": "Ei tuloksia"
     },
     "overview": {
-      "title": "Overview",
-      "description": "Live counts from application data. Time ranges use UTC calendar days. Active learners count distinct users with learning activity events — not logins.",
-      "metrics": "Metrics",
-      "recentAudit": "Recent admin actions",
-      "recentAuditLede": "Latest mutations from the audit trail.",
-      "viewAllAudit": "View audit log",
+      "title": "Yhteenveto",
+      "description": "Live-luvut sovellusdatasta. Aikavälit käyttävät UTC-kalenteripäiviä. Aktiiviset oppijat laskevat käyttäjät, joilla on oppimistapahtumia — ei kirjautumisia.",
+      "metrics": "Mittarit",
+      "recentAudit": "Viimeisimmät ylläpitotoimet",
+      "recentAuditLede": "Uusimmat muutokset auditointilokista.",
+      "viewAllAudit": "Näytä auditointiloki",
       "cards": {
-        "users": "Total users",
-        "newUsers7d": "New users (7d)",
-        "newUsers30d": "New users (30d)",
-        "activeUsers7d": "Active learners (7d)",
-        "workspaces": "Workspaces",
-        "vocabulary": "Vocabulary",
-        "theory": "Theory",
-        "writing": "Writing",
-        "exercises": "Exercises",
-        "listening": "Listening",
-        "reading": "Reading",
-        "speaking": "Speaking",
-        "inbox": "Capture",
-        "failedListening": "Failed listening",
-        "failedImports": "Failed imports",
-        "runningJobs": "Running job locks",
-        "recentAudits7d": "Audit entries (7d)"
+        "users": "Käyttäjiä yhteensä",
+        "newUsers7d": "Uudet käyttäjät (7 pv)",
+        "newUsers30d": "Uudet käyttäjät (30 pv)",
+        "activeUsers7d": "Aktiiviset oppijat (7 pv)",
+        "workspaces": "Työtilat",
+        "vocabulary": "Sanasto",
+        "theory": "Teoria",
+        "writing": "Kirjoittaminen",
+        "exercises": "Harjoitus",
+        "listening": "Kuuntelu",
+        "reading": "Lukeminen",
+        "speaking": "Puhuminen",
+        "inbox": "Keräys",
+        "failedListening": "Epäonnistuneet kuuntelut",
+        "failedImports": "Epäonnistuneet tuonnit",
+        "runningJobs": "Käynnissä olevat lukot",
+        "recentAudits7d": "Auditointimerkinnät (7 pv)",
+        "admins": "Ylläpitäjät",
+        "testers": "Testaajat",
+        "suspended": "Jäädytetyt",
+        "contentTotal": "Sisältötietueet"
+      },
+      "quickAccess": "Pikapääsy",
+      "quickAccessLede": "Siirry hallintatyökaluihin.",
+      "groups": {
+        "people": "Ihmiset",
+        "content": "Sisältö",
+        "ops": "Toiminnot"
+      },
+      "charts": {
+        "signupsTitle": "Uudet tilit",
+        "signupsLede": "Päivittäiset rekisteröinnit viimeisten 14 UTC-päivän ajalta.",
+        "activeTitle": "Aktiiviset oppijat",
+        "activeLede": "Eri oppijat aktiviteetilla päivittäin (14 pv).",
+        "rolesTitle": "Roolit",
+        "rolesLede": "Tilit rooleittain.",
+        "contentTitle": "Sisällön jakauma",
+        "contentLede": "Tallenteet oppimismoduleissa."
       }
     },
     "users": {
-      "title": "Users",
+      "title": "Käyttäjät",
       "description": "Search accounts, change roles, suspend access, or delete with confirmation.",
-      "searchPlaceholder": "Search name or email…",
+      "searchPlaceholder": "Hae nimeä tai sähköpostia…",
       "empty": "No users match these filters.",
       "selfGuard": "Safeguards prevent changing or deleting your own admin account here.",
       "columns": {
-        "user": "User",
-        "role": "Role",
-        "status": "Status",
-        "plan": "Plan",
-        "workspaces": "Workspaces",
-        "created": "Registered"
+        "user": "Käyttäjä",
+        "role": "Rooli",
+        "status": "Tila",
+        "plan": "Paketti",
+        "workspaces": "Työtilat",
+        "created": "Rekisteröity"
       },
       "filters": {
         "role": "Role",
         "status": "Status",
-        "allRoles": "Any role",
-        "allStatuses": "Any status"
+        "allRoles": "Kaikki roolit",
+        "allStatuses": "Kaikki tilat"
       },
       "status": {
-        "active": "Active",
-        "suspended": "Suspended"
+        "active": "Aktiivinen",
+        "suspended": "Jäädytetty"
       },
       "fields": {
         "id": "User id",
-        "name": "Name",
-        "role": "Role",
+        "name": "Nimi",
+        "role": "Rooli",
         "status": "Status",
         "plan": "Plan",
         "created": "Registered",
         "updated": "Updated",
-        "emailVerified": "Email verified"
+        "emailVerified": "Email verified",
+        "email": "Sähköposti",
+        "password": "Salasana"
       },
       "detail": {
         "account": "Account",
@@ -4840,7 +4975,8 @@
         "usageLede": "Owned records across learning modules.",
         "actions": "Account actions",
         "workspaces": "Workspaces",
-        "workspacesLede": "Language workspaces owned by this user."
+        "workspacesLede": "Language workspaces owned by this user.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Save name",
@@ -4848,14 +4984,34 @@
         "revokeAdmin": "Revoke admin",
         "suspend": "Suspend",
         "restore": "Restore",
-        "delete": "Delete account"
+        "delete": "Delete account",
+        "grantTester": "Anna testaaja-rooli",
+        "revokeTester": "Poista testaaja-rooli",
+        "create": "Luo käyttäjä"
       },
       "confirm": {
         "grantAdmin": "Grant admin access to this account?",
         "revokeAdmin": "Revoke admin access? This fails if they are the last active admin.",
         "suspend": "Suspend this account? They lose access on the next protected request.",
         "restore": "Restore this account?",
-        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone."
+        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone.",
+        "grantTester": "Annetaanko testaaja-rooli? He saavat kaikki sovellusominaisuudet QA:ta varten; tallennettu tilaus ei muutu.",
+        "revokeTester": "Poistetaanko testaaja-rooli? Ominaisuuksien käyttö palaa heidän todellisen tilauksensa mukaiseksi."
+      },
+      "roleHelp": "Testaaja-rooli avaa kaikki Free-, Pro- ja Premium-ominaisuudet QA:ta varten muuttamatta tallennettua tilausta. Tämä hallintapaneeli vaatii ylläpitäjän.",
+      "roles": {
+        "user": "Käyttäjä",
+        "tester": "Testaaja",
+        "admin": "Ylläpitäjä"
+      },
+      "create": {
+        "title": "Luo käyttäjä",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4877,7 +5033,9 @@
         "language": "Language",
         "owner": "Owner",
         "created": "Created",
-        "updated": "Updated"
+        "updated": "Updated",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Language: {language}",
@@ -4892,6 +5050,10 @@
       },
       "confirm": {
         "delete": "Delete this workspace and all learning content inside it via database cascades?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4913,7 +5075,10 @@
         "owner": "Owner",
         "workspace": "Workspace",
         "created": "Created",
-        "updated": "Updated"
+        "updated": "Updated",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Metadata inspection. Private bodies are not auto-loaded.",
@@ -4922,11 +5087,13 @@
         "actions": "Actions"
       },
       "actions": {
-        "delete": "Delete record"
+        "delete": "Delete record",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Delete this record? Related child rows follow database cascade / set-null rules."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Jobs",
@@ -4991,7 +5158,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "This user already has a workspace for that language.",
       "INVALID_LANGUAGE": "Invalid language code.",
       "CONTENT_NOT_FOUND": "Record not found.",
-      "INVALID_CONTENT_MODULE": "Unknown content module."
+      "INVALID_CONTENT_MODULE": "Unknown content module.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

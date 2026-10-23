@@ -15,7 +15,20 @@
     "clearFilter": "Temizle",
     "filters": "Filtreler",
     "hideFilters": "Filtreleri gizle",
-    "remove": "Kaldır"
+    "remove": "Kaldır",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Bir klasör kendi içine taşınamaz",
     "tooDeep": "Bu klasör çok derin iç içe geçmiş",
     "notFound": "Klasör bulunamadı",
-    "nameTaken": "Bu adı zaten bir klasör veya yazı kullanıyor"
+    "nameTaken": "Bu adı zaten bir klasör veya yazı kullanıyor",
+    "dragTipTitle": "Klasöre taşı",
+    "dragTipBody": "Fare veya dokunmatik yüzeyi olan bilgisayarda bir öğeyi klasör kartının üzerine sürükleyerek taşıyabilirsiniz. Taşıma simgesini de kullanabilirsiniz.",
+    "dragTipDismiss": "İpucunu kapat",
+    "dragTipShow": "Klasöre nasıl taşınır",
+    "dragTipDemo": "Klasöre sürükle",
+    "dragTipCard": "Öğe"
   },
   "theme": {
     "toggle": "Temayı değiştir",
@@ -291,7 +310,11 @@
     "createWorkspace": "Çalışma alanı oluştur",
     "createWorkspaceHint": "Başka bir dil çalışma alanı ekleyin",
     "switchWorkspace": "Çalışma alanını değiştir",
-    "switchFailed": "Çalışma alanı değiştirilemedi"
+    "switchFailed": "Çalışma alanı değiştirilemedi",
+    "selectLanguage": "Dil seçin",
+    "allLanguages": "Tüm diller",
+    "changeLanguageFailed": "Arayüz dili değiştirilemedi",
+    "popularLanguages": "Popüler"
   },
   "workspace": {
     "title": "Çalışma alanları",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# içe aktarım} other {# içe aktarım}}"
     },
     "processing": {
-      "workingTitle": "Alıştırmanız üzerinde çalışılıyor",
+      "workingTitle": "Alıştırmanız hazırlanıyor",
       "readyTitle": "Alıştırma hazır",
       "errorTitle": "Bir şeyler ters gitti",
       "cancel": "İptal",
       "retry": "Yeniden dene",
       "dismiss": "Kapat",
       "stages": {
-        "uploading": "Yükleniyor…",
-        "extracting": "İçerik çıkarılıyor…",
-        "analyzing": "İçerik analiz ediliyor…",
-        "generating": "Alıştırma oluşturuluyor…",
-        "saving": "Alıştırma kaydediliyor…",
+        "uploading": "Dosya yükleniyor",
+        "extracting": "İçerik çıkarılıyor",
+        "analyzing": "İçerik analiz ediliyor",
+        "generating": "Sorular oluşturuluyor",
+        "saving": "Alıştırma kaydedilip hazırlanıyor",
         "completed": "Alıştırma hazır",
-        "error": "Oluşturma başarısız"
-      }
+        "error": "Oluşturma başarısız",
+        "preparing": "Öğrenme materyali hazırlanıyor",
+        "validating": "Yanıtlar ve ipuçları doğrulanıyor"
+      },
+      "stillWorking": "Hâlâ oluşturuluyor… {seconds} sn geçti",
+      "hints": {
+        "uploading": "Dosyanız güvenle gönderiliyor.",
+        "extracting": "Kaynaktan metin ve yapı okunuyor.",
+        "analyzing": "Materyaldeki alıştırma ipuçları belirleniyor.",
+        "preparing": "Bu set için seçilen kelime dağarcığı veya teori toplanıyor.",
+        "generating": "Model soruları yazıyor. Biraz sürebilir.",
+        "validating": "Pratikten önce yanıtlar, ipuçları ve yapı kontrol ediliyor.",
+        "saving": "Alıştırma setiniz birleştiriliyor."
+      },
+      "nextSetPreparing": "Sonraki set hazırlanıyor…",
+      "nextSetReady": "Sonraki set hazır",
+      "nextSetFailed": "Sonraki set hazırlanamadı",
+      "nextSetRetry": "Sonraki seti hazırla",
+      "openNextSet": "Sonraki seti aç"
     },
     "import": {
       "eyebrow": "İçe aktarılan pratik",
@@ -822,6 +862,7 @@
       "aiReady": "Pratik hazır",
       "aiUnavailable": "Şu anda AI soruları oluşturulamadı.",
       "aiForbidden": "AI teori alıştırmaları Pro ile kullanılabilir.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI yardımı Ayarlar’da kapalı.",
       "feedback": {
         "correct": "Doğru!",
@@ -874,7 +915,21 @@
         "theRule": "Kural",
         "why": "Neden",
         "complete": "Anlaşıldı",
-        "completeHint": "Hazır olduğunuzda ilerleyebilirsiniz."
+        "completeHint": "Hazır olduğunuzda ilerleyebilirsiniz.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "İpucu",
       "startsWith": "“{letter}” ile başlar",
       "revealPrompt": "Hâlâ takıldınız mı? Tam cevabı gösterebilirsiniz.",
-      "revealAnswer": "Cevabı Göster"
+      "revealAnswer": "Cevabı Göster",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Henüz kelime yok",
@@ -977,8 +1034,38 @@
       "forbidden": "AI alıştırma oluşturma Pro ile kullanılabilir.",
       "disabled": "AI yardımı Ayarlar’da kapalı.",
       "upgradeHint": "Free her gün birkaç AI alıştırma oluşturma içerir. Pro limiti kaldırır.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Soru oluşturmadan önce kelime bilgisi kelimeleri ekleyin.",
-      "noneValid": "AI bu kelimeler için geçerli sorular oluşturamadı. Tekrar deneyin."
+      "noneValid": "AI bu kelimeler için geçerli sorular oluşturamadı. Tekrar deneyin.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Oturum tamamlandı",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Yalnızca içerik değişirken",
       "confirmNever": "Asla",
       "saveFailed": "Yapay zekâ tercihleri kaydedilemedi",
-      "disabledToast": "Yapay zekâ desteği Ayarlar’da kapalı"
+      "disabledToast": "Yapay zekâ desteği Ayarlar’da kapalı",
+      "exerciseNextSetPrefetch": "Sonraki alıştırma setini hazırla",
+      "exerciseNextSetPrefetchDescription": "Cevaplamaya başladıktan sonra sonraki set arka planda otomatik hazırlanır. Başlangıçta bir AI alıştırma kredisi kullanır. Yalnızca Yeni set ile oluşturmak için kapatın."
     },
     "tutorials": "Bölüm eğitimleri",
     "tutorialsDescription": "Tamamlanan bölüm turlarını sıfırlayın; böylece “Eğitimi göster” yeniden baştan başlar.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Hesabınız yok mu?",
     "hasAccount": "Zaten bir hesabınız var mı?",
     "invalidCredentials": "Geçersiz e-posta veya şifre",
+    "rememberMe": "Beni hatırla",
+    "signInUnavailable": "Şu anda giriş yapılamadı. Lütfen yeniden deneyin.",
+    "accountSuspended": "Bu hesap askıya alındı. Bunun bir hata olduğunu düşünüyorsanız destekle iletişime geçin.",
     "emailExists": "Bu e-posta ile bir hesap zaten mevcut",
     "emailInvalid": "Geçerli bir e-posta adresi girin",
     "registerFailed": "Hesap oluşturulamadı. Lütfen yeniden deneyin.",
@@ -2848,7 +2940,9 @@
     "legalTerms": "Koşullar",
     "registerAgreement": "Hesap oluşturarak <terms>Kullanım Koşulları</terms> ve <privacy>Gizlilik Politikası</privacy>’nı kabul etmiş olursunuz.",
     "avatarRequestTooLarge": "Bu fotoğraf gönderilemeyecek kadar büyük. Daha küçük bir görsel deneyin.",
-    "requestTooLarge": "Bu istek çok büyüktü. Değişiklikleriniz korundu — lütfen yeniden deneyin."
+    "requestTooLarge": "Bu istek çok büyüktü. Değişiklikleriniz korundu — lütfen yeniden deneyin.",
+    "roleAdmin": "Yönetici",
+    "roleTester": "Test kullanıcısı"
   },
   "account": {
     "eyebrow": "Hesap",
@@ -2910,6 +3004,7 @@
       "backup": "Yedeği indir",
       "backupDone": "Yedek indirildi",
       "backupFailed": "Yedeğiniz hazırlanamadı. Yeniden deneyin.",
+      "confirmPhrase": "Tüm verileri sil",
       "confirmLabel": "Onaylamak için {phrase} yazın",
       "confirm": "Tüm verileri sil",
       "deleted": "Tüm öğrenme verileri silindi",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Atlanabilir",
       "warnings": {
         "workspace_language_reuse": "Bazı çalışma alanları aynı dil için zaten mevcut. İçerikleri çoğaltmak yerine mevcut çalışma alanlarınıza eklenecek.",
-        "empty_backup": "Bu yedek içe aktarılabilir öğrenme verisi içermiyor."
+        "empty_backup": "Bu yedek içe aktarılabilir öğrenme verisi içermiyor.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "İptal",
       "confirm": "Öğrenme verilerini içe aktar",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# kelime dağarcığı öğesi zaten mevcut} other {# kelime dağarcığı öğesi zaten mevcut}}",
         "listening_missing_media": "{count, plural, one {# dinleme dersinde medya URL’si eksik} other {# dinleme dersinde medya URL’si eksik}}",
         "listening_duplicate_filename": "{count, plural, one {# dinleme dersi atlandı (yinelenen dosya adı)} other {# dinleme dersi atlandı (yinelenen dosya adı)}}",
+        "speaking_duplicate": "{count, plural, one {# konuşma oturumu zaten mevcut} other {# konuşma oturumu zaten mevcut}}",
         "invalid_workspace_ref": "{count, plural, one {# öğede çalışma alanı eksik} other {# öğede çalışma alanı eksik}}",
         "invalid_record": "{count, plural, one {# geçersiz kayıt} other {# geçersiz kayıt}}",
-        "unsupported_account_field": "Hesap kimliği alanları içe aktarılmaz"
+        "unsupported_account_field": "Hesap kimliği alanları içe aktarılmaz",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Bu yedek dosyası çok büyük. Yeniden dışa aktarmayı deneyin veya destek ile iletişime geçin.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Bu yedek içe aktarılamadı. Yeniden deneyin.",
         "requestTooLarge": "Bu yedek bu sayfa üzerinden işlenemeyecek kadar büyük. Daha küçük bir dışa aktarma deneyin veya destek ile iletişime geçin.",
         "notConfigured": "Yedek içe aktarma için dosya depolama henüz yapılandırılmadı."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Hesabı kapat",
@@ -3002,6 +3110,7 @@
       "backup": "Yedeği indir",
       "backupDone": "Yedek indirildi",
       "backupFailed": "Yedeğiniz hazırlanamadı. Yeniden deneyin.",
+      "confirmPhrase": "Hesabımı sil",
       "confirmLabel": "Onaylamak için {phrase} yazın",
       "confirm": "Hesabı kalıcı olarak sil",
       "deleted": "Hesabınız silindi",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Öğrenme Eğilimleri",
       "personalLearningPath": "Kişisel Öğrenme Yolu",
       "personalizedRecommendations": "Kişiselleştirilmiş öneriler",
-      "crossModuleIntelligence": "Modüller arası kişiselleştirme"
+      "crossModuleIntelligence": "Modüller arası kişiselleştirme",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Planları karşılaştır",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Bugünkü Öğrenme Koçu limitinize ulaştınız. Koçunuz yarın tekrar kullanılabilir olacak.",
       "errorPremium": "Öğrenme Koçu bir Premium özelliğidir. Öğrenme etkinliğinize göre kişiselleştirilmiş öneriler alın.",
       "errorUnavailable": "Koçunuz şu anda yanıt veremedi. Mesajınız sayılmadı. Lütfen yeniden deneyin.",
+      "errorWorkspace": "Koça sormadan önce bir çalışma alanı seçin.",
+      "errorUnauthorized": "Devam etmek için yeniden giriş yapın.",
       "prompts": {
         "practice_today": "Bugün neye odaklanmalıyım?",
         "struggling_words": "Bu kelimelerde neden zorlanıyorum?",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Yönetim",
+      "admin": "Yönetici",
       "manage": "Yönet",
       "overview": "Genel bakış",
       "users": "Kullanıcılar",
@@ -4750,7 +4862,7 @@
       "contentLibrary": "İçerik kütüphanesi",
       "backToApp": "Uygulamaya dön",
       "openMenu": "Yönetim menüsünü aç",
-      "openAdmin": "Yönetim paneli"
+      "openAdmin": "Yönetici paneli"
     },
     "modules": {
       "vocabulary": "Kelime dağarcığı",
@@ -4798,7 +4910,28 @@
         "failedListening": "Başarısız dinleme",
         "failedImports": "Başarısız içe aktarmalar",
         "runningJobs": "Çalışan iş kilitleri",
-        "recentAudits7d": "Denetim kayıtları (7g)"
+        "recentAudits7d": "Denetim kayıtları (7g)",
+        "admins": "Yöneticiler",
+        "testers": "Test kullanıcıları",
+        "suspended": "Askıya alınanlar",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Hızlı erişim",
+      "quickAccessLede": "Yönetim araçlarına gidin.",
+      "groups": {
+        "people": "Kişiler",
+        "content": "İçerik",
+        "ops": "İşlemler"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "Plan",
         "created": "Kayıt",
         "updated": "Güncellendi",
-        "emailVerified": "E-posta doğrulandı"
+        "emailVerified": "E-posta doğrulandı",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Hesap",
@@ -4841,7 +4976,8 @@
         "usageLede": "Öğrenme modüllerindeki sahip olunan kayıtlar.",
         "actions": "Hesap işlemleri",
         "workspaces": "Çalışma alanları",
-        "workspacesLede": "Bu kullanıcının sahip olduğu dil çalışma alanları."
+        "workspacesLede": "Bu kullanıcının sahip olduğu dil çalışma alanları.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Adı kaydet",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Yöneticiyi kaldır",
         "suspend": "Askıya al",
         "restore": "Geri yükle",
-        "delete": "Hesabı sil"
+        "delete": "Hesabı sil",
+        "grantTester": "Test kullanıcısı rolü ver",
+        "revokeTester": "Test kullanıcısı rolünü kaldır",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Bu hesaba yönetici erişimi verilsin mi?",
         "revokeAdmin": "Yönetici erişimi kaldırılsın mı? Son aktif yöneticiyse bu işlem başarısız olur.",
         "suspend": "Bu hesap askıya alınsın mı? Bir sonraki korumalı istekte erişimi kaybederler.",
         "restore": "Bu hesap geri yüklensin mi?",
-        "delete": "Bu hesap ve bağlı öğrenme verileri kalıcı olarak silinsin mi? Bu geri alınamaz."
+        "delete": "Bu hesap ve bağlı öğrenme verileri kalıcı olarak silinsin mi? Bu geri alınamaz.",
+        "grantTester": "Test kullanıcısı rolü verilsin mi? QA için tüm uygulama özelliklerini alırlar; kayıtlı abonelik değişmez.",
+        "revokeTester": "Test kullanıcısı rolü kaldırılsın mı? Özellik erişimi gerçek aboneliklerine döner."
+      },
+      "roleHelp": "Test kullanıcısı rolü, kayıtlı aboneliği değiştirmeden QA için tüm Free, Pro ve Premium özelliklerini açar. Bu panel için yönetici gerekir.",
+      "roles": {
+        "user": "Kullanıcı",
+        "tester": "Test kullanıcısı",
+        "admin": "Yönetici"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Dil",
         "owner": "Sahip",
         "created": "Oluşturuldu",
-        "updated": "Güncellendi"
+        "updated": "Güncellendi",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Dil: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Bu çalışma alanı ve içindeki tüm öğrenme içeriği veritabanı zincirleme silme ile silinsin mi?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Sahip",
         "workspace": "Çalışma alanı",
         "created": "Oluşturuldu",
-        "updated": "Güncellendi"
+        "updated": "Güncellendi",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Meta veri incelemesi. Özel gövdeler otomatik yüklenmez.",
@@ -4923,11 +5088,13 @@
         "actions": "İşlemler"
       },
       "actions": {
-        "delete": "Kaydı sil"
+        "delete": "Kaydı sil",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Bu kayıt silinsin mi? İlgili alt satırlar veritabanı cascade / set-null kurallarını izler."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "İşler",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "Bu kullanıcının bu dil için zaten bir çalışma alanı var.",
       "INVALID_LANGUAGE": "Geçersiz dil kodu.",
       "CONTENT_NOT_FOUND": "Kayıt bulunamadı.",
-      "INVALID_CONTENT_MODULE": "Bilinmeyen içerik modülü."
+      "INVALID_CONTENT_MODULE": "Bilinmeyen içerik modülü.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

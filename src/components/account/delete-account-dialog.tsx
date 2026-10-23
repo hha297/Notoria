@@ -2,11 +2,12 @@
 
 import styles from "@/components/style/account/account.module.css";
 import { mx } from "@/lib/css-module";
-import { useState, useTransition } from "react";
+import { useEffect, useState, useTransition } from "react";
 import { signOut } from "next-auth/react";
 import { AlertTriangle, Download, Loader2, Trash2 } from "lucide-react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
+import { ConfirmPhraseLabel } from "@/components/account/confirm-phrase-label";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -18,10 +19,11 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { deleteAccount } from "@/lib/actions/account";
 import {
-  deleteAccount,
-} from "@/lib/actions/account";
-import { DELETE_ACCOUNT_CONFIRMATION } from "@/lib/account/constants";
+  displayConfirmPhrase,
+  matchesConfirmPhrase,
+} from "@/lib/account/confirm-phrase";
 import { downloadAccountBackupJson } from "@/lib/account/download-backup";
 
 type DeleteAccountDialogProps = {
@@ -37,11 +39,22 @@ export function DeleteAccountDialog({
 }: DeleteAccountDialogProps) {
   const t = useTranslations("account.delete");
   const tc = useTranslations("common");
+  const locale = useLocale();
   const [confirmation, setConfirmation] = useState("");
   const [isBackupPending, startBackupTransition] = useTransition();
   const [isDeletePending, startDeleteTransition] = useTransition();
+
+  const expectedPhrase = t("confirmPhrase");
+  const displayPhrase = displayConfirmPhrase(expectedPhrase, locale);
   const canDelete =
-    confirmation.trim() === DELETE_ACCOUNT_CONFIRMATION && !isDeletePending;
+    matchesConfirmPhrase(confirmation, expectedPhrase, locale) &&
+    !isDeletePending;
+
+  useEffect(() => {
+    // Reset on locale change and whenever the dialog closes/reopens.
+    // eslint-disable-next-line react-hooks/set-state-in-effect
+    setConfirmation("");
+  }, [locale, open]);
 
   function handleOpenChange(next: boolean) {
     if (isDeletePending) return;
@@ -69,7 +82,7 @@ export function DeleteAccountDialog({
 
     startDeleteTransition(async () => {
       try {
-        await deleteAccount({ confirmation: DELETE_ACCOUNT_CONFIRMATION });
+        await deleteAccount({ confirmation });
         toast.success(t("deleted"));
         await signOut({ callbackUrl: "/" });
       } catch {
@@ -82,7 +95,10 @@ export function DeleteAccountDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         showCloseButton={!isDeletePending}
-        className={mx(styles, "account-delete-sheet flex max-h-[min(92dvh,720px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-xl sm:p-0")}
+        className={mx(
+          styles,
+          "account-delete-sheet flex max-h-[min(92dvh,720px)] flex-col gap-0 overflow-hidden p-0 sm:max-w-xl sm:p-0",
+        )}
       >
         <div className={mx(styles, "account-delete-hero shrink-0")}>
           <DialogHeader className="gap-2 space-y-0 pr-8 text-left">
@@ -96,11 +112,18 @@ export function DeleteAccountDialog({
           </DialogHeader>
         </div>
 
-        <div className={mx(styles, "account-delete-body min-h-0 flex-1 overflow-y-auto")}>
+        <div
+          className={mx(
+            styles,
+            "account-delete-body min-h-0 flex-1 overflow-y-auto",
+          )}
+        >
           <div className={mx(styles, "account-delete-warning")} role="alert">
             <AlertTriangle className="size-4 shrink-0" aria-hidden />
             <div>
-              <p className={mx(styles, "account-delete-warning-title")}>{t("warningTitle")}</p>
+              <p className={mx(styles, "account-delete-warning-title")}>
+                {t("warningTitle")}
+              </p>
               <ul className={mx(styles, "account-delete-warning-list")}>
                 <li>{t("warnings.workspaces")}</li>
                 <li>{t("warnings.billing")}</li>
@@ -112,8 +135,12 @@ export function DeleteAccountDialog({
 
           <div className={mx(styles, "account-delete-backup")}>
             <div>
-              <p className={mx(styles, "account-delete-backup-title")}>{t("backupTitle")}</p>
-              <p className={mx(styles, "account-delete-backup-hint")}>{t("backupHint")}</p>
+              <p className={mx(styles, "account-delete-backup-title")}>
+                {t("backupTitle")}
+              </p>
+              <p className={mx(styles, "account-delete-backup-hint")}>
+                {t("backupHint")}
+              </p>
             </div>
             <Button
               type="button"
@@ -132,15 +159,21 @@ export function DeleteAccountDialog({
             </Button>
           </div>
 
-          <div className={mx(styles, "account-field")}>
-            <Label htmlFor="delete-account-confirm" className={mx(styles, "account-label")}>
-              {t("confirmLabel", { phrase: DELETE_ACCOUNT_CONFIRMATION })}
+          <div className={mx(styles, "account-delete-confirm")}>
+            <Label
+              htmlFor="delete-account-confirm"
+              className={mx(styles, "account-label")}
+            >
+              <ConfirmPhraseLabel
+                template={t("confirmLabel", { phrase: "\u0000" })}
+                phrase={displayPhrase}
+              />
             </Label>
             <Input
               id="delete-account-confirm"
               value={confirmation}
               onChange={(event) => setConfirmation(event.target.value)}
-              placeholder={DELETE_ACCOUNT_CONFIRMATION}
+              placeholder={displayPhrase}
               autoComplete="off"
               spellCheck={false}
               disabled={isDeletePending}
@@ -149,7 +182,12 @@ export function DeleteAccountDialog({
           </div>
         </div>
 
-        <DialogFooter className={mx(styles, "account-delete-footer mx-0 mb-0 shrink-0")}>
+        <DialogFooter
+          className={mx(
+            styles,
+            "account-delete-footer mx-0 mb-0 sm:mx-0 sm:mb-0 shrink-0",
+          )}
+        >
           <Button
             type="button"
             variant="outline"

@@ -15,7 +15,20 @@
     "clearFilter": "Скинути",
     "filters": "Фільтри",
     "hideFilters": "Сховати фільтри",
-    "remove": "Прибрати"
+    "remove": "Прибрати",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "Не можна перемістити папку в саму себе",
     "tooDeep": "Ця папка вкладена занадто глибоко",
     "notFound": "Папку не знайдено",
-    "nameTaken": "Папка або текст із такою назвою вже існує"
+    "nameTaken": "Папка або текст із такою назвою вже існує",
+    "dragTipTitle": "Перемістити до теки",
+    "dragTipBody": "На комп’ютері з мишею або трекпадом перетягніть елемент на картку теки. Також можна скористатися значком переміщення.",
+    "dragTipDismiss": "Сховати підказку",
+    "dragTipShow": "Як переміщувати до тек",
+    "dragTipDemo": "Перетягти до теки",
+    "dragTipCard": "Елемент"
   },
   "theme": {
     "toggle": "Перемкнути тему",
@@ -291,7 +310,11 @@
     "createWorkspace": "Створити робочий простір",
     "createWorkspaceHint": "Додати ще один мовний робочий простір",
     "switchWorkspace": "Перемкнути робочий простір",
-    "switchFailed": "Не вдалося перемкнути робочий простір"
+    "switchFailed": "Не вдалося перемкнути робочий простір",
+    "selectLanguage": "Виберіть мову",
+    "allLanguages": "Усі мови",
+    "changeLanguageFailed": "Не вдалося змінити мову інтерфейсу",
+    "popularLanguages": "Популярні"
   },
   "workspace": {
     "title": "Робочі простори",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, one {# імпорт} few {# імпорти} many {# імпортів} other {# імпорту}}"
     },
     "processing": {
-      "workingTitle": "Готуємо вашу вправу",
-      "readyTitle": "Вправу готово",
+      "workingTitle": "Готуємо вправу",
+      "readyTitle": "Вправа готова",
       "errorTitle": "Щось пішло не так",
       "cancel": "Скасувати",
-      "retry": "Повторити",
+      "retry": "Спробувати знову",
       "dismiss": "Закрити",
       "stages": {
-        "uploading": "Завантаження…",
-        "extracting": "Витягування змісту…",
-        "analyzing": "Аналіз змісту…",
-        "generating": "Генерація вправи…",
-        "saving": "Збереження вправи…",
-        "completed": "Вправу готово",
-        "error": "Генерація не вдалася"
-      }
+        "uploading": "Завантаження файлу",
+        "extracting": "Витягування вмісту",
+        "analyzing": "Аналіз вмісту",
+        "generating": "Генерація запитань",
+        "saving": "Збереження та підготовка вправи",
+        "completed": "Вправа готова",
+        "error": "Не вдалося створити",
+        "preparing": "Підготовка навчального матеріалу",
+        "validating": "Перевірка відповідей і підказок"
+      },
+      "stillWorking": "Досі генеруємо… минуло {seconds} с",
+      "hints": {
+        "uploading": "Безпечне надсилання файлу.",
+        "extracting": "Читання тексту й структури з джерела.",
+        "analyzing": "Пошук підказок для практики в матеріалі.",
+        "preparing": "Збір вибраної лексики або теорії для цього набору.",
+        "generating": "Модель пише запитання. Це може зайняти час.",
+        "validating": "Перевірка відповідей, підказок і структури перед практикою.",
+        "saving": "Збирання вашого набору вправ."
+      },
+      "nextSetPreparing": "Готуємо наступний набір…",
+      "nextSetReady": "Наступний набір готовий",
+      "nextSetFailed": "Не вдалося підготувати наступний набір",
+      "nextSetRetry": "Підготувати наступний набір",
+      "openNextSet": "Відкрити наступний набір"
     },
     "import": {
       "eyebrow": "Імпортована практика",
@@ -822,6 +862,7 @@
       "aiReady": "Практику готово",
       "aiUnavailable": "Зараз не вдалося згенерувати питання зі ШІ.",
       "aiForbidden": "Вправи з теорії зі ШІ доступні з Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "Допомогу ШІ вимкнено в Налаштуваннях.",
       "feedback": {
         "correct": "Правильно!",
@@ -874,7 +915,21 @@
         "theRule": "Правило",
         "why": "Чому",
         "complete": "Зрозуміло",
-        "completeHint": "Можете рухатися далі, коли будете готові."
+        "completeHint": "Можете рухатися далі, коли будете готові.",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "Підказка",
       "startsWith": "Починається з «{letter}»",
       "revealPrompt": "Усе ще складно? Можете відкрити повну відповідь.",
-      "revealAnswer": "Відкрити відповідь"
+      "revealAnswer": "Відкрити відповідь",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "Словника ще немає",
@@ -977,8 +1034,38 @@
       "forbidden": "Генерація вправ зі ШІ доступна з Pro.",
       "disabled": "Допомогу ШІ вимкнено в Налаштуваннях.",
       "upgradeHint": "Безкоштовний план включає кілька генерацій вправ зі ШІ на день. Pro знімає обмеження.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "Додайте слова до словника, перш ніж генерувати питання.",
-      "noneValid": "ШІ не зміг створити дійсні питання для цих слів. Спробуйте ще раз."
+      "noneValid": "ШІ не зміг створити дійсні питання для цих слів. Спробуйте ще раз.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "Сесію завершено",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "Лише під час зміни вмісту",
       "confirmNever": "Ніколи",
       "saveFailed": "Не вдалося зберегти параметри ШІ",
-      "disabledToast": "Допомогу ШІ вимкнено в Налаштуваннях"
+      "disabledToast": "Допомогу ШІ вимкнено в Налаштуваннях",
+      "exerciseNextSetPrefetch": "Готувати наступний набір вправ",
+      "exerciseNextSetPrefetchDescription": "Після того як ви почнете відповідати, наступний набір готується автоматично у фоні. Витрачає один кредит ІІ-вправи на старті. Вимкніть, щоб генерувати лише кнопкою Новий набір."
     },
     "tutorials": "Оглядові тури розділів",
     "tutorialsDescription": "Скинути завершені оглядові тури розділів, щоб «Показати тур» знову починався з початку.",
@@ -2768,6 +2857,9 @@
     "noAccount": "Немає облікового запису?",
     "hasAccount": "Уже маєте обліковий запис?",
     "invalidCredentials": "Невірна електронна пошта або пароль",
+    "rememberMe": "Запам'ятати мене",
+    "signInUnavailable": "Не вдалося увійти просто зараз. Спробуйте ще раз.",
+    "accountSuspended": "Цей обліковий запис призупинено. Напишіть у підтримку, якщо це помилка.",
     "emailExists": "Обліковий запис із цією електронною поштою вже існує",
     "emailInvalid": "Введіть дійсну адресу електронної пошти",
     "registerFailed": "Не вдалося створити обліковий запис. Спробуйте ще раз.",
@@ -2809,6 +2901,8 @@
     "resetTokenMissing": "Це посилання для скидання відсутнє або неповне. Запросіть нове.",
     "account": "Обліковий запис",
     "accountSettings": "Налаштування облікового запису",
+    "roleAdmin": "Адміністратор",
+    "roleTester": "Тестувальник",
     "accountDescription": "Оновіть фото профілю та пароль.",
     "profile": "Профіль",
     "avatar": "Фото профілю",
@@ -2910,6 +3004,7 @@
       "backup": "Завантажити резервну копію",
       "backupDone": "Резервну копію завантажено",
       "backupFailed": "Не вдалося підготувати резервну копію. Спробуйте ще раз.",
+      "confirmPhrase": "Видалити всі дані",
       "confirmLabel": "Введіть {phrase} для підтвердження",
       "confirm": "Видалити всі дані",
       "deleted": "Усі навчальні дані видалено",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "Може бути пропущено",
       "warnings": {
         "workspace_language_reuse": "Деякі робочі простори вже існують для тієї самої мови. Їхній вміст буде додано до наявних робочих просторів замість створення дублікатів.",
-        "empty_backup": "Ця резервна копія не містить навчальних даних для імпорту."
+        "empty_backup": "Ця резервна копія не містить навчальних даних для імпорту.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Скасувати",
       "confirm": "Імпортувати навчальні дані",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# елемент словника вже існує} few {# елементи словника вже існують} many {# елементів словника вже існують} other {# елемента словника вже існують}}",
         "listening_missing_media": "{count, plural, one {# урок аудіювання без URL медіа} few {# уроки аудіювання без URL медіа} many {# уроків аудіювання без URL медіа} other {# уроку аудіювання без URL медіа}}",
         "listening_duplicate_filename": "{count, plural, one {# урок аудіювання пропущено (дублікат імені файлу)} few {# уроки аудіювання пропущено (дублікат імені файлу)} many {# уроків аудіювання пропущено (дублікат імені файлу)} other {# уроку аудіювання пропущено (дублікат імені файлу)}}",
+        "speaking_duplicate": "{count, plural, one {# сесія говоріння вже існує} few {# сесії говоріння вже існують} many {# сесій говоріння вже існують} other {# сесії говоріння вже існують}}",
         "invalid_workspace_ref": "{count, plural, one {# елемент без робочого простору} few {# елементи без робочого простору} many {# елементів без робочого простору} other {# елемента без робочого простору}}",
         "invalid_record": "{count, plural, one {# недійсний запис} few {# недійсні записи} many {# недійсних записів} other {# недійсного запису}}",
-        "unsupported_account_field": "Поля ідентичності облікового запису не імпортуються"
+        "unsupported_account_field": "Поля ідентичності облікового запису не імпортуються",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Цей файл резервної копії занадто великий. Спробуйте експортувати знову або зверніться до служби підтримки.",
@@ -2977,7 +3080,12 @@
         "importFailed": "Не вдалося імпортувати цю резервну копію. Спробуйте ще раз.",
         "requestTooLarge": "Ця резервна копія занадто велика для обробки на цій сторінці. Спробуйте менший експорт або зверніться до служби підтримки.",
         "notConfigured": "Сховище файлів для імпорту резервних копій ще не налаштовано."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Закрити обліковий запис",
@@ -3002,6 +3110,7 @@
       "backup": "Завантажити резервну копію",
       "backupDone": "Резервну копію завантажено",
       "backupFailed": "Не вдалося підготувати резервну копію. Спробуйте ще раз.",
+      "confirmPhrase": "Видалити мій обліковий запис",
       "confirmLabel": "Введіть {phrase} для підтвердження",
       "confirm": "Назавжди видалити обліковий запис",
       "deleted": "Ваш обліковий запис видалено",
@@ -3256,7 +3365,8 @@
       "learningTrends": "Навчальні тенденції",
       "personalLearningPath": "Особистий навчальний шлях",
       "personalizedRecommendations": "Персоналізовані рекомендації",
-      "crossModuleIntelligence": "Персоналізація між модулями"
+      "crossModuleIntelligence": "Персоналізація між модулями",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Порівняння планів",
@@ -3441,6 +3551,8 @@
       "errorQuota": "Ви вичерпали денний ліміт Learning Coach. Коуч знову буде доступний завтра.",
       "errorPremium": "Learning Coach — функція Premium. Отримуйте персоналізовані рекомендації на основі Вашої навчальної активності.",
       "errorUnavailable": "Коуч зараз не зміг відповісти. Ваше повідомлення не зараховано. Спробуйте ще раз.",
+      "errorWorkspace": "Оберіть робочий простір, перш ніж питати коуча.",
+      "errorUnauthorized": "Увійдіть знову, щоб продовжити.",
       "prompts": {
         "practice_today": "На чому мені зосередитися сьогодні?",
         "struggling_words": "Чому мені важко з цими словами?",
@@ -4739,7 +4851,7 @@
   },
   "admin": {
     "nav": {
-      "admin": "Адмін",
+      "admin": "Адміністратор",
       "manage": "Керування",
       "overview": "Огляд",
       "users": "Користувачі",
@@ -4798,7 +4910,28 @@
         "failedListening": "Невдале аудіювання",
         "failedImports": "Невдалі імпорти",
         "runningJobs": "Активні блокування завдань",
-        "recentAudits7d": "Записи аудиту (7 дн.)"
+        "recentAudits7d": "Записи аудиту (7 дн.)",
+        "admins": "Адміністратори",
+        "testers": "Тестувальники",
+        "suspended": "Заблоковані",
+        "contentTotal": "Content records"
+      },
+      "quickAccess": "Швидкий доступ",
+      "quickAccessLede": "Перейти до інструментів керування.",
+      "groups": {
+        "people": "Люди",
+        "content": "Вміст",
+        "ops": "Операції"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "План",
         "created": "Зареєстровано",
         "updated": "Оновлено",
-        "emailVerified": "Email підтверджено"
+        "emailVerified": "Email підтверджено",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "Обліковий запис",
@@ -4841,7 +4976,8 @@
         "usageLede": "Власні записи в навчальних модулях.",
         "actions": "Дії з обліковим записом",
         "workspaces": "Робочі простори",
-        "workspacesLede": "Мовні робочі простори цього користувача."
+        "workspacesLede": "Мовні робочі простори цього користувача.",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "Зберегти ім’я",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "Відкликати адміна",
         "suspend": "Призупинити",
         "restore": "Відновити",
-        "delete": "Видалити обліковий запис"
+        "delete": "Видалити обліковий запис",
+        "grantTester": "Призначити тестувальника",
+        "revokeTester": "Зняти тестувальника",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "Надати цьому обліковому запису доступ адміна?",
         "revokeAdmin": "Відкликати доступ адміна? Це не вдасться, якщо це останній активний адмін.",
         "suspend": "Призупинити цей обліковий запис? Доступ буде втрачено на наступному захищеному запиті.",
         "restore": "Відновити цей обліковий запис?",
-        "delete": "Назавжди видалити цей обліковий запис і пов’язані навчальні дані? Цю дію не можна скасувати."
+        "delete": "Назавжди видалити цей обліковий запис і пов’язані навчальні дані? Цю дію не можна скасувати.",
+        "grantTester": "Призначити роль тестувальника? Вони отримають усі функції застосунку для QA; збережена підписка не зміниться.",
+        "revokeTester": "Зняти роль тестувальника? Доступ до функцій повернеться до їхньої фактичної підписки."
+      },
+      "roleHelp": "Роль тестувальника відкриває всі функції Free, Pro і Premium для QA, не змінюючи збережену підписку. Для цієї панелі потрібен адміністратор.",
+      "roles": {
+        "user": "Користувач",
+        "tester": "Тестувальник",
+        "admin": "Адміністратор"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "Мова",
         "owner": "Власник",
         "created": "Створено",
-        "updated": "Оновлено"
+        "updated": "Оновлено",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "Мова: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "Видалити цей робочий простір і весь навчальний контент у ньому через каскади бази даних?"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "Власник",
         "workspace": "Робочий простір",
         "created": "Створено",
-        "updated": "Оновлено"
+        "updated": "Оновлено",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "Перегляд метаданих. Приватний вміст не завантажується автоматично.",
@@ -4923,11 +5088,13 @@
         "actions": "Дії"
       },
       "actions": {
-        "delete": "Видалити запис"
+        "delete": "Видалити запис",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "Видалити цей запис? Пов’язані дочірні рядки підпадають під правила каскаду / set-null у базі даних."
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "Завдання",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "У цього користувача вже є робочий простір для цієї мови.",
       "INVALID_LANGUAGE": "Недійсний код мови.",
       "CONTENT_NOT_FOUND": "Запис не знайдено.",
-      "INVALID_CONTENT_MODULE": "Невідомий модуль контенту."
+      "INVALID_CONTENT_MODULE": "Невідомий модуль контенту.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }

@@ -3,10 +3,12 @@
 import formatStyles from "@/components/style/export/export-format.module.css";
 import { mx } from "@/lib/css-module";
 import { Download, Loader2 } from "lucide-react";
+import { useTheme } from "next-themes";
 import { useEffect, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
+import { ExportAppearanceOptions } from "@/components/export/export-appearance-options";
 import {
   ExportFormatOptions,
   ExportOptionChip,
@@ -19,6 +21,7 @@ import {
   DOCUMENT_EXPORT_FORMATS,
   getDefaultExportFormat,
 } from "@/lib/export/formats";
+import { DEFAULT_EXPORT_APPEARANCE } from "@/lib/export/print-theme";
 import {
   DEFAULT_EXPORT_OPTIONS,
   exportWritingExercise,
@@ -46,6 +49,8 @@ export function WritingExportDialog({
 }: WritingExportDialogProps) {
   const t = useTranslations("writing.export");
   const tc = useTranslations("common");
+  const tAppearance = useTranslations("common.exportAppearance");
+  const { resolvedTheme } = useTheme();
   const { hasProAccess, openUpgrade } = useProAccess();
   const [options, setOptions] = useState<ExportOptions>(DEFAULT_EXPORT_OPTIONS);
   const [isExporting, setIsExporting] = useState(false);
@@ -63,8 +68,10 @@ export function WritingExportDialog({
         hasProAccess,
         DOCUMENT_EXPORT_FORMATS,
       ) as ExportFormat,
+      appearance: DEFAULT_EXPORT_APPEARANCE,
+      themeMode: resolvedTheme === "dark" ? "dark" : "light",
     }));
-  }, [open, hasProAccess]);
+  }, [open, hasProAccess, resolvedTheme]);
 
   useEffect(() => {
     return () => {
@@ -94,7 +101,10 @@ export function WritingExportDialog({
         title,
         description,
         state: editorState,
-        options,
+        options: {
+          ...options,
+          themeMode: resolvedTheme === "dark" ? "dark" : "light",
+        },
         labels: {
           documentHeading: t("documentHeading"),
           titleLabel: t("titleLabel"),
@@ -185,6 +195,18 @@ export function WritingExportDialog({
               pdf: t("formatPdfHint"),
               docx: t("formatDocxHint"),
             }}
+          />
+        </ExportSheetSection>
+
+        <ExportSheetSection label={tAppearance("label")}>
+          <ExportAppearanceOptions
+            idPrefix="writing-export-appearance"
+            value={options.appearance}
+            onChange={(appearance) =>
+              setOptions((current) => ({ ...current, appearance }))
+            }
+            surface="writing"
+            showDocxNote={options.format === "docx"}
           />
         </ExportSheetSection>
 

@@ -414,6 +414,65 @@
   gap: 0;
   /* Kill DialogContent default padding so the hero can bleed edge-to-edge. */
   padding: 0 !important;
+  /*
+    Dialog portals outside .account-stack — define the same control tokens so
+    .account-input borders/fills match the sheet instead of falling back bright.
+  */
+  --account-control-fill: color-mix(
+    in oklab,
+    var(--surface-muted) 42%,
+    var(--popover)
+  );
+  --account-control-fill-hover: color-mix(
+    in oklab,
+    var(--surface-muted) 56%,
+    var(--popover)
+  );
+  --account-control-border: color-mix(
+    in oklab,
+    var(--hairline-cloud) 92%,
+    transparent
+  );
+  --account-control-border-hover: color-mix(
+    in oklab,
+    var(--ink) 26%,
+    var(--hairline-cloud)
+  );
+}
+
+.account-delete-body .account-field {
+  gap: 0.65rem;
+}
+
+/* Soft panel so the typed-confirm step reads as the critical action. */
+.account-delete-confirm {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  padding: 0.9rem 0.95rem;
+  border-radius: 0.75rem;
+  border: 1px solid
+    color-mix(in oklab, var(--destructive) 22%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      165deg,
+      color-mix(in oklab, var(--destructive) 10%, transparent),
+      color-mix(in oklab, var(--surface-muted) 28%, transparent) 70%
+    );
+}
+
+/* Highlight the exact string the user must type. */
+.account-delete-confirm-phrase {
+  display: inline;
+  padding: 0.12em 0.4em;
+  border-radius: 0.35rem;
+  background: color-mix(in oklab, var(--destructive) 18%, transparent);
+  color: color-mix(in oklab, var(--destructive) 78%, var(--ink));
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: none;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 .account-delete-hero {
@@ -523,7 +582,14 @@
 }
 
 .account-delete-footer {
-  padding: 0.95rem 1.3rem 1.15rem;
+  /* Override DialogFooter bleed + control-surface so footer matches the sheet. */
+  margin-inline: 0 !important;
+  margin-bottom: 0 !important;
+  padding: 1rem 1.3rem 1.35rem !important;
+  border-radius: 0 !important;
   border-top: 1px solid
     color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
 }

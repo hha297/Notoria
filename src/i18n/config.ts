@@ -1,4 +1,4 @@
-export const locales = ["ar", "be", "bg", "bs", "cs", "da", "de", "el", "en", "es", "fi", "fr", "hi", "hu", "hy", "id", "it", "ja", "ko", "nl", "no", "pl", "pt", "ro", "ru", "sq", "sv", "th", "tr", "uk", "vi", "zh"] as const;
+export const locales = ["ar", "be", "bg", "bn", "bs", "cs", "da", "de", "el", "en", "es", "et", "fa", "fi", "fil", "fr", "hi", "hr", "hu", "hy", "id", "it", "ja", "ko", "lt", "lv", "ms", "nl", "no", "pl", "pt", "ro", "ru", "sk", "sl", "sq", "sr", "sv", "th", "tr", "uk", "ur", "vi", "zh"] as const;
 
 export type AppLocale = (typeof locales)[number];
 

@@ -15,7 +15,21 @@
     "clearFilter": "Clear",
     "filters": "Filters",
     "hideFilters": "Hide filters",
-    "remove": "Remove"
+    "remove": "Remove",
+    "moreActions": "More actions",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +294,13 @@
     "invalidMove": "Can't move a folder into itself",
     "tooDeep": "This folder is nested too deeply",
     "notFound": "Folder not found",
-    "nameTaken": "A folder or writing already uses this name"
+    "nameTaken": "A folder or writing already uses this name",
+    "dragTipTitle": "Move into a folder",
+    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
+    "dragTipDismiss": "Dismiss tip",
+    "dragTipShow": "How to move into folders",
+    "dragTipDemo": "Drag item onto folder",
+    "dragTipCard": "Item"
   },
   "theme": {
     "toggle": "Toggle theme",
@@ -291,7 +311,11 @@
     "createWorkspace": "Create workspace",
     "createWorkspaceHint": "Add another language workspace",
     "switchWorkspace": "Switch workspace",
-    "switchFailed": "Could not switch workspace"
+    "switchFailed": "Could not switch workspace",
+    "selectLanguage": "Select language",
+    "allLanguages": "All languages",
+    "changeLanguageFailed": "Could not change UI language",
+    "popularLanguages": "Popular"
   },
   "workspace": {
     "title": "Workspaces",
@@ -669,15 +693,32 @@
       "cancel": "Cancel",
       "retry": "Retry",
       "dismiss": "Dismiss",
+      "stillWorking": "Still generating… {seconds}s elapsed",
       "stages": {
-        "uploading": "Uploading…",
-        "extracting": "Extracting content…",
-        "analyzing": "Analyzing content…",
-        "generating": "Generating exercise…",
-        "saving": "Saving exercise…",
+        "uploading": "Uploading file",
+        "extracting": "Extracting content",
+        "analyzing": "Analyzing content",
+        "preparing": "Preparing learning material",
+        "generating": "Generating questions",
+        "validating": "Validating answers and hints",
+        "saving": "Saving and preparing the exercise",
         "completed": "Exercise ready",
         "error": "Generation failed"
-      }
+      },
+      "hints": {
+        "uploading": "Sending your file securely.",
+        "extracting": "Reading text and structure from the source.",
+        "analyzing": "Identifying practice cues from the material.",
+        "preparing": "Gathering the selected vocabulary or theory for this set.",
+        "generating": "The model is writing questions. This can take a little while.",
+        "validating": "Checking answers, hints, and structure before practice.",
+        "saving": "Assembling your practice set."
+      },
+      "nextSetPreparing": "Preparing next set…",
+      "nextSetReady": "Next set ready",
+      "nextSetFailed": "Could not prepare the next set",
+      "nextSetRetry": "Prepare next set",
+      "openNextSet": "Open next set"
     },
     "import": {
       "eyebrow": "Imported practice",
@@ -822,6 +863,7 @@
       "aiReady": "Practice ready",
       "aiUnavailable": "Could not generate AI questions right now.",
       "aiForbidden": "AI theory exercises are available with Pro.",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "AI assistance is turned off in Settings.",
       "feedback": {
         "correct": "Correct!",
@@ -861,6 +903,8 @@
         "quickReview": "Quick review",
         "skipReview": "Skip review",
         "startPractice": "Start practice",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise",
         "openTheory": "Open full theory",
         "tryIt": "Try it",
         "outline": "In this lesson",
@@ -875,6 +919,18 @@
         "why": "Why",
         "complete": "Understood",
         "completeHint": "You can move on when you're ready."
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +987,9 @@
       "label": "Hint",
       "startsWith": "Starts with “{letter}”",
       "revealPrompt": "Still stuck? You can reveal the full answer.",
-      "revealAnswer": "Reveal Answer"
+      "revealAnswer": "Reveal Answer",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "No vocabulary yet",
@@ -977,6 +1035,36 @@
       "forbidden": "AI exercise generation is available with Pro.",
       "disabled": "AI assistance is turned off in Settings.",
       "upgradeHint": "Free includes a few AI exercise generations each day. Pro removes the limit.",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetSaveAs": "Save as preset",
+      "presetUpdate": "Update preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetUpdated": "Preset updated",
+      "presetRenamed": "Preset renamed",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is.",
       "emptyWords": "Add vocabulary words before generating questions.",
       "noneValid": "AI could not create valid questions for these words. Try again."
     },
@@ -1802,7 +1890,7 @@
         },
         "moveItem": {
           "title": "8. Move between folders",
-          "body": "Use the move icon on any piece, or drag it onto a folder card. You can also drag folders into other folders to nest topics."
+          "body": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item, or drag folders into other folders to nest topics."
         }
       }
     },
@@ -1841,7 +1929,7 @@
         },
         "moveItem": {
           "title": "8. Move notes between folders",
-          "body": "Use the move icon on any note, or drag it onto a folder. You can also nest folders inside each other to organize by topic."
+          "body": "On a computer with a mouse or trackpad, drag a note onto a folder card to move it. You can also use the move icon on each note, or nest folders inside each other to organize by topic."
         }
       }
     },
@@ -1891,7 +1979,7 @@
         },
         "moveItem": {
           "title": "7. Move lessons between folders",
-          "body": "Use the move icon on any lesson, or drag it onto a folder card. You can also nest folders to organize larger collections."
+          "body": "On a computer with a mouse or trackpad, drag a lesson onto a folder card to move it. You can also use the move icon on each lesson, or nest folders to organize larger collections."
         }
       }
     },
@@ -1945,7 +2033,7 @@
         },
         "moveItem": {
           "title": "8. Move passages between folders",
-          "body": "Use the move icon on any passage, or drag it onto a folder card. You can also nest folders for larger collections."
+          "body": "On a computer with a mouse or trackpad, drag a passage onto a folder card to move it. You can also use the move icon on each passage, or nest folders for larger collections."
         }
       }
     },
@@ -2009,6 +2097,8 @@
       "correctionDetailed": "Detailed",
       "suggestions": "AI suggestions",
       "suggestionsDescription": "Show proactive AI suggestions while editing vocabulary when available.",
+      "exerciseNextSetPrefetch": "Prepare next exercise set",
+      "exerciseNextSetPrefetchDescription": "After you start answering, automatically prepare the next set in the background. Uses one AI exercise credit when preparation starts. Turn off to only generate when you tap New set.",
       "confirmActions": "Confirm AI actions",
       "confirmActionsDescription": "Ask before AI changes your content.",
       "confirmAlways": "Always",
@@ -2768,6 +2858,9 @@
     "noAccount": "Don't have an account?",
     "hasAccount": "Already have an account?",
     "invalidCredentials": "Invalid email or password",
+    "rememberMe": "Remember me",
+    "signInUnavailable": "We couldn't sign you in right now. Please try again.",
+    "accountSuspended": "This account is suspended. Contact support if you think this is a mistake.",
     "emailExists": "An account with this email already exists",
     "emailInvalid": "Enter a valid email address",
     "registerFailed": "Could not create account. Please try again.",
@@ -2809,6 +2902,8 @@
     "resetTokenMissing": "This reset link is missing or incomplete. Request a new one.",
     "account": "Account",
     "accountSettings": "Account settings",
+    "roleAdmin": "Admin",
+    "roleTester": "Tester",
     "accountDescription": "Update your profile photo and password.",
     "profile": "Profile",
     "avatar": "Profile photo",
@@ -2910,6 +3005,7 @@
       "backup": "Download backup",
       "backupDone": "Backup downloaded",
       "backupFailed": "Could not prepare your backup. Try again.",
+      "confirmPhrase": "Delete all data",
       "confirmLabel": "Type {phrase} to confirm",
       "confirm": "Delete all data",
       "deleted": "All learning data has been deleted",
@@ -2938,9 +3034,15 @@
         "auth": "Authentication information"
       },
       "skippedTitle": "May be skipped",
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import",
       "warnings": {
-        "workspace_language_reuse": "Some workspaces already exist for the same language. Their content will be added into your existing workspaces instead of creating duplicates.",
-        "empty_backup": "This backup does not contain any importable learning data."
+        "workspace_language_reuse": "A workspace for the same language already exists on this account. Backup content for that language is added into it — the workspace itself is not duplicated.",
+        "empty_backup": "This backup does not contain any importable learning data.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Cancel",
       "confirm": "Import learning data",
@@ -2961,10 +3063,17 @@
         "speaking": "{count, plural, one {# speaking session} other {# speaking sessions}}"
       },
       "skips": {
-        "workspace_language_exists": "{count, plural, one {# workspace already exists for that language} other {# workspaces already exist for that language}}",
-        "vocabulary_duplicate": "{count, plural, one {# vocabulary item already exists} other {# vocabulary items already exist}}",
+        "workspace_language_exists": "{count, plural, one {# workspace reused (same language) — content still imports} other {# workspaces reused (same language) — content still imports}}",
+        "vocabulary_duplicate": "{count, plural, one {# vocabulary item} other {# vocabulary items}}",
+        "folder_duplicate": "{count, plural, one {# folder} other {# folders}}",
+        "tag_duplicate": "{count, plural, one {# tag} other {# tags}}",
+        "theory_duplicate": "{count, plural, one {# theory page} other {# theory pages}}",
+        "writing_duplicate": "{count, plural, one {# writing document} other {# writing documents}}",
+        "exercise_duplicate": "{count, plural, one {# exercise} other {# exercises}}",
         "listening_missing_media": "{count, plural, one {# listening lesson missing media URL} other {# listening lessons missing media URLs}}",
-        "listening_duplicate_filename": "{count, plural, one {# listening lesson skipped (duplicate filename)} other {# listening lessons skipped (duplicate filename)}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson} other {# listening lessons}}",
+        "listening_duplicate_filename": "{count, plural, one {# listening lesson (same filename)} other {# listening lessons (same filename)}}",
+        "speaking_duplicate": "{count, plural, one {# speaking session} other {# speaking sessions}}",
         "invalid_workspace_ref": "{count, plural, one {# item with missing workspace} other {# items with missing workspace}}",
         "invalid_record": "{count, plural, one {# invalid record} other {# invalid records}}",
         "unsupported_account_field": "Account identity fields are not imported"
@@ -3002,6 +3111,7 @@
       "backup": "Download backup",
       "backupDone": "Backup downloaded",
       "backupFailed": "Could not prepare your backup. Try again.",
+      "confirmPhrase": "Delete my account",
       "confirmLabel": "Type {phrase} to confirm",
       "confirm": "Permanently delete account",
       "deleted": "Your account has been deleted",
@@ -3256,7 +3366,8 @@
       "learningTrends": "Learning Trends",
       "personalLearningPath": "Personal Learning Path",
       "personalizedRecommendations": "Personalized recommendations",
-      "crossModuleIntelligence": "Cross-module personalization"
+      "crossModuleIntelligence": "Cross-module personalization",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "Compare plans",
@@ -3441,6 +3552,8 @@
       "errorQuota": "You've reached today's Learning Coach limit. Your Coach will be available again tomorrow.",
       "errorPremium": "Learning Coach is a Premium feature. Get personalized recommendations based on your learning activity.",
       "errorUnavailable": "Your Coach couldn't respond right now. Your message wasn't counted. Please try again.",
+      "errorWorkspace": "Choose a workspace before asking the coach.",
+      "errorUnauthorized": "Sign in again to continue.",
       "prompts": {
         "practice_today": "What should I focus on today?",
         "struggling_words": "Why am I struggling with these words?",
@@ -4778,15 +4891,36 @@
       "title": "Overview",
       "description": "Live counts from application data. Time ranges use UTC calendar days. Active learners count distinct users with learning activity events — not logins.",
       "metrics": "Metrics",
+      "quickAccess": "Quick access",
+      "quickAccessLede": "Jump to management tools.",
       "recentAudit": "Recent admin actions",
       "recentAuditLede": "Latest mutations from the audit trail.",
       "viewAllAudit": "View audit log",
+      "groups": {
+        "people": "People",
+        "content": "Content",
+        "ops": "Operations"
+      },
+      "charts": {
+        "signupsTitle": "New accounts",
+        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
+        "activeTitle": "Active learners",
+        "activeLede": "Distinct learners with activity each day (14d).",
+        "rolesTitle": "Roles",
+        "rolesLede": "Share of accounts by role.",
+        "contentTitle": "Content mix",
+        "contentLede": "Stored records across learning modules."
+      },
       "cards": {
         "users": "Total users",
+        "admins": "Admins",
+        "testers": "Testers",
+        "suspended": "Suspended",
         "newUsers7d": "New users (7d)",
         "newUsers30d": "New users (30d)",
         "activeUsers7d": "Active learners (7d)",
         "workspaces": "Workspaces",
+        "contentTotal": "Content records",
         "vocabulary": "Vocabulary",
         "theory": "Theory",
         "writing": "Writing",
@@ -4803,10 +4937,20 @@
     },
     "users": {
       "title": "Users",
-      "description": "Search accounts, change roles, suspend access, or delete with confirmation.",
+      "description": "Create accounts, edit profiles, change roles, suspend access, or delete with confirmation.",
       "searchPlaceholder": "Search name or email…",
       "empty": "No users match these filters.",
       "selfGuard": "Safeguards prevent changing or deleting your own admin account here.",
+      "roleHelp": "Tester unlocks all Free, Pro, and Premium features for QA without changing the stored subscription. Admin is required for this dashboard.",
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "roles": {
+        "user": "User",
+        "tester": "Tester",
+        "admin": "Admin"
+      },
       "columns": {
         "user": "User",
         "role": "Role",
@@ -4825,9 +4969,16 @@
         "active": "Active",
         "suspended": "Suspended"
       },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
+      },
       "fields": {
         "id": "User id",
         "name": "Name",
+        "email": "Email",
+        "password": "Password",
         "role": "Role",
         "status": "Status",
         "plan": "Plan",
@@ -4840,13 +4991,17 @@
         "usage": "Content counts",
         "usageLede": "Owned records across learning modules.",
         "actions": "Account actions",
+        "danger": "Danger zone",
         "workspaces": "Workspaces",
         "workspacesLede": "Language workspaces owned by this user."
       },
       "actions": {
-        "saveProfile": "Save name",
+        "create": "Create user",
+        "saveProfile": "Save profile",
         "grantAdmin": "Grant admin",
         "revokeAdmin": "Revoke admin",
+        "grantTester": "Grant tester",
+        "revokeTester": "Revoke tester",
         "suspend": "Suspend",
         "restore": "Restore",
         "delete": "Delete account"
@@ -4854,6 +5009,8 @@
       "confirm": {
         "grantAdmin": "Grant admin access to this account?",
         "revokeAdmin": "Revoke admin access? This fails if they are the last active admin.",
+        "grantTester": "Grant tester access? They get full app features for QA; the stored subscription is unchanged.",
+        "revokeTester": "Revoke tester access? Feature access returns to their actual subscription.",
         "suspend": "Suspend this account? They lose access on the next protected request.",
         "restore": "Restore this account?",
         "delete": "Permanently delete this account and cascaded learning data? This cannot be undone."
@@ -4861,10 +5018,14 @@
     },
     "workspaces": {
       "title": "Workspaces",
-      "description": "Inspect and manage language workspaces.",
+      "description": "Create and manage language workspaces.",
       "searchPlaceholder": "Search name, language, or owner email…",
       "empty": "No workspaces match these filters.",
       "createForUser": "Create workspace for this user",
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
+      },
       "columns": {
         "name": "Name",
         "language": "Language",
@@ -4877,6 +5038,8 @@
         "nameOptional": "Optional display name",
         "language": "Language",
         "owner": "Owner",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com",
         "created": "Created",
         "updated": "Updated"
       },
@@ -4896,10 +5059,11 @@
       }
     },
     "content": {
-      "description": "Lists show metadata only. Open a row for identifiers and status. Private bodies (transcripts, notes) are not loaded here by default.",
+      "description": "Lists show metadata only. Open a row to edit the title or delete. Private bodies (transcripts, notes) are not loaded here by default.",
       "searchPlaceholder": "Search titles…",
       "empty": "No records match these filters.",
       "listeningMediaNote": "Deleting a listening lesson removes the database row. External media cleanup is best-effort and is not performed by this admin action.",
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed.",
       "columns": {
         "title": "Title",
         "status": "Status",
@@ -4909,6 +5073,9 @@
       },
       "fields": {
         "id": "Id",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name",
         "status": "Status",
         "errorCode": "Error code",
         "owner": "Owner",
@@ -4917,12 +5084,13 @@
         "updated": "Updated"
       },
       "detail": {
-        "description": "Metadata inspection. Private bodies are not auto-loaded.",
+        "description": "Edit the display title or delete the record. Private bodies are not auto-loaded.",
         "meta": "Record",
         "metaLede": "Identifiers and status only.",
         "actions": "Actions"
       },
       "actions": {
+        "saveTitle": "Save title",
         "delete": "Delete record"
       },
       "confirm": {
@@ -4988,10 +5156,13 @@
       "CANNOT_SUSPEND_SELF": "You cannot suspend your own account.",
       "CANNOT_DELETE_SELF": "You cannot delete your own account.",
       "USER_NOT_FOUND": "User not found.",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
       "WORKSPACE_NOT_FOUND": "Workspace not found.",
       "WORKSPACE_LANGUAGE_EXISTS": "This user already has a workspace for that language.",
       "INVALID_LANGUAGE": "Invalid language code.",
       "CONTENT_NOT_FOUND": "Record not found.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing.",
       "INVALID_CONTENT_MODULE": "Unknown content module."
     }
   }

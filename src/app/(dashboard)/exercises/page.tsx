@@ -12,7 +12,7 @@ export default async function ExercisesPage() {
   if (!workspace) {
     return (
       <PageShell className="route-atelier writing-atelier" data-route="exercises">
-        <div className="flex flex-col gap-10 lg:gap-12">
+        <div className="writing-atelier flex flex-col gap-10 lg:gap-12">
           <header className="writing-hero">
             <div className="writing-hero-copy">
               <p className="writing-kicker">{t("title")}</p>
@@ -28,7 +28,7 @@ export default async function ExercisesPage() {
 
   return (
     <PageShell className="route-atelier writing-atelier" data-route="exercises">
-      <div className="flex flex-col gap-10 lg:gap-12">
+      <div className="writing-atelier flex flex-col gap-10 lg:gap-12">
         <header className="writing-hero">
           <div className="writing-hero-copy">
             <p className="writing-kicker">{t("title")}</p>

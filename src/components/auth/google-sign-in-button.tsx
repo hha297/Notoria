@@ -7,6 +7,7 @@ import { Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import styles from "@/components/style/auth/auth.module.css";
 import { mx } from "@/lib/css-module";
+import { setRememberPreference } from "@/lib/auth/remember-preference";
 import { requestWelcomeModalOnLogin } from "@/lib/prompts/storage";
 
 function GoogleGlyph({ className }: { className?: string }) {
@@ -41,6 +42,8 @@ type GoogleSignInButtonProps = {
   /** Where Auth.js should send the user after Google auth. */
   callbackUrl?: string;
   disabled?: boolean;
+  /** Carried through the OAuth redirect as a short-lived httpOnly cookie. */
+  remember?: boolean;
 };
 
 /**
@@ -50,6 +53,7 @@ type GoogleSignInButtonProps = {
 export function GoogleSignInButton({
   callbackUrl = "/",
   disabled = false,
+  remember = false,
 }: GoogleSignInButtonProps) {
   const t = useTranslations("auth");
   const [isLoading, setIsLoading] = useState(false);
@@ -57,6 +61,7 @@ export function GoogleSignInButton({
   async function handleClick() {
     setIsLoading(true);
     try {
+      await setRememberPreference(remember);
       requestWelcomeModalOnLogin();
       await signIn("google", { callbackUrl });
     } catch {
@@ -106,16 +111,22 @@ export function AuthGoogleSection({
   enabled,
   disabled = false,
   callbackUrl = "/",
+  remember = false,
 }: {
   enabled: boolean;
   disabled?: boolean;
   callbackUrl?: string;
+  remember?: boolean;
 }) {
   if (!enabled) return null;
 
   return (
     <>
-      <GoogleSignInButton callbackUrl={callbackUrl} disabled={disabled} />
+      <GoogleSignInButton
+        callbackUrl={callbackUrl}
+        disabled={disabled}
+        remember={remember}
+      />
       <AuthOAuthDivider />
     </>
   );

@@ -2,6 +2,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getLocale, getTranslations } from "next-intl/server";
 import { AdminPageHeader } from "@/components/admin/admin-page-header";
+import { AdminRoleBadge } from "@/components/admin/admin-role-badge";
 import { UserAdminActions } from "@/components/admin/user-admin-actions";
 import { WorkspaceAdminActions } from "@/components/admin/workspace-admin-actions";
 import { Badge } from "@/components/ui/badge";
@@ -28,6 +29,20 @@ export default async function AdminUserDetailPage({ params }: PageProps) {
 
   const { user, counts, workspaces } = detail;
 
+  const roleLabel =
+    user.role === "ADMIN"
+      ? t("users.roles.admin")
+      : user.role === "TESTER"
+        ? t("users.roles.tester")
+        : t("users.roles.user");
+
+  const planLabel =
+    user.subscriptionPlan === "premium"
+      ? t("users.plans.premium")
+      : user.subscriptionPlan === "pro"
+        ? t("users.plans.pro")
+        : t("users.plans.free");
+
   return (
     <div className={mx(styles, "admin-page")}>
       <AdminPageHeader
@@ -35,7 +50,7 @@ export default async function AdminUserDetailPage({ params }: PageProps) {
         title={user.name}
         description={user.email}
         actions={
-          <Link href="/admin/users" className="text-sm font-semibold underline">
+          <Link href="/admin/users" className={mx(styles, "admin-text-link")}>
             {t("common.backToList")}
           </Link>
         }
@@ -52,7 +67,9 @@ export default async function AdminUserDetailPage({ params }: PageProps) {
             <dt>{t("users.fields.id")}</dt>
             <dd className={mx(styles, "admin-mono")}>{user.id}</dd>
             <dt>{t("users.fields.role")}</dt>
-            <dd>{user.role}</dd>
+            <dd>
+              <AdminRoleBadge role={user.role} label={roleLabel} />
+            </dd>
             <dt>{t("users.fields.status")}</dt>
             <dd>
               {user.suspendedAt ? (
@@ -62,16 +79,22 @@ export default async function AdminUserDetailPage({ params }: PageProps) {
               )}
             </dd>
             <dt>{t("users.fields.plan")}</dt>
-            <dd>
-              {user.subscriptionPlan}
+            <dd className={mx(styles, "admin-mono")}>
+              {planLabel}
               {user.subscriptionStatus ? ` · ${user.subscriptionStatus}` : ""}
             </dd>
             <dt>{t("users.fields.created")}</dt>
-            <dd>{formatAdminDate(user.createdAt, locale)}</dd>
+            <dd className={mx(styles, "admin-mono")}>
+              {formatAdminDate(user.createdAt, locale)}
+            </dd>
             <dt>{t("users.fields.updated")}</dt>
-            <dd>{formatAdminDate(user.updatedAt, locale)}</dd>
+            <dd className={mx(styles, "admin-mono")}>
+              {formatAdminDate(user.updatedAt, locale)}
+            </dd>
             <dt>{t("users.fields.emailVerified")}</dt>
-            <dd>{formatAdminDate(user.emailVerified, locale)}</dd>
+            <dd className={mx(styles, "admin-mono")}>
+              {formatAdminDate(user.emailVerified, locale)}
+            </dd>
           </dl>
         </div>
       </section>
@@ -120,6 +143,7 @@ export default async function AdminUserDetailPage({ params }: PageProps) {
           <UserAdminActions
             userId={user.id}
             name={user.name}
+            email={user.email}
             role={user.role}
             suspended={Boolean(user.suspendedAt)}
             isSelf={admin.id === user.id}
@@ -159,8 +183,8 @@ export default async function AdminUserDetailPage({ params }: PageProps) {
               ))}
             </ul>
           )}
-          <div className="mt-4 border-t border-hairline-cloud pt-4">
-            <h3 className="mb-2 font-heading text-sm font-semibold">
+          <div className="mt-4 grid gap-2">
+            <h3 className={mx(styles, "admin-section-label")}>
               {t("workspaces.createForUser")}
             </h3>
             <WorkspaceAdminActions mode="create" ownerUserId={user.id} />

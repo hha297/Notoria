@@ -38,6 +38,7 @@ export type MultipleChoiceQuestion = {
   meanings?: string[];
   aiGenerated?: boolean;
   sentenceMeaning?: string | null;
+  hints?: string[];
 };
 
 const OPTION_COUNT = 4;
@@ -117,6 +118,7 @@ export function contextualExerciseToQuestion(
     baseWord?: string | null;
     answerForm?: string | null;
     sentenceMeaning?: string | null;
+    hints?: string[] | null;
   },
   word: FlashcardWord | undefined,
   index: number,
@@ -158,6 +160,7 @@ export function contextualExerciseToQuestion(
     meanings: word.meanings,
     aiGenerated: true,
     sentenceMeaning: exercise.sentenceMeaning,
+    hints: exercise.hints ?? undefined,
   };
 }
 

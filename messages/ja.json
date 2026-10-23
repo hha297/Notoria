@@ -15,7 +15,20 @@
     "clearFilter": "クリア",
     "filters": "フィルター",
     "hideFilters": "フィルターを隠す",
-    "remove": "削除"
+    "remove": "削除",
+    "exportAppearance": {
+      "label": "Appearance",
+      "print": "Print-friendly",
+      "printHint": "White page, dark text",
+      "theme": "Current theme",
+      "themeHint": "Matches your light or dark theme",
+      "previewKicker": "Sample page",
+      "previewTitle": "Document title",
+      "previewBody": "Body text uses the selected colors and spacing.",
+      "previewCallout": "Callouts and accents follow the module color.",
+      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
+      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+    }
   },
   "contentImport": {
     "title": {
@@ -280,7 +293,13 @@
     "invalidMove": "フォルダを自身の中には移動できません",
     "tooDeep": "このフォルダのネストが深すぎます",
     "notFound": "フォルダが見つかりません",
-    "nameTaken": "この名前のフォルダまたはライティングはすでにあります"
+    "nameTaken": "この名前のフォルダまたはライティングはすでにあります",
+    "dragTipTitle": "フォルダへ移動",
+    "dragTipBody": "マウスやトラックパッドのあるパソコンでは、項目をフォルダカードにドラッグして移動できます。各項目の移動アイコンも使えます。",
+    "dragTipDismiss": "ヒントを閉じる",
+    "dragTipShow": "フォルダへの移動方法",
+    "dragTipDemo": "フォルダへドラッグ",
+    "dragTipCard": "項目"
   },
   "theme": {
     "toggle": "テーマを切り替え",
@@ -291,7 +310,11 @@
     "createWorkspace": "ワークスペースを作成",
     "createWorkspaceHint": "別の言語のワークスペースを追加",
     "switchWorkspace": "ワークスペースを切り替え",
-    "switchFailed": "ワークスペースを切り替えられませんでした"
+    "switchFailed": "ワークスペースを切り替えられませんでした",
+    "selectLanguage": "言語を選択",
+    "allLanguages": "すべての言語",
+    "changeLanguageFailed": "インターフェースの言語を変更できませんでした",
+    "popularLanguages": "人気"
   },
   "workspace": {
     "title": "ワークスペース",
@@ -663,21 +686,38 @@
       "importCount": "{count, plural, other {# 件のインポート}}"
     },
     "processing": {
-      "workingTitle": "演習を準備中",
-      "readyTitle": "演習の準備完了",
+      "workingTitle": "演習を準備しています",
+      "readyTitle": "演習の準備ができました",
       "errorTitle": "問題が発生しました",
       "cancel": "キャンセル",
       "retry": "再試行",
       "dismiss": "閉じる",
       "stages": {
-        "uploading": "アップロード中…",
-        "extracting": "内容を抽出中…",
-        "analyzing": "内容を分析中…",
-        "generating": "演習を生成中…",
-        "saving": "演習を保存中…",
-        "completed": "演習の準備完了",
-        "error": "生成に失敗しました"
-      }
+        "uploading": "ファイルをアップロード中",
+        "extracting": "内容を抽出中",
+        "analyzing": "内容を分析中",
+        "generating": "問題を生成中",
+        "saving": "演習を保存・準備中",
+        "completed": "演習の準備ができました",
+        "error": "生成に失敗しました",
+        "preparing": "学習教材を準備中",
+        "validating": "解答とヒントを検証中"
+      },
+      "stillWorking": "まだ生成中… {seconds}秒経過",
+      "hints": {
+        "uploading": "ファイルを安全に送信しています。",
+        "extracting": "ソースからテキストと構造を読み取っています。",
+        "analyzing": "教材から練習の手がかりを特定しています。",
+        "preparing": "このセット用に選んだ語彙や理論を集めています。",
+        "generating": "モデルが問題を作成しています。少々お待ちください。",
+        "validating": "練習前に解答・ヒント・構造を確認しています。",
+        "saving": "練習セットを組み立てています。"
+      },
+      "nextSetPreparing": "次のセットを準備中…",
+      "nextSetReady": "次のセットの準備ができました",
+      "nextSetFailed": "次のセットを準備できませんでした",
+      "nextSetRetry": "次のセットを準備",
+      "openNextSet": "次のセットを開く"
     },
     "import": {
       "eyebrow": "インポートした練習",
@@ -822,6 +862,7 @@
       "aiReady": "練習の準備完了",
       "aiUnavailable": "現在、AI問題を生成できませんでした。",
       "aiForbidden": "AI理論演習はProでご利用いただけます。",
+      "aiPremiumRequired": "Additional instructions are available on Premium.",
       "aiDisabled": "設定でAI支援がオフになっています。",
       "feedback": {
         "correct": "正解！",
@@ -874,7 +915,21 @@
         "theRule": "ルール",
         "why": "なぜ",
         "complete": "理解しました",
-        "completeHint": "準備ができたら進めます。"
+        "completeHint": "準備ができたら進めます。",
+        "startExercise": "Start exercise",
+        "skipReviewAndStart": "Skip review and start exercise"
+      },
+      "folders": {
+        "unfiled": "Unfiled",
+        "joiner": " → ",
+        "count": "{count, plural, one {# note} other {# notes}}",
+        "selectAll": "Select all",
+        "selectGroup": "Select notes in {name}",
+        "expand": "Expand {name}",
+        "collapse": "Collapse {name}",
+        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
+        "practiceSelected": "Practice selected",
+        "clearSelection": "Clear selection"
       }
     },
     "types": {
@@ -931,7 +986,9 @@
       "label": "ヒント",
       "startsWith": "「{letter}」で始まります",
       "revealPrompt": "まだわかりませんか？答え全体を表示できます。",
-      "revealAnswer": "答えを表示"
+      "revealAnswer": "答えを表示",
+      "nextHint": "Next hint",
+      "hintProgress": "Hint {current} of {total}"
     },
     "empty": {
       "noWordsTitle": "まだ語彙がありません",
@@ -977,8 +1034,38 @@
       "forbidden": "AI演習生成はProでご利用いただけます。",
       "disabled": "設定でAI支援がオフになっています。",
       "upgradeHint": "Freeでは毎日数回のAI演習生成が含まれます。Proでは上限がなくなります。",
+      "additionalInstructions": "Additional instructions",
+      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
+      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
+      "premiumRequired": "Additional instructions are available on Premium.",
+      "presetLabel": "Presets",
+      "presetNone": "No preset selected",
+      "presetApply": "Apply",
+      "presetSave": "Save preset",
+      "presetName": "Preset name",
+      "presetDelete": "Delete",
+      "presetSaved": "Preset saved",
+      "presetDeleted": "Preset deleted",
+      "presetSaveFailed": "Could not save that preset.",
       "emptyWords": "問題を生成する前に語彙を追加してください。",
-      "noneValid": "AIはこれらの単語に対して有効な問題を作成できませんでした。もう一度お試しください。"
+      "noneValid": "AIはこれらの単語に対して有効な問題を作成できませんでした。もう一度お試しください。",
+      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
+      "presetUpdate": "Update preset",
+      "presetUpdated": "Preset updated",
+      "presetsTitle": "Saved presets",
+      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
+      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
+      "presetSaveAs": "Save as preset",
+      "presetUpdateCurrent": "Update with current settings",
+      "presetRename": "Rename",
+      "presetManage": "Manage preset",
+      "presetRenamed": "Preset renamed",
+      "presetSaveDialogTitle": "Save as preset",
+      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
+      "presetRenameDialogTitle": "Rename preset",
+      "presetRenameDialogDescription": "Choose a new name for this preset.",
+      "presetDeleteDialogTitle": "Delete preset?",
+      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
     },
     "session": {
       "complete": "セッション完了",
@@ -2015,7 +2102,9 @@
       "confirmContentChange": "コンテンツ変更時のみ",
       "confirmNever": "しない",
       "saveFailed": "AI設定を保存できませんでした",
-      "disabledToast": "設定でAIアシスタンスがオフになっています"
+      "disabledToast": "設定でAIアシスタンスがオフになっています",
+      "exerciseNextSetPrefetch": "次の演習セットを準備する",
+      "exerciseNextSetPrefetchDescription": "解答を始めると、次のセットをバックグラウンドで自動準備します。開始時にAI演習クレジットを1つ使います。オフにすると「新しいセット」でのみ生成します。"
     },
     "tutorials": "セクションチュートリアル",
     "tutorialsDescription": "完了したセクションのウォークスルーをリセットし、「チュートリアルを表示」を最初から始められるようにします。",
@@ -2768,6 +2857,9 @@
     "noAccount": "アカウントをお持ちでないですか？",
     "hasAccount": "すでにアカウントをお持ちですか？",
     "invalidCredentials": "メールアドレスまたはパスワードが正しくありません",
+    "rememberMe": "ログイン状態を保持",
+    "signInUnavailable": "ただいまサインインできません。もう一度お試しください。",
+    "accountSuspended": "このアカウントは停止されています。誤りだと思われる場合はサポートへ連絡してください。",
     "emailExists": "このメールアドレスのアカウントはすでに存在します",
     "emailInvalid": "有効なメールアドレスを入力してください",
     "registerFailed": "アカウントを作成できませんでした。もう一度お試しください。",
@@ -2848,7 +2940,9 @@
     "legalTerms": "利用規約",
     "registerAgreement": "アカウントを作成すると、<terms>利用規約</terms>および<privacy>プライバシーポリシー</privacy>に同意したものとみなされます。",
     "avatarRequestTooLarge": "その写真は送信するには大きすぎます。より小さい画像をお試しください。",
-    "requestTooLarge": "リクエストが大きすぎました。変更内容は保持されています — もう一度お試しください。"
+    "requestTooLarge": "リクエストが大きすぎました。変更内容は保持されています — もう一度お試しください。",
+    "roleAdmin": "管理者",
+    "roleTester": "テスター"
   },
   "account": {
     "eyebrow": "アカウント",
@@ -2910,6 +3004,7 @@
       "backup": "バックアップをダウンロード",
       "backupDone": "バックアップをダウンロードしました",
       "backupFailed": "バックアップを準備できませんでした。もう一度お試しください。",
+      "confirmPhrase": "すべてのデータを削除",
       "confirmLabel": "確認のため {phrase} と入力してください",
       "confirm": "すべてのデータを削除",
       "deleted": "すべての学習データを削除しました",
@@ -2940,7 +3035,8 @@
       "skippedTitle": "スキップされる可能性があります",
       "warnings": {
         "workspace_language_reuse": "同じ言語のワークスペースがすでに存在します。重複作成ではなく、既存のワークスペースにコンテンツが追加されます。",
-        "empty_backup": "このバックアップにはインポート可能な学習データが含まれていません。"
+        "empty_backup": "このバックアップにはインポート可能な学習データが含まれていません。",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "キャンセル",
       "confirm": "学習データをインポート",
@@ -2965,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# 件の語彙はすでに存在します} other {# 件の語彙はすでに存在します}}",
         "listening_missing_media": "{count, plural, one {# 件のリスニングレッスンにメディアURLがありません} other {# 件のリスニングレッスンにメディアURLがありません}}",
         "listening_duplicate_filename": "{count, plural, one {# 件のリスニングレッスンをスキップ（ファイル名の重複）} other {# 件のリスニングレッスンをスキップ（ファイル名の重複）}}",
+        "speaking_duplicate": "{count, plural, one {# スピーキングセッションは既に存在します} other {# スピーキングセッションは既に存在します}}",
         "invalid_workspace_ref": "{count, plural, one {# 件の項目にワークスペースがありません} other {# 件の項目にワークスペースがありません}}",
         "invalid_record": "{count, plural, one {# 件の無効なレコード} other {# 件の無効なレコード}}",
-        "unsupported_account_field": "アカウントの身元フィールドはインポートされません"
+        "unsupported_account_field": "アカウントの身元フィールドはインポートされません",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "そのバックアップファイルは大きすぎます。再度エクスポートするか、サポートにお問い合わせください。",
@@ -2977,7 +3080,12 @@
         "importFailed": "このバックアップをインポートできませんでした。もう一度お試しください。",
         "requestTooLarge": "そのバックアップはこのページで処理するには大きすぎます。より小さいエクスポートを試すか、サポートにお問い合わせください。",
         "notConfigured": "バックアップインポート用のファイルストレージはまだ設定されていません。"
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "アカウントを閉鎖",
@@ -3002,6 +3110,7 @@
       "backup": "バックアップをダウンロード",
       "backupDone": "バックアップをダウンロードしました",
       "backupFailed": "バックアップを準備できませんでした。もう一度お試しください。",
+      "confirmPhrase": "アカウントを削除",
       "confirmLabel": "確認のため {phrase} と入力してください",
       "confirm": "アカウントを完全に削除",
       "deleted": "アカウントを削除しました",
@@ -3256,7 +3365,8 @@
       "learningTrends": "学習トレンド",
       "personalLearningPath": "個人の学習パス",
       "personalizedRecommendations": "パーソナライズされたおすすめ",
-      "crossModuleIntelligence": "モジュール横断のパーソナライズ"
+      "crossModuleIntelligence": "モジュール横断のパーソナライズ",
+      "exerciseCustomInstructions": "Custom exercise instructions"
     },
     "compare": {
       "heading": "プランを比較",
@@ -3441,6 +3551,8 @@
       "errorQuota": "本日の学習コーチ上限に達しました。コーチは明日から再びご利用いただけます。",
       "errorPremium": "学習コーチは Premium 機能です。学習活動に基づくパーソナライズされたおすすめを受け取れます。",
       "errorUnavailable": "コーチは今応答できませんでした。メッセージはカウントされていません。もう一度お試しください。",
+      "errorWorkspace": "コーチに聞く前にワークスペースを選んでください。",
+      "errorUnauthorized": "続けるには再度サインインしてください。",
       "prompts": {
         "practice_today": "今日は何に集中すべきですか？",
         "struggling_words": "なぜこれらの単語で苦戦しているのですか？",
@@ -4798,7 +4910,28 @@
         "failedListening": "失敗したリスニング",
         "failedImports": "失敗したインポート",
         "runningJobs": "実行中のジョブロック",
-        "recentAudits7d": "監査エントリ（7日）"
+        "recentAudits7d": "監査エントリ（7日）",
+        "admins": "管理者",
+        "testers": "テスター",
+        "suspended": "停止中",
+        "contentTotal": "コンテンツ件数"
+      },
+      "quickAccess": "クイックアクセス",
+      "quickAccessLede": "管理ツールへ移動します。",
+      "groups": {
+        "people": "ユーザー",
+        "content": "コンテンツ",
+        "ops": "運用"
+      },
+      "charts": {
+        "signupsTitle": "新規アカウント",
+        "signupsLede": "直近14 UTC日の日次登録数。",
+        "activeTitle": "アクティブ学習者",
+        "activeLede": "日ごとの活動のある学習者数（14日）。",
+        "rolesTitle": "ロール",
+        "rolesLede": "ロール別アカウント比率。",
+        "contentTitle": "コンテンツ構成",
+        "contentLede": "学習モジュール内の保存レコード。"
       }
     },
     "users": {
@@ -4833,7 +4966,9 @@
         "plan": "プラン",
         "created": "登録日",
         "updated": "更新日",
-        "emailVerified": "メール確認済み"
+        "emailVerified": "メール確認済み",
+        "email": "Email",
+        "password": "Password"
       },
       "detail": {
         "account": "アカウント",
@@ -4841,7 +4976,8 @@
         "usageLede": "学習モジュール全体の所有レコードです。",
         "actions": "アカウント操作",
         "workspaces": "ワークスペース",
-        "workspacesLede": "このユーザーが所有する言語ワークスペースです。"
+        "workspacesLede": "このユーザーが所有する言語ワークスペースです。",
+        "danger": "Danger zone"
       },
       "actions": {
         "saveProfile": "名前を保存",
@@ -4849,14 +4985,34 @@
         "revokeAdmin": "管理者を取り消し",
         "suspend": "停止",
         "restore": "復元",
-        "delete": "アカウントを削除"
+        "delete": "アカウントを削除",
+        "grantTester": "テスター役割を付与",
+        "revokeTester": "テスター役割を解除",
+        "create": "Create user"
       },
       "confirm": {
         "grantAdmin": "このアカウントに管理者権限を付与しますか？",
         "revokeAdmin": "管理者権限を取り消しますか？最後の有効な管理者である場合は失敗します。",
         "suspend": "このアカウントを停止しますか？次の保護されたリクエストからアクセスできなくなります。",
         "restore": "このアカウントを復元しますか？",
-        "delete": "このアカウントと関連する学習データを完全に削除しますか？この操作は取り消せません。"
+        "delete": "このアカウントと関連する学習データを完全に削除しますか？この操作は取り消せません。",
+        "grantTester": "テスター役割を付与しますか？QA用にアプリの全機能を利用できます。保存済みのサブスクリプションは変わりません。",
+        "revokeTester": "テスター役割を解除しますか？機能アクセスは実際のサブスクリプションに戻ります。"
+      },
+      "roleHelp": "テスター役割は保存済みのサブスクリプションを変えずに、QA用に Free / Pro / Premium の全機能を利用できます。このダッシュボードには管理者が必要です。",
+      "roles": {
+        "user": "ユーザー",
+        "tester": "テスター",
+        "admin": "管理者"
+      },
+      "create": {
+        "title": "Create user",
+        "lede": "Provision an account with an email and password. They can sign in immediately."
+      },
+      "plans": {
+        "free": "Free",
+        "pro": "Pro",
+        "premium": "Premium"
       }
     },
     "workspaces": {
@@ -4878,7 +5034,9 @@
         "language": "言語",
         "owner": "所有者",
         "created": "作成日",
-        "updated": "更新日"
+        "updated": "更新日",
+        "ownerEmail": "Owner email",
+        "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
         "description": "言語: {language}",
@@ -4893,6 +5051,10 @@
       },
       "confirm": {
         "delete": "このワークスペースと中の学習コンテンツを、データベースのカスケードで削除しますか？"
+      },
+      "create": {
+        "title": "Create workspace",
+        "lede": "Attach a new language workspace to an existing account by email."
       }
     },
     "content": {
@@ -4914,7 +5076,10 @@
         "owner": "所有者",
         "workspace": "ワークスペース",
         "created": "作成日",
-        "updated": "更新日"
+        "updated": "更新日",
+        "title": "Title",
+        "word": "Word",
+        "folderName": "Folder name"
       },
       "detail": {
         "description": "メタデータの確認です。非公開本文は自動では読み込まれません。",
@@ -4923,11 +5088,13 @@
         "actions": "操作"
       },
       "actions": {
-        "delete": "レコードを削除"
+        "delete": "レコードを削除",
+        "saveTitle": "Save title"
       },
       "confirm": {
         "delete": "このレコードを削除しますか？関連する子行はデータベースのカスケード／null 設定ルールに従います。"
-      }
+      },
+      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
     },
     "jobs": {
       "title": "ジョブ",
@@ -4992,7 +5159,10 @@
       "WORKSPACE_LANGUAGE_EXISTS": "このユーザーには、その言語のワークスペースがすでにあります。",
       "INVALID_LANGUAGE": "無効な言語コードです。",
       "CONTENT_NOT_FOUND": "レコードが見つかりません。",
-      "INVALID_CONTENT_MODULE": "不明なコンテンツモジュールです。"
+      "INVALID_CONTENT_MODULE": "不明なコンテンツモジュールです。",
+      "EMAIL_EXISTS": "That email is already registered.",
+      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
+      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
     }
   }
 }
