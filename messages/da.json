@@ -310,7 +310,11 @@
     "createWorkspace": "Opret arbejdsområde",
     "createWorkspaceHint": "Tilføj et nyt sprogarbejdsområde",
     "switchWorkspace": "Skift arbejdsområde",
-    "switchFailed": "Kunne ikke skifte arbejdsområde"
+    "switchFailed": "Kunne ikke skifte arbejdsområde",
+    "selectLanguage": "Vælg sprog",
+    "allLanguages": "Alle sprog",
+    "changeLanguageFailed": "Kunne ikke skifte grænsefladesprog",
+    "popularLanguages": "Populære"
   },
   "workspace": {
     "title": "Arbejdsområder",
@@ -3000,6 +3004,7 @@
       "backup": "Download sikkerhedskopi",
       "backupDone": "Sikkerhedskopi downloadet",
       "backupFailed": "Kunne ikke forberede din sikkerhedskopi. Prøv igen.",
+      "confirmPhrase": "Slet alle data",
       "confirmLabel": "Skriv {phrase} for at bekræfte",
       "confirm": "Slet alle data",
       "deleted": "Alle læringsdata er slettet",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Kan springes over",
       "warnings": {
         "workspace_language_reuse": "Nogle arbejdsområder findes allerede for samme sprog. Deres indhold tilføjes til dine eksisterende arbejdsområder i stedet for at oprette dubletter.",
-        "empty_backup": "Denne sikkerhedskopi indeholder ingen importerbare læringsdata."
+        "empty_backup": "Denne sikkerhedskopi indeholder ingen importerbare læringsdata.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Annuller",
       "confirm": "Importer læringsdata",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# ordforrådselement findes allerede} other {# ordforrådselementer findes allerede}}",
         "listening_missing_media": "{count, plural, one {# lyttelektion mangler medie-URL} other {# lyttelektioner mangler medie-URL'er}}",
         "listening_duplicate_filename": "{count, plural, one {# lyttelektion sprunget over (dubletfilnavn)} other {# lyttelektioner sprunget over (dubletfilnavn)}}",
+        "speaking_duplicate": "{count, plural, one {# talesession findes allerede} other {# talesessioner findes allerede}}",
         "invalid_workspace_ref": "{count, plural, one {# element med manglende arbejdsområde} other {# elementer med manglende arbejdsområde}}",
         "invalid_record": "{count, plural, one {# ugyldig post} other {# ugyldige poster}}",
-        "unsupported_account_field": "Kontoidentitetsfelter importeres ikke"
+        "unsupported_account_field": "Kontoidentitetsfelter importeres ikke",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Den sikkerhedskopifil er for stor. Prøv at eksportere igen, eller kontakt support.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Kunne ikke importere denne sikkerhedskopi. Prøv igen.",
         "requestTooLarge": "Den sikkerhedskopi er for stor til at behandle via denne side. Prøv en mindre eksport, eller kontakt support.",
         "notConfigured": "Fillagring er ikke konfigureret til import af sikkerhedskopier endnu."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Luk konto",
@@ -3092,6 +3110,7 @@
       "backup": "Download sikkerhedskopi",
       "backupDone": "Sikkerhedskopi downloadet",
       "backupFailed": "Kunne ikke forberede din sikkerhedskopi. Prøv igen.",
+      "confirmPhrase": "Slet min konto",
       "confirmLabel": "Skriv {phrase} for at bekræfte",
       "confirm": "Slet konto permanent",
       "deleted": "Din konto er blevet slettet",

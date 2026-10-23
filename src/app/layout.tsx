@@ -30,6 +30,7 @@ import { QueryProvider } from "@/components/providers/query-provider";
 import { AuthSessionProvider } from "@/components/providers/auth-session-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { PreferencesProvider } from "@/components/providers/preferences-provider";
+import { localeTextDirection } from "@/lib/i18n/ui-locales";
 import "./globals.css";
 
 const ibmPlexSans = IBM_Plex_Sans({
@@ -128,10 +129,12 @@ export default async function RootLayout({
 }>) {
   const locale = await getLocale();
   const messages = await getMessages();
+  const direction = localeTextDirection(locale);
 
   return (
     <html
       lang={locale}
+      dir={direction}
       suppressHydrationWarning
       className={`${ibmPlexSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >

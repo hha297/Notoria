@@ -310,7 +310,11 @@
     "createWorkspace": "Стварыць працоўную прастору",
     "createWorkspaceHint": "Дадаць яшчэ адну моўную працоўную прастору",
     "switchWorkspace": "Пераключыць працоўную прастору",
-    "switchFailed": "Не ўдалося пераключыць працоўную прастору"
+    "switchFailed": "Не ўдалося пераключыць працоўную прастору",
+    "selectLanguage": "Выберыце мову",
+    "allLanguages": "Усе мовы",
+    "changeLanguageFailed": "Не ўдалося змяніць мову інтэрфейсу",
+    "popularLanguages": "Папулярныя"
   },
   "workspace": {
     "title": "Працоўныя прасторы",
@@ -3000,6 +3004,7 @@
       "backup": "Спампаваць рэзервовую копію",
       "backupDone": "Рэзервовая копія спампавана",
       "backupFailed": "Не ўдалося падрыхтаваць рэзервовую копію. Паспрабуйце яшчэ раз.",
+      "confirmPhrase": "Выдаліць усе даныя",
       "confirmLabel": "Увядзіце {phrase}, каб пацвердзіць",
       "confirm": "Выдаліць усе даныя",
       "deleted": "Усе навучальныя даныя выдалены",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Можа быць прапушчана",
       "warnings": {
         "workspace_language_reuse": "Некаторыя працоўныя прасторы ўжо існуюць для той жа мовы. Іх змест будзе дададзены ў існуючыя працоўныя прасторы замест стварэння дублікатаў.",
-        "empty_backup": "Гэтая рэзервовая копія не змяшчае навучальных даных для імпарту."
+        "empty_backup": "Гэтая рэзервовая копія не змяшчае навучальных даных для імпарту.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Скасаваць",
       "confirm": "Імпартаваць навучальныя даныя",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# элемент слоўніка ўжо існуе} few {# элементы слоўніка ўжо існуюць} many {# элементаў слоўніка ўжо існуюць} other {# элемента слоўніка ўжо існуюць}}",
         "listening_missing_media": "{count, plural, one {# урок слухання без URL медыя} few {# урокі слухання без URL медыя} many {# урокаў слухання без URL медыя} other {# урока слухання без URL медыя}}",
         "listening_duplicate_filename": "{count, plural, one {# урок слухання прапушчаны (дублікат назвы файла)} few {# урокі слухання прапушчаны (дублікат назвы файла)} many {# урокаў слухання прапушчана (дублікат назвы файла)} other {# урока слухання прапушчана (дублікат назвы файла)}}",
+        "speaking_duplicate": "{count, plural, one {# сесія маўлення ўжо існуе} few {# сесіі маўлення ўжо існуюць} many {# сесій маўлення ўжо існуюць} other {# сесіі маўлення ўжо існуюць}}",
         "invalid_workspace_ref": "{count, plural, one {# элемент без працоўнай прасторы} few {# элементы без працоўнай прасторы} many {# элементаў без працоўнай прасторы} other {# элемента без працоўнай прасторы}}",
         "invalid_record": "{count, plural, one {# няправільны запіс} few {# няправільныя запісы} many {# няправільных запісаў} other {# няправільнага запісу}}",
-        "unsupported_account_field": "Палі ідэнтычнасці ўліковага запісу не імпартуюцца"
+        "unsupported_account_field": "Палі ідэнтычнасці ўліковага запісу не імпартуюцца",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Гэты файл рэзервовай копіі занадта вялікі. Паспрабуйце экспартаваць зноў або звярніцеся ў службу падтрымкі.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Не ўдалося імпартаваць гэтую рэзервовую копію. Паспрабуйце яшчэ раз.",
         "requestTooLarge": "Гэтая рэзервовая копія занадта вялікая для апрацоўкі на гэтай старонцы. Паспрабуйце меншы экспарт або звярніцеся ў службу падтрымкі.",
         "notConfigured": "Сховішча файлаў для імпарту рэзервовых копій яшчэ не наладжана."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Закрыць уліковы запіс",
@@ -3092,6 +3110,7 @@
       "backup": "Спампаваць рэзервовую копію",
       "backupDone": "Рэзервовая копія спампавана",
       "backupFailed": "Не ўдалося падрыхтаваць рэзервовую копію. Паспрабуйце яшчэ раз.",
+      "confirmPhrase": "Выдаліць мой уліковы запіс",
       "confirmLabel": "Увядзіце {phrase}, каб пацвердзіць",
       "confirm": "Назаўсёды выдаліць уліковы запіс",
       "deleted": "Ваш уліковы запіс выдалены",

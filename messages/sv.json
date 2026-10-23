@@ -310,7 +310,11 @@
     "createWorkspace": "Skapa arbetsyta",
     "createWorkspaceHint": "Lägg till en till språkarbeetsyta",
     "switchWorkspace": "Byt arbetsyta",
-    "switchFailed": "Kunde inte byta arbetsyta"
+    "switchFailed": "Kunde inte byta arbetsyta",
+    "selectLanguage": "Välj språk",
+    "allLanguages": "Alla språk",
+    "changeLanguageFailed": "Det gick inte att byta gränssnittsspråk",
+    "popularLanguages": "Populära"
   },
   "workspace": {
     "title": "Arbetsytor",
@@ -3000,6 +3004,7 @@
       "backup": "Ladda ner säkerhetskopia",
       "backupDone": "Säkerhetskopia nedladdad",
       "backupFailed": "Kunde inte förbereda din säkerhetskopia. Försök igen.",
+      "confirmPhrase": "Radera alla data",
       "confirmLabel": "Skriv {phrase} för att bekräfta",
       "confirm": "Radera all data",
       "deleted": "All inlärningsdata har raderats",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Kan hoppas över",
       "warnings": {
         "workspace_language_reuse": "Vissa arbetsytor finns redan för samma språk. Deras innehåll läggs till i dina befintliga arbetsytor i stället för att dupliceras.",
-        "empty_backup": "Den här säkerhetskopian innehåller ingen importerbar inlärningsdata."
+        "empty_backup": "Den här säkerhetskopian innehåller ingen importerbar inlärningsdata.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Avbryt",
       "confirm": "Importera inlärningsdata",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# ordförrådspost finns redan} other {# ordförrådsposter finns redan}}",
         "listening_missing_media": "{count, plural, one {# lyssningslektion saknar media-URL} other {# lyssningslektioner saknar media-URL}}",
         "listening_duplicate_filename": "{count, plural, one {# lyssningslektion hoppades över (duplicerat filnamn)} other {# lyssningslektioner hoppades över (duplicerat filnamn)}}",
+        "speaking_duplicate": "{count, plural, one {# talsession finns redan} other {# talsessioner finns redan}}",
         "invalid_workspace_ref": "{count, plural, one {# objekt med saknad arbetsyta} other {# objekt med saknad arbetsyta}}",
         "invalid_record": "{count, plural, one {# ogiltig post} other {# ogiltiga poster}}",
-        "unsupported_account_field": "Kontoidentitetsfält importeras inte"
+        "unsupported_account_field": "Kontoidentitetsfält importeras inte",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Säkerhetskopiefilen är för stor. Exportera igen eller kontakta support.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Kunde inte importera säkerhetskopian. Försök igen.",
         "requestTooLarge": "Säkerhetskopian är för stor att bearbeta på den här sidan. Prova en mindre export eller kontakta support.",
         "notConfigured": "Fillagring är inte konfigurerad för import av säkerhetskopior ännu."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Stäng konto",
@@ -3092,6 +3110,7 @@
       "backup": "Ladda ner säkerhetskopia",
       "backupDone": "Säkerhetskopia nedladdad",
       "backupFailed": "Kunde inte förbereda din säkerhetskopia. Försök igen.",
+      "confirmPhrase": "Radera mitt konto",
       "confirmLabel": "Skriv {phrase} för att bekräfta",
       "confirm": "Permanently delete account",
       "deleted": "Ditt konto har tagits bort",

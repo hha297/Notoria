@@ -310,7 +310,11 @@
     "createWorkspace": "Munkaterület létrehozása",
     "createWorkspaceHint": "Újabb nyelvi munkaterület hozzáadása",
     "switchWorkspace": "Munkaterület váltása",
-    "switchFailed": "Nem sikerült váltani a munkaterületet"
+    "switchFailed": "Nem sikerült váltani a munkaterületet",
+    "selectLanguage": "Nyelv kiválasztása",
+    "allLanguages": "Összes nyelv",
+    "changeLanguageFailed": "Nem sikerült megváltoztatni a felület nyelvét",
+    "popularLanguages": "Népszerű"
   },
   "workspace": {
     "title": "Munkaterületek",
@@ -3000,6 +3004,7 @@
       "backup": "Biztonsági mentés letöltése",
       "backupDone": "Biztonsági mentés letöltve",
       "backupFailed": "Nem sikerült előkészíteni a biztonsági mentést. Próbálja újra.",
+      "confirmPhrase": "Összes adat törlése",
       "confirmLabel": "Írja be a következőt a megerősítéshez: {phrase}",
       "confirm": "Minden adat törlése",
       "deleted": "Minden tanulási adat törölve",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Kihagyásra kerülhet",
       "warnings": {
         "workspace_language_reuse": "Egyes munkaterületek már léteznek ugyanahhoz a nyelvhez. A tartalmuk a meglévő munkaterületeibe kerül, ahelyett hogy duplikátumok jönnének létre.",
-        "empty_backup": "Ez a biztonsági mentés nem tartalmaz importálható tanulási adatokat."
+        "empty_backup": "Ez a biztonsági mentés nem tartalmaz importálható tanulási adatokat.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Mégse",
       "confirm": "Tanulási adatok importálása",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# szókincselem már létezik} other {# szókincselem már létezik}}",
         "listening_missing_media": "{count, plural, one {# hallásértési lecke hiányzó média-URL-lel} other {# hallásértési lecke hiányzó média-URL-lel}}",
         "listening_duplicate_filename": "{count, plural, one {# hallásértési lecke kihagyva (ismétlődő fájlnév)} other {# hallásértési lecke kihagyva (ismétlődő fájlnév)}}",
+        "speaking_duplicate": "{count, plural, one {# beszédóra már létezik} other {# beszédóra már létezik}}",
         "invalid_workspace_ref": "{count, plural, one {# elem hiányzó munkaterülettel} other {# elem hiányzó munkaterülettel}}",
         "invalid_record": "{count, plural, one {# érvénytelen rekord} other {# érvénytelen rekord}}",
-        "unsupported_account_field": "A fiókazonosítási mezők nem kerülnek importálásra"
+        "unsupported_account_field": "A fiókazonosítási mezők nem kerülnek importálásra",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Ez a biztonsági mentés fájl túl nagy. Próbálja újra exportálni, vagy lépjen kapcsolatba az ügyfélszolgálattal.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Nem sikerült importálni ezt a biztonsági mentést. Próbálja újra.",
         "requestTooLarge": "Ez a biztonsági mentés túl nagy az ezen az oldalon történő feldolgozáshoz. Próbáljon kisebb exportot, vagy lépjen kapcsolatba az ügyfélszolgálattal.",
         "notConfigured": "A fájltárolás még nincs konfigurálva a biztonsági mentés importjához."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Fiók bezárása",
@@ -3092,6 +3110,7 @@
       "backup": "Biztonsági mentés letöltése",
       "backupDone": "Biztonsági mentés letöltve",
       "backupFailed": "Nem sikerült előkészíteni a biztonsági mentést. Próbálja újra.",
+      "confirmPhrase": "Fiókom törlése",
       "confirmLabel": "Írja be a következőt a megerősítéshez: {phrase}",
       "confirm": "Fiók végleges törlése",
       "deleted": "A fiókja törölve lett",

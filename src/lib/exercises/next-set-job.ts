@@ -1,9 +1,5 @@
 import { NextResponse } from "next/server";
-import {
-  AI_JOBS,
-  runExclusiveJob,
-  type JobLockStore,
-} from "@/lib/ai/job-lock";
+import { AI_JOBS, runExclusiveJob, type JobLockStore } from "@/lib/ai/job-lock";
 import { guardMeteredAi, settleMeteredAi } from "@/lib/ai/guard-route";
 import {
   NEXT_SET_RESULT_TTL_MS,

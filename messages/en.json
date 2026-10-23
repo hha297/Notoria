@@ -311,7 +311,11 @@
     "createWorkspace": "Create workspace",
     "createWorkspaceHint": "Add another language workspace",
     "switchWorkspace": "Switch workspace",
-    "switchFailed": "Could not switch workspace"
+    "switchFailed": "Could not switch workspace",
+    "selectLanguage": "Select language",
+    "allLanguages": "All languages",
+    "changeLanguageFailed": "Could not change UI language",
+    "popularLanguages": "Popular"
   },
   "workspace": {
     "title": "Workspaces",
@@ -3001,6 +3005,7 @@
       "backup": "Download backup",
       "backupDone": "Backup downloaded",
       "backupFailed": "Could not prepare your backup. Try again.",
+      "confirmPhrase": "Delete all data",
       "confirmLabel": "Type {phrase} to confirm",
       "confirm": "Delete all data",
       "deleted": "All learning data has been deleted",
@@ -3029,9 +3034,15 @@
         "auth": "Authentication information"
       },
       "skippedTitle": "May be skipped",
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import",
       "warnings": {
-        "workspace_language_reuse": "Some workspaces already exist for the same language. Their content will be added into your existing workspaces instead of creating duplicates.",
-        "empty_backup": "This backup does not contain any importable learning data."
+        "workspace_language_reuse": "A workspace for the same language already exists on this account. Backup content for that language is added into it — the workspace itself is not duplicated.",
+        "empty_backup": "This backup does not contain any importable learning data.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Cancel",
       "confirm": "Import learning data",
@@ -3052,10 +3063,17 @@
         "speaking": "{count, plural, one {# speaking session} other {# speaking sessions}}"
       },
       "skips": {
-        "workspace_language_exists": "{count, plural, one {# workspace already exists for that language} other {# workspaces already exist for that language}}",
-        "vocabulary_duplicate": "{count, plural, one {# vocabulary item already exists} other {# vocabulary items already exist}}",
+        "workspace_language_exists": "{count, plural, one {# workspace reused (same language) — content still imports} other {# workspaces reused (same language) — content still imports}}",
+        "vocabulary_duplicate": "{count, plural, one {# vocabulary item} other {# vocabulary items}}",
+        "folder_duplicate": "{count, plural, one {# folder} other {# folders}}",
+        "tag_duplicate": "{count, plural, one {# tag} other {# tags}}",
+        "theory_duplicate": "{count, plural, one {# theory page} other {# theory pages}}",
+        "writing_duplicate": "{count, plural, one {# writing document} other {# writing documents}}",
+        "exercise_duplicate": "{count, plural, one {# exercise} other {# exercises}}",
         "listening_missing_media": "{count, plural, one {# listening lesson missing media URL} other {# listening lessons missing media URLs}}",
-        "listening_duplicate_filename": "{count, plural, one {# listening lesson skipped (duplicate filename)} other {# listening lessons skipped (duplicate filename)}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson} other {# listening lessons}}",
+        "listening_duplicate_filename": "{count, plural, one {# listening lesson (same filename)} other {# listening lessons (same filename)}}",
+        "speaking_duplicate": "{count, plural, one {# speaking session} other {# speaking sessions}}",
         "invalid_workspace_ref": "{count, plural, one {# item with missing workspace} other {# items with missing workspace}}",
         "invalid_record": "{count, plural, one {# invalid record} other {# invalid records}}",
         "unsupported_account_field": "Account identity fields are not imported"
@@ -3093,6 +3111,7 @@
       "backup": "Download backup",
       "backupDone": "Backup downloaded",
       "backupFailed": "Could not prepare your backup. Try again.",
+      "confirmPhrase": "Delete my account",
       "confirmLabel": "Type {phrase} to confirm",
       "confirm": "Permanently delete account",
       "deleted": "Your account has been deleted",

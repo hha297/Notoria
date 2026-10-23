@@ -239,7 +239,7 @@ export function ProSubscriptionCard({
               ) : null}
               {actions.includes("openCoach") ? (
                 <Button
-                  type="button"
+                  nativeButton={false}
                   variant="outline"
                   className={mx(styles, "account-coach-cta")}
                   render={<Link href="/coach" />}

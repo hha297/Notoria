@@ -310,7 +310,11 @@
     "createWorkspace": "कार्यस्थान बनाएँ",
     "createWorkspaceHint": "एक और भाषा कार्यस्थान जोड़ें",
     "switchWorkspace": "कार्यस्थान बदलें",
-    "switchFailed": "कार्यस्थान नहीं बदला जा सका"
+    "switchFailed": "कार्यस्थान नहीं बदला जा सका",
+    "selectLanguage": "भाषा चुनें",
+    "allLanguages": "सभी भाषाएँ",
+    "changeLanguageFailed": "इंटरफ़ेस भाषा बदली नहीं जा सकी",
+    "popularLanguages": "लोकप्रिय"
   },
   "workspace": {
     "title": "कार्यस्थान",
@@ -3000,6 +3004,7 @@
       "backup": "बैकअप डाउनलोड करें",
       "backupDone": "बैकअप डाउनलोड हो गया",
       "backupFailed": "आपका बैकअप तैयार नहीं हो सका। पुनः प्रयास करें।",
+      "confirmPhrase": "सभी डेटा हटाएँ",
       "confirmLabel": "पुष्टि के लिए {phrase} टाइप करें",
       "confirm": "सभी डेटा हटाएँ",
       "deleted": "सभी सीखने का डेटा हटा दिया गया है",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "छोड़ा जा सकता है",
       "warnings": {
         "workspace_language_reuse": "समान भाषा के लिए कुछ वर्कस्पेस पहले से मौजूद हैं। उनकी सामग्री डुप्लिकेट बनाने के बजाय आपके मौजूदा वर्कस्पेस में जोड़ी जाएगी।",
-        "empty_backup": "इस बैकअप में कोई आयात योग्य सीखने का डेटा नहीं है।"
+        "empty_backup": "इस बैकअप में कोई आयात योग्य सीखने का डेटा नहीं है।",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "रद्द करें",
       "confirm": "सीखने का डेटा आयात करें",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# शब्दावली आइटम पहले से मौजूद है} other {# शब्दावली आइटम पहले से मौजूद हैं}}",
         "listening_missing_media": "{count, plural, one {# सुनने के पाठ में मीडिया URL गायब} other {# सुनने के पाठों में मीडिया URL गायब}}",
         "listening_duplicate_filename": "{count, plural, one {# सुनने का पाठ छोड़ा गया (डुप्लिकेट फ़ाइल नाम)} other {# सुनने के पाठ छोड़े गए (डुप्लिकेट फ़ाइल नाम)}}",
+        "speaking_duplicate": "{count, plural, one {# बोलने का सत्र पहले से मौजूद है} other {# बोलने के सत्र पहले से मौजूद हैं}}",
         "invalid_workspace_ref": "{count, plural, one {# आइटम जिसमें वर्कस्पेस गायब} other {# आइटम जिनमें वर्कस्पेस गायब}}",
         "invalid_record": "{count, plural, one {# अमान्य रिकॉर्ड} other {# अमान्य रिकॉर्ड}}",
-        "unsupported_account_field": "खाता पहचान फ़ील्ड आयात नहीं होते"
+        "unsupported_account_field": "खाता पहचान फ़ील्ड आयात नहीं होते",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "वह बैकअप फ़ाइल बहुत बड़ी है। फिर निर्यात करें या सहायता से संपर्क करें।",
@@ -3067,7 +3080,12 @@
         "importFailed": "यह बैकअप आयात नहीं हो सका। पुनः प्रयास करें।",
         "requestTooLarge": "वह बैकअप इस पेज से प्रसंस्कृत करने के लिए बहुत बड़ा है। छोटा निर्यात आज़माएँ या सहायता से संपर्क करें।",
         "notConfigured": "बैकअप आयात के लिए फ़ाइल संग्रहण अभी कॉन्फ़िगर नहीं है।"
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "खाता बंद करें",
@@ -3092,6 +3110,7 @@
       "backup": "बैकअप डाउनलोड करें",
       "backupDone": "बैकअप डाउनलोड हो गया",
       "backupFailed": "आपका बैकअप तैयार नहीं हो सका। पुनः प्रयास करें।",
+      "confirmPhrase": "मेरा खाता हटाएँ",
       "confirmLabel": "पुष्टि के लिए {phrase} टाइप करें",
       "confirm": "खाता स्थायी रूप से हटाएँ",
       "deleted": "आपका खाता हटा दिया गया है",

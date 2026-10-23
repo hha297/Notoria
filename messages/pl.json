@@ -310,7 +310,11 @@
     "createWorkspace": "Utwórz przestrzeń roboczą",
     "createWorkspaceHint": "Dodaj kolejną przestrzeń językową",
     "switchWorkspace": "Przełącz przestrzeń roboczą",
-    "switchFailed": "Nie udało się przełączyć przestrzeni roboczej"
+    "switchFailed": "Nie udało się przełączyć przestrzeni roboczej",
+    "selectLanguage": "Wybierz język",
+    "allLanguages": "Wszystkie języki",
+    "changeLanguageFailed": "Nie udało się zmienić języka interfejsu",
+    "popularLanguages": "Popularne"
   },
   "workspace": {
     "title": "Przestrzenie robocze",
@@ -3000,6 +3004,7 @@
       "backup": "Pobierz kopię zapasową",
       "backupDone": "Kopia zapasowa pobrana",
       "backupFailed": "Nie udało się przygotować kopii zapasowej. Spróbuj ponownie.",
+      "confirmPhrase": "Usuń wszystkie dane",
       "confirmLabel": "Wpisz {phrase}, aby potwierdzić",
       "confirm": "Usuń wszystkie dane",
       "deleted": "Wszystkie dane do nauki zostały usunięte",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Może zostać pominięte",
       "warnings": {
         "workspace_language_reuse": "Niektóre obszary robocze już istnieją dla tego samego języka. Ich treść zostanie dodana do istniejących obszarów roboczych zamiast tworzenia duplikatów.",
-        "empty_backup": "Ta kopia zapasowa nie zawiera żadnych importowalnych danych do nauki."
+        "empty_backup": "Ta kopia zapasowa nie zawiera żadnych importowalnych danych do nauki.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Anuluj",
       "confirm": "Importuj dane do nauki",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# pozycja słownictwa już istnieje} few {# pozycje słownictwa już istnieją} many {# pozycji słownictwa już istnieje} other {# pozycji słownictwa już istnieje}}",
         "listening_missing_media": "{count, plural, one {# lekcja słuchania bez URL multimediów} few {# lekcje słuchania bez URL multimediów} many {# lekcji słuchania bez URL multimediów} other {# lekcji słuchania bez URL multimediów}}",
         "listening_duplicate_filename": "{count, plural, one {# lekcja słuchania pominięta (zduplikowana nazwa pliku)} few {# lekcje słuchania pominięte (zduplikowana nazwa pliku)} many {# lekcji słuchania pominiętych (zduplikowana nazwa pliku)} other {# lekcji słuchania pominiętych (zduplikowana nazwa pliku)}}",
+        "speaking_duplicate": "{count, plural, one {# sesja mówienia już istnieje} few {# sesje mówienia już istnieją} many {# sesji mówienia już istnieje} other {# sesji mówienia już istnieje}}",
         "invalid_workspace_ref": "{count, plural, one {# element bez obszaru roboczego} few {# elementy bez obszaru roboczego} many {# elementów bez obszaru roboczego} other {# elementu bez obszaru roboczego}}",
         "invalid_record": "{count, plural, one {# nieprawidłowy rekord} few {# nieprawidłowe rekordy} many {# nieprawidłowych rekordów} other {# nieprawidłowego rekordu}}",
-        "unsupported_account_field": "Pola tożsamości konta nie są importowane"
+        "unsupported_account_field": "Pola tożsamości konta nie są importowane",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Ten plik kopii zapasowej jest za duży. Spróbuj wyeksportować ponownie lub skontaktuj się z pomocą.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Nie udało się zaimportować tej kopii zapasowej. Spróbuj ponownie.",
         "requestTooLarge": "Ta kopia zapasowa jest za duża do przetworzenia na tej stronie. Spróbuj mniejszego eksportu lub skontaktuj się z pomocą.",
         "notConfigured": "Przechowywanie plików nie jest jeszcze skonfigurowane do importu kopii zapasowej."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Zamknij konto",
@@ -3092,6 +3110,7 @@
       "backup": "Pobierz kopię zapasową",
       "backupDone": "Kopia zapasowa pobrana",
       "backupFailed": "Nie udało się przygotować kopii zapasowej. Spróbuj ponownie.",
+      "confirmPhrase": "Usuń moje konto",
       "confirmLabel": "Wpisz {phrase}, aby potwierdzić",
       "confirm": "Trwale usuń konto",
       "deleted": "Twoje konto zostało usunięte",

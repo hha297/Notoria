@@ -310,7 +310,11 @@
     "createWorkspace": "Crea un espai de treball",
     "createWorkspaceHint": "Afegiu un altre espai de treball d'idioma",
     "switchWorkspace": "Canvia d'espai de treball",
-    "switchFailed": "No s'ha pogut canviar d'espai de treball"
+    "switchFailed": "No s'ha pogut canviar d'espai de treball",
+    "selectLanguage": "Select language",
+    "allLanguages": "All languages",
+    "changeLanguageFailed": "Could not change UI language",
+    "popularLanguages": "Popular"
   },
   "workspace": {
     "title": "Espais de treball",
@@ -3000,6 +3004,7 @@
       "backup": "Baixa la còpia de seguretat",
       "backupDone": "Còpia de seguretat baixada",
       "backupFailed": "No s’ha pogut preparar la còpia de seguretat. Torneu-ho a provar.",
+      "confirmPhrase": "Esborra totes les dades",
       "confirmLabel": "Escriviu {phrase} per confirmar",
       "confirm": "Suprimeix totes les dades",
       "deleted": "S’han suprimit totes les dades d’aprenentatge",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Es pot ometre",
       "warnings": {
         "workspace_language_reuse": "Alguns espais de treball ja existeixen per a la mateixa llengua. El seu contingut s’afegirà als espais de treball existents en lloc de crear duplicats.",
-        "empty_backup": "Aquesta còpia de seguretat no conté dades d’aprenentatge importables."
+        "empty_backup": "Aquesta còpia de seguretat no conté dades d’aprenentatge importables.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Cancel·la",
       "confirm": "Importa les dades d’aprenentatge",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# element de vocabulari ja existeix} other {# elements de vocabulari ja existeixen}}",
         "listening_missing_media": "{count, plural, one {# lliçó de comprensió oral sense URL multimèdia} other {# lliçons de comprensió oral sense URL multimèdia}}",
         "listening_duplicate_filename": "{count, plural, one {# lliçó de comprensió oral omesa (nom de fitxer duplicat)} other {# lliçons de comprensió oral omeses (nom de fitxer duplicat)}}",
+        "speaking_duplicate": "{count, plural, one {# sessió d’expressió oral ja existeix} other {# sessions d’expressió oral ja existeixen}}",
         "invalid_workspace_ref": "{count, plural, one {# element amb espai de treball que falta} other {# elements amb espai de treball que falta}}",
         "invalid_record": "{count, plural, one {# registre no vàlid} other {# registres no vàlids}}",
-        "unsupported_account_field": "Els camps d’identitat del compte no s’importen"
+        "unsupported_account_field": "Els camps d’identitat del compte no s’importen",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Aquest fitxer de còpia de seguretat és massa gran. Proveu d’exportar de nou o contacteu amb l’assistència.",
@@ -3067,7 +3080,12 @@
         "importFailed": "No s’ha pogut importar aquesta còpia de seguretat. Torneu-ho a provar.",
         "requestTooLarge": "Aquesta còpia de seguretat és massa gran per processar-la en aquesta pàgina. Proveu una exportació més petita o contacteu amb l’assistència.",
         "notConfigured": "L’emmagatzematge de fitxers encara no està configurat per a la importació de còpies de seguretat."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Tanca el compte",
@@ -3092,6 +3110,7 @@
       "backup": "Baixa la còpia de seguretat",
       "backupDone": "Còpia de seguretat baixada",
       "backupFailed": "No s’ha pogut preparar la còpia de seguretat. Torneu-ho a provar.",
+      "confirmPhrase": "Esborra el meu compte",
       "confirmLabel": "Escriviu {phrase} per confirmar",
       "confirm": "Suprimeix el compte permanentment",
       "deleted": "S’ha suprimit el compte",

@@ -151,38 +151,46 @@ export function DashboardStudio({
                 data-studio-scene={studioScene}
                 data-exercise={exerciseDetailSlug ?? undefined}
               >
-                <div className="flex h-12 items-center gap-1.5 px-2 sm:h-14 sm:gap-2 sm:px-4">
-                  <div className="flex min-w-0 flex-1 items-center gap-1.5 sm:basis-0 sm:gap-2">
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="icon"
-                      className="size-9 shrink-0 sm:size-10 lg:hidden"
-                      aria-label={t("groups.main")}
-                      onClick={() => setNavOpen(true)}
-                    >
-                      <Menu className="size-4" />
-                    </Button>
-                    {activeWorkspaceId ? (
-                      <div className="min-w-0 flex-1">
-                        <WorkspaceSearch
-                          workspaceId={activeWorkspaceId}
-                          compact
-                        />
-                      </div>
-                    ) : (
-                      <div className="min-w-0 flex-1" />
-                    )}
-                  </div>
-                  <div className="flex min-w-0 shrink-0 items-center gap-1 sm:gap-2">
-                    <div className="min-w-0 max-w-[9.5rem] sm:max-w-none sm:flex-initial">
-                      <WorkspaceSelector
-                        workspaces={workspaces}
-                        activeWorkspaceId={activeWorkspaceId}
+                {/*
+                  Mobile: Menu · Search · Workspace (language/theme live in the drawer).
+                  Desktop (lg+): also Language + Theme in the chrome row.
+                  Search grows; workspace select has its own stable desktop width
+                  (create CTA is shrink-0 beside it, not inside a max-width box).
+                */}
+                <div className="group/chrome flex h-auto items-center gap-1.5 px-2 py-1.5 sm:h-14 sm:gap-2 sm:px-4 sm:py-0">
+                  <Button
+                    type="button"
+                    variant="outline"
+                    size="icon"
+                    className="studio-chrome-control control-surface h-9 w-9 shrink-0 sm:h-10 sm:w-10 lg:hidden max-sm:group-has-[[data-mobile-search]]/chrome:hidden"
+                    aria-label={t("groups.main")}
+                    onClick={() => setNavOpen(true)}
+                  >
+                    <Menu className="size-4" />
+                  </Button>
+
+                  {activeWorkspaceId ? (
+                    <div className="min-w-0 shrink-0 max-sm:group-has-[[data-mobile-search]]/chrome:min-w-0 max-sm:group-has-[[data-mobile-search]]/chrome:flex-1 max-sm:group-has-[[data-mobile-search]]/chrome:basis-0 sm:min-w-0 sm:max-w-md sm:flex-1 sm:basis-0 lg:max-w-lg">
+                      <WorkspaceSearch
+                        workspaceId={activeWorkspaceId}
+                        compact
                       />
                     </div>
-                    <LocaleThemeControls locale={locale} compact />
-                  </div>
+                  ) : (
+                    <div className="hidden min-w-0 flex-1 sm:block" />
+                  )}
+
+                  <WorkspaceSelector
+                    className="min-w-0 flex-1 sm:flex-none max-sm:group-has-[[data-mobile-search]]/chrome:hidden"
+                    workspaces={workspaces}
+                    activeWorkspaceId={activeWorkspaceId}
+                  />
+
+                  <LocaleThemeControls
+                    locale={locale}
+                    compact
+                    className="hidden lg:flex"
+                  />
                 </div>
               </header>
 
@@ -246,6 +254,7 @@ export function DashboardStudio({
             <SidebarNav
               workspaceId={activeWorkspaceId}
               layout="drawer"
+              locale={locale}
               onNavigate={() => setNavOpen(false)}
               {...sidebarUser}
             />

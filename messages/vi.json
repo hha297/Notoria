@@ -311,7 +311,11 @@
     "createWorkspace": "Tạo không gian học",
     "createWorkspaceHint": "Thêm không gian học cho ngôn ngữ khác",
     "switchWorkspace": "Đổi không gian học",
-    "switchFailed": "Không đổi được không gian học. Thử lại nhé."
+    "switchFailed": "Không đổi được không gian học. Thử lại nhé.",
+    "selectLanguage": "Chọn ngôn ngữ",
+    "allLanguages": "Tất cả ngôn ngữ",
+    "changeLanguageFailed": "Không đổi được ngôn ngữ giao diện",
+    "popularLanguages": "Phổ biến"
   },
   "workspace": {
     "title": "Không gian học",
@@ -2806,6 +2810,7 @@
       "backup": "Tải backup",
       "backupDone": "Đã tải backup",
       "backupFailed": "Không chuẩn bị được backup. Thử lại nhé.",
+      "confirmPhrase": "Xóa toàn bộ dữ liệu",
       "confirmLabel": "Gõ {phrase} để xác nhận",
       "confirm": "Xóa toàn bộ dữ liệu",
       "deleted": "Đã xóa toàn bộ dữ liệu học",
@@ -2834,9 +2839,15 @@
         "auth": "Thông tin xác thực"
       },
       "skippedTitle": "Có thể bỏ qua",
+      "skippedInAccountTitle": "Đã có trên tài khoản của bạn",
+      "skippedInAccountHint": "Các tên này trùng với mục bạn đã có. Chúng sẽ không được nhập lại. Mục mới trong cùng workspace vẫn được nhập.",
+      "skippedInBackupTitle": "Tên trùng trong file backup",
+      "skippedInBackupHint": "File liệt kê cùng một tên nhiều lần. Chỉ bản đầu tiên của mỗi tên được nhập — điều này bình thường kể cả khi tài khoản đang trống.",
+      "skippedOtherTitle": "Không nhập được",
       "warnings": {
-        "workspace_language_reuse": "Một số workspace đã tồn tại cho cùng ngôn ngữ. Nội dung sẽ được thêm vào workspace hiện có thay vì tạo bản trùng.",
-        "empty_backup": "Bản sao lưu này không chứa dữ liệu học có thể nhập."
+        "workspace_language_reuse": "Tài khoản đã có workspace cùng ngôn ngữ. Nội dung backup của ngôn ngữ đó được thêm vào workspace hiện có — không tạo thêm workspace trùng.",
+        "empty_backup": "Bản sao lưu này không có dữ liệu học có thể nhập.",
+        "ambiguous_name_match": "Một số mục hiện có trùng tên. Import sẽ dùng một mục theo cách xác định và không đổi các mục còn lại."
       },
       "cancel": "Hủy",
       "confirm": "Nhập dữ liệu học",
@@ -2857,13 +2868,20 @@
         "speaking": "{count, plural, one {# phiên speaking} other {# phiên speaking}}"
       },
       "skips": {
-        "workspace_language_exists": "{count, plural, one {# workspace đã tồn tại cho ngôn ngữ đó} other {# workspace đã tồn tại cho ngôn ngữ đó}}",
-        "vocabulary_duplicate": "{count, plural, one {# mục từ vựng đã tồn tại} other {# mục từ vựng đã tồn tại}}",
+        "workspace_language_exists": "{count, plural, one {# workspace được dùng lại (cùng ngôn ngữ) — nội dung vẫn nhập} other {# workspace được dùng lại (cùng ngôn ngữ) — nội dung vẫn nhập}}",
+        "vocabulary_duplicate": "{count, plural, one {# mục từ vựng} other {# mục từ vựng}}",
         "listening_missing_media": "{count, plural, one {# bài listening thiếu URL media} other {# bài listening thiếu URL media}}",
-        "listening_duplicate_filename": "{count, plural, one {# bài listening bị bỏ qua (trùng tên file)} other {# bài listening bị bỏ qua (trùng tên file)}}",
+        "listening_duplicate_filename": "{count, plural, one {# bài listening (trùng tên file)} other {# bài listening (trùng tên file)}}",
+        "speaking_duplicate": "{count, plural, one {# phiên speaking} other {# phiên speaking}}",
         "invalid_workspace_ref": "{count, plural, one {# mục thiếu workspace} other {# mục thiếu workspace}}",
         "invalid_record": "{count, plural, one {# bản ghi không hợp lệ} other {# bản ghi không hợp lệ}}",
-        "unsupported_account_field": "Các trường danh tính tài khoản không được nhập"
+        "unsupported_account_field": "Các trường danh tính tài khoản không được nhập",
+        "folder_duplicate": "{count, plural, one {# thư mục} other {# thư mục}}",
+        "tag_duplicate": "{count, plural, one {# thẻ} other {# thẻ}}",
+        "theory_duplicate": "{count, plural, one {# trang theory} other {# trang theory}}",
+        "writing_duplicate": "{count, plural, one {# tài liệu writing} other {# tài liệu writing}}",
+        "exercise_duplicate": "{count, plural, one {# bài tập} other {# bài tập}}",
+        "listening_duplicate": "{count, plural, one {# bài listening} other {# bài listening}}"
       },
       "errors": {
         "fileTooLarge": "File backup quá lớn. Hãy xuất lại hoặc liên hệ hỗ trợ.",
@@ -2898,6 +2916,7 @@
       "backup": "Tải backup",
       "backupDone": "Đã tải backup",
       "backupFailed": "Không chuẩn bị được backup. Thử lại nhé.",
+      "confirmPhrase": "Xóa tài khoản của tôi",
       "confirmLabel": "Gõ {phrase} để xác nhận",
       "confirm": "Xóa tài khoản vĩnh viễn",
       "deleted": "Tài khoản của bạn đã được xóa",

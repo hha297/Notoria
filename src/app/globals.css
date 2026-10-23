@@ -260,7 +260,7 @@
   );
   --page-accent-border: color-mix(
     in oklab,
-    var(--page-accent) 28%,
+    var(--page-accent) 18%,
     var(--hairline-cloud)
   );
   --page-accent-hover: color-mix(
@@ -557,6 +557,7 @@
 
   /* Prefer page-accent borders on interactive controls inside themed scopes */
   .studio-paper[data-studio-scene] .control-surface,
+  .studio-chrome[data-studio-scene] .control-surface,
   [data-exercise] .control-surface {
     border-color: var(--page-accent-border);
   }
@@ -565,6 +566,10 @@
   .studio-paper[data-studio-scene] .control-surface:focus-visible,
   .studio-paper[data-studio-scene] .control-surface[data-popup-open],
   .studio-paper[data-studio-scene] .control-surface[aria-expanded="true"],
+  .studio-chrome[data-studio-scene] .control-surface:hover:not(:disabled):not([aria-disabled="true"]),
+  .studio-chrome[data-studio-scene] .control-surface:focus-visible,
+  .studio-chrome[data-studio-scene] .control-surface[data-popup-open],
+  .studio-chrome[data-studio-scene] .control-surface[aria-expanded="true"],
   [data-exercise] .control-surface:hover:not(:disabled):not([aria-disabled="true"]),
   [data-exercise] .control-surface:focus-visible,
   [data-exercise] .control-surface[data-popup-open],
@@ -852,6 +857,18 @@
     );
     --primary-foreground: var(--background);
     --ring: color-mix(in oklab, var(--page-accent) 55%, transparent);
+    /*
+      Re-bind border tokens on the themed scope so Tailwind utilities
+      (`border-page-accent-border`) on nested controls follow this page,
+      not the root/home teal. Keep the mix soft — match studio-paper’s
+      hairline weight (paper shell is pure hairline-cloud; ~18% accent tint).
+    */
+    --page-accent-border: color-mix(
+      in oklab,
+      var(--page-accent) 18%,
+      var(--hairline-cloud)
+    );
+    --color-page-accent-border: var(--page-accent-border);
   }
 
   .studio-paper > * {
@@ -862,8 +879,10 @@
   .studio-chrome {
     @apply relative isolate shrink-0 text-ink;
     border-radius: 1rem;
-    border: 1px solid var(--page-accent-border);
-    /* Follow active page accent (scene / exercise), not fixed theory/violet mix */
+    /* Same quiet edge as .studio-paper (hairline), not a loud accent stroke. */
+    border: 1px solid var(--hairline-cloud);
+    /* One height for every toolbar control (menu, search, workspace, locale, theme). */
+    --studio-control-h: 2.25rem;
     background-color: var(--surface);
     background-image:
       linear-gradient(
@@ -919,7 +938,14 @@
     z-index: 1;
   }
 
+  @media (min-width: 640px) {
+    .studio-chrome {
+      --studio-control-h: 2.5rem;
+    }
+  }
+
   .dark .studio-chrome {
+    border-color: var(--hairline-cloud);
     background-color: color-mix(in oklab, var(--background) 48%, transparent);
     background-image:
       linear-gradient(
@@ -3868,6 +3894,81 @@ html {
 
 html.dark {
   color-scheme: dark;
+}
+
+/*
+  Unlayered: beat Tailwind `border-page-accent-border` utilities so every
+  chrome/paper control (search, workspace, locale, theme, kbd, inputs)
+  uses the active page accent — not a fixed home teal border.
+*/
+.studio-chrome[data-studio-scene] :is(
+  .control-surface,
+  .border-page-accent-border,
+  input,
+  button.control-surface,
+  kbd
+),
+.studio-paper[data-studio-scene] :is(
+  .control-surface,
+  .border-page-accent-border,
+  input,
+  button.control-surface,
+  kbd
+) {
+  border-color: var(--page-accent-border);
+}
+
+/*
+  Lock navbar control heights. Beats SelectTrigger data-[size=default]:h-10,
+  Input h-10, and size-10 action menus that were desyncing the row.
+  Nested .studio-chrome-control (e.g. workspace … menu) fills the shell —
+  re-applying the token made the shell grow past siblings.
+*/
+.studio-chrome .studio-chrome-control {
+  box-sizing: border-box;
+  height: var(--studio-control-h) !important;
+  min-height: var(--studio-control-h) !important;
+  max-height: var(--studio-control-h) !important;
+}
+
+.studio-chrome .studio-chrome-control .studio-chrome-control {
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+}
+
+.studio-chrome .studio-chrome-control [data-slot="select-trigger"] {
+  box-sizing: border-box;
+  height: 100% !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  padding-block: 0 !important;
+}
+
+.studio-chrome[data-studio-scene]
+  :is(.control-surface, button.control-surface, input):is(
+    :hover,
+    :focus-visible,
+    [data-popup-open],
+    [aria-expanded="true"]
+  ):not(:disabled):not([aria-disabled="true"]),
+.studio-paper[data-studio-scene]
+  :is(.control-surface, button.control-surface, input):is(
+    :hover,
+    :focus-visible,
+    [data-popup-open],
+    [aria-expanded="true"]
+  ):not(:disabled):not([aria-disabled="true"]) {
+  border-color: color-mix(in oklab, var(--page-accent) 28%, var(--border));
+}
+
+/* Workspace actions divider — keep near hairline, light accent only. */
+.studio-chrome[data-studio-scene] .bg-hairline-cloud {
+  background-color: color-mix(
+    in oklab,
+    var(--page-accent) 14%,
+    var(--hairline-cloud)
+  );
 }
 
 /* Detail chrome back links — outside @layer so muted defaults cannot wash them out. */

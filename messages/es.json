@@ -310,7 +310,11 @@
     "createWorkspace": "Crear espacio de trabajo",
     "createWorkspaceHint": "Añadir otro espacio de trabajo de idioma",
     "switchWorkspace": "Cambiar espacio de trabajo",
-    "switchFailed": "No se pudo cambiar el espacio de trabajo"
+    "switchFailed": "No se pudo cambiar el espacio de trabajo",
+    "selectLanguage": "Elegir idioma",
+    "allLanguages": "Todos los idiomas",
+    "changeLanguageFailed": "No se pudo cambiar el idioma de la interfaz",
+    "popularLanguages": "Populares"
   },
   "workspace": {
     "title": "Espacios de trabajo",
@@ -3000,6 +3004,7 @@
       "backup": "Descargar copia de seguridad",
       "backupDone": "Copia de seguridad descargada",
       "backupFailed": "No se pudo preparar su copia de seguridad. Inténtelo de nuevo.",
+      "confirmPhrase": "Eliminar todos los datos",
       "confirmLabel": "Escriba {phrase} para confirmar",
       "confirm": "Eliminar todos los datos",
       "deleted": "Se han eliminado todos los datos de aprendizaje",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Puede omitirse",
       "warnings": {
         "workspace_language_reuse": "Algunos espacios de trabajo ya existen para el mismo idioma. Su contenido se añadirá a sus espacios de trabajo existentes en lugar de crear duplicados.",
-        "empty_backup": "Esta copia de seguridad no contiene datos de aprendizaje importables."
+        "empty_backup": "Esta copia de seguridad no contiene datos de aprendizaje importables.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Cancelar",
       "confirm": "Importar datos de aprendizaje",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# elemento de vocabulario ya existe} other {# elementos de vocabulario ya existen}}",
         "listening_missing_media": "{count, plural, one {# lección de comprensión auditiva sin URL de medios} other {# lecciones de comprensión auditiva sin URL de medios}}",
         "listening_duplicate_filename": "{count, plural, one {# lección de comprensión auditiva omitida (nombre de archivo duplicado)} other {# lecciones de comprensión auditiva omitidas (nombre de archivo duplicado)}}",
+        "speaking_duplicate": "{count, plural, one {# sesión de expresión oral ya existe} other {# sesiones de expresión oral ya existen}}",
         "invalid_workspace_ref": "{count, plural, one {# elemento sin espacio de trabajo} other {# elementos sin espacio de trabajo}}",
         "invalid_record": "{count, plural, one {# registro no válido} other {# registros no válidos}}",
-        "unsupported_account_field": "Los campos de identidad de la cuenta no se importan"
+        "unsupported_account_field": "Los campos de identidad de la cuenta no se importan",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Ese archivo de copia de seguridad es demasiado grande. Intente exportar de nuevo o contacte con soporte.",
@@ -3067,7 +3080,12 @@
         "importFailed": "No se pudo importar esta copia de seguridad. Inténtelo de nuevo.",
         "requestTooLarge": "Esa copia de seguridad es demasiado grande para procesarla en esta página. Pruebe con una exportación más pequeña o contacte con soporte.",
         "notConfigured": "El almacenamiento de archivos aún no está configurado para la importación de copias de seguridad."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Cerrar cuenta",
@@ -3092,6 +3110,7 @@
       "backup": "Descargar copia de seguridad",
       "backupDone": "Copia de seguridad descargada",
       "backupFailed": "No se pudo preparar su copia de seguridad. Inténtelo de nuevo.",
+      "confirmPhrase": "Eliminar mi cuenta",
       "confirmLabel": "Escriba {phrase} para confirmar",
       "confirm": "Eliminar la cuenta de forma permanente",
       "deleted": "Su cuenta ha sido eliminada",

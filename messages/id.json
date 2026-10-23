@@ -310,7 +310,11 @@
     "createWorkspace": "Buat ruang kerja",
     "createWorkspaceHint": "Tambahkan ruang kerja bahasa lain",
     "switchWorkspace": "Ganti ruang kerja",
-    "switchFailed": "Tidak dapat mengganti ruang kerja"
+    "switchFailed": "Tidak dapat mengganti ruang kerja",
+    "selectLanguage": "Pilih bahasa",
+    "allLanguages": "Semua bahasa",
+    "changeLanguageFailed": "Tidak bisa mengubah bahasa antarmuka",
+    "popularLanguages": "Populer"
   },
   "workspace": {
     "title": "Ruang kerja",
@@ -3000,6 +3004,7 @@
       "backup": "Unduh cadangan",
       "backupDone": "Cadangan diunduh",
       "backupFailed": "Tidak dapat menyiapkan cadangan Anda. Coba lagi.",
+      "confirmPhrase": "Hapus semua data",
       "confirmLabel": "Ketik {phrase} untuk mengonfirmasi",
       "confirm": "Hapus semua data",
       "deleted": "Semua data pembelajaran telah dihapus",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Mungkin dilewati",
       "warnings": {
         "workspace_language_reuse": "Beberapa ruang kerja sudah ada untuk bahasa yang sama. Kontennya akan ditambahkan ke ruang kerja yang ada alih-alih membuat duplikat.",
-        "empty_backup": "Cadangan ini tidak berisi data pembelajaran yang dapat diimpor."
+        "empty_backup": "Cadangan ini tidak berisi data pembelajaran yang dapat diimpor.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Batal",
       "confirm": "Impor data pembelajaran",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# item kosakata sudah ada} other {# item kosakata sudah ada}}",
         "listening_missing_media": "{count, plural, one {# pelajaran mendengarkan tanpa URL media} other {# pelajaran mendengarkan tanpa URL media}}",
         "listening_duplicate_filename": "{count, plural, one {# pelajaran mendengarkan dilewati (nama file duplikat)} other {# pelajaran mendengarkan dilewati (nama file duplikat)}}",
+        "speaking_duplicate": "{count, plural, one {# sesi berbicara sudah ada} other {# sesi berbicara sudah ada}}",
         "invalid_workspace_ref": "{count, plural, one {# item tanpa ruang kerja} other {# item tanpa ruang kerja}}",
         "invalid_record": "{count, plural, one {# catatan tidak valid} other {# catatan tidak valid}}",
-        "unsupported_account_field": "Bidang identitas akun tidak diimpor"
+        "unsupported_account_field": "Bidang identitas akun tidak diimpor",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "File cadangan itu terlalu besar. Coba ekspor lagi atau hubungi dukungan.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Tidak dapat mengimpor cadangan ini. Coba lagi.",
         "requestTooLarge": "Cadangan itu terlalu besar untuk diproses melalui halaman ini. Coba ekspor yang lebih kecil atau hubungi dukungan.",
         "notConfigured": "Penyimpanan file belum dikonfigurasi untuk impor cadangan."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Tutup akun",
@@ -3092,6 +3110,7 @@
       "backup": "Unduh cadangan",
       "backupDone": "Cadangan diunduh",
       "backupFailed": "Tidak dapat menyiapkan cadangan Anda. Coba lagi.",
+      "confirmPhrase": "Hapus akun saya",
       "confirmLabel": "Ketik {phrase} untuk mengonfirmasi",
       "confirm": "Hapus akun secara permanen",
       "deleted": "Akun Anda telah dihapus",

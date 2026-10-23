@@ -29,11 +29,14 @@ import { getStripeClient } from "@/lib/stripe/client";
 import { isStripeConfigured } from "@/lib/stripe/config";
 import { toBillingState } from "@/lib/stripe/pro";
 import { reconcileUserSubscription } from "@/lib/stripe/subscription";
+import { matchesConfirmPhrase } from "@/lib/account/confirm-phrase";
 import {
-  DELETE_ACCOUNT_CONFIRMATION,
-  DELETE_ALL_DATA_CONFIRMATION,
+  DELETE_ACCOUNT_CONFIRM_PHRASE_KEY,
+  DELETE_ALL_DATA_CONFIRM_PHRASE_KEY,
 } from "@/lib/account/constants";
 import { purgeUserLearningData } from "@/lib/account/purge-learning-data";
+import { isValidLocale } from "@/i18n/config";
+import { getLocale, getTranslations } from "next-intl/server";
 
 const MAX_AVATAR_SIZE = 5 * 1024 * 1024;
 const ALLOWED_AVATAR_TYPES = new Set([
@@ -420,7 +423,7 @@ export async function removeAvatar() {
 }
 
 const deleteAccountSchema = z.object({
-  confirmation: z.literal(DELETE_ACCOUNT_CONFIRMATION),
+  confirmation: z.string().min(1).max(200),
 });
 
 async function destroyCloudinaryPublicId(
@@ -678,7 +681,7 @@ export async function exportAccountBackup() {
 }
 
 const deleteAllAccountDataSchema = z.object({
-  confirmation: z.literal(DELETE_ALL_DATA_CONFIRMATION),
+  confirmation: z.string().min(1).max(200),
 });
 
 /**
@@ -689,7 +692,18 @@ export async function deleteAllAccountData(
   data: z.infer<typeof deleteAllAccountDataSchema>,
 ) {
   const parsed = deleteAllAccountDataSchema.parse(data);
-  if (parsed.confirmation !== DELETE_ALL_DATA_CONFIRMATION) {
+
+  const locale = await getLocale();
+  if (!isValidLocale(locale)) {
+    throw new Error("INVALID_LOCALE");
+  }
+
+  const t = await getTranslations({
+    locale,
+    namespace: "account.clearData",
+  });
+  const expectedPhrase = t(DELETE_ALL_DATA_CONFIRM_PHRASE_KEY);
+  if (!matchesConfirmPhrase(parsed.confirmation, expectedPhrase, locale)) {
     throw new Error("INVALID_CONFIRMATION");
   }
 
@@ -723,7 +737,18 @@ export async function deleteAccount(
   data: z.infer<typeof deleteAccountSchema>,
 ) {
   const parsed = deleteAccountSchema.parse(data);
-  if (parsed.confirmation !== DELETE_ACCOUNT_CONFIRMATION) {
+
+  const locale = await getLocale();
+  if (!isValidLocale(locale)) {
+    throw new Error("INVALID_LOCALE");
+  }
+
+  const t = await getTranslations({
+    locale,
+    namespace: "account.delete",
+  });
+  const expectedPhrase = t(DELETE_ACCOUNT_CONFIRM_PHRASE_KEY);
+  if (!matchesConfirmPhrase(parsed.confirmation, expectedPhrase, locale)) {
     throw new Error("INVALID_CONFIRMATION");
   }
 

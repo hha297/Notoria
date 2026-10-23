@@ -310,7 +310,11 @@
     "createWorkspace": "Luo työtila",
     "createWorkspaceHint": "Lisää toinen kielityötila",
     "switchWorkspace": "Vaihda työtilaa",
-    "switchFailed": "Työtilan vaihto epäonnistui"
+    "switchFailed": "Työtilan vaihto epäonnistui",
+    "selectLanguage": "Valitse kieli",
+    "allLanguages": "Kaikki kielet",
+    "changeLanguageFailed": "Käyttöliittymän kieltä ei voitu vaihtaa",
+    "popularLanguages": "Suositut"
   },
   "workspace": {
     "title": "Työtilat",
@@ -2805,6 +2809,7 @@
       "backup": "Lataa varmuuskopio",
       "backupDone": "Varmuuskopio ladattu",
       "backupFailed": "Varmuuskopiota ei voitu valmistella. Yritä uudelleen.",
+      "confirmPhrase": "Poista kaikki data",
       "confirmLabel": "Kirjoita {phrase} vahvistaaksesi",
       "confirm": "Poista kaikki data",
       "deleted": "Kaikki oppimisdata on poistettu",
@@ -2835,7 +2840,8 @@
       "skippedTitle": "Saatetaan ohittaa",
       "warnings": {
         "workspace_language_reuse": "Joitakin työtiloja on jo olemassa samalle kielelle. Niiden sisältö lisätään olemassa oleviin työtiloihin sen sijaan, että luotaisiin kaksoiskappaleita.",
-        "empty_backup": "Tämä varmuuskopio ei sisällä tuotavaa oppimisdataa."
+        "empty_backup": "Tämä varmuuskopio ei sisällä tuotavaa oppimisdataa.",
+        "ambiguous_name_match": "Joillakin olemassa olevilla kohteilla on sama nimi. Tuonti käyttää yhtä niistä deterministisesti eikä muuta muita."
       },
       "cancel": "Peruuta",
       "confirm": "Tuo oppimisdata",
@@ -2860,9 +2866,16 @@
         "vocabulary_duplicate": "{count, plural, one {# sanastoyksikkö on jo olemassa} other {# sanastoyksikköä on jo olemassa}}",
         "listening_missing_media": "{count, plural, one {# kuuntelutunnilta puuttuu media-URL} other {# kuuntelutunnilta puuttuu media-URL}}",
         "listening_duplicate_filename": "{count, plural, one {# kuuntelutunti ohitettiin (päällekkäinen tiedostonimi)} other {# kuuntelutuntia ohitettiin (päällekkäinen tiedostonimi)}}",
+        "speaking_duplicate": "{count, plural, one {# puhesessio on jo olemassa} other {# puhesessiota on jo olemassa}}",
         "invalid_workspace_ref": "{count, plural, one {# kohde ilman työtilaa} other {# kohdetta ilman työtilaa}}",
         "invalid_record": "{count, plural, one {# virheellinen tietue} other {# virheellistä tietuetta}}",
-        "unsupported_account_field": "Tilin henkilöllisyyskenttiä ei tuoda"
+        "unsupported_account_field": "Tilin henkilöllisyyskenttiä ei tuoda",
+        "folder_duplicate": "{count, plural, one {# kansio on jo olemassa} other {# kansiota on jo olemassa}}",
+        "tag_duplicate": "{count, plural, one {# tunniste on jo olemassa} other {# tunnistetta on jo olemassa}}",
+        "theory_duplicate": "{count, plural, one {# teoriasivu on jo olemassa} other {# teoriasivua on jo olemassa}}",
+        "writing_duplicate": "{count, plural, one {# kirjoitusasiakirja on jo olemassa} other {# kirjoitusasiakirjaa on jo olemassa}}",
+        "exercise_duplicate": "{count, plural, one {# harjoitus on jo olemassa} other {# harjoitusta on jo olemassa}}",
+        "listening_duplicate": "{count, plural, one {# kuuntelutunti on jo olemassa} other {# kuuntelutuntia on jo olemassa}}"
       },
       "errors": {
         "fileTooLarge": "Varmuuskopiotiedosto on liian suuri. Vie uudelleen tai ota yhteyttä tukeen.",
@@ -2872,7 +2885,12 @@
         "importFailed": "Varmuuskopiota ei voitu tuoda. Yritä uudelleen.",
         "requestTooLarge": "Varmuuskopio on liian suuri käsiteltäväksi tällä sivulla. Kokeile pienempää vientiä tai ota yhteyttä tukeen.",
         "notConfigured": "Tiedostojen tallennusta ei ole vielä määritetty varmuuskopioiden tuontia varten."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Sulje tili",
@@ -2897,6 +2915,7 @@
       "backup": "Lataa varmuuskopio",
       "backupDone": "Varmuuskopio ladattu",
       "backupFailed": "Varmuuskopiota ei voitu valmistella. Yritä uudelleen.",
+      "confirmPhrase": "Poista tilini",
       "confirmLabel": "Kirjoita {phrase} vahvistaaksesi",
       "confirm": "Poista tili pysyvästi",
       "deleted": "Tilisi on poistettu",

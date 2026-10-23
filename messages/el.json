@@ -310,7 +310,11 @@
     "createWorkspace": "Δημιουργία χώρου εργασίας",
     "createWorkspaceHint": "Προσθήκη άλλου χώρου εργασίας γλώσσας",
     "switchWorkspace": "Εναλλαγή χώρου εργασίας",
-    "switchFailed": "Δεν ήταν δυνατή η εναλλαγή χώρου εργασίας"
+    "switchFailed": "Δεν ήταν δυνατή η εναλλαγή χώρου εργασίας",
+    "selectLanguage": "Επιλογή γλώσσας",
+    "allLanguages": "Όλες οι γλώσσες",
+    "changeLanguageFailed": "Δεν ήταν δυνατή η αλλαγή της γλώσσας διεπαφής",
+    "popularLanguages": "Δημοφιλή"
   },
   "workspace": {
     "title": "Χώροι εργασίας",
@@ -3000,6 +3004,7 @@
       "backup": "Λήψη αντιγράφου ασφαλείας",
       "backupDone": "Το αντίγραφο ασφαλείας κατέβηκε",
       "backupFailed": "Δεν ήταν δυνατή η προετοιμασία του αντιγράφου ασφαλείας. Δοκιμάστε ξανά.",
+      "confirmPhrase": "Διαγραφή όλων των δεδομένων",
       "confirmLabel": "Πληκτρολογήστε {phrase} για επιβεβαίωση",
       "confirm": "Διαγραφή όλων των δεδομένων",
       "deleted": "Όλα τα μαθησιακά δεδομένα έχουν διαγραφεί",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Μπορεί να παραλειφθεί",
       "warnings": {
         "workspace_language_reuse": "Ορισμένοι χώροι εργασίας υπάρχουν ήδη για την ίδια γλώσσα. Το περιεχόμενό τους θα προστεθεί στους υπάρχοντες χώρους εργασίας αντί να δημιουργηθούν διπλότυπα.",
-        "empty_backup": "Αυτό το αντίγραφο ασφαλείας δεν περιέχει εισαγώγιμα μαθησιακά δεδομένα."
+        "empty_backup": "Αυτό το αντίγραφο ασφαλείας δεν περιέχει εισαγώγιμα μαθησιακά δεδομένα.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Ακύρωση",
       "confirm": "Εισαγωγή μαθησιακών δεδομένων",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# στοιχείο λεξιλογίου υπάρχει ήδη} other {# στοιχεία λεξιλογίου υπάρχουν ήδη}}",
         "listening_missing_media": "{count, plural, one {# μάθημα ακρόασης χωρίς URL πολυμέσων} other {# μαθήματα ακρόασης χωρίς URL πολυμέσων}}",
         "listening_duplicate_filename": "{count, plural, one {# μάθημα ακρόασης παραλείφθηκε (διπλότυπο όνομα αρχείου)} other {# μαθήματα ακρόασης παραλείφθηκαν (διπλότυπο όνομα αρχείου)}}",
+        "speaking_duplicate": "{count, plural, one {# συνεδρία ομιλίας υπάρχει ήδη} other {# συνεδρίες ομιλίας υπάρχουν ήδη}}",
         "invalid_workspace_ref": "{count, plural, one {# στοιχείο χωρίς χώρο εργασίας} other {# στοιχεία χωρίς χώρο εργασίας}}",
         "invalid_record": "{count, plural, one {# μη έγκυρη εγγραφή} other {# μη έγκυρες εγγραφές}}",
-        "unsupported_account_field": "Τα πεδία ταυτότητας λογαριασμού δεν εισάγονται"
+        "unsupported_account_field": "Τα πεδία ταυτότητας λογαριασμού δεν εισάγονται",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Αυτό το αρχείο αντιγράφου ασφαλείας είναι πολύ μεγάλο. Δοκιμάστε εξαγωγή ξανά ή επικοινωνήστε με την υποστήριξη.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Δεν ήταν δυνατή η εισαγωγή αυτού του αντιγράφου ασφαλείας. Δοκιμάστε ξανά.",
         "requestTooLarge": "Αυτό το αντίγραφο ασφαλείας είναι πολύ μεγάλο για επεξεργασία μέσω αυτής της σελίδας. Δοκιμάστε μικρότερη εξαγωγή ή επικοινωνήστε με την υποστήριξη.",
         "notConfigured": "Η αποθήκευση αρχείων δεν έχει ρυθμιστεί ακόμη για εισαγωγή αντιγράφου ασφαλείας."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Κλείσιμο λογαριασμού",
@@ -3092,6 +3110,7 @@
       "backup": "Λήψη αντιγράφου ασφαλείας",
       "backupDone": "Το αντίγραφο ασφαλείας κατέβηκε",
       "backupFailed": "Δεν ήταν δυνατή η προετοιμασία του αντιγράφου ασφαλείας. Δοκιμάστε ξανά.",
+      "confirmPhrase": "Διαγραφή του λογαριασμού μου",
       "confirmLabel": "Πληκτρολογήστε {phrase} για επιβεβαίωση",
       "confirm": "Οριστική διαγραφή λογαριασμού",
       "deleted": "Ο λογαριασμός σας έχει διαγραφεί",

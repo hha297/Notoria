@@ -310,7 +310,11 @@
     "createWorkspace": "워크스페이스 만들기",
     "createWorkspaceHint": "다른 언어 워크스페이스 추가",
     "switchWorkspace": "워크스페이스 전환",
-    "switchFailed": "워크스페이스를 전환할 수 없습니다"
+    "switchFailed": "워크스페이스를 전환할 수 없습니다",
+    "selectLanguage": "언어 선택",
+    "allLanguages": "모든 언어",
+    "changeLanguageFailed": "인터페이스 언어를 변경할 수 없습니다",
+    "popularLanguages": "인기"
   },
   "workspace": {
     "title": "워크스페이스",
@@ -3000,6 +3004,7 @@
       "backup": "백업 다운로드",
       "backupDone": "백업이 다운로드되었습니다",
       "backupFailed": "백업을 준비하지 못했습니다. 다시 시도하세요.",
+      "confirmPhrase": "모든 데이터 삭제",
       "confirmLabel": "확인하려면 {phrase}을(를) 입력하세요",
       "confirm": "모든 데이터 삭제",
       "deleted": "모든 학습 데이터가 삭제되었습니다",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "건너뛸 수 있음",
       "warnings": {
         "workspace_language_reuse": "같은 언어의 워크스페이스가 이미 있습니다. 중복을 만들지 않고 기존 워크스페이스에 콘텐츠가 추가됩니다.",
-        "empty_backup": "이 백업에는 가져올 수 있는 학습 데이터가 없습니다."
+        "empty_backup": "이 백업에는 가져올 수 있는 학습 데이터가 없습니다.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "취소",
       "confirm": "학습 데이터 가져오기",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {어휘 항목 #개가 이미 있음} other {어휘 항목 #개가 이미 있음}}",
         "listening_missing_media": "{count, plural, one {미디어 URL이 없는 듣기 레슨 #개} other {미디어 URL이 없는 듣기 레슨 #개}}",
         "listening_duplicate_filename": "{count, plural, one {건너뛴 듣기 레슨 #개(중복 파일 이름)} other {건너뛴 듣기 레슨 #개(중복 파일 이름)}}",
+        "speaking_duplicate": "{count, plural, one {# 말하기 세션이 이미 있습니다} other {# 말하기 세션이 이미 있습니다}}",
         "invalid_workspace_ref": "{count, plural, one {워크스페이스가 없는 항목 #개} other {워크스페이스가 없는 항목 #개}}",
         "invalid_record": "{count, plural, one {잘못된 레코드 #개} other {잘못된 레코드 #개}}",
-        "unsupported_account_field": "계정 신원 필드는 가져오지 않습니다"
+        "unsupported_account_field": "계정 신원 필드는 가져오지 않습니다",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "백업 파일이 너무 큽니다. 다시 내보내거나 고객지원에 문의하세요.",
@@ -3067,7 +3080,12 @@
         "importFailed": "이 백업을 가져오지 못했습니다. 다시 시도하세요.",
         "requestTooLarge": "이 백업은 이 페이지에서 처리하기에 너무 큽니다. 더 작은 내보내기를 시도하거나 고객지원에 문의하세요.",
         "notConfigured": "백업 가져오기용 파일 저장소가 아직 구성되지 않았습니다."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "계정 폐쇄",
@@ -3092,6 +3110,7 @@
       "backup": "백업 다운로드",
       "backupDone": "백업이 다운로드되었습니다",
       "backupFailed": "백업을 준비하지 못했습니다. 다시 시도하세요.",
+      "confirmPhrase": "내 계정 삭제",
       "confirmLabel": "확인하려면 {phrase}을(를) 입력하세요",
       "confirm": "계정 영구 삭제",
       "deleted": "계정이 삭제되었습니다",

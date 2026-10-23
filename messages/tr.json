@@ -310,7 +310,11 @@
     "createWorkspace": "Çalışma alanı oluştur",
     "createWorkspaceHint": "Başka bir dil çalışma alanı ekleyin",
     "switchWorkspace": "Çalışma alanını değiştir",
-    "switchFailed": "Çalışma alanı değiştirilemedi"
+    "switchFailed": "Çalışma alanı değiştirilemedi",
+    "selectLanguage": "Dil seçin",
+    "allLanguages": "Tüm diller",
+    "changeLanguageFailed": "Arayüz dili değiştirilemedi",
+    "popularLanguages": "Popüler"
   },
   "workspace": {
     "title": "Çalışma alanları",
@@ -3000,6 +3004,7 @@
       "backup": "Yedeği indir",
       "backupDone": "Yedek indirildi",
       "backupFailed": "Yedeğiniz hazırlanamadı. Yeniden deneyin.",
+      "confirmPhrase": "Tüm verileri sil",
       "confirmLabel": "Onaylamak için {phrase} yazın",
       "confirm": "Tüm verileri sil",
       "deleted": "Tüm öğrenme verileri silindi",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Atlanabilir",
       "warnings": {
         "workspace_language_reuse": "Bazı çalışma alanları aynı dil için zaten mevcut. İçerikleri çoğaltmak yerine mevcut çalışma alanlarınıza eklenecek.",
-        "empty_backup": "Bu yedek içe aktarılabilir öğrenme verisi içermiyor."
+        "empty_backup": "Bu yedek içe aktarılabilir öğrenme verisi içermiyor.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "İptal",
       "confirm": "Öğrenme verilerini içe aktar",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# kelime dağarcığı öğesi zaten mevcut} other {# kelime dağarcığı öğesi zaten mevcut}}",
         "listening_missing_media": "{count, plural, one {# dinleme dersinde medya URL’si eksik} other {# dinleme dersinde medya URL’si eksik}}",
         "listening_duplicate_filename": "{count, plural, one {# dinleme dersi atlandı (yinelenen dosya adı)} other {# dinleme dersi atlandı (yinelenen dosya adı)}}",
+        "speaking_duplicate": "{count, plural, one {# konuşma oturumu zaten mevcut} other {# konuşma oturumu zaten mevcut}}",
         "invalid_workspace_ref": "{count, plural, one {# öğede çalışma alanı eksik} other {# öğede çalışma alanı eksik}}",
         "invalid_record": "{count, plural, one {# geçersiz kayıt} other {# geçersiz kayıt}}",
-        "unsupported_account_field": "Hesap kimliği alanları içe aktarılmaz"
+        "unsupported_account_field": "Hesap kimliği alanları içe aktarılmaz",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Bu yedek dosyası çok büyük. Yeniden dışa aktarmayı deneyin veya destek ile iletişime geçin.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Bu yedek içe aktarılamadı. Yeniden deneyin.",
         "requestTooLarge": "Bu yedek bu sayfa üzerinden işlenemeyecek kadar büyük. Daha küçük bir dışa aktarma deneyin veya destek ile iletişime geçin.",
         "notConfigured": "Yedek içe aktarma için dosya depolama henüz yapılandırılmadı."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Hesabı kapat",
@@ -3092,6 +3110,7 @@
       "backup": "Yedeği indir",
       "backupDone": "Yedek indirildi",
       "backupFailed": "Yedeğiniz hazırlanamadı. Yeniden deneyin.",
+      "confirmPhrase": "Hesabımı sil",
       "confirmLabel": "Onaylamak için {phrase} yazın",
       "confirm": "Hesabı kalıcı olarak sil",
       "deleted": "Hesabınız silindi",

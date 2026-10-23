@@ -23,11 +23,14 @@ import { useTranslations } from "next-intl";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import { LinkPendingIndicator } from "@/components/layout/link-pending-indicator";
+import { LocaleSelector } from "@/components/layout/locale-selector";
 import { SidebarProCta } from "@/components/layout/sidebar-pro-cta";
+import { ThemeToggle } from "@/components/layout/theme-toggle";
 import { UserButton } from "@/components/layout/user-button";
 import { Logo, LogoWordmark } from "@/components/ui/logo";
 import navStyles from "@/components/style/layout/nav.module.css";
 import { mx } from "@/lib/css-module";
+import type { AppLocale } from "@/i18n/config";
 import type { PlanId } from "@/lib/billing/plans";
 import { prefetchDashboardDestination } from "@/lib/query/prefetch";
 import { cn } from "@/lib/utils";
@@ -202,6 +205,8 @@ type SidebarNavProps = SidebarUser & {
   onNavigate?: () => void;
   /** `drawer` fills the mobile sheet and pins the account block to the bottom. */
   layout?: "panel" | "drawer";
+  /** Required for drawer language control (desktop panel keeps language in the chrome). */
+  locale?: AppLocale;
 };
 
 export function SidebarNav({
@@ -215,6 +220,7 @@ export function SidebarNav({
   isAdmin = false,
   isTester = false,
   layout = "panel",
+  locale,
 }: SidebarNavProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -327,6 +333,16 @@ export function SidebarNav({
           isDrawer ? "mt-auto" : "mt-4",
         )}
       >
+        {isDrawer && locale ? (
+          <div
+            className="mb-2 flex items-center gap-2"
+            /* Keep control order in LTR chrome even when UI copy is RTL. */
+            dir="ltr"
+          >
+            <LocaleSelector value={locale} appearance="drawer" />
+            <ThemeToggle compact className="h-9 w-9 sm:h-9 sm:w-9" />
+          </div>
+        ) : null}
         <SidebarProCta plan={plan} onNavigate={onNavigate} />
         <div className="mt-1">
           <UserButton

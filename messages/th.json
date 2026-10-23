@@ -310,7 +310,11 @@
     "createWorkspace": "สร้างพื้นที่ทำงาน",
     "createWorkspaceHint": "เพิ่มพื้นที่ทำงานสำหรับภาษาอื่น",
     "switchWorkspace": "สลับพื้นที่ทำงาน",
-    "switchFailed": "ไม่สามารถสลับพื้นที่ทำงานได้"
+    "switchFailed": "ไม่สามารถสลับพื้นที่ทำงานได้",
+    "selectLanguage": "เลือกภาษา",
+    "allLanguages": "ทุกภาษา",
+    "changeLanguageFailed": "เปลี่ยนภาษาอินเทอร์เฟซไม่ได้",
+    "popularLanguages": "ยอดนิยม"
   },
   "workspace": {
     "title": "พื้นที่ทำงาน",
@@ -3000,6 +3004,7 @@
       "backup": "ดาวน์โหลดข้อมูลสำรอง",
       "backupDone": "ดาวน์โหลดข้อมูลสำรองแล้ว",
       "backupFailed": "เตรียมข้อมูลสำรองไม่ได้ ลองอีกครั้ง",
+      "confirmPhrase": "ลบข้อมูลทั้งหมด",
       "confirmLabel": "พิมพ์ {phrase} เพื่อยืนยัน",
       "confirm": "ลบข้อมูลทั้งหมด",
       "deleted": "ลบข้อมูลการเรียนรู้ทั้งหมดแล้ว",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "อาจถูกข้าม",
       "warnings": {
         "workspace_language_reuse": "มีพื้นที่ทำงานสำหรับภาษาเดียวกันอยู่แล้ว เนื้อหาจะถูกเพิ่มเข้าไปในพื้นที่ทำงานที่มีอยู่แทนการสร้างซ้ำ",
-        "empty_backup": "ข้อมูลสำรองนี้ไม่มีข้อมูลการเรียนรู้ที่นำเข้าได้"
+        "empty_backup": "ข้อมูลสำรองนี้ไม่มีข้อมูลการเรียนรู้ที่นำเข้าได้",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "ยกเลิก",
       "confirm": "นำเข้าข้อมูลการเรียนรู้",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {มี # รายการคำศัพท์อยู่แล้ว} other {มี # รายการคำศัพท์อยู่แล้ว}}",
         "listening_missing_media": "{count, plural, one {# บทเรียนการฟังไม่มี URL สื่อ} other {# บทเรียนการฟังไม่มี URL สื่อ}}",
         "listening_duplicate_filename": "{count, plural, one {ข้าม # บทเรียนการฟัง (ชื่อไฟล์ซ้ำ)} other {ข้าม # บทเรียนการฟัง (ชื่อไฟล์ซ้ำ)}}",
+        "speaking_duplicate": "{count, plural, one {# เซสชันการพูดมีอยู่แล้ว} other {# เซสชันการพูดมีอยู่แล้ว}}",
         "invalid_workspace_ref": "{count, plural, one {# รายการไม่มีพื้นที่ทำงาน} other {# รายการไม่มีพื้นที่ทำงาน}}",
         "invalid_record": "{count, plural, one {# ระเบียนไม่ถูกต้อง} other {# ระเบียนไม่ถูกต้อง}}",
-        "unsupported_account_field": "ฟิลด์ตัวตนบัญชีจะไม่ถูกนำเข้า"
+        "unsupported_account_field": "ฟิลด์ตัวตนบัญชีจะไม่ถูกนำเข้า",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "ไฟล์สำรองนั้นใหญ่เกินไป ลองส่งออกอีกครั้งหรือติดต่อฝ่ายสนับสนุน",
@@ -3067,7 +3080,12 @@
         "importFailed": "นำเข้าข้อมูลสำรองนี้ไม่ได้ ลองอีกครั้ง",
         "requestTooLarge": "ข้อมูลสำรองนั้นใหญ่เกินไปที่จะประมวลผลผ่านหน้านี้ ลองส่งออกที่เล็กกว่าหรือติดต่อฝ่ายสนับสนุน",
         "notConfigured": "ยังไม่ได้ตั้งค่าที่เก็บไฟล์สำหรับการนำเข้าข้อมูลสำรอง"
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "ปิดบัญชี",
@@ -3092,6 +3110,7 @@
       "backup": "ดาวน์โหลดข้อมูลสำรอง",
       "backupDone": "ดาวน์โหลดข้อมูลสำรองแล้ว",
       "backupFailed": "เตรียมข้อมูลสำรองไม่ได้ ลองอีกครั้ง",
+      "confirmPhrase": "ลบบัญชีของฉัน",
       "confirmLabel": "พิมพ์ {phrase} เพื่อยืนยัน",
       "confirm": "ลบบัญชีอย่างถาวร",
       "deleted": "ลบบัญชีของคุณแล้ว",

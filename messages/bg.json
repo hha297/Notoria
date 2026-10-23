@@ -310,7 +310,11 @@
     "createWorkspace": "Създаване на работно пространство",
     "createWorkspaceHint": "Добавяне на друго езиково работно пространство",
     "switchWorkspace": "Смяна на работното пространство",
-    "switchFailed": "Не можахме да сменим работното пространство"
+    "switchFailed": "Не можахме да сменим работното пространство",
+    "selectLanguage": "Изберете език",
+    "allLanguages": "Всички езици",
+    "changeLanguageFailed": "Езикът на интерфейса не можа да бъде променен",
+    "popularLanguages": "Популярни"
   },
   "workspace": {
     "title": "Работни пространства",
@@ -3000,6 +3004,7 @@
       "backup": "Изтегли архива",
       "backupDone": "Архивът е изтеглен",
       "backupFailed": "Архивът не можа да бъде подготвен. Опитайте отново.",
+      "confirmPhrase": "Изтрий всички данни",
       "confirmLabel": "Въведете {phrase}, за да потвърдите",
       "confirm": "Изтрий всички данни",
       "deleted": "Всички учебни данни са изтрити",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Може да бъде пропуснато",
       "warnings": {
         "workspace_language_reuse": "Някои работни пространства вече съществуват за същия език. Съдържанието им ще бъде добавено към съществуващите работни пространства вместо да се създават дубликати.",
-        "empty_backup": "Този архив не съдържа импортируеми учебни данни."
+        "empty_backup": "Този архив не съдържа импортируеми учебни данни.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Отказ",
       "confirm": "Импортирай учебните данни",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# елемент от речника вече съществува} other {# елемента от речника вече съществуват}}",
         "listening_missing_media": "{count, plural, one {# урок по слушане без URL на медия} other {# урока по слушане без URL на медия}}",
         "listening_duplicate_filename": "{count, plural, one {# урок по слушане пропуснат (дублирано име на файл)} other {# урока по слушане пропуснати (дублирано име на файл)}}",
+        "speaking_duplicate": "{count, plural, one {# сесия по говорене вече съществува} other {# сесии по говорене вече съществуват}}",
         "invalid_workspace_ref": "{count, plural, one {# елемент с липсващо работно пространство} other {# елемента с липсващо работно пространство}}",
         "invalid_record": "{count, plural, one {# невалиден запис} other {# невалидни записа}}",
-        "unsupported_account_field": "Полетата за идентичност на акаунта не се импортират"
+        "unsupported_account_field": "Полетата за идентичност на акаунта не се импортират",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Този архивен файл е твърде голям. Опитайте да експортирате отново или се свържете с поддръжката.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Този архив не можа да бъде импортиран. Опитайте отново.",
         "requestTooLarge": "Този архив е твърде голям за обработка през тази страница. Опитайте с по-малък експорт или се свържете с поддръжката.",
         "notConfigured": "Файловото хранилище все още не е конфигурирано за импорт на архиви."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Затвори акаунта",
@@ -3092,6 +3110,7 @@
       "backup": "Изтегли архива",
       "backupDone": "Архивът е изтеглен",
       "backupFailed": "Архивът не можа да бъде подготвен. Опитайте отново.",
+      "confirmPhrase": "Изтрий акаунта ми",
       "confirmLabel": "Въведете {phrase}, за да потвърдите",
       "confirm": "Окончателно изтрий акаунта",
       "deleted": "Акаунтът ви е изтрит",

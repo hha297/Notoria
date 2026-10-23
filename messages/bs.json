@@ -310,7 +310,11 @@
     "createWorkspace": "Kreiraj radni prostor",
     "createWorkspaceHint": "Dodajte još jedan jezični radni prostor",
     "switchWorkspace": "Promijeni radni prostor",
-    "switchFailed": "Promjena radnog prostora nije uspjela"
+    "switchFailed": "Promjena radnog prostora nije uspjela",
+    "selectLanguage": "Odaberite jezik",
+    "allLanguages": "Svi jezici",
+    "changeLanguageFailed": "Nije moguće promijeniti jezik sučelja",
+    "popularLanguages": "Popularno"
   },
   "workspace": {
     "title": "Radni prostori",
@@ -3000,6 +3004,7 @@
       "backup": "Preuzmi sigurnosnu kopiju",
       "backupDone": "Sigurnosna kopija preuzeta",
       "backupFailed": "Nije moguće pripremiti sigurnosnu kopiju. Pokušajte ponovo.",
+      "confirmPhrase": "Obriši sve podatke",
       "confirmLabel": "Upišite {phrase} za potvrdu",
       "confirm": "Izbriši sve podatke",
       "deleted": "Svi podaci za učenje su izbrisani",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Može biti preskočeno",
       "warnings": {
         "workspace_language_reuse": "Neki radni prostori već postoje za isti jezik. Njihov sadržaj bit će dodan u postojeće radne prostore umjesto kreiranja duplikata.",
-        "empty_backup": "Ova sigurnosna kopija ne sadrži uvozne podatke za učenje."
+        "empty_backup": "Ova sigurnosna kopija ne sadrži uvozne podatke za učenje.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Otkaži",
       "confirm": "Uvezi podatke za učenje",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# stavka vokabulara već postoji} few {# stavke vokabulara već postoje} other {# stavki vokabulara već postoji}}",
         "listening_missing_media": "{count, plural, one {# lekcija slušanja bez URL-a medija} few {# lekcije slušanja bez URL-ova medija} other {# lekcija slušanja bez URL-ova medija}}",
         "listening_duplicate_filename": "{count, plural, one {# lekcija slušanja preskočena (duplikat naziva datoteke)} few {# lekcije slušanja preskočene (duplikat naziva datoteke)} other {# lekcija slušanja preskočeno (duplikat naziva datoteke)}}",
+        "speaking_duplicate": "{count, plural, one {# sesija govora već postoji} few {# sesije govora već postoje} other {# sesija govora već postoji}}",
         "invalid_workspace_ref": "{count, plural, one {# stavka bez radnog prostora} few {# stavke bez radnog prostora} other {# stavki bez radnog prostora}}",
         "invalid_record": "{count, plural, one {# nevažeći zapis} few {# nevažeća zapisa} other {# nevažećih zapisa}}",
-        "unsupported_account_field": "Polja identiteta računa se ne uvoze"
+        "unsupported_account_field": "Polja identiteta računa se ne uvoze",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Ta datoteka sigurnosne kopije je prevelika. Pokušajte ponovo izvesti ili kontaktirajte podršku.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Nije moguće uvesti ovu sigurnosnu kopiju. Pokušajte ponovo.",
         "requestTooLarge": "Ta sigurnosna kopija je prevelika za obradu putem ove stranice. Pokušajte manji izvoz ili kontaktirajte podršku.",
         "notConfigured": "Skladište datoteka još nije konfigurisano za uvoz sigurnosne kopije."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Zatvori račun",
@@ -3092,6 +3110,7 @@
       "backup": "Preuzmi sigurnosnu kopiju",
       "backupDone": "Sigurnosna kopija preuzeta",
       "backupFailed": "Nije moguće pripremiti sigurnosnu kopiju. Pokušajte ponovo.",
+      "confirmPhrase": "Obriši moj račun",
       "confirmLabel": "Upišite {phrase} za potvrdu",
       "confirm": "Trajno izbriši račun",
       "deleted": "Vaš račun je izbrisan",

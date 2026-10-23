@@ -310,7 +310,11 @@
     "createWorkspace": "Создать рабочее пространство",
     "createWorkspaceHint": "Добавить ещё одно языковое пространство",
     "switchWorkspace": "Сменить рабочее пространство",
-    "switchFailed": "Не удалось сменить рабочее пространство"
+    "switchFailed": "Не удалось сменить рабочее пространство",
+    "selectLanguage": "Выберите язык",
+    "allLanguages": "Все языки",
+    "changeLanguageFailed": "Не удалось изменить язык интерфейса",
+    "popularLanguages": "Популярные"
   },
   "workspace": {
     "title": "Рабочие пространства",
@@ -3000,6 +3004,7 @@
       "backup": "Скачать резервную копию",
       "backupDone": "Резервная копия скачана",
       "backupFailed": "Не удалось подготовить резервную копию. Попробуйте снова.",
+      "confirmPhrase": "Удалить все данные",
       "confirmLabel": "Введите {phrase} для подтверждения",
       "confirm": "Удалить все данные",
       "deleted": "Все учебные данные удалены",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Может быть пропущено",
       "warnings": {
         "workspace_language_reuse": "Некоторые рабочие пространства для того же языка уже существуют. Их содержимое будет добавлено в существующие рабочие пространства вместо создания дубликатов.",
-        "empty_backup": "В этой резервной копии нет учебных данных, пригодных для импорта."
+        "empty_backup": "В этой резервной копии нет учебных данных, пригодных для импорта.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Отмена",
       "confirm": "Импортировать учебные данные",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# элемент словаря уже существует} few {# элемента словаря уже существуют} many {# элементов словаря уже существуют} other {# элемента словаря уже существуют}}",
         "listening_missing_media": "{count, plural, one {# урок аудирования без URL медиа} few {# урока аудирования без URL медиа} many {# уроков аудирования без URL медиа} other {# урока аудирования без URL медиа}}",
         "listening_duplicate_filename": "{count, plural, one {# урок аудирования пропущен (дубликат имени файла)} few {# урока аудирования пропущены (дубликат имени файла)} many {# уроков аудирования пропущены (дубликат имени файла)} other {# урока аудирования пропущены (дубликат имени файла)}}",
+        "speaking_duplicate": "{count, plural, one {# сессия говорения уже существует} few {# сессии говорения уже существуют} many {# сессий говорения уже существуют} other {# сессии говорения уже существуют}}",
         "invalid_workspace_ref": "{count, plural, one {# элемент без рабочего пространства} few {# элемента без рабочего пространства} many {# элементов без рабочего пространства} other {# элемента без рабочего пространства}}",
         "invalid_record": "{count, plural, one {# недействительная запись} few {# недействительные записи} many {# недействительных записей} other {# недействительные записи}}",
-        "unsupported_account_field": "Поля идентичности аккаунта не импортируются"
+        "unsupported_account_field": "Поля идентичности аккаунта не импортируются",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Файл резервной копии слишком большой. Попробуйте экспортировать снова или обратитесь в поддержку.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Не удалось импортировать эту резервную копию. Попробуйте снова.",
         "requestTooLarge": "Эта резервная копия слишком большая для обработки на этой странице. Попробуйте меньший экспорт или обратитесь в поддержку.",
         "notConfigured": "Хранилище файлов для импорта резервных копий ещё не настроено."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Закрыть аккаунт",
@@ -3092,6 +3110,7 @@
       "backup": "Скачать резервную копию",
       "backupDone": "Резервная копия скачана",
       "backupFailed": "Не удалось подготовить резервную копию. Попробуйте снова.",
+      "confirmPhrase": "Удалить мой аккаунт",
       "confirmLabel": "Введите {phrase} для подтверждения",
       "confirm": "Безвозвратно удалить аккаунт",
       "deleted": "Ваш аккаунт удалён",

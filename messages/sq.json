@@ -310,7 +310,11 @@
     "createWorkspace": "Krijo hapësirë pune",
     "createWorkspaceHint": "Shtoni një hapësirë pune tjetër për gjuhë",
     "switchWorkspace": "Ndrysho hapësirën e punës",
-    "switchFailed": "Nuk mundëm të ndryshonim hapësirën e punës"
+    "switchFailed": "Nuk mundëm të ndryshonim hapësirën e punës",
+    "selectLanguage": "Zgjidhni gjuhën",
+    "allLanguages": "Të gjitha gjuhët",
+    "changeLanguageFailed": "Nuk mund të ndryshohej gjuha e ndërfaqes",
+    "popularLanguages": "Të njohura"
   },
   "workspace": {
     "title": "Hapësirat e punës",
@@ -3000,6 +3004,7 @@
       "backup": "Shkarko kopjen rezervë",
       "backupDone": "Kopja rezervë u shkarkua",
       "backupFailed": "Kopja rezervë nuk mund të përgatitej. Provoni përsëri.",
+      "confirmPhrase": "Fshi të gjitha të dhënat",
       "confirmLabel": "Shkruani {phrase} për të konfirmuar",
       "confirm": "Fshi të gjitha të dhënat",
       "deleted": "Të gjitha të dhënat e të mësuarit janë fshirë",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Mund të anashkalohen",
       "warnings": {
         "workspace_language_reuse": "Disa hapësira pune ekzistojnë tashmë për të njëjtën gjuhë. Përmbajtja e tyre do të shtohet në hapësirat ekzistuese në vend që të krijohen dyfishime.",
-        "empty_backup": "Kjo kopje rezervë nuk përmban të dhëna të importueshme të të mësuarit."
+        "empty_backup": "Kjo kopje rezervë nuk përmban të dhëna të importueshme të të mësuarit.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Anulo",
       "confirm": "Importo të dhënat e të mësuarit",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# artikull fjalori ekziston tashmë} other {# artikuj fjalori ekzistojnë tashmë}}",
         "listening_missing_media": "{count, plural, one {# mësim dëgjimi pa URL media} other {# mësime dëgjimi pa URL media}}",
         "listening_duplicate_filename": "{count, plural, one {# mësim dëgjimi u anashkalua (emër skedari i dyfishtë)} other {# mësime dëgjimi u anashkaluan (emër skedari i dyfishtë)}}",
+        "speaking_duplicate": "{count, plural, one {# sesion të foluri ekziston tashmë} other {# sesione të foluri ekzistojnë tashmë}}",
         "invalid_workspace_ref": "{count, plural, one {# artikull me hapësirë pune që mungon} other {# artikuj me hapësirë pune që mungon}}",
         "invalid_record": "{count, plural, one {# regjistër i pavlefshëm} other {# regjistra të pavlefshëm}}",
-        "unsupported_account_field": "Fushat e identitetit të llogarisë nuk importohen"
+        "unsupported_account_field": "Fushat e identitetit të llogarisë nuk importohen",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Ai skedar i kopjes rezervë është shumë i madh. Provoni të eksportoni përsëri ose kontaktoni mbështetjen.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Kjo kopje rezervë nuk mund të importohej. Provoni përsëri.",
         "requestTooLarge": "Ajo kopje rezervë është shumë e madhe për t’u përpunuar përmes kësaj faqeje. Provoni një eksport më të vogël ose kontaktoni mbështetjen.",
         "notConfigured": "Ruajtja e skedarëve nuk është konfiguruar ende për importin e kopjes rezervë."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Mbyll llogarinë",
@@ -3092,6 +3110,7 @@
       "backup": "Shkarko kopjen rezervë",
       "backupDone": "Kopja rezervë u shkarkua",
       "backupFailed": "Kopja rezervë nuk mund të përgatitej. Provoni përsëri.",
+      "confirmPhrase": "Fshi llogarinë time",
       "confirmLabel": "Shkruani {phrase} për të konfirmuar",
       "confirm": "Fshi përgjithmonë llogarinë",
       "deleted": "Llogaria juaj është fshirë",

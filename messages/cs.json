@@ -310,7 +310,11 @@
     "createWorkspace": "Vytvořit pracovní prostor",
     "createWorkspaceHint": "Přidat další jazykový pracovní prostor",
     "switchWorkspace": "Přepnout pracovní prostor",
-    "switchFailed": "Pracovní prostor se nepodařilo přepnout"
+    "switchFailed": "Pracovní prostor se nepodařilo přepnout",
+    "selectLanguage": "Vybrat jazyk",
+    "allLanguages": "Všechny jazyky",
+    "changeLanguageFailed": "Nepodařilo se změnit jazyk rozhraní",
+    "popularLanguages": "Oblíbené"
   },
   "workspace": {
     "title": "Pracovní prostory",
@@ -3000,6 +3004,7 @@
       "backup": "Stáhnout zálohu",
       "backupDone": "Záloha stažena",
       "backupFailed": "Zálohu se nepodařilo připravit. Zkuste to znovu.",
+      "confirmPhrase": "Smazat všechna data",
       "confirmLabel": "Pro potvrzení napište {phrase}",
       "confirm": "Smazat všechna data",
       "deleted": "Všechna učební data byla smazána",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Může být přeskočeno",
       "warnings": {
         "workspace_language_reuse": "Některé pracovní prostory již existují pro stejný jazyk. Jejich obsah bude přidán do stávajících pracovních prostorů místo vytváření duplicit.",
-        "empty_backup": "Tato záloha neobsahuje žádná importovatelná učební data."
+        "empty_backup": "Tato záloha neobsahuje žádná importovatelná učební data.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Zrušit",
       "confirm": "Importovat učební data",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# položka slovní zásoby již existuje} few {# položky slovní zásoby již existují} many {# položky slovní zásoby již existuje} other {# položek slovní zásoby již existuje}}",
         "listening_missing_media": "{count, plural, one {# lekce poslechu bez URL média} few {# lekce poslechu bez URL média} many {# lekce poslechu bez URL média} other {# lekcí poslechu bez URL média}}",
         "listening_duplicate_filename": "{count, plural, one {# lekce poslechu přeskočena (duplicitní název souboru)} few {# lekce poslechu přeskočeny (duplicitní název souboru)} many {# lekce poslechu přeskočeno (duplicitní název souboru)} other {# lekcí poslechu přeskočeno (duplicitní název souboru)}}",
+        "speaking_duplicate": "{count, plural, one {# řečová relace již existuje} few {# řečové relace již existují} many {# řečových relací již existuje} other {# řečových relací již existuje}}",
         "invalid_workspace_ref": "{count, plural, one {# položka s chybějícím pracovním prostorem} few {# položky s chybějícím pracovním prostorem} many {# položky s chybějícím pracovním prostorem} other {# položek s chybějícím pracovním prostorem}}",
         "invalid_record": "{count, plural, one {# neplatný záznam} few {# neplatné záznamy} many {# neplatného záznamu} other {# neplatných záznamů}}",
-        "unsupported_account_field": "Pole identity účtu se neimportují"
+        "unsupported_account_field": "Pole identity účtu se neimportují",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Tento soubor zálohy je příliš velký. Zkuste exportovat znovu nebo kontaktujte podporu.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Tuto zálohu se nepodařilo importovat. Zkuste to znovu.",
         "requestTooLarge": "Tato záloha je příliš velká ke zpracování na této stránce. Zkuste menší export nebo kontaktujte podporu.",
         "notConfigured": "Úložiště souborů pro import zálohy ještě není nastaveno."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Uzavřít účet",
@@ -3092,6 +3110,7 @@
       "backup": "Stáhnout zálohu",
       "backupDone": "Záloha stažena",
       "backupFailed": "Zálohu se nepodařilo připravit. Zkuste to znovu.",
+      "confirmPhrase": "Smazat můj účet",
       "confirmLabel": "Pro potvrzení napište {phrase}",
       "confirm": "Trvale smazat účet",
       "deleted": "Váš účet byl smazán",

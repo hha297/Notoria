@@ -16,13 +16,28 @@ import {
   type FolderSection,
 } from "@/db/schema";
 import { normalizeMeaningUsageLabels } from "@/lib/vocabulary/meaning-usage";
-import { buildBackupPreview, type ExistingVocabKey } from "./preview";
+import { loadExistingInventory } from "./inventory";
+import {
+  contentTitleKey,
+  exerciseSectionKey,
+  folderMatchKey,
+  listeningFilenameKey,
+  normalizeBackupName,
+  setCanonicalId,
+  tagMatchKey,
+  vocabWordKey,
+} from "./match";
+import {
+  addSkip,
+  createSkipBucket,
+  duplicateSkipSource,
+  toSkipSummaries,
+} from "./skip-bucket";
 import type {
   AccountBackupDocument,
   BackupImportCounts,
   BackupImportResult,
   BackupSkipReason,
-  BackupSkipSummary,
 } from "./types";
 import { EMPTY_BACKUP_COUNTS } from "./types";
 
@@ -56,32 +71,11 @@ const SPEAKING_STATUSES = new Set([
   "cancelled",
 ]);
 
-type SkipBucket = Map<BackupSkipReason, { count: number; examples: string[] }>;
-
-function addSkip(
-  bucket: SkipBucket,
-  reason: BackupSkipReason,
-  example?: string,
-) {
-  const current = bucket.get(reason) ?? { count: 0, examples: [] };
-  current.count += 1;
-  if (example && current.examples.length < 5) {
-    current.examples.push(example);
-  }
-  bucket.set(reason, current);
-}
-
-function toSkipSummaries(bucket: SkipBucket): BackupSkipSummary[] {
-  return Array.from(bucket.entries()).map(([reason, value]) => ({
-    reason,
-    count: value.count,
-    examples: value.examples,
-  }));
-}
-
 function normalizeVocabStatus(status: string) {
   const upper = status.toUpperCase();
-  return VOCAB_STATUSES.has(upper) ? (upper as "NEW" | "LEARNING" | "REVIEW" | "MASTERED") : "NEW";
+  return VOCAB_STATUSES.has(upper)
+    ? (upper as "NEW" | "LEARNING" | "REVIEW" | "MASTERED")
+    : "NEW";
 }
 
 function normalizeExerciseType(type: string) {
@@ -107,7 +101,6 @@ function normalizeListeningStatus(status: string) {
       | "COMPLETED"
       | "FAILED";
   }
-  // Older backups may use READY
   if (upper === "READY") return "COMPLETED";
   return "COMPLETED";
 }
@@ -132,78 +125,90 @@ function parseDate(value: string | null | undefined): Date | null {
   return Number.isNaN(date.getTime()) ? null : date;
 }
 
-function vocabKey(workspaceId: string, word: string, partOfSpeech: string | null) {
-  return `${workspaceId}::${word.trim().toLowerCase()}::${(partOfSpeech ?? "").trim().toLowerCase()}`;
+type ImportTx = Parameters<Parameters<typeof db.transaction>[0]>[0];
+
+function isUniqueViolation(error: unknown) {
+  let current: unknown = error;
+  for (let depth = 0; depth < 6 && current && typeof current === "object"; depth += 1) {
+    if ("code" in current && String((current as { code?: unknown }).code) === "23505") {
+      return true;
+    }
+    current = "cause" in current ? (current as { cause?: unknown }).cause : undefined;
+  }
+  return false;
+}
+
+async function runInSavepoint<T>(
+  tx: ImportTx,
+  label: string,
+  fn: () => Promise<T>,
+): Promise<{ ok: true; value: T } | { ok: false; error: unknown }> {
+  const sp = `imp_${label.replace(/[^a-zA-Z0-9_]/g, "_").slice(0, 40)}_${Math.random().toString(36).slice(2, 8)}`;
+  await tx.execute(sql.raw(`savepoint ${sp}`));
+  try {
+    const value = await fn();
+    await tx.execute(sql.raw(`release savepoint ${sp}`));
+    return { ok: true, value };
+  } catch (error) {
+    await tx.execute(sql.raw(`rollback to savepoint ${sp}`));
+    return { ok: false, error };
+  }
 }
 
 /**
  * Import learning data from a validated account backup into the current user's account.
- * Never touches identity, auth, or billing. Uses "add as new" with language-based workspace reuse.
+ * Never touches identity, auth, or billing. Uses "add as new" with language-based workspace reuse
+ * and name-based duplicate skips (trim + NFC, case/accent sensitive).
  */
 export async function importAccountBackupLearningData(options: {
   userId: string;
   backup: AccountBackupDocument;
 }): Promise<BackupImportResult> {
   const { userId, backup } = options;
-  const skips: SkipBucket = new Map();
+  const skips = createSkipBucket();
   const imported = EMPTY_BACKUP_COUNTS();
 
-  const existingWorkspaces = await db.query.workspaces.findMany({
-    where: eq(workspaces.userId, userId),
-    columns: { id: true, language: true, name: true },
-  });
-
-  const existingVocabRows = existingWorkspaces.length
-    ? await db
-        .select({
-          workspaceId: vocabularyWords.workspaceId,
-          word: vocabularyWords.word,
-          partOfSpeech: vocabularyWords.partOfSpeech,
-        })
-        .from(vocabularyWords)
-        .where(
-          and(
-            eq(vocabularyWords.userId, userId),
-            inArray(
-              vocabularyWords.workspaceId,
-              existingWorkspaces.map((ws) => ws.id),
-            ),
-          ),
-        )
-    : [];
-
-  const existingVocabKeys: ExistingVocabKey[] = existingVocabRows.map((row) => ({
-    workspaceId: row.workspaceId,
-    word: row.word,
-    partOfSpeech: row.partOfSpeech ?? "",
-  }));
-
-  // Warm preview for consistent skip accounting (not returned; import does the writes)
-  buildBackupPreview(
-    backup,
-    existingWorkspaces.map((ws) => ({ id: ws.id, language: ws.language })),
-    existingVocabKeys,
-  );
-
-  const languageToId = new Map(
-    existingWorkspaces.map((ws) => [ws.language.trim().toLowerCase(), ws.id]),
-  );
   const workspaceIdMap = new Map<string, string>();
   const folderIdMap = new Map<string, string>();
-  const existingVocab = new Set(
-    existingVocabKeys.map((item) =>
-      vocabKey(item.workspaceId, item.word, item.partOfSpeech || null),
-    ),
-  );
+  /** Workspaces that already existed before this import (language reuse). */
+  const preExistingWorkspaceIds = new Set<string>();
 
   await db.transaction(async (tx) => {
-    // 1. Workspaces
+    // Serialize concurrent confirms for the same account so inventory recheck is reliable.
+    await tx.execute(
+      sql`select pg_advisory_xact_lock(hashtext(${`account-backup-import:${userId}`}))`,
+    );
+
+    const inventory = await loadExistingInventory(userId, tx);
+    // Snapshot of names already on the account (before this backup claims any).
+    const accountFolders = new Set(inventory.folders.keys());
+    const accountTags = new Set(inventory.tags);
+    const accountVocabulary = new Set(inventory.vocabulary);
+    const accountTheory = new Set(inventory.theory);
+    const accountWriting = new Set(inventory.writing);
+    const accountExercises = new Set(inventory.exercises);
+    const accountListeningTitles = new Set(inventory.listeningTitles);
+    const accountListeningFilenames = new Set(inventory.listeningFilenames);
+    const accountSpeaking = new Set(inventory.speaking);
+
+    for (const ws of inventory.workspaces) {
+      preExistingWorkspaceIds.add(ws.id);
+    }
+
+    const languageToId = new Map(
+      inventory.workspaces.map((ws) => [
+        normalizeBackupName(ws.language).toLowerCase(),
+        ws.id,
+      ]),
+    );
+
+    // 1. Workspaces — reuse by language (existing product rule).
     for (const workspace of backup.workspaces) {
-      const langKey = workspace.language.trim().toLowerCase();
+      const langKey = normalizeBackupName(workspace.language).toLowerCase();
       const existingId = languageToId.get(langKey);
       if (existingId) {
         workspaceIdMap.set(workspace.id, existingId);
-        addSkip(skips, "workspace_language_exists", workspace.name);
+        addSkip(skips, "workspace_language_exists", "account", workspace.name);
         continue;
       }
 
@@ -211,8 +216,8 @@ export async function importAccountBackupLearningData(options: {
         .insert(workspaces)
         .values({
           userId,
-          name: workspace.name,
-          language: workspace.language,
+          name: normalizeBackupName(workspace.name) || workspace.name,
+          language: workspace.language.trim(),
         })
         .returning({ id: workspaces.id });
 
@@ -221,40 +226,53 @@ export async function importAccountBackupLearningData(options: {
       imported.workspaces += 1;
     }
 
-    // 2. Workspace tags + folders
+    // 2. Tags + folders (parent-first; reuse matching folders).
     for (const workspace of backup.workspaces) {
       const newWorkspaceId = workspaceIdMap.get(workspace.id);
       if (!newWorkspaceId) continue;
 
       for (const tagName of workspace.tags) {
-        const trimmed = tagName.trim();
-        if (!trimmed) continue;
+        const name = normalizeBackupName(tagName);
+        if (!name) continue;
+        const key = tagMatchKey(newWorkspaceId, name);
+        if (inventory.tags.has(key)) {
+          addSkip(
+            skips,
+            "tag_duplicate",
+            duplicateSkipSource(accountTags.has(key)),
+            name,
+          );
+          continue;
+        }
 
-        const existingTag = await tx.query.workspaceTags.findFirst({
-          where: and(
-            eq(workspaceTags.workspaceId, newWorkspaceId),
-            eq(workspaceTags.name, trimmed),
-          ),
-          columns: { id: true },
+        const tagResult = await runInSavepoint(tx, "tag", async () => {
+          await tx.insert(workspaceTags).values({
+            workspaceId: newWorkspaceId,
+            name,
+          });
         });
-        if (existingTag) continue;
-
-        await tx.insert(workspaceTags).values({
-          workspaceId: newWorkspaceId,
-          name: trimmed,
-        });
+        if (!tagResult.ok) {
+          if (isUniqueViolation(tagResult.error)) {
+            inventory.tags.add(key);
+            addSkip(skips, "tag_duplicate", "account", name);
+            continue;
+          }
+          addSkip(skips, "invalid_record", "other", name);
+          continue;
+        }
+        inventory.tags.add(key);
         imported.tags += 1;
       }
 
-      // Insert folders in parent-first passes
       const pending = [...workspace.folders];
       let safety = pending.length + 2;
       while (pending.length > 0 && safety-- > 0) {
         const nextRound: typeof pending = [];
         for (const folder of pending) {
           if (folder.parentId && !folderIdMap.has(folder.parentId)) {
-            // Parent not yet mapped — wait unless parent isn't in this workspace
-            const parentInBackup = workspace.folders.some((f) => f.id === folder.parentId);
+            const parentInBackup = workspace.folders.some(
+              (item) => item.id === folder.parentId,
+            );
             if (parentInBackup) {
               nextRound.push(folder);
               continue;
@@ -265,35 +283,81 @@ export async function importAccountBackupLearningData(options: {
             folder.parentId && folderIdMap.has(folder.parentId)
               ? folderIdMap.get(folder.parentId)!
               : null;
+          const section = folder.section as FolderSection;
+          const name = normalizeBackupName(folder.name) || folder.name;
+          const key = folderMatchKey(newWorkspaceId, section, parentId, name);
+          const existingFolderId = inventory.folders.get(key);
+          if (existingFolderId) {
+            folderIdMap.set(folder.id, existingFolderId);
+            addSkip(
+              skips,
+              "folder_duplicate",
+              duplicateSkipSource(accountFolders.has(key)),
+              name,
+            );
+            continue;
+          }
 
-          const [created] = await tx
-            .insert(workspaceFolders)
-            .values({
-              userId,
-              workspaceId: newWorkspaceId,
-              section: folder.section as FolderSection,
-              parentId,
-              name: folder.name,
-            })
-            .returning({ id: workspaceFolders.id });
-
-          folderIdMap.set(folder.id, created.id);
-          imported.folders += 1;
-        }
-        if (nextRound.length === pending.length) {
-          // Cycle / orphan — insert remaining without parent
-          for (const folder of nextRound) {
+          const folderResult = await runInSavepoint(tx, "folder", async () => {
             const [created] = await tx
               .insert(workspaceFolders)
               .values({
                 userId,
                 workspaceId: newWorkspaceId,
-                section: folder.section as FolderSection,
-                parentId: null,
-                name: folder.name,
+                section,
+                parentId,
+                name,
               })
               .returning({ id: workspaceFolders.id });
-            folderIdMap.set(folder.id, created.id);
+            return created.id;
+          });
+
+          if (!folderResult.ok) {
+            addSkip(skips, "invalid_record", "other", name);
+            continue;
+          }
+
+          folderIdMap.set(folder.id, folderResult.value);
+          setCanonicalId(inventory.folders, key, folderResult.value);
+          imported.folders += 1;
+        }
+
+        if (nextRound.length === pending.length) {
+          for (const folder of nextRound) {
+            const section = folder.section as FolderSection;
+            const name = normalizeBackupName(folder.name) || folder.name;
+            const key = folderMatchKey(newWorkspaceId, section, null, name);
+            const existingFolderId = inventory.folders.get(key);
+            if (existingFolderId) {
+              folderIdMap.set(folder.id, existingFolderId);
+              addSkip(
+                skips,
+                "folder_duplicate",
+                duplicateSkipSource(accountFolders.has(key)),
+                name,
+              );
+              continue;
+            }
+
+            const folderResult = await runInSavepoint(tx, "folder_orphan", async () => {
+              const [created] = await tx
+                .insert(workspaceFolders)
+                .values({
+                  userId,
+                  workspaceId: newWorkspaceId,
+                  section,
+                  parentId: null,
+                  name,
+                })
+                .returning({ id: workspaceFolders.id });
+              return created.id;
+            });
+            if (!folderResult.ok) {
+              addSkip(skips, "invalid_record", "other", name);
+              continue;
+            }
+            folderIdMap.set(folder.id, folderResult.value);
+            setCanonicalId(inventory.folders, key, folderResult.value);
             imported.folders += 1;
           }
           break;
@@ -303,35 +367,43 @@ export async function importAccountBackupLearningData(options: {
       }
     }
 
-    // 3. Vocabulary
+    // 3. Vocabulary — duplicate by word only (POS ignored).
     for (const item of backup.vocabulary) {
       const newWorkspaceId = workspaceIdMap.get(item.workspaceId);
       if (!newWorkspaceId) {
-        addSkip(skips, "invalid_workspace_ref", item.word);
+        addSkip(skips, "invalid_workspace_ref", "other", item.word);
         continue;
       }
 
-      const key = vocabKey(newWorkspaceId, item.word, item.partOfSpeech);
-      if (existingVocab.has(key)) {
-        addSkip(skips, "vocabulary_duplicate", item.word);
+      const word = normalizeBackupName(item.word);
+      if (!word) {
+        addSkip(skips, "invalid_record", "other", item.word);
+        continue;
+      }
+      const key = vocabWordKey(newWorkspaceId, word);
+      if (inventory.vocabulary.has(key)) {
+        addSkip(
+          skips,
+          "vocabulary_duplicate",
+          duplicateSkipSource(accountVocabulary.has(key)),
+          word,
+        );
         continue;
       }
 
-      try {
+      const vocabResult = await runInSavepoint(tx, "vocab", async () => {
         const [created] = await tx
           .insert(vocabularyWords)
           .values({
             userId,
             workspaceId: newWorkspaceId,
-            word: item.word.trim(),
+            word,
             partOfSpeech: item.partOfSpeech?.trim() || null,
             synonyms: item.synonyms,
             notes: item.notes,
             status: normalizeVocabStatus(item.status),
           })
           .returning({ id: vocabularyWords.id });
-
-        existingVocab.add(key);
 
         if (item.meanings.length > 0) {
           await tx.insert(wordMeanings).values(
@@ -365,78 +437,169 @@ export async function importAccountBackupLearningData(options: {
             })),
           );
         }
+      });
 
-        imported.vocabulary += 1;
-      } catch {
-        addSkip(skips, "vocabulary_duplicate", item.word);
+      if (!vocabResult.ok) {
+        if (isUniqueViolation(vocabResult.error)) {
+          inventory.vocabulary.add(key);
+          addSkip(skips, "vocabulary_duplicate", "account", word);
+          continue;
+        }
+        addSkip(skips, "invalid_record", "other", word);
+        continue;
       }
+      inventory.vocabulary.add(key);
+      imported.vocabulary += 1;
     }
 
-    // 4. Theory
+    // 4. Theory — title within workspace (any folder).
     for (const note of backup.theory) {
       const newWorkspaceId = workspaceIdMap.get(note.workspaceId);
       if (!newWorkspaceId) {
-        addSkip(skips, "invalid_workspace_ref", note.title);
+        addSkip(skips, "invalid_workspace_ref", "other", note.title);
         continue;
       }
+      const title = normalizeBackupName(note.title);
+      if (!title) {
+        addSkip(skips, "invalid_record", "other", note.title);
+        continue;
+      }
+      const key = contentTitleKey(newWorkspaceId, "theory", title);
+      if (inventory.theory.has(key)) {
+        addSkip(
+          skips,
+          "theory_duplicate",
+          duplicateSkipSource(accountTheory.has(key)),
+          title,
+        );
+        continue;
+      }
+
       const folderId =
         note.folderId && folderIdMap.has(note.folderId)
           ? folderIdMap.get(note.folderId)!
           : null;
 
-      await tx.insert(grammarNotes).values({
-        userId,
-        workspaceId: newWorkspaceId,
-        folderId,
-        title: note.title,
-        content: note.content as object,
+      const theoryResult = await runInSavepoint(tx, "theory", async () => {
+        await tx.insert(grammarNotes).values({
+          userId,
+          workspaceId: newWorkspaceId,
+          folderId,
+          title,
+          content: note.content as object,
+        });
       });
+      if (!theoryResult.ok) {
+        addSkip(skips, "invalid_record", "other", title);
+        continue;
+      }
+      inventory.theory.add(key);
       imported.theory += 1;
     }
 
-    // 5. Exercises (including writing)
+    // 5. Exercises / writing — title within workspace + type section.
     for (const exercise of backup.exercises) {
       const newWorkspaceId = workspaceIdMap.get(exercise.workspaceId);
       if (!newWorkspaceId) {
-        addSkip(skips, "invalid_workspace_ref", exercise.title);
+        addSkip(skips, "invalid_workspace_ref", "other", exercise.title);
         continue;
       }
       const type = normalizeExerciseType(exercise.type);
       if (!type) {
-        addSkip(skips, "invalid_record", exercise.title);
+        addSkip(skips, "invalid_record", "other", exercise.title);
         continue;
       }
+      const title = normalizeBackupName(exercise.title);
+      if (!title) {
+        addSkip(skips, "invalid_record", "other", exercise.title);
+        continue;
+      }
+
+      const section = exerciseSectionKey(type);
+      const key = contentTitleKey(newWorkspaceId, section, title);
+      const isWriting = section === "writing";
+      const duplicateSet = isWriting ? inventory.writing : inventory.exercises;
+      const accountSet = isWriting ? accountWriting : accountExercises;
+      const skipReason: BackupSkipReason = isWriting
+        ? "writing_duplicate"
+        : "exercise_duplicate";
+
+      if (duplicateSet.has(key)) {
+        addSkip(
+          skips,
+          skipReason,
+          duplicateSkipSource(accountSet.has(key)),
+          title,
+        );
+        continue;
+      }
+
       const folderId =
         exercise.folderId && folderIdMap.has(exercise.folderId)
           ? folderIdMap.get(exercise.folderId)!
           : null;
 
-      await tx.insert(exercises).values({
-        userId,
-        workspaceId: newWorkspaceId,
-        folderId,
-        title: exercise.title,
-        description: exercise.description,
-        type,
-        content: exercise.content as object,
+      const exerciseResult = await runInSavepoint(tx, "exercise", async () => {
+        await tx.insert(exercises).values({
+          userId,
+          workspaceId: newWorkspaceId,
+          folderId,
+          title,
+          description: exercise.description,
+          type,
+          content: exercise.content as object,
+        });
       });
-
-      if (type === "WRITING") {
-        imported.writing += 1;
-      } else {
-        imported.exercises += 1;
+      if (!exerciseResult.ok) {
+        addSkip(skips, "invalid_record", "other", title);
+        continue;
       }
+      duplicateSet.add(key);
+      if (isWriting) imported.writing += 1;
+      else imported.exercises += 1;
     }
 
-    // 6. Listening
+    // 6. Listening — title within workspace; also filename uniqueness.
     for (const lesson of backup.listening) {
       const newWorkspaceId = workspaceIdMap.get(lesson.workspaceId);
       if (!newWorkspaceId) {
-        addSkip(skips, "invalid_workspace_ref", lesson.title);
+        addSkip(skips, "invalid_workspace_ref", "other", lesson.title);
         continue;
       }
-      if (!lesson.mediaUrl?.trim() || !lesson.mediaPublicId?.trim()) {
-        addSkip(skips, "listening_missing_media", lesson.title);
+      const mediaUrl = lesson.mediaUrl?.trim() ?? "";
+      const mediaPublicId = lesson.mediaPublicId?.trim() ?? "";
+      if (!mediaUrl || !mediaPublicId) {
+        addSkip(skips, "listening_missing_media", "other", lesson.title);
+        continue;
+      }
+
+      const title = normalizeBackupName(lesson.title);
+      if (!title) {
+        addSkip(skips, "invalid_record", "other", lesson.title);
+        continue;
+      }
+      const titleKey = contentTitleKey(newWorkspaceId, "listening", title);
+      if (inventory.listeningTitles.has(titleKey)) {
+        addSkip(
+          skips,
+          "listening_duplicate",
+          duplicateSkipSource(accountListeningTitles.has(titleKey)),
+          title,
+        );
+        continue;
+      }
+
+      const filenameKey = listeningFilenameKey(
+        newWorkspaceId,
+        lesson.originalFilename,
+      );
+      if (filenameKey && inventory.listeningFilenames.has(filenameKey)) {
+        addSkip(
+          skips,
+          "listening_duplicate_filename",
+          duplicateSkipSource(accountListeningFilenames.has(filenameKey)),
+          title,
+        );
         continue;
       }
 
@@ -444,22 +607,21 @@ export async function importAccountBackupLearningData(options: {
         lesson.folderId && folderIdMap.has(lesson.folderId)
           ? folderIdMap.get(lesson.folderId)!
           : null;
-
       const exerciseType = lesson.exerciseType
         ? normalizeListeningExerciseType(lesson.exerciseType)
         : null;
 
-      try {
+      const listeningResult = await runInSavepoint(tx, "listen", async () => {
         const [created] = await tx
           .insert(listeningLessons)
           .values({
             userId,
             workspaceId: newWorkspaceId,
             folderId,
-            title: lesson.title,
+            title,
             originalFilename: lesson.originalFilename,
-            cloudinaryUrl: lesson.mediaUrl,
-            cloudinaryPublicId: lesson.mediaPublicId,
+            cloudinaryUrl: mediaUrl,
+            cloudinaryPublicId: mediaPublicId,
             mediaType: lesson.mediaType || "audio",
             format: lesson.format,
             duration: lesson.duration,
@@ -492,56 +654,78 @@ export async function importAccountBackupLearningData(options: {
         if (validItems.length > 0) {
           await tx.insert(listeningExercises).values(validItems);
         }
+      });
 
-        imported.listening += 1;
-      } catch (error) {
-        // Unique filename per workspace
-        if (
-          error &&
-          typeof error === "object" &&
-          "code" in error &&
-          (error as { code?: string }).code === "23505"
-        ) {
-          addSkip(skips, "listening_duplicate_filename", lesson.title);
+      if (!listeningResult.ok) {
+        if (isUniqueViolation(listeningResult.error)) {
+          if (filenameKey) inventory.listeningFilenames.add(filenameKey);
+          inventory.listeningTitles.add(titleKey);
+          addSkip(skips, "listening_duplicate_filename", "account", title);
           continue;
         }
-        addSkip(skips, "invalid_record", lesson.title);
+        addSkip(skips, "invalid_record", "other", title);
+        continue;
       }
+      inventory.listeningTitles.add(titleKey);
+      if (filenameKey) inventory.listeningFilenames.add(filenameKey);
+      imported.listening += 1;
     }
 
-    // 7. Speaking
+    // 7. Speaking — title within workspace.
     for (const session of backup.speaking) {
       const newWorkspaceId = workspaceIdMap.get(session.workspaceId);
       if (!newWorkspaceId) {
-        addSkip(skips, "invalid_workspace_ref", session.title);
+        addSkip(skips, "invalid_workspace_ref", "other", session.title);
+        continue;
+      }
+      const title = normalizeBackupName(session.title);
+      if (!title) {
+        addSkip(skips, "invalid_record", "other", session.title);
+        continue;
+      }
+      const key = contentTitleKey(newWorkspaceId, "speaking", title);
+      if (inventory.speaking.has(key)) {
+        addSkip(
+          skips,
+          "speaking_duplicate",
+          duplicateSkipSource(accountSpeaking.has(key)),
+          title,
+        );
         continue;
       }
 
-      await tx.insert(speakingSessions).values({
-        userId,
-        workspaceId: newWorkspaceId,
-        title: session.title,
-        language: session.language,
-        topic: session.topic,
-        cefrLevel: session.cefrLevel,
-        notes: session.notes,
-        status: normalizeSpeakingStatus(session.status),
-        transcript: session.transcript,
-        transcriptUrl: session.transcriptUrl,
-        recordingUrl: session.recordingUrl,
-        summary: session.summary,
-        startedAt: parseDate(session.startedAt),
-        endedAt: parseDate(session.endedAt),
+      const speakingResult = await runInSavepoint(tx, "speak", async () => {
+        await tx.insert(speakingSessions).values({
+          userId,
+          workspaceId: newWorkspaceId,
+          title,
+          language: session.language,
+          topic: session.topic,
+          cefrLevel: session.cefrLevel,
+          notes: session.notes,
+          status: normalizeSpeakingStatus(session.status),
+          transcript: session.transcript,
+          transcriptUrl: null,
+          recordingUrl: null,
+          summary: session.summary,
+          startedAt: parseDate(session.startedAt),
+          endedAt: parseDate(session.endedAt),
+        });
       });
+
+      if (!speakingResult.ok) {
+        addSkip(skips, "invalid_record", "other", title);
+        continue;
+      }
+      inventory.speaking.add(key);
       imported.speaking += 1;
     }
   });
 
-  // Touch updatedAt on reused workspaces so they feel fresh
   const reusedIds = Array.from(
     new Set(
       Array.from(workspaceIdMap.values()).filter((id) =>
-        existingWorkspaces.some((ws) => ws.id === id),
+        preExistingWorkspaceIds.has(id),
       ),
     ),
   );

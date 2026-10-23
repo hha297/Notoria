@@ -310,7 +310,11 @@
     "createWorkspace": "Ստեղծել աշխատատարածք",
     "createWorkspaceHint": "Ավելացնել մեկ այլ լեզվի աշխատատարածք",
     "switchWorkspace": "Փոխել աշխատատարածքը",
-    "switchFailed": "Չհաջողվեց փոխել աշխատատարածքը"
+    "switchFailed": "Չհաջողվեց փոխել աշխատատարածքը",
+    "selectLanguage": "Ընտրեք լեզուն",
+    "allLanguages": "Բոլոր լեզուները",
+    "changeLanguageFailed": "Չհաջողվեց փոխել միջերեսի լեզուն",
+    "popularLanguages": "Հանրաճանաչ"
   },
   "workspace": {
     "title": "Աշխատատարածքներ",
@@ -2999,6 +3003,7 @@
       "backup": "Ներբեռնել պահուստ",
       "backupDone": "Պահուստը ներբեռնված է",
       "backupFailed": "Չհաջողվեց պատրաստել պահուստը։ Կրկին փորձեք։",
+      "confirmPhrase": "Ջնջել բոլոր տվյալները",
       "confirmLabel": "Հաստատելու համար մուտքագրեք {phrase}",
       "confirm": "Ջնջել բոլոր տվյալները",
       "deleted": "Ամբողջ ուսումնական տվյալները ջնջված են",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Կարող է բաց թողնվել",
       "warnings": {
         "workspace_language_reuse": "Որոշ աշխատատարածքներ արդեն գոյություն ունեն նույն լեզվի համար։ Դրանց բովանդակությունը կավելացվի առկա աշխատատարածքներին՝ առանց կրկնօրինակների։",
-        "empty_backup": "Այս պահուստը ներմուծելի ուսումնական տվյալներ չի պարունակում։"
+        "empty_backup": "Այս պահուստը ներմուծելի ուսումնական տվյալներ չի պարունակում։",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Չեղարկել",
       "confirm": "Ներմուծել ուսումնական տվյալները",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# բառապաշարի տարր արդեն գոյություն ունի} other {# բառապաշարի տարր արդեն գոյություն ունի}}",
         "listening_missing_media": "{count, plural, one {# լսման դաս՝ առանց մեդիա URL-ի} other {# լսման դաս՝ առանց մեդիա URL-ի}}",
         "listening_duplicate_filename": "{count, plural, one {# լսման դաս բաց թողնված է (կրկնվող ֆայլի անուն)} other {# լսման դաս բաց թողնված է (կրկնվող ֆայլի անուն)}}",
+        "speaking_duplicate": "{count, plural, one {# խոսքի սեսիա արդեն գոյություն ունի} other {# խոսքի սեսիա արդեն գոյություն ունի}}",
         "invalid_workspace_ref": "{count, plural, one {# տարր՝ առանց աշխատատարածքի} other {# տարր՝ առանց աշխատատարածքի}}",
         "invalid_record": "{count, plural, one {# անվավեր գրառում} other {# անվավեր գրառում}}",
-        "unsupported_account_field": "Հաշվի ինքնության դաշտերը չեն ներմուծվում"
+        "unsupported_account_field": "Հաշվի ինքնության դաշտերը չեն ներմուծվում",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Այդ պահուստի ֆայլը չափազանց մեծ է։ Կրկին արտահանեք կամ կապվեք աջակցության հետ։",
@@ -3067,7 +3080,12 @@
         "importFailed": "Չհաջողվեց ներմուծել այս պահուստը։ Կրկին փորձեք։",
         "requestTooLarge": "Այդ պահուստը չափազանց մեծ է այս էջով մշակելու համար։ Փորձեք ավելի փոքր արտահանում կամ կապվեք աջակցության հետ։",
         "notConfigured": "Պահուստի ներմուծման համար ֆայլերի պահեստը դեռ կազմաձևված չէ։"
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Փակել հաշիվը",
@@ -3092,6 +3110,7 @@
       "backup": "Ներբեռնել պահուստ",
       "backupDone": "Պահուստը ներբեռնված է",
       "backupFailed": "Չհաջողվեց պատրաստել պահուստը։ Կրկին փորձեք։",
+      "confirmPhrase": "Ջնջել իմ հաշիվը",
       "confirmLabel": "Հաստատելու համար մուտքագրեք {phrase}",
       "confirm": "Մշտապես ջնջել հաշիվը",
       "deleted": "Ձեր հաշիվը ջնջված է",

@@ -310,7 +310,11 @@
     "createWorkspace": "Створити робочий простір",
     "createWorkspaceHint": "Додати ще один мовний робочий простір",
     "switchWorkspace": "Перемкнути робочий простір",
-    "switchFailed": "Не вдалося перемкнути робочий простір"
+    "switchFailed": "Не вдалося перемкнути робочий простір",
+    "selectLanguage": "Виберіть мову",
+    "allLanguages": "Усі мови",
+    "changeLanguageFailed": "Не вдалося змінити мову інтерфейсу",
+    "popularLanguages": "Популярні"
   },
   "workspace": {
     "title": "Робочі простори",
@@ -3000,6 +3004,7 @@
       "backup": "Завантажити резервну копію",
       "backupDone": "Резервну копію завантажено",
       "backupFailed": "Не вдалося підготувати резервну копію. Спробуйте ще раз.",
+      "confirmPhrase": "Видалити всі дані",
       "confirmLabel": "Введіть {phrase} для підтвердження",
       "confirm": "Видалити всі дані",
       "deleted": "Усі навчальні дані видалено",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Може бути пропущено",
       "warnings": {
         "workspace_language_reuse": "Деякі робочі простори вже існують для тієї самої мови. Їхній вміст буде додано до наявних робочих просторів замість створення дублікатів.",
-        "empty_backup": "Ця резервна копія не містить навчальних даних для імпорту."
+        "empty_backup": "Ця резервна копія не містить навчальних даних для імпорту.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Скасувати",
       "confirm": "Імпортувати навчальні дані",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# елемент словника вже існує} few {# елементи словника вже існують} many {# елементів словника вже існують} other {# елемента словника вже існують}}",
         "listening_missing_media": "{count, plural, one {# урок аудіювання без URL медіа} few {# уроки аудіювання без URL медіа} many {# уроків аудіювання без URL медіа} other {# уроку аудіювання без URL медіа}}",
         "listening_duplicate_filename": "{count, plural, one {# урок аудіювання пропущено (дублікат імені файлу)} few {# уроки аудіювання пропущено (дублікат імені файлу)} many {# уроків аудіювання пропущено (дублікат імені файлу)} other {# уроку аудіювання пропущено (дублікат імені файлу)}}",
+        "speaking_duplicate": "{count, plural, one {# сесія говоріння вже існує} few {# сесії говоріння вже існують} many {# сесій говоріння вже існують} other {# сесії говоріння вже існують}}",
         "invalid_workspace_ref": "{count, plural, one {# елемент без робочого простору} few {# елементи без робочого простору} many {# елементів без робочого простору} other {# елемента без робочого простору}}",
         "invalid_record": "{count, plural, one {# недійсний запис} few {# недійсні записи} many {# недійсних записів} other {# недійсного запису}}",
-        "unsupported_account_field": "Поля ідентичності облікового запису не імпортуються"
+        "unsupported_account_field": "Поля ідентичності облікового запису не імпортуються",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Цей файл резервної копії занадто великий. Спробуйте експортувати знову або зверніться до служби підтримки.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Не вдалося імпортувати цю резервну копію. Спробуйте ще раз.",
         "requestTooLarge": "Ця резервна копія занадто велика для обробки на цій сторінці. Спробуйте менший експорт або зверніться до служби підтримки.",
         "notConfigured": "Сховище файлів для імпорту резервних копій ще не налаштовано."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Закрити обліковий запис",
@@ -3092,6 +3110,7 @@
       "backup": "Завантажити резервну копію",
       "backupDone": "Резервну копію завантажено",
       "backupFailed": "Не вдалося підготувати резервну копію. Спробуйте ще раз.",
+      "confirmPhrase": "Видалити мій обліковий запис",
       "confirmLabel": "Введіть {phrase} для підтвердження",
       "confirm": "Назавжди видалити обліковий запис",
       "deleted": "Ваш обліковий запис видалено",

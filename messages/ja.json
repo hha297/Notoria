@@ -310,7 +310,11 @@
     "createWorkspace": "ワークスペースを作成",
     "createWorkspaceHint": "別の言語のワークスペースを追加",
     "switchWorkspace": "ワークスペースを切り替え",
-    "switchFailed": "ワークスペースを切り替えられませんでした"
+    "switchFailed": "ワークスペースを切り替えられませんでした",
+    "selectLanguage": "言語を選択",
+    "allLanguages": "すべての言語",
+    "changeLanguageFailed": "インターフェースの言語を変更できませんでした",
+    "popularLanguages": "人気"
   },
   "workspace": {
     "title": "ワークスペース",
@@ -3000,6 +3004,7 @@
       "backup": "バックアップをダウンロード",
       "backupDone": "バックアップをダウンロードしました",
       "backupFailed": "バックアップを準備できませんでした。もう一度お試しください。",
+      "confirmPhrase": "すべてのデータを削除",
       "confirmLabel": "確認のため {phrase} と入力してください",
       "confirm": "すべてのデータを削除",
       "deleted": "すべての学習データを削除しました",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "スキップされる可能性があります",
       "warnings": {
         "workspace_language_reuse": "同じ言語のワークスペースがすでに存在します。重複作成ではなく、既存のワークスペースにコンテンツが追加されます。",
-        "empty_backup": "このバックアップにはインポート可能な学習データが含まれていません。"
+        "empty_backup": "このバックアップにはインポート可能な学習データが含まれていません。",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "キャンセル",
       "confirm": "学習データをインポート",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# 件の語彙はすでに存在します} other {# 件の語彙はすでに存在します}}",
         "listening_missing_media": "{count, plural, one {# 件のリスニングレッスンにメディアURLがありません} other {# 件のリスニングレッスンにメディアURLがありません}}",
         "listening_duplicate_filename": "{count, plural, one {# 件のリスニングレッスンをスキップ（ファイル名の重複）} other {# 件のリスニングレッスンをスキップ（ファイル名の重複）}}",
+        "speaking_duplicate": "{count, plural, one {# スピーキングセッションは既に存在します} other {# スピーキングセッションは既に存在します}}",
         "invalid_workspace_ref": "{count, plural, one {# 件の項目にワークスペースがありません} other {# 件の項目にワークスペースがありません}}",
         "invalid_record": "{count, plural, one {# 件の無効なレコード} other {# 件の無効なレコード}}",
-        "unsupported_account_field": "アカウントの身元フィールドはインポートされません"
+        "unsupported_account_field": "アカウントの身元フィールドはインポートされません",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "そのバックアップファイルは大きすぎます。再度エクスポートするか、サポートにお問い合わせください。",
@@ -3067,7 +3080,12 @@
         "importFailed": "このバックアップをインポートできませんでした。もう一度お試しください。",
         "requestTooLarge": "そのバックアップはこのページで処理するには大きすぎます。より小さいエクスポートを試すか、サポートにお問い合わせください。",
         "notConfigured": "バックアップインポート用のファイルストレージはまだ設定されていません。"
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "アカウントを閉鎖",
@@ -3092,6 +3110,7 @@
       "backup": "バックアップをダウンロード",
       "backupDone": "バックアップをダウンロードしました",
       "backupFailed": "バックアップを準備できませんでした。もう一度お試しください。",
+      "confirmPhrase": "アカウントを削除",
       "confirmLabel": "確認のため {phrase} と入力してください",
       "confirm": "アカウントを完全に削除",
       "deleted": "アカウントを削除しました",

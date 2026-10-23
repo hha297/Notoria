@@ -3,41 +3,11 @@ import { throwIfAborted } from "@/lib/ai/cancellation";
 import { runChatCompletion } from "@/lib/ai/provider-call";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import type { AppLocale } from "@/i18n/config";
+import { uiLocaleEnglishName } from "@/lib/i18n/ui-locales";
 
-const UI_LANGUAGE_NAMES: Record<AppLocale, string> = {
-  en: "English",
-  fi: "Finnish",
-  sv: "Swedish",
-  vi: "Vietnamese",
-  id: "Indonesian",
-  de: "German",
-  fr: "French",
-  es: "Spanish",
-  it: "Italian",
-  pt: "Portuguese",
-  nl: "Dutch",
-  no: "Norwegian",
-  da: "Danish",
-  pl: "Polish",
-  ru: "Russian",
-  uk: "Ukrainian",
-  ja: "Japanese",
-  ko: "Korean",
-  zh: "Chinese",
-  ar: "Arabic",
-  hi: "Hindi",
-  th: "Thai",
-  tr: "Turkish",
-  el: "Greek",
-  cs: "Czech",
-  hu: "Hungarian",
-  ro: "Romanian",
-  be: "Belarusian",
-  bs: "Bosnian",
-  hy: "Armenian",
-  sq: "Albanian",
-  bg: "Bulgarian",
-};
+function uiLanguageName(locale: AppLocale) {
+  return uiLocaleEnglishName(locale);
+}
 
 function parseJsonContent(content: string | null | undefined) {
   if (!content?.trim()) return null;
@@ -60,7 +30,7 @@ export async function glossSentenceMeaning(input: {
   const sentence = clipForAi(input.sentence, AI_INPUT_LIMITS.sentenceText);
   if (!sentence) throw new Error("AI_INVALID_REQUEST");
 
-  const uiLanguage = UI_LANGUAGE_NAMES[input.uiLocale];
+  const uiLanguage = uiLanguageName(input.uiLocale);
   const { completion } = await runChatCompletion({
     operation: "exercise.sentence_gloss",
     feature: "ai_exercise",
@@ -189,7 +159,7 @@ async function glossSentenceMeaningsBatch(input: {
   if (input.sentences.length === 0) return result;
   throwIfAborted(input.signal);
 
-  const uiLanguage = UI_LANGUAGE_NAMES[input.uiLocale];
+  const uiLanguage = uiLanguageName(input.uiLocale);
   const sentences = input.sentences.map((item) => ({
     index: item.index,
     sentence: clipForAi(item.sentence, AI_INPUT_LIMITS.sentenceText),

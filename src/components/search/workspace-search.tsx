@@ -131,11 +131,24 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
     }
   }
 
+  /** Mobile: leave expanded search and restore Menu · Search · Workspace. */
+  function dismissMobileSearch() {
+    pendingEnter.current = false;
+    setValue("");
+    setDebounced("");
+    setOpen(false);
+    setMobileExpanded(false);
+    if (document.activeElement === inputRef.current) {
+      inputRef.current?.blur();
+    }
+  }
+
   const showMobileTrigger =
     compact && !mobileExpanded && !value.trim() && !open;
 
   function openResult(result: SearchResult) {
     closeSearch();
+    setMobileExpanded(false);
     router.push(result.href);
   }
 
@@ -178,8 +191,9 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
   useAppShortcut(
     "openSearch",
     () => {
-      inputRef.current?.focus();
+      setMobileExpanded(true);
       setOpen(true);
+      window.requestAnimationFrame(() => inputRef.current?.focus());
     },
     { enableOnFormTags: true },
   );
@@ -194,9 +208,13 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
 
   function onKeyDown(event: KeyboardEvent<HTMLInputElement>) {
     if (event.key === "Escape") {
+      event.preventDefault();
       pendingEnter.current = false;
+      if (compact && mobileExpanded) {
+        dismissMobileSearch();
+        return;
+      }
       if (value) {
-        event.preventDefault();
         setValue("");
         setDebounced("");
         return;
@@ -233,18 +251,23 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
     }
   }
 
+  const mobileSearchActive = compact && mobileExpanded;
+
   return (
     <div
       ref={rootRef}
+      data-mobile-search={mobileSearchActive ? "" : undefined}
       className={cn(
         "relative min-w-0",
-        showMobileTrigger ? "w-auto sm:w-full" : "w-full",
+        showMobileTrigger
+          ? "w-9 shrink-0 sm:w-full"
+          : "w-full min-w-0 flex-1 basis-0 sm:flex-none",
       )}
     >
       {showMobileTrigger ? (
         <button
           type="button"
-          className="control-surface inline-flex size-9 shrink-0 items-center justify-center rounded-md border border-page-accent-border text-muted-foreground sm:hidden"
+          className="studio-chrome-control control-surface inline-flex h-9 w-9 shrink-0 items-center justify-center rounded-md border border-page-accent-border text-muted-foreground sm:hidden"
           aria-label={t("placeholder")}
           onClick={() => {
             setMobileExpanded(true);
@@ -266,6 +289,7 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
         <Input
           ref={inputRef}
           value={value}
+          enterKeyHint="search"
           onChange={(event) => {
             pendingEnter.current = false;
             setValue(event.target.value);
@@ -275,9 +299,6 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
           onFocus={() => {
             setOpen(true);
             setMobileExpanded(true);
-          }}
-          onBlur={() => {
-            if (!value.trim() && !showPanel) setMobileExpanded(false);
           }}
           onKeyDown={onKeyDown}
           placeholder={t("placeholder")}
@@ -289,11 +310,25 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
           aria-activedescendant={activeId}
           aria-autocomplete="list"
           className={cn(
-            "control-surface rounded-md border-page-accent-border pr-20 pl-10 shadow-none",
-            compact && "h-9 sm:h-10",
+            "control-surface rounded-md border-page-accent-border pl-10 shadow-none",
+            mobileSearchActive ? "pr-11" : "pr-20",
+            compact
+              ? "studio-chrome-control h-9 sm:h-10"
+              : "h-10",
           )}
         />
-        <div className="absolute top-1/2 right-3 flex -translate-y-1/2 items-center gap-1.5">
+        <div className="absolute top-1/2 right-2 flex -translate-y-1/2 items-center gap-1 sm:right-3 sm:gap-1.5">
+          {mobileSearchActive ? (
+            <button
+              type="button"
+              onMouseDown={(event) => event.preventDefault()}
+              onClick={dismissMobileSearch}
+              className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors btn-ghost-surface sm:hidden"
+              aria-label={t("clear")}
+            >
+              <X className="size-4" />
+            </button>
+          ) : null}
           {value ? (
             <button
               type="button"
@@ -303,7 +338,10 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
                 setDebounced("");
                 inputRef.current?.focus();
               }}
-              className="rounded-md p-1 text-muted-foreground transition-colors btn-ghost-surface"
+              className={cn(
+                "rounded-md p-1 text-muted-foreground transition-colors btn-ghost-surface",
+                mobileSearchActive && "max-sm:hidden",
+              )}
               aria-label={t("clear")}
             >
               <X className="size-4" />

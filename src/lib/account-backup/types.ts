@@ -144,10 +144,22 @@ export type BackupSkipReason =
   | "unsupported_account_field"
   | "workspace_language_exists"
   | "vocabulary_duplicate"
+  | "folder_duplicate"
+  | "tag_duplicate"
+  | "theory_duplicate"
+  | "writing_duplicate"
+  | "exercise_duplicate"
   | "listening_missing_media"
+  | "listening_duplicate"
+  | "listening_duplicate_filename"
+  | "speaking_duplicate"
   | "invalid_workspace_ref"
-  | "invalid_record"
-  | "listening_duplicate_filename";
+  | "invalid_record";
+
+export type BackupPreviewWarning =
+  | "workspace_language_reuse"
+  | "empty_backup"
+  | "ambiguous_name_match";
 
 export type BackupImportCounts = {
   workspaces: number;
@@ -161,15 +173,16 @@ export type BackupImportCounts = {
   speaking: number;
 };
 
+/** Where a skip came from — drives preview/result copy. */
+export type BackupSkipSource = "account" | "backup" | "other";
+
 export type BackupSkipSummary = {
   reason: BackupSkipReason;
+  /** account = already on this user; backup = repeated name inside the file; other = media/invalid. */
+  source: BackupSkipSource;
   count: number;
   examples: string[];
 };
-
-export type BackupPreviewWarning =
-  | "workspace_language_reuse"
-  | "empty_backup";
 
 export type BackupPreview = {
   format: typeof ACCOUNT_BACKUP_FORMAT;

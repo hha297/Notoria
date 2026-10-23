@@ -310,7 +310,11 @@
     "createWorkspace": "إنشاء مساحة عمل",
     "createWorkspaceHint": "إضافة مساحة عمل للغة أخرى",
     "switchWorkspace": "تبديل مساحة العمل",
-    "switchFailed": "تعذّر تبديل مساحة العمل"
+    "switchFailed": "تعذّر تبديل مساحة العمل",
+    "selectLanguage": "اختر اللغة",
+    "allLanguages": "كل اللغات",
+    "changeLanguageFailed": "تعذّر تغيير لغة الواجهة",
+    "popularLanguages": "شائعة"
   },
   "workspace": {
     "title": "مساحات العمل",
@@ -3000,6 +3004,7 @@
       "backup": "تنزيل النسخة الاحتياطية",
       "backupDone": "تم تنزيل النسخة الاحتياطية",
       "backupFailed": "تعذّر تجهيز نسختك الاحتياطية. حاول مرة أخرى.",
+      "confirmPhrase": "حذف كل البيانات",
       "confirmLabel": "اكتب {phrase} للتأكيد",
       "confirm": "حذف كل البيانات",
       "deleted": "تم حذف كل بيانات التعلّم",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "قد يُتخطى",
       "warnings": {
         "workspace_language_reuse": "بعض مساحات العمل موجودة بالفعل لنفس اللغة. سيُضاف محتواها إلى مساحات عملك الحالية بدلًا من إنشاء تكرارات.",
-        "empty_backup": "لا تحتوي هذه النسخة الاحتياطية على أي بيانات تعلّم قابلة للاستيراد."
+        "empty_backup": "لا تحتوي هذه النسخة الاحتياطية على أي بيانات تعلّم قابلة للاستيراد.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "إلغاء",
       "confirm": "استيراد بيانات التعلّم",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, zero {# عنصر مفردات موجود بالفعل} one {عنصر مفردات واحد موجود بالفعل} two {عنصرا مفردات موجودان بالفعل} few {# عناصر مفردات موجودة بالفعل} many {# عنصر مفردات موجود بالفعل} other {# عنصر مفردات موجود بالفعل}}",
         "listening_missing_media": "{count, plural, zero {# درس استماع بلا عنوان وسائط} one {درس استماع واحد بلا عنوان وسائط} two {درسا استماع بلا عنواني وسائط} few {# دروس استماع بلا عناوين وسائط} many {# درس استماع بلا عناوين وسائط} other {# درس استماع بلا عناوين وسائط}}",
         "listening_duplicate_filename": "{count, plural, zero {# درس استماع تم تخطيه (اسم ملف مكرر)} one {درس استماع واحد تم تخطيه (اسم ملف مكرر)} two {درسا استماع تم تخطيهما (اسم ملف مكرر)} few {# دروس استماع تم تخطيها (اسم ملف مكرر)} many {# درس استماع تم تخطيه (اسم ملف مكرر)} other {# درس استماع تم تخطيه (اسم ملف مكرر)}}",
+        "speaking_duplicate": "{count, plural, one {# جلسة تحدث موجودة بالفعل} other {# جلسات تحدث موجودة بالفعل}}",
         "invalid_workspace_ref": "{count, plural, zero {# عنصر بلا مساحة عمل} one {عنصر واحد بلا مساحة عمل} two {عنصران بلا مساحة عمل} few {# عناصر بلا مساحة عمل} many {# عنصرًا بلا مساحة عمل} other {# عنصر بلا مساحة عمل}}",
         "invalid_record": "{count, plural, zero {# سجل غير صالح} one {سجل واحد غير صالح} two {سجلان غير صالحين} few {# سجلات غير صالحة} many {# سجلًا غير صالح} other {# سجل غير صالح}}",
-        "unsupported_account_field": "حقول هوية الحساب لا تُستورد"
+        "unsupported_account_field": "حقول هوية الحساب لا تُستورد",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "ملف النسخة الاحتياطية هذا كبير جدًا. حاول التصدير مرة أخرى أو تواصل مع الدعم.",
@@ -3067,7 +3080,12 @@
         "importFailed": "تعذّر استيراد هذه النسخة الاحتياطية. حاول مرة أخرى.",
         "requestTooLarge": "هذه النسخة الاحتياطية كبيرة جدًا للمعالجة عبر هذه الصفحة. جرّب تصديرًا أصغر أو تواصل مع الدعم.",
         "notConfigured": "تخزين الملفات غير مُعدّ لاستيراد النسخ الاحتياطية بعد."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "إغلاق الحساب",
@@ -3092,6 +3110,7 @@
       "backup": "تنزيل النسخة الاحتياطية",
       "backupDone": "تم تنزيل النسخة الاحتياطية",
       "backupFailed": "تعذّر تجهيز نسختك الاحتياطية. حاول مرة أخرى.",
+      "confirmPhrase": "حذف حسابي",
       "confirmLabel": "اكتب {phrase} للتأكيد",
       "confirm": "حذف الحساب نهائيًا",
       "deleted": "تم حذف حسابك",

@@ -310,7 +310,11 @@
     "createWorkspace": "创建工作区",
     "createWorkspaceHint": "添加另一个语言工作区",
     "switchWorkspace": "切换工作区",
-    "switchFailed": "无法切换工作区"
+    "switchFailed": "无法切换工作区",
+    "selectLanguage": "选择语言",
+    "allLanguages": "所有语言",
+    "changeLanguageFailed": "无法更改界面语言",
+    "popularLanguages": "热门"
   },
   "workspace": {
     "title": "工作区",
@@ -3000,6 +3004,7 @@
       "backup": "下载备份",
       "backupDone": "备份已下载",
       "backupFailed": "无法准备备份。请重试。",
+      "confirmPhrase": "删除全部数据",
       "confirmLabel": "输入 {phrase} 以确认",
       "confirm": "删除全部数据",
       "deleted": "全部学习数据已删除",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "可能跳过",
       "warnings": {
         "workspace_language_reuse": "部分工作区在同一语言下已存在。其内容将加入现有工作区，而不会创建重复项。",
-        "empty_backup": "此备份不包含任何可导入的学习数据。"
+        "empty_backup": "此备份不包含任何可导入的学习数据。",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "取消",
       "confirm": "导入学习数据",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# 个词汇项已存在} other {# 个词汇项已存在}}",
         "listening_missing_media": "{count, plural, one {# 堂听力课缺少媒体 URL} other {# 堂听力课缺少媒体 URL}}",
         "listening_duplicate_filename": "{count, plural, one {# 堂听力课已跳过（文件名重复）} other {# 堂听力课已跳过（文件名重复）}}",
+        "speaking_duplicate": "{count, plural, one {# 口语练习已存在} other {# 口语练习已存在}}",
         "invalid_workspace_ref": "{count, plural, one {# 项缺少工作区} other {# 项缺少工作区}}",
         "invalid_record": "{count, plural, one {# 条无效记录} other {# 条无效记录}}",
-        "unsupported_account_field": "账户身份字段不会导入"
+        "unsupported_account_field": "账户身份字段不会导入",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "该备份文件过大。请重新导出或联系支持。",
@@ -3067,7 +3080,12 @@
         "importFailed": "无法导入此备份。请重试。",
         "requestTooLarge": "该备份太大，无法通过此页面处理。请尝试更小的导出或联系支持。",
         "notConfigured": "备份导入的文件存储尚未配置。"
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "关闭账户",
@@ -3092,6 +3110,7 @@
       "backup": "下载备份",
       "backupDone": "备份已下载",
       "backupFailed": "无法准备备份。请重试。",
+      "confirmPhrase": "删除我的账户",
       "confirmLabel": "输入 {phrase} 以确认",
       "confirm": "永久删除账户",
       "deleted": "你的账户已删除",

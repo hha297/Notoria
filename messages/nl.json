@@ -310,7 +310,11 @@
     "createWorkspace": "Werkruimte aanmaken",
     "createWorkspaceHint": "Nog een taalwerkruimte toevoegen",
     "switchWorkspace": "Werkruimte wisselen",
-    "switchFailed": "Kon niet van werkruimte wisselen"
+    "switchFailed": "Kon niet van werkruimte wisselen",
+    "selectLanguage": "Taal kiezen",
+    "allLanguages": "Alle talen",
+    "changeLanguageFailed": "Interface-taal kon niet worden gewijzigd",
+    "popularLanguages": "Populair"
   },
   "workspace": {
     "title": "Werkruimten",
@@ -3000,6 +3004,7 @@
       "backup": "Back-up downloaden",
       "backupDone": "Back-up gedownload",
       "backupFailed": "Uw back-up kon niet worden voorbereid. Probeer het opnieuw.",
+      "confirmPhrase": "Alle gegevens verwijderen",
       "confirmLabel": "Typ {phrase} om te bevestigen",
       "confirm": "Alle gegevens verwijderen",
       "deleted": "Alle leergegevens zijn verwijderd",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Kan worden overgeslagen",
       "warnings": {
         "workspace_language_reuse": "Sommige werkruimten bestaan al voor dezelfde taal. Hun inhoud wordt aan uw bestaande werkruimten toegevoegd in plaats van duplicaten te maken.",
-        "empty_backup": "Deze back-up bevat geen importeerbare leergegevens."
+        "empty_backup": "Deze back-up bevat geen importeerbare leergegevens.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Annuleren",
       "confirm": "Leergegevens importeren",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# woordenschatitem bestaat al} other {# woordenschatitems bestaan al}}",
         "listening_missing_media": "{count, plural, one {# luisterles zonder media-URL} other {# luisterlessen zonder media-URL’s}}",
         "listening_duplicate_filename": "{count, plural, one {# luisterles overgeslagen (dubbele bestandsnaam)} other {# luisterlessen overgeslagen (dubbele bestandsnaam)}}",
+        "speaking_duplicate": "{count, plural, one {# spreeksessie bestaat al} other {# spreeksessies bestaan al}}",
         "invalid_workspace_ref": "{count, plural, one {# item zonder werkruimte} other {# items zonder werkruimte}}",
         "invalid_record": "{count, plural, one {# ongeldig record} other {# ongeldige records}}",
-        "unsupported_account_field": "Accountidentiteitsvelden worden niet geïmporteerd"
+        "unsupported_account_field": "Accountidentiteitsvelden worden niet geïmporteerd",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Dat back-upbestand is te groot. Probeer opnieuw te exporteren of neem contact op met de ondersteuning.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Deze back-up kon niet worden geïmporteerd. Probeer het opnieuw.",
         "requestTooLarge": "Die back-up is te groot om via deze pagina te verwerken. Probeer een kleinere export of neem contact op met de ondersteuning.",
         "notConfigured": "Bestandsopslag is nog niet geconfigureerd voor back-upimport."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Account sluiten",
@@ -3092,6 +3110,7 @@
       "backup": "Back-up downloaden",
       "backupDone": "Back-up gedownload",
       "backupFailed": "Uw back-up kon niet worden voorbereid. Probeer het opnieuw.",
+      "confirmPhrase": "Mijn account verwijderen",
       "confirmLabel": "Typ {phrase} om te bevestigen",
       "confirm": "Account definitief verwijderen",
       "deleted": "Uw account is verwijderd",

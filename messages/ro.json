@@ -310,7 +310,11 @@
     "createWorkspace": "Creați spațiu de lucru",
     "createWorkspaceHint": "Adăugați un alt spațiu de lucru pentru o limbă",
     "switchWorkspace": "Schimbați spațiul de lucru",
-    "switchFailed": "Nu s-a putut schimba spațiul de lucru"
+    "switchFailed": "Nu s-a putut schimba spațiul de lucru",
+    "selectLanguage": "Selectați limba",
+    "allLanguages": "Toate limbile",
+    "changeLanguageFailed": "Nu s-a putut schimba limba interfeței",
+    "popularLanguages": "Populare"
   },
   "workspace": {
     "title": "Spații de lucru",
@@ -3000,6 +3004,7 @@
       "backup": "Descărcați copia de rezervă",
       "backupDone": "Copia de rezervă a fost descărcată",
       "backupFailed": "Nu s-a putut pregăti copia de rezervă. Încercați din nou.",
+      "confirmPhrase": "Șterge toate datele",
       "confirmLabel": "Tastați {phrase} pentru a confirma",
       "confirm": "Ștergeți toate datele",
       "deleted": "Toate datele de învățare au fost șterse",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Pot fi omise",
       "warnings": {
         "workspace_language_reuse": "Unele spații de lucru există deja pentru aceeași limbă. Conținutul lor va fi adăugat în spațiile de lucru existente în loc să se creeze duplicate.",
-        "empty_backup": "Această copie de rezervă nu conține date de învățare importabile."
+        "empty_backup": "Această copie de rezervă nu conține date de învățare importabile.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Anulați",
       "confirm": "Importați datele de învățare",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# element de vocabular există deja} few {# elemente de vocabular există deja} other {# de elemente de vocabular există deja}}",
         "listening_missing_media": "{count, plural, one {# lecție de ascultare fără URL media} few {# lecții de ascultare fără URL media} other {# de lecții de ascultare fără URL media}}",
         "listening_duplicate_filename": "{count, plural, one {# lecție de ascultare omisă (nume de fișier duplicat)} few {# lecții de ascultare omise (nume de fișier duplicat)} other {# de lecții de ascultare omise (nume de fișier duplicat)}}",
+        "speaking_duplicate": "{count, plural, one {# sesiune de vorbire există deja} few {# sesiuni de vorbire există deja} other {# de sesiuni de vorbire există deja}}",
         "invalid_workspace_ref": "{count, plural, one {# element fără spațiu de lucru} few {# elemente fără spațiu de lucru} other {# de elemente fără spațiu de lucru}}",
         "invalid_record": "{count, plural, one {# înregistrare nevalidă} few {# înregistrări nevalide} other {# de înregistrări nevalide}}",
-        "unsupported_account_field": "Câmpurile de identitate ale contului nu sunt importate"
+        "unsupported_account_field": "Câmpurile de identitate ale contului nu sunt importate",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Fișierul de rezervă este prea mare. Încercați să exportați din nou sau contactați asistența.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Nu s-a putut importa această copie de rezervă. Încercați din nou.",
         "requestTooLarge": "Această copie de rezervă este prea mare pentru a fi procesată pe această pagină. Încercați un export mai mic sau contactați asistența.",
         "notConfigured": "Stocarea fișierelor nu este încă configurată pentru importul copiilor de rezervă."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Închideți contul",
@@ -3092,6 +3110,7 @@
       "backup": "Descărcați copia de rezervă",
       "backupDone": "Copia de rezervă a fost descărcată",
       "backupFailed": "Nu s-a putut pregăti copia de rezervă. Încercați din nou.",
+      "confirmPhrase": "Șterge contul meu",
       "confirmLabel": "Tastați {phrase} pentru a confirma",
       "confirm": "Ștergeți definitiv contul",
       "deleted": "Contul dvs. a fost șters",

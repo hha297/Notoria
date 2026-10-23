@@ -6,7 +6,8 @@ import { getFlashcardWords } from "@/lib/actions/flashcards";
 import { getTheoryNote } from "@/lib/actions/theory";
 import { generateAiTheoryExercises } from "@/lib/theory-exercises/ai";
 import { parseTheoryContent } from "@/lib/theory/content";
-import { locales, type AppLocale } from "@/i18n/config";
+import { locales } from "@/i18n/config";
+import { uiLocaleEnglishName } from "@/lib/i18n/ui-locales";
 import { getActiveWorkspace } from "@/lib/workspace";
 import { gateAdditionalInstructions } from "@/lib/exercises/additional-instructions-server";
 import { exerciseNextSetMetaSchema } from "@/lib/exercises/ai-types";
@@ -19,41 +20,6 @@ import { DEFAULT_NEXT_SET_COUNT } from "@/lib/exercises/next-set-fingerprint";
 export const runtime = "nodejs";
 /** Match `AI_DEADLINES_MS.theoryGenerate` with a little headroom. */
 export const maxDuration = 120;
-
-const UI_LANGUAGE_NAMES: Record<AppLocale, string> = {
-  en: "English",
-  fi: "Finnish",
-  sv: "Swedish",
-  vi: "Vietnamese",
-  id: "Indonesian",
-  de: "German",
-  fr: "French",
-  es: "Spanish",
-  it: "Italian",
-  pt: "Portuguese",
-  nl: "Dutch",
-  no: "Norwegian",
-  da: "Danish",
-  pl: "Polish",
-  ru: "Russian",
-  uk: "Ukrainian",
-  ja: "Japanese",
-  ko: "Korean",
-  zh: "Chinese",
-  ar: "Arabic",
-  hi: "Hindi",
-  th: "Thai",
-  tr: "Turkish",
-  el: "Greek",
-  cs: "Czech",
-  hu: "Hungarian",
-  ro: "Romanian",
-  be: "Belarusian",
-  bs: "Bosnian",
-  hy: "Armenian",
-  sq: "Albanian",
-  bg: "Bulgarian",
-};
 
 const bodySchema = z.object({
   theoryId: z.string().min(1),
@@ -151,7 +117,7 @@ export async function POST(request: Request) {
           })),
           count,
           studyLanguage: workspace?.language,
-          uiLanguage: UI_LANGUAGE_NAMES[uiLocale],
+          uiLanguage: uiLocaleEnglishName(uiLocale),
           additionalInstructions: gated.text,
         });
       },

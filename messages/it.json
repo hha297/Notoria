@@ -310,7 +310,11 @@
     "createWorkspace": "Crea spazio di lavoro",
     "createWorkspaceHint": "Aggiunga un altro spazio di lavoro per una lingua",
     "switchWorkspace": "Cambia spazio di lavoro",
-    "switchFailed": "Impossibile cambiare spazio di lavoro"
+    "switchFailed": "Impossibile cambiare spazio di lavoro",
+    "selectLanguage": "Seleziona lingua",
+    "allLanguages": "Tutte le lingue",
+    "changeLanguageFailed": "Impossibile cambiare la lingua dell’interfaccia",
+    "popularLanguages": "Popolari"
   },
   "workspace": {
     "title": "Spazi di lavoro",
@@ -3000,6 +3004,7 @@
       "backup": "Scarica backup",
       "backupDone": "Backup scaricato",
       "backupFailed": "Impossibile preparare il backup. Riprovi.",
+      "confirmPhrase": "Elimina tutti i dati",
       "confirmLabel": "Digiti {phrase} per confermare",
       "confirm": "Elimina tutti i dati",
       "deleted": "Tutti i dati di apprendimento sono stati eliminati",
@@ -3030,7 +3035,8 @@
       "skippedTitle": "Potrebbero essere saltati",
       "warnings": {
         "workspace_language_reuse": "Alcuni spazi di lavoro esistono già per la stessa lingua. Il loro contenuto verrà aggiunto agli spazi di lavoro esistenti invece di creare duplicati.",
-        "empty_backup": "Questo backup non contiene dati di apprendimento importabili."
+        "empty_backup": "Questo backup non contiene dati di apprendimento importabili.",
+        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
       },
       "cancel": "Annulla",
       "confirm": "Importa dati di apprendimento",
@@ -3055,9 +3061,16 @@
         "vocabulary_duplicate": "{count, plural, one {# elemento di vocabolario esiste già} other {# elementi di vocabolario esistono già}}",
         "listening_missing_media": "{count, plural, one {# lezione di ascolto senza URL media} other {# lezioni di ascolto senza URL media}}",
         "listening_duplicate_filename": "{count, plural, one {# lezione di ascolto saltata (nome file duplicato)} other {# lezioni di ascolto saltate (nome file duplicato)}}",
+        "speaking_duplicate": "{count, plural, one {# sessione di conversazione esiste già} other {# sessioni di conversazione esistono già}}",
         "invalid_workspace_ref": "{count, plural, one {# elemento senza spazio di lavoro} other {# elementi senza spazio di lavoro}}",
         "invalid_record": "{count, plural, one {# record non valido} other {# record non validi}}",
-        "unsupported_account_field": "I campi di identità dell’account non vengono importati"
+        "unsupported_account_field": "I campi di identità dell’account non vengono importati",
+        "folder_duplicate": "{count, plural, one {# folder already exists} other {# folders already exist}}",
+        "tag_duplicate": "{count, plural, one {# tag already exists} other {# tags already exist}}",
+        "theory_duplicate": "{count, plural, one {# theory page already exists} other {# theory pages already exist}}",
+        "writing_duplicate": "{count, plural, one {# writing document already exists} other {# writing documents already exist}}",
+        "exercise_duplicate": "{count, plural, one {# exercise already exists} other {# exercises already exist}}",
+        "listening_duplicate": "{count, plural, one {# listening lesson already exists} other {# listening lessons already exist}}"
       },
       "errors": {
         "fileTooLarge": "Questo file di backup è troppo grande. Provi a esportare di nuovo o contatti l’assistenza.",
@@ -3067,7 +3080,12 @@
         "importFailed": "Impossibile importare questo backup. Riprovi.",
         "requestTooLarge": "Questo backup è troppo grande per essere elaborato da questa pagina. Provi un’esportazione più piccola o contatti l’assistenza.",
         "notConfigured": "L’archiviazione file non è ancora configurata per l’importazione di backup."
-      }
+      },
+      "skippedInAccountTitle": "Already in your account",
+      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
+      "skippedInBackupTitle": "Duplicate names in this backup",
+      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
+      "skippedOtherTitle": "Could not import"
     },
     "danger": {
       "title": "Chiudi account",
@@ -3092,6 +3110,7 @@
       "backup": "Scarica backup",
       "backupDone": "Backup scaricato",
       "backupFailed": "Impossibile preparare il backup. Riprovi.",
+      "confirmPhrase": "Elimina il mio account",
       "confirmLabel": "Digiti {phrase} per confermare",
       "confirm": "Elimina account in modo permanente",
       "deleted": "Il Suo account è stato eliminato",
