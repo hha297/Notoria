@@ -186,7 +186,14 @@ export function partitionSelectedForTag(
   return { toAdd, toRemove };
 }
 
-/** Prefer a stable default selection within a standard group. */
-export function defaultTagManagerTagId(group: TagManagerGroup): string {
+/** All standard (topic + usage) ids editable in Tag Manager. */
+export function allStandardTagManagerIds(): string[] {
+  return TAG_MANAGER_GROUPS.flatMap((group) => tagManagerTagIds(group));
+}
+
+/** Prefer a stable default selection among standard tags. */
+export function defaultTagManagerTagId(
+  group: TagManagerGroup = "topic",
+): string {
   return tagManagerTagIds(group)[0] ?? "everyday_life";
 }

@@ -578,3 +578,239 @@
     font-size: 2.05rem;
   }
 }
+
+/* ——— Nested folder browser (exercise theory picker) ——— */
+.theory-folder-browser {
+  --folder-accent: var(--module-theory-fg);
+  --folder-soft: var(--module-theory-bg);
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.theory-folder-tree,
+.theory-folder-children {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  min-width: 0;
+}
+
+.theory-folder-node {
+  --folder-depth: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+  min-width: 0;
+}
+
+.theory-folder-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 0.35rem 0.45rem;
+  min-width: 0;
+  margin-inline-start: calc(var(--folder-depth) * 0.95rem);
+  padding: 0.35rem;
+  border-radius: 0.85rem;
+  border: 1px solid color-mix(in oklab, var(--folder-accent) 18%, var(--hairline-cloud));
+  background:
+    linear-gradient(
+      115deg,
+      color-mix(in oklab, var(--folder-soft) 42%, transparent) 0%,
+      transparent 55%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 90%, var(--background));
+  box-shadow: inset 3px 0 0 color-mix(in oklab, var(--folder-accent) 38%, transparent);
+  transition:
+    border-color 140ms ease,
+    background 140ms ease;
+}
+
+.theory-folder-node[data-open="true"] > .theory-folder-row {
+  border-color: color-mix(in oklab, var(--folder-accent) 36%, transparent);
+  background:
+    linear-gradient(
+      115deg,
+      color-mix(in oklab, var(--folder-soft) 58%, transparent) 0%,
+      transparent 58%
+    ),
+    color-mix(in oklab, var(--folder-soft) 28%, var(--surface-elevated));
+  box-shadow: inset 3px 0 0 var(--folder-accent);
+}
+
+.theory-folder-node[data-unfiled="true"] > .theory-folder-row {
+  --folder-accent: var(--muted-foreground);
+  --folder-soft: color-mix(in oklab, var(--muted) 55%, transparent);
+}
+
+.theory-folder-row:hover {
+  border-color: color-mix(in oklab, var(--folder-accent) 40%, transparent);
+}
+
+.theory-folder-toggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  border: 0;
+  border-radius: 0.55rem;
+  background: transparent;
+  color: var(--muted-foreground);
+  cursor: pointer;
+}
+
+.theory-folder-toggle:hover:not(:disabled) {
+  color: var(--folder-accent);
+  background: color-mix(in oklab, var(--folder-soft) 45%, transparent);
+}
+
+.theory-folder-toggle:disabled {
+  opacity: 0.35;
+  cursor: default;
+}
+
+.theory-folder-toggle:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--folder-accent) 55%, transparent);
+  outline-offset: 1px;
+}
+
+.theory-folder-main {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 0.65rem;
+  min-width: 0;
+  min-height: 2.65rem;
+  padding: 0.35rem 0.55rem 0.35rem 0.2rem;
+  border: 0;
+  border-radius: 0.65rem;
+  background: transparent;
+  color: inherit;
+  text-align: start;
+  cursor: pointer;
+}
+
+.theory-folder-main:hover:not(:disabled) {
+  background: color-mix(in oklab, var(--folder-soft) 28%, transparent);
+}
+
+.theory-folder-main:disabled {
+  cursor: default;
+}
+
+.theory-folder-main:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--folder-accent) 55%, transparent);
+  outline-offset: 1px;
+}
+
+.theory-folder-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 0.6rem;
+  color: var(--folder-accent);
+  background: color-mix(in oklab, var(--folder-soft) 55%, transparent);
+  border: 1px solid color-mix(in oklab, var(--folder-accent) 22%, transparent);
+}
+
+.theory-folder-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  min-width: 0;
+}
+
+.theory-folder-name {
+  font-size: 0.92rem;
+  font-weight: 650;
+  line-height: 1.25;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.theory-folder-submeta {
+  font-size: 0.7rem;
+  color: var(--muted-foreground);
+}
+
+.theory-folder-count {
+  flex-shrink: 0;
+  font-size: 0.72rem;
+  font-weight: 650;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in oklab, var(--folder-accent) 72%, var(--muted-foreground));
+}
+
+.theory-folder-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  min-width: 0;
+  margin-inline-start: calc(var(--folder-depth) * 0.95rem + 0.85rem);
+  padding: 0.15rem 0 0.25rem 0.85rem;
+  border-inline-start: 1px solid
+    color-mix(in oklab, var(--folder-accent) 22%, transparent);
+}
+
+.theory-folder-notes-grid {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+@media (min-width: 640px) {
+  .theory-folder-notes-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.theory-folder-notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.theory-note-radio {
+  display: inline-flex;
+  width: 1.05rem;
+  height: 1.05rem;
+  flex-shrink: 0;
+  margin-top: 0.35rem;
+  border-radius: 999px;
+  border: 2px solid var(--lesson-row-fg);
+  background: transparent;
+  box-shadow: inset 0 0 0 0 var(--lesson-row-fg);
+  transition:
+    background 120ms ease,
+    box-shadow 120ms ease,
+    border-color 120ms ease;
+}
+
+.theory-note-radio[data-checked="true"] {
+  background: var(--lesson-row-fg);
+  box-shadow: inset 0 0 0 3px
+    color-mix(in oklab, var(--background) 92%, transparent);
+}
+
+.theory-library-row-selected,
+.theory-library-card-selected {
+  border-color: color-mix(in oklab, var(--lesson-row-fg) 48%, transparent);
+  background: color-mix(in oklab, var(--lesson-row-bg) 34%, var(--surface-elevated));
+}
+
+.theory-library-row-selected {
+  box-shadow: inset 3px 0 0 var(--lesson-row-fg);
+}

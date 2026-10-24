@@ -1,6 +1,6 @@
 "use client";
 
-import { Loader2, RefreshCw, Sparkles } from "lucide-react";
+import { RefreshCw, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import type { NextSetStatus } from "@/hooks/use-exercise-next-set";
@@ -24,14 +24,13 @@ export function NextSetStatusChip({
 }: NextSetStatusChipProps) {
   const t = useTranslations("exercises.processing");
 
-  if (status === "idle") return null;
+  // Preparing runs in the background — only surface ready / failed.
+  if (status === "idle" || status === "preparing" || status === "scheduled") {
+    return null;
+  }
 
   const label =
-    status === "ready"
-      ? t("nextSetReady")
-      : status === "failed"
-        ? t("nextSetFailed")
-        : t("nextSetPreparing");
+    status === "ready" ? t("nextSetReady") : t("nextSetFailed");
 
   return (
     <div
@@ -42,9 +41,7 @@ export function NextSetStatusChip({
       role="status"
       aria-live="polite"
     >
-      {status === "preparing" || status === "scheduled" ? (
-        <Loader2 className="size-3.5 shrink-0 animate-spin text-(--exercise-accent) motion-reduce:animate-none" />
-      ) : status === "ready" ? (
+      {status === "ready" ? (
         <Sparkles className="size-3.5 shrink-0 text-(--exercise-accent)" />
       ) : (
         <RefreshCw className="size-3.5 shrink-0 text-muted-foreground" />

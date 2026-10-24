@@ -114,6 +114,8 @@
   --color-module-account-fg: var(--module-account-fg);
   --color-module-settings-bg: var(--module-settings-bg);
   --color-module-settings-fg: var(--module-settings-fg);
+  --color-module-tags-bg: var(--module-tags-bg);
+  --color-module-tags-fg: var(--module-tags-fg);
 
   --color-page-accent: var(--page-accent);
   --color-page-accent-soft: var(--page-accent-soft);
@@ -169,9 +171,10 @@
   --accent-soft: #fde9b8;
 
   /*
-    Light surface hierarchy — page section, sidebar, and navbar share the same
-    white base; elevated cards stay white; muted/hover use a soft wash.
+    Light surface hierarchy — sidebar, navbar, and sections stay white;
+    --page-backdrop is the outermost shell wash only (less glare).
   */
+  --page-backdrop: #f5f5f0;
   --background: #ffffff;
   --foreground: #23251d;
   --surface: #ffffff;
@@ -250,18 +253,22 @@
   --module-account-fg: #5e6a72;
   --module-settings-bg: #eef0eb;
   --module-settings-fg: #55615a;
+  /* Sky — Tag Manager; cool blue, not writing rose / home teal / listen blue */
+  --module-tags-bg: #e0f2fe;
+  --module-tags-fg: #0369a1;
 
   /*
-    Studio paper wash strengths (color-mix %). High-chroma scenes override
-    slightly so yellow/green do not dominate vs blue/purple.
+    Studio paper wash strengths (color-mix %). Light module fills are already
+    near-white, so % must run higher than dark to stay visible on white paper.
+    High-chroma scenes override slightly so yellow/green do not dominate.
   */
-  --studio-wash-base-a: 22%;
-  --studio-wash-base-b: 10%;
-  --studio-wash-scene-a: 32%;
-  --studio-wash-scene-b: 12%;
-  --studio-wash-fade-a: 50%;
-  --studio-wash-fade-b: 46%;
-  --studio-shell-wash: 22%;
+  --studio-wash-base-a: 50%;
+  --studio-wash-base-b: 26%;
+  --studio-wash-scene-a: 62%;
+  --studio-wash-scene-b: 28%;
+  --studio-wash-fade-a: 58%;
+  --studio-wash-fade-b: 54%;
+  --studio-shell-wash: 42%;
 
   /*
     Page accent — single source of truth for route/exercise-tinted UI.
@@ -278,7 +285,7 @@
   /* Soft accent edge — quiet tint so chrome/sidebar borders stay light */
   --page-accent-border: color-mix(
     in oklab,
-    var(--page-accent) 22%,
+    var(--page-accent) 30%,
     transparent
   );
   --page-accent-hover: color-mix(
@@ -379,6 +386,7 @@
   --accent-violet-deep: #f7a501;
   --accent-soft: #3d3420;
 
+  --page-backdrop: #151611;
   --background: #151611;
   --foreground: #eeefe9;
   --surface: #1c1d18;
@@ -455,6 +463,8 @@
   --module-account-fg: #9aa8b4;
   --module-settings-bg: #2c322e;
   --module-settings-fg: #a8b4ac;
+  --module-tags-bg: #0c2a3a;
+  --module-tags-fg: #38bdf8;
 
   /* Dark wash coverage — tighter corners; palette hex unchanged */
   --studio-wash-base-a: 12%;
@@ -732,7 +742,7 @@
   }
 
   .studio-shell {
-    background-color: var(--background);
+    background-color: var(--page-backdrop);
     background-image:
       radial-gradient(
         ellipse 56% 42% at 0% 0%,
@@ -785,13 +795,10 @@
     position: relative;
     isolation: isolate;
     /*
-      Continuous with .studio-shell ambient. Opaque elevated (or a gradient
-      that settles on opaque elevated) filled the flex-1 frame and read as a
-      rectangular slab on empty Writing/Reading/Vocabulary states. Shell owns
-      the page background; paper keeps border + accent washes only — any
-      elevated veil still silhouettes as a content-height-independent rectangle.
+      White (light) / elevated (dark) section on top of --page-backdrop shell.
+      Scene accent washes sit on ::before/::after above this base.
     */
-    background-color: transparent;
+    background-color: var(--surface);
     background-image: none;
   }
 
@@ -864,7 +871,7 @@
       ),
       radial-gradient(
         ellipse 36% 24% at 94% 0%,
-        color-mix(in oklab, var(--page-accent-soft) 8%, transparent),
+        color-mix(in oklab, var(--page-accent-soft) 20%, transparent),
         transparent 48%
       );
   }
@@ -956,13 +963,19 @@
     --page-accent: var(--module-vocab-fg);
     --page-accent-soft: var(--module-vocab-bg);
     /* Green reads strong — keep wash slightly quieter */
-    --studio-wash-scene-a: 36%;
+    --studio-wash-scene-a: 58%;
+  }
+
+  [data-studio-scene="tags"] {
+    --page-accent: var(--module-tags-fg);
+    --page-accent-soft: var(--module-tags-bg);
+    --studio-wash-scene-a: 64%;
   }
 
   [data-studio-scene="home"] {
     --page-accent: var(--module-home-fg);
     --page-accent-soft: var(--module-home-bg);
-    --studio-wash-scene-a: 36%;
+    --studio-wash-scene-a: 66%;
   }
 
   [data-studio-scene="guide"] {
@@ -978,51 +991,77 @@
       var(--module-account-bg) 70%,
       var(--module-account-fg) 30%
     );
-    --studio-wash-scene-a: 34%;
+    --studio-wash-scene-a: 64%;
   }
 
   [data-studio-scene="settings"] {
     --page-accent: var(--module-settings-fg);
     --page-accent-soft: var(--module-settings-bg);
-    --studio-wash-scene-a: 34%;
+    --studio-wash-scene-a: 64%;
   }
 
   [data-studio-scene="exercises"] {
     --page-accent: var(--module-exercise-fg);
     --page-accent-soft: var(--module-exercise-bg);
     /* Yellow/amber needs less wash % for comparable intensity */
-    --studio-wash-scene-a: 32%;
-    --studio-wash-scene-b: 12%;
+    --studio-wash-scene-a: 56%;
+    --studio-wash-scene-b: 24%;
   }
 
   [data-studio-scene="theory"] {
     --page-accent: var(--module-theory-fg);
     --page-accent-soft: var(--module-theory-bg);
-    --studio-wash-scene-a: 38%;
+    --studio-wash-scene-a: 70%;
   }
 
   [data-studio-scene="writing"] {
     --page-accent: var(--module-writing-fg);
     --page-accent-soft: var(--module-writing-bg);
-    --studio-wash-scene-a: 38%;
+    --studio-wash-scene-a: 70%;
   }
 
   [data-studio-scene="read"] {
     --page-accent: var(--module-read-fg);
     --page-accent-soft: var(--module-read-bg);
-    --studio-wash-scene-a: 42%;
+    --studio-wash-scene-a: 74%;
   }
 
   [data-studio-scene="listen"] {
     --page-accent: var(--module-listen-fg);
     --page-accent-soft: var(--module-listen-bg);
-    --studio-wash-scene-a: 42%;
+    --studio-wash-scene-a: 74%;
   }
 
   [data-studio-scene="speak"] {
     --page-accent: var(--module-speak-fg);
     --page-accent-soft: var(--module-speak-bg);
-    --studio-wash-scene-a: 36%;
+    --studio-wash-scene-a: 66%;
+  }
+
+  /* Dark module fills are deep — keep scene wash % near the dark base tokens */
+  .dark [data-studio-scene="vocabulary"] {
+    --studio-wash-scene-a: 16%;
+  }
+  .dark [data-studio-scene="tags"],
+  .dark [data-studio-scene="account"],
+  .dark [data-studio-scene="settings"] {
+    --studio-wash-scene-a: 15%;
+  }
+  .dark [data-studio-scene="home"],
+  .dark [data-studio-scene="speak"] {
+    --studio-wash-scene-a: 16%;
+  }
+  .dark [data-studio-scene="exercises"] {
+    --studio-wash-scene-a: 14%;
+    --studio-wash-scene-b: 6%;
+  }
+  .dark [data-studio-scene="theory"],
+  .dark [data-studio-scene="writing"] {
+    --studio-wash-scene-a: 18%;
+  }
+  .dark [data-studio-scene="read"],
+  .dark [data-studio-scene="listen"] {
+    --studio-wash-scene-a: 20%;
   }
 
   /* Detail exercise: beat scene yellow with the active exercise accent */
@@ -1048,6 +1087,7 @@
   .account-atelier-shell,
   .settings-atelier-shell,
   .vocab-lexicon-shell,
+  .tag-manager-shell,
   .coach-atelier-shell {
     --primary: var(--page-accent);
     --primary-hover: color-mix(
@@ -1091,8 +1131,8 @@
     background-image:
       linear-gradient(
         155deg,
-        color-mix(in oklab, var(--page-accent-soft) 22%, var(--surface)),
-        color-mix(in oklab, var(--page-accent-soft) 8%, var(--surface)) 52%,
+        color-mix(in oklab, var(--page-accent-soft) 42%, var(--surface)),
+        color-mix(in oklab, var(--page-accent-soft) 16%, var(--surface)) 52%,
         var(--surface) 90%
       );
     box-shadow: none;
@@ -1101,16 +1141,16 @@
     --control-surface:
       linear-gradient(
         155deg,
-        color-mix(in oklab, var(--page-accent-soft) 24%, var(--surface)),
-        color-mix(in oklab, var(--page-accent) 5%, var(--surface)) 52%,
+        color-mix(in oklab, var(--page-accent-soft) 44%, var(--surface)),
+        color-mix(in oklab, var(--page-accent) 8%, var(--surface)) 52%,
         var(--surface) 92%
       ),
       linear-gradient(var(--control-surface-base), var(--control-surface-base));
     --control-surface-hover:
       linear-gradient(
         155deg,
-        color-mix(in oklab, var(--page-accent-soft) 34%, var(--surface)),
-        color-mix(in oklab, var(--page-accent) 8%, var(--surface)) 52%,
+        color-mix(in oklab, var(--page-accent-soft) 56%, var(--surface)),
+        color-mix(in oklab, var(--page-accent) 12%, var(--surface)) 52%,
         var(--surface) 92%
       ),
       linear-gradient(
@@ -1510,6 +1550,11 @@
     --portal-page-accent-soft: var(--module-vocab-bg);
   }
 
+  html[data-portal-scene="tags"] {
+    --portal-page-accent: var(--module-tags-fg);
+    --portal-page-accent-soft: var(--module-tags-bg);
+  }
+
   html[data-portal-scene="home"] {
     --portal-page-accent: var(--module-home-fg);
     --portal-page-accent-soft: var(--module-home-bg);
@@ -1895,6 +1940,15 @@
     --page-accent-soft: var(--writing-accent-bg);
   }
 
+  .tag-manager-shell {
+    --writing-ink: var(--module-tags-fg);
+    --writing-wash: var(--module-tags-bg);
+    --writing-accent-fg: var(--module-tags-fg);
+    --writing-accent-bg: var(--module-tags-bg);
+    --page-accent: var(--writing-accent-fg);
+    --page-accent-soft: var(--writing-accent-bg);
+  }
+
   .coach-atelier-shell {
     --writing-ink: var(--accent-lime);
     --writing-wash: color-mix(in oklab, var(--accent-lime) 22%, var(--surface));
@@ -1917,6 +1971,7 @@
   .account-atelier,
   .settings-atelier,
   .vocab-lexicon,
+  .tag-manager-atelier,
   .coach-atelier,
   .writing-paper-page,
   .writing-sheet,
@@ -1946,6 +2001,7 @@
   .account-atelier::before,
   .settings-atelier::before,
   .vocab-lexicon::before,
+  .tag-manager-atelier::before,
   .coach-atelier::before,
   .route-atelier::before,
   .writing-empty-desk::before {
@@ -2109,6 +2165,7 @@
   .account-atelier > *,
   .settings-atelier > *,
   .vocab-lexicon > *,
+  .tag-manager-atelier > *,
   .coach-atelier > *,
   .writing-paper-page > *,
   .writing-sheet > *,
@@ -4378,7 +4435,7 @@ button:focus-visible .lucide-arrow-left,
 
 /* Unlayered so these beat shadcn @layer base defaults. */
 html {
-  background-color: var(--background);
+  background-color: var(--page-backdrop);
   color-scheme: light;
 }
 

@@ -24,6 +24,7 @@ import { cn } from "@/lib/utils";
 
 function studioSceneFromPath(pathname: string) {
   if (pathname === "/") return "home";
+  if (pathname === "/tag" || pathname.startsWith("/tag/")) return "tags";
   if (pathname.startsWith("/vocabulary")) return "vocabulary";
   if (pathname.startsWith("/exercises")) return "exercises";
   if (pathname.startsWith("/theory")) return "theory";
@@ -248,7 +249,9 @@ export function DashboardStudio({
                         pathname.startsWith("/reading/") ||
                         pathname.startsWith("/theory/") ||
                         pathname.startsWith("/listening/") ||
-                        pathname.startsWith("/speaking/")
+                        pathname.startsWith("/speaking/") ||
+                        pathname === "/tag" ||
+                          pathname.startsWith("/tag/")
                         ? "max-w-[90rem]"
                         : "max-w-6xl",
                     )}

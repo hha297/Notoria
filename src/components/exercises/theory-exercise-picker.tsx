@@ -9,12 +9,15 @@ import {
   ChevronDown,
   ChevronLeft,
   ChevronRight,
+  FileText,
+  Folder,
+  FolderOpen,
   LayoutGrid,
   LayoutList,
   Plus,
   Search,
 } from "lucide-react";
-import { useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useMemo, useState, type ReactNode } from "react";
 import { useTranslations } from "next-intl";
 import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
 import { useDateFnsLocale } from "@/hooks/use-date-fns-locale";
@@ -37,11 +40,10 @@ import featureStyles from "@/components/style/exercises/theory.module.css";
 import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 import {
-  checkState,
-  folderPathLabel,
-  groupTheoryPickerNotes,
-  toggleMembers,
+  buildTheoryPickerTree,
+  filterTheoryPickerTree,
   type TheoryPickerFolder,
+  type TheoryPickerTreeNode,
 } from "@/lib/theory-exercises/group-picker";
 
 export type TheoryExerciseCardItem = {
@@ -112,7 +114,7 @@ export function TheoryExercisePicker({
     query: string;
     open: Record<string, boolean>;
   } | null>(null);
-  const [selectedIds, setSelectedIds] = useState<Set<string>>(() => new Set());
+  const [selectedId, setSelectedId] = useState<string | null>(null);
 
   const categoryOptions = useMemo(() => {
     const present = new Set(
@@ -148,23 +150,18 @@ export function TheoryExercisePicker({
     });
   }, [theories, search, categories, tTheory]);
 
-  const libraryGrouping = useMemo(
-    () => groupTheoryPickerNotes(theories, folders),
+  const libraryTree = useMemo(
+    () => buildTheoryPickerTree(theories, folders),
     [folders, theories],
   );
   const filteredIds = useMemo(
     () => new Set(filtered.map((note) => note.id)),
     [filtered],
   );
-  const visibleGroups = useMemo(() => {
-    if (libraryGrouping.kind !== "grouped") return [];
-    return libraryGrouping.groups
-      .map((group) => ({
-        ...group,
-        notes: group.notes.filter((note) => filteredIds.has(note.id)),
-      }))
-      .filter((group) => group.notes.length > 0);
-  }, [filteredIds, libraryGrouping]);
+  const visibleRoots = useMemo(() => {
+    if (libraryTree.kind !== "tree") return [];
+    return filterTheoryPickerTree(libraryTree.roots, filteredIds);
+  }, [filteredIds, libraryTree]);
   const searching = search.trim().length > 0;
   const router = useRouter();
 
@@ -176,15 +173,8 @@ export function TheoryExercisePicker({
   const paged = filtered.slice(pageStart, pageStart + pageSize);
 
   const practiceSelected = () => {
-    const ids = [...selectedIds];
-    if (ids.length === 0) return;
-    const [primary, ...rest] = ids;
-    if (!primary) return;
-    const href =
-      rest.length > 0
-        ? `/exercises/theory/${primary}?also=${encodeURIComponent(rest.join(","))}`
-        : `/exercises/theory/${primary}`;
-    router.push(href);
+    if (!selectedId) return;
+    router.push(`/exercises/theory/${selectedId}`);
   };
 
   return (
@@ -293,12 +283,12 @@ export function TheoryExercisePicker({
                 </button>
               ) : null}
             </TheoryEmpty>
-          ) : libraryGrouping.kind === "grouped" ? (
+          ) : libraryTree.kind === "tree" ? (
             <div className="space-y-4">
-              {selectedIds.size > 0 ? (
+              {selectedId ? (
                 <div className="flex flex-wrap items-center gap-2 rounded-md border border-border/70 bg-muted/30 px-3 py-2">
                   <span className="text-sm text-ink">
-                    {t("folders.selectedCount", { count: selectedIds.size })}
+                    {t("folders.selectedOne")}
                   </span>
                   <Button
                     type="button"
@@ -313,23 +303,23 @@ export function TheoryExercisePicker({
                     type="button"
                     size="sm"
                     variant="ghost"
-                    onClick={() => setSelectedIds(new Set())}
+                    onClick={() => setSelectedId(null)}
                   >
                     {t("folders.clearSelection")}
                   </Button>
                 </div>
               ) : null}
-              <TheoryGroupedNotes
-                groups={visibleGroups}
+              <TheoryFolderBrowser
+                roots={visibleRoots}
                 viewMode={viewMode}
                 searching={searching}
                 searchQuery={search}
                 expanded={expanded}
                 searchOpen={searchOpen}
-                selectedIds={selectedIds}
+                selectedId={selectedId}
                 onExpandedChange={setExpanded}
                 onSearchOpenChange={setSearchOpen}
-                onSelectedChange={setSelectedIds}
+                onSelectNote={setSelectedId}
               />
             </div>
           ) : viewMode === "cards" ? (
@@ -393,249 +383,220 @@ export function TheoryExercisePicker({
   );
 }
 
-function TheoryGroupedNotes({
-  groups,
+function TheoryFolderBrowser({
+  roots,
   viewMode,
   searching,
   searchQuery,
   expanded,
   searchOpen,
-  selectedIds,
+  selectedId,
   onExpandedChange,
   onSearchOpenChange,
-  onSelectedChange,
+  onSelectNote,
 }: {
-  groups: Array<{
-    id: string;
-    unfiled: boolean;
-    path: string[];
-    notes: TheoryExerciseCardItem[];
-  }>;
+  roots: TheoryPickerTreeNode<TheoryExerciseCardItem>[];
   viewMode: TheoryViewMode;
   searching: boolean;
   searchQuery: string;
   expanded: Record<string, boolean>;
   searchOpen: { query: string; open: Record<string, boolean> } | null;
-  selectedIds: Set<string>;
+  selectedId: string | null;
   onExpandedChange: (value: Record<string, boolean>) => void;
   onSearchOpenChange: (
     value: { query: string; open: Record<string, boolean> } | null,
   ) => void;
-  onSelectedChange: (value: Set<string>) => void;
+  onSelectNote: (noteId: string | null) => void;
 }) {
-  const t = useTranslations("exercises.theory");
-  const tTheory = useTranslations("theory");
-  const dateLocale = useDateFnsLocale();
-  const visibleIds = groups.flatMap((group) => group.notes.map((note) => note.id));
-  const allState = checkState(selectedIds, visibleIds);
-
-  const isOpen = (groupId: string) => {
+  const isOpen = (nodeId: string) => {
     if (searching) {
-      if (searchOpen?.query === searchQuery && groupId in searchOpen.open) {
-        return searchOpen.open[groupId];
+      if (searchOpen?.query === searchQuery && nodeId in searchOpen.open) {
+        return searchOpen.open[nodeId];
       }
       return true;
     }
-    return Boolean(expanded[groupId]);
+    return Boolean(expanded[nodeId]);
   };
 
-  const toggleOpen = (groupId: string) => {
+  const toggleOpen = (nodeId: string) => {
     if (searching) {
       const base =
         searchOpen?.query === searchQuery ? searchOpen.open : {};
-      const openNow = groupId in base ? base[groupId] : true;
+      const openNow = nodeId in base ? base[nodeId] : true;
       onSearchOpenChange({
         query: searchQuery,
-        open: { ...base, [groupId]: !openNow },
+        open: { ...base, [nodeId]: !openNow },
       });
       return;
     }
-    onExpandedChange({ ...expanded, [groupId]: !expanded[groupId] });
+    onExpandedChange({ ...expanded, [nodeId]: !expanded[nodeId] });
   };
 
   return (
-    <div className="space-y-4">
-      <div className="flex min-h-10 items-center gap-2">
-        <span className="inline-flex size-9 shrink-0 items-center justify-center">
-          <SelectionCheckbox
-            checked={allState === "all"}
-            indeterminate={allState === "some"}
-            label={t("folders.selectAll")}
-            onChange={(select) =>
-              onSelectedChange(toggleMembers(selectedIds, visibleIds, select))
-            }
+    <div className={mx(featureStyles, "theory-folder-browser")}>
+      <ul className={mx(featureStyles, "theory-folder-tree")}>
+        {roots.map((node) => (
+          <TheoryFolderNode
+            key={node.id}
+            node={node}
+            viewMode={viewMode}
+            open={isOpen}
+            onToggle={toggleOpen}
+            selectedId={selectedId}
+            onSelectNote={onSelectNote}
           />
-        </span>
-        <span className="text-sm font-medium text-ink">{t("folders.selectAll")}</span>
-      </div>
-      {groups.map((group) => {
-        const headingText = group.unfiled
-          ? t("folders.unfiled")
-          : folderPathLabel(group.path, t("folders.joiner"));
-        const open = isOpen(group.id);
-        const memberIds = group.notes.map((note) => note.id);
-        const groupState = checkState(selectedIds, memberIds);
-        return (
-          <section key={group.id} className="space-y-3">
-            <div className="flex min-h-10 items-center gap-1.5 sm:gap-2">
-              <span className="inline-flex size-9 shrink-0 items-center justify-center">
-                <button
-                  type="button"
-                  className="inline-flex size-9 items-center justify-center rounded-md text-muted-foreground transition-colors hover:bg-muted/60 hover:text-ink focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:outline-none"
-                  aria-expanded={open}
-                  aria-label={
-                    open
-                      ? t("folders.collapse", { name: headingText })
-                      : t("folders.expand", { name: headingText })
-                  }
-                  onClick={() => toggleOpen(group.id)}
-                >
-                  {open ? (
-                    <ChevronDown className="size-4" aria-hidden />
-                  ) : (
-                    <ChevronRight className="size-4" aria-hidden />
-                  )}
-                </button>
-              </span>
-              <span className="inline-flex size-9 shrink-0 items-center justify-center">
-                <SelectionCheckbox
-                  checked={groupState === "all"}
-                  indeterminate={groupState === "some"}
-                  label={t("folders.selectGroup", { name: headingText })}
-                  onChange={(select) =>
-                    onSelectedChange(
-                      toggleMembers(selectedIds, memberIds, select),
-                    )
-                  }
-                />
-              </span>
-              <h3 className="min-w-0 flex-1 text-sm leading-snug font-semibold wrap-anywhere text-pretty text-ink">
-                {group.unfiled ? (
-                  headingText
-                ) : (
-                  <FolderPathParts path={group.path} />
-                )}
-              </h3>
-              <span className="shrink-0 self-center text-xs tabular-nums text-muted-foreground">
-                {t("folders.count", { count: group.notes.length })}
-              </span>
-            </div>
-            {open ? (
-              viewMode === "cards" ? (
-                <ul className="grid gap-4 sm:grid-cols-2">
-                  {group.notes.map((note, index) => (
-                    <li key={note.id} className="min-w-0">
-                      <div className="mb-2">
-                        <SelectionCheckbox
-                          checked={selectedIds.has(note.id)}
-                          indeterminate={false}
-                          label={note.title}
-                          onChange={(select) =>
-                            onSelectedChange(
-                              toggleMembers(selectedIds, [note.id], select),
-                            )
-                          }
-                        />
-                      </div>
-                      <TheoryCard
-                        note={note}
-                        index={index}
-                        slot={index % THEORY_COLOR_SLOTS}
-                        label={categoryLabel(note.category, tTheory)}
-                        meta={noteMeta(note, t, tTheory, dateLocale)}
-                        practiceLabel={t("practice")}
-                        viewLabel={t("view")}
-                      />
-                    </li>
-                  ))}
-                </ul>
-              ) : (
-                <ol className="space-y-3">
-                  {group.notes.map((note, index) => (
-                    <li key={note.id} className="flex min-w-0 items-start gap-3">
-                      <div className="pt-6">
-                        <SelectionCheckbox
-                          checked={selectedIds.has(note.id)}
-                          indeterminate={false}
-                          label={note.title}
-                          onChange={(select) =>
-                            onSelectedChange(
-                              toggleMembers(selectedIds, [note.id], select),
-                            )
-                          }
-                        />
-                      </div>
-                      <div className="min-w-0 flex-1">
-                        <TheoryListRow
-                          note={note}
-                          index={index}
-                          slot={index % THEORY_COLOR_SLOTS}
-                          featured={false}
-                          label={categoryLabel(note.category, tTheory)}
-                          meta={noteMeta(note, t, tTheory, dateLocale)}
-                          practiceLabel={t("practice")}
-                          viewLabel={t("view")}
-                        />
-                      </div>
-                    </li>
-                  ))}
-                </ol>
-              )
-            ) : null}
-          </section>
-        );
-      })}
+        ))}
+      </ul>
     </div>
   );
 }
 
-function FolderPathParts({ path }: { path: readonly string[] }) {
-  const t = useTranslations("exercises.theory");
-  return (
-    <span className="inline">
-      {path.map((part, index) => (
-        <span key={`${index}-${part}`}>
-          {index > 0 ? (
-            <span
-              className="mx-1.5 inline-block text-muted-foreground"
-              aria-hidden
-            >
-              {t("folders.joiner").trim() || "→"}
-            </span>
-          ) : null}
-          <span>{part}</span>
-        </span>
-      ))}
-    </span>
-  );
-}
-
-function SelectionCheckbox({
-  checked,
-  indeterminate,
-  label,
-  onChange,
+function TheoryFolderNode({
+  node,
+  viewMode,
+  open,
+  onToggle,
+  selectedId,
+  onSelectNote,
 }: {
-  checked: boolean;
-  indeterminate: boolean;
-  label: string;
-  onChange: (checked: boolean) => void;
+  node: TheoryPickerTreeNode<TheoryExerciseCardItem>;
+  viewMode: TheoryViewMode;
+  open: (nodeId: string) => boolean;
+  onToggle: (nodeId: string) => void;
+  selectedId: string | null;
+  onSelectNote: (noteId: string | null) => void;
 }) {
-  const ref = useRef<HTMLInputElement>(null);
-  useEffect(() => {
-    if (ref.current) ref.current.indeterminate = indeterminate;
-  }, [checked, indeterminate]);
+  const t = useTranslations("exercises.theory");
+  const tTheory = useTranslations("theory");
+  const dateLocale = useDateFnsLocale();
+  const name = node.unfiled ? t("folders.unfiled") : node.name;
+  const isExpanded = open(node.id);
+  const hasBody = node.children.length > 0 || node.notes.length > 0;
+
+  function selectNote(noteId: string) {
+    onSelectNote(selectedId === noteId ? null : noteId);
+  }
 
   return (
-    <input
-      ref={ref}
-      type="checkbox"
-      checked={checked}
-      aria-label={label}
-      aria-checked={indeterminate ? "mixed" : checked}
-      onChange={(event) => onChange(event.target.checked)}
-      className="size-4 shrink-0 rounded-[3px] border border-page-accent-border accent-primary focus-visible:ring-2 focus-visible:ring-ring/50 focus-visible:outline-none"
-    />
+    <li
+      className={mx(featureStyles, "theory-folder-node")}
+      style={{ ["--folder-depth" as string]: String(node.depth) }}
+      data-unfiled={node.unfiled ? "true" : undefined}
+      data-open={isExpanded ? "true" : undefined}
+    >
+      <div className={mx(featureStyles, "theory-folder-row")}>
+        <button
+          type="button"
+          className={mx(featureStyles, "theory-folder-toggle")}
+          aria-expanded={isExpanded}
+          aria-label={
+            isExpanded
+              ? t("folders.collapse", { name })
+              : t("folders.expand", { name })
+          }
+          disabled={!hasBody}
+          onClick={() => onToggle(node.id)}
+        >
+          {isExpanded ? (
+            <ChevronDown className="size-4" aria-hidden />
+          ) : (
+            <ChevronRight className="size-4" aria-hidden />
+          )}
+        </button>
+
+        <button
+          type="button"
+          className={mx(featureStyles, "theory-folder-main")}
+          aria-expanded={isExpanded}
+          onClick={() => onToggle(node.id)}
+          disabled={!hasBody}
+        >
+          <span className={mx(featureStyles, "theory-folder-icon")} aria-hidden>
+            {node.unfiled ? (
+              <FileText className="size-[1.15rem]" strokeWidth={2.1} />
+            ) : isExpanded ? (
+              <FolderOpen className="size-[1.2rem]" strokeWidth={2.1} />
+            ) : (
+              <Folder className="size-[1.2rem]" strokeWidth={2.1} />
+            )}
+          </span>
+          <span className={mx(featureStyles, "theory-folder-copy")}>
+            <span className={mx(featureStyles, "theory-folder-name")}>
+              {name}
+            </span>
+            {node.children.length > 0 ? (
+              <span className={mx(featureStyles, "theory-folder-submeta")}>
+                {t("folders.subfolders", { count: node.children.length })}
+              </span>
+            ) : null}
+          </span>
+          <span className={mx(featureStyles, "theory-folder-count")}>
+            {t("folders.count", { count: node.totalNotes })}
+          </span>
+        </button>
+      </div>
+
+      {isExpanded ? (
+        <div className={mx(featureStyles, "theory-folder-body")}>
+          {node.children.length > 0 ? (
+            <ul className={mx(featureStyles, "theory-folder-children")}>
+              {node.children.map((child) => (
+                <TheoryFolderNode
+                  key={child.id}
+                  node={child}
+                  viewMode={viewMode}
+                  open={open}
+                  onToggle={onToggle}
+                  selectedId={selectedId}
+                  onSelectNote={onSelectNote}
+                />
+              ))}
+            </ul>
+          ) : null}
+
+          {node.notes.length > 0 ? (
+            viewMode === "cards" ? (
+              <ul className={mx(featureStyles, "theory-folder-notes-grid")}>
+                {node.notes.map((note, index) => (
+                  <li key={note.id} className="min-w-0">
+                    <TheoryCard
+                      note={note}
+                      index={index}
+                      slot={index % THEORY_COLOR_SLOTS}
+                      label={categoryLabel(note.category, tTheory)}
+                      meta={noteMeta(note, t, tTheory, dateLocale)}
+                      practiceLabel={t("practice")}
+                      viewLabel={t("view")}
+                      selected={selectedId === note.id}
+                      onSelect={() => selectNote(note.id)}
+                    />
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <ol className={mx(featureStyles, "theory-folder-notes-list")}>
+                {node.notes.map((note, index) => (
+                  <li key={note.id} className="min-w-0">
+                    <TheoryListRow
+                      note={note}
+                      index={index}
+                      slot={index % THEORY_COLOR_SLOTS}
+                      featured={false}
+                      label={categoryLabel(note.category, tTheory)}
+                      meta={noteMeta(note, t, tTheory, dateLocale)}
+                      practiceLabel={t("practice")}
+                      viewLabel={t("view")}
+                      selected={selectedId === note.id}
+                      onSelect={() => selectNote(note.id)}
+                    />
+                  </li>
+                ))}
+              </ol>
+            )
+          ) : null}
+        </div>
+      ) : null}
+    </li>
   );
 }
 
@@ -648,6 +609,8 @@ function TheoryListRow({
   meta,
   practiceLabel,
   viewLabel,
+  selected,
+  onSelect,
 }: {
   note: TheoryExerciseCardItem;
   index: number;
@@ -657,14 +620,51 @@ function TheoryListRow({
   meta: string[];
   practiceLabel: string;
   viewLabel: string;
+  selected?: boolean;
+  onSelect?: () => void;
 }) {
+  const selectable = Boolean(onSelect);
+
   return (
     <article
       data-theory-category={note.category}
       data-theory-slot={slot}
       data-featured={featured ? "" : undefined}
-      className={mx(featureStyles, "theory-library-row group grid gap-4 rounded-md px-4 py-6 sm:grid-cols-[4.25rem_minmax(0,1fr)_auto] sm:items-start sm:gap-x-5 sm:px-5 sm:py-7")}
+      data-selected={selected ? "true" : undefined}
+      role={selectable ? "radio" : undefined}
+      aria-checked={selectable ? selected : undefined}
+      tabIndex={selectable ? 0 : undefined}
+      aria-label={selectable ? note.title : undefined}
+      className={cn(
+        mx(
+          featureStyles,
+          "theory-library-row group grid gap-4 rounded-md px-4 py-6 sm:items-start sm:gap-x-5 sm:px-5 sm:py-7",
+        ),
+        selectable
+          ? "sm:grid-cols-[auto_4.25rem_minmax(0,1fr)_auto] cursor-pointer"
+          : "sm:grid-cols-[4.25rem_minmax(0,1fr)_auto]",
+        selectable && selected && mx(featureStyles, "theory-library-row-selected"),
+      )}
+      onClick={onSelect}
+      onKeyDown={
+        selectable
+          ? (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onSelect?.();
+              }
+            }
+          : undefined
+      }
     >
+      {selectable ? (
+        <span
+          className={mx(featureStyles, "theory-note-radio")}
+          data-checked={selected ? "true" : undefined}
+          aria-hidden
+        />
+      ) : null}
+
       <p
         className="font-mono text-[1.7rem] leading-none font-semibold tabular-nums text-(--lesson-row-fg) sm:pt-1 sm:text-[2rem]"
         aria-hidden
@@ -684,6 +684,7 @@ function TheoryListRow({
         >
           <Link
             href={`/exercises/theory/${note.id}`}
+            onClick={(event) => event.stopPropagation()}
             className="rounded-sm text-ink transition-colors group-hover:text-(--lesson-row-fg) hover:text-(--lesson-row-fg) focus-visible:ring-2 focus-visible:ring-(--lesson-row-fg)/40 focus-visible:outline-none"
           >
             {note.title}
@@ -713,6 +714,7 @@ function TheoryListRow({
       <div className="flex min-w-0 flex-wrap items-center gap-1 max-sm:w-full sm:shrink-0 sm:flex-col sm:items-end sm:gap-2 sm:pt-7">
         <Link
           href={`/exercises/theory/${note.id}`}
+          onClick={(event) => event.stopPropagation()}
           className={cn(
             "inline-flex h-9 items-center gap-1.5 rounded-md px-3 text-sm font-semibold max-sm:flex-1 max-sm:justify-center",
             "bg-(--lesson-row-fg) text-(--lesson-row-on) transition-opacity hover:opacity-90",
@@ -724,6 +726,7 @@ function TheoryListRow({
         </Link>
         <Link
           href={`/theory/${note.id}`}
+          onClick={(event) => event.stopPropagation()}
           className="inline-flex h-9 items-center px-3 text-sm font-semibold text-muted-foreground transition-colors hover:text-(--lesson-row-fg) focus-visible:ring-2 focus-visible:ring-(--lesson-row-fg)/40 focus-visible:outline-none max-sm:flex-1 max-sm:justify-center"
         >
           {viewLabel}
@@ -741,6 +744,8 @@ function TheoryCard({
   meta,
   practiceLabel,
   viewLabel,
+  selected,
+  onSelect,
 }: {
   note: TheoryExerciseCardItem;
   index: number;
@@ -749,22 +754,59 @@ function TheoryCard({
   meta: string[];
   practiceLabel: string;
   viewLabel: string;
+  selected?: boolean;
+  onSelect?: () => void;
 }) {
+  const selectable = Boolean(onSelect);
+
   return (
     <article
       data-theory-category={note.category}
       data-theory-slot={slot}
-      className={mx(featureStyles, "theory-library-card group flex h-full flex-col gap-4 rounded-md px-5 py-5")}
+      data-selected={selected ? "true" : undefined}
+      role={selectable ? "radio" : undefined}
+      aria-checked={selectable ? selected : undefined}
+      tabIndex={selectable ? 0 : undefined}
+      aria-label={selectable ? note.title : undefined}
+      className={cn(
+        mx(
+          featureStyles,
+          "theory-library-card group flex h-full flex-col gap-4 rounded-md px-5 py-5",
+        ),
+        selectable && "cursor-pointer",
+        selectable && selected && mx(featureStyles, "theory-library-card-selected"),
+      )}
+      onClick={onSelect}
+      onKeyDown={
+        selectable
+          ? (event) => {
+              if (event.key === "Enter" || event.key === " ") {
+                event.preventDefault();
+                onSelect?.();
+              }
+            }
+          : undefined
+      }
     >
       <div className="flex items-start justify-between gap-3">
-        <p
-          className="font-mono text-[1.45rem] leading-none font-semibold tabular-nums text-(--lesson-row-fg)"
-          aria-hidden
-        >
-          {String(index + 1).padStart(2, "0")}
-        </p>
+        <div className="flex items-center gap-2.5">
+          {selectable ? (
+            <span
+              className={mx(featureStyles, "theory-note-radio")}
+              data-checked={selected ? "true" : undefined}
+              aria-hidden
+            />
+          ) : null}
+          <p
+            className="font-mono text-[1.45rem] leading-none font-semibold tabular-nums text-(--lesson-row-fg)"
+            aria-hidden
+          >
+            {String(index + 1).padStart(2, "0")}
+          </p>
+        </div>
         <Link
           href={`/exercises/theory/${note.id}`}
+          onClick={(event) => event.stopPropagation()}
           className={cn(
             "inline-flex h-8 items-center gap-1.5 rounded-md px-2.5 text-sm font-semibold",
             "bg-(--lesson-row-fg) text-(--lesson-row-on) transition-opacity hover:opacity-90",
@@ -783,6 +825,7 @@ function TheoryCard({
         <h3 className="mt-2 font-heading text-xl font-bold tracking-tight text-pretty wrap-anywhere text-ink">
           <Link
             href={`/exercises/theory/${note.id}`}
+            onClick={(event) => event.stopPropagation()}
             className="rounded-sm text-ink transition-colors group-hover:text-(--lesson-row-fg) hover:text-(--lesson-row-fg) focus-visible:ring-2 focus-visible:ring-(--lesson-row-fg)/40 focus-visible:outline-none"
           >
             {note.title}
@@ -812,6 +855,7 @@ function TheoryCard({
         </p>
         <Link
           href={`/theory/${note.id}`}
+          onClick={(event) => event.stopPropagation()}
           className="shrink-0 text-sm font-semibold text-muted-foreground transition-colors hover:text-(--lesson-row-fg) focus-visible:ring-2 focus-visible:ring-(--lesson-row-fg)/40 focus-visible:outline-none"
         >
           {viewLabel}

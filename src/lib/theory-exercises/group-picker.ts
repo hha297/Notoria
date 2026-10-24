@@ -151,6 +151,140 @@ export function folderPathLabel(path: readonly string[], separator = " → ") {
   return path.filter(Boolean).join(separator);
 }
 
+export type TheoryPickerTreeNode<T> = {
+  id: string;
+  folderId: string | null;
+  unfiled: boolean;
+  name: string;
+  depth: number;
+  children: TheoryPickerTreeNode<T>[];
+  /** Notes filed directly in this folder. */
+  notes: T[];
+  /** Notes in this folder + all descendants. */
+  totalNotes: number;
+};
+
+/**
+ * Nested folder tree for the exercise picker.
+ * Intermediate folders appear even when only descendants hold notes.
+ */
+export function buildTheoryPickerTree<T extends GroupableNote>(
+  notes: readonly T[],
+  folders: readonly TheoryPickerFolder[],
+):
+  | { kind: "flat"; notes: T[] }
+  | { kind: "tree"; roots: TheoryPickerTreeNode<T>[] } {
+  const unique = dedupeNotes(notes);
+  if (folders.length === 0) return { kind: "flat", notes: unique };
+
+  const byId = new Map(folders.map((folder) => [folder.id, folder]));
+  const filed = unique.some(
+    (note) => Boolean(note.folderId) && byId.has(note.folderId ?? ""),
+  );
+  if (!filed) return { kind: "flat", notes: unique };
+
+  const children = new Map<string | null, TheoryPickerFolder[]>();
+  for (const folder of folders) {
+    const parentId =
+      folder.parentId && byId.has(folder.parentId) ? folder.parentId : null;
+    const list = children.get(parentId) ?? [];
+    list.push(folder);
+    children.set(parentId, list);
+  }
+  for (const list of children.values()) {
+    list.sort((left, right) =>
+      left.name.localeCompare(right.name, undefined, { sensitivity: "base" }),
+    );
+  }
+
+  const notesByFolder = new Map<string | null, T[]>();
+  for (const note of unique) {
+    const folderId =
+      note.folderId && byId.has(note.folderId) ? note.folderId : null;
+    const list = notesByFolder.get(folderId) ?? [];
+    list.push(note);
+    notesByFolder.set(folderId, list);
+  }
+
+  const build = (
+    folder: TheoryPickerFolder,
+    depth: number,
+  ): TheoryPickerTreeNode<T> | null => {
+    const childNodes = (children.get(folder.id) ?? [])
+      .map((child) => build(child, depth + 1))
+      .filter((node): node is TheoryPickerTreeNode<T> => node !== null);
+    const directNotes = notesByFolder.get(folder.id) ?? [];
+    if (directNotes.length === 0 && childNodes.length === 0) return null;
+    const totalNotes =
+      directNotes.length +
+      childNodes.reduce((sum, child) => sum + child.totalNotes, 0);
+    return {
+      id: folder.id,
+      folderId: folder.id,
+      unfiled: false,
+      name: folder.name,
+      depth,
+      children: childNodes,
+      notes: directNotes,
+      totalNotes,
+    };
+  };
+
+  const roots: TheoryPickerTreeNode<T>[] = (children.get(null) ?? [])
+    .map((folder) => build(folder, 0))
+    .filter((node): node is TheoryPickerTreeNode<T> => node !== null);
+
+  const unfiledNotes = notesByFolder.get(null) ?? [];
+  if (unfiledNotes.length > 0) {
+    roots.push({
+      id: UNFILED_GROUP_ID,
+      folderId: null,
+      unfiled: true,
+      name: "",
+      depth: 0,
+      children: [],
+      notes: unfiledNotes,
+      totalNotes: unfiledNotes.length,
+    });
+  }
+
+  return { kind: "tree", roots };
+}
+
+/** Keep branches that still have matching notes after a filter. */
+export function filterTheoryPickerTree<T extends GroupableNote>(
+  roots: readonly TheoryPickerTreeNode<T>[],
+  noteIds: ReadonlySet<string>,
+): TheoryPickerTreeNode<T>[] {
+  const walk = (
+    node: TheoryPickerTreeNode<T>,
+  ): TheoryPickerTreeNode<T> | null => {
+    const notes = node.notes.filter((note) => noteIds.has(note.id));
+    const children = node.children
+      .map(walk)
+      .filter((child): child is TheoryPickerTreeNode<T> => child !== null);
+    if (notes.length === 0 && children.length === 0) return null;
+    const totalNotes =
+      notes.length + children.reduce((sum, child) => sum + child.totalNotes, 0);
+    return { ...node, notes, children, totalNotes };
+  };
+  return roots
+    .map(walk)
+    .filter((node): node is TheoryPickerTreeNode<T> => node !== null);
+}
+
+export function collectTheoryTreeNoteIds<T extends GroupableNote>(
+  nodes: readonly TheoryPickerTreeNode<T>[],
+): string[] {
+  const ids: string[] = [];
+  const walk = (node: TheoryPickerTreeNode<T>) => {
+    for (const note of node.notes) ids.push(note.id);
+    for (const child of node.children) walk(child);
+  };
+  for (const node of nodes) walk(node);
+  return ids;
+}
+
 export function checkState(
   selectedIds: ReadonlySet<string>,
   memberIds: readonly string[],

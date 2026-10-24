@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  buildTheoryPickerTree,
   checkState,
   folderPathLabel,
   groupTheoryPickerNotes,
@@ -48,6 +49,27 @@ describe("theory exercise picker groups", () => {
     const notes = [{ id: "n1", folderId: null }];
     expect(groupTheoryPickerNotes(notes, []).kind).toBe("flat");
     expect(groupTheoryPickerNotes(notes, folders).kind).toBe("flat");
+  });
+
+  it("builds a nested tree including intermediate folders", () => {
+    const notes = [
+      { id: "n1", folderId: "c" },
+      { id: "n2", folderId: "a" },
+      { id: "n3", folderId: null },
+    ];
+    const tree = buildTheoryPickerTree(notes, folders);
+    expect(tree.kind).toBe("tree");
+    if (tree.kind !== "tree") return;
+    expect(tree.roots.map((node) => node.id)).toEqual(["a", UNFILED_GROUP_ID]);
+    const rootA = tree.roots[0]!;
+    expect(rootA.notes.map((note) => note.id)).toEqual(["n2"]);
+    expect(rootA.children.map((child) => child.id)).toEqual(["b"]);
+    expect(rootA.children[0]!.notes).toEqual([]);
+    expect(rootA.children[0]!.children.map((child) => child.id)).toEqual(["c"]);
+    expect(rootA.children[0]!.children[0]!.notes.map((note) => note.id)).toEqual(
+      ["n1"],
+    );
+    expect(rootA.totalNotes).toBe(2);
   });
 
   it("selects only the ids it is given", () => {
