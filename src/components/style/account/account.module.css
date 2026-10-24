@@ -21,9 +21,9 @@
 }
 
 .account-panel {
-  border-radius: 0.95rem;
+  border-radius: var(--radius-lg);
   border: 1px solid
-    color-mix(in oklab, var(--module-account-fg) 16%, var(--hairline-cloud));
+    color-mix(in oklab, var(--module-account-fg) 42%, transparent);
   background:
     linear-gradient(
       165deg,
@@ -103,7 +103,40 @@
 .account-avatar-block {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: 0.9rem;
+  text-align: center;
+}
+
+.account-avatar-actions {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+}
+
+.account-avatar-actions > :global(button) {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+@media (min-width: 768px) {
+  .account-avatar-block {
+    align-items: flex-start;
+    text-align: left;
+  }
+
+  .account-avatar-actions {
+    justify-content: flex-start;
+    width: auto;
+  }
+
+  .account-avatar-actions > :global(button) {
+    flex: 0 0 auto;
+  }
 }
 
 .account-avatar-hint,
@@ -461,9 +494,23 @@
     );
 }
 
+/* “Type” / phrase / “to confirm” wrap as whole units, not mid-word. */
+.account-delete-confirm-label {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 0.3rem 0.4rem;
+  max-width: 100%;
+}
+
+.account-delete-confirm-part {
+  white-space: nowrap;
+}
+
 /* Highlight the exact string the user must type. */
 .account-delete-confirm-phrase {
-  display: inline;
+  display: inline-block;
+  max-width: 100%;
   padding: 0.12em 0.4em;
   border-radius: 0.35rem;
   background: color-mix(in oklab, var(--destructive) 18%, transparent);
@@ -471,8 +518,9 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   text-transform: none;
-  box-decoration-break: clone;
-  -webkit-box-decoration-break: clone;
+  white-space: nowrap;
+  overflow-x: auto;
+  vertical-align: baseline;
 }
 
 .account-delete-hero {

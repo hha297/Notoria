@@ -115,23 +115,6 @@ export function ReadingView({
     );
   }
 
-  const actions = (
-    <>
-      <ShowTutorialButton section="reading" />
-      <QuotaLockButton
-        type="button"
-        className="route-primary-cta"
-        locked={readingQuota.locked}
-        lockMessage={readingQuota.message}
-        icon={<Plus className="size-4" />}
-        onClick={() => setImportOpen(true)}
-        data-tutorial="reading-import"
-      >
-        {t("import")}
-      </QuotaLockButton>
-    </>
-  );
-
   return (
     <PageShell className="writing-atelier-shell reading-atelier-shell">
       <FolderWorkspace
@@ -145,30 +128,24 @@ export function ReadingView({
       >
         <div className="writing-atelier reading-atelier flex flex-col gap-10 lg:gap-12">
           <header className="writing-hero">
-            <div className="writing-hero-copy">
-              <p className="writing-kicker">{t("eyebrow")}</p>
-              <h1 className="writing-brand-title">{t("title")}</h1>
-              <p className="writing-brand-lede">{t("description")}</p>
+            <p className="writing-kicker">{t("eyebrow")}</p>
+            <h1 className="writing-brand-title">{t("title")}</h1>
+            <div className="writing-hero-primary">
+              <QuotaLockButton
+                type="button"
+                className="route-primary-cta"
+                locked={readingQuota.locked}
+                lockMessage={readingQuota.message}
+                icon={<Plus className="size-4" />}
+                onClick={() => setImportOpen(true)}
+                data-tutorial="reading-import"
+              >
+                {t("import")}
+              </QuotaLockButton>
             </div>
-            <div className="writing-hero-actions">
-              {isEmptyRoot ? (
-                <>
-                  <ShowTutorialButton section="reading" />
-                  <QuotaLockButton
-                    type="button"
-                    className="route-primary-cta"
-                    locked={readingQuota.locked}
-                    lockMessage={readingQuota.message}
-                    icon={<Plus className="size-4" />}
-                    onClick={() => setImportOpen(true)}
-                    data-tutorial="reading-import"
-                  >
-                    {t("import")}
-                  </QuotaLockButton>
-                </>
-              ) : (
-                actions
-              )}
+            <p className="writing-brand-lede">{t("description")}</p>
+            <div className="writing-hero-secondary">
+              <ShowTutorialButton section="reading" />
             </div>
           </header>
 

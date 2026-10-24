@@ -268,7 +268,7 @@ export function WritingTable({
     return Array.from(buckets.values());
   }, [filtered, groupBy, t]);
 
-  const actions = (
+  const secondaryActions = (
     <>
       <ShowTutorialButton section="writing" />
       <LockedFeatureButton
@@ -282,11 +282,14 @@ export function WritingTable({
       >
         {tImport("button")}
       </LockedFeatureButton>
-      <LinkButton href={createHref} data-tutorial="writing-create">
-        <Plus className="size-4" />
-        {t("create")}
-      </LinkButton>
     </>
+  );
+
+  const primaryAction = (
+    <LinkButton href={createHref} data-tutorial="writing-create">
+      <Plus className="size-4" />
+      {t("create")}
+    </LinkButton>
   );
 
   return (
@@ -302,12 +305,11 @@ export function WritingTable({
       >
         <div className="writing-atelier flex flex-col gap-10 lg:gap-12">
           <header className="writing-hero">
-            <div className="writing-hero-copy">
-              <p className="writing-kicker">{t("title")}</p>
-              <h1 className="writing-brand-title">{t("title")}</h1>
-              <p className="writing-brand-lede">{t("description")}</p>
-            </div>
-            <div className="writing-hero-actions">{actions}</div>
+            <p className="writing-kicker">{t("title")}</p>
+            <h1 className="writing-brand-title">{t("title")}</h1>
+            <div className="writing-hero-primary">{primaryAction}</div>
+            <p className="writing-brand-lede">{t("description")}</p>
+            <div className="writing-hero-secondary">{secondaryActions}</div>
           </header>
 
           <section className="writing-workspace">

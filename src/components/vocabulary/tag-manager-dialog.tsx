@@ -418,24 +418,26 @@ export function TagManagerDialog({
     <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent
         className={cn(
-          "flex h-[min(90dvh,56rem)] w-[min(calc(100%-1.25rem),80rem)]",
+          "!flex h-[min(92dvh,52rem)] max-h-[min(92dvh,52rem)] w-[min(calc(100%-1rem),72rem)]",
           "max-w-none sm:max-w-none",
-          "flex-col gap-3 overflow-hidden p-4 sm:gap-4 sm:p-5",
+          "min-h-0 flex-col gap-3 !overflow-hidden p-3.5 sm:gap-4 sm:p-5",
         )}
         showCloseButton
       >
-        <DialogHeader className="shrink-0 space-y-1 pr-8">
+        <DialogHeader className="shrink-0 space-y-1.5 pr-8 text-left">
           <DialogTitle className="flex items-center gap-2">
             <Tags
-              className="size-4"
+              className="size-4 shrink-0"
               style={{ color: "var(--module-vocab-fg)" }}
             />
             {t("title")}
           </DialogTitle>
-          <DialogDescription>{t("description")}</DialogDescription>
+          <DialogDescription className="text-pretty">
+            {t("description")}
+          </DialogDescription>
         </DialogHeader>
 
-        <div className={mx(styles, "tag-manager")}>
+        <div className={cn(mx(styles, "tag-manager"), "min-h-0 flex-1")}>
           <div className={mx(styles, "tag-manager-layout")}>
             <aside
               className={mx(styles, "tag-manager-tags")}
@@ -478,52 +480,69 @@ export function TagManagerDialog({
                 </button>
               </div>
 
-              <div className={mx(styles, "tag-manager-pane-head")}>
-                {tagSource === "standard" ? (
-                  <div
-                    className={mx(styles, "tag-manager-groups")}
-                    role="tablist"
-                    aria-label={t("groupsLabel")}
-                  >
-                    {TAG_MANAGER_GROUPS.map((item) => (
-                      <button
-                        key={item}
-                        type="button"
-                        role="tab"
-                        aria-selected={standardGroup === item}
-                        className={cn(
-                          mx(styles, "tag-manager-group-chip"),
-                          standardGroup === item && mx(styles, "is-active"),
-                        )}
-                        onClick={() => selectStandardGroup(item)}
-                      >
-                        {tTags(`groups.${item}`)}
-                      </button>
-                    ))}
-                  </div>
-                ) : (
-                  <p className={mx(styles, "tag-manager-pane-hint")}>
-                    {t("customTagsHint")}
-                  </p>
-                )}
-              </div>
+              {tagSource === "standard" ? (
+                <div
+                  className={mx(styles, "tag-manager-groups")}
+                  role="tablist"
+                  aria-label={t("groupsLabel")}
+                >
+                  {TAG_MANAGER_GROUPS.map((item) => (
+                    <button
+                      key={item}
+                      type="button"
+                      role="tab"
+                      aria-selected={standardGroup === item}
+                      className={cn(
+                        mx(styles, "tag-manager-group-chip"),
+                        standardGroup === item && mx(styles, "is-active"),
+                      )}
+                      onClick={() => selectStandardGroup(item)}
+                    >
+                      {tTags(`groups.${item}`)}
+                    </button>
+                  ))}
+                </div>
+              ) : (
+                <p className={mx(styles, "tag-manager-pane-hint")}>
+                  {t("customTagsHint")}
+                </p>
+              )}
 
               {tagSource === "custom" && customTagOptions.length === 0 ? (
                 <p className={mx(styles, "tag-manager-section-empty")}>
                   {t("emptyCustomTags")}
                 </p>
               ) : (
-                <div
-                  className={mx(styles, "tag-manager-list")}
-                  role="listbox"
-                  aria-label={
-                    tagSource === "custom"
-                      ? t("customTagsHeading")
-                      : t("standardTagsHeading")
-                  }
-                >
-                  {activeTagList.map(renderTagButton)}
-                </div>
+                <>
+                  <select
+                    className={mx(styles, "tag-manager-mobile-select")}
+                    value={selectedTagId}
+                    aria-label={
+                      tagSource === "custom"
+                        ? t("customTagsHeading")
+                        : t("standardTagsHeading")
+                    }
+                    onChange={(event) => selectTag(event.target.value)}
+                  >
+                    {activeTagList.map((tag) => (
+                      <option key={tag.id} value={tag.id}>
+                        {tag.label} · {t("wordCount", { count: tag.count })}
+                      </option>
+                    ))}
+                  </select>
+
+                  <div
+                    className={mx(styles, "tag-manager-list")}
+                    role="listbox"
+                    aria-label={
+                      tagSource === "custom"
+                        ? t("customTagsHeading")
+                        : t("standardTagsHeading")
+                    }
+                  >
+                    {activeTagList.map(renderTagButton)}
+                  </div>
+                </>
               )}
             </aside>
 
@@ -531,32 +550,31 @@ export function TagManagerDialog({
               className={mx(styles, "tag-manager-words")}
               aria-label={t("wordsHeading", { tag: selectedTagLabel })}
             >
-              <div className={mx(styles, "tag-manager-pane-head")}>
-                <div className={mx(styles, "tag-manager-words-title-row")}>
-                  <h2 className={mx(styles, "tag-manager-selected-title")}>
-                    {selectedTagLabel}
-                  </h2>
-                  {selectedKind ? (
-                    <span
-                      className={cn(
-                        mx(styles, "tag-manager-kind-badge"),
-                        selectedKind === "custom" && mx(styles, "is-custom"),
-                      )}
-                    >
-                      {selectedKind === "custom"
-                        ? t("kindCustom")
-                        : t("kindStandard")}
-                    </span>
-                  ) : null}
-                </div>
-                <div className={mx(styles, "tag-manager-toolbar")}>
-                  <Input
-                    value={search}
-                    onChange={(event) => setSearch(event.target.value)}
-                    placeholder={t("searchPlaceholder")}
-                    aria-label={t("searchPlaceholder")}
-                  />
-                </div>
+              <div className={mx(styles, "tag-manager-words-title-row")}>
+                <h2 className={mx(styles, "tag-manager-selected-title")}>
+                  {selectedTagLabel}
+                </h2>
+                {selectedKind ? (
+                  <span
+                    className={cn(
+                      mx(styles, "tag-manager-kind-badge"),
+                      selectedKind === "custom" && mx(styles, "is-custom"),
+                    )}
+                  >
+                    {selectedKind === "custom"
+                      ? t("kindCustom")
+                      : t("kindStandard")}
+                  </span>
+                ) : null}
+              </div>
+
+              <div className={mx(styles, "tag-manager-toolbar")}>
+                <Input
+                  value={search}
+                  onChange={(event) => setSearch(event.target.value)}
+                  placeholder={t("searchPlaceholder")}
+                  aria-label={t("searchPlaceholder")}
+                />
               </div>
 
               {loading ? (
@@ -603,6 +621,14 @@ export function TagManagerDialog({
               </p>
             </div>
             <div className={mx(styles, "tag-manager-actions")}>
+              <Button
+                type="button"
+                variant="outline"
+                disabled={pending}
+                onClick={() => handleOpenChange(false)}
+              >
+                {tc("cancel")}
+              </Button>
               {selectedCount > 0 && operation ? (
                 <Button type="button" disabled={pending} onClick={runOperation}>
                   {pending ? (
@@ -613,14 +639,6 @@ export function TagManagerDialog({
                     : t("applyRemove", { count: selectedCount })}
                 </Button>
               ) : null}
-              <Button
-                type="button"
-                variant="ghost"
-                disabled={pending}
-                onClick={() => handleOpenChange(false)}
-              >
-                {tc("cancel")}
-              </Button>
             </div>
           </div>
         </div>

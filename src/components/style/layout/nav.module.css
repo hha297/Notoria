@@ -7,21 +7,16 @@
   overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
-  border-radius: 1rem;
-  border: 1px solid var(--hairline-cloud);
-  /* Opaque white/elevated + soft module blend (no glass) */
-  background-color: var(--surface-elevated);
+  border-radius: var(--radius-lg);
+  /* Inherit scene tokens from [data-studio-scene] — never root/home teal */
+  border: 1px solid var(--page-accent-border);
+  background-color: var(--background);
   background-image:
     linear-gradient(
       155deg,
-      color-mix(in oklab, var(--module-theory-bg) 32%, var(--surface-elevated)),
-      color-mix(in oklab, var(--module-listen-bg) 14%, var(--surface-elevated)) 48%,
-      var(--surface-elevated) 78%
-    ),
-    linear-gradient(
-      205deg,
-      color-mix(in oklab, var(--module-vocab-bg) 18%, var(--surface-elevated)),
-      var(--surface-elevated) 62%
+      color-mix(in oklab, var(--page-accent-soft) 38%, var(--background)),
+      color-mix(in oklab, var(--page-accent-soft) 14%, var(--background)) 52%,
+      var(--background) 84%
     );
   color: var(--ink);
   box-shadow: none;
@@ -73,18 +68,13 @@
   background:
     radial-gradient(
       ellipse 80% 55% at 18% 0%,
-      color-mix(in oklab, var(--module-theory-bg) 62%, transparent),
+      color-mix(in oklab, var(--page-accent-soft) 48%, transparent),
       transparent 72%
     ),
     radial-gradient(
       ellipse 70% 50% at 92% 100%,
-      color-mix(in oklab, var(--module-vocab-bg) 48%, transparent),
+      color-mix(in oklab, var(--page-accent-soft) 28%, transparent),
       transparent 70%
-    ),
-    radial-gradient(
-      ellipse 55% 40% at 50% 40%,
-      color-mix(in oklab, var(--module-listen-bg) 28%, transparent),
-      transparent 68%
     );
 }
 
@@ -201,81 +191,106 @@
   --nav-route-fg: var(--module-settings-fg);
 }
 
+/*
+  User button follows the current page accent (same family as sidebar chrome),
+  not a fixed slate — so Writing/Theory/… tint the trigger + menu.
+*/
 .nav-account-trigger {
   border-color: color-mix(
     in oklab,
-    var(--module-account-fg) 22%,
-    var(--hairline-cloud)
-  );
-  background: color-mix(in oklab, var(--module-account-bg) 32%, transparent);
+    var(--page-accent) 32%,
+    transparent
+  ) !important;
+  background-color: color-mix(
+    in oklab,
+    var(--page-accent-soft) 38%,
+    transparent
+  ) !important;
+  background-image: none !important;
+  box-shadow: none;
   transition:
     border-color 160ms ease,
-    background-color 160ms ease;
+    background-color 160ms ease,
+    box-shadow 160ms ease;
 }
 
 .nav-account-trigger:hover,
+.nav-account-trigger:focus-visible,
 .nav-account-trigger[data-popup-open],
-.nav-account-trigger[data-state="open"] {
+.nav-account-trigger[data-state="open"],
+.nav-account-trigger[aria-expanded="true"] {
   border-color: color-mix(
     in oklab,
-    var(--module-account-fg) 40%,
-    var(--hairline-cloud)
-  );
-  background: color-mix(
+    var(--page-accent) 52%,
+    transparent
+  ) !important;
+  background-color: color-mix(
     in oklab,
-    var(--module-account-bg) 58%,
+    var(--page-accent-soft) 58%,
     var(--surface-elevated)
-  );
+  ) !important;
+  box-shadow: inset 2px 0 0 var(--page-accent);
 }
 
 .nav-account-trigger.is-active {
   border-color: color-mix(
     in oklab,
-    var(--module-account-fg) 48%,
-    var(--hairline-cloud)
-  );
-  background: color-mix(
+    var(--page-accent) 58%,
+    transparent
+  ) !important;
+  background-color: color-mix(
     in oklab,
-    var(--module-account-bg) 72%,
+    var(--page-accent-soft) 68%,
     var(--surface-elevated)
-  );
-  box-shadow: inset 0 0 0 1px
-    color-mix(in oklab, var(--module-account-fg) 22%, transparent);
+  ) !important;
+  box-shadow:
+    inset 2px 0 0 var(--page-accent),
+    inset 0 0 0 1px color-mix(in oklab, var(--page-accent) 22%, transparent);
 }
 
-/* Opaque account blend on the open menu (beats flat menu-surface). */
+/* Portaled menu: accent edge + soft wash (beats menu-surface). */
 .nav-account-menu {
   border-color: color-mix(
     in oklab,
-    var(--module-account-fg) 36%,
-    var(--hairline-cloud)
-  );
-  background-color: var(--popover);
+    var(--page-accent) 40%,
+    transparent
+  ) !important;
+  background-color: var(--popover) !important;
   background-image:
     linear-gradient(
       160deg,
-      color-mix(in oklab, var(--module-account-bg) 62%, var(--popover)),
-      color-mix(in oklab, var(--module-account-bg) 32%, var(--popover)) 58%,
+      color-mix(in oklab, var(--page-accent-soft) 55%, var(--popover)),
+      color-mix(in oklab, var(--page-accent-soft) 22%, var(--popover)) 58%,
       var(--popover)
-    );
+    ) !important;
+  box-shadow: 0 0 0 1px
+    color-mix(in oklab, var(--page-accent) 18%, transparent);
 }
 
 .nav-account-menu :global([data-slot="dropdown-menu-item"]) {
+  border: 1px solid transparent;
+  border-radius: 0.45rem;
   transition:
     background-color 140ms ease,
     background-image 140ms ease,
+    border-color 140ms ease,
     color 140ms ease;
 }
 
 .nav-account-menu :global([data-slot="dropdown-menu-item"]:hover),
 .nav-account-menu :global([data-slot="dropdown-menu-item"]:focus),
 .nav-account-menu :global([data-slot="dropdown-menu-item"][data-highlighted]) {
-  background-color: var(--popover) !important;
+  border-color: color-mix(
+    in oklab,
+    var(--page-accent) 36%,
+    transparent
+  ) !important;
+  background-color: transparent !important;
   background-image:
     linear-gradient(
       155deg,
-      color-mix(in oklab, var(--module-account-bg) 82%, var(--popover)),
-      color-mix(in oklab, var(--module-account-bg) 52%, var(--popover))
+      color-mix(in oklab, var(--page-accent-soft) 72%, var(--popover)),
+      color-mix(in oklab, var(--page-accent-soft) 40%, var(--popover))
     ) !important;
   color: var(--ink) !important;
 }
@@ -285,7 +300,7 @@
 .nav-account-menu
   :global([data-slot="dropdown-menu-item"][data-highlighted])
   svg {
-  color: var(--module-account-fg);
+  color: var(--page-accent);
 }
 
 .nav-plan-cta {

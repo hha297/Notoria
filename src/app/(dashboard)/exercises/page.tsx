@@ -30,14 +30,12 @@ export default async function ExercisesPage() {
     <PageShell className="route-atelier writing-atelier" data-route="exercises">
       <div className="writing-atelier flex flex-col gap-10 lg:gap-12">
         <header className="writing-hero">
-          <div className="writing-hero-copy">
-            <p className="writing-kicker">{t("title")}</p>
-            <h1 className="writing-brand-title">{t("title")}</h1>
-            <p className="writing-brand-lede">{t("studioDescription")}</p>
-          </div>
-          <div className="writing-hero-actions">
+          <p className="writing-kicker">{t("title")}</p>
+          <h1 className="writing-brand-title">{t("title")}</h1>
+          <div className="writing-hero-primary">
             <ShowTutorialButton section="exercise" />
           </div>
+          <p className="writing-brand-lede">{t("studioDescription")}</p>
         </header>
 
         <ExerciseStudioClient

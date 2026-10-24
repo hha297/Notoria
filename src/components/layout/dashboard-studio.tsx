@@ -131,7 +131,11 @@ export function DashboardStudio({
           containing block ends above the footer (no absolute overlay / z-fight).
         */}
         <div className="flex min-h-0 flex-1 flex-col px-2 pt-3 sm:px-3 sm:pt-5">
-          <div className="mx-auto flex w-full max-w-[90rem] min-h-0 flex-1 items-stretch gap-4 sm:gap-6">
+          <div
+            className="mx-auto flex w-full max-w-[90rem] min-h-0 flex-1 items-stretch gap-4 sm:gap-6"
+            data-studio-scene={studioScene}
+            data-exercise={exerciseDetailSlug ?? undefined}
+          >
             <div className="hidden w-[15.5rem] shrink-0 lg:block">
               <div className="sticky top-5 z-20">
                 <FloatingSidebar
@@ -157,44 +161,59 @@ export function DashboardStudio({
                   Search grows; workspace select has its own stable desktop width
                   (create CTA is shrink-0 beside it, not inside a max-width box).
                 */}
-                <div className="group/chrome flex h-auto items-center gap-1.5 px-2 py-1.5 sm:h-14 sm:gap-2 sm:px-4 sm:py-0">
+                <div
+                  className={cn(
+                    "group/chrome flex h-auto items-center gap-1.5 px-2 py-1.5 sm:h-14 sm:gap-2 sm:px-4 sm:py-0",
+                    /* Expanded search: even inset — no leftover gap from collapsed siblings */
+                    "max-sm:has-[[data-mobile-search]]:gap-0",
+                  )}
+                >
+                  {/* Mobile: Menu · Workspace · Search icon. Desktop: Search grows, then workspace. */}
                   <Button
                     type="button"
                     variant="outline"
                     size="icon"
-                    className="studio-chrome-control control-surface h-9 w-9 shrink-0 sm:h-10 sm:w-10 lg:hidden max-sm:group-has-[[data-mobile-search]]/chrome:hidden"
+                    className={cn(
+                      "studio-chrome-control control-surface h-9 w-9 min-w-9 shrink-0 sm:h-10 sm:w-10 sm:min-w-10 lg:hidden",
+                      "max-sm:overflow-hidden max-sm:transition-[min-width,width,opacity,padding,border-color] max-sm:duration-300 max-sm:ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
+                      "max-sm:group-has-[[data-mobile-search]]/chrome:pointer-events-none max-sm:group-has-[[data-mobile-search]]/chrome:w-0 max-sm:group-has-[[data-mobile-search]]/chrome:min-w-0 max-sm:group-has-[[data-mobile-search]]/chrome:opacity-0 max-sm:group-has-[[data-mobile-search]]/chrome:border-transparent max-sm:group-has-[[data-mobile-search]]/chrome:px-0",
+                    )}
                     aria-label={t("groups.main")}
                     onClick={() => setNavOpen(true)}
                   >
                     <Menu className="size-4" />
                   </Button>
 
+                  <WorkspaceSelector
+                    className={cn(
+                      "min-w-0 max-sm:flex-1 max-sm:basis-0 sm:order-3 sm:flex-none",
+                      "max-sm:transition-[max-width,opacity,flex-grow,flex-basis] max-sm:duration-300 max-sm:ease-[cubic-bezier(0.22,1,0.36,1)] motion-reduce:transition-none",
+                      "max-sm:group-has-[[data-mobile-search]]/chrome:pointer-events-none max-sm:group-has-[[data-mobile-search]]/chrome:max-w-0 max-sm:group-has-[[data-mobile-search]]/chrome:min-w-0 max-sm:group-has-[[data-mobile-search]]/chrome:flex-[0_0_0] max-sm:group-has-[[data-mobile-search]]/chrome:basis-0 max-sm:group-has-[[data-mobile-search]]/chrome:opacity-0 max-sm:group-has-[[data-mobile-search]]/chrome:overflow-hidden",
+                    )}
+                    workspaces={workspaces}
+                    activeWorkspaceId={activeWorkspaceId}
+                  />
+
                   {activeWorkspaceId ? (
-                    <div className="min-w-0 flex-1 basis-0 max-sm:group-has-[[data-mobile-search]]/chrome:flex-1">
+                    <div
+                      className={cn(
+                        "min-w-0 max-sm:shrink-0 sm:order-2 sm:flex-1 sm:basis-0",
+                        "max-sm:group-has-[[data-mobile-search]]/chrome:flex-1 max-sm:group-has-[[data-mobile-search]]/chrome:basis-0 max-sm:group-has-[[data-mobile-search]]/chrome:min-w-0",
+                      )}
+                    >
                       <WorkspaceSearch
                         workspaceId={activeWorkspaceId}
                         compact
                       />
                     </div>
                   ) : (
-                    <div className="hidden min-w-0 flex-1 basis-0 sm:block" />
+                    <div className="hidden min-w-0 flex-1 basis-0 sm:order-2 sm:block" />
                   )}
-
-                  {/*
-                    Search is the only flex grower (no max-w), so leftover width
-                    stays inside search. Workspace + locale + theme pack with even
-                    chrome gaps — short locale labels won't open a void.
-                  */}
-                  <WorkspaceSelector
-                    className="min-w-0 flex-1 sm:flex-none max-sm:group-has-[[data-mobile-search]]/chrome:hidden"
-                    workspaces={workspaces}
-                    activeWorkspaceId={activeWorkspaceId}
-                  />
 
                   <LocaleThemeControls
                     locale={locale}
                     compact
-                    className="hidden lg:flex"
+                    className="hidden lg:flex sm:order-4"
                   />
                 </div>
               </header>

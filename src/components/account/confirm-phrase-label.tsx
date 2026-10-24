@@ -9,8 +9,9 @@ type ConfirmPhraseLabelProps = {
 };
 
 /**
- * Renders “Type {phrase} to confirm” with the phrase emphasized but color-matched
- * to the surrounding label (avoids bright foreground clash).
+ * Renders “Type {phrase} to confirm” with the phrase emphasized.
+ * Units wrap as wholes (phrase / “to confirm”) — never mid-badge + mid-tail
+ * on the same broken row.
  */
 export function ConfirmPhraseLabel({
   template,
@@ -18,12 +19,20 @@ export function ConfirmPhraseLabel({
 }: ConfirmPhraseLabelProps) {
   const [before, after = ""] = template.split("\u0000");
   return (
-    <>
-      {before}
+    <span className={mx(styles, "account-delete-confirm-label")}>
+      {before.trim() ? (
+        <span className={mx(styles, "account-delete-confirm-part")}>
+          {before.trim()}
+        </span>
+      ) : null}
       <span className={mx(styles, "account-delete-confirm-phrase")}>
         {phrase}
       </span>
-      {after}
-    </>
+      {after.trim() ? (
+        <span className={mx(styles, "account-delete-confirm-part")}>
+          {after.trim()}
+        </span>
+      ) : null}
+    </span>
   );
 }

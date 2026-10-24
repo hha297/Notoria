@@ -1,60 +1,67 @@
 /*
-  Tag Manager — single accent family: vocab green + neutral elevated surfaces.
-  No theory purple, no surface-active yellow hover.
+  Tag Manager — vocab green.
+  Mobile: natural content height inside ONE scroll (never crush rows).
+  Desktop: tags | words; word columns scroll independently.
 */
 .tag-manager {
   --tm-accent: var(--module-vocab-fg);
   --tm-accent-soft: var(--module-vocab-bg);
-  --tm-panel: color-mix(in oklab, var(--surface-elevated) 88%, var(--tm-accent-soft));
-  --tm-panel-edge: color-mix(in oklab, var(--hairline-cloud) 78%, var(--tm-accent) 12%);
-  --tm-wash: color-mix(in oklab, var(--tm-accent-soft) 42%, transparent);
-  --tm-wash-strong: color-mix(in oklab, var(--tm-accent-soft) 68%, transparent);
-  --tm-hover: color-mix(in oklab, var(--tm-accent-soft) 38%, var(--surface-elevated));
-  --tm-muted-line: color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+  --tm-line: color-mix(
+    in oklab,
+    var(--page-accent-border, var(--hairline-cloud)) 88%,
+    transparent
+  );
+  --tm-wash: color-mix(in oklab, var(--tm-accent-soft) 36%, transparent);
+  --tm-wash-strong: color-mix(in oklab, var(--tm-accent-soft) 58%, transparent);
+  --tm-hover: color-mix(
+    in oklab,
+    var(--tm-accent-soft) 32%,
+    var(--surface-elevated)
+  );
 
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  flex: 1;
+  gap: 0.75rem;
+  flex: 1 1 auto;
   min-height: 0;
-  height: 100%;
+  overflow: hidden;
 }
 
 .tag-manager-layout {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.85rem;
-  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  flex: 1 1 auto;
   min-height: 0;
+  overflow: hidden;
 }
 
 @media (min-width: 900px) {
   .tag-manager-layout {
-    grid-template-columns: minmax(18rem, 22rem) minmax(0, 1fr);
-    gap: 1rem;
+    display: grid;
+    grid-template-columns: minmax(15.5rem, 19rem) minmax(0, 1fr);
+    gap: 1.15rem;
+    align-items: stretch;
   }
 }
 
-.tag-manager-tags,
-.tag-manager-words {
+/* ——— Tag picker ——— */
+.tag-manager-tags {
   display: flex;
   flex-direction: column;
-  min-height: 0;
-  border: 1px solid var(--tm-panel-edge);
-  border-radius: 0.85rem;
-  background: var(--tm-panel);
-  overflow: hidden;
-}
-
-.tag-manager-tags {
-  min-height: 14rem;
-  max-height: 18rem;
+  gap: 0.55rem;
+  flex: 0 0 auto;
 }
 
 @media (min-width: 900px) {
   .tag-manager-tags {
+    flex: 1 1 auto;
     min-height: 0;
-    max-height: none;
+    overflow: hidden;
+    padding: 0.85rem;
+    border: 1px solid var(--tm-line);
+    border-radius: var(--radius-lg);
+    background: color-mix(in oklab, var(--surface-elevated) 70%, transparent);
   }
 }
 
@@ -62,35 +69,34 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 0.3rem;
-  padding: 0.55rem;
-  border-bottom: 1px solid var(--tm-muted-line);
-  background: color-mix(in oklab, var(--tm-accent-soft) 22%, var(--surface-elevated));
-  flex-shrink: 0;
+  padding: 0.25rem;
+  border-radius: var(--radius-md);
+  background: color-mix(
+    in oklab,
+    var(--tm-accent-soft) 22%,
+    var(--surface-elevated)
+  );
 }
 
 .tag-manager-source-tab {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  min-height: 2.35rem;
-  padding: 0.4rem 0.65rem;
+  gap: 0.3rem;
+  min-height: 2.2rem;
+  padding: 0.3rem 0.45rem;
   border: 1px solid transparent;
-  border-radius: 0.55rem;
+  border-radius: calc(var(--radius-md) - 2px);
   background: transparent;
   color: var(--muted-foreground);
-  font-size: 0.82rem;
+  font-size: 0.78rem;
   font-weight: 600;
   cursor: pointer;
-  transition:
-    background-color 140ms ease,
-    border-color 140ms ease,
-    color 140ms ease;
 }
 
 .tag-manager-source-tab:hover {
   color: var(--ink);
-  background: color-mix(in oklab, var(--surface-elevated) 82%, var(--tm-accent-soft));
+  background: color-mix(in oklab, var(--surface-elevated) 80%, transparent);
 }
 
 .tag-manager-source-tab:focus-visible {
@@ -100,14 +106,13 @@
 
 .tag-manager-source-tab.is-active {
   color: var(--tm-accent);
-  border-color: color-mix(in oklab, var(--tm-accent) 32%, transparent);
+  border-color: color-mix(in oklab, var(--tm-accent) 28%, transparent);
   background: var(--tm-wash-strong);
 }
 
-/* Keep custom tab in the same vocab family (no theory purple). */
 .tag-manager-source-tab.is-custom.is-active {
   color: var(--tm-accent);
-  border-color: color-mix(in oklab, var(--tm-accent) 32%, transparent);
+  border-color: color-mix(in oklab, var(--tm-accent) 28%, transparent);
   background: var(--tm-wash-strong);
 }
 
@@ -115,60 +120,38 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  min-width: 1.35rem;
-  height: 1.2rem;
-  padding: 0 0.35rem;
+  min-width: 1.2rem;
+  height: 1.1rem;
+  padding: 0 0.28rem;
   border-radius: 999px;
-  background: color-mix(in oklab, var(--tm-accent) 12%, transparent);
-  color: inherit;
-  font-size: 0.7rem;
+  background: color-mix(in oklab, var(--tm-accent) 14%, transparent);
+  font-size: 0.66rem;
   font-variant-numeric: tabular-nums;
   font-weight: 700;
-}
-
-.tag-manager-pane-head {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-  padding: 0.75rem 0.9rem;
-  border-bottom: 1px solid var(--tm-muted-line);
-  background: color-mix(in oklab, var(--surface-elevated) 94%, var(--tm-accent-soft));
-  flex-shrink: 0;
-}
-
-.tag-manager-pane-hint {
-  margin: 0;
-  font-size: 0.78rem;
-  line-height: 1.4;
-  color: var(--muted-foreground);
 }
 
 .tag-manager-groups {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  gap: 0.3rem;
 }
 
 .tag-manager-group-chip {
   display: inline-flex;
   align-items: center;
-  height: 1.85rem;
-  padding: 0 0.7rem;
-  border: 1px solid var(--tm-muted-line);
+  height: 1.8rem;
+  padding: 0 0.65rem;
+  border: 1px solid var(--tm-line);
   border-radius: 0.5rem;
-  background: color-mix(in oklab, var(--surface-elevated) 70%, transparent);
+  background: transparent;
   color: var(--muted-foreground);
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   cursor: pointer;
-  transition:
-    border-color 140ms ease,
-    background-color 140ms ease,
-    color 140ms ease;
 }
 
 .tag-manager-group-chip:hover {
   color: var(--tm-accent);
-  border-color: color-mix(in oklab, var(--tm-accent) 34%, var(--hairline-cloud));
+  border-color: color-mix(in oklab, var(--tm-accent) 30%, var(--hairline-cloud));
   background: var(--tm-hover);
 }
 
@@ -179,39 +162,84 @@
 
 .tag-manager-group-chip.is-active {
   color: var(--tm-accent);
-  border-color: color-mix(in oklab, var(--tm-accent) 40%, transparent);
+  border-color: color-mix(in oklab, var(--tm-accent) 36%, transparent);
   background: var(--tm-wash-strong);
   font-weight: 600;
 }
 
+.tag-manager-pane-hint {
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.4;
+  color: var(--muted-foreground);
+}
+
+.tag-manager-mobile-select {
+  display: block;
+  width: 100%;
+  height: 2.5rem;
+  padding: 0 2.25rem 0 0.85rem;
+  border: 1px solid var(--tm-line);
+  border-radius: var(--radius-md);
+  background-color: var(--surface-elevated);
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--muted-foreground) 50%),
+    linear-gradient(135deg, var(--muted-foreground) 50%, transparent 50%);
+  background-position:
+    calc(100% - 1.1rem) calc(50% - 0.15rem),
+    calc(100% - 0.75rem) calc(50% - 0.15rem);
+  background-size: 0.35rem 0.35rem;
+  background-repeat: no-repeat;
+  color: var(--ink);
+  font-size: 0.9rem;
+  font-weight: 600;
+  appearance: none;
+  cursor: pointer;
+}
+
+.tag-manager-mobile-select:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--tm-accent) 50%, transparent);
+  outline-offset: 2px;
+  border-color: color-mix(in oklab, var(--tm-accent) 40%, transparent);
+}
+
+@media (min-width: 900px) {
+  .tag-manager-mobile-select {
+    display: none;
+  }
+}
+
 .tag-manager-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  padding: 0.45rem;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
+  display: none;
+}
+
+@media (min-width: 900px) {
+  .tag-manager-list {
+    display: flex;
+    flex-direction: column;
+    gap: 0.15rem;
+    flex: 1 1 auto;
+    min-height: 0;
+    margin: 0 -0.25rem;
+    padding: 0.15rem 0.25rem;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
 }
 
 .tag-manager-tag {
   display: grid;
   grid-template-columns: minmax(0, 1fr) auto;
   align-items: center;
-  gap: 0.65rem;
+  gap: 0.55rem;
   width: 100%;
-  padding: 0.6rem 0.7rem;
+  padding: 0.55rem 0.65rem;
   border: 1px solid transparent;
   border-radius: 0.55rem;
   background: transparent;
   color: var(--ink);
   text-align: left;
   cursor: pointer;
-  transition:
-    background-color 140ms ease,
-    border-color 140ms ease,
-    color 140ms ease;
 }
 
 .tag-manager-tag:hover {
@@ -224,7 +252,7 @@
 }
 
 .tag-manager-tag.is-active {
-  border-color: color-mix(in oklab, var(--tm-accent) 34%, transparent);
+  border-color: color-mix(in oklab, var(--tm-accent) 30%, transparent);
   background: var(--tm-wash-strong);
   color: var(--tm-accent);
   font-weight: 600;
@@ -232,7 +260,7 @@
 
 .tag-manager-tag-label {
   min-width: 0;
-  font-size: 0.9rem;
+  font-size: 0.875rem;
   line-height: 1.3;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -241,7 +269,7 @@
 
 .tag-manager-tag-count {
   flex-shrink: 0;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
   color: var(--muted-foreground);
 }
@@ -250,12 +278,32 @@
   color: color-mix(in oklab, var(--tm-accent) 72%, var(--muted-foreground));
 }
 
+/* ——— Words pane ——— */
+.tag-manager-words {
+  display: flex;
+  flex-direction: column;
+  gap: 0.65rem;
+  flex: 1 1 auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+@media (min-width: 900px) {
+  .tag-manager-words {
+    padding: 0.95rem 1rem 1rem;
+    border: 1px solid var(--tm-line);
+    border-radius: var(--radius-lg);
+    background: color-mix(in oklab, var(--surface-elevated) 55%, transparent);
+  }
+}
+
 .tag-manager-words-title-row {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.45rem 0.75rem;
+  gap: 0.35rem 0.65rem;
+  flex: 0 0 auto;
 }
 
 .tag-manager-selected-title {
@@ -274,52 +322,58 @@
 .tag-manager-kind-badge {
   display: inline-flex;
   align-items: center;
-  height: 1.45rem;
-  padding: 0 0.55rem;
+  height: 1.35rem;
+  padding: 0 0.5rem;
   border-radius: 999px;
-  border: 1px solid color-mix(in oklab, var(--tm-accent) 26%, transparent);
+  border: 1px solid color-mix(in oklab, var(--tm-accent) 24%, transparent);
   background: var(--tm-wash);
   color: var(--tm-accent);
-  font-size: 0.68rem;
+  font-size: 0.64rem;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
   flex-shrink: 0;
 }
 
-/* Custom = same accent, quieter fill so it still reads as a variant. */
 .tag-manager-kind-badge.is-custom {
-  border-color: color-mix(in oklab, var(--tm-accent) 22%, var(--hairline-cloud));
-  background: color-mix(in oklab, var(--surface-elevated) 78%, var(--tm-accent-soft));
+  border-color: color-mix(in oklab, var(--tm-accent) 20%, var(--hairline-cloud));
+  background: color-mix(
+    in oklab,
+    var(--surface-elevated) 78%,
+    var(--tm-accent-soft)
+  );
   color: color-mix(in oklab, var(--tm-accent) 82%, var(--ink));
 }
 
 .tag-manager-toolbar {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
+  flex: 0 0 auto;
 }
 
+/*
+  CRITICAL: on mobile, sections must NOT shrink (min-height:auto / flex-shrink:0).
+  Only this scroller clips — otherwise 1000+ rows crush into overlapping text.
+*/
 .tag-manager-word-scroll {
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  flex: 1;
-  min-height: 0;
+  gap: 1.15rem;
+  flex: 1 1 auto;
+  min-height: 8rem;
+  overflow-x: hidden;
   overflow-y: auto;
   overscroll-behavior: contain;
-  padding: 0.65rem 0.7rem 0.85rem;
-  background: color-mix(in oklab, var(--tm-accent-soft) 10%, transparent);
+  -webkit-overflow-scrolling: touch;
+  padding-right: 0.15rem;
 }
 
 @media (min-width: 1100px) {
   .tag-manager-word-scroll {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
-    gap: 0.85rem;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr);
+    gap: 1rem;
     align-items: stretch;
     overflow: hidden;
-    padding: 0.75rem;
+    min-height: 0;
   }
 }
 
@@ -327,50 +381,71 @@
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  flex: 0 0 auto;
   min-width: 0;
-  min-height: 0;
-  border: 1px solid var(--tm-panel-edge);
-  border-radius: 0.7rem;
-  background: color-mix(in oklab, var(--surface-elevated) 92%, var(--tm-accent-soft));
-  overflow: hidden;
+  min-height: auto;
 }
 
 @media (min-width: 1100px) {
   .tag-manager-word-section {
+    flex: 1 1 auto;
+    min-height: 0;
     height: 100%;
+    padding: 0.55rem;
+    border: 1px solid var(--tm-line);
+    border-radius: var(--radius-md);
+    background: color-mix(in oklab, var(--background) 35%, transparent);
+    overflow: hidden;
   }
 }
 
 .tag-manager-word-section-head {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.4rem 0.75rem;
-  padding: 0.55rem 0.7rem;
-  border-bottom: 1px solid var(--tm-muted-line);
-  background: color-mix(in oklab, var(--tm-accent-soft) 18%, var(--surface-elevated));
-  flex-shrink: 0;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.35rem;
+  flex: 0 0 auto;
+}
+
+@media (min-width: 480px) {
+  .tag-manager-word-section-head {
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.35rem 0.65rem;
+  }
+}
+
+@media (min-width: 1100px) {
+  .tag-manager-word-section-head {
+    padding: 0.25rem 0.35rem 0.45rem;
+    border-bottom: 1px solid var(--tm-line);
+    margin-bottom: 0.15rem;
+  }
 }
 
 .tag-manager-word-section-title-row {
   display: flex;
   align-items: baseline;
-  gap: 0.45rem;
+  gap: 0.4rem;
   min-width: 0;
 }
 
 .tag-manager-word-section-title {
   margin: 0;
-  font-size: 0.84rem;
+  font-size: 0.72rem;
   font-weight: 700;
-  color: var(--ink);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
 }
 
 .tag-manager-word-section-count {
   font-size: 0.75rem;
   font-variant-numeric: tabular-nums;
   color: var(--muted-foreground);
+  opacity: 0.9;
 }
 
 .tag-manager-select-all {
@@ -378,8 +453,10 @@
   align-items: center;
   gap: 0.4rem;
   font-size: 0.75rem;
+  line-height: 1.2;
   color: var(--muted-foreground);
   cursor: pointer;
+  white-space: nowrap;
 }
 
 .tag-manager-select-all.is-disabled {
@@ -391,34 +468,31 @@
   display: flex;
   flex-direction: column;
   gap: 0.15rem;
-  padding: 0.35rem;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  max-height: 14rem;
+  flex: 0 0 auto;
+  min-height: auto;
 }
 
 @media (min-width: 1100px) {
   .tag-manager-word-rows {
-    max-height: none;
+    flex: 1 1 auto;
+    min-height: 0;
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.15rem;
   }
 }
 
 .tag-manager-word {
   display: grid;
   grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
+  align-items: start;
   gap: 0.65rem;
-  padding: 0.5rem 0.55rem;
-  border: 1px solid transparent;
-  border-left-width: 3px;
+  flex: 0 0 auto;
+  padding: 0.6rem 0.45rem;
   border-radius: 0.5rem;
+  border: 1px solid transparent;
+  border-left: 3px solid transparent;
   background: transparent;
-  transition:
-    background-color 140ms ease,
-    border-color 140ms ease,
-    opacity 140ms ease;
 }
 
 .tag-manager-word:hover:not(.is-disabled) {
@@ -432,33 +506,32 @@
 
 .tag-manager-word.is-member {
   background: var(--tm-wash);
-  border-color: color-mix(in oklab, var(--tm-accent) 16%, transparent);
-  border-left-width: 1px;
 }
 
 .tag-manager-word.is-member:hover:not(.is-disabled) {
-  background: color-mix(in oklab, var(--tm-accent-soft) 55%, var(--surface-elevated));
+  background: color-mix(
+    in oklab,
+    var(--tm-accent-soft) 50%,
+    var(--surface-elevated)
+  );
 }
 
 .tag-manager-word.is-selected {
-  border-left-width: 3px;
-  border-color: color-mix(in oklab, var(--tm-accent) 24%, transparent);
-  border-left-color: color-mix(in oklab, var(--tm-accent) 70%, transparent);
-}
-
-.tag-manager-word.is-selected:not(.is-member) {
-  background: color-mix(in oklab, var(--tm-accent-soft) 30%, var(--surface-elevated));
+  border-left-color: color-mix(in oklab, var(--tm-accent) 75%, transparent);
+  background: color-mix(
+    in oklab,
+    var(--tm-accent-soft) 28%,
+    var(--surface-elevated)
+  );
 }
 
 .tag-manager-word.is-member.is-selected {
-  border-left-width: 3px;
   background: var(--tm-wash-strong);
-  border-color: color-mix(in oklab, var(--tm-accent) 30%, transparent);
-  border-left-color: color-mix(in oklab, var(--tm-accent) 82%, transparent);
+  border-left-color: color-mix(in oklab, var(--tm-accent) 85%, transparent);
 }
 
 .tag-manager-word.is-disabled {
-  opacity: 0.48;
+  opacity: 0.45;
   cursor: not-allowed;
 }
 
@@ -467,9 +540,11 @@
 }
 
 .tag-manager-word-check {
-  width: 1rem;
-  height: 1rem;
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: 0.15rem;
   accent-color: var(--tm-accent);
+  flex-shrink: 0;
 }
 
 .tag-manager-word-check:disabled {
@@ -485,12 +560,14 @@
   min-width: 0;
   display: flex;
   flex-direction: column;
+  gap: 0.12rem;
 }
 
 .tag-manager-word-title {
   margin: 0;
   font-size: 0.92rem;
   font-weight: 600;
+  line-height: 1.3;
   color: var(--ink);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -498,8 +575,9 @@
 }
 
 .tag-manager-word-meta {
-  margin: 0.1rem 0 0;
-  font-size: 0.78rem;
+  margin: 0;
+  font-size: 0.76rem;
+  line-height: 1.3;
   color: var(--muted-foreground);
   overflow: hidden;
   text-overflow: ellipsis;
@@ -509,46 +587,68 @@
 .tag-manager-empty,
 .tag-manager-section-empty {
   margin: 0;
-  padding: 1.25rem 1rem;
+  padding: 1.25rem 0.75rem;
   text-align: center;
   font-size: 0.88rem;
   color: var(--muted-foreground);
 }
 
 .tag-manager-section-empty {
-  margin: 0.35rem;
-  padding: 1rem 0.75rem;
   text-align: left;
+  padding: 0.7rem 0.45rem;
   border-radius: 0.5rem;
-  background: color-mix(in oklab, var(--tm-accent-soft) 20%, var(--surface-elevated));
-  border: 1px dashed color-mix(in oklab, var(--tm-accent) 18%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--tm-accent-soft) 16%, transparent);
 }
 
+/* ——— Footer ——— */
 .tag-manager-footer {
   display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.75rem 0.15rem 0.1rem;
-  border-top: 1px solid var(--tm-muted-line);
-  flex-shrink: 0;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.65rem;
+  padding-top: 0.7rem;
+  border-top: 1px solid var(--tm-line);
+  flex: 0 0 auto;
+}
+
+@media (min-width: 640px) {
+  .tag-manager-footer {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
 }
 
 .tag-manager-selection {
   margin: 0;
   font-size: 0.84rem;
   color: var(--muted-foreground);
+  min-width: 0;
+}
+
+.tag-manager-selection p {
+  margin: 0;
 }
 
 .tag-manager-selection-breakdown {
   margin: 0.2rem 0 0;
-  font-size: 0.78rem;
-  color: color-mix(in oklab, var(--muted-foreground) 82%, var(--tm-accent));
+  font-size: 0.74rem;
+  line-height: 1.4;
+  color: color-mix(in oklab, var(--muted-foreground) 88%, var(--tm-accent));
 }
 
 .tag-manager-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 0.45rem;
+  width: 100%;
+}
+
+@media (min-width: 640px) {
+  .tag-manager-actions {
+    width: auto;
+    margin-inline-start: auto;
+  }
 }

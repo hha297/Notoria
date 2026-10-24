@@ -260,9 +260,11 @@
 .route-tutorial-btn {
   --route-tutorial-fg: var(--module-home-fg);
   --route-tutorial-bg: var(--module-home-bg);
-  height: 2rem;
+  /* Match default Import / LinkButton height (h-10), mobile + desktop */
+  height: 2.5rem;
+  min-height: 2.5rem;
   border: 1px solid var(--hairline-cloud) !important;
-  border-radius: 0.45rem;
+  border-radius: var(--radius-md);
   background: transparent !important;
   color: var(--ink) !important;
   box-shadow: none !important;

@@ -152,9 +152,10 @@ export function TheoryLibrary({
     );
   }
 
-  const actions = (
+  const secondaryActions = (
     <>
       <ShowTutorialButton section="theory" />
+      {isEmptyRoot ? <NewFolderButton variant="outline" /> : null}
       <LockedFeatureButton
         type="button"
         variant="outline"
@@ -166,11 +167,14 @@ export function TheoryLibrary({
       >
         {tImport("button")}
       </LockedFeatureButton>
-      <LinkButton href={createHref} data-tutorial="theory-add-note">
-        <Plus className="size-4" />
-        {isEmptyRoot ? t("createFirst") : t("create")}
-      </LinkButton>
     </>
+  );
+
+  const primaryAction = (
+    <LinkButton href={createHref} data-tutorial="theory-add-note">
+      <Plus className="size-4" />
+      {isEmptyRoot ? t("createFirst") : t("create")}
+    </LinkButton>
   );
 
   return (
@@ -186,37 +190,11 @@ export function TheoryLibrary({
       >
         <div className="writing-atelier theory-atelier flex flex-col gap-10 lg:gap-12">
           <header className="writing-hero">
-            <div className="writing-hero-copy">
-              <p className="writing-kicker">{t("eyebrow")}</p>
-              <h1 className="writing-brand-title">{t("title")}</h1>
-              <p className="writing-brand-lede">{t("description")}</p>
-            </div>
-            <div className="writing-hero-actions">
-              {isEmptyRoot ? (
-                <>
-                  <ShowTutorialButton section="theory" />
-                  <NewFolderButton variant="outline" size="sm" />
-                  <LockedFeatureButton
-                    type="button"
-                    variant="outline"
-                    size="sm"
-                    className="route-quiet-action"
-                    data-route-action="theory"
-                    feature="content_import"
-                    icon={<Upload className="size-4" />}
-                    onClick={() => setImportOpen(true)}
-                  >
-                    {tImport("button")}
-                  </LockedFeatureButton>
-                  <LinkButton href={createHref} data-tutorial="theory-add-note">
-                    <Plus className="size-4" />
-                    {t("createFirst")}
-                  </LinkButton>
-                </>
-              ) : (
-                actions
-              )}
-            </div>
+            <p className="writing-kicker">{t("eyebrow")}</p>
+            <h1 className="writing-brand-title">{t("title")}</h1>
+            <div className="writing-hero-primary">{primaryAction}</div>
+            <p className="writing-brand-lede">{t("description")}</p>
+            <div className="writing-hero-secondary">{secondaryActions}</div>
           </header>
 
           {isEmptyRoot ? (
