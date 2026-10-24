@@ -148,7 +148,7 @@ export function EditorToolbar({
     <>
       <div
         className={cn(
-          "flex flex-nowrap items-center gap-1 overflow-x-auto overscroll-x-contain border-b border-hairline-cloud bg-transparent p-2 [scrollbar-width:thin] [-webkit-overflow-scrolling:touch]",
+          "flex flex-nowrap items-center gap-1 overflow-x-auto overscroll-x-contain border-b border-page-accent-border bg-transparent p-2 [scrollbar-width:thin] [-webkit-overflow-scrolling:touch]",
           className,
         )}
       >

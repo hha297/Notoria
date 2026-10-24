@@ -169,10 +169,9 @@
   background:
     linear-gradient(
       180deg,
-      color-mix(in oklab, var(--home-accent-bg) 34%, transparent),
-      transparent 78%
-    ),
-    color-mix(in oklab, var(--surface-elevated) 40%, transparent);
+      color-mix(in oklab, var(--home-accent-bg) 22%, var(--surface-elevated)),
+      var(--surface-elevated) 78%
+    );
 }
 
 .home-hub-icon,
