@@ -96,16 +96,10 @@ export function LocaleSelector({
           appearance === "drawer"
             ? "h-9 min-w-0 flex-1 justify-start px-2.5 text-sm"
             : cn(
-                /*
-                  Stable width per breakpoint (not per language).
-                  Compact/mobile: flag + uppercase locale code to save chrome space.
-                  sm+: flag + native name with ellipsis.
-                */
-                "studio-chrome-control shrink-0 justify-center px-2 sm:px-2.5",
-                compact
-                  ? "h-9 w-[4.75rem] text-sm sm:h-10 sm:w-[9.5rem]"
-                  : "h-10 w-[9.5rem] sm:w-[10.5rem]",
-              ),
+              /* Hug flag + label; grow with longer names (no fixed slot). */
+              "studio-chrome-control w-auto max-w-[12rem] shrink-0 justify-center px-4",
+              compact ? "h-9 text-sm sm:h-10" : "h-10",
+            ),
           className,
         )}
       >
@@ -113,8 +107,10 @@ export function LocaleSelector({
         <span
           dir="ltr"
           className={cn(
-            "flex min-w-0 max-w-full items-center gap-1.5 sm:gap-2",
-            appearance === "drawer" ? "justify-start" : "justify-center",
+            "flex min-w-0 items-center gap-1.5",
+            appearance === "drawer"
+              ? "max-w-full justify-start"
+              : "justify-center",
           )}
         >
           <LocaleFlagBadge code={selected.flag} size="trigger" />
@@ -122,15 +118,15 @@ export function LocaleSelector({
             <span className="min-w-0 truncate text-left">{selected.label}</span>
           ) : compact ? (
             <>
-              <span className="font-bold tracking-[0.06em] uppercase sm:hidden">
+              <span className="whitespace-nowrap font-bold tracking-[0.06em] uppercase sm:hidden">
                 {selected.code}
               </span>
-              <span className="hidden min-w-0 truncate text-center sm:inline">
+              <span className="hidden min-w-0 truncate sm:inline">
                 {selected.label}
               </span>
             </>
           ) : (
-            <span className="min-w-0 truncate text-center">{selected.label}</span>
+            <span className="min-w-0 truncate">{selected.label}</span>
           )}
         </span>
       </Button>

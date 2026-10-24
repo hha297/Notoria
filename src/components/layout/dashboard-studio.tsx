@@ -170,16 +170,21 @@ export function DashboardStudio({
                   </Button>
 
                   {activeWorkspaceId ? (
-                    <div className="min-w-0 shrink-0 max-sm:group-has-[[data-mobile-search]]/chrome:min-w-0 max-sm:group-has-[[data-mobile-search]]/chrome:flex-1 max-sm:group-has-[[data-mobile-search]]/chrome:basis-0 sm:min-w-0 sm:max-w-md sm:flex-1 sm:basis-0 lg:max-w-lg">
+                    <div className="min-w-0 flex-1 basis-0 max-sm:group-has-[[data-mobile-search]]/chrome:flex-1">
                       <WorkspaceSearch
                         workspaceId={activeWorkspaceId}
                         compact
                       />
                     </div>
                   ) : (
-                    <div className="hidden min-w-0 flex-1 sm:block" />
+                    <div className="hidden min-w-0 flex-1 basis-0 sm:block" />
                   )}
 
+                  {/*
+                    Search is the only flex grower (no max-w), so leftover width
+                    stays inside search. Workspace + locale + theme pack with even
+                    chrome gaps — short locale labels won't open a void.
+                  */}
                   <WorkspaceSelector
                     className="min-w-0 flex-1 sm:flex-none max-sm:group-has-[[data-mobile-search]]/chrome:hidden"
                     workspaces={workspaces}

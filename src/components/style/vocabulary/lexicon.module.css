@@ -104,7 +104,7 @@
   /* Full-bleed across main padding via shared --studio-main-pad token */
   width: auto;
   max-width: none;
-  margin: 0 0 0.35rem;
+  margin: 0 0 0.5rem;
   margin-inline: calc(-1 * var(--studio-main-pad, 1rem));
   padding: 0.7rem var(--studio-main-pad, 1rem);
   border: 0;
@@ -205,7 +205,9 @@
     color-mix(in oklab, var(--vocab-pos-accent) 28%, transparent);
   border-radius: 0.5rem;
   background: none;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease;
 }
 
 /* Tag chips on the card: accent wash + border, not muted slate */
@@ -249,9 +251,9 @@
 .vocab-module:hover,
 .vocab-module:focus-within {
   background: radial-gradient(
-    ellipse 90% 85% at 12% 50%,
-    color-mix(in oklab, var(--vocab-pos-accent) 18%, transparent),
-    transparent 72%
+    ellipse 80% 70% at 12% 50%,
+    color-mix(in oklab, var(--vocab-pos-accent) 12%, transparent),
+    transparent 68%
   );
 }
 
@@ -271,9 +273,9 @@
   z-index: 0;
   pointer-events: none;
   background: radial-gradient(
-    ellipse 78% 70% at 12% 0%,
-    color-mix(in oklab, var(--vocab-pos-accent) 22%, transparent),
-    transparent 74%
+    ellipse 64% 52% at 12% 0%,
+    color-mix(in oklab, var(--vocab-pos-accent) 14%, transparent),
+    transparent 68%
   );
 }
 
@@ -362,7 +364,8 @@
 
 .vocab-module-cta:focus-visible {
   outline: none;
-  box-shadow: 0 0 0 2px color-mix(in oklab, var(--vocab-pos-accent) 40%, transparent);
+  box-shadow: 0 0 0 2px
+    color-mix(in oklab, var(--vocab-pos-accent) 40%, transparent);
 }
 
 @media (max-width: 639px) {
@@ -404,7 +407,11 @@
 }
 
 .vocab-module-action:hover {
-  background: color-mix(in oklab, var(--vocab-pos-accent) 18%, transparent) !important;
+  background: color-mix(
+    in oklab,
+    var(--vocab-pos-accent) 18%,
+    transparent
+  ) !important;
   color: var(--vocab-pos-accent) !important;
 }
 
@@ -413,7 +420,11 @@
 }
 
 .vocab-module-action-danger:hover {
-  background: color-mix(in oklab, var(--destructive) 16%, transparent) !important;
+  background: color-mix(
+    in oklab,
+    var(--destructive) 16%,
+    transparent
+  ) !important;
   color: var(--destructive) !important;
 }
 
@@ -531,7 +542,11 @@
   font-weight: 700;
   letter-spacing: 0.06em;
   line-height: 1.6;
-  color: color-mix(in oklab, var(--vocab-pos-accent, var(--module-vocab-fg)) 85%, var(--muted-foreground));
+  color: color-mix(
+    in oklab,
+    var(--vocab-pos-accent, var(--module-vocab-fg)) 85%,
+    var(--muted-foreground)
+  );
   font-variant-numeric: tabular-nums;
 }
 

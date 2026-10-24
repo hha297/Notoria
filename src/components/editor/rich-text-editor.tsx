@@ -565,7 +565,7 @@ export function RichTextEditor({
   return (
     <div
       className={cn(
-        "overflow-hidden rounded-md border border-hairline-cloud bg-transparent",
+        "overflow-hidden rounded-md border border-page-accent-border control-surface bg-transparent",
         className,
       )}
     >
@@ -587,7 +587,7 @@ export function RichTextEditor({
         />
       </div>
       {editable && footerVisible && (
-        <div className="flex flex-col gap-1 border-t border-hairline-cloud bg-transparent px-4 py-3.5 font-mono text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-4">
+        <div className="flex flex-col gap-1 border-t border-page-accent-border bg-transparent px-4 py-3.5 font-mono text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between sm:px-5 sm:py-4">
           <span>
             {words} words · {characters} characters
           </span>
