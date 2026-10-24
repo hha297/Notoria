@@ -163,7 +163,7 @@ export function VocabularyBank({
 
   const sortValue = `${sortField}:${sortDirection}`;
 
-  const actions = (
+  const secondaryActions = (
     <>
       <ShowTutorialButton section="vocabulary" />
       <LockedFeatureButton
@@ -189,23 +189,25 @@ export function VocabularyBank({
         <Download className="size-4" />
         {t("export.button")}
       </Button>
-      <LinkButton href="/vocabulary/new" data-tutorial="vocab-add-word">
-        <Plus className="size-4" />
-        {t("addWord")}
-      </LinkButton>
     </>
+  );
+
+  const primaryAction = (
+    <LinkButton href="/vocabulary/new" data-tutorial="vocab-add-word">
+      <Plus className="size-4" />
+      {t("addWord")}
+    </LinkButton>
   );
 
   return (
     <PageShell className="vocab-lexicon-shell">
       <div className={mx(featureStyles, "vocab-lexicon writing-atelier flex flex-col gap-10 lg:gap-12")}>
         <header className="writing-hero">
-          <div className="writing-hero-copy">
-            <p className="writing-kicker">{workspaceName}</p>
-            <h1 className="writing-brand-title">{t("title")}</h1>
-            <p className="writing-brand-lede">{t("description")}</p>
-          </div>
-          <div className="writing-hero-actions">{actions}</div>
+          <p className="writing-kicker">{workspaceName}</p>
+          <h1 className="writing-brand-title">{t("title")}</h1>
+          <div className="writing-hero-primary">{primaryAction}</div>
+          <p className="writing-brand-lede">{t("description")}</p>
+          <div className="writing-hero-secondary">{secondaryActions}</div>
         </header>
 
         <section className="writing-workspace">

@@ -259,8 +259,11 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
       data-mobile-search={mobileSearchActive ? "" : undefined}
       className={cn(
         "relative min-w-0",
+        "max-sm:transition-[flex-grow,flex-basis,width,max-width,opacity] max-sm:duration-300 max-sm:ease-[cubic-bezier(0.22,1,0.36,1)]",
+        "motion-reduce:transition-none",
+        /* Collapsed mobile: icon only. Expanded / desktop: fill remaining chrome. */
         showMobileTrigger
-          ? "w-9 shrink-0 sm:w-full"
+          ? "w-9 shrink-0 sm:w-full sm:flex-1 sm:basis-0"
           : "w-full min-w-0 flex-1 basis-0 sm:flex-none",
       )}
     >
@@ -281,11 +284,19 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
 
       <div
         className={cn(
-          "relative",
+          "relative w-full",
           showMobileTrigger && "hidden sm:block",
+          !showMobileTrigger &&
+            compact &&
+            "max-sm:animate-in max-sm:fade-in-0 max-sm:duration-300 motion-reduce:animate-none",
         )}
       >
-        <Search className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground" />
+        <Search
+          className={cn(
+            "pointer-events-none absolute top-1/2 size-4 -translate-y-1/2 text-muted-foreground",
+            mobileSearchActive ? "left-2.5" : "left-3",
+          )}
+        />
         <Input
           ref={inputRef}
           value={value}
@@ -310,20 +321,25 @@ export function WorkspaceSearch({ workspaceId, compact = false }: WorkspaceSearc
           aria-activedescendant={activeId}
           aria-autocomplete="list"
           className={cn(
-            "control-surface rounded-md border-page-accent-border pl-10 shadow-none",
-            mobileSearchActive ? "pr-11" : "pr-20",
+            "control-surface w-full rounded-md border-page-accent-border shadow-none",
+            mobileSearchActive ? "pl-9 pr-10" : "pl-10 pr-20",
             compact
               ? "studio-chrome-control h-9 sm:h-10"
               : "h-10",
           )}
         />
-        <div className="absolute top-1/2 right-2 flex -translate-y-1/2 items-center gap-1 sm:right-3 sm:gap-1.5">
+        <div
+          className={cn(
+            "absolute top-1/2 flex -translate-y-1/2 items-center gap-1",
+            mobileSearchActive ? "right-1.5" : "right-2 sm:right-3 sm:gap-1.5",
+          )}
+        >
           {mobileSearchActive ? (
             <button
               type="button"
               onMouseDown={(event) => event.preventDefault()}
               onClick={dismissMobileSearch}
-              className="inline-flex size-8 items-center justify-center rounded-md text-muted-foreground transition-colors btn-ghost-surface sm:hidden"
+              className="inline-flex size-7 items-center justify-center rounded-md text-muted-foreground transition-colors btn-ghost-surface sm:hidden"
               aria-label={t("clear")}
             >
               <X className="size-4" />

@@ -40,7 +40,6 @@ export function ShowTutorialButton({
       <Button
         type="button"
         variant={variant}
-        size="sm"
         data-tutorial-section={section}
         className={cn(mx(tutorialStyles, "route-tutorial-btn"), className)}
         onClick={() => setOpen(true)}

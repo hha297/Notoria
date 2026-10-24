@@ -13,6 +13,7 @@ import {
   Inbox,
   Languages,
   PenLine,
+  Plus,
   Video,
   type LucideIcon,
 } from "lucide-react";
@@ -164,7 +165,11 @@ export function DashboardHome({
 
   const quickActions = [
     { href: "/vocabulary/new", label: t("quickAddWord"), accent: "vocab" },
-    { href: "/exercises", label: t("quickStartExercise"), accent: "exercise" },
+    {
+      href: "/exercises",
+      label: t("quickStartExercise"),
+      accent: "exercise",
+    },
     { href: "/writing", label: t("quickOpenWriting"), accent: "writing" },
     { href: "/theory", label: t("quickOpenTheory"), accent: "theory" },
   ];
@@ -240,9 +245,9 @@ export function DashboardHome({
             </div>
           ) : null}
           <div className="writing-hero-actions">
-            <LinkButton href="/exercises">
-              <Dumbbell className="size-4" />
-              {t("practiceNowCta")}
+            <LinkButton href="/vocabulary/new">
+              <Plus className="size-4" />
+              {t("quickAddWord")}
               <ArrowRight className="size-4" />
             </LinkButton>
           </div>
@@ -259,16 +264,6 @@ export function DashboardHome({
               {t(`modules.${next.id}.how`)}
             </p>
           </div>
-          <Link
-            href={next.href}
-            className={mx(
-              homeStyles,
-              "home-next-link inline-flex shrink-0 items-center gap-1.5 text-sm font-semibold",
-            )}
-          >
-            {t(`modules.${next.id}.cta`)}
-            <ArrowRight className="size-3.5" aria-hidden />
-          </Link>
         </div>
 
         <div

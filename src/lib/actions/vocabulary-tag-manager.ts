@@ -44,6 +44,7 @@ async function requireOwnedWordIds(wordIds: string[]) {
 
 function revalidateVocabulary() {
   revalidatePath("/vocabulary");
+  revalidatePath("/tag");
   revalidatePath("/settings");
 }
 

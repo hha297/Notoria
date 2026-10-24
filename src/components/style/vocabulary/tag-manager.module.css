@@ -1,554 +1,628 @@
 /*
-  Tag Manager — single accent family: vocab green + neutral elevated surfaces.
-  No theory purple, no surface-active yellow hover.
+  Tag Manager — two separate systems:
+  Standard = group + tile grid
+  Custom = searchable dropdown only
 */
-.tag-manager {
-  --tm-accent: var(--module-vocab-fg);
-  --tm-accent-soft: var(--module-vocab-bg);
-  --tm-panel: color-mix(in oklab, var(--surface-elevated) 88%, var(--tm-accent-soft));
-  --tm-panel-edge: color-mix(in oklab, var(--hairline-cloud) 78%, var(--tm-accent) 12%);
-  --tm-wash: color-mix(in oklab, var(--tm-accent-soft) 42%, transparent);
-  --tm-wash-strong: color-mix(in oklab, var(--tm-accent-soft) 68%, transparent);
-  --tm-hover: color-mix(in oklab, var(--tm-accent-soft) 38%, var(--surface-elevated));
-  --tm-muted-line: color-mix(in oklab, var(--hairline-cloud) 88%, transparent);
+.tm {
+  --tm-accent: var(--page-accent, var(--module-tags-fg));
+  --tm-soft: var(--page-accent-soft, var(--module-tags-bg));
+  --tm-line: var(--page-accent-border);
+  --tm-wash: color-mix(in oklab, var(--tm-soft) 42%, transparent);
+  --tm-wash-strong: color-mix(in oklab, var(--tm-soft) 64%, transparent);
+  --tm-hover: color-mix(in oklab, var(--tm-soft) 30%, var(--surface-elevated));
+  --tm-rule: color-mix(in oklab, var(--tm-accent) 18%, var(--hairline-cloud));
 
+  position: relative;
+  isolation: isolate;
   display: flex;
   flex-direction: column;
-  gap: 0.85rem;
-  flex: 1;
-  min-height: 0;
-  height: 100%;
+  gap: 1.25rem;
+  width: 100%;
+  min-width: 0;
+  padding-bottom: 5.75rem;
 }
 
-.tag-manager-layout {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 0.85rem;
-  flex: 1;
-  min-height: 0;
-}
+@media (min-width: 760px) {
+  .tm {
+    gap: 1.5rem;
+    padding-bottom: 2.25rem;
+  }
 
-@media (min-width: 900px) {
-  .tag-manager-layout {
-    grid-template-columns: minmax(18rem, 22rem) minmax(0, 1fr);
-    gap: 1rem;
+  .tm[data-has-selection="true"] {
+    padding-bottom: 5.5rem;
   }
 }
 
-.tag-manager-tags,
-.tag-manager-words {
-  display: flex;
-  flex-direction: column;
-  min-height: 0;
-  border: 1px solid var(--tm-panel-edge);
-  border-radius: 0.85rem;
-  background: var(--tm-panel);
-  overflow: hidden;
+/* ——— Header (shares writing-hero / writing-brand-title with Theory & Writing) ——— */
+.tm-head {
+  text-align: start;
+  align-items: stretch;
 }
 
-.tag-manager-tags {
-  min-height: 14rem;
-  max-height: 18rem;
+.tm-head :global(.writing-kicker) {
+  color: var(--tm-accent);
 }
 
-@media (min-width: 900px) {
-  .tag-manager-tags {
-    min-height: 0;
-    max-height: none;
-  }
+.tm-head :global(.writing-brand-title) {
+  margin-top: 0.35rem;
 }
 
-.tag-manager-source-tabs {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 0.3rem;
-  padding: 0.55rem;
-  border-bottom: 1px solid var(--tm-muted-line);
-  background: color-mix(in oklab, var(--tm-accent-soft) 22%, var(--surface-elevated));
-  flex-shrink: 0;
-}
-
-.tag-manager-source-tab {
+.tm-back {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  gap: 0.4rem;
-  min-height: 2.35rem;
-  padding: 0.4rem 0.65rem;
-  border: 1px solid transparent;
-  border-radius: 0.55rem;
-  background: transparent;
+  gap: 0.35rem;
+  width: fit-content;
+  margin-bottom: 0.35rem;
   color: var(--muted-foreground);
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 550;
+  text-decoration: none;
+}
+
+.tm-back:hover {
+  color: var(--tm-accent);
+}
+
+/* ——— System switch (Standard | Custom) ——— */
+.tm-systems {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.55rem;
+  min-width: 0;
+}
+
+.tm-system {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  min-width: 0;
+  padding: 0.85rem 0.9rem;
+  border: 1px solid color-mix(in oklab, var(--tm-accent) 16%, var(--hairline-cloud));
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--surface-elevated) 80%, transparent);
+  color: var(--muted-foreground);
+  text-align: start;
   cursor: pointer;
   transition:
-    background-color 140ms ease,
-    border-color 140ms ease,
-    color 140ms ease;
+    border-color 120ms ease,
+    background 120ms ease,
+    color 120ms ease;
 }
 
-.tag-manager-source-tab:hover {
+.tm-system:hover {
+  border-color: color-mix(in oklab, var(--tm-accent) 32%, transparent);
   color: var(--ink);
-  background: color-mix(in oklab, var(--surface-elevated) 82%, var(--tm-accent-soft));
 }
 
-.tag-manager-source-tab:focus-visible {
-  outline: 2px solid color-mix(in oklab, var(--tm-accent) 50%, transparent);
+.tm-system:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--tm-accent) 55%, transparent);
   outline-offset: 2px;
 }
 
-.tag-manager-source-tab.is-active {
-  color: var(--tm-accent);
-  border-color: color-mix(in oklab, var(--tm-accent) 32%, transparent);
-  background: var(--tm-wash-strong);
+.tm-system.is-active {
+  border-color: color-mix(in oklab, var(--tm-accent) 42%, transparent);
+  border-left: 3px solid var(--tm-accent);
+  background:
+    linear-gradient(
+      135deg,
+      color-mix(in oklab, var(--tm-soft) 48%, transparent) 0%,
+      color-mix(in oklab, var(--surface-elevated) 88%, transparent) 70%
+    );
+  color: var(--ink);
 }
 
-/* Keep custom tab in the same vocab family (no theory purple). */
-.tag-manager-source-tab.is-custom.is-active {
-  color: var(--tm-accent);
-  border-color: color-mix(in oklab, var(--tm-accent) 32%, transparent);
-  background: var(--tm-wash-strong);
-}
-
-.tag-manager-source-count {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  min-width: 1.35rem;
-  height: 1.2rem;
-  padding: 0 0.35rem;
-  border-radius: 999px;
-  background: color-mix(in oklab, var(--tm-accent) 12%, transparent);
-  color: inherit;
-  font-size: 0.7rem;
-  font-variant-numeric: tabular-nums;
+.tm-system-label {
+  font-size: 0.92rem;
   font-weight: 700;
+  letter-spacing: -0.01em;
+  color: inherit;
 }
 
-.tag-manager-pane-head {
+.tm-system.is-active .tm-system-label {
+  color: var(--tm-accent);
+}
+
+.tm-system-meta {
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--muted-foreground);
+}
+
+/* ——— Panels ——— */
+.tm-panel {
+  --tm-panel-pad: var(--studio-main-pad, 1.25rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+  min-width: 0;
+  margin-inline: calc(-1 * var(--tm-panel-pad));
+  padding: 1rem var(--tm-panel-pad);
+  border-block: 1px solid var(--tm-rule);
+  background:
+    radial-gradient(
+      ellipse 70% 110% at 6% 0%,
+      color-mix(in oklab, var(--tm-soft) 52%, transparent),
+      transparent 68%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--tm-soft) 34%, var(--surface-elevated)) 0%,
+      color-mix(in oklab, var(--tm-soft) 12%, transparent) 100%
+    );
+}
+
+.tm-panel-custom {
+  background:
+    radial-gradient(
+      ellipse 60% 100% at 94% 0%,
+      color-mix(in oklab, var(--tm-soft) 48%, transparent),
+      transparent 66%
+    ),
+    linear-gradient(
+      180deg,
+      color-mix(in oklab, var(--tm-soft) 30%, var(--surface-elevated)) 0%,
+      color-mix(in oklab, var(--tm-soft) 10%, transparent) 100%
+    );
+}
+
+.tm-sections {
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  min-width: 0;
+}
+
+.tm-section {
   display: flex;
   flex-direction: column;
   gap: 0.55rem;
-  padding: 0.75rem 0.9rem;
-  border-bottom: 1px solid var(--tm-muted-line);
-  background: color-mix(in oklab, var(--surface-elevated) 94%, var(--tm-accent-soft));
-  flex-shrink: 0;
+  min-width: 0;
 }
 
-.tag-manager-pane-hint {
+.tm-section-head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.35rem 0.75rem;
+}
+
+.tm-section-title {
   margin: 0;
   font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  color: var(--tm-accent);
+}
+
+.tm-section-optional {
+  font-size: 0.7rem;
+  font-weight: 550;
+  color: var(--muted-foreground);
+}
+
+.tm-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+  gap: 0.45rem;
+}
+
+.tm-tile {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-height: 2.55rem;
+  padding: 0.45rem 0.7rem;
+  border: 1px solid color-mix(in oklab, var(--tm-accent) 16%, var(--hairline-cloud));
+  border-left: 3px solid color-mix(in oklab, var(--tm-accent) 28%, transparent);
+  border-radius: 0.65rem;
+  background: color-mix(in oklab, var(--surface-elevated) 86%, transparent);
+  color: var(--ink);
+  text-align: start;
+  cursor: pointer;
+  transition:
+    border-color 120ms ease,
+    background 120ms ease;
+}
+
+.tm-tile:hover {
+  border-color: color-mix(in oklab, var(--tm-accent) 34%, transparent);
+  background: var(--tm-hover);
+}
+
+.tm-tile:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--tm-accent) 55%, transparent);
+  outline-offset: 2px;
+}
+
+.tm-tile.is-active {
+  border-color: color-mix(in oklab, var(--tm-accent) 42%, transparent);
+  border-left-color: var(--tm-accent);
+  background: var(--tm-wash-strong);
+  color: var(--tm-accent);
+  font-weight: 650;
+}
+
+.tm-tile-label {
+  min-width: 0;
+  font-size: 0.82rem;
+  line-height: 1.25;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.tm-tile-count {
+  flex-shrink: 0;
+  font-size: 0.7rem;
+  font-weight: 700;
+  font-variant-numeric: tabular-nums;
+  color: color-mix(in oklab, var(--tm-accent) 65%, var(--muted-foreground));
+}
+
+/* Custom picker panel */
+.tm-custom-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  width: 100%;
+  max-width: 28rem;
+  margin-inline: 0;
+}
+
+.tm-custom-label {
+  margin: 0;
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--tm-accent);
+}
+
+.tm-custom-picker {
+  border-color: color-mix(in oklab, var(--tm-accent) 28%, var(--hairline-cloud)) !important;
+  background: color-mix(in oklab, var(--surface-elevated) 90%, var(--tm-soft)) !important;
+}
+
+.tm-custom-hint {
+  margin: 0;
+  font-size: 0.76rem;
   line-height: 1.4;
   color: var(--muted-foreground);
 }
 
-.tag-manager-groups {
+/* ——— Word stage ——— */
+.tm-stage {
+  display: flex;
+  flex-direction: column;
+  gap: 0.9rem;
+  min-width: 0;
+}
+
+.tm-stage-bar {
   display: flex;
   flex-wrap: wrap;
-  gap: 0.35rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem 0.85rem;
 }
 
-.tag-manager-group-chip {
+.tm-stage-identity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: flex-start;
+  gap: 0.4rem 0.65rem;
+  min-width: 0;
+  flex: 1 1 auto;
+  text-align: start;
+}
+
+.tm-stage-title {
+  margin: 0;
+  font-family: var(--font-heading);
+  font-size: clamp(1.15rem, 2.2vw, 1.45rem);
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  line-height: 1.15;
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+
+.tm-kind {
   display: inline-flex;
   align-items: center;
-  height: 1.85rem;
-  padding: 0 0.7rem;
-  border: 1px solid var(--tm-muted-line);
-  border-radius: 0.5rem;
-  background: color-mix(in oklab, var(--surface-elevated) 70%, transparent);
-  color: var(--muted-foreground);
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition:
-    border-color 140ms ease,
-    background-color 140ms ease,
-    color 140ms ease;
-}
-
-.tag-manager-group-chip:hover {
+  height: 1.3rem;
+  padding: 0 0.45rem;
+  border-radius: 0.3rem;
+  border: 1px solid color-mix(in oklab, var(--tm-accent) 30%, transparent);
+  background: var(--tm-wash);
   color: var(--tm-accent);
-  border-color: color-mix(in oklab, var(--tm-accent) 34%, var(--hairline-cloud));
-  background: var(--tm-hover);
+  font-size: 0.6rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
 }
 
-.tag-manager-group-chip:focus-visible {
-  outline: 2px solid color-mix(in oklab, var(--tm-accent) 50%, transparent);
+.tm-kind.is-custom {
+  border-color: color-mix(in oklab, var(--tm-accent) 18%, var(--hairline-cloud));
+  background: color-mix(in oklab, var(--surface-elevated) 80%, var(--tm-soft));
+}
+
+.tm-mode {
+  display: inline-flex;
+  align-items: stretch;
+  gap: 0.15rem;
+  margin-inline-start: auto;
+  flex-shrink: 0;
+  padding: 0.18rem;
+  border-radius: 0.65rem;
+  border: 1px solid var(--tm-line);
+  background: color-mix(in oklab, var(--surface-elevated) 75%, var(--tm-soft));
+}
+
+.tm-mode-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  min-height: 2.1rem;
+  padding: 0.28rem 0.75rem;
+  border: 0;
+  border-radius: 0.5rem;
+  background: transparent;
+  color: var(--muted-foreground);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.tm-mode-btn em {
+  font-style: normal;
+  font-variant-numeric: tabular-nums;
+  font-weight: 750;
+}
+
+.tm-mode-btn:hover {
+  color: var(--ink);
+}
+
+.tm-mode-btn:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--tm-accent) 55%, transparent);
   outline-offset: 2px;
 }
 
-.tag-manager-group-chip.is-active {
+.tm-mode-btn.is-active {
   color: var(--tm-accent);
-  border-color: color-mix(in oklab, var(--tm-accent) 40%, transparent);
-  background: var(--tm-wash-strong);
-  font-weight: 600;
+  background: color-mix(in oklab, var(--background) 90%, var(--tm-soft));
+  box-shadow: inset 0 -2px 0 var(--tm-accent);
 }
 
-.tag-manager-list {
-  display: flex;
-  flex-direction: column;
-  gap: 0.2rem;
-  padding: 0.45rem;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-}
-
-.tag-manager-tag {
+.tm-tools {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0.5rem 1rem;
   align-items: center;
-  gap: 0.65rem;
+}
+
+@media (min-width: 720px) {
+  .tm-tools {
+    grid-template-columns: minmax(12rem, 22rem) auto 1fr;
+  }
+
+  .tm-scope {
+    justify-self: end;
+    text-align: end;
+  }
+}
+
+.tm-word-search {
   width: 100%;
-  padding: 0.6rem 0.7rem;
-  border: 1px solid transparent;
-  border-radius: 0.55rem;
-  background: transparent;
-  color: var(--ink);
-  text-align: left;
-  cursor: pointer;
-  transition:
-    background-color 140ms ease,
-    border-color 140ms ease,
-    color 140ms ease;
 }
 
-.tag-manager-tag:hover {
-  background: var(--tm-hover);
-}
-
-.tag-manager-tag:focus-visible {
-  outline: 2px solid color-mix(in oklab, var(--tm-accent) 50%, transparent);
-  outline-offset: 1px;
-}
-
-.tag-manager-tag.is-active {
-  border-color: color-mix(in oklab, var(--tm-accent) 34%, transparent);
-  background: var(--tm-wash-strong);
-  color: var(--tm-accent);
-  font-weight: 600;
-}
-
-.tag-manager-tag-label {
-  min-width: 0;
-  font-size: 0.9rem;
-  line-height: 1.3;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.tag-manager-tag-count {
-  flex-shrink: 0;
+.tm-select-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
   font-size: 0.78rem;
-  font-variant-numeric: tabular-nums;
-  color: var(--muted-foreground);
-}
-
-.tag-manager-tag.is-active .tag-manager-tag-count {
-  color: color-mix(in oklab, var(--tm-accent) 72%, var(--muted-foreground));
-}
-
-.tag-manager-words-title-row {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.45rem 0.75rem;
-}
-
-.tag-manager-selected-title {
-  margin: 0;
-  min-width: 0;
-  font-family: var(--font-heading);
-  font-size: 1.05rem;
-  font-weight: 700;
-  line-height: 1.25;
-  color: var(--ink);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-.tag-manager-kind-badge {
-  display: inline-flex;
-  align-items: center;
-  height: 1.45rem;
-  padding: 0 0.55rem;
-  border-radius: 999px;
-  border: 1px solid color-mix(in oklab, var(--tm-accent) 26%, transparent);
-  background: var(--tm-wash);
-  color: var(--tm-accent);
-  font-size: 0.68rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  flex-shrink: 0;
-}
-
-/* Custom = same accent, quieter fill so it still reads as a variant. */
-.tag-manager-kind-badge.is-custom {
-  border-color: color-mix(in oklab, var(--tm-accent) 22%, var(--hairline-cloud));
-  background: color-mix(in oklab, var(--surface-elevated) 78%, var(--tm-accent-soft));
-  color: color-mix(in oklab, var(--tm-accent) 82%, var(--ink));
-}
-
-.tag-manager-toolbar {
-  display: flex;
-  flex-direction: column;
-  gap: 0.55rem;
-}
-
-.tag-manager-word-scroll {
-  display: flex;
-  flex-direction: column;
-  gap: 0.85rem;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  padding: 0.65rem 0.7rem 0.85rem;
-  background: color-mix(in oklab, var(--tm-accent-soft) 10%, transparent);
-}
-
-@media (min-width: 1100px) {
-  .tag-manager-word-scroll {
-    display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1.35fr);
-    gap: 0.85rem;
-    align-items: stretch;
-    overflow: hidden;
-    padding: 0.75rem;
-  }
-}
-
-.tag-manager-word-section {
-  display: flex;
-  flex-direction: column;
-  gap: 0.4rem;
-  min-width: 0;
-  min-height: 0;
-  border: 1px solid var(--tm-panel-edge);
-  border-radius: 0.7rem;
-  background: color-mix(in oklab, var(--surface-elevated) 92%, var(--tm-accent-soft));
-  overflow: hidden;
-}
-
-@media (min-width: 1100px) {
-  .tag-manager-word-section {
-    height: 100%;
-  }
-}
-
-.tag-manager-word-section-head {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;
-  gap: 0.4rem 0.75rem;
-  padding: 0.55rem 0.7rem;
-  border-bottom: 1px solid var(--tm-muted-line);
-  background: color-mix(in oklab, var(--tm-accent-soft) 18%, var(--surface-elevated));
-  flex-shrink: 0;
-}
-
-.tag-manager-word-section-title-row {
-  display: flex;
-  align-items: baseline;
-  gap: 0.45rem;
-  min-width: 0;
-}
-
-.tag-manager-word-section-title {
-  margin: 0;
-  font-size: 0.84rem;
-  font-weight: 700;
-  color: var(--ink);
-}
-
-.tag-manager-word-section-count {
-  font-size: 0.75rem;
-  font-variant-numeric: tabular-nums;
-  color: var(--muted-foreground);
-}
-
-.tag-manager-select-all {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.75rem;
   color: var(--muted-foreground);
   cursor: pointer;
+  user-select: none;
 }
 
-.tag-manager-select-all.is-disabled {
+.tm-select-all.is-disabled {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
-.tag-manager-word-rows {
-  display: flex;
-  flex-direction: column;
-  gap: 0.15rem;
-  padding: 0.35rem;
-  flex: 1;
-  min-height: 0;
-  overflow-y: auto;
-  overscroll-behavior: contain;
-  max-height: 14rem;
+.tm-scope {
+  margin: 0;
+  font-size: 0.72rem;
+  color: var(--muted-foreground);
 }
 
-@media (min-width: 1100px) {
-  .tag-manager-word-rows {
-    max-height: none;
-  }
-}
-
-.tag-manager-word {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  align-items: center;
-  gap: 0.65rem;
-  padding: 0.5rem 0.55rem;
-  border: 1px solid transparent;
-  border-left-width: 3px;
-  border-radius: 0.5rem;
-  background: transparent;
-  transition:
-    background-color 140ms ease,
-    border-color 140ms ease,
-    opacity 140ms ease;
-}
-
-.tag-manager-word:hover:not(.is-disabled) {
-  background: var(--tm-hover);
-}
-
-.tag-manager-word:focus-within {
-  outline: 2px solid color-mix(in oklab, var(--tm-accent) 42%, transparent);
-  outline-offset: 1px;
-}
-
-.tag-manager-word.is-member {
-  background: var(--tm-wash);
-  border-color: color-mix(in oklab, var(--tm-accent) 16%, transparent);
-  border-left-width: 1px;
-}
-
-.tag-manager-word.is-member:hover:not(.is-disabled) {
-  background: color-mix(in oklab, var(--tm-accent-soft) 55%, var(--surface-elevated));
-}
-
-.tag-manager-word.is-selected {
-  border-left-width: 3px;
-  border-color: color-mix(in oklab, var(--tm-accent) 24%, transparent);
-  border-left-color: color-mix(in oklab, var(--tm-accent) 70%, transparent);
-}
-
-.tag-manager-word.is-selected:not(.is-member) {
-  background: color-mix(in oklab, var(--tm-accent-soft) 30%, var(--surface-elevated));
-}
-
-.tag-manager-word.is-member.is-selected {
-  border-left-width: 3px;
-  background: var(--tm-wash-strong);
-  border-color: color-mix(in oklab, var(--tm-accent) 30%, transparent);
-  border-left-color: color-mix(in oklab, var(--tm-accent) 82%, transparent);
-}
-
-.tag-manager-word.is-disabled {
-  opacity: 0.48;
-  cursor: not-allowed;
-}
-
-.tag-manager-word.is-disabled .tag-manager-word-check {
-  cursor: not-allowed;
-}
-
-.tag-manager-word-check {
-  width: 1rem;
-  height: 1rem;
+.tm-check {
+  width: 1.05rem;
+  height: 1.05rem;
+  flex-shrink: 0;
   accent-color: var(--tm-accent);
 }
 
-.tag-manager-word-check:disabled {
-  opacity: 0.7;
-}
-
-.tag-manager-word-check:focus-visible {
-  outline: 2px solid color-mix(in oklab, var(--tm-accent) 50%, transparent);
+.tm-check:focus-visible {
+  outline: 2px solid color-mix(in oklab, var(--tm-accent) 55%, transparent);
   outline-offset: 2px;
 }
 
-.tag-manager-word-copy {
-  min-width: 0;
+.tm-words {
   display: flex;
   flex-direction: column;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 1rem 0 0;
+  list-style: none;
+  border-top: 1px solid var(--tm-rule);
 }
 
-.tag-manager-word-title {
-  margin: 0;
-  font-size: 0.92rem;
-  font-weight: 600;
+.tm-word {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: start;
+  gap: 0.8rem;
+  min-height: 3.15rem;
+  padding: 0.78rem 0.95rem 0.78rem 0.85rem;
+  border: 1px solid color-mix(in oklab, var(--tm-accent) 18%, var(--hairline-cloud));
+  border-left: 3px solid color-mix(in oklab, var(--tm-accent) 34%, var(--hairline-cloud));
+  border-radius: 0.7rem;
+  background:
+    linear-gradient(
+      105deg,
+      color-mix(in oklab, var(--tm-soft) 22%, transparent) 0%,
+      transparent 42%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 88%, var(--background));
+  cursor: pointer;
+  transition:
+    background 120ms ease,
+    border-color 120ms ease;
+}
+
+.tm-word:hover {
+  border-color: color-mix(in oklab, var(--tm-accent) 34%, var(--hairline-cloud));
+  border-left-color: color-mix(in oklab, var(--tm-accent) 62%, transparent);
+  background: var(--tm-hover);
+}
+
+.tm-word:focus-within {
+  outline: 2px solid color-mix(in oklab, var(--tm-accent) 48%, transparent);
+  outline-offset: 1px;
+}
+
+.tm-word.is-member {
+  border-left-color: var(--tm-accent);
+  background:
+    linear-gradient(
+      105deg,
+      color-mix(in oklab, var(--tm-soft) 48%, transparent) 0%,
+      transparent 50%
+    ),
+    color-mix(in oklab, var(--tm-soft) 36%, var(--surface-elevated));
+}
+
+.tm-word.is-selected {
+  border-color: color-mix(in oklab, var(--tm-accent) 40%, var(--hairline-cloud));
+  border-left-color: var(--tm-accent);
+  background: var(--tm-wash-strong);
+}
+
+.tm-word .tm-check {
+  margin-top: 0.22rem;
+}
+
+.tm-word-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 0.18rem;
+  min-width: 0;
+}
+
+.tm-word-title {
+  font-size: 0.95rem;
+  font-weight: 650;
+  line-height: 1.3;
   color: var(--ink);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
-.tag-manager-word-meta {
-  margin: 0.1rem 0 0;
-  font-size: 0.78rem;
+.tm-word-meta {
+  font-size: 0.8rem;
+  line-height: 1.35;
   color: var(--muted-foreground);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  overflow-wrap: anywhere;
 }
 
-.tag-manager-empty,
-.tag-manager-section-empty {
+.tm-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
   margin: 0;
-  padding: 1.25rem 1rem;
+  padding: 2.25rem 1rem;
   text-align: center;
-  font-size: 0.88rem;
+  font-size: 0.9rem;
   color: var(--muted-foreground);
+  border: 1px dashed color-mix(in oklab, var(--tm-accent) 22%, var(--hairline-cloud));
+  border-radius: var(--radius-md);
+  background: color-mix(in oklab, var(--tm-soft) 14%, transparent);
 }
 
-.tag-manager-section-empty {
-  margin: 0.35rem;
-  padding: 1rem 0.75rem;
-  text-align: left;
-  border-radius: 0.5rem;
-  background: color-mix(in oklab, var(--tm-accent-soft) 20%, var(--surface-elevated));
-  border: 1px dashed color-mix(in oklab, var(--tm-accent) 18%, var(--hairline-cloud));
+.tm-pagination {
+  display: flex;
+  width: 100%;
+  margin-top: 0.35rem;
+  padding-top: 0.95rem;
+  border-top: 1px solid var(--tm-rule);
 }
 
-.tag-manager-footer {
+.tm-pager {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 0.65rem 1rem;
+  width: 100%;
+  margin-top: 0 !important;
+  padding-top: 0 !important;
+  border-top: none !important;
+}
+
+@media (min-width: 760px) {
+  .tm-pager {
+    justify-content: flex-end;
+  }
+}
+
+.tm-dock {
+  position: fixed;
+  z-index: 30;
+  inset-inline: 0.75rem;
+  bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 0.75rem;
-  padding: 0.75rem 0.15rem 0.1rem;
-  border-top: 1px solid var(--tm-muted-line);
-  flex-shrink: 0;
+  gap: 0.65rem 1rem;
+  padding: 0.8rem 0.95rem;
+  border: 1px solid color-mix(in oklab, var(--tm-accent) 36%, transparent);
+  border-radius: var(--radius-lg);
+  background: color-mix(in oklab, var(--background) 84%, var(--tm-soft));
+  backdrop-filter: blur(14px) saturate(1.12);
+  -webkit-backdrop-filter: blur(14px) saturate(1.12);
+  box-shadow: 0 12px 32px color-mix(in oklab, var(--ink) 16%, transparent);
 }
 
-.tag-manager-selection {
+@media (min-width: 900px) {
+  .tm-dock {
+    inset-inline: max(0.75rem, calc(50% - 28rem));
+    max-width: 56rem;
+    margin-inline: auto;
+  }
+}
+
+.tm-dock-copy {
   margin: 0;
-  font-size: 0.84rem;
-  color: var(--muted-foreground);
+  font-size: 0.88rem;
+  font-weight: 650;
+  color: var(--ink);
 }
 
-.tag-manager-selection-breakdown {
-  margin: 0.2rem 0 0;
-  font-size: 0.78rem;
-  color: color-mix(in oklab, var(--muted-foreground) 82%, var(--tm-accent));
-}
-
-.tag-manager-actions {
+.tm-dock-actions {
   display: flex;
   flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 0.45rem;
+  margin-inline-start: auto;
 }

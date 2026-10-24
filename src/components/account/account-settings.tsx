@@ -332,7 +332,7 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
         <div className={mx(styles, "account-panel-body account-profile-grid")}>
           <div className={mx(styles, "account-avatar-block")}>
             <UserAvatar name={name} image={image} size="xl" />
-            <div className="flex flex-wrap gap-2">
+            <div className={mx(styles, "account-avatar-actions")}>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -343,6 +343,7 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
               <Button
                 type="button"
                 variant="outline"
+                size="sm"
                 className="route-quiet-action"
                 data-route-action="account"
                 disabled={isAvatarPending}
@@ -359,6 +360,7 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
                 <Button
                   type="button"
                   variant="destructive"
+                  size="sm"
                   disabled={isAvatarPending}
                   onClick={handleRemoveAvatar}
                 >
@@ -543,8 +545,8 @@ export function AccountSettings({ user, checkoutResult, expectPlan }: AccountSet
           </div>
           <Button
             type="button"
-            variant="outline"
-            className="shrink-0 border-destructive/40 text-destructive hover:bg-destructive/10"
+            variant="destructive"
+            className="shrink-0"
             onClick={() => setClearDataOpen(true)}
           >
             <Eraser className="size-4" />

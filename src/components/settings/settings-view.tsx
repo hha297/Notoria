@@ -271,9 +271,8 @@ function DataPrivacySection() {
         </div>
         <Button
           type="button"
-          variant="outline"
-          className="route-quiet-action shrink-0"
-          data-route-action="settings"
+          variant="destructive"
+          className="shrink-0"
           onClick={() => setConfirmOpen(true)}
         >
           <Trash2 className="size-4" />

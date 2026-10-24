@@ -106,13 +106,21 @@
 .guide-toc-link {
   display: block;
   padding: 0.4rem 0.65rem;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-md);
   font-size: 0.875rem;
   color: var(--muted-foreground);
   white-space: normal;
   transition:
     color 140ms ease,
     background-color 140ms ease;
+}
+
+.guide-toc-index {
+  display: inline-block;
+  min-width: 1.35em;
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: color-mix(in oklab, var(--module-guide-fg) 78%, var(--muted-foreground));
 }
 
 .guide-toc-link:hover {
@@ -256,7 +264,7 @@
 }
 
 .guide-callout {
-  border-radius: 0.95rem;
+  border-radius: var(--radius-lg);
   padding: 1.15rem 1.2rem;
 }
 

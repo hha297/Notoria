@@ -124,23 +124,6 @@ export function ListeningView({
     );
   }
 
-  const actions = (
-    <>
-      <ShowTutorialButton section="listening" />
-      <QuotaLockButton
-        type="button"
-        className="route-primary-cta"
-        locked={listeningQuota.locked}
-        lockMessage={listeningQuota.message}
-        icon={<Plus className="size-4" />}
-        onClick={openUpload}
-        data-tutorial="listening-upload"
-      >
-        {t("upload")}
-      </QuotaLockButton>
-    </>
-  );
-
   return (
     <PageShell className="writing-atelier-shell listening-atelier-shell">
       <FolderWorkspace
@@ -154,31 +137,27 @@ export function ListeningView({
       >
         <div className="writing-atelier listening-atelier flex flex-col gap-10 lg:gap-12">
           <header className="writing-hero">
-            <div className="writing-hero-copy">
-              <p className="writing-kicker">{t("eyebrow")}</p>
-              <h1 className="writing-brand-title">{t("title")}</h1>
-              <p className="writing-brand-lede">{t("description")}</p>
+            <p className="writing-kicker">{t("eyebrow")}</p>
+            <h1 className="writing-brand-title">{t("title")}</h1>
+            <div className="writing-hero-primary">
+              <QuotaLockButton
+                type="button"
+                className="route-primary-cta"
+                locked={listeningQuota.locked}
+                lockMessage={listeningQuota.message}
+                icon={<Plus className="size-4" />}
+                onClick={openUpload}
+                data-tutorial="listening-upload"
+              >
+                {isEmptyRoot ? t("uploadFirst") : t("upload")}
+              </QuotaLockButton>
             </div>
-            <div className="writing-hero-actions">
+            <p className="writing-brand-lede">{t("description")}</p>
+            <div className="writing-hero-secondary">
+              <ShowTutorialButton section="listening" />
               {isEmptyRoot ? (
-                <>
-                  <ShowTutorialButton section="listening" />
-                  <NewFolderButton variant="outline" size="sm" />
-                  <QuotaLockButton
-                    type="button"
-                    className="route-primary-cta"
-                    locked={listeningQuota.locked}
-                    lockMessage={listeningQuota.message}
-                    icon={<Plus className="size-4" />}
-                    onClick={openUpload}
-                    data-tutorial="listening-upload"
-                  >
-                    {t("uploadFirst")}
-                  </QuotaLockButton>
-                </>
-              ) : (
-                actions
-              )}
+                <NewFolderButton variant="outline" size="sm" />
+              ) : null}
             </div>
           </header>
 

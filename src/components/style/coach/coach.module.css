@@ -1182,142 +1182,182 @@
 }
 
 .coach-streak {
+  --coach-fg: var(--accent-lime);
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
-  padding: 1.1rem 1.15rem 1.15rem;
-  border-radius: 1rem;
-  border: 1px solid color-mix(in oklab, var(--coach-fg) 26%, var(--border));
+  gap: 0.65rem;
+  width: 100%;
+  max-width: 100%;
+  padding: 0.8rem 0.85rem 0.85rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 28%, transparent);
   background:
     linear-gradient(
       160deg,
       color-mix(in oklab, var(--coach-fg) 16%, transparent) 0%,
-      color-mix(in oklab, var(--coach-fg) 4%, transparent) 48%,
-      transparent 78%
+      transparent 58%
     ),
-    color-mix(in oklab, var(--surface-elevated) 92%, var(--surface));
+    color-mix(in oklab, var(--surface-elevated) 90%, var(--surface));
 }
 
 .coach-streak-home {
   --coach-fg: var(--module-home-fg);
-  border-color: color-mix(in oklab, var(--module-home-fg) 28%, var(--border));
+  border-color: color-mix(in oklab, var(--module-home-fg) 30%, transparent);
   background:
     linear-gradient(
       160deg,
-      color-mix(in oklab, var(--module-home-bg) 70%, transparent) 0%,
-      color-mix(in oklab, var(--module-home-bg) 28%, transparent) 45%,
-      transparent 78%
+      color-mix(in oklab, var(--module-home-bg) 58%, transparent) 0%,
+      transparent 64%
     ),
-    color-mix(in oklab, var(--module-home-bg) 35%, var(--surface));
+    color-mix(in oklab, var(--module-home-bg) 24%, var(--surface));
+}
+
+.coach-streak-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  min-width: 0;
+}
+
+.coach-streak-top .coach-section-kicker {
+  margin: 0;
+}
+
+.coach-streak-body {
+  display: flex;
+  flex-direction: column;
+  gap: 0.7rem;
+  min-width: 0;
 }
 
 .coach-streak-hero {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.55rem;
+  min-width: 0;
 }
 
 .coach-streak-flame {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.75rem;
-  height: 2.75rem;
-  border-radius: 0.85rem;
-  color: color-mix(in oklab, var(--coach-fg) 45%, var(--muted-foreground));
-  background: color-mix(in oklab, var(--coach-fg) 8%, transparent);
+  width: 2.4rem;
+  height: 2.4rem;
+  flex-shrink: 0;
+  border-radius: 0.7rem;
+  color: color-mix(in oklab, var(--coach-fg) 55%, var(--muted-foreground));
+  background: color-mix(in oklab, var(--coach-fg) 14%, transparent);
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 24%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--foreground) 6%, transparent);
 }
 
 .coach-streak-flame-lit {
-  color: color-mix(in oklab, var(--coach-fg) 95%, var(--foreground));
-  background: color-mix(in oklab, var(--coach-fg) 18%, transparent);
+  color: var(--coach-fg);
+  background: color-mix(in oklab, var(--coach-fg) 22%, transparent);
+  border-color: color-mix(in oklab, var(--coach-fg) 44%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, var(--foreground) 8%, transparent),
+    0 0 0 3px color-mix(in oklab, var(--coach-fg) 14%, transparent);
 }
 
 .coach-streak-count-wrap {
   display: flex;
   flex-direction: column;
-  gap: 0.05rem;
+  gap: 0.02rem;
   min-width: 0;
 }
 
 .coach-streak-count {
   margin: 0;
-  font-size: 2.15rem;
+  font-family: var(--font-heading);
+  font-size: 1.85rem;
   font-weight: 800;
   line-height: 1;
-  letter-spacing: -0.03em;
-  color: var(--foreground);
+  letter-spacing: -0.045em;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
 }
 
 .coach-streak-unit {
   margin: 0;
-  font-size: 0.82rem;
+  font-size: 0.7rem;
   font-weight: 650;
-  color: color-mix(in oklab, var(--coach-fg) 70%, var(--muted-foreground));
+  letter-spacing: 0.01em;
+  color: color-mix(in oklab, var(--coach-fg) 80%, var(--muted-foreground));
 }
 
-.coach-streak-status {
+.coach-streak-start {
   margin: 0;
-  font-size: 0.88rem;
-  line-height: 1.45;
-  color: color-mix(in oklab, var(--foreground) 88%, var(--muted-foreground));
+  font-size: 0.76rem;
+  line-height: 1.35;
+  color: var(--muted-foreground);
 }
 
 .coach-streak-week {
   display: grid;
   grid-template-columns: repeat(7, minmax(0, 1fr));
-  gap: 0.35rem;
-  margin: 0.15rem 0 0;
-  padding: 0;
+  gap: 0.2rem;
+  margin: 0;
+  padding: 0.45rem 0.35rem 0.4rem;
   list-style: none;
+  border-radius: calc(var(--radius-md) - 1px);
+  background: color-mix(in oklab, var(--coach-fg) 8%, transparent);
+  border: 1px solid color-mix(in oklab, var(--coach-fg) 14%, transparent);
 }
 
 .coach-streak-day {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 0.3rem;
+  gap: 0.26rem;
+  min-width: 0;
 }
 
 .coach-streak-dot {
   appearance: none;
-  width: 0.78rem;
-  height: 0.78rem;
+  width: 0.68rem;
+  height: 0.68rem;
   padding: 0;
   border-radius: 999px;
-  border: 1px solid color-mix(in oklab, var(--coach-fg) 22%, var(--border));
-  background: color-mix(in oklab, var(--muted) 45%, transparent);
+  border: 1.5px solid color-mix(in oklab, var(--coach-fg) 28%, var(--hairline-cloud));
+  background: transparent;
   cursor: pointer;
   outline: none;
   transition:
     transform 0.12s ease,
     background 0.12s ease,
-    border-color 0.12s ease;
+    border-color 0.12s ease,
+    box-shadow 0.12s ease;
 }
 
 .coach-streak-dot:hover,
 .coach-streak-dot:focus-visible {
   transform: scale(1.18);
-  border-color: color-mix(in oklab, var(--coach-fg) 48%, var(--border));
+  border-color: color-mix(in oklab, var(--coach-fg) 58%, transparent);
 }
 
 .coach-streak-dot-active {
-  border-color: color-mix(in oklab, var(--coach-fg) 55%, var(--border));
-  background: color-mix(in oklab, var(--coach-fg) 85%, var(--foreground));
+  border-color: transparent;
+  background: var(--coach-fg);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--coach-fg) 20%, transparent);
 }
 
 .coach-streak-day-label {
-  font-size: 0.65rem;
+  font-size: 0.58rem;
   font-weight: 650;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.03em;
   text-transform: uppercase;
   color: var(--muted-foreground);
 }
 
 .coach-streak-best {
-  margin: 0.1rem 0 0;
-  font-size: 0.78rem;
+  margin: 0;
+  flex-shrink: 0;
+  font-size: 0.68rem;
+  font-weight: 550;
   color: var(--muted-foreground);
+  text-align: end;
 }
 
 .coach-streak-tooltip {

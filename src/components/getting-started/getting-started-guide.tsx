@@ -264,9 +264,12 @@ function GuideToc() {
       >
         <p className={mx(styles, "guide-toc-title")}>{t("toc.title")}</p>
         <ul className={mx(styles, "guide-toc-list")}>
-          {TOC_IDS.map((id) => (
+          {TOC_IDS.map((id, index) => (
             <li key={id}>
               <a href={`#${id}`} className={mx(styles, "guide-toc-link")}>
+                <span className={mx(styles, "guide-toc-index")} aria-hidden>
+                  {index + 1}.
+                </span>{" "}
                 {t(`toc.${tocKey(id)}`)}
               </a>
             </li>
@@ -350,13 +353,17 @@ function GuideSection({
   children: ReactNode;
   moduleTint?: string;
 }) {
+  const tocIndex = (TOC_IDS as readonly string[]).indexOf(id);
+  const heading =
+    tocIndex >= 0 ? `${tocIndex + 1}. ${title}` : title;
+
   return (
     <section
       id={id}
       className={mx(styles, "guide-section")}
       data-guide-module={moduleTint}
     >
-      <h2 className={mx(styles, "guide-section-title")}>{title}</h2>
+      <h2 className={mx(styles, "guide-section-title")}>{heading}</h2>
       <div className={mx(styles, "guide-section-body")}>{children}</div>
     </section>
   );
