@@ -6,6 +6,7 @@ import {
   ROLE_REFRESH_MS,
   authClock,
   classifyDependencyError,
+  dependencyCauseCode,
   nextAuthBackoffMs,
 } from "@/lib/auth/policy";
 
@@ -28,11 +29,18 @@ function categoryOf(error: unknown): string {
   return classifyDependencyError(error);
 }
 
+function causeOf(error: unknown): string | undefined {
+  if (error instanceof AuthorizationUnavailableError) return error.causeCode;
+  return dependencyCauseCode(error);
+}
+
 /**
  * Refresh role and suspension on an existing JWT.
  * Returns null only when the user row is confirmed missing.
  * Throws only while establishing a new session if the read fails.
  * An existing session keeps its claims and records a backoff instead.
+ *
+ * Not used from middleware — navigation validates the signed token only.
  */
 export async function refreshAuthMetadata({
   token,
@@ -55,6 +63,7 @@ export async function refreshAuthMetadata({
   if (!due || inBackoff) return token;
 
   const phase = establishing ? "initial" : "refresh";
+  const started = Date.now();
 
   try {
     const row = await loadUser(token.id);
@@ -63,6 +72,8 @@ export async function refreshAuthMetadata({
         stage: "metadata-refresh",
         phase,
         outcome: "user-missing",
+        operation: "auth.metadataRefresh",
+        durationMs: Date.now() - started,
       });
       return null;
     }
@@ -76,16 +87,21 @@ export async function refreshAuthMetadata({
     return token;
   } catch (error) {
     const errorCategory = categoryOf(error);
+    const causeCode = causeOf(error);
+    const durationMs = Date.now() - started;
     if (establishing) {
       logAuthEvent({
         stage: "metadata-refresh",
         phase,
         outcome: "unavailable",
+        operation: "auth.metadataRefresh",
+        durationMs,
         errorCategory,
+        causeCode,
       });
       throw error instanceof AuthorizationUnavailableError
         ? error
-        : new AuthorizationUnavailableError(errorCategory);
+        : new AuthorizationUnavailableError(errorCategory, causeCode);
     }
 
     const backoff = nextAuthBackoffMs(
@@ -98,7 +114,10 @@ export async function refreshAuthMetadata({
       stage: "metadata-refresh",
       phase,
       outcome: "preserved",
+      operation: "auth.metadataRefresh",
+      durationMs,
       errorCategory,
+      causeCode,
     });
     return token;
   }

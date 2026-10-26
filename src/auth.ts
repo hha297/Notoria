@@ -16,10 +16,15 @@ import { refreshAuthMetadata } from "@/lib/auth/metadata-refresh";
 import {
   SESSION_MAX_AGE_SECONDS,
   classifyDependencyError,
+  dependencyCauseCode,
   parseRememberValue,
 } from "@/lib/auth/policy";
-import { currentAuthRequest } from "@/lib/auth/request-context";
+import {
+  currentAuthRequest,
+  isMiddlewareAuthSurface,
+} from "@/lib/auth/request-context";
 import { bindSessionLifetime } from "@/lib/auth/session-lifetime";
+import { runBoundedDbOp } from "@/lib/db/run-bounded";
 
 const credentialsSchema = z.object({
   email: z.string().email(),
@@ -31,7 +36,7 @@ class AccountSuspendedSignIn extends CredentialsSignin {
 }
 
 async function loadAuthUser(userId: string) {
-  try {
+  return runBoundedDbOp("auth.loadUser", async () => {
     const row = await db.query.users.findFirst({
       where: eq(users.id, userId),
       columns: {
@@ -44,9 +49,7 @@ async function loadAuthUser(userId: string) {
       },
     });
     return row ?? null;
-  } catch (error) {
-    throw new AuthorizationUnavailableError(classifyDependencyError(error));
-  }
+  });
 }
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -98,19 +101,33 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
         let user;
         try {
-          user = await db.query.users.findFirst({
-            where: eq(users.email, parsed.data.email.toLowerCase()),
-          });
+          user = await runBoundedDbOp("auth.authorize", async () =>
+            db.query.users.findFirst({
+              where: eq(users.email, parsed.data.email.toLowerCase()),
+            }),
+          );
         } catch (error) {
+          // runBoundedDbOp already logged operation/duration/cause.
           logAuthEvent({
             stage: "sign-in",
             phase: "initial",
             outcome: "unavailable",
-            errorCategory: classifyDependencyError(error),
+            operation: "auth.authorize",
+            errorCategory:
+              error instanceof AuthorizationUnavailableError
+                ? error.category
+                : classifyDependencyError(error),
+            causeCode:
+              error instanceof AuthorizationUnavailableError
+                ? error.causeCode
+                : dependencyCauseCode(error),
           });
-          throw new AuthorizationUnavailableError(
-            classifyDependencyError(error),
-          );
+          throw error instanceof AuthorizationUnavailableError
+            ? error
+            : new AuthorizationUnavailableError(
+                classifyDependencyError(error),
+                dependencyCauseCode(error),
+              );
         }
 
         if (!user?.passwordHash) return null;
@@ -144,6 +161,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             stage: "sign-in",
             phase: "initial",
             outcome: "suspended",
+            operation: "auth.signIn",
           });
           return false;
         }
@@ -153,10 +171,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           stage: "sign-in",
           phase: "initial",
           outcome: "unavailable",
+          operation: "auth.signIn",
           errorCategory:
             error instanceof AuthorizationUnavailableError
               ? error.category
               : classifyDependencyError(error),
+          causeCode:
+            error instanceof AuthorizationUnavailableError
+              ? error.causeCode
+              : dependencyCauseCode(error),
         });
         return false;
       }
@@ -185,6 +208,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
       if (!timed) return null;
       token = timed;
 
+      // Middleware: signature + hard expiry only. No DB / metadata refresh.
+      if (isMiddlewareAuthSurface() && !establishing) {
+        return token;
+      }
+
       try {
         return await refreshAuthMetadata({
           token,
@@ -206,7 +234,15 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           stage: "metadata-refresh",
           phase: "refresh",
           outcome: "preserved",
-          errorCategory: classifyDependencyError(error),
+          operation: "auth.jwt",
+          errorCategory:
+            error instanceof AuthorizationUnavailableError
+              ? error.category
+              : classifyDependencyError(error),
+          causeCode:
+            error instanceof AuthorizationUnavailableError
+              ? error.causeCode
+              : dependencyCauseCode(error),
         });
         return token;
       }

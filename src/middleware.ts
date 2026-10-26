@@ -8,6 +8,11 @@ import {
   stripSessionSetCookies,
 } from "@/lib/auth/session-cookie";
 
+/**
+ * Navigation gate: Auth.js validates the signed JWT and hard session
+ * expiry only. Role/suspension metadata is not refreshed here — that
+ * happens on /api/auth/session and protected server loaders/actions.
+ */
 const withAuth = auth((request) => {
   const started = performance.now();
   try {
@@ -39,14 +44,18 @@ export default async function middleware(
   request: Parameters<typeof withAuth>[0],
   event: Parameters<typeof withAuth>[1],
 ) {
-  return runWithAuthRequest(request, async () => {
-    const response = await withAuth(request, event);
-    if (!response) return response;
-    if (isAuthCookieMutation(request.nextUrl.pathname)) {
-      return stripSessionSetCookies(response);
-    }
-    return applySessionPersistence(response);
-  });
+  return runWithAuthRequest(
+    request,
+    async () => {
+      const response = await withAuth(request, event);
+      if (!response) return response;
+      if (isAuthCookieMutation(request.nextUrl.pathname)) {
+        return stripSessionSetCookies(response);
+      }
+      return applySessionPersistence(response);
+    },
+    { surface: "middleware" },
+  );
 }
 
 export const config = {

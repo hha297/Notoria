@@ -16,6 +16,7 @@ export default async function AdminLayout({
   try {
     await requireAdmin();
   } catch (error) {
+    // Do not treat AUTH_UNAVAILABLE as denial — leave session cookies intact.
     if (
       error instanceof AdminAccessError ||
       error instanceof AccountSuspendedError ||

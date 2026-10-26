@@ -60,14 +60,75 @@ export function nextAuthBackoffMs(previous: number | undefined): number {
 }
 
 /**
+ * Safe driver / PostgreSQL code for logs. Never returns messages, hosts,
+ * or connection strings — only short alphanumeric codes.
+ */
+export function dependencyCauseCode(error: unknown): string | undefined {
+  if (typeof error !== "object" || error === null) return undefined;
+
+  const record = error as {
+    code?: unknown;
+    errno?: unknown;
+    cause?: unknown;
+  };
+
+  const fromCode = sanitizeCauseToken(record.code);
+  if (fromCode) return fromCode;
+
+  const fromErrno = sanitizeCauseToken(record.errno);
+  if (fromErrno) return fromErrno;
+
+  if (record.cause !== undefined) {
+    return dependencyCauseCode(record.cause);
+  }
+  return undefined;
+}
+
+function sanitizeCauseToken(value: unknown): string | undefined {
+  if (typeof value === "number" && Number.isFinite(value)) {
+    const asInt = String(Math.trunc(value));
+    if (/^-?\d{1,10}$/.test(asInt)) return asInt;
+    return undefined;
+  }
+  if (typeof value !== "string") return undefined;
+  const trimmed = value.trim();
+  // PostgreSQL SQLSTATE (5 chars) or Node errno-style tokens.
+  if (/^[A-Z0-9_]{2,32}$/i.test(trimmed)) return trimmed.toUpperCase();
+  return undefined;
+}
+
+/**
  * Category only. Callers must not log the raw error: driver messages can
  * contain host details.
  */
 export function classifyDependencyError(error: unknown): string {
+  const cause = dependencyCauseCode(error);
+  if (cause === "57014" || cause === "ETIMEDOUT" || cause === "ETIME") {
+    return "timeout";
+  }
+  if (
+    cause === "53300" ||
+    cause === "57P01" ||
+    cause === "57P03" ||
+    cause === "08001" ||
+    cause === "08006" ||
+    cause === "ECONNREFUSED" ||
+    cause === "ECONNRESET" ||
+    cause === "ENOTFOUND" ||
+    cause === "EAI_AGAIN" ||
+    cause === "EPIPE"
+  ) {
+    return "connection";
+  }
+
   const name = error instanceof Error ? error.name : "";
   const message = error instanceof Error ? error.message : "";
   const text = `${name} ${message}`;
-  if (/timeout|timed out|etimedout|connect_timeout|57014/i.test(text)) {
+  if (
+    /timeout|timed out|etimedout|connect_timeout|57014|statement timeout/i.test(
+      text,
+    )
+  ) {
     return "timeout";
   }
   if (

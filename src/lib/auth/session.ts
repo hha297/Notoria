@@ -9,8 +9,10 @@ export const getSession = cache(async () =>
 );
 
 /**
- * Authenticated, non-suspended user id. Suspension is enforced here so
- * existing sessions lose access on the next protected server call.
+ * Authenticated, non-suspended user id from a fresh database row.
+ * Suspension and identity are enforced here so JWT claims alone are not
+ * enough for protected mutations. Database failures throw
+ * AuthorizationUnavailableError (503) and must not clear the session.
  */
 export const getCurrentUserId = cache(async (): Promise<string> => {
   const session = await getSession();
@@ -30,6 +32,10 @@ export const getCurrentUserId = cache(async (): Promise<string> => {
   return user.id;
 });
 
+/**
+ * Soft presence check for pages. Database failures propagate as
+ * AuthorizationUnavailableError — callers must not treat that as signed-out.
+ */
 export async function requireUser() {
   const session = await getSession();
 

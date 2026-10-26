@@ -15,10 +15,13 @@ export class AuthorizationUnavailableError extends Error {
   readonly statusCode = 503;
   readonly code = "AUTH_UNAVAILABLE";
   readonly category: string;
+  /** Sanitized driver / PostgreSQL code when known (e.g. 57014, ETIMEDOUT). */
+  readonly causeCode?: string;
 
-  constructor(category: string) {
+  constructor(category: string, causeCode?: string) {
     super("AUTH_UNAVAILABLE");
     this.name = "AuthorizationUnavailableError";
     this.category = category;
+    if (causeCode) this.causeCode = causeCode;
   }
 }

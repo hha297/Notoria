@@ -6,8 +6,9 @@ import { incomingRequestId, logAuthEvent } from "@/lib/auth/diagnostics";
 import {
   AuthorizationUnavailableError,
 } from "@/lib/auth/errors";
-import { classifyDependencyError } from "@/lib/auth/policy";
+import { classifyDependencyError, dependencyCauseCode } from "@/lib/auth/policy";
 import { getSession } from "@/lib/auth/session";
+import { runBoundedDbOp } from "@/lib/db/run-bounded";
 import { withTiming } from "@/lib/perf/dev-timing";
 
 const USER_COLUMNS = {
@@ -31,6 +32,7 @@ const USER_COLUMNS = {
 /**
  * Single request-scoped user row for subscription + pro-access + admin checks.
  * Isolated by React cache() — never shared across requests/users.
+ * Always reads the database; never trusts JWT role/suspension alone.
  */
 export const getCurrentUserRecord = cache(async () => {
   return withTiming("auth.userRecord", async () => {
@@ -39,27 +41,37 @@ export const getCurrentUserRecord = cache(async () => {
       return null;
     }
 
+    const started = Date.now();
     try {
-      const user = await db.query.users.findFirst({
-        where: eq(users.id, session.user.id),
-        columns: USER_COLUMNS,
+      return await runBoundedDbOp("auth.userRecord", async () => {
+        const user = await db.query.users.findFirst({
+          where: eq(users.id, session.user.id),
+          columns: USER_COLUMNS,
+        });
+        return user ?? null;
       });
-      return user ?? null;
     } catch (error) {
       const errorCategory =
         error instanceof AuthorizationUnavailableError
           ? error.category
           : classifyDependencyError(error);
+      const causeCode =
+        error instanceof AuthorizationUnavailableError
+          ? error.causeCode
+          : dependencyCauseCode(error);
       logAuthEvent({
         stage: "authorization",
         phase: "check",
         outcome: "unavailable",
+        operation: "auth.userRecord",
+        durationMs: Date.now() - started,
         errorCategory,
+        causeCode,
         requestId: await incomingRequestId(),
       });
       throw error instanceof AuthorizationUnavailableError
         ? error
-        : new AuthorizationUnavailableError(errorCategory);
+        : new AuthorizationUnavailableError(errorCategory, causeCode);
     }
   });
 });

@@ -11,6 +11,8 @@ import {
   ROLE_REFRESH_MS,
   SESSION_MAX_AGE_SECONDS,
   SESSION_SHORT_MAX_AGE_SECONDS,
+  classifyDependencyError,
+  dependencyCauseCode,
   safeLocalCallback,
 } from "@/lib/auth/policy";
 import { requireOwnedRow } from "@/lib/data/owned";
@@ -176,6 +178,21 @@ describe("authorization errors", () => {
     expect(jsonAuthError(new Error("remaining connection slots are reserved"))).toMatchObject({
       status: 503,
     });
+  });
+
+  it("extracts sanitized driver cause codes without leaking messages", () => {
+    expect(dependencyCauseCode({ code: "57014" })).toBe("57014");
+    expect(dependencyCauseCode({ code: "ETIMEDOUT" })).toBe("ETIMEDOUT");
+    expect(dependencyCauseCode({ code: "53300" })).toBe("53300");
+    expect(
+      dependencyCauseCode({
+        message: "password=secret host=db.internal",
+        code: "08006",
+      }),
+    ).toBe("08006");
+    expect(dependencyCauseCode(new Error("password=secret"))).toBeUndefined();
+    expect(classifyDependencyError({ code: "57014" })).toBe("timeout");
+    expect(classifyDependencyError({ code: "53300" })).toBe("connection");
   });
 
   it("does not treat a stale admin flag as paid access when no user row is available", () => {
