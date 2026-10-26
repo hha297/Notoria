@@ -89,33 +89,9 @@ export function SpeakingView({ workspaceId }: SpeakingViewProps) {
     <PageShell className="writing-atelier-shell speaking-atelier-shell">
       <div className="writing-atelier speaking-atelier flex flex-col gap-10 lg:gap-12">
         <header className="writing-hero">
-          <div className="writing-hero-copy">
-            <p className="writing-kicker">{t("eyebrow")}</p>
-            <h1 className="writing-brand-title">{t("title")}</h1>
-            <p className="writing-brand-lede">{t("description")}</p>
-            <ul className={mx(styles, "speaking-canopy mt-5")} aria-label={t("stats.aria")}>
-              <li className={mx(styles, "speaking-canopy-item")}>
-                <span className={mx(styles, "speaking-canopy-value")}>{stats.total}</span>
-                <span className={mx(styles, "speaking-canopy-label")}>{t("stats.total")}</span>
-              </li>
-              <li className={mx(styles, "speaking-canopy-item")}>
-                <span className={mx(styles, "speaking-canopy-value")}>{stats.completed}</span>
-                <span className={mx(styles, "speaking-canopy-label")}>
-                  {t("stats.completed")}
-                </span>
-              </li>
-              <li className={mx(styles, "speaking-canopy-item")}>
-                <span className={mx(styles, "speaking-canopy-value")}>{stats.ready}</span>
-                <span className={mx(styles, "speaking-canopy-label")}>{t("stats.ready")}</span>
-              </li>
-              <li className={mx(styles, "speaking-canopy-item")}>
-                <span className={mx(styles, "speaking-canopy-value")}>{stats.topics}</span>
-                <span className={mx(styles, "speaking-canopy-label")}>{t("stats.topics")}</span>
-              </li>
-            </ul>
-          </div>
-          <div className="writing-hero-actions">
-            <ShowTutorialButton section="speaking" />
+          <p className="writing-kicker">{t("eyebrow")}</p>
+          <h1 className="writing-brand-title">{t("title")}</h1>
+          <div className="writing-hero-primary">
             <QuotaLockButton
               className="route-primary-cta"
               locked={speakingQuota.locked}
@@ -127,6 +103,33 @@ export function SpeakingView({ workspaceId }: SpeakingViewProps) {
               {sessions.length === 0 ? t("newCallFirst") : t("newCall")}
             </QuotaLockButton>
           </div>
+          <p className="writing-brand-lede">{t("description")}</p>
+          <div className="writing-hero-secondary">
+            <ShowTutorialButton section="speaking" />
+          </div>
+          <ul
+            className={cn(mx(styles, "speaking-canopy"), "writing-hero-extra")}
+            aria-label={t("stats.aria")}
+          >
+            <li className={mx(styles, "speaking-canopy-item")}>
+              <span className={mx(styles, "speaking-canopy-value")}>{stats.total}</span>
+              <span className={mx(styles, "speaking-canopy-label")}>{t("stats.total")}</span>
+            </li>
+            <li className={mx(styles, "speaking-canopy-item")}>
+              <span className={mx(styles, "speaking-canopy-value")}>{stats.completed}</span>
+              <span className={mx(styles, "speaking-canopy-label")}>
+                {t("stats.completed")}
+              </span>
+            </li>
+            <li className={mx(styles, "speaking-canopy-item")}>
+              <span className={mx(styles, "speaking-canopy-value")}>{stats.ready}</span>
+              <span className={mx(styles, "speaking-canopy-label")}>{t("stats.ready")}</span>
+            </li>
+            <li className={mx(styles, "speaking-canopy-item")}>
+              <span className={mx(styles, "speaking-canopy-value")}>{stats.topics}</span>
+              <span className={mx(styles, "speaking-canopy-label")}>{t("stats.topics")}</span>
+            </li>
+          </ul>
         </header>
 
         <section className={mx(styles, "speaking-guide")} aria-label={t("guide.aria")}>

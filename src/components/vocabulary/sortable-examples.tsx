@@ -78,45 +78,24 @@ function ExampleRowShell({
 
   return (
     <div className={mx(composerStyles, "vocab-composer-item")}>
-      <div className="flex items-start gap-2.5 p-3.5 sm:items-center sm:gap-3 sm:p-4">
+      <div className="flex items-center gap-2.5 p-3.5 sm:gap-3 sm:p-4">
         {dragHandle}
         <span
-          className={mx(composerStyles, "vocab-composer-index mt-1 sm:mt-0")}
+          className={mx(composerStyles, "vocab-composer-index")}
           aria-hidden
         >
           {index + 1}
         </span>
-        <div className="min-w-0 flex-1 space-y-2.5">
-          <CapitalizedInput
-            ref={inputRef}
-            value={item.sentence}
-            onChange={(event) =>
-              onUpdate(item.id, { sentence: event.target.value })
-            }
-            placeholder={placeholder}
-            className={mx(composerStyles, "vocab-composer-field w-full")}
-            aria-label={`${t("examples")} ${index + 1}`}
-          />
-          <button
-            type="button"
-            onClick={onToggleDetails}
-            className={mx(composerStyles, "vocab-composer-details-toggle")}
-            aria-expanded={detailsOpen}
-          >
-            <ChevronDown
-              className={cn(
-                "size-3.5 transition-transform",
-                detailsOpen ? "rotate-0" : "-rotate-90",
-              )}
-            />
-            {t("exampleDetails")}
-            {hasDetails && !detailsOpen ? (
-              <span className={mx(composerStyles, "vocab-composer-details-badge")}>
-                {t("exampleDetailsFilled")}
-              </span>
-            ) : null}
-          </button>
-        </div>
+        <CapitalizedInput
+          ref={inputRef}
+          value={item.sentence}
+          onChange={(event) =>
+            onUpdate(item.id, { sentence: event.target.value })
+          }
+          placeholder={placeholder}
+          className={mx(composerStyles, "vocab-composer-field min-w-0 flex-1")}
+          aria-label={`${t("examples")} ${index + 1}`}
+        />
         <Button
           type="button"
           variant="ghost"
@@ -126,11 +105,32 @@ function ExampleRowShell({
           aria-label={t("removeExample")}
           className={mx(
             composerStyles,
-            "vocab-composer-icon-btn vocab-composer-icon-btn-danger mt-1 shrink-0 sm:mt-0",
+            "vocab-composer-icon-btn vocab-composer-icon-btn-danger shrink-0",
           )}
         >
           <Trash2 className="size-4" />
         </Button>
+      </div>
+      <div className="flex px-3.5 pb-3.5 sm:px-4 sm:pb-4">
+        <button
+          type="button"
+          onClick={onToggleDetails}
+          className={mx(composerStyles, "vocab-composer-details-toggle")}
+          aria-expanded={detailsOpen}
+        >
+          <ChevronDown
+            className={cn(
+              "size-3.5 transition-transform",
+              detailsOpen ? "rotate-0" : "-rotate-90",
+            )}
+          />
+          {t("exampleDetails")}
+          {hasDetails && !detailsOpen ? (
+            <span className={mx(composerStyles, "vocab-composer-details-badge")}>
+              {t("exampleDetailsFilled")}
+            </span>
+          ) : null}
+        </button>
       </div>
 
       {detailsOpen ? (
@@ -145,7 +145,7 @@ function ExampleRowShell({
               htmlFor={`example-meaning-${item.id}`}
               className={mx(
                 composerStyles,
-                "vocab-composer-kicker text-[0.68rem] font-semibold tracking-[0.14em] uppercase",
+                "vocab-composer-kicker text-[0.8rem] font-semibold tracking-[0.14em] uppercase",
               )}
             >
               {t("exampleMeaning")}{" "}
@@ -168,7 +168,7 @@ function ExampleRowShell({
               htmlFor={`example-notes-${item.id}`}
               className={mx(
                 composerStyles,
-                "vocab-composer-kicker text-[0.68rem] font-semibold tracking-[0.14em] uppercase",
+                "vocab-composer-kicker text-[0.8rem] font-semibold tracking-[0.14em] uppercase",
               )}
             >
               {t("exampleNotes")}{" "}

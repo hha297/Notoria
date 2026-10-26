@@ -113,11 +113,11 @@ function MeaningRowShell({
       <div
         className={mx(
           composerStyles,
-          "vocab-composer-item flex min-w-0 items-start gap-2.5 p-3.5 sm:gap-3 sm:p-4",
+          "vocab-composer-item min-w-0 p-3.5 sm:p-4",
           item.isPrimary ? "vocab-composer-item-primary" : null,
         )}
       >
-        <div className="flex shrink-0 items-center gap-2.5 pt-0.5 sm:gap-3">
+        <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
           {dragHandle}
           <span
             className={mx(composerStyles, "vocab-composer-index")}
@@ -144,10 +144,8 @@ function MeaningRowShell({
               className={cn("size-4", item.isPrimary && "fill-current")}
             />
           </Button>
-        </div>
-        <div className="flex min-w-0 flex-1 flex-col gap-2">
           <div
-            className={mx(composerStyles, "vocab-meaning-input-row")}
+            className={mx(composerStyles, "vocab-meaning-input-row min-w-0 flex-1")}
           >
             <CapitalizedInput
               ref={inputRef}
@@ -167,27 +165,28 @@ function MeaningRowShell({
               }
             />
           </div>
-          <MeaningUsageChips
-            value={item.usageLabels}
-            onChange={(usageLabels) =>
-              onUpdateUsageLabels(item.id, usageLabels)
-            }
-          />
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            onClick={() => onRemove(item.id)}
+            disabled={!canRemove}
+            aria-label="Remove meaning"
+            className={mx(
+              composerStyles,
+              "vocab-composer-icon-btn vocab-composer-icon-btn-danger shrink-0 cursor-pointer",
+            )}
+          >
+            <Trash2 className="size-4" />
+          </Button>
         </div>
-        <Button
-          type="button"
-          variant="ghost"
-          size="icon-sm"
-          onClick={() => onRemove(item.id)}
-          disabled={!canRemove}
-          aria-label="Remove meaning"
-          className={mx(
-            composerStyles,
-            "vocab-composer-icon-btn vocab-composer-icon-btn-danger shrink-0 cursor-pointer",
-          )}
-        >
-          <Trash2 className="size-4" />
-        </Button>
+        <MeaningUsageChips
+          value={item.usageLabels}
+          onChange={(usageLabels) =>
+            onUpdateUsageLabels(item.id, usageLabels)
+          }
+          className="mt-2"
+        />
       </div>
       {aiFooter}
     </div>

@@ -1182,7 +1182,7 @@
       },
       "contextualLanguageHint": "Câu hỏi được tạo bằng {language} (ngôn ngữ workspace).",
       "contextualEmptyTitle": "Tạo câu hỏi ngữ cảnh",
-      "contextualEmptyDescription": "Tạo câu trắc nghiệm điền chỗ trống từ từ vựng của bạn.",
+      "contextualEmptyDescription": "Có thể thêm hướng dẫn tùy chọn bên dưới, rồi bấm Tạo. Để trống cũng được.",
       "contextualProDescription": "Câu hỏi ngữ cảnh bằng AI dành cho Pro.",
       "unlockContextual": "Mở khóa với Pro",
       "correct": "Đúng rồi!",
@@ -1214,7 +1214,7 @@
         "contextual": "Ngữ cảnh"
       },
       "contextualEmptyTitle": "Tạo câu hỏi ngữ cảnh",
-      "contextualEmptyDescription": "Tạo câu điền chỗ trống để gõ đáp án từ từ vựng của bạn.",
+      "contextualEmptyDescription": "Có thể thêm hướng dẫn tùy chọn bên dưới, rồi bấm Tạo. Để trống cũng được.",
       "contextualProDescription": "Câu hỏi ngữ cảnh bằng AI dành cho Pro.",
       "unlockContextual": "Mở khóa với Pro",
       "placeholder": "Gõ đáp án…",

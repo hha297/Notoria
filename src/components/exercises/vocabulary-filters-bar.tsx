@@ -103,14 +103,14 @@ export function VocabularyFiltersBar({
             <ToggleGroupItem
               value="word-to-meaning"
               variant="outline"
-              className="h-auto min-h-8 w-full justify-center whitespace-normal px-3 py-2 text-center sm:flex-1"
+              className="exercise-study-mode-toggle h-auto min-h-10 w-full justify-center whitespace-normal px-3 py-2.5 text-center sm:flex-1"
             >
               {tFlash("modes.wordToMeaning")}
             </ToggleGroupItem>
             <ToggleGroupItem
               value="meaning-to-word"
               variant="outline"
-              className="h-auto min-h-8 w-full justify-center whitespace-normal px-3 py-2 text-center sm:flex-1"
+              className="exercise-study-mode-toggle h-auto min-h-10 w-full justify-center whitespace-normal px-3 py-2.5 text-center sm:flex-1"
             >
               {tFlash("modes.meaningToWord")}
             </ToggleGroupItem>
@@ -118,7 +118,7 @@ export function VocabularyFiltersBar({
               <ToggleGroupItem
                 value="contextual"
                 variant="outline"
-                className="h-auto min-h-8 w-full justify-center gap-1.5 whitespace-normal px-3 py-2 text-center sm:flex-1"
+                className="exercise-study-mode-toggle h-auto min-h-10 w-full justify-center gap-1.5 whitespace-normal px-3 py-2.5 text-center sm:flex-1"
               >
                 {tMc("modes.contextual")}
                 {contextualPro ? (
@@ -134,7 +134,7 @@ export function VocabularyFiltersBar({
               <ToggleGroupItem
                 value="mixed"
                 variant="outline"
-                className="h-auto min-h-8 w-full justify-center whitespace-normal px-3 py-2 text-center sm:flex-1"
+                className="exercise-study-mode-toggle h-auto min-h-10 w-full justify-center whitespace-normal px-3 py-2.5 text-center sm:flex-1"
               >
                 {tFlash("modes.mixed")}
               </ToggleGroupItem>

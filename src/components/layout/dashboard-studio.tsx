@@ -126,7 +126,11 @@ export function DashboardStudio({
         Document scrolls naturally. Sidebar is position:sticky inside the
         content row so it unsticks before the footer (normal-flow containing block).
       */}
-      <div className="studio-shell flex min-h-svh flex-col">
+      <div
+        className="studio-shell flex min-h-svh flex-col"
+        data-studio-scene={studioScene}
+        data-exercise={exerciseDetailSlug ?? undefined}
+      >
         {/*
           Sticky sidebar lives in normal flow beside main content so its
           containing block ends above the footer (no absolute overlay / z-fight).

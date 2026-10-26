@@ -268,8 +268,9 @@
   --studio-wash-scene-b: 28%;
   --studio-wash-fade-a: 58%;
   --studio-wash-fade-b: 54%;
-  /* Outermost shell ambient — same on every route (gaps around chrome) */
+  /* Outermost shell ambient — follows --page-accent-soft per route */
   --studio-shell-wash: 60%;
+  --studio-shell-wash-soft: 36%;
 
   /*
     Page accent — single source of truth for route/exercise-tinted UI.
@@ -475,8 +476,9 @@
   --studio-wash-scene-b: 14%;
   --studio-wash-fade-a: 50%;
   --studio-wash-fade-b: 48%;
-  /* Outer shell glow — same strength on every route */
+  /* Outer shell glow — follows page accent on every route */
   --studio-shell-wash: 40%;
+  --studio-shell-wash-soft: 24%;
 
   /* Dark: page-accent tokens inherit module overrides above; surfaces follow them */
   --control-surface-base: var(--surface-elevated);
@@ -720,15 +722,49 @@
   .toggle-surface:hover:not(:disabled):not([aria-disabled="true"]) {
     background-image: var(--control-surface-hover);
     color: var(--foreground);
+    border-color: color-mix(
+      in oklab,
+      var(--exercise-accent, var(--page-accent)) 42%,
+      var(--hairline-cloud)
+    );
   }
 
+  /*
+    Pressed must clearly differ from outline control-surface (which already
+    carries a soft accent wash on exercise pages).
+  */
   .toggle-surface[aria-pressed="true"],
   .toggle-surface[data-state="on"],
   .toggle-surface[data-pressed] {
-    background-color: var(--page-accent-selected);
-    background-image: var(--page-accent-gradient);
+    background-color: color-mix(
+      in oklab,
+      var(--exercise-accent-soft, var(--page-accent-soft)) 72%,
+      var(--surface)
+    );
+    background-image: linear-gradient(
+      155deg,
+      color-mix(
+        in oklab,
+        var(--exercise-accent, var(--page-accent)) 18%,
+        var(--surface)
+      ),
+      color-mix(
+        in oklab,
+        var(--exercise-accent-soft, var(--page-accent-soft)) 58%,
+        var(--surface)
+      )
+        52%,
+      var(--surface) 100%
+    );
     color: var(--foreground);
-    border-color: var(--page-accent-border);
+    border-color: var(--exercise-accent, var(--page-accent));
+    box-shadow: inset 0 0 0 1px
+      color-mix(
+        in oklab,
+        var(--exercise-accent, var(--page-accent)) 45%,
+        transparent
+      );
+    font-weight: 650;
   }
 
   /* Soft section shells on exercise detail pages */
@@ -749,6 +785,10 @@
         color-mix(in oklab, var(--exercise-accent-soft) 70%, transparent);
   }
 
+  /*
+    Outermost gaps around sidebar/paper — tinted by the current page accent
+    (data-studio-scene / data-exercise on .studio-shell), not fixed modules.
+  */
   .studio-shell {
     background-color: var(--page-backdrop);
     background-image:
@@ -756,7 +796,7 @@
         ellipse 95% 75% at -8% -6%,
         color-mix(
           in oklab,
-          var(--module-theory-bg) var(--studio-shell-wash),
+          var(--page-accent-soft) var(--studio-shell-wash),
           transparent
         ),
         transparent 82%
@@ -765,7 +805,7 @@
         ellipse 90% 70% at 108% -8%,
         color-mix(
           in oklab,
-          var(--module-listen-bg) var(--studio-shell-wash),
+          var(--page-accent-soft) var(--studio-shell-wash-soft),
           transparent
         ),
         transparent 80%
@@ -774,8 +814,12 @@
         ellipse 86% 66% at 106% 108%,
         color-mix(
           in oklab,
-          var(--module-writing-bg) var(--studio-shell-wash),
-          transparent
+          var(--page-accent) 14%,
+          color-mix(
+            in oklab,
+            var(--page-accent-soft) var(--studio-shell-wash-soft),
+            transparent
+          )
         ),
         transparent 82%
       ),
@@ -783,7 +827,7 @@
         ellipse 82% 64% at -10% 110%,
         color-mix(
           in oklab,
-          var(--module-vocab-bg) var(--studio-shell-wash),
+          var(--page-accent-soft) var(--studio-shell-wash-soft),
           transparent
         ),
         transparent 80%
@@ -2771,7 +2815,7 @@
 
   .writing-kicker {
     margin: 0;
-    font-size: 0.72rem;
+    font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
@@ -2804,19 +2848,21 @@
   }
 
   /*
-    Library heroes (Theory / Writing / …):
-    Mobile  → title | Add
+    Library heroes (Theory / Vocabulary / …):
+    Mobile  → colored kicker | Add
+              title
               description
               Tutorial · Import
-    Desktop → title | Tutorial · Import · Add
+    Desktop → colored kicker | Tutorial · Import · Add
+              title
               description
   */
   .writing-hero:has(> .writing-hero-primary) {
     display: grid;
     grid-template-columns: minmax(0, 1fr) auto;
     grid-template-areas:
-      "kicker kicker"
-      "title primary"
+      "kicker primary"
+      "title title"
       "lede lede"
       "secondary secondary";
     column-gap: 0.65rem;
@@ -2826,6 +2872,8 @@
 
   .writing-hero:has(> .writing-hero-primary) > .writing-kicker {
     grid-area: kicker;
+    align-self: center;
+    min-width: 0;
   }
 
   .writing-hero:has(> .writing-hero-primary) > .writing-brand-title {
@@ -2848,6 +2896,7 @@
     align-items: center;
     justify-content: flex-end;
     gap: 0.45rem;
+    margin-inline-start: 0.45rem;
   }
 
   .writing-hero-secondary {
@@ -2855,7 +2904,7 @@
     display: flex;
     flex-wrap: wrap;
     align-items: center;
-    justify-content: flex-end;
+    justify-content: flex-start;
     gap: 0.45rem;
     min-width: 0;
   }
@@ -2864,9 +2913,14 @@
       :has(> .writing-hero-secondary)
     ) {
     grid-template-areas:
-      "kicker kicker"
-      "title primary"
+      "kicker primary"
+      "title title"
       "lede lede";
+  }
+
+  .writing-hero:has(> .writing-hero-primary) > .writing-hero-extra {
+    grid-column: 1 / -1;
+    margin-top: 0.35rem;
   }
 
   .writing-hero:has(> .writing-hero-primary)
@@ -2876,15 +2930,26 @@
     min-height: 2.5rem;
   }
 
-  /* Legacy heroes: copy + actions */
+  /*
+    Legacy heroes (Capture / Speaking / Writing empty / …):
+    Mobile + Desktop → colored kicker | primary actions
+                       title
+                       lede
+                       extras
+  */
   .writing-hero:has(> .writing-hero-actions):not(
       :has(> .writing-hero-primary)
     ) {
     display: grid;
-    grid-template-columns: minmax(0, 1fr);
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "kicker actions"
+      "title title"
+      "lede lede"
+      "extra extra";
     column-gap: 0.65rem;
     row-gap: 0.5rem;
-    align-items: start;
+    align-items: center;
   }
 
   .writing-hero:has(> .writing-hero-actions):not(:has(> .writing-hero-primary))
@@ -2894,37 +2959,47 @@
 
   .writing-hero:has(> .writing-hero-actions):not(:has(> .writing-hero-primary))
     .writing-kicker {
-    grid-column: 1 / -1;
-  }
-
-  .writing-hero:has(> .writing-hero-actions):not(:has(> .writing-hero-primary))
-    .writing-brand-title {
-    grid-column: 1;
+    grid-area: kicker;
     align-self: center;
     min-width: 0;
   }
 
   .writing-hero:has(> .writing-hero-actions):not(:has(> .writing-hero-primary))
-    > .writing-hero-actions {
-    grid-column: 1;
+    .writing-brand-title {
+    grid-area: title;
     align-self: center;
-    justify-content: flex-start;
-    width: auto;
-    max-width: 100%;
-    flex-wrap: wrap;
+    min-width: 0;
   }
 
   .writing-hero:has(> .writing-hero-actions):not(:has(> .writing-hero-primary))
     .writing-brand-lede {
-    grid-column: 1 / -1;
+    grid-area: lede;
+  }
+
+  .writing-hero:has(> .writing-hero-actions):not(:has(> .writing-hero-primary))
+    > .writing-hero-actions {
+    grid-area: actions;
+    align-self: center;
+    justify-content: flex-end;
+    width: auto;
+    max-width: 100%;
+    flex-wrap: wrap;
+    margin-inline-start: 0.45rem;
+  }
+
+  /* Extra copy children (e.g. speaking stats) under the lede */
+  .writing-hero:has(> .writing-hero-actions):not(:has(> .writing-hero-primary))
+    > .writing-hero-copy
+    > :not(.writing-kicker):not(.writing-brand-title):not(.writing-brand-lede) {
+    grid-area: extra;
   }
 
   @media (min-width: 640px) {
     .writing-hero:has(> .writing-hero-primary) {
       grid-template-columns: minmax(0, 1fr) auto auto;
       grid-template-areas:
-        "kicker kicker kicker"
-        "title secondary primary"
+        "kicker secondary primary"
+        "title title title"
         "lede lede lede";
       column-gap: 0.45rem;
       row-gap: 0.65rem;
@@ -2935,8 +3010,8 @@
       ) {
       grid-template-columns: minmax(0, 1fr) auto;
       grid-template-areas:
-        "kicker kicker"
-        "title primary"
+        "kicker primary"
+        "title title"
         "lede lede";
     }
 
@@ -2946,27 +3021,24 @@
       margin-inline-start: 0.55rem;
     }
 
-    .writing-hero:has(> .writing-hero-primary):not(
-        :has(> .writing-hero-secondary)
-      )
-      > .writing-hero-primary {
+    .writing-hero-primary {
       margin-inline-start: 0.55rem;
     }
 
     .writing-hero:has(> .writing-hero-actions):not(
         :has(> .writing-hero-primary)
       ) {
-      grid-template-columns: minmax(0, 1fr) auto;
+      column-gap: 0.45rem;
+      row-gap: 0.65rem;
     }
 
     .writing-hero:has(> .writing-hero-actions):not(
         :has(> .writing-hero-primary)
       )
       > .writing-hero-actions {
-      grid-column: 2;
-      justify-content: flex-end;
       flex-wrap: nowrap;
       max-width: none;
+      margin-inline-start: 0.55rem;
     }
   }
 
@@ -3393,7 +3465,7 @@
     gap: 0.4rem;
     margin: 0 0 0.35rem;
     padding: 0;
-    font-size: 0.72rem;
+    font-size: 0.8rem;
     font-weight: 700;
     letter-spacing: 0.12em;
     text-transform: uppercase;
