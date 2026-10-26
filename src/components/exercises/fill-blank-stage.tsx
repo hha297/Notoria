@@ -198,6 +198,10 @@ export function FillBlankStage({
               hints={item.hints}
               grounding={cue || item.meanings[0]}
               answers={item.acceptableAnswers}
+              mode="spelling-progressive"
+              visibleMeaning={cue || item.meanings[0]}
+              spellingAnswer={expected}
+              lemma={item.word}
               resetKey={item.id}
               answered={revealed}
               correctAnswer={onRevealAnswer ? expected : undefined}

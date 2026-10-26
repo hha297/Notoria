@@ -194,6 +194,10 @@ export function TypeAnswerStage({
               hints={item.hints}
               grounding={item.meaningHint || item.meanings[0]}
               answers={item.acceptableAnswers}
+              mode="spelling-progressive"
+              visibleMeaning={item.meaningHint || item.meanings[0]}
+              spellingAnswer={item.acceptableAnswers[0] ?? expected}
+              lemma={item.word}
               resetKey={item.id}
               answered={revealed}
               correctAnswer={onRevealAnswer ? expected : undefined}

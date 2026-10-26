@@ -215,6 +215,37 @@ describe("fill-in-blank AI validation", () => {
     expect(item?.sentenceMeaning).toBe("Sentence gloss in the UI language.");
   });
 
+  it("preserves AI grammar hints through validation and appends a spelling mask", () => {
+    const validated = validateFillBlankExercise(
+      {
+        wordId: alpha.id,
+        sentence: SAMPLE_BLANK,
+        answer: "alphas",
+        baseWord: "alpha",
+        hints: [
+          "Use the plural form required by the determiner.",
+          "Connect the blank to this idea: abc.",
+        ],
+      },
+      alpha,
+    );
+    expect(validated?.hints).toEqual([
+      "Use the plural form required by the determiner.",
+      "Connect the blank to this idea: abc.",
+    ]);
+
+    const item = fillBlankExerciseToItem(
+      validated!,
+      { ...alpha, meanings: ["abc"] },
+      "hints-1",
+    );
+    expect(item?.hints?.[0]).toBe("Use the plural form required by the determiner.");
+    expect(item?.hints?.at(-1)).toBe("alp___");
+    expect(item?.hints?.join(" ").toLowerCase()).not.toContain(
+      "connect the blank to this idea: abc",
+    );
+  });
+
   it("rejects fill-blank AI items without a vocabulary meaning hint", () => {
     expect(
       fillBlankExerciseToItem(

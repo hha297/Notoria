@@ -211,7 +211,7 @@ export function SynonymPicker({
   }
 
   return (
-    <div className="space-y-4">
+    <div className={mx(composerStyles, "vocab-picker-block")}>
       <Label
         htmlFor="synonyms-search"
         className={mx(
@@ -226,31 +226,39 @@ export function SynonymPicker({
       </Label>
 
       {value.length > 0 ? (
-        <div className={mx(composerStyles, "vocab-chip-row")}>
-          {value.map((synonym) => (
-            <span
-              key={synonym.id}
-              data-active="true"
-              className={mx(composerStyles, "vocab-chip")}
-            >
-              <Link
-                href={`/vocabulary/${synonym.id}`}
-                target="_blank"
-                rel="noreferrer"
-                className="hover:underline"
+        <div
+          className={mx(composerStyles, "vocab-picker-selected")}
+          aria-label={t("selectedSynonyms")}
+        >
+          <p className={mx(composerStyles, "vocab-picker-selected-label")}>
+            {t("selectedSynonyms")}
+          </p>
+          <div className={mx(composerStyles, "vocab-chip-row")}>
+            {value.map((synonym) => (
+              <span
+                key={synonym.id}
+                data-active="true"
+                className={mx(composerStyles, "vocab-chip")}
               >
-                {synonym.word}
-              </Link>
-              <button
-                type="button"
-                className={mx(composerStyles, "vocab-chip-remove")}
-                aria-label={t("synonymsRemove", { word: synonym.word })}
-                onClick={() => removeSynonym(synonym.id)}
-              >
-                <X className="size-3" />
-              </button>
-            </span>
-          ))}
+                <Link
+                  href={`/vocabulary/${synonym.id}`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="hover:underline"
+                >
+                  {synonym.word}
+                </Link>
+                <button
+                  type="button"
+                  className={mx(composerStyles, "vocab-chip-remove")}
+                  aria-label={t("synonymsRemove", { word: synonym.word })}
+                  onClick={() => removeSynonym(synonym.id)}
+                >
+                  <X className="size-3" />
+                </button>
+              </span>
+            ))}
+          </div>
         </div>
       ) : null}
 
@@ -266,15 +274,20 @@ export function SynonymPicker({
           }
           className={mx(
             composerStyles,
-            "vocab-composer-field vocab-search-field h-11!",
+            "vocab-composer-field vocab-search-field",
           )}
           disabled={isCreating}
+          aria-autocomplete="list"
+          aria-controls="synonyms-results"
         />
         <Button
           type="button"
           variant="outline"
           size="sm"
-          className={mx(composerStyles, "vocab-composer-add h-11 shrink-0")}
+          className={mx(
+            composerStyles,
+            "vocab-composer-add vocab-picker-add shrink-0",
+          )}
           onClick={() => {
             if (exactMatch && !queryIsCurrentWord) {
               selectSynonym(exactMatch);
@@ -293,16 +306,29 @@ export function SynonymPicker({
         </Button>
       </div>
 
-      <div className={mx(composerStyles, "vocab-suggest")}>
+      <div
+        id="synonyms-results"
+        role="listbox"
+        aria-label={t("synonyms")}
+        className={mx(composerStyles, "vocab-suggest")}
+      >
         {queryIsCurrentWord ? (
           <p className={mx(composerStyles, "vocab-suggest-empty")}>
             {t("synonymsCannotLinkSelf")}
           </p>
         ) : null}
 
+        {isCreating ? (
+          <p className={mx(composerStyles, "vocab-suggest-empty")}>
+            {t("pickerLoading")}
+          </p>
+        ) : null}
+
         {canCreate ? (
           <button
             type="button"
+            role="option"
+            data-create="true"
             className={mx(composerStyles, "vocab-suggest-item")}
             onClick={() => openCreate()}
             disabled={isCreating}
@@ -314,7 +340,10 @@ export function SynonymPicker({
           </button>
         ) : null}
 
-        {filtered.length === 0 && !canCreate && !queryIsCurrentWord ? (
+        {filtered.length === 0 &&
+        !canCreate &&
+        !queryIsCurrentWord &&
+        !isCreating ? (
           <p className={mx(composerStyles, "vocab-suggest-empty")}>
             {t("synonymsNoResults")}
           </p>
@@ -325,18 +354,22 @@ export function SynonymPicker({
               <button
                 key={option.id}
                 type="button"
-                data-active={checked}
+                role="option"
+                aria-selected={checked}
+                data-active={checked || undefined}
                 className={mx(composerStyles, "vocab-suggest-item")}
                 onClick={() => selectSynonym(option)}
               >
-                <span className={mx(composerStyles, "vocab-suggest-title")}>
-                  {option.word}
-                </span>
-                {option.meaning ? (
-                  <span className={mx(composerStyles, "vocab-suggest-meta")}>
-                    {option.meaning}
+                <span className={mx(composerStyles, "vocab-suggest-body")}>
+                  <span className={mx(composerStyles, "vocab-suggest-title")}>
+                    {option.word}
                   </span>
-                ) : null}
+                  {option.meaning ? (
+                    <span className={mx(composerStyles, "vocab-suggest-meta")}>
+                      {option.meaning}
+                    </span>
+                  ) : null}
+                </span>
               </button>
             );
           })

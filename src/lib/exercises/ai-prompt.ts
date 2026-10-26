@@ -109,7 +109,7 @@ export function fillBlankUserPayload(input: {
     difficultyGuidance: profile.aiGuidance,
     fillBlankGuidance: profile.fillBlankGuidance,
     reminder:
-      "Practice sentence/answer must be in languageHint. ALWAYS include sentenceMeaning in uiLanguage (website language), not the study language. Obey difficultyGuidance and fillBlankGuidance. Target words must come from the provided list only. Difficulty controls sentence construction only — never swap targets. word/baseWord is the lemma; answer is the contextual surface form. Hints follow hintDifficulty and must not reveal the answer.",
+      "Practice sentence/answer must be in languageHint. ALWAYS include sentenceMeaning in uiLanguage (website language), not the study language. Obey difficultyGuidance and fillBlankGuidance. Target words must come from the provided list only. Difficulty controls sentence construction only — never swap targets. word/baseWord is the lemma; answer is the contextual surface form. Hints follow hintDifficulty: grammar/structure only in explanationLanguage; never restate the on-screen meaning gloss; never invent spelling masks or reveal the full answer.",
     regenerateReason: input.regenerateReason,
     ...additionalInstructionFields(input.additionalInstructions),
     ...progressiveHintPayload({

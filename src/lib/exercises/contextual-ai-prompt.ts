@@ -168,8 +168,8 @@ export function contextualAiUserPayload(input: {
     typeAnswerGuidance: profile.typeAnswerGuidance,
     reminder:
       input.exerciseType === "multiple-choice"
-        ? "Write completeSentence in studyLanguage with the correctly inflected target already in the sentence — no blank. Return that exact token as answerForm and correctOption. baseWord stays the lemma. options must be exactly 4 contextual forms for that same slot. One exercise per wordId. Difficulty changes construction only — never swap targets."
-        : "Write completeSentence in studyLanguage with the correctly inflected target already in the sentence — no blank. answer is that exact in-sentence token, not automatically the saved lemma. One exercise per wordId. Difficulty changes construction only — never swap targets.",
+        ? "Write completeSentence in studyLanguage with the correctly inflected target already in the sentence — no blank. Return that exact token as answerForm and correctOption. baseWord stays the lemma. options must be exactly 4 contextual forms for that same slot. One exercise per wordId. Difficulty changes construction only — never swap targets. Hints: grammar/structure in explanationLanguage only; do not restate the meaning gloss or invent spelling masks."
+        : "Write completeSentence in studyLanguage with the correctly inflected target already in the sentence — no blank. answer is that exact in-sentence token, not automatically the saved lemma. One exercise per wordId. Difficulty changes construction only — never swap targets. Hints: grammar/structure in explanationLanguage only; do not restate the meaning gloss or invent spelling masks.",
     regenerateReason: input.regenerateReason,
     ...additionalInstructionFields(input.additionalInstructions),
     ...progressiveHintPayload({

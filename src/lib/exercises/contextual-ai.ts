@@ -197,6 +197,7 @@ function validateMc(
       answers: [answerForm, lemma],
       grounding: word.meaning,
       difficulty,
+      visibleMeaning: word.meaning,
     }),
   };
 }
@@ -237,6 +238,10 @@ function validateTypeAnswer(
       answers: [answer, word.word],
       grounding: word.meaning,
       difficulty,
+      mode: "spelling-progressive",
+      visibleMeaning: meaningHint,
+      spellingAnswer: answer,
+      lemma: word.word,
     }),
   };
 }
