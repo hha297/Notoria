@@ -29,7 +29,8 @@
       "previewCallout": "Izcēlumi un akcenti seko moduļa krāsai.",
       "fixedNote": "Izskats eksportētajā failā ir fiksēts. Lai to mainītu, eksportējiet vēlreiz.",
       "docxBackgroundNote": "Word un citas programmas var neatainot lapas fonu tāpat, īpaši drukājot."
-    }
+    },
+    "scrollToTop": "Scroll to top"
   },
   "contentImport": {
     "title": {

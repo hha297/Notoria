@@ -29,7 +29,8 @@
       "previewCallout": "Sumusunod ang mga callout at accent sa kulay ng module.",
       "fixedNote": "Nakapirmi ang hitsura sa naka-export na file. Mag-export ulit para baguhin ito.",
       "docxBackgroundNote": "Maaaring hindi ipakita ng Word at iba pang app ang background ng pahina sa parehong paraan, lalo na kapag nagpi-print."
-    }
+    },
+    "scrollToTop": "Scroll to top"
   },
   "contentImport": {
     "title": {

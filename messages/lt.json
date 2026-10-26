@@ -29,7 +29,8 @@
       "previewCallout": "Išryškinimai ir akcentai seka modulio spalvą.",
       "fixedNote": "Išvaizda eksportuotame faile yra fiksuota. Norėdami pakeisti, eksportuokite dar kartą.",
       "docxBackgroundNote": "Word ir kitos programos gali kitaip rodyti lapo foną, ypač spausdinant."
-    }
+    },
+    "scrollToTop": "Scroll to top"
   },
   "contentImport": {
     "title": {

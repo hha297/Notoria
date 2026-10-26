@@ -28,7 +28,8 @@
       "previewCallout": "Callouts and accents follow the module color.",
       "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
       "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
-    }
+    },
+    "scrollToTop": "Scroll to top"
   },
   "contentImport": {
     "title": {

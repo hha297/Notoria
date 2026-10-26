@@ -29,7 +29,8 @@
       "previewCallout": "Hộp chú thích theo màu module.",
       "fixedNote": "Giao diện được cố định trong file. Xuất lại nếu muốn đổi.",
       "docxBackgroundNote": "Word và ứng dụng khác có thể không hiển thị nền trang giống nhau, nhất là khi in."
-    }
+    },
+    "scrollToTop": "Lên đầu trang"
   },
   "contentImport": {
     "title": {

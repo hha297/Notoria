@@ -46,6 +46,7 @@ export function ExerciseSetSubmitBar({
   return (
     <>
       <div
+        data-scroll-top-clearance=""
         className={[
           "sticky bottom-0 z-20",
           // Bleed to studio-paper edges and cancel main pb so the bar sits flush.

@@ -29,7 +29,8 @@
       "previewCallout": "Esiletõsted ja aktsendid järgivad mooduli värvi.",
       "fixedNote": "Välimus on eksporditud failis fikseeritud. Muutmiseks ekspordi uuesti.",
       "docxBackgroundNote": "Word ja teised rakendused ei pruugi lehe tausta sama moodi näidata, eriti printimisel."
-    }
+    },
+    "scrollToTop": "Scroll to top"
   },
   "contentImport": {
     "title": {

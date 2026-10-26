@@ -29,7 +29,8 @@
       "previewCallout": "Callout dan aksen mengikut warna modul.",
       "fixedNote": "Penampilan ditetapkan dalam fail yang dieksport. Eksport semula untuk mengubahnya.",
       "docxBackgroundNote": "Word dan aplikasi lain mungkin tidak memaparkan latar belakang halaman dengan cara yang sama, terutamanya semasa mencetak."
-    }
+    },
+    "scrollToTop": "Scroll to top"
   },
   "contentImport": {
     "title": {

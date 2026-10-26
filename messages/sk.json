@@ -29,7 +29,8 @@
       "previewCallout": "Výzvy a zvýraznenia nasledujú farbu modulu.",
       "fixedNote": "Vzhľad je v exportovanom súbore pevný. Ak ho chcete zmeniť, exportujte znova.",
       "docxBackgroundNote": "Word a iné aplikácie nemusia zobrazovať pozadia stránok rovnako, najmä pri tlači."
-    }
+    },
+    "scrollToTop": "Scroll to top"
   },
   "contentImport": {
     "title": {

@@ -612,7 +612,11 @@ export function TagManagerPage({
         </section>
 
         {selectedCount > 0 ? (
-          <div className={mx(styles, "tm-dock")} role="region">
+          <div
+            className={mx(styles, "tm-dock")}
+            role="region"
+            data-scroll-top-clearance=""
+          >
             <p className={mx(styles, "tm-dock-copy")}>
               {t("selected", { count: selectedCount })}
             </p>

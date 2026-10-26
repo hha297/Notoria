@@ -25,6 +25,7 @@ import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
+import { ScrollToTopButton } from "@/components/layout/scroll-to-top-button";
 import { Toaster } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryProvider } from "@/components/providers/query-provider";
@@ -157,6 +158,7 @@ export default async function RootLayout({
                 <QueryProvider>
                   <TooltipProvider>
                     {children}
+                    <ScrollToTopButton />
                     <Toaster richColors position="top-right" />
                   </TooltipProvider>
                 </QueryProvider>

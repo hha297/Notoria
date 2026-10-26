@@ -29,7 +29,8 @@
       "previewCallout": "Izpostavljeni okvirji in poudarki sledijo barvi modula.",
       "fixedNote": "Videz je fiksen v izvoženi datoteki. Izvozite znova, da ga spremenite.",
       "docxBackgroundNote": "Word in druge aplikacije morda ne bodo prikazale ozadij strani na isti način, še posebej pri tisku."
-    }
+    },
+    "scrollToTop": "Scroll to top"
   },
   "contentImport": {
     "title": {

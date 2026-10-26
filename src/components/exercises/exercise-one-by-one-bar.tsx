@@ -27,6 +27,7 @@ export function ExerciseOneByOneBar({
 
   return (
     <div
+      data-scroll-top-clearance=""
       className={[
         "sticky bottom-0 z-20",
         "-mx-[var(--studio-main-pad,1rem)]",

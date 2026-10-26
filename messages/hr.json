@@ -29,7 +29,8 @@
       "previewCallout": "Istaknuti okviri i naglasci prate boju modula.",
       "fixedNote": "Izgled je fiksiran u izvezenoj datoteci. Izvezite ponovno da ga promijenite.",
       "docxBackgroundNote": "Word i druge aplikacije možda neće prikazati pozadine stranica na isti način, osobito pri ispisu."
-    }
+    },
+    "scrollToTop": "Scroll to top"
   },
   "contentImport": {
     "title": {
