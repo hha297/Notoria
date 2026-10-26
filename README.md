@@ -1,16 +1,39 @@
-![Notoria](./public/logo.png)
+<p align="center">
+  <img src="./public/logo.png" alt="Notoria" width="60" height="60" />
+</p>
 
-# Notoria
+<h1 align="center">Notoria</h1>
 
-**Private language learning workspaces**  
-Vocabulary · Theory · Writing · Exercises · Listening · Speaking  
-Owned by you · Scoped by language · Optional AI
+<p align="center">
+  <strong>Private language learning workspaces</strong><br/>
+  <sub>Vocabulary · Theory · Writing · Exercises · Listening · Speaking</sub><br/>
+  <sub>Owned by you · Scoped by language · Optional AI</sub>
+</p>
 
-![Live — www.notoria.fi](https://img.shields.io/badge/Live-www.notoria.fi-f7a501?style=for-the-badge&labelColor=23251d)   ![Sign up](https://img.shields.io/badge/Start_free-Sign_up-2c8c66?style=for-the-badge&labelColor=23251d)
+<p align="center">
+  <a href="https://www.notoria.fi"><img src="https://img.shields.io/badge/Live-www.notoria.fi-f7a501?style=flat-square&labelColor=23251d" alt="Live"/></a>
+  <a href="https://www.notoria.fi/sign-up"><img src="https://img.shields.io/badge/Start_free-Sign_up-2c8c66?style=flat-square&labelColor=23251d" alt="Sign up"/></a>
+</p>
 
-![Next.js](https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white)![React](https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=0A0A0A)![TypeScript](https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white)![PostgreSQL](https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white)![Drizzle](https://img.shields.io/badge/Drizzle-ORM-C5F74F?style=flat-square&labelColor=1a1a1a)![Stripe](https://img.shields.io/badge/Stripe-Billing-635BFF?style=flat-square&logo=stripe&logoColor=white)![OpenAI](https://img.shields.io/badge/OpenAI-AI-412991?style=flat-square&logo=openai&logoColor=white)![Locales](https://img.shields.io/badge/i18n-EN_·_FI_·_SV_·_VI-2c84e0?style=flat-square)
+<p align="center">
+  <img src="https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js"/>
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=0A0A0A" alt="React"/>
+  <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript"/>
+  <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL"/>
+  <img src="https://img.shields.io/badge/Drizzle-ORM-C5F74F?style=flat-square&labelColor=1a1a1a" alt="Drizzle"/>
+  <img src="https://img.shields.io/badge/Stripe-635BFF?style=flat-square&logo=stripe&logoColor=white" alt="Stripe"/>
+  <img src="https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white" alt="OpenAI"/>
+  <img src="https://img.shields.io/badge/EN_·_FI_·_SV_·_VI-2c84e0?style=flat-square" alt="Locales"/>
+</p>
 
-![About](https://img.shields.io/badge/About-23251d?style=flat-square)![Features](https://img.shields.io/badge/Features-2c8c66?style=flat-square)![Plans](https://img.shields.io/badge/Plans-f7a501?style=flat-square&labelColor=23251d)![Setup](https://img.shields.io/badge/Setup-2c84e0?style=flat-square)![Config](https://img.shields.io/badge/Config-5e6a72?style=flat-square)![Privacy](https://img.shields.io/badge/Privacy-5e6a72?style=flat-square)![Contact](https://img.shields.io/badge/Contact-2c84e0?style=flat-square)
+<p align="center">
+  <a href="#what-is-notoria"><img src="https://img.shields.io/badge/About-23251d?style=flat-square" alt="About"/></a>
+  <a href="#key-features"><img src="https://img.shields.io/badge/Features-2c8c66?style=flat-square" alt="Features"/></a>
+  <a href="#plans-at-a-glance"><img src="https://img.shields.io/badge/Plans-f7a501?style=flat-square&labelColor=23251d" alt="Plans"/></a>
+  <a href="#getting-started"><img src="https://img.shields.io/badge/Setup-2c84e0?style=flat-square" alt="Setup"/></a>
+  <a href="#configuration"><img src="https://img.shields.io/badge/Config-5e6a72?style=flat-square" alt="Config"/></a>
+  <a href="https://www.notoria.fi/privacy"><img src="https://img.shields.io/badge/Privacy-5e6a72?style=flat-square" alt="Privacy"/></a>
+</p>
 
 ---
 
@@ -353,9 +376,15 @@ No open-source license file is published in this repository. Treat the codebase 
 
 ---
 
-![Notoria logo](./public/logo.png)
+<div align="center">
 
-**Notoria**  
-Your material · Your progress · One private place
+<img src="./public/logo.png" alt="Notoria" width="60" height="60" />
 
-![www.notoria.fi](https://img.shields.io/badge/www.notoria.fi-f7a501?style=for-the-badge&labelColor=23251d)
+<strong>Notoria</strong><br/>
+<sub>Your material · Your progress · One private place</sub>
+
+<br/>
+
+<a href="https://www.notoria.fi"><img src="https://img.shields.io/badge/www.notoria.fi-f7a501?style=flat-square&labelColor=23251d" alt="www.notoria.fi"/></a>
+
+</div>
