@@ -44,6 +44,35 @@
   align-items: center;
 }
 
+.inbox-folder-new {
+  margin-inline-start: auto;
+  min-height: 2.2rem;
+  height: 2.2rem;
+  border-radius: 0.75rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-home-fg) 28%, var(--hairline-cloud)) !important;
+  background: color-mix(
+    in oklab,
+    var(--module-home-bg) 36%,
+    var(--surface-elevated)
+  ) !important;
+  color: color-mix(in oklab, var(--module-home-fg) 78%, var(--ink)) !important;
+}
+
+.inbox-folder-new:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--module-home-fg) 42%,
+    var(--hairline-cloud)
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--module-home-bg) 52%,
+    var(--surface-elevated)
+  ) !important;
+  color: var(--module-home-fg) !important;
+}
+
 .inbox-folder-chip-wrap {
   display: inline-flex;
   align-items: stretch;

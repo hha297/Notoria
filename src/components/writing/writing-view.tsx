@@ -54,12 +54,16 @@ export function WritingView({
         >
           <div className="writing-atelier writing-atelier-empty flex flex-col gap-10">
             <header className="writing-hero">
-              <div className="writing-hero-copy">
-                <p className="writing-kicker">{t("title")}</p>
-                <h1 className="writing-brand-title">{t("title")}</h1>
-                <p className="writing-brand-lede">{t("description")}</p>
+              <p className="writing-kicker">{t("title")}</p>
+              <h1 className="writing-brand-title">{t("title")}</h1>
+              <div className="writing-hero-primary">
+                <LinkButton href={createHref}>
+                  <Plus className="size-4" />
+                  {t("createFirst")}
+                </LinkButton>
               </div>
-              <div className="writing-hero-actions">
+              <p className="writing-brand-lede">{t("description")}</p>
+              <div className="writing-hero-secondary">
                 <ShowTutorialButton section="writing" />
                 <NewFolderButton variant="outline" size="sm" />
                 <LockedFeatureButton
@@ -74,10 +78,6 @@ export function WritingView({
                 >
                   {tImport("button")}
                 </LockedFeatureButton>
-                <LinkButton href={createHref}>
-                  <Plus className="size-4" />
-                  {t("createFirst")}
-                </LinkButton>
               </div>
             </header>
             <div className="writing-empty-desk">

@@ -244,18 +244,12 @@
 /* Match section 01 WORD kicker: small uppercase + section accent. */
 .vocab-composer-section-title {
   margin: 0;
-  font-size: 0.68rem;
+  font-size: 0.8rem;
   font-weight: 600;
   letter-spacing: 0.18em;
   line-height: 1.3;
   text-transform: uppercase;
   color: var(--composer-accent, var(--module-vocab-fg));
-}
-
-@media (min-width: 640px) {
-  .vocab-composer-section-title {
-    font-size: 0.68rem;
-  }
 }
 
 .vocab-composer-section-hint {

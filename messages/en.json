@@ -1194,7 +1194,7 @@
       },
       "contextualLanguageHint": "Questions are generated in {language} (workspace language).",
       "contextualEmptyTitle": "Generate contextual questions",
-      "contextualEmptyDescription": "Create fill-in-the-blank multiple choice questions from your vocabulary.",
+      "contextualEmptyDescription": "Add optional instructions below if you want, then press Generate. You can leave the prompt empty.",
       "contextualProDescription": "Contextual AI questions are available with Pro.",
       "unlockContextual": "Unlock with Pro",
       "correct": "Correct!",
@@ -1226,7 +1226,7 @@
         "contextual": "Contextual"
       },
       "contextualEmptyTitle": "Generate contextual questions",
-      "contextualEmptyDescription": "Create fill-in-the-blank typing prompts from your vocabulary.",
+      "contextualEmptyDescription": "Add optional instructions below if you want, then press Generate. You can leave the prompt empty.",
       "contextualProDescription": "Contextual AI questions are available with Pro.",
       "unlockContextual": "Unlock with Pro",
       "placeholder": "Type your answer…",

@@ -312,17 +312,21 @@ export function TypeAnswerSession({
     startDeterministicSession();
   }, [isContextual, startContextualSession, startDeterministicSession]);
 
-  // Restart only when the practice source changes — not when callback identities
-  // shift (e.g. quota message object rebuilt every render).
+  // Deterministic modes reshuffle when the practice source changes.
+  // Contextual waits for an explicit Generate click so the learner can edit
+  // additional instructions first.
   useEffect(() => {
     let cancelled = false;
     void Promise.resolve().then(() => {
       if (cancelled) return;
       if (isContextual) {
-        void startContextualSession();
-      } else {
-        startDeterministicSession();
+        setItems([]);
+        setActiveIds(null);
+        resetAttempt();
+        resetProcessing();
+        return;
       }
+      startDeterministicSession();
     });
     return () => {
       cancelled = true;

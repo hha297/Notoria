@@ -391,19 +391,9 @@ export function InboxView({
         )}
       >
         <header className="writing-hero">
-          <div className="writing-hero-copy">
-            <p className="writing-kicker">{t("eyebrow")}</p>
-            <h1 className="writing-brand-title">{t("title")}</h1>
-            <p className="writing-brand-lede">{t("description")}</p>
-          </div>
-          <div className="writing-hero-actions">
-            <ShowTutorialButton section="inbox" autoOpenIfIncomplete />
-            <NewFolderButton
-              variant="outline"
-              size="sm"
-              routeAction="home"
-              onClick={() => setCreateFolderOpen(true)}
-            />
+          <p className="writing-kicker">{t("eyebrow")}</p>
+          <h1 className="writing-brand-title">{t("title")}</h1>
+          <div className="writing-hero-primary">
             <Button
               type="button"
               data-tutorial="inbox-capture"
@@ -412,6 +402,10 @@ export function InboxView({
               <Plus className="size-4" />
               {t("capture")}
             </Button>
+          </div>
+          <p className="writing-brand-lede">{t("description")}</p>
+          <div className="writing-hero-secondary">
+            <ShowTutorialButton section="inbox" autoOpenIfIncomplete />
           </div>
         </header>
 
@@ -493,6 +487,13 @@ export function InboxView({
                     </div>
                   );
                 })}
+                <NewFolderButton
+                  variant="outline"
+                  size="sm"
+                  routeAction="home"
+                  className={mx(styles, "inbox-folder-new")}
+                  onClick={() => setCreateFolderOpen(true)}
+                />
               </div>
             </nav>
 

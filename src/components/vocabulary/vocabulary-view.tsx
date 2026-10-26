@@ -78,12 +78,16 @@ export function VocabularyView({
       <PageShell className="vocab-lexicon-shell">
         <div className={mx(featureStyles, "vocab-lexicon writing-atelier writing-atelier-empty flex flex-col gap-10")}>
           <header className="writing-hero">
-            <div className="writing-hero-copy">
-              <p className="writing-kicker">{workspaceName}</p>
-              <h1 className="writing-brand-title">{t("title")}</h1>
-              <p className="writing-brand-lede">{t("description")}</p>
+            <p className="writing-kicker">{workspaceName}</p>
+            <h1 className="writing-brand-title">{t("title")}</h1>
+            <div className="writing-hero-primary">
+              <LinkButton href="/vocabulary/new" data-tutorial="vocab-add-word">
+                <Plus className="size-4" />
+                {t("addWord")}
+              </LinkButton>
             </div>
-            <div className="writing-hero-actions">
+            <p className="writing-brand-lede">{t("description")}</p>
+            <div className="writing-hero-secondary">
               <ShowTutorialButton section="vocabulary" />
               <LockedFeatureButton
                 type="button"
@@ -96,10 +100,6 @@ export function VocabularyView({
               >
                 {tImport("button")}
               </LockedFeatureButton>
-              <LinkButton href="/vocabulary/new" data-tutorial="vocab-add-word">
-                <Plus className="size-4" />
-                {t("addWord")}
-              </LinkButton>
             </div>
           </header>
 
