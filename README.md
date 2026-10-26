@@ -1,147 +1,121 @@
 <p align="center">
-  <img src="./public/logo.png" alt="Notoria" width="120"/>
+  <img src="./public/logo.png" alt="Notoria" width="60" height="60" />
 </p>
 
 <h1 align="center">Notoria</h1>
 
 <p align="center">
   <strong>Private language learning workspaces</strong><br/>
-  Vocabulary, theory, writing, exercises, listening, and speaking — owned by you, scoped by language.
+  <sub>Vocabulary · Theory · Writing · Exercises · Listening · Speaking</sub><br/>
+  <sub>Owned by you · Scoped by language · Optional AI</sub>
 </p>
 
 <p align="center">
-  <a href="https://www.notoria.fi"><img src="https://img.shields.io/badge/Live-www.notoria.fi-f7a501?style=flat-square&labelColor=23251d" alt="Live — www.notoria.fi"/></a>
-  &nbsp;
-  <a href="https://www.notoria.fi"><img src="https://hits.sh/www.notoria.fi.svg?style=flat-square&label=views&color=f7a501" alt="Live site views"/></a>
-  &nbsp;&nbsp;&nbsp;
-  <a href="https://www.notoria.fi/sign-up"><img src="https://img.shields.io/badge/Sign_up-free_account-2c8c66?style=flat-square&labelColor=23251d" alt="Sign up"/></a>
-  &nbsp;
-  <a href="https://www.notoria.fi/sign-up"><img src="https://hits.sh/www.notoria.fi/sign-up.svg?style=flat-square&label=views&color=2c8c66" alt="Sign-up views"/></a>
+  <a href="https://www.notoria.fi"><img src="https://img.shields.io/badge/Live-www.notoria.fi-f7a501?style=flat-square&labelColor=23251d" alt="Live"/></a>
+  <a href="https://www.notoria.fi/sign-up"><img src="https://img.shields.io/badge/Start_free-Sign_up-2c8c66?style=flat-square&labelColor=23251d" alt="Sign up"/></a>
 </p>
 
 <p align="center">
-  <img src="https://img.shields.io/badge/Next.js-16-black?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js"/>
-  &nbsp;
-  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=black" alt="React"/>
-  &nbsp;
+  <img src="https://img.shields.io/badge/Next.js-16-000000?style=flat-square&logo=nextdotjs&logoColor=white" alt="Next.js"/>
+  <img src="https://img.shields.io/badge/React-19-61DAFB?style=flat-square&logo=react&logoColor=0A0A0A" alt="React"/>
   <img src="https://img.shields.io/badge/TypeScript-5-3178C6?style=flat-square&logo=typescript&logoColor=white" alt="TypeScript"/>
-  &nbsp;
   <img src="https://img.shields.io/badge/PostgreSQL-16-4169E1?style=flat-square&logo=postgresql&logoColor=white" alt="PostgreSQL"/>
-  &nbsp;
-  <img src="https://img.shields.io/badge/Drizzle-ORM-C5F74F?style=flat-square&labelColor=23251d" alt="Drizzle"/>
-  &nbsp;
-  <img src="https://img.shields.io/badge/Stripe-Billing-635BFF?style=flat-square&logo=stripe&logoColor=white" alt="Stripe"/>
-  &nbsp;
-  <img src="https://img.shields.io/badge/OpenAI-AI-412991?style=flat-square&logo=openai&logoColor=white" alt="OpenAI"/>
+  <img src="https://img.shields.io/badge/Drizzle-ORM-C5F74F?style=flat-square&labelColor=1a1a1a" alt="Drizzle"/>
+  <img src="https://img.shields.io/badge/Stripe-635BFF?style=flat-square&logo=stripe&logoColor=white" alt="Stripe"/>
+  <img src="https://img.shields.io/badge/OpenAI-412991?style=flat-square&logo=openai&logoColor=white" alt="OpenAI"/>
+  <img src="https://img.shields.io/badge/EN_·_FI_·_SV_·_VI-2c84e0?style=flat-square" alt="Locales"/>
 </p>
 
 <p align="center">
-  <a href="https://www.notoria.fi"><img src="https://img.shields.io/badge/Website-notoria.fi-23251d?style=flat-square" alt="Website"/></a>
-  &nbsp;
-  <a href="https://www.notoria.fi/privacy"><img src="https://img.shields.io/badge/Privacy-policy-5e6a72?style=flat-square" alt="Privacy"/></a>
-  &nbsp;
-  <a href="https://www.notoria.fi/terms"><img src="https://img.shields.io/badge/Terms-of_use-5e6a72?style=flat-square" alt="Terms"/></a>
-  &nbsp;
-  <a href="mailto:contact@notoria.fi"><img src="https://img.shields.io/badge/Contact-contact%40notoria.fi-2c84e0?style=flat-square" alt="Contact"/></a>
+  <a href="#what-is-notoria"><img src="https://img.shields.io/badge/About-23251d?style=flat-square" alt="About"/></a>
+  <a href="#key-features"><img src="https://img.shields.io/badge/Features-2c8c66?style=flat-square" alt="Features"/></a>
+  <a href="#plans-at-a-glance"><img src="https://img.shields.io/badge/Plans-f7a501?style=flat-square&labelColor=23251d" alt="Plans"/></a>
+  <a href="#getting-started"><img src="https://img.shields.io/badge/Setup-2c84e0?style=flat-square" alt="Setup"/></a>
+  <a href="#configuration"><img src="https://img.shields.io/badge/Config-5e6a72?style=flat-square" alt="Config"/></a>
+  <a href="https://www.notoria.fi/privacy"><img src="https://img.shields.io/badge/Privacy-5e6a72?style=flat-square" alt="Privacy"/></a>
 </p>
-
----
-
-## Table of contents
-
-- [What is Notoria?](#what-is-notoria)
-- [Key features](#key-features)
-- [How Notoria works](#how-notoria-works)
-- [Plans at a glance](#plans-at-a-glance)
-- [Import & export](#import--export)
-- [Tech stack](#tech-stack)
-- [Project structure](#project-structure)
-- [Getting started](#getting-started)
-- [Configuration](#configuration)
-- [Data & privacy](#data--privacy)
-- [Roadmap](#roadmap)
-- [Contributing](#contributing)
-- [License](#license)
 
 ---
 
 ## What is Notoria?
 
-Notoria is a **private** language-learning product — not a social network. There are no public profiles, sharing feeds, or multiplayer classrooms.
+Notoria is a **private** language-learning product — not a social network. No public profiles, sharing feeds, or multiplayer classrooms.
 
-| You get | What that means |
-| --- | --- |
-| **Owned learning data** | Words, notes, drafts, lessons, and sessions belong to your account |
-| **One workspace per language** | English, Finnish, Swedish, Vietnamese, … stay separated |
-| **Practice from your material** | Exercises drill *your* vocabulary and examples — not a generic dictionary |
-| **Optional AI** | Free has a small daily allowance; Pro unlocks the toolkit; Premium adds a Learning Coach |
+|                                                                                                                                                                 |                                                                                                                                                                               |                                                                                                                                                                        |                                                                                                                                                                   |
+| --------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| ![Owned data](https://img.shields.io/badge/Owned_data-2c8c66?style=for-the-badge&labelColor=23251d) Words, notes, drafts, and sessions stay on **your** account | ![Per language](https://img.shields.io/badge/Per_language-2c84e0?style=for-the-badge&labelColor=23251d) One workspace per language — English, Finnish, Swedish, Vietnamese, … | ![Your material](https://img.shields.io/badge/Your_material-f7a501?style=for-the-badge&labelColor=23251d) Exercises drill _your_ vocabulary — not a generic dictionary | ![Optional AI](https://img.shields.io/badge/Optional_AI-635BFF?style=for-the-badge&labelColor=23251d) Free daily allowance · Pro toolkit · Premium Learning Coach |
 
-**Who it’s for:** learners who want a structured personal study space (lexicon → theory → drills → production → listening/speaking) with optional AI help and clear data ownership.
+> **Who it’s for:** learners who want a structured personal study space — lexicon → theory → drills → production → listening/speaking — with optional AI and clear data ownership.
 
 ---
 
 ## Key features
 
-| Module | Highlights |
-| --- | --- |
-| **Vocabulary** | Meanings, examples, tags, POS, learning status (`NEW` → `MASTERED`). SRS via flashcards. CSV export free; PDF/DOCX + file import on Pro. |
-| **Exercises** | Flashcards, fill-blank, multiple choice, match pairs, type-answer from your words. Pro: AI contextual drills + **Form a Sentence**. |
-| **Theory** | TipTap notebook for grammar, usage, culture, …. Category filters. PDF/DOCX import & export on Pro. |
-| **Writing** | Rich documents and question-set worksheets. Pro AI: Check / Improve / Grammar. PDF/DOCX export on Pro. |
-| **Listening** *(Pro)* | Upload audio/video → AssemblyAI transcript → OpenAI practice. Sticky player linked to transcript. |
-| **Speaking** | Live AI video tutor (Stream + OpenAI Realtime). Transcript + feedback. Tutor calls metered on Free. |
+|                                                                                      | Module                | Highlights                                                                                                                               |
+| :----------------------------------------------------------------------------------: | --------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+|          ![](https://img.shields.io/badge/-Vocab-2c8c66?style=flat-square)           | **Vocabulary**        | Meanings, examples, tags, POS, learning status (`NEW` → `MASTERED`). SRS via flashcards. CSV export free; PDF/DOCX + file import on Pro. |
+| ![](https://img.shields.io/badge/-Drills-f7a501?style=flat-square&labelColor=23251d) | **Exercises**         | Flashcards, fill-blank, multiple choice, match pairs, type-answer from your words. Pro: AI contextual drills + **Form a Sentence**.      |
+|          ![](https://img.shields.io/badge/-Theory-2c84e0?style=flat-square)          | **Theory**            | TipTap notebook for grammar, usage, culture. Category filters. PDF/DOCX import & export on Pro.                                          |
+|          ![](https://img.shields.io/badge/-Write-cd4239?style=flat-square)           | **Writing**           | Rich documents and question-set worksheets. Pro AI: Check / Improve / Grammar. PDF/DOCX export on Pro.                                   |
+|          ![](https://img.shields.io/badge/-Listen-635BFF?style=flat-square)          | **Listening** _(Pro)_ | Upload audio/video → AssemblyAI transcript → OpenAI practice. Sticky player linked to transcript.                                        |
+|          ![](https://img.shields.io/badge/-Speak-412991?style=flat-square)           | **Speaking**          | Live AI video tutor (Stream + OpenAI Realtime). Transcript + feedback. Tutor calls metered on Free.                                      |
 
 ### AI & personalization
 
-| Layer | What’s included |
-| --- | --- |
-| **Free AI** | Small daily quotas (speaking tutor, listening transcript, exercise gen, vocab helpers, writing support) |
-| **Pro AI** | Higher / unlimited lightweight AI; listening practice generation; AI practice from imported worksheets |
-| **Premium** | Learning Coach on `/coach` — next-move recommendations, Ask Coach chat, progress views, attention cues from real activity |
+| Tier                                                                                        | What’s included                                                                                                           |
+| ------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------- |
+| ![Free](https://img.shields.io/badge/Free-5e6a72?style=flat-square)                         | Small daily quotas (speaking tutor, listening transcript, exercise gen, vocab helpers, writing support)                   |
+| ![Pro](https://img.shields.io/badge/Pro-2c84e0?style=flat-square)                           | Higher / unlimited lightweight AI; listening practice generation; AI practice from imported worksheets                    |
+| ![Premium](https://img.shields.io/badge/Premium-f7a501?style=flat-square&labelColor=23251d) | Learning Coach on `/coach` — next-move recommendations, Ask Coach chat, progress views, attention cues from real activity |
 
 Quotas use the **UTC calendar day** (reset 00:00 UTC). Stripe is the source of truth for paid status; the server reserves usage before AI calls and refunds on provider failure.
 
 ### Account & access
 
-- Email/password + **Google OAuth** (Auth.js)
-- Forgot / reset password via Resend
-- Account settings: profile, password, avatar, billing, **account backup**
-- UI locales: **English, Finnish, Swedish, Vietnamese**
+|                |                                                                         |
+| -------------- | ----------------------------------------------------------------------- |
+| **Auth**       | Email/password + **Google OAuth** (Auth.js) · Forgot / reset via Resend |
+| **Account**    | Profile, password, avatar, billing, **account backup**                  |
+| **UI locales** | English · Finnish · Swedish · Vietnamese                                |
 
 ---
 
 ## How Notoria works
 
-```text
-Onboard language workspace
-        ↓
-Build vocabulary & theory notes
-        ↓
-Practice (flashcards / quizzes / form-a-sentence)
-        ↓
-Produce (writing) · Listen · Speak
-        ↓
-Optional: Premium coach from real activity
+```mermaid
+flowchart LR
+  A[Onboard workspace] --> B[Vocab + Theory]
+  B --> C[Practice drills]
+  C --> D[Write · Listen · Speak]
+  D --> E[Optional Premium Coach]
+
+  style A fill:#23251d,stroke:#f7a501,color:#eeefe9
+  style B fill:#2c8c66,stroke:#1e5c44,color:#fff
+  style C fill:#f7a501,stroke:#8a5c00,color:#23251d
+  style D fill:#2c84e0,stroke:#1a5a9a,color:#fff
+  style E fill:#635BFF,stroke:#3d37a8,color:#fff
 ```
 
 Everything scopes to the **active workspace** (cookie). Modules share that language context so drills stay aligned with what you saved.
 
+---
+
 ## Plans at a glance
 
-Daily limits and prices live in `src/lib/billing/plans.ts` (`PLAN_DAILY_QUOTAS`). Subscribe from `/account`.
+Daily limits and prices live in [`src/lib/billing/plans.ts`](src/lib/billing/plans.ts) (`PLAN_DAILY_QUOTAS`). Subscribe from `/account`.
 
-| Capability                                 | Free  | Pro (€9.99/mo) | Premium (€19.99/mo) |
-| ------------------------------------------ | ----- | -------------- | ------------------- |
-| Core vocab / writing / theory / CSV export | Yes   | Yes            | Yes                 |
-| AI Speaking Tutor                          | 1/day | 10/day         | Unlimited           |
-| AI Listening Transcript                    | 1/day | 10/day         | Unlimited           |
-| AI Exercise generation                     | 3/day | Unlimited      | Unlimited           |
-| AI Vocabulary actions                      | 5/day | Unlimited      | Unlimited           |
-| AI Writing Support                         | 1/day | Unlimited      | Unlimited           |
-| Import & export material                   | —     | Yes            | Yes                 |
-| Import & export account backup             | Yes   | Yes            | Yes                 |
-| Listening module                           | —     | Yes            | Yes                 |
-| Learning Coach / Ask Coach                 | —     | —              | Yes (100 msg/day)   |
+| Capability                                 | ![Free](https://img.shields.io/badge/Free-5e6a72?style=flat-square) | ![Pro](https://img.shields.io/badge/Pro_€9.99-2c84e0?style=flat-square) | ![Premium](https://img.shields.io/badge/Premium_€19.99-f7a501?style=flat-square&labelColor=23251d) |
+| ------------------------------------------ | :-----------------------------------------------------------------: | :---------------------------------------------------------------------: | :------------------------------------------------------------------------------------------------: |
+| Core vocab / writing / theory / CSV export |                                  ✓                                  |                                    ✓                                    |                                                 ✓                                                  |
+| AI Speaking Tutor                          |                                1/day                                |                                 10/day                                  |                                             Unlimited                                              |
+| AI Listening Transcript                    |                                1/day                                |                                 10/day                                  |                                             Unlimited                                              |
+| AI Exercise generation                     |                                3/day                                |                                Unlimited                                |                                             Unlimited                                              |
+| AI Vocabulary actions                      |                                5/day                                |                                Unlimited                                |                                             Unlimited                                              |
+| AI Writing Support                         |                                1/day                                |                                Unlimited                                |                                             Unlimited                                              |
+| Import & export material                   |                                  —                                  |                                    ✓                                    |                                                 ✓                                                  |
+| Account backup import / export             |                                  ✓                                  |                                    ✓                                    |                                                 ✓                                                  |
+| Listening module                           |                                  —                                  |                                    ✓                                    |                                                 ✓                                                  |
+| Learning Coach / Ask Coach                 |                                  —                                  |                                    —                                    |                                          ✓ (100 msg/day)                                           |
 
 Paid statuses: `active`, `trialing`, `past_due`. Admins get Premium capabilities without Stripe.
 
@@ -151,12 +125,13 @@ Paid statuses: `active`, `trialing`, `past_due`. Admins get Premium capabilities
 
 Two different flows — keep them separate:
 
-| Flow                         | Formats        | Availability                           | What it does                                                             |
-| ---------------------------- | -------------- | -------------------------------------- | ------------------------------------------------------------------------ |
-| **Material import / export** | CSV, PDF, DOCX | **Pro+** (CSV _export_ free for vocab) | Bring files into Vocabulary / Writing / Theory, or export printable docs |
-| **Account backup**           | Notoria JSON   | **All plans**                          | Export / restore learning data for the signed-in account                 |
+|             | Material import / export                                                 | Account backup                                           |
+| ----------- | ------------------------------------------------------------------------ | -------------------------------------------------------- |
+| **Formats** | CSV, PDF, DOCX                                                           | Notoria JSON                                             |
+| **Who**     | **Pro+** (CSV _export_ free for vocab)                                   | **All plans**                                            |
+| **Purpose** | Bring files into Vocabulary / Writing / Theory, or export printable docs | Export / restore learning data for the signed-in account |
 
-**Account backup rules (important):**
+**Account backup rules** (important)
 
 - Restores workspaces, vocabulary, theory, writing/exercises, listening, speaking, tags, folders
 - Uses **add as new** (match workspace by language; skip duplicate words; skip listening without media URLs)
@@ -167,25 +142,26 @@ Two different flows — keep them separate:
 
 ## Tech stack
 
-| Layer            | Choice                                                        |
-| ---------------- | ------------------------------------------------------------- |
-| App              | **Next.js 16** (App Router), **React 19**, TypeScript         |
-| UI               | Tailwind CSS v4, CSS Modules, shadcn/ui (Base UI), Lucide     |
-| Data             | PostgreSQL 16, **Drizzle ORM**, TanStack Query                |
-| Auth             | NextAuth v5 (credentials + Google), Resend (password reset)   |
-| Billing          | Stripe Checkout + Customer Portal + webhooks                  |
-| i18n             | next-intl (EN / FI / SV / VI)                                 |
-| Editor           | TipTap                                                        |
-| Export / import  | `@react-pdf/renderer`, `docx`, `unpdf`, `mammoth`             |
-| AI               | OpenAI (+ Realtime for speaking tutor)                        |
-| Speech           | AssemblyAI (listening); OpenAI Realtime transcription (speaking) |
-| Media / realtime | Cloudinary (images/audio); private Vercel Blob (Reading PDF/DOCX); Stream Video |
-| Tests            | Vitest                                                        |
-| Deploy           | Vercel + Docker Compose (local Postgres)                      |
+| Layer                | Choice                                                           |
+| -------------------- | ---------------------------------------------------------------- |
+| **App**              | Next.js 16 (App Router), React 19, TypeScript                    |
+| **UI**               | Tailwind CSS v4, CSS Modules, shadcn/ui (Base UI), Lucide        |
+| **Data**             | PostgreSQL 16, Drizzle ORM, TanStack Query                       |
+| **Auth**             | NextAuth v5 (credentials + Google), Resend (password reset)      |
+| **Billing**          | Stripe Checkout + Customer Portal + webhooks                     |
+| **i18n**             | next-intl (EN / FI / SV / VI)                                    |
+| **Editor**           | TipTap                                                           |
+| **Export / import**  | `@react-pdf/renderer`, `docx`, `unpdf`, `mammoth`                |
+| **AI**               | OpenAI (+ Realtime for speaking tutor)                           |
+| **Speech**           | AssemblyAI (listening); OpenAI Realtime transcription (speaking) |
+| **Media / realtime** | Cloudinary; private Vercel Blob (Reading PDF/DOCX); Stream Video |
+| **Tests / deploy**   | Vitest · Vercel · Docker Compose (local Postgres)                |
 
 ---
 
 ## Project structure
+
+**Expand** `src/` layout
 
 ```text
 messages/                     # next-intl UI strings: en, fi, sv, vi
@@ -218,47 +194,9 @@ src/
 │       ├── stream/           # Stream Video webhooks
 │       └── stripe/           # checkout, portal, webhook, sync
 │
-├── components/
-│   ├── account/              # settings, avatar, backup import dialog
-│   ├── auth/                 # auth forms & shells
-│   ├── billing/              # upgrade modal, plan table, locks
-│   ├── coach/                # Premium coach UI
-│   ├── content-import/       # shared CSV/PDF/DOCX import dialog
-│   ├── vocabulary/           # bank, form, preview, export
-│   ├── theory/               # library, editor, rows
-│   ├── writing/              # list, editor, AI panel, export
-│   ├── exercises/            # studio, modes, import practice
-│   ├── flashcards/           # SRS card UI
-│   ├── listening/            # lessons, player, practice
-│   ├── speaking/             # sessions + call lobby/active/ended
-│   ├── folders/              # workspace folders
-│   ├── workspace/            # create / switch / edit workspace
-│   ├── dashboard/            # home, guide, continue cards
-│   ├── layout/               # sidebar, header, page shell, locale
-│   ├── editor/               # TipTap editor chrome
-│   ├── export/               # shared export dialogs / format UI
-│   ├── search/ · filters/    # global search & multi-filters
-│   ├── onboarding/           # tutorials, language onboarding
-│   ├── settings/ · preferences/
-│   ├── legal/ · getting-started/ · help/
-│   ├── providers/            # session, prefs, AI prefs
-│   ├── style/                # CSS Modules per feature
-│   ├── ui/                   # shadcn/Base UI primitives
-│   └── shared/ · form/ · prompts/ · inbox/ · review-later/
-│
+├── components/               # feature UI (account, vocab, exercises, …)
 ├── db/                       # Drizzle schema + Postgres client
-├── lib/
-│   ├── actions/              # Server Actions (CRUD per domain)
-│   ├── account-backup/       # parse / preview / import JSON backups
-│   ├── content-import/       # extract → map → analyze pipeline
-│   ├── billing/              # plans, quotas, entitlements, coach
-│   ├── auth/ · email/        # sessions, Pro gates, password reset
-│   ├── stripe/               # checkout / portal / subscription sync
-│   ├── vocabulary/ · writing/ · theory/ · theory-exercises/
-│   ├── exercises/ · exercise-import/ · flashcards/
-│   ├── listening/ · speaking/
-│   ├── editor/ · export/ · search/ · folders/ · ai/
-│   └── query/ · activity/ · onboarding/ · taxonomy/ · …
+├── lib/                      # actions, billing, auth, domain logic
 ├── schemas/                  # Zod input schemas
 └── types/                    # shared TypeScript types
 ```
@@ -272,7 +210,7 @@ src/
 - **Node.js 20+**
 - **Docker Desktop** (local Postgres)
 - **npm**
-- Optional providers for full features: Cloudinary, OpenAI, AssemblyAI, Stream, Stripe (test), Resend
+- Optional for full features: Cloudinary, OpenAI, AssemblyAI, Stream, Stripe (test), Resend
 
 ### Install & run
 
@@ -303,7 +241,9 @@ stripe listen --forward-to localhost:3000/api/stripe/webhook
 
 ## Configuration
 
-Create `.env.local` in the project root:
+Create `.env.local` in the project root.
+
+**Full** `.env.local` **template**
 
 ```env
 # ── Database (PostgreSQL) ──────────────────────────────────────────
@@ -392,7 +332,7 @@ Notoria is built as a **personal learning workspace**:
 - Account deletion removes learning data and cancels active Pro/Premium per product rules
 - **Account backup** is learning-data portability — not an identity or subscription transfer
 
-Official policy pages: [Privacy](https://www.notoria.fi/privacy) · [Terms](https://www.notoria.fi/terms) · [contact@notoria.fi](mailto:contact@notoria.fi)
+**Policy:** [Privacy](https://www.notoria.fi/privacy) · [Terms](https://www.notoria.fi/terms) · [contact@notoria.fi](mailto:contact@notoria.fi)
 
 **Local DB helpers**
 
@@ -437,15 +377,14 @@ No open-source license file is published in this repository. Treat the codebase 
 ---
 
 <div align="center">
-  <img src="./public/logo.png" alt="Notoria logo" width="88"/>
 
-  <p><strong>Notoria</strong></p>
+<img src="./public/logo.png" alt="Notoria" width="60" height="60" />
 
-  <p>
-    <sub>Built for learners who want their material — and their progress — in one private place.</sub>
-  </p>
+<strong>Notoria</strong><br/>
+<sub>Your material · Your progress · One private place</sub>
 
-  <p>
-    <a href="https://www.notoria.fi">www.notoria.fi</a>
-  </p>
+<br/>
+
+<a href="https://www.notoria.fi"><img src="https://img.shields.io/badge/www.notoria.fi-f7a501?style=flat-square&labelColor=23251d" alt="www.notoria.fi"/></a>
+
 </div>

@@ -1146,10 +1146,12 @@
           "needs_review": "Sai & chưa trả lời ({count})",
           "correct": "Đúng ({count})"
         },
-        "prevWrong": "Câu sai trước",
-        "nextWrong": "Câu sai tiếp",
-        "wrongPosition": "{current} / {total} cần xem lại",
-        "toReviewCount": "{count} to review"
+        "prevWrong": "Trước",
+        "nextWrong": "Sau",
+        "wrongPosition": "{current} / {total}",
+        "toReviewCount": "{count} cần xem lại",
+        "floatLabel": "Điều hướng câu sai",
+        "closeFloat": "Hiện tất cả câu"
       },
       "scorePercent": "{percent}% correct",
       "result": {

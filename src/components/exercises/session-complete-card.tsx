@@ -55,6 +55,42 @@ function resolveMood(input: {
   return "mixed";
 }
 
+const MOOD_WASH: Record<ResultMood, string> = {
+  perfect:
+    "bg-[radial-gradient(ellipse_at_18%_0%,color-mix(in_oklab,var(--success)_14%,transparent),transparent_62%),radial-gradient(ellipse_at_88%_12%,color-mix(in_oklab,var(--exercise-accent)_8%,transparent),transparent_56%)]",
+  strong:
+    "bg-[radial-gradient(ellipse_at_18%_0%,color-mix(in_oklab,var(--success)_12%,transparent),transparent_62%),radial-gradient(ellipse_at_92%_8%,color-mix(in_oklab,var(--exercise-accent)_10%,transparent),transparent_56%)]",
+  mixed:
+    "bg-[radial-gradient(ellipse_at_14%_0%,color-mix(in_oklab,var(--exercise-accent)_12%,transparent),transparent_62%),radial-gradient(ellipse_at_90%_18%,color-mix(in_oklab,var(--warning)_6%,transparent),transparent_56%)]",
+  unanswered:
+    "bg-[radial-gradient(ellipse_at_16%_0%,color-mix(in_oklab,var(--warning)_12%,transparent),transparent_62%),radial-gradient(ellipse_at_88%_14%,color-mix(in_oklab,var(--exercise-accent)_7%,transparent),transparent_56%)]",
+};
+
+const MOOD_RAIL: Record<ResultMood, string> = {
+  perfect: "from-success/55 via-success/25 to-transparent",
+  strong: "from-success/50 via-(--exercise-accent)/25 to-transparent",
+  mixed: "from-(--exercise-accent)/55 via-warning/20 to-transparent",
+  unanswered: "from-warning/55 via-(--exercise-accent)/20 to-transparent",
+};
+
+const MOOD_BADGE: Record<ResultMood, string> = {
+  perfect:
+    "border-success-border/35 bg-success-muted/45 text-success dark:bg-success-muted/35",
+  strong:
+    "border-success-border/30 bg-[color-mix(in_oklab,var(--success-muted)_40%,var(--exercise-accent-soft)_30%,transparent)] text-success",
+  mixed:
+    "border-(--exercise-accent)/25 bg-(--exercise-accent-soft)/70 text-(--exercise-accent)",
+  unanswered:
+    "border-warning/30 bg-[color-mix(in_oklab,var(--warning)_8%,var(--surface))] text-warning",
+};
+
+const MOOD_HEADLINE: Record<ResultMood, string> = {
+  perfect: "text-success",
+  strong: "text-success",
+  mixed: "text-(--exercise-accent)",
+  unanswered: "text-warning",
+};
+
 export function SessionCompleteCard({
   title,
   scoreLabel,
@@ -87,11 +123,11 @@ export function SessionCompleteCard({
 
   const mood = hasStats
     ? resolveMood({
-        questions: questions!,
-        correct: correct!,
-        incorrect: derivedIncorrect,
-        unanswered: derivedUnanswered,
-      })
+      questions: questions!,
+      correct: correct!,
+      incorrect: derivedIncorrect,
+      unanswered: derivedUnanswered,
+    })
     : "mixed";
   const ratio =
     hasStats && questions! > 0 ? Math.min(1, correct! / questions!) : 0;
@@ -106,105 +142,170 @@ export function SessionCompleteCard({
           ? CircleHelp
           : Target;
 
-  const moodTone =
-    mood === "perfect" || mood === "strong"
-      ? "text-success"
-      : mood === "unanswered"
-        ? "text-muted-foreground"
-        : "text-(--exercise-accent)";
+  const stagger = reduceMotion
+    ? undefined
+    : {
+      hidden: {},
+      show: {
+        transition: { staggerChildren: 0.07, delayChildren: 0.18 },
+      },
+    };
+
+  const item = reduceMotion
+    ? undefined
+    : {
+      hidden: { opacity: 0, y: 10 },
+      show: {
+        opacity: 1,
+        y: 0,
+        transition: { duration: 0.32, ease: [0.22, 1, 0.36, 1] as const },
+      },
+    };
 
   return (
     <motion.div
-      initial={reduceMotion ? false : { opacity: 0, y: 14 }}
+      initial={reduceMotion ? false : { opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={
-        reduceMotion ? { duration: 0 } : { duration: 0.35, ease: [0.22, 1, 0.36, 1] }
+        reduceMotion ? { duration: 0 } : { duration: 0.4, ease: [0.22, 1, 0.36, 1] }
       }
-      className="exercise-panel relative w-full overflow-hidden rounded-xl border px-5 py-7 sm:rounded-2xl sm:px-7 sm:py-8"
+      className="exercise-panel relative w-full overflow-hidden rounded-xl border px-5 py-7 sm:rounded-2xl sm:px-8 sm:py-9"
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-x-0 top-0 h-40 bg-[radial-gradient(ellipse_at_top,var(--exercise-accent-soft),transparent_70%)]"
+        className={cn(
+          "pointer-events-none absolute inset-0 opacity-70 dark:opacity-55",
+          MOOD_WASH[mood],
+        )}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-8 left-[18%] h-36 w-48 rounded-full bg-(--exercise-accent)/16 blur-3xl"
+        className={cn(
+          "pointer-events-none absolute top-0 bottom-0 left-0 w-0.5 bg-linear-to-b sm:w-1",
+          MOOD_RAIL[mood],
+        )}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -right-8 top-10 h-32 w-40 rounded-full bg-success/12 blur-3xl"
+        className="pointer-events-none absolute inset-x-0 bottom-0 h-px bg-linear-to-r from-transparent via-(--exercise-accent)/12 to-transparent"
       />
 
-      <div className="relative">
-        <p className="font-mono text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
-          {title}
-        </p>
+      <div className="relative pl-1.5 sm:pl-2">
+        <div className="flex flex-wrap items-center gap-2.5">
+          <p className="font-mono text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
+            {title}
+          </p>
+          {hasStats ? (
+            <span
+              className={cn(
+                "inline-flex items-center gap-1 rounded-full border px-2.5 py-0.5 text-[0.68rem] font-semibold tracking-wide",
+                MOOD_BADGE[mood],
+              )}
+            >
+              <MoodIcon className="size-3.5 shrink-0" strokeWidth={2.3} />
+              {t("scorePercent", { percent })}
+            </span>
+          ) : null}
+        </div>
 
         {hasStats ? (
-          <div className="mt-5 flex flex-col items-center gap-6 sm:mt-6 sm:flex-row sm:items-center sm:gap-8 lg:gap-10">
-            <ScoreRing
-              ratio={ratio}
-              mood={mood}
-              reduceMotion={Boolean(reduceMotion)}
-            >
-              <p className="font-heading text-[2.1rem] leading-none font-bold tracking-tight tabular-nums text-ink sm:text-[2.45rem]">
-                {correct}
-                <span className="text-[1.05rem] font-semibold text-muted-foreground sm:text-[1.2rem]">
-                  {" "}
-                  / {questions}
-                </span>
-              </p>
-              <p className="mt-1.5 text-[0.68rem] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
-                {t("scorePercent", { percent })}
-              </p>
-            </ScoreRing>
+          <motion.div
+            className="mt-6 flex flex-col items-center gap-7 sm:mt-7 sm:flex-row sm:items-center sm:gap-9 lg:gap-11"
+            variants={stagger}
+            initial={reduceMotion ? undefined : "hidden"}
+            animate={reduceMotion ? undefined : "show"}
+          >
+            <motion.div variants={item}>
+              <ScoreRing
+                ratio={ratio}
+                mood={mood}
+                reduceMotion={Boolean(reduceMotion)}
+              >
+                <p className="font-heading text-[2.15rem] leading-none font-bold tracking-tight tabular-nums text-ink sm:text-[2.55rem]">
+                  {correct}
+                  <span className="text-[1.05rem] font-semibold text-muted-foreground sm:text-[1.2rem]">
+                    {" "}
+                    / {questions}
+                  </span>
+                </p>
+                <p className="mt-1.5 text-[0.8rem] font-medium tracking-wide text-muted-foreground">
+                  {t("questionsLabel")}
+                </p>
+              </ScoreRing>
+            </motion.div>
 
-            <div className="min-w-0 flex-1 space-y-4 text-center sm:space-y-5 sm:text-left">
-              <div className="space-y-1">
+            <div className="min-w-0 flex-1 space-y-5 text-center sm:space-y-5 sm:text-left">
+              <motion.div className="space-y-2" variants={item}>
                 <p
                   className={cn(
-                    "inline-flex items-center justify-center gap-1.5 font-heading text-lg font-semibold tracking-tight sm:justify-start sm:text-xl",
-                    moodTone,
+                    "inline-flex items-center justify-center gap-2 font-heading text-[1.35rem] font-semibold tracking-tight sm:justify-start sm:text-[1.55rem]",
+                    MOOD_HEADLINE[mood],
                   )}
                 >
-                  <MoodIcon className="size-5 shrink-0" strokeWidth={2.2} />
+                  <span
+                    className={cn(
+                      "grid size-8 place-items-center rounded-lg border sm:size-9",
+                      MOOD_BADGE[mood],
+                    )}
+                  >
+                    <MoodIcon className="size-[1.125rem]" strokeWidth={2.2} />
+                  </span>
                   {t(`result.${mood}.headline`)}
                 </p>
-                <p className="mx-auto max-w-md text-sm leading-relaxed text-muted-foreground sm:mx-0">
+                <p className="mx-auto max-w-md text-[0.95rem] leading-relaxed text-muted-foreground sm:mx-0">
                   {t(`result.${mood}.body`)}
                 </p>
-              </div>
+              </motion.div>
 
-              <dl className="grid grid-cols-3 gap-2">
-                <Stat
-                  label={t("correctLabel")}
-                  value={correct!}
-                  tone="success"
-                />
-                <Stat
-                  label={t("incorrectLabel")}
-                  value={derivedIncorrect}
-                  tone="error"
-                />
-                <Stat
-                  label={t("unansweredLabel")}
-                  value={derivedUnanswered}
-                  tone="warning"
-                />
-              </dl>
+              <motion.dl
+                className="grid grid-cols-3 gap-2 sm:gap-2.5"
+                variants={stagger}
+              >
+                <motion.div variants={item}>
+                  <Stat
+                    label={t("correctLabel")}
+                    value={correct!}
+                    tone="success"
+                  />
+                </motion.div>
+                <motion.div variants={item}>
+                  <Stat
+                    label={t("incorrectLabel")}
+                    value={derivedIncorrect}
+                    tone="error"
+                  />
+                </motion.div>
+                <motion.div variants={item}>
+                  <Stat
+                    label={t("unansweredLabel")}
+                    value={derivedUnanswered}
+                    tone="warning"
+                  />
+                </motion.div>
+              </motion.dl>
             </div>
-          </div>
+          </motion.div>
         ) : scoreLabel ? (
           <p className="mt-5 text-sm font-medium text-muted-foreground">
             {scoreLabel}
           </p>
         ) : null}
 
-        <div className="mt-7 flex flex-wrap items-center justify-center gap-2">
+        <motion.div
+          className="mt-8 flex flex-wrap items-center justify-center gap-2.5"
+          initial={reduceMotion ? false : { opacity: 0, y: 8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={
+            reduceMotion
+              ? { duration: 0 }
+              : { delay: 0.35, duration: 0.3, ease: [0.22, 1, 0.36, 1] }
+          }
+        >
           <Button
             type="button"
             onClick={onTryAgain}
             disabled={extraAction?.loading}
+            className="min-w-[9.5rem] shadow-sm shadow-(--exercise-accent)/15"
           >
             <RotateCcw className="size-4" />
             {tryAgainLabel}
@@ -241,7 +342,7 @@ export function SessionCompleteCard({
               {extraAction.label}
             </QuotaLockButton>
           ) : null}
-        </div>
+        </motion.div>
       </div>
     </motion.div>
   );
@@ -258,21 +359,36 @@ function ScoreRing({
   reduceMotion: boolean;
   children: ReactNode;
 }) {
-  const size = 136;
-  const stroke = 7;
+  const size = 148;
+  const stroke = 8;
   const radius = (size - stroke) / 2;
   const circumference = 2 * Math.PI * radius;
   const offset = circumference * (1 - Math.max(0, Math.min(1, ratio)));
   const strokeColor =
     mood === "perfect" || mood === "strong"
       ? "var(--success)"
-      : "var(--exercise-accent)";
+      : mood === "unanswered"
+        ? "var(--warning)"
+        : "var(--exercise-accent)";
+  const glowClass =
+    mood === "perfect" || mood === "strong"
+      ? "bg-success/8"
+      : mood === "unanswered"
+        ? "bg-warning/7"
+        : "bg-(--exercise-accent)/8";
 
   return (
     <div
       className="relative grid shrink-0 place-items-center"
       style={{ width: size, height: size }}
     >
+      <div
+        aria-hidden
+        className={cn(
+          "pointer-events-none absolute inset-[12%] rounded-full blur-xl",
+          glowClass,
+        )}
+      />
       <svg
         width={size}
         height={size}
@@ -285,7 +401,7 @@ function ScoreRing({
           cy={size / 2}
           r={radius}
           fill="none"
-          stroke="color-mix(in oklab, var(--hairline-cloud) 70%, transparent)"
+          stroke="color-mix(in oklab, var(--hairline-cloud) 72%, transparent)"
           strokeWidth={stroke}
         />
         <motion.circle
@@ -306,7 +422,7 @@ function ScoreRing({
           transition={
             reduceMotion
               ? { duration: 0 }
-              : { duration: 0.85, ease: [0.22, 1, 0.36, 1], delay: 0.08 }
+              : { duration: 0.9, ease: [0.22, 1, 0.36, 1], delay: 0.1 }
           }
         />
       </svg>
@@ -327,19 +443,19 @@ function Stat({
   return (
     <div
       className={cn(
-        "relative overflow-hidden rounded-xl border px-2.5 py-3 sm:px-3.5",
+        "relative overflow-hidden rounded-xl border px-2.5 py-3.5 sm:px-3.5",
         tone === "success" &&
-          "border-success-border/80 bg-[linear-gradient(165deg,color-mix(in_oklab,var(--success)_28%,transparent),color-mix(in_oklab,var(--success-muted)_80%,transparent)_55%,transparent)] shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--success)_22%,transparent)]",
+        "border-success-border/40 bg-[linear-gradient(165deg,color-mix(in_oklab,var(--success)_12%,transparent),color-mix(in_oklab,var(--success-muted)_55%,transparent)_55%,transparent)] shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--success)_10%,transparent)]",
         tone === "error" &&
-          "border-error-border/80 bg-[linear-gradient(165deg,color-mix(in_oklab,var(--error)_28%,transparent),color-mix(in_oklab,var(--error-muted)_80%,transparent)_55%,transparent)] shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--error)_22%,transparent)]",
+        "border-error-border/40 bg-[linear-gradient(165deg,color-mix(in_oklab,var(--error)_12%,transparent),color-mix(in_oklab,var(--error-muted)_55%,transparent)_55%,transparent)] shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--error)_10%,transparent)]",
         tone === "warning" &&
-          "border-warning/70 bg-[linear-gradient(165deg,color-mix(in_oklab,var(--warning)_26%,transparent),color-mix(in_oklab,var(--warning)_10%,transparent)_55%,transparent)] shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--warning)_20%,transparent)]",
+        "border-warning/35 bg-[linear-gradient(165deg,color-mix(in_oklab,var(--warning)_11%,transparent),color-mix(in_oklab,var(--warning)_5%,transparent)_55%,transparent)] shadow-[inset_0_0_0_1px_color-mix(in_oklab,var(--warning)_10%,transparent)]",
       )}
     >
       <span
         aria-hidden
         className={cn(
-          "pointer-events-none absolute inset-y-0 left-0 w-1",
+          "pointer-events-none absolute inset-y-0 left-0 w-1 opacity-70",
           tone === "success" && "bg-success",
           tone === "error" && "bg-error",
           tone === "warning" && "bg-warning",
@@ -347,7 +463,7 @@ function Stat({
       />
       <dt
         className={cn(
-          "text-[0.7rem] font-semibold tracking-wide",
+          "pl-1.5 text-[0.68rem] font-semibold tracking-[0.04em] uppercase",
           tone === "success" && "text-success",
           tone === "error" && "text-error",
           tone === "warning" && "text-warning",
@@ -357,7 +473,7 @@ function Stat({
       </dt>
       <dd
         className={cn(
-          "mt-1 font-heading text-2xl font-bold tabular-nums sm:text-[1.7rem]",
+          "mt-1.5 pl-1.5 font-heading text-[1.65rem] leading-none font-bold tabular-nums sm:text-[1.85rem]",
           tone === "success" && "text-success",
           tone === "error" && "text-error",
           tone === "warning" && "text-warning",

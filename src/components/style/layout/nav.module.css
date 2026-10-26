@@ -97,12 +97,18 @@
 }
 
 .nav-link:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--nav-route-fg, var(--primary)) 28%,
+    var(--hairline-cloud)
+  );
   background: color-mix(
     in oklab,
     var(--nav-route-bg, var(--muted)) 42%,
     transparent
   );
   color: var(--nav-route-fg, var(--ink));
+  box-shadow: inset 2px 0 0 var(--nav-route-fg, var(--primary));
 }
 
 .nav-link.is-active {
