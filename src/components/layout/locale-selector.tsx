@@ -208,7 +208,7 @@ function LocaleSection({
 }) {
   return (
     <section className={className}>
-      <h3 className="mb-3 text-[0.72rem] font-bold tracking-[0.14em] text-muted-foreground uppercase sm:mb-3.5">
+      <h3 className="mb-3 text-[0.8rem] font-bold tracking-[0.14em] text-muted-foreground uppercase sm:mb-3.5">
         {title}
       </h3>
       {children}

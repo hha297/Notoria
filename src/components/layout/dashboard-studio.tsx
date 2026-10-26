@@ -164,7 +164,7 @@ export function DashboardStudio({
                 */}
                 <div
                   className={cn(
-                    "group/chrome flex h-auto items-center gap-1.5 px-2 py-1.5 sm:h-14 sm:gap-2 sm:px-4 sm:py-0",
+                    "group/chrome flex h-auto items-center gap-1.5 px-2 py-1.5 sm:h-14 sm:gap-2 sm:px-2 sm:py-0",
                     /* Expanded search: even inset — no leftover gap from collapsed siblings */
                     "max-sm:has-[[data-mobile-search]]:gap-0",
                   )}
@@ -251,7 +251,7 @@ export function DashboardStudio({
                         pathname.startsWith("/listening/") ||
                         pathname.startsWith("/speaking/") ||
                         pathname === "/tag" ||
-                          pathname.startsWith("/tag/")
+                        pathname.startsWith("/tag/")
                         ? "max-w-[90rem]"
                         : "max-w-6xl",
                     )}

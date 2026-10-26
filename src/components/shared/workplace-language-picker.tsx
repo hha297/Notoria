@@ -125,7 +125,7 @@ export function WorkplaceLanguagePicker({
             className="pointer-events-none absolute inset-x-0 top-0 h-px bg-gradient-to-r from-transparent via-primary/70 to-transparent"
           />
 
-          <DialogHeader className="relative flex shrink-0 flex-row items-center justify-between gap-3 border-b border-hairline-cloud/80 px-5 py-4 sm:px-6 sm:py-5">
+          <DialogHeader className="relative flex shrink-0 flex-row items-center justify-between gap-3 border-b border-hairline-cloud px-5 py-4 sm:px-6 sm:py-5 dark:border-white/14">
             <DialogTitle className="text-xl font-bold tracking-tight sm:text-2xl">
               {t("language")}
             </DialogTitle>
@@ -139,7 +139,7 @@ export function WorkplaceLanguagePicker({
             </DialogClose>
           </DialogHeader>
 
-          <div className="relative shrink-0 border-b border-hairline-cloud/80 px-4 py-3 sm:px-6">
+          <div className="relative shrink-0 border-b border-hairline-cloud px-4 py-3 sm:px-6 dark:border-white/14">
             <div className="relative">
               <Search
                 className="pointer-events-none absolute top-1/2 left-3 size-4 -translate-y-1/2 text-muted-foreground"
@@ -153,7 +153,12 @@ export function WorkplaceLanguagePicker({
                 aria-label={t("languageSearchPlaceholder")}
                 autoComplete="off"
                 spellCheck={false}
-                className="h-11 rounded-xl border-hairline-cloud bg-popover pl-10 shadow-none [background-image:none]"
+                className={cn(
+                  "h-11 rounded-xl border-primary/25 pl-10 shadow-none [background-image:none]",
+                  "bg-[color-mix(in_oklab,var(--primary)_10%,var(--surface-elevated))]",
+                  "dark:border-primary/30 dark:bg-[color-mix(in_oklab,var(--primary)_16%,var(--surface-elevated))]",
+                  "placeholder:text-muted-foreground focus-visible:border-primary/45 focus-visible:ring-primary/25",
+                )}
                 onChange={(event) => setQuery(event.target.value)}
               />
             </div>
@@ -220,7 +225,7 @@ function LanguageSection({
 }) {
   return (
     <section className={className}>
-      <h3 className="mb-3 text-[0.72rem] font-bold tracking-[0.14em] text-muted-foreground uppercase sm:mb-3.5">
+      <h3 className="mb-3 text-[0.8rem] font-bold tracking-[0.14em] text-muted-foreground uppercase sm:mb-3.5">
         {title}
       </h3>
       {children}

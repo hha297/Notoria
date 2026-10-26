@@ -1146,10 +1146,12 @@
           "needs_review": "Wrong & unanswered ({count})",
           "correct": "Correct ({count})"
         },
-        "prevWrong": "Previous wrong",
-        "nextWrong": "Next wrong",
-        "wrongPosition": "{current} / {total} to review",
-        "toReviewCount": "{count} to review"
+        "prevWrong": "Previous",
+        "nextWrong": "Next",
+        "wrongPosition": "{current} / {total}",
+        "toReviewCount": "{count} to review",
+        "floatLabel": "Wrong answers navigation",
+        "closeFloat": "Show all answers"
       },
       "scorePercent": "{percent}% correct",
       "result": {
