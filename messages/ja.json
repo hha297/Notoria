@@ -1030,7 +1030,21 @@
       "next": "次へ",
       "check": "チェック",
       "shuffle": "シャッフル",
-      "finish": "ラウンドを終了"
+      "finish": "ラウンドを終了",
+      "source": {
+        "label": "Question source",
+        "chooseAi": "Use AI Generated",
+        "emptyTitle": "No usable saved examples",
+        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "saved-examples": {
+          "title": "Saved examples",
+          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+        },
+        "ai-generated": {
+          "title": "AI Generated",
+          "description": "Create fresh sentences from your vocabulary with AI."
+        }
+      }
     },
     "ai": {
       "generate": "AIで生成",

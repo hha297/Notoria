@@ -1031,7 +1031,21 @@
       "next": "Järgmine",
       "check": "Kontrolli",
       "shuffle": "Sega",
-      "finish": "Lõpeta voor"
+      "finish": "Lõpeta voor",
+      "source": {
+        "label": "Question source",
+        "chooseAi": "Use AI Generated",
+        "emptyTitle": "No usable saved examples",
+        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "saved-examples": {
+          "title": "Saved examples",
+          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+        },
+        "ai-generated": {
+          "title": "AI Generated",
+          "description": "Create fresh sentences from your vocabulary with AI."
+        }
+      }
     },
     "ai": {
       "generate": "Genereeri AI-ga",
