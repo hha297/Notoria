@@ -29,7 +29,8 @@
       "previewCallout": "Hộp chú thích theo màu module.",
       "fixedNote": "Giao diện được cố định trong file. Xuất lại nếu muốn đổi.",
       "docxBackgroundNote": "Word và ứng dụng khác có thể không hiển thị nền trang giống nhau, nhất là khi in."
-    }
+    },
+    "scrollToTop": "Lên đầu trang"
   },
   "contentImport": {
     "title": {
@@ -1085,8 +1086,14 @@
       "tryAgain": "Làm lại",
       "questionsLabel": "Câu hỏi",
       "correctLabel": "Đúng",
+      "incorrectLabel": "Sai",
+      "unansweredLabel": "Chưa trả lời",
       "reviewLabel": "Cần ôn",
       "answeredProgress": "{answered} / {total} đã trả lời",
+      "questionProgress": "{current} / {total}",
+      "checkAnswer": "Kiểm tra",
+      "nextQuestion": "Tiếp theo",
+      "viewResults": "Xem kết quả",
       "submitSet": "Nộp bài",
       "submitting": "Đang chấm…",
       "unansweredWarnTitle": "Còn câu chưa trả lời",
@@ -1100,7 +1107,35 @@
       "resultsTitle": "Kết quả",
       "unanswered": "Chưa trả lời",
       "yourAnswer": "Câu trả lời của bạn",
-      "correctAnswer": "Đáp án đúng"
+      "correctAnswer": "Đáp án đúng",
+      "shortSetNote": "Chỉ có {count} câu từ bộ lọc hiện tại.",
+      "displayMode": {
+        "label": "Cách làm bài",
+        "lockedHint": "Hoàn thành hoặc tạo bộ mới để đổi cách làm.",
+        "one_by_one": {
+          "title": "Từng câu",
+          "description": "Hiện một câu mỗi lần. Kiểm tra sau mỗi câu để nhận feedback ngay."
+        },
+        "all_questions": {
+          "title": "Toàn bộ câu",
+          "description": "Hiện cả bộ, trả lời theo thứ tự bất kỳ, rồi nộp một lần để chấm."
+        }
+      },
+      "review": {
+        "title": "Xem lại",
+        "allCorrect": "Hoàn hảo — đúng hết mọi câu.",
+        "summary": "{incorrect} sai · {unanswered} chưa trả lời · {needsReview} cần xem lại",
+        "viewWrong": "Xem câu sai",
+        "filtersLabel": "Lọc câu hỏi",
+        "filter": {
+          "all": "Tất cả ({count})",
+          "needs_review": "Sai & chưa trả lời ({count})",
+          "correct": "Đúng ({count})"
+        },
+        "prevWrong": "Câu sai trước",
+        "nextWrong": "Câu sai tiếp",
+        "wrongPosition": "{current} / {total} cần xem lại"
+      }
     },
     "multipleChoice": {
       "questionWord": "Từ này nghĩa là gì?",
@@ -1131,7 +1166,9 @@
       "progress": "Đã ghép {matched} / {total}",
       "hint": "Chọn một từ, rồi chọn nghĩa tương ứng",
       "complete": "Ghép hết rồi — giỏi quá!",
-      "shuffle": "Xáo cột"
+      "shuffle": "Xáo cột",
+      "pairsProgress": "{matched} / {total} cặp",
+      "continueRound": "Tiếp tục"
     },
     "typeAnswer": {
       "questionWord": "Nghĩa là gì?",

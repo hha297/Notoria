@@ -1,24 +1,14 @@
 /* Theory notes library / editor category filters.
- * Hover/active stay unlayered (module CSS) so they beat shadcn defaults. */
+ * Hover/active stay unlayered (module CSS) so they beat shadcn defaults.
+ *
+ * Inactive: soft accent wash + accent border + accent text.
+ * Active: solid accent fill + contrasting label.
+ */
 
 .theory-cat-picker {
   display: flex;
   flex-wrap: wrap;
   gap: 0.45rem;
-}
-
-.theory-filter-pill.theory-cat-chip {
-  color: var(--theory-cat-fg);
-  border-color: color-mix(
-    in oklab,
-    var(--theory-cat-fg) 32%,
-    var(--hairline-cloud)
-  );
-  background: color-mix(
-    in oklab,
-    var(--theory-cat-bg) 42%,
-    var(--surface-elevated)
-  );
 }
 
 .theory-filter-row {
@@ -28,55 +18,43 @@
 }
 
 .theory-filter-pill {
+  --pill-fg: var(--theory-cat-fg, var(--page-accent));
+  --pill-bg: var(--theory-cat-bg, var(--page-accent-soft));
   height: 2.25rem;
   padding: 0 0.9rem;
-  border: 1px solid var(--hairline-cloud);
+  border: 1px solid color-mix(in oklab, var(--pill-fg) 38%, transparent);
   border-radius: 999px;
-  background-color: transparent;
-  background-image: var(--control-surface);
-  color: var(--muted-foreground);
+  background-color: color-mix(in oklab, var(--pill-bg) 72%, var(--surface));
+  background-image: none;
+  color: var(--pill-fg);
   font-size: 0.875rem;
+  font-weight: 550;
   cursor: pointer;
   transition:
     border-color 160ms ease,
     background-color 160ms ease,
-    background-image 160ms ease,
     box-shadow 160ms ease,
-    color 160ms ease;
+    color 160ms ease,
+    font-weight 160ms ease;
 }
 
 .theory-filter-pill:hover {
-  border-color: color-mix(
-    in oklab,
-    var(--theory-cat-fg) 42%,
-    var(--hairline-cloud)
-  );
-  background-image:
-    linear-gradient(
-      155deg,
-      color-mix(in oklab, var(--theory-cat-bg) 42%, transparent),
-      transparent 70%
-    ),
-    var(--control-surface-hover);
-  color: var(--theory-cat-fg);
+  border-color: color-mix(in oklab, var(--pill-fg) 55%, transparent);
+  background-color: color-mix(in oklab, var(--pill-bg) 88%, var(--surface));
+  color: var(--pill-fg);
   box-shadow: none;
 }
 
 .theory-filter-pill.is-active {
-  border-color: color-mix(
-    in oklab,
-    var(--theory-cat-fg) 55%,
-    var(--hairline-cloud)
-  );
-  background-image:
-    linear-gradient(
-      155deg,
-      color-mix(in oklab, var(--theory-cat-bg) 58%, transparent),
-      transparent 68%
-    ),
-    var(--control-surface);
-  color: var(--theory-cat-fg);
-  box-shadow:
-    0 0 0 1px color-mix(in oklab, var(--theory-cat-fg) 20%, transparent),
-    0 10px 22px color-mix(in oklab, var(--theory-cat-fg) 14%, transparent);
+  border-color: var(--pill-fg);
+  background-color: var(--pill-fg);
+  background-image: none;
+  color: var(--background);
+  font-weight: 700;
+  box-shadow: 0 1px 2px color-mix(in oklab, var(--ink) 12%, transparent);
+}
+
+.theory-filter-pill.theory-cat-chip {
+  /* Same tokens; kept for editor pickers that add this class. */
+  color: inherit;
 }

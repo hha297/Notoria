@@ -15,7 +15,10 @@ export type MatchPairItem = {
   meaning: string;
 };
 
-/** One progression = one complete match-pair round, not one pair. */
+/**
+ * One progression = one complete match-pair round, not one pair.
+ * Prefer fuller rounds (up to 10); leftover rounds stay ≥ min when possible.
+ */
 export const MATCH_PAIR_MAX_ROUNDS = 10;
 export const MATCH_PAIR_MIN_PAIRS_PER_ROUND = 5;
 export const MATCH_PAIR_MAX_PAIRS_PER_ROUND = 10;
@@ -32,10 +35,9 @@ export function buildMatchPairItems(words: FlashcardWord[]): MatchPairItem[] {
 }
 
 /**
- * Split available vocabulary into round sizes.
- * At most 10 rounds, each 5–10 pairs when possible. Never pads with
- * duplicates or empty slots. A round may have fewer than 5 pairs only
- * when the whole bank is smaller than 5.
+ * Split available vocabulary into round sizes of about 4–5 pairs.
+ * Never pads with duplicates. A round may be smaller than the min only
+ * when the bank cannot support evenly-sized rounds.
  */
 export function planMatchPairRoundSizes(availableCount: number): number[] {
   if (availableCount <= 0) return [];
@@ -48,24 +50,59 @@ export function planMatchPairRoundSizes(availableCount: number): number[] {
     availableCount,
     MATCH_PAIR_MAX_ROUNDS * MATCH_PAIR_MAX_PAIRS_PER_ROUND,
   );
-  const minRounds = Math.ceil(usable / MATCH_PAIR_MAX_PAIRS_PER_ROUND);
-  const maxRounds = Math.min(
-    MATCH_PAIR_MAX_ROUNDS,
-    Math.floor(usable / MATCH_PAIR_MIN_PAIRS_PER_ROUND),
-  );
-  const roundCount = Math.max(minRounds, maxRounds);
 
-  const base = Math.floor(usable / roundCount);
-  const remainder = usable % roundCount;
-  return Array.from(
-    { length: roundCount },
-    (_, index) => base + (index < remainder ? 1 : 0),
-  );
+  const sizes: number[] = [];
+  let remaining = usable;
+  while (remaining > 0 && sizes.length < MATCH_PAIR_MAX_ROUNDS) {
+    if (remaining <= MATCH_PAIR_MAX_PAIRS_PER_ROUND) {
+      sizes.push(remaining);
+      break;
+    }
+    sizes.push(MATCH_PAIR_MAX_PAIRS_PER_ROUND);
+    remaining -= MATCH_PAIR_MAX_PAIRS_PER_ROUND;
+  }
+
+  return rebalanceMatchPairRoundSizes(sizes);
 }
 
-export type MatchPairProgressionEvent = "stay" | "next-round" | "complete";
+/** Steal from larger rounds until tiny leftovers are as even as possible. */
+function rebalanceMatchPairRoundSizes(sizes: number[]): number[] {
+  if (sizes.length <= 1) return sizes;
+  const next = [...sizes];
+  for (let guard = 0; guard < 40; guard += 1) {
+    let smallIdx = -1;
+    let smallVal = Number.POSITIVE_INFINITY;
+    let largeIdx = -1;
+    let largeVal = -1;
+    for (let i = 0; i < next.length; i += 1) {
+      const value = next[i]!;
+      if (value < smallVal) {
+        smallVal = value;
+        smallIdx = i;
+      }
+      if (value > largeVal) {
+        largeVal = value;
+        largeIdx = i;
+      }
+    }
+    if (smallIdx < 0 || largeIdx < 0 || smallIdx === largeIdx) break;
+    if (smallVal >= MATCH_PAIR_MIN_PAIRS_PER_ROUND) break;
+    if (largeVal <= smallVal + 1) break;
+    next[largeIdx]! -= 1;
+    next[smallIdx]! += 1;
+  }
+  return next;
+}
 
-/** Pair matches never advance progression; only a finished round does. */
+/**
+ * After the last pair in a round: wait for Continue (or View results).
+ * Pair matches alone never auto-advance.
+ */
+export type MatchPairProgressionEvent =
+  | "stay"
+  | "round-complete"
+  | "session-complete";
+
 export function progressionEventAfterPairMatch(input: {
   matchedCount: number;
   roundPairCount: number;
@@ -76,9 +113,9 @@ export function progressionEventAfterPairMatch(input: {
     return "stay";
   }
   if (input.currentRoundIndex >= input.totalRounds - 1) {
-    return "complete";
+    return "session-complete";
   }
-  return "next-round";
+  return "round-complete";
 }
 
 export function splitItemsIntoRoundSizes<T>(

@@ -8,24 +8,28 @@ export type ExerciseSessionMode =
   | "type_answer"
   | "form_sentence";
 
-/** Default interactive set size when the mode allows it. */
-export const DEFAULT_SESSION_QUESTION_COUNT = 10;
+/**
+ * Default interactive set size for modes that build questions locally
+ * (no AI generation). AI batches keep their own constants.
+ */
+export const DEFAULT_SESSION_QUESTION_COUNT = 20;
 
 /** Maximum items (or pairs) per exercise session. */
 export const SESSION_SIZE_MAX_BY_MODE: Record<ExerciseSessionMode, number> = {
   flashcards: 30,
-  fill_blank: 15,
+  fill_blank: 20,
   multiple_choice: 20,
   match_pairs: 10, // per-round cap; full session rounds are planned in match-pairs.ts
-  type_answer: 15,
-  form_sentence: 10,
+  type_answer: 20,
+  form_sentence: 20,
 };
 
 /** Optional min–max range; when set, session size is randomized in range. */
 export const SESSION_SIZE_RANGE_BY_MODE: Partial<
   Record<ExerciseSessionMode, { min: number; max: number }>
 > = {
-  form_sentence: { min: 5, max: 10 },
+  // Prefer a full local set when enough bank exists; still allow shorter draws.
+  form_sentence: { min: 10, max: 20 },
 };
 
 /** Target share of items drawn from the newest-word pool when possible. */

@@ -8,8 +8,14 @@ import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseDifficultySelect } from "@/components/exercises/exercise-difficulty-select";
 import { ExerciseAdditionalInstructions } from "@/components/exercises/exercise-additional-instructions";
+import { ExerciseDisplayModePicker } from "@/components/exercises/exercise-display-mode-picker";
+import { ExerciseOneByOneBar } from "@/components/exercises/exercise-one-by-one-bar";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { ExerciseSetSubmitBar } from "@/components/exercises/exercise-set-submit-bar";
+import {
+  ExerciseSetReviewNav,
+  exerciseReviewFocusClass,
+} from "@/components/exercises/exercise-set-review-nav";
 import { MultipleChoiceStage } from "@/components/exercises/multiple-choice-stage";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
@@ -19,7 +25,9 @@ import { useAiProcessing } from "@/hooks/use-ai-processing";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { useExerciseDifficulty } from "@/hooks/use-exercise-difficulty";
 import { useExerciseSetAttempt } from "@/hooks/use-exercise-set-attempt";
+import { useExerciseSetUi } from "@/hooks/use-exercise-set-ui";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
+import { cn } from "@/lib/utils";
 import { isValidLocale } from "@/i18n/config";
 import { requestContextualExerciseAi } from "@/lib/exercises/contextual-ai-client";
 import {
@@ -122,12 +130,43 @@ export function MultipleChoiceSession({
     totalQuestionCount,
     unansweredIds,
     score,
+    checkedCount,
     setAnswer,
     resetAttempt,
     submit,
+    checkOne,
+    markSubmitted,
   } = useExerciseSetAttempt({ questionIds });
 
-  const submitted = attemptPhase === "submitted";
+  const {
+    displayMode,
+    setDisplayMode,
+    displayModeLocked,
+    currentQuestionId,
+    currentChecked,
+    currentCanCheck,
+    isLastQuestion,
+    goNextQuestion,
+    visibleQuestionIds,
+    numbers,
+    reviewFilter,
+    setReviewFilter,
+    focusedReviewId,
+    setFocusedReviewId,
+    afterNewSet,
+    jumpToUnanswered,
+    openWrongReview,
+    submitted,
+  } = useExerciseSetUi({
+    questionIds,
+    results,
+    answers,
+    attemptPhase,
+    answeredCount,
+    checkedCount,
+    questionIdPrefix: "mc-q",
+    setAnchorId: "mc-set-top",
+  });
 
   const startDeterministicSession = useCallback(() => {
     const prefs = commitAndBeginNext();
@@ -148,7 +187,9 @@ export function MultipleChoiceSession({
     setActiveIds(null);
     resetAttempt();
     resetProcessing();
+    afterNewSet();
   }, [
+    afterNewSet,
     commitAndBeginNext,
     createdAtByWordId,
     filteredWords,
@@ -261,16 +302,19 @@ export function MultipleChoiceSession({
       setStage("saving");
       setQuestions(nextQuestions);
       completeProcessing();
+      afterNewSet();
       window.setTimeout(() => resetProcessing(), 350);
     } catch {
       fail(tAi("unavailable"));
     }
   }, [
+    additionalInstructions,
+    afterNewSet,
     commitAndBeginNext,
     completeProcessing,
     difficulty,
-    additionalInstructions,
-    fail,
+    exerciseQuota.message,
+    exerciseQuota.refreshQuotas,
     fail,
     filteredWords,
     language,
@@ -279,8 +323,6 @@ export function MultipleChoiceSession({
     resetProcessing,
     setStage,
     tAi,
-    exerciseQuota.message,
-    exerciseQuota.refreshQuotas,
     uiLocale,
   ]);
 
@@ -321,31 +363,45 @@ export function MultipleChoiceSession({
     }
   };
 
+  const gradeQuestion = useCallback(
+    (question: MultipleChoiceQuestion, raw: unknown): SetQuestionResult => {
+      const value = typeof raw === "string" ? raw : "";
+      const unanswered = !isNonEmptyAnswer(value);
+      const correct =
+        !unanswered &&
+        displayContextualOption(question, value) ===
+          contextualSurfaceAnswer(question);
+      recordOutcome({ wordId: question.wordId, correct });
+      return { correct, unanswered };
+    },
+    [recordOutcome],
+  );
+
   const handleSubmit = () => {
     void submit((currentAnswers) => {
       const graded: Record<string, SetQuestionResult> = {};
       for (const question of practiceQuestions) {
-        const raw = currentAnswers[question.id];
-        const value = typeof raw === "string" ? raw : "";
-        const unanswered = !isNonEmptyAnswer(value);
-        const correct =
-          !unanswered &&
-          displayContextualOption(question, value) ===
-            contextualSurfaceAnswer(question);
-        graded[question.id] = { correct, unanswered };
-        recordOutcome({ wordId: question.wordId, correct });
+        graded[question.id] = gradeQuestion(question, currentAnswers[question.id]);
       }
       return graded;
     });
   };
 
-  const jumpToUnanswered = () => {
-    const first = unansweredIds[0];
-    if (!first) return;
-    document
-      .getElementById(`mc-q-${first}`)
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const handleCheckOne = () => {
+    if (!currentQuestionId) return;
+    const question = practiceQuestions.find((q) => q.id === currentQuestionId);
+    if (!question) return;
+    void checkOne(question.id, (raw) => gradeQuestion(question, raw));
   };
+
+  const handleViewResults = () => {
+    markSubmitted();
+  };
+
+  const questionsById = useMemo(
+    () => new Map(practiceQuestions.map((q) => [q.id, q] as const)),
+    [practiceQuestions],
+  );
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
 
@@ -469,9 +525,24 @@ export function MultipleChoiceSession({
     );
   }
 
+  const oneByOne = displayMode === "one_by_one";
+  const progressCurrent = submitted
+    ? score.correct
+    : oneByOne
+      ? Math.min(checkedCount + (currentChecked ? 0 : 1), totalQuestionCount)
+      : answeredCount;
+  const progressTotal = submitted ? score.total : totalQuestionCount;
+
   return (
     <div className="space-y-6">
+      <div id="mc-set-top" className="scroll-mt-24" />
       {filtersBar}
+
+      <ExerciseDisplayModePicker
+        value={displayMode}
+        onChange={setDisplayMode}
+        disabled={displayModeLocked}
+      />
 
       {isContextual ? (
         <ExerciseAdditionalInstructions
@@ -495,19 +566,35 @@ export function MultipleChoiceSession({
         />
       ) : null}
 
+      {!isContextual &&
+      practiceQuestions.length > 0 &&
+      practiceQuestions.length < 20 ? (
+        <p className="text-xs text-muted-foreground">
+          {tSession("shortSetNote", { count: practiceQuestions.length })}
+        </p>
+      ) : null}
+
       <ExerciseProgressHeader
-        current={submitted ? score.correct : answeredCount}
-        total={submitted ? score.total : totalQuestionCount}
+        current={progressCurrent}
+        total={progressTotal}
         progressLabel={
           submitted
             ? tSession("score", {
                 correct: score.correct,
                 total: score.total,
               })
-            : tSession("answeredProgress", {
-                answered: answeredCount,
-                total: totalQuestionCount,
-              })
+            : oneByOne
+              ? tSession("questionProgress", {
+                  current: Math.min(
+                    checkedCount + 1,
+                    Math.max(totalQuestionCount, 1),
+                  ),
+                  total: totalQuestionCount,
+                })
+              : tSession("answeredProgress", {
+                  answered: answeredCount,
+                  total: totalQuestionCount,
+                })
         }
         scoreLabel={
           submitted
@@ -522,14 +609,32 @@ export function MultipleChoiceSession({
             ? score.total
               ? (score.correct / score.total) * 100
               : 0
-            : totalQuestionCount
-              ? (answeredCount / totalQuestionCount) * 100
-              : 0
+            : oneByOne
+              ? totalQuestionCount
+                ? (checkedCount / totalQuestionCount) * 100
+                : 0
+              : totalQuestionCount
+                ? (answeredCount / totalQuestionCount) * 100
+                : 0
         }
       />
 
+      {submitted ? (
+        <ExerciseSetReviewNav
+          questionIds={questionIds}
+          results={results}
+          questionDomId={(id) => `mc-q-${id}`}
+          filter={reviewFilter}
+          onFilterChange={setReviewFilter}
+          focusedId={focusedReviewId}
+          onFocusedIdChange={setFocusedReviewId}
+        />
+      ) : null}
+
       <div className="space-y-4" key={attemptKey}>
-        {practiceQuestions.map((question, index) => {
+        {visibleQuestionIds.map((id) => {
+          const question = questionsById.get(id);
+          if (!question) return null;
           const selected =
             typeof answers[question.id] === "string"
               ? String(answers[question.id])
@@ -537,44 +642,66 @@ export function MultipleChoiceSession({
           const result = results[question.id];
           const unanswered = Boolean(result?.unanswered);
           const isCorrect = Boolean(result?.correct);
+          const revealed = submitted || Boolean(result);
           return (
-            <MultipleChoiceStage
+            <div
               key={question.id}
-              question={question}
-              number={index + 1}
-              promptLabel={promptLabelFor(question, {
-                contextual: t("questionContext"),
-                wordToMeaning: t("questionWord"),
-                meaningToWord: t("questionMeaning"),
-              })}
-              selected={selected}
-              revealed={submitted}
-              peeked={false}
-              isCorrect={isCorrect}
-              unanswered={unanswered}
-              onPick={(option) => setAnswer(question.id, option)}
-            />
+              className={cn(
+                exerciseReviewFocusClass(focusedReviewId === question.id),
+              )}
+            >
+              <MultipleChoiceStage
+                question={question}
+                number={numbers[question.id]}
+                promptLabel={promptLabelFor(question, {
+                  contextual: t("questionContext"),
+                  wordToMeaning: t("questionWord"),
+                  meaningToWord: t("questionMeaning"),
+                })}
+                selected={selected}
+                revealed={revealed}
+                peeked={false}
+                isCorrect={isCorrect}
+                unanswered={unanswered}
+                onPick={(option) => setAnswer(question.id, option)}
+              />
+            </div>
           );
         })}
       </div>
 
       {!submitted ? (
-        <ExerciseSetSubmitBar
-          answeredCount={answeredCount}
-          totalQuestionCount={totalQuestionCount}
-          unansweredCount={unansweredIds.length}
-          submitting={submitting}
-          onSubmit={handleSubmit}
-          onJumpToUnanswered={jumpToUnanswered}
-        />
+        oneByOne ? (
+          <ExerciseOneByOneBar
+            checked={currentChecked}
+            isLast={isLastQuestion}
+            canCheck={currentCanCheck}
+            submitting={submitting}
+            onCheck={handleCheckOne}
+            onNext={goNextQuestion}
+            onViewResults={handleViewResults}
+          />
+        ) : (
+          <ExerciseSetSubmitBar
+            answeredCount={answeredCount}
+            totalQuestionCount={totalQuestionCount}
+            unansweredCount={unansweredIds.length}
+            submitting={submitting}
+            onSubmit={handleSubmit}
+            onJumpToUnanswered={() => jumpToUnanswered(unansweredIds)}
+          />
+        )
       ) : (
         <div className="space-y-4">
           <SessionCompleteCard
             title={tSession("complete")}
             questions={score.total}
             correct={score.correct}
+            incorrect={score.incorrect}
+            unanswered={score.unanswered}
             tryAgainLabel={tSession("restartSet")}
             onTryAgain={startSession}
+            onViewWrong={openWrongReview}
           />
           <div className="mx-auto flex w-full max-w-md flex-wrap justify-center gap-2">
             {practiceQuestions.some(
@@ -595,6 +722,7 @@ export function MultipleChoiceSession({
                     .map((q) => q.id);
                   setActiveIds(ids.length > 0 ? ids : null);
                   resetAttempt();
+                  afterNewSet();
                 }}
               >
                 {tSession("retryIncorrect")}
@@ -610,6 +738,7 @@ export function MultipleChoiceSession({
                     .map((q) => q.id);
                   setActiveIds(ids.length > 0 ? ids : null);
                   resetAttempt();
+                  afterNewSet();
                 }}
               >
                 {tSession("retryUnanswered")}

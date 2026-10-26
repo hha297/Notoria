@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { RotateCcw } from "lucide-react";
+import { ArrowRight, RotateCcw } from "lucide-react";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { MatchPairsStage } from "@/components/exercises/match-pairs-stage";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
@@ -15,6 +15,7 @@ import {
   progressionEventAfterPairMatch,
   type MatchPairItem,
 } from "@/lib/exercises/match-pairs";
+import { scrollToNewExerciseSet } from "@/lib/exercises/scroll-set";
 import { shuffleArray } from "@/lib/exercises/utils";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
@@ -26,6 +27,8 @@ type MatchPairsSessionProps = {
   words: FlashcardWord[];
 };
 
+type RoundGate = "playing" | "round-complete" | "session-complete";
+
 export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps) {
   const t = useTranslations("exercises.matchPairs");
   const tSession = useTranslations("exercises.session");
@@ -35,8 +38,8 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
   const [selectedWordId, setSelectedWordId] = useState<string | null>(null);
   const [matchedIds, setMatchedIds] = useState<Set<string>>(new Set());
   const [wrongId, setWrongId] = useState<string | null>(null);
+  const [roundGate, setRoundGate] = useState<RoundGate>("playing");
   const [sessionComplete, setSessionComplete] = useState(false);
-  const roundLockedRef = useRef(false);
   const wrongTimerRef = useRef<number | null>(null);
   const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
 
@@ -59,7 +62,6 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
   const startSession = useCallback(() => {
     const prefs = commitAndBeginNext();
     clearWrongTimer();
-    roundLockedRef.current = false;
     setRounds(
       buildMatchPairRounds(poolItems, {
         getWordId: (item) => item.wordId,
@@ -72,16 +74,14 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
     setSelectedWordId(null);
     setMatchedIds(new Set());
     setWrongId(null);
+    setRoundGate("playing");
     setSessionComplete(false);
+    scrollToNewExerciseSet("match-pairs-set-top");
   }, [clearWrongTimer, commitAndBeginNext, createdAtByWordId, poolItems]);
 
   useEffect(() => {
     startSession();
   }, [startSession, workspaceId]);
-
-  useEffect(() => {
-    roundLockedRef.current = false;
-  }, [currentRoundIndex]);
 
   useEffect(() => () => clearWrongTimer(), [clearWrongTimer]);
 
@@ -94,6 +94,14 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
     () => rounds.reduce((sum, round) => sum + round.length, 0),
     [rounds],
   );
+  const matchedBeforeRound = useMemo(
+    () =>
+      rounds
+        .slice(0, currentRoundIndex)
+        .reduce((sum, round) => sum + round.length, 0),
+    [rounds, currentRoundIndex],
+  );
+  const overallMatched = matchedBeforeRound + matchedIds.size;
 
   const wordColumn = useMemo(() => shuffleArray(currentItems), [currentItems]);
   const meaningColumn = useMemo(
@@ -104,8 +112,30 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
     [currentItems],
   );
 
+  const advanceFromGate = () => {
+    if (roundGate === "session-complete") {
+      setSessionComplete(true);
+      return;
+    }
+    if (roundGate !== "round-complete") return;
+    setCurrentRoundIndex((index) =>
+      index >= totalRounds - 1 ? index : index + 1,
+    );
+    setMatchedIds(new Set());
+    setSelectedWordId(null);
+    setWrongId(null);
+    setRoundGate("playing");
+    scrollToNewExerciseSet("match-pairs-set-top");
+  };
+
   const handleWordClick = (wordId: string) => {
-    if (matchedIds.has(wordId) || sessionComplete || roundLockedRef.current) return;
+    if (
+      matchedIds.has(wordId) ||
+      sessionComplete ||
+      roundGate !== "playing"
+    ) {
+      return;
+    }
     setSelectedWordId(wordId);
     setWrongId(null);
   };
@@ -115,7 +145,7 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
       matchedIds.has(wordId) ||
       !selectedWordId ||
       sessionComplete ||
-      roundLockedRef.current
+      roundGate !== "playing"
     ) {
       return;
     }
@@ -135,21 +165,10 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
         totalRounds,
       });
       if (event === "stay") return;
-      if (roundLockedRef.current) return;
-      roundLockedRef.current = true;
       clearWrongTimer();
-
-      if (event === "complete") {
-        setSessionComplete(true);
-        return;
-      }
-
-      setCurrentRoundIndex((index) =>
-        index >= totalRounds - 1 ? index : index + 1,
+      setRoundGate(
+        event === "session-complete" ? "session-complete" : "round-complete",
       );
-      setMatchedIds(new Set());
-      setSelectedWordId(null);
-      setWrongId(null);
       return;
     }
 
@@ -175,6 +194,7 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
 
   return (
     <div className="space-y-6">
+      <div id="match-pairs-set-top" className="scroll-mt-24" />
       <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
       {sessionComplete ? (
         <SessionCompleteCard
@@ -187,10 +207,14 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
       ) : (
         <>
           <ExerciseProgressHeader
-            current={totalRounds ? currentRoundIndex + 1 : 0}
-            total={totalRounds}
-            progressLabel={t("roundProgress", {
-              current: currentRoundIndex + 1,
+            current={overallMatched}
+            total={totalPairs}
+            progressLabel={t("pairsProgress", {
+              matched: overallMatched,
+              total: totalPairs,
+            })}
+            scoreLabel={t("roundProgress", {
+              current: totalRounds ? currentRoundIndex + 1 : 0,
               total: totalRounds,
             })}
           />
@@ -202,21 +226,38 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
             selectedWordId={selectedWordId}
             matchedIds={matchedIds}
             wrongId={wrongId}
+            roundLocked={roundGate !== "playing"}
             onWordClick={handleWordClick}
             onMeaningClick={handleMeaningClick}
           />
-          <div className="flex justify-center">
-            <Button
-              type="button"
-              variant="ghost"
-              size="sm"
-              onClick={startSession}
-              className="text-muted-foreground"
-            >
-              <RotateCcw className="size-4" />
-              {tSession("tryAgain")}
-            </Button>
-          </div>
+
+          {roundGate !== "playing" ? (
+            <div className="flex justify-center">
+              <Button
+                type="button"
+                className="h-11 w-full bg-(--exercise-accent) text-background hover:opacity-90 sm:h-9 sm:w-auto"
+                onClick={advanceFromGate}
+              >
+                {roundGate === "session-complete"
+                  ? tSession("viewResults")
+                  : t("continueRound")}
+                <ArrowRight className="size-4" />
+              </Button>
+            </div>
+          ) : (
+            <div className="flex justify-center">
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={startSession}
+                className="text-muted-foreground"
+              >
+                <RotateCcw className="size-4" />
+                {tSession("tryAgain")}
+              </Button>
+            </div>
+          )}
         </>
       )}
     </div>

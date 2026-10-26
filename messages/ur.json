@@ -29,7 +29,8 @@
       "previewCallout": "کال آؤٹ اور ایکسنٹ ماڈیول کے رنگ کی پیروی کرتے ہیں۔",
       "fixedNote": "برآمد شدہ فائل میں ظاہری شکل طے شدہ ہے۔ بدلنے کے لیے دوبارہ برآمد کریں۔",
       "docxBackgroundNote": "Word اور دیگر ایپس صفحے کے پس منظر کو یکساں طریقے سے نہیں دکھاتیں، خاص طور پر پرنٹ کرتے وقت۔"
-    }
+    },
+    "scrollToTop": "Scroll to top"
   },
   "contentImport": {
     "title": {
@@ -1085,8 +1086,14 @@
       "tryAgain": "دوبارہ کوشش کریں",
       "questionsLabel": "سوالات",
       "correctLabel": "درست",
+      "incorrectLabel": "Incorrect",
+      "unansweredLabel": "Unanswered",
       "reviewLabel": "دہرائی کے لیے",
       "answeredProgress": "{answered} / {total} جواب دیے گئے",
+      "questionProgress": "{current} / {total}",
+      "checkAnswer": "Check answer",
+      "nextQuestion": "Next",
+      "viewResults": "View results",
       "submitSet": "جوابات جمع کروائیں",
       "submitting": "جانچ ہو رہی ہے…",
       "unansweredWarnTitle": "بلا جواب سوالات",
@@ -1100,7 +1107,35 @@
       "resultsTitle": "نتائج",
       "unanswered": "جواب نہیں دیا",
       "yourAnswer": "آپ کا جواب",
-      "correctAnswer": "درست جواب"
+      "correctAnswer": "درست جواب",
+      "shortSetNote": "Only {count} questions available from your current filters.",
+      "displayMode": {
+        "label": "How you practice",
+        "lockedHint": "Finish or start a new set to change this.",
+        "one_by_one": {
+          "title": "One by one",
+          "description": "See one question at a time. Check after each answer for immediate feedback."
+        },
+        "all_questions": {
+          "title": "All questions",
+          "description": "See the full set, answer in any order, then submit once for feedback."
+        }
+      },
+      "review": {
+        "title": "Review",
+        "allCorrect": "Perfect — every question correct.",
+        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
+        "viewWrong": "View wrong answers",
+        "filtersLabel": "Filter questions",
+        "filter": {
+          "all": "All ({count})",
+          "needs_review": "Wrong & unanswered ({count})",
+          "correct": "Correct ({count})"
+        },
+        "prevWrong": "Previous wrong",
+        "nextWrong": "Next wrong",
+        "wrongPosition": "{current} / {total} to review"
+      }
     },
     "multipleChoice": {
       "questionWord": "اس لفظ کا معنی کیا ہے؟",
@@ -1131,7 +1166,9 @@
       "progress": "{matched} / {total} مل گئے",
       "hint": "ایک لفظ منتخب کریں، پھر اس کا معنی دبائیں",
       "complete": "سب جوڑے مل گئے — بہت اعلیٰ!",
-      "shuffle": "کالم شفل کریں"
+      "shuffle": "کالم شفل کریں",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "معنی کیا ہے؟",

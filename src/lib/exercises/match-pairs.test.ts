@@ -13,20 +13,20 @@ import {
 function assertValidPlan(available: number, sizes: number[]) {
   const used = sizes.reduce((sum, size) => sum + size, 0);
   expect(sizes.length).toBeLessThanOrEqual(MATCH_PAIR_MAX_ROUNDS);
-  expect(used).toBe(Math.min(available, MATCH_PAIR_MAX_ROUNDS * MATCH_PAIR_MAX_PAIRS_PER_ROUND));
+  expect(used).toBe(
+    Math.min(available, MATCH_PAIR_MAX_ROUNDS * MATCH_PAIR_MAX_PAIRS_PER_ROUND),
+  );
   expect(sizes.every((size) => size > 0)).toBe(true);
-  expect(sizes.every((size) => size <= MATCH_PAIR_MAX_PAIRS_PER_ROUND)).toBe(true);
-
-  if (available >= MATCH_PAIR_MIN_PAIRS_PER_ROUND) {
-    expect(sizes.every((size) => size >= MATCH_PAIR_MIN_PAIRS_PER_ROUND)).toBe(
-      true,
-    );
-  }
+  expect(sizes.every((size) => size <= MATCH_PAIR_MAX_PAIRS_PER_ROUND)).toBe(
+    true,
+  );
 
   if (sizes.length > 1) {
     const min = Math.min(...sizes);
-    const max = Math.max(...sizes);
-    expect(max - min).toBeLessThanOrEqual(1);
+    // Leftover rounds may sit at the min while prior rounds stay near max.
+    expect(min).toBeGreaterThanOrEqual(
+      Math.min(MATCH_PAIR_MIN_PAIRS_PER_ROUND, Math.floor(available / sizes.length)),
+    );
   }
 }
 
@@ -35,104 +35,81 @@ describe("planMatchPairRoundSizes", () => {
     expect(planMatchPairRoundSizes(0)).toEqual([]);
   });
 
-  it("keeps a small bank in a single round even below 5 pairs", () => {
+  it("keeps a small bank in a single round even below the min", () => {
     expect(planMatchPairRoundSizes(1)).toEqual([1]);
     expect(planMatchPairRoundSizes(4)).toEqual([4]);
   });
 
-  it("keeps 5–10 pairs as one round", () => {
+  it("keeps up to 10 pairs as one round", () => {
     expect(planMatchPairRoundSizes(5)).toEqual([5]);
     expect(planMatchPairRoundSizes(8)).toEqual([8]);
     expect(planMatchPairRoundSizes(10)).toEqual([10]);
   });
 
-  it("splits 11–12 pairs into two valid rounds instead of a tiny leftover", () => {
-    assertValidPlan(11, planMatchPairRoundSizes(11));
-    expect(planMatchPairRoundSizes(11)).toHaveLength(2);
-    assertValidPlan(12, planMatchPairRoundSizes(12));
-    expect(planMatchPairRoundSizes(12)).toEqual([6, 6]);
+  it("splits 20 pairs into two rounds of 10", () => {
+    expect(planMatchPairRoundSizes(20)).toEqual([10, 10]);
   });
 
-  it("uses 10 rounds of 8 for 80 pairs", () => {
-    const sizes = planMatchPairRoundSizes(80);
-    expect(sizes).toHaveLength(10);
-    expect(sizes.every((size) => size === 8)).toBe(true);
+  it("rebalances tiny leftovers up toward the min when possible", () => {
+    expect(planMatchPairRoundSizes(11)).toEqual([6, 5]);
+    expect(planMatchPairRoundSizes(15)).toEqual([10, 5]);
   });
 
-  it("uses 10 rounds of 5 for 50 pairs", () => {
-    const sizes = planMatchPairRoundSizes(50);
-    expect(sizes).toHaveLength(10);
-    expect(sizes.every((size) => size === 5)).toBe(true);
-  });
-
-  it("does not invent extra rounds when 37 pairs cannot fill 10×5", () => {
-    const sizes = planMatchPairRoundSizes(37);
-    assertValidPlan(37, sizes);
-    expect(sizes.length).toBeLessThan(10);
-    expect(sizes.reduce((sum, size) => sum + size, 0)).toBe(37);
-  });
-
-  it("caps at 10 rounds of 10 and does not consume surplus vocabulary", () => {
+  it("caps usable pairs at max rounds × max pairs", () => {
     const sizes = planMatchPairRoundSizes(200);
-    expect(sizes).toHaveLength(10);
-    expect(sizes.every((size) => size === 10)).toBe(true);
+    expect(sizes).toHaveLength(MATCH_PAIR_MAX_ROUNDS);
+    expect(sizes.every((size) => size === MATCH_PAIR_MAX_PAIRS_PER_ROUND)).toBe(
+      true,
+    );
   });
 
-  it("never pads to 10 rounds with empty or duplicate slots", () => {
-    for (const count of [2, 7, 13, 23, 37, 48, 49, 51, 99, 100]) {
+  it("never pads with empty slots", () => {
+    for (const count of [2, 7, 13, 20, 23, 37, 48, 51, 99]) {
       assertValidPlan(count, planMatchPairRoundSizes(count));
     }
   });
 });
 
 describe("progressionEventAfterPairMatch", () => {
-  it("does not advance progression until the whole round is matched", () => {
+  it("does not advance until the whole round is matched", () => {
     expect(
       progressionEventAfterPairMatch({
         matchedCount: 1,
-        roundPairCount: 8,
+        roundPairCount: 10,
         currentRoundIndex: 0,
-        totalRounds: 10,
+        totalRounds: 2,
       }),
     ).toBe("stay");
     expect(
       progressionEventAfterPairMatch({
-        matchedCount: 4,
-        roundPairCount: 8,
+        matchedCount: 9,
+        roundPairCount: 10,
         currentRoundIndex: 0,
-        totalRounds: 10,
-      }),
-    ).toBe("stay");
-    expect(
-      progressionEventAfterPairMatch({
-        matchedCount: 7,
-        roundPairCount: 8,
-        currentRoundIndex: 0,
-        totalRounds: 10,
+        totalRounds: 2,
       }),
     ).toBe("stay");
   });
 
-  it("advances exactly one round when the final pair is matched", () => {
+  it("signals round-complete so the UI can show Continue", () => {
     expect(
       progressionEventAfterPairMatch({
-        matchedCount: 8,
-        roundPairCount: 8,
+        matchedCount: 10,
+        roundPairCount: 10,
         currentRoundIndex: 0,
-        totalRounds: 10,
+        totalRounds: 2,
       }),
-    ).toBe("next-round");
+    ).toBe("round-complete");
   });
 
-  it("completes the session after the last round instead of adding another", () => {
+  it("signals session-complete after the last round", () => {
     expect(
       progressionEventAfterPairMatch({
-        matchedCount: 6,
-        roundPairCount: 6,
-        currentRoundIndex: 5,
-        totalRounds: 6,
+        matchedCount: 10,
+        roundPairCount: 10,
+        currentRoundIndex: 1,
+        totalRounds: 2,
       }),
-    ).toBe("complete");
+    ).toBe("session-complete");
   });
 });
 
@@ -146,10 +123,16 @@ describe("buildMatchPairRounds", () => {
   }
 
   it("does not duplicate vocabulary across rounds", () => {
-    const rounds = buildMatchPairRounds(items(37));
+    const rounds = buildMatchPairRounds(items(20));
     const ids = rounds.flat().map((item) => item.wordId);
     expect(new Set(ids).size).toBe(ids.length);
-    expect(ids).toHaveLength(37);
+    expect(ids).toHaveLength(20);
+  });
+
+  it("puts 10 pairs in a single round when the bank is 10", () => {
+    const rounds = buildMatchPairRounds(items(10));
+    expect(rounds).toHaveLength(1);
+    expect(rounds[0]).toHaveLength(10);
   });
 
   it("splits sampled items with the planned sizes", () => {

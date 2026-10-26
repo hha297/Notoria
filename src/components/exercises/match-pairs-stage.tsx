@@ -8,6 +8,7 @@ import {
   type ReactNode,
   type RefObject,
 } from "react";
+import { Check, X } from "lucide-react";
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import type { MatchPairItem } from "@/lib/exercises/match-pairs";
@@ -27,6 +28,8 @@ type MatchPairsStageProps = {
   selectedWordId: string | null;
   matchedIds: Set<string>;
   wrongId: string | null;
+  /** When true, round is finished — tiles stay visible but inactive. */
+  roundLocked?: boolean;
   onWordClick: (wordId: string) => void;
   onMeaningClick: (wordId: string) => void;
 };
@@ -55,6 +58,7 @@ export function MatchPairsStage({
   selectedWordId,
   matchedIds,
   wrongId,
+  roundLocked = false,
   onWordClick,
   onMeaningClick,
 }: MatchPairsStageProps) {
@@ -62,7 +66,7 @@ export function MatchPairsStage({
   const tType = useTranslations("exercises.types.match-pairs");
   const reduceMotion = useReducedMotion();
   const boardRef = useRef<HTMLDivElement>(null);
-  const waiting = Boolean(selectedWordId);
+  const waiting = Boolean(selectedWordId) && !roundLocked;
   const matchedOrder = Array.from(matchedIds);
   const pairNumber = (wordId: string) => {
     const index = matchedOrder.indexOf(wordId);
@@ -109,9 +113,13 @@ export function MatchPairsStage({
           </p>
         </header>
 
+        {/*
+          Mobile + desktop: two columns side by side.
+          Connector lines only from md up (hidden on narrow screens).
+        */}
         <div
           ref={boardRef}
-          className="relative mt-8 grid grid-cols-1 gap-8 md:mt-10 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:gap-0"
+          className="relative mt-6 grid grid-cols-2 gap-2 sm:mt-8 sm:gap-3 md:mt-10 md:grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] md:gap-0"
         >
           <MatchColumn title={t("words")}>
             {wordColumn.map((item) => (
@@ -125,6 +133,7 @@ export function MatchPairsStage({
                 wrong={wrongId !== null && selectedWordId === item.wordId}
                 pairing={false}
                 waiting={false}
+                locked={roundLocked}
                 pairNumber={pairNumber(item.wordId)}
                 pairColor={pairColor(item.wordId)}
                 reduceMotion={Boolean(reduceMotion)}
@@ -147,6 +156,7 @@ export function MatchPairsStage({
                 wrong={wrongId === item.wordId}
                 pairing={waiting && !matchedIds.has(item.wordId)}
                 waiting={waiting}
+                locked={roundLocked}
                 pairNumber={pairNumber(item.wordId)}
                 pairColor={pairColor(item.wordId)}
                 reduceMotion={Boolean(reduceMotion)}
@@ -175,10 +185,10 @@ function MatchColumn({
 }) {
   return (
     <section className="relative z-20 min-w-0">
-      <p className="mb-3 text-[0.68rem] font-semibold tracking-[0.18em] text-(--exercise-accent) uppercase md:mb-4">
+      <p className="mb-2 text-[0.62rem] font-semibold tracking-[0.16em] text-(--exercise-accent) uppercase sm:mb-3 sm:text-[0.68rem] sm:tracking-[0.18em] md:mb-4">
         {title}
       </p>
-      <div role="group" aria-label={title} className="flex flex-col gap-2">
+      <div role="group" aria-label={title} className="flex flex-col gap-1.5 sm:gap-2">
         {children}
       </div>
     </section>
@@ -189,25 +199,25 @@ function BoardGutter({ active }: { active: boolean }) {
   return (
     <div
       aria-hidden
-      className="relative z-0 flex items-center px-1 py-1 md:items-stretch md:px-5 md:py-0 lg:px-8"
+      className="relative z-0 hidden items-stretch px-5 py-0 md:flex lg:px-8"
     >
-      <div className="relative flex h-px w-full flex-row items-center md:h-auto md:w-px md:flex-1 md:flex-col">
+      <div className="relative flex w-px flex-1 flex-col items-center">
         <span
           className={cn(
-            "h-px flex-1 bg-linear-to-r from-transparent via-hairline-cloud to-hairline-cloud md:h-auto md:w-px md:bg-linear-to-b md:from-hairline-cloud md:via-hairline-cloud md:to-transparent",
-            active && "via-(--exercise-accent)/55 md:via-(--exercise-accent)/55",
+            "w-px flex-1 bg-linear-to-b from-hairline-cloud via-hairline-cloud to-transparent",
+            active && "via-(--exercise-accent)/55",
           )}
         />
         <span
           className={cn(
-            "mx-3 size-1.5 rotate-45 border border-hairline-cloud bg-surface-elevated transition-colors duration-200 md:mx-0 md:my-3",
+            "my-3 size-1.5 rotate-45 border border-hairline-cloud bg-surface-elevated transition-colors duration-200",
             active && "border-(--exercise-accent) bg-(--exercise-accent)",
           )}
         />
         <span
           className={cn(
-            "h-px flex-1 bg-linear-to-r from-hairline-cloud via-hairline-cloud to-transparent md:h-auto md:w-px md:bg-linear-to-b md:from-transparent md:via-hairline-cloud md:to-hairline-cloud",
-            active && "via-(--exercise-accent)/55 md:via-(--exercise-accent)/55",
+            "w-px flex-1 bg-linear-to-b from-transparent via-hairline-cloud to-hairline-cloud",
+            active && "via-(--exercise-accent)/55",
           )}
         />
       </div>
@@ -236,43 +246,24 @@ function connectorPath(
     x: meaning.left - board.left + meaning.width / 2,
     y: meaning.top - board.top + meaning.height / 2,
   };
-  const sideBySide =
-    Math.abs(wordMid.x - meaningMid.x) > Math.abs(wordMid.y - meaningMid.y);
 
-  if (sideBySide) {
-    const wordOnLeft = wordMid.x < meaningMid.x;
-    const start = {
-      x: wordOnLeft ? word.right - board.left : word.left - board.left,
-      y: wordMid.y,
-    };
-    const end = {
-      x: wordOnLeft ? meaning.left - board.left : meaning.right - board.left,
-      y: meaningMid.y,
-    };
-    const pull = Math.max(28, Math.abs(end.x - start.x) * 0.42);
-    const dir = start.x < end.x ? 1 : -1;
-    return {
-      start,
-      end,
-      d: `M ${start.x} ${start.y} C ${start.x + pull * dir} ${start.y}, ${end.x - pull * dir} ${end.y}, ${end.x} ${end.y}`,
-    };
-  }
-
-  const wordOnTop = wordMid.y < meaningMid.y;
+  // Desktop is always side-by-side; attach to facing edges so lines never
+  // cross through card text.
+  const wordOnLeft = wordMid.x < meaningMid.x;
   const start = {
-    x: wordMid.x,
-    y: wordOnTop ? word.bottom - board.top : word.top - board.top,
+    x: wordOnLeft ? word.right - board.left : word.left - board.left,
+    y: wordMid.y,
   };
   const end = {
-    x: meaningMid.x,
-    y: wordOnTop ? meaning.top - board.top : meaning.bottom - board.top,
+    x: wordOnLeft ? meaning.left - board.left : meaning.right - board.left,
+    y: meaningMid.y,
   };
-  const pull = Math.max(22, Math.abs(end.y - start.y) * 0.38);
-  const dir = start.y < end.y ? 1 : -1;
+  const pull = Math.max(28, Math.abs(end.x - start.x) * 0.42);
+  const dir = start.x < end.x ? 1 : -1;
   return {
     start,
     end,
-    d: `M ${start.x} ${start.y} C ${start.x} ${start.y + pull * dir}, ${end.x} ${end.y - pull * dir}, ${end.x} ${end.y}`,
+    d: `M ${start.x} ${start.y} C ${start.x + pull * dir} ${start.y}, ${end.x - pull * dir} ${end.y}, ${end.x} ${end.y}`,
   };
 }
 
@@ -286,10 +277,11 @@ function MatchPairLines({
   reduceMotion: boolean;
 }) {
   const [lines, setLines] = useState<Connector[]>([]);
+  const [enabled, setEnabled] = useState(false);
 
   const measure = useCallback(() => {
     const board = boardRef.current;
-    if (!board) {
+    if (!board || !enabled) {
       setLines([]);
       return;
     }
@@ -317,12 +309,20 @@ function MatchPairLines({
     }
 
     setLines(next);
-  }, [boardRef, matchedOrder]);
+  }, [boardRef, enabled, matchedOrder]);
+
+  useLayoutEffect(() => {
+    const mq = window.matchMedia("(min-width: 768px)");
+    const syncEnabled = () => setEnabled(mq.matches);
+    syncEnabled();
+    mq.addEventListener("change", syncEnabled);
+    return () => mq.removeEventListener("change", syncEnabled);
+  }, []);
 
   useLayoutEffect(() => {
     measure();
     const board = boardRef.current;
-    if (!board) return;
+    if (!board || !enabled) return;
 
     const observer = new ResizeObserver(() => measure());
     observer.observe(board);
@@ -330,21 +330,25 @@ function MatchPairLines({
       observer.observe(node);
     });
     window.addEventListener("resize", measure);
+    window.addEventListener("scroll", measure, { passive: true });
     window.visualViewport?.addEventListener("resize", measure);
+    window.visualViewport?.addEventListener("scroll", measure);
 
     return () => {
       observer.disconnect();
       window.removeEventListener("resize", measure);
+      window.removeEventListener("scroll", measure);
       window.visualViewport?.removeEventListener("resize", measure);
+      window.visualViewport?.removeEventListener("scroll", measure);
     };
-  }, [boardRef, matchedOrder, measure]);
+  }, [boardRef, enabled, matchedOrder, measure]);
 
-  if (lines.length === 0) return null;
+  if (!enabled || lines.length === 0) return null;
 
   return (
     <svg
       aria-hidden
-      className="pointer-events-none absolute inset-0 z-10 overflow-visible"
+      className="pointer-events-none absolute inset-0 z-10 hidden overflow-visible md:block"
     >
       {lines.map((line) => (
         <g key={line.id}>
@@ -355,7 +359,7 @@ function MatchPairLines({
             strokeWidth={2}
             strokeLinecap="round"
             initial={reduceMotion ? false : { pathLength: 0, opacity: 0 }}
-            animate={{ pathLength: 1, opacity: 0.9 }}
+            animate={{ pathLength: 1, opacity: 0.85 }}
             transition={
               reduceMotion
                 ? { duration: 0 }
@@ -379,6 +383,7 @@ function MatchTile({
   wrong,
   pairing,
   waiting,
+  locked,
   pairNumber,
   pairColor,
   reduceMotion,
@@ -392,6 +397,7 @@ function MatchTile({
   wrong: boolean;
   pairing: boolean;
   waiting: boolean;
+  locked: boolean;
   pairNumber: number | null;
   pairColor: string | null;
   reduceMotion: boolean;
@@ -400,42 +406,42 @@ function MatchTile({
   const mark =
     pairNumber != null ? String(pairNumber).padStart(2, "0") : null;
   const idleMeaning = side === "meaning" && !waiting && !matched && !wrong;
+  const inactive = matched || locked;
 
   return (
     <motion.button
       type="button"
-      disabled={matched}
+      disabled={inactive}
       onClick={onClick}
       aria-pressed={selected}
-      aria-disabled={matched}
+      aria-disabled={inactive}
       data-match-tile={side}
       data-word-id={wordId}
-      whileHover={reduceMotion || matched ? undefined : { y: -1 }}
-      whileTap={reduceMotion || matched ? undefined : { scale: 0.985 }}
+      whileHover={reduceMotion || inactive ? undefined : { y: -1 }}
+      whileTap={reduceMotion || inactive ? undefined : { scale: 0.985 }}
       animate={
         reduceMotion
           ? undefined
           : {
-            opacity: matched ? 0.82 : idleMeaning ? 0.72 : 1,
-          }
+              opacity: matched ? 0.88 : idleMeaning ? 0.78 : 1,
+            }
       }
       transition={{ duration: 0.16 }}
       className={cn(
-        "relative flex min-h-14 w-full min-w-0 cursor-pointer items-center gap-3 overflow-hidden border px-3.5 py-3 text-left",
-        "sm:min-h-14 sm:px-4",
+        "relative flex min-h-12 w-full min-w-0 cursor-pointer items-start gap-2 overflow-hidden border px-2.5 py-2.5 text-left sm:min-h-14 sm:items-center sm:gap-3 sm:px-3.5 sm:py-3",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
         "disabled:cursor-default",
         !matched &&
-        !selected &&
-        !wrong &&
-        !pairing &&
-        "border-hairline-cloud control-surface shadow-sm shadow-ink/4 hover:border-(--exercise-accent)/50 hover:bg-(--exercise-accent-soft)/55",
+          !selected &&
+          !wrong &&
+          !pairing &&
+          "border-hairline-cloud control-surface shadow-sm shadow-ink/4 hover:border-(--exercise-accent)/50 hover:bg-(--exercise-accent-soft)/55",
         pairing &&
-        !wrong &&
-        "border-(--exercise-accent)/45 control-surface shadow-sm shadow-ink/4 hover:border-(--exercise-accent) hover:bg-(--exercise-accent-soft)/80",
+          !wrong &&
+          "border-(--exercise-accent)/45 control-surface shadow-sm shadow-ink/4 hover:border-(--exercise-accent) hover:bg-(--exercise-accent-soft)/80",
         selected &&
-        !wrong &&
-        "border-(--exercise-accent) bg-(--exercise-accent-soft) shadow-sm",
+          !wrong &&
+          "border-(--exercise-accent) bg-(--exercise-accent-soft) shadow-sm",
         matched && "control-surface text-muted-foreground",
         wrong && !reduceMotion && mx(featureStyles, "feedback-error exercise-shake"),
         wrong && reduceMotion && mx(featureStyles, "feedback-error"),
@@ -451,7 +457,7 @@ function MatchTile({
         aria-hidden
         className={cn(
           "absolute inset-y-0 w-0.75",
-          side === "word" ? "left-0 md:right-0 md:left-auto" : "left-0",
+          side === "word" ? "left-0" : "left-0",
           selected && !wrong && "bg-(--exercise-accent)",
           pairing && !wrong && "bg-(--exercise-accent)/55",
           wrong && "bg-error",
@@ -460,23 +466,52 @@ function MatchTile({
         style={matched && pairColor ? { backgroundColor: pairColor } : undefined}
       />
 
-      {mark ? (
+      {matched ? (
         <span
-          className={cn(
-            "font-mono text-[0.65rem] tracking-[0.16em] tabular-nums",
-            side === "word" && "md:order-2 md:ml-auto",
-          )}
+          className="mt-0.5 flex shrink-0 items-center gap-1 sm:mt-0"
           style={pairColor ? { color: pairColor } : undefined}
         >
-          {mark}
+          <span
+            aria-hidden
+            className="flex size-5 items-center justify-center rounded-full"
+            style={
+              pairColor
+                ? {
+                    backgroundColor: `color-mix(in oklab, ${pairColor} 18%, transparent)`,
+                  }
+                : undefined
+            }
+          >
+            <Check className="size-3.5" strokeWidth={2.5} />
+          </span>
+          {mark ? (
+            <span className="font-mono text-[0.65rem] tracking-[0.14em] tabular-nums">
+              {mark}
+            </span>
+          ) : null}
         </span>
-      ) : null}
+      ) : wrong ? (
+        <span
+          aria-hidden
+          className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-error/15 text-error sm:mt-0"
+        >
+          <X className="size-3.5" strokeWidth={2.5} />
+        </span>
+      ) : (
+        <span
+          aria-hidden
+          className={cn(
+            "mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border border-dashed border-hairline-cloud sm:mt-0",
+            selected && "border-(--exercise-accent) bg-(--exercise-accent)/25",
+            pairing && "border-(--exercise-accent)/55",
+          )}
+        />
+      )}
 
       <span
         className={cn(
-          "min-w-0 flex-1 font-heading text-[0.98rem] leading-snug font-semibold tracking-tight wrap-anywhere sm:text-[1.05rem]",
+          "min-w-0 flex-1 font-heading text-[0.9rem] leading-snug font-semibold tracking-tight wrap-anywhere sm:text-[0.98rem] md:text-[1.05rem]",
           matched && "font-medium",
-          side === "word" && mark && "md:order-1",
         )}
       >
         {label}

@@ -29,7 +29,8 @@
       "previewCallout": "Izpostavljeni okvirji in poudarki sledijo barvi modula.",
       "fixedNote": "Videz je fiksen v izvoženi datoteki. Izvozite znova, da ga spremenite.",
       "docxBackgroundNote": "Word in druge aplikacije morda ne bodo prikazale ozadij strani na isti način, še posebej pri tisku."
-    }
+    },
+    "scrollToTop": "Scroll to top"
   },
   "contentImport": {
     "title": {
@@ -1085,8 +1086,14 @@
       "tryAgain": "Poskusi znova",
       "questionsLabel": "Pitanja",
       "correctLabel": "Točno",
+      "incorrectLabel": "Incorrect",
+      "unansweredLabel": "Unanswered",
       "reviewLabel": "Za pregled",
       "answeredProgress": "{answered} / {total} odgovoreno",
+      "questionProgress": "{current} / {total}",
+      "checkAnswer": "Check answer",
+      "nextQuestion": "Next",
+      "viewResults": "View results",
       "submitSet": "Pošalji odgovore",
       "submitting": "Provjera…",
       "unansweredWarnTitle": "Neodgovorena vprašanj",
@@ -1100,7 +1107,35 @@
       "resultsTitle": "Rezultati",
       "unanswered": "Ne odgovoreno",
       "yourAnswer": "Vaš odgovor",
-      "correctAnswer": "Točan odgovor"
+      "correctAnswer": "Točan odgovor",
+      "shortSetNote": "Only {count} questions available from your current filters.",
+      "displayMode": {
+        "label": "How you practice",
+        "lockedHint": "Finish or start a new set to change this.",
+        "one_by_one": {
+          "title": "One by one",
+          "description": "See one question at a time. Check after each answer for immediate feedback."
+        },
+        "all_questions": {
+          "title": "All questions",
+          "description": "See the full set, answer in any order, then submit once for feedback."
+        }
+      },
+      "review": {
+        "title": "Review",
+        "allCorrect": "Perfect — every question correct.",
+        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
+        "viewWrong": "View wrong answers",
+        "filtersLabel": "Filter questions",
+        "filter": {
+          "all": "All ({count})",
+          "needs_review": "Wrong & unanswered ({count})",
+          "correct": "Correct ({count})"
+        },
+        "prevWrong": "Previous wrong",
+        "nextWrong": "Next wrong",
+        "wrongPosition": "{current} / {total} to review"
+      }
     },
     "multipleChoice": {
       "questionWord": "Šta znači ova beseda?",
@@ -1131,7 +1166,9 @@
       "progress": "{matched} / {total} upareno",
       "hint": "Izberite beseda, nato dodirnite njeno pomen",
       "complete": "Vsi parovi su upareni — odličan posao!",
-      "shuffle": "Promešaj stolpci"
+      "shuffle": "Promešaj stolpci",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Šta je pomen?",

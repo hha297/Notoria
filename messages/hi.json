@@ -28,7 +28,8 @@
       "previewCallout": "Callouts and accents follow the module color.",
       "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
       "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
-    }
+    },
+    "scrollToTop": "Scroll to top"
   },
   "contentImport": {
     "title": {
@@ -1084,8 +1085,14 @@
       "tryAgain": "फिर से प्रयास करें",
       "questionsLabel": "प्रश्न",
       "correctLabel": "सही",
+      "incorrectLabel": "Incorrect",
+      "unansweredLabel": "Unanswered",
       "reviewLabel": "समीक्षा के लिए",
       "answeredProgress": "{answered} / {total} उत्तर दिए गए",
+      "questionProgress": "{current} / {total}",
+      "checkAnswer": "Check answer",
+      "nextQuestion": "Next",
+      "viewResults": "View results",
       "submitSet": "उत्तर जमा करें",
       "submitting": "जाँच हो रही है…",
       "unansweredWarnTitle": "अनुत्तरित प्रश्न",
@@ -1099,7 +1106,35 @@
       "resultsTitle": "परिणाम",
       "unanswered": "उत्तर नहीं दिया",
       "yourAnswer": "आपका उत्तर",
-      "correctAnswer": "सही उत्तर"
+      "correctAnswer": "सही उत्तर",
+      "shortSetNote": "Only {count} questions available from your current filters.",
+      "displayMode": {
+        "label": "How you practice",
+        "lockedHint": "Finish or start a new set to change this.",
+        "one_by_one": {
+          "title": "One by one",
+          "description": "See one question at a time. Check after each answer for immediate feedback."
+        },
+        "all_questions": {
+          "title": "All questions",
+          "description": "See the full set, answer in any order, then submit once for feedback."
+        }
+      },
+      "review": {
+        "title": "Review",
+        "allCorrect": "Perfect — every question correct.",
+        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
+        "viewWrong": "View wrong answers",
+        "filtersLabel": "Filter questions",
+        "filter": {
+          "all": "All ({count})",
+          "needs_review": "Wrong & unanswered ({count})",
+          "correct": "Correct ({count})"
+        },
+        "prevWrong": "Previous wrong",
+        "nextWrong": "Next wrong",
+        "wrongPosition": "{current} / {total} to review"
+      }
     },
     "multipleChoice": {
       "questionWord": "इस शब्द का अर्थ क्या है?",
@@ -1130,7 +1165,9 @@
       "progress": "{matched} / {total} मिलाए गए",
       "hint": "एक शब्द चुनें, फिर उसके अर्थ पर टैप करें",
       "complete": "सभी जोड़े मिलाए गए — बहुत अच्छा!",
-      "shuffle": "कॉलम शफ़ल करें"
+      "shuffle": "कॉलम शफ़ल करें",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "अर्थ क्या है?",

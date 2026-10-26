@@ -134,6 +134,42 @@ export function useExerciseSetAttempt({
     [answers, questionIds, results],
   );
 
+  /**
+   * Grade a single question once (one-by-one display). No-ops if already graded
+   * or the set is already submitted.
+   */
+  const checkOne = useCallback(
+    async (
+      questionId: string,
+      gradeOne: (
+        answer: unknown,
+      ) => SetQuestionResult | Promise<SetQuestionResult>,
+    ) => {
+      if (phase !== "answering" || submitting) return null;
+      if (results[questionId]) return results[questionId]!;
+      setSubmitting(true);
+      try {
+        const graded = await gradeOne(answers[questionId]);
+        setResults((prev) => ({ ...prev, [questionId]: graded }));
+        return graded;
+      } finally {
+        setSubmitting(false);
+      }
+    },
+    [answers, phase, results, submitting],
+  );
+
+  /** Flip to submitted after one-by-one finishes (or when opening results). */
+  const markSubmitted = useCallback(() => {
+    setPhase("submitted");
+    setSubmitting(false);
+  }, []);
+
+  const checkedCount = useMemo(
+    () => questionIds.filter((id) => results[id] != null).length,
+    [questionIds, results],
+  );
+
   return {
     answers,
     phase,
@@ -145,10 +181,13 @@ export function useExerciseSetAttempt({
     progressRatio: progress.ratio,
     unansweredIds,
     score,
+    checkedCount,
     setAnswer,
     clearAnswer,
     resetAttempt,
     submit,
     beginRetry,
+    checkOne,
+    markSubmitted,
   };
 }

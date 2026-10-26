@@ -1,6 +1,6 @@
 "use client";
 
-import { RotateCcw, Sparkles } from "lucide-react";
+import { Focus, RotateCcw, Sparkles } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { Button } from "@/components/ui/button";
@@ -11,8 +11,11 @@ type SessionCompleteCardProps = {
   scoreLabel?: string;
   questions?: number;
   correct?: number;
+  incorrect?: number;
+  unanswered?: number;
   tryAgainLabel: string;
   onTryAgain: () => void;
+  onViewWrong?: () => void;
   backHref?: string;
   extraAction?: {
     label: string;
@@ -29,23 +32,37 @@ export function SessionCompleteCard({
   scoreLabel,
   questions,
   correct,
+  incorrect,
+  unanswered,
   tryAgainLabel,
   onTryAgain,
+  onViewWrong,
   backHref = "/exercises",
   extraAction,
 }: SessionCompleteCardProps) {
   const t = useTranslations("exercises.session");
   const tExercises = useTranslations("exercises");
   const hasStats = typeof questions === "number" && typeof correct === "number";
-  const reviewCount = hasStats ? Math.max(0, questions - correct) : 0;
+  const derivedIncorrect =
+    typeof incorrect === "number"
+      ? incorrect
+      : hasStats
+        ? Math.max(0, questions - correct - (unanswered ?? 0))
+        : 0;
+  const derivedUnanswered = unanswered ?? 0;
+  const needsReview = derivedIncorrect + derivedUnanswered;
+  const perfect = hasStats && needsReview === 0 && questions > 0;
 
   return (
     <div className="mx-auto w-full max-w-lg py-8 text-center sm:py-12">
       <p className="font-mono text-xs font-semibold tracking-[0.18em] text-(--exercise-accent) uppercase">
         {title}
       </p>
+      {perfect ? (
+        <p className="mt-3 text-sm font-medium text-ink">{t("review.allCorrect")}</p>
+      ) : null}
       {hasStats ? (
-        <dl className="mt-6 grid grid-cols-1 gap-3 text-ink sm:grid-cols-3">
+        <dl className="mt-6 grid grid-cols-2 gap-3 text-ink sm:grid-cols-4">
           <div>
             <dt className="text-xs text-muted-foreground">{t("questionsLabel")}</dt>
             <dd className="mt-1 font-heading text-2xl font-bold tabular-nums">
@@ -59,9 +76,15 @@ export function SessionCompleteCard({
             </dd>
           </div>
           <div>
-            <dt className="text-xs text-muted-foreground">{t("reviewLabel")}</dt>
+            <dt className="text-xs text-muted-foreground">{t("incorrectLabel")}</dt>
             <dd className="mt-1 font-heading text-2xl font-bold tabular-nums">
-              {reviewCount}
+              {derivedIncorrect}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs text-muted-foreground">{t("unansweredLabel")}</dt>
+            <dd className="mt-1 font-heading text-2xl font-bold tabular-nums">
+              {derivedUnanswered}
             </dd>
           </div>
         </dl>
@@ -71,6 +94,12 @@ export function SessionCompleteCard({
         </p>
       ) : null}
       <div className="mt-8 flex flex-col items-center gap-2 sm:flex-row sm:justify-center">
+        {needsReview > 0 && onViewWrong ? (
+          <Button type="button" variant="outline" onClick={onViewWrong}>
+            <Focus className="size-4" />
+            {t("review.viewWrong")}
+          </Button>
+        ) : null}
         <Button type="button" onClick={onTryAgain} disabled={extraAction?.loading}>
           <RotateCcw className="size-4" />
           {tryAgainLabel}

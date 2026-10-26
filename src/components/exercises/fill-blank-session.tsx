@@ -8,9 +8,15 @@ import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseAiBar } from "@/components/exercises/exercise-ai-bar";
+import { ExerciseDisplayModePicker } from "@/components/exercises/exercise-display-mode-picker";
+import { ExerciseOneByOneBar } from "@/components/exercises/exercise-one-by-one-bar";
 import { FillBlankStage } from "@/components/exercises/fill-blank-stage";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { ExerciseSetSubmitBar } from "@/components/exercises/exercise-set-submit-bar";
+import {
+  ExerciseSetReviewNav,
+  exerciseReviewFocusClass,
+} from "@/components/exercises/exercise-set-review-nav";
 import { NextSetStatusChip } from "@/components/exercises/next-set-status";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
@@ -38,7 +44,9 @@ import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { answersMatchAny, shuffleArray } from "@/lib/exercises/utils";
 import { useExerciseDifficulty } from "@/hooks/use-exercise-difficulty";
 import { useExerciseSetAttempt } from "@/hooks/use-exercise-set-attempt";
+import { useExerciseSetUi } from "@/hooks/use-exercise-set-ui";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
+import { cn } from "@/lib/utils";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
 import { DEFAULT_FLASHCARD_FILTERS } from "@/types/flashcards";
@@ -121,12 +129,44 @@ export function FillBlankSession({
     totalQuestionCount,
     unansweredIds,
     score,
+    checkedCount,
     setAnswer,
     resetAttempt,
     submit,
+    checkOne,
+    markSubmitted,
   } = useExerciseSetAttempt({ questionIds });
 
-  const submitted = attemptPhase === "submitted";
+  const {
+    displayMode,
+    setDisplayMode,
+    displayModeLocked,
+    currentQuestionId,
+    currentChecked,
+    currentCanCheck,
+    isLastQuestion,
+    goNextQuestion,
+    visibleQuestionIds,
+    numbers,
+    reviewFilter,
+    setReviewFilter,
+    focusedReviewId,
+    setFocusedReviewId,
+    afterNewSet,
+    jumpToUnanswered,
+    openWrongReview,
+    submitted,
+  } = useExerciseSetUi({
+    questionIds,
+    results,
+    answers,
+    attemptPhase,
+    answeredCount,
+    checkedCount,
+    questionIdPrefix: "fb-q",
+    setAnchorId: "fb-set-top",
+  });
+
   const hasSession = items.length > 0;
 
   const startExampleSession = useCallback(() => {
@@ -143,17 +183,25 @@ export function FillBlankSession({
     setItems(sampled);
     setActiveIds(null);
     resetAttempt();
-  }, [commitAndBeginNext, createdAtByWordId, exampleItems, resetAttempt]);
+    afterNewSet();
+  }, [
+    afterNewSet,
+    commitAndBeginNext,
+    createdAtByWordId,
+    exampleItems,
+    resetAttempt,
+  ]);
 
   const restartSet = useCallback(() => {
     if (aiItems && aiItems.length > 0) {
       setItems(shuffleArray(aiItems));
       setActiveIds(null);
       resetAttempt();
+      afterNewSet();
       return;
     }
     startExampleSession();
-  }, [aiItems, resetAttempt, startExampleSession]);
+  }, [afterNewSet, aiItems, resetAttempt, startExampleSession]);
 
   useEffect(() => {
     if (!hasProAccess) startExampleSession();
@@ -211,8 +259,9 @@ export function FillBlankSession({
       setItems(shuffleArray(nextItems));
       setActiveIds(null);
       resetAttempt();
+      afterNewSet();
     },
-    [resetAttempt],
+    [afterNewSet, resetAttempt],
   );
 
   const buildNextPayload = useCallback((): FillBlankNextPayload | null => {
@@ -429,33 +478,47 @@ export function FillBlankSession({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only invalidate on config
   }, [difficulty, additionalInstructions]);
 
+  const gradeQuestion = useCallback(
+    (item: FillBlankItem, raw: unknown): SetQuestionResult => {
+      const value = typeof raw === "string" ? raw : "";
+      const unanswered = !isNonEmptyAnswer(value);
+      const correct =
+        !unanswered && answersMatchAny(value, item.acceptableAnswers);
+      recordOutcome({
+        wordId: item.wordId,
+        correct,
+        itemKey: fillBlankItemSentence(item),
+      });
+      return { correct, unanswered };
+    },
+    [recordOutcome],
+  );
+
   const handleSubmit = () => {
     void submit((currentAnswers) => {
       const graded: Record<string, SetQuestionResult> = {};
       for (const item of practiceItems) {
-        const raw = currentAnswers[item.id];
-        const value = typeof raw === "string" ? raw : "";
-        const unanswered = !isNonEmptyAnswer(value);
-        const correct =
-          !unanswered && answersMatchAny(value, item.acceptableAnswers);
-        graded[item.id] = { correct, unanswered };
-        recordOutcome({
-          wordId: item.wordId,
-          correct,
-          itemKey: fillBlankItemSentence(item),
-        });
+        graded[item.id] = gradeQuestion(item, currentAnswers[item.id]);
       }
       return graded;
     });
   };
 
-  const jumpToUnanswered = () => {
-    const first = unansweredIds[0];
-    if (!first) return;
-    document
-      .getElementById(`fb-q-${first}`)
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const handleCheckOne = () => {
+    if (!currentQuestionId) return;
+    const item = practiceItems.find((row) => row.id === currentQuestionId);
+    if (!item) return;
+    void checkOne(item.id, (raw) => gradeQuestion(item, raw));
   };
+
+  const handleViewResults = () => {
+    markSubmitted();
+  };
+
+  const itemsById = useMemo(
+    () => new Map(practiceItems.map((item) => [item.id, item] as const)),
+    [practiceItems],
+  );
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
 
@@ -499,8 +562,17 @@ export function FillBlankSession({
     processing.stage === "error" ||
     processing.stage === "completed";
 
+  const oneByOne = displayMode === "one_by_one";
+  const progressCurrent = submitted
+    ? score.correct
+    : oneByOne
+      ? Math.min(checkedCount + (currentChecked ? 0 : 1), totalQuestionCount)
+      : answeredCount;
+  const progressTotal = submitted ? score.total : totalQuestionCount;
+
   return (
     <div className="space-y-6">
+      <div id="fb-set-top" className="scroll-mt-24" />
       <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
       {aiBar}
 
@@ -537,19 +609,41 @@ export function FillBlankSession({
         />
       ) : hasSession ? (
         <>
+          <ExerciseDisplayModePicker
+            value={displayMode}
+            onChange={setDisplayMode}
+            disabled={displayModeLocked}
+          />
+
+          {!aiItems &&
+          practiceItems.length > 0 &&
+          practiceItems.length < 20 ? (
+            <p className="text-xs text-muted-foreground">
+              {tSession("shortSetNote", { count: practiceItems.length })}
+            </p>
+          ) : null}
+
           <ExerciseProgressHeader
-            current={submitted ? score.correct : answeredCount}
-            total={submitted ? score.total : totalQuestionCount}
+            current={progressCurrent}
+            total={progressTotal}
             progressLabel={
               submitted
                 ? tSession("score", {
                     correct: score.correct,
                     total: score.total,
                   })
-                : tSession("answeredProgress", {
-                    answered: answeredCount,
-                    total: totalQuestionCount,
-                  })
+                : oneByOne
+                  ? tSession("questionProgress", {
+                      current: Math.min(
+                        checkedCount + 1,
+                        Math.max(totalQuestionCount, 1),
+                      ),
+                      total: totalQuestionCount,
+                    })
+                  : tSession("answeredProgress", {
+                      answered: answeredCount,
+                      total: totalQuestionCount,
+                    })
             }
             scoreLabel={
               submitted
@@ -564,14 +658,32 @@ export function FillBlankSession({
                 ? score.total
                   ? (score.correct / score.total) * 100
                   : 0
-                : totalQuestionCount
-                  ? (answeredCount / totalQuestionCount) * 100
-                  : 0
+                : oneByOne
+                  ? totalQuestionCount
+                    ? (checkedCount / totalQuestionCount) * 100
+                    : 0
+                  : totalQuestionCount
+                    ? (answeredCount / totalQuestionCount) * 100
+                    : 0
             }
           />
 
+          {submitted ? (
+            <ExerciseSetReviewNav
+              questionIds={questionIds}
+              results={results}
+              questionDomId={(id) => `fb-q-${id}`}
+              filter={reviewFilter}
+              onFilterChange={setReviewFilter}
+              focusedId={focusedReviewId}
+              onFocusedIdChange={setFocusedReviewId}
+            />
+          ) : null}
+
           <div className="space-y-4" key={attemptKey}>
-            {practiceItems.map((item, index) => {
+            {visibleQuestionIds.map((id) => {
+              const item = itemsById.get(id);
+              if (!item) return null;
               const input =
                 typeof answers[item.id] === "string"
                   ? String(answers[item.id])
@@ -579,42 +691,64 @@ export function FillBlankSession({
               const result = results[item.id];
               const unanswered = Boolean(result?.unanswered);
               const isCorrect = Boolean(result?.correct);
+              const revealed = submitted || Boolean(result);
               return (
-                <FillBlankStage
+                <div
                   key={item.id}
-                  item={item}
-                  number={index + 1}
-                  input={input}
-                  revealed={submitted}
-                  peeked={false}
-                  isCorrect={isCorrect}
-                  unanswered={unanswered}
-                  onInputChange={(value) => {
-                    setAnswer(item.id, value);
-                    if (value.trim()) notifyAnswerInteraction();
-                  }}
-                />
+                  className={cn(
+                    exerciseReviewFocusClass(focusedReviewId === item.id),
+                  )}
+                >
+                  <FillBlankStage
+                    item={item}
+                    number={numbers[item.id]}
+                    input={input}
+                    revealed={revealed}
+                    peeked={false}
+                    isCorrect={isCorrect}
+                    unanswered={unanswered}
+                    onInputChange={(value) => {
+                      setAnswer(item.id, value);
+                      if (value.trim()) notifyAnswerInteraction();
+                    }}
+                  />
+                </div>
               );
             })}
           </div>
 
           {!submitted ? (
-            <ExerciseSetSubmitBar
-              answeredCount={answeredCount}
-              totalQuestionCount={totalQuestionCount}
-              unansweredCount={unansweredIds.length}
-              submitting={submitting}
-              onSubmit={handleSubmit}
-              onJumpToUnanswered={jumpToUnanswered}
-            />
+            oneByOne ? (
+              <ExerciseOneByOneBar
+                checked={currentChecked}
+                isLast={isLastQuestion}
+                canCheck={currentCanCheck}
+                submitting={submitting}
+                onCheck={handleCheckOne}
+                onNext={goNextQuestion}
+                onViewResults={handleViewResults}
+              />
+            ) : (
+              <ExerciseSetSubmitBar
+                answeredCount={answeredCount}
+                totalQuestionCount={totalQuestionCount}
+                unansweredCount={unansweredIds.length}
+                submitting={submitting}
+                onSubmit={handleSubmit}
+                onJumpToUnanswered={() => jumpToUnanswered(unansweredIds)}
+              />
+            )
           ) : (
             <div className="space-y-4">
               <SessionCompleteCard
                 title={tSession("complete")}
                 questions={score.total}
                 correct={score.correct}
+                incorrect={score.incorrect}
+                unanswered={score.unanswered}
                 tryAgainLabel={tSession("restartSet")}
                 onTryAgain={restartSet}
+                onViewWrong={openWrongReview}
                 extraAction={
                   hasProAccess
                     ? {
@@ -646,6 +780,7 @@ export function FillBlankSession({
                         .map((item) => item.id);
                       setActiveIds(ids.length > 0 ? ids : null);
                       resetAttempt();
+                      afterNewSet();
                     }}
                   >
                     {tSession("retryIncorrect")}
@@ -661,6 +796,7 @@ export function FillBlankSession({
                         .map((item) => item.id);
                       setActiveIds(ids.length > 0 ? ids : null);
                       resetAttempt();
+                      afterNewSet();
                     }}
                   >
                     {tSession("retryUnanswered")}
