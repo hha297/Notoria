@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} associé(s)",
       "hint": "Sélectionnez un mot, puis touchez son sens",
       "complete": "Toutes les paires sont associées — bravo !",
-      "shuffle": "Mélanger les colonnes"
+      "shuffle": "Mélanger les colonnes",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Quel est le sens ?",

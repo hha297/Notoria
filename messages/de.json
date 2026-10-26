@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} zugeordnet",
       "hint": "Wähle ein Wort und tippe dann auf seine Bedeutung",
       "complete": "Alle Paare zugeordnet — super!",
-      "shuffle": "Spalten mischen"
+      "shuffle": "Spalten mischen",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Was ist die Bedeutung?",

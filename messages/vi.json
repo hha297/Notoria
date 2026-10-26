@@ -1166,7 +1166,9 @@
       "progress": "Đã ghép {matched} / {total}",
       "hint": "Chọn một từ, rồi chọn nghĩa tương ứng",
       "complete": "Ghép hết rồi — giỏi quá!",
-      "shuffle": "Xáo cột"
+      "shuffle": "Xáo cột",
+      "pairsProgress": "{matched} / {total} cặp",
+      "continueRound": "Tiếp tục"
     },
     "typeAnswer": {
       "questionWord": "Nghĩa là gì?",

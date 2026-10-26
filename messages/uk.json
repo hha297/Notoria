@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} зіставлено",
       "hint": "Оберіть слово, потім торкніться його значення",
       "complete": "Усі пари зіставлено — чудово!",
-      "shuffle": "Перемішати стовпці"
+      "shuffle": "Перемішати стовпці",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Яке значення?",

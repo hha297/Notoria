@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} yhdistetty",
       "hint": "Valitse sana, sitten napauta sen merkitystä",
       "complete": "Kaikki parit yhdistetty — hienoa!",
-      "shuffle": "Sekoita sarakkeet"
+      "shuffle": "Sekoita sarakkeet",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Mikä on merkitys?",

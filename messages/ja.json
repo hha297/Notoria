@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} マッチ済み",
       "hint": "単語を選んでから、その意味をタップします",
       "complete": "すべてのペアをマッチしました — よくできました！",
-      "shuffle": "列をシャッフル"
+      "shuffle": "列をシャッフル",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "意味は何ですか？",

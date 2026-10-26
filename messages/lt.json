@@ -1166,7 +1166,9 @@
       "progress": "{matched} / {total} atitiko",
       "hint": "Pasirinkite žodį, tada palieskite jo reikšmę",
       "complete": "Visos poros suderintos — šauniai padirbėta!",
-      "shuffle": "Maišyti stulpelius"
+      "shuffle": "Maišyti stulpelius",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Ką tai reiškia?",

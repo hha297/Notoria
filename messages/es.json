@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} emparejados",
       "hint": "Selecciona una palabra y luego toca su significado",
       "complete": "¡Todos los pares emparejados — buen trabajo!",
-      "shuffle": "Barajar columnas"
+      "shuffle": "Barajar columnas",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "¿Cuál es el significado?",

@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} مطابقة",
       "hint": "اختر كلمة، ثم انقر معناها",
       "complete": "تمت مطابقة كل الأزواج — أحسنت!",
-      "shuffle": "خلط الأعمدة"
+      "shuffle": "خلط الأعمدة",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "ما المعنى؟",

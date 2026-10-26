@@ -1166,7 +1166,9 @@
       "progress": "{matched} / {total} মেলানো",
       "hint": "একটি শব্দ নির্বাচন করুন, তারপর তার অর্থ ট্যাপ করুন",
       "complete": "সব জোড়া মেলানো হয়েছে — দারুণ কাজ!",
-      "shuffle": "কলাম এলোমেলো করুন"
+      "shuffle": "কলাম এলোমেলো করুন",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "অর্থ কী?",

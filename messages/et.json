@@ -1166,7 +1166,9 @@
       "progress": "{matched} / {total} sobitatud",
       "hint": "Vali sõna, seejärel puuduta selle tähendust",
       "complete": "Kõik paarid sobitatud — tubli!",
-      "shuffle": "Sega veerud"
+      "shuffle": "Sega veerud",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Mis on tähendus?",

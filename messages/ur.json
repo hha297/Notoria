@@ -1166,7 +1166,9 @@
       "progress": "{matched} / {total} مل گئے",
       "hint": "ایک لفظ منتخب کریں، پھر اس کا معنی دبائیں",
       "complete": "سب جوڑے مل گئے — بہت اعلیٰ!",
-      "shuffle": "کالم شفل کریں"
+      "shuffle": "کالم شفل کریں",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "معنی کیا ہے؟",

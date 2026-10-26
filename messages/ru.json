@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} сопоставлено",
       "hint": "Выберите слово, затем нажмите его значение",
       "complete": "Все пары сопоставлены — отличная работа!",
-      "shuffle": "Перемешать столбцы"
+      "shuffle": "Перемешать столбцы",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Каково значение?",

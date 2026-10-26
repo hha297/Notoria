@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} párosítva",
       "hint": "Válasszon egy szót, majd koppintson a jelentésére",
       "complete": "Minden pár párosítva — szép munka!",
-      "shuffle": "Oszlopok keverése"
+      "shuffle": "Oszlopok keverése",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Mi a jelentése?",

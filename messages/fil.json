@@ -1166,7 +1166,9 @@
       "progress": "{matched} / {total} ang naitugma",
       "hint": "Pumili ng salita, tapos i-tap ang kahulugan nito",
       "complete": "Naitugma ang lahat ng pares — magaling!",
-      "shuffle": "I-shuffle ang mga column"
+      "shuffle": "I-shuffle ang mga column",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Ano ang kahulugan?",

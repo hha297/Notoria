@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} associados",
       "hint": "Selecione uma palavra e depois toque no seu significado",
       "complete": "Todos os pares associados — excelente!",
-      "shuffle": "Baralhar colunas"
+      "shuffle": "Baralhar colunas",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Qual é o significado?",

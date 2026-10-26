@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} matchet",
       "hint": "Velg et ord, og trykk deretter på betydningen",
       "complete": "Alle par matchet — flott jobbet!",
-      "shuffle": "Bland kolonner"
+      "shuffle": "Bland kolonner",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Hva er betydningen?",

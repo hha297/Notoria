@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} համապատասխանեցված",
       "hint": "Ընտրեք բառ, ապա հպեք դրա իմաստին",
       "complete": "Բոլոր զույգերը համապատասխանեցված են — հիանալի է։",
-      "shuffle": "Խառնել սյուները"
+      "shuffle": "Խառնել սյուները",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Ո՞րն է իմաստը",

@@ -466,14 +466,17 @@
   --module-tags-bg: #0c2a3a;
   --module-tags-fg: #38bdf8;
 
-  /* Dark wash coverage — tighter corners; palette hex unchanged */
-  --studio-wash-base-a: 12%;
-  --studio-wash-base-b: 5%;
-  --studio-wash-scene-a: 18%;
-  --studio-wash-scene-b: 7%;
-  --studio-wash-fade-a: 40%;
-  --studio-wash-fade-b: 38%;
-  --studio-shell-wash: 12%;
+  /*
+    Dark wash — slightly broader/stronger than before so paper accent reads
+    closer to the sidebar soft wash, without washing out the dark base.
+  */
+  --studio-wash-base-a: 22%;
+  --studio-wash-base-b: 12%;
+  --studio-wash-scene-a: 28%;
+  --studio-wash-scene-b: 14%;
+  --studio-wash-fade-a: 50%;
+  --studio-wash-fade-b: 48%;
+  --studio-shell-wash: 18%;
 
   /* Dark: page-accent tokens inherit module overrides above; surfaces follow them */
   --control-surface-base: var(--surface-elevated);
@@ -904,6 +907,69 @@
       );
   }
 
+  /* Dark: a bit more spread so the wash is visible without lighting the page */
+  .dark .studio-paper::before {
+    background:
+      radial-gradient(
+        ellipse 62% 38% at 8% 0%,
+        color-mix(
+          in oklab,
+          var(--page-accent-soft) var(--studio-wash-base-a),
+          transparent
+        ),
+        transparent var(--studio-wash-fade-a)
+      ),
+      radial-gradient(
+        ellipse 50% 34% at 92% 0%,
+        color-mix(
+          in oklab,
+          var(--page-accent-soft) var(--studio-wash-base-b),
+          transparent
+        ),
+        transparent var(--studio-wash-fade-b)
+      );
+  }
+
+  .dark .studio-paper[data-studio-scene]::before {
+    background:
+      radial-gradient(
+        ellipse 56% 34% at 6% 0%,
+        color-mix(
+          in oklab,
+          var(--page-accent-soft) var(--studio-wash-base-b),
+          transparent
+        ),
+        transparent 54%
+      ),
+      radial-gradient(
+        ellipse 44% 30% at 94% 0%,
+        color-mix(in oklab, var(--page-accent-soft) 16%, transparent),
+        transparent 52%
+      );
+  }
+
+  .dark .studio-paper[data-studio-scene]::after {
+    background:
+      radial-gradient(
+        ellipse 68% 40% at 10% 0%,
+        color-mix(
+          in oklab,
+          var(--page-accent-soft) var(--studio-wash-scene-a),
+          transparent
+        ),
+        transparent var(--studio-wash-fade-a)
+      ),
+      radial-gradient(
+        ellipse 50% 34% at 90% 0%,
+        color-mix(
+          in oklab,
+          var(--page-accent-soft) var(--studio-wash-scene-b),
+          transparent
+        ),
+        transparent var(--studio-wash-fade-b)
+      );
+  }
+
   /* Mobile: tighter ellipses so narrow viewports do not crop a saturated band */
   @media (max-width: 639px) {
     .studio-paper::before {
@@ -1046,28 +1112,28 @@
 
   /* Dark module fills are deep — keep scene wash % near the dark base tokens */
   .dark [data-studio-scene="vocabulary"] {
-    --studio-wash-scene-a: 16%;
+    --studio-wash-scene-a: 26%;
   }
   .dark [data-studio-scene="tags"],
   .dark [data-studio-scene="account"],
   .dark [data-studio-scene="settings"] {
-    --studio-wash-scene-a: 15%;
+    --studio-wash-scene-a: 24%;
   }
   .dark [data-studio-scene="home"],
   .dark [data-studio-scene="speak"] {
-    --studio-wash-scene-a: 16%;
+    --studio-wash-scene-a: 26%;
   }
   .dark [data-studio-scene="exercises"] {
-    --studio-wash-scene-a: 14%;
-    --studio-wash-scene-b: 6%;
+    --studio-wash-scene-a: 22%;
+    --studio-wash-scene-b: 10%;
   }
   .dark [data-studio-scene="theory"],
   .dark [data-studio-scene="writing"] {
-    --studio-wash-scene-a: 18%;
+    --studio-wash-scene-a: 28%;
   }
   .dark [data-studio-scene="read"],
   .dark [data-studio-scene="listen"] {
-    --studio-wash-scene-a: 20%;
+    --studio-wash-scene-a: 30%;
   }
 
   /* Detail exercise: beat scene yellow with the active exercise accent */

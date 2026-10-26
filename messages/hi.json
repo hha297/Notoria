@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} मिलाए गए",
       "hint": "एक शब्द चुनें, फिर उसके अर्थ पर टैप करें",
       "complete": "सभी जोड़े मिलाए गए — बहुत अच्छा!",
-      "shuffle": "कॉलम शफ़ल करें"
+      "shuffle": "कॉलम शफ़ल करें",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "अर्थ क्या है?",

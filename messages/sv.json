@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} matchade",
       "hint": "Välj ett ord, tryck sedan på dess betydelse",
       "complete": "Alla par matchade — bra jobbat!",
-      "shuffle": "Blanda kolumner"
+      "shuffle": "Blanda kolumner",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Vad är betydelsen?",

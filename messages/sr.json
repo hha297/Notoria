@@ -1166,7 +1166,9 @@
       "progress": "{matched} / {total} upareno",
       "hint": "Izaberite reč, zatim dodirnite njeno značenje",
       "complete": "Svi parovi su upareni — odličan posao!",
-      "shuffle": "Promešaj kolone"
+      "shuffle": "Promešaj kolone",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Šta je značenje?",

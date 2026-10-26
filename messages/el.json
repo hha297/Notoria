@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} αντιστοιχίστηκαν",
       "hint": "Επιλέξτε μια λέξη και μετά πατήστε τη σημασία της",
       "complete": "Όλα τα ζεύγη αντιστοιχίστηκαν — εξαιρετικά!",
-      "shuffle": "Ανακάτεμα στηλών"
+      "shuffle": "Ανακάτεμα στηλών",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Ποια είναι η σημασία;",

@@ -1175,8 +1175,10 @@
       "words": "Words",
       "meanings": "Meanings",
       "roundProgress": "Round {current} / {total}",
+      "pairsProgress": "{matched} / {total} pairs",
       "progress": "{matched} / {total} matched",
       "hint": "Select a word, then tap its meaning",
+      "continueRound": "Continue",
       "complete": "All pairs matched — great job!",
       "shuffle": "Shuffle columns"
     },

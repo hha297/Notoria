@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} cocok",
       "hint": "Pilih kata, lalu ketuk artinya",
       "complete": "Semua pasangan cocok — bagus!",
-      "shuffle": "Acak kolom"
+      "shuffle": "Acak kolom",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Apa artinya?",

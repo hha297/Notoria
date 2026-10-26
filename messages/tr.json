@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} eşleştirildi",
       "hint": "Bir kelime seçin, ardından anlamına dokunun",
       "complete": "Tüm çiftler eşleştirildi — harika iş!",
-      "shuffle": "Sütunları karıştır"
+      "shuffle": "Sütunları karıştır",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Anlamı nedir?",

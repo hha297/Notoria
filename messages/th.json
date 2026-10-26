@@ -1165,7 +1165,9 @@
       "progress": "จับคู่แล้ว {matched} / {total}",
       "hint": "เลือกคำ แล้วแตะความหมาย",
       "complete": "จับคู่ครบทุกคู่แล้ว — ยอดเยี่ยม!",
-      "shuffle": "สลับคอลัมน์"
+      "shuffle": "สลับคอลัมน์",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "ความหมายคืออะไร?",

@@ -1166,7 +1166,9 @@
       "progress": "{matched} / {total} saskaņoti",
       "hint": "Atlasiet vārdu, pēc tam pieskarieties tā nozīmei",
       "complete": "Visi pāri saskaņoti — lieliski!",
-      "shuffle": "Sajaukt kolonnas"
+      "shuffle": "Sajaukt kolonnas",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Kāda ir nozīme?",

@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} të përputhura",
       "hint": "Zgjidhni një fjalë, pastaj prekni kuptimin e saj",
       "complete": "Të gjitha çiftet u përputhën — punë e shkëlqyer!",
-      "shuffle": "Përziej kolonat"
+      "shuffle": "Përziej kolonat",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Cili është kuptimi?",

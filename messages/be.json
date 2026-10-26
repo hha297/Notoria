@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} злучана",
       "hint": "Выберыце слова, потым націсніце яго значэнне",
       "complete": "Усе пары злучаны — выдатна!",
-      "shuffle": "Перамяшаць слупкі"
+      "shuffle": "Перамяшаць слупкі",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Якое значэнне?",

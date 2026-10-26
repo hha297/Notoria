@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} dopasowanych",
       "hint": "Wybierz słowo, potem dotknij jego znaczenia",
       "complete": "Wszystkie pary dopasowane — świetna robota!",
-      "shuffle": "Przetasuj kolumny"
+      "shuffle": "Przetasuj kolumny",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Jakie jest znaczenie?",

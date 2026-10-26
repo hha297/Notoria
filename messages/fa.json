@@ -1166,7 +1166,9 @@
       "progress": "{matched} / {total} جور شده",
       "hint": "یک کلمه انتخاب کنید، سپس معنیش را بزنید",
       "complete": "همه جفت‌ها جور شد — عالی!",
-      "shuffle": "درهم‌ریختن ستون‌ها"
+      "shuffle": "درهم‌ریختن ستون‌ها",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "معنی چیست؟",

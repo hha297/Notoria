@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} 맞춤",
       "hint": "단어를 선택한 뒤 의미를 탭하세요",
       "complete": "모든 짝을 맞췄습니다 — 잘하셨어요!",
-      "shuffle": "열 섞기"
+      "shuffle": "열 섞기",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "의미가 무엇인가요?",

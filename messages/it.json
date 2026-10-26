@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} abbinate",
       "hint": "Selezioni una parola, poi tocchi il suo significato",
       "complete": "Tutte le coppie abbinate — ottimo lavoro!",
-      "shuffle": "Mescola colonne"
+      "shuffle": "Mescola colonne",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Qual è il significato?",

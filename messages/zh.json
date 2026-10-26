@@ -1165,7 +1165,9 @@
       "progress": "已配对 {matched} / {total}",
       "hint": "先选一个词，再点对应释义",
       "complete": "全部配对完成——太棒了！",
-      "shuffle": "打乱列"
+      "shuffle": "打乱列",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "这个词是什么意思？",

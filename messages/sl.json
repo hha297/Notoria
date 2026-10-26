@@ -1166,7 +1166,9 @@
       "progress": "{matched} / {total} upareno",
       "hint": "Izberite beseda, nato dodirnite njeno pomen",
       "complete": "Vsi parovi su upareni — odličan posao!",
-      "shuffle": "Promešaj stolpci"
+      "shuffle": "Promešaj stolpci",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Šta je pomen?",

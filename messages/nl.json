@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} gekoppeld",
       "hint": "Selecteer een woord, tik daarna op de betekenis",
       "complete": "Alle paren gekoppeld — goed gedaan!",
-      "shuffle": "Kolommen schudden"
+      "shuffle": "Kolommen schudden",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Wat is de betekenis?",

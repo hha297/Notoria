@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} spárováno",
       "hint": "Vyberte slovo a pak klepněte na jeho význam",
       "complete": "Všechny páry spárovány — skvělá práce!",
-      "shuffle": "Zamíchat sloupce"
+      "shuffle": "Zamíchat sloupce",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Jaký je význam?",

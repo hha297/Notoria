@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} emparellades",
       "hint": "Seleccioneu una paraula i després toqueu-ne el significat",
       "complete": "Totes les parelles emparellades — molt bé!",
-      "shuffle": "Barrejar les columnes"
+      "shuffle": "Barrejar les columnes",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Quin és el significat?",

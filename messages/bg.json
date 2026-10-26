@@ -1165,7 +1165,9 @@
       "progress": "{matched} / {total} свързани",
       "hint": "Изберете дума, след това докоснете значението ѝ",
       "complete": "Всички двойки са свързани — отлична работа!",
-      "shuffle": "Разбъркай колоните"
+      "shuffle": "Разбъркай колоните",
+      "pairsProgress": "{matched} / {total} pairs",
+      "continueRound": "Continue"
     },
     "typeAnswer": {
       "questionWord": "Какво е значението?",
