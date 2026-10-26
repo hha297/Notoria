@@ -4,7 +4,11 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { ExerciseHint } from "@/components/exercises/exercise-hint";
 import { Button } from "@/components/ui/button";
-import { resolveProgressiveHints } from "@/lib/exercises/progressive-hints";
+import { isSpellingMaskHint } from "@/lib/exercises/hint";
+import {
+  resolveProgressiveHints,
+  type ProgressiveHintMode,
+} from "@/lib/exercises/progressive-hints";
 
 type ProgressiveHintRevealProps = {
   hints?: readonly string[] | null;
@@ -13,6 +17,10 @@ type ProgressiveHintRevealProps = {
   answers?: readonly string[];
   difficulty?: string | null;
   submittedMistake?: string | null;
+  mode?: ProgressiveHintMode;
+  visibleMeaning?: string | null;
+  spellingAnswer?: string | null;
+  lemma?: string | null;
   resetKey: string;
   answered: boolean;
   correctAnswer?: string;
@@ -29,6 +37,10 @@ export function ProgressiveHintReveal({
   answers = [],
   difficulty,
   submittedMistake,
+  mode = "standard",
+  visibleMeaning,
+  spellingAnswer,
+  lemma,
   resetKey,
   answered,
   correctAnswer,
@@ -41,6 +53,10 @@ export function ProgressiveHintReveal({
     answers,
     difficulty,
     submittedMistake,
+    mode,
+    visibleMeaning,
+    spellingAnswer,
+    lemma,
   });
   if (resolved.length === 0 || answered) return null;
 
@@ -48,6 +64,7 @@ export function ProgressiveHintReveal({
     <ProgressiveHintRevealInner
       key={resetKey}
       hints={resolved}
+      answers={answers}
       answered={answered}
       correctAnswer={correctAnswer}
       onRevealAnswer={onRevealAnswer}
@@ -57,16 +74,19 @@ export function ProgressiveHintReveal({
 
 function ProgressiveHintRevealInner({
   hints,
+  answers,
   answered,
   correctAnswer,
   onRevealAnswer,
 }: {
   hints: string[];
+  answers: readonly string[];
   answered: boolean;
   correctAnswer?: string;
   onRevealAnswer?: () => void;
 }) {
   const t = useTranslations("exercises.timedHint");
+  const tSession = useTranslations("exercises.session");
   const [shown, setShown] = useState(1);
   const visible = hints.slice(0, shown);
 
@@ -79,14 +99,26 @@ function ProgressiveHintRevealInner({
         onRevealAnswer={onRevealAnswer}
       >
         <ol className="space-y-2">
-          {visible.map((hint, index) => (
-            <li key={`${index}-${hint}`} className="wrap-anywhere">
-              <span className="mr-2 text-xs font-semibold text-muted-foreground">
-                {t("hintProgress", { current: index + 1, total: hints.length })}
-              </span>
-              {hint}
-            </li>
-          ))}
+          {visible.map((hint, index) => {
+            const spelling = isSpellingMaskHint(hint, answers);
+            return (
+              <li key={`${index}-${hint}`} className="wrap-anywhere">
+                <span className="mr-2 text-xs font-semibold text-muted-foreground">
+                  {t("hintProgress", {
+                    current: index + 1,
+                    total: hints.length,
+                  })}
+                </span>
+                {spelling ? (
+                  <span className="font-mono tracking-wide">
+                    {tSession("partialHint", { mask: hint })}
+                  </span>
+                ) : (
+                  hint
+                )}
+              </li>
+            );
+          })}
         </ol>
         {shown < hints.length ? (
           <Button
@@ -94,7 +126,9 @@ function ProgressiveHintRevealInner({
             variant="ghost"
             size="sm"
             className="mt-2 h-auto px-0 text-muted-foreground hover:bg-transparent hover:text-ink"
-            onClick={() => setShown((count) => Math.min(hints.length, count + 1))}
+            onClick={() =>
+              setShown((count) => Math.min(hints.length, count + 1))
+            }
           >
             {t("nextHint")}
           </Button>

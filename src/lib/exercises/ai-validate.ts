@@ -122,6 +122,13 @@ export function validateFillBlankExercise(
     return null;
   }
 
+  const hints = Array.isArray(raw.hints)
+    ? raw.hints
+        .map((hint) => (typeof hint === "string" ? hint.trim() : ""))
+        .filter(Boolean)
+        .slice(0, 3)
+    : undefined;
+
   return {
     wordId: word.id,
     type: "fill-in-blank",
@@ -133,6 +140,7 @@ export function validateFillBlankExercise(
     explanation: null,
     difficulty: raw.difficulty ?? null,
     sentenceMeaning: raw.sentenceMeaning?.trim() || null,
+    ...(hints && hints.length > 0 ? { hints } : {}),
   };
 }
 
@@ -221,6 +229,10 @@ export function fillBlankExerciseToItem(
       answers: [answer, word.word],
       grounding: meaningHint,
       difficulty: exercise.difficulty,
+      mode: "spelling-progressive",
+      visibleMeaning: meaningHint,
+      spellingAnswer: answer,
+      lemma: word.word,
     }),
   };
 }

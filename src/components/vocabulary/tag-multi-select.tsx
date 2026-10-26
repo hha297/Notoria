@@ -358,7 +358,7 @@ export function TagMultiSelect({
         </div>
       </div>
 
-      <div className="space-y-4">
+      <div className={mx(composerStyles, "vocab-picker-block")}>
         <Label
           htmlFor="custom-tags-search"
           className={mx(
@@ -373,25 +373,36 @@ export function TagMultiSelect({
         </Label>
 
         {selectedCustom.length > 0 ? (
-          <div className={mx(composerStyles, "vocab-chip-row")}>
-            {selectedCustom.map((tag) => (
-              <span
-                key={tag}
-                data-active="true"
-                className={mx(composerStyles, "vocab-chip")}
-              >
-                {getTagLabel(tag, (key) => t(key))}
-                <button
-                  type="button"
-                  className={mx(composerStyles, "vocab-chip-remove")}
-                  aria-label={`Remove ${getTagLabel(tag, (key) => t(key))}`}
-                  disabled={busy}
-                  onClick={() => setTagChecked(tag, false)}
-                >
-                  <X className="size-3" />
-                </button>
-              </span>
-            ))}
+          <div
+            className={mx(composerStyles, "vocab-picker-selected")}
+            aria-label={tv("selectedCustomTags")}
+          >
+            <p className={mx(composerStyles, "vocab-picker-selected-label")}>
+              {tv("selectedCustomTags")}
+            </p>
+            <div className={mx(composerStyles, "vocab-chip-row")}>
+              {selectedCustom.map((tag) => {
+                const label = getTagLabel(tag, (key) => t(key));
+                return (
+                  <span
+                    key={tag}
+                    data-active="true"
+                    className={mx(composerStyles, "vocab-chip")}
+                  >
+                    {label}
+                    <button
+                      type="button"
+                      className={mx(composerStyles, "vocab-chip-remove")}
+                      aria-label={tv("removeCustomTag", { name: label })}
+                      disabled={busy}
+                      onClick={() => setTagChecked(tag, false)}
+                    >
+                      <X className="size-3" />
+                    </button>
+                  </span>
+                );
+              })}
+            </div>
           </div>
         ) : null}
 
@@ -405,15 +416,20 @@ export function TagMultiSelect({
             placeholder={tv("searchOrCreateTags")}
             className={mx(
               composerStyles,
-              "vocab-composer-field vocab-search-field h-11!",
+              "vocab-composer-field vocab-search-field",
             )}
             disabled={busy}
+            aria-autocomplete="list"
+            aria-controls="custom-tags-results"
           />
           <Button
             type="button"
             variant="outline"
             size="sm"
-            className={mx(composerStyles, "vocab-composer-add h-11 shrink-0")}
+            className={mx(
+              composerStyles,
+              "vocab-composer-add vocab-picker-add shrink-0",
+            )}
             onClick={handleAdd}
             disabled={!canSubmitQuery}
           >
@@ -426,10 +442,23 @@ export function TagMultiSelect({
           </Button>
         </div>
 
-        <div className={mx(composerStyles, "vocab-suggest")}>
+        <div
+          id="custom-tags-results"
+          role="listbox"
+          aria-label={t("groups.custom")}
+          className={mx(composerStyles, "vocab-suggest")}
+        >
+          {busy && filteredCustom.length === 0 && !canCreate ? (
+            <p className={mx(composerStyles, "vocab-suggest-empty")}>
+              {tv("pickerLoading")}
+            </p>
+          ) : null}
+
           {canCreate ? (
             <button
               type="button"
+              role="option"
+              data-create="true"
               className={mx(composerStyles, "vocab-suggest-item")}
               onClick={() => void handleCreateFromQuery()}
               disabled={busy}
@@ -441,7 +470,7 @@ export function TagMultiSelect({
             </button>
           ) : null}
 
-          {filteredCustom.length === 0 && !canCreate ? (
+          {filteredCustom.length === 0 && !canCreate && !busy ? (
             <p className={mx(composerStyles, "vocab-suggest-empty")}>
               {customOptions.length === 0
                 ? tSettings("noCustomTags")
@@ -453,7 +482,9 @@ export function TagMultiSelect({
               return (
                 <div
                   key={option.id}
-                  data-active={checked}
+                  role="option"
+                  aria-selected={checked}
+                  data-active={checked || undefined}
                   className={mx(composerStyles, "vocab-suggest-item")}
                 >
                   <button
@@ -471,10 +502,7 @@ export function TagMultiSelect({
                       type="button"
                       variant="ghost"
                       size="icon-xs"
-                      className={mx(
-                        composerStyles,
-                        "vocab-suggest-action",
-                      )}
+                      className={mx(composerStyles, "vocab-suggest-action")}
                       aria-label={tSettings("renameTag")}
                       disabled={busy}
                       onClick={() => openEdit(option)}

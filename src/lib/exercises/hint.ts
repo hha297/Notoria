@@ -6,31 +6,61 @@ export function hintInitialLetter(text: string) {
   return first.toLocaleUpperCase();
 }
 
+function isContentChar(ch: string) {
+  return /\p{L}|\p{N}/u.test(ch);
+}
+
 /**
- * Partial surface-form hint: keep a short prefix of content characters,
- * replace the rest with dots. Spaces/punctuation stay visible so length
- * cues remain language-agnostic (no hardcoded sample words).
+ * How many leading content characters to keep visible.
+ * Normally 3; shorter answers keep fewer so something stays hidden.
+ * Never keeps the full answer.
+ */
+export function spellingHintKeepCount(contentCount: number) {
+  if (contentCount <= 1) return 0;
+  if (contentCount === 2) return 1;
+  if (contentCount === 3) return 1;
+  return Math.min(3, contentCount - 1);
+}
+
+/**
+ * Partial surface-form hint derived from the canonical answer.
+ * Reveals a short prefix of letters/digits and masks the rest with `_`.
+ * Spaces and hyphens stay visible. Never returns the complete answer.
  */
 export function partialAnswerHint(answer: string): string {
-  const trimmed = answer.trim();
+  const trimmed = answer.normalize("NFC").trim();
   if (!trimmed) return "";
   const chars = [...trimmed];
-  const contentCount = chars.filter((ch) => /\p{L}|\p{N}/u.test(ch)).length;
-  if (contentCount === 0) return trimmed;
-  // Single-letter answers would otherwise reveal the whole word.
-  const keep =
-    contentCount <= 1
-      ? 0
-      : Math.min(
-          Math.max(1, Math.ceil(contentCount * 0.35)),
-          Math.min(3, contentCount - 1),
-        );
+  const contentCount = chars.filter(isContentChar).length;
+  if (contentCount === 0) return "";
+
+  const keep = spellingHintKeepCount(contentCount);
+  if (keep <= 0) {
+    return chars.map((ch) => (isContentChar(ch) ? "_" : ch)).join("");
+  }
+
   let seen = 0;
-  return chars
+  const masked = chars
     .map((ch) => {
-      if (!/\p{L}|\p{N}/u.test(ch)) return ch;
+      if (!isContentChar(ch)) return ch;
       seen += 1;
-      return seen <= keep ? ch : "·";
+      return seen <= keep ? ch : "_";
     })
     .join("");
+
+  // Safety: never equal the full answer (case-insensitive, ignoring mask chars).
+  if (masked.toLocaleLowerCase() === trimmed.toLocaleLowerCase()) {
+    return chars.map((ch) => (isContentChar(ch) ? "_" : ch)).join("");
+  }
+  return masked;
+}
+
+/** True when `hint` is exactly the deterministic spelling mask for one answer. */
+export function isSpellingMaskHint(hint: string, answers: readonly string[]) {
+  const text = hint.normalize("NFC").replace(/\s+/g, " ").trim();
+  if (!text || !text.includes("_")) return false;
+  return answers.some((answer) => {
+    const mask = partialAnswerHint(answer);
+    return Boolean(mask) && mask.toLocaleLowerCase() === text.toLocaleLowerCase();
+  });
 }
