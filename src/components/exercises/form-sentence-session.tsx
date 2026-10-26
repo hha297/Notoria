@@ -536,62 +536,37 @@ export function FormSentenceSession({
           />
         )
       ) : (
-        <div className="space-y-4">
-          <SessionCompleteCard
-            title={tSession("complete")}
-            questions={score.total}
-            correct={score.correct}
-            incorrect={score.incorrect}
-            unanswered={score.unanswered}
-            tryAgainLabel={tSession("restartSet")}
-            onTryAgain={startSession}
-            onViewWrong={openWrongReview}
-          />
-          <div className="mx-auto flex w-full max-w-md flex-wrap justify-center gap-2">
-            {practiceItems.some(
-              (item) =>
-                results[item.id] &&
-                !results[item.id]!.correct &&
-                !results[item.id]!.unanswered,
-            ) ? (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  const ids = practiceItems
-                    .filter((item) => {
-                      const row = results[item.id];
-                      return row && !row.correct && !row.unanswered;
-                    })
-                    .map((item) => item.id);
-                  setActiveIds(ids.length > 0 ? ids : null);
-                  setFeedbackById({});
-                  resetAttempt();
-                  afterNewSet();
-                }}
-              >
-                {tSession("retryIncorrect")}
-              </Button>
-            ) : null}
-            {Object.values(results).some((row) => row.unanswered) ? (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  const ids = practiceItems
-                    .filter((item) => results[item.id]?.unanswered)
-                    .map((item) => item.id);
-                  setActiveIds(ids.length > 0 ? ids : null);
-                  setFeedbackById({});
-                  resetAttempt();
-                  afterNewSet();
-                }}
-              >
-                {tSession("retryUnanswered")}
-              </Button>
-            ) : null}
-          </div>
-        </div>
+        <SessionCompleteCard
+          title={tSession("complete")}
+          questions={score.total}
+          correct={score.correct}
+          incorrect={score.incorrect}
+          unanswered={score.unanswered}
+          tryAgainLabel={tSession("restartSet")}
+          onTryAgain={startSession}
+          onViewWrong={openWrongReview}
+          onRetryIncorrect={() => {
+            const ids = practiceItems
+              .filter((item) => {
+                const row = results[item.id];
+                return row && !row.correct && !row.unanswered;
+              })
+              .map((item) => item.id);
+            setActiveIds(ids.length > 0 ? ids : null);
+            setFeedbackById({});
+            resetAttempt();
+            afterNewSet();
+          }}
+          onRetryUnanswered={() => {
+            const ids = practiceItems
+              .filter((item) => results[item.id]?.unanswered)
+              .map((item) => item.id);
+            setActiveIds(ids.length > 0 ? ids : null);
+            setFeedbackById({});
+            resetAttempt();
+            afterNewSet();
+          }}
+        />
       )}
     </div>
   );

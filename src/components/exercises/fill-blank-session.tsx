@@ -10,6 +10,7 @@ import { AiProcessingProgress } from "@/components/exercises/ai-processing-progr
 import { ExerciseAiBar } from "@/components/exercises/exercise-ai-bar";
 import { ExerciseDisplayModePicker } from "@/components/exercises/exercise-display-mode-picker";
 import { ExerciseOneByOneBar } from "@/components/exercises/exercise-one-by-one-bar";
+import { FillBlankSourcePicker } from "@/components/exercises/fill-blank-source-picker";
 import { FillBlankStage } from "@/components/exercises/fill-blank-stage";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { ExerciseSetSubmitBar } from "@/components/exercises/exercise-set-submit-bar";
@@ -22,6 +23,7 @@ import { SessionCompleteCard } from "@/components/exercises/session-complete-car
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
 import { Button } from "@/components/ui/button";
+import { LinkButton } from "@/components/ui/link-button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
 import { useExerciseNextSet } from "@/hooks/use-exercise-next-set";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
@@ -37,6 +39,7 @@ import { wordHasBlankMeaningHint } from "@/lib/exercises/blank-hint";
 import {
   buildFillBlankItems,
   type FillBlankItem,
+  type FillBlankSource,
 } from "@/lib/exercises/fill-blank";
 import { DEFAULT_NEXT_SET_COUNT } from "@/lib/exercises/next-set-fingerprint";
 import { isNonEmptyAnswer, type SetQuestionResult } from "@/lib/exercises/set-attempt";
@@ -74,9 +77,13 @@ export function FillBlankSession({
   const { hasProAccess, openUpgrade } = useProAccess();
   const exerciseQuota = useQuotaLockMessage("ai_exercise");
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
+  const [questionSource, setQuestionSource] =
+    useState<FillBlankSource>("saved-examples");
   const [aiItems, setAiItems] = useState<FillBlankItem[] | null>(null);
   const [items, setItems] = useState<FillBlankItem[]>([]);
   const [activeIds, setActiveIds] = useState<string[] | null>(null);
+  const usingSavedExamples = questionSource === "saved-examples";
+  const usingAiGenerated = questionSource === "ai-generated";
   const { difficulty, setDifficulty } = useExerciseDifficulty("fill_blank");
   const [additionalInstructions, setAdditionalInstructions] = useState("");
   const [usedWordIds, setUsedWordIds] = useState<string[]>([]);
@@ -193,7 +200,7 @@ export function FillBlankSession({
   ]);
 
   const restartSet = useCallback(() => {
-    if (aiItems && aiItems.length > 0) {
+    if (usingAiGenerated && aiItems && aiItems.length > 0) {
       setItems(shuffleArray(aiItems));
       setActiveIds(null);
       resetAttempt();
@@ -201,14 +208,52 @@ export function FillBlankSession({
       return;
     }
     startExampleSession();
-  }, [afterNewSet, aiItems, resetAttempt, startExampleSession]);
+  }, [
+    afterNewSet,
+    aiItems,
+    resetAttempt,
+    startExampleSession,
+    usingAiGenerated,
+  ]);
+
+  const handleQuestionSourceChange = useCallback(
+    (next: FillBlankSource) => {
+      if (next === "ai-generated" && !hasProAccess) {
+        openUpgrade();
+        return;
+      }
+      if (next === questionSource) return;
+      setQuestionSource(next);
+      resetProcessing();
+      setAiItems(null);
+      setUsedWordIds([]);
+      avoidByWord.current = {};
+      clearPreferences();
+      setActiveIds(null);
+      resetAttempt();
+      if (next === "ai-generated") {
+        setItems([]);
+      }
+    },
+    [
+      clearPreferences,
+      hasProAccess,
+      openUpgrade,
+      questionSource,
+      resetAttempt,
+      resetProcessing,
+    ],
+  );
 
   useEffect(() => {
-    if (!hasProAccess) startExampleSession();
-  }, [hasProAccess, startExampleSession]);
+    if (!usingSavedExamples) return;
+    startExampleSession();
+  }, [startExampleSession, usingSavedExamples, workspaceId]);
 
+  // Reset the AI bank when the workspace changes while AI source is active.
+  // Source switches clear state in handleQuestionSourceChange instead.
   useEffect(() => {
-    if (!hasProAccess) return;
+    if (!usingAiGenerated) return;
     setAiItems(null);
     setItems([]);
     setUsedWordIds([]);
@@ -216,7 +261,9 @@ export function FillBlankSession({
     clearPreferences();
     setActiveIds(null);
     resetAttempt();
-  }, [clearPreferences, hasProAccess, workspaceId, resetAttempt]);
+    resetProcessing();
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- workspace switch only
+  }, [workspaceId]);
 
   const mapExercisesToItems = useCallback(
     (exercises: ExerciseAiFillBlank[], picked: FlashcardWord[]) => {
@@ -295,7 +342,7 @@ export function FillBlankSession({
     markGeneratedSequence,
     resetForNewActiveSet,
   } = useExerciseNextSet<FillBlankNextPayload, FillBlankItem[]>({
-    enabled: hasProAccess && Boolean(aiItems),
+    enabled: hasProAccess && usingAiGenerated && Boolean(aiItems),
     buildPayload: () => buildNextPayload(),
     generate: async (payload, meta) => {
       const result = await requestExerciseAi(
@@ -537,30 +584,44 @@ export function FillBlankSession({
     />
   );
 
+  const sourcePicker = (
+    <FillBlankSourcePicker
+      value={questionSource}
+      onChange={handleQuestionSourceChange}
+      aiLocked={!hasProAccess}
+      disabled={submitted || generating}
+    />
+  );
+
   if (filteredWords.length === 0) {
     return (
       <div className="space-y-6">
         <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
-        {aiBar}
+        {sourcePicker}
+        {usingAiGenerated ? aiBar : null}
         <VocabularyEmpty variant="no-filtered" />
       </div>
     );
   }
 
-  if (!hasProAccess && exampleItems.length === 0) {
+  if (usingSavedExamples && exampleItems.length === 0) {
     return (
       <div className="space-y-6">
         <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
-        {aiBar}
-        <VocabularyEmpty variant="no-examples" />
+        {sourcePicker}
+        <EmptySavedExamplesCard
+          canUseAi={hasProAccess}
+          onChooseAi={() => handleQuestionSourceChange("ai-generated")}
+        />
       </div>
     );
   }
 
   const showAiProgress =
-    generating ||
-    processing.stage === "error" ||
-    processing.stage === "completed";
+    usingAiGenerated &&
+    (generating ||
+      processing.stage === "error" ||
+      processing.stage === "completed");
 
   const oneByOne = displayMode === "one_by_one";
   const progressCurrent = submitted
@@ -574,9 +635,10 @@ export function FillBlankSession({
     <div className="space-y-6">
       <div id="fb-set-top" className="scroll-mt-24" />
       <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
-      {aiBar}
+      {sourcePicker}
+      {usingAiGenerated ? aiBar : null}
 
-      {hasSession && hasProAccess && !showAiProgress ? (
+      {hasSession && usingAiGenerated && hasProAccess && !showAiProgress ? (
         <NextSetStatusChip
           status={nextSetStatus}
           onRetry={() => retryPrefetch()}
@@ -601,7 +663,7 @@ export function FillBlankSession({
             processing.stage === "error" ? () => resetProcessing() : undefined
           }
         />
-      ) : !hasSession && hasProAccess ? (
+      ) : !hasSession && usingAiGenerated ? (
         <EmptyGenerateCard
           locked={exerciseQuota.locked}
           lockMessage={exerciseQuota.message}
@@ -615,7 +677,7 @@ export function FillBlankSession({
             disabled={displayModeLocked}
           />
 
-          {!aiItems &&
+          {usingSavedExamples &&
           practiceItems.length > 0 &&
           practiceItems.length < 20 ? (
             <p className="text-xs text-muted-foreground">
@@ -739,71 +801,46 @@ export function FillBlankSession({
               />
             )
           ) : (
-            <div className="space-y-4">
-              <SessionCompleteCard
-                title={tSession("complete")}
-                questions={score.total}
-                correct={score.correct}
-                incorrect={score.incorrect}
-                unanswered={score.unanswered}
-                tryAgainLabel={tSession("restartSet")}
-                onTryAgain={restartSet}
-                onViewWrong={openWrongReview}
-                extraAction={
-                  hasProAccess
-                    ? {
-                        label: tAi("generateMore"),
-                        onClick: () => void handleNewSet(),
-                        loading: generating,
-                        locked: exerciseQuota.locked,
-                        lockMessage: exerciseQuota.message,
-                      }
-                    : undefined
-                }
-              />
-              <div className="mx-auto flex w-full max-w-md flex-wrap justify-center gap-2">
-                {practiceItems.some(
-                  (item) =>
-                    results[item.id] &&
-                    !results[item.id]!.correct &&
-                    !results[item.id]!.unanswered,
-                ) ? (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => {
-                      const ids = practiceItems
-                        .filter((item) => {
-                          const row = results[item.id];
-                          return row && !row.correct && !row.unanswered;
-                        })
-                        .map((item) => item.id);
-                      setActiveIds(ids.length > 0 ? ids : null);
-                      resetAttempt();
-                      afterNewSet();
-                    }}
-                  >
-                    {tSession("retryIncorrect")}
-                  </Button>
-                ) : null}
-                {Object.values(results).some((row) => row.unanswered) ? (
-                  <Button
-                    type="button"
-                    variant="outline"
-                    onClick={() => {
-                      const ids = practiceItems
-                        .filter((item) => results[item.id]?.unanswered)
-                        .map((item) => item.id);
-                      setActiveIds(ids.length > 0 ? ids : null);
-                      resetAttempt();
-                      afterNewSet();
-                    }}
-                  >
-                    {tSession("retryUnanswered")}
-                  </Button>
-                ) : null}
-              </div>
-            </div>
+            <SessionCompleteCard
+              title={tSession("complete")}
+              questions={score.total}
+              correct={score.correct}
+              incorrect={score.incorrect}
+              unanswered={score.unanswered}
+              tryAgainLabel={tSession("restartSet")}
+              onTryAgain={restartSet}
+              onViewWrong={openWrongReview}
+              onRetryIncorrect={() => {
+                const ids = practiceItems
+                  .filter((item) => {
+                    const row = results[item.id];
+                    return row && !row.correct && !row.unanswered;
+                  })
+                  .map((item) => item.id);
+                setActiveIds(ids.length > 0 ? ids : null);
+                resetAttempt();
+                afterNewSet();
+              }}
+              onRetryUnanswered={() => {
+                const ids = practiceItems
+                  .filter((item) => results[item.id]?.unanswered)
+                  .map((item) => item.id);
+                setActiveIds(ids.length > 0 ? ids : null);
+                resetAttempt();
+                afterNewSet();
+              }}
+              extraAction={
+                usingAiGenerated && hasProAccess
+                  ? {
+                      label: tAi("generateMore"),
+                      onClick: () => void handleNewSet(),
+                      loading: generating,
+                      locked: exerciseQuota.locked,
+                      lockMessage: exerciseQuota.message,
+                    }
+                  : undefined
+              }
+            />
           )}
         </>
       ) : null}
@@ -849,6 +886,36 @@ function EmptyGenerateCard({
         >
           {tAi("generate")}
         </QuotaLockButton>
+      </div>
+    </div>
+  );
+}
+
+function EmptySavedExamplesCard({
+  canUseAi,
+  onChooseAi,
+}: {
+  canUseAi: boolean;
+  onChooseAi: () => void;
+}) {
+  const t = useTranslations("exercises.fillInBlank.source");
+  const tEmpty = useTranslations("exercises.empty");
+
+  return (
+    <div className="mx-auto max-w-lg px-4 py-10 text-center sm:px-8 sm:py-14">
+      <p className="font-heading text-xl font-semibold tracking-tight text-ink sm:text-2xl">
+        {t("emptyTitle")}
+      </p>
+      <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
+        {t("emptyDescription")}
+      </p>
+      <div className="mt-7 flex flex-wrap items-center justify-center gap-2">
+        <LinkButton href="/vocabulary">{tEmpty("editVocabulary")}</LinkButton>
+        {canUseAi ? (
+          <Button type="button" variant="outline" onClick={onChooseAi}>
+            {t("chooseAi")}
+          </Button>
+        ) : null}
       </div>
     </div>
   );

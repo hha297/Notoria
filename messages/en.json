@@ -1043,7 +1043,21 @@
       "next": "Next",
       "check": "Check",
       "shuffle": "Shuffle",
-      "finish": "Finish round"
+      "finish": "Finish round",
+      "source": {
+        "label": "Question source",
+        "chooseAi": "Use AI Generated",
+        "emptyTitle": "No usable saved examples",
+        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "saved-examples": {
+          "title": "Saved examples",
+          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+        },
+        "ai-generated": {
+          "title": "AI Generated",
+          "description": "Create fresh sentences from your vocabulary with AI."
+        }
+      }
     },
     "ai": {
       "generate": "Generate with AI",
@@ -1094,6 +1108,7 @@
     "session": {
       "complete": "Session complete",
       "score": "{correct} / {total} correct",
+      "scorePercent": "{percent}% correct",
       "pairsMatched": "Matched {count} pairs",
       "tryAgain": "Try again",
       "questionsLabel": "Questions",
@@ -1101,6 +1116,24 @@
       "incorrectLabel": "Incorrect",
       "unansweredLabel": "Unanswered",
       "reviewLabel": "To review",
+      "result": {
+        "perfect": {
+          "headline": "Perfect set",
+          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+        },
+        "strong": {
+          "headline": "Strong finish",
+          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+        },
+        "mixed": {
+          "headline": "Good work — keep going",
+          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+        },
+        "unanswered": {
+          "headline": "Almost there",
+          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+        }
+      },
       "answeredProgress": "{answered} / {total} answered",
       "questionProgress": "{current} / {total}",
       "checkAnswer": "Check answer",
@@ -1137,6 +1170,7 @@
         "title": "Review",
         "allCorrect": "Perfect — every question correct.",
         "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
+        "toReviewCount": "{count} to review",
         "viewWrong": "View wrong answers",
         "filtersLabel": "Filter questions",
         "filter": {

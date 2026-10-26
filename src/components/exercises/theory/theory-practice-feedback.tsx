@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import featureStyles from "@/components/style/exercises/theory.module.css";
 import { mx } from "@/lib/css-module";
@@ -59,19 +59,26 @@ export function TheoryPracticeFeedback({
         >
           <p
             className={cn(
-              "text-sm font-medium tracking-wide",
-              peeked || unanswered
-                ? "text-muted-foreground"
-                : correct
-                  ? "text-success"
-                  : "text-error",
+              "inline-flex items-center gap-1.5 text-sm font-medium tracking-wide",
+              unanswered
+                ? "font-semibold text-warning"
+                : peeked
+                  ? "text-muted-foreground"
+                  : correct
+                    ? "text-success"
+                    : "text-error",
             )}
           >
-            {unanswered
-              ? tSession("unanswered")
-              : peeked || !correct
-                ? t("feedback.incorrect")
-                : t("feedback.correct")}
+            {unanswered ? (
+              <>
+                <XCircle className="size-4 shrink-0" strokeWidth={2.4} />
+                {tSession("unanswered")}
+              </>
+            ) : peeked || !correct ? (
+              t("feedback.incorrect")
+            ) : (
+              t("feedback.correct")
+            )}
           </p>
 
           <dl className="space-y-3 text-sm leading-relaxed sm:text-[0.9375rem]">

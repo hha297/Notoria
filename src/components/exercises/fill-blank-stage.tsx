@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { Check, Sparkles } from "lucide-react";
+import { Check, Sparkles, XCircle } from "lucide-react";
 import { ProgressiveHintReveal } from "@/components/exercises/progressive-hint-reveal";
 import { EXERCISE_SET_QUESTION_CARD_CLASS } from "@/components/exercises/exercise-set-question-card";
 import {
@@ -352,7 +352,8 @@ function AnswerFeedback({
           aria-live="polite"
         >
           {unanswered ? (
-            <p className="text-sm font-medium text-muted-foreground">
+            <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-warning">
+              <XCircle className="size-4 shrink-0" strokeWidth={2.4} />
               {unansweredLabel}
             </p>
           ) : peeked ? (

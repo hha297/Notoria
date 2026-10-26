@@ -1030,7 +1030,21 @@
       "next": "Далей",
       "check": "Праверыць",
       "shuffle": "Перамяшаць",
-      "finish": "Завершыць раунд"
+      "finish": "Завершыць раунд",
+      "source": {
+        "label": "Question source",
+        "chooseAi": "Use AI Generated",
+        "emptyTitle": "No usable saved examples",
+        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "saved-examples": {
+          "title": "Saved examples",
+          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+        },
+        "ai-generated": {
+          "title": "AI Generated",
+          "description": "Create fresh sentences from your vocabulary with AI."
+        }
+      }
     },
     "ai": {
       "generate": "Стварыць з AI",
@@ -1133,7 +1147,27 @@
         },
         "prevWrong": "Previous wrong",
         "nextWrong": "Next wrong",
-        "wrongPosition": "{current} / {total} to review"
+        "wrongPosition": "{current} / {total} to review",
+        "toReviewCount": "{count} to review"
+      },
+      "scorePercent": "{percent}% correct",
+      "result": {
+        "perfect": {
+          "headline": "Perfect set",
+          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+        },
+        "strong": {
+          "headline": "Strong finish",
+          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+        },
+        "mixed": {
+          "headline": "Good work — keep going",
+          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+        },
+        "unanswered": {
+          "headline": "Almost there",
+          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+        }
       }
     },
     "multipleChoice": {

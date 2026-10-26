@@ -3,7 +3,7 @@
 import { useEffect, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { Check, Sparkles } from "lucide-react";
+import { Check, Sparkles, XCircle } from "lucide-react";
 import {
   applyAnswerFormCasing,
   blankMeaningHintFromItem,
@@ -589,7 +589,8 @@ function AnswerFeedback({
           aria-live="polite"
         >
           {unanswered ? (
-            <p className="text-sm font-medium text-muted-foreground">
+            <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-warning">
+              <XCircle className="size-4 shrink-0" strokeWidth={2.4} />
               {unansweredLabel}
             </p>
           ) : peeked ? (

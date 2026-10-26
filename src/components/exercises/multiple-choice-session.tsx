@@ -20,7 +20,6 @@ import { MultipleChoiceStage } from "@/components/exercises/multiple-choice-stag
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
-import { Button } from "@/components/ui/button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { useExerciseDifficulty } from "@/hooks/use-exercise-difficulty";
@@ -692,60 +691,35 @@ export function MultipleChoiceSession({
           />
         )
       ) : (
-        <div className="space-y-4">
-          <SessionCompleteCard
-            title={tSession("complete")}
-            questions={score.total}
-            correct={score.correct}
-            incorrect={score.incorrect}
-            unanswered={score.unanswered}
-            tryAgainLabel={tSession("restartSet")}
-            onTryAgain={startSession}
-            onViewWrong={openWrongReview}
-          />
-          <div className="mx-auto flex w-full max-w-md flex-wrap justify-center gap-2">
-            {practiceQuestions.some(
-              (q) =>
-                results[q.id] &&
-                !results[q.id]!.correct &&
-                !results[q.id]!.unanswered,
-            ) ? (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  const ids = practiceQuestions
-                    .filter((q) => {
-                      const row = results[q.id];
-                      return row && !row.correct && !row.unanswered;
-                    })
-                    .map((q) => q.id);
-                  setActiveIds(ids.length > 0 ? ids : null);
-                  resetAttempt();
-                  afterNewSet();
-                }}
-              >
-                {tSession("retryIncorrect")}
-              </Button>
-            ) : null}
-            {Object.values(results).some((row) => row.unanswered) ? (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  const ids = practiceQuestions
-                    .filter((q) => results[q.id]?.unanswered)
-                    .map((q) => q.id);
-                  setActiveIds(ids.length > 0 ? ids : null);
-                  resetAttempt();
-                  afterNewSet();
-                }}
-              >
-                {tSession("retryUnanswered")}
-              </Button>
-            ) : null}
-          </div>
-        </div>
+        <SessionCompleteCard
+          title={tSession("complete")}
+          questions={score.total}
+          correct={score.correct}
+          incorrect={score.incorrect}
+          unanswered={score.unanswered}
+          tryAgainLabel={tSession("restartSet")}
+          onTryAgain={startSession}
+          onViewWrong={openWrongReview}
+          onRetryIncorrect={() => {
+            const ids = practiceQuestions
+              .filter((q) => {
+                const row = results[q.id];
+                return row && !row.correct && !row.unanswered;
+              })
+              .map((q) => q.id);
+            setActiveIds(ids.length > 0 ? ids : null);
+            resetAttempt();
+            afterNewSet();
+          }}
+          onRetryUnanswered={() => {
+            const ids = practiceQuestions
+              .filter((q) => results[q.id]?.unanswered)
+              .map((q) => q.id);
+            setActiveIds(ids.length > 0 ? ids : null);
+            resetAttempt();
+            afterNewSet();
+          }}
+        />
       )}
     </div>
   );

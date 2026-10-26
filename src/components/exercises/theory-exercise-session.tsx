@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
 import { toast } from "sonner";
-import { RotateCcw, Sparkles } from "lucide-react";
+import { ArrowRight, RotateCcw, Sparkles } from "lucide-react";
 import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
@@ -632,9 +632,10 @@ export function TheoryExerciseSessionView({
           {hasLesson ? (
             <Link
               href={`/theory/${session.theoryId}`}
-              className="mt-2 inline-block text-sm font-medium text-(--exercise-accent) underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-(--exercise-accent)/40 focus-visible:outline-none"
+              className="group mt-2 inline-flex items-center gap-1.5 text-sm font-medium text-(--exercise-accent) underline-offset-4 hover:underline focus-visible:ring-2 focus-visible:ring-(--exercise-accent)/40 focus-visible:outline-none"
             >
               {t("lesson.openTheory")}
+              <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none" />
             </Link>
           ) : null}
         </div>
@@ -826,79 +827,54 @@ export function TheoryExerciseSessionView({
           />
         )
       ) : (
-        <div className="space-y-4 pt-2">
-          <SessionCompleteCard
-            title={tSession("complete")}
-            questions={score.total}
-            correct={score.correct}
-            incorrect={score.incorrect}
-            unanswered={score.unanswered}
-            scoreLabel={tSession("score", {
-              correct: score.correct,
-              total: score.total,
-            })}
-            tryAgainLabel={tSession("restartSet")}
-            onTryAgain={() => {
-              setActiveIds(null);
-              resetAttempt();
-              afterNewSet();
-            }}
-            onViewWrong={openWrongReview}
-            extraAction={
-              practiceOnly
-                ? undefined
-                : {
-                    label: t("generateMore"),
-                    onClick: () => void handleNewSet(),
-                    loading: generating,
-                    locked: exerciseQuota.locked,
-                    lockMessage: exerciseQuota.message,
-                  }
-            }
-          />
-          <div className="mx-auto flex w-full max-w-md flex-wrap justify-center gap-2">
-            {practiceItems.some(
-              (item) =>
-                results[item.id] &&
-                !results[item.id]!.correct &&
-                !results[item.id]!.unanswered,
-            ) ? (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  const ids = practiceItems
-                    .filter((item) => {
-                      const row = results[item.id];
-                      return row && !row.correct && !row.unanswered;
-                    })
-                    .map((item) => item.id);
-                  setActiveIds(ids.length > 0 ? ids : null);
-                  resetAttempt();
-                  afterNewSet();
-                }}
-              >
-                {tSession("retryIncorrect")}
-              </Button>
-            ) : null}
-            {Object.values(results).some((row) => row.unanswered) ? (
-              <Button
-                type="button"
-                variant="outline"
-                onClick={() => {
-                  const ids = practiceItems
-                    .filter((item) => results[item.id]?.unanswered)
-                    .map((item) => item.id);
-                  setActiveIds(ids.length > 0 ? ids : null);
-                  resetAttempt();
-                  afterNewSet();
-                }}
-              >
-                {tSession("retryUnanswered")}
-              </Button>
-            ) : null}
-          </div>
-        </div>
+        <SessionCompleteCard
+          title={tSession("complete")}
+          questions={score.total}
+          correct={score.correct}
+          incorrect={score.incorrect}
+          unanswered={score.unanswered}
+          scoreLabel={tSession("score", {
+            correct: score.correct,
+            total: score.total,
+          })}
+          tryAgainLabel={tSession("restartSet")}
+          onTryAgain={() => {
+            setActiveIds(null);
+            resetAttempt();
+            afterNewSet();
+          }}
+          onViewWrong={openWrongReview}
+          onRetryIncorrect={() => {
+            const ids = practiceItems
+              .filter((item) => {
+                const row = results[item.id];
+                return row && !row.correct && !row.unanswered;
+              })
+              .map((item) => item.id);
+            setActiveIds(ids.length > 0 ? ids : null);
+            resetAttempt();
+            afterNewSet();
+          }}
+          onRetryUnanswered={() => {
+            const ids = practiceItems
+              .filter((item) => results[item.id]?.unanswered)
+              .map((item) => item.id);
+            setActiveIds(ids.length > 0 ? ids : null);
+            resetAttempt();
+            afterNewSet();
+          }}
+          extraAction={
+            practiceOnly
+              ? undefined
+              : {
+                  label: t("generateMore"),
+                  onClick: () => void handleNewSet(),
+                  loading: generating,
+                  locked: exerciseQuota.locked,
+                  lockMessage: exerciseQuota.message,
+                }
+          }
+        />
       )}
     </div>
   );

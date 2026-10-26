@@ -1,3 +1,40 @@
+/*
+ * Title / flush fields: kill opaque control-surface on the input.
+ * Title wash bleeds to the studio paper edge (same pattern as vocab-group-head).
+ */
+.import-field-wash,
+.import-field-wash:hover,
+.import-field-wash:focus-visible,
+.import-field-wash:disabled {
+  background-color: transparent !important;
+  background-image: none !important;
+}
+
+.import-title-wash {
+  position: relative;
+  width: auto;
+  max-width: none;
+  box-sizing: border-box;
+  margin-inline: calc(-1 * var(--studio-main-pad, 1rem));
+  padding: 0.65rem var(--studio-main-pad, 1rem) 0.75rem;
+  background:
+    linear-gradient(
+      90deg,
+      color-mix(in oklab, var(--import-mode-bg) 22%, transparent) 0%,
+      color-mix(in oklab, var(--import-mode-bg) 10%, transparent) 32%,
+      color-mix(in oklab, var(--import-mode-bg) 4%, transparent) 58%,
+      transparent 82%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 88%, var(--import-mode-bg));
+}
+
+@media (min-width: 640px) {
+  .import-title-wash {
+    margin-inline: calc(-1 * var(--studio-main-pad, 1.5rem));
+    padding-inline: var(--studio-main-pad, 1.5rem);
+  }
+}
+
 .import-hero,
 .import-stage {
   position: relative;
