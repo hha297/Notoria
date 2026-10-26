@@ -1084,8 +1084,14 @@
       "tryAgain": "Nochmal versuchen",
       "questionsLabel": "Fragen",
       "correctLabel": "Richtig",
+      "incorrectLabel": "Incorrect",
+      "unansweredLabel": "Unanswered",
       "reviewLabel": "Zu wiederholen",
       "answeredProgress": "{answered} / {total} beantwortet",
+      "questionProgress": "{current} / {total}",
+      "checkAnswer": "Check answer",
+      "nextQuestion": "Next",
+      "viewResults": "View results",
       "submitSet": "Antworten absenden",
       "submitting": "Wird geprüft…",
       "unansweredWarnTitle": "Unbeantwortete Fragen",
@@ -1099,7 +1105,35 @@
       "resultsTitle": "Ergebnisse",
       "unanswered": "Nicht beantwortet",
       "yourAnswer": "Deine Antwort",
-      "correctAnswer": "Richtige Antwort"
+      "correctAnswer": "Richtige Antwort",
+      "shortSetNote": "Only {count} questions available from your current filters.",
+      "displayMode": {
+        "label": "How you practice",
+        "lockedHint": "Finish or start a new set to change this.",
+        "one_by_one": {
+          "title": "One by one",
+          "description": "See one question at a time. Check after each answer for immediate feedback."
+        },
+        "all_questions": {
+          "title": "All questions",
+          "description": "See the full set, answer in any order, then submit once for feedback."
+        }
+      },
+      "review": {
+        "title": "Review",
+        "allCorrect": "Perfect — every question correct.",
+        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
+        "viewWrong": "View wrong answers",
+        "filtersLabel": "Filter questions",
+        "filter": {
+          "all": "All ({count})",
+          "needs_review": "Wrong & unanswered ({count})",
+          "correct": "Correct ({count})"
+        },
+        "prevWrong": "Previous wrong",
+        "nextWrong": "Next wrong",
+        "wrongPosition": "{current} / {total} to review"
+      }
     },
     "multipleChoice": {
       "questionWord": "Was bedeutet dieses Wort?",

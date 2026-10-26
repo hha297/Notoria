@@ -9,8 +9,14 @@ import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
 import { ExerciseAdditionalInstructions } from "@/components/exercises/exercise-additional-instructions";
+import { ExerciseDisplayModePicker } from "@/components/exercises/exercise-display-mode-picker";
+import { ExerciseOneByOneBar } from "@/components/exercises/exercise-one-by-one-bar";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { ExerciseSetSubmitBar } from "@/components/exercises/exercise-set-submit-bar";
+import {
+  ExerciseSetReviewNav,
+  exerciseReviewFocusClass,
+} from "@/components/exercises/exercise-set-review-nav";
 import { NextSetStatusChip } from "@/components/exercises/next-set-status";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { TheoryFillBlankCard } from "@/components/exercises/theory/theory-fill-blank-card";
@@ -22,6 +28,7 @@ import { LinkButton } from "@/components/ui/link-button";
 import { useAiProcessing } from "@/hooks/use-ai-processing";
 import { useExerciseNextSet } from "@/hooks/use-exercise-next-set";
 import { useExerciseSetAttempt } from "@/hooks/use-exercise-set-attempt";
+import { useExerciseSetUi } from "@/hooks/use-exercise-set-ui";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { DEFAULT_NEXT_SET_COUNT } from "@/lib/exercises/next-set-fingerprint";
 import { isNonEmptyAnswer, type SetQuestionResult } from "@/lib/exercises/set-attempt";
@@ -38,6 +45,7 @@ import {
 import type { TheoryExercise, TheoryExerciseSession } from "@/lib/theory-exercises/types";
 import featureStyles from "@/components/style/exercises/theory.module.css";
 import { mx } from "@/lib/css-module";
+import { cn } from "@/lib/utils";
 
 type TheoryNextPayload = {
   theoryIds: string[];
@@ -140,13 +148,45 @@ export function TheoryExerciseSessionView({
     attemptKey,
     answeredCount,
     totalQuestionCount,
-    progressRatio,
     unansweredIds,
     score,
+    checkedCount,
     setAnswer,
     resetAttempt,
     submit,
+    checkOne,
+    markSubmitted,
   } = useExerciseSetAttempt({ questionIds });
+
+  const {
+    displayMode,
+    setDisplayMode,
+    displayModeLocked,
+    currentQuestionId,
+    currentChecked,
+    currentCanCheck,
+    isLastQuestion,
+    goNextQuestion,
+    visibleQuestionIds,
+    numbers,
+    reviewFilter,
+    setReviewFilter,
+    focusedReviewId,
+    setFocusedReviewId,
+    afterNewSet,
+    jumpToUnanswered,
+    openWrongReview,
+    submitted,
+  } = useExerciseSetUi({
+    questionIds,
+    results,
+    answers,
+    attemptPhase,
+    answeredCount,
+    checkedCount,
+    questionIdPrefix: "theory-q",
+    setAnchorId: "theory-set-top",
+  });
 
   const loadItems = useCallback(
     (nextItems: TheoryExercise[], shuffle = true) => {
@@ -154,8 +194,9 @@ export function TheoryExerciseSessionView({
       setItems(shuffle ? shuffleArray(filtered) : filtered);
       setActiveIds(null);
       resetAttempt();
+      afterNewSet();
     },
-    [resetAttempt],
+    [afterNewSet, resetAttempt],
   );
 
   const uiLocale = useLocale();
@@ -380,6 +421,7 @@ export function TheoryExerciseSessionView({
     setItems(shuffleArray(filtered));
     setActiveIds(null);
     resetAttempt();
+    afterNewSet();
     setPhase(hasLesson ? "overview" : "practice");
     // Only reset when the theory document / item source changes.
     // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional: avoid reshuffling mid-attempt
@@ -395,20 +437,17 @@ export function TheoryExerciseSessionView({
   }, [generateWithAi, items.length]);
 
   const total = practiceItems.length;
-  const submitted = attemptPhase === "submitted";
-  const progressValue = progressRatio * 100;
   const generateError =
     processing.stage === "error"
       ? processing.errorMessage || t("aiUnavailable")
       : null;
 
-  const jumpToUnanswered = () => {
-    const first = unansweredIds[0];
-    if (!first) return;
-    document
-      .getElementById(`theory-q-${first}`)
-      ?.scrollIntoView({ behavior: "smooth", block: "start" });
-  };
+  const gradeQuestion = useCallback(
+    (item: TheoryExercise, raw: unknown): SetQuestionResult => {
+      return gradeTheorySet([item], { [item.id]: raw })[item.id]!;
+    },
+    [],
+  );
 
   const handleSubmit = () => {
     void submit((currentAnswers, ids) => {
@@ -416,6 +455,22 @@ export function TheoryExerciseSessionView({
       return gradeTheorySet(subset, currentAnswers);
     });
   };
+
+  const handleCheckOne = () => {
+    if (!currentQuestionId) return;
+    const item = practiceItems.find((row) => row.id === currentQuestionId);
+    if (!item) return;
+    void checkOne(item.id, (raw) => gradeQuestion(item, raw));
+  };
+
+  const handleViewResults = () => {
+    markSubmitted();
+  };
+
+  const itemsById = useMemo(
+    () => new Map(practiceItems.map((item) => [item.id, item] as const)),
+    [practiceItems],
+  );
 
   const instructionsField = practiceOnly ? null : (
     <ExerciseAdditionalInstructions
@@ -550,12 +605,21 @@ export function TheoryExerciseSessionView({
     );
   }
 
+  const oneByOne = displayMode === "one_by_one";
+  const progressCurrent = submitted
+    ? score.correct
+    : oneByOne
+      ? Math.min(checkedCount + (currentChecked ? 0 : 1), totalQuestionCount)
+      : answeredCount;
+  const progressTotal = submitted ? score.total : totalQuestionCount;
+
   return (
     <div
       data-exercise="theory"
       data-theory-category={session.category}
       className={mx(featureStyles, "theory-practice-stage -mx-[var(--studio-main-pad,1rem)] space-y-5 px-4 py-4 sm:-mx-[var(--studio-main-pad,1.5rem)] sm:space-y-8 sm:px-6 sm:py-9")}
     >
+      <div id="theory-set-top" className="scroll-mt-24" />
       <div className="space-y-4">
         {instructionsField}
         <div className="min-w-0">
@@ -574,6 +638,21 @@ export function TheoryExerciseSessionView({
             </Link>
           ) : null}
         </div>
+
+        <ExerciseDisplayModePicker
+          value={displayMode}
+          onChange={setDisplayMode}
+          disabled={displayModeLocked}
+        />
+
+        {practiceOnly &&
+        practiceItems.length > 0 &&
+        practiceItems.length < 20 ? (
+          <p className="text-xs text-muted-foreground">
+            {tSession("shortSetNote", { count: practiceItems.length })}
+          </p>
+        ) : null}
+
         <div className="flex flex-wrap items-end justify-between gap-2">
           <div className="min-w-0 flex-1">
             <ExerciseProgressHeader
@@ -583,13 +662,21 @@ export function TheoryExerciseSessionView({
                       correct: score.correct,
                       total: score.total,
                     })
-                  : tSession("answeredProgress", {
-                      answered: answeredCount,
-                      total: totalQuestionCount,
-                    })
+                  : oneByOne
+                    ? tSession("questionProgress", {
+                        current: Math.min(
+                          checkedCount + 1,
+                          Math.max(totalQuestionCount, 1),
+                        ),
+                        total: totalQuestionCount,
+                      })
+                    : tSession("answeredProgress", {
+                        answered: answeredCount,
+                        total: totalQuestionCount,
+                      })
               }
-              current={submitted ? score.correct : answeredCount}
-              total={submitted ? score.total : totalQuestionCount}
+              current={progressCurrent}
+              total={progressTotal}
               scoreLabel={
                 submitted
                   ? t("score", {
@@ -603,7 +690,13 @@ export function TheoryExerciseSessionView({
                   ? total
                     ? (score.correct / total) * 100
                     : 0
-                  : progressValue
+                  : oneByOne
+                    ? totalQuestionCount
+                      ? (checkedCount / totalQuestionCount) * 100
+                      : 0
+                    : totalQuestionCount
+                      ? (answeredCount / totalQuestionCount) * 100
+                      : 0
               }
             />
           </div>
@@ -642,73 +735,104 @@ export function TheoryExerciseSessionView({
         ) : null}
       </div>
 
+      {submitted ? (
+        <ExerciseSetReviewNav
+          questionIds={questionIds}
+          results={results}
+          questionDomId={(id) => `theory-q-${id}`}
+          filter={reviewFilter}
+          onFilterChange={setReviewFilter}
+          focusedId={focusedReviewId}
+          onFocusedIdChange={setFocusedReviewId}
+        />
+      ) : null}
+
       <div className="space-y-4" key={attemptKey}>
-        {practiceItems.map((item, index) => {
+        {visibleQuestionIds.map((id) => {
+          const item = itemsById.get(id);
+          if (!item) return null;
           const value =
             typeof answers[item.id] === "string" ? String(answers[item.id]) : "";
           const result = results[item.id];
           const correct = Boolean(result?.correct);
           const unanswered = Boolean(result?.unanswered);
+          const revealed = submitted || Boolean(result);
           const onAnswerChange = (next: string) => {
             setAnswer(item.id, next);
             if (next.trim()) notifyAnswerInteraction();
           };
-          if (item.type === "fill_blank") {
-            return (
-              <TheoryFillBlankCard
-                key={item.id}
-                item={item}
-                number={index + 1}
-                value={value}
-                onChange={onAnswerChange}
-                submitted={submitted}
-                correct={correct}
-                unanswered={unanswered}
-              />
-            );
-          }
-          if (item.type === "transformation") {
-            return (
-              <TheoryTransformationCard
-                key={item.id}
-                item={item}
-                number={index + 1}
-                value={value}
-                onChange={onAnswerChange}
-                submitted={submitted}
-                correct={correct}
-                unanswered={unanswered}
-              />
-            );
-          }
           return (
-            <TheoryMultipleChoiceCard
+            <div
               key={item.id}
-              item={item}
-              number={index + 1}
-              value={value}
-              onChange={onAnswerChange}
-              submitted={submitted}
-              correct={correct}
-              unanswered={unanswered}
-            />
+              className={cn(
+                exerciseReviewFocusClass(focusedReviewId === item.id),
+              )}
+            >
+              {item.type === "fill_blank" ? (
+                <TheoryFillBlankCard
+                  item={item}
+                  number={numbers[item.id]}
+                  value={value}
+                  onChange={onAnswerChange}
+                  submitted={revealed}
+                  correct={correct}
+                  unanswered={unanswered}
+                />
+              ) : item.type === "transformation" ? (
+                <TheoryTransformationCard
+                  item={item}
+                  number={numbers[item.id]}
+                  value={value}
+                  onChange={onAnswerChange}
+                  submitted={revealed}
+                  correct={correct}
+                  unanswered={unanswered}
+                />
+              ) : (
+                <TheoryMultipleChoiceCard
+                  item={item}
+                  number={numbers[item.id]}
+                  value={value}
+                  onChange={onAnswerChange}
+                  submitted={revealed}
+                  correct={correct}
+                  unanswered={unanswered}
+                />
+              )}
+            </div>
           );
         })}
       </div>
 
       {!submitted ? (
-        <ExerciseSetSubmitBar
-          answeredCount={answeredCount}
-          totalQuestionCount={totalQuestionCount}
-          unansweredCount={unansweredIds.length}
-          submitting={submitting}
-          onSubmit={handleSubmit}
-          onJumpToUnanswered={jumpToUnanswered}
-        />
+        oneByOne ? (
+          <ExerciseOneByOneBar
+            checked={currentChecked}
+            isLast={isLastQuestion}
+            canCheck={currentCanCheck}
+            submitting={submitting}
+            onCheck={handleCheckOne}
+            onNext={goNextQuestion}
+            onViewResults={handleViewResults}
+          />
+        ) : (
+          <ExerciseSetSubmitBar
+            answeredCount={answeredCount}
+            totalQuestionCount={totalQuestionCount}
+            unansweredCount={unansweredIds.length}
+            submitting={submitting}
+            onSubmit={handleSubmit}
+            onJumpToUnanswered={() => jumpToUnanswered(unansweredIds)}
+          />
+        )
       ) : (
         <div className="space-y-4 pt-2">
           <SessionCompleteCard
             title={tSession("complete")}
+            questions={score.total}
+            correct={score.correct}
+            incorrect={score.incorrect}
+            unanswered={score.unanswered}
             scoreLabel={tSession("score", {
               correct: score.correct,
               total: score.total,
@@ -717,7 +841,9 @@ export function TheoryExerciseSessionView({
             onTryAgain={() => {
               setActiveIds(null);
               resetAttempt();
+              afterNewSet();
             }}
+            onViewWrong={openWrongReview}
             extraAction={
               practiceOnly
                 ? undefined
@@ -749,6 +875,7 @@ export function TheoryExerciseSessionView({
                     .map((item) => item.id);
                   setActiveIds(ids.length > 0 ? ids : null);
                   resetAttempt();
+                  afterNewSet();
                 }}
               >
                 {tSession("retryIncorrect")}
@@ -764,6 +891,7 @@ export function TheoryExerciseSessionView({
                     .map((item) => item.id);
                   setActiveIds(ids.length > 0 ? ids : null);
                   resetAttempt();
+                  afterNewSet();
                 }}
               >
                 {tSession("retryUnanswered")}

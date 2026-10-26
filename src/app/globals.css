@@ -741,6 +741,12 @@
     border-color: var(--exercise-panel-border, var(--page-accent-border));
   }
 
+  .exercise-panel[data-review-focus="true"] {
+    box-shadow:
+      0 0 0 2px color-mix(in oklab, var(--exercise-accent) 55%, transparent),
+      0 0 0 6px color-mix(in oklab, var(--exercise-accent-soft) 70%, transparent);
+  }
+
   .studio-shell {
     background-color: var(--page-backdrop);
     background-image:

@@ -47,7 +47,7 @@ describe("set-attempt helpers", () => {
         },
         ["a", "b", "c"],
       ),
-    ).toEqual({ correct: 1, total: 3 });
+    ).toEqual({ correct: 1, total: 3, incorrect: 1, unanswered: 1 });
   });
 
   it("builds retry subsets against the retry set size", () => {

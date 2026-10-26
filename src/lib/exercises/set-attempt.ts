@@ -65,12 +65,20 @@ export function unansweredQuestionIds(
 export function scoreSetResults(
   results: Readonly<Record<string, SetQuestionResult>>,
   questionIds: readonly string[],
-): { correct: number; total: number } {
+): { correct: number; total: number; incorrect: number; unanswered: number } {
   let correct = 0;
+  let incorrect = 0;
+  let unanswered = 0;
   for (const id of questionIds) {
-    if (results[id]?.correct) correct += 1;
+    const row = results[id];
+    if (!row || row.unanswered) {
+      unanswered += 1;
+      continue;
+    }
+    if (row.correct) correct += 1;
+    else incorrect += 1;
   }
-  return { correct, total: questionIds.length };
+  return { correct, total: questionIds.length, incorrect, unanswered };
 }
 
 /**
