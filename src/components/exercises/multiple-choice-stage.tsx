@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { Check, Sparkles } from "lucide-react";
+import { Check, Sparkles, XCircle } from "lucide-react";
 import { ProgressiveHintReveal } from "@/components/exercises/progressive-hint-reveal";
 import {
   applyAnswerFormCasing,
@@ -329,10 +329,11 @@ function ChoiceOption({
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
         "disabled:cursor-default",
         !revealed &&
+          !isSelected &&
           "border-hairline-cloud control-surface shadow-sm shadow-ink/4 hover:border-(--exercise-accent)/55 hover:bg-(--exercise-accent-soft)/70 hover:shadow-md hover:shadow-ink/6",
         !revealed &&
           isSelected &&
-          "border-(--exercise-accent) bg-(--exercise-accent-soft) shadow-sm",
+          "border-(--exercise-accent) [background-image:none] bg-[color-mix(in_oklab,var(--exercise-accent)_24%,var(--exercise-accent-soft))] shadow-sm",
         showCorrect &&
           "border-success-border bg-success-muted/80 text-success shadow-sm",
         showWrong &&
@@ -355,8 +356,8 @@ function ChoiceOption({
       />
       <span
         className={cn(
-          "flex size-7 shrink-0 items-center justify-center font-mono text-[11px] tracking-wide tabular-nums",
-          "sm:size-auto sm:justify-start sm:text-[0.68rem] sm:tracking-[0.18em]",
+          "flex size-7 shrink-0 items-center justify-center self-center font-mono text-[11px] leading-none tracking-wide tabular-nums",
+          "sm:size-auto sm:justify-start sm:self-auto sm:text-[0.68rem] sm:tracking-[0.18em]",
           showCorrect
             ? "text-success"
             : showWrong
@@ -370,7 +371,7 @@ function ChoiceOption({
           mark
         )}
       </span>
-      <span className="min-w-0 pt-0.5 font-heading text-[1.05rem] leading-snug font-semibold tracking-tight wrap-anywhere sm:pt-0 sm:text-[1.2rem]">
+      <span className="min-w-0 self-center font-heading text-[1.05rem] leading-snug font-semibold tracking-tight wrap-anywhere sm:self-auto sm:text-[1.2rem]">
         {label}
       </span>
     </motion.button>
@@ -406,18 +407,25 @@ function AnswerCaption({
           exit={reduceMotion ? undefined : { opacity: 0 }}
           transition={{ duration: reduceMotion ? 0 : 0.18 }}
           className={cn(
-            "mt-5 text-sm font-medium wrap-anywhere",
-            unanswered || peeked || !isCorrect
-              ? "text-muted-foreground"
-              : "text-success",
+            "mt-5 inline-flex items-center gap-1.5 text-sm font-medium wrap-anywhere",
+            unanswered
+              ? "font-semibold text-warning"
+              : peeked || !isCorrect
+                ? "text-muted-foreground"
+                : "text-success",
           )}
           aria-live="polite"
         >
-          {unanswered
-            ? unansweredLabel
-            : peeked || !isCorrect
-              ? incorrectLabel
-              : correctLabel}
+          {unanswered ? (
+            <>
+              <XCircle className="size-4 shrink-0" strokeWidth={2.4} />
+              {unansweredLabel}
+            </>
+          ) : peeked || !isCorrect ? (
+            incorrectLabel
+          ) : (
+            correctLabel
+          )}
         </motion.p>
       ) : null}
     </AnimatePresence>

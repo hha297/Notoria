@@ -1,7 +1,7 @@
 "use client";
 
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { ChevronDown, ChevronUp, Focus } from "lucide-react";
+import { ChevronDown, ChevronUp } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import {
@@ -42,6 +42,7 @@ export function ExerciseSetReviewNav({
   className,
 }: ExerciseSetReviewNavProps) {
   const t = useTranslations("exercises.session.review");
+  const tSession = useTranslations("exercises.session");
   const counts = useMemo(
     () => reviewCounts(questionIds, results),
     [questionIds, results],
@@ -87,35 +88,33 @@ export function ExerciseSetReviewNav({
         className,
       )}
     >
-      <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-        <div className="min-w-0">
-          <p className="text-[0.68rem] font-semibold tracking-[0.16em] text-(--exercise-accent) uppercase">
-            {t("title")}
-          </p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {counts.needsReview === 0
-              ? t("allCorrect")
-              : t("summary", {
-                  incorrect: counts.incorrect,
-                  unanswered: counts.unanswered,
-                  needsReview: counts.needsReview,
-                })}
-          </p>
-        </div>
-        {counts.needsReview > 0 ? (
-          <Button
-            type="button"
-            variant="outline"
-            className="shrink-0 border-(--exercise-accent)/40"
-            onClick={() => {
-              const first = needsReviewIds[0];
-              if (first) jumpTo(first);
-            }}
-          >
-            <Focus className="size-4" />
-            {t("viewWrong")}
-          </Button>
-        ) : null}
+      <div className="min-w-0">
+        <p className="text-[0.68rem] font-semibold tracking-[0.16em] text-(--exercise-accent) uppercase">
+          {t("title")}
+        </p>
+        <p className="mt-1 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-sm">
+          {counts.needsReview === 0 ? (
+            <span className="font-medium text-success">{t("allCorrect")}</span>
+          ) : (
+            <>
+              <span className="font-semibold text-error tabular-nums">
+                {counts.incorrect} {tSession("incorrectLabel").toLowerCase()}
+              </span>
+              <span className="text-muted-foreground/45" aria-hidden>
+                ·
+              </span>
+              <span className="font-semibold text-warning tabular-nums">
+                {counts.unanswered} {tSession("unansweredLabel").toLowerCase()}
+              </span>
+              <span className="text-muted-foreground/45" aria-hidden>
+                ·
+              </span>
+              <span className="text-muted-foreground tabular-nums">
+                {t("toReviewCount", { count: counts.needsReview })}
+              </span>
+            </>
+          )}
+        </p>
       </div>
 
       <div

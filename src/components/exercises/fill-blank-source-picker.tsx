@@ -60,8 +60,8 @@ export function FillBlankSourcePicker({
               className={cn(
                 "rounded-xl border px-3.5 py-3 text-left transition-[border-color,background-color,box-shadow]",
                 selected
-                  ? "border-(--exercise-accent) bg-(--exercise-accent-soft)/70 shadow-[inset_0_0_0_1px_var(--exercise-accent)]"
-                  : "border-hairline-cloud bg-surface hover:border-(--exercise-accent)/40",
+                  ? "border-(--exercise-accent) bg-(--exercise-accent-soft) shadow-[inset_0_0_0_1px_var(--exercise-accent)]"
+                  : "exercise-panel hover:border-(--exercise-accent)/40 hover:bg-(--page-accent-hover)",
                 (disabled || locked) && "cursor-not-allowed opacity-60",
               )}
             >

@@ -381,7 +381,7 @@ export function ImportMaterialForm() {
         </p>
       </div>
 
-      <div className="space-y-2 px-1">
+      <div className={cn(mx(importStyles, "import-title-wash"), "space-y-2")}>
         <Label htmlFor="import-title" className="text-[0.68rem] font-semibold tracking-[0.16em] text-muted-foreground uppercase">
           {t("titleLabel")}
         </Label>
@@ -391,7 +391,10 @@ export function ImportMaterialForm() {
           onChange={(e) => setTitle(e.target.value)}
           placeholder={t("titlePlaceholder")}
           disabled={isBusy}
-          className="h-11 rounded-none border-0 border-b border-hairline-cloud bg-transparent px-0 shadow-none focus-visible:border-(--import-mode-fg) focus-visible:ring-0"
+          className={cn(
+            mx(importStyles, "import-field-wash"),
+            "h-11 rounded-none border-0 border-b border-hairline-cloud px-0 shadow-none focus-visible:border-(--import-mode-fg) focus-visible:ring-0",
+          )}
         />
       </div>
 
@@ -426,7 +429,10 @@ export function ImportMaterialForm() {
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               placeholder={t("urlPlaceholder")}
-              className="h-12 rounded-none border-0 border-b border-hairline-cloud bg-transparent px-0 font-heading text-lg shadow-none focus-visible:border-(--import-mode-fg) focus-visible:ring-0"
+              className={cn(
+                mx(importStyles, "import-field-wash"),
+                "h-12 rounded-none border-0 border-b border-hairline-cloud px-0 font-heading text-lg shadow-none focus-visible:border-(--import-mode-fg) focus-visible:ring-0",
+              )}
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
                   e.preventDefault();
@@ -459,7 +465,10 @@ export function ImportMaterialForm() {
               onChange={(e) => setText(e.target.value)}
               rows={10}
               placeholder={t("textPlaceholder")}
-              className="min-h-44 resize-y rounded-md border border-(--import-mode-fg)/28 bg-transparent px-3.5 py-3 font-heading text-lg leading-relaxed shadow-none focus-visible:border-(--import-mode-fg)/50 focus-visible:ring-0"
+              className={cn(
+                mx(importStyles, "import-field-wash"),
+                "min-h-44 resize-y rounded-md border border-(--import-mode-fg)/28 px-3.5 py-3 font-heading text-lg leading-relaxed shadow-none focus-visible:border-(--import-mode-fg)/50 focus-visible:ring-0",
+              )}
             />
           </div>
           <QuotaLockButton

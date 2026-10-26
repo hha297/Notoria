@@ -5,7 +5,7 @@ import Link from "next/link";
 import type { JSONContent } from "@tiptap/react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { ChevronRight, Loader2 } from "lucide-react";
+import { ArrowRight, ChevronRight, Loader2 } from "lucide-react";
 import { DescriptionContent } from "@/components/form/description-content";
 import { TheoryLessonProse } from "@/components/exercises/theory/theory-lesson-prose";
 import { Button } from "@/components/ui/button";
@@ -355,9 +355,10 @@ function OverviewActions({
       <p>
         <Link
           href={theoryHref}
-          className="text-sm font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-ink hover:underline focus-visible:ring-2 focus-visible:ring-(--lesson-row-fg)/40 focus-visible:outline-none"
+          className="group inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground underline-offset-4 transition-colors hover:text-ink hover:underline focus-visible:ring-2 focus-visible:ring-(--lesson-row-fg)/40 focus-visible:outline-none"
         >
           {t("lesson.openTheory")}
+          <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none" />
         </Link>
       </p>
     </div>
@@ -408,9 +409,10 @@ function ReviewDocument({
         </button>
         <Link
           href={theoryHref}
-          className="text-sm font-medium text-muted-foreground underline-offset-4 hover:text-ink hover:underline focus-visible:ring-2 focus-visible:ring-(--lesson-concept)/40 focus-visible:outline-none"
+          className="group inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground underline-offset-4 hover:text-ink hover:underline focus-visible:ring-2 focus-visible:ring-(--lesson-concept)/40 focus-visible:outline-none"
         >
           {t("lesson.openTheory")}
+          <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none" />
         </Link>
       </div>
 

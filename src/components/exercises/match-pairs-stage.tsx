@@ -428,7 +428,7 @@ function MatchTile({
       }
       transition={{ duration: 0.16 }}
       className={cn(
-        "relative flex min-h-12 w-full min-w-0 cursor-pointer items-start gap-2 overflow-hidden border px-2.5 py-2.5 text-left sm:min-h-14 sm:items-center sm:gap-3 sm:px-3.5 sm:py-3",
+        "relative flex min-h-12 w-full min-w-0 cursor-pointer items-center gap-2 overflow-hidden border px-2.5 py-2.5 text-left sm:min-h-14 sm:gap-3 sm:px-3.5 sm:py-3",
         "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring/50",
         "disabled:cursor-default",
         !matched &&
@@ -441,7 +441,7 @@ function MatchTile({
           "border-(--exercise-accent)/45 control-surface shadow-sm shadow-ink/4 hover:border-(--exercise-accent) hover:bg-(--exercise-accent-soft)/80",
         selected &&
           !wrong &&
-          "border-(--exercise-accent) bg-(--exercise-accent-soft) shadow-sm",
+          "border-(--exercise-accent) [background-image:none] bg-[color-mix(in_oklab,var(--exercise-accent)_24%,var(--exercise-accent-soft))] shadow-sm",
         matched && "control-surface text-muted-foreground",
         wrong && !reduceMotion && mx(featureStyles, "feedback-error exercise-shake"),
         wrong && reduceMotion && mx(featureStyles, "feedback-error"),
@@ -468,7 +468,7 @@ function MatchTile({
 
       {matched ? (
         <span
-          className="mt-0.5 flex shrink-0 items-center gap-1 sm:mt-0"
+          className="flex shrink-0 items-center gap-1"
           style={pairColor ? { color: pairColor } : undefined}
         >
           <span
@@ -485,7 +485,7 @@ function MatchTile({
             <Check className="size-3.5" strokeWidth={2.5} />
           </span>
           {mark ? (
-            <span className="font-mono text-[0.65rem] tracking-[0.14em] tabular-nums">
+            <span className="font-mono text-[0.65rem] leading-none tracking-[0.14em] tabular-nums">
               {mark}
             </span>
           ) : null}
@@ -493,7 +493,7 @@ function MatchTile({
       ) : wrong ? (
         <span
           aria-hidden
-          className="mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full bg-error/15 text-error sm:mt-0"
+          className="flex size-5 shrink-0 items-center justify-center rounded-full bg-error/15 text-error"
         >
           <X className="size-3.5" strokeWidth={2.5} />
         </span>
@@ -501,8 +501,8 @@ function MatchTile({
         <span
           aria-hidden
           className={cn(
-            "mt-0.5 flex size-5 shrink-0 items-center justify-center rounded-full border border-dashed border-hairline-cloud sm:mt-0",
-            selected && "border-(--exercise-accent) bg-(--exercise-accent)/25",
+            "flex size-5 shrink-0 items-center justify-center rounded-full border border-dashed border-hairline-cloud",
+            selected && "border-(--exercise-accent) bg-(--exercise-accent)/35",
             pairing && "border-(--exercise-accent)/55",
           )}
         />
