@@ -5,6 +5,7 @@ import { revalidatePath } from "next/cache";
 import { z } from "zod";
 import { db } from "@/db";
 import { vocabularyWordTags, vocabularyWords } from "@/db/schema";
+import { AuthorizationUnavailableError } from "@/lib/auth/errors";
 import { getCurrentUserId } from "@/lib/auth/session";
 import { isTagManagerTagId, storedTagMatchesManagerTag } from "@/lib/vocabulary/tag-manager";
 import { getActiveWorkspace } from "@/lib/workspace";
@@ -16,7 +17,20 @@ const bulkTagSchema = z.object({
 
 export type VocabularyTagMembershipResult =
   | { ok: true; affected: number }
-  | { ok: false; code: "INVALID" | "UNAUTHORIZED" | "NOT_FOUND" };
+  | {
+      ok: false;
+      code: "INVALID" | "UNAUTHORIZED" | "NOT_FOUND" | "AUTH_UNAVAILABLE";
+    };
+
+function mapTagAuthError(error: unknown): VocabularyTagMembershipResult | null {
+  if (error instanceof AuthorizationUnavailableError) {
+    return { ok: false, code: "AUTH_UNAVAILABLE" };
+  }
+  if (error instanceof Error && error.message === "Unauthorized") {
+    return { ok: false, code: "UNAUTHORIZED" };
+  }
+  return null;
+}
 
 async function requireOwnedWordIds(wordIds: string[]) {
   const userId = await getCurrentUserId();
@@ -96,9 +110,8 @@ export async function addTagToVocabularyWords(
     revalidateVocabulary();
     return { ok: true, affected: toInsert.length };
   } catch (error) {
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return { ok: false, code: "UNAUTHORIZED" };
-    }
+    const mapped = mapTagAuthError(error);
+    if (mapped) return mapped;
     throw error;
   }
 }
@@ -143,9 +156,8 @@ export async function removeTagFromVocabularyWords(
     revalidateVocabulary();
     return { ok: true, affected: deleted.length };
   } catch (error) {
-    if (error instanceof Error && error.message === "Unauthorized") {
-      return { ok: false, code: "UNAUTHORIZED" };
-    }
+    const mapped = mapTagAuthError(error);
+    if (mapped) return mapped;
     throw error;
   }
 }

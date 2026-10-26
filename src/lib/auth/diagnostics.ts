@@ -4,20 +4,22 @@ export type AuthStage =
   | "sign-in"
   | "metadata-refresh"
   | "authorization"
-  | "session";
+  | "session"
+  | "database";
 
-export type AuthPhase = "initial" | "refresh" | "check";
+export type AuthPhase = "initial" | "refresh" | "check" | "query";
 
 export type AuthOutcome =
   | "preserved"
   | "user-missing"
   | "unavailable"
   | "denied"
-  | "suspended";
+  | "suspended"
+  | "ok";
 
 /**
- * Sanitized auth log. Never pass tokens, cookies, emails, or raw driver
- * errors into `event`.
+ * Sanitized auth/DB log. Never pass tokens, cookies, emails, connection
+ * strings, SQL, or user content into `event`.
  */
 export async function incomingRequestId(): Promise<string | undefined> {
   const current = currentAuthRequest()?.requestId;
@@ -37,7 +39,10 @@ export function logAuthEvent(event: {
   stage: AuthStage;
   phase: AuthPhase;
   outcome: AuthOutcome;
+  operation?: string;
+  durationMs?: number;
   errorCategory?: string;
+  causeCode?: string;
   requestId?: string;
 }) {
   const requestId = event.requestId ?? currentAuthRequest()?.requestId;
@@ -45,7 +50,10 @@ export function logAuthEvent(event: {
     stage: event.stage,
     phase: event.phase,
     outcome: event.outcome,
+    operation: event.operation,
+    durationMs: event.durationMs,
     errorCategory: event.errorCategory,
+    causeCode: event.causeCode,
     requestId,
   });
 }

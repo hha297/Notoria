@@ -8,16 +8,21 @@ import {
 } from "@/lib/auth/session-cookie";
 
 async function handle(request: NextRequest) {
-  return runWithAuthRequest(request, async () => {
-    const response =
-      request.method === "POST"
-        ? await handlers.POST(request)
-        : await handlers.GET(request);
-    const persisted = await applySessionPersistence(response);
-    const pathname = new URL(request.url).pathname;
-    if (!shouldClearRememberPreference(pathname)) return persisted;
-    return appendRememberPreferenceClear(persisted, request);
-  });
+  // Server surface: JWT callback may refresh role/suspension from the DB.
+  return runWithAuthRequest(
+    request,
+    async () => {
+      const response =
+        request.method === "POST"
+          ? await handlers.POST(request)
+          : await handlers.GET(request);
+      const persisted = await applySessionPersistence(response);
+      const pathname = new URL(request.url).pathname;
+      if (!shouldClearRememberPreference(pathname)) return persisted;
+      return appendRememberPreferenceClear(persisted, request);
+    },
+    { surface: "server" },
+  );
 }
 
 export const GET = handle;

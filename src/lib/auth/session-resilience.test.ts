@@ -248,20 +248,35 @@ describe("session resilience", () => {
     assertSessionNotCleared(recovered);
   });
 
-  it("does not redirect middleware navigation to sign-in on a transient refresh failure", async () => {
+  it("does not hit the database or redirect on middleware navigation when refresh would be due", async () => {
     const signedIn = await signIn({ remember: "false" });
     const cookie = liveCookieHeader(signedIn);
     state.now += 61_000;
     state.mode = "throw";
+    const callsBefore = findFirst.mock.calls.length;
 
     const response = await middleware(
       pageRequest("/vocabulary?folder=abc", cookie),
       {} as never,
     );
+    expect(findFirst.mock.calls.length).toBe(callsBefore);
     expect(response?.status).not.toBe(307);
     expect(response?.headers.get("location") ?? "").not.toContain("/sign-in");
     assertSessionNotCleared(response!);
     expect(persistence(liveSessionHeaders(response!)[0]!)).toBe("persistent");
+  });
+
+  it("keeps public marketing pages free of metadata-refresh database reads", async () => {
+    const signedIn = await signIn({ remember: "true" });
+    const cookie = liveCookieHeader(signedIn);
+    state.now += 61_000;
+    state.mode = "throw";
+    const callsBefore = findFirst.mock.calls.length;
+
+    const response = await middleware(pageRequest("/about", cookie), {} as never);
+    expect(findFirst.mock.calls.length).toBe(callsBefore);
+    expect(response?.headers.get("location")).toBeNull();
+    assertSessionNotCleared(response!);
   });
 
   it("does not let one failed refresh delete a session another request kept", async () => {
@@ -361,8 +376,18 @@ describe("session resilience", () => {
     const cookie = liveCookieHeader(signedIn);
     state.now += 61_000;
     state.suspendedAt = new Date("2026-01-02T00:00:00.000Z");
+
+    // Middleware uses JWT claims only; refresh via session first.
+    const refreshed = await sessionRequest(cookie);
+    assertSessionNotCleared(refreshed);
+    const suspendedCookie = liveCookieHeader(refreshed);
+    const suspendedBody = (await refreshed.json()) as {
+      user?: { suspendedAt?: string | null };
+    };
+    expect(suspendedBody.user?.suspendedAt).toBeTruthy();
+
     const suspended = await middleware(
-      pageRequest("/vocabulary", cookie),
+      pageRequest("/vocabulary", suspendedCookie),
       {} as never,
     );
     expect(suspended?.headers.get("location")).toContain("error=AccountSuspended");
@@ -398,6 +423,23 @@ describe("session resilience", () => {
     );
     const adminLocation = admin?.headers.get("location") ?? "";
     expect(new URL(adminLocation).pathname).toBe("/");
+  });
+
+  it("fails closed for admin when the database is unavailable without clearing the session", async () => {
+    state.role = "ADMIN";
+    const signedIn = await signIn({ remember: "true" });
+    const cookie = liveCookieHeader(signedIn);
+    state.mode = "throw";
+
+    expect(() =>
+      assertAdminUser({ id: "user-1", role: "ADMIN", suspendedAt: null }),
+    ).not.toThrow();
+
+    // Soft middleware gate still allows /admin with a prior ADMIN claim;
+    // requireAdmin() on the page must fail closed via the DB (tested elsewhere).
+    const gate = await middleware(pageRequest("/admin", cookie), {} as never);
+    expect(gate?.headers.get("location")).toBeNull();
+    assertSessionNotCleared(gate!);
   });
 });
 
