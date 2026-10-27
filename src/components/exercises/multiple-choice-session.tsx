@@ -577,7 +577,8 @@ export function MultipleChoiceSession({
         </p>
       ) : null}
 
-      <ExerciseProgressHeader
+      {submitted || oneByOne ? (
+        <ExerciseProgressHeader
         current={progressCurrent}
         total={progressTotal}
         progressLabel={
@@ -620,7 +621,8 @@ export function MultipleChoiceSession({
                 ? (answeredCount / totalQuestionCount) * 100
                 : 0
         }
-      />
+        />
+      ) : null}
 
       {submitted ? (
         <ExerciseSetReviewNav

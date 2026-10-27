@@ -70,7 +70,7 @@ export default async function CoachPage({ searchParams }: PageProps) {
         <div
           className={cn(
             "writing-atelier coach-atelier",
-            mx(styles, "coach-atelier flex flex-col gap-10"),
+            mx(styles, "coach-atelier flex flex-col gap-6 sm:gap-8"),
           )}
         >
           <header className="writing-hero">
@@ -99,7 +99,7 @@ export default async function CoachPage({ searchParams }: PageProps) {
         <div
           className={cn(
             "writing-atelier coach-atelier",
-            mx(styles, "coach-atelier flex flex-col gap-8"),
+            mx(styles, "coach-atelier flex flex-col gap-6 sm:gap-8"),
           )}
         >
           <header className="writing-hero">
@@ -107,7 +107,7 @@ export default async function CoachPage({ searchParams }: PageProps) {
               <p className="writing-kicker">{t("eyebrow")}</p>
               <h1 className="writing-brand-title">
                 {t("title")}{" "}
-                <span className="text-[color:var(--accent-lime)]">{t("highlight")}</span>
+                <span className="text-[color:var(--page-accent)]">{t("highlight")}</span>
               </h1>
               <p className="writing-brand-lede">{t("description")}</p>
             </div>
@@ -176,7 +176,7 @@ export default async function CoachPage({ searchParams }: PageProps) {
       <div
         className={cn(
           "writing-atelier coach-atelier",
-          mx(styles, "coach-atelier flex flex-col gap-10 lg:gap-12"),
+          mx(styles, "coach-atelier flex flex-col gap-6 sm:gap-8 lg:gap-10"),
         )}
       >
         <header className="writing-hero">
@@ -184,7 +184,7 @@ export default async function CoachPage({ searchParams }: PageProps) {
             <p className="writing-kicker">{t("eyebrow")}</p>
             <h1 className="writing-brand-title">
               {t("title")}{" "}
-              <span className="text-[color:var(--accent-lime)]">{t("highlight")}</span>
+              <span className="text-[color:var(--page-accent)]">{t("highlight")}</span>
             </h1>
             <p className="writing-brand-lede">{t("descriptionIntelligence")}</p>
           </div>

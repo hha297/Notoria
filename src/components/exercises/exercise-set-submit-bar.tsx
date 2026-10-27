@@ -5,6 +5,7 @@ import { Loader2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { ConfirmActionDialog } from "@/components/shared/confirm-action-dialog";
 import { Button } from "@/components/ui/button";
+import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 
 type ExerciseSetSubmitBarProps = {
   answeredCount: number;
@@ -60,37 +61,43 @@ export function ExerciseSetSubmitBar({
           "backdrop-blur-sm supports-backdrop-filter:bg-[color-mix(in_oklab,var(--exercise-accent-soft)_32%,var(--surface-elevated)_88%)]",
         ].join(" ")}
       >
-        <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-          <p className="text-sm text-muted-foreground tabular-nums">
-            {t("answeredProgress", {
+        <div className="flex w-full flex-col gap-2">
+          <ExerciseProgressHeader
+            current={answeredCount}
+            total={totalQuestionCount}
+            progressLabel={t("answeredProgress", {
               answered: answeredCount,
               total: totalQuestionCount,
             })}
-            {unansweredCount > 0 ? (
-              <button
-                type="button"
-                className="ml-2 font-medium text-(--exercise-accent) underline-offset-4 hover:underline"
-                onClick={onJumpToUnanswered}
-              >
-                {t("jumpToUnanswered")}
-              </button>
-            ) : null}
-          </p>
-          <Button
-            type="button"
-            onClick={handleSubmitClick}
-            disabled={disabled || submitting || totalQuestionCount === 0}
-            className="h-11 w-full bg-(--exercise-accent) text-background hover:opacity-90 sm:h-9 sm:w-auto"
-          >
-            {submitting ? (
-              <>
-                <Loader2 className="size-4 animate-spin" />
-                {t("submitting")}
-              </>
-            ) : (
-              t("submitSet")
-            )}
-          </Button>
+          />
+          <div className="flex w-full flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+            <div className="min-h-5 text-sm text-muted-foreground">
+              {unansweredCount > 0 ? (
+                <button
+                  type="button"
+                  className="font-medium text-(--exercise-accent) underline-offset-4 hover:underline"
+                  onClick={onJumpToUnanswered}
+                >
+                  {t("jumpToUnanswered")}
+                </button>
+              ) : null}
+            </div>
+            <Button
+              type="button"
+              onClick={handleSubmitClick}
+              disabled={disabled || submitting || totalQuestionCount === 0}
+              className="h-11 w-full bg-(--exercise-accent) text-background hover:opacity-90 sm:h-9 sm:w-auto"
+            >
+              {submitting ? (
+                <>
+                  <Loader2 className="size-4 animate-spin" />
+                  {t("submitting")}
+                </>
+              ) : (
+                t("submitSet")
+              )}
+            </Button>
+          </div>
         </div>
       </div>
 

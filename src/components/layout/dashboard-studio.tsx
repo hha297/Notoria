@@ -26,12 +26,14 @@ function studioSceneFromPath(pathname: string) {
   if (pathname === "/") return "home";
   if (pathname === "/tag" || pathname.startsWith("/tag/")) return "tags";
   if (pathname.startsWith("/vocabulary")) return "vocabulary";
+  if (pathname.startsWith("/inbox")) return "inbox";
   if (pathname.startsWith("/exercises")) return "exercises";
   if (pathname.startsWith("/theory")) return "theory";
   if (pathname.startsWith("/reading")) return "read";
   if (pathname.startsWith("/writing")) return "writing";
   if (pathname.startsWith("/listening")) return "listen";
   if (pathname.startsWith("/speaking")) return "speak";
+  if (pathname.startsWith("/coach")) return "coach";
   if (pathname.startsWith("/getting-started")) return "guide";
   if (pathname.startsWith("/settings")) return "settings";
   if (pathname.startsWith("/account")) return "account";

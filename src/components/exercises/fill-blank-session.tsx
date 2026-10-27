@@ -36,6 +36,7 @@ import {
 } from "@/lib/exercises/ai-validate";
 import { pickFillBlankAiWords, toExerciseAiWord } from "@/lib/exercises/ai-words";
 import { wordHasBlankMeaningHint } from "@/lib/exercises/blank-hint";
+import { isSlotAnswerComplete } from "@/lib/exercises/character-slots";
 import {
   buildFillBlankItems,
   type FillBlankItem,
@@ -126,6 +127,14 @@ export function FillBlankSession({
     [practiceItems],
   );
 
+  const isCompleteAnswer = useCallback(
+    (questionId: string, value: unknown) => {
+      const item = practiceItems.find((candidate) => candidate.id === questionId);
+      return Boolean(item && isSlotAnswerComplete(value, item.acceptableAnswers));
+    },
+    [practiceItems],
+  );
+
   const {
     answers,
     phase: attemptPhase,
@@ -142,7 +151,7 @@ export function FillBlankSession({
     submit,
     checkOne,
     markSubmitted,
-  } = useExerciseSetAttempt({ questionIds });
+  } = useExerciseSetAttempt({ questionIds, isAnswered: isCompleteAnswer });
 
   const {
     displayMode,
@@ -172,6 +181,7 @@ export function FillBlankSession({
     checkedCount,
     questionIdPrefix: "fb-q",
     setAnchorId: "fb-set-top",
+    isAnswered: isCompleteAnswer,
   });
 
   const hasSession = items.length > 0;
@@ -685,7 +695,8 @@ export function FillBlankSession({
             </p>
           ) : null}
 
-          <ExerciseProgressHeader
+          {submitted || oneByOne ? (
+            <ExerciseProgressHeader
             current={progressCurrent}
             total={progressTotal}
             progressLabel={
@@ -728,7 +739,8 @@ export function FillBlankSession({
                     ? (answeredCount / totalQuestionCount) * 100
                     : 0
             }
-          />
+            />
+          ) : null}
 
           {submitted ? (
             <ExerciseSetReviewNav
@@ -796,6 +808,7 @@ export function FillBlankSession({
                 totalQuestionCount={totalQuestionCount}
                 unansweredCount={unansweredIds.length}
                 submitting={submitting}
+                disabled={unansweredIds.length > 0}
                 onSubmit={handleSubmit}
                 onJumpToUnanswered={() => jumpToUnanswered(unansweredIds)}
               />

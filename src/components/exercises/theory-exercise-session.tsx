@@ -31,6 +31,7 @@ import { useExerciseSetAttempt } from "@/hooks/use-exercise-set-attempt";
 import { useExerciseSetUi } from "@/hooks/use-exercise-set-ui";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { DEFAULT_NEXT_SET_COUNT } from "@/lib/exercises/next-set-fingerprint";
+import { isSlotAnswerComplete } from "@/lib/exercises/character-slots";
 import { isNonEmptyAnswer, type SetQuestionResult } from "@/lib/exercises/set-attempt";
 import { shuffleArray } from "@/lib/exercises/utils";
 import { requestTheoryExerciseAi } from "@/lib/theory-exercises/ai-client";
@@ -140,6 +141,17 @@ export function TheoryExerciseSessionView({
     [practiceItems],
   );
 
+  const isCompleteAnswer = useCallback(
+    (questionId: string, value: unknown) => {
+      const item = practiceItems.find((candidate) => candidate.id === questionId);
+      if (!item) return false;
+      return item.type === "fill_blank"
+        ? isSlotAnswerComplete(value, [item.answer, ...item.acceptedAnswers])
+        : isNonEmptyAnswer(value);
+    },
+    [practiceItems],
+  );
+
   const {
     answers,
     phase: attemptPhase,
@@ -156,7 +168,7 @@ export function TheoryExerciseSessionView({
     submit,
     checkOne,
     markSubmitted,
-  } = useExerciseSetAttempt({ questionIds });
+  } = useExerciseSetAttempt({ questionIds, isAnswered: isCompleteAnswer });
 
   const {
     displayMode,
@@ -186,6 +198,7 @@ export function TheoryExerciseSessionView({
     checkedCount,
     questionIdPrefix: "theory-q",
     setAnchorId: "theory-set-top",
+    isAnswered: isCompleteAnswer,
   });
 
   const loadItems = useCallback(
@@ -617,10 +630,10 @@ export function TheoryExerciseSessionView({
     <div
       data-exercise="theory"
       data-theory-category={session.category}
-      className={mx(featureStyles, "theory-practice-stage -mx-[var(--studio-main-pad,1rem)] space-y-5 px-4 py-4 sm:-mx-[var(--studio-main-pad,1.5rem)] sm:space-y-8 sm:px-6 sm:py-9")}
+      className={mx(featureStyles, "theory-practice-stage w-full min-w-0 max-w-full space-y-4 px-1 py-3 sm:-mx-[var(--studio-main-pad,1.5rem)] sm:w-auto sm:max-w-none sm:space-y-7 sm:px-6 sm:py-8")}
     >
       <div id="theory-set-top" className="scroll-mt-24" />
-      <div className="space-y-4">
+      <div className="min-w-0 space-y-3 sm:space-y-4">
         {instructionsField}
         <div className="min-w-0">
           <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
@@ -655,7 +668,8 @@ export function TheoryExerciseSessionView({
         ) : null}
 
         <div className="flex flex-wrap items-end justify-between gap-2">
-          <div className="min-w-0 flex-1">
+          {submitted || oneByOne ? (
+            <div className="min-w-0 flex-1">
             <ExerciseProgressHeader
               progressLabel={
                 submitted
@@ -700,7 +714,8 @@ export function TheoryExerciseSessionView({
                       : 0
               }
             />
-          </div>
+            </div>
+          ) : null}
           <div className="flex items-center gap-2">
             {!practiceOnly ? (
               <QuotaLockButton
@@ -822,6 +837,9 @@ export function TheoryExerciseSessionView({
             totalQuestionCount={totalQuestionCount}
             unansweredCount={unansweredIds.length}
             submitting={submitting}
+            disabled={unansweredIds.some(
+              (id) => itemsById.get(id)?.type === "fill_blank",
+            )}
             onSubmit={handleSubmit}
             onJumpToUnanswered={() => jumpToUnanswered(unansweredIds)}
           />

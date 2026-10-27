@@ -401,7 +401,8 @@ export function FormSentenceSession({
         </p>
       ) : null}
 
-      <ExerciseProgressHeader
+      {submitted || oneByOne ? (
+        <ExerciseProgressHeader
         current={progressCurrent}
         total={progressTotal}
         progressLabel={
@@ -444,7 +445,8 @@ export function FormSentenceSession({
                 ? (answeredCount / totalQuestionCount) * 100
                 : 0
         }
-      />
+        />
+      ) : null}
 
       {submitted ? (
         <ExerciseSetReviewNav

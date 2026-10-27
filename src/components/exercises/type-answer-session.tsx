@@ -554,7 +554,8 @@ export function TypeAnswerSession({
         </p>
       ) : null}
 
-      <ExerciseProgressHeader
+      {submitted || oneByOne ? (
+        <ExerciseProgressHeader
         current={progressCurrent}
         total={progressTotal}
         progressLabel={
@@ -597,7 +598,8 @@ export function TypeAnswerSession({
                 ? (answeredCount / totalQuestionCount) * 100
                 : 0
         }
-      />
+        />
+      ) : null}
 
       {submitted ? (
         <ExerciseSetReviewNav

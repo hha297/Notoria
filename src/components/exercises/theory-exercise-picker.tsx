@@ -487,7 +487,7 @@ function TheoryFolderNode({
       <div className={mx(featureStyles, "theory-folder-row")}>
         <button
           type="button"
-          className={mx(featureStyles, "theory-folder-toggle")}
+          className={mx(featureStyles, "theory-folder-main")}
           aria-expanded={isExpanded}
           aria-label={
             isExpanded
@@ -497,41 +497,37 @@ function TheoryFolderNode({
           disabled={!hasBody}
           onClick={() => onToggle(node.id)}
         >
-          {isExpanded ? (
-            <ChevronDown className="size-4" aria-hidden />
-          ) : (
-            <ChevronRight className="size-4" aria-hidden />
-          )}
-        </button>
-
-        <button
-          type="button"
-          className={mx(featureStyles, "theory-folder-main")}
-          aria-expanded={isExpanded}
-          onClick={() => onToggle(node.id)}
-          disabled={!hasBody}
-        >
+          <span className={mx(featureStyles, "theory-folder-chevron")} aria-hidden>
+            {isExpanded ? (
+              <ChevronDown className="size-3.5" />
+            ) : (
+              <ChevronRight className="size-3.5" />
+            )}
+          </span>
           <span className={mx(featureStyles, "theory-folder-icon")} aria-hidden>
             {node.unfiled ? (
-              <FileText className="size-[1.15rem]" strokeWidth={2.1} />
+              <FileText className="size-4" strokeWidth={2} />
             ) : isExpanded ? (
-              <FolderOpen className="size-[1.2rem]" strokeWidth={2.1} />
+              <FolderOpen className="size-4" strokeWidth={2} />
             ) : (
-              <Folder className="size-[1.2rem]" strokeWidth={2.1} />
+              <Folder className="size-4" strokeWidth={2} />
             )}
           </span>
           <span className={mx(featureStyles, "theory-folder-copy")}>
             <span className={mx(featureStyles, "theory-folder-name")}>
               {name}
             </span>
-            {node.children.length > 0 ? (
-              <span className={mx(featureStyles, "theory-folder-submeta")}>
+            <span className={mx(featureStyles, "theory-folder-meta")}>
+              {node.children.length > 0 ? (
+                <span className={mx(featureStyles, "theory-folder-submeta")}>
                 {t("folders.subfolders", { count: node.children.length })}
+                </span>
+              ) : null}
+              {node.children.length > 0 ? <span aria-hidden>·</span> : null}
+              <span className={mx(featureStyles, "theory-folder-count")}>
+                {t("folders.count", { count: node.totalNotes })}
               </span>
-            ) : null}
-          </span>
-          <span className={mx(featureStyles, "theory-folder-count")}>
-            {t("folders.count", { count: node.totalNotes })}
+            </span>
           </span>
         </button>
       </div>
